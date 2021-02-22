@@ -7,7 +7,7 @@
 
 namespace logging
 {
-	util::util(void)
+	util::util(void) : _target_level(logging_level::information)
 	{
 
 	}
@@ -50,6 +50,11 @@ namespace logging
 		_write_console.store(write_console);
 	}
 
+	std::chrono::time_point<std::chrono::steady_clock> util::chrono_start(void)
+	{
+		return std::chrono::steady_clock::now();
+	}
+
 	void util::write(const logging_level& target_level, const std::wstring& log_data)
 	{
 		if ((unsigned short)target_level > (unsigned short)_target_level)
@@ -64,6 +69,15 @@ namespace logging
 
 		_buffer.push_back({ target_level , { std::chrono::system_clock::now(), log_data } });
 		_has_buffer.store(true);
+	}
+
+	void util::write(const logging_level& target_level, const std::wstring& log_data, const std::chrono::time_point<std::chrono::steady_clock>& time)
+	{
+		auto end = std::chrono::steady_clock::now();
+
+		std::chrono::duration<double> diff = end - time;
+
+		write(target_level, fmt::format(L"{} [{:0>3} ms]", log_data, (diff.count() * 1000)));
 	}
 
 	void util::run(void)
@@ -91,8 +105,6 @@ namespace logging
 			{
 				auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(buffer.second.first.time_since_epoch()).count() % 1000;
 				auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(buffer.second.first.time_since_epoch()).count() % 1000;
-				
-				result.clear();
 				fmt::format_to(std::back_inserter(result), L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}]", fmt::localtime(buffer.second.first), milli_seconds, micro_seconds);
 				switch (buffer.first)
 				{
@@ -108,6 +120,14 @@ namespace logging
 				{
 					std::wcout << result.data();
 				}
+
+				if (!_write_file.load())
+				{
+					result.clear();
+					continue;
+				}
+
+				result.clear();
 			}
 
 			buffers.clear();

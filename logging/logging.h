@@ -29,7 +29,9 @@ namespace logging
 		void set_write_console(const bool& write_console);
 
 	public:
+		std::chrono::time_point<std::chrono::steady_clock> chrono_start(void);
 		void write(const logging_level& target_level, const std::wstring& log_data);
+		void write(const logging_level& target_level, const std::wstring& log_data, const std::chrono::time_point<std::chrono::steady_clock>& time);
 
 	private:
 		void run(void);
@@ -44,7 +46,8 @@ namespace logging
 		std::atomic<bool> _has_buffer{ false };
 		std::atomic<bool> _transfer_buffer{ false };
 		std::atomic<bool> _thread_stop{ false };
-		std::atomic<bool> _write_console{ true };		
+		std::atomic<bool> _write_console{ true };
+		std::atomic<bool> _write_file{ true };
 
 	private:
 		std::thread _thread;
