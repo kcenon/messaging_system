@@ -9,6 +9,8 @@
 #include <iostream>
 #include <filesystem>
 
+#include <codecvt>
+
 namespace logging
 {
 	util::util(void) : _target_level(logging_level::information), _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
@@ -80,18 +82,16 @@ namespace logging
 
 	void util::write(const logging_level& target_level, const std::wstring& log_data)
 	{
-		if ((unsigned short)target_level > (unsigned short)_target_level)
+		if (target_level > _target_level)
 		{
 			return;
 		}
-
-		while (_transfer_buffer.load())
-		{
-			std::this_thread::yield();
-		}
+		
+		std::lock_guard<std::mutex> guard(_mutex);
 
 		_buffer.push_back({ target_level , { std::chrono::system_clock::now(), log_data } });
-		_has_buffer.store(true);
+
+		_condition.notify_one();
 	}
 
 	void util::write(const logging_level& target_level, const std::wstring& log_data, const std::chrono::time_point<std::chrono::steady_clock>& time)
@@ -105,26 +105,20 @@ namespace logging
 
 	void util::run(void)
 	{
-		fmt::wmemory_buffer result;
+		std::wstring result;
 		std::vector<std::pair<logging_level, std::pair<std::chrono::system_clock::time_point, std::wstring>>> buffers;
+
+		std::wclog.imbue(std::locale("C.UTF-8"));
 
 		start_log();
 
 		while (!_thread_stop.load() || !_buffer.empty())
 		{
-			if (!_has_buffer.load())
-			{
-				std::this_thread::yield();
-				continue;
-			}
-			
-			_transfer_buffer.store(true);
-			if (!_buffer.empty())
-			{
-				buffers.swap(_buffer);
-				_has_buffer.store(false);
-			}
-			_transfer_buffer.store(false);
+			std::unique_lock<std::mutex> unique(_mutex);
+			_condition.wait(unique, [this] { return !_thread_stop.load() || !_buffer.empty(); });
+
+			buffers.swap(_buffer);
+			unique.unlock();
 
 			std::filesystem::path target_path(fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path,
 				_store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention));
@@ -141,7 +135,6 @@ namespace logging
 				_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
 			if (err != 0)
 			{
-				result.clear();
 				return;
 			}
 
@@ -157,7 +150,7 @@ namespace logging
 				{
 					fmt::format_to(std::back_inserter(result), L"[{:%H:%M:%S}.{:0>3}{:0>3}]", fmt::localtime(buffer.second.first), milli_seconds, micro_seconds);
 				}
-				
+
 				switch (buffer.first)
 				{
 				case logging_level::exception: fmt::format_to(std::back_inserter(result), L"{}", L"[EXCEPTION]"); break;
@@ -168,9 +161,7 @@ namespace logging
 				}
 				fmt::format_to(std::back_inserter(result), L": {}\r\n", buffer.second.second);
 
-				store_log(file, result.data());
-
-				result.clear();
+				store_log(file, std::move(result));
 			}
 
 			_close(file);
@@ -181,9 +172,23 @@ namespace logging
 		end_log();
 	}
 
+	std::ostream& operator<<(std::ostream& os, logging_level level)
+	{
+		switch (level)
+		{
+		case logging_level::exception: os << L"EXCEPTION"; break;
+		case logging_level::error: os << L"ERROR"; break;
+		case logging_level::information: os << L"INFORMATION"; break;
+		case logging_level::sequence: os << L"SEQUENCE"; break;
+		case logging_level::paramete: os << L"PARAMETER"; break;
+		}
+
+		return os;
+	}
+
 	void util::start_log(void)
 	{
-		fmt::wmemory_buffer result;
+		std::wstring result;
 
 		std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
 
@@ -203,15 +208,12 @@ namespace logging
 			_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
 		if (err != 0)
 		{
-			result.clear();
 			return;
 		}
 
-		store_log(file, result.data());
+		store_log(file, std::move(result));
 		
 		_close(file);
-
-		result.clear();
 	}
 
 	void util::backup_log(const std::wstring& target_path, const std::wstring& backup_path)
@@ -233,6 +235,11 @@ namespace logging
 
 	void util::store_log(int& file_handle, const std::wstring& log)
 	{
+		if (log.empty())
+		{
+			return;
+		}
+
 		_latest_logs.push(log);
 		while (_latest_logs.size() > _store_latest_log_count.load())
 		{
@@ -241,7 +248,7 @@ namespace logging
 
 		if (_write_console.load())
 		{
-			std::wcout << log;
+			std::wclog << log;
 		}
 
 		if (!_write_file.load())
@@ -250,11 +257,12 @@ namespace logging
 		}
 
 		_write(file_handle, log.data(), (unsigned int)(log.size() * sizeof(wchar_t)));
+		_commit(file_handle);
 	}
 
 	void util::end_log(void)
 	{
-		fmt::wmemory_buffer result;
+		std::wstring result;
 
 		std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
 
@@ -278,7 +286,7 @@ namespace logging
 			return;
 		}
 
-		store_log(file, result.data());
+		store_log(file, std::move(result));
 
 		_close(file);
 

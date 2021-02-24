@@ -10,6 +10,8 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <iostream>
+#include <condition_variable>
 
 namespace logging
 {
@@ -62,8 +64,6 @@ namespace logging
 		std::wstring _store_log_extention;
 
 	private:
-		std::atomic<bool> _has_buffer{ false };
-		std::atomic<bool> _transfer_buffer{ false };
 		std::atomic<bool> _thread_stop{ false };
 		std::atomic<bool> _write_date{ false };
 		std::atomic<bool> _write_console{ true };
@@ -72,7 +72,9 @@ namespace logging
 		std::atomic<size_t> _limit_log_file_size{ 2097152 };
 
 	private:
+		std::mutex _mutex;
 		std::thread _thread;
+		std::condition_variable _condition;
 		std::queue<std::wstring> _latest_logs;
 
 #pragma region singleton

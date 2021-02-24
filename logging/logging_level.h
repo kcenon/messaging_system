@@ -2,7 +2,7 @@
 
 namespace logging
 {
-	enum class logging_level
+	enum class logging_level : unsigned short
 	{
 		exception = 0 ,
 		error = 1,
