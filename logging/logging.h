@@ -2,15 +2,16 @@
 
 #include "logging_level.h"
 
+#include <map>
 #include <queue>
 #include <mutex>
-#include <memory>
 #include <atomic>
 #include <thread>
 #include <vector>
 #include <string>
 #include <chrono>
 #include <iostream>
+#include <functional>
 #include <condition_variable>
 
 namespace logging
@@ -45,14 +46,20 @@ namespace logging
 		void run(void);
 
 	private:
-		void start_log(void);
+		void set_log_flag(const std::wstring& flag);
 		void backup_log(const std::wstring& target_path, const std::wstring& backup_path);
 		void store_log(int& file_handle, const std::wstring& log);
-		void end_log(void);
 
 	private:
 		std::vector<unsigned char> load(const std::wstring& path);
 		void append(const std::wstring& source, const std::wstring& target);
+
+	private:
+		std::wstring exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
+		std::wstring error_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
+		std::wstring information_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
+		std::wstring sequence_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
+		std::wstring parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
 
 	private:
 		std::vector<std::pair<logging_level, std::pair<std::chrono::system_clock::time_point, std::wstring>>> _buffer;
@@ -76,6 +83,7 @@ namespace logging
 		std::thread _thread;
 		std::condition_variable _condition;
 		std::queue<std::wstring> _latest_logs;
+		std::map<logging_level, std::function<std::wstring(const std::chrono::system_clock::time_point&, const std::wstring&)>> _log_datas;
 
 #pragma region singleton
 	public:
