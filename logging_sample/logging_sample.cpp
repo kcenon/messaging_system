@@ -11,16 +11,16 @@ int main()
 	logging::util::handle().start();
 
 	std::vector<std::thread> threads;
-	for (unsigned short index = 0; index < 10; ++index)
+	for (unsigned short thread_index = 0; thread_index < 10; ++thread_index)
 	{
 		threads.push_back(
-			std::thread([]
+			std::thread([](const unsigned short& thread_index)
 				{
-					for (unsigned int index = 0; index < 1000; ++index)
+					for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 					{
-						logging::util::handle().write(logging::logging_level::information, fmt::format(L"테스트_in_thread_{}", index));
+						logging::util::handle().write(logging::logging_level::information, fmt::format(L"테스트_in_thread_{}: {}", thread_index, log_index));
 					}
-				})
+				}, thread_index)
 		);
 	}
 

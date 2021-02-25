@@ -15,7 +15,11 @@ namespace logging
 {
 	util::util(void) : _target_level(logging_level::information), _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
 	{
-
+		_log_datas.insert({ logging_level::exception, std::bind(&util::exception_log, this, std::placeholders::_1, std::placeholders::_2) });
+		_log_datas.insert({ logging_level::error, std::bind(&util::error_log, this, std::placeholders::_1, std::placeholders::_2) });
+		_log_datas.insert({ logging_level::information, std::bind(&util::information_log, this, std::placeholders::_1, std::placeholders::_2) });
+		_log_datas.insert({ logging_level::sequence, std::bind(&util::sequence_log, this, std::placeholders::_1, std::placeholders::_2) });
+		_log_datas.insert({ logging_level::parameter, std::bind(&util::parameter_log, this, std::placeholders::_1, std::placeholders::_2) });
 	}
 
 	util::~util(void)
@@ -105,12 +109,11 @@ namespace logging
 
 	void util::run(void)
 	{
-		std::wstring result;
 		std::vector<std::pair<logging_level, std::pair<std::chrono::system_clock::time_point, std::wstring>>> buffers;
 
 		_setmode(_fileno(stdout), _O_U8TEXT);
 
-		start_log();
+		set_log_flag(L"START");
 
 		while (!_thread_stop.load() || !_buffer.empty())
 		{
@@ -142,30 +145,13 @@ namespace logging
 
 			for (auto& buffer : buffers)
 			{
-				result.clear();
-
-				auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(buffer.second.first.time_since_epoch()).count() % 1000;
-				auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(buffer.second.first.time_since_epoch()).count() % 1000;
-				if (_write_date.load())
+				auto iterator = _log_datas.find(buffer.first);
+				if (iterator == _log_datas.end())
 				{
-					fmt::format_to(std::back_inserter(result), L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}]", fmt::localtime(buffer.second.first), milli_seconds, micro_seconds);
-				}
-				else
-				{
-					fmt::format_to(std::back_inserter(result), L"[{:%H:%M:%S}.{:0>3}{:0>3}]", fmt::localtime(buffer.second.first), milli_seconds, micro_seconds);
+					continue;
 				}
 
-				switch (buffer.first)
-				{
-				case logging_level::exception: fmt::format_to(std::back_inserter(result), L"{}", L"[EXCEPTION]"); break;
-				case logging_level::error: fmt::format_to(std::back_inserter(result), L"{}", L"[ERROR]"); break;
-				case logging_level::information: fmt::format_to(std::back_inserter(result), L"{}", L"[INFORMATION]"); break;
-				case logging_level::sequence: fmt::format_to(std::back_inserter(result), L"{}", L"[SEQUENCE]"); break;
-				case logging_level::paramete: fmt::format_to(std::back_inserter(result), L"{}", L"[PARAMETER]"); break;
-				}
-				fmt::format_to(std::back_inserter(result), L": {}\n", buffer.second.second);
-
-				store_log(file, std::move(result));
+				store_log(file, iterator->second(buffer.second.first, buffer.second.second));
 			}
 
 			_close(file);
@@ -173,26 +159,11 @@ namespace logging
 			buffers.clear();
 		}
 
-		end_log();
+		set_log_flag(L"END");
 	}
 
-	void util::start_log(void)
+	void util::set_log_flag(const std::wstring& flag)
 	{
-		std::wstring result;
-
-		std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
-
-		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(current.time_since_epoch()).count() % 1000;
-		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(current.time_since_epoch()).count() % 1000;
-		if (_write_date.load())
-		{
-			fmt::format_to(std::back_inserter(result), L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][START]\n", fmt::localtime(current), milli_seconds, micro_seconds);
-		}
-		else
-		{
-			fmt::format_to(std::back_inserter(result), L"[{:%H:%M:%S}.{:0>3}{:0>3}][START]\n", fmt::localtime(current), milli_seconds, micro_seconds);
-		}
-
 		int file;
 		errno_t err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention).c_str(),
 			_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
@@ -203,7 +174,18 @@ namespace logging
 
 		_setmode(file, _O_U8TEXT);
 
-		store_log(file, std::move(result));
+		std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
+		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(current.time_since_epoch()).count() % 1000;
+		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(current.time_since_epoch()).count() % 1000;
+
+		if (_write_date.load())
+		{
+			store_log(file, fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][{}]\n", fmt::localtime(current), milli_seconds, micro_seconds, flag));
+		}
+		else
+		{
+			store_log(file, fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][{}]\n", fmt::localtime(current), milli_seconds, micro_seconds, flag));
+		}
 		
 		_close(file);
 	}
@@ -250,41 +232,6 @@ namespace logging
 
 		_write(file_handle, log.data(), (unsigned int)(log.size() * sizeof(wchar_t)));
 		_commit(file_handle);
-	}
-
-	void util::end_log(void)
-	{
-		std::wstring result;
-
-		std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
-
-		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(current.time_since_epoch()).count() % 1000;
-		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(current.time_since_epoch()).count() % 1000;
-		if (_write_date.load())
-		{
-			fmt::format_to(std::back_inserter(result), L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][END]\n", fmt::localtime(current), milli_seconds, micro_seconds);
-		}
-		else
-		{
-			fmt::format_to(std::back_inserter(result), L"[{:%H:%M:%S}.{:0>3}{:0>3}][END]\n", fmt::localtime(current), milli_seconds, micro_seconds);
-		}
-
-		int file;
-		errno_t err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention).c_str(),
-			_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
-		if (err != 0)
-		{
-			result.clear();
-			return;
-		}
-
-		_setmode(file, _O_U8TEXT);
-
-		store_log(file, std::move(result));
-
-		_close(file);
-
-		result.clear();
 	}
 
 	std::vector<unsigned char> util::load(const std::wstring& path)
@@ -336,6 +283,66 @@ namespace logging
 		_close(file);
 
 		std::filesystem::remove(source);
+	}
+
+	std::wstring util::exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	{
+		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 1000;
+		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count() % 1000;
+		if (_write_date.load())
+		{
+			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][EXCEPTION]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+		}
+		
+		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][EXCEPTION]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+	}
+
+	std::wstring util::error_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	{
+		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 1000;
+		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count() % 1000;
+		if (_write_date.load())
+		{
+			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][ERROR]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+		}
+
+		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][ERROR]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+	}
+
+	std::wstring util::information_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	{
+		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 1000;
+		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count() % 1000;
+		if (_write_date.load())
+		{
+			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][INFORMATION]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+		}
+
+		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][INFORMATION]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+	}
+
+	std::wstring util::sequence_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	{
+		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 1000;
+		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count() % 1000;
+		if (_write_date.load())
+		{
+			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][SEQUENCE]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+		}
+
+		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][SEQUENCE]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+	}
+
+	std::wstring util::parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	{
+		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 1000;
+		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count() % 1000;
+		if (_write_date.load())
+		{
+			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+		}
+
+		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
 	}
 
 #pragma region singleton

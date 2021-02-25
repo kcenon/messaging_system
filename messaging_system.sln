@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logging", "logging\logging.vcxproj", "{6A8E08F7-E020-4926-9E2C-4DC01802BA20}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logging_test", "logging_test\logging_test.vcxproj", "{E9D1659B-CD41-4D66-B10E-A5FA4464BEC0}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logging_sample", "logging_sample\logging_sample.vcxproj", "{F6318E57-EEC4-46C4-834E-A12841413365}"
 EndProject
 Global
@@ -25,14 +23,6 @@ Global
 		{6A8E08F7-E020-4926-9E2C-4DC01802BA20}.Release|x64.Build.0 = Release|x64
 		{6A8E08F7-E020-4926-9E2C-4DC01802BA20}.Release|x86.ActiveCfg = Release|Win32
 		{6A8E08F7-E020-4926-9E2C-4DC01802BA20}.Release|x86.Build.0 = Release|Win32
-		{E9D1659B-CD41-4D66-B10E-A5FA4464BEC0}.Debug|x64.ActiveCfg = Debug|x64
-		{E9D1659B-CD41-4D66-B10E-A5FA4464BEC0}.Debug|x64.Build.0 = Debug|x64
-		{E9D1659B-CD41-4D66-B10E-A5FA4464BEC0}.Debug|x86.ActiveCfg = Debug|Win32
-		{E9D1659B-CD41-4D66-B10E-A5FA4464BEC0}.Debug|x86.Build.0 = Debug|Win32
-		{E9D1659B-CD41-4D66-B10E-A5FA4464BEC0}.Release|x64.ActiveCfg = Release|x64
-		{E9D1659B-CD41-4D66-B10E-A5FA4464BEC0}.Release|x64.Build.0 = Release|x64
-		{E9D1659B-CD41-4D66-B10E-A5FA4464BEC0}.Release|x86.ActiveCfg = Release|Win32
-		{E9D1659B-CD41-4D66-B10E-A5FA4464BEC0}.Release|x86.Build.0 = Release|Win32
 		{F6318E57-EEC4-46C4-834E-A12841413365}.Debug|x64.ActiveCfg = Debug|x64
 		{F6318E57-EEC4-46C4-834E-A12841413365}.Debug|x64.Build.0 = Debug|x64
 		{F6318E57-EEC4-46C4-834E-A12841413365}.Debug|x86.ActiveCfg = Debug|Win32
