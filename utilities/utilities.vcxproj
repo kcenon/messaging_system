@@ -171,10 +171,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="compressor.cpp" />
     <ClCompile Include="converting.cpp" />
     <ClCompile Include="logging.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="compressor.h" />
     <ClInclude Include="converting.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="logging_level.h" />
