@@ -18,12 +18,18 @@
     <ClCompile Include="logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="converting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="logging_level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="converting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
