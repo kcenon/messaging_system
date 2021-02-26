@@ -171,9 +171,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="converting.cpp" />
     <ClCompile Include="logging.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="converting.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="logging_level.h" />
   </ItemGroup>
