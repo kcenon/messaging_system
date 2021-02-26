@@ -4,6 +4,7 @@
 
 #include <map>
 #include <queue>
+#include <tuple>
 #include <mutex>
 #include <atomic>
 #include <thread>
@@ -62,7 +63,10 @@ namespace logging
 		std::wstring parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
 
 	private:
-		std::vector<std::pair<logging_level, std::pair<std::chrono::system_clock::time_point, std::wstring>>> _buffer;
+		std::tuple<long long, long long> get_milli_micro_seconds(const std::chrono::system_clock::duration& duration);
+
+	private:
+		std::vector<std::tuple<logging_level, std::chrono::system_clock::time_point, std::wstring>> _buffer;
 
 	private:
 		logging_level _target_level;
