@@ -18,7 +18,8 @@ int main()
 				{
 					for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 					{
-						logging::util::handle().write(logging::logging_level::information, fmt::format(L"테스트_in_thread_{}: {}", thread_index, log_index));
+						auto start = logging::util::handle().chrono_start();
+						logging::util::handle().write(logging::logging_level::information, fmt::format(L"테스트_in_thread_{}: {}", thread_index, log_index), start);
 					}
 				}, thread_index)
 		);

@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <optional>
 #include <iostream>
 #include <functional>
 #include <condition_variable>
@@ -39,9 +40,8 @@ namespace logging
 		const std::queue<std::wstring> get_latest_logs(void);
 
 	public:
-		std::chrono::time_point<std::chrono::steady_clock> chrono_start(void);
-		void write(const logging_level& target_level, const std::wstring& log_data);
-		void write(const logging_level& target_level, const std::wstring& log_data, const std::chrono::time_point<std::chrono::steady_clock>& time);
+		std::chrono::time_point<std::chrono::high_resolution_clock> chrono_start(void);
+		void write(const logging_level& target_level, const std::wstring& log_data, const std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>& time = std::nullopt);
 
 	protected:
 		void run(void);
