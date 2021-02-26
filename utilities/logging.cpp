@@ -79,32 +79,36 @@ namespace logging
 		return _latest_logs;
 	}
 
-	std::chrono::time_point<std::chrono::steady_clock> util::chrono_start(void)
+	std::chrono::time_point<std::chrono::high_resolution_clock> util::chrono_start(void)
 	{
-		return std::chrono::steady_clock::now();
+		return std::chrono::high_resolution_clock::now();
 	}
 
-	void util::write(const logging_level& target_level, const std::wstring& log_data)
+	void util::write(const logging_level& target_level, const std::wstring& log_data, const std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>& time)
 	{
 		if (target_level > _target_level)
 		{
 			return;
 		}
-		
+
 		std::lock_guard<std::mutex> guard(_mutex);
 
-		_buffer.push_back({ target_level , std::chrono::system_clock::now(), log_data });
+		if (!time.has_value())
+		{
+			_buffer.push_back({ target_level , std::chrono::system_clock::now(), log_data });
+
+			_condition.notify_one();
+
+			return;
+		}
+
+		auto end = std::chrono::high_resolution_clock::now();
+
+		std::chrono::duration<double, std::milli> diff = end - time.value();
+
+		_buffer.push_back({ target_level , std::chrono::system_clock::now(), fmt::format(L"{} [{} ms]", log_data, diff.count()) });
 
 		_condition.notify_one();
-	}
-
-	void util::write(const logging_level& target_level, const std::wstring& log_data, const std::chrono::time_point<std::chrono::steady_clock>& time)
-	{
-		auto end = std::chrono::steady_clock::now();
-
-		std::chrono::duration<double> diff = end - time;
-
-		write(target_level, fmt::format(L"{} [{:0>3} ms]", log_data, (diff.count() * 1000)));
 	}
 
 	void util::run(void)
