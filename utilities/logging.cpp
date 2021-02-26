@@ -93,7 +93,7 @@ namespace logging
 		
 		std::lock_guard<std::mutex> guard(_mutex);
 
-		_buffer.push_back({ target_level , { std::chrono::system_clock::now(), log_data } });
+		_buffer.push_back({ target_level , std::chrono::system_clock::now(), log_data });
 
 		_condition.notify_one();
 	}
@@ -109,7 +109,7 @@ namespace logging
 
 	void util::run(void)
 	{
-		std::vector<std::pair<logging_level, std::pair<std::chrono::system_clock::time_point, std::wstring>>> buffers;
+		std::vector<std::tuple<logging_level, std::chrono::system_clock::time_point, std::wstring>> buffers;
 
 		_setmode(_fileno(stdout), _O_U8TEXT);
 
@@ -145,13 +145,13 @@ namespace logging
 
 			for (auto& buffer : buffers)
 			{
-				auto iterator = _log_datas.find(buffer.first);
+				auto iterator = _log_datas.find(std::get<0>(buffer));
 				if (iterator == _log_datas.end())
 				{
 					continue;
 				}
 
-				store_log(file, iterator->second(buffer.second.first, buffer.second.second));
+				store_log(file, iterator->second(std::get<1>(buffer), std::get<2>(buffer)));
 			}
 
 			_close(file);
@@ -175,16 +175,14 @@ namespace logging
 		_setmode(file, _O_U8TEXT);
 
 		std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
-		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(current.time_since_epoch()).count() % 1000;
-		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(current.time_since_epoch()).count() % 1000;
-
+		auto seconds = get_milli_micro_seconds(current.time_since_epoch());
 		if (_write_date.load())
 		{
-			store_log(file, fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][{}]\n", fmt::localtime(current), milli_seconds, micro_seconds, flag));
+			store_log(file, fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][{}]\n", fmt::localtime(current), std::get<0>(seconds), std::get<1>(seconds), flag));
 		}
 		else
 		{
-			store_log(file, fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][{}]\n", fmt::localtime(current), milli_seconds, micro_seconds, flag));
+			store_log(file, fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][{}]\n", fmt::localtime(current), std::get<0>(seconds), std::get<1>(seconds), flag));
 		}
 		
 		_close(file);
@@ -287,62 +285,65 @@ namespace logging
 
 	std::wstring util::exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 1000;
-		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count() % 1000;
+		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][EXCEPTION]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][EXCEPTION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 		}
 		
-		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][EXCEPTION]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][EXCEPTION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 	}
 
 	std::wstring util::error_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 1000;
-		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count() % 1000;
+		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][ERROR]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][ERROR]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 		}
 
-		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][ERROR]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][ERROR]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 	}
 
 	std::wstring util::information_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 1000;
-		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count() % 1000;
+		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][INFORMATION]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][INFORMATION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 		}
 
-		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][INFORMATION]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][INFORMATION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 	}
 
 	std::wstring util::sequence_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 1000;
-		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count() % 1000;
+		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][SEQUENCE]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][SEQUENCE]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 		}
 
-		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][SEQUENCE]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][SEQUENCE]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 	}
 
 	std::wstring util::parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto milli_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count() % 1000;
-		auto micro_seconds = std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count() % 1000;
+		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 		}
 
-		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), milli_seconds, micro_seconds, data);
+		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
+	}
+
+	std::tuple<long long, long long> util::get_milli_micro_seconds(const std::chrono::system_clock::duration& duration)
+	{
+		return { 
+			std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() % 1000 ,
+			std::chrono::duration_cast<std::chrono::microseconds>(duration).count() % 1000 
+		};
 	}
 
 #pragma region singleton
