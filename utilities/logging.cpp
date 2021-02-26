@@ -115,7 +115,10 @@ namespace logging
 	{
 		std::vector<std::tuple<logging_level, std::chrono::system_clock::time_point, std::wstring>> buffers;
 
-		_setmode(_fileno(stdout), _O_U8TEXT);
+		if (_setmode(_fileno(stdout), _O_U8TEXT) == -1)
+		{
+			return;
+		}
 
 		set_log_flag(L"START");
 
@@ -145,7 +148,10 @@ namespace logging
 				return;
 			}
 
-			_setmode(file, _O_U8TEXT);
+			if (_setmode(file, _O_U8TEXT) == -1)
+			{
+				return;
+			}
 
 			for (auto& buffer : buffers)
 			{
@@ -176,7 +182,10 @@ namespace logging
 			return;
 		}
 
-		_setmode(file, _O_U8TEXT);
+		if (_setmode(file, _O_U8TEXT) == -1)
+		{
+			return;
+		}
 
 		std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
 		auto seconds = get_milli_micro_seconds(current.time_since_epoch());
@@ -199,9 +208,7 @@ namespace logging
 			return;
 		}
 
-		size_t size1 = std::filesystem::file_size(target_path);
-		size_t size2 = _limit_log_file_size.load();
-		if (size1 < size2)
+		if (std::filesystem::file_size(target_path) < _limit_log_file_size.load())
 		{
 			return;
 		}
