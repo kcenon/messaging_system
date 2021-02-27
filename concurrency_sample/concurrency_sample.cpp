@@ -19,19 +19,18 @@ int main()
 	logging::util::handle().start();
 
 	concurrency::thread_pool::handle().append(std::make_shared<concurrency::thread_worker>(concurrency::priorities::high));
-	concurrency::thread_pool::handle().append(std::make_shared<concurrency::thread_worker>(concurrency::priorities::normal, std::vector<concurrency::priorities> { concurrency::priorities::high }));
-	concurrency::thread_pool::handle().append(std::make_shared<concurrency::thread_worker>(concurrency::priorities::low, std::vector<concurrency::priorities> { concurrency::priorities::high, concurrency::priorities::normal }));
+	concurrency::thread_pool::handle().append(std::make_shared<concurrency::thread_worker>(concurrency::priorities::normal, 
+		std::vector<concurrency::priorities> { concurrency::priorities::high }));
+	concurrency::thread_pool::handle().append(std::make_shared<concurrency::thread_worker>(concurrency::priorities::low, 
+		std::vector<concurrency::priorities> { concurrency::priorities::high, concurrency::priorities::normal }));
 	concurrency::thread_pool::handle().start();
 
-	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
+	for (unsigned int log_index = 0; log_index < 10000; ++log_index)
 	{
-		auto temp = std::make_shared<concurrency::job>(&write);
-		temp->set_priority(concurrency::priorities::high);
-
-		concurrency::job_pool::handle().push(temp);
+		concurrency::job_pool::handle().push(std::make_shared<concurrency::job>(concurrency::priorities::high, &write));
 	}
 
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	std::this_thread::sleep_for(std::chrono::seconds(5));
 
 	concurrency::thread_pool::handle().stop();
 	logging::util::handle().stop();
