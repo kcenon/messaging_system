@@ -16,5 +16,5 @@ namespace converting
 		static std::vector<char> to_array(const std::wstring& value);
 		static std::wstring to_wstring(const std::vector<char>& value);
 	};
-};
+}
 

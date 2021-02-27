@@ -16,6 +16,6 @@ namespace compressor
 
 	private:
 		static unsigned short _block_bytes;
-	}
-};
+	};
+}
 
