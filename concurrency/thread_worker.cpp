@@ -52,10 +52,10 @@ namespace concurrency
 
 	void thread_worker::run(void)
 	{
-		while (!_thread_stop.load())
+		while (check_condition(true))
 		{
 			std::unique_lock<std::mutex> unique(_mutex);
-			_condition.wait(unique, [this] { return !_thread_stop.load() || job_pool::handle().contain(_priority, _others); });
+			_condition.wait(unique, [this] { return check_condition(false); });
 			unique.unlock();
 
 			working(job_pool::handle().pop(_priority, _others));
@@ -75,5 +75,15 @@ namespace concurrency
 		}
 
 		current_job->work();
+	}
+
+	bool thread_worker::check_condition(const bool& ignore_job)
+	{
+		if (ignore_job)
+		{
+			return !_thread_stop.load();
+		}
+
+		return !_thread_stop.load() || job_pool::handle().contain(_priority, _others);
 	}
 }

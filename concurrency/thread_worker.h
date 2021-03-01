@@ -31,6 +31,9 @@ namespace concurrency
 	protected:
 		virtual void working(std::shared_ptr<job> current_job);
 
+	protected:
+		bool check_condition(const bool& ignore_job);
+
 	private:
 		std::atomic<bool> _thread_stop{ false };
 
