@@ -12,8 +12,8 @@ namespace concurrency
 	{
 	public:
 		job(const priorities& priority);
-		job(const priorities& priority, const std::function<void(void)>& working_callback);
-		job(const priorities& priority, const std::vector<char>& data, const std::function<void(const std::vector<char>&)>& working_callback);
+		job(const priorities& priority, const std::function<bool(void)>& working_callback);
+		job(const priorities& priority, const std::vector<char>& data, const std::function<bool(const std::vector<char>&)>& working_callback);
 		~job(void);
 
 	public:
@@ -23,7 +23,7 @@ namespace concurrency
 		const priorities priority(void);
 
 	public:
-		void work(void);
+		bool work(void);
 
 	protected:
 		virtual bool working(void);
@@ -31,7 +31,7 @@ namespace concurrency
 	private:
 		priorities _priority;
 		std::vector<char> _data;
-		std::function<void(void)> _working_callback;
-		std::function<void(const std::vector<char>&)> _working_callback2;
+		std::function<bool(void)> _working_callback;
+		std::function<bool(const std::vector<char>&)> _working_callback2;
 	};
 }

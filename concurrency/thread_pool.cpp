@@ -1,5 +1,7 @@
 #include "thread_pool.h"
 
+#include "logging.h"
+
 namespace concurrency
 {
 	thread_pool::thread_pool(const std::vector<std::shared_ptr<thread_worker>>& workers)

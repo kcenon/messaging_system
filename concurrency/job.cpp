@@ -9,12 +9,12 @@ namespace concurrency
 	{
 	}
 
-	job::job(const priorities& priority, const std::function<void(void)>& working_callback)
+	job::job(const priorities& priority, const std::function<bool(void)>& working_callback)
 		: _priority(priority), _working_callback(working_callback), _working_callback2(nullptr)
 	{
 	}
 
-	job::job(const priorities& priority, const std::vector<char>& data, const std::function<void(const std::vector<char>&)>& working_callback)
+	job::job(const priorities& priority, const std::vector<char>& data, const std::function<bool(const std::vector<char>&)>& working_callback)
 		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(working_callback)
 	{
 	}
@@ -33,26 +33,34 @@ namespace concurrency
 		return _priority;
 	}
 
-	void job::work(void)
+	bool job::work(void)
 	{
 		if (_working_callback != nullptr)
 		{
-			_working_callback();
+			bool result = _working_callback();
 
-			return;
+			logging::util::handle().write(logging::logging_level::sequence, L"completed working callback function without values on job");
+
+			return result;
 		}
 
 		if (_working_callback2 != nullptr)
 		{
-			_working_callback2(_data);
+			bool result = _working_callback2(_data);
 
-			return;
+			logging::util::handle().write(logging::logging_level::sequence, L"completed working callback function with values on job");
+
+			return result;
 		}
 
 		if (!working())
 		{
 			logging::util::handle().write(logging::logging_level::error, L"cannot complete working function on job");
+
+			return false;
 		}
+
+		return true;
 	}
 
 	bool job::working(void)
