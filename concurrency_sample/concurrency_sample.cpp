@@ -6,12 +6,20 @@
 #include "job_pool.h"
 #include "job.h"
 
+#include "converting.h"
+
 #include "fmt/format.h"
 
 void write(void)
 {
 	auto start = logging::util::handle().chrono_start();
 	logging::util::handle().write(logging::logging_level::information, L"테스트_in_thread", start);
+}
+
+void write_data(const std::vector<char>& data)
+{
+	auto start = logging::util::handle().chrono_start();
+	logging::util::handle().write(logging::logging_level::information, converting::util::to_wstring(data), start);
 }
 
 int main()
@@ -28,6 +36,7 @@ int main()
 	for (unsigned int log_index = 0; log_index < 10000; ++log_index)
 	{
 		concurrency::job_pool::handle().push(std::make_shared<concurrency::job>(concurrency::priorities::high, &write));
+		concurrency::job_pool::handle().push(std::make_shared<concurrency::job>(concurrency::priorities::high, converting::util::to_array(L"test2_in_thread"), &write_data));
 	}
 
 	std::this_thread::sleep_for(std::chrono::seconds(5));
