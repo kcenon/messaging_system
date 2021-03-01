@@ -14,7 +14,7 @@ namespace concurrency
 	{
 	}
 
-	job::job(const priorities& priority, const std::vector<unsigned char>& data, const std::function<void(const std::vector<unsigned char>&)>& working_callback)
+	job::job(const priorities& priority, const std::vector<char>& data, const std::function<void(const std::vector<char>&)>& working_callback)
 		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(working_callback)
 	{
 	}
