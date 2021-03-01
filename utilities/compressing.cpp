@@ -1,4 +1,4 @@
-﻿#include "compressor.h"
+﻿#include "compressing.h"
 
 #include "logging.h"
 
@@ -6,18 +6,20 @@
 
 #include "fmt/format.h"
 
-namespace compressor
+namespace compressing
 {
-	unsigned short util::_block_bytes = 1024;
+	using namespace logging;
 
-	std::vector<unsigned char> util::compression(const std::vector<unsigned char>& original_data)
+	unsigned short compressor::_block_bytes = 1024;
+
+	std::vector<unsigned char> compressor::compression(const std::vector<unsigned char>& original_data)
 	{
 		if (original_data.empty())
 		{
 			return original_data;
 		}
 
-		auto start = logging::util::handle().chrono_start();
+		auto start = logger::handle().chrono_start();
 
 		LZ4_stream_t lz4Stream_body;
 		size_t read_index = 0;
@@ -77,18 +79,18 @@ namespace compressor
 
 		if (original_data.size() < compressed_data.size())
 		{
-			logging::util::handle().write(logging::logging_level::information, L"this file does not need to use compress because compressed result is bigger than original data", start);
+			logger::handle().write(logging::logging_level::information, L"this file does not need to use compress because compressed result is bigger than original data", start);
 
 			return original_data;
 		}
 
-		logging::util::handle().write(logging::logging_level::information, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
+		logger::handle().write(logging::logging_level::information, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
 			_block_bytes, original_data.size(), compressed_data.size(), (((double)compressed_data.size() / (double)original_data.size()) * 100)), start);
 
 		return compressed_data;
 	}
 
-	std::vector<unsigned char> util::decompression(const std::vector<unsigned char>& compressed_data)
+	std::vector<unsigned char> compressor::decompression(const std::vector<unsigned char>& compressed_data)
 	{
 		if (compressed_data.empty())
 		{
@@ -161,23 +163,23 @@ namespace compressor
 
 		if (decompressed_data.size() < compressed_data.size())
 		{
-			logging::util::handle().write(logging::logging_level::information, L"this file does not need to use decompress because it is not compressed data", start);
+			logger::handle().write(logging::logging_level::information, L"this file does not need to use decompress because it is not compressed data", start);
 
 			return compressed_data;
 		}
 
-		logging::util::handle().write(logging::logging_level::information, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
+		logger::handle().write(logging::logging_level::information, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
 			_block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)), start);
 
 		return decompressed_data;
 	}
 
-	void util::set_block_bytes(const unsigned short& block_bytes)
+	void compressor::set_block_bytes(const unsigned short& block_bytes)
 	{
 		_block_bytes = block_bytes;
 	}
 
-	unsigned short util::get_block_bytes(void)
+	unsigned short compressor::get_block_bytes(void)
 	{
 		return _block_bytes;
 	}

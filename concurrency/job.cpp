@@ -4,6 +4,8 @@
 
 namespace concurrency
 {
+	using namespace logging;
+
 	job::job(const priorities& priority)
 		: _priority(priority), _working_callback(nullptr), _working_callback2(nullptr)
 	{
@@ -39,7 +41,7 @@ namespace concurrency
 		{
 			bool result = _working_callback();
 
-			logging::util::handle().write(logging::logging_level::sequence, L"completed working callback function without values on job");
+			logger::handle().write(logging::logging_level::sequence, L"completed working callback function without values on job");
 
 			return result;
 		}
@@ -48,14 +50,14 @@ namespace concurrency
 		{
 			bool result = _working_callback2(_data);
 
-			logging::util::handle().write(logging::logging_level::sequence, L"completed working callback function with values on job");
+			logger::handle().write(logging::logging_level::sequence, L"completed working callback function with values on job");
 
 			return result;
 		}
 
 		if (!working())
 		{
-			logging::util::handle().write(logging::logging_level::error, L"cannot complete working function on job");
+			logger::handle().write(logging::logging_level::error, L"cannot complete working function on job");
 
 			return false;
 		}
@@ -65,7 +67,7 @@ namespace concurrency
 
 	bool job::working(void)
 	{
-		logging::util::handle().write(logging::logging_level::error, L"need to implement working function on job");
+		logger::handle().write(logging::logging_level::error, L"need to implement working function on job");
 
 		return false;
 	}

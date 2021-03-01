@@ -6,6 +6,8 @@
 
 namespace concurrency
 {
+	using namespace logging;
+
 	thread_pool::thread_pool(const std::vector<std::shared_ptr<thread_worker>>& workers)
 		: _workers(workers)
 	{
@@ -23,7 +25,7 @@ namespace concurrency
 
 		_workers.push_back(worker);
 
-		logging::util::handle().write(logging::logging_level::parameter, fmt::format(L"appended new worker: priority - {}", worker->priority()));
+		logger::handle().write(logging::logging_level::parameter, fmt::format(L"appended new worker: priority - {}", worker->priority()));
 	}
 
 	void thread_pool::start(void)

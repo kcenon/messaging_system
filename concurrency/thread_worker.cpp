@@ -9,6 +9,8 @@
 
 namespace concurrency
 {
+	using namespace logging;
+
 	thread_worker::thread_worker(const priorities& priority, const std::vector<priorities>& others)
 		: _priority(priority), _others(others)
 	{
@@ -24,7 +26,7 @@ namespace concurrency
 	{
 		stop();
 
-		logging::util::handle().write(logging::logging_level::sequence, fmt::format(L"attempt to start working thread: priority - {}", _priority));
+		logger::handle().write(logging::logging_level::sequence, fmt::format(L"attempt to start working thread: priority - {}", _priority));
 
 		_thread = std::thread(&thread_worker::run, this);
 	}
@@ -37,7 +39,7 @@ namespace concurrency
 		{
 			_thread.join();
 
-			logging::util::handle().write(logging::logging_level::sequence, fmt::format(L"completed to stop working thread: priority - {}", _priority));
+			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed to stop working thread: priority - {}", _priority));
 		}
 
 		_thread_stop.store(false);

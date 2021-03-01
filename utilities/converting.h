@@ -6,7 +6,7 @@
 
 namespace converting
 {
-	class util
+	class converter
 	{
 	public:
 		static std::wstring to_wstring(const std::string& value);

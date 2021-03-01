@@ -2,9 +2,9 @@
 
 #include <vector>
 
-namespace compressor
+namespace compressing
 {
-	class util
+	class compressor
 	{
 	public:
 		static std::vector<unsigned char> compression(const std::vector<unsigned char>& original_data);

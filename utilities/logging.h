@@ -18,13 +18,13 @@
 
 namespace logging
 {
-	class util
+	class logger
 	{
 	private:
-		util(void);
+		logger(void);
 
 	public:
-		~util(void);
+		~logger(void);
 
 	public:
 		bool start(const std::wstring& store_log_file_name = L"log", const std::wstring& store_log_extention = L"log", const std::wstring& store_log_root_path = L"");
@@ -91,10 +91,10 @@ namespace logging
 
 #pragma region singleton
 	public:
-		static util& handle(void);
+		static logger& handle(void);
 
 	private:
-		static std::unique_ptr<util> _handle;
+		static std::unique_ptr<logger> _handle;
 		static std::once_flag _once;
 #pragma endregion
 	};

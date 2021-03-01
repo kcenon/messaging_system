@@ -13,21 +13,21 @@
 
 namespace logging
 {
-	util::util(void) : _target_level(logging_level::information), _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
+	logger::logger(void) : _target_level(logging_level::information), _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
 	{
-		_log_datas.insert({ logging_level::exception, std::bind(&util::exception_log, this, std::placeholders::_1, std::placeholders::_2) });
-		_log_datas.insert({ logging_level::error, std::bind(&util::error_log, this, std::placeholders::_1, std::placeholders::_2) });
-		_log_datas.insert({ logging_level::information, std::bind(&util::information_log, this, std::placeholders::_1, std::placeholders::_2) });
-		_log_datas.insert({ logging_level::sequence, std::bind(&util::sequence_log, this, std::placeholders::_1, std::placeholders::_2) });
-		_log_datas.insert({ logging_level::parameter, std::bind(&util::parameter_log, this, std::placeholders::_1, std::placeholders::_2) });
+		_log_datas.insert({ logging_level::exception, std::bind(&logger::exception_log, this, std::placeholders::_1, std::placeholders::_2) });
+		_log_datas.insert({ logging_level::error, std::bind(&logger::error_log, this, std::placeholders::_1, std::placeholders::_2) });
+		_log_datas.insert({ logging_level::information, std::bind(&logger::information_log, this, std::placeholders::_1, std::placeholders::_2) });
+		_log_datas.insert({ logging_level::sequence, std::bind(&logger::sequence_log, this, std::placeholders::_1, std::placeholders::_2) });
+		_log_datas.insert({ logging_level::parameter, std::bind(&logger::parameter_log, this, std::placeholders::_1, std::placeholders::_2) });
 	}
 
-	util::~util(void)
+	logger::~logger(void)
 	{
 
 	}
 
-	bool util::start(const std::wstring& store_log_file_name, const std::wstring& store_log_extention, const std::wstring& store_log_root_path)
+	bool logger::start(const std::wstring& store_log_file_name, const std::wstring& store_log_extention, const std::wstring& store_log_root_path)
 	{
 		stop();
 
@@ -35,12 +35,12 @@ namespace logging
 		_store_log_extention = store_log_extention;
 		_store_log_root_path = store_log_root_path;
 
-		_thread = std::thread(&util::run, this);
+		_thread = std::thread(&logger::run, this);
 
 		return true;
 	}
 
-	bool util::stop(void)
+	bool logger::stop(void)
 	{
 		_thread_stop.store(true);
 
@@ -54,37 +54,37 @@ namespace logging
 		return true;
 	}
 
-	void util::set_target_level(const logging_level& target_level)
+	void logger::set_target_level(const logging_level& target_level)
 	{
 		_target_level = target_level;
 	}
 
-	void util::set_write_console(const bool& write_console)
+	void logger::set_write_console(const bool& write_console)
 	{
 		_write_console.store(write_console);
 	}
 
-	void util::set_store_latest_log_count(const size_t& store_latest_log_count)
+	void logger::set_store_latest_log_count(const size_t& store_latest_log_count)
 	{
 		_store_latest_log_count.store(store_latest_log_count);
 	}
 
-	void util::set_limit_log_file_size(const size_t& limit_log_file_size)
+	void logger::set_limit_log_file_size(const size_t& limit_log_file_size)
 	{
 		_limit_log_file_size.store(limit_log_file_size);
 	}
 
-	const std::queue<std::wstring> util::get_latest_logs(void)
+	const std::queue<std::wstring> logger::get_latest_logs(void)
 	{
 		return _latest_logs;
 	}
 
-	std::chrono::time_point<std::chrono::high_resolution_clock> util::chrono_start(void)
+	std::chrono::time_point<std::chrono::high_resolution_clock> logger::chrono_start(void)
 	{
 		return std::chrono::high_resolution_clock::now();
 	}
 
-	void util::write(const logging_level& target_level, const std::wstring& log_data, const std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>& time)
+	void logger::write(const logging_level& target_level, const std::wstring& log_data, const std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>& time)
 	{
 		if (target_level > _target_level)
 		{
@@ -111,7 +111,7 @@ namespace logging
 		_condition.notify_one();
 	}
 
-	void util::run(void)
+	void logger::run(void)
 	{
 		std::vector<std::tuple<logging_level, std::chrono::system_clock::time_point, std::wstring>> buffers;
 
@@ -172,7 +172,7 @@ namespace logging
 		set_log_flag(L"END");
 	}
 
-	void util::set_log_flag(const std::wstring& flag)
+	void logger::set_log_flag(const std::wstring& flag)
 	{
 		int file;
 		errno_t err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention).c_str(),
@@ -201,7 +201,7 @@ namespace logging
 		_close(file);
 	}
 
-	void util::backup_log(const std::wstring& target_path, const std::wstring& backup_path)
+	void logger::backup_log(const std::wstring& target_path, const std::wstring& backup_path)
 	{
 		if (!std::filesystem::exists(target_path))
 		{
@@ -216,7 +216,7 @@ namespace logging
 		append(target_path, backup_path);
 	}
 
-	void util::store_log(int& file_handle, const std::wstring& log)
+	void logger::store_log(int& file_handle, const std::wstring& log)
 	{
 		if (log.empty())
 		{
@@ -243,7 +243,7 @@ namespace logging
 		_commit(file_handle);
 	}
 
-	std::vector<unsigned char> util::load(const std::wstring& path)
+	std::vector<unsigned char> logger::load(const std::wstring& path)
 	{
 		if (!std::filesystem::exists(path))
 		{
@@ -277,7 +277,7 @@ namespace logging
 		return target;
 	}
 
-	void util::append(const std::wstring& source, const std::wstring& target)
+	void logger::append(const std::wstring& source, const std::wstring& target)
 	{
 		std::vector<unsigned char> data = load(source);
 
@@ -294,7 +294,7 @@ namespace logging
 		std::filesystem::remove(source);
 	}
 
-	std::wstring util::exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	std::wstring logger::exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
 		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
 		if (_write_date.load())
@@ -305,7 +305,7 @@ namespace logging
 		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][EXCEPTION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 	}
 
-	std::wstring util::error_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	std::wstring logger::error_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
 		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
 		if (_write_date.load())
@@ -316,7 +316,7 @@ namespace logging
 		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][ERROR]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 	}
 
-	std::wstring util::information_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	std::wstring logger::information_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
 		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
 		if (_write_date.load())
@@ -327,7 +327,7 @@ namespace logging
 		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][INFORMATION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 	}
 
-	std::wstring util::sequence_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	std::wstring logger::sequence_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
 		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
 		if (_write_date.load())
@@ -338,7 +338,7 @@ namespace logging
 		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][SEQUENCE]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 	}
 
-	std::wstring util::parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	std::wstring logger::parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
 		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
 		if (_write_date.load())
@@ -349,7 +349,7 @@ namespace logging
 		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 	}
 
-	std::tuple<long long, long long> util::get_milli_micro_seconds(const std::chrono::system_clock::duration& duration)
+	std::tuple<long long, long long> logger::get_milli_micro_seconds(const std::chrono::system_clock::duration& duration)
 	{
 		return { 
 			std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() % 1000 ,
@@ -358,14 +358,14 @@ namespace logging
 	}
 
 #pragma region singleton
-	std::unique_ptr<util> util::_handle;
-	std::once_flag util::_once;
+	std::unique_ptr<logger> logger::_handle;
+	std::once_flag logger::_once;
 
-	util& util::handle(void)
+	logger& logger::handle(void)
 	{
 		std::call_once(_once, []()
 			{
-				_handle.reset(new util);
+				_handle.reset(new logger);
 			});
 
 		return *_handle.get();
