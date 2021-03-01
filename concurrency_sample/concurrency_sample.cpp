@@ -10,16 +10,20 @@
 
 #include "fmt/format.h"
 
-void write(void)
+bool write(void)
 {
 	auto start = logging::util::handle().chrono_start();
 	logging::util::handle().write(logging::logging_level::information, L"테스트_in_thread", start);
+
+	return true;
 }
 
-void write_data(const std::vector<char>& data)
+bool write_data(const std::vector<char>& data)
 {
 	auto start = logging::util::handle().chrono_start();
 	logging::util::handle().write(logging::logging_level::information, converting::util::to_wstring(data), start);
+
+	return true;
 }
 
 int main()

@@ -3,6 +3,10 @@
 #include "job.h"
 #include "job_pool.h"
 
+#include "logging.h"
+
+#include "fmt/format.h"
+
 namespace concurrency
 {
 	thread_worker::thread_worker(const priorities& priority, const std::vector<priorities>& others)
@@ -20,6 +24,8 @@ namespace concurrency
 	{
 		stop();
 
+		logging::util::handle().write(logging::logging_level::sequence, fmt::format(L"attempt to start working thread: priority - {}", _priority));
+
 		_thread = std::thread(&thread_worker::run, this);
 	}
 
@@ -30,6 +36,8 @@ namespace concurrency
 		if (_thread.joinable())
 		{
 			_thread.join();
+
+			logging::util::handle().write(logging::logging_level::sequence, fmt::format(L"completed to stop working thread: priority - {}", _priority));
 		}
 
 		_thread_stop.store(false);
@@ -43,13 +51,7 @@ namespace concurrency
 			_condition.wait(unique, [this] { return !_thread_stop.load() || job_pool::handle().contain(_priority, _others); });
 			unique.unlock();
 
-			auto job = job_pool::handle().pop(_priority, _others);
-			if (job == nullptr)
-			{
-				continue;
-			}
-
-			job->work();
+			working(job_pool::handle().pop(_priority, _others));
 		}
 	}
 
@@ -58,8 +60,13 @@ namespace concurrency
 		_condition.notify_one();
 	}
 
-	void thread_worker::working(void)
+	void thread_worker::working(std::shared_ptr<job> current_job)
 	{
+		if (current_job == nullptr)
+		{
+			return;
+		}
 
+		current_job->work();
 	}
 }

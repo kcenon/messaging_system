@@ -10,6 +10,7 @@
 
 namespace concurrency
 {
+	class job;
 	class thread_worker
 	{
 	public:
@@ -25,7 +26,7 @@ namespace concurrency
 		void notification(const priorities& priority);
 
 	protected:
-		virtual void working(void);
+		virtual void working(std::shared_ptr<job> current_job);
 
 	private:
 		std::atomic<bool> _thread_stop{ false };
