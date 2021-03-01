@@ -2,6 +2,8 @@
 
 #include "logging.h"
 
+#include "fmt/format.h"
+
 namespace concurrency
 {
 	thread_pool::thread_pool(const std::vector<std::shared_ptr<thread_worker>>& workers)
@@ -20,6 +22,8 @@ namespace concurrency
 		std::unique_lock<std::mutex> unique(_mutex);
 
 		_workers.push_back(worker);
+
+		logging::util::handle().write(logging::logging_level::parameter, fmt::format(L"appended new worker: priority - {}", worker->priority()));
 	}
 
 	void thread_pool::start(void)

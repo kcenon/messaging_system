@@ -43,6 +43,11 @@ namespace concurrency
 		_thread_stop.store(false);
 	}
 
+	const priorities thread_worker::priority(void)
+	{
+		return _priority;
+	}
+
 	void thread_worker::run(void)
 	{
 		while (!_thread_stop.load())
