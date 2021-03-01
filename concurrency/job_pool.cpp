@@ -7,6 +7,8 @@
 
 namespace concurrency
 {
+	using namespace logging;
+
 	job_pool::job_pool(void)
 	{
 
@@ -31,7 +33,7 @@ namespace concurrency
 		{
 			iterator->second.push(new_job);
 
-			logging::util::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
+			logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
 
 			notification(new_job->priority());
 
@@ -43,7 +45,7 @@ namespace concurrency
 
 		_jobs.insert({ new_job->priority(), queue });
 
-		logging::util::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
+		logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
 
 		notification(new_job->priority());
 	}
@@ -58,7 +60,7 @@ namespace concurrency
 			std::shared_ptr<job> temp = iterator->second.front();
 			iterator->second.pop();
 
-			logging::util::handle().write(logging::logging_level::parameter, fmt::format(L"pop a job: priority - {}", temp->priority()));
+			logger::handle().write(logging::logging_level::parameter, fmt::format(L"pop a job: priority - {}", temp->priority()));
 
 			return temp;
 		}
@@ -71,7 +73,7 @@ namespace concurrency
 				std::shared_ptr<job> temp = iterator->second.front();
 				iterator->second.pop();
 
-				logging::util::handle().write(logging::logging_level::parameter, fmt::format(L"pop a job: priority - {}", temp->priority()));
+				logger::handle().write(logging::logging_level::parameter, fmt::format(L"pop a job: priority - {}", temp->priority()));
 
 				return temp;
 			}

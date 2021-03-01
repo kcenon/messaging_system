@@ -6,9 +6,11 @@
 
 #include <iostream>
 
+using namespace logging;
+
 int main()
 {
-	logging::util::handle().start();
+	logger::handle().start();
 
 	std::vector<std::thread> threads;
 	for (unsigned short thread_index = 0; thread_index < 10; ++thread_index)
@@ -18,8 +20,8 @@ int main()
 				{
 					for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 					{
-						auto start = logging::util::handle().chrono_start();
-						logging::util::handle().write(logging::logging_level::information, fmt::format(L"테스트_in_thread_{}: {}", thread_index, log_index), start);
+						auto start = logger::handle().chrono_start();
+						logger::handle().write(logging::logging_level::information, fmt::format(L"테스트_in_thread_{}: {}", thread_index, log_index), start);
 					}
 				}, thread_index)
 		);
@@ -30,7 +32,7 @@ int main()
 		thread.join();
 	}
 
-	logging::util::handle().stop();
+	logger::handle().stop();
 
     return 0;
 }

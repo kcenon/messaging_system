@@ -21,7 +21,7 @@
     <ClCompile Include="converting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="compressor.cpp">
+    <ClCompile Include="compressing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,7 +35,7 @@
     <ClInclude Include="converting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="compressor.h">
+    <ClInclude Include="compressing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

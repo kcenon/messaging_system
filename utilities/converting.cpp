@@ -4,7 +4,7 @@
 
 namespace converting
 {
-	std::wstring util::to_wstring(const std::string& value)
+	std::wstring converter::to_wstring(const std::string& value)
 	{
 		if (value.empty())
 		{
@@ -18,7 +18,7 @@ namespace converting
 		return result.data();
 	}
 
-	std::string util::to_string(const std::wstring& value)
+	std::string converter::to_string(const std::wstring& value)
 	{
 		if (value.empty())
 		{
@@ -32,7 +32,7 @@ namespace converting
 		return result.data();
 	}
 
-	std::vector<char> util::to_array(const std::wstring& value)
+	std::vector<char> converter::to_array(const std::wstring& value)
 	{
 		if (value.empty())
 		{
@@ -46,7 +46,7 @@ namespace converting
 		return result;
 	}
 
-	std::wstring util::to_wstring(const std::vector<char>& value)
+	std::wstring converter::to_wstring(const std::vector<char>& value)
 	{
 		if (value.empty())
 		{
