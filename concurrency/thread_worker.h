@@ -21,6 +21,9 @@ namespace concurrency
 		void start(void);
 		void stop(void);
 
+	public:
+		const priorities priority(void);
+
 	protected:
 		void run(void);
 		void notification(const priorities& priority);
