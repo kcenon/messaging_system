@@ -67,11 +67,11 @@ namespace concurrency
 
 		for (auto& other : others)
 		{
-			auto iterator = _jobs.find(priority);
-			if (iterator != _jobs.end() && !iterator->second.empty())
+			auto iterator2 = _jobs.find(other);
+			if (iterator2 != _jobs.end() && !iterator2->second.empty())
 			{
-				std::shared_ptr<job> temp = iterator->second.front();
-				iterator->second.pop();
+				std::shared_ptr<job> temp = iterator2->second.front();
+				iterator2->second.pop();
 
 				logger::handle().write(logging::logging_level::parameter, fmt::format(L"pop a job: priority - {}", temp->priority()));
 

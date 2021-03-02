@@ -66,7 +66,7 @@ namespace logging
 		std::tuple<long long, long long> get_milli_micro_seconds(const std::chrono::system_clock::duration& duration);
 
 	private:
-		std::vector<std::tuple<logging_level, std::chrono::system_clock::time_point, std::wstring>> _buffer;
+		std::vector<std::tuple<logging_level, std::chrono::system_clock::time_point,std::wstring>> _buffer;
 
 	private:
 		logging_level _target_level;
@@ -75,10 +75,9 @@ namespace logging
 		std::wstring _store_log_extention;
 
 	private:
-		std::atomic<bool> _thread_stop{ false };
+		std::atomic<bool> _thread_stop{ true };
 		std::atomic<bool> _write_date{ false };
 		std::atomic<bool> _write_console{ true };
-		std::atomic<bool> _write_file{ true };
 		std::atomic<size_t> _store_latest_log_count{ 1000 };
 		std::atomic<size_t> _limit_log_file_size{ 2097152 };
 
