@@ -234,11 +234,6 @@ namespace logging
 			std::wcout << log;
 		}
 
-		if (!_write_file.load())
-		{
-			return;
-		}
-
 		_write(file_handle, log.data(), (unsigned int)(log.size() * sizeof(wchar_t)));
 		_commit(file_handle);
 	}
