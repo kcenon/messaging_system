@@ -35,6 +35,8 @@ namespace concurrency
 	{
 		_thread_stop.store(true);
 
+		_condition.notify_one();
+
 		if (_thread.joinable())
 		{
 			_thread.join();
@@ -64,7 +66,24 @@ namespace concurrency
 
 	void thread_worker::notification(const priorities& priority)
 	{
-		_condition.notify_one();
+		if (_priority == priority)
+		{
+			_condition.notify_one();
+
+			return;
+		}
+		
+		for (auto& other : _others)
+		{
+			if (other != _priority)
+			{
+				continue;
+			}
+
+			_condition.notify_one();
+
+			return;
+		}
 	}
 
 	void thread_worker::working(std::shared_ptr<job> current_job)
@@ -74,7 +93,7 @@ namespace concurrency
 			return;
 		}
 
-		current_job->work();
+		current_job->work(_priority);
 	}
 
 	bool thread_worker::check_condition(const bool& ignore_job)

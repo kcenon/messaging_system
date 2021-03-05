@@ -23,10 +23,10 @@ namespace concurrency
 		const priorities priority(void);
 
 	public:
-		bool work(void);
+		bool work(const priorities& priority);
 
 	protected:
-		virtual bool working(void);
+		virtual bool working(const priorities& priority);
 
 	private:
 		priorities _priority;
