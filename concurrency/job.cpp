@@ -2,6 +2,8 @@
 
 #include "logging.h"
 
+#include "fmt/format.h"
+
 namespace concurrency
 {
 	using namespace logging;
@@ -35,13 +37,13 @@ namespace concurrency
 		return _priority;
 	}
 
-	bool job::work(void)
+	bool job::work(const priorities& priority)
 	{
 		if (_working_callback != nullptr)
 		{
 			bool result = _working_callback();
 
-			logger::handle().write(logging::logging_level::sequence, L"completed working callback function without values on job");
+			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function without values on job: job priority[{}], worker priority[{}]", _priority, priority));
 
 			return result;
 		}
@@ -50,14 +52,14 @@ namespace concurrency
 		{
 			bool result = _working_callback2(_data);
 
-			logger::handle().write(logging::logging_level::sequence, L"completed working callback function with values on job");
+			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function with values on job: job priority[{}], worker priority[{}]", _priority, priority));
 
 			return result;
 		}
 
-		if (!working())
+		if (!working(priority))
 		{
-			logger::handle().write(logging::logging_level::error, L"cannot complete working function on job");
+			logger::handle().write(logging::logging_level::sequence, fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", _priority, priority));
 
 			return false;
 		}
@@ -65,9 +67,9 @@ namespace concurrency
 		return true;
 	}
 
-	bool job::working(void)
+	bool job::working(const priorities& priority)
 	{
-		logger::handle().write(logging::logging_level::error, L"need to implement working function on job");
+		logger::handle().write(logging::logging_level::sequence, fmt::format(L"need to implement working function on job: job priority[{}], worker priority[{}]", _priority, priority));
 
 		return false;
 	}
