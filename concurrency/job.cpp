@@ -43,7 +43,7 @@ namespace concurrency
 		{
 			bool result = _working_callback();
 
-			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function without values on job: job priority[{}], worker priority[{}]", _priority, priority));
+			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function without value on job: job priority[{}], worker priority[{}]", _priority, priority));
 
 			return result;
 		}
@@ -52,7 +52,7 @@ namespace concurrency
 		{
 			bool result = _working_callback2(_data);
 
-			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function with values on job: job priority[{}], worker priority[{}]", _priority, priority));
+			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", _priority, priority));
 
 			return result;
 		}

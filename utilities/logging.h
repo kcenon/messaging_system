@@ -52,10 +52,6 @@ namespace logging
 		void store_log(int& file_handle, const std::wstring& log);
 
 	private:
-		std::vector<unsigned char> load(const std::wstring& path);
-		void append(const std::wstring& source, const std::wstring& target);
-
-	private:
 		std::wstring exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
 		std::wstring error_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
 		std::wstring information_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
@@ -63,7 +59,7 @@ namespace logging
 		std::wstring parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
 
 	private:
-		std::tuple<long long, long long> get_milli_micro_seconds(const std::chrono::system_clock::duration& duration);
+		std::tuple<long long, long long> get_under_seconds(const std::chrono::system_clock::duration& duration);
 
 	private:
 		std::vector<std::tuple<logging_level, std::chrono::system_clock::time_point,std::wstring>> _buffer;

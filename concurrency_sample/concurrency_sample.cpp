@@ -54,12 +54,9 @@ int main()
 	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high));
 	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high));
 	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high));
-	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal,
-		std::vector<priorities> { priorities::high }));
-	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal,
-		std::vector<priorities> { priorities::high }));
-	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::low, 
-		std::vector<priorities> { priorities::high, priorities::normal }));
+	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
+	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
+	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
 
 	thread_pool::handle().start();
 

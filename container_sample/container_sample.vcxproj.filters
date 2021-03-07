@@ -15,34 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="logging.cpp">
+    <ClCompile Include="container_sample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="converting.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="compressing.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="file_handling.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="logging.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="logging_level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="converting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="compressing.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="file_handling.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
