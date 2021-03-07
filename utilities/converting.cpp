@@ -2,6 +2,8 @@
 
 #include <codecvt>
 
+#include "cryptopp/base64.h"
+
 namespace converting
 {
 	std::wstring converter::to_wstring(const std::string& value)
@@ -77,6 +79,34 @@ namespace converting
 
 		// UTF-8 no BOM
 		return to_wstring(std::string(value.data(), value.size()));
+	}
+
+	std::vector<char> converter::from_base64(const std::wstring& value)
+	{
+		if (value.empty())
+		{
+			return std::vector<char>();
+		}
+
+		std::string source = to_string(value);
+		std::string encoded;
+		CryptoPP::StringSource(source, true, new CryptoPP::Base64Encoder(new CryptoPP::StringSink(encoded)));
+
+		return std::vector<char>(encoded.data(), encoded.data() + encoded.size());
+	}
+
+	std::wstring converter::to_base64(const std::vector<char>& value)
+	{
+		if (value.empty())
+		{
+			return std::wstring();
+		}
+
+		std::string source = std::string(value.data(), value.size());
+		std::string decoded;
+		CryptoPP::StringSource(source, true, new CryptoPP::Base64Decoder(new CryptoPP::StringSink(decoded)));
+
+		return to_wstring(decoded);
 	}
 
 	std::wstring converter::convert(const std::u16string& value)

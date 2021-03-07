@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6a8e08f7-e020-4926-9e2c-4dc01802ba20}</ProjectGuid>
-    <RootNamespace>logging</RootNamespace>
+    <ProjectGuid>{82a9da7d-8e60-4e90-9061-88e6f7756387}</ProjectGuid>
+    <RootNamespace>container</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -94,13 +94,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -114,13 +115,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -134,13 +136,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -154,13 +157,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -171,17 +175,42 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="compressing.cpp" />
-    <ClCompile Include="converting.cpp" />
-    <ClCompile Include="file_handling.cpp" />
-    <ClCompile Include="logging.cpp" />
+    <ClInclude Include="container.h" />
+    <ClInclude Include="value.h" />
+    <ClInclude Include="values\bool_value.h" />
+    <ClInclude Include="values\bytes_value.h" />
+    <ClInclude Include="values\container_value.h" />
+    <ClInclude Include="values\double_value.h" />
+    <ClInclude Include="values\float_value.h" />
+    <ClInclude Include="values\int_value.h" />
+    <ClInclude Include="values\llong_value.h" />
+    <ClInclude Include="values\long_value.h" />
+    <ClInclude Include="values\short_value.h" />
+    <ClInclude Include="values\string_value.h" />
+    <ClInclude Include="values\uint_value.h" />
+    <ClInclude Include="values\ullong_value.h" />
+    <ClInclude Include="values\ulong_value.h" />
+    <ClInclude Include="values\ushort_value.h" />
+    <ClInclude Include="value_types.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="compressing.h" />
-    <ClInclude Include="converting.h" />
-    <ClInclude Include="file_handling.h" />
-    <ClInclude Include="logging.h" />
-    <ClInclude Include="logging_level.h" />
+    <ClCompile Include="container.cpp" />
+    <ClCompile Include="value.cpp" />
+    <ClCompile Include="values\bool_value.cpp" />
+    <ClCompile Include="values\bytes_value.cpp" />
+    <ClCompile Include="values\container_value.cpp" />
+    <ClCompile Include="values\double_value.cpp" />
+    <ClCompile Include="values\float_value.cpp" />
+    <ClCompile Include="values\int_value.cpp" />
+    <ClCompile Include="values\llong_value.cpp" />
+    <ClCompile Include="values\long_value.cpp" />
+    <ClCompile Include="values\short_value.cpp" />
+    <ClCompile Include="values\string_value.cpp" />
+    <ClCompile Include="values\uint_value.cpp" />
+    <ClCompile Include="values\ullong_value.cpp" />
+    <ClCompile Include="values\ulong_value.cpp" />
+    <ClCompile Include="values\ushort_value.cpp" />
+    <ClCompile Include="value_types.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

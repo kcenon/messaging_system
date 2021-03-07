@@ -1,5 +1,7 @@
 #include "logging.h"
 
+#include "file_handling.h"
+
 #include "fmt/chrono.h"
 #include "fmt/format.h"
 
@@ -13,6 +15,8 @@
 
 namespace logging
 {
+	using namespace file_handling;
+
 	logger::logger(void) : _target_level(logging_level::information), _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
 	{
 		_log_datas.insert({ logging_level::exception, std::bind(&logger::exception_log, this, std::placeholders::_1, std::placeholders::_2) });
@@ -188,7 +192,7 @@ namespace logging
 		}
 
 		std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
-		auto seconds = get_milli_micro_seconds(current.time_since_epoch());
+		auto seconds = get_under_seconds(current.time_since_epoch());
 		if (_write_date.load())
 		{
 			store_log(file, fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][{}]\n", fmt::localtime(current), std::get<0>(seconds), std::get<1>(seconds), flag));
@@ -213,7 +217,7 @@ namespace logging
 			return;
 		}
 
-		append(target_path, backup_path);
+		file_handler::append(backup_path, file_handler::load(target_path));
 	}
 
 	void logger::store_log(int& file_handle, const std::wstring& log)
@@ -238,60 +242,9 @@ namespace logging
 		_commit(file_handle);
 	}
 
-	std::vector<unsigned char> logger::load(const std::wstring& path)
-	{
-		if (!std::filesystem::exists(path))
-		{
-			return std::vector<unsigned char>();
-		}
-
-		int file;
-		errno_t err = _wsopen_s(&file, path.c_str(), _O_RDONLY | _O_BINARY, _SH_DENYRD, _S_IREAD);
-		if (err != 0)
-		{
-			return std::vector<unsigned char>();
-		}
-
-		size_t file_size = _lseek(file, 0, SEEK_END);
-		_lseek(file, 0, SEEK_SET);
-
-		char* temp = new char[file_size];
-		memset(temp, 0, file_size);
-
-		file_size = _read(file, temp, (unsigned int)file_size);
-
-		std::vector<unsigned char> target;
-		target.reserve(file_size);
-		target.insert(target.begin(), temp, temp + file_size);
-
-		_close(file);
-
-		delete[] temp;
-		temp = nullptr;
-
-		return target;
-	}
-
-	void logger::append(const std::wstring& source, const std::wstring& target)
-	{
-		std::vector<unsigned char> data = load(source);
-
-		int file;
-		errno_t err = _wsopen_s(&file, target.c_str(), _O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
-		if (err != 0)
-		{
-			return;
-		}
-
-		_write(file, data.data(), (unsigned int)data.size());
-		_close(file);
-
-		std::filesystem::remove(source);
-	}
-
 	std::wstring logger::exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
+		auto seconds = get_under_seconds(time.time_since_epoch());
 		if (_write_date.load())
 		{
 			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][EXCEPTION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
@@ -302,7 +255,7 @@ namespace logging
 
 	std::wstring logger::error_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
+		auto seconds = get_under_seconds(time.time_since_epoch());
 		if (_write_date.load())
 		{
 			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][ERROR]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
@@ -313,7 +266,7 @@ namespace logging
 
 	std::wstring logger::information_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
+		auto seconds = get_under_seconds(time.time_since_epoch());
 		if (_write_date.load())
 		{
 			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][INFORMATION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
@@ -324,7 +277,7 @@ namespace logging
 
 	std::wstring logger::sequence_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
+		auto seconds = get_under_seconds(time.time_since_epoch());
 		if (_write_date.load())
 		{
 			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][SEQUENCE]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
@@ -335,7 +288,7 @@ namespace logging
 
 	std::wstring logger::parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto seconds = get_milli_micro_seconds(time.time_since_epoch());
+		auto seconds = get_under_seconds(time.time_since_epoch());
 		if (_write_date.load())
 		{
 			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
@@ -344,7 +297,7 @@ namespace logging
 		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
 	}
 
-	std::tuple<long long, long long> logger::get_milli_micro_seconds(const std::chrono::system_clock::duration& duration)
+	std::tuple<long long, long long> logger::get_under_seconds(const std::chrono::system_clock::duration& duration)
 	{
 		return { 
 			std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() % 1000 ,
