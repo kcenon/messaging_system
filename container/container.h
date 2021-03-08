@@ -7,21 +7,21 @@
 
 namespace container
 {
-	class values : public std::enable_shared_from_this<values>
+	class value_container : public std::enable_shared_from_this<value_container>
 	{
 	public:
-		values(void);
-		values(const std::wstring& data_string, const bool& parse_only_header = false);
-		values(std::shared_ptr<values> data_container, const bool& parse_only_header = false);
-		values(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& message_type = L"packet_container",
+		value_container(void);
+		value_container(const std::wstring& data_string, const bool& parse_only_header = false);
+		value_container(std::shared_ptr<value_container> data_container, const bool& parse_only_header = false);
+		value_container(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& message_type = L"packet_container",
 			const std::vector<std::shared_ptr<value>>& units = {});
-		values(const std::wstring& source_id, const std::wstring& source_sub_id,
+		value_container(const std::wstring& source_id, const std::wstring& source_sub_id,
 			const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& message_type = L"packet_container",
 			const std::vector<std::shared_ptr<value>>& units = {});
-		virtual ~values(void);
+		virtual ~value_container(void);
 
 	public:
-		std::shared_ptr<values> get_ptr(void);
+		std::shared_ptr<value_container> get_ptr(void);
 
 	public:
 		void set_source(const std::wstring& source_id, const std::wstring& source_sub_id);
@@ -41,7 +41,8 @@ namespace container
 		std::wstring message_type(void) const;
 
 	public:
-		std::shared_ptr<value> add(std::shared_ptr<value> target_value);
+		std::shared_ptr<value> add(const value& target_value);
+		std::shared_ptr<value> add(std::shared_ptr<value> target_value);		
 		void remove(const std::wstring& target_name);
 		void remove(std::shared_ptr<value> target_value);
 		std::vector<std::shared_ptr<value>> value_array(const std::wstring& target_name);
@@ -61,17 +62,20 @@ namespace container
 	public:
 		std::shared_ptr<value> operator[](const std::wstring& key);
 
-		friend std::shared_ptr<values> operator<<(std::shared_ptr<values> target_container, std::shared_ptr<value> other);
+		friend std::shared_ptr<value_container> operator<<(std::shared_ptr<value_container> target_container, std::shared_ptr<value> other);
 
-		friend std::ostream& operator <<(std::ostream& out, std::shared_ptr<values> other);
-		friend std::wostream& operator <<(std::wostream& out, std::shared_ptr<values> other);
+		friend std::ostream& operator <<(std::ostream& out, std::shared_ptr<value_container> other);
+		friend std::wostream& operator <<(std::wostream& out, std::shared_ptr<value_container> other);
 
-		friend std::string& operator <<(std::string& out, std::shared_ptr<values> other);
-		friend std::wstring& operator <<(std::wstring& out, std::shared_ptr<values> other);
+		friend std::string& operator <<(std::string& out, std::shared_ptr<value_container> other);
+		friend std::wstring& operator <<(std::wstring& out, std::shared_ptr<value_container> other);
 
 	protected:
 		bool deserialize_values(const std::wstring& data);
 		void parsing(const std::wstring& source_name, const std::wstring& target_name, const std::wstring& target_value, std::wstring& target_variable);
+
+	protected:
+		std::shared_ptr<value> generate_value(const std::wstring& name, const std::wstring& type, const std::wstring& value);
 
 	private:
 		std::wstring _source_id;

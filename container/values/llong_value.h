@@ -8,7 +8,7 @@ namespace container
 	{
 	public:
 		llong_value(void);
-		llong_value(const std::wstring& name, const long& value);
+		llong_value(const std::wstring& name, const long long& value);
 		~llong_value(void);
 
 	public:

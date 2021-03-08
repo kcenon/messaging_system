@@ -10,7 +10,7 @@ namespace container
 		_type = value_types::ullong_value;
 	}
 
-	ullong_value::ullong_value(const std::wstring& name, const long& value)
+	ullong_value::ullong_value(const std::wstring& name, const unsigned long long& value)
 		: value(name, (const char*)&value, sizeof(unsigned long long), value_types::ullong_value)
 	{
 	}

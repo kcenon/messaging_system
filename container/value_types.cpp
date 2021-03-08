@@ -12,6 +12,9 @@ namespace container
 		{ L"int", value_types::int_value },
 		{ L"uint", value_types::uint_value },
 		{ L"long", value_types::long_value },
+		{ L"long", value_types::ulong_value },
+		{ L"long", value_types::llong_value },
+		{ L"long", value_types::ullong_value },
 		{ L"float", value_types::float_value },
 		{ L"double", value_types::double_value },
 		{ L"bytes", value_types::bytes_value },
@@ -42,6 +45,9 @@ namespace container
 		case value_types::int_value: result = L"int"; break;
 		case value_types::uint_value: result = L"uint"; break;
 		case value_types::long_value: result = L"long"; break;
+		case value_types::ulong_value: result = L"ulong"; break;
+		case value_types::llong_value: result = L"llong"; break;
+		case value_types::ullong_value: result = L"ullong"; break;
 		case value_types::float_value: result = L"float"; break;
 		case value_types::double_value: result = L"double"; break;
 		case value_types::bytes_value: result = L"bytes"; break;
