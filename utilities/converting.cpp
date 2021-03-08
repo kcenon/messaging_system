@@ -69,8 +69,6 @@ namespace converting
 			return std::wstring();
 		}
 
-		size_t out_size;
-
 		// UTF-8 BOM
 		if (value.size() >= 3 && value[0] == 0xef && value[1] == 0xbb && value[2] == 0xbf)
 		{
