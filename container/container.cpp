@@ -4,19 +4,6 @@
 #include "converting.h"
 #include "file_handling.h"
 
-#include "values/bool_value.h"
-#include "values/bytes_value.h"
-#include "values/double_value.h"
-#include "values/float_value.h"
-#include "values/int_value.h"
-#include "values/long_value.h"
-#include "values/ulong_value.h"
-#include "values/llong_value.h"
-#include "values/ullong_value.h"
-#include "values/short_value.h"
-#include "values/string_value.h"
-#include "values/uint_value.h"
-#include "values/ushort_value.h"
 #include "values/container_value.h"
 
 #include <io.h>
@@ -166,7 +153,7 @@ namespace container
 
 	std::shared_ptr<value> value_container::add(const value& target_value)
 	{
-		return add(generate_value(target_value.name(), convert_value_type(target_value.type()), target_value.to_string()));
+		return add(value::generate_value(target_value.name(), convert_value_type(target_value.type()), target_value.to_string()));
 	}
 
 	std::shared_ptr<value> value_container::add(std::shared_ptr<value> target_value)
@@ -427,7 +414,7 @@ namespace container
 		std::vector<std::shared_ptr<value>> temp_list;
 		while (start != end)
 		{
-			temp_list.push_back(generate_value((*start)[1], (*start)[2], (*start)[3]));
+			temp_list.push_back(value::generate_value((*start)[1], (*start)[2], (*start)[3]));
 
 			start++;
 		}
@@ -479,32 +466,5 @@ namespace container
 		boost::trim(target_variable);
 
 		return;
-	}
-
-	std::shared_ptr<value> value_container::generate_value(const std::wstring& target_name, const std::wstring& target_type, const std::wstring& target_value)
-	{
-		std::shared_ptr<value> result = nullptr;
-		value_types current_type = convert_value_type(target_type);
-
-		switch (current_type)
-		{
-		case value_types::bool_value: result = std::make_shared<bool_value>(target_name, target_value); break;
-		case value_types::short_value: result = std::make_shared<short_value>(target_name, (short)_wtoi(target_value.c_str())); break;
-		case value_types::ushort_value: result = std::make_shared<ushort_value>(target_name, (unsigned short)_wtoi(target_value.c_str())); break;
-		case value_types::int_value: result = std::make_shared<int_value>(target_name, (int)_wtoi(target_value.c_str())); break;
-		case value_types::uint_value: result = std::make_shared<uint_value>(target_name, (unsigned int)_wtoi(target_value.c_str())); break;
-		case value_types::long_value: result = std::make_shared<long_value>(target_name, (long)_wtol(target_value.c_str())); break;
-		case value_types::ulong_value: result = std::make_shared<ulong_value>(target_name, (unsigned long)_wtol(target_value.c_str())); break;
-		case value_types::llong_value: result = std::make_shared<llong_value>(target_name, (long long)_wtoll(target_value.c_str())); break;
-		case value_types::ullong_value: result = std::make_shared<ullong_value>(target_name, (unsigned long long)_wtoll(target_value.c_str())); break;
-		case value_types::float_value: result = std::make_shared<float_value>(target_name, (float)_wtof(target_value.c_str())); break;
-		case value_types::double_value: result = std::make_shared<double_value>(target_name, (double)_wtof(target_value.c_str())); break;
-		case value_types::bytes_value: result = std::make_shared<bytes_value>(target_name, converter::from_base64(target_value.c_str())); break;
-		case value_types::string_value: result = std::make_shared<string_value>(target_name, target_value); break;
-		case value_types::container_value: result = std::make_shared<container_value>(target_name, (long)_wtol(target_value.c_str())); break;
-		default: result = std::make_shared<value>(target_name, nullptr, 0, value_types::null_value); break;
-		}
-
-		return result;
 	}
 }

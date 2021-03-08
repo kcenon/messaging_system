@@ -83,6 +83,9 @@ namespace container
 		friend std::string& operator<<(std::string& out, std::shared_ptr<value> other);
 		friend std::wstring& operator<<(std::wstring& out, std::shared_ptr<value> other);
 
+	public:
+		static std::shared_ptr<value> generate_value(const std::wstring& name, const std::wstring& type, const std::wstring& value);
+
 	protected:
 		template <typename T> void set_data(T data);
 		void set_byte_string(const std::wstring& data);

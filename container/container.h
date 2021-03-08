@@ -74,9 +74,6 @@ namespace container
 		bool deserialize_values(const std::wstring& data);
 		void parsing(const std::wstring& source_name, const std::wstring& target_name, const std::wstring& target_value, std::wstring& target_variable);
 
-	protected:
-		std::shared_ptr<value> generate_value(const std::wstring& name, const std::wstring& type, const std::wstring& value);
-
 	private:
 		std::wstring _source_id;
 		std::wstring _source_sub_id;
