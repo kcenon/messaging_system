@@ -10,7 +10,7 @@ namespace container
 		_type = value_types::llong_value;
 	}
 
-	llong_value::llong_value(const std::wstring& name, const long& value)
+	llong_value::llong_value(const std::wstring& name, const long long& value)
 		: value(name, (const char*)&value, sizeof(long long), value_types::llong_value)
 	{
 	}

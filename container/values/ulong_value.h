@@ -8,7 +8,7 @@ namespace container
 	{
 	public:
 		ulong_value(void);
-		ulong_value(const std::wstring& name, const long& value);
+		ulong_value(const std::wstring& name, const unsigned long& value);
 		~ulong_value(void);
 
 	public:

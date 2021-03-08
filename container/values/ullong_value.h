@@ -8,7 +8,7 @@ namespace container
 	{
 	public:
 		ullong_value(void);
-		ullong_value(const std::wstring& name, const long& value);
+		ullong_value(const std::wstring& name, const unsigned long long& value);
 		~ullong_value(void);
 
 	public:
