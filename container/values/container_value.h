@@ -13,7 +13,9 @@ namespace container
 		~container_value(void);
 
 	public:
+		std::shared_ptr<value> add(const value& item, const bool& update_count = true) override;
 		std::shared_ptr<value> add(std::shared_ptr<value> item, const bool& update_count = true) override;
+		void add(const std::vector<value>& target_values, const bool& update_count = true) override;
 		void add(const std::vector<std::shared_ptr<value>>& target_values, const bool& update_count = true) override;
 		void remove(const std::wstring& target_name, const bool& update_count = true) override;
 		void remove(std::shared_ptr<value> item, const bool& update_count = true) override;

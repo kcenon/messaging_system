@@ -34,6 +34,11 @@ namespace container
 		_units.clear();
 	}
 
+	std::shared_ptr<value> container_value::add(const value& item, const bool& update_count)
+	{
+		return add(value::generate_value(item.name(), convert_value_type(item.type()), item.to_string()), update_count);
+	}
+
 	std::shared_ptr<value> container_value::add(std::shared_ptr<value> item, const bool& update_count)
 	{
 		std::vector<std::shared_ptr<value>>::iterator target;
@@ -58,6 +63,17 @@ namespace container
 		}
 
 		return item;
+	}
+
+	void container_value::add(const std::vector<value>& target_values, const bool& update_count)
+	{
+		std::vector<std::shared_ptr<value>> temp_values;
+		for (auto& target_value : target_values)
+		{
+			temp_values.push_back(value::generate_value(target_value.name(), convert_value_type(target_value.type()), target_value.to_string()));
+		}
+
+		add(temp_values, update_count);
 	}
 
 	void container_value::add(const std::vector<std::shared_ptr<value>>& target_values, const bool& update_count)
