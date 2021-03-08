@@ -37,7 +37,9 @@ namespace container
 		std::vector<std::shared_ptr<value>>& children(const bool& only_container = false);
 
 	public:
+		virtual std::shared_ptr<value> add(const value& item, const bool& update_count = true) { throw std::exception("cannot support to add value object on this object"); }
 		virtual std::shared_ptr<value> add(std::shared_ptr<value> item, const bool& update_count = true) { throw std::exception("cannot support to add value object on this object"); }
+		virtual void add(const std::vector<value>& target_values, const bool& update_count = true) { throw std::exception("cannot support to add value objects on this object"); }
 		virtual void add(const std::vector<std::shared_ptr<value>>& target_values, const bool& update_count = true) { throw std::exception("cannot support to add value objects on this object"); }
 		virtual void remove(const std::wstring& target_name, const bool& update_count = true) { throw std::exception("cannot support to remove value objects on this object"); }
 		virtual void remove(std::shared_ptr<value> item, const bool& update_count = true) { throw std::exception("cannot support to remove value object on this object"); }
