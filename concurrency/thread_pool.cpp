@@ -19,6 +19,15 @@ namespace concurrency
 
 	}
 
+	void thread_pool::clear(void)
+	{
+		std::lock_guard<std::mutex> guard(_mutex);
+
+		_workers.clear();
+
+		logger::handle().write(logging::logging_level::parameter, L"removed all workera");
+	}
+
 	void thread_pool::append(std::shared_ptr<thread_worker> worker)
 	{
 		std::unique_lock<std::mutex> unique(_mutex);

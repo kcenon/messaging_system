@@ -36,6 +36,16 @@ namespace container
 		deserialize(data_string, parse_only_header);
 	}
 
+	value_container::value_container(const std::vector<char>& data_array, const bool& parse_only_header) : value_container()
+	{
+		deserialize(data_array, parse_only_header);
+	}
+
+	value_container::value_container(const value_container& data_container, const bool& parse_only_header) : value_container()
+	{
+		deserialize(data_container.serialize(), parse_only_header);
+	}
+
 	value_container::value_container(std::shared_ptr<value_container> data_container, const bool& parse_only_header) : value_container()
 	{
 		if (data_container == nullptr)
@@ -239,7 +249,7 @@ namespace container
 		_units.clear();
 	}
 
-	std::wstring value_container::serialize(const bool& contain_whitespace)
+	std::wstring value_container::serialize(const bool& contain_whitespace) const
 	{
 		fmt::wmemory_buffer result;
 
@@ -273,6 +283,11 @@ namespace container
 		fmt::format_to(std::back_inserter(result), L"{}", L"};");
 
 		return result.data();
+	}
+
+	std::vector<char> value_container::serialize_array(const bool& contain_whitespace) const
+	{
+		return converter::to_array(serialize(contain_whitespace));
 	}
 
 	bool value_container::deserialize(const std::wstring& data_string, const bool& parse_only_header)
@@ -317,6 +332,11 @@ namespace container
 		}
 
 		return deserialize_values(removed_newline);
+	}
+
+	bool value_container::deserialize(const std::vector<char>& data_array, const bool& parse_only_header)
+	{
+		return deserialize(converter::to_wstring(data_array), parse_only_header);
 	}
 
 	std::wstring value_container::datas(void) const

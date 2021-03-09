@@ -12,6 +12,8 @@ namespace container
 	public:
 		value_container(void);
 		value_container(const std::wstring& data_string, const bool& parse_only_header = false);
+		value_container(const std::vector<char>& data_array, const bool& parse_only_header = false);
+		value_container(const value_container& data_container, const bool& parse_only_header = false);
 		value_container(std::shared_ptr<value_container> data_container, const bool& parse_only_header = false);
 		value_container(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& message_type = L"packet_container",
 			const std::vector<std::shared_ptr<value>>& units = {});
@@ -49,9 +51,12 @@ namespace container
 
 	public:
 		void initialize(void);
-		std::wstring serialize(const bool& contain_whitespace = false);
-		bool deserialize(const std::wstring& data_string, const bool& parse_only_header = false);
 
+	public:
+		std::wstring serialize(const bool& contain_whitespace = false) const;
+		std::vector<char> serialize_array(const bool& contain_whitespace = false) const;
+		bool deserialize(const std::wstring& data_string, const bool& parse_only_header = false);
+		bool deserialize(const std::vector<char>& data_array, const bool& parse_only_header = false);
 	public:
 		std::wstring datas(void) const;
 

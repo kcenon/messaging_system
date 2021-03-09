@@ -1,0 +1,141 @@
+﻿#include "tcp_session.h"
+
+#include "thread_pool.h"
+#include "thread_worker.h"
+#include "job_pool.h"
+#include "job.h"
+
+namespace network
+{
+	using namespace concurrency;
+
+	tcp_session::tcp_session(void) : _confirm(false), _bridge_line(false)
+	{
+
+	}
+
+	tcp_session::~tcp_session(void)
+	{
+
+	}
+
+	std::shared_ptr<tcp_session> tcp_session::get_ptr(void)
+	{
+		return shared_from_this();
+	}
+
+	void tcp_session::start(const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
+	{
+		thread_pool::handle().clear();
+		thread_pool::handle().append(std::make_shared<thread_worker>(priorities::top));
+		for (unsigned short high = 0; high < high_priority; ++high)
+		{
+			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high));
+		}
+		for (unsigned short normal = 0; normal < normal_priority; ++normal)
+		{
+			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
+		}
+		for (unsigned short low = 0; low < low_priority; ++low)
+		{
+			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
+		}
+		thread_pool::handle().start();
+	}
+
+	void tcp_session::stop(void)
+	{
+		thread_pool::handle().stop();
+	}
+
+	void tcp_session::send(std::shared_ptr<container::value_container> message)
+	{
+		if (message == nullptr)
+		{
+			return;
+		}
+
+		if (_bridge_line)
+		{
+			job_pool::handle().push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
+
+			return;
+		}
+
+		if (message->target_id() != _target_id)
+		{
+			return;
+		}
+
+		if (!message->target_sub_id().empty() && message->target_sub_id() != _target_id)
+		{
+			return;
+		}
+
+		job_pool::handle().push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
+	}
+
+	bool tcp_session::send_packet(const std::vector<char>& data)
+	{
+		if (data.empty())
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool tcp_session::receive_packet(const std::vector<char>& data)
+	{
+		if (data.empty())
+		{
+			return false;
+		}
+
+		job_pool::handle().push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::parsing_packet, this, std::placeholders::_1)));
+
+		return true;
+	}
+
+	bool tcp_session::parsing_packet(const std::vector<char>& data)
+	{
+		if (data.empty())
+		{
+			return false;
+		}
+
+		std::shared_ptr<container::value_container> message = std::make_shared<container::value_container>(data);
+		if (message == nullptr)
+		{
+			return false;
+		}
+
+		auto target = _message_handlers.find(message->message_type());
+		if (target == _message_handlers.end())
+		{
+			return normal_message(message);
+		}
+
+		return target->second(message);
+	}
+
+	bool tcp_session::normal_message(std::shared_ptr<container::value_container> message)
+	{
+		if (message == nullptr)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	bool tcp_session::confirm_message(std::shared_ptr<container::value_container> message)
+	{
+		if (message == nullptr)
+		{
+			return false;
+		}
+
+		return true;
+	}
+}
