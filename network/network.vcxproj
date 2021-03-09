@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{82a9da7d-8e60-4e90-9061-88e6f7756387}</ProjectGuid>
-    <RootNamespace>container</RootNamespace>
+    <ProjectGuid>{bbe3c8f7-4d0a-478c-969f-3f20b55f9f06}</ProjectGuid>
+    <RootNamespace>network</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -101,7 +101,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../concurrency/;../container/;../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -122,7 +122,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../concurrency/;../container/;../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -143,7 +143,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../concurrency/;../container/;../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -164,7 +164,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../concurrency/;../container/;../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -175,44 +175,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="container.h" />
-    <ClInclude Include="value.h" />
-    <ClInclude Include="values\bool_value.h" />
-    <ClInclude Include="values\bytes_value.h" />
-    <ClInclude Include="values\container_value.h" />
-    <ClInclude Include="values\double_value.h" />
-    <ClInclude Include="values\float_value.h" />
-    <ClInclude Include="values\int_value.h" />
-    <ClInclude Include="values\llong_value.h" />
-    <ClInclude Include="values\long_value.h" />
-    <ClInclude Include="values\short_value.h" />
-    <ClInclude Include="values\string_value.h" />
-    <ClInclude Include="values\uint_value.h" />
-    <ClInclude Include="values\ullong_value.h" />
-    <ClInclude Include="values\ulong_value.h" />
-    <ClInclude Include="values\ushort_value.h" />
-    <ClInclude Include="value_types.h" />
+    <ClInclude Include="tcp_client.h" />
+    <ClInclude Include="tcp_server.h" />
+    <ClInclude Include="tcp_session.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="container.cpp" />
-    <ClCompile Include="value.cpp" />
-    <ClCompile Include="values\bool_value.cpp" />
-    <ClCompile Include="values\bytes_value.cpp" />
-    <ClCompile Include="values\container_value.cpp" />
-    <ClCompile Include="values\double_value.cpp" />
-    <ClCompile Include="values\float_value.cpp" />
-    <ClCompile Include="values\int_value.cpp" />
-    <ClCompile Include="values\llong_value.cpp" />
-    <ClCompile Include="values\long_value.cpp" />
-    <ClCompile Include="values\short_value.cpp" />
-    <ClCompile Include="values\string_value.cpp" />
-    <ClCompile Include="values\uint_value.cpp" />
-    <ClCompile Include="values\ullong_value.cpp" />
-    <ClCompile Include="values\ulong_value.cpp" />
-    <ClCompile Include="values\ushort_value.cpp" />
-    <ClCompile Include="value_types.cpp" />
+    <ClCompile Include="tcp_client.cpp" />
+    <ClCompile Include="tcp_server.cpp" />
+    <ClCompile Include="tcp_session.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\concurrency\concurrency.vcxproj">
+      <Project>{237acd99-0ce3-46cf-80e5-df64ab9bbe4c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\container\container.vcxproj">
+      <Project>{82a9da7d-8e60-4e90-9061-88e6f7756387}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\utilities\utilities.vcxproj">
       <Project>{6a8e08f7-e020-4926-9e2c-4dc01802ba20}</Project>
     </ProjectReference>

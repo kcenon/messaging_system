@@ -17,6 +17,7 @@ namespace concurrency
 		~thread_pool(void);
 
 	public:
+		void clear(void);
 		void append(std::shared_ptr<thread_worker> worker);
 
 	public:
