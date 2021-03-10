@@ -67,12 +67,19 @@ namespace container
 	public:
 		std::shared_ptr<value> operator[](const std::wstring& key);
 
+		friend value_container operator<<(value_container target_container, value& other);
+		friend value_container operator<<(value_container target_container, std::shared_ptr<value> other);
+		friend std::shared_ptr<value_container> operator<<(std::shared_ptr<value_container> target_container, value& other);
 		friend std::shared_ptr<value_container> operator<<(std::shared_ptr<value_container> target_container, std::shared_ptr<value> other);
 
+		friend std::ostream& operator <<(std::ostream& out, value_container& other);
 		friend std::ostream& operator <<(std::ostream& out, std::shared_ptr<value_container> other);
+		friend std::wostream& operator <<(std::wostream& out, value_container& other);
 		friend std::wostream& operator <<(std::wostream& out, std::shared_ptr<value_container> other);
 
+		friend std::string& operator <<(std::string& out, value_container& other);
 		friend std::string& operator <<(std::string& out, std::shared_ptr<value_container> other);
+		friend std::wstring& operator <<(std::wstring& out, value_container& other);
 		friend std::wstring& operator <<(std::wstring& out, std::shared_ptr<value_container> other);
 
 	protected:

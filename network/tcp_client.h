@@ -36,6 +36,7 @@ namespace network
 	private:
 		bool normal_message(std::shared_ptr<container::value_container> message);
 		bool confirm_message(std::shared_ptr<container::value_container> message);
+		bool echo_message(std::shared_ptr<container::value_container> message);
 
 	private:
 		bool _confirm;

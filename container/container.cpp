@@ -375,6 +375,27 @@ namespace container
 		return searched_values[0];
 	}
 
+	value_container operator<<(value_container target_container, value& other)
+	{
+		target_container.add(other);
+
+		return target_container;
+	}
+
+	value_container operator<<(value_container target_container, std::shared_ptr<value> other)
+	{
+		target_container.add(other);
+
+		return target_container;
+	}
+
+	std::shared_ptr<value_container> operator<<(std::shared_ptr<value_container> target_container, value& other)
+	{
+		target_container->add(other);
+
+		return target_container;
+	}
+
 	std::shared_ptr<value_container> operator<<(std::shared_ptr<value_container> target_container, std::shared_ptr<value> other)
 	{
 		target_container->add(other);
@@ -382,9 +403,23 @@ namespace container
 		return target_container;
 	}
 
+	std::ostream& operator <<(std::ostream& out, value_container& other) // output
+	{
+		out << converter::to_string(other.serialize(false));
+
+		return out;
+	}
+
 	std::ostream& operator <<(std::ostream& out, std::shared_ptr<value_container> other) // output
 	{
 		out << converter::to_string(other->serialize(false));
+
+		return out;
+	}
+
+	std::wostream& operator <<(std::wostream& out, value_container& other) // output
+	{
+		out << other.serialize(false);
 
 		return out;
 	}
@@ -396,9 +431,23 @@ namespace container
 		return out;
 	}
 
+	std::string& operator <<(std::string& out, value_container& other)
+	{
+		out = converter::to_string(other.serialize(false));
+
+		return out;
+	}
+
 	std::string& operator <<(std::string& out, std::shared_ptr<value_container> other)
 	{
 		out = converter::to_string(other->serialize(false));
+
+		return out;
+	}
+
+	std::wstring& operator <<(std::wstring& out, value_container& other)
+	{
+		out = other.serialize(false);
 
 		return out;
 	}

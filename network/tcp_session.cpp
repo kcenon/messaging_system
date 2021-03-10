@@ -1,5 +1,7 @@
 ﻿#include "tcp_session.h"
 
+#include "values/bool_value.h"
+
 #include "thread_pool.h"
 #include "thread_worker.h"
 #include "job_pool.h"
@@ -7,11 +9,13 @@
 
 namespace network
 {
+	using namespace container;
 	using namespace concurrency;
 
 	tcp_session::tcp_session(void) : _confirm(false), _bridge_line(false)
 	{
-
+		_message_handlers.insert({ L"confirm", std::bind(&tcp_session::confirm_message, this, std::placeholders::_1) });
+		_message_handlers.insert({ L"echo", std::bind(&tcp_session::echo_message, this, std::placeholders::_1) });
 	}
 
 	tcp_session::~tcp_session(void)
@@ -135,6 +139,33 @@ namespace network
 		{
 			return false;
 		}
+
+		return true;
+	}
+
+	bool tcp_session::echo_message(std::shared_ptr<container::value_container> message)
+	{
+		if (message == nullptr)
+		{
+			return false;
+		}
+
+		if (!_confirm)
+		{
+			return false;
+		}
+
+		std::shared_ptr<value> response = (*message)[L"response"];
+		if (!response->is_null())
+		{
+			return true;
+		}
+
+		message->swap_header();
+
+		message << std::make_shared<bool_value>(L"response", true);
+
+		job_pool::handle().push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
