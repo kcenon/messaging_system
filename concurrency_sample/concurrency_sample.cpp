@@ -51,14 +51,13 @@ int main()
 	logger::handle().set_target_level(logging_level::information);
 	logger::handle().start();
 
-	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high));
-	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high));
-	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high));
-	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
-	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
-	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
-
-	thread_pool::handle().start();
+	thread_pool::handle().stop(true);
+	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high), true);
+	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high), true);
+	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high), true);
+	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }), true);
+	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }), true);
+	thread_pool::handle().append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
