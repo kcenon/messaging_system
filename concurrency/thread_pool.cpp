@@ -19,24 +19,6 @@ namespace concurrency
 
 	}
 
-	void thread_pool::clear(void)
-	{
-		std::lock_guard<std::mutex> guard(_mutex);
-
-		_workers.clear();
-
-		logger::handle().write(logging::logging_level::parameter, L"removed all workera");
-	}
-
-	void thread_pool::append(std::shared_ptr<thread_worker> worker)
-	{
-		std::unique_lock<std::mutex> unique(_mutex);
-
-		_workers.push_back(worker);
-
-		logger::handle().write(logging::logging_level::parameter, fmt::format(L"appended new worker: priority - {}", worker->priority()));
-	}
-
 	void thread_pool::start(void)
 	{
 		std::lock_guard<std::mutex> guard(_mutex);
@@ -52,7 +34,23 @@ namespace concurrency
 		}
 	}
 
-	void thread_pool::stop(void)
+	void thread_pool::append(std::shared_ptr<thread_worker> worker, const bool& start)
+	{
+		std::unique_lock<std::mutex> unique(_mutex);
+
+		_workers.push_back(worker);
+
+		logger::handle().write(logging::logging_level::parameter, fmt::format(L"appended new worker: priority - {}", worker->priority()));
+
+		unique.unlock();
+
+		if (start)
+		{
+			worker->start();
+		}
+	}
+
+	void thread_pool::stop(const bool& clear)
 	{
 		std::lock_guard<std::mutex> guard(_mutex);
 
@@ -64,6 +62,11 @@ namespace concurrency
 			}
 
 			worker->stop();
+		}
+
+		if (clear)
+		{
+			_workers.clear();
 		}
 	}
 

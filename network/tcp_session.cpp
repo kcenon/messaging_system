@@ -30,21 +30,20 @@ namespace network
 
 	void tcp_session::start(const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
-		thread_pool::handle().clear();
-		thread_pool::handle().append(std::make_shared<thread_worker>(priorities::top));
+		thread_pool::handle().stop(true);
+		thread_pool::handle().append(std::make_shared<thread_worker>(priorities::top), true);
 		for (unsigned short high = 0; high < high_priority; ++high)
 		{
-			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high));
+			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::high), true);
 		}
 		for (unsigned short normal = 0; normal < normal_priority; ++normal)
 		{
-			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
+			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }), true);
 		}
 		for (unsigned short low = 0; low < low_priority; ++low)
 		{
-			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
+			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 		}
-		thread_pool::handle().start();
 	}
 
 	void tcp_session::stop(void)

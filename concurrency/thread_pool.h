@@ -17,12 +17,9 @@ namespace concurrency
 		~thread_pool(void);
 
 	public:
-		void clear(void);
-		void append(std::shared_ptr<thread_worker> worker);
-
-	public:
 		void start(void);
-		void stop(void);
+		void append(std::shared_ptr<thread_worker> worker, const bool& start = false);
+		void stop(const bool& clear = false);
 
 	private:
 		std::mutex _mutex;
