@@ -12,7 +12,7 @@ namespace compressing
 
 	unsigned short compressor::_block_bytes = 1024;
 
-	std::vector<unsigned char> compressor::compression(const std::vector<unsigned char>& original_data)
+	std::vector<char> compressor::compression(const std::vector<char>& original_data)
 	{
 		if (original_data.empty())
 		{
@@ -34,7 +34,7 @@ namespace compressing
 		int compress_size = LZ4_COMPRESSBOUND(_block_bytes);
 		std::vector<char> compress_buffer;
 		compress_buffer.reserve(compress_size);
-		std::vector<unsigned char> compressed_data;
+		std::vector<char> compressed_data;
 
 		char compress_size_data[4];
 
@@ -90,7 +90,7 @@ namespace compressing
 		return compressed_data;
 	}
 
-	std::vector<unsigned char> compressor::decompression(const std::vector<unsigned char>& compressed_data)
+	std::vector<char> compressor::decompression(const std::vector<char>& compressed_data)
 	{
 		if (compressed_data.empty())
 		{
@@ -115,7 +115,7 @@ namespace compressing
 		int compress_size = LZ4_COMPRESSBOUND(_block_bytes);
 		std::vector<char> compress_buffer;
 		compress_buffer.reserve(compress_size);
-		std::vector<unsigned char> decompressed_data;
+		std::vector<char> decompressed_data;
 
 		LZ4_setStreamDecode(&lz4StreamDecode_body, NULL, 0);
 

@@ -95,7 +95,7 @@ namespace logging
 			return;
 		}
 
-		std::lock_guard<std::mutex> guard(_mutex);
+		std::scoped_lock<std::mutex> guard(_mutex);
 
 		if (!time.has_value())
 		{
