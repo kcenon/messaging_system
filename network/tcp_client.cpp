@@ -2,6 +2,7 @@
 
 #include "values/bool_value.h"
 
+#include "converting.h"
 #include "thread_pool.h"
 #include "thread_worker.h"
 #include "job_pool.h"
@@ -11,10 +12,12 @@
 
 namespace network
 {
+	using namespace converting;
 	using namespace container;
-	using namespace concurrency;
+	using namespace threads;
 
-	tcp_client::tcp_client(void) : _confirm(false), _bridge_line(false)
+	tcp_client::tcp_client(void) 
+		: _confirm(false), _bridge_line(false), _io_context(nullptr), _socket(nullptr), _buffer_size(1024)
 	{
 		_message_handlers.insert({ L"confirm", std::bind(&tcp_client::confirm_message, this, std::placeholders::_1) });
 		_message_handlers.insert({ L"echo", std::bind(&tcp_client::echo_message, this, std::placeholders::_1) });
@@ -30,8 +33,10 @@ namespace network
 		return shared_from_this();
 	}
 
-	void tcp_client::start(const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
+	void tcp_client::start(const std::wstring& ip, const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
+		stop();
+
 		thread_pool::handle().stop(true);
 		thread_pool::handle().append(std::make_shared<thread_worker>(priorities::top), true);
 		for (unsigned short high = 0; high < high_priority; ++high)
@@ -46,10 +51,50 @@ namespace network
 		{
 			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 		}
+
+		_io_context = std::make_shared<asio::io_context>();
+
+		_socket = std::make_shared<asio::ip::tcp::socket>(*_io_context);
+		_socket->open(asio::ip::tcp::v4());
+		_socket->bind(asio::ip::tcp::endpoint(asio::ip::tcp::v4(), 0));
+		_socket->connect(asio::ip::tcp::endpoint(asio::ip::address::from_string(converter::to_string(ip)), port));
+
+		_socket->set_option(asio::ip::tcp::no_delay(true));
+		_socket->set_option(asio::socket_base::keep_alive(true));
+		_socket->set_option(asio::socket_base::receive_buffer_size(_buffer_size));
+
+		_thread = std::thread([](std::shared_ptr<asio::io_context> context)
+			{
+				try
+				{
+					context->run();
+				}
+				catch (const std::overflow_error&) { }
+				catch (const std::runtime_error&) { }
+				catch (const std::exception&) { }
+				catch (...) { }
+			}, _io_context);
 	}
 
 	void tcp_client::stop(void)
 	{
+		if (_socket != nullptr && _socket->is_open())
+		{
+			_socket->close();
+		}
+		_socket.reset();
+
+		if (_io_context != nullptr)
+		{
+			_io_context->stop();
+		}
+		_io_context.reset();
+
+		if (_thread.joinable())
+		{
+			_thread.join();
+		}
+
 		thread_pool::handle().stop();
 	}
 

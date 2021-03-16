@@ -10,7 +10,7 @@
 #include <optional>
 #include <functional>
 
-namespace concurrency
+namespace threads
 {
 	class job;
 	class job_pool
