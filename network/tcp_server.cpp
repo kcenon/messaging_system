@@ -1,9 +1,16 @@
 #include "tcp_server.h"
 
+#include "logging.h"
+#include "converting.h"
 #include "tcp_session.h"
+
+#include "fmt/format.h"
 
 namespace network
 {
+	using namespace logging;
+	using namespace converting;
+
 	tcp_server::tcp_server() : _io_context(nullptr), _acceptor(nullptr)
 	{
 
@@ -38,13 +45,15 @@ namespace network
 				{
 					try
 					{
+						logger::handle().write(logging::logging_level::information, L"start tcp_server");
 						context->run();
+						logger::handle().write(logging::logging_level::information, L"stop tcp_server");
 						break;
 					}
-					catch (const std::overflow_error&) { if (context == nullptr) { break; } context->reset(); }
-					catch (const std::runtime_error&) { if (context == nullptr) { break; } context->reset(); }
-					catch (const std::exception&) { if (context == nullptr) { break; } context->reset(); }
-					catch (...) { if (context == nullptr) { break; } context->reset(); }					
+					catch (const std::overflow_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, L"break tcp_client with overflow error"); context->reset(); }
+					catch (const std::runtime_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, L"break tcp_client with runtime error"); context->reset(); }
+					catch (const std::exception&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, L"break tcp_client with exception"); context->reset(); }
+					catch (...) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, L"break tcp_client with error"); context->reset(); }
 				}
 			}, _io_context);
 	}
@@ -53,12 +62,14 @@ namespace network
 	{
 		if (_acceptor != nullptr && _acceptor->is_open())
 		{
+			logger::handle().write(logging::logging_level::sequence, L"attempts to close acceptor");
 			_acceptor->close();
 		}
 		_acceptor.reset();
 
 		if (_io_context != nullptr)
 		{
+			logger::handle().write(logging::logging_level::sequence, L"attempts to stop io_context");
 			_io_context->stop();
 		}
 		_io_context.reset();
@@ -101,6 +112,9 @@ namespace network
 				{
 					return;
 				}
+
+				logger::handle().write(logging::logging_level::information, fmt::format(L"accepted new client: {}:{}", 
+					converter::to_wstring(socket.remote_endpoint().address().to_string()), socket.remote_endpoint().port()));
 
 				std::shared_ptr<tcp_session> session = std::make_shared<tcp_session>(socket);
 				session->start(_high_priority, _normal_priority, _low_priority);

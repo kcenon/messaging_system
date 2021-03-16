@@ -2,14 +2,20 @@
 
 #include "values/bool_value.h"
 
+#include "logging.h"
+#include "converting.h"
 #include "thread_pool.h"
 #include "thread_worker.h"
 #include "job_pool.h"
 #include "job.h"
 
+#include "fmt/format.h"
+
 namespace network
 {
+	using namespace logging;
 	using namespace container;
+	using namespace converting;
 	using namespace threads;
 
 	tcp_session::tcp_session(asio::ip::tcp::socket& socket) : _confirm(false), _bridge_line(false), _buffer_size(1024), _socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket)))
@@ -20,7 +26,6 @@ namespace network
 
 		_message_handlers.insert({ L"confirm", std::bind(&tcp_session::confirm_message, this, std::placeholders::_1) });
 		_message_handlers.insert({ L"echo", std::bind(&tcp_session::echo_message, this, std::placeholders::_1) });
-		_message_handlers.insert({ L"disconnect", std::bind(&tcp_session::disconnect_message, this, std::placeholders::_1) });
 	}
 
 	tcp_session::~tcp_session(void)
@@ -49,6 +54,9 @@ namespace network
 		{
 			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 		}
+
+		logger::handle().write(logging::logging_level::information, fmt::format(L"started session: {}:{}", 
+			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port()));
 	}
 
 	void tcp_session::stop(void)
@@ -170,16 +178,6 @@ namespace network
 		message << std::make_shared<bool_value>(L"response", true);
 
 		job_pool::handle().push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
-
-		return true;
-	}
-
-	bool tcp_session::disconnect_message(std::shared_ptr<container::value_container> message)
-	{
-		if (message == nullptr)
-		{
-			return false;
-		}
 
 		return true;
 	}
