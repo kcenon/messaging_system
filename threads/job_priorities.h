@@ -1,6 +1,6 @@
 #pragma once
 
-namespace concurrency
+namespace threads
 {
 	enum class priorities : unsigned short
 	{

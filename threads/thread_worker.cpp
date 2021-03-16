@@ -7,7 +7,7 @@
 
 #include "fmt/format.h"
 
-namespace concurrency
+namespace threads
 {
 	using namespace logging;
 

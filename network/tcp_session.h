@@ -7,12 +7,14 @@
 #include <string>
 #include <functional>
 
+#include "asio.hpp"
+
 namespace network
 {
 	class tcp_session : public std::enable_shared_from_this<tcp_session>
 	{
 	public:
-		tcp_session(void);
+		tcp_session(asio::ip::tcp::socket& socket);
 		~tcp_session(void);
 
 	public:
@@ -36,16 +38,19 @@ namespace network
 		bool normal_message(std::shared_ptr<container::value_container> message);
 		bool confirm_message(std::shared_ptr<container::value_container> message);
 		bool echo_message(std::shared_ptr<container::value_container> message);
+		bool disconnect_message(std::shared_ptr<container::value_container> message);
 
 	private:
 		bool _confirm;
 		bool _bridge_line;
+		size_t _buffer_size;
 		std::wstring _source_id;
 		std::wstring _source_sub_id;
 		std::wstring _target_id;
 		std::wstring _target_sub_id;
 
 	private:
+		std::shared_ptr<asio::ip::tcp::socket> _socket;
 		std::map<std::wstring, std::function<bool(std::shared_ptr<container::value_container>)>> _message_handlers;
 	};
 }

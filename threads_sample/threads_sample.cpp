@@ -12,7 +12,7 @@
 
 using namespace logging;
 using namespace converting;
-using namespace concurrency;
+using namespace threads;
 
 bool write_high(void)
 {
@@ -77,4 +77,6 @@ int main()
 
 	thread_pool::handle().stop();
 	logger::handle().stop();
+
+	return 0;
 }

@@ -6,7 +6,7 @@
 #include <vector>
 #include <functional>
 
-namespace concurrency
+namespace threads
 {
 	class job : public std::enable_shared_from_this<job>
 	{

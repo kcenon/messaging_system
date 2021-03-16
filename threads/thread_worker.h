@@ -8,7 +8,7 @@
 #include <vector>
 #include <condition_variable>
 
-namespace concurrency
+namespace threads
 {
 	class job;
 	class thread_worker

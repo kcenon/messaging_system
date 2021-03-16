@@ -6,7 +6,7 @@
 #include <memory>
 #include <vector>
 
-namespace concurrency
+namespace threads
 {
 	class thread_pool
 	{
