@@ -28,11 +28,14 @@ namespace network
 		void send(std::shared_ptr<container::value_container> message);
 
 	private:
+		bool compress_packet(const std::vector<char>& data);
+		bool encrypt_packet(const std::vector<char>& data);
 		bool send_packet(const std::vector<char>& data);
-		bool receive_packet(const std::vector<char>& data);
 
 	private:
-		bool parsing_packet(const std::vector<char>& data);
+		bool decompress_packet(const std::vector<char>& data);
+		bool decrypt_packet(const std::vector<char>& data);
+		bool receive_packet(const std::vector<char>& data);
 
 	private:
 		bool normal_message(std::shared_ptr<container::value_container> message);
@@ -42,11 +45,17 @@ namespace network
 	private:
 		bool _confirm;
 		bool _bridge_line;
-		size_t _buffer_size;
+		int _buffer_size;
 		std::wstring _source_id;
 		std::wstring _source_sub_id;
 		std::wstring _target_id;
 		std::wstring _target_sub_id;
+
+	private:
+		bool _compress_mode;
+		bool _encrypt_mode;
+		std::wstring _key;
+		std::wstring _iv;
 
 	private:
 		std::shared_ptr<asio::ip::tcp::socket> _socket;

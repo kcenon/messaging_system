@@ -88,7 +88,7 @@ namespace converting
 
 		std::string source = to_string(value);
 		std::string encoded;
-		CryptoPP::StringSource(source, true, new CryptoPP::Base64Encoder(new CryptoPP::StringSink(encoded)));
+		CryptoPP::StringSource(source.data(), true, new CryptoPP::Base64Encoder(new CryptoPP::StringSink(encoded)));
 
 		return std::vector<char>(encoded.data(), encoded.data() + encoded.size());
 	}
@@ -100,9 +100,8 @@ namespace converting
 			return std::wstring();
 		}
 
-		std::string source = std::string(value.data(), value.size());
 		std::string decoded;
-		CryptoPP::StringSource(source, true, new CryptoPP::Base64Decoder(new CryptoPP::StringSink(decoded)));
+		CryptoPP::StringSource(value.data(), true, new CryptoPP::Base64Decoder(new CryptoPP::StringSink(decoded)));
 
 		return to_wstring(decoded);
 	}

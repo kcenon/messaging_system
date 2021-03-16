@@ -21,7 +21,7 @@ namespace threads
 
 	void thread_pool::start(void)
 	{
-		std::lock_guard<std::mutex> guard(_mutex);
+		std::scoped_lock<std::mutex> guard(_mutex);
 
 		for (auto& worker : _workers)
 		{
@@ -52,7 +52,7 @@ namespace threads
 
 	void thread_pool::stop(const bool& clear)
 	{
-		std::lock_guard<std::mutex> guard(_mutex);
+		std::scoped_lock<std::mutex> guard(_mutex);
 
 		for (auto& worker : _workers)
 		{
