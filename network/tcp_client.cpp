@@ -1,7 +1,8 @@
-#include "tcp_client.h"
+﻿#include "tcp_client.h"
 
 #include "values/bool_value.h"
 
+#include "logging.h"
 #include "converting.h"
 #include "thread_pool.h"
 #include "thread_worker.h"
@@ -10,8 +11,11 @@
 
 #include <functional>
 
+#include "fmt/format.h"
+
 namespace network
 {
+	using namespace logging;
 	using namespace converting;
 	using namespace container;
 	using namespace threads;
@@ -52,8 +56,10 @@ namespace network
 			thread_pool::handle().append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 		}
 
+		logger::handle().write(logging::logging_level::sequence, L"attempts to create io_context");
 		_io_context = std::make_shared<asio::io_context>();
 
+		logger::handle().write(logging::logging_level::sequence, L"attempts to create socket");
 		_socket = std::make_shared<asio::ip::tcp::socket>(*_io_context);
 		_socket->open(asio::ip::tcp::v4());
 		_socket->bind(asio::ip::tcp::endpoint(asio::ip::tcp::v4(), 0));
@@ -67,12 +73,14 @@ namespace network
 			{
 				try
 				{
+					logger::handle().write(logging::logging_level::information, L"start tcp_client");
 					context->run();
+					logger::handle().write(logging::logging_level::information, L"stop tcp_client");
 				}
-				catch (const std::overflow_error&) { }
-				catch (const std::runtime_error&) { }
-				catch (const std::exception&) { }
-				catch (...) { }
+				catch (const std::overflow_error&) { logger::handle().write(logging::logging_level::exception, L"break tcp_client with overflow error"); }
+				catch (const std::runtime_error&) { logger::handle().write(logging::logging_level::exception, L"break tcp_client with runtime error"); }
+				catch (const std::exception&) { logger::handle().write(logging::logging_level::exception, L"break tcp_client with exception"); }
+				catch (...) { logger::handle().write(logging::logging_level::exception, L"break tcp_client with error"); }
 			}, _io_context);
 	}
 
@@ -80,12 +88,14 @@ namespace network
 	{
 		if (_socket != nullptr && _socket->is_open())
 		{
+			logger::handle().write(logging::logging_level::sequence, L"attempts to close socket");
 			_socket->close();
 		}
 		_socket.reset();
 
 		if (_io_context != nullptr)
 		{
+			logger::handle().write(logging::logging_level::sequence, L"attempts to stop io_context");
 			_io_context->stop();
 		}
 		_io_context.reset();
@@ -109,6 +119,8 @@ namespace network
 		{
 			return;
 		}
+
+		logger::handle().write(logging::logging_level::sequence, fmt::format(L"attempts to send message: {}", message->message_type()));
 
 		job_pool::handle().push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_client::send_packet, this, std::placeholders::_1)));
 	}
