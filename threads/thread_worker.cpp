@@ -12,13 +12,18 @@ namespace threads
 	using namespace logging;
 
 	thread_worker::thread_worker(const priorities& priority, const std::vector<priorities>& others)
-		: _priority(priority), _others(others)
+		: _priority(priority), _others(others), _job_pool(nullptr)
 	{
 	}
 
 	thread_worker::~thread_worker(void)
 	{
 
+	}
+
+	void thread_worker::set_job_pool(std::shared_ptr<job_pool> job_pool)
+	{
+		_job_pool = job_pool;
 	}
 
 	void thread_worker::start(void)
@@ -79,7 +84,12 @@ namespace threads
 		{
 			std::unique_lock<std::mutex> unique(_mutex);
 			_condition.wait(unique, [this] { return check_condition(); });
-			std::shared_ptr<job> current_job = job_pool::handle().pop(_priority, _others);
+			if (_job_pool == nullptr)
+			{
+				continue;
+			}
+
+			std::shared_ptr<job> current_job = _job_pool->pop(_priority, _others);
 			unique.unlock();
 
 			working(current_job);
@@ -103,6 +113,11 @@ namespace threads
 			return true;
 		}
 
-		return job_pool::handle().contain(_priority, _others);
+		if (_job_pool == nullptr)
+		{
+			return false;
+		}
+
+		return _job_pool->contain(_priority, _others);
 	}
 }
