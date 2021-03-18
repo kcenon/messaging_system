@@ -11,11 +11,15 @@
 namespace threads
 {
 	class job;
+	class job_pool;
 	class thread_worker
 	{
 	public:
 		thread_worker(const priorities& priority, const std::vector<priorities>& others = {});
 		~thread_worker(void);
+
+	public:
+		void set_job_pool(std::shared_ptr<job_pool> job_pool);
 
 	public:
 		void start(void);
@@ -40,6 +44,7 @@ namespace threads
 	private:
 		priorities _priority;
 		std::vector<priorities> _others;
+		std::shared_ptr<job_pool> _job_pool;
 
 	private:
 		std::mutex _mutex;

@@ -13,13 +13,14 @@
 namespace threads
 {
 	class job;
-	class job_pool
+	class job_pool : public std::enable_shared_from_this<job_pool>
 	{
-	private:
+	public:
 		job_pool(void);
+		~job_pool(void);
 
 	public:
-		~job_pool(void);
+		std::shared_ptr<job_pool> get_ptr(void);
 
 	public:
 		void push(std::shared_ptr<job> new_job);
@@ -36,14 +37,5 @@ namespace threads
 		std::mutex _mutex;
 		std::map<priorities, std::queue<std::shared_ptr<job>>> _jobs;
 		std::vector<std::function<void(const priorities&)>> _notifications;
-
-#pragma region singleton
-	public:
-		static job_pool& handle(void);
-
-	private:
-		static std::unique_ptr<job_pool> _handle;
-		static std::once_flag _once;
-#pragma endregion
 	};
 }

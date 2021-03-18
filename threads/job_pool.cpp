@@ -19,6 +19,11 @@ namespace threads
 
 	}
 
+	std::shared_ptr<job_pool> job_pool::get_ptr(void)
+	{
+		return shared_from_this();
+	}
+
 	void job_pool::push(std::shared_ptr<job> new_job)
 	{
 		if (new_job == nullptr)
@@ -26,12 +31,13 @@ namespace threads
 			return;
 		}
 
-		std::lock_guard<std::mutex> guard(_mutex);
+		std::unique_lock<std::mutex> unique(_mutex);
 
 		auto iterator = _jobs.find(new_job->priority());
 		if (iterator != _jobs.end())
 		{
 			iterator->second.push(new_job);
+			unique.unlock();
 
 			logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
 
@@ -44,6 +50,7 @@ namespace threads
 		queue.push(new_job);
 
 		_jobs.insert({ new_job->priority(), queue });
+		unique.unlock();
 
 		logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
 
@@ -52,7 +59,7 @@ namespace threads
 
 	std::shared_ptr<job> job_pool::pop(const priorities& priority, const std::vector<priorities>& others)
 	{
-		std::unique_lock<std::mutex> unique(_mutex);
+		std::scoped_lock<std::mutex> guard(_mutex);
 
 		auto iterator = _jobs.find(priority);
 		if (iterator != _jobs.end() && !iterator->second.empty())
@@ -84,7 +91,7 @@ namespace threads
 
 	bool job_pool::contain(const priorities& priority, const std::vector<priorities>& others)
 	{
-		std::lock_guard<std::mutex> unique(_mutex);
+		std::scoped_lock<std::mutex> guard(_mutex);
 
 		auto iterator = _jobs.find(priority);
 		if (iterator != _jobs.end() && !iterator->second.empty())
@@ -125,19 +132,4 @@ namespace threads
 			notification(priority);
 		}
 	}
-
-#pragma region singleton
-	std::unique_ptr<job_pool> job_pool::_handle;
-	std::once_flag job_pool::_once;
-
-	job_pool& job_pool::handle(void)
-	{
-		std::call_once(_once, []()
-			{
-				_handle.reset(new job_pool);
-			});
-
-		return *_handle.get();
-	}
-#pragma endregion
 }

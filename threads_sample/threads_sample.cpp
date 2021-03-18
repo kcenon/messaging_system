@@ -61,16 +61,16 @@ int main()
 
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		job_pool::handle().push(std::make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data));
-		job_pool::handle().push(std::make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data));
-		job_pool::handle().push(std::make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data));
+		thread_pool::handle().push(std::make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data));
+		thread_pool::handle().push(std::make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data));
+		thread_pool::handle().push(std::make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data));
 	}
 
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		job_pool::handle().push(std::make_shared<job>(priorities::high, &write_high));
-		job_pool::handle().push(std::make_shared<job>(priorities::normal, &write_normal));
-		job_pool::handle().push(std::make_shared<job>(priorities::low, &write_low));
+		thread_pool::handle().push(std::make_shared<job>(priorities::high, &write_high));
+		thread_pool::handle().push(std::make_shared<job>(priorities::normal, &write_normal));
+		thread_pool::handle().push(std::make_shared<job>(priorities::low, &write_low));
 	}
 
 	std::this_thread::sleep_for(std::chrono::seconds(5));
