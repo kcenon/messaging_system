@@ -1,6 +1,7 @@
 #include "thread_pool.h"
 
 #include "logging.h"
+#include "job_pool.h"
 
 #include "fmt/format.h"
 
@@ -11,7 +12,7 @@ namespace threads
 	thread_pool::thread_pool(const std::vector<std::shared_ptr<thread_worker>>& workers)
 		: _workers(workers)
 	{
-
+		job_pool::handle().append_notification(std::bind(&thread_pool::notification, this, std::placeholders::_1));
 	}
 
 	thread_pool::~thread_pool(void)
@@ -21,7 +22,7 @@ namespace threads
 
 	void thread_pool::start(void)
 	{
-		std::scoped_lock<std::mutex> guard(_mutex);
+		std::lock_guard<std::mutex> guard(_mutex);
 
 		for (auto& worker : _workers)
 		{
@@ -52,7 +53,7 @@ namespace threads
 
 	void thread_pool::stop(const bool& clear)
 	{
-		std::scoped_lock<std::mutex> guard(_mutex);
+		std::lock_guard<std::mutex> guard(_mutex);
 
 		for (auto& worker : _workers)
 		{
@@ -67,6 +68,21 @@ namespace threads
 		if (clear)
 		{
 			_workers.clear();
+		}
+	}
+
+	void thread_pool::notification(const priorities& priority)
+	{
+		std::lock_guard<std::mutex> guard(_mutex);
+
+		for (auto& worker : _workers)
+		{
+			if (worker == nullptr)
+			{
+				continue;
+			}
+
+			worker->notification(priority);
 		}
 	}
 

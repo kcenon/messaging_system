@@ -14,7 +14,6 @@ namespace threads
 	thread_worker::thread_worker(const priorities& priority, const std::vector<priorities>& others)
 		: _priority(priority), _others(others)
 	{
-		job_pool::handle().append_notification(std::bind(&thread_worker::notification, this, std::placeholders::_1));
 	}
 
 	thread_worker::~thread_worker(void)
@@ -52,18 +51,6 @@ namespace threads
 		return _priority;
 	}
 
-	void thread_worker::run(void)
-	{
-		while (check_condition(true))
-		{
-			std::unique_lock<std::mutex> unique(_mutex);
-			_condition.wait(unique, [this] { return check_condition(false); });
-			unique.unlock();
-
-			working(job_pool::handle().pop(_priority, _others));
-		}
-	}
-
 	void thread_worker::notification(const priorities& priority)
 	{
 		if (_priority == priority)
@@ -72,7 +59,7 @@ namespace threads
 
 			return;
 		}
-		
+
 		for (auto& other : _others)
 		{
 			if (other != _priority)
@@ -86,6 +73,19 @@ namespace threads
 		}
 	}
 
+	void thread_worker::run(void)
+	{
+		while (!_thread_stop.load())
+		{
+			std::unique_lock<std::mutex> unique(_mutex);
+			_condition.wait(unique, [this] { return check_condition(); });
+			std::shared_ptr<job> current_job = job_pool::handle().pop(_priority, _others);
+			unique.unlock();
+
+			working(current_job);
+		}
+	}
+
 	void thread_worker::working(std::shared_ptr<job> current_job)
 	{
 		if (current_job == nullptr)
@@ -96,13 +96,13 @@ namespace threads
 		current_job->work(_priority);
 	}
 
-	bool thread_worker::check_condition(const bool& ignore_job)
+	bool thread_worker::check_condition(void)
 	{
-		if (ignore_job)
+		if (_thread_stop.load())
 		{
-			return !_thread_stop.load();
+			return true;
 		}
 
-		return !_thread_stop.load() || job_pool::handle().contain(_priority, _others);
+		return job_pool::handle().contain(_priority, _others);
 	}
 }

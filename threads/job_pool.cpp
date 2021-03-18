@@ -26,7 +26,7 @@ namespace threads
 			return;
 		}
 
-		std::scoped_lock<std::mutex> guard(_mutex);
+		std::lock_guard<std::mutex> guard(_mutex);
 
 		auto iterator = _jobs.find(new_job->priority());
 		if (iterator != _jobs.end())
