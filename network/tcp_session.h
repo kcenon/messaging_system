@@ -1,6 +1,7 @@
 #pragma once
 
 #include "container.h"
+#include "thread_pool.h"
 
 #include <map>
 #include <memory>
@@ -59,6 +60,7 @@ namespace network
 
 	private:
 		std::shared_ptr<asio::ip::tcp::socket> _socket;
+		std::shared_ptr<threads::thread_pool> _thread_pool;
 		std::map<std::wstring, std::function<bool(std::shared_ptr<container::value_container>)>> _message_handlers;
 	};
 }

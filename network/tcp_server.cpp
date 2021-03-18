@@ -11,14 +11,14 @@ namespace network
 	using namespace logging;
 	using namespace converting;
 
-	tcp_server::tcp_server() : _io_context(nullptr), _acceptor(nullptr)
+	tcp_server::tcp_server(void) : _io_context(nullptr), _acceptor(nullptr)
 	{
 
 	}
 
 	tcp_server::~tcp_server(void)
 	{
-
+		stop();
 	}
 
 	std::shared_ptr<tcp_server> tcp_server::get_ptr(void)
@@ -66,6 +66,17 @@ namespace network
 			_acceptor->close();
 		}
 		_acceptor.reset();
+
+		for (auto& session : _sessions)
+		{
+			if (session == nullptr)
+			{
+				continue;
+			}
+
+			session->stop();
+		}
+		_sessions.clear();
 
 		if (_io_context != nullptr)
 		{

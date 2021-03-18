@@ -11,7 +11,7 @@ using namespace network;
 
 int main()
 {
-	logger::handle().set_target_level(logging_level::information);
+	logger::handle().set_target_level(logging_level::sequence);
 	logger::handle().start();
 
 	tcp_server server;
