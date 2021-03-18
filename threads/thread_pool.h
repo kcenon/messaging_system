@@ -21,6 +21,9 @@ namespace threads
 		void append(std::shared_ptr<thread_worker> worker, const bool& start = false);
 		void stop(const bool& clear = false);
 
+	protected:
+		void notification(const priorities& priority);
+
 	private:
 		std::mutex _mutex;
 		std::vector<std::shared_ptr<thread_worker>> _workers;

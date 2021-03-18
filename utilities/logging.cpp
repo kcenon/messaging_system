@@ -95,7 +95,7 @@ namespace logging
 			return;
 		}
 
-		std::scoped_lock<std::mutex> guard(_mutex);
+		std::lock_guard<std::mutex> guard(_mutex);
 
 		if (!time.has_value())
 		{
@@ -129,7 +129,7 @@ namespace logging
 		while (!_thread_stop.load() || !_buffer.empty())
 		{
 			std::unique_lock<std::mutex> unique(_mutex);
-			_condition.wait(unique, [this] { return !_thread_stop.load() || !_buffer.empty(); });
+			_condition.wait(unique, [this] { return _thread_stop.load() || !_buffer.empty(); });
 
 			buffers.swap(_buffer);
 			unique.unlock();

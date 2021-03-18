@@ -23,16 +23,16 @@ namespace threads
 
 	public:
 		const priorities priority(void);
+		void notification(const priorities& priority);
 
 	protected:
 		void run(void);
-		void notification(const priorities& priority);
 
 	protected:
 		virtual void working(std::shared_ptr<job> current_job);
 
 	protected:
-		bool check_condition(const bool& ignore_job);
+		bool check_condition(void);
 
 	private:
 		std::atomic<bool> _thread_stop{ false };
