@@ -16,7 +16,7 @@ namespace network
 	class tcp_session : public std::enable_shared_from_this<tcp_session>, public data_handling
 	{
 	public:
-		tcp_session(asio::ip::tcp::socket& socket);
+		tcp_session(const std::wstring& source_id, asio::ip::tcp::socket& socket);
 		~tcp_session(void);
 
 	public:

@@ -22,13 +22,19 @@ namespace network
 	using namespace encrypting;
 	using namespace compressing;
 
-	tcp_session::tcp_session(asio::ip::tcp::socket& socket)
+	tcp_session::tcp_session(const std::wstring& source_id, asio::ip::tcp::socket& socket)
 		: data_handling(246, 135), _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _buffer_size(1024),
-		_key(L""), _iv(L""), _socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket))), _thread_pool(nullptr)
+		_key(L""), _iv(L""), _socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket))), _thread_pool(nullptr), _source_id(source_id),
+		_source_sub_id(L""), _target_id(L""), _target_sub_id(L"")
 	{
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));
 		_socket->set_option(asio::socket_base::receive_buffer_size(_buffer_size));
+
+		_source_sub_id = fmt::format(L"{}:{}",
+			converter::to_wstring(_socket->local_endpoint().address().to_string()), _socket->local_endpoint().port());
+		_target_sub_id = fmt::format(L"{}:{}",
+			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
 		_message_handlers.insert({ L"request_connection", std::bind(&tcp_session::connection_message, this, std::placeholders::_1) });
 		_message_handlers.insert({ L"echo", std::bind(&tcp_session::echo_message, this, std::placeholders::_1) });
@@ -112,7 +118,7 @@ namespace network
 			return;
 		}
 
-		if (!message->target_sub_id().empty() && message->target_sub_id() != _target_id)
+		if (!message->target_sub_id().empty() && message->target_sub_id() != _target_sub_id)
 		{
 			return;
 		}
@@ -269,7 +275,10 @@ namespace network
 
 		logger::handle().write(logging::logging_level::information, fmt::format(L"connection_message: {}", message->serialize()));
 
+		_target_id = message->source_id();
+
 		message->swap_header();
+		message->set_source(_source_id, _source_sub_id);
 		message->set_message_type(L"confirm");
 
 		send(message);

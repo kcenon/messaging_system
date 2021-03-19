@@ -18,7 +18,7 @@ namespace network
 	class tcp_client : public std::enable_shared_from_this<tcp_client>, public data_handling
 	{
 	public:
-		tcp_client(void);
+		tcp_client(const std::wstring& source_id);
 		~tcp_client(void);
 
 	public:

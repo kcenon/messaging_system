@@ -15,7 +15,7 @@ namespace network
 	class tcp_server : public std::enable_shared_from_this<tcp_server>
 	{
 	public:
-		tcp_server(void);
+		tcp_server(const std::wstring& source_id);
 		~tcp_server(void);
 
 	public:
@@ -33,6 +33,7 @@ namespace network
 		void wait_connection(void);
 
 	private:
+		std::wstring _source_id;
 		unsigned short _high_priority;
 		unsigned short _normal_priority;
 		unsigned short _low_priority;

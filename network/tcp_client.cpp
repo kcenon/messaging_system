@@ -29,10 +29,10 @@ namespace network
 	using namespace encrypting;
 	using namespace compressing;
 
-	tcp_client::tcp_client(void) 
+	tcp_client::tcp_client(const std::wstring& source_id)
 		: data_handling(246, 135), _confirm(false), _auto_echo(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false),
 		_io_context(nullptr), _socket(nullptr), _buffer_size(1024), _key(L""), _iv(L""), _thread_pool(nullptr), _auto_echo_interval_seconds(1),
-		_connection_key(L"")
+		_connection_key(L""), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L"")
 	{
 		_message_handlers.insert({ L"confirm", std::bind(&tcp_client::confirm_message, this, std::placeholders::_1) });
 		_message_handlers.insert({ L"echo", std::bind(&tcp_client::echo_message, this, std::placeholders::_1) });
@@ -80,6 +80,11 @@ namespace network
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));
 		_socket->set_option(asio::socket_base::receive_buffer_size(_buffer_size));
+
+		_source_sub_id = fmt::format(L"{}:{}",
+			converter::to_wstring(_socket->local_endpoint().address().to_string()), _socket->local_endpoint().port());
+		_target_sub_id = fmt::format(L"{}:{}",
+			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
 		_thread = std::thread([](std::shared_ptr<asio::io_context> context)
 			{
