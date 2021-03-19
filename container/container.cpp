@@ -364,15 +364,9 @@ namespace container
 		file_handler::save(file_path, converter::to_array(serialize(contain_whitespace)));
 	}
 
-	std::shared_ptr<value> value_container::operator[](const std::wstring& key)
+	std::vector<std::shared_ptr<value>> value_container::operator[](const std::wstring& key)
 	{
-		std::vector<std::shared_ptr<value>> searched_values = value_array(key);
-		if (searched_values.empty())
-		{
-			return std::make_shared<value>(key);
-		}
-
-		return searched_values[0];
+		return value_array(key);
 	}
 
 	value_container operator<<(value_container target_container, value& other)
