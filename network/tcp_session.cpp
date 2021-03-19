@@ -23,14 +23,14 @@ namespace network
 	using namespace compressing;
 
 	tcp_session::tcp_session(asio::ip::tcp::socket& socket)
-		: _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _buffer_size(1024),
+		: data_handling(246, 135), _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _buffer_size(1024),
 		_key(L""), _iv(L""), _socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket))), _thread_pool(nullptr)
 	{
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));
 		_socket->set_option(asio::socket_base::receive_buffer_size(_buffer_size));
 
-		_message_handlers.insert({ L"confirm", std::bind(&tcp_session::confirm_message, this, std::placeholders::_1) });
+		_message_handlers.insert({ L"request_connection", std::bind(&tcp_session::connection_message, this, std::placeholders::_1) });
 		_message_handlers.insert({ L"echo", std::bind(&tcp_session::echo_message, this, std::placeholders::_1) });
 	}
 
@@ -64,6 +64,8 @@ namespace network
 			_thread_pool->append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 		}
 
+		read_start_code(_socket);
+
 		logger::handle().write(logging::logging_level::information, fmt::format(L"started session: {}:{}", 
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port()));
 	}
@@ -86,7 +88,21 @@ namespace network
 
 		if (_bridge_line)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::compress_packet, this, std::placeholders::_1)));
+			if (_compress_mode)
+			{
+				_thread_pool->push(std::make_shared<job>(priorities::high, message->serialize_array(), std::bind(&tcp_session::compress_packet, this, std::placeholders::_1)));
+
+				return;
+			}
+
+			if (_encrypt_mode)
+			{
+				_thread_pool->push(std::make_shared<job>(priorities::normal, message->serialize_array(), std::bind(&tcp_session::encrypt_packet, this, std::placeholders::_1)));
+
+				return;
+			}
+
+			_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
 
 			return;
 		}
@@ -108,7 +124,22 @@ namespace network
 			return;
 		}
 
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::normal, message->serialize_array(), std::bind(&tcp_session::encrypt_packet, this, std::placeholders::_1)));
+
+			return;
+		}
+
 		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
+	}
+
+	void tcp_session::receive_on_tcp(const data_modes& data_mode, const std::vector<char>& data)
+	{
+		switch (data_mode)
+		{
+		case data_modes::packet_mode: decrypt_packet(data); break;
+		}
 	}
 
 	bool tcp_session::compress_packet(const std::vector<char>& data)
@@ -149,7 +180,7 @@ namespace network
 			return false;
 		}
 
-		return true;
+		return send_on_tcp(_socket, data_modes::packet_mode, data);
 	}
 
 	bool tcp_session::decompress_packet(const std::vector<char>& data)
@@ -159,14 +190,14 @@ namespace network
 			return false;
 		}
 
-		if (_encrypt_mode)
+		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&tcp_session::decrypt_packet, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&tcp_session::receive_packet, this, std::placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, compressor::decompression(data), std::bind(&tcp_session::receive_packet, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::receive_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
@@ -178,7 +209,14 @@ namespace network
 			return false;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&tcp_session::receive_packet, this, std::placeholders::_1)));
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&tcp_session::decompress_packet, this, std::placeholders::_1)));
+
+			return true;
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::decompress_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
@@ -212,15 +250,29 @@ namespace network
 			return false;
 		}
 
+		if (!_confirm)
+		{
+			return false;
+		}
+
+		logger::handle().write(logging::logging_level::information, fmt::format(L"normal_message: {}", message->serialize()));
+
 		return true;
 	}
 
-	bool tcp_session::confirm_message(std::shared_ptr<container::value_container> message)
+	bool tcp_session::connection_message(std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
 			return false;
 		}
+
+		logger::handle().write(logging::logging_level::information, fmt::format(L"connection_message: {}", message->serialize()));
+
+		message->swap_header();
+		message->set_message_type(L"confirm");
+
+		send(message);
 
 		return true;
 	}
@@ -238,7 +290,7 @@ namespace network
 		}
 
 		std::vector<std::shared_ptr<value>> response = (*message)[L"response"];
-		if (response.empty())
+		if (!response.empty())
 		{
 			return true;
 		}
