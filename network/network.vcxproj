@@ -175,11 +175,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="data_lengths.h" />
+    <ClInclude Include="data_modes.h" />
+    <ClInclude Include="data_handling.h" />
+    <ClInclude Include="session_types.h" />
     <ClInclude Include="tcp_client.h" />
     <ClInclude Include="tcp_server.h" />
     <ClInclude Include="tcp_session.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="data_handling.cpp" />
     <ClCompile Include="tcp_client.cpp" />
     <ClCompile Include="tcp_server.cpp" />
     <ClCompile Include="tcp_session.cpp" />

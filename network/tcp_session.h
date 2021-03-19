@@ -2,6 +2,7 @@
 
 #include "container.h"
 #include "thread_pool.h"
+#include "data_handling.h"
 
 #include <map>
 #include <memory>
@@ -12,7 +13,7 @@
 
 namespace network
 {
-	class tcp_session : public std::enable_shared_from_this<tcp_session>
+	class tcp_session : public std::enable_shared_from_this<tcp_session>, public data_handling
 	{
 	public:
 		tcp_session(asio::ip::tcp::socket& socket);
@@ -28,6 +29,9 @@ namespace network
 	public:
 		void send(std::shared_ptr<container::value_container> message);
 
+	protected:
+		void receive_on_tcp(const data_modes& data_mode, const std::vector<char>& data) override;
+
 	private:
 		bool compress_packet(const std::vector<char>& data);
 		bool encrypt_packet(const std::vector<char>& data);
@@ -40,11 +44,12 @@ namespace network
 
 	private:
 		bool normal_message(std::shared_ptr<container::value_container> message);
-		bool confirm_message(std::shared_ptr<container::value_container> message);
+		bool connection_message(std::shared_ptr<container::value_container> message);
 		bool echo_message(std::shared_ptr<container::value_container> message);
 
 	private:
 		bool _confirm;
+		bool _auto_echo;
 		bool _bridge_line;
 		int _buffer_size;
 		std::wstring _source_id;

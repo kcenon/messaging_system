@@ -2,6 +2,8 @@
 
 #include "container.h"
 #include "thread_pool.h"
+#include "data_handling.h"
+#include "session_types.h"
 
 #include <map>
 #include <memory>
@@ -13,7 +15,7 @@
 
 namespace network
 {
-	class tcp_client : public std::enable_shared_from_this<tcp_client>
+	class tcp_client : public std::enable_shared_from_this<tcp_client>, public data_handling
 	{
 	public:
 		tcp_client(void);
@@ -29,6 +31,10 @@ namespace network
 	public:
 		void send(const container::value_container& message);
 		void send(std::shared_ptr<container::value_container> message);
+
+	protected:
+		void send_connection(void);
+		void receive_on_tcp(const data_modes& data_mode, const std::vector<char>& data) override;
 
 	private:
 		bool compress_packet(const std::vector<char>& data);
@@ -47,12 +53,17 @@ namespace network
 
 	private:
 		bool _confirm;
+		bool _auto_echo;
 		bool _bridge_line;
 		int _buffer_size;
+		session_types _session_type;
 		std::wstring _source_id;
 		std::wstring _source_sub_id;
 		std::wstring _target_id;
 		std::wstring _target_sub_id;
+		std::wstring _connection_key;
+		unsigned short _auto_echo_interval_seconds;
+		std::vector<std::wstring> _snipping_targets;
 
 	private:
 		bool _compress_mode;

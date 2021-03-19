@@ -1,6 +1,12 @@
 ﻿#include "tcp_client.h"
 
+#include "value.h"
 #include "values/bool_value.h"
+#include "values/bytes_value.h"
+#include "values/short_value.h"
+#include "values/ushort_value.h"
+#include "values/string_value.h"
+#include "values/container_value.h"
 
 #include "logging.h"
 #include "converting.h"
@@ -24,8 +30,9 @@ namespace network
 	using namespace compressing;
 
 	tcp_client::tcp_client(void) 
-		: _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _io_context(nullptr), _socket(nullptr), _buffer_size(1024),
-		_key(L""), _iv(L""), _thread_pool(nullptr)
+		: data_handling(246, 135), _confirm(false), _auto_echo(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false),
+		_io_context(nullptr), _socket(nullptr), _buffer_size(1024), _key(L""), _iv(L""), _thread_pool(nullptr), _auto_echo_interval_seconds(1),
+		_connection_key(L"")
 	{
 		_message_handlers.insert({ L"confirm", std::bind(&tcp_client::confirm_message, this, std::placeholders::_1) });
 		_message_handlers.insert({ L"echo", std::bind(&tcp_client::echo_message, this, std::placeholders::_1) });
@@ -87,6 +94,9 @@ namespace network
 				catch (const std::exception&) { logger::handle().write(logging::logging_level::exception, L"break tcp_client with exception"); }
 				catch (...) { logger::handle().write(logging::logging_level::exception, L"break tcp_client with error"); }
 			}, _io_context);
+
+		read_start_code(_socket);
+		send_connection();
 	}
 
 	void tcp_client::stop(void)
@@ -136,7 +146,42 @@ namespace network
 			return;
 		}
 
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::normal, message->serialize_array(), std::bind(&tcp_client::encrypt_packet, this, std::placeholders::_1)));
+
+			return;
+		}
+
 		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_client::send_packet, this, std::placeholders::_1)));
+	}
+
+	void tcp_client::send_connection(void)
+	{
+		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"request_connection");
+
+		container << std::make_shared<container::string_value>(L"connection_key", _connection_key);
+		container << std::make_shared<container::bool_value>(L"auto_echo", _auto_echo);
+		container << std::make_shared<container::ushort_value>(L"auto_echo_interval_seconds", _auto_echo_interval_seconds);
+		container << std::make_shared<container::short_value>(L"session_type", (short)_session_type);
+		container << std::make_shared<container::bool_value>(L"bridge_mode", _bridge_line);
+
+		std::shared_ptr<container::container_value> snipping_targets = std::make_shared<container::container_value>(L"snipping_targets");
+		for (auto& snipping_target : _snipping_targets)
+		{
+			snipping_targets->add(std::make_shared<container::string_value>(L"snipping_target", snipping_target));
+		}
+		container << snipping_targets;
+
+		send(container);
+	}
+
+	void tcp_client::receive_on_tcp(const data_modes& data_mode, const std::vector<char>& data)
+	{
+		switch (data_mode)
+		{
+		case data_modes::packet_mode: decrypt_packet(data); break;
+		}
 	}
 
 	bool tcp_client::compress_packet(const std::vector<char>& data)
@@ -177,7 +222,7 @@ namespace network
 			return false;
 		}
 
-		return true;
+		return send_on_tcp(_socket, data_modes::packet_mode, data);
 	}
 
 	bool tcp_client::decompress_packet(const std::vector<char>& data)
@@ -187,14 +232,14 @@ namespace network
 			return false;
 		}
 
-		if (_encrypt_mode)
+		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&tcp_client::decrypt_packet, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&tcp_client::receive_packet, this, std::placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, compressor::decompression(data), std::bind(&tcp_client::receive_packet, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_client::receive_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
@@ -206,7 +251,14 @@ namespace network
 			return false;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&tcp_client::receive_packet, this, std::placeholders::_1)));
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&tcp_client::decompress_packet, this, std::placeholders::_1)));
+
+			return true;
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_client::decompress_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
@@ -245,6 +297,8 @@ namespace network
 			return false;
 		}
 
+		logger::handle().write(logging::logging_level::information, fmt::format(L"normal_message: {}", message->serialize()));
+
 		return true;
 	}
 
@@ -254,6 +308,8 @@ namespace network
 		{
 			return false;
 		}
+
+		logger::handle().write(logging::logging_level::information, fmt::format(L"confirm_message: {}", message->serialize()));
 
 		return true;
 	}
@@ -271,7 +327,7 @@ namespace network
 		}
 
 		std::vector<std::shared_ptr<value>> response = (*message)[L"response"];
-		if (response.empty())
+		if (!response.empty())
 		{
 			return true;
 		}
