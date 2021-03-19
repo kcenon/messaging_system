@@ -270,8 +270,8 @@ namespace network
 			return false;
 		}
 
-		std::shared_ptr<value> response = (*message)[L"response"];
-		if (!response->is_null())
+		std::vector<std::shared_ptr<value>> response = (*message)[L"response"];
+		if (response.empty())
 		{
 			return true;
 		}

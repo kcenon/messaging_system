@@ -65,7 +65,7 @@ namespace container
 		void save_packet(const std::wstring& file_path, const bool& contain_whitespace = false);
 
 	public:
-		std::shared_ptr<value> operator[](const std::wstring& key);
+		std::vector<std::shared_ptr<value>> operator[](const std::wstring& key);
 
 		friend value_container operator<<(value_container target_container, value& other);
 		friend value_container operator<<(value_container target_container, std::shared_ptr<value> other);
