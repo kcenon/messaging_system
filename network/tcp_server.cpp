@@ -11,7 +11,7 @@ namespace network
 	using namespace logging;
 	using namespace converting;
 
-	tcp_server::tcp_server(void) : _io_context(nullptr), _acceptor(nullptr)
+	tcp_server::tcp_server(const std::wstring& source_id) : _io_context(nullptr), _acceptor(nullptr), _source_id(source_id)
 	{
 
 	}
@@ -127,7 +127,7 @@ namespace network
 				logger::handle().write(logging::logging_level::information, fmt::format(L"accepted new client: {}:{}", 
 					converter::to_wstring(socket.remote_endpoint().address().to_string()), socket.remote_endpoint().port()));
 
-				std::shared_ptr<tcp_session> session = std::make_shared<tcp_session>(socket);
+				std::shared_ptr<tcp_session> session = std::make_shared<tcp_session>(_source_id, socket);
 				session->start(_high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);
