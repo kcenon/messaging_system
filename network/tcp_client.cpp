@@ -16,6 +16,8 @@
 #include "job_pool.h"
 #include "job.h"
 
+#include "data_lengths.h"
+
 #include <functional>
 
 #include "fmt/format.h"
@@ -31,7 +33,7 @@ namespace network
 
 	tcp_client::tcp_client(const std::wstring& source_id, const std::wstring& connection_key)
 		: data_handling(246, 135), _confirm(false), _auto_echo(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false),
-		_io_context(nullptr), _socket(nullptr), _buffer_size(1024), _key(L""), _iv(L""), _thread_pool(nullptr), _auto_echo_interval_seconds(1),
+		_io_context(nullptr), _socket(nullptr), _key(L""), _iv(L""), _thread_pool(nullptr), _auto_echo_interval_seconds(1),
 		_connection_key(connection_key), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L"")
 	{
 		_message_handlers.insert({ L"confirm_connection", std::bind(&tcp_client::confirm_message, this, std::placeholders::_1) });
@@ -46,6 +48,27 @@ namespace network
 	std::shared_ptr<tcp_client> tcp_client::get_ptr(void)
 	{
 		return shared_from_this();
+	}
+
+	void tcp_client::set_auto_echo(const bool& auto_echo, const unsigned short& echo_interval)
+	{
+		_auto_echo = auto_echo;
+		_auto_echo_interval_seconds = echo_interval;
+	}
+
+	void tcp_client::set_bridge_line(const bool& bridge_line)
+	{
+		_bridge_line = bridge_line;
+	}
+
+	void tcp_client::set_compress_mode(const bool& compress_mode)
+	{
+		_compress_mode = compress_mode;
+	}
+
+	void tcp_client::set_session_types(const session_types& session_type)
+	{
+		_session_type = session_type;
 	}
 
 	void tcp_client::start(const std::wstring& ip, const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
@@ -79,7 +102,7 @@ namespace network
 
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));
-		_socket->set_option(asio::socket_base::receive_buffer_size(_buffer_size));
+		_socket->set_option(asio::socket_base::receive_buffer_size(buffer_size));
 
 		_source_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->local_endpoint().address().to_string()), _socket->local_endpoint().port());

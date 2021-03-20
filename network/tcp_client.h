@@ -25,6 +25,12 @@ namespace network
 		std::shared_ptr<tcp_client> get_ptr(void);
 
 	public:
+		void set_auto_echo(const bool& auto_echo, const unsigned short& echo_interval);
+		void set_bridge_line(const bool& bridge_line);
+		void set_compress_mode(const bool& compress_mode);
+		void set_session_types(const session_types& session_type);
+
+	public:
 		void start(const std::wstring& ip, const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
 		void stop(void);
 
@@ -55,7 +61,6 @@ namespace network
 		bool _confirm;
 		bool _auto_echo;
 		bool _bridge_line;
-		int _buffer_size;
 		session_types _session_type;
 		std::wstring _source_id;
 		std::wstring _source_sub_id;

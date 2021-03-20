@@ -3,6 +3,7 @@
 #include "container.h"
 #include "thread_pool.h"
 #include "data_handling.h"
+#include "session_types.h"
 
 #include <map>
 #include <memory>
@@ -23,7 +24,10 @@ namespace network
 		std::shared_ptr<tcp_session> get_ptr(void);
 
 	public:
-		void start(const bool& encrypt_mode, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
+		const session_types get_session_type(void);
+
+	public:
+		void start(const bool& encrypt_mode, const bool& compress_mode, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
 		void stop(void);
 
 	public:
@@ -56,7 +60,7 @@ namespace network
 		bool _confirm;
 		bool _auto_echo;
 		bool _bridge_line;
-		int _buffer_size;
+		session_types _session_type;
 		std::wstring _source_id;
 		std::wstring _source_sub_id;
 		std::wstring _target_id;
