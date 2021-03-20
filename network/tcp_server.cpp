@@ -11,7 +11,8 @@ namespace network
 	using namespace logging;
 	using namespace converting;
 
-	tcp_server::tcp_server(const std::wstring& source_id) : _io_context(nullptr), _acceptor(nullptr), _source_id(source_id)
+	tcp_server::tcp_server(const std::wstring& source_id, const std::wstring& connection_key) 
+		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(connection_key)
 	{
 
 	}
@@ -26,10 +27,11 @@ namespace network
 		return shared_from_this();
 	}
 
-	void tcp_server::start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
+	void tcp_server::start(const bool& encrypt_mode, const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
 		stop();
 
+		_encrypt_mode = encrypt_mode;
 		_high_priority = high_priority;
 		_normal_priority = normal_priority;
 		_low_priority = low_priority;
@@ -127,8 +129,8 @@ namespace network
 				logger::handle().write(logging::logging_level::information, fmt::format(L"accepted new client: {}:{}", 
 					converter::to_wstring(socket.remote_endpoint().address().to_string()), socket.remote_endpoint().port()));
 
-				std::shared_ptr<tcp_session> session = std::make_shared<tcp_session>(_source_id, socket);
-				session->start(_high_priority, _normal_priority, _low_priority);
+				std::shared_ptr<tcp_session> session = std::make_shared<tcp_session>(_source_id, _connection_key, socket);
+				session->start(_encrypt_mode, _high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);
 

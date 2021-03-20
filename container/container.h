@@ -48,6 +48,7 @@ namespace container
 		void remove(const std::wstring& target_name);
 		void remove(std::shared_ptr<value> target_value);
 		std::vector<std::shared_ptr<value>> value_array(const std::wstring& target_name);
+		std::shared_ptr<value> get_value(const std::wstring& target_name, const unsigned int& index = 0);
 
 	public:
 		void initialize(void);
