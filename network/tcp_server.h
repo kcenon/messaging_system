@@ -22,7 +22,11 @@ namespace network
 		std::shared_ptr<tcp_server> get_ptr(void);
 
 	public:
-		void start(const bool& encrypt_mode, const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
+		void set_encrypt_mode(const bool& encrypt_mode);
+		void set_compress_mode(const bool& compress_mode);
+
+	public:
+		void start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
 		void stop(void);
 
 	public:
@@ -34,6 +38,7 @@ namespace network
 
 	private:
 		bool _encrypt_mode;
+		bool _compress_mode;
 		std::wstring _source_id;
 		std::wstring _connection_key;
 		unsigned short _high_priority;

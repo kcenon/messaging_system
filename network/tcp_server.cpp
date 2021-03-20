@@ -27,11 +27,20 @@ namespace network
 		return shared_from_this();
 	}
 
-	void tcp_server::start(const bool& encrypt_mode, const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
+	void tcp_server::set_encrypt_mode(const bool& encrypt_mode)
+	{
+		_encrypt_mode = encrypt_mode;
+	}
+
+	void tcp_server::set_compress_mode(const bool& compress_mode)
+	{
+		_compress_mode = compress_mode;
+	}
+
+	void tcp_server::start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
 		stop();
 
-		_encrypt_mode = encrypt_mode;
 		_high_priority = high_priority;
 		_normal_priority = normal_priority;
 		_low_priority = low_priority;
@@ -130,7 +139,7 @@ namespace network
 					converter::to_wstring(socket.remote_endpoint().address().to_string()), socket.remote_endpoint().port()));
 
 				std::shared_ptr<tcp_session> session = std::make_shared<tcp_session>(_source_id, _connection_key, socket);
-				session->start(_encrypt_mode, _high_priority, _normal_priority, _low_priority);
+				session->start(_encrypt_mode, _compress_mode, _high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);
 

@@ -12,6 +12,8 @@
 #include "job_pool.h"
 #include "job.h"
 
+#include "data_lengths.h"
+
 #include "fmt/format.h"
 
 namespace network
@@ -24,13 +26,13 @@ namespace network
 	using namespace compressing;
 
 	tcp_session::tcp_session(const std::wstring& source_id, const std::wstring& connection_key, asio::ip::tcp::socket& socket)
-		: data_handling(246, 135), _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _buffer_size(1024),
+		: data_handling(246, 135), _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false),
 		_key(L""), _iv(L""), _socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket))), _thread_pool(nullptr), _source_id(source_id),
 		_source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _connection_key(connection_key)
 	{
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));
-		_socket->set_option(asio::socket_base::receive_buffer_size(_buffer_size));
+		_socket->set_option(asio::socket_base::receive_buffer_size(buffer_size));
 
 		_source_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->local_endpoint().address().to_string()), _socket->local_endpoint().port());
@@ -51,11 +53,17 @@ namespace network
 		return shared_from_this();
 	}
 
-	void tcp_session::start(const bool& encrypt_mode, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
+	const session_types tcp_session::get_session_type(void)
+	{
+		return _session_type;
+	}
+
+	void tcp_session::start(const bool& encrypt_mode, const bool& compress_mode, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
 		stop();
 
 		_encrypt_mode = encrypt_mode;
+		_compress_mode = compress_mode;
 		_thread_pool = std::make_shared<threads::thread_pool>();
 
 		_thread_pool->append(std::make_shared<thread_worker>(priorities::top), true);
@@ -279,8 +287,6 @@ namespace network
 
 		logger::handle().write(logging::logging_level::information, fmt::format(L"connection_message: {}", message->serialize()));
 
-		_target_id = message->source_id();
-
 		if (!same_key_check(message->get_value(L"connection_key")))
 		{
 			return false;
@@ -290,6 +296,9 @@ namespace network
 		{
 			return false;
 		}
+
+		_target_id = message->source_id();
+		_session_type = (session_types)message->get_value(L"session_type")->to_short();
 
 		generate_key();
 
