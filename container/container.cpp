@@ -237,6 +237,22 @@ namespace container
 		return result_list;
 	}
 
+	std::shared_ptr<value> value_container::get_value(const std::wstring& target_name, const unsigned int& index)
+	{
+		std::vector<std::shared_ptr<value>> result_list = value_array(target_name);
+		if (result_list.empty())
+		{
+			return std::make_shared<value>(target_name);
+		}
+
+		if (index >= result_list.size())
+		{
+			return std::make_shared<value>(target_name);
+		}
+
+		return result_list[index];
+	}
+
 	void value_container::initialize(void)
 	{
 		_source_id = L"";

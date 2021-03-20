@@ -14,13 +14,13 @@ int main()
 	logger::handle().set_target_level(logging_level::sequence);
 	logger::handle().start();
 
-	tcp_server server(L"server");
-	tcp_client client(L"client");
+	tcp_server server(L"server", L"connection_key");
+	tcp_client client(L"client", L"connection_key");
 
-	server.start(5690, 1, 1, 1);
+	server.start(true, 5690, 1, 1, 1);
 	client.start(L"127.0.0.1", 5690, 1, 1, 1);
 
-	std::this_thread::sleep_for(std::chrono::seconds(5));
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 
 	client.stop();
 	server.stop();

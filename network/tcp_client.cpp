@@ -29,12 +29,12 @@ namespace network
 	using namespace encrypting;
 	using namespace compressing;
 
-	tcp_client::tcp_client(const std::wstring& source_id)
+	tcp_client::tcp_client(const std::wstring& source_id, const std::wstring& connection_key)
 		: data_handling(246, 135), _confirm(false), _auto_echo(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false),
 		_io_context(nullptr), _socket(nullptr), _buffer_size(1024), _key(L""), _iv(L""), _thread_pool(nullptr), _auto_echo_interval_seconds(1),
-		_connection_key(L""), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L"")
+		_connection_key(connection_key), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L"")
 	{
-		_message_handlers.insert({ L"confirm", std::bind(&tcp_client::confirm_message, this, std::placeholders::_1) });
+		_message_handlers.insert({ L"confirm_connection", std::bind(&tcp_client::confirm_message, this, std::placeholders::_1) });
 		_message_handlers.insert({ L"echo", std::bind(&tcp_client::echo_message, this, std::placeholders::_1) });
 	}
 
@@ -142,7 +142,7 @@ namespace network
 			return;
 		}
 
-		logger::handle().write(logging::logging_level::sequence, fmt::format(L"attempts to send message: {}", message->message_type()));
+		logger::handle().write(logging::logging_level::information, fmt::format(L"attempt to send: {}", message->serialize()));
 
 		if (_compress_mode)
 		{
@@ -315,6 +315,16 @@ namespace network
 		}
 
 		logger::handle().write(logging::logging_level::information, fmt::format(L"confirm_message: {}", message->serialize()));
+
+		if (!message->get_value(L"confirm")->to_boolean())
+		{
+			return false;
+		}
+
+		_confirm = true;
+		_key = message->get_value(L"key")->to_string();
+		_iv = message->get_value(L"iv")->to_string();
+		_encrypt_mode = message->get_value(L"encrypt_mode")->to_boolean();
 
 		return true;
 	}

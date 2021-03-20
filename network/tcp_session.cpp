@@ -1,6 +1,7 @@
 ﻿#include "tcp_session.h"
 
 #include "values/bool_value.h"
+#include "values/string_value.h"
 
 #include "logging.h"
 #include "converting.h"
@@ -22,10 +23,10 @@ namespace network
 	using namespace encrypting;
 	using namespace compressing;
 
-	tcp_session::tcp_session(const std::wstring& source_id, asio::ip::tcp::socket& socket)
+	tcp_session::tcp_session(const std::wstring& source_id, const std::wstring& connection_key, asio::ip::tcp::socket& socket)
 		: data_handling(246, 135), _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _buffer_size(1024),
 		_key(L""), _iv(L""), _socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket))), _thread_pool(nullptr), _source_id(source_id),
-		_source_sub_id(L""), _target_id(L""), _target_sub_id(L"")
+		_source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _connection_key(connection_key)
 	{
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));
@@ -50,10 +51,11 @@ namespace network
 		return shared_from_this();
 	}
 
-	void tcp_session::start(const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
+	void tcp_session::start(const bool& encrypt_mode, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
 		stop();
 
+		_encrypt_mode = encrypt_mode;
 		_thread_pool = std::make_shared<threads::thread_pool>();
 
 		_thread_pool->append(std::make_shared<thread_worker>(priorities::top), true);
@@ -91,6 +93,8 @@ namespace network
 		{
 			return;
 		}
+
+		logger::handle().write(logging::logging_level::information, fmt::format(L"attempt to send: {}", message->serialize()));
 
 		if (_bridge_line)
 		{
@@ -277,11 +281,33 @@ namespace network
 
 		_target_id = message->source_id();
 
-		message->swap_header();
-		message->set_source(_source_id, _source_sub_id);
-		message->set_message_type(L"confirm");
+		if (!same_key_check(message->get_value(L"connection_key")))
+		{
+			return false;
+		}
 
-		send(message);
+		if (!same_id_check())
+		{
+			return false;
+		}
+
+		generate_key();
+
+		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection");
+
+		container << std::make_shared<container::bool_value>(L"confirm", true);
+		container << std::make_shared<container::string_value>(L"key", _key);
+		container << std::make_shared<container::string_value>(L"iv", _iv);
+		container << std::make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode);
+
+		if (_compress_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::high, compressor::compression(container->serialize_array()), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
+
+			return true;
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::top, container->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
@@ -311,5 +337,58 @@ namespace network
 		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
 
 		return true;
+	}
+
+	void tcp_session::generate_key(void)
+	{
+		if (!_encrypt_mode)
+		{
+			_key = L"";
+			_iv = L"";
+
+			return;
+		}
+		
+		auto encrypt_key = encryptor::create_key();
+		_key = encrypt_key.first;
+		_iv = encrypt_key.second;
+	}
+
+	bool tcp_session::same_key_check(std::shared_ptr<container::value> key)
+	{
+		if (key != nullptr && _connection_key == key->to_string())
+		{
+			return true;
+		}
+
+		logger::handle().write(logging::logging_level::information, L"ignored this line = \"unknown connection key\"");
+
+		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection");
+
+		container << std::make_shared<container::bool_value>(L"confirm", false);
+		container << std::make_shared<container::string_value>(L"reason", L"ignored this line = \"unknown connection key\"");
+
+		send(container);
+
+		return false;
+	}
+
+	bool tcp_session::same_id_check(void)
+	{
+		if (_target_id != _source_id)
+		{
+			return true;
+		}
+
+		logger::handle().write(logging::logging_level::information, L"ignored this line = \"cannot use same id with server\"");
+
+		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection");
+
+		container << std::make_shared<container::bool_value>(L"confirm", false);
+		container << std::make_shared<container::string_value>(L"reason", L"ignored this line = \"cannot use same id with server\"");
+
+		send(container);
+
+		return false;
 	}
 }
