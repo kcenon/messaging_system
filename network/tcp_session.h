@@ -24,7 +24,13 @@ namespace network
 		std::shared_ptr<tcp_session> get_ptr(void);
 
 	public:
+		void set_connection_notification(const std::function<void(std::shared_ptr<tcp_session>, const bool&)>& notification);
+		void set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification);
+
+	public:
 		const session_types get_session_type(void);
+		const std::wstring target_id(void);
+		const std::wstring target_sub_id(void);
 
 	public:
 		void start(const bool& encrypt_mode, const bool& compress_mode, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
@@ -36,6 +42,7 @@ namespace network
 	protected:
 		void receive_on_tcp(const data_modes& data_mode, const std::vector<char>& data) override;
 
+		// packet
 	private:
 		bool compress_packet(const std::vector<char>& data);
 		bool encrypt_packet(const std::vector<char>& data);
@@ -46,6 +53,18 @@ namespace network
 		bool decrypt_packet(const std::vector<char>& data);
 		bool receive_packet(const std::vector<char>& data);
 
+		// file
+	private:
+		bool load_file(const std::vector<char>& data);
+		bool compress_file(const std::vector<char>& data);
+		bool encrypt_file(const std::vector<char>& data);
+		bool send_file(const std::vector<char>& data);
+
+	private:
+		bool decompress_file(const std::vector<char>& data);
+		bool decrypt_file(const std::vector<char>& data);
+		bool receive_file(const std::vector<char>& data);
+
 	private:
 		bool normal_message(std::shared_ptr<container::value_container> message);
 		bool connection_message(std::shared_ptr<container::value_container> message);
@@ -55,6 +74,10 @@ namespace network
 		void generate_key(void);
 		bool same_key_check(std::shared_ptr<container::value> key);
 		bool same_id_check(void);
+
+	private:
+		void append_data(std::vector<char>& result, const std::vector<char>& source);
+		std::vector<char> devide_data(const std::vector<char>& source, size_t& index);
 
 	private:
 		bool _confirm;
@@ -72,6 +95,10 @@ namespace network
 		bool _encrypt_mode;
 		std::wstring _key;
 		std::wstring _iv;
+
+	private:
+		std::function<void(std::shared_ptr<tcp_session>, const bool&)> _connection;
+		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)> _received_file;
 
 	private:
 		std::shared_ptr<asio::ip::tcp::socket> _socket;

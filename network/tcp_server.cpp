@@ -6,13 +6,15 @@
 
 #include "fmt/format.h"
 
+#include <algorithm>
+
 namespace network
 {
 	using namespace logging;
 	using namespace converting;
 
 	tcp_server::tcp_server(const std::wstring& source_id, const std::wstring& connection_key) 
-		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(connection_key)
+		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(connection_key), _received_file(nullptr), _connection(nullptr)
 	{
 
 	}
@@ -35,6 +37,16 @@ namespace network
 	void tcp_server::set_compress_mode(const bool& compress_mode)
 	{
 		_compress_mode = compress_mode;
+	}
+
+	void tcp_server::set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification)
+	{
+		_connection = notification;
+	}
+
+	void tcp_server::set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification)
+	{
+		_received_file = notification;
 	}
 
 	void tcp_server::start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
@@ -139,11 +151,38 @@ namespace network
 					converter::to_wstring(socket.remote_endpoint().address().to_string()), socket.remote_endpoint().port()));
 
 				std::shared_ptr<tcp_session> session = std::make_shared<tcp_session>(_source_id, _connection_key, socket);
+				session->set_connection_notification(std::bind(&tcp_server::connect_condition, this, std::placeholders::_1, std::placeholders::_2));
+				session->set_file_notification(_received_file);
 				session->start(_encrypt_mode, _compress_mode, _high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);
 
 				wait_connection();
 			});
+	}
+
+	void tcp_server::connect_condition(std::shared_ptr<tcp_session> target, const bool& condition)
+	{
+		if (target == nullptr)
+		{
+			return;
+		}
+
+		if (_connection)
+		{
+			_connection(target->target_id(), target->target_sub_id(), condition);
+		}
+
+		if (!condition)
+		{
+			auto iter = std::find(_sessions.begin(), _sessions.end(), target);
+			if (iter != _sessions.end())
+			{
+				_sessions.erase(iter);
+
+				(*iter)->stop();
+				(*iter).reset();
+			}
+		}
 	}
 }
