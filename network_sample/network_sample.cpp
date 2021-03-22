@@ -14,7 +14,7 @@ int main()
 	bool encrypt_mode = true;
 	bool compress_mode = true;
 
-	logger::handle().set_target_level(logging_level::sequence);
+	logger::handle().set_target_level(logging_level::parameter);
 	logger::handle().start();
 
 	tcp_server server(L"server", L"any string can be used for it");

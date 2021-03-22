@@ -26,6 +26,10 @@ namespace network
 		void set_compress_mode(const bool& compress_mode);
 
 	public:
+		void set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification);
+		void set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification);
+
+	public:
 		void start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
 		void stop(void);
 
@@ -35,6 +39,7 @@ namespace network
 
 	protected:
 		void wait_connection(void);
+		void connect_condition(std::shared_ptr<tcp_session> target, const bool& condition);
 
 	private:
 		bool _encrypt_mode;
@@ -50,5 +55,9 @@ namespace network
 		std::shared_ptr<asio::io_context> _io_context;
 		std::shared_ptr<asio::ip::tcp::acceptor> _acceptor;
 		std::vector<std::shared_ptr<tcp_session>> _sessions;
+
+	private:
+		std::function<void(const std::wstring&, const std::wstring&, const bool&)> _connection;
+		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)> _received_file;
 	};
 }
