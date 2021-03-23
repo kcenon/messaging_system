@@ -17,17 +17,13 @@
 #include "values/ushort_value.h"
 #include "values/container_value.h"
 
-#include "fmt/format.h"
+#include <sstream>
 
-#include <boost/algorithm/string.hpp>
-#include <boost/archive/iterators/binary_from_base64.hpp>
-#include <boost/archive/iterators/base64_from_binary.hpp>
-#include <boost/archive/iterators/transform_width.hpp>
+#include "fmt/format.h"
 
 namespace container
 {
 	using namespace converting;
-	using namespace boost::archive::iterators;
 
 	value::value(void) : _name(L""), _type(value_types::null_value), _size(0)
 	{
@@ -137,10 +133,10 @@ namespace container
 
 		std::wstring temp = to_string();
 
-		boost::replace_all(temp, L"</0x0A;>", L"\r");
-		boost::replace_all(temp, L"</0x0B;>", L"\n");
-		boost::replace_all(temp, L"</0x0C;>", L" ");
-		boost::replace_all(temp, L"</0x0D;>", L"\t");
+		converter::replace_all(temp, L"</0x0A;>", L"\r");
+		converter::replace_all(temp, L"</0x0B;>", L"\n");
+		converter::replace_all(temp, L"</0x0C;>", L" ");
+		converter::replace_all(temp, L"</0x0D;>", L"\t");
 
 		return temp;
 	}

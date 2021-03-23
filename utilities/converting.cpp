@@ -7,7 +7,7 @@
 
 namespace converting
 {
-	void converter::replace(std::wstring& source, const std::wstring& token, const std::wstring& target)
+	void converter::replace_all(std::wstring& source, const std::wstring& token, const std::wstring& target)
 	{
 		if (source.empty() == true)
 		{
