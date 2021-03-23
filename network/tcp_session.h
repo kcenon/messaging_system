@@ -25,6 +25,7 @@ namespace network
 
 	public:
 		void set_connection_notification(const std::function<void(std::shared_ptr<tcp_session>, const bool&)>& notification);
+		void set_message_notification(const std::function<void(std::shared_ptr<container::value_container>)>& notification);
 		void set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification);
 
 	public:
@@ -98,6 +99,7 @@ namespace network
 
 	private:
 		std::function<void(std::shared_ptr<tcp_session>, const bool&)> _connection;
+		std::function<void(std::shared_ptr<container::value_container>)> _received_message;
 		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)> _received_file;
 
 	private:

@@ -28,7 +28,7 @@ namespace network
 	using namespace file_handling;
 
 	tcp_session::tcp_session(const std::wstring& source_id, const std::wstring& connection_key, asio::ip::tcp::socket& socket)
-		: data_handling(246, 135), _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false),
+		: data_handling(246, 135), _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _received_message(nullptr),
 		_key(L""), _iv(L""), _socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket))), _thread_pool(nullptr), _source_id(source_id),
 		_source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _connection_key(connection_key), _received_file(nullptr), _connection(nullptr)
 	{
@@ -58,6 +58,11 @@ namespace network
 	void tcp_session::set_connection_notification(const std::function<void(std::shared_ptr<tcp_session>, const bool&)>& notification)
 	{
 		_connection = notification;
+	}
+
+	void tcp_session::set_message_notification(const std::function<void(std::shared_ptr<container::value_container>)>& notification)
+	{
+		_received_message = notification;
 	}
 
 	void tcp_session::set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification)
@@ -443,7 +448,10 @@ namespace network
 			return false;
 		}
 
-		logger::handle().write(logging::logging_level::information, fmt::format(L"normal_message: {}", message->serialize()));
+		if (_received_message)
+		{
+			_received_message(message);
+		}
 
 		return true;
 	}
@@ -454,8 +462,6 @@ namespace network
 		{
 			return false;
 		}
-
-		logger::handle().write(logging::logging_level::information, fmt::format(L"connection_message: {}", message->serialize()));
 
 		_target_id = message->source_id();
 		_session_type = (session_types)message->get_value(L"session_type")->to_short();
@@ -482,12 +488,13 @@ namespace network
 
 		generate_key();
 
-		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection");
-
-		container << std::make_shared<container::bool_value>(L"confirm", true);
-		container << std::make_shared<container::string_value>(L"key", _key);
-		container << std::make_shared<container::string_value>(L"iv", _iv);
-		container << std::make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode);
+		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
+			std::vector<std::shared_ptr<container::value>> {
+				std::make_shared<container::bool_value>(L"confirm", true),
+				std::make_shared<container::string_value>(L"key", _key),
+				std::make_shared<container::string_value>(L"iv", _iv),
+				std::make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode)
+		});
 
 		if (_compress_mode)
 		{
@@ -562,10 +569,11 @@ namespace network
 
 		logger::handle().write(logging::logging_level::information, L"ignored this line = \"unknown connection key\"");
 
-		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection");
-
-		container << std::make_shared<container::bool_value>(L"confirm", false);
-		container << std::make_shared<container::string_value>(L"reason", L"ignored this line = \"unknown connection key\"");
+		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
+			std::vector<std::shared_ptr<container::value>> {
+				std::make_shared<container::bool_value>(L"confirm", false),
+				std::make_shared<container::string_value>(L"reason", L"ignored this line = \"unknown connection key\"")
+		});
 
 		send(container);
 
@@ -581,10 +589,11 @@ namespace network
 
 		logger::handle().write(logging::logging_level::information, L"ignored this line = \"cannot use same id with server\"");
 
-		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection");
-
-		container << std::make_shared<container::bool_value>(L"confirm", false);
-		container << std::make_shared<container::string_value>(L"reason", L"ignored this line = \"cannot use same id with server\"");
+		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
+			std::vector<std::shared_ptr<container::value>> {
+				std::make_shared<container::bool_value>(L"confirm", false),
+				std::make_shared<container::string_value>(L"reason", L"ignored this line = \"cannot use same id with server\"")
+		});
 
 		send(container);
 
