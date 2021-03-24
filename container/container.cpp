@@ -532,14 +532,12 @@ namespace container
 	{
 		if (source_name != target_name)
 		{
-			target_variable = L"";
-
 			return;
 		}
 
 		target_variable = target_value;
 
-		target_variable.erase(0, target_variable.find_first_not_of(' '));
+		target_variable.substr(0, target_variable.find_first_not_of(' '));
 		target_variable.erase(target_variable.find_last_not_of(' ') + 1);
 
 		return;
