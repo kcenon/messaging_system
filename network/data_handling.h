@@ -6,7 +6,11 @@
 #include <vector>
 #include <system_error>
 
+#ifdef ASIO_STANDALONE
 #include "asio.hpp"
+#else
+#include <boost/asio.hpp>
+#endif
 
 namespace network
 {
@@ -17,20 +21,35 @@ namespace network
 		~data_handling(void);
 
 	protected:
-		void read_start_code(std::shared_ptr<asio::ip::tcp::socket> socket);
-		void read_packet_code(std::shared_ptr<asio::ip::tcp::socket> socket);
-		void read_length_code(const data_modes& packet_mode, std::shared_ptr<asio::ip::tcp::socket> socket);
-		void read_data(const data_modes& packet_mode, const unsigned int& remained_length, std::shared_ptr<asio::ip::tcp::socket> socket);
-		void read_end_code(const data_modes& packet_mode, std::shared_ptr<asio::ip::tcp::socket> socket);
+#ifdef ASIO_STANDALONE
+		void read_start_code(std::weak_ptr<asio::ip::tcp::socket> socket);
+		void read_packet_code(std::weak_ptr<asio::ip::tcp::socket> socket);
+		void read_length_code(const data_modes& packet_mode, std::weak_ptr<asio::ip::tcp::socket> socket);
+		void read_data(const data_modes& packet_mode, const unsigned int& remained_length, std::weak_ptr<asio::ip::tcp::socket> socket);
+		void read_end_code(const data_modes& packet_mode, std::weak_ptr<asio::ip::tcp::socket> socket);
+#else
+		void read_start_code(std::weak_ptr<boost::asio::ip::tcp::socket> socket);
+		void read_packet_code(std::weak_ptr<boost::asio::ip::tcp::socket> socket);
+		void read_length_code(const data_modes& packet_mode, std::weak_ptr<boost::asio::ip::tcp::socket> socket);
+		void read_data(const data_modes& packet_mode, const unsigned int& remained_length, std::weak_ptr<boost::asio::ip::tcp::socket> socket);
+		void read_end_code(const data_modes& packet_mode, std::weak_ptr<boost::asio::ip::tcp::socket> socket);
+#endif
 
 	protected:
-		bool send_on_tcp(std::shared_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const std::vector<char>& data);
-		virtual void receive_on_tcp(const data_modes& data_mode, const std::vector<char>& data) = 0;
+#ifdef ASIO_STANDALONE
+		bool send_on_tcp(std::weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const std::vector<unsigned char>& data);
+#else
+		bool send_on_tcp(std::weak_ptr<boost::asio::ip::tcp::socket> socket, const data_modes& data_mode, const std::vector<unsigned char>& data);
+#endif
+		virtual void receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data) = 0;
+
+	protected:
+		virtual void disconnected(void) = 0;
 
 	private:
 		char _start_code_tag[start_code];
 		char _end_code_tag[end_code];
 		char _receiving_buffer[buffer_size];
-		std::vector<char> _received_data;
+		std::vector<unsigned char> _received_data;
 	};
 }

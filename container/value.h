@@ -16,7 +16,7 @@ namespace container
 		value(std::shared_ptr<value> object);
 		value(const std::wstring& name, const std::vector<std::shared_ptr<value>>& units = {});
 		value(const std::wstring& name, const std::wstring& type, const std::wstring& data);
-		value(const std::wstring& name, const char* data, const size_t& size, const value_types& type = value_types::null_value);
+		value(const std::wstring& name, const unsigned char* data, const size_t& size, const value_types& type = value_types::null_value);
 		virtual ~value(void);
 
 	public:
@@ -24,7 +24,7 @@ namespace container
 
 	public:
 		void set_parent(std::shared_ptr<value> parent);
-		void set_data(const char* data, const size_t& size, const value_types& type);
+		void set_data(const unsigned char* data, const size_t& size, const value_types& type);
 		void set_data(const std::wstring& name, const std::wstring& type, const std::wstring& data);
 
 	public:
@@ -47,7 +47,7 @@ namespace container
 		std::vector<std::shared_ptr<value>> value_array(const std::wstring& key);
 
 	public:
-		const std::vector<char> to_bytes(void) const;
+		const std::vector<unsigned char> to_bytes(void) const;
 
 	public:
 		bool is_null(void) const;
@@ -98,7 +98,7 @@ namespace container
 		size_t _size;
 		value_types _type;
 		std::wstring _name;
-		std::vector<char> _data;
+		std::vector<unsigned char> _data;
 
 	protected:
 		std::weak_ptr<value> _parent;

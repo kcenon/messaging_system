@@ -38,7 +38,7 @@ bool write_low(void)
 	return true;
 }
 
-bool write_data(const std::vector<char>& data)
+bool write_data(const std::vector<unsigned char>& data)
 {
 	auto start = logger::handle().chrono_start();
 	logger::handle().write(logging_level::information, converter::to_wstring(data), start);

@@ -12,27 +12,52 @@ namespace network
 	{
 		memset(_start_code_tag, start_code_value, start_code);
 		memset(_end_code_tag, end_code_value, end_code);
+		memset(_receiving_buffer, 0, buffer_size);
 	}
 
 	data_handling::~data_handling(void)
 	{
 	}
 
-	void data_handling::read_start_code(std::shared_ptr<asio::ip::tcp::socket> socket)
+#ifdef ASIO_STANDALONE
+	void data_handling::read_start_code(std::weak_ptr<asio::ip::tcp::socket> socket)
+#else
+	void data_handling::read_start_code(std::weak_ptr<boost::asio::ip::tcp::socket> socket)
+#endif
 	{
-		if (socket == nullptr)
+#ifdef ASIO_STANDALONE
+		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+#else
+		std::shared_ptr<boost::asio::ip::tcp::socket> current_socket = socket.lock();
+#endif
+		if (current_socket == nullptr)
 		{
+			disconnected();
+
 			return;
 		}
 
 		_received_data.clear();
-		memset(_receiving_buffer, 0, buffer_size);
 
-		socket->async_receive(asio::buffer(_receiving_buffer, start_code),
+#ifdef ASIO_STANDALONE
+		current_socket->async_receive(asio::buffer(_receiving_buffer, start_code),
 			[this, socket](std::error_code ec, std::size_t length)
+#else
+		current_socket->async_receive(boost::asio::buffer(_receiving_buffer, start_code),
+			[this, socket](boost::system::error_code ec, std::size_t length)
+#endif
 			{
-				if (ec || length != start_code)
+				if (ec)
 				{
+					disconnected();
+
+					return;
+				}
+
+				if (length != start_code)
+				{
+					memset(_receiving_buffer, 0, buffer_size);
+
 					read_start_code(socket);
 
 					return;
@@ -45,52 +70,107 @@ namespace network
 						continue;
 					}
 
+					memset(_receiving_buffer, 0, buffer_size);
+
 					read_start_code(socket);
 
 					return;
 				}
+
+				memset(_receiving_buffer, 0, buffer_size);
 
 				read_packet_code(socket);
 			});
 	}
 
-	void data_handling::read_packet_code(std::shared_ptr<asio::ip::tcp::socket> socket)
+#ifdef ASIO_STANDALONE
+	void data_handling::read_packet_code(std::weak_ptr<asio::ip::tcp::socket> socket)
+#else
+	void data_handling::read_packet_code(std::weak_ptr<boost::asio::ip::tcp::socket> socket)
+#endif
 	{
-		if (socket == nullptr)
+#ifdef ASIO_STANDALONE
+		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+#else
+		std::shared_ptr<boost::asio::ip::tcp::socket> current_socket = socket.lock();
+#endif
+		if (current_socket == nullptr)
 		{
+			disconnected();
+
 			return;
 		}
 
-		memset(_receiving_buffer, 0, buffer_size);
-
-		socket->async_receive(asio::buffer(_receiving_buffer, mode_code),
+#ifdef ASIO_STANDALONE
+		current_socket->async_receive(asio::buffer(_receiving_buffer, mode_code),
 			[this, socket](std::error_code ec, std::size_t length)
+#else
+		current_socket->async_receive(boost::asio::buffer(_receiving_buffer, mode_code),
+			[this, socket](boost::system::error_code ec, std::size_t length)
+#endif
 			{
-				if (ec || length != mode_code)
+				if (ec)
 				{
+					disconnected();
+
+					return;
+				}
+
+				if (length != mode_code)
+				{
+					memset(_receiving_buffer, 0, buffer_size);
+
 					read_start_code(socket);
 
 					return;
 				}
 
-				read_length_code((data_modes)_receiving_buffer[0], socket);
+				data_modes mode = (data_modes)_receiving_buffer[0];
+				memset(_receiving_buffer, 0, buffer_size);
+
+				read_length_code(mode, socket);
 			});
 	}
 
-	void data_handling::read_length_code(const data_modes& packet_mode, std::shared_ptr<asio::ip::tcp::socket> socket)
+#ifdef ASIO_STANDALONE
+	void data_handling::read_length_code(const data_modes& packet_mode, std::weak_ptr<asio::ip::tcp::socket> socket)
+#else
+	void data_handling::read_length_code(const data_modes& packet_mode, std::weak_ptr<boost::asio::ip::tcp::socket> socket)
+#endif
 	{
-		if (socket == nullptr)
+#ifdef ASIO_STANDALONE
+		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+#else
+		std::shared_ptr<boost::asio::ip::tcp::socket> current_socket = socket.lock();
+#endif
+		if (current_socket == nullptr)
 		{
+			disconnected();
+
 			return;
 		}
 
 		memset(_receiving_buffer, 0, buffer_size);
 
-		socket->async_receive(asio::buffer(_receiving_buffer, length_code),
+#ifdef ASIO_STANDALONE
+		current_socket->async_receive(asio::buffer(_receiving_buffer, length_code),
 			[this, packet_mode, socket](std::error_code ec, std::size_t length)
+#else
+		current_socket->async_receive(boost::asio::buffer(_receiving_buffer, length_code),
+			[this, packet_mode, socket](boost::system::error_code ec, std::size_t length)
+#endif
 			{
-				if (ec || length != length_code)
+				if (ec)
 				{
+					disconnected();
+
+					return;
+				}
+
+				if (length != length_code)
+				{
+					memset(_receiving_buffer, 0, buffer_size);
+
 					read_start_code(socket);
 
 					return;
@@ -99,19 +179,18 @@ namespace network
 				unsigned int target_length = 0;
 				memcpy(&target_length, _receiving_buffer, length);
 
+				memset(_receiving_buffer, 0, buffer_size);
+
 				read_data(packet_mode, target_length, socket);
 			});
 	}
 
-	void data_handling::read_data(const data_modes& packet_mode, const unsigned int& remained_length, std::shared_ptr<asio::ip::tcp::socket> socket)
+#ifdef ASIO_STANDALONE
+	void data_handling::read_data(const data_modes& packet_mode, const unsigned int& remained_length, std::weak_ptr<asio::ip::tcp::socket> socket)
+#else
+	void data_handling::read_data(const data_modes& packet_mode, const unsigned int& remained_length, std::weak_ptr<boost::asio::ip::tcp::socket> socket)
+#endif
 	{
-		if (socket == nullptr)
-		{
-			return;
-		}
-
-		memset(_receiving_buffer, 0, buffer_size);
-
 		if (remained_length == 0)
 		{
 			read_end_code(packet_mode, socket);
@@ -119,56 +198,118 @@ namespace network
 			return;
 		}
 
+#ifdef ASIO_STANDALONE
+		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+#else
+		std::shared_ptr<boost::asio::ip::tcp::socket> current_socket = socket.lock();
+#endif
+		if (current_socket == nullptr)
+		{
+			disconnected();
+
+			return;
+		}
+
+		memset(_receiving_buffer, 0, buffer_size);
+
 		if (remained_length >= buffer_size)
 		{
-			socket->async_receive(asio::buffer(_receiving_buffer, buffer_size),
-				[this, packet_mode, remained_length,socket](std::error_code ec, std::size_t length)
+#ifdef ASIO_STANDALONE
+			current_socket->async_receive(asio::buffer(_receiving_buffer, buffer_size),
+				[this, packet_mode, remained_length, socket](std::error_code ec, std::size_t length)
+#else
+			current_socket->async_receive(boost::asio::buffer(_receiving_buffer, buffer_size),
+				[this, packet_mode, remained_length, socket](boost::system::error_code ec, std::size_t length)
+#endif
 				{
-					if (ec || length != buffer_size)
+					if (ec)
 					{
+						disconnected();
+
+						return;
+					}
+
+					if (length != buffer_size)
+					{
+						memset(_receiving_buffer, 0, buffer_size);
+
 						read_start_code(socket);
 
 						return;
 					}
 
 					_received_data.insert(_received_data.end(), _receiving_buffer, _receiving_buffer + length);
+					memset(_receiving_buffer, 0, buffer_size);
 
 					read_data(packet_mode, remained_length - length, socket);
 				});
 
+			current_socket.reset();
 			return;
 		}
 
-		socket->async_receive(asio::buffer(_receiving_buffer, remained_length),
+#ifdef ASIO_STANDALONE
+		current_socket->async_receive(asio::buffer(_receiving_buffer, remained_length),
 			[this, packet_mode, socket](std::error_code ec, std::size_t length)
+#else
+		current_socket->async_receive(boost::asio::buffer(_receiving_buffer, remained_length),
+			[this, packet_mode, socket](boost::system::error_code ec, std::size_t length)
+#endif
 			{
 				if (ec)
 				{
-					read_start_code(socket);
+					disconnected();
 
 					return;
 				}
 
 				_received_data.insert(_received_data.end(), _receiving_buffer, _receiving_buffer + length);
+				memset(_receiving_buffer, 0, buffer_size);
 
 				read_data(packet_mode, 0, socket);
 			});
+		current_socket.reset();
 	}
 
-	void data_handling::read_end_code(const data_modes& packet_mode, std::shared_ptr<asio::ip::tcp::socket> socket)
+#ifdef ASIO_STANDALONE
+	void data_handling::read_end_code(const data_modes& packet_mode, std::weak_ptr<asio::ip::tcp::socket> socket)
+#else
+	void data_handling::read_end_code(const data_modes& packet_mode, std::weak_ptr<boost::asio::ip::tcp::socket> socket)
+#endif
 	{
-		if (socket == nullptr)
+#ifdef ASIO_STANDALONE
+		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+#else
+		std::shared_ptr<boost::asio::ip::tcp::socket> current_socket = socket.lock();
+#endif
+		if (current_socket == nullptr)
 		{
+			disconnected();
+
 			return;
 		}
 
 		memset(_receiving_buffer, 0, buffer_size);
 
-		socket->async_receive(asio::buffer(_receiving_buffer, end_code),
+#ifdef ASIO_STANDALONE
+		current_socket->async_receive(asio::buffer(_receiving_buffer, end_code),
 			[this, packet_mode, socket](std::error_code ec, std::size_t length)
+#else
+		current_socket->async_receive(boost::asio::buffer(_receiving_buffer, end_code),
+			[this, packet_mode, socket](boost::system::error_code ec, std::size_t length)
+#endif
 			{
-				if (ec || length != end_code)
+				if (ec)
 				{
+					disconnected();
+
+					return;
+				}
+
+				if (length != end_code)
+				{
+					memset(_receiving_buffer, 0, buffer_size);
+
 					read_start_code(socket);
 
 					return;
@@ -181,6 +322,8 @@ namespace network
 						continue;
 					}
 
+					memset(_receiving_buffer, 0, buffer_size);
+
 					read_start_code(socket);
 
 					return;
@@ -188,58 +331,105 @@ namespace network
 
 				receive_on_tcp(packet_mode, _received_data);
 				_received_data.clear();
+
+				memset(_receiving_buffer, 0, buffer_size);
+
+				read_start_code(socket);
 			});
+		current_socket.reset();
 	}
 
-	bool data_handling::send_on_tcp(std::shared_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const std::vector<char>& data)
+#ifdef ASIO_STANDALONE
+	bool data_handling::send_on_tcp(std::weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const std::vector<unsigned char>& data)
+#else
+	bool data_handling::send_on_tcp(std::weak_ptr<boost::asio::ip::tcp::socket> socket, const data_modes& data_mode, const std::vector<unsigned char>& data)
+#endif
 	{
-		if (socket == nullptr)
-		{
-			return false;
-		}
-
 		if (data.empty())
 		{
 			return false;
 		}
 
-
-		size_t sended_size;
-		sended_size = socket->send(asio::buffer(_start_code_tag, start_code));
-		if (sended_size != 4)
+#ifdef ASIO_STANDALONE
+		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+#else
+		std::shared_ptr<boost::asio::ip::tcp::socket> current_socket = socket.lock();
+#endif
+		if (current_socket == nullptr)
 		{
-			logger::handle().write(logging_level::error, L"cannot send start code");
+			disconnected();
+
 			return false;
 		}
 
-		sended_size = socket->send(asio::buffer(&data_mode, mode_code));
+		size_t sended_size;
+#ifdef ASIO_STANDALONE
+		sended_size = current_socket->send(asio::buffer(_start_code_tag, start_code));
+#else
+		sended_size = current_socket->send(boost::asio::buffer(_start_code_tag, start_code));
+#endif
+		if (sended_size != 4)
+		{
+			logger::handle().write(logging_level::error, L"cannot send start code");
+
+			current_socket.reset();
+			return false;
+		}
+
+#ifdef ASIO_STANDALONE
+		sended_size = current_socket->send(asio::buffer(&data_mode, mode_code));
+#else
+		sended_size = current_socket->send(boost::asio::buffer(&data_mode, mode_code));
+#endif
 		if (sended_size != sizeof(unsigned char))
 		{
 			logger::handle().write(logging_level::error, L"cannot send data type code");
+
+			current_socket.reset();
 			return false;
 		}
 
 		unsigned int length = (unsigned int)data.size();
-		sended_size = socket->send(asio::buffer(&length, length_code));
+#ifdef ASIO_STANDALONE
+		sended_size = current_socket->send(asio::buffer(&length, length_code));
+#else
+		sended_size = current_socket->send(boost::asio::buffer(&length, length_code));
+#endif
 		if (sended_size != sizeof(unsigned int))
 		{
 			logger::handle().write(logging_level::error, L"cannot send length code");
+
+			current_socket.reset();
 			return false;
 		}
 
-		sended_size = socket->send(asio::buffer(data.data(), data.size()));
+#ifdef ASIO_STANDALONE
+		sended_size = current_socket->send(asio::buffer(data.data(), data.size()));
+#else
+		sended_size = current_socket->send(boost::asio::buffer(data.data(), data.size()));
+#endif
 		if (sended_size != data.size())
 		{
 			logger::handle().write(logging_level::error, L"cannot send data");
+
+			current_socket.reset();
 			return false;
 		}
 
-		sended_size = socket->send(asio::buffer(_end_code_tag, end_code));
+#ifdef ASIO_STANDALONE
+		sended_size = current_socket->send(asio::buffer(_end_code_tag, end_code));
+#else
+		sended_size = current_socket->send(boost::asio::buffer(_end_code_tag, end_code));
+#endif
 		if (sended_size != 4)
 		{
 			logger::handle().write(logging_level::error, L"cannot send end code");
+
+			current_socket.reset();
 			return false;
 		}
+
+		current_socket.reset();
 
 		return true;
 	}

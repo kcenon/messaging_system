@@ -63,12 +63,21 @@ namespace network
 		_normal_priority = normal_priority;
 		_low_priority = low_priority;
 
+#ifdef ASIO_STANDALONE
 		_io_context = std::make_shared<asio::io_context>();
 		_acceptor = std::make_shared<asio::ip::tcp::acceptor>(*_io_context, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port));
+#else
+		_io_context = std::make_shared<boost::asio::io_context>();
+		_acceptor = std::make_shared<boost::asio::ip::tcp::acceptor>(*_io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port));
+#endif
 
 		wait_connection();
 
+#ifdef ASIO_STANDALONE
 		_thread = std::thread([](std::shared_ptr<asio::io_context> context)
+#else
+		_thread = std::thread([](std::shared_ptr<boost::asio::io_context> context)
+#endif
 			{
 				while (context)
 				{
@@ -89,12 +98,14 @@ namespace network
 
 	void tcp_server::stop(void)
 	{
-		if (_acceptor != nullptr && _acceptor->is_open())
+		if (_acceptor != nullptr)
 		{
-			logger::handle().write(logging::logging_level::sequence, L"attempts to close acceptor");
-			_acceptor->close();
+			if (_acceptor->is_open())
+			{
+				_acceptor->close();
+			}
+			_acceptor.reset();
 		}
-		_acceptor.reset();
 
 		for (auto& session : _sessions)
 		{
@@ -109,14 +120,26 @@ namespace network
 
 		if (_io_context != nullptr)
 		{
-			logger::handle().write(logging::logging_level::sequence, L"attempts to stop io_context");
 			_io_context->stop();
+			_io_context.reset();
 		}
-		_io_context.reset();
 
 		if (_thread.joinable())
 		{
 			_thread.join();
+		}
+	}
+
+	void tcp_server::echo(void)
+	{
+		for (auto& session : _sessions)
+		{
+			if (session == nullptr)
+			{
+				continue;
+			}
+
+			session->echo();
 		}
 	}
 
@@ -146,7 +169,11 @@ namespace network
 	void tcp_server::wait_connection(void)
 	{
 		_acceptor->async_accept(
+#ifdef ASIO_STANDALONE
 			[this](std::error_code ec, asio::ip::tcp::socket socket)
+#else
+			[this](boost::system::error_code ec, boost::asio::ip::tcp::socket socket)
+#endif
 			{
 				if (ec)
 				{
@@ -186,9 +213,6 @@ namespace network
 			if (iter != _sessions.end())
 			{
 				_sessions.erase(iter);
-
-				(*iter)->stop();
-				(*iter).reset();
 			}
 		}
 	}

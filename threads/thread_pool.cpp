@@ -17,7 +17,7 @@ namespace threads
 
 	thread_pool::~thread_pool(void)
 	{
-
+		_job_pool.reset();
 	}
 
 	void thread_pool::start(void)

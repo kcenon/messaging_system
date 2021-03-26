@@ -11,7 +11,7 @@ namespace container
 	}
 
 	ulong_value::ulong_value(const std::wstring& name, const unsigned long& value)
-		: value(name, (const char*)&value, sizeof(unsigned long), value_types::ulong_value)
+		: value(name, (const unsigned char*)&value, sizeof(unsigned long), value_types::ulong_value)
 	{
 	}
 

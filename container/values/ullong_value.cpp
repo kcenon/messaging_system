@@ -11,7 +11,7 @@ namespace container
 	}
 
 	ullong_value::ullong_value(const std::wstring& name, const unsigned long long& value)
-		: value(name, (const char*)&value, sizeof(unsigned long long), value_types::ullong_value)
+		: value(name, (const unsigned char*)&value, sizeof(unsigned long long), value_types::ullong_value)
 	{
 	}
 

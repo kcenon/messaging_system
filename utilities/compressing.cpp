@@ -12,7 +12,7 @@ namespace compressing
 
 	unsigned short compressor::_block_bytes = 1024;
 
-	std::vector<char> compressor::compression(const std::vector<char>& original_data)
+	std::vector<unsigned char> compressor::compression(const std::vector<unsigned char>& original_data)
 	{
 		if (original_data.empty())
 		{
@@ -34,7 +34,7 @@ namespace compressing
 		int compress_size = LZ4_COMPRESSBOUND(_block_bytes);
 		std::vector<char> compress_buffer;
 		compress_buffer.reserve(compress_size);
-		std::vector<char> compressed_data;
+		std::vector<unsigned char> compressed_data;
 
 		char compress_size_data[4];
 
@@ -55,7 +55,7 @@ namespace compressing
 				char* const compress_buffer_pointer = compress_buffer.data();
 				memset(compress_buffer_pointer, 0, sizeof(char) * compress_size);
 
-				const int compressed_size = LZ4_compress_fast_continue(&lz4Stream_body, source_buffer_pointer, compress_buffer_pointer, (int)inpBytes, compress_size, 1);
+				const int compressed_size = LZ4_compress_fast_continue(&lz4Stream_body, (const char*)source_buffer_pointer, (char*)compress_buffer_pointer, (int)inpBytes, compress_size, 1);
 				if (compressed_size <= 0) {
 					break;
 				}
@@ -79,18 +79,18 @@ namespace compressing
 
 		if (original_data.size() < compressed_data.size())
 		{
-			logger::handle().write(logging::logging_level::information, L"this file does not need to use compress because compressed result is bigger than original data", start);
+			logger::handle().write(logging::logging_level::sequence, L"this file does not need to use compress because compressed result is bigger than original data", start);
 
 			return original_data;
 		}
 
-		logger::handle().write(logging::logging_level::information, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
+		logger::handle().write(logging::logging_level::sequence, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
 			_block_bytes, original_data.size(), compressed_data.size(), (((double)compressed_data.size() / (double)original_data.size()) * 100)), start);
 
 		return compressed_data;
 	}
 
-	std::vector<char> compressor::decompression(const std::vector<char>& compressed_data)
+	std::vector<unsigned char> compressor::decompression(const std::vector<unsigned char>& compressed_data)
 	{
 		if (compressed_data.empty())
 		{
@@ -115,7 +115,7 @@ namespace compressing
 		int compress_size = LZ4_COMPRESSBOUND(_block_bytes);
 		std::vector<char> compress_buffer;
 		compress_buffer.reserve(compress_size);
-		std::vector<char> decompressed_data;
+		std::vector<unsigned char> decompressed_data;
 
 		LZ4_setStreamDecode(&lz4StreamDecode_body, NULL, 0);
 
@@ -143,7 +143,7 @@ namespace compressing
 
 			{
 				char* const target_buffer_pointer = target_buffer[target_buffer_index].data();
-				const int decompressed_size = LZ4_decompress_safe_continue(&lz4StreamDecode_body, compress_buffer_pointer, target_buffer_pointer, compressed_size, _block_bytes);
+				const int decompressed_size = LZ4_decompress_safe_continue(&lz4StreamDecode_body, (const char*)compress_buffer_pointer, (char*)target_buffer_pointer, compressed_size, _block_bytes);
 				if (decompressed_size <= 0) {
 					break;
 				}
@@ -163,12 +163,12 @@ namespace compressing
 
 		if (decompressed_data.size() < compressed_data.size())
 		{
-			logger::handle().write(logging::logging_level::information, L"this file does not need to use decompress because it is not compressed data", start);
+			logger::handle().write(logging::logging_level::sequence, L"this file does not need to use decompress because it is not compressed data", start);
 
 			return compressed_data;
 		}
 
-		logger::handle().write(logging::logging_level::information, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
+		logger::handle().write(logging::logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
 			_block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)), start);
 
 		return decompressed_data;

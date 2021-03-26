@@ -7,7 +7,11 @@
 #include <string>
 #include <thread>
 
+#ifdef ASIO_STANDALONE
 #include "asio.hpp"
+#else
+#include <boost/asio.hpp>
+#endif
 
 namespace network
 {
@@ -35,6 +39,7 @@ namespace network
 		void stop(void);
 
 	public:
+		void echo(void);
 		void send(const container::value_container& message);
 		void send(std::shared_ptr<container::value_container> message);
 
@@ -53,8 +58,13 @@ namespace network
 
 	private:
 		std::thread _thread;
+#ifdef ASIO_STANDALONE
 		std::shared_ptr<asio::io_context> _io_context;
 		std::shared_ptr<asio::ip::tcp::acceptor> _acceptor;
+#else
+		std::shared_ptr<boost::asio::io_context> _io_context;
+		std::shared_ptr<boost::asio::ip::tcp::acceptor> _acceptor;
+#endif
 		std::vector<std::shared_ptr<tcp_session>> _sessions;
 
 	private:

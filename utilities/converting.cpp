@@ -96,19 +96,19 @@ namespace converting
 		return result.data();
 	}
 
-	std::vector<char> converter::to_array(const std::wstring& value)
+	std::vector<unsigned char> converter::to_array(const std::wstring& value)
 	{
 		if (value.empty())
 		{
-			return std::vector<char>();
+			return std::vector<unsigned char>();
 		}
 
 		std::string temp = to_string(value);
 
-		return std::vector<char>(temp.data(), temp.data() + temp.size());
+		return std::vector<unsigned char>(temp.data(), temp.data() + temp.size());
 	}
 
-	std::wstring converter::to_wstring(const std::vector<char>& value)
+	std::wstring converter::to_wstring(const std::vector<unsigned char>& value)
 	{
 		if (value.empty())
 		{
@@ -118,28 +118,28 @@ namespace converting
 		// UTF-8 BOM
 		if (value.size() >= 3 && value[0] == 0xef && value[1] == 0xbb && value[2] == 0xbf)
 		{
-			return to_wstring(std::string(value.data() + 2, value.size() - 2));
+			return to_wstring(std::string((char*)value.data() + 2, value.size() - 2));
 		}
 
 		// UTF-8 no BOM
-		return to_wstring(std::string(value.data(), value.size()));
+		return to_wstring(std::string((char*)value.data(), value.size()));
 	}
 
-	std::vector<char> converter::from_base64(const std::wstring& value)
+	std::vector<unsigned char> converter::from_base64(const std::wstring& value)
 	{
 		if (value.empty())
 		{
-			return std::vector<char>();
+			return std::vector<unsigned char>();
 		}
 
 		std::string source = to_string(value);
 		std::string encoded;
 		CryptoPP::StringSource(source.data(), true, new CryptoPP::Base64Decoder(new CryptoPP::StringSink(encoded)));
 
-		return std::vector<char>(encoded.data(), encoded.data() + encoded.size());
+		return std::vector<unsigned char>(encoded.data(), encoded.data() + encoded.size());
 	}
 
-	std::wstring converter::to_base64(const std::vector<char>& value)
+	std::wstring converter::to_base64(const std::vector<unsigned char>& value)
 	{
 		if (value.empty())
 		{

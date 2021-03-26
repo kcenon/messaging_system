@@ -11,7 +11,7 @@ namespace container
 	}
 
 	ushort_value::ushort_value(const std::wstring& name, const unsigned short& value)
-		: value(name, (const char*)&value, sizeof(unsigned short), value_types::ushort_value)
+		: value(name, (const unsigned char*)&value, sizeof(unsigned short), value_types::ushort_value)
 	{
 	}
 

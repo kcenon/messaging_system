@@ -21,7 +21,7 @@ namespace container
 		converter::replace_all(temp, L" ", L"</0x0C;>");
 		converter::replace_all(temp, L"\t", L"</0x0D;>");
 
-		std::vector<char> data = converter::to_array(temp);
+		std::vector<unsigned char> data = converter::to_array(temp);
 
 		set_data(data.data(), data.size(), value_types::string_value);
 	}

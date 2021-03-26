@@ -10,14 +10,22 @@
 #include <string>
 #include <functional>
 
+#ifdef ASIO_STANDALONE
 #include "asio.hpp"
+#else
+#include <boost/asio.hpp>
+#endif
 
 namespace network
 {
-	class tcp_session : public std::enable_shared_from_this<tcp_session>, public data_handling
+	class tcp_session : public std::enable_shared_from_this<tcp_session>, data_handling
 	{
 	public:
+#ifdef ASIO_STANDALONE
 		tcp_session(const std::wstring& source_id, const std::wstring& connection_key, asio::ip::tcp::socket& socket);
+#else
+		tcp_session(const std::wstring& source_id, const std::wstring& connection_key, boost::asio::ip::tcp::socket& socket);
+#endif
 		~tcp_session(void);
 
 	public:
@@ -38,33 +46,35 @@ namespace network
 		void stop(void);
 
 	public:
+		void echo(void);
 		void send(std::shared_ptr<container::value_container> message);
 
 	protected:
-		void receive_on_tcp(const data_modes& data_mode, const std::vector<char>& data) override;
+		void receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data) override;
+		void disconnected(void) override;
 
 		// packet
 	private:
-		bool compress_packet(const std::vector<char>& data);
-		bool encrypt_packet(const std::vector<char>& data);
-		bool send_packet(const std::vector<char>& data);
+		bool compress_packet(const std::vector<unsigned char>& data);
+		bool encrypt_packet(const std::vector<unsigned char>& data);
+		bool send_packet(const std::vector<unsigned char>& data);
 
 	private:
-		bool decompress_packet(const std::vector<char>& data);
-		bool decrypt_packet(const std::vector<char>& data);
-		bool receive_packet(const std::vector<char>& data);
+		bool decompress_packet(const std::vector<unsigned char>& data);
+		bool decrypt_packet(const std::vector<unsigned char>& data);
+		bool receive_packet(const std::vector<unsigned char>& data);
 
 		// file
 	private:
-		bool load_file(const std::vector<char>& data);
-		bool compress_file(const std::vector<char>& data);
-		bool encrypt_file(const std::vector<char>& data);
-		bool send_file(const std::vector<char>& data);
+		bool load_file(const std::vector<unsigned char>& data);
+		bool compress_file(const std::vector<unsigned char>& data);
+		bool encrypt_file(const std::vector<unsigned char>& data);
+		bool send_file(const std::vector<unsigned char>& data);
 
 	private:
-		bool decompress_file(const std::vector<char>& data);
-		bool decrypt_file(const std::vector<char>& data);
-		bool receive_file(const std::vector<char>& data);
+		bool decompress_file(const std::vector<unsigned char>& data);
+		bool decrypt_file(const std::vector<unsigned char>& data);
+		bool receive_file(const std::vector<unsigned char>& data);
 
 	private:
 		bool normal_message(std::shared_ptr<container::value_container> message);
@@ -77,8 +87,8 @@ namespace network
 		bool same_id_check(void);
 
 	private:
-		void append_data(std::vector<char>& result, const std::vector<char>& source);
-		std::vector<char> devide_data(const std::vector<char>& source, size_t& index);
+		void append_data(std::vector<unsigned char>& result, const std::vector<unsigned char>& source);
+		std::vector<unsigned char> devide_data(const std::vector<unsigned char>& source, size_t& index);
 
 	private:
 		bool _confirm;
@@ -103,7 +113,11 @@ namespace network
 		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)> _received_file;
 
 	private:
+#ifdef ASIO_STANDALONE
 		std::shared_ptr<asio::ip::tcp::socket> _socket;
+#else
+		std::shared_ptr<boost::asio::ip::tcp::socket> _socket;
+#endif
 		std::shared_ptr<threads::thread_pool> _thread_pool;
 		std::map<std::wstring, std::function<bool(std::shared_ptr<container::value_container>)>> _message_handlers;
 	};

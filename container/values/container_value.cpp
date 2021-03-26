@@ -20,7 +20,7 @@ namespace container
 		_size = sizeof(long);
 
 		char* data_ptr = (char*)&reserved_count;
-		_data = std::vector<char>(data_ptr, data_ptr + _size);
+		_data = std::vector<unsigned char>(data_ptr, data_ptr + _size);
 	}
 
 	container_value::container_value(const std::wstring& name, const std::vector<std::shared_ptr<value>>& units)
@@ -59,7 +59,7 @@ namespace container
 		if (update_count == true)
 		{
 			long size = static_cast<long>(_units.size());
-			set_data((const char*)&size, sizeof(long), value_types::container_value);
+			set_data((const unsigned char*)&size, sizeof(long), value_types::container_value);
 		}
 
 		return item;
@@ -99,7 +99,7 @@ namespace container
 		if (update_count == true)
 		{
 			long size = static_cast<long>(_units.size());
-			set_data((const char*)&size, sizeof(long), value_types::container_value);
+			set_data((const unsigned char*)&size, sizeof(long), value_types::container_value);
 		}
 	}
 
@@ -125,7 +125,7 @@ namespace container
 		if (update_count == true)
 		{
 			long size = static_cast<long>(_units.size());
-			set_data((const char*)&size, sizeof(long), value_types::container_value);
+			set_data((const unsigned char*)&size, sizeof(long), value_types::container_value);
 		}
 	}
 
@@ -148,7 +148,7 @@ namespace container
 		if (update_count == true)
 		{
 			long size = static_cast<long>(_units.size());
-			set_data((const char*)&size, sizeof(long), value_types::container_value);
+			set_data((const unsigned char*)&size, sizeof(long), value_types::container_value);
 		}
 	}
 
@@ -157,7 +157,7 @@ namespace container
 		_units.clear();
 
 		long size = static_cast<long>(_units.size());
-		set_data((const char*)&size, sizeof(long), value_types::container_value);
+		set_data((const unsigned char*)&size, sizeof(long), value_types::container_value);
 	}
 
 	short container_value::to_short(void) const

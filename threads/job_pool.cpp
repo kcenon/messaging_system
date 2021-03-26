@@ -16,7 +16,7 @@ namespace threads
 
 	job_pool::~job_pool(void)
 	{
-
+		_jobs.clear();
 	}
 
 	std::shared_ptr<job_pool> job_pool::get_ptr(void)
