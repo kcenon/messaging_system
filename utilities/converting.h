@@ -16,12 +16,12 @@ namespace converting
 		static std::string to_string(const std::wstring& value);
 
 	public:
-		static std::vector<char> to_array(const std::wstring& value);
-		static std::wstring to_wstring(const std::vector<char>& value);
+		static std::vector<unsigned char> to_array(const std::wstring& value);
+		static std::wstring to_wstring(const std::vector<unsigned char>& value);
 
 	public:
-		static std::vector<char> from_base64(const std::wstring& value);
-		static std::wstring to_base64(const std::vector<char>& value);
+		static std::vector<unsigned char> from_base64(const std::wstring& value);
+		static std::wstring to_base64(const std::vector<unsigned char>& value);
 
 	private:
 		static std::wstring convert(const std::u16string& value);

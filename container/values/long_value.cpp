@@ -11,7 +11,7 @@ namespace container
 	}
 
 	long_value::long_value(const std::wstring& name, const long& value)
-		: value(name, (const char*)&value, sizeof(long), value_types::long_value)
+		: value(name, (const unsigned char*)&value, sizeof(long), value_types::long_value)
 	{
 	}
 

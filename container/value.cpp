@@ -45,7 +45,7 @@ namespace container
 		_units = units;
 
 		long size = static_cast<long>(_units.size());
-		set_data((const char*)&size, sizeof(long), value_types::container_value);
+		set_data((const unsigned char*)&size, sizeof(long), value_types::container_value);
 	}
 
 	value::value(const std::wstring& name, const std::wstring& type, const std::wstring& data)
@@ -54,7 +54,7 @@ namespace container
 		set_data(name, type, data);
 	}
 
-	value::value(const std::wstring& name, const char* data, const size_t& size, const value_types& type)
+	value::value(const std::wstring& name, const unsigned char* data, const size_t& size, const value_types& type)
 		: value()
 	{
 		_name = name;
@@ -75,7 +75,7 @@ namespace container
 		_parent = parent;
 	}
 
-	void value::set_data(const char* data, const size_t& size, const value_types& type)
+	void value::set_data(const unsigned char* data, const size_t& size, const value_types& type)
 	{
 		if (data == nullptr || size == 0)
 		{
@@ -87,7 +87,7 @@ namespace container
 
 		_type = type;
 		_size = size;
-		_data = std::vector<char>(data, data + size);
+		_data = std::vector<unsigned char>(data, data + size);
 	}
 
 	void value::set_data(const std::wstring& name, const std::wstring& type, const std::wstring& data)
@@ -193,7 +193,7 @@ namespace container
 		return result_list;
 	}
 
-	const std::vector<char> value::to_bytes(void) const
+	const std::vector<unsigned char> value::to_bytes(void) const
 	{
 		return _data;
 	}
@@ -337,7 +337,7 @@ namespace container
 		char* data_ptr = (char*)&data;
 
 		_size = sizeof(T);
-		_data = std::vector<char>(data_ptr, data_ptr + _size);
+		_data = std::vector<unsigned char>(data_ptr, data_ptr + _size);
 	}
 
 	void value::set_byte_string(const std::wstring& data)

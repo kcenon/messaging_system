@@ -110,9 +110,16 @@ namespace network
 		}
 
 		logger::handle().write(logging::logging_level::sequence, L"attempts to create io_context");
+
+#ifdef ASIO_STANDALONE
 		_io_context = std::make_shared<asio::io_context>();
+#else
+		_io_context = std::make_shared<boost::asio::io_context>();
+#endif
 
 		logger::handle().write(logging::logging_level::sequence, L"attempts to create socket");
+
+#ifdef ASIO_STANDALONE
 		_socket = std::make_shared<asio::ip::tcp::socket>(*_io_context);
 		_socket->open(asio::ip::tcp::v4());
 		_socket->bind(asio::ip::tcp::endpoint(asio::ip::tcp::v4(), 0));
@@ -121,13 +128,27 @@ namespace network
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));
 		_socket->set_option(asio::socket_base::receive_buffer_size(buffer_size));
+#else
+		_socket = std::make_shared<boost::asio::ip::tcp::socket>(*_io_context);
+		_socket->open(boost::asio::ip::tcp::v4());
+		_socket->bind(boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 0));
+		_socket->connect(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(converter::to_string(ip)), port));
+
+		_socket->set_option(boost::asio::ip::tcp::no_delay(true));
+		_socket->set_option(boost::asio::socket_base::keep_alive(true));
+		_socket->set_option(boost::asio::socket_base::receive_buffer_size(buffer_size));
+#endif
 
 		_source_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->local_endpoint().address().to_string()), _socket->local_endpoint().port());
 		_target_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
+#ifdef ASIO_STANDALONE
 		_thread = std::thread([](std::shared_ptr<asio::io_context> context)
+#else
+		_thread = boost::thread([](std::shared_ptr<boost::asio::io_context> context)
+#endif
 			{
 				try
 				{
@@ -147,17 +168,20 @@ namespace network
 
 	void tcp_client::stop(void)
 	{
-		if (_socket != nullptr && _socket->is_open())
+		if (_socket != nullptr)
 		{
-			_socket->close();
+			if (_socket->is_open())
+			{
+				_socket->close();
+			}
+			_socket.reset();
 		}
-		_socket.reset();
 
 		if (_io_context != nullptr)
 		{
 			_io_context->stop();
+			_io_context.reset();
 		}
-		_io_context.reset();
 
 		if (_thread.joinable())
 		{
@@ -169,6 +193,14 @@ namespace network
 			_thread_pool->stop();
 			_thread_pool.reset();
 		}
+	}
+
+	void tcp_client::echo(void)
+	{
+		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"echo",
+			std::vector<std::shared_ptr<container::value>> {});
+
+		send(container);
 	}
 
 	void tcp_client::send(const container::value_container& message)
@@ -183,7 +215,10 @@ namespace network
 			return;
 		}
 
-		logger::handle().write(logging::logging_level::information, fmt::format(L"attempt to send: {}", message->serialize()));
+		if (_socket == nullptr)
+		{
+			return;
+		}
 
 		if (_compress_mode)
 		{
@@ -204,26 +239,26 @@ namespace network
 
 	void tcp_client::send_connection(void)
 	{
+		std::shared_ptr<container::container_value> snipping_targets = std::make_shared<container::container_value>(L"snipping_targets");
+		for (auto& snipping_target : _snipping_targets)
+		{
+			snipping_targets->add(std::make_shared<container::string_value>(L"snipping_target", snipping_target));
+		}
+
 		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"request_connection",
 			std::vector<std::shared_ptr<container::value>> {
 				std::make_shared<container::string_value>(L"connection_key", _connection_key),
 				std::make_shared<container::bool_value>(L"auto_echo", _auto_echo),
 				std::make_shared<container::ushort_value>(L"auto_echo_interval_seconds", _auto_echo_interval_seconds),
 				std::make_shared<container::short_value>(L"session_type", (short)_session_type),
-				std::make_shared<container::bool_value>(L"bridge_mode", _bridge_line)
+				std::make_shared<container::bool_value>(L"bridge_mode", _bridge_line),
+				snipping_targets
 		});
-
-		std::shared_ptr<container::container_value> snipping_targets = std::make_shared<container::container_value>(L"snipping_targets");
-		for (auto& snipping_target : _snipping_targets)
-		{
-			snipping_targets->add(std::make_shared<container::string_value>(L"snipping_target", snipping_target));
-		}
-		container << snipping_targets;
 
 		send(container);
 	}
 
-	void tcp_client::receive_on_tcp(const data_modes& data_mode, const std::vector<char>& data)
+	void tcp_client::receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data)
 	{
 		switch (data_mode)
 		{
@@ -232,7 +267,17 @@ namespace network
 		}
 	}
 
-	bool tcp_client::compress_packet(const std::vector<char>& data)
+	void tcp_client::disconnected(void)
+	{
+		stop();
+
+		if (_connection != nullptr)
+		{
+			_connection(_target_id, _target_sub_id, false);
+		}
+	}
+
+	bool tcp_client::compress_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -251,7 +296,7 @@ namespace network
 		return true;
 	}
 
-	bool tcp_client::encrypt_packet(const std::vector<char>& data)
+	bool tcp_client::encrypt_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -263,7 +308,7 @@ namespace network
 		return true;
 	}
 
-	bool tcp_client::send_packet(const std::vector<char>& data)
+	bool tcp_client::send_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -273,7 +318,7 @@ namespace network
 		return send_on_tcp(_socket, data_modes::packet_mode, data);
 	}
 
-	bool tcp_client::decompress_packet(const std::vector<char>& data)
+	bool tcp_client::decompress_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -292,7 +337,7 @@ namespace network
 		return true;
 	}
 
-	bool tcp_client::decrypt_packet(const std::vector<char>& data)
+	bool tcp_client::decrypt_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -311,7 +356,7 @@ namespace network
 		return true;
 	}
 
-	bool tcp_client::receive_packet(const std::vector<char>& data)
+	bool tcp_client::receive_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -333,7 +378,7 @@ namespace network
 		return target->second(message);
 	}
 
-	bool tcp_client::load_file(const std::vector<char>& data)
+	bool tcp_client::load_file(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -346,7 +391,7 @@ namespace network
 			return false;
 		}
 
-		std::vector<char> result;
+		std::vector<unsigned char> result;
 		append_data(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
 		append_data(result, converter::to_array(message->source_id()));
 		append_data(result, converter::to_array(message->source_sub_id()));
@@ -375,7 +420,7 @@ namespace network
 		return true;
 	}
 
-	bool tcp_client::compress_file(const std::vector<char>& data)
+	bool tcp_client::compress_file(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -394,7 +439,7 @@ namespace network
 		return true;
 	}
 
-	bool tcp_client::encrypt_file(const std::vector<char>& data)
+	bool tcp_client::encrypt_file(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -406,7 +451,7 @@ namespace network
 		return true;
 	}
 
-	bool tcp_client::send_file(const std::vector<char>& data)
+	bool tcp_client::send_file(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -416,7 +461,7 @@ namespace network
 		return send_on_tcp(_socket, data_modes::file_mode, data);
 	}
 
-	bool tcp_client::decompress_file(const std::vector<char>& data)
+	bool tcp_client::decompress_file(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -435,7 +480,7 @@ namespace network
 		return true;
 	}
 
-	bool tcp_client::decrypt_file(const std::vector<char>& data)
+	bool tcp_client::decrypt_file(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -454,7 +499,7 @@ namespace network
 		return true;
 	}
 
-	bool tcp_client::receive_file(const std::vector<char>& data)
+	bool tcp_client::receive_file(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -545,6 +590,8 @@ namespace network
 		std::vector<std::shared_ptr<value>> response = (*message)[L"response"];
 		if (!response.empty())
 		{
+			logger::handle().write(logging::logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
+
 			return true;
 		}
 
@@ -557,7 +604,7 @@ namespace network
 		return true;
 	}
 
-	void tcp_client::append_data(std::vector<char>& result, const std::vector<char>& source)
+	void tcp_client::append_data(std::vector<unsigned char>& result, const std::vector<unsigned char>& source)
 	{
 		size_t temp;
 		const int size = sizeof(size_t);
@@ -569,11 +616,11 @@ namespace network
 		result.insert(result.end(), source.begin(), source.end());
 	}
 
-	std::vector<char> tcp_client::devide_data(const std::vector<char>& source, size_t& index)
+	std::vector<unsigned char> tcp_client::devide_data(const std::vector<unsigned char>& source, size_t& index)
 	{
 		if (source.empty())
 		{
-			return std::vector<char>();
+			return std::vector<unsigned char>();
 		}
 
 		size_t temp;
@@ -581,7 +628,7 @@ namespace network
 
 		if (source.size() < index + size)
 		{
-			return std::vector<char>();
+			return std::vector<unsigned char>();
 		}
 
 		memcpy(&temp, source.data() + index, size);
@@ -589,10 +636,10 @@ namespace network
 
 		if (source.size() < index + temp)
 		{
-			return std::vector<char>();
+			return std::vector<unsigned char>();
 		}
 
-		std::vector<char> result;
+		std::vector<unsigned char> result;
 		result.insert(result.end(), source.begin() + index , source.begin() + index + temp);
 
 		return result;

@@ -11,7 +11,7 @@ namespace container
 	}
 
 	float_value::float_value(const std::wstring& name, const float& value)
-		: value(name, (const char*)&value, sizeof(float), value_types::float_value)
+		: value(name, (const unsigned char*)&value, sizeof(float), value_types::float_value)
 	{
 	}
 

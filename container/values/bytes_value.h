@@ -8,8 +8,8 @@ namespace container
 	{
 	public:
 		bytes_value(void);
-		bytes_value(const std::wstring& name, const std::vector<char>& data);
-		bytes_value(const std::wstring& name, const char* data, const size_t& size);
+		bytes_value(const std::wstring& name, const std::vector<unsigned char>& data);
+		bytes_value(const std::wstring& name, const unsigned char* data, const size_t& size);
 		~bytes_value(void);
 
 	public:

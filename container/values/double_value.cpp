@@ -11,7 +11,7 @@ namespace container
 	}
 
 	double_value::double_value(const std::wstring& name, const double& value)
-		: value(name, (const char*)&value, sizeof(double), value_types::double_value)
+		: value(name, (const unsigned char*)&value, sizeof(double), value_types::double_value)
 	{
 	}
 

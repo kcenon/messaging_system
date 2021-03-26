@@ -11,7 +11,7 @@ namespace container
 	}
 
 	uint_value::uint_value(const std::wstring& name, const unsigned int& value)
-		: value(name, (const char*)&value, sizeof(unsigned int), value_types::uint_value)
+		: value(name, (const unsigned char*)&value, sizeof(unsigned int), value_types::uint_value)
 	{
 	}
 

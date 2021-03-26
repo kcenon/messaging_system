@@ -7,8 +7,8 @@ namespace compressing
 	class compressor
 	{
 	public:
-		static std::vector<char> compression(const std::vector<char>& original_data);
-		static std::vector<char> decompression(const std::vector<char>& compressed_data);
+		static std::vector<unsigned char> compression(const std::vector<unsigned char>& original_data);
+		static std::vector<unsigned char> decompression(const std::vector<unsigned char>& compressed_data);
 
 	public:
 		static void set_block_bytes(const unsigned short& block_bytes);
