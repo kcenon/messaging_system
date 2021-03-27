@@ -15,7 +15,7 @@ namespace network
 
 	tcp_server::tcp_server(const std::wstring& source_id) 
 		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), 
-		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr)
+		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _broadcast_mode(false)
 	{
 
 	}
@@ -38,6 +38,11 @@ namespace network
 	void tcp_server::set_compress_mode(const bool& compress_mode)
 	{
 		_compress_mode = compress_mode;
+	}
+
+	void tcp_server::set_broadcast_mode(const bool& broadcast_mode)
+	{
+		_broadcast_mode = broadcast_mode;
 	}
 
 	void tcp_server::set_connection_key(const std::wstring& connection_key)
@@ -194,6 +199,24 @@ namespace network
 		}
 	}
 
+	void tcp_server::send(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+	}
+
+		for (auto& session : _sessions)
+		{
+			if (session == nullptr)
+			{
+				continue;
+			}
+
+			session->send(source_id, source_sub_id, target_id, target_sub_id, data);
+		}
+	}
+
 	void tcp_server::wait_connection(void)
 	{
 		_acceptor->async_accept(
@@ -213,9 +236,9 @@ namespace network
 
 				std::shared_ptr<tcp_session> session = std::make_shared<tcp_session>(_source_id, _connection_key, socket);
 				session->set_connection_notification(std::bind(&tcp_server::connect_condition, this, std::placeholders::_1, std::placeholders::_2));
-				session->set_message_notification(_received_message);
+				session->set_message_notification(std::bind(&tcp_server::received_message, this, std::placeholders::_1));
 				session->set_file_notification(_received_file);
-				session->set_binary_notification(_received_data);
+				session->set_binary_notification(std::bind(&tcp_server::received_binary, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
 				session->start(_encrypt_mode, _compress_mode, _high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);
@@ -243,6 +266,46 @@ namespace network
 			{
 				_sessions.erase(iter);
 			}
+		}
+	}
+
+	void tcp_server::received_message(std::shared_ptr<container::value_container> message)
+	{
+		if (message == nullptr)
+		{
+			return;
+		}
+
+		if (_broadcast_mode && _source_id.compare(message->source_id()) != 0)
+		{
+			send(message);
+
+			return;
+		}
+
+		if (_received_message)
+		{
+			_received_message(message);
+		}
+	}
+
+	void tcp_server::received_binary(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (_broadcast_mode && _source_id.compare(source_id) != 0)
+		{
+			send(source_id, source_sub_id, target_id, target_sub_id, data);
+
+			return;
+		}
+
+		if (_received_data)
+		{
+			_received_data(source_id, source_sub_id, target_id, target_sub_id, data);
 		}
 	}
 }

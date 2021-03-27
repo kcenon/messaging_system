@@ -28,6 +28,7 @@ namespace network
 	public:
 		void set_encrypt_mode(const bool& encrypt_mode);
 		void set_compress_mode(const bool& compress_mode);
+		void set_broadcast_mode(const bool& broadcast_mode);
 		void set_connection_key(const std::wstring& connection_key);
 
 	public:
@@ -45,14 +46,20 @@ namespace network
 		void send(const container::value_container& message);
 		void send(std::shared_ptr<container::value_container> message);
 		void send(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
+		void send(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
 
 	protected:
 		void wait_connection(void);
 		void connect_condition(std::shared_ptr<tcp_session> target, const bool& condition);
 
 	private:
+		void received_message(std::shared_ptr<container::value_container> message);
+		void received_binary(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
+
+	private:
 		bool _encrypt_mode;
 		bool _compress_mode;
+		bool _broadcast_mode;
 		std::wstring _source_id;
 		std::wstring _connection_key;
 		unsigned short _high_priority;
