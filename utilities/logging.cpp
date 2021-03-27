@@ -31,13 +31,14 @@ namespace logging
 
 	}
 
-	bool logger::start(const std::wstring& store_log_file_name, const std::wstring& store_log_extention, const std::wstring& store_log_root_path)
+	bool logger::start(const std::wstring& store_log_file_name, const std::wstring& store_log_extention, const std::wstring& store_log_root_path, const bool& append_date_on_file_name)
 	{
 		stop();
 
 		_store_log_file_name = store_log_file_name;
 		_store_log_extention = store_log_extention;
 		_store_log_root_path = store_log_root_path;
+		_append_date_on_file_name.store(append_date_on_file_name);
 
 		_thread = std::thread(&logger::run, this);
 
@@ -134,19 +135,46 @@ namespace logging
 			buffers.swap(_buffer);
 			unique.unlock();
 
-			std::filesystem::path target_path(fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path,
-				_store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention));
+			std::filesystem::path target_path;
+			if (_append_date_on_file_name.load())
+			{
+				target_path = fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path,
+					_store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention);
+			}
+			else
+			{
+				target_path = fmt::format(L"{}{}.{}", _store_log_root_path, _store_log_file_name, _store_log_extention);
+			}
+
 			if (!target_path.parent_path().empty())
 			{
 				std::filesystem::create_directories(target_path.parent_path());
 			}
 
-			backup_log(target_path.wstring(), fmt::format(L"{}{}_{:%Y-%m-%d}_backup.{}", _store_log_root_path,
-				_store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention));
+			if (_append_date_on_file_name.load())
+			{
+				backup_log(target_path.wstring(), fmt::format(L"{}{}_{:%Y-%m-%d}_backup.{}", _store_log_root_path,
+					_store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention));
+			}
+			else
+			{
+				backup_log(target_path.wstring(), fmt::format(L"{}{}_backup.{}", _store_log_root_path,
+					_store_log_file_name, _store_log_extention));
+			}
 			
 			int file;
-			errno_t err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention).c_str(),
-				_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
+			errno_t err;
+			if (_append_date_on_file_name.load())
+			{
+				err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention).c_str(),
+					_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
+			}
+			else
+			{
+				err = _wsopen_s(&file, fmt::format(L"{}{}.{}", _store_log_root_path, _store_log_file_name, _store_log_extention).c_str(),
+					_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
+			}
+
 			if (err != 0)
 			{
 				return;
@@ -179,8 +207,19 @@ namespace logging
 	void logger::set_log_flag(const std::wstring& flag)
 	{
 		int file;
-		errno_t err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention).c_str(),
-			_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
+
+		errno_t err;
+		if (_append_date_on_file_name.load())
+		{
+			err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention).c_str(),
+				_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
+		}
+		else
+		{
+			err = _wsopen_s(&file, fmt::format(L"{}{}.{}", _store_log_root_path, _store_log_file_name, _store_log_extention).c_str(),
+				_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
+		}
+
 		if (err != 0)
 		{
 			return;

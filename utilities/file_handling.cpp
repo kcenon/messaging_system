@@ -6,6 +6,16 @@
 
 namespace file_handling
 {
+	bool file_handler::remove(const std::wstring& path)
+	{
+		if (!std::filesystem::exists(path))
+		{
+			return false;
+		}
+
+		return std::filesystem::remove(path);
+	}
+
 	std::vector<unsigned char> file_handler::load(const std::wstring& path)
 	{
 		if (!std::filesystem::exists(path))
