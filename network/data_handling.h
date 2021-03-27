@@ -46,6 +46,10 @@ namespace network
 	protected:
 		virtual void disconnected(void) = 0;
 
+	protected:
+		void append_data_on_file_packet(std::vector<unsigned char>& result, const std::vector<unsigned char>& source);
+		std::vector<unsigned char> devide_data_on_file_packet(const std::vector<unsigned char>& source, size_t& index);
+
 	private:
 		char _start_code_tag[start_code];
 		char _end_code_tag[end_code];

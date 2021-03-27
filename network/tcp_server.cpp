@@ -13,8 +13,8 @@ namespace network
 	using namespace logging;
 	using namespace converting;
 
-	tcp_server::tcp_server(const std::wstring& source_id, const std::wstring& connection_key) 
-		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(connection_key), 
+	tcp_server::tcp_server(const std::wstring& source_id) 
+		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), 
 		_received_file(nullptr), _connection(nullptr), _received_message(nullptr)
 	{
 
@@ -38,6 +38,11 @@ namespace network
 	void tcp_server::set_compress_mode(const bool& compress_mode)
 	{
 		_compress_mode = compress_mode;
+	}
+
+	void tcp_server::set_connection_key(const std::wstring& connection_key)
+	{
+		_connection_key = connection_key;
 	}
 
 	void tcp_server::set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification)

@@ -33,10 +33,10 @@ namespace network
 	using namespace compressing;
 	using namespace file_handling;
 
-	tcp_client::tcp_client(const std::wstring& source_id, const std::wstring& connection_key)
+	tcp_client::tcp_client(const std::wstring& source_id)
 		: data_handling(246, 135), _confirm(false), _auto_echo(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false),
 		_io_context(nullptr), _socket(nullptr), _key(L""), _iv(L""), _thread_pool(nullptr), _auto_echo_interval_seconds(1), _connection(nullptr),
-		_connection_key(connection_key), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _received_file(nullptr),
+		_connection_key(L"connection_key"), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _received_file(nullptr),
 		_received_message(nullptr)
 	{
 		_message_handlers.insert({ L"confirm_connection", std::bind(&tcp_client::confirm_message, this, std::placeholders::_1) });
@@ -72,6 +72,11 @@ namespace network
 	void tcp_client::set_session_types(const session_types& session_type)
 	{
 		_session_type = session_type;
+	}
+
+	void tcp_client::set_connection_key(const std::wstring& connection_key)
+	{
+		_connection_key = connection_key;
 	}
 
 	void tcp_client::set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification)
@@ -392,14 +397,14 @@ namespace network
 		}
 
 		std::vector<unsigned char> result;
-		append_data(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
-		append_data(result, converter::to_array(message->source_id()));
-		append_data(result, converter::to_array(message->source_sub_id()));
-		append_data(result, converter::to_array(message->target_id()));
-		append_data(result, converter::to_array(message->target_sub_id()));
-		append_data(result, converter::to_array(message->get_value(L"source")->to_string()));
-		append_data(result, converter::to_array(message->get_value(L"target")->to_string()));
-		append_data(result, file_handler::load(message->get_value(L"source")->to_string()));
+		append_data_on_file_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
+		append_data_on_file_packet(result, converter::to_array(message->source_id()));
+		append_data_on_file_packet(result, converter::to_array(message->source_sub_id()));
+		append_data_on_file_packet(result, converter::to_array(message->target_id()));
+		append_data_on_file_packet(result, converter::to_array(message->target_sub_id()));
+		append_data_on_file_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
+		append_data_on_file_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
+		append_data_on_file_packet(result, file_handler::load(message->get_value(L"source")->to_string()));
 
 		if (_compress_mode)
 		{
@@ -507,14 +512,14 @@ namespace network
 		}
 
 		size_t index = 0;
-		std::wstring indication_id = converter::to_wstring(devide_data(data, index));
-		std::wstring source_id = converter::to_wstring(devide_data(data, index));
-		std::wstring source_sub_id = converter::to_wstring(devide_data(data, index));
-		std::wstring target_id = converter::to_wstring(devide_data(data, index));
-		std::wstring target_sub_id = converter::to_wstring(devide_data(data, index));
-		std::wstring source_path = converter::to_wstring(devide_data(data, index));
-		std::wstring target_path = converter::to_wstring(devide_data(data, index));
-		if (file_handler::save(target_path, devide_data(data, index)))
+		std::wstring indication_id = converter::to_wstring(devide_data_on_file_packet(data, index));
+		std::wstring source_id = converter::to_wstring(devide_data_on_file_packet(data, index));
+		std::wstring source_sub_id = converter::to_wstring(devide_data_on_file_packet(data, index));
+		std::wstring target_id = converter::to_wstring(devide_data_on_file_packet(data, index));
+		std::wstring target_sub_id = converter::to_wstring(devide_data_on_file_packet(data, index));
+		std::wstring source_path = converter::to_wstring(devide_data_on_file_packet(data, index));
+		std::wstring target_path = converter::to_wstring(devide_data_on_file_packet(data, index));
+		if (file_handler::save(target_path, devide_data_on_file_packet(data, index)))
 		{
 			if(_received_file)
 			{
@@ -602,46 +607,5 @@ namespace network
 		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_client::send_packet, this, std::placeholders::_1)));
 
 		return true;
-	}
-
-	void tcp_client::append_data(std::vector<unsigned char>& result, const std::vector<unsigned char>& source)
-	{
-		size_t temp;
-		const int size = sizeof(size_t);
-		char temp_size[size];
-
-		temp = source.size();
-		memcpy(temp_size, &temp, size);
-		result.insert(result.end(), temp_size, temp_size + size);
-		result.insert(result.end(), source.begin(), source.end());
-	}
-
-	std::vector<unsigned char> tcp_client::devide_data(const std::vector<unsigned char>& source, size_t& index)
-	{
-		if (source.empty())
-		{
-			return std::vector<unsigned char>();
-		}
-
-		size_t temp;
-		const int size = sizeof(size_t);
-
-		if (source.size() < index + size)
-		{
-			return std::vector<unsigned char>();
-		}
-
-		memcpy(&temp, source.data() + index, size);
-		index += size;
-
-		if (source.size() < index + temp)
-		{
-			return std::vector<unsigned char>();
-		}
-
-		std::vector<unsigned char> result;
-		result.insert(result.end(), source.begin() + index , source.begin() + index + temp);
-
-		return result;
 	}
 }

@@ -433,4 +433,45 @@ namespace network
 
 		return true;
 	}
+
+	void data_handling::append_data_on_file_packet(std::vector<unsigned char>& result, const std::vector<unsigned char>& source)
+	{
+		size_t temp;
+		const int size = sizeof(size_t);
+		char temp_size[size];
+
+		temp = source.size();
+		memcpy(temp_size, &temp, size);
+		result.insert(result.end(), temp_size, temp_size + size);
+		result.insert(result.end(), source.begin(), source.end());
+	}
+
+	std::vector<unsigned char> data_handling::devide_data_on_file_packet(const std::vector<unsigned char>& source, size_t& index)
+	{
+		if (source.empty())
+		{
+			return std::vector<unsigned char>();
+		}
+
+		size_t temp;
+		const int size = sizeof(size_t);
+
+		if (source.size() < index + size)
+		{
+			return std::vector<unsigned char>();
+		}
+
+		memcpy(&temp, source.data() + index, size);
+		index += size;
+
+		if (source.size() < index + temp)
+		{
+			return std::vector<unsigned char>();
+		}
+
+		std::vector<unsigned char> result;
+		result.insert(result.end(), source.begin() + index, source.begin() + index + temp);
+
+		return result;
+	}
 }

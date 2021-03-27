@@ -87,10 +87,6 @@ namespace network
 		bool same_id_check(void);
 
 	private:
-		void append_data(std::vector<unsigned char>& result, const std::vector<unsigned char>& source);
-		std::vector<unsigned char> devide_data(const std::vector<unsigned char>& source, size_t& index);
-
-	private:
 		bool _confirm;
 		bool _auto_echo;
 		bool _bridge_line;

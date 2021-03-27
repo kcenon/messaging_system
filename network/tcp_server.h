@@ -19,7 +19,7 @@ namespace network
 	class tcp_server : public std::enable_shared_from_this<tcp_server>
 	{
 	public:
-		tcp_server(const std::wstring& source_id, const std::wstring& connection_key);
+		tcp_server(const std::wstring& source_id);
 		~tcp_server(void);
 
 	public:
@@ -28,6 +28,7 @@ namespace network
 	public:
 		void set_encrypt_mode(const bool& encrypt_mode);
 		void set_compress_mode(const bool& compress_mode);
+		void set_connection_key(const std::wstring& connection_key);
 
 	public:
 		void set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification);
