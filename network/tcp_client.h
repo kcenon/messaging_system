@@ -23,7 +23,7 @@ namespace network
 	class tcp_client : public std::enable_shared_from_this<tcp_client>, data_handling
 	{
 	public:
-		tcp_client(const std::wstring& source_id, const std::wstring& connection_key);
+		tcp_client(const std::wstring& source_id);
 		~tcp_client(void);
 
 	public:
@@ -34,6 +34,7 @@ namespace network
 		void set_bridge_line(const bool& bridge_line);
 		void set_compress_mode(const bool& compress_mode);
 		void set_session_types(const session_types& session_type);
+		void set_connection_key(const std::wstring& connection_key);
 
 	public:
 		void set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification);
@@ -41,7 +42,7 @@ namespace network
 		void set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification);
 
 	public:
-		void start(const std::wstring& ip, const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
+		void start(const std::wstring& ip, const unsigned short& port, const unsigned short& high_priority = 1, const unsigned short& normal_priority = 2, const unsigned short& low_priority = 3);
 		void stop(void);
 
 	public:
@@ -81,10 +82,6 @@ namespace network
 		bool normal_message(std::shared_ptr<container::value_container> message);
 		bool confirm_message(std::shared_ptr<container::value_container> message);
 		bool echo_message(std::shared_ptr<container::value_container> message);
-
-	private:
-		void append_data(std::vector<unsigned char>& result, const std::vector<unsigned char>& source);
-		std::vector<unsigned char> devide_data(const std::vector<unsigned char>& source, size_t& index);
 
 	private:
 		bool _confirm;
