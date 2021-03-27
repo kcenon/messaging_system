@@ -15,7 +15,7 @@ namespace network
 
 	tcp_server::tcp_server(const std::wstring& source_id) 
 		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), 
-		_received_file(nullptr), _connection(nullptr), _received_message(nullptr)
+		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr)
 	{
 
 	}
@@ -58,6 +58,11 @@ namespace network
 	void tcp_server::set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification)
 	{
 		_received_file = notification;
+	}
+
+	void tcp_server::set_binary_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)>& notification)
+	{
+		_received_data = notification;
 	}
 
 	void tcp_server::start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
@@ -171,6 +176,24 @@ namespace network
 		}
 	}
 
+	void tcp_server::send(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		for (auto& session : _sessions)
+		{
+			if (session == nullptr)
+			{
+				continue;
+			}
+
+			session->send(target_id, target_sub_id, data);
+		}
+	}
+
 	void tcp_server::wait_connection(void)
 	{
 		_acceptor->async_accept(
@@ -192,6 +215,7 @@ namespace network
 				session->set_connection_notification(std::bind(&tcp_server::connect_condition, this, std::placeholders::_1, std::placeholders::_2));
 				session->set_message_notification(_received_message);
 				session->set_file_notification(_received_file);
+				session->set_binary_notification(_received_data);
 				session->start(_encrypt_mode, _compress_mode, _high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);

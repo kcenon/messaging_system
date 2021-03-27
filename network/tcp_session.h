@@ -35,6 +35,7 @@ namespace network
 		void set_connection_notification(const std::function<void(std::shared_ptr<tcp_session>, const bool&)>& notification);
 		void set_message_notification(const std::function<void(std::shared_ptr<container::value_container>)>& notification);
 		void set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification);
+		void set_binary_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)>& notification);
 
 	public:
 		const session_types get_session_type(void);
@@ -48,6 +49,7 @@ namespace network
 	public:
 		void echo(void);
 		void send(std::shared_ptr<container::value_container> message);
+		void send(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
 
 	protected:
 		void receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data) override;
@@ -75,6 +77,17 @@ namespace network
 		bool decompress_file(const std::vector<unsigned char>& data);
 		bool decrypt_file(const std::vector<unsigned char>& data);
 		bool receive_file(const std::vector<unsigned char>& data);
+
+		// binary
+	private:
+		bool compress_binary(const std::vector<unsigned char>& data);
+		bool encrypt_binary(const std::vector<unsigned char>& data);
+		bool send_binary(const std::vector<unsigned char>& data);
+
+	private:
+		bool decompress_binary(const std::vector<unsigned char>& data);
+		bool decrypt_binary(const std::vector<unsigned char>& data);
+		bool receive_binary(const std::vector<unsigned char>& data);
 
 	private:
 		bool normal_message(std::shared_ptr<container::value_container> message);
@@ -107,6 +120,7 @@ namespace network
 		std::function<void(std::shared_ptr<tcp_session>, const bool&)> _connection;
 		std::function<void(std::shared_ptr<container::value_container>)> _received_message;
 		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)> _received_file;
+		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)> _received_data;
 
 	private:
 #ifdef ASIO_STANDALONE
