@@ -53,10 +53,10 @@ int main()
 
 	thread_pool manager;
 	manager.append(std::make_shared<thread_worker>(priorities::high), true);
-	manager.append(std::make_shared<thread_worker>(priorities::high), true);
-	manager.append(std::make_shared<thread_worker>(priorities::high), true);
 	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }), true);
 	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }), true);
+	manager.append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
+	manager.append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 	manager.append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)

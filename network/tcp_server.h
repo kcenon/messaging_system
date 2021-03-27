@@ -34,6 +34,7 @@ namespace network
 		void set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification);
 		void set_message_notification(const std::function<void(std::shared_ptr<container::value_container>)>& notification);
 		void set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification);
+		void set_binary_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)>& notification);
 
 	public:
 		void start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
@@ -43,6 +44,7 @@ namespace network
 		void echo(void);
 		void send(const container::value_container& message);
 		void send(std::shared_ptr<container::value_container> message);
+		void send(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
 
 	protected:
 		void wait_connection(void);
@@ -74,5 +76,6 @@ namespace network
 		std::function<void(const std::wstring&, const std::wstring&, const bool&)> _connection;
 		std::function<void(std::shared_ptr<container::value_container>)> _received_message;
 		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)> _received_file;
+		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)> _received_data;
 	};
 }

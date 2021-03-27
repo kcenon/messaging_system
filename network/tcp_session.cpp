@@ -34,7 +34,7 @@ namespace network
 #endif
 		: data_handling(246, 135), _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _received_message(nullptr),
 		_key(L""), _iv(L""), _thread_pool(nullptr), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), 
-		_connection_key(connection_key), _received_file(nullptr), _connection(nullptr),
+		_connection_key(connection_key), _received_file(nullptr), _received_data(nullptr), _connection(nullptr), 
 
 #ifdef ASIO_STANDALONE
 		_socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket)))
@@ -93,6 +93,11 @@ namespace network
 	void tcp_session::set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification)
 	{
 		_received_file = notification;
+	}
+
+	void tcp_session::set_binary_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)>& notification)
+	{
+		_received_data = notification;
 	}
 
 	const session_types tcp_session::get_session_type(void)
@@ -162,33 +167,12 @@ namespace network
 			return;
 		}
 
-		if (_bridge_line)
-		{
-			if (_compress_mode)
-			{
-				_thread_pool->push(std::make_shared<job>(priorities::high, message->serialize_array(), std::bind(&tcp_session::compress_packet, this, std::placeholders::_1)));
-
-				return;
-			}
-
-			if (_encrypt_mode)
-			{
-				_thread_pool->push(std::make_shared<job>(priorities::normal, message->serialize_array(), std::bind(&tcp_session::encrypt_packet, this, std::placeholders::_1)));
-
-				return;
-			}
-
-			_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
-
-			return;
-		}
-
-		if (message->target_id() != _target_id)
+		if (!_bridge_line && message->target_id() != _target_id)
 		{
 			return;
 		}
 
-		if (!message->target_sub_id().empty() && message->target_sub_id() != _target_sub_id)
+		if (!_bridge_line && !message->target_sub_id().empty() && message->target_sub_id() != _target_sub_id)
 		{
 			return;
 		}
@@ -208,6 +192,47 @@ namespace network
 		}
 
 		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
+	}
+
+	void tcp_session::send(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (!_bridge_line && target_id != _target_id)
+		{
+			return;
+		}
+
+		if (!_bridge_line && !target_sub_id.empty() && target_id != _target_sub_id)
+		{
+			return;
+		}
+
+		std::vector<unsigned char> result;
+		append_data_on_file_packet(result, converter::to_array(_source_id));
+		append_data_on_file_packet(result, converter::to_array(_source_sub_id));
+		append_data_on_file_packet(result, converter::to_array(target_id));
+		append_data_on_file_packet(result, converter::to_array(target_sub_id));
+		append_data_on_file_packet(result, data);
+
+		if (_compress_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::compress_binary, this, std::placeholders::_1)));
+
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::encrypt_binary, this, std::placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&tcp_session::send_binary, this, std::placeholders::_1)));
 	}
 
 	void tcp_session::receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data)
@@ -472,6 +497,106 @@ namespace network
 			{
 				_received_file(source_id, source_sub_id, indication_id, target_path);
 			}
+		}
+
+		return true;
+	}
+
+	bool tcp_session::compress_binary(const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return false;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::compression(data), std::bind(&tcp_session::encrypt_binary, this, std::placeholders::_1)));
+
+			return true;
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::top, compressor::compression(data), std::bind(&tcp_session::send_binary, this, std::placeholders::_1)));
+
+		return true;
+	}
+
+	bool tcp_session::encrypt_binary(const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return false;
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), std::bind(&tcp_session::send_binary, this, std::placeholders::_1)));
+
+		return true;
+	}
+
+	bool tcp_session::send_binary(const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return false;
+		}
+
+		return send_on_tcp(_socket, data_modes::binary_mode, data);
+	}
+
+	bool tcp_session::decompress_binary(const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return false;
+		}
+
+		if (_compress_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&tcp_session::receive_binary, this, std::placeholders::_1)));
+
+			return true;
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::receive_binary, this, std::placeholders::_1)));
+
+		return true;
+	}
+
+	bool tcp_session::decrypt_binary(const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return false;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&tcp_session::decompress_binary, this, std::placeholders::_1)));
+
+			return true;
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::decompress_binary, this, std::placeholders::_1)));
+
+		return true;
+	}
+
+	bool tcp_session::receive_binary(const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return false;
+		}
+
+		size_t index = 0;
+		std::wstring source_id = converter::to_wstring(devide_data_on_file_packet(data, index));
+		std::wstring source_sub_id = converter::to_wstring(devide_data_on_file_packet(data, index));
+		std::wstring target_id = converter::to_wstring(devide_data_on_file_packet(data, index));
+		std::wstring target_sub_id = converter::to_wstring(devide_data_on_file_packet(data, index));
+		std::vector<unsigned char> target_data = devide_data_on_file_packet(data, index);
+		if (_received_data)
+		{
+			_received_data(source_id, source_sub_id, target_id, target_sub_id, target_data);
 		}
 
 		return true;
