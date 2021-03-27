@@ -120,6 +120,8 @@ namespace network
 		std::shared_ptr<boost::asio::io_context> _io_context;
 		std::shared_ptr<boost::asio::ip::tcp::socket> _socket;
 #endif
+
+	private:
 		std::shared_ptr<threads::thread_pool> _thread_pool;
 		std::map<std::wstring, std::function<bool(std::shared_ptr<container::value_container>)>> _message_handlers;
 	};

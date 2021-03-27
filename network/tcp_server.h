@@ -65,6 +65,8 @@ namespace network
 		std::shared_ptr<boost::asio::io_context> _io_context;
 		std::shared_ptr<boost::asio::ip::tcp::acceptor> _acceptor;
 #endif
+
+	private:
 		std::vector<std::shared_ptr<tcp_session>> _sessions;
 
 	private:
