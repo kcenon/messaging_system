@@ -50,6 +50,7 @@ namespace network
 		void echo(void);
 		void send(std::shared_ptr<container::value_container> message);
 		void send(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
+		void send(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
 
 	protected:
 		void receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data) override;
