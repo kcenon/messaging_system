@@ -27,7 +27,7 @@ namespace logging
 		~logger(void);
 
 	public:
-		bool start(const std::wstring& store_log_file_name = L"log", const std::wstring& store_log_extention = L"log", const std::wstring& store_log_root_path = L"");
+		bool start(const std::wstring& store_log_file_name = L"log", const std::wstring& store_log_extention = L"log", const std::wstring& store_log_root_path = L"", const bool& append_date_on_file_name = true);
 		bool stop(void);
 
 	public:
@@ -74,6 +74,7 @@ namespace logging
 		std::atomic<bool> _thread_stop{ true };
 		std::atomic<bool> _write_date{ false };
 		std::atomic<bool> _write_console{ true };
+		std::atomic<bool> _append_date_on_file_name{ true };
 		std::atomic<size_t> _store_latest_log_count{ 1000 };
 		std::atomic<size_t> _limit_log_file_size{ 2097152 };
 
