@@ -175,6 +175,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="argument_parsing.cpp" />
     <ClCompile Include="compressing.cpp" />
     <ClCompile Include="converting.cpp" />
     <ClCompile Include="encrypting.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="logging.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="argument_parsing.h" />
     <ClInclude Include="compressing.h" />
     <ClInclude Include="converting.h" />
     <ClInclude Include="encrypting.h" />
