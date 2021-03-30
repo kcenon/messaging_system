@@ -155,6 +155,17 @@ namespace container
 		_units.clear();
 	}
 
+	std::shared_ptr<value_container> value_container::copy(const bool& swap_header, const bool& parse_only_header)
+	{
+		std::shared_ptr<value_container> new_container = std::make_shared<value_container>(serialize(), parse_only_header);
+		if (swap_header)
+		{
+			new_container->swap_header();
+		}
+
+		return new_container;
+	}
+
 	std::shared_ptr<value> value_container::add(const value& target_value)
 	{
 		return add(value::generate_value(target_value.name(), convert_value_type(target_value.type()), target_value.to_string()));

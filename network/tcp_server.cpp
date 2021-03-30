@@ -111,6 +111,19 @@ namespace network
 			}, _io_context);
 	}
 
+	void tcp_server::wait_stop(const unsigned int& seconds)
+	{
+		_future_status = _promise_status.get_future();
+
+		if (seconds == 0)
+		{
+			_future_status.wait();
+			return;
+		}
+
+		_future_status.wait_for(std::chrono::seconds(seconds));
+	}
+
 	void tcp_server::stop(void)
 	{
 		if (_acceptor != nullptr)
@@ -135,6 +148,8 @@ namespace network
 
 		if (_io_context != nullptr)
 		{
+			_promise_status.set_value(true);
+
 			_io_context->stop();
 			_io_context.reset();
 		}
