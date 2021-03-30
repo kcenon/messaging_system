@@ -30,6 +30,9 @@
     <ClCompile Include="encrypting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="argument_parsing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logging.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="encrypting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="argument_parsing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
