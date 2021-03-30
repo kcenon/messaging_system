@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <thread>
+#include <future>
 
 #ifdef ASIO_STANDALONE
 #include "asio.hpp"
@@ -39,6 +40,7 @@ namespace network
 
 	public:
 		void start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
+		void wait_stop(const unsigned int& seconds = 0);
 		void stop(void);
 
 	public:
@@ -77,6 +79,8 @@ namespace network
 #endif
 
 	private:
+		std::promise<bool> _promise_status;
+		std::future<bool> _future_status;
 		std::vector<std::shared_ptr<tcp_session>> _sessions;
 
 	private:

@@ -34,6 +34,7 @@ namespace container
 	public:
 		void swap_header(void);
 		void clear_value(void);
+		std::shared_ptr<value_container> copy(const bool& swap_header = false, const bool& parse_only_header = false);
 
 	public:
 		std::wstring source_id(void) const;
