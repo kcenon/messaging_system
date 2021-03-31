@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 		temp = target->second;
 		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
-		if (temp.compare(L"true"))
+		if (temp.compare(L"true") == 0)
 		{
 			encrypt_mode = true;
 		}
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 		temp = target->second;
 		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
-		if (temp.compare(L"true"))
+		if (temp.compare(L"true") == 0)
 		{
 			compress_mode = true;
 		}
