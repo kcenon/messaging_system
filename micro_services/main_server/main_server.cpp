@@ -24,11 +24,12 @@ int main(int argc, char* argv[])
 	std::wstring temp;
 	bool encrypt_mode = false;
 	bool compress_mode = false;
-	std::wstring connection_key = L"";
-	unsigned short server_port = 0;
-	unsigned short high_priority_count = 0;
-	unsigned short normal_priority_count = 0;
-	unsigned short low_priority_count = 0;
+	logging_level log_level = logging_level::information;
+	std::wstring connection_key = L"main_connection_key";
+	unsigned short server_port = 9753;
+	unsigned short high_priority_count = 1;
+	unsigned short normal_priority_count = 2;
+	unsigned short low_priority_count = 3;
 
 	auto target = arguments.find(L"--encrypt_mode");
 	if (target != arguments.end())
@@ -92,7 +93,13 @@ int main(int argc, char* argv[])
 		low_priority_count = (unsigned short)_wtoi(target->second.c_str());
 	}
 
-	logger::handle().set_target_level(logging_level::information);
+	target = arguments.find(L"--logging_level");
+	if (target != arguments.end())
+	{
+		log_level = (logging_level)_wtoi(target->second.c_str());
+	}
+
+	logger::handle().set_target_level(log_level);
 	logger::handle().start();
 
 	std::shared_ptr<tcp_server> server = std::make_shared<tcp_server>(L"main_server");
