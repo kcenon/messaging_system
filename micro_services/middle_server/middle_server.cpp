@@ -14,23 +14,23 @@ using namespace logging;
 using namespace network;
 using namespace argument_parsing;
 
-std::wstring main_server_ip = L"";
-unsigned short main_server_port = 0;
-unsigned short high_priority_count = 0;
-unsigned short normal_priority_count = 0;
-unsigned short low_priority_count = 0;
+std::wstring main_server_ip = L"127.0.0.1";
+unsigned short main_server_port = 9753;
+unsigned short high_priority_count = 1;
+unsigned short normal_priority_count = 2;
+unsigned short low_priority_count = 3;
 
 std::vector<std::wstring> _file_commands;
 
 std::atomic<bool> _data_line_connected{ false };
 std::atomic<bool> _file_line_connected{ false };
 
-std::shared_ptr<tcp_server> _server = nullptr;
 std::shared_ptr<tcp_client> _data_line = nullptr;
 std::shared_ptr<tcp_client> _file_line = nullptr;
+std::shared_ptr<tcp_server> _middle_server = nullptr;
 
-void connection_from_server(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
-void received_message_from_server(std::shared_ptr<container::value_container> container);
+void connection_from_middle_server(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
+void received_message_from_middle_server(std::shared_ptr<container::value_container> container);
 void connection_from_data_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
 void received_message_from_data_line(std::shared_ptr<container::value_container> container);
 void connection_from_file_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
@@ -44,9 +44,10 @@ int main(int argc, char* argv[])
 	std::wstring temp;
 	bool encrypt_mode = false;
 	bool compress_mode = false;
-	std::wstring main_connection_key = L"";
-	std::wstring middle_connection_key = L"";
-	unsigned short middle_server_port = 0;
+	logging_level log_level = logging_level::information;
+	std::wstring main_connection_key = L"main_connection_key";
+	std::wstring middle_connection_key = L"middle_connection_key";
+	unsigned short middle_server_port = 8642;
 
 	auto target = arguments.find(L"--encrypt_mode");
 	if (target != arguments.end())
@@ -128,11 +129,17 @@ int main(int argc, char* argv[])
 		low_priority_count = (unsigned short)_wtoi(target->second.c_str());
 	}
 
+	target = arguments.find(L"--logging_level");
+	if (target != arguments.end())
+	{
+		log_level = (logging_level)_wtoi(target->second.c_str());
+	}
+
 	_file_commands.push_back(L"");
 	_file_commands.push_back(L"");
 	_file_commands.push_back(L"");
 
-	logger::handle().set_target_level(logging_level::information);
+	logger::handle().set_target_level(log_level);
 	logger::handle().start();
 
 	_data_line = std::make_shared<tcp_client>(L"data_line");
@@ -152,28 +159,28 @@ int main(int argc, char* argv[])
 	_file_line->set_file_notification(&received_file_from_file_line);
 	_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 
-	_server = std::make_shared<tcp_server>(L"middle_server");
-	_server->set_encrypt_mode(encrypt_mode);
-	_server->set_compress_mode(compress_mode);
-	_server->set_connection_key(middle_connection_key);
-	_server->set_connection_notification(&connection_from_server);
-	_server->set_message_notification(&received_message_from_server);
-	_server->start(middle_server_port, high_priority_count, normal_priority_count, low_priority_count);
+	_middle_server = std::make_shared<tcp_server>(L"middle_server");
+	_middle_server->set_encrypt_mode(encrypt_mode);
+	_middle_server->set_compress_mode(compress_mode);
+	_middle_server->set_connection_key(middle_connection_key);
+	_middle_server->set_connection_notification(&connection_from_middle_server);
+	_middle_server->set_message_notification(&received_message_from_middle_server);
+	_middle_server->start(middle_server_port, high_priority_count, normal_priority_count, low_priority_count);
 
-	_server->wait_stop();
+	_middle_server->wait_stop();
 
 	logger::handle().stop();
 
 	return 0;
 }
 
-void connection_from_server(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
+void connection_from_middle_server(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
 	logger::handle().write(logging::logging_level::information,
 		fmt::format(L"target_id: {}, target_sub_id: {}, condition: {}", target_id, target_sub_id, condition));
 }
 
-void received_message_from_server(std::shared_ptr<container::value_container> container)
+void received_message_from_middle_server(std::shared_ptr<container::value_container> container)
 {
 	if (container == nullptr)
 	{
@@ -190,13 +197,13 @@ void received_message_from_server(std::shared_ptr<container::value_container> co
 	{
 		if (!_data_line_connected.load())
 		{
-			if (_server)
+			if (_middle_server)
 			{
 				std::shared_ptr<container::value_container> response = container->copy(true, true);
 				response << std::make_shared<container::bool_value>(L"error", true);
 				response << std::make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
 
-				_server->send(response);
+				_middle_server->send(response);
 			}
 
 			return;
@@ -212,13 +219,13 @@ void received_message_from_server(std::shared_ptr<container::value_container> co
 
 	if (!_file_line_connected.load())
 	{
-		if (_server)
+		if (_middle_server)
 		{
 			std::shared_ptr<container::value_container> response = container->copy(true, true);
 			response << std::make_shared<container::bool_value>(L"error", true);
 			response << std::make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
 
-			_server->send(response);
+			_middle_server->send(response);
 		}
 
 		return;
@@ -252,9 +259,9 @@ void received_message_from_data_line(std::shared_ptr<container::value_container>
 		return;
 	}
 
-	if (_server)
+	if (_middle_server)
 	{
-		_server->send(container);
+		_middle_server->send(container);
 	}
 }
 
@@ -280,9 +287,9 @@ void received_message_from_file_line(std::shared_ptr<container::value_container>
 		return;
 	}
 
-	if (_server)
+	if (_middle_server)
 	{
-		_server->send(container);
+		_middle_server->send(container);
 	}
 }
 
