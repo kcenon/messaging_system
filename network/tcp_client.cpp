@@ -36,7 +36,7 @@ namespace network
 	tcp_client::tcp_client(const std::wstring& source_id)
 		: data_handling(246, 135), _confirm(false), _auto_echo(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false),
 		_io_context(nullptr), _socket(nullptr), _key(L""), _iv(L""), _thread_pool(nullptr), _auto_echo_interval_seconds(1), _connection(nullptr),
-		_connection_key(L"connection_key"), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _received_file(nullptr),
+		_connection_key(L"connection_key"), _source_id(source_id), _source_sub_id(L""), _target_id(L"unknown"), _target_sub_id(L"0.0.0.0:0"), _received_file(nullptr),
 		_received_message(nullptr), _received_data(nullptr)
 	{
 		_message_handlers.insert({ L"confirm_connection", std::bind(&tcp_client::confirm_message, this, std::placeholders::_1) });
@@ -51,6 +51,11 @@ namespace network
 	std::shared_ptr<tcp_client> tcp_client::get_ptr(void)
 	{
 		return shared_from_this();
+	}
+
+	std::wstring tcp_client::source_id(void) const
+	{
+		return _source_id;
 	}
 
 	void tcp_client::set_auto_echo(const bool& auto_echo, const unsigned short& echo_interval)
@@ -152,31 +157,19 @@ namespace network
 #endif
 		}
 		catch (const std::overflow_error&) {
-			if (_connection != nullptr)
-			{
-				_connection(_target_id, _target_sub_id, false);
-			}
+			connection_notification(false);
 			return; 
 		}
 		catch (const std::runtime_error&) {
-			if (_connection != nullptr)
-			{
-				_connection(_target_id, _target_sub_id, false);
-			}
+			connection_notification(false);
 			return;
 		}
 		catch (const std::exception&) {
-			if (_connection != nullptr)
-			{
-				_connection(_target_id, _target_sub_id, false);
-			}
+			connection_notification(false);
 			return;
 		}
 		catch (...) {
-			if (_connection != nullptr)
-			{
-				_connection(_target_id, _target_sub_id, false);
-			}
+			connection_notification(false);
 			return;
 		}
 
@@ -186,9 +179,9 @@ namespace network
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
 #ifdef ASIO_STANDALONE
-		_thread = std::thread([](std::shared_ptr<asio::io_context> context)
+		_thread = std::thread([&](std::shared_ptr<asio::io_context> context)
 #else
-		_thread = boost::thread([](std::shared_ptr<boost::asio::io_context> context)
+		_thread = boost::thread([&](std::shared_ptr<boost::asio::io_context> context)
 #endif
 			{
 				try
@@ -197,10 +190,22 @@ namespace network
 					context->run();
 					logger::handle().write(logging::logging_level::information, L"stop tcp_client");
 				}
-				catch (const std::overflow_error&) { logger::handle().write(logging::logging_level::exception, L"break tcp_client with overflow error"); }
-				catch (const std::runtime_error&) { logger::handle().write(logging::logging_level::exception, L"break tcp_client with runtime error"); }
-				catch (const std::exception&) { logger::handle().write(logging::logging_level::exception, L"break tcp_client with exception"); }
-				catch (...) { logger::handle().write(logging::logging_level::exception, L"break tcp_client with error"); }
+				catch (const std::overflow_error&) { 
+					logger::handle().write(logging::logging_level::exception, L"break tcp_client with overflow error"); 
+					connection_notification(false);
+				}
+				catch (const std::runtime_error&) { 
+					logger::handle().write(logging::logging_level::exception, L"break tcp_client with runtime error");
+					connection_notification(false);
+				}
+				catch (const std::exception&) { 
+					logger::handle().write(logging::logging_level::exception, L"break tcp_client with exception"); 
+					connection_notification(false);
+				}
+				catch (...) { 
+					logger::handle().write(logging::logging_level::exception, L"break tcp_client with error");
+					connection_notification(false);
+				}
 			}, _io_context);
 
 		read_start_code(_socket);
@@ -338,10 +343,7 @@ namespace network
 	{
 		stop();
 
-		if (_connection != nullptr)
-		{
-			_connection(_target_id, _target_sub_id, false);
-		}
+		connection_notification(false);
 	}
 
 	bool tcp_client::compress_packet(const std::vector<unsigned char>& data)
@@ -719,12 +721,11 @@ namespace network
 			return false;
 		}
 
+		_target_id = message->source_id();
+
 		if (!message->get_value(L"confirm")->to_boolean())
 		{
-			if (_connection)
-			{
-				_connection(message->source_id(), message->source_sub_id(), false);
-			}
+			connection_notification(false);
 
 			return false;
 		}
@@ -734,10 +735,7 @@ namespace network
 		_iv = message->get_value(L"iv")->to_string();
 		_encrypt_mode = message->get_value(L"encrypt_mode")->to_boolean();
 
-		if (_connection)
-		{
-			_connection(message->source_id(), message->source_sub_id(), true);
-		}
+		connection_notification(true);
 
 		return true;
 	}
@@ -769,5 +767,17 @@ namespace network
 		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_client::send_packet, this, std::placeholders::_1)));
 
 		return true;
+	}
+
+	void tcp_client::connection_notification(const bool& condition)
+	{
+		std::thread thread([&](const bool& connection) 
+			{
+				if (_connection)
+				{
+					_connection(_target_id, _target_sub_id, connection);
+				}
+			}, condition);
+		thread.detach();
 	}
 }
