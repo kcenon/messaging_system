@@ -6,6 +6,7 @@
 
 #include <wchar.h>
 #include <algorithm>
+#include <signal.h>
 
 #include "fmt/format.h"
 
@@ -14,6 +15,8 @@ constexpr auto PROGRAM_NAME = L"main_server";
 using namespace logging;
 using namespace network;
 using namespace argument_parsing;
+
+std::shared_ptr<tcp_server> _main_server = nullptr;
 
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
 void received_message(std::shared_ptr<container::value_container> container);
@@ -113,16 +116,16 @@ int main(int argc, char* argv[])
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
 
-	std::shared_ptr<tcp_server> server = std::make_shared<tcp_server>(PROGRAM_NAME);
-	server->set_encrypt_mode(encrypt_mode);
-	server->set_compress_mode(compress_mode);
-	server->set_connection_key(connection_key);
-	server->set_connection_notification(&connection);
-	server->set_message_notification(&received_message);
-	server->set_file_notification(&received_file);
-	server->start(server_port, high_priority_count, normal_priority_count, low_priority_count);
+	std::shared_ptr<tcp_server> main_server = std::make_shared<tcp_server>(PROGRAM_NAME);
+	main_server->set_encrypt_mode(encrypt_mode);
+	main_server->set_compress_mode(compress_mode);
+	main_server->set_connection_key(connection_key);
+	main_server->set_connection_notification(&connection);
+	main_server->set_message_notification(&received_message);
+	main_server->set_file_notification(&received_file);
+	main_server->start(server_port, high_priority_count, normal_priority_count, low_priority_count);
 
-	server->wait_stop();
+	main_server->wait_stop();
 
 	logger::handle().stop();
 
@@ -132,7 +135,7 @@ int main(int argc, char* argv[])
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
 	logger::handle().write(logging::logging_level::information,
-		fmt::format(L"target_id: {}, target_sub_id: {}, condition: {}", target_id, target_sub_id, condition));
+		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
 void received_message(std::shared_ptr<container::value_container> container)

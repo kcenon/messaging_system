@@ -30,6 +30,9 @@ namespace network
 		std::shared_ptr<tcp_client> get_ptr(void);
 
 	public:
+		std::wstring source_id(void) const;
+
+	public:
 		void set_auto_echo(const bool& auto_echo, const unsigned short& echo_interval);
 		void set_bridge_line(const bool& bridge_line);
 		void set_compress_mode(const bool& compress_mode);
@@ -95,6 +98,9 @@ namespace network
 		bool normal_message(std::shared_ptr<container::value_container> message);
 		bool confirm_message(std::shared_ptr<container::value_container> message);
 		bool echo_message(std::shared_ptr<container::value_container> message);
+
+	private:
+		void connection_notification(const bool& condition);
 
 	private:
 		bool _confirm;

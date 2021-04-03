@@ -8,6 +8,8 @@
 #include "values/bool_value.h"
 #include "values/string_value.h"
 
+#include <signal.h>
+
 #include "fmt/format.h"
 
 constexpr auto PROGRAM_NAME = L"middle_server";
@@ -163,16 +165,16 @@ int main(int argc, char* argv[])
 
 	_data_line = std::make_shared<tcp_client>(L"data_line");
 	_data_line->set_compress_mode(compress_mode);
-	_data_line->set_session_types(session_types::message_line);
 	_data_line->set_connection_key(main_connection_key);
+	_data_line->set_session_types(session_types::message_line);
 	_data_line->set_connection_notification(&connection_from_data_line);
 	_data_line->set_message_notification(&received_message_from_data_line);
 	_data_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 
 	_file_line = std::make_shared<tcp_client>(L"file_line");
 	_file_line->set_compress_mode(compress_mode);
-	_file_line->set_session_types(session_types::file_line);
 	_file_line->set_connection_key(main_connection_key);
+	_file_line->set_session_types(session_types::file_line);
 	_file_line->set_connection_notification(&connection_from_file_line);
 	_file_line->set_message_notification(&received_message_from_file_line);
 	_file_line->set_file_notification(&received_file_from_file_line);
@@ -188,7 +190,7 @@ int main(int argc, char* argv[])
 void connection_from_middle_server(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
 	logger::handle().write(logging::logging_level::information,
-		fmt::format(L"target_id: {}, target_sub_id: {}, condition: {}", target_id, target_sub_id, condition));
+		fmt::format(L"a client on middle server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
 void received_message_from_middle_server(std::shared_ptr<container::value_container> container)
@@ -252,15 +254,18 @@ void connection_from_data_line(const std::wstring& target_id, const std::wstring
 {
 	_data_line_connected.store(condition);
 
-	if (condition)
+	if (_data_line)
 	{
-		logger::handle().write(logging::logging_level::information,
-			fmt::format(L"data_line is connected => target: {}[{}], condition: {}", target_id, target_sub_id, condition));
+		logger::handle().write(logging::logging_level::sequence,
+			fmt::format(L"{} on middle server is {} from target: {}[{}]", _data_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
 
-		return;
+		if (condition)
+		{
+			return;
+		}
+
+		_data_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 	}
-
-	_data_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 }
 
 void received_message_from_data_line(std::shared_ptr<container::value_container> container)
@@ -280,15 +285,18 @@ void connection_from_file_line(const std::wstring& target_id, const std::wstring
 {
 	_file_line_connected.store(condition);
 
-	if (condition)
+	if (_file_line)
 	{
-		logger::handle().write(logging::logging_level::information,
-			fmt::format(L"file_line is connected => target: {}[{}], condition: {}", target_id, target_sub_id, condition));
+		logger::handle().write(logging::logging_level::sequence,
+			fmt::format(L"{} on middle server is {} from target: {}[{}]", _file_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
 
-		return;
+		if (condition)
+		{
+			return;
+		}
+
+		_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 	}
-
-	_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 }
 
 void received_message_from_file_line(std::shared_ptr<container::value_container> container)

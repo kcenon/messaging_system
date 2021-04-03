@@ -7,6 +7,7 @@
 #include "fmt/format.h"
 
 constexpr auto PROGRAM_NAME = L"network_sample";
+constexpr auto CONNECTION_KEY = L"network_sample";
 
 using namespace logging;
 using namespace network;
@@ -26,7 +27,7 @@ int main(void)
 	std::shared_ptr<tcp_server> server = std::make_shared<tcp_server>(L"server");
 	server->set_encrypt_mode(encrypt_mode);
 	server->set_compress_mode(compress_mode);
-	server->set_connection_key(L"any string can be used for it");
+	server->set_connection_key(CONNECTION_KEY);
 	server->set_connection_notification(&connection);
 	server->set_message_notification(&received_message);
 	server->set_file_notification(&received_file);
@@ -34,7 +35,7 @@ int main(void)
 
 	std::shared_ptr<tcp_client> client = std::make_shared<tcp_client>(L"client");
 	client->set_compress_mode(compress_mode);
-	client->set_connection_key(L"any string can be used for it");
+	client->set_connection_key(CONNECTION_KEY);
 	client->set_connection_notification(&connection);
 	client->set_message_notification(&received_message);
 	client->set_file_notification(&received_file);
@@ -58,7 +59,7 @@ int main(void)
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
 	logger::handle().write(logging::logging_level::information,
-		fmt::format(L"target_id: {}, target_sub_id: {}, condition: {}", target_id, target_sub_id, condition));
+		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
 void received_message(std::shared_ptr<container::value_container> container)
