@@ -38,6 +38,7 @@ void received_message_from_data_line(std::shared_ptr<container::value_container>
 void connection_from_file_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
 void received_message_from_file_line(std::shared_ptr<container::value_container> container);
 void received_file_from_file_line(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& indication_id, const std::wstring& target_path);
+void display_help(void);
 
 int main(int argc, char* argv[])
 {
@@ -51,7 +52,15 @@ int main(int argc, char* argv[])
 	std::wstring middle_connection_key = L"middle_connection_key";
 	unsigned short middle_server_port = 8642;
 
-	auto target = arguments.find(L"--encrypt_mode");
+	auto target = arguments.find(L"--help");
+	if (target != arguments.end())
+	{
+		display_help();
+
+		return 0;
+	}
+
+	target = arguments.find(L"--encrypt_mode");
 	if (target != arguments.end())
 	{
 		temp = target->second;
@@ -299,4 +308,18 @@ void received_file_from_file_line(const std::wstring& source_id, const std::wstr
 {
 	logger::handle().write(logging::logging_level::information,
 		fmt::format(L"source_id: {}, source_sub_id: {}, indication_id: {}, file_path: {}", source_id, source_sub_id, indication_id, target_path));
+}
+
+void display_help(void)
+{
+	std::wcout << L"--encrypt_mode" << std::endl;
+	std::wcout << L"--compress_mode" << std::endl;
+	std::wcout << L"--main_connection_key" << std::endl;
+	std::wcout << L"--middle_connection_key" << std::endl;
+	std::wcout << L"--main_server_port" << std::endl;
+	std::wcout << L"--middle_server_port" << std::endl;
+	std::wcout << L"--high_priority_count" << std::endl;
+	std::wcout << L"--normal_priority_count" << std::endl;
+	std::wcout << L"--low_priority_count" << std::endl;
+	std::wcout << L"--logging_level" << std::endl;
 }
