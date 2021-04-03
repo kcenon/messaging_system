@@ -4,11 +4,13 @@
 
 #include <iostream>
 
+constexpr auto PROGRAM_NAME = L"logging_sample";
+
 using namespace logging;
 
 int main()
 {
-	logger::handle().start();
+	logger::handle().start(PROGRAM_NAME);
 
 	std::vector<std::thread> threads;
 	for (unsigned short thread_index = 0; thread_index < 10; ++thread_index)

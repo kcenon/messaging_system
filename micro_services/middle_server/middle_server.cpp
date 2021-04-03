@@ -10,6 +10,8 @@
 
 #include "fmt/format.h"
 
+constexpr auto PROGRAM_NAME = L"middle_server";
+
 using namespace logging;
 using namespace network;
 using namespace argument_parsing;
@@ -140,7 +142,15 @@ int main(int argc, char* argv[])
 	_file_commands.push_back(L"");
 
 	logger::handle().set_target_level(log_level);
-	logger::handle().start();
+	logger::handle().start(PROGRAM_NAME);
+
+	_middle_server = std::make_shared<tcp_server>(PROGRAM_NAME);
+	_middle_server->set_encrypt_mode(encrypt_mode);
+	_middle_server->set_compress_mode(compress_mode);
+	_middle_server->set_connection_key(middle_connection_key);
+	_middle_server->set_connection_notification(&connection_from_middle_server);
+	_middle_server->set_message_notification(&received_message_from_middle_server);
+	_middle_server->start(middle_server_port, high_priority_count, normal_priority_count, low_priority_count);
 
 	_data_line = std::make_shared<tcp_client>(L"data_line");
 	_data_line->set_compress_mode(compress_mode);
@@ -158,14 +168,6 @@ int main(int argc, char* argv[])
 	_file_line->set_message_notification(&received_message_from_file_line);
 	_file_line->set_file_notification(&received_file_from_file_line);
 	_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
-
-	_middle_server = std::make_shared<tcp_server>(L"middle_server");
-	_middle_server->set_encrypt_mode(encrypt_mode);
-	_middle_server->set_compress_mode(compress_mode);
-	_middle_server->set_connection_key(middle_connection_key);
-	_middle_server->set_connection_notification(&connection_from_middle_server);
-	_middle_server->set_message_notification(&received_message_from_middle_server);
-	_middle_server->start(middle_server_port, high_priority_count, normal_priority_count, low_priority_count);
 
 	_middle_server->wait_stop();
 
