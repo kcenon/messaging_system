@@ -14,16 +14,22 @@ namespace argument_parsing
 		std::wstring argument_id;
 		for (int index = 1; index < argc; ++index)
 		{
-			if (index + 1 >= argc)
-			{
-				break;
-			}
-
 			argument_id = converter::to_wstring(argv[index]);
 			offset = argument_id.find(L"--", 0);
 			if (offset != 0)
 			{
 				continue;
+			}
+
+			if (argument_id.compare(L"--help") == 0)
+			{
+				result.insert({ argument_id, L"" });
+				continue;
+			}
+
+			if (index + 1 >= argc)
+			{
+				break;
 			}
 
 			auto target = result.find(argument_id);
