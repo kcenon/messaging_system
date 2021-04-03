@@ -9,6 +9,8 @@
 
 #include "fmt/format.h"
 
+constexpr auto PROGRAM_NAME = L"main_server";
+
 using namespace logging;
 using namespace network;
 using namespace argument_parsing;
@@ -100,9 +102,9 @@ int main(int argc, char* argv[])
 	}
 
 	logger::handle().set_target_level(log_level);
-	logger::handle().start();
+	logger::handle().start(PROGRAM_NAME);
 
-	std::shared_ptr<tcp_server> server = std::make_shared<tcp_server>(L"main_server");
+	std::shared_ptr<tcp_server> server = std::make_shared<tcp_server>(PROGRAM_NAME);
 	server->set_encrypt_mode(encrypt_mode);
 	server->set_compress_mode(compress_mode);
 	server->set_connection_key(connection_key);

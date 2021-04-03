@@ -6,6 +6,8 @@
 
 #include "fmt/format.h"
 
+constexpr auto PROGRAM_NAME = L"network_sample";
+
 using namespace logging;
 using namespace network;
 
@@ -19,7 +21,7 @@ int main(void)
 	bool compress_mode = false;
 
 	logger::handle().set_target_level(logging_level::information);
-	logger::handle().start();
+	logger::handle().start(PROGRAM_NAME);
 
 	std::shared_ptr<tcp_server> server = std::make_shared<tcp_server>(L"server");
 	server->set_encrypt_mode(encrypt_mode);

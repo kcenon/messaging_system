@@ -15,12 +15,14 @@
 #include <memory>
 #include <iostream>
 
+constexpr auto PROGRAM_NAME = L"container_sample";
+
 using namespace logging;
 using namespace container;
 
 int main()
 {
-	logger::handle().start();
+	logger::handle().start(PROGRAM_NAME);
 
 	auto start = logger::handle().chrono_start();
 	value_container data;

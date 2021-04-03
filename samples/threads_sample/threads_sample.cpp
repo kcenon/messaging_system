@@ -10,6 +10,8 @@
 
 #include "fmt/format.h"
 
+constexpr auto PROGRAM_NAME = L"thread_sample";
+
 using namespace logging;
 using namespace converting;
 using namespace threads;
@@ -49,7 +51,7 @@ bool write_data(const std::vector<unsigned char>& data)
 int main()
 {
 	logger::handle().set_target_level(logging_level::information);
-	logger::handle().start();
+	logger::handle().start(PROGRAM_NAME);
 
 	thread_pool manager;
 	manager.append(std::make_shared<thread_worker>(priorities::high), true);
