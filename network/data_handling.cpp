@@ -434,7 +434,7 @@ namespace network
 		return true;
 	}
 
-	void data_handling::append_data_on_file_packet(std::vector<unsigned char>& result, const std::vector<unsigned char>& source)
+	void data_handling::append_binary_on_packet(std::vector<unsigned char>& result, const std::vector<unsigned char>& source)
 	{
 		size_t temp;
 		const int size = sizeof(size_t);
@@ -446,7 +446,7 @@ namespace network
 		result.insert(result.end(), source.begin(), source.end());
 	}
 
-	std::vector<unsigned char> data_handling::devide_data_on_file_packet(const std::vector<unsigned char>& source, size_t& index)
+	std::vector<unsigned char> data_handling::devide_binary_on_packet(const std::vector<unsigned char>& source, size_t& index)
 	{
 		if (source.empty())
 		{

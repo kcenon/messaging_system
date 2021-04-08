@@ -37,13 +37,13 @@ namespace threads
 		return _priority;
 	}
 
-	bool job::work(const priorities& priority)
+	bool job::work(const priorities& worker_priority)
 	{
 		if (_working_callback != nullptr)
 		{
 			bool result = _working_callback();
 
-			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function without value on job: job priority[{}], worker priority[{}]", _priority, priority));
+			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function without value on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
 
 			return result;
 		}
@@ -52,14 +52,14 @@ namespace threads
 		{
 			bool result = _working_callback2(_data);
 
-			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", _priority, priority));
+			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
 
 			return result;
 		}
 
-		if (!working(priority))
+		if (!working(worker_priority))
 		{
-			logger::handle().write(logging::logging_level::sequence, fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", _priority, priority));
+			logger::handle().write(logging::logging_level::sequence, fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
 
 			return false;
 		}
@@ -67,9 +67,9 @@ namespace threads
 		return true;
 	}
 
-	bool job::working(const priorities& priority)
+	bool job::working(const priorities& worker_priority)
 	{
-		logger::handle().write(logging::logging_level::sequence, fmt::format(L"need to implement working function on job: job priority[{}], worker priority[{}]", _priority, priority));
+		logger::handle().write(logging::logging_level::sequence, fmt::format(L"need to implement working function on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
 
 		return false;
 	}
