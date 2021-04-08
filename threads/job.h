@@ -23,10 +23,10 @@ namespace threads
 		const priorities priority(void);
 
 	public:
-		bool work(const priorities& priority);
+		bool work(const priorities& worker_priority);
 
 	protected:
-		virtual bool working(const priorities& priority);
+		virtual bool working(const priorities& worker_priority);
 
 	private:
 		priorities _priority;

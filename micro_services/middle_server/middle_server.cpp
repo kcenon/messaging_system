@@ -18,6 +18,12 @@ using namespace logging;
 using namespace network;
 using namespace argument_parsing;
 
+bool encrypt_mode = false;
+bool compress_mode = false;
+logging_level log_level = logging_level::information;
+std::wstring main_connection_key = L"main_connection_key";
+std::wstring middle_connection_key = L"middle_connection_key";
+unsigned short middle_server_port = 8642;
 std::wstring main_server_ip = L"127.0.0.1";
 unsigned short main_server_port = 9753;
 unsigned short high_priority_count = 1;
@@ -33,6 +39,10 @@ std::shared_ptr<tcp_client> _data_line = nullptr;
 std::shared_ptr<tcp_client> _file_line = nullptr;
 std::shared_ptr<tcp_server> _middle_server = nullptr;
 
+bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
+void create_middle_server(void);
+void create_data_line(void);
+void create_file_line(void);
 void connection_from_middle_server(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
 void received_message_from_middle_server(std::shared_ptr<container::value_container> container);
 void connection_from_data_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
@@ -44,22 +54,39 @@ void display_help(void);
 
 int main(int argc, char* argv[])
 {
-	std::map<std::wstring, std::wstring> arguments = argument_parser::parse(argc, argv);
+	if (!parse_arguments(argument_parser::parse(argc, argv)))
+	{
+		return 0;
+	}
 
+	_file_commands.push_back(L"");
+	_file_commands.push_back(L"");
+	_file_commands.push_back(L"");
+
+	logger::handle().set_target_level(log_level);
+	logger::handle().start(PROGRAM_NAME);
+
+	create_middle_server();
+	create_data_line();
+	create_file_line();
+
+	_middle_server->wait_stop();
+
+	logger::handle().stop();
+
+	return 0;
+}
+
+bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
+{
 	std::wstring temp;
-	bool encrypt_mode = false;
-	bool compress_mode = false;
-	logging_level log_level = logging_level::information;
-	std::wstring main_connection_key = L"main_connection_key";
-	std::wstring middle_connection_key = L"middle_connection_key";
-	unsigned short middle_server_port = 8642;
 
 	auto target = arguments.find(L"--help");
 	if (target != arguments.end())
 	{
 		display_help();
 
-		return 0;
+		return false;
 	}
 
 	target = arguments.find(L"--encrypt_mode");
@@ -148,12 +175,15 @@ int main(int argc, char* argv[])
 		log_level = (logging_level)_wtoi(target->second.c_str());
 	}
 
-	_file_commands.push_back(L"");
-	_file_commands.push_back(L"");
-	_file_commands.push_back(L"");
+	return true;
+}
 
-	logger::handle().set_target_level(log_level);
-	logger::handle().start(PROGRAM_NAME);
+void create_middle_server(void)
+{
+	if (_middle_server != nullptr)
+	{
+		_middle_server.reset();
+	}
 
 	_middle_server = std::make_shared<tcp_server>(PROGRAM_NAME);
 	_middle_server->set_encrypt_mode(encrypt_mode);
@@ -162,6 +192,14 @@ int main(int argc, char* argv[])
 	_middle_server->set_connection_notification(&connection_from_middle_server);
 	_middle_server->set_message_notification(&received_message_from_middle_server);
 	_middle_server->start(middle_server_port, high_priority_count, normal_priority_count, low_priority_count);
+}
+
+void create_data_line(void)
+{
+	if (_data_line != nullptr)
+	{
+		_data_line.reset();
+	}
 
 	_data_line = std::make_shared<tcp_client>(L"data_line");
 	_data_line->set_compress_mode(compress_mode);
@@ -170,6 +208,14 @@ int main(int argc, char* argv[])
 	_data_line->set_connection_notification(&connection_from_data_line);
 	_data_line->set_message_notification(&received_message_from_data_line);
 	_data_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
+}
+
+void create_file_line(void)
+{
+	if (_file_line != nullptr)
+	{
+		_file_line.reset();
+	}
 
 	_file_line = std::make_shared<tcp_client>(L"file_line");
 	_file_line->set_compress_mode(compress_mode);
@@ -179,12 +225,6 @@ int main(int argc, char* argv[])
 	_file_line->set_message_notification(&received_message_from_file_line);
 	_file_line->set_file_notification(&received_file_from_file_line);
 	_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
-
-	_middle_server->wait_stop();
-
-	logger::handle().stop();
-
-	return 0;
 }
 
 void connection_from_middle_server(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
@@ -264,6 +304,8 @@ void connection_from_data_line(const std::wstring& target_id, const std::wstring
 			return;
 		}
 
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+
 		_data_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 	}
 }
@@ -295,6 +337,8 @@ void connection_from_file_line(const std::wstring& target_id, const std::wstring
 			return;
 		}
 
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+
 		_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 	}
 }
@@ -320,14 +364,25 @@ void received_file_from_file_line(const std::wstring& source_id, const std::wstr
 
 void display_help(void)
 {
-	std::wcout << L"--encrypt_mode" << std::endl;
-	std::wcout << L"--compress_mode" << std::endl;
-	std::wcout << L"--main_connection_key" << std::endl;
-	std::wcout << L"--middle_connection_key" << std::endl;
-	std::wcout << L"--main_server_port" << std::endl;
-	std::wcout << L"--middle_server_port" << std::endl;
-	std::wcout << L"--high_priority_count" << std::endl;
-	std::wcout << L"--normal_priority_count" << std::endl;
-	std::wcout << L"--low_priority_count" << std::endl;
-	std::wcout << L"--logging_level" << std::endl;
+	std::wcout << L"main server options:" << std::endl << std::endl;
+	std::wcout << L"--encrypt_mode [value] " << std::endl;
+	std::wcout << L"\tThe encrypt_mode on/off. If you want to use encrypt mode must be appended '--encrypt_mode true'.\n\tInitialize value is --encrypt_mode off." << std::endl << std::endl;
+	std::wcout << L"--compress_mode [value]" << std::endl;
+	std::wcout << L"\tThe compress_mode on/off. If you want to use compress mode must be appended '--compress_mode true'.\n\tInitialize value is --compress_mode off." << std::endl << std::endl;
+	std::wcout << L"--main_connection_key [value]" << std::endl;
+	std::wcout << L"\tIf you want to change a specific key string for the connection to the main server must be appended\n\t'--main_connection_key [specific key string]'." << std::endl << std::endl;
+	std::wcout << L"--middle_connection_key [value]" << std::endl;
+	std::wcout << L"\tIf you want to change a specific key string for the connection to the middle server must be appended\n\t'--middle_connection_key [specific key string]'." << std::endl << std::endl;
+	std::wcout << L"--main_server_port [value]" << std::endl;
+	std::wcout << L"\tIf you want to change a port number for the connection to the main server must be appended\n\t'--main_server_port [port number]'." << std::endl << std::endl;
+	std::wcout << L"--middle_server_port [value]" << std::endl;
+	std::wcout << L"\tIf you want to change a port number for the connection to the middle server must be appended\n\t'--middle_server_port [port number]'." << std::endl << std::endl;
+	std::wcout << L"--high_priority_count [value]" << std::endl;
+	std::wcout << L"\tIf you want to change high priority thread workers must be appended '--high_priority_count [count]'." << std::endl << std::endl;
+	std::wcout << L"--normal_priority_count [value]" << std::endl;
+	std::wcout << L"\tIf you want to change normal priority thread workers must be appended '--normal_priority_count [count]'." << std::endl << std::endl;
+	std::wcout << L"--low_priority_count [value]" << std::endl;
+	std::wcout << L"\tIf you want to change low priority thread workers must be appended '--low_priority_count [count]'." << std::endl << std::endl;
+	std::wcout << L"--logging_level [value]" << std::endl;
+	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
 }
