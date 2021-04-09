@@ -104,6 +104,11 @@ namespace network
 		_received_data = notification;
 	}
 
+	bool tcp_client::is_confirmed(void) const
+	{
+		return _confirm;
+	}
+
 	void tcp_client::start(const std::wstring& ip, const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
 		stop();
@@ -186,24 +191,24 @@ namespace network
 			{
 				try
 				{
-					logger::handle().write(logging::logging_level::information, L"start tcp_client");
+					logger::handle().write(logging::logging_level::information, fmt::format(L"start tcp_client({})", _source_id));
 					context->run();
-					logger::handle().write(logging::logging_level::information, L"stop tcp_client");
+					logger::handle().write(logging::logging_level::information, fmt::format(L"stop tcp_client({})", _source_id));
 				}
 				catch (const std::overflow_error&) { 
-					logger::handle().write(logging::logging_level::exception, L"break tcp_client with overflow error"); 
+					logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_client({}) with overflow error", _source_id));
 					connection_notification(false);
 				}
 				catch (const std::runtime_error&) { 
-					logger::handle().write(logging::logging_level::exception, L"break tcp_client with runtime error");
+					logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_client({}) with runtime error", _source_id));
 					connection_notification(false);
 				}
 				catch (const std::exception&) { 
-					logger::handle().write(logging::logging_level::exception, L"break tcp_client with exception"); 
+					logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_client({}) with exception", _source_id));
 					connection_notification(false);
 				}
 				catch (...) { 
-					logger::handle().write(logging::logging_level::exception, L"break tcp_client with error");
+					logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_client({}) with error", _source_id));
 					connection_notification(false);
 				}
 			}, _io_context);
@@ -335,6 +340,7 @@ namespace network
 		switch (data_mode)
 		{
 		case data_modes::file_mode: decrypt_file(data); break;
+		case data_modes::binary_mode: break;
 		case data_modes::packet_mode: decrypt_packet(data); break;
 		}
 	}
@@ -771,6 +777,12 @@ namespace network
 
 	void tcp_client::connection_notification(const bool& condition)
 	{
+		if (!condition)
+		{
+			_confirm = false;
+		}
+
+		// Need to find out more efficient way
 		std::thread thread([&](const bool& connection) 
 			{
 				if (_connection)
