@@ -30,10 +30,7 @@ unsigned short high_priority_count = 1;
 unsigned short normal_priority_count = 2;
 unsigned short low_priority_count = 3;
 
-std::vector<std::wstring> _file_commands;
-
-std::atomic<bool> _data_line_connected{ false };
-std::atomic<bool> _file_line_connected{ false };
+std::map<std::wstring, std::function<bool(std::shared_ptr<container::value_container>)>> _file_commands;
 
 std::shared_ptr<tcp_client> _data_line = nullptr;
 std::shared_ptr<tcp_client> _file_line = nullptr;
@@ -50,6 +47,8 @@ void received_message_from_data_line(std::shared_ptr<container::value_container>
 void connection_from_file_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
 void received_message_from_file_line(std::shared_ptr<container::value_container> container);
 void received_file_from_file_line(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& indication_id, const std::wstring& target_path);
+bool download_files(std::shared_ptr<container::value_container> container);
+bool upload_files(std::shared_ptr<container::value_container> container);
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -59,9 +58,8 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	_file_commands.push_back(L"");
-	_file_commands.push_back(L"");
-	_file_commands.push_back(L"");
+	_file_commands.insert({ L"download_files", &download_files });
+	_file_commands.insert({ L"upload_files", &upload_files });
 
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
@@ -240,15 +238,10 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 		return;
 	}
 
-	auto target = std::find_if(_file_commands.begin(), _file_commands.end(),
-		[&container](const std::wstring& item)
-		{
-			return item == container->message_type();
-		});
-
+	auto target = _file_commands.find(container->message_type());
 	if (target != _file_commands.end())
 	{
-		if (!_data_line_connected.load())
+		if (_data_line == nullptr || !_data_line->is_confirmed())
 		{
 			if (_middle_server)
 			{
@@ -270,7 +263,7 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 		return;
 	}
 
-	if (!_file_line_connected.load())
+	if (_file_line == nullptr || !_file_line->is_confirmed())
 	{
 		if (_middle_server)
 		{
@@ -284,30 +277,27 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 		return;
 	}
 
-	if (_file_line)
-	{
-		_file_line->send(container);
-	}
+	target->second(container);
 }
 
 void connection_from_data_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
-	_data_line_connected.store(condition);
-
-	if (_data_line)
+	if (_data_line == nullptr)
 	{
-		logger::handle().write(logging::logging_level::sequence,
-			fmt::format(L"{} on middle server is {} from target: {}[{}]", _data_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
-
-		if (condition)
-		{
-			return;
-		}
-
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-
-		_data_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
+		return;
 	}
+
+	logger::handle().write(logging::logging_level::sequence,
+		fmt::format(L"{} on middle server is {} from target: {}[{}]", _data_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
+
+	if (condition)
+	{
+		return;
+	}
+
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+
+	_data_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 }
 
 void received_message_from_data_line(std::shared_ptr<container::value_container> container)
@@ -325,22 +315,22 @@ void received_message_from_data_line(std::shared_ptr<container::value_container>
 
 void connection_from_file_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
-	_file_line_connected.store(condition);
-
-	if (_file_line)
+	if (_file_line == nullptr)
 	{
-		logger::handle().write(logging::logging_level::sequence,
-			fmt::format(L"{} on middle server is {} from target: {}[{}]", _file_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
-
-		if (condition)
-		{
-			return;
-		}
-
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-
-		_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
+		return;
 	}
+
+	logger::handle().write(logging::logging_level::sequence,
+		fmt::format(L"{} on middle server is {} from target: {}[{}]", _file_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
+
+	if (condition)
+	{
+		return;
+	}
+
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+
+	_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 }
 
 void received_message_from_file_line(std::shared_ptr<container::value_container> container)
@@ -360,6 +350,36 @@ void received_file_from_file_line(const std::wstring& source_id, const std::wstr
 {
 	logger::handle().write(logging::logging_level::information,
 		fmt::format(L"source_id: {}, source_sub_id: {}, indication_id: {}, file_path: {}", source_id, source_sub_id, indication_id, target_path));
+}
+
+bool download_files(std::shared_ptr<container::value_container> container)
+{
+	if (container == nullptr)
+	{
+		return false;
+	}
+
+	if (_file_line)
+	{
+		_file_line->send(container);
+	}
+
+	return true;
+}
+
+bool upload_files(std::shared_ptr<container::value_container> container)
+{
+	if (container == nullptr)
+	{
+		return false;
+	}
+
+	if (_file_line)
+	{
+		_file_line->send(container);
+	}
+
+	return true;
 }
 
 void display_help(void)

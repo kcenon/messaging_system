@@ -46,6 +46,7 @@ namespace network
 		void set_binary_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)>& notification);
 
 	public:
+		bool is_confirmed(void) const;
 		void start(const std::wstring& ip, const unsigned short& port, const unsigned short& high_priority = 1, const unsigned short& normal_priority = 2, const unsigned short& low_priority = 3);
 		void stop(void);
 

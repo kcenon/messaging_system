@@ -89,24 +89,24 @@ namespace network
 		wait_connection();
 
 #ifdef ASIO_STANDALONE
-		_thread = std::thread([](std::shared_ptr<asio::io_context> context)
+		_thread = std::thread([&](std::shared_ptr<asio::io_context> context)
 #else
-		_thread = std::thread([](std::shared_ptr<boost::asio::io_context> context)
+		_thread = std::thread([&](std::shared_ptr<boost::asio::io_context> context)
 #endif
 			{
 				while (context)
 				{
 					try
 					{
-						logger::handle().write(logging::logging_level::information, L"start tcp_server");
+						logger::handle().write(logging::logging_level::information, fmt::format(L"start tcp_server({})", _source_id));
 						context->run();
-						logger::handle().write(logging::logging_level::information, L"stop tcp_server");
+						logger::handle().write(logging::logging_level::information, fmt::format(L"stop tcp_server({})", _source_id));
 						break;
 					}
-					catch (const std::overflow_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, L"break tcp_client with overflow error"); context->reset(); }
-					catch (const std::runtime_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, L"break tcp_client with runtime error"); context->reset(); }
-					catch (const std::exception&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, L"break tcp_client with exception"); context->reset(); }
-					catch (...) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, L"break tcp_client with error"); context->reset(); }
+					catch (const std::overflow_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_server({}) with overflow error", _source_id)); context->reset(); }
+					catch (const std::runtime_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_server({}) with runtime error", _source_id)); context->reset(); }
+					catch (const std::exception&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_server({}) with exception", _source_id)); context->reset(); }
+					catch (...) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_server({}) with error", _source_id)); context->reset(); }
 				}
 			}, _io_context);
 	}
