@@ -5,6 +5,7 @@
 #include "tcp_client.h"
 #include "argument_parsing.h"
 
+#include "value.h"
 #include "values/bool_value.h"
 #include "values/string_value.h"
 
@@ -359,9 +360,17 @@ bool download_files(std::shared_ptr<container::value_container> container)
 		return false;
 	}
 
-	if (_file_line)
+	std::vector<std::shared_ptr<container::value>> files = container->value_array(L"file");
+	for (auto& file : files)
 	{
-		_file_line->send(container);
+		std::shared_ptr<container::value_container> temp = container->copy(false, true);
+		temp << container->get_value(L"indication_id");
+		temp << file;
+
+		if (_file_line)
+		{
+			_file_line->send(temp);
+		}
 	}
 
 	return true;
@@ -374,9 +383,18 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 		return false;
 	}
 
-	if (_file_line)
+	std::vector<std::shared_ptr<container::value>> files = container->value_array(L"file");
+	for (auto& file : files)
 	{
-		_file_line->send(container);
+		std::shared_ptr<container::value_container> temp = container->copy(false, true);
+		temp->set_message_type(L"transfer_file");
+		temp << container->get_value(L"indication_id");
+		temp << file;
+
+		if (_file_line)
+		{
+			_file_line->send_file(temp);
+		}
 	}
 
 	return true;
