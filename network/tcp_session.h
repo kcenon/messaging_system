@@ -49,8 +49,9 @@ namespace network
 	public:
 		void echo(void);
 		void send(std::shared_ptr<container::value_container> message);
-		void send(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
-		void send(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
+		void send_file(std::shared_ptr<container::value_container> message);
+		void send_binary(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
+		void send_binary(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
 
 	protected:
 		void receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data) override;
@@ -69,30 +70,30 @@ namespace network
 
 		// file
 	private:
-		bool load_file(const std::vector<unsigned char>& data);
-		bool compress_file(const std::vector<unsigned char>& data);
-		bool encrypt_file(const std::vector<unsigned char>& data);
-		bool send_file(const std::vector<unsigned char>& data);
+		bool compress_file_packet(const std::vector<unsigned char>& data);
+		bool encrypt_file_packet(const std::vector<unsigned char>& data);
+		bool send_file_packet(const std::vector<unsigned char>& data);
 
 	private:
-		bool decompress_file(const std::vector<unsigned char>& data);
-		bool decrypt_file(const std::vector<unsigned char>& data);
-		bool receive_file(const std::vector<unsigned char>& data);
+		bool decompress_file_packet(const std::vector<unsigned char>& data);
+		bool decrypt_file_packet(const std::vector<unsigned char>& data);
+		bool receive_file_packet(const std::vector<unsigned char>& data);
 
 		// binary
 	private:
-		bool compress_binary(const std::vector<unsigned char>& data);
-		bool encrypt_binary(const std::vector<unsigned char>& data);
-		bool send_binary(const std::vector<unsigned char>& data);
+		bool compress_binary_packet(const std::vector<unsigned char>& data);
+		bool encrypt_binary_packet(const std::vector<unsigned char>& data);
+		bool send_binary_packet(const std::vector<unsigned char>& data);
 
 	private:
-		bool decompress_binary(const std::vector<unsigned char>& data);
-		bool decrypt_binary(const std::vector<unsigned char>& data);
-		bool receive_binary(const std::vector<unsigned char>& data);
+		bool decompress_binary_packet(const std::vector<unsigned char>& data);
+		bool decrypt_binary_packet(const std::vector<unsigned char>& data);
+		bool receive_binary_packet(const std::vector<unsigned char>& data);
 
 	private:
 		bool normal_message(std::shared_ptr<container::value_container> message);
 		bool connection_message(std::shared_ptr<container::value_container> message);
+		bool request_file(std::shared_ptr<container::value_container> message);
 		bool echo_message(std::shared_ptr<container::value_container> message);
 
 	private:

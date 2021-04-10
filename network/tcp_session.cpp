@@ -58,6 +58,7 @@ namespace network
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
 		_message_handlers.insert({ L"request_connection", std::bind(&tcp_session::connection_message, this, std::placeholders::_1) });
+		_message_handlers.insert({ L"request_file", std::bind(&tcp_session::request_file, this, std::placeholders::_1) });
 		_message_handlers.insert({ L"echo", std::bind(&tcp_session::echo_message, this, std::placeholders::_1) });
 	}
 
@@ -194,7 +195,41 @@ namespace network
 		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
 	}
 
-	void tcp_session::send(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	void tcp_session::send_file(std::shared_ptr<container::value_container> message)
+	{
+		if (message == nullptr)
+		{
+			return;
+		}
+
+		std::vector<unsigned char> result;
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
+		append_binary_on_packet(result, converter::to_array(message->source_id()));
+		append_binary_on_packet(result, converter::to_array(message->source_sub_id()));
+		append_binary_on_packet(result, converter::to_array(message->target_id()));
+		append_binary_on_packet(result, converter::to_array(message->target_sub_id()));
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
+		append_binary_on_packet(result, file_handler::load(message->get_value(L"source")->to_string()));
+
+		if (_compress_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::compress_file_packet, this, std::placeholders::_1)));
+
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::encrypt_file_packet, this, std::placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&tcp_session::send_file_packet, this, std::placeholders::_1)));
+	}
+
+	void tcp_session::send_binary(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -220,22 +255,22 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::compress_binary, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::compress_binary_packet, this, std::placeholders::_1)));
 
 			return;
 		}
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::encrypt_binary, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::encrypt_binary_packet, this, std::placeholders::_1)));
 
 			return;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&tcp_session::send_binary, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&tcp_session::send_binary_packet, this, std::placeholders::_1)));
 	}
 
-	void tcp_session::send(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	void tcp_session::send_binary(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -261,26 +296,26 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::compress_binary, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::compress_binary_packet, this, std::placeholders::_1)));
 
 			return;
 		}
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::encrypt_binary, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::encrypt_binary_packet, this, std::placeholders::_1)));
 
 			return;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&tcp_session::send_binary, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&tcp_session::send_binary_packet, this, std::placeholders::_1)));
 	}
 
 	void tcp_session::receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data)
 	{
 		switch (data_mode)
 		{
-		case data_modes::file_mode: decrypt_file(data); break;
+		case data_modes::file_mode: decrypt_file_packet(data); break;
 		case data_modes::packet_mode: decrypt_packet(data); break;
 		}
 	}
@@ -396,49 +431,7 @@ namespace network
 		return target->second(message);
 	}
 
-	bool tcp_session::load_file(const std::vector<unsigned char>& data)
-	{
-		if (data.empty())
-		{
-			return false;
-		}
-
-		std::shared_ptr<container::value_container> message = std::make_shared<container::value_container>(data);
-		if (message == nullptr)
-		{
-			return false;
-		}
-
-		std::vector<unsigned char> result;
-		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
-		append_binary_on_packet(result, converter::to_array(message->source_id()));
-		append_binary_on_packet(result, converter::to_array(message->source_sub_id()));
-		append_binary_on_packet(result, converter::to_array(message->target_id()));
-		append_binary_on_packet(result, converter::to_array(message->target_sub_id()));
-		append_binary_on_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
-		append_binary_on_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
-		append_binary_on_packet(result, file_handler::load(message->get_value(L"source")->to_string()));
-
-		if (_compress_mode)
-		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::compress_file, this, std::placeholders::_1)));
-
-			return true;
-		}
-
-		if (_encrypt_mode)
-		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::encrypt_file, this, std::placeholders::_1)));
-
-			return true;
-		}
-
-		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&tcp_session::send_file, this, std::placeholders::_1)));
-
-		return true;
-	}
-
-	bool tcp_session::compress_file(const std::vector<unsigned char>& data)
+	bool tcp_session::compress_file_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -447,29 +440,29 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::high, compressor::compression(data), std::bind(&tcp_session::encrypt_file, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::high, compressor::compression(data), std::bind(&tcp_session::encrypt_file_packet, this, std::placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, compressor::compression(data), std::bind(&tcp_session::send_file, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::top, compressor::compression(data), std::bind(&tcp_session::send_file_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
 
-	bool tcp_session::encrypt_file(const std::vector<unsigned char>& data)
+	bool tcp_session::encrypt_file_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
 			return false;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), std::bind(&tcp_session::send_file, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), std::bind(&tcp_session::send_file_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
 
-	bool tcp_session::send_file(const std::vector<unsigned char>& data)
+	bool tcp_session::send_file_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -479,7 +472,7 @@ namespace network
 		return send_on_tcp(_socket, data_modes::file_mode, data);
 	}
 
-	bool tcp_session::decompress_file(const std::vector<unsigned char>& data)
+	bool tcp_session::decompress_file_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -488,17 +481,17 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&tcp_session::receive_file, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&tcp_session::receive_file_packet, this, std::placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::receive_file, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::receive_file_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
 
-	bool tcp_session::decrypt_file(const std::vector<unsigned char>& data)
+	bool tcp_session::decrypt_file_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -507,17 +500,17 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&tcp_session::decompress_file, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&tcp_session::decompress_file_packet, this, std::placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::decompress_file, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::decompress_file_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
 
-	bool tcp_session::receive_file(const std::vector<unsigned char>& data)
+	bool tcp_session::receive_file_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -543,7 +536,7 @@ namespace network
 		return true;
 	}
 
-	bool tcp_session::compress_binary(const std::vector<unsigned char>& data)
+	bool tcp_session::compress_binary_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -552,29 +545,29 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::compression(data), std::bind(&tcp_session::encrypt_binary, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::compression(data), std::bind(&tcp_session::encrypt_binary_packet, this, std::placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, compressor::compression(data), std::bind(&tcp_session::send_binary, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::top, compressor::compression(data), std::bind(&tcp_session::send_binary_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
 
-	bool tcp_session::encrypt_binary(const std::vector<unsigned char>& data)
+	bool tcp_session::encrypt_binary_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
 			return false;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), std::bind(&tcp_session::send_binary, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), std::bind(&tcp_session::send_binary_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
 
-	bool tcp_session::send_binary(const std::vector<unsigned char>& data)
+	bool tcp_session::send_binary_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -584,7 +577,7 @@ namespace network
 		return send_on_tcp(_socket, data_modes::binary_mode, data);
 	}
 
-	bool tcp_session::decompress_binary(const std::vector<unsigned char>& data)
+	bool tcp_session::decompress_binary_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -593,17 +586,17 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&tcp_session::receive_binary, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&tcp_session::receive_binary_packet, this, std::placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::receive_binary, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::receive_binary_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
 
-	bool tcp_session::decrypt_binary(const std::vector<unsigned char>& data)
+	bool tcp_session::decrypt_binary_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -612,17 +605,17 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&tcp_session::decompress_binary, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&tcp_session::decompress_binary_packet, this, std::placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::decompress_binary, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_session::decompress_binary_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
 
-	bool tcp_session::receive_binary(const std::vector<unsigned char>& data)
+	bool tcp_session::receive_binary_packet(const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -723,6 +716,47 @@ namespace network
 		{
 			_connection(get_ptr(), true);
 		}
+
+		return true;
+	}
+
+	bool tcp_session::request_file(std::shared_ptr<container::value_container> message)
+	{
+		if (message == nullptr)
+		{
+			return false;
+		}
+
+		if (!_confirm)
+		{
+			return false;
+		}
+
+		std::vector<unsigned char> result;
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
+		append_binary_on_packet(result, converter::to_array(message->source_id()));
+		append_binary_on_packet(result, converter::to_array(message->source_sub_id()));
+		append_binary_on_packet(result, converter::to_array(message->target_id()));
+		append_binary_on_packet(result, converter::to_array(message->target_sub_id()));
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
+		append_binary_on_packet(result, file_handler::load(message->get_value(L"source")->to_string()));
+
+		if (_compress_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::compress_file_packet, this, std::placeholders::_1)));
+
+			return true;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::encrypt_file_packet, this, std::placeholders::_1)));
+
+			return true;
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&tcp_session::send_file_packet, this, std::placeholders::_1)));
 
 		return true;
 	}

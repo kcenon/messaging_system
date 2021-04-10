@@ -89,9 +89,9 @@ namespace network
 		wait_connection();
 
 #ifdef ASIO_STANDALONE
-		_thread = std::thread([&](std::shared_ptr<asio::io_context> context)
+		_thread = std::thread([this](std::shared_ptr<asio::io_context> context)
 #else
-		_thread = std::thread([&](std::shared_ptr<boost::asio::io_context> context)
+		_thread = std::thread([this](std::shared_ptr<boost::asio::io_context> context)
 #endif
 			{
 				while (context)
@@ -196,7 +196,30 @@ namespace network
 		}
 	}
 
-	void tcp_server::send(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	void tcp_server::send_file(std::shared_ptr<container::value_container> message)
+	{
+		if (message == nullptr)
+		{
+			return;
+		}
+
+		for (auto& session : _sessions)
+		{
+			if (session == nullptr)
+			{
+				continue;
+			}
+
+			if (session->get_session_type() != session_types::file_line)
+			{
+				continue;
+			}
+
+			session->send_file(message);
+		}
+	}
+
+	void tcp_server::send_binary(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -210,11 +233,11 @@ namespace network
 				continue;
 			}
 
-			session->send(target_id, target_sub_id, data);
+			session->send_binary(target_id, target_sub_id, data);
 		}
 	}
 
-	void tcp_server::send(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	void tcp_server::send_binary(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -228,7 +251,7 @@ namespace network
 				continue;
 			}
 
-			session->send(source_id, source_sub_id, target_id, target_sub_id, data);
+			session->send_binary(source_id, source_sub_id, target_id, target_sub_id, data);
 		}
 	}
 
@@ -313,7 +336,7 @@ namespace network
 
 		if (_broadcast_mode && _source_id.compare(source_id) != 0)
 		{
-			send(source_id, source_sub_id, target_id, target_sub_id, data);
+			send_binary(source_id, source_sub_id, target_id, target_sub_id, data);
 
 			return;
 		}
