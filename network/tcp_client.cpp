@@ -288,6 +288,11 @@ namespace network
 		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_client::send_packet, this, std::placeholders::_1)));
 	}
 
+	void tcp_client::send_file(const container::value_container& message)
+	{
+		send_file(std::make_shared<container::value_container>(message));
+	}
+
 	void tcp_client::send_file(std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
