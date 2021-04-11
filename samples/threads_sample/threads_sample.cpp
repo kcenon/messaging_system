@@ -74,7 +74,7 @@ protected:
 
 		switch (priority())
 		{
-		case priorities::high:
+		case priorities::high: 
 			logger::handle().write(logging_level::information, L"테스트4_high_in_thread", start);
 			break;
 		case priorities::normal:
@@ -92,6 +92,7 @@ protected:
 int main()
 {
 	logger::handle().set_target_level(logging_level::information);
+	logger::handle().set_write_console(false);
 	logger::handle().start(PROGRAM_NAME);
 
 	thread_pool manager;

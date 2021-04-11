@@ -196,6 +196,11 @@ namespace network
 		}
 	}
 
+	void tcp_server::send_file(const container::value_container& message)
+	{
+		send_file(std::make_shared<container::value_container>(message));
+	}
+
 	void tcp_server::send_file(std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
