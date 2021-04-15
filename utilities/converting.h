@@ -9,7 +9,8 @@ namespace converting
 	class converter
 	{
 	public:
-		static void replace_all(std::wstring& source, const std::wstring& token, const std::wstring& target);
+		static void replace(std::wstring& source, const std::wstring& token, const std::wstring& target);
+		static const std::wstring replace2(const std::wstring& source, const std::wstring& token, const std::wstring& target);
 
 	public:
 		static std::wstring to_wstring(const std::string& value);

@@ -15,6 +15,7 @@ namespace container
 		value_container(const std::vector<unsigned char>& data_array, const bool& parse_only_header = false);
 		value_container(const value_container& data_container, const bool& parse_only_header = false);
 		value_container(std::shared_ptr<value_container> data_container, const bool& parse_only_header = false);
+		value_container(const std::wstring& message_type, const std::vector<std::shared_ptr<value>>& units = {});
 		value_container(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& message_type = L"packet_container",
 			const std::vector<std::shared_ptr<value>>& units = {});
 		value_container(const std::wstring& source_id, const std::wstring& source_sub_id,

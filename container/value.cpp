@@ -133,10 +133,10 @@ namespace container
 
 		std::wstring temp = to_string();
 
-		converter::replace_all(temp, L"</0x0A;>", L"\r");
-		converter::replace_all(temp, L"</0x0B;>", L"\n");
-		converter::replace_all(temp, L"</0x0C;>", L" ");
-		converter::replace_all(temp, L"</0x0D;>", L"\t");
+		converter::replace(temp, L"</0x0A;>", L"\r");
+		converter::replace(temp, L"</0x0B;>", L"\n");
+		converter::replace(temp, L"</0x0C;>", L" ");
+		converter::replace(temp, L"</0x0D;>", L"\t");
 
 		return temp;
 	}

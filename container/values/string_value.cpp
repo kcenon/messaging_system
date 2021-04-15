@@ -16,10 +16,10 @@ namespace container
 		: value(name, nullptr, 0, value_types::null_value)
 	{
 		std::wstring temp = value;
-		converter::replace_all(temp, L"\r", L"</0x0A;>");
-		converter::replace_all(temp, L"\n", L"</0x0B;>");
-		converter::replace_all(temp, L" ", L"</0x0C;>");
-		converter::replace_all(temp, L"\t", L"</0x0D;>");
+		converter::replace(temp, L"\r", L"</0x0A;>");
+		converter::replace(temp, L"\n", L"</0x0B;>");
+		converter::replace(temp, L" ", L"</0x0C;>");
+		converter::replace(temp, L"\t", L"</0x0D;>");
 
 		std::vector<unsigned char> data = converter::to_array(temp);
 
@@ -38,10 +38,10 @@ namespace container
 		}
 
 		std::wstring temp = converter::to_wstring(_data);
-		converter::replace_all(temp, L"</0x0A;>", L"\r");
-		converter::replace_all(temp, L"</0x0B;>", L"\n");
-		converter::replace_all(temp, L"</0x0C;>", L" ");
-		converter::replace_all(temp, L"</0x0D;>", L"\t");
+		converter::replace(temp, L"</0x0A;>", L"\r");
+		converter::replace(temp, L"</0x0B;>", L"\n");
+		converter::replace(temp, L"</0x0C;>", L" ");
+		converter::replace(temp, L"</0x0D;>", L"\t");
 
 		return temp;
 	}

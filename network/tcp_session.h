@@ -70,6 +70,7 @@ namespace network
 
 		// file
 	private:
+		bool load_file_packet(const std::vector<unsigned char>& data);
 		bool compress_file_packet(const std::vector<unsigned char>& data);
 		bool encrypt_file_packet(const std::vector<unsigned char>& data);
 		bool send_file_packet(const std::vector<unsigned char>& data);

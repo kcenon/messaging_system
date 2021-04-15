@@ -7,15 +7,20 @@
 
 namespace converting
 {
-	void converter::replace_all(std::wstring& source, const std::wstring& token, const std::wstring& target)
+	void converter::replace(std::wstring& source, const std::wstring& token, const std::wstring& target)
+	{
+		source = replace2(source, token, target);
+	}
+
+	const std::wstring converter::replace2(const std::wstring& source, const std::wstring& token, const std::wstring& target)
 	{
 		if (source.empty() == true)
 		{
-			return;
+			return L"";
 		}
+
 		size_t offset = 0;
 		size_t last_offset = 0;
-		std::wstring temp_string = L"";
 		fmt::wmemory_buffer result;
 
 		while (true)
@@ -26,30 +31,22 @@ namespace converting
 				break;
 			}
 
-			temp_string = source.substr(last_offset, offset - last_offset);
-			if (temp_string.empty() != true)
-			{
-				fmt::format_to(std::back_inserter(result), L"{}{}", temp_string, target);
-			}			
+			fmt::format_to(std::back_inserter(result), L"{}{}", source.substr(last_offset, offset - last_offset), target);
 
 			last_offset = offset + wcslen(token.c_str());
 		}
 
 		if (last_offset != 0 && last_offset != std::string::npos)
 		{
-			temp_string = source.substr(last_offset, offset - last_offset);
-			if (!(temp_string.empty() == true))
-			{
-				fmt::format_to(std::back_inserter(result), L"{}", temp_string);
-			}
+			fmt::format_to(std::back_inserter(result), L"{}", source.substr(last_offset, offset - last_offset));
 		}
 
-		if (result.size() == 0)
+		if (last_offset == 0)
 		{
-			return;
+			return source;
 		}
 
-		source = result.data();
+		return result.data();
 	}
 
 	std::wstring converter::to_wstring(const std::string& value)

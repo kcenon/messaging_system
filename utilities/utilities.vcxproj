@@ -180,6 +180,7 @@
     <ClCompile Include="converting.cpp" />
     <ClCompile Include="encrypting.cpp" />
     <ClCompile Include="file_handling.cpp" />
+    <ClCompile Include="folder_handling.cpp" />
     <ClCompile Include="logging.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +189,7 @@
     <ClInclude Include="converting.h" />
     <ClInclude Include="encrypting.h" />
     <ClInclude Include="file_handling.h" />
+    <ClInclude Include="folder_handling.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="logging_level.h" />
   </ItemGroup>

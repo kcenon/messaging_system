@@ -297,10 +297,14 @@ namespace network
 			return;
 		}
 
-		if (_connection)
-		{
-			_connection(target->target_id(), target->target_sub_id(), condition);
-		}
+		std::thread thread([this](const std::wstring& target_id, const std::wstring& target_sub_id, const bool& connection)
+			{
+				if (_connection)
+				{
+					_connection(target_id, target_sub_id, connection);
+				}
+			}, target->target_id(), target->target_sub_id(), condition);
+		thread.detach();
 
 		if (!condition)
 		{

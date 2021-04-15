@@ -50,6 +50,13 @@ namespace container
 		deserialize(data_container->serialize(), parse_only_header);
 	}
 
+	value_container::value_container(const std::wstring& message_type,
+		const std::vector<std::shared_ptr<value>>& units) : value_container()
+	{
+		set_message_type(message_type);
+		set_units(units);
+	}
+
 	value_container::value_container(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& message_type,
 		const std::vector<std::shared_ptr<value>>& units) : value_container()
 	{
@@ -136,6 +143,7 @@ namespace container
 			}
 
 			_units.push_back(target_value);
+			target_value->set_parent(nullptr);
 		}
 	}
 
