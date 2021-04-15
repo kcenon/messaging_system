@@ -240,7 +240,7 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 	}
 
 	auto target = _file_commands.find(container->message_type());
-	if (target != _file_commands.end())
+	if (target == _file_commands.end())
 	{
 		if (_data_line == nullptr || !_data_line->is_confirmed())
 		{
@@ -349,7 +349,7 @@ void received_message_from_file_line(std::shared_ptr<container::value_container>
 
 void received_file_from_file_line(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& indication_id, const std::wstring& target_path)
 {
-	logger::handle().write(logging::logging_level::information,
+	logger::handle().write(logging::logging_level::sequence,
 		fmt::format(L"source_id: {}, source_sub_id: {}, indication_id: {}, file_path: {}", source_id, source_sub_id, indication_id, target_path));
 }
 
@@ -364,8 +364,10 @@ bool download_files(std::shared_ptr<container::value_container> container)
 	for (auto& file : files)
 	{
 		std::shared_ptr<container::value_container> temp = container->copy(false, true);
-		temp << container->get_value(L"indication_id");
-		temp << file;
+		temp->set_message_type(L"request_file");
+		temp << std::make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string());
+		temp << std::make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
+		temp << std::make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
 
 		if (_file_line)
 		{
@@ -388,8 +390,9 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 	{
 		std::shared_ptr<container::value_container> temp = container->copy(false, true);
 		temp->set_message_type(L"transfer_file");
-		temp << container->get_value(L"indication_id");
-		temp << file;
+		temp << std::make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string());
+		temp << std::make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
+		temp << std::make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
 
 		if (_file_line)
 		{

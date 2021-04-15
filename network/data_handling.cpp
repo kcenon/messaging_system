@@ -4,6 +4,8 @@
 
 #include <utility>
 
+#include "fmt/format.h"
+
 namespace network
 {
 	using namespace logging;
@@ -443,6 +445,11 @@ namespace network
 		temp = source.size();
 		memcpy(temp_size, &temp, size);
 		result.insert(result.end(), temp_size, temp_size + size);
+		if (size == 0)
+		{
+			return;
+		}
+
 		result.insert(result.end(), source.begin(), source.end());
 	}
 
@@ -464,13 +471,14 @@ namespace network
 		memcpy(&temp, source.data() + index, size);
 		index += size;
 
-		if (source.size() < index + temp)
+		if (temp == 0 || source.size() < index + temp)
 		{
 			return std::vector<unsigned char>();
 		}
 
 		std::vector<unsigned char> result;
 		result.insert(result.end(), source.begin() + index, source.begin() + index + temp);
+		index += temp;
 
 		return result;
 	}

@@ -1,8 +1,14 @@
 ﻿#include <iostream>
 
 #include "logging.h"
+#include "converting.h"
 #include "tcp_client.h"
+#include "folder_handling.h"
 #include "argument_parsing.h"
+
+#include "container.h"
+#include "values/string_value.h"
+#include "values/container_value.h"
 
 #include "fmt/format.h"
 
@@ -10,11 +16,15 @@ constexpr auto PROGRAM_NAME = L"download_sample";
 
 using namespace logging;
 using namespace network;
+using namespace converting;
+using namespace folder_handling;
 using namespace argument_parsing;
 
 bool encrypt_mode = false;
 bool compress_mode = false;
 logging_level log_level = logging_level::information;
+std::wstring source_folder = L"";
+std::wstring target_folder = L"";
 std::wstring connection_key = L"middle_connection_key";
 std::wstring server_ip = L"127.0.0.1";
 unsigned short server_port = 8642;
@@ -35,6 +45,14 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
+	std::vector<std::wstring> sources = folder_handler::get_files(source_folder);
+	if (sources.empty())
+	{
+		display_help();
+
+		return 0;
+	}
+
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
 
@@ -47,12 +65,22 @@ int main(int argc, char* argv[])
 	client->set_file_notification(&received_file);
 	client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
 
-	std::this_thread::sleep_for(std::chrono::seconds(1));
-	for (int i = 0; i < 100; ++i)
+	std::vector<std::shared_ptr<container::value>> files;
+
+	files.push_back(std::make_shared<container::string_value>(L"indication_id", L"download_test"));
+	for (auto& source : sources)
 	{
-		client->echo();
+		files.push_back(std::make_shared<container::container_value>(L"file", std::vector<std::shared_ptr<container::value>> {
+			std::make_shared<container::string_value>(L"source", source),
+			std::make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
+		}));
 	}
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+
+	std::shared_ptr<container::value_container> container = 
+		std::make_shared<container::value_container>(L"main_server", L"", L"download_files", files);
+	client->send(container);
+
+	std::this_thread::sleep_for(std::chrono::seconds(100));
 
 	client->stop();
 
@@ -123,6 +151,18 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 		server_port = (unsigned short)_wtoi(target->second.c_str());
 	}
 
+	target = arguments.find(L"--source_folder");
+	if (target != arguments.end())
+	{
+		source_folder = target->second;
+	}
+
+	target = arguments.find(L"--target_folder");
+	if (target != arguments.end())
+	{
+		target_folder = target->second;
+	}
+
 	target = arguments.find(L"--high_priority_count");
 	if (target != arguments.end())
 	{
@@ -190,6 +230,10 @@ void display_help(void)
 	std::wcout << L"\tIf you want to change normal priority thread workers must be appended '--normal_priority_count [count]'." << std::endl << std::endl;
 	std::wcout << L"--low_priority_count [value]" << std::endl;
 	std::wcout << L"\tIf you want to change low priority thread workers must be appended '--low_priority_count [count]'." << std::endl << std::endl;
+	std::wcout << L"--source_folder [path]" << std::endl;
+	std::wcout << L"\tIf you want to download folder on middle server on computer must be appended '--source_folder [path]'." << std::endl << std::endl;
+	std::wcout << L"--target_folder [path]" << std::endl;
+	std::wcout << L"\tIf you want to download on your computer must be appended '--target_folder [path]'." << std::endl << std::endl;
 	std::wcout << L"--logging_level [value]" << std::endl;
 	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
 }

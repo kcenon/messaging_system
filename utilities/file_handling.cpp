@@ -52,6 +52,12 @@ namespace file_handling
 
 	bool file_handler::save(const std::wstring& path, const std::vector<unsigned char>& data)
 	{
+		std::filesystem::path target_path(path);
+		if (target_path.parent_path().empty() != true)
+		{
+			std::filesystem::create_directories(target_path.parent_path());
+		}
+
 		int file;
 		errno_t err = _wsopen_s(&file, path.c_str(), _O_WRONLY | _O_CREAT | _O_TRUNC | _O_BINARY, _SH_DENYWR, _S_IWRITE);
 		if (err != 0)
