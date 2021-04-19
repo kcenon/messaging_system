@@ -118,11 +118,11 @@ namespace network
 		_thread_pool->append(std::make_shared<thread_worker>(priorities::top), true);
 		for (unsigned short high = 0; high < high_priority; ++high)
 		{
-			_thread_pool->append(std::make_shared<thread_worker>(priorities::high), true);
+			_thread_pool->append(std::make_shared<thread_worker>(priorities::high, std::vector<priorities> { priorities::normal, priorities::low }), true);
 		}
 		for (unsigned short normal = 0; normal < normal_priority; ++normal)
 		{
-			_thread_pool->append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }), true);
+			_thread_pool->append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high, priorities::low }), true);
 		}
 		for (unsigned short low = 0; low < low_priority; ++low)
 		{
@@ -388,8 +388,12 @@ namespace network
 	{
 		switch (data_mode)
 		{
-		case data_modes::packet_mode: decrypt_packet(data); break;
-		case data_modes::file_mode: decrypt_file_packet(data); break;
+		case data_modes::packet_mode:
+			_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_client::decrypt_packet, this, std::placeholders::_1))); 
+			break;
+		case data_modes::file_mode:
+			_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_client::decrypt_file_packet, this, std::placeholders::_1)));
+			break;
 		}
 	}
 
@@ -593,12 +597,12 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&tcp_client::receive_file_packet, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::low, compressor::decompression(data), std::bind(&tcp_client::receive_file_packet, this, std::placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::normal, data, std::bind(&tcp_client::receive_file_packet, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::low, data, std::bind(&tcp_client::receive_file_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
@@ -612,12 +616,12 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&tcp_client::decompress_file_packet, this, std::placeholders::_1)));
+			_thread_pool->push(std::make_shared<job>(priorities::normal, encryptor::decryption(data, _key, _iv), std::bind(&tcp_client::decompress_file_packet, this, std::placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&tcp_client::decompress_file_packet, this, std::placeholders::_1)));
+		_thread_pool->push(std::make_shared<job>(priorities::normal, data, std::bind(&tcp_client::decompress_file_packet, this, std::placeholders::_1)));
 
 		return true;
 	}
@@ -628,7 +632,7 @@ namespace network
 		{
 			return false;
 		}
-
+		
 		size_t index = 0;
 		std::wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
 		std::wstring source_id = converter::to_wstring(devide_binary_on_packet(data, index));
@@ -639,10 +643,34 @@ namespace network
 		std::wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
 		if (file_handler::save(target_path, devide_binary_on_packet(data, index)))
 		{
-			if(_received_file)
-			{
-				_received_file(source_id, source_sub_id, indication_id, target_path);
-			}
+			std::vector<unsigned char> result;
+			append_binary_on_packet(result, converter::to_array(indication_id));
+			append_binary_on_packet(result, converter::to_array(target_id));
+			append_binary_on_packet(result, converter::to_array(target_sub_id));
+			append_binary_on_packet(result, converter::to_array(target_path));
+
+			_thread_pool->push(std::make_shared<job>(priorities::high, result, std::bind(&tcp_client::notify_file_packet, this, std::placeholders::_1)));
+		}
+
+		return true;
+	}
+
+	bool tcp_client::notify_file_packet(const std::vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return false;
+		}
+
+		size_t index = 0;
+		std::wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		std::wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		std::wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		std::wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
+
+		if (_received_file)
+		{
+			_received_file(target_id, target_sub_id, indication_id, target_path);
 		}
 
 		return true;

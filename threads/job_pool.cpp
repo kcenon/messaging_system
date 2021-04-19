@@ -31,28 +31,24 @@ namespace threads
 			return;
 		}
 
-		std::unique_lock<std::mutex> unique(_mutex);
+		std::scoped_lock<std::mutex> guard(_mutex);
 
 		auto iterator = _jobs.find(new_job->priority());
 		if (iterator != _jobs.end())
 		{
 			iterator->second.push(new_job);
-			unique.unlock();
 
 			logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
-
-			notification(new_job->priority());
-
-			return;
 		}
+		else
+		{
+			std::queue<std::shared_ptr<job>> queue;
+			queue.push(new_job);
 
-		std::queue<std::shared_ptr<job>> queue;
-		queue.push(new_job);
+			_jobs.insert({ new_job->priority(), queue });
 
-		_jobs.insert({ new_job->priority(), queue });
-		unique.unlock();
-
-		logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
+			logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
+		}
 
 		notification(new_job->priority());
 	}

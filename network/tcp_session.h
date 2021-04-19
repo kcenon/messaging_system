@@ -43,7 +43,7 @@ namespace network
 		const std::wstring target_sub_id(void);
 
 	public:
-		void start(const bool& encrypt_mode, const bool& compress_mode, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority);
+		void start(const bool& encrypt_mode, const bool& compress_mode, const unsigned short& high_priority = 8, const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
 		void stop(void);
 
 	public:
@@ -79,6 +79,7 @@ namespace network
 		bool decompress_file_packet(const std::vector<unsigned char>& data);
 		bool decrypt_file_packet(const std::vector<unsigned char>& data);
 		bool receive_file_packet(const std::vector<unsigned char>& data);
+		bool notify_file_packet(const std::vector<unsigned char>& data);
 
 		// binary
 	private:
@@ -94,6 +95,7 @@ namespace network
 	private:
 		bool normal_message(std::shared_ptr<container::value_container> message);
 		bool connection_message(std::shared_ptr<container::value_container> message);
+		bool request_files(std::shared_ptr<container::value_container> message);
 		bool request_file(std::shared_ptr<container::value_container> message);
 		bool echo_message(std::shared_ptr<container::value_container> message);
 

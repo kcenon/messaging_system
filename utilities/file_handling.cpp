@@ -23,15 +23,14 @@ namespace file_handling
 			return std::vector<unsigned char>();
 		}
 
+		size_t file_size = std::filesystem::file_size(path);
+
 		int file;
-		errno_t err = _wsopen_s(&file, path.c_str(), _O_RDONLY | _O_BINARY, _SH_DENYRD, _S_IREAD);
+		errno_t err = _wsopen_s(&file, path.c_str(), _O_RDONLY | _O_BINARY | _O_SEQUENTIAL, _SH_DENYRD, _S_IREAD);
 		if (err != 0)
 		{
 			return std::vector<unsigned char>();
 		}
-
-		size_t file_size = _lseek(file, 0, SEEK_END);
-		_lseek(file, 0, SEEK_SET);
 
 		char* temp = new char[file_size];
 		memset(temp, 0, file_size);
