@@ -27,9 +27,9 @@ std::wstring middle_connection_key = L"middle_connection_key";
 unsigned short middle_server_port = 8642;
 std::wstring main_server_ip = L"127.0.0.1";
 unsigned short main_server_port = 9753;
-unsigned short high_priority_count = 1;
-unsigned short normal_priority_count = 2;
-unsigned short low_priority_count = 3;
+unsigned short high_priority_count = 4;
+unsigned short normal_priority_count = 4;
+unsigned short low_priority_count = 4;
 
 std::map<std::wstring, std::function<bool(std::shared_ptr<container::value_container>)>> _file_commands;
 
@@ -347,10 +347,19 @@ void received_message_from_file_line(std::shared_ptr<container::value_container>
 	}
 }
 
-void received_file_from_file_line(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& indication_id, const std::wstring& target_path)
+void received_file_from_file_line(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& indication_id, const std::wstring& target_path)
 {
-	logger::handle().write(logging::logging_level::sequence,
-		fmt::format(L"source_id: {}, source_sub_id: {}, indication_id: {}, file_path: {}", source_id, source_sub_id, indication_id, target_path));
+	logger::handle().write(logging::logging_level::parameter,
+		fmt::format(L"target_id: {}, target_sub_id: {}, indication_id: {}, file_path: {}", target_id, target_sub_id, indication_id, target_path));
+
+	std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(target_id, target_sub_id, L"downloaded_file");
+	container << std::make_shared<container::string_value>(L"indication_id", indication_id);
+	container << std::make_shared<container::string_value>(L"target_path", target_path);
+
+	if (_middle_server)
+	{
+		_middle_server->send(container);
+	}
 }
 
 bool download_files(std::shared_ptr<container::value_container> container)
@@ -360,19 +369,12 @@ bool download_files(std::shared_ptr<container::value_container> container)
 		return false;
 	}
 
-	std::vector<std::shared_ptr<container::value>> files = container->value_array(L"file");
-	for (auto& file : files)
-	{
-		std::shared_ptr<container::value_container> temp = container->copy(false, true);
-		temp->set_message_type(L"request_file");
-		temp << std::make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string());
-		temp << std::make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
-		temp << std::make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
+	std::shared_ptr<container::value_container> temp = container->copy();
+	temp->set_message_type(L"request_files");
 
-		if (_file_line)
-		{
-			_file_line->send(temp);
-		}
+	if (_file_line)
+	{
+		_file_line->send(temp);
 	}
 
 	return true;
@@ -385,11 +387,12 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 		return false;
 	}
 
+	std::shared_ptr<container::value_container> temp = container->copy(false, true);
+	temp->set_message_type(L"transfer_file");
+
 	std::vector<std::shared_ptr<container::value>> files = container->value_array(L"file");
 	for (auto& file : files)
 	{
-		std::shared_ptr<container::value_container> temp = container->copy(false, true);
-		temp->set_message_type(L"transfer_file");
 		temp << std::make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string());
 		temp << std::make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
 		temp << std::make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
@@ -398,6 +401,8 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 		{
 			_file_line->send_file(temp);
 		}
+
+		temp->clear_value();
 	}
 
 	return true;

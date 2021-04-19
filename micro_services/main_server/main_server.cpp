@@ -21,9 +21,9 @@ bool compress_mode = false;
 logging_level log_level = logging_level::information;
 std::wstring connection_key = L"main_connection_key";
 unsigned short server_port = 9753;
-unsigned short high_priority_count = 1;
-unsigned short normal_priority_count = 2;
-unsigned short low_priority_count = 3;
+unsigned short high_priority_count = 4;
+unsigned short normal_priority_count = 4;
+unsigned short low_priority_count = 4;
 
 std::shared_ptr<tcp_server> _main_server = nullptr;
 
@@ -170,10 +170,10 @@ void received_message(std::shared_ptr<container::value_container> container)
 		fmt::format(L"received message: {}", container->serialize()));
 }
 
-void received_file(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& indication_id, const std::wstring& target_path)
+void received_file(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& indication_id, const std::wstring& target_path)
 {
-	logger::handle().write(logging::logging_level::information,
-		fmt::format(L"source_id: {}, source_sub_id: {}, indication_id: {}, file_path: {}", source_id, source_sub_id, indication_id, target_path));
+	logger::handle().write(logging::logging_level::parameter,
+		fmt::format(L"target_id: {}, target_sub_id: {}, indication_id: {}, file_path: {}", target_id, target_sub_id, indication_id, target_path));
 }
 
 void display_help(void)

@@ -47,7 +47,7 @@ namespace network
 
 	public:
 		bool is_confirmed(void) const;
-		void start(const std::wstring& ip, const unsigned short& port, const unsigned short& high_priority = 1, const unsigned short& normal_priority = 2, const unsigned short& low_priority = 3);
+		void start(const std::wstring& ip, const unsigned short& port, const unsigned short& high_priority = 8, const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
 		void stop(void);
 
 	public:
@@ -85,6 +85,7 @@ namespace network
 		bool decompress_file_packet(const std::vector<unsigned char>& data);
 		bool decrypt_file_packet(const std::vector<unsigned char>& data);
 		bool receive_file_packet(const std::vector<unsigned char>& data);
+		bool notify_file_packet(const std::vector<unsigned char>& data);
 
 		// binary
 	private:

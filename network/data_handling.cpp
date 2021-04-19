@@ -42,11 +42,11 @@ namespace network
 		_received_data.clear();
 
 #ifdef ASIO_STANDALONE
-		current_socket->async_receive(asio::buffer(_receiving_buffer, start_code),
+		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, start_code),
 			[this, socket](std::error_code ec, std::size_t length)
 #else
-		current_socket->async_receive(boost::asio::buffer(_receiving_buffer, start_code),
-			[this, socket](boost::system::error_code ec, std::size_t length)
+		boost::asio::async_read(*current_socket, boost::asio::buffer(_receiving_buffer, start_code),
+			[this, socket](std::error_code ec, std::size_t length)
 #endif
 			{
 				if (ec)
@@ -104,11 +104,11 @@ namespace network
 		}
 
 #ifdef ASIO_STANDALONE
-		current_socket->async_receive(asio::buffer(_receiving_buffer, mode_code),
+		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, mode_code),
 			[this, socket](std::error_code ec, std::size_t length)
 #else
-		current_socket->async_receive(boost::asio::buffer(_receiving_buffer, mode_code),
-			[this, socket](boost::system::error_code ec, std::size_t length)
+		boost::asio::async_read(*current_socket, boost::asio::buffer(_receiving_buffer, mode_code),
+			[this, socket](std::error_code ec, std::size_t length)
 #endif
 			{
 				if (ec)
@@ -155,11 +155,11 @@ namespace network
 		memset(_receiving_buffer, 0, buffer_size);
 
 #ifdef ASIO_STANDALONE
-		current_socket->async_receive(asio::buffer(_receiving_buffer, length_code),
+		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, length_code),
 			[this, packet_mode, socket](std::error_code ec, std::size_t length)
 #else
-		current_socket->async_receive(boost::asio::buffer(_receiving_buffer, length_code),
-			[this, packet_mode, socket](boost::system::error_code ec, std::size_t length)
+		boost::asio::async_read(*current_socket, boost::asio::buffer(_receiving_buffer, length_code),
+			[this, packet_mode, socket](std::error_code ec, std::size_t length)
 #endif
 			{
 				if (ec)
@@ -217,11 +217,11 @@ namespace network
 		if (remained_length >= buffer_size)
 		{
 #ifdef ASIO_STANDALONE
-			current_socket->async_receive(asio::buffer(_receiving_buffer, buffer_size),
+			asio::async_read(*current_socket, asio::buffer(_receiving_buffer, buffer_size),
 				[this, packet_mode, remained_length, socket](std::error_code ec, std::size_t length)
 #else
-			current_socket->async_receive(boost::asio::buffer(_receiving_buffer, buffer_size),
-				[this, packet_mode, remained_length, socket](boost::system::error_code ec, std::size_t length)
+			boost::asio::async_read(*current_socket, boost::asio::buffer(_receiving_buffer, buffer_size),
+				[this, packet_mode, remained_length, socket](std::error_code ec, std::size_t length)
 #endif
 				{
 					if (ec)
@@ -251,11 +251,11 @@ namespace network
 		}
 
 #ifdef ASIO_STANDALONE
-		current_socket->async_receive(asio::buffer(_receiving_buffer, remained_length),
+		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, remained_length),
 			[this, packet_mode, socket](std::error_code ec, std::size_t length)
 #else
-		current_socket->async_receive(boost::asio::buffer(_receiving_buffer, remained_length),
-			[this, packet_mode, socket](boost::system::error_code ec, std::size_t length)
+		boost::asio::async_read(*current_socket, boost::asio::buffer(_receiving_buffer, remained_length),
+			[this, packet_mode, socket](std::error_code ec, std::size_t length)
 #endif
 			{
 				if (ec)
@@ -294,11 +294,11 @@ namespace network
 		memset(_receiving_buffer, 0, buffer_size);
 
 #ifdef ASIO_STANDALONE
-		current_socket->async_receive(asio::buffer(_receiving_buffer, end_code),
+		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, end_code),
 			[this, packet_mode, socket](std::error_code ec, std::size_t length)
 #else
-		current_socket->async_receive(boost::asio::buffer(_receiving_buffer, end_code),
-			[this, packet_mode, socket](boost::system::error_code ec, std::size_t length)
+		boost::asio::async_read(*current_socket, boost::asio::buffer(_receiving_buffer, end_code),
+			[this, packet_mode, socket](std::error_code ec, std::size_t length)
 #endif
 			{
 				if (ec)
