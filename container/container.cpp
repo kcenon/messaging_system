@@ -21,7 +21,8 @@ namespace container
 	using namespace file_handling;
 
 	value_container::value_container(void)
-		: _source_id(L""), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _message_type(L"data_container"), _version(L"1.0")
+		: _source_id(L""), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _message_type(L"data_container"), _version(L"1.0"),
+		_parsed_data(true), _data_string(L"")
 	{
 	}
 
@@ -268,6 +269,9 @@ namespace container
 
 	void value_container::initialize(void)
 	{
+		_parsed_data = true;
+		_data_string = L"";
+
 		_source_id = L"";
 		_source_sub_id = L"";
 		_target_id = L"";
@@ -278,45 +282,42 @@ namespace container
 		_units.clear();
 	}
 
-	std::wstring value_container::serialize(const bool& contain_whitespace) const
+	std::wstring value_container::serialize(void) const
 	{
+		if (!_parsed_data)
+		{
+			return _data_string;
+		}
+
 		fmt::wmemory_buffer result;
 
-		std::wstring new_line_string = L"";
-		std::wstring tab_string = L"";
-		if (contain_whitespace)
-		{
-			new_line_string = L"\n";
-			tab_string = L"\t";
-		}
-
 		// header
-		fmt::format_to(std::back_inserter(result), L"@header={}{}{}", new_line_string, L"{", new_line_string);
+		fmt::format_to(std::back_inserter(result), L"@header={}", L"{");
 		if (_message_type != L"data_container")
 		{
-			fmt::format_to(std::back_inserter(result), L"{}[target_id,{}{}];{}", tab_string, tab_string, _target_id, new_line_string);
-			fmt::format_to(std::back_inserter(result), L"{}[target_sub_id,{}{}];{}", tab_string, tab_string, _target_sub_id, new_line_string);
-			fmt::format_to(std::back_inserter(result), L"{}[source_id,{}{}];{}", tab_string, tab_string, _source_id, new_line_string);
-			fmt::format_to(std::back_inserter(result), L"{}[source_sub_id,{}{}];{}", tab_string, tab_string, _source_sub_id, new_line_string);
+			fmt::format_to(std::back_inserter(result), L"[target_id,{}];", _target_id);
+			fmt::format_to(std::back_inserter(result), L"[target_sub_id,{}];", _target_sub_id);
+			fmt::format_to(std::back_inserter(result), L"[source_id,{}];", _source_id);
+			fmt::format_to(std::back_inserter(result), L"[source_sub_id,{}];", _source_sub_id);
 		}
-		fmt::format_to(std::back_inserter(result), L"{}[message_type,{}{}];{}", tab_string, tab_string, _message_type, new_line_string);
-		fmt::format_to(std::back_inserter(result), L"{}[version,{}{}];{}", tab_string, tab_string, _version, new_line_string);
-		fmt::format_to(std::back_inserter(result), L"{}{}", L"};", new_line_string);
+		fmt::format_to(std::back_inserter(result), L"[message_type,{}];", _message_type);
+		fmt::format_to(std::back_inserter(result), L"[version,{}];", _version);
+		fmt::format_to(std::back_inserter(result), L"{}", L"};");
 
 		// data
-		fmt::format_to(std::back_inserter(result), L"@data={}{}{}", new_line_string, L"{", new_line_string);
+		fmt::format_to(std::back_inserter(result), L"@data={}", L"{");
 		for (auto& unit : _units)
 		{
-			fmt::format_to(std::back_inserter(result), L"{}", unit->serialize(contain_whitespace, 1));
+			fmt::format_to(std::back_inserter(result), L"{}", unit->serialize());
 		}
 		fmt::format_to(std::back_inserter(result), L"{}", L"};");
 
 		return result.data();
 	}
 
-	std::vector<unsigned char> value_container::serialize_array(const bool& contain_whitespace) const
+	std::vector<unsigned char> value_container::serialize_array(void) const
 	{
-		return converter::to_array(serialize(contain_whitespace));
+		return converter::to_array(serialize());
 	}
 
 	bool value_container::deserialize(const std::wstring& data_string, const bool& parse_only_header)
@@ -336,7 +337,7 @@ namespace container
 		std::wsregex_iterator full_end;
 		if (full_iter == full_end)
 		{
-			return deserialize_values(removed_newline);
+			return deserialize_values(removed_newline, parse_only_header);
 		}
 
 		std::wstring temp = (*full_iter)[1];
@@ -355,12 +356,7 @@ namespace container
 			header_iter++;
 		}
 
-		if (parse_only_header)
-		{
-			return true;
-		}
-
-		return deserialize_values(removed_newline);
+		return deserialize_values(removed_newline, parse_only_header);
 	}
 
 	bool value_container::deserialize(const std::vector<unsigned char>& data_array, const bool& parse_only_header)
@@ -376,7 +372,7 @@ namespace container
 		fmt::format_to(std::back_inserter(result), L"@data={}", L"{");
 		for (auto& unit : _units)
 		{
-			fmt::format_to(std::back_inserter(result), L"{}", unit->serialize(false, 1));
+			fmt::format_to(std::back_inserter(result), L"{}", unit->serialize());
 		}
 		fmt::format_to(std::back_inserter(result), L"{}", L"};");
 
@@ -388,9 +384,9 @@ namespace container
 		deserialize(converter::to_wstring(file_handler::load(file_path)));
 	}
 
-	void value_container::save_packet(const std::wstring& file_path, const bool& contain_whitespace)
+	void value_container::save_packet(const std::wstring& file_path)
 	{
-		file_handler::save(file_path, converter::to_array(serialize(contain_whitespace)));
+		file_handler::save(file_path, converter::to_array(serialize()));
 	}
 
 	std::vector<std::shared_ptr<value>> value_container::operator[](const std::wstring& key)
@@ -428,61 +424,61 @@ namespace container
 
 	std::ostream& operator <<(std::ostream& out, value_container& other) // output
 	{
-		out << converter::to_string(other.serialize(false));
+		out << converter::to_string(other.serialize());
 
 		return out;
 	}
 
 	std::ostream& operator <<(std::ostream& out, std::shared_ptr<value_container> other) // output
 	{
-		out << converter::to_string(other->serialize(false));
+		out << converter::to_string(other->serialize());
 
 		return out;
 	}
 
 	std::wostream& operator <<(std::wostream& out, value_container& other) // output
 	{
-		out << other.serialize(false);
+		out << other.serialize();
 
 		return out;
 	}
 
 	std::wostream& operator <<(std::wostream& out, std::shared_ptr<value_container> other) // output
 	{
-		out << other->serialize(false);
+		out << other->serialize();
 
 		return out;
 	}
 
 	std::string& operator <<(std::string& out, value_container& other)
 	{
-		out = converter::to_string(other.serialize(false));
+		out = converter::to_string(other.serialize());
 
 		return out;
 	}
 
 	std::string& operator <<(std::string& out, std::shared_ptr<value_container> other)
 	{
-		out = converter::to_string(other->serialize(false));
+		out = converter::to_string(other->serialize());
 
 		return out;
 	}
 
 	std::wstring& operator <<(std::wstring& out, value_container& other)
 	{
-		out = other.serialize(false);
+		out = other.serialize();
 
 		return out;
 	}
 
 	std::wstring& operator <<(std::wstring& out, std::shared_ptr<value_container> other)
 	{
-		out = other->serialize(false);
+		out = other->serialize();
 
 		return out;
 	}
 
-	bool value_container::deserialize_values(const std::wstring& data)
+	bool value_container::deserialize_values(const std::wstring& data, const bool& parse_only_header)
 	{
 		if (_units.size() > 0)
 		{
@@ -494,10 +490,23 @@ namespace container
 		std::wsregex_iterator full_end;
 		if (full_iter == full_end)
 		{
+			_data_string = L"";
+			_parsed_data = true;
+
 			return false;
 		}
 
 		std::wstring regex_temp = (*full_iter)[0].str();
+		
+		if (parse_only_header)
+		{
+			_data_string = converter::replace2(converter::replace2(regex_temp, L"", L""), L"", L"");
+			_parsed_data = false;
+
+			return true;
+		}
+
+		_data_string = regex_temp;
 
 		std::wregex regex_condition(L"\\[(\\w+),[\\s?]*(\\w+),[\\s?]*(.*?)\\];");
 		std::wsregex_iterator start(regex_temp.begin(), regex_temp.end(), regex_condition);
