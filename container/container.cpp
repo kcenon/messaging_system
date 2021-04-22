@@ -131,7 +131,7 @@ namespace container
 	{
 		if (!_parsed_data)
 		{
-			deserialize_values(_data_string, true);
+			deserialize_values(_data_string, false);
 		}
 
 		std::vector<std::shared_ptr<value>>::iterator target;
@@ -196,7 +196,7 @@ namespace container
 	{
 		if (!_parsed_data)
 		{
-			deserialize_values(_data_string, true);
+			deserialize_values(_data_string, false);
 		}
 
 		std::vector<std::shared_ptr<value>>::iterator target;
@@ -221,7 +221,7 @@ namespace container
 	{
 		if (!_parsed_data)
 		{
-			deserialize_values(_data_string, true);
+			deserialize_values(_data_string, false);
 		}
 
 		std::vector<std::shared_ptr<value>>::iterator target;
@@ -246,7 +246,7 @@ namespace container
 	{
 		if (!_parsed_data)
 		{
-			deserialize_values(_data_string, true);
+			deserialize_values(_data_string, false);
 		}
 
 		std::vector<std::shared_ptr<value>>::iterator target;
@@ -268,7 +268,7 @@ namespace container
 	{
 		if (!_parsed_data)
 		{
-			deserialize_values(_data_string, true);
+			deserialize_values(_data_string, false);
 		}
 
 		std::vector<std::shared_ptr<value>> result_list;
@@ -287,7 +287,7 @@ namespace container
 	{
 		if (!_parsed_data)
 		{
-			deserialize_values(_data_string, true);
+			deserialize_values(_data_string, false);
 		}
 
 		std::vector<std::shared_ptr<value>> result_list = value_array(target_name);
@@ -539,13 +539,14 @@ namespace container
 		
 		if (parse_only_header)
 		{
-			_data_string = converter::replace2(converter::replace2(regex_temp, L"", L""), L"", L"");
+			_data_string = regex_temp;
 			_parsed_data = false;
 
 			return true;
 		}
 
-		_data_string = regex_temp;
+		_data_string = L"";
+		_parsed_data = true;
 
 		std::wregex regex_condition(L"\\[(\\w+),[\\s?]*(\\w+),[\\s?]*(.*?)\\];");
 		std::wsregex_iterator start(regex_temp.begin(), regex_temp.end(), regex_condition);
