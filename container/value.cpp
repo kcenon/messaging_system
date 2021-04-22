@@ -232,28 +232,15 @@ namespace container
 		return _type == value_types::container_value;
 	}
 
-	std::wstring value::serialize(const bool& contain_whitespace, const unsigned short& tab_count)
+	std::wstring value::serialize(void)
 	{
 		fmt::wmemory_buffer result;
 
-		std::wstring new_line_string = L"";
-		std::wstring tab_string = L"";
-		if (contain_whitespace)
-		{
-			new_line_string = L"\n";
-			tab_string = L"\t";
-
-			for (unsigned short index = 0; index < tab_count; ++index)
-			{
-				fmt::format_to(std::back_inserter(result), L"{}", tab_string);
-			}
-		}
-
-		fmt::format_to(std::back_inserter(result), L"[{},{}{},{}{}];{}", name(), tab_string, convert_value_type(_type), tab_string, to_string(false), new_line_string);
+		fmt::format_to(std::back_inserter(result), L"[{},{},{}];", name(), convert_value_type(_type), to_string(false));
 
 		for (auto& unit : _units)
 		{
-			fmt::format_to(std::back_inserter(result), L"{}", unit->serialize(contain_whitespace, tab_count + 1));
+			fmt::format_to(std::back_inserter(result), L"{}", unit->serialize());
 		}
 
 		return result.data();
@@ -279,28 +266,28 @@ namespace container
 
 	std::ostream& operator<<(std::ostream& out, std::shared_ptr<value> other) // output
 	{
-		out << converter::to_string(other->serialize(false));
+		out << converter::to_string(other->serialize());
 
 		return out;
 	}
 
 	std::wostream& operator<<(std::wostream& out, std::shared_ptr<value> other) // output
 	{
-		out << other->serialize(false);
+		out << other->serialize();
 
 		return out;
 	}
 
 	std::string& operator<<(std::string& out, std::shared_ptr<value> other)
 	{
-		out = converter::to_string(other->serialize(false));
+		out = converter::to_string(other->serialize());
 
 		return out;
 	}
 
 	std::wstring& operator<<(std::wstring& out, std::shared_ptr<value> other)
 	{
-		out = other->serialize(false);
+		out = other->serialize();
 
 		return out;
 	}

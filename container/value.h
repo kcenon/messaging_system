@@ -58,7 +58,7 @@ namespace container
 		bool is_container(void) const;
 
 	public:
-		std::wstring serialize(const bool& contain_whitespace = false, const unsigned short& tab_count = 0);
+		std::wstring serialize(void);
 
 	public:
 		virtual bool to_boolean(void) const { return false; }

@@ -56,16 +56,17 @@ namespace container
 		void initialize(void);
 
 	public:
-		std::wstring serialize(const bool& contain_whitespace = false) const;
-		std::vector<unsigned char> serialize_array(const bool& contain_whitespace = false) const;
+		std::wstring serialize(void) const;
+		std::vector<unsigned char> serialize_array(void) const;
 		bool deserialize(const std::wstring& data_string, const bool& parse_only_header = false);
 		bool deserialize(const std::vector<unsigned char>& data_array, const bool& parse_only_header = false);
+
 	public:
 		std::wstring datas(void) const;
 
 	public:
 		void load_packet(const std::wstring& file_path);
-		void save_packet(const std::wstring& file_path, const bool& contain_whitespace = false);
+		void save_packet(const std::wstring& file_path);
 
 	public:
 		std::vector<std::shared_ptr<value>> operator[](const std::wstring& key);
@@ -86,8 +87,12 @@ namespace container
 		friend std::wstring& operator <<(std::wstring& out, std::shared_ptr<value_container> other);
 
 	protected:
-		bool deserialize_values(const std::wstring& data);
+		bool deserialize_values(const std::wstring& data, const bool& parse_only_header);
 		void parsing(const std::wstring& source_name, const std::wstring& target_name, const std::wstring& target_value, std::wstring& target_variable);
+
+	private:
+		bool _parsed_data;
+		std::wstring _data_string;
 
 	private:
 		std::wstring _source_id;
