@@ -246,7 +246,7 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 		{
 			if (_middle_server)
 			{
-				std::shared_ptr<container::value_container> response = container->copy(true, true);
+				std::shared_ptr<container::value_container> response = container->copy(true, false);
 				response << std::make_shared<container::bool_value>(L"error", true);
 				response << std::make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
 
@@ -268,7 +268,7 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 	{
 		if (_middle_server)
 		{
-			std::shared_ptr<container::value_container> response = container->copy(true, true);
+			std::shared_ptr<container::value_container> response = container->copy(true, false);
 			response << std::make_shared<container::bool_value>(L"error", true);
 			response << std::make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
 
@@ -387,7 +387,7 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 		return false;
 	}
 
-	std::shared_ptr<container::value_container> temp = container->copy(false, true);
+	std::shared_ptr<container::value_container> temp = container->copy(false, false);
 	temp->set_message_type(L"transfer_file");
 
 	std::vector<std::shared_ptr<container::value>> files = container->value_array(L"file");

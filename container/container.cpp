@@ -129,6 +129,11 @@ namespace container
 
 	void value_container::set_units(const std::vector<std::shared_ptr<value>>& target_values)
 	{
+		if (!_parsed_data)
+		{
+			deserialize_values(_data_string, true);
+		}
+
 		std::vector<std::shared_ptr<value>>::iterator target;
 		for (auto& target_value : target_values)
 		{
@@ -161,15 +166,22 @@ namespace container
 
 	void value_container::clear_value(void)
 	{
+		_parsed_data = true;
+		_data_string = L"";
 		_units.clear();
 	}
 
-	std::shared_ptr<value_container> value_container::copy(const bool& swap_header, const bool& parse_only_header)
+	std::shared_ptr<value_container> value_container::copy(const bool& swap_header, const bool& containing_values)
 	{
-		std::shared_ptr<value_container> new_container = std::make_shared<value_container>(serialize(), parse_only_header);
+		std::shared_ptr<value_container> new_container = std::make_shared<value_container>(serialize(), !containing_values);
 		if (swap_header)
 		{
 			new_container->swap_header();
+		}
+
+		if (!containing_values)
+		{
+			new_container->clear_value();
 		}
 
 		return new_container;
@@ -182,6 +194,11 @@ namespace container
 
 	std::shared_ptr<value> value_container::add(std::shared_ptr<value> target_value)
 	{
+		if (!_parsed_data)
+		{
+			deserialize_values(_data_string, true);
+		}
+
 		std::vector<std::shared_ptr<value>>::iterator target;
 		target = std::find_if(_units.begin(), _units.end(),
 			[&target_value](std::shared_ptr<value> item)
@@ -202,6 +219,11 @@ namespace container
 
 	void value_container::remove(const std::wstring& target_name)
 	{
+		if (!_parsed_data)
+		{
+			deserialize_values(_data_string, true);
+		}
+
 		std::vector<std::shared_ptr<value>>::iterator target;
 
 		while (true) {
@@ -222,6 +244,11 @@ namespace container
 
 	void value_container::remove(std::shared_ptr<value> target_value)
 	{
+		if (!_parsed_data)
+		{
+			deserialize_values(_data_string, true);
+		}
+
 		std::vector<std::shared_ptr<value>>::iterator target;
 		target = std::find_if(_units.begin(), _units.end(),
 			[&target_value](std::shared_ptr<value> item)
@@ -239,6 +266,11 @@ namespace container
 
 	std::vector<std::shared_ptr<value>> value_container::value_array(const std::wstring& target_name)
 	{
+		if (!_parsed_data)
+		{
+			deserialize_values(_data_string, true);
+		}
+
 		std::vector<std::shared_ptr<value>> result_list;
 
 		std::for_each(_units.begin(), _units.end(), [&target_name, &result_list](std::shared_ptr<value> source) {
@@ -253,6 +285,11 @@ namespace container
 
 	std::shared_ptr<value> value_container::get_value(const std::wstring& target_name, const unsigned int& index)
 	{
+		if (!_parsed_data)
+		{
+			deserialize_values(_data_string, true);
+		}
+
 		std::vector<std::shared_ptr<value>> result_list = value_array(target_name);
 		if (result_list.empty())
 		{
@@ -269,9 +306,6 @@ namespace container
 
 	void value_container::initialize(void)
 	{
-		_parsed_data = true;
-		_data_string = L"";
-
 		_source_id = L"";
 		_source_sub_id = L"";
 		_target_id = L"";
@@ -279,7 +313,7 @@ namespace container
 		_message_type = L"data_container";
 		_version = L"1.0";
 
-		_units.clear();
+		clear_value();
 	}
 
 	std::wstring value_container::serialize(void) const
@@ -366,6 +400,11 @@ namespace container
 
 	std::wstring value_container::datas(void) const
 	{
+		if (!_parsed_data)
+		{
+			return _data_string;
+		}
+
 		fmt::wmemory_buffer result;
 
 		// data

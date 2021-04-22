@@ -803,7 +803,7 @@ namespace network
 			return false;
 		}
 
-		std::shared_ptr<container::value_container> container = message->copy(true, true);
+		std::shared_ptr<container::value_container> container = message->copy(true, false);
 		container->set_message_type(L"request_file");
 
 		std::vector<std::shared_ptr<container::value>> files = message->value_array(L"file");
