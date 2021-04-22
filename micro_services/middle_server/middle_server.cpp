@@ -3,6 +3,7 @@
 #include "logging.h"
 #include "tcp_server.h"
 #include "tcp_client.h"
+#include "compressing.h"
 #include "argument_parsing.h"
 
 #include "value.h"
@@ -17,10 +18,12 @@ constexpr auto PROGRAM_NAME = L"middle_server";
 
 using namespace logging;
 using namespace network;
+using namespace compressing;
 using namespace argument_parsing;
 
 bool encrypt_mode = false;
 bool compress_mode = false;
+unsigned short compress_block_size = 1024;
 logging_level log_level = logging_level::information;
 std::wstring main_connection_key = L"main_connection_key";
 std::wstring middle_connection_key = L"middle_connection_key";
@@ -57,6 +60,11 @@ int main(int argc, char* argv[])
 	if (!parse_arguments(argument_parser::parse(argc, argv)))
 	{
 		return 0;
+	}
+
+	if (compress_mode)
+	{
+		compressor::set_block_bytes(compress_block_size);
 	}
 
 	_file_commands.insert({ L"download_files", &download_files });
@@ -118,6 +126,12 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 		{
 			compress_mode = false;
 		}
+	}
+
+	target = arguments.find(L"--compress_block_size");
+	if (target != arguments.end())
+	{
+		compress_block_size = (unsigned short)_wtoi(target->second.c_str());
 	}
 
 	target = arguments.find(L"--main_connection_key");
@@ -415,6 +429,8 @@ void display_help(void)
 	std::wcout << L"\tThe encrypt_mode on/off. If you want to use encrypt mode must be appended '--encrypt_mode true'.\n\tInitialize value is --encrypt_mode off." << std::endl << std::endl;
 	std::wcout << L"--compress_mode [value]" << std::endl;
 	std::wcout << L"\tThe compress_mode on/off. If you want to use compress mode must be appended '--compress_mode true'.\n\tInitialize value is --compress_mode off." << std::endl << std::endl;
+	std::wcout << L"--compress_block_size [value]" << std::endl;
+	std::wcout << L"\tThe compress_mode on/off. If you want to change compress block size must be appended '--compress_block_size size'.\n\tInitialize value is --compress_mode 1024." << std::endl << std::endl;
 	std::wcout << L"--main_connection_key [value]" << std::endl;
 	std::wcout << L"\tIf you want to change a specific key string for the connection to the main server must be appended\n\t'--main_connection_key [specific key string]'." << std::endl << std::endl;
 	std::wcout << L"--middle_connection_key [value]" << std::endl;
