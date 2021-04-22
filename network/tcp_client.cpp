@@ -490,7 +490,7 @@ namespace network
 			return false;
 		}
 
-		std::shared_ptr<container::value_container> message = std::make_shared<container::value_container>(data);
+		std::shared_ptr<container::value_container> message = std::make_shared<container::value_container>(data, true);
 		if (message == nullptr)
 		{
 			return false;
