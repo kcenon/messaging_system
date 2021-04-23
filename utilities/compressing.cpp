@@ -73,17 +73,14 @@ namespace compressing
 		source_buffer[0].clear();
 		source_buffer[1].clear();
 		source_buffer.clear();
-
-		auto end = std::chrono::steady_clock::now();
-		std::chrono::duration<double> diff = end - start;
-
-		if (original_data.size() < compressed_data.size())
+		
+		if (compressed_data.size() == 0)
 		{
-			logger::handle().write(logging::logging_level::sequence, L"this file does not need to use compress because compressed result is bigger than original data", start);
+			logger::handle().write(logging::logging_level::error, L"cannot complete to compress data");
 
-			return original_data;
+			return std::vector<unsigned char>();
 		}
-
+		
 		logger::handle().write(logging::logging_level::sequence, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
 			_block_bytes, original_data.size(), compressed_data.size(), (((double)compressed_data.size() / (double)original_data.size()) * 100)), start);
 
@@ -130,7 +127,7 @@ namespace compressing
 				}
 
 				memcpy(&compressed_size, compressed_data.data() + read_index, sizeof(int));
-				if (0 >= compressed_size) {
+				if (0 >= compressed_size || compressor::_block_bytes < compressed_size) {
 					break;
 				}
 
@@ -157,17 +154,14 @@ namespace compressing
 		target_buffer[0].clear();
 		target_buffer[1].clear();
 		target_buffer.clear();
-
-		auto end = std::chrono::steady_clock::now();
-		std::chrono::duration<double> diff = end - start;
-
-		if (decompressed_data.size() < compressed_data.size())
+		
+		if (decompressed_data.size() == 0)
 		{
-			logger::handle().write(logging::logging_level::sequence, L"this file does not need to use decompress because it is not compressed data", start);
+			logger::handle().write(logging::logging_level::error, L"cannot complete to decompress data");
 
-			return compressed_data;
+			return std::vector<unsigned char>();
 		}
-
+		
 		logger::handle().write(logging::logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
 			_block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)), start);
 

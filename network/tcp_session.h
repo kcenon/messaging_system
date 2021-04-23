@@ -56,6 +56,7 @@ namespace network
 	protected:
 		void receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data) override;
 		void disconnected(void) override;
+		bool check_confirm_condition(void);
 
 		// packet
 	private:

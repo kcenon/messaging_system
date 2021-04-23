@@ -24,7 +24,11 @@ using namespace argument_parsing;
 bool encrypt_mode = false;
 bool compress_mode = false;
 unsigned short compress_block_size = 1024;
+#ifdef _DEBUG
+logging_level log_level = logging_level::parameter;
+#else
 logging_level log_level = logging_level::information;
+#endif
 std::wstring main_connection_key = L"main_connection_key";
 std::wstring middle_connection_key = L"middle_connection_key";
 unsigned short middle_server_port = 8642;
