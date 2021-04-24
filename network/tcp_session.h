@@ -97,7 +97,6 @@ namespace network
 		bool normal_message(std::shared_ptr<container::value_container> message);
 		bool connection_message(std::shared_ptr<container::value_container> message);
 		bool request_files(std::shared_ptr<container::value_container> message);
-		bool request_file(std::shared_ptr<container::value_container> message);
 		bool echo_message(std::shared_ptr<container::value_container> message);
 
 	private:

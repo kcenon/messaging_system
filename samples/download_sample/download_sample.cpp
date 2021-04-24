@@ -35,7 +35,6 @@ unsigned short low_priority_count = 3;
 bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
 void received_message(std::shared_ptr<container::value_container> container);
-void received_file(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& indication_id, const std::wstring& target_path);
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -62,7 +61,6 @@ int main(int argc, char* argv[])
 	client->set_session_types(session_types::file_line);
 	client->set_connection_notification(&connection);
 	client->set_message_notification(&received_message);
-	client->set_file_notification(&received_file);
 	client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
 
 	std::vector<std::shared_ptr<container::value>> files;
@@ -203,14 +201,35 @@ void received_message(std::shared_ptr<container::value_container> container)
 		return;
 	}
 
+	if (container->message_type() == L"transfer_condition")
+	{
+		if (container->get_value(L"percentage")->to_ushort() == 100)
+		{
+			logger::handle().write(logging::logging_level::information,
+				fmt::format(L"started download: [{}]", container->get_value(L"indication_id")->to_string()));
+
+			return;
+		}
+
+		logger::handle().write(logging::logging_level::information,
+			fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
+
+		if (container->get_value(L"completed")->to_boolean())
+		{
+			logger::handle().write(logging::logging_level::information,
+				fmt::format(L"completed download: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(), container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
+		}
+		else if (container->get_value(L"percentage")->to_ushort() == 100)
+		{
+			logger::handle().write(logging::logging_level::information,
+				fmt::format(L"completed download: [{}]", container->get_value(L"indication_id")->to_string()));
+		}
+
+		return;
+	}
+
 	logger::handle().write(logging::logging_level::information,
 		fmt::format(L"received message: {}", container->serialize()));
-}
-
-void received_file(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& indication_id, const std::wstring& target_path)
-{
-	logger::handle().write(logging::logging_level::information,
-		fmt::format(L"source_id: {}, source_sub_id: {}, indication_id: {}, file_path: {}", source_id, source_sub_id, indication_id, target_path));
 }
 
 void display_help(void)

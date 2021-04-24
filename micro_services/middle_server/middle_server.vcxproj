@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="file_manager.cpp" />
     <ClCompile Include="middle_server.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +183,9 @@
     <ProjectReference Include="..\..\utilities\utilities.vcxproj">
       <Project>{6a8e08f7-e020-4926-9e2c-4dc01802ba20}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="file_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

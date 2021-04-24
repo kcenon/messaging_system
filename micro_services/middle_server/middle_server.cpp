@@ -4,10 +4,12 @@
 #include "tcp_server.h"
 #include "tcp_client.h"
 #include "compressing.h"
+#include "file_manager.h"
 #include "argument_parsing.h"
 
 #include "value.h"
 #include "values/bool_value.h"
+#include "values/ushort_value.h"
 #include "values/string_value.h"
 
 #include <signal.h>
@@ -37,6 +39,8 @@ unsigned short main_server_port = 9753;
 unsigned short high_priority_count = 4;
 unsigned short normal_priority_count = 4;
 unsigned short low_priority_count = 4;
+
+file_manager _file_manager;
 
 std::map<std::wstring, std::function<bool(std::shared_ptr<container::value_container>)>> _file_commands;
 
@@ -264,7 +268,9 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 		{
 			if (_middle_server)
 			{
-				std::shared_ptr<container::value_container> response = container->copy(true, false);
+				std::shared_ptr<container::value_container> response = container->copy(false);
+				response->swap_header();
+
 				response << std::make_shared<container::bool_value>(L"error", true);
 				response << std::make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
 
@@ -286,7 +292,9 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 	{
 		if (_middle_server)
 		{
-			std::shared_ptr<container::value_container> response = container->copy(true, false);
+			std::shared_ptr<container::value_container> response = container->copy(false);
+			response->swap_header();
+
 			response << std::make_shared<container::bool_value>(L"error", true);
 			response << std::make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
 
@@ -370,13 +378,13 @@ void received_file_from_file_line(const std::wstring& target_id, const std::wstr
 	logger::handle().write(logging::logging_level::parameter,
 		fmt::format(L"target_id: {}, target_sub_id: {}, indication_id: {}, file_path: {}", target_id, target_sub_id, indication_id, target_path));
 
-	std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(target_id, target_sub_id, L"downloaded_file");
-	container << std::make_shared<container::string_value>(L"indication_id", indication_id);
-	container << std::make_shared<container::string_value>(L"target_path", target_path);
-
-	if (_middle_server)
+	std::shared_ptr<container::value_container> container = _file_manager.received(target_id, target_sub_id, indication_id, target_path);
+	if(container != nullptr)
 	{
-		_middle_server->send(container);
+		if (_middle_server)
+		{
+			_middle_server->send(container);
+		}
 	}
 }
 
@@ -385,6 +393,24 @@ bool download_files(std::shared_ptr<container::value_container> container)
 	if (container == nullptr)
 	{
 		return false;
+	}
+
+	std::vector<std::shared_ptr<container::value>> files = container->value_array(L"file");
+
+	std::vector<std::wstring> target_paths;
+	for (auto& file : files)
+	{
+		target_paths.push_back((*file)[L"target"]->to_string());
+	}
+	_file_manager.set(container->get_value(L"indication_id")->to_string(), target_paths);
+
+	if (_middle_server)
+	{
+		_middle_server->send(std::make_shared<container::value_container>(container->source_id(), container->source_sub_id(), L"transfer_condition",
+			std::vector<std::shared_ptr<container::value>> {
+				std::make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string()),
+				std::make_shared<container::ushort_value>(L"percentage", 0)
+		}));
 	}
 
 	std::shared_ptr<container::value_container> temp = container->copy();
@@ -405,7 +431,8 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 		return false;
 	}
 
-	std::shared_ptr<container::value_container> temp = container->copy(false, false);
+	std::shared_ptr<container::value_container> temp = container->copy(false);
+	temp->swap_header();
 	temp->set_message_type(L"transfer_file");
 
 	std::vector<std::shared_ptr<container::value>> files = container->value_array(L"file");
