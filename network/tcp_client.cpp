@@ -632,7 +632,6 @@ namespace network
 		{
 			return false;
 		}
-		
 		size_t index = 0;
 		std::wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
 		std::wstring source_id = converter::to_wstring(devide_binary_on_packet(data, index));
@@ -641,16 +640,21 @@ namespace network
 		std::wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
 		std::wstring source_path = converter::to_wstring(devide_binary_on_packet(data, index));
 		std::wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
+
+		std::vector<unsigned char> result;
+		append_binary_on_packet(result, converter::to_array(indication_id));
+		append_binary_on_packet(result, converter::to_array(target_id));
+		append_binary_on_packet(result, converter::to_array(target_sub_id));
 		if (file_handler::save(target_path, devide_binary_on_packet(data, index)))
 		{
-			std::vector<unsigned char> result;
-			append_binary_on_packet(result, converter::to_array(indication_id));
-			append_binary_on_packet(result, converter::to_array(target_id));
-			append_binary_on_packet(result, converter::to_array(target_sub_id));
 			append_binary_on_packet(result, converter::to_array(target_path));
-
-			_thread_pool->push(std::make_shared<job>(priorities::high, result, std::bind(&tcp_client::notify_file_packet, this, std::placeholders::_1)));
 		}
+		else
+		{
+			append_binary_on_packet(result, converter::to_array(L""));
+		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::high, result, std::bind(&tcp_client::notify_file_packet, this, std::placeholders::_1)));
 
 		return true;
 	}

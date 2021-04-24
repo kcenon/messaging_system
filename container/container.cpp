@@ -171,12 +171,12 @@ namespace container
 		_units.clear();
 	}
 
-	std::shared_ptr<value_container> value_container::copy(const bool& swap_header, const bool& containing_values)
+	std::shared_ptr<value_container> value_container::copy(const bool& containing_values)
 	{
 		std::shared_ptr<value_container> new_container = std::make_shared<value_container>(serialize(), !containing_values);
-		if (swap_header)
+		if (new_container == nullptr)
 		{
-			new_container->swap_header();
+			return nullptr;
 		}
 
 		if (!containing_values)
@@ -318,11 +318,6 @@ namespace container
 
 	std::wstring value_container::serialize(void) const
 	{
-		if (!_parsed_data)
-		{
-			return _data_string;
-		}
-
 		fmt::wmemory_buffer result;
 
 		// header
@@ -337,6 +332,13 @@ namespace container
 		fmt::format_to(std::back_inserter(result), L"[message_type,{}];", _message_type);
 		fmt::format_to(std::back_inserter(result), L"[version,{}];", _version);
 		fmt::format_to(std::back_inserter(result), L"{}", L"};");
+
+		if (!_parsed_data)
+		{
+			fmt::format_to(std::back_inserter(result), L"{}", _data_string);
+
+			return result.data();
+		}
 
 		// data
 		fmt::format_to(std::back_inserter(result), L"@data={}", L"{");
