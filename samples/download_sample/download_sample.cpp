@@ -203,7 +203,7 @@ void received_message(std::shared_ptr<container::value_container> container)
 
 	if (container->message_type() == L"transfer_condition")
 	{
-		if (container->get_value(L"percentage")->to_ushort() == 100)
+		if (container->get_value(L"percentage")->to_ushort() == 0)
 		{
 			logger::handle().write(logging::logging_level::information,
 				fmt::format(L"started download: [{}]", container->get_value(L"indication_id")->to_string()));
