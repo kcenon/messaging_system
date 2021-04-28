@@ -462,8 +462,9 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 
 	if (_file_line)
 	{
-		container << std::make_shared<container::string_value>(L"gateway_source_id", _file_line->source_id());
-		container << std::make_shared<container::string_value>(L"gateway_source_sub_id", _file_line->source_sub_id());
+		container << std::make_shared<container::string_value>(L"gateway_source_id", container->source_id());
+		container << std::make_shared<container::string_value>(L"gateway_source_sub_id", container->source_sub_id());
+		container->set_source(_file_line->source_id(), _file_line->source_sub_id());
 
 		_file_line->send(container);
 	}

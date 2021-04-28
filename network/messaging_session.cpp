@@ -211,6 +211,7 @@ namespace network
 
 		std::shared_ptr<container::value_container> container = message->copy(false);
 		container->swap_header();
+		container->set_target(message->get_value(L"gateway_source_id")->to_string(), message->get_value(L"gateway_source_sub_id")->to_string());
 		container->set_message_type(L"request_file");
 
 		std::vector<std::shared_ptr<container::value>> files = message->value_array(L"file");

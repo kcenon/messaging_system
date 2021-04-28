@@ -12,6 +12,8 @@
 
 #include "fmt/format.h"
 
+#include <future>
+
 constexpr auto PROGRAM_NAME = L"download_sample";
 
 using namespace logging;
@@ -31,6 +33,9 @@ unsigned short server_port = 8642;
 unsigned short high_priority_count = 1;
 unsigned short normal_priority_count = 2;
 unsigned short low_priority_count = 3;
+
+std::promise<bool> _promise_status;
+std::future<bool> _future_status;
 
 bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
@@ -74,11 +79,13 @@ int main(int argc, char* argv[])
 		}));
 	}
 
+	_future_status = _promise_status.get_future();
+
 	std::shared_ptr<container::value_container> container = 
 		std::make_shared<container::value_container>(L"main_server", L"", L"download_files", files);
 	client->send(container);
 
-	std::this_thread::sleep_for(std::chrono::seconds(100));
+	_future_status.wait_for(std::chrono::seconds(100));
 
 	client->stop();
 
@@ -218,11 +225,15 @@ void received_message(std::shared_ptr<container::value_container> container)
 		{
 			logger::handle().write(logging::logging_level::information,
 				fmt::format(L"completed download: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(), container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
+
+			_promise_status.set_value(false);
 		}
 		else if (container->get_value(L"percentage")->to_ushort() == 100)
 		{
 			logger::handle().write(logging::logging_level::information,
 				fmt::format(L"completed download: [{}]", container->get_value(L"indication_id")->to_string()));
+
+			_promise_status.set_value(true);
 		}
 
 		return;
