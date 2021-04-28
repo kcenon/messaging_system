@@ -220,8 +220,8 @@ namespace network
 				continue;
 			}
 
-			if (session->target_id() != message->get_value(L"gateway_source_id")->to_string() &&
-				session->target_sub_id() != message->get_value(L"gateway_source_sub_id")->to_string())
+			if (session->target_id() != message->source_id() &&
+				session->target_sub_id() != message->source_sub_id())
 			{
 				continue;
 			}
