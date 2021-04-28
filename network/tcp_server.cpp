@@ -196,12 +196,12 @@ namespace network
 		}
 	}
 
-	void tcp_server::send_file(const container::value_container& message)
+	void tcp_server::send_files(const container::value_container& message)
 	{
-		send_file(std::make_shared<container::value_container>(message));
+		send_files(std::make_shared<container::value_container>(message));
 	}
 
-	void tcp_server::send_file(std::shared_ptr<container::value_container> message)
+	void tcp_server::send_files(std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -220,7 +220,13 @@ namespace network
 				continue;
 			}
 
-			session->send_file(message);
+			if (session->target_id() != message->get_value(L"gateway_source_id")->to_string() &&
+				session->target_sub_id() != message->get_value(L"gateway_source_sub_id")->to_string())
+			{
+				continue;
+			}
+
+			session->send_files(message);
 		}
 	}
 

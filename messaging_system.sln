@@ -35,6 +35,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "middle_server", "micro_serv
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "download_sample", "samples\download_sample\download_sample.vcxproj", "{CD9D24D1-9E92-4D3F-972C-91FDBDE51122}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "upload_sample", "samples\upload_sample\upload_sample.vcxproj", "{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -139,6 +141,14 @@ Global
 		{CD9D24D1-9E92-4D3F-972C-91FDBDE51122}.Release|x64.Build.0 = Release|x64
 		{CD9D24D1-9E92-4D3F-972C-91FDBDE51122}.Release|x86.ActiveCfg = Release|Win32
 		{CD9D24D1-9E92-4D3F-972C-91FDBDE51122}.Release|x86.Build.0 = Release|Win32
+		{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}.Debug|x64.ActiveCfg = Debug|x64
+		{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}.Debug|x64.Build.0 = Debug|x64
+		{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}.Debug|x86.ActiveCfg = Debug|Win32
+		{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}.Debug|x86.Build.0 = Debug|Win32
+		{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}.Release|x64.ActiveCfg = Release|x64
+		{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}.Release|x64.Build.0 = Release|x64
+		{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}.Release|x86.ActiveCfg = Release|Win32
+		{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +166,7 @@ Global
 		{F4C004E7-7EDE-4404-9FFD-EF76D59481B2} = {8E6ED347-8187-40C8-9E8B-F36645EEC5AF}
 		{AE14A4E2-14BC-4F22-960D-38BA6DC746B3} = {8E6ED347-8187-40C8-9E8B-F36645EEC5AF}
 		{CD9D24D1-9E92-4D3F-972C-91FDBDE51122} = {C523CF87-90A3-4BB5-B91A-20305DD5471D}
+		{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3} = {C523CF87-90A3-4BB5-B91A-20305DD5471D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BA577ED-B16E-4A1D-97C7-A7981CF700AC}
