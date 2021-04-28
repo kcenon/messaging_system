@@ -63,7 +63,6 @@ int main(int argc, char* argv[])
 	std::shared_ptr<messaging_client> client = std::make_shared<messaging_client>(PROGRAM_NAME);
 	client->set_compress_mode(compress_mode);
 	client->set_connection_key(connection_key);
-	client->set_session_types(session_types::file_line);
 	client->set_connection_notification(&connection);
 	client->set_message_notification(&received_message);
 	client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
