@@ -1,8 +1,8 @@
-#include "tcp_server.h"
+#include "messaging_server.h"
 
 #include "logging.h"
 #include "converting.h"
-#include "tcp_session.h"
+#include "messaging_session.h"
 
 #include "fmt/format.h"
 
@@ -13,64 +13,64 @@ namespace network
 	using namespace logging;
 	using namespace converting;
 
-	tcp_server::tcp_server(const std::wstring& source_id) 
+	messaging_server::messaging_server(const std::wstring& source_id) 
 		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), 
 		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _broadcast_mode(false)
 	{
 
 	}
 
-	tcp_server::~tcp_server(void)
+	messaging_server::~messaging_server(void)
 	{
 		stop();
 	}
 
-	std::shared_ptr<tcp_server> tcp_server::get_ptr(void)
+	std::shared_ptr<messaging_server> messaging_server::get_ptr(void)
 	{
 		return shared_from_this();
 	}
 
-	void tcp_server::set_encrypt_mode(const bool& encrypt_mode)
+	void messaging_server::set_encrypt_mode(const bool& encrypt_mode)
 	{
 		_encrypt_mode = encrypt_mode;
 	}
 
-	void tcp_server::set_compress_mode(const bool& compress_mode)
+	void messaging_server::set_compress_mode(const bool& compress_mode)
 	{
 		_compress_mode = compress_mode;
 	}
 
-	void tcp_server::set_broadcast_mode(const bool& broadcast_mode)
+	void messaging_server::set_broadcast_mode(const bool& broadcast_mode)
 	{
 		_broadcast_mode = broadcast_mode;
 	}
 
-	void tcp_server::set_connection_key(const std::wstring& connection_key)
+	void messaging_server::set_connection_key(const std::wstring& connection_key)
 	{
 		_connection_key = connection_key;
 	}
 
-	void tcp_server::set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification)
+	void messaging_server::set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification)
 	{
 		_connection = notification;
 	}
 
-	void tcp_server::set_message_notification(const std::function<void(std::shared_ptr<container::value_container>)>& notification)
+	void messaging_server::set_message_notification(const std::function<void(std::shared_ptr<container::value_container>)>& notification)
 	{
 		_received_message = notification;
 	}
 
-	void tcp_server::set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification)
+	void messaging_server::set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification)
 	{
 		_received_file = notification;
 	}
 
-	void tcp_server::set_binary_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)>& notification)
+	void messaging_server::set_binary_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)>& notification)
 	{
 		_received_data = notification;
 	}
 
-	void tcp_server::start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
+	void messaging_server::start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
 		stop();
 
@@ -98,20 +98,20 @@ namespace network
 				{
 					try
 					{
-						logger::handle().write(logging::logging_level::information, fmt::format(L"start tcp_server({})", _source_id));
+						logger::handle().write(logging::logging_level::information, fmt::format(L"start messaging_server({})", _source_id));
 						context->run();
-						logger::handle().write(logging::logging_level::information, fmt::format(L"stop tcp_server({})", _source_id));
+						logger::handle().write(logging::logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
 						break;
 					}
-					catch (const std::overflow_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_server({}) with overflow error", _source_id)); context->reset(); }
-					catch (const std::runtime_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_server({}) with runtime error", _source_id)); context->reset(); }
-					catch (const std::exception&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_server({}) with exception", _source_id)); context->reset(); }
-					catch (...) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break tcp_server({}) with error", _source_id)); context->reset(); }
+					catch (const std::overflow_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_server({}) with overflow error", _source_id)); context->reset(); }
+					catch (const std::runtime_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_server({}) with runtime error", _source_id)); context->reset(); }
+					catch (const std::exception&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_server({}) with exception", _source_id)); context->reset(); }
+					catch (...) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_server({}) with error", _source_id)); context->reset(); }
 				}
 			}, _io_context);
 	}
 
-	void tcp_server::wait_stop(const unsigned int& seconds)
+	void messaging_server::wait_stop(const unsigned int& seconds)
 	{
 		_future_status = _promise_status.get_future();
 
@@ -124,7 +124,7 @@ namespace network
 		_future_status.wait_for(std::chrono::seconds(seconds));
 	}
 
-	void tcp_server::stop(void)
+	void messaging_server::stop(void)
 	{
 		if (_acceptor != nullptr)
 		{
@@ -160,7 +160,7 @@ namespace network
 		}
 	}
 
-	void tcp_server::echo(void)
+	void messaging_server::echo(void)
 	{
 		for (auto& session : _sessions)
 		{
@@ -173,12 +173,12 @@ namespace network
 		}
 	}
 
-	void tcp_server::send(const container::value_container& message)
+	void messaging_server::send(const container::value_container& message)
 	{
 		send(std::make_shared<container::value_container>(message));
 	}
 
-	void tcp_server::send(std::shared_ptr<container::value_container> message)
+	void messaging_server::send(std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -196,12 +196,12 @@ namespace network
 		}
 	}
 
-	void tcp_server::send_files(const container::value_container& message)
+	void messaging_server::send_files(const container::value_container& message)
 	{
 		send_files(std::make_shared<container::value_container>(message));
 	}
 
-	void tcp_server::send_files(std::shared_ptr<container::value_container> message)
+	void messaging_server::send_files(std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -230,7 +230,7 @@ namespace network
 		}
 	}
 
-	void tcp_server::send_binary(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	void messaging_server::send_binary(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -248,7 +248,7 @@ namespace network
 		}
 	}
 
-	void tcp_server::send_binary(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	void messaging_server::send_binary(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -266,7 +266,7 @@ namespace network
 		}
 	}
 
-	void tcp_server::wait_connection(void)
+	void messaging_server::wait_connection(void)
 	{
 		_acceptor->async_accept(
 #ifdef ASIO_STANDALONE
@@ -283,11 +283,11 @@ namespace network
 				logger::handle().write(logging::logging_level::information, fmt::format(L"accepted new client: {}:{}", 
 					converter::to_wstring(socket.remote_endpoint().address().to_string()), socket.remote_endpoint().port()));
 
-				std::shared_ptr<tcp_session> session = std::make_shared<tcp_session>(_source_id, _connection_key, socket);
-				session->set_connection_notification(std::bind(&tcp_server::connect_condition, this, std::placeholders::_1, std::placeholders::_2));
-				session->set_message_notification(std::bind(&tcp_server::received_message, this, std::placeholders::_1));
+				std::shared_ptr<messaging_session> session = std::make_shared<messaging_session>(_source_id, _connection_key, socket);
+				session->set_connection_notification(std::bind(&messaging_server::connect_condition, this, std::placeholders::_1, std::placeholders::_2));
+				session->set_message_notification(std::bind(&messaging_server::received_message, this, std::placeholders::_1));
 				session->set_file_notification(_received_file);
-				session->set_binary_notification(std::bind(&tcp_server::received_binary, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
+				session->set_binary_notification(std::bind(&messaging_server::received_binary, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
 				session->start(_encrypt_mode, _compress_mode, _high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);
@@ -296,7 +296,7 @@ namespace network
 			});
 	}
 
-	void tcp_server::connect_condition(std::shared_ptr<tcp_session> target, const bool& condition)
+	void messaging_server::connect_condition(std::shared_ptr<messaging_session> target, const bool& condition)
 	{
 		if (target == nullptr)
 		{
@@ -322,7 +322,7 @@ namespace network
 		}
 	}
 
-	void tcp_server::received_message(std::shared_ptr<container::value_container> message)
+	void messaging_server::received_message(std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -342,7 +342,7 @@ namespace network
 		}
 	}
 
-	void tcp_server::received_binary(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	void messaging_server::received_binary(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{

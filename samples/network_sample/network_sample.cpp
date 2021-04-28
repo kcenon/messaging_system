@@ -1,8 +1,8 @@
 ﻿#include <iostream>
 
 #include "logging.h"
-#include "tcp_server.h"
-#include "tcp_client.h"
+#include "messaging_server.h"
+#include "messaging_client.h"
 #include "argument_parsing.h"
 
 #include "fmt/format.h"
@@ -33,14 +33,14 @@ int main(int argc, char* argv[])
 	logger::handle().set_target_level(logging_level::information);
 	logger::handle().start(PROGRAM_NAME);
 
-	std::shared_ptr<tcp_server> server = std::make_shared<tcp_server>(L"server");
+	std::shared_ptr<messaging_server> server = std::make_shared<messaging_server>(L"server");
 	server->set_encrypt_mode(encrypt_mode);
 	server->set_compress_mode(compress_mode);
 	server->set_connection_key(CONNECTION_KEY);
 	server->set_connection_notification(&connection);
 	server->start(server_port, 1, 1, 1);
 
-	std::shared_ptr<tcp_client> client = std::make_shared<tcp_client>(L"client");
+	std::shared_ptr<messaging_client> client = std::make_shared<messaging_client>(L"client");
 	client->set_compress_mode(compress_mode);
 	client->set_connection_key(CONNECTION_KEY);
 	client->set_connection_notification(&connection);

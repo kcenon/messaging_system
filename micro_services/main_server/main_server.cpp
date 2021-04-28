@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "logging.h"
-#include "tcp_server.h"
+#include "messaging_server.h"
 #include "compressing.h"
 #include "argument_parsing.h"
 
@@ -35,7 +35,7 @@ unsigned short high_priority_count = 4;
 unsigned short normal_priority_count = 4;
 unsigned short low_priority_count = 4;
 
-std::shared_ptr<tcp_server> _main_server = nullptr;
+std::shared_ptr<messaging_server> _main_server = nullptr;
 
 bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
 void create_main_server(void);
@@ -164,7 +164,7 @@ void create_main_server(void)
 		_main_server.reset();
 	}
 
-	_main_server = std::make_shared<tcp_server>(PROGRAM_NAME);
+	_main_server = std::make_shared<messaging_server>(PROGRAM_NAME);
 	_main_server->set_encrypt_mode(encrypt_mode);
 	_main_server->set_compress_mode(compress_mode);
 	_main_server->set_connection_key(connection_key);

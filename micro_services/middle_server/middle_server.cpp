@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include "logging.h"
-#include "tcp_server.h"
-#include "tcp_client.h"
+#include "messaging_server.h"
+#include "messaging_client.h"
 #include "compressing.h"
 #include "file_manager.h"
 #include "argument_parsing.h"
@@ -44,9 +44,9 @@ file_manager _file_manager;
 
 std::map<std::wstring, std::function<bool(std::shared_ptr<container::value_container>)>> _file_commands;
 
-std::shared_ptr<tcp_client> _data_line = nullptr;
-std::shared_ptr<tcp_client> _file_line = nullptr;
-std::shared_ptr<tcp_server> _middle_server = nullptr;
+std::shared_ptr<messaging_client> _data_line = nullptr;
+std::shared_ptr<messaging_client> _file_line = nullptr;
+std::shared_ptr<messaging_server> _middle_server = nullptr;
 
 bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
 void create_middle_server(void);
@@ -207,7 +207,7 @@ void create_middle_server(void)
 		_middle_server.reset();
 	}
 
-	_middle_server = std::make_shared<tcp_server>(PROGRAM_NAME);
+	_middle_server = std::make_shared<messaging_server>(PROGRAM_NAME);
 	_middle_server->set_encrypt_mode(encrypt_mode);
 	_middle_server->set_compress_mode(compress_mode);
 	_middle_server->set_connection_key(middle_connection_key);
@@ -223,7 +223,7 @@ void create_data_line(void)
 		_data_line.reset();
 	}
 
-	_data_line = std::make_shared<tcp_client>(L"data_line");
+	_data_line = std::make_shared<messaging_client>(L"data_line");
 	_data_line->set_compress_mode(compress_mode);
 	_data_line->set_connection_key(main_connection_key);
 	_data_line->set_session_types(session_types::message_line);
@@ -239,7 +239,7 @@ void create_file_line(void)
 		_file_line.reset();
 	}
 
-	_file_line = std::make_shared<tcp_client>(L"file_line");
+	_file_line = std::make_shared<messaging_client>(L"file_line");
 	_file_line->set_compress_mode(compress_mode);
 	_file_line->set_connection_key(main_connection_key);
 	_file_line->set_session_types(session_types::file_line);

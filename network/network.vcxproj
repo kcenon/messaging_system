@@ -183,15 +183,15 @@
     <ClInclude Include="data_modes.h" />
     <ClInclude Include="data_handling.h" />
     <ClInclude Include="session_types.h" />
-    <ClInclude Include="tcp_client.h" />
-    <ClInclude Include="tcp_server.h" />
-    <ClInclude Include="tcp_session.h" />
+    <ClInclude Include="messaging_client.h" />
+    <ClInclude Include="messaging_server.h" />
+    <ClInclude Include="messaging_session.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="data_handling.cpp" />
-    <ClCompile Include="tcp_client.cpp" />
-    <ClCompile Include="tcp_server.cpp" />
-    <ClCompile Include="tcp_session.cpp" />
+    <ClCompile Include="messaging_client.cpp" />
+    <ClCompile Include="messaging_server.cpp" />
+    <ClCompile Include="messaging_session.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\threads\threads.vcxproj">
