@@ -31,6 +31,7 @@ namespace network
 
 	public:
 		std::wstring source_id(void) const;
+		std::wstring source_sub_id(void) const;
 
 	public:
 		void set_auto_echo(const bool& auto_echo, const unsigned short& echo_interval);
@@ -54,8 +55,8 @@ namespace network
 		void echo(void);
 		void send(const container::value_container& message);
 		void send(std::shared_ptr<container::value_container> message);
-		void send_file(const container::value_container& message);
-		void send_file(std::shared_ptr<container::value_container> message);
+		void send_files(const container::value_container& message);
+		void send_files(std::shared_ptr<container::value_container> message);
 		void send_binary(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data);
 
 	protected:

@@ -1,47 +1,40 @@
-#include <iostream>
+﻿#include <iostream>
 
 #include "logging.h"
-#include "tcp_server.h"
-#include "compressing.h"
+#include "converting.h"
+#include "tcp_client.h"
+#include "folder_handling.h"
 #include "argument_parsing.h"
 
-#include "value.h"
+#include "container.h"
 #include "values/string_value.h"
-
-#include <wchar.h>
-#include <algorithm>
-#include <signal.h>
+#include "values/container_value.h"
 
 #include "fmt/format.h"
 
-constexpr auto PROGRAM_NAME = L"main_server";
+constexpr auto PROGRAM_NAME = L"upload_sample";
 
 using namespace logging;
 using namespace network;
-using namespace compressing;
+using namespace converting;
+using namespace folder_handling;
 using namespace argument_parsing;
 
 bool encrypt_mode = false;
 bool compress_mode = false;
-unsigned short compress_block_size = 1024;
-#ifdef _DEBUG
-logging_level log_level = logging_level::parameter;
-#else
 logging_level log_level = logging_level::information;
-#endif
-std::wstring connection_key = L"main_connection_key";
-unsigned short server_port = 9753;
-unsigned short high_priority_count = 4;
-unsigned short normal_priority_count = 4;
-unsigned short low_priority_count = 4;
-
-std::shared_ptr<tcp_server> _main_server = nullptr;
+std::wstring source_folder = L"";
+std::wstring target_folder = L"";
+std::wstring connection_key = L"middle_connection_key";
+std::wstring server_ip = L"127.0.0.1";
+unsigned short server_port = 8642;
+unsigned short high_priority_count = 1;
+unsigned short normal_priority_count = 2;
+unsigned short low_priority_count = 3;
 
 bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
-void create_main_server(void);
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
 void received_message(std::shared_ptr<container::value_container> container);
-void received_file(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& indication_id, const std::wstring& target_path);
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -51,17 +44,43 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	if (compress_mode)
+	std::vector<std::wstring> sources = folder_handler::get_files(source_folder);
+	if (sources.empty())
 	{
-		compressor::set_block_bytes(compress_block_size);
+		display_help();
+
+		return 0;
 	}
 
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
 
-	create_main_server();
+	std::shared_ptr<tcp_client> client = std::make_shared<tcp_client>(PROGRAM_NAME);
+	client->set_compress_mode(compress_mode);
+	client->set_connection_key(connection_key);
+	client->set_session_types(session_types::file_line);
+	client->set_connection_notification(&connection);
+	client->set_message_notification(&received_message);
+	client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
 
-	_main_server->wait_stop();
+	std::vector<std::shared_ptr<container::value>> files;
+
+	files.push_back(std::make_shared<container::string_value>(L"indication_id", L"upload_test"));
+	for (auto& source : sources)
+	{
+		files.push_back(std::make_shared<container::container_value>(L"file", std::vector<std::shared_ptr<container::value>> {
+			std::make_shared<container::string_value>(L"source", source),
+			std::make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
+		}));
+	}
+
+	std::shared_ptr<container::value_container> container = 
+		std::make_shared<container::value_container>(L"main_server", L"", L"upload_files", files);
+	client->send(container);
+
+	std::this_thread::sleep_for(std::chrono::seconds(100));
+
+	client->stop();
 
 	logger::handle().stop();
 
@@ -112,22 +131,34 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 		}
 	}
 
-	target = arguments.find(L"--compress_block_size");
-	if (target != arguments.end())
-	{
-		compress_block_size = (unsigned short)_wtoi(target->second.c_str());
-	}
-
 	target = arguments.find(L"--connection_key");
 	if (target != arguments.end())
 	{
 		connection_key = target->second;
 	}
 
+	target = arguments.find(L"--server_ip");
+	if (target != arguments.end())
+	{
+		server_ip = target->second;
+	}
+
 	target = arguments.find(L"--server_port");
 	if (target != arguments.end())
 	{
 		server_port = (unsigned short)_wtoi(target->second.c_str());
+	}
+
+	target = arguments.find(L"--source_folder");
+	if (target != arguments.end())
+	{
+		source_folder = target->second;
+	}
+
+	target = arguments.find(L"--target_folder");
+	if (target != arguments.end())
+	{
+		target_folder = target->second;
 	}
 
 	target = arguments.find(L"--high_priority_count");
@@ -157,23 +188,6 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	return true;
 }
 
-void create_main_server(void)
-{
-	if (_main_server != nullptr)
-	{
-		_main_server.reset();
-	}
-
-	_main_server = std::make_shared<tcp_server>(PROGRAM_NAME);
-	_main_server->set_encrypt_mode(encrypt_mode);
-	_main_server->set_compress_mode(compress_mode);
-	_main_server->set_connection_key(connection_key);
-	_main_server->set_connection_notification(&connection);
-	_main_server->set_message_notification(&received_message);
-	_main_server->set_file_notification(&received_file);
-	_main_server->start(server_port, high_priority_count, normal_priority_count, low_priority_count);
-}
-
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
 	logger::handle().write(logging::logging_level::information,
@@ -187,11 +201,28 @@ void received_message(std::shared_ptr<container::value_container> container)
 		return;
 	}
 
-	if (container->message_type() == L"transfer_file")
+	if (container->message_type() == L"transfer_condition")
 	{
-		if (_main_server != nullptr)
+		if (container->get_value(L"percentage")->to_ushort() == 0)
 		{
-			_main_server->send_files(container);
+			logger::handle().write(logging::logging_level::information,
+				fmt::format(L"started upload: [{}]", container->get_value(L"indication_id")->to_string()));
+
+			return;
+		}
+
+		logger::handle().write(logging::logging_level::information,
+			fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
+
+		if (container->get_value(L"completed")->to_boolean())
+		{
+			logger::handle().write(logging::logging_level::information,
+				fmt::format(L"completed download: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(), container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
+		}
+		else if (container->get_value(L"percentage")->to_ushort() == 100)
+		{
+			logger::handle().write(logging::logging_level::information,
+				fmt::format(L"completed upload: [{}]", container->get_value(L"indication_id")->to_string()));
 		}
 
 		return;
@@ -201,27 +232,13 @@ void received_message(std::shared_ptr<container::value_container> container)
 		fmt::format(L"received message: {}", container->serialize()));
 }
 
-void received_file(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& indication_id, const std::wstring& target_path)
-{
-	if (_main_server != nullptr)
-	{
-		_main_server->send(std::make_shared<container::value_container>(target_id, target_sub_id, L"uploaded_file",
-			std::vector<std::shared_ptr<container::value>> {
-				std::make_shared<container::string_value>(L"indication_id", indication_id),
-				std::make_shared<container::string_value>(L"target_path", target_path)
-		}));
-	}
-}
-
 void display_help(void)
 {
-	std::wcout << L"Options:" << std::endl << std::endl;
+	std::wcout << L"download sample options:" << std::endl << std::endl;
 	std::wcout << L"--encrypt_mode [value] " << std::endl;
 	std::wcout << L"\tThe encrypt_mode on/off. If you want to use encrypt mode must be appended '--encrypt_mode true'.\n\tInitialize value is --encrypt_mode off." << std::endl << std::endl;
 	std::wcout << L"--compress_mode [value]" << std::endl;
 	std::wcout << L"\tThe compress_mode on/off. If you want to use compress mode must be appended '--compress_mode true'.\n\tInitialize value is --compress_mode off." << std::endl << std::endl;
-	std::wcout << L"--compress_block_size [value]" << std::endl;
-	std::wcout << L"\tThe compress_mode on/off. If you want to change compress block size must be appended '--compress_block_size size'.\n\tInitialize value is --compress_mode 1024." << std::endl << std::endl;
 	std::wcout << L"--connection_key [value]" << std::endl;
 	std::wcout << L"\tIf you want to change a specific key string for the connection to the main server must be appended\n\t'--connection_key [specific key string]'." << std::endl << std::endl;
 	std::wcout << L"--server_port [value]" << std::endl;
@@ -232,6 +249,10 @@ void display_help(void)
 	std::wcout << L"\tIf you want to change normal priority thread workers must be appended '--normal_priority_count [count]'." << std::endl << std::endl;
 	std::wcout << L"--low_priority_count [value]" << std::endl;
 	std::wcout << L"\tIf you want to change low priority thread workers must be appended '--low_priority_count [count]'." << std::endl << std::endl;
+	std::wcout << L"--source_folder [path]" << std::endl;
+	std::wcout << L"\tIf you want to download folder on middle server on computer must be appended '--source_folder [path]'." << std::endl << std::endl;
+	std::wcout << L"--target_folder [path]" << std::endl;
+	std::wcout << L"\tIf you want to download on your computer must be appended '--target_folder [path]'." << std::endl << std::endl;
 	std::wcout << L"--logging_level [value]" << std::endl;
 	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
 }

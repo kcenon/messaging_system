@@ -61,6 +61,7 @@ void received_message_from_file_line(std::shared_ptr<container::value_container>
 void received_file_from_file_line(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& indication_id, const std::wstring& target_path);
 bool download_files(std::shared_ptr<container::value_container> container);
 bool upload_files(std::shared_ptr<container::value_container> container);
+void uploaded_file(std::shared_ptr<container::value_container> container);
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -367,6 +368,13 @@ void received_message_from_file_line(std::shared_ptr<container::value_container>
 		return;
 	}
 
+	if (container->message_type() == L"uploaded_file")
+	{
+		uploaded_file(container);
+
+		return;
+	}
+
 	if (_middle_server)
 	{
 		_middle_server->send(container);
@@ -431,26 +439,54 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 		return false;
 	}
 
-	std::shared_ptr<container::value_container> temp = container->copy(false);
-	temp->swap_header();
-	temp->set_message_type(L"transfer_file");
-
 	std::vector<std::shared_ptr<container::value>> files = container->value_array(L"file");
+
+	std::vector<std::wstring> target_paths;
 	for (auto& file : files)
 	{
-		temp << std::make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string());
-		temp << std::make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
-		temp << std::make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
+		target_paths.push_back((*file)[L"target"]->to_string());
+	}
+	_file_manager.set(container->get_value(L"indication_id")->to_string(), target_paths);
 
-		if (_file_line)
-		{
-			_file_line->send_file(temp);
-		}
+	if (_middle_server)
+	{
+		_middle_server->send(std::make_shared<container::value_container>(container->source_id(), container->source_sub_id(), L"transfer_condition",
+			std::vector<std::shared_ptr<container::value>> {
+				std::make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string()),
+				std::make_shared<container::ushort_value>(L"percentage", 0)
+		}));
+	}
 
-		temp->clear_value();
+	container->set_message_type(L"transfer_file");
+	
+
+	if (_file_line)
+	{
+		container << std::make_shared<container::string_value>(L"gateway_source_id", _file_line->source_id());
+		container << std::make_shared<container::string_value>(L"gateway_source_sub_id", _file_line->source_sub_id());
+
+		_file_line->send(container);
 	}
 
 	return true;
+}
+
+void uploaded_file(std::shared_ptr<container::value_container> container)
+{
+	if (container == nullptr)
+	{
+		return;
+	}
+
+	std::shared_ptr<container::value_container> temp = _file_manager.received(
+		container->target_id(), container->target_sub_id(), container->get_value(L"indication_id")->to_string(), container->get_value(L"target_path")->to_string());
+	if (temp != nullptr)
+	{
+		if (_middle_server)
+		{
+			_middle_server->send(temp);
+		}
+	}
 }
 
 void display_help(void)

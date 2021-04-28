@@ -197,38 +197,32 @@ namespace network
 		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&tcp_session::send_packet, this, std::placeholders::_1)));
 	}
 
-	void tcp_session::send_file(std::shared_ptr<container::value_container> message)
+	void tcp_session::send_files(std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
 			return;
 		}
 
-		std::vector<unsigned char> result;
-		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
-		append_binary_on_packet(result, converter::to_array(message->source_id()));
-		append_binary_on_packet(result, converter::to_array(message->source_sub_id()));
-		append_binary_on_packet(result, converter::to_array(message->target_id()));
-		append_binary_on_packet(result, converter::to_array(message->target_sub_id()));
-		append_binary_on_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
-		append_binary_on_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
-		append_binary_on_packet(result, file_handler::load(message->get_value(L"source")->to_string()));
-
-		if (_compress_mode)
+		if (message->source_id().empty())
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::compress_file_packet, this, std::placeholders::_1)));
-
-			return;
+			message->set_source(_source_id, _source_sub_id);
 		}
 
-		if (_encrypt_mode)
+		std::shared_ptr<container::value_container> container = message->copy(false);
+		container->swap_header();
+		container->set_message_type(L"request_file");
+
+		std::vector<std::shared_ptr<container::value>> files = message->value_array(L"file");
+		for (auto& file : files)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&tcp_session::encrypt_file_packet, this, std::placeholders::_1)));
+			container << std::make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
+			container << std::make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
+			container << std::make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
 
-			return;
+			_thread_pool->push(std::make_shared<job>(priorities::low, container->serialize_array(), std::bind(&tcp_session::load_file_packet, this, std::placeholders::_1)));
+			container->clear_value();
 		}
-
-		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&tcp_session::send_file_packet, this, std::placeholders::_1)));
 	}
 
 	void tcp_session::send_binary(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
@@ -589,8 +583,8 @@ namespace network
 
 		std::vector<unsigned char> result;
 		append_binary_on_packet(result, converter::to_array(indication_id));
-		append_binary_on_packet(result, converter::to_array(source_id));
-		append_binary_on_packet(result, converter::to_array(source_sub_id));
+		append_binary_on_packet(result, converter::to_array(target_id));
+		append_binary_on_packet(result, converter::to_array(target_sub_id));
 		if (file_handler::save(target_path, devide_binary_on_packet(data, index)))
 		{
 			append_binary_on_packet(result, converter::to_array(target_path));
