@@ -244,6 +244,11 @@ namespace network
 				continue;
 			}
 
+			if (session->get_session_type() != session_types::binary_line)
+			{
+				continue;
+			}
+
 			session->send_binary(target_id, target_sub_id, data);
 		}
 	}
@@ -258,6 +263,11 @@ namespace network
 		for (auto& session : _sessions)
 		{
 			if (session == nullptr)
+			{
+				continue;
+			}
+
+			if (session->get_session_type() != session_types::binary_line)
 			{
 				continue;
 			}

@@ -310,6 +310,11 @@ namespace network
 			return;
 		}
 
+		if (_session_type != session_types::file_line)
+		{
+			return;
+		}
+
 		if (message->source_id().empty())
 		{
 			message->set_source(_source_id, _source_sub_id);
@@ -333,6 +338,11 @@ namespace network
 
 	void messaging_client::send_binary(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
 	{
+		if (_session_type != session_types::binary_line)
+		{
+			return;
+		}
+
 		std::vector<unsigned char> result;
 		append_binary_on_packet(result, converter::to_array(_source_id));
 		append_binary_on_packet(result, converter::to_array(_source_sub_id));
