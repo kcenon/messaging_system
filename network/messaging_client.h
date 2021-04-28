@@ -20,14 +20,14 @@
 
 namespace network
 {
-	class tcp_client : public std::enable_shared_from_this<tcp_client>, data_handling
+	class messaging_client : public std::enable_shared_from_this<messaging_client>, data_handling
 	{
 	public:
-		tcp_client(const std::wstring& source_id);
-		~tcp_client(void);
+		messaging_client(const std::wstring& source_id);
+		~messaging_client(void);
 
 	public:
-		std::shared_ptr<tcp_client> get_ptr(void);
+		std::shared_ptr<messaging_client> get_ptr(void);
 
 	public:
 		std::wstring source_id(void) const;

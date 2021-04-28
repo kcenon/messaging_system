@@ -16,15 +16,15 @@
 
 namespace network
 {
-	class tcp_session;
-	class tcp_server : public std::enable_shared_from_this<tcp_server>
+	class messaging_session;
+	class messaging_server : public std::enable_shared_from_this<messaging_server>
 	{
 	public:
-		tcp_server(const std::wstring& source_id);
-		~tcp_server(void);
+		messaging_server(const std::wstring& source_id);
+		~messaging_server(void);
 
 	public:
-		std::shared_ptr<tcp_server> get_ptr(void);
+		std::shared_ptr<messaging_server> get_ptr(void);
 
 	public:
 		void set_encrypt_mode(const bool& encrypt_mode);
@@ -54,7 +54,7 @@ namespace network
 
 	protected:
 		void wait_connection(void);
-		void connect_condition(std::shared_ptr<tcp_session> target, const bool& condition);
+		void connect_condition(std::shared_ptr<messaging_session> target, const bool& condition);
 
 	private:
 		void received_message(std::shared_ptr<container::value_container> message);
@@ -83,7 +83,7 @@ namespace network
 	private:
 		std::promise<bool> _promise_status;
 		std::future<bool> _future_status;
-		std::vector<std::shared_ptr<tcp_session>> _sessions;
+		std::vector<std::shared_ptr<messaging_session>> _sessions;
 
 	private:
 		std::function<void(const std::wstring&, const std::wstring&, const bool&)> _connection;

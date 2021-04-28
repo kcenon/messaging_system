@@ -2,7 +2,7 @@
 
 #include "logging.h"
 #include "converting.h"
-#include "tcp_client.h"
+#include "messaging_client.h"
 #include "folder_handling.h"
 #include "argument_parsing.h"
 
@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
 
-	std::shared_ptr<tcp_client> client = std::make_shared<tcp_client>(PROGRAM_NAME);
+	std::shared_ptr<messaging_client> client = std::make_shared<messaging_client>(PROGRAM_NAME);
 	client->set_compress_mode(compress_mode);
 	client->set_connection_key(connection_key);
 	client->set_session_types(session_types::file_line);

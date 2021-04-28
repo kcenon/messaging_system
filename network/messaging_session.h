@@ -18,21 +18,21 @@
 
 namespace network
 {
-	class tcp_session : public std::enable_shared_from_this<tcp_session>, data_handling
+	class messaging_session : public std::enable_shared_from_this<messaging_session>, data_handling
 	{
 	public:
 #ifdef ASIO_STANDALONE
-		tcp_session(const std::wstring& source_id, const std::wstring& connection_key, asio::ip::tcp::socket& socket);
+		messaging_session(const std::wstring& source_id, const std::wstring& connection_key, asio::ip::tcp::socket& socket);
 #else
-		tcp_session(const std::wstring& source_id, const std::wstring& connection_key, boost::asio::ip::tcp::socket& socket);
+		messaging_session(const std::wstring& source_id, const std::wstring& connection_key, boost::asio::ip::tcp::socket& socket);
 #endif
-		~tcp_session(void);
+		~messaging_session(void);
 
 	public:
-		std::shared_ptr<tcp_session> get_ptr(void);
+		std::shared_ptr<messaging_session> get_ptr(void);
 
 	public:
-		void set_connection_notification(const std::function<void(std::shared_ptr<tcp_session>, const bool&)>& notification);
+		void set_connection_notification(const std::function<void(std::shared_ptr<messaging_session>, const bool&)>& notification);
 		void set_message_notification(const std::function<void(std::shared_ptr<container::value_container>)>& notification);
 		void set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification);
 		void set_binary_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)>& notification);
@@ -122,7 +122,7 @@ namespace network
 		std::wstring _iv;
 
 	private:
-		std::function<void(std::shared_ptr<tcp_session>, const bool&)> _connection;
+		std::function<void(std::shared_ptr<messaging_session>, const bool&)> _connection;
 		std::function<void(std::shared_ptr<container::value_container>)> _received_message;
 		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)> _received_file;
 		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)> _received_data;
