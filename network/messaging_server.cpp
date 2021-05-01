@@ -15,7 +15,7 @@ namespace network
 
 	messaging_server::messaging_server(const std::wstring& source_id) 
 		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), 
-		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _broadcast_mode(false)
+		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr)
 	{
 
 	}
@@ -40,14 +40,14 @@ namespace network
 		_compress_mode = compress_mode;
 	}
 
-	void messaging_server::set_broadcast_mode(const bool& broadcast_mode)
-	{
-		_broadcast_mode = broadcast_mode;
-	}
-
 	void messaging_server::set_connection_key(const std::wstring& connection_key)
 	{
 		_connection_key = connection_key;
+	}
+
+	void messaging_server::set_ignore_snipping_targets(const std::vector<std::wstring>& ignore_snipping_targets)
+	{
+		_ignore_snipping_targets = ignore_snipping_targets;
 	}
 
 	void messaging_server::set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification)
@@ -215,17 +215,6 @@ namespace network
 				continue;
 			}
 
-			if (session->get_session_type() != session_types::file_line)
-			{
-				continue;
-			}
-
-			if (session->target_id() != message->source_id() &&
-				session->target_sub_id() != message->source_sub_id())
-			{
-				continue;
-			}
-
 			session->send_files(message);
 		}
 	}
@@ -244,11 +233,6 @@ namespace network
 				continue;
 			}
 
-			if (session->get_session_type() != session_types::binary_line)
-			{
-				continue;
-			}
-
 			session->send_binary(target_id, target_sub_id, data);
 		}
 	}
@@ -263,11 +247,6 @@ namespace network
 		for (auto& session : _sessions)
 		{
 			if (session == nullptr)
-			{
-				continue;
-			}
-
-			if (session->get_session_type() != session_types::binary_line)
 			{
 				continue;
 			}
@@ -298,7 +277,7 @@ namespace network
 				session->set_message_notification(std::bind(&messaging_server::received_message, this, std::placeholders::_1));
 				session->set_file_notification(_received_file);
 				session->set_binary_notification(std::bind(&messaging_server::received_binary, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
-				session->start(_encrypt_mode, _compress_mode, _high_priority, _normal_priority, _low_priority);
+				session->start(_encrypt_mode, _compress_mode, _ignore_snipping_targets, _high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);
 
@@ -339,13 +318,6 @@ namespace network
 			return;
 		}
 
-		if (_broadcast_mode && _source_id.compare(message->source_id()) != 0)
-		{
-			send(message);
-
-			return;
-		}
-
 		if (_received_message)
 		{
 			_received_message(message);
@@ -356,13 +328,6 @@ namespace network
 	{
 		if (data.empty())
 		{
-			return;
-		}
-
-		if (_broadcast_mode && _source_id.compare(source_id) != 0)
-		{
-			send_binary(source_id, source_sub_id, target_id, target_sub_id, data);
-
 			return;
 		}
 

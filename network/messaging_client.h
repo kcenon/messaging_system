@@ -39,6 +39,7 @@ namespace network
 		void set_compress_mode(const bool& compress_mode);
 		void set_session_types(const session_types& session_type);
 		void set_connection_key(const std::wstring& connection_key);
+		void set_snipping_targets(const std::vector<std::wstring>& snipping_targets);
 
 	public:
 		void set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification);

@@ -2,6 +2,7 @@
 
 #include "values/bool_value.h"
 #include "values/string_value.h"
+#include "values/container_value.h"
 
 #include "logging.h"
 #include "converting.h"
@@ -116,12 +117,13 @@ namespace network
 		return _target_sub_id;
 	}
 
-	void messaging_session::start(const bool& encrypt_mode, const bool& compress_mode, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
+	void messaging_session::start(const bool& encrypt_mode, const bool& compress_mode, const std::vector<std::wstring>& ignore_snipping_targets, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
 		stop();
 
 		_encrypt_mode = encrypt_mode;
 		_compress_mode = compress_mode;
+		_ignore_snipping_targets = ignore_snipping_targets;
 		_thread_pool = std::make_shared<threads::thread_pool>();
 
 		_thread_pool->append(std::make_shared<thread_worker>(priorities::top), true);
@@ -170,12 +172,12 @@ namespace network
 			return;
 		}
 
-		if (!_bridge_line && message->target_id() != _target_id)
+		if (!_bridge_line && message->target_id() != _target_id && !contained_snipping_target(message->target_id()))
 		{
 			return;
 		}
 
-		if (!_bridge_line && !message->target_sub_id().empty() && message->target_sub_id() != _target_sub_id)
+		if (!_bridge_line && !contained_snipping_target(message->target_id()) && !message->target_sub_id().empty() && message->target_sub_id() != _target_sub_id)
 		{
 			return;
 		}
@@ -205,6 +207,11 @@ namespace network
 		}
 
 		if (_session_type != session_types::file_line)
+		{
+			return;
+		}
+
+		if (_target_id != message->source_id() && _target_sub_id != message->source_sub_id())
 		{
 			return;
 		}
@@ -284,6 +291,11 @@ namespace network
 			return;
 		}
 
+		if (_session_type != session_types::binary_line)
+		{
+			return;
+		}
+
 		if (!_bridge_line && target_id != _target_id)
 		{
 			return;
@@ -349,6 +361,17 @@ namespace network
 		if (!_confirm)
 		{
 			_socket->close();
+		}
+
+		return true;
+	}
+
+	bool messaging_session::contained_snipping_target(const std::wstring& snipping_target)
+	{
+		auto target = std::find(_snipping_targets.begin(), _snipping_targets.end(), snipping_target);
+		if (target == _snipping_targets.end())
+		{
+			return false;
 		}
 
 		return true;
@@ -783,6 +806,33 @@ namespace network
 
 		_confirm = true;
 
+		std::shared_ptr<value> acceptable_snipping_targets = std::make_shared<container::container_value>(L"snipping_targets");
+
+		_snipping_targets.clear();		
+		std::vector<std::shared_ptr<value>> snipping_targets = message->get_value(L"snipping_targets")->children();
+		for (auto& snipping_target : snipping_targets)
+		{
+			if (snipping_target == nullptr)
+			{
+				continue;
+			}
+
+			if (snipping_target->name() != L"snipping_target")
+			{
+				continue;
+			}
+
+			auto target = std::find(_ignore_snipping_targets.begin(), _ignore_snipping_targets.end(), snipping_target->to_string());
+			if (target == _snipping_targets.end())
+			{
+				continue;
+			}
+
+			_snipping_targets.push_back(snipping_target->to_string());
+
+			acceptable_snipping_targets->add(std::make_shared<container::string_value>(L"snipping_target", snipping_target->to_string()));
+		}
+
 		generate_key();
 
 		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
@@ -790,7 +840,8 @@ namespace network
 				std::make_shared<container::bool_value>(L"confirm", true),
 				std::make_shared<container::string_value>(L"key", _key),
 				std::make_shared<container::string_value>(L"iv", _iv),
-				std::make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode)
+				std::make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode),
+				acceptable_snipping_targets
 		});
 
 		if (_compress_mode)
