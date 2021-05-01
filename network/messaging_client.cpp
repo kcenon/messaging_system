@@ -89,6 +89,11 @@ namespace network
 		_connection_key = connection_key;
 	}
 
+	void messaging_client::set_snipping_targets(const std::vector<std::wstring>& snipping_targets)
+	{
+		_snipping_targets = snipping_targets;
+	}
+
 	void messaging_client::set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification)
 	{
 		_connection = notification;

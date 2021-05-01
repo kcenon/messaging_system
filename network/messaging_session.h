@@ -43,7 +43,7 @@ namespace network
 		const std::wstring target_sub_id(void);
 
 	public:
-		void start(const bool& encrypt_mode, const bool& compress_mode, const unsigned short& high_priority = 8, const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
+		void start(const bool& encrypt_mode, const bool& compress_mode, const std::vector<std::wstring>& ignore_snipping_targets, const unsigned short& high_priority = 8, const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
 		void stop(void);
 
 	public:
@@ -56,7 +56,10 @@ namespace network
 	protected:
 		void receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data) override;
 		void disconnected(void) override;
+
+	protected:
 		bool check_confirm_condition(void);
+		bool contained_snipping_target(const std::wstring& snipping_target);
 
 		// packet
 	private:
@@ -114,6 +117,8 @@ namespace network
 		std::wstring _target_id;
 		std::wstring _target_sub_id;
 		std::wstring _connection_key;
+		std::vector<std::wstring> _snipping_targets;
+		std::vector<std::wstring> _ignore_snipping_targets;
 
 	private:
 		bool _compress_mode;

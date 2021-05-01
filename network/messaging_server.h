@@ -29,8 +29,8 @@ namespace network
 	public:
 		void set_encrypt_mode(const bool& encrypt_mode);
 		void set_compress_mode(const bool& compress_mode);
-		void set_broadcast_mode(const bool& broadcast_mode);
 		void set_connection_key(const std::wstring& connection_key);
+		void set_ignore_snipping_targets(const std::vector<std::wstring>& ignore_snipping_targets);
 
 	public:
 		void set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification);
@@ -63,12 +63,12 @@ namespace network
 	private:
 		bool _encrypt_mode;
 		bool _compress_mode;
-		bool _broadcast_mode;
 		std::wstring _source_id;
 		std::wstring _connection_key;
 		unsigned short _high_priority;
 		unsigned short _normal_priority;
 		unsigned short _low_priority;
+		std::vector<std::wstring> _ignore_snipping_targets;
 
 	private:
 		std::thread _thread;
