@@ -830,6 +830,22 @@ namespace network
 		_iv = message->get_value(L"iv")->to_string();
 		_encrypt_mode = message->get_value(L"encrypt_mode")->to_boolean();
 
+		std::vector<std::shared_ptr<value>> snipping_targets = message->get_value(L"snipping_targets")->children();
+		for (auto& snipping_target : snipping_targets)
+		{
+			if (snipping_target == nullptr)
+			{
+				continue;
+			}
+
+			if (snipping_target->name() != L"snipping_target")
+			{
+				continue;
+			}
+
+			logger::handle().write(logging::logging_level::information, fmt::format(L"accepted snipping target: {}", snipping_target->to_string()));
+		}
+
 		connection_notification(true);
 
 		return true;
