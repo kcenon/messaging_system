@@ -273,6 +273,13 @@ namespace network
 					converter::to_wstring(socket.remote_endpoint().address().to_string()), socket.remote_endpoint().port()));
 
 				std::shared_ptr<messaging_session> session = std::make_shared<messaging_session>(_source_id, _connection_key, socket);
+				if (session == nullptr)
+				{
+					wait_connection();
+
+					return;
+				}
+
 				session->set_connection_notification(std::bind(&messaging_server::connect_condition, this, std::placeholders::_1, std::placeholders::_2));
 				session->set_message_notification(std::bind(&messaging_server::received_message, this, std::placeholders::_1));
 				session->set_file_notification(_received_file);
