@@ -37,7 +37,7 @@ namespace network
 		: data_handling(246, 135), _confirm(false), _auto_echo(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false),
 		_io_context(nullptr), _socket(nullptr), _key(L""), _iv(L""), _thread_pool(nullptr), _auto_echo_interval_seconds(1), _connection(nullptr),
 		_connection_key(L"connection_key"), _source_id(source_id), _source_sub_id(L""), _target_id(L"unknown"), _target_sub_id(L"0.0.0.0:0"), _received_file(nullptr),
-		_received_message(nullptr), _received_data(nullptr)
+		_received_message(nullptr), _received_data(nullptr), _session_type(session_types::message_line)
 	{
 		_message_handlers.insert({ L"confirm_connection", std::bind(&messaging_client::confirm_message, this, std::placeholders::_1) });
 		_message_handlers.insert({ L"echo", std::bind(&messaging_client::echo_message, this, std::placeholders::_1) });

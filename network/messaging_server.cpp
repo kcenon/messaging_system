@@ -13,9 +13,10 @@ namespace network
 	using namespace logging;
 	using namespace converting;
 
-	messaging_server::messaging_server(const std::wstring& source_id) 
-		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), 
-		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr)
+	messaging_server::messaging_server(const std::wstring& source_id)
+		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), _encrypt_mode(false),
+		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _compress_mode(false),
+		_high_priority(8), _normal_priority(8), _low_priority(8)
 	{
 
 	}
