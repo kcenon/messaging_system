@@ -188,9 +188,9 @@ namespace network
 	}
 
 #ifdef ASIO_STANDALONE
-	void data_handling::read_data(const data_modes& packet_mode, const unsigned int& remained_length, std::weak_ptr<asio::ip::tcp::socket> socket)
+	void data_handling::read_data(const data_modes& packet_mode, const size_t& remained_length, std::weak_ptr<asio::ip::tcp::socket> socket)
 #else
-	void data_handling::read_data(const data_modes& packet_mode, const unsigned int& remained_length, std::weak_ptr<boost::asio::ip::tcp::socket> socket)
+	void data_handling::read_data(const data_modes& packet_mode, const size_t& remained_length, std::weak_ptr<boost::asio::ip::tcp::socket> socket)
 #endif
 	{
 		if (remained_length == 0)

@@ -25,13 +25,13 @@ namespace network
 		void read_start_code(std::weak_ptr<asio::ip::tcp::socket> socket);
 		void read_packet_code(std::weak_ptr<asio::ip::tcp::socket> socket);
 		void read_length_code(const data_modes& packet_mode, std::weak_ptr<asio::ip::tcp::socket> socket);
-		void read_data(const data_modes& packet_mode, const unsigned int& remained_length, std::weak_ptr<asio::ip::tcp::socket> socket);
+		void read_data(const data_modes& packet_mode, const size_t& remained_length, std::weak_ptr<asio::ip::tcp::socket> socket);
 		void read_end_code(const data_modes& packet_mode, std::weak_ptr<asio::ip::tcp::socket> socket);
 #else
 		void read_start_code(std::weak_ptr<boost::asio::ip::tcp::socket> socket);
 		void read_packet_code(std::weak_ptr<boost::asio::ip::tcp::socket> socket);
 		void read_length_code(const data_modes& packet_mode, std::weak_ptr<boost::asio::ip::tcp::socket> socket);
-		void read_data(const data_modes& packet_mode, const unsigned int& remained_length, std::weak_ptr<boost::asio::ip::tcp::socket> socket);
+		void read_data(const data_modes& packet_mode, const size_t& remained_length, std::weak_ptr<boost::asio::ip::tcp::socket> socket);
 		void read_end_code(const data_modes& packet_mode, std::weak_ptr<boost::asio::ip::tcp::socket> socket);
 #endif
 

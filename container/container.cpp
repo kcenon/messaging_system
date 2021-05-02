@@ -607,8 +607,10 @@ namespace container
 
 		target_variable = target_value;
 
-		target_variable.substr(0, target_variable.find_first_not_of(' '));
-		target_variable.erase(target_variable.find_last_not_of(' ') + 1);
+		if (target_value.find_first_not_of(' ') != std::string::npos)
+		{
+			target_variable = target_variable.erase(target_value.find_last_not_of(' ') + 1);
+		}
 
 		return;
 	}

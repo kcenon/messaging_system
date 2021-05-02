@@ -3,6 +3,7 @@
 #include "value.h"
 #include "values/bool_value.h"
 #include "values/ushort_value.h"
+#include "values/ullong_value.h"
 #include "values/string_value.h"
 
 file_manager::file_manager(void)
@@ -66,7 +67,7 @@ std::shared_ptr<container::value_container> file_manager::received(const std::ws
 		target->second.push_back(file_path);
 	}
 
-	unsigned short temp = ((double)target->second.size() / (double)source->second.size()) * 100;
+	unsigned short temp = (unsigned short)(((double)target->second.size() / (double)source->second.size()) * 100);
 	if (percentage->second != temp)
 	{
 		percentage->second = temp;
@@ -88,8 +89,8 @@ std::shared_ptr<container::value_container> file_manager::received(const std::ws
 	
 	if (source->second.size() == (target->second.size() + fail->second.size()))
 	{
-		unsigned short completed = target->second.size();
-		unsigned short failed = fail->second.size();
+		size_t completed = target->second.size();
+		size_t failed = fail->second.size();
 
 		_transferring_list.erase(source);
 		_transferred_list.erase(target);
@@ -100,8 +101,8 @@ std::shared_ptr<container::value_container> file_manager::received(const std::ws
 			std::vector<std::shared_ptr<container::value>> {
 				std::make_shared<container::string_value>(L"indication_id", indication_id),
 				std::make_shared<container::ushort_value>(L"percentage", temp),
-				std::make_shared<container::ushort_value>(L"completed_count", completed),
-				std::make_shared<container::ushort_value>(L"failed_count", failed),
+				std::make_shared<container::ullong_value>(L"completed_count", completed),
+				std::make_shared<container::ullong_value>(L"failed_count", failed),
 				std::make_shared<container::bool_value>(L"completed", true)
 		});
 	}
