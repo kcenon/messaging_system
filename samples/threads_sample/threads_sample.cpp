@@ -116,8 +116,7 @@ int main(int argc, char* argv[])
 	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
 	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
 	manager.append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
-	manager.start();
-
+	
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
 		manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data));
@@ -146,7 +145,9 @@ int main(int argc, char* argv[])
 		manager.push(std::make_shared<test2_job>(priorities::low));
 	}
 
-	manager.stop();
+	manager.start();
+	manager.stop(false);
+
 	logger::handle().stop();
 
 	return 0;

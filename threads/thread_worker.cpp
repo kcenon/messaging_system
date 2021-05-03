@@ -35,8 +35,9 @@ namespace threads
 		_thread = std::thread(&thread_worker::run, this);
 	}
 
-	void thread_worker::stop(void)
+	void thread_worker::stop(const bool& ignore_contained_job)
 	{
+		_ignore_contained_job.store(ignore_contained_job);
 		_thread_stop.store(true);
 
 		_condition.notify_one();
@@ -80,7 +81,7 @@ namespace threads
 
 	void thread_worker::run(void)
 	{
-		while (!_thread_stop.load())
+		while (!_thread_stop.load() || !_ignore_contained_job.load())
 		{
 			std::unique_lock<std::mutex> unique(_mutex);
 			_condition.wait(unique, [this] { return check_condition(); });
@@ -91,6 +92,11 @@ namespace threads
 
 			std::shared_ptr<job> current_job = _job_pool->pop(_priority, _others);
 			unique.unlock();
+
+			if (current_job == nullptr && _thread_stop.load())
+			{
+				break;
+			}
 
 			working(current_job);
 		}

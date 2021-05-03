@@ -23,6 +23,7 @@ namespace threads
 		std::shared_ptr<job_pool> get_ptr(void);
 
 	public:
+		void set_push_lock(const bool& lock_condition);
 		void push(std::shared_ptr<job> new_job);
 		std::shared_ptr<job> pop(const priorities& priority, const std::vector<priorities>& others = {});
 		bool contain(const priorities& priority, const std::vector<priorities>& others = {});
@@ -35,6 +36,7 @@ namespace threads
 
 	private:
 		std::mutex _mutex;
+		bool _lock_condition;
 		std::map<priorities, std::queue<std::shared_ptr<job>>> _jobs;
 		std::vector<std::function<void(const priorities&)>> _notifications;
 	};

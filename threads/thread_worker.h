@@ -23,7 +23,7 @@ namespace threads
 
 	public:
 		void start(void);
-		void stop(void);
+		void stop(const bool& ignore_contained_job = true);
 
 	public:
 		const priorities priority(void);
@@ -40,6 +40,7 @@ namespace threads
 
 	private:
 		std::atomic<bool> _thread_stop{ false };
+		std::atomic<bool> _ignore_contained_job{ false };
 
 	private:
 		priorities _priority;
