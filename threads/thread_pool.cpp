@@ -52,9 +52,14 @@ namespace threads
 		}
 	}
 
-	void thread_pool::stop(const bool& clear)
+	void thread_pool::stop(const bool& ignore_contained_job)
 	{
 		std::scoped_lock<std::mutex> guard(_mutex);
+
+		if (_job_pool != nullptr)
+		{
+			_job_pool->set_push_lock(!ignore_contained_job);
+		}
 
 		for (auto& worker : _workers)
 		{
@@ -63,13 +68,10 @@ namespace threads
 				continue;
 			}
 
-			worker->stop();
+			worker->stop(ignore_contained_job);
 		}
 
-		if (clear)
-		{
-			_workers.clear();
-		}
+		_workers.clear();
 	}
 
 	void thread_pool::push(std::shared_ptr<job> job)

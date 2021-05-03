@@ -17,7 +17,7 @@ namespace threads
 	public:
 		void start(void);
 		void append(std::shared_ptr<thread_worker> worker, const bool& start = false);
-		void stop(const bool& clear = false);
+		void stop(const bool& ignore_contained_job = true);
 
 	public:
 		void push(std::shared_ptr<job> job);

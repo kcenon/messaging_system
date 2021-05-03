@@ -9,7 +9,7 @@ namespace threads
 {
 	using namespace logging;
 
-	job_pool::job_pool(void)
+	job_pool::job_pool(void) : _lock_condition(false)
 	{
 
 	}
@@ -24,9 +24,19 @@ namespace threads
 		return shared_from_this();
 	}
 
+	void job_pool::set_push_lock(const bool& lock_condition)
+	{
+		_lock_condition = lock_condition;
+	}
+
 	void job_pool::push(std::shared_ptr<job> new_job)
 	{
 		if (new_job == nullptr)
+		{
+			return;
+		}
+
+		if (_lock_condition)
 		{
 			return;
 		}
