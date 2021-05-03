@@ -14,6 +14,7 @@ using namespace logging;
 using namespace network;
 using namespace argument_parsing;
 
+bool write_console = false;
 bool encrypt_mode = false;
 bool compress_mode = false;
 logging_level log_level = logging_level::information;
@@ -30,7 +31,8 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	logger::handle().set_target_level(logging_level::information);
+	logger::handle().set_write_console(write_console);
+	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
 
 	std::shared_ptr<messaging_server> server = std::make_shared<messaging_server>(L"server");
@@ -111,6 +113,22 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 		server_port = (unsigned short)_wtoi(target->second.c_str());
 	}
 
+	target = arguments.find(L"--write_console_mode");
+	if (target != arguments.end())
+	{
+		temp = target->second;
+		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
+		if (temp.compare(L"true") == 0)
+		{
+			write_console = true;
+		}
+		else
+		{
+			write_console = false;
+		}
+	}
+
 	target = arguments.find(L"--logging_level");
 	if (target != arguments.end())
 	{
@@ -135,6 +153,8 @@ void display_help(void)
 	std::wcout << L"\tThe compress_mode on/off. If you want to use compress mode must be appended '--compress_mode true'.\n\tInitialize value is --compress_mode off." << std::endl << std::endl;
 	std::wcout << L"--server_port [value]" << std::endl;
 	std::wcout << L"\tIf you want to change a port number for the connection to the main server must be appended\n\t'--server_port [port number]'." << std::endl << std::endl;
+	std::wcout << L"--write_console_mode [value] " << std::endl;
+	std::wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << std::endl << std::endl;
 	std::wcout << L"--logging_level [value]" << std::endl;
 	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
 }

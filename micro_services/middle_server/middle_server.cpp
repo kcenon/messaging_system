@@ -23,6 +23,7 @@ using namespace network;
 using namespace compressing;
 using namespace argument_parsing;
 
+bool write_console = false;
 bool encrypt_mode = false;
 bool compress_mode = false;
 unsigned short compress_block_size = 1024;
@@ -79,6 +80,7 @@ int main(int argc, char* argv[])
 	_file_commands.insert({ L"download_files", &download_files });
 	_file_commands.insert({ L"upload_files", &upload_files });
 
+	logger::handle().set_write_console(write_console);
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
 
@@ -189,6 +191,22 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	if (target != arguments.end())
 	{
 		low_priority_count = (unsigned short)_wtoi(target->second.c_str());
+	}
+
+	target = arguments.find(L"--write_console_mode");
+	if (target != arguments.end())
+	{
+		temp = target->second;
+		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
+		if (temp.compare(L"true") == 0)
+		{
+			write_console = true;
+		}
+		else
+		{
+			write_console = false;
+		}
 	}
 
 	target = arguments.find(L"--logging_level");
@@ -513,6 +531,8 @@ void display_help(void)
 	std::wcout << L"\tIf you want to change normal priority thread workers must be appended '--normal_priority_count [count]'." << std::endl << std::endl;
 	std::wcout << L"--low_priority_count [value]" << std::endl;
 	std::wcout << L"\tIf you want to change low priority thread workers must be appended '--low_priority_count [count]'." << std::endl << std::endl;
+	std::wcout << L"--write_console_mode [value] " << std::endl;
+	std::wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << std::endl << std::endl;
 	std::wcout << L"--logging_level [value]" << std::endl;
 	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
 }
