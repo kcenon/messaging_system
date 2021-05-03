@@ -11,6 +11,7 @@ using namespace logging;
 int main()
 {
 	logger::handle().start(PROGRAM_NAME);
+	logger::handle().set_write_console(false);
 
 	std::vector<std::thread> threads;
 	for (unsigned short thread_index = 0; thread_index < 10; ++thread_index)
