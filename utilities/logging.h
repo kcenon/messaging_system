@@ -73,7 +73,7 @@ namespace logging
 	private:
 		std::atomic<bool> _thread_stop{ true };
 		std::atomic<bool> _write_date{ false };
-		std::atomic<bool> _write_console{ true };
+		std::atomic<bool> _write_console{ false };
 		std::atomic<bool> _append_date_on_file_name{ true };
 		std::atomic<size_t> _store_latest_log_count{ 1000 };
 		std::atomic<size_t> _limit_log_file_size{ 2097152 };

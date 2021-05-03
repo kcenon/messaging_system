@@ -8,6 +8,8 @@
 
 #include "converting.h"
 
+#include "argument_parsing.h"
+
 #include "fmt/format.h"
 
 constexpr auto PROGRAM_NAME = L"thread_sample";
@@ -15,6 +17,13 @@ constexpr auto PROGRAM_NAME = L"thread_sample";
 using namespace logging;
 using namespace converting;
 using namespace threads;
+using namespace argument_parsing;
+
+bool write_console = false;
+logging_level log_level = logging_level::information;
+
+bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
+void display_help(void);
 
 bool write_data(const std::vector<unsigned char>& data)
 {
@@ -89,10 +98,15 @@ protected:
 	}
 };
 
-int main()
+int main(int argc, char* argv[])
 {
-	logger::handle().set_target_level(logging_level::information);
-	logger::handle().set_write_console(false);
+	if (!parse_arguments(argument_parser::parse(argc, argv)))
+	{
+		return 0;
+	}
+
+	logger::handle().set_write_console(write_console);
+	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
 
 	thread_pool manager;
@@ -102,6 +116,7 @@ int main()
 	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
 	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
 	manager.append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
+	manager.start();
 
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
@@ -131,12 +146,54 @@ int main()
 		manager.push(std::make_shared<test2_job>(priorities::low));
 	}
 
-	manager.start();
-
-	std::this_thread::sleep_for(std::chrono::seconds(5));
-
 	manager.stop();
 	logger::handle().stop();
 
 	return 0;
+}
+
+bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
+{
+	std::wstring temp;
+
+	auto target = arguments.find(L"--help");
+	if (target != arguments.end())
+	{
+		display_help();
+
+		return false;
+	}
+
+	target = arguments.find(L"--write_console_mode");
+	if (target != arguments.end())
+	{
+		temp = target->second;
+		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
+		if (temp.compare(L"true") == 0)
+		{
+			write_console = true;
+		}
+		else
+		{
+			write_console = false;
+		}
+	}
+
+	target = arguments.find(L"--logging_level");
+	if (target != arguments.end())
+	{
+		log_level = (logging_level)_wtoi(target->second.c_str());
+	}
+
+	return true;
+}
+
+void display_help(void)
+{
+	std::wcout << L"download sample options:" << std::endl << std::endl;
+	std::wcout << L"--write_console_mode [value] " << std::endl;
+	std::wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << std::endl << std::endl;
+	std::wcout << L"--logging_level [value]" << std::endl;
+	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
 }
