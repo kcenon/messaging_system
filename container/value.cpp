@@ -158,7 +158,7 @@ namespace container
 		return _units.size();
 	}
 
-	std::vector<std::shared_ptr<value>>& value::children(const bool& only_container)
+	std::vector<std::shared_ptr<value>> value::children(const bool& only_container)
 	{
 		if (!only_container)
 		{

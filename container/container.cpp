@@ -562,7 +562,7 @@ namespace container
 			start++;
 		}
 
-		container_value* container = nullptr;
+		std::shared_ptr<value> container = nullptr;
 		std::vector<std::shared_ptr<value>>::iterator iterator;
 		for (iterator = temp_list.begin(); iterator != temp_list.end(); ++iterator)
 		{
@@ -575,7 +575,7 @@ namespace container
 					continue;
 				}
 
-				container = (container_value*)(*iterator).get();
+				container = *iterator;
 
 				continue;
 			}
@@ -584,14 +584,14 @@ namespace container
 
 			if ((*iterator)->is_container() == true)
 			{
-				container = (container_value*)(*iterator).get();
+				container = *iterator;
 
 				continue;
 			}
 
 			while (container != nullptr && container->to_long() == container->child_count())
 			{
-				container = (container_value*)(container->parent().get());
+				container = container->parent();
 			}
 		}
 

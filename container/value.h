@@ -34,7 +34,7 @@ namespace container
 		size_t size(void) const;
 		std::shared_ptr<value> parent(void);
 		size_t child_count(void) const;
-		std::vector<std::shared_ptr<value>>& children(const bool& only_container = false);
+		std::vector<std::shared_ptr<value>> children(const bool& only_container = false);
 
 	public:
 		virtual std::shared_ptr<value> add(const value& item, const bool& update_count = true) { throw std::exception("cannot support to add value object on this object"); }
