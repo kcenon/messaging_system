@@ -196,6 +196,7 @@ namespace logging
 				store_log(file, iterator->second(std::get<1>(buffer), std::get<2>(buffer)));
 			}
 
+			_commit(file);
 			_close(file);
 
 			buffers.clear();
@@ -240,7 +241,8 @@ namespace logging
 		{
 			store_log(file, fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][{}]\n", fmt::localtime(current), std::get<0>(seconds), std::get<1>(seconds), flag));
 		}
-		
+
+		_commit(file);
 		_close(file);
 	}
 
@@ -278,7 +280,6 @@ namespace logging
 		}
 
 		_write(file_handle, log.data(), (unsigned int)(log.size() * sizeof(wchar_t)));
-		_commit(file_handle);
 	}
 
 	std::wstring logger::exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
