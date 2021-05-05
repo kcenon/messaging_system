@@ -33,11 +33,7 @@ namespace logging
 	public:
 		void set_target_level(const logging_level& target_level);
 		void set_write_console(const bool& write_console);
-		void set_store_latest_log_count(const size_t& store_latest_log_count);
 		void set_limit_log_file_size(const size_t& limit_log_file_size);
-
-	public:
-		const std::queue<std::wstring> get_latest_logs(void);
 
 	public:
 		std::chrono::time_point<std::chrono::high_resolution_clock> chrono_start(void);
@@ -75,14 +71,12 @@ namespace logging
 		std::atomic<bool> _write_date{ false };
 		std::atomic<bool> _write_console{ false };
 		std::atomic<bool> _append_date_on_file_name{ true };
-		std::atomic<size_t> _store_latest_log_count{ 1000 };
 		std::atomic<size_t> _limit_log_file_size{ 2097152 };
 
 	private:
 		std::mutex _mutex;
 		std::thread _thread;
 		std::condition_variable _condition;
-		std::queue<std::wstring> _latest_logs;
 		std::map<logging_level, std::function<std::wstring(const std::chrono::system_clock::time_point&, const std::wstring&)>> _log_datas;
 
 #pragma region singleton
