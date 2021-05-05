@@ -69,19 +69,9 @@ namespace logging
 		_write_console.store(write_console);
 	}
 
-	void logger::set_store_latest_log_count(const size_t& store_latest_log_count)
-	{
-		_store_latest_log_count.store(store_latest_log_count);
-	}
-
 	void logger::set_limit_log_file_size(const size_t& limit_log_file_size)
 	{
 		_limit_log_file_size.store(limit_log_file_size);
-	}
-
-	const std::queue<std::wstring> logger::get_latest_logs(void)
-	{
-		return _latest_logs;
 	}
 
 	std::chrono::time_point<std::chrono::high_resolution_clock> logger::chrono_start(void)
@@ -266,12 +256,6 @@ namespace logging
 		if (log.empty())
 		{
 			return;
-		}
-
-		_latest_logs.push(log);
-		while (_latest_logs.size() > _store_latest_log_count.load())
-		{
-			_latest_logs.pop();
 		}
 
 		if (_write_console.load())
