@@ -206,21 +206,26 @@ namespace network
 					logger::handle().write(logging::logging_level::information, fmt::format(L"stop messaging_client({})", _source_id));
 				}
 				catch (const std::overflow_error&) { 
-					logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with overflow error", _source_id));
-					connection_notification(false);
+					if (_socket != nullptr) {
+						logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with overflow error", _source_id));
+					}
 				}
 				catch (const std::runtime_error&) { 
-					logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with runtime error", _source_id));
-					connection_notification(false);
+					if (_socket != nullptr) {
+						logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with runtime error", _source_id));
+					}
 				}
 				catch (const std::exception&) { 
-					logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with exception", _source_id));
-					connection_notification(false);
+					if (_socket != nullptr) {
+						logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with exception", _source_id));
+					}
 				}
 				catch (...) { 
-					logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with error", _source_id));
-					connection_notification(false);
+					if (_socket != nullptr) {
+						logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with error", _source_id));
+					}
 				}
+				connection_notification(false);
 			}, _io_context);
 
 		read_start_code(_socket);
