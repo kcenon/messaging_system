@@ -15,3 +15,11 @@ And, it will provide functions like below,
 3. Send packet to all connected clients
 4. Send files between main server and middle server
 5. Packet compress and encrypt
+
+Before building this project, you have to download and build vcpkg(https://github.com/Microsoft/vcpkg).
+Secondly, should install libraries like below,
+
+1. ASIO(https://think-async.com/Asio/) or Boost(https://www.boost.org/) library
+2. fmt(https://github.com/fmtlib/fmt) library
+3. cryptopp(https://www.cryptopp.com/) library
+4. lz4(https://github.com/lz4/lz4) library
