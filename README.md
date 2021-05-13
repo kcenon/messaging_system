@@ -292,6 +292,8 @@ int main(int argc, char* argv[])
 
 ### Sample: Download file
 
+If you want to test this sample, you have to run two programs such as main_server and middle_server on build/micro_service before.
+
 ``` C++
 #include <iostream>
 
@@ -429,6 +431,8 @@ int main(int argc, char* argv[])
 ```
 
 ### Sample: Upload file
+
+If you want to test this sample, you have to run two programs such as main_server and middle_server on build/micro_service before.
 
 ``` C++
 #include <iostream>
