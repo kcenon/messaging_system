@@ -528,11 +528,6 @@ void received_message(std::shared_ptr<container::value_container> container)
 
 int main(int argc, char* argv[])
 {
-    if (!parse_arguments(argument_parser::parse(argc, argv)))
-    {
-        return 0;
-    }
-
     std::vector<std::wstring> sources = folder_handler::get_files(source_folder);
     if (sources.empty())
     {
