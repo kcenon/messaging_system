@@ -46,31 +46,31 @@ logging_level log_level = logging_level::information;
 
 int main(int argc, char* argv[])
 {
-	logger::handle().set_write_console(write_console);
-	logger::handle().set_target_level(log_level);
-	logger::handle().start(PROGRAM_NAME);
+    logger::handle().set_write_console(write_console);
+    logger::handle().set_target_level(log_level);
+    logger::handle().start(PROGRAM_NAME);
 
-	std::vector<std::thread> threads;
-	for (unsigned short thread_index = 0; thread_index < 10; ++thread_index)
-	{
-		threads.push_back(
-			std::thread([](const unsigned short& thread_index)
-				{
-					for (unsigned int log_index = 0; log_index < 1000; ++log_index)
-					{
-						auto start = logger::handle().chrono_start();
-						logger::handle().write(logging::logging_level::information, fmt::format(L"테스트_in_thread_{}: {}", thread_index, log_index), start);
-					}
-				}, thread_index)
-		);
-	}
+    std::vector<std::thread> threads;
+    for (unsigned short thread_index = 0; thread_index < 10; ++thread_index)
+    {
+        threads.push_back(
+            std::thread([](const unsigned short& thread_index)
+            {
+                for (unsigned int log_index = 0; log_index < 1000; ++log_index)
+                {
+                    auto start = logger::handle().chrono_start();
+                    logger::handle().write(logging::logging_level::information, fmt::format(L"테스트_in_thread_{}: {}", thread_index, log_index), start);
+                }
+            }, thread_index)
+        );
+    }
 
-	for (auto& thread : threads)
-	{
-		thread.join();
-	}
+    for (auto& thread : threads)
+    {
+        thread.join();
+    }
 
-	logger::handle().stop();
+    logger::handle().stop();
 
     return 0;
 }
@@ -106,37 +106,37 @@ logging_level log_level = logging_level::information;
 
 int main(int argc, char* argv[])
 {
-	logger::handle().set_write_console(write_console);
-	logger::handle().set_target_level(log_level);
-	logger::handle().start(PROGRAM_NAME);
+    logger::handle().set_write_console(write_console);
+    logger::handle().set_target_level(log_level);
+    logger::handle().start(PROGRAM_NAME);
 
-	auto start = logger::handle().chrono_start();
-	value_container data;
-	data.add(bool_value(L"false_value", false));
-	data.add(bool_value(L"true_value", true));
-	data.add(float_value(L"float_value", (float)1.234567890123456789));
-	data.add(double_value(L"double_value", (double)1.234567890123456789));
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data.serialize()), start);
+    auto start = logger::handle().chrono_start();
+    value_container data;
+    data.add(bool_value(L"false_value", false));
+    data.add(bool_value(L"true_value", true));
+    data.add(float_value(L"float_value", (float)1.234567890123456789));
+    data.add(double_value(L"double_value", (double)1.234567890123456789));
+    logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data.serialize()), start);
 
-	start = logger::handle().chrono_start();
-	value_container data2(data);
-	data2.add(std::make_shared<long_value>(L"long_value", LONG_MAX));
-	data2.add(std::make_shared<ulong_value>(L"ulong_value", ULONG_MAX));
-	data2.add(std::make_shared<llong_value>(L"llong_value", LLONG_MAX));
-	data2.add(std::make_shared<ullong_value>(L"ullong_value", ULLONG_MAX));
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data2.serialize()), start);
+    start = logger::handle().chrono_start();
+    value_container data2(data);
+    data2.add(std::make_shared<long_value>(L"long_value", LONG_MAX));
+    data2.add(std::make_shared<ulong_value>(L"ulong_value", ULONG_MAX));
+    data2.add(std::make_shared<llong_value>(L"llong_value", LLONG_MAX));
+    data2.add(std::make_shared<ullong_value>(L"ullong_value", ULLONG_MAX));
+    logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data2.serialize()), start);
 
-	start = logger::handle().chrono_start();
-	value_container data3(data2);
-	data3.remove(L"false_value");
-	data3.remove(L"true_value");
-	data3.remove(L"float_value");
-	data3.remove(L"double_value");
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data3.serialize()), start);
+    start = logger::handle().chrono_start();
+    value_container data3(data2);
+    data3.remove(L"false_value");
+    data3.remove(L"true_value");
+    data3.remove(L"float_value");
+    data3.remove(L"double_value");
+    logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data3.serialize()), start);
 
-	logger::handle().stop();
+    logger::handle().stop();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -168,125 +168,125 @@ logging_level log_level = logging_level::information;
 
 bool write_data(const std::vector<unsigned char>& data)
 {
-	auto start = logger::handle().chrono_start();
-	logger::handle().write(logging_level::information, converter::to_wstring(data), start);
+    auto start = logger::handle().chrono_start();
+    logger::handle().write(logging_level::information, converter::to_wstring(data), start);
 
-	return true;
+    return true;
 }
 
 bool write_high(void)
 {
-	return write_data(converter::to_array(L"테스트2_high_in_thread"));
+    return write_data(converter::to_array(L"테스트2_high_in_thread"));
 }
 
 bool write_normal(void)
 {
-	return write_data(converter::to_array(L"테스트2_normal_in_thread"));
+    return write_data(converter::to_array(L"테스트2_normal_in_thread"));
 }
 
 bool write_low(void)
 {
-	return write_data(converter::to_array(L"테스트2_low_in_thread"));
+    return write_data(converter::to_array(L"테스트2_low_in_thread"));
 }
 
 class test_job : public job
 {
 public:
-	test_job(const priorities& priority, const std::vector<unsigned char>& data) : job(priority)
-	{
-		_data = data;
-	}
+    test_job(const priorities& priority, const std::vector<unsigned char>& data) : job(priority)
+    {
+        _data = data;
+    }
 
 protected:
-	bool working(const priorities& worker_priority) override
-	{
-		auto start = logger::handle().chrono_start();
-		logger::handle().write(logging_level::information, converter::to_wstring(_data), start);
+    bool working(const priorities& worker_priority) override
+    {
+        auto start = logger::handle().chrono_start();
+        logger::handle().write(logging_level::information, converter::to_wstring(_data), start);
 
-		return true;
-	}
+        return true;
+    }
 
 private:
-	std::vector<unsigned char> _data;
+    std::vector<unsigned char> _data;
 };
 
 class test2_job : public job
 {
 public:
-	test2_job(const priorities& priority) : job(priority)
-	{
-	}
+    test2_job(const priorities& priority) : job(priority)
+    {
+    }
 
 protected:
-	bool working(const priorities& worker_priority) override
-	{
-		auto start = logger::handle().chrono_start();
+    bool working(const priorities& worker_priority) override
+    {
+        auto start = logger::handle().chrono_start();
 
-		switch (priority())
-		{
-		case priorities::high: 
-			logger::handle().write(logging_level::information, L"테스트4_high_in_thread", start);
-			break;
-		case priorities::normal:
-			logger::handle().write(logging_level::information, L"테스트4_normal_in_thread", start);
-			break;
-		case priorities::low:
-			logger::handle().write(logging_level::information, L"테스트4_low_in_thread", start);
-			break;
-		}		
+        switch (priority())
+        {
+        case priorities::high: 
+            logger::handle().write(logging_level::information, L"테스트4_high_in_thread", start);
+            break;
+	case priorities::normal:
+            logger::handle().write(logging_level::information, L"테스트4_normal_in_thread", start);
+            break;
+        case priorities::low:
+            logger::handle().write(logging_level::information, L"테스트4_low_in_thread", start);
+            break;
+        }		
 
-		return true;
-	}
+        return true;
+    }
 };
 
 int main(int argc, char* argv[])
 {
-	logger::handle().set_write_console(write_console);
-	logger::handle().set_target_level(log_level);
-	logger::handle().start(PROGRAM_NAME);
+    logger::handle().set_write_console(write_console);
+    logger::handle().set_target_level(log_level);
+    logger::handle().start(PROGRAM_NAME);
 
-	thread_pool manager;
-	manager.append(std::make_shared<thread_worker>(priorities::high));
-	manager.append(std::make_shared<thread_worker>(priorities::high));
-	manager.append(std::make_shared<thread_worker>(priorities::high));
-	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
-	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
-	manager.append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
+    thread_pool manager;
+    manager.append(std::make_shared<thread_worker>(priorities::high));
+    manager.append(std::make_shared<thread_worker>(priorities::high));
+    manager.append(std::make_shared<thread_worker>(priorities::high));
+    manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
+    manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
+    manager.append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
 	
-	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
-	{
-		manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data));
-		manager.push(std::make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data));
-		manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data));
-	}
+    for (unsigned int log_index = 0; log_index < 1000; ++log_index)
+    {
+        manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data));
+        manager.push(std::make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data));
+        manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data));
+    }
 
-	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
-	{
-		manager.push(std::make_shared<job>(priorities::high, &write_high));
-		manager.push(std::make_shared<job>(priorities::normal, &write_normal));
-		manager.push(std::make_shared<job>(priorities::low, &write_low));
-	}
+    for (unsigned int log_index = 0; log_index < 1000; ++log_index)
+    {
+        manager.push(std::make_shared<job>(priorities::high, &write_high));
+        manager.push(std::make_shared<job>(priorities::normal, &write_normal));
+        manager.push(std::make_shared<job>(priorities::low, &write_low));
+    }
 
-	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
-	{
-		manager.push(std::make_shared<test_job>(priorities::high, converter::to_array(L"테스트3_high_in_thread")));
-		manager.push(std::make_shared<test_job>(priorities::normal, converter::to_array(L"테스트3_normal_in_thread")));
-		manager.push(std::make_shared<test_job>(priorities::low, converter::to_array(L"테스트3_low_in_thread")));
-	}
+    for (unsigned int log_index = 0; log_index < 1000; ++log_index)
+    {
+        manager.push(std::make_shared<test_job>(priorities::high, converter::to_array(L"테스트3_high_in_thread")));
+        manager.push(std::make_shared<test_job>(priorities::normal, converter::to_array(L"테스트3_normal_in_thread")));
+        manager.push(std::make_shared<test_job>(priorities::low, converter::to_array(L"테스트3_low_in_thread")));
+    }
 
-	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
-	{
-		manager.push(std::make_shared<test2_job>(priorities::high));
-		manager.push(std::make_shared<test2_job>(priorities::normal));
-		manager.push(std::make_shared<test2_job>(priorities::low));
-	}
+    for (unsigned int log_index = 0; log_index < 1000; ++log_index)
+    {
+        manager.push(std::make_shared<test2_job>(priorities::high));
+        manager.push(std::make_shared<test2_job>(priorities::normal));
+        manager.push(std::make_shared<test2_job>(priorities::low));
+    }
 
-	manager.start();
-	manager.stop(false);
+    manager.start();
+    manager.stop(false);
 
-	logger::handle().stop();
+    logger::handle().stop();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -333,97 +333,98 @@ std::future<bool> _future_status;
 
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
-	logger::handle().write(logging::logging_level::information,
-		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
+    logger::handle().write(logging::logging_level::information,
+        fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
 void received_message(std::shared_ptr<container::value_container> container)
 {
-	if (container == nullptr)
-	{
-		return;
-	}
+    if (container == nullptr)
+    {
+        return;
+    }
 
-	if (container->message_type() == L"transfer_condition")
-	{
-		if (container->get_value(L"percentage")->to_ushort() == 0)
-		{
-			logger::handle().write(logging::logging_level::information,
-				fmt::format(L"started download: [{}]", container->get_value(L"indication_id")->to_string()));
+    if (container->message_type() == L"transfer_condition")
+    {
+        if (container->get_value(L"percentage")->to_ushort() == 0)
+        {
+            logger::handle().write(logging::logging_level::information,
+                fmt::format(L"started download: [{}]", container->get_value(L"indication_id")->to_string()));
 
-			return;
-		}
+                return;
+        }
 
-		logger::handle().write(logging::logging_level::information,
-			fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
+        logger::handle().write(logging::logging_level::information,
+            fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
 
-		if (container->get_value(L"completed")->to_boolean())
-		{
-			logger::handle().write(logging::logging_level::information,
-				fmt::format(L"completed download: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(), container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
+        if (container->get_value(L"completed")->to_boolean())
+        {
+            logger::handle().write(logging::logging_level::information,
+                fmt::format(L"completed download: [{}] success-{}, fail-{}", 
+		    container->get_value(L"indication_id")->to_string(), 
+		    container->get_value(L"completed_count")->to_ushort(), 
+		    container->get_value(L"failed_count")->to_ushort()));
 
-			_promise_status.set_value(false);
-		}
-		else if (container->get_value(L"percentage")->to_ushort() == 100)
-		{
-			logger::handle().write(logging::logging_level::information,
-				fmt::format(L"completed download: [{}]", container->get_value(L"indication_id")->to_string()));
+            _promise_status.set_value(false);
+        }
+        else if (container->get_value(L"percentage")->to_ushort() == 100)
+        {
+            logger::handle().write(logging::logging_level::information,
+                fmt::format(L"completed download: [{}]", container->get_value(L"indication_id")->to_string()));
 
-			_promise_status.set_value(true);
-		}
+            _promise_status.set_value(true);
+        }
 
-		return;
-	}
+        return;
+    }
 
-	logger::handle().write(logging::logging_level::information,
-		fmt::format(L"received message: {}", container->serialize()));
+    logger::handle().write(logging::logging_level::information,
+        fmt::format(L"received message: {}", container->serialize()));
 }
 
 int main(int argc, char* argv[])
 {
-	std::vector<std::wstring> sources = folder_handler::get_files(source_folder);
-	if (sources.empty())
-	{
-		display_help();
+    std::vector<std::wstring> sources = folder_handler::get_files(source_folder);
+    if (sources.empty())
+    {
+        return 0;
+    }
 
-		return 0;
-	}
+    logger::handle().set_write_console(write_console);
+    logger::handle().set_target_level(log_level);
+    logger::handle().start(PROGRAM_NAME);
 
-	logger::handle().set_write_console(write_console);
-	logger::handle().set_target_level(log_level);
-	logger::handle().start(PROGRAM_NAME);
+    std::shared_ptr<messaging_client> client = std::make_shared<messaging_client>(PROGRAM_NAME);
+    client->set_compress_mode(compress_mode);
+    client->set_connection_key(connection_key);
+    client->set_connection_notification(&connection);
+    client->set_message_notification(&received_message);
+    client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
 
-	std::shared_ptr<messaging_client> client = std::make_shared<messaging_client>(PROGRAM_NAME);
-	client->set_compress_mode(compress_mode);
-	client->set_connection_key(connection_key);
-	client->set_connection_notification(&connection);
-	client->set_message_notification(&received_message);
-	client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
+    std::vector<std::shared_ptr<container::value>> files;
 
-	std::vector<std::shared_ptr<container::value>> files;
-
-	files.push_back(std::make_shared<container::string_value>(L"indication_id", L"download_test"));
-	for (auto& source : sources)
-	{
-		files.push_back(std::make_shared<container::container_value>(L"file", std::vector<std::shared_ptr<container::value>> {
+    files.push_back(std::make_shared<container::string_value>(L"indication_id", L"download_test"));
+    for (auto& source : sources)
+    {
+        files.push_back(std::make_shared<container::container_value>(L"file", std::vector<std::shared_ptr<container::value>> {
 			std::make_shared<container::string_value>(L"source", source),
 			std::make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
-		}));
-	}
+        }));
+    }
 
-	_future_status = _promise_status.get_future();
+    _future_status = _promise_status.get_future();
 
-	std::shared_ptr<container::value_container> container = 
-		std::make_shared<container::value_container>(L"main_server", L"", L"download_files", files);
-	client->send(container);
+    std::shared_ptr<container::value_container> container = 
+        std::make_shared<container::value_container>(L"main_server", L"", L"download_files", files);
+    client->send(container);
 
-	_future_status.wait_for(std::chrono::seconds(100));
+    _future_status.wait_for(std::chrono::seconds(100));
 
-	client->stop();
+    client->stop();
 
-	logger::handle().stop();
+    logger::handle().stop();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -470,102 +471,103 @@ std::future<bool> _future_status;
 
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
-	logger::handle().write(logging::logging_level::information,
-		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
+    logger::handle().write(logging::logging_level::information,
+        fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
 void received_message(std::shared_ptr<container::value_container> container)
 {
-	if (container == nullptr)
-	{
-		return;
-	}
+    if (container == nullptr)
+    {
+        return;
+    }
 
-	if (container->message_type() == L"transfer_condition")
-	{
-		if (container->get_value(L"percentage")->to_ushort() == 0)
-		{
-			logger::handle().write(logging::logging_level::information,
-				fmt::format(L"started upload: [{}]", container->get_value(L"indication_id")->to_string()));
+    if (container->message_type() == L"transfer_condition")
+    {
+        if (container->get_value(L"percentage")->to_ushort() == 0)
+        {
+            logger::handle().write(logging::logging_level::information,
+                fmt::format(L"started upload: [{}]", container->get_value(L"indication_id")->to_string()));
 
-			return;
-		}
+            return;
+        }
 
-		logger::handle().write(logging::logging_level::information,
-			fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
+        logger::handle().write(logging::logging_level::information,
+            fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
 
-		if (container->get_value(L"completed")->to_boolean())
-		{
-			logger::handle().write(logging::logging_level::information,
-				fmt::format(L"completed download: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(), container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
+        if (container->get_value(L"completed")->to_boolean())
+        {
+            logger::handle().write(logging::logging_level::information,
+                fmt::format(L"completed download: [{}] success-{}, fail-{}", 
+		    container->get_value(L"indication_id")->to_string(), 
+		    container->get_value(L"completed_count")->to_ushort(), 
+		    container->get_value(L"failed_count")->to_ushort()));
 
-			_promise_status.set_value(false);
-		}
-		else if (container->get_value(L"percentage")->to_ushort() == 100)
-		{
-			logger::handle().write(logging::logging_level::information,
-				fmt::format(L"completed upload: [{}]", container->get_value(L"indication_id")->to_string()));
+            _promise_status.set_value(false);
+        }
+        else if (container->get_value(L"percentage")->to_ushort() == 100)
+        {
+            logger::handle().write(logging::logging_level::information,
+            fmt::format(L"completed upload: [{}]", container->get_value(L"indication_id")->to_string()));
 
-			_promise_status.set_value(true);
-		}
+            _promise_status.set_value(true);
+        }
 
-		return;
-	}
+        return;
+    }
 
-	logger::handle().write(logging::logging_level::information,
-		fmt::format(L"received message: {}", container->serialize()));
+    logger::handle().write(logging::logging_level::information,
+        fmt::format(L"received message: {}", container->serialize()));
 }
 
 int main(int argc, char* argv[])
 {
-	if (!parse_arguments(argument_parser::parse(argc, argv)))
-	{
-		return 0;
-	}
+    if (!parse_arguments(argument_parser::parse(argc, argv)))
+    {
+        return 0;
+    }
 
-	std::vector<std::wstring> sources = folder_handler::get_files(source_folder);
-	if (sources.empty())
-	{
-		display_help();
+    std::vector<std::wstring> sources = folder_handler::get_files(source_folder);
+    if (sources.empty())
+    {
+        return 0;
+    }
 
-		return 0;
-	}
+    logger::handle().set_write_console(write_console);
+    logger::handle().set_target_level(log_level);
+    logger::handle().start(PROGRAM_NAME);
 
-	logger::handle().set_write_console(write_console);
-	logger::handle().set_target_level(log_level);
-	logger::handle().start(PROGRAM_NAME);
+    std::shared_ptr<messaging_client> client = std::make_shared<messaging_client>(PROGRAM_NAME);
+    client->set_compress_mode(compress_mode);
+    client->set_connection_key(connection_key);
+    client->set_connection_notification(&connection);
+    client->set_message_notification(&received_message);
+    client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
 
-	std::shared_ptr<messaging_client> client = std::make_shared<messaging_client>(PROGRAM_NAME);
-	client->set_compress_mode(compress_mode);
-	client->set_connection_key(connection_key);
-	client->set_connection_notification(&connection);
-	client->set_message_notification(&received_message);
-	client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
+    std::vector<std::shared_ptr<container::value>> files;
 
-	std::vector<std::shared_ptr<container::value>> files;
-
-	files.push_back(std::make_shared<container::string_value>(L"indication_id", L"upload_test"));
-	for (auto& source : sources)
-	{
-		files.push_back(std::make_shared<container::container_value>(L"file", std::vector<std::shared_ptr<container::value>> {
+    files.push_back(std::make_shared<container::string_value>(L"indication_id", L"upload_test"));
+    for (auto& source : sources)
+    {
+        files.push_back(std::make_shared<container::container_value>(L"file", std::vector<std::shared_ptr<container::value>> {
 			std::make_shared<container::string_value>(L"source", source),
 			std::make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
 		}));
-	}
+    }
 
-	_future_status = _promise_status.get_future();
+    _future_status = _promise_status.get_future();
 
-	std::shared_ptr<container::value_container> container = 
-		std::make_shared<container::value_container>(L"main_server", L"", L"upload_files", files);
-	client->send(container);
+    std::shared_ptr<container::value_container> container = 
+        std::make_shared<container::value_container>(L"main_server", L"", L"upload_files", files);
+    client->send(container);
 
-	_future_status.wait_for(std::chrono::seconds(100));
+    _future_status.wait_for(std::chrono::seconds(100));
 
-	client->stop();
+    client->stop();
 
-	logger::handle().stop();
+    logger::handle().stop();
 
-	return 0;
+    return 0;
 }
 ```
 
