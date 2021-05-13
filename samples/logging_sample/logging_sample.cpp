@@ -92,7 +92,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 
 void display_help(void)
 {
-	std::wcout << L"download sample options:" << std::endl << std::endl;
+	std::wcout << L"logging sample options:" << std::endl << std::endl;
 	std::wcout << L"--write_console_mode [value] " << std::endl;
 	std::wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << std::endl << std::endl;
 	std::wcout << L"--logging_level [value]" << std::endl;

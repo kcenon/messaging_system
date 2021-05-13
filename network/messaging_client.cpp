@@ -487,6 +487,8 @@ namespace network
 
 		if (_encrypt_mode)
 		{
+			// if encrypt_mode is true
+			// 
 			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&messaging_client::decompress_packet, this, std::placeholders::_1)));
 
 			return true;

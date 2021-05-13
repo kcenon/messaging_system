@@ -140,6 +140,7 @@ namespace network
 			_thread_pool->append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 		}
 
+		// check connection message from client
 		_thread_pool->push(std::make_shared<job>(priorities::high, std::bind(&messaging_session::check_confirm_condition, this)));
 
 		read_start_code(_socket);
@@ -360,6 +361,7 @@ namespace network
 
 		if (!_confirm)
 		{
+			// if does not receive connection message from client
 			_socket->close();
 		}
 
@@ -784,6 +786,7 @@ namespace network
 		_target_id = message->source_id();
 		_session_type = (session_types)message->get_value(L"session_type")->to_short();
 
+		// check connection key
 		if (!same_key_check(message->get_value(L"connection_key")))
 		{
 			if (_connection)
@@ -794,6 +797,7 @@ namespace network
 			return false;
 		}
 
+		// compare both session id an client id
 		if (!same_id_check())
 		{
 			if (_connection)
@@ -806,6 +810,7 @@ namespace network
 
 		_confirm = true;
 
+		// check snipping target list
 		std::shared_ptr<value> acceptable_snipping_targets = std::make_shared<container::container_value>(L"snipping_targets");
 
 		_snipping_targets.clear();		
