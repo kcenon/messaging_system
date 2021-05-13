@@ -1,6 +1,4 @@
-# messaging_system
-
-## What is 'messaging system'
+## What is?
 Normally, it is pretty hard to implement a TCP server and client with a proper thread system in the C++ language. To support newbie's desire to make their own TCP communication system, I planned its project.
 
 So, it will contain several systems like below,
