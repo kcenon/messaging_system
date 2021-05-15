@@ -141,17 +141,12 @@ namespace network
 
 		logger::handle().write(logging::logging_level::sequence, L"attempts to create io_context");
 
-#ifdef ASIO_STANDALONE
 		_io_context = std::make_shared<asio::io_context>();
-#else
-		_io_context = std::make_shared<boost::asio::io_context>();
-#endif
 
 		logger::handle().write(logging::logging_level::sequence, L"attempts to create socket");
 
 		try
 		{
-#ifdef ASIO_STANDALONE
 			_socket = std::make_shared<asio::ip::tcp::socket>(*_io_context);
 			_socket->open(asio::ip::tcp::v4());
 			_socket->bind(asio::ip::tcp::endpoint(asio::ip::tcp::v4(), 0));
@@ -160,16 +155,6 @@ namespace network
 			_socket->set_option(asio::ip::tcp::no_delay(true));
 			_socket->set_option(asio::socket_base::keep_alive(true));
 			_socket->set_option(asio::socket_base::receive_buffer_size(buffer_size));
-#else
-			_socket = std::make_shared<boost::asio::ip::tcp::socket>(*_io_context);
-			_socket->open(boost::asio::ip::tcp::v4());
-			_socket->bind(boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 0));
-			_socket->connect(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(converter::to_string(ip)), port));
-
-			_socket->set_option(boost::asio::ip::tcp::no_delay(true));
-			_socket->set_option(boost::asio::socket_base::keep_alive(true));
-			_socket->set_option(boost::asio::socket_base::receive_buffer_size(buffer_size));
-#endif
 		}
 		catch (const std::overflow_error&) {
 			connection_notification(false);
@@ -193,11 +178,7 @@ namespace network
 		_target_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
-#ifdef ASIO_STANDALONE
 		_thread = std::thread([this](std::shared_ptr<asio::io_context> context)
-#else
-		_thread = boost::thread([this](std::shared_ptr<boost::asio::io_context> context)
-#endif
 			{
 				try
 				{

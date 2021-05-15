@@ -28,30 +28,15 @@ namespace network
 	using namespace compressing;
 	using namespace file_handling;
 
-#ifdef ASIO_STANDALONE
 	messaging_session::messaging_session(const std::wstring& source_id, const std::wstring& connection_key, asio::ip::tcp::socket& socket)
-#else
-	messaging_session::messaging_session(const std::wstring& source_id, const std::wstring& connection_key, boost::asio::ip::tcp::socket& socket)
-#endif
 		: data_handling(246, 135), _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _received_message(nullptr),
 		_key(L""), _iv(L""), _thread_pool(nullptr), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), 
 		_connection_key(connection_key), _received_file(nullptr), _received_data(nullptr), _connection(nullptr), 
-
-#ifdef ASIO_STANDALONE
 		_socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket)))
-#else
-		_socket(std::make_shared<boost::asio::ip::tcp::socket>(std::move(socket)))
-#endif
 	{
-#ifdef ASIO_STANDALONE
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));
 		_socket->set_option(asio::socket_base::receive_buffer_size(buffer_size));
-#else
-		_socket->set_option(boost::asio::ip::tcp::no_delay(true));
-		_socket->set_option(boost::asio::socket_base::keep_alive(true));
-		_socket->set_option(boost::asio::socket_base::receive_buffer_size(buffer_size));
-#endif
 
 		_source_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->local_endpoint().address().to_string()), _socket->local_endpoint().port());

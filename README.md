@@ -5,8 +5,8 @@ So, it will contain several systems like below,
 1. File log system
 2. Concurrency control by the thread pool system
 3. Serializable data packet container
-4. Multi-session TCP server
-5. TCP Client
+4. Asynchronous multi-session TCP server
+5. Asynchronous TCP Client
 
 And, it will provide functions like below,
 1. Callback functions for each sequence such as connection, receiving data and receiving file
@@ -19,18 +19,16 @@ And, it will provide functions like below,
 Before building this project, you have to download and build vcpkg(https://github.com/Microsoft/vcpkg).
 Secondly, should install libraries like below followed vcpkg install rule,
 
-1. ASIO(https://github.com/chriskohlhoff/asio/) or Boost(https://github.com/boostorg) library
-2. fmt(https://github.com/fmtlib/fmt) library
-3. cryptopp(https://www.cryptopp.com/) library
-4. lz4(https://github.com/lz4/lz4) library
-
-* If you want to use Boost library instead of Asio library, you have to remove 'ASIO_STANDALONE' on preprocessor definition on network library.
+1. Asio(https://github.com/chriskohlhoff/asio/) library: to support network implement
+2. fmt(https://github.com/fmtlib/fmt) library: to support string formatting
+3. cryptopp(https://www.cryptopp.com/) library: to support data encryption
+4. lz4(https://github.com/lz4/lz4) library: to support data compression
 
 After all installations, you can build this project with Visual Studio 2019.
 
 ## How to use
 
-### Sample: Thread safe logging
+### Sample 01: Thread safe logging
 
 ``` C++
 #include "logging.h"
@@ -59,7 +57,8 @@ int main(int argc, char* argv[])
                 for (unsigned int log_index = 0; log_index < 1000; ++log_index)
                 {
                     auto start = logger::handle().chrono_start();
-                    logger::handle().write(logging::logging_level::information, fmt::format(L"테스트_in_thread_{}: {}", thread_index, log_index), start);
+                    logger::handle().write(logging::logging_level::information, 
+                        fmt::format(L"test_in_thread_{}: {}", thread_index, log_index), start);
                 }
             }, thread_index)
         );
@@ -76,7 +75,7 @@ int main(int argc, char* argv[])
 }
 ```
 
-### Sample: Container
+### Sample 02: Serializable data container
 
 ``` C++
 #include "logging.h"
@@ -116,6 +115,8 @@ int main(int argc, char* argv[])
     data.add(bool_value(L"true_value", true));
     data.add(float_value(L"float_value", (float)1.234567890123456789));
     data.add(double_value(L"double_value", (double)1.234567890123456789));
+
+    // write serialized data
     logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data.serialize()), start);
 
     start = logger::handle().chrono_start();
@@ -124,6 +125,8 @@ int main(int argc, char* argv[])
     data2.add(std::make_shared<ulong_value>(L"ulong_value", ULONG_MAX));
     data2.add(std::make_shared<llong_value>(L"llong_value", LLONG_MAX));
     data2.add(std::make_shared<ullong_value>(L"ullong_value", ULLONG_MAX));
+
+    // write serialized data
     logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data2.serialize()), start);
 
     start = logger::handle().chrono_start();
@@ -132,6 +135,8 @@ int main(int argc, char* argv[])
     data3.remove(L"true_value");
     data3.remove(L"float_value");
     data3.remove(L"double_value");
+
+    // write serialized data
     logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data3.serialize()), start);
 
     logger::handle().stop();
@@ -140,7 +145,7 @@ int main(int argc, char* argv[])
 }
 ```
 
-### Sample: Thread
+### Sample 03: Priority thread
 
 ``` C++
 #include <iostream>
@@ -176,17 +181,17 @@ bool write_data(const std::vector<unsigned char>& data)
 
 bool write_high(void)
 {
-    return write_data(converter::to_array(L"테스트2_high_in_thread"));
+    return write_data(converter::to_array(L"test2_high_in_thread"));
 }
 
 bool write_normal(void)
 {
-    return write_data(converter::to_array(L"테스트2_normal_in_thread"));
+    return write_data(converter::to_array(L"test2_normal_in_thread"));
 }
 
 bool write_low(void)
 {
-    return write_data(converter::to_array(L"테스트2_low_in_thread"));
+    return write_data(converter::to_array(L"test2_low_in_thread"));
 }
 
 class test_job : public job
@@ -225,13 +230,13 @@ protected:
         switch (priority())
         {
         case priorities::high: 
-            logger::handle().write(logging_level::information, L"테스트4_high_in_thread", start);
+            logger::handle().write(logging_level::information, L"test4_high_in_thread", start);
             break;
 	case priorities::normal:
-            logger::handle().write(logging_level::information, L"테스트4_normal_in_thread", start);
+            logger::handle().write(logging_level::information, L"test4_normal_in_thread", start);
             break;
         case priorities::low:
-            logger::handle().write(logging_level::information, L"테스트4_low_in_thread", start);
+            logger::handle().write(logging_level::information, L"test4_low_in_thread", start);
             break;
         }		
 
@@ -245,6 +250,7 @@ int main(int argc, char* argv[])
     logger::handle().set_target_level(log_level);
     logger::handle().start(PROGRAM_NAME);
 
+    // create thread_pool
     thread_pool manager;
     manager.append(std::make_shared<thread_worker>(priorities::high));
     manager.append(std::make_shared<thread_worker>(priorities::high));
@@ -255,9 +261,9 @@ int main(int argc, char* argv[])
 	
     for (unsigned int log_index = 0; log_index < 1000; ++log_index)
     {
-        manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data));
-        manager.push(std::make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data));
-        manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data));
+        manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"test_high_in_thread"), &write_data));
+        manager.push(std::make_shared<job>(priorities::normal, converter::to_array(L"test_normal_in_thread"), &write_data));
+        manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"test_low_in_thread"), &write_data));
     }
 
     for (unsigned int log_index = 0; log_index < 1000; ++log_index)
@@ -269,9 +275,9 @@ int main(int argc, char* argv[])
 
     for (unsigned int log_index = 0; log_index < 1000; ++log_index)
     {
-        manager.push(std::make_shared<test_job>(priorities::high, converter::to_array(L"테스트3_high_in_thread")));
-        manager.push(std::make_shared<test_job>(priorities::normal, converter::to_array(L"테스트3_normal_in_thread")));
-        manager.push(std::make_shared<test_job>(priorities::low, converter::to_array(L"테스트3_low_in_thread")));
+        manager.push(std::make_shared<test_job>(priorities::high, converter::to_array(L"test3_high_in_thread")));
+        manager.push(std::make_shared<test_job>(priorities::normal, converter::to_array(L"test3_normal_in_thread")));
+        manager.push(std::make_shared<test_job>(priorities::low, converter::to_array(L"test3_low_in_thread")));
     }
 
     for (unsigned int log_index = 0; log_index < 1000; ++log_index)
@@ -281,7 +287,10 @@ int main(int argc, char* argv[])
         manager.push(std::make_shared<test2_job>(priorities::low));
     }
 
+    // If you want to check the thread-safe of priority job-pool, 
+    // you can call the below function before appending jobs.
     manager.start();
+
     manager.stop(false);
 
     logger::handle().stop();
@@ -290,7 +299,7 @@ int main(int argc, char* argv[])
 }
 ```
 
-### Sample: Download file
+### Sample 04: Download file
 
 If you want to test this sample, you have to run two programs such as main_server and middle_server on build/micro_service before.
 The next thing is that fill out two factors such as source_folder and target_folder.
@@ -431,7 +440,7 @@ int main(int argc, char* argv[])
 }
 ```
 
-### Sample: Upload file
+### Sample 05: Upload file
 
 If you want to test this sample, you have to run two programs such as main_server and middle_server on build/micro_service before.
 The next thing is that fill out two factors such as source_folder and target_folder.

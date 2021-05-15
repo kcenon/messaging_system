@@ -8,11 +8,7 @@
 #include <thread>
 #include <future>
 
-#ifdef ASIO_STANDALONE
 #include "asio.hpp"
-#else
-#include <boost/asio.hpp>
-#endif
 
 namespace network
 {
@@ -72,13 +68,8 @@ namespace network
 
 	private:
 		std::thread _thread;
-#ifdef ASIO_STANDALONE
 		std::shared_ptr<asio::io_context> _io_context;
 		std::shared_ptr<asio::ip::tcp::acceptor> _acceptor;
-#else
-		std::shared_ptr<boost::asio::io_context> _io_context;
-		std::shared_ptr<boost::asio::ip::tcp::acceptor> _acceptor;
-#endif
 
 	private:
 		std::promise<bool> _promise_status;

@@ -10,13 +10,8 @@
 #include <string>
 #include <functional>
 
-#ifdef ASIO_STANDALONE
 #include <thread>
 #include "asio.hpp"
-#else
-#include <boost/thread.hpp>
-#include <boost/asio.hpp>
-#endif
 
 namespace network
 {
@@ -134,15 +129,9 @@ namespace network
 		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)> _received_data;
 
 	private:
-#ifdef ASIO_STANDALONE
 		std::thread _thread;
 		std::shared_ptr<asio::io_context> _io_context;
 		std::shared_ptr<asio::ip::tcp::socket> _socket;
-#else
-		boost::thread _thread;
-		std::shared_ptr<boost::asio::io_context> _io_context;
-		std::shared_ptr<boost::asio::ip::tcp::socket> _socket;
-#endif
 
 	private:
 		std::shared_ptr<threads::thread_pool> _thread_pool;

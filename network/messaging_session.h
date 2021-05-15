@@ -10,22 +10,14 @@
 #include <string>
 #include <functional>
 
-#ifdef ASIO_STANDALONE
 #include "asio.hpp"
-#else
-#include <boost/asio.hpp>
-#endif
 
 namespace network
 {
 	class messaging_session : public std::enable_shared_from_this<messaging_session>, data_handling
 	{
 	public:
-#ifdef ASIO_STANDALONE
 		messaging_session(const std::wstring& source_id, const std::wstring& connection_key, asio::ip::tcp::socket& socket);
-#else
-		messaging_session(const std::wstring& source_id, const std::wstring& connection_key, boost::asio::ip::tcp::socket& socket);
-#endif
 		~messaging_session(void);
 
 	public:
@@ -133,11 +125,7 @@ namespace network
 		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)> _received_data;
 
 	private:
-#ifdef ASIO_STANDALONE
 		std::shared_ptr<asio::ip::tcp::socket> _socket;
-#else
-		std::shared_ptr<boost::asio::ip::tcp::socket> _socket;
-#endif
 
 	private:
 		std::shared_ptr<threads::thread_pool> _thread_pool;
