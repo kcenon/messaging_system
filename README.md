@@ -117,7 +117,8 @@ int main(int argc, char* argv[])
     data.add(double_value(L"double_value", (double)1.234567890123456789));
 
     // write serialized data
-    logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data.serialize()), start);
+    logger::handle().write(logging::logging_level::information, 
+        fmt::format(L"data serialize:\n{}", data.serialize()), start);
 
     start = logger::handle().chrono_start();
     value_container data2(data);
@@ -127,7 +128,8 @@ int main(int argc, char* argv[])
     data2.add(std::make_shared<ullong_value>(L"ullong_value", ULLONG_MAX));
 
     // write serialized data
-    logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data2.serialize()), start);
+    logger::handle().write(logging::logging_level::information, 
+        fmt::format(L"data serialize:\n{}", data2.serialize()), start);
 
     start = logger::handle().chrono_start();
     value_container data3(data2);
@@ -137,7 +139,8 @@ int main(int argc, char* argv[])
     data3.remove(L"double_value");
 
     // write serialized data
-    logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data3.serialize()), start);
+    logger::handle().write(logging::logging_level::information, 
+        fmt::format(L"data serialize:\n{}", data3.serialize()), start);
 
     logger::handle().stop();
 
@@ -255,15 +258,21 @@ int main(int argc, char* argv[])
     manager.append(std::make_shared<thread_worker>(priorities::high));
     manager.append(std::make_shared<thread_worker>(priorities::high));
     manager.append(std::make_shared<thread_worker>(priorities::high));
-    manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
-    manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
-    manager.append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
+    manager.append(std::make_shared<thread_worker>(priorities::normal, 
+        std::vector<priorities> { priorities::high }));
+    manager.append(std::make_shared<thread_worker>(priorities::normal, 
+        std::vector<priorities> { priorities::high }));
+    manager.append(std::make_shared<thread_worker>(priorities::low, 
+        std::vector<priorities> { priorities::high, priorities::normal }));
 	
     for (unsigned int log_index = 0; log_index < 1000; ++log_index)
     {
-        manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"test_high_in_thread"), &write_data));
-        manager.push(std::make_shared<job>(priorities::normal, converter::to_array(L"test_normal_in_thread"), &write_data));
-        manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"test_low_in_thread"), &write_data));
+        manager.push(std::make_shared<job>(priorities::high, 
+            converter::to_array(L"test_high_in_thread"), &write_data));
+        manager.push(std::make_shared<job>(priorities::normal, 
+            converter::to_array(L"test_normal_in_thread"), &write_data));
+        manager.push(std::make_shared<job>(priorities::low, 
+            converter::to_array(L"test_low_in_thread"), &write_data));
     }
 
     for (unsigned int log_index = 0; log_index < 1000; ++log_index)
@@ -275,9 +284,12 @@ int main(int argc, char* argv[])
 
     for (unsigned int log_index = 0; log_index < 1000; ++log_index)
     {
-        manager.push(std::make_shared<test_job>(priorities::high, converter::to_array(L"test3_high_in_thread")));
-        manager.push(std::make_shared<test_job>(priorities::normal, converter::to_array(L"test3_normal_in_thread")));
-        manager.push(std::make_shared<test_job>(priorities::low, converter::to_array(L"test3_low_in_thread")));
+        manager.push(std::make_shared<test_job>(priorities::high, 
+            converter::to_array(L"test3_high_in_thread")));
+        manager.push(std::make_shared<test_job>(priorities::normal, 
+            converter::to_array(L"test3_normal_in_thread")));
+        manager.push(std::make_shared<test_job>(priorities::low, 
+            converter::to_array(L"test3_low_in_thread")));
     }
 
     for (unsigned int log_index = 0; log_index < 1000; ++log_index)
@@ -346,7 +358,8 @@ std::future<bool> _future_status;
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
     logger::handle().write(logging::logging_level::information,
-        fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
+        fmt::format(L"a client on main server: {}[{}] is {}", 
+            target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
 void received_message(std::shared_ptr<container::value_container> container)
@@ -361,28 +374,32 @@ void received_message(std::shared_ptr<container::value_container> container)
         if (container->get_value(L"percentage")->to_ushort() == 0)
         {
             logger::handle().write(logging::logging_level::information,
-                fmt::format(L"started download: [{}]", container->get_value(L"indication_id")->to_string()));
+                fmt::format(L"started download: [{}]", 
+                    container->get_value(L"indication_id")->to_string()));
 
                 return;
         }
 
         logger::handle().write(logging::logging_level::information,
-            fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
+            fmt::format(L"received percentage: [{}] {}%", 
+                container->get_value(L"indication_id")->to_string(), 
+                container->get_value(L"percentage")->to_ushort()));
 
         if (container->get_value(L"completed")->to_boolean())
         {
             logger::handle().write(logging::logging_level::information,
                 fmt::format(L"completed download: [{}] success-{}, fail-{}", 
-		    container->get_value(L"indication_id")->to_string(), 
-		    container->get_value(L"completed_count")->to_ushort(), 
-		    container->get_value(L"failed_count")->to_ushort()));
+		            container->get_value(L"indication_id")->to_string(), 
+		            container->get_value(L"completed_count")->to_ushort(), 
+		            container->get_value(L"failed_count")->to_ushort()));
 
             _promise_status.set_value(false);
         }
         else if (container->get_value(L"percentage")->to_ushort() == 100)
         {
             logger::handle().write(logging::logging_level::information,
-                fmt::format(L"completed download: [{}]", container->get_value(L"indication_id")->to_string()));
+                fmt::format(L"completed download: [{}]", 
+                    container->get_value(L"indication_id")->to_string()));
 
             _promise_status.set_value(true);
         }
@@ -418,10 +435,13 @@ int main(int argc, char* argv[])
     files.push_back(std::make_shared<container::string_value>(L"indication_id", L"download_test"));
     for (auto& source : sources)
     {
-        files.push_back(std::make_shared<container::container_value>(L"file", std::vector<std::shared_ptr<container::value>> {
-			std::make_shared<container::string_value>(L"source", source),
-			std::make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
-        }));
+        files.push_back(std::make_shared<container::container_value>(L"file", 
+            std::vector<std::shared_ptr<container::value>> {
+		    	std::make_shared<container::string_value>(L"source", source),
+		    	std::make_shared<container::string_value>(L"target", 
+                    converter::replace2(source, source_folder, target_folder))
+            }
+        ));
     }
 
     _future_status = _promise_status.get_future();
@@ -487,7 +507,8 @@ std::future<bool> _future_status;
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
     logger::handle().write(logging::logging_level::information,
-        fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
+        fmt::format(L"a client on main server: {}[{}] is {}", 
+            target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
 void received_message(std::shared_ptr<container::value_container> container)
@@ -502,28 +523,32 @@ void received_message(std::shared_ptr<container::value_container> container)
         if (container->get_value(L"percentage")->to_ushort() == 0)
         {
             logger::handle().write(logging::logging_level::information,
-                fmt::format(L"started upload: [{}]", container->get_value(L"indication_id")->to_string()));
+                fmt::format(L"started upload: [{}]", 
+                    container->get_value(L"indication_id")->to_string()));
 
             return;
         }
 
         logger::handle().write(logging::logging_level::information,
-            fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
+            fmt::format(L"received percentage: [{}] {}%", 
+                container->get_value(L"indication_id")->to_string(), 
+                container->get_value(L"percentage")->to_ushort()));
 
         if (container->get_value(L"completed")->to_boolean())
         {
             logger::handle().write(logging::logging_level::information,
                 fmt::format(L"completed download: [{}] success-{}, fail-{}", 
-		    container->get_value(L"indication_id")->to_string(), 
-		    container->get_value(L"completed_count")->to_ushort(), 
-		    container->get_value(L"failed_count")->to_ushort()));
+		            container->get_value(L"indication_id")->to_string(), 
+		            container->get_value(L"completed_count")->to_ushort(), 
+		            container->get_value(L"failed_count")->to_ushort()));
 
             _promise_status.set_value(false);
         }
         else if (container->get_value(L"percentage")->to_ushort() == 100)
         {
             logger::handle().write(logging::logging_level::information,
-            fmt::format(L"completed upload: [{}]", container->get_value(L"indication_id")->to_string()));
+            fmt::format(L"completed upload: [{}]", 
+                container->get_value(L"indication_id")->to_string()));
 
             _promise_status.set_value(true);
         }
@@ -559,10 +584,13 @@ int main(int argc, char* argv[])
     files.push_back(std::make_shared<container::string_value>(L"indication_id", L"upload_test"));
     for (auto& source : sources)
     {
-        files.push_back(std::make_shared<container::container_value>(L"file", std::vector<std::shared_ptr<container::value>> {
-			std::make_shared<container::string_value>(L"source", source),
-			std::make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
-		}));
+        files.push_back(std::make_shared<container::container_value>(L"file", 
+            std::vector<std::shared_ptr<container::value>> {
+			    std::make_shared<container::string_value>(L"source", source),
+			    std::make_shared<container::string_value>(L"target", 
+                    converter::replace2(source, source_folder, target_folder))
+		    }
+        ));
     }
 
     _future_status = _promise_status.get_future();
