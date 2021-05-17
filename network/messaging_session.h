@@ -24,6 +24,7 @@ namespace network
 		std::shared_ptr<messaging_session> get_ptr(void);
 
 	public:
+		void set_kill_code(const bool& kill_code);
 		void set_connection_notification(const std::function<void(std::shared_ptr<messaging_session>, const bool&)>& notification);
 		void set_message_notification(const std::function<void(std::shared_ptr<container::value_container>)>& notification);
 		void set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification);
@@ -101,6 +102,7 @@ namespace network
 
 	private:
 		bool _confirm;
+		bool _kill_code;
 		bool _auto_echo;
 		bool _bridge_line;
 		session_types _session_type;

@@ -67,6 +67,11 @@ namespace network
 		return shared_from_this();
 	}
 
+	void messaging_session::set_kill_code(const bool& kill_code)
+	{
+		_kill_code = kill_code;
+	}
+
 	void messaging_session::set_connection_notification(const std::function<void(std::shared_ptr<messaging_session>, const bool&)>& notification)
 	{
 		_connection = notification;
@@ -770,6 +775,16 @@ namespace network
 
 		_target_id = message->source_id();
 		_session_type = (session_types)message->get_value(L"session_type")->to_short();
+
+		if (_kill_code)
+		{
+			if (_connection)
+			{
+				_connection(get_ptr(), false);
+			}
+
+			return false;
+		}
 
 		// check connection key
 		if (!same_key_check(message->get_value(L"connection_key")))

@@ -35,6 +35,7 @@ unsigned short server_port = 9753;
 unsigned short high_priority_count = 4;
 unsigned short normal_priority_count = 4;
 unsigned short low_priority_count = 4;
+size_t session_limit_count = 0;
 
 std::shared_ptr<messaging_server> _main_server = nullptr;
 
@@ -150,6 +151,12 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 		low_priority_count = (unsigned short)_wtoi(target->second.c_str());
 	}
 
+	target = arguments.find(L"--session_limit_count");
+	if (target != arguments.end())
+	{
+		session_limit_count = (unsigned short)_wtoi(target->second.c_str());
+	}
+
 	target = arguments.find(L"--write_console_mode");
 	if (target != arguments.end())
 	{
@@ -186,6 +193,7 @@ void create_main_server(void)
 	_main_server->set_encrypt_mode(encrypt_mode);
 	_main_server->set_compress_mode(compress_mode);
 	_main_server->set_connection_key(connection_key);
+	_main_server->set_session_limit_count(session_limit_count);
 	_main_server->set_connection_notification(&connection);
 	_main_server->set_message_notification(&received_message);
 	_main_server->set_file_notification(&received_file);
@@ -250,6 +258,8 @@ void display_help(void)
 	std::wcout << L"\tIf you want to change normal priority thread workers must be appended '--normal_priority_count [count]'." << std::endl << std::endl;
 	std::wcout << L"--low_priority_count [value]" << std::endl;
 	std::wcout << L"\tIf you want to change low priority thread workers must be appended '--low_priority_count [count]'." << std::endl << std::endl;
+	std::wcout << L"--session_limit_count [value]" << std::endl;
+	std::wcout << L"\tIf you want to change session limit count must be appended '--session_limit_count [count]'." << std::endl << std::endl;
 	std::wcout << L"--write_console_mode [value] " << std::endl;
 	std::wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << std::endl << std::endl;
 	std::wcout << L"--logging_level [value]" << std::endl;

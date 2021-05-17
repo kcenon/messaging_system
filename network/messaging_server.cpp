@@ -16,7 +16,7 @@ namespace network
 	messaging_server::messaging_server(const std::wstring& source_id)
 		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), _encrypt_mode(false),
 		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _compress_mode(false),
-		_high_priority(8), _normal_priority(8), _low_priority(8)
+		_high_priority(8), _normal_priority(8), _low_priority(8), _session_limit_count(0)
 	{
 
 	}
@@ -49,6 +49,11 @@ namespace network
 	void messaging_server::set_ignore_snipping_targets(const std::vector<std::wstring>& ignore_snipping_targets)
 	{
 		_ignore_snipping_targets = ignore_snipping_targets;
+	}
+
+	void messaging_server::set_session_limit_count(const bool& session_limit_count)
+	{
+		_session_limit_count = session_limit_count;
 	}
 
 	void messaging_server::set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification)
@@ -268,10 +273,16 @@ namespace network
 					return;
 				}
 
+				if (_session_limit_count > 0)
+				{
+					session->set_kill_code(_sessions.size() >= _session_limit_count);
+				}
+
 				session->set_connection_notification(std::bind(&messaging_server::connect_condition, this, std::placeholders::_1, std::placeholders::_2));
 				session->set_message_notification(std::bind(&messaging_server::received_message, this, std::placeholders::_1));
 				session->set_file_notification(_received_file);
 				session->set_binary_notification(std::bind(&messaging_server::received_binary, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
+
 				session->start(_encrypt_mode, _compress_mode, _ignore_snipping_targets, _high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);

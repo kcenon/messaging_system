@@ -27,6 +27,7 @@ namespace network
 		void set_compress_mode(const bool& compress_mode);
 		void set_connection_key(const std::wstring& connection_key);
 		void set_ignore_snipping_targets(const std::vector<std::wstring>& ignore_snipping_targets);
+		void set_session_limit_count(const bool& session_limit_count);
 
 	public:
 		void set_connection_notification(const std::function<void(const std::wstring&, const std::wstring&, const bool&)>& notification);
@@ -64,6 +65,7 @@ namespace network
 		unsigned short _high_priority;
 		unsigned short _normal_priority;
 		unsigned short _low_priority;
+		size_t _session_limit_count;
 		std::vector<std::wstring> _ignore_snipping_targets;
 
 	private:
