@@ -21,7 +21,11 @@ using namespace network;
 using namespace compressing;
 using namespace argument_parsing;
 
+#ifdef _DEBUG
+bool write_console = true;
+#else
 bool write_console = false;
+#endif
 bool encrypt_mode = false;
 bool compress_mode = false;
 unsigned short compress_block_size = 1024;

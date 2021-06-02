@@ -18,7 +18,7 @@ namespace threads
 
 	thread_worker::~thread_worker(void)
 	{
-
+		stop();
 	}
 
 	void thread_worker::set_job_pool(std::shared_ptr<job_pool> job_pool)
@@ -30,26 +30,24 @@ namespace threads
 	{
 		stop();
 
-		logger::handle().write(logging::logging_level::sequence, fmt::format(L"attempt to start working thread: priority - {}", _priority));
-
+		_thread_stop.store(false);
 		_thread = std::thread(&thread_worker::run, this);
 	}
 
 	void thread_worker::stop(const bool& ignore_contained_job)
 	{
+		if (!_thread.joinable())
+		{
+			return;
+		}
+
 		_ignore_contained_job.store(ignore_contained_job);
+
 		_thread_stop.store(true);
 
 		_condition.notify_one();
 
-		if (_thread.joinable())
-		{
-			_thread.join();
-
-			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed to stop working thread: priority - {}", _priority));
-		}
-
-		_thread_stop.store(false);
+		_thread.join();
 	}
 
 	const priorities thread_worker::priority(void)
@@ -81,6 +79,8 @@ namespace threads
 
 	void thread_worker::run(void)
 	{
+		logger::handle().write(logging::logging_level::sequence, fmt::format(L"start working thread: priority - {}", _priority));
+
 		while (!_thread_stop.load() || !_ignore_contained_job.load())
 		{
 			std::unique_lock<std::mutex> unique(_mutex);
@@ -88,6 +88,11 @@ namespace threads
 			if (_job_pool == nullptr)
 			{
 				continue;
+			}
+
+			if (_thread_stop.load() && _ignore_contained_job.load())
+			{
+				break;
 			}
 
 			std::shared_ptr<job> current_job = _job_pool->pop(_priority, _others);
@@ -100,6 +105,8 @@ namespace threads
 
 			working(current_job);
 		}
+
+		logger::handle().write(logging::logging_level::sequence, fmt::format(L"stop working thread: priority - {}", _priority));
 	}
 
 	void thread_worker::working(std::shared_ptr<job> current_job)

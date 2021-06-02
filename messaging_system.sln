@@ -23,8 +23,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "threads_sample", "samples\t
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "network_sample", "samples\network_sample\network_sample.vcxproj", "{299C85D1-A631-48B3-9CA9-14BCAA67E6D3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit_tests", "unit_tests", "{B43E624F-8E83-4955-87D6-CA07ACAC504F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "micro_services", "micro_services", "{8E6ED347-8187-40C8-9E8B-F36645EEC5AF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "main_server", "micro_services\main_server\main_server.vcxproj", "{F4C004E7-7EDE-4404-9FFD-EF76D59481B2}"
