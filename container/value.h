@@ -58,7 +58,11 @@ namespace container
 		bool is_container(void) const;
 
 	public:
-		std::wstring serialize(void);
+		const std::wstring to_xml(void);
+		const std::wstring to_json(void);
+
+	public:
+		const std::wstring serialize(void);
 
 	public:
 		virtual bool to_boolean(void) const { return false; }

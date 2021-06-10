@@ -400,7 +400,76 @@ namespace container
 		return deserialize(converter::to_wstring(data_array), parse_only_header);
 	}
 
-	std::wstring value_container::datas(void) const
+	const std::wstring value_container::to_xml(void)
+	{
+		if (!_parsed_data)
+		{
+			deserialize_values(_data_string, false);
+		}
+
+		fmt::wmemory_buffer result;
+
+		fmt::format_to(std::back_inserter(result), L"{}", L"<container>");
+		fmt::format_to(std::back_inserter(result), L"{}", L"<header>");
+		if (_message_type != L"data_container")
+		{
+			fmt::format_to(std::back_inserter(result), L"<target_id>{}</target_id>", _target_id);
+			fmt::format_to(std::back_inserter(result), L"<target_sub_id>{}</target_sub_id>", _target_sub_id);
+			fmt::format_to(std::back_inserter(result), L"<source_id>{}</source_id>", _source_id);
+			fmt::format_to(std::back_inserter(result), L"<source_sub_id>{}</source_sub_id>", _source_sub_id);
+		}
+		fmt::format_to(std::back_inserter(result), L"<message_type>{}</message_type>", _message_type);
+		fmt::format_to(std::back_inserter(result), L"<version>{}</version>", _version);
+		fmt::format_to(std::back_inserter(result), L"{}", L"</header>");
+
+		fmt::format_to(std::back_inserter(result), L"{}", L"<values>");
+		for (auto& unit : _units)
+		{
+			fmt::format_to(std::back_inserter(result), L"{}", unit->to_xml());
+		}
+		fmt::format_to(std::back_inserter(result), L"{}", L"</values>");
+		fmt::format_to(std::back_inserter(result), L"{}", L"</container>");
+
+		return result.data();
+	}
+
+	const std::wstring value_container::to_json(void)
+	{
+		if (!_parsed_data)
+		{
+			deserialize_values(_data_string, false);
+		}
+
+		fmt::wmemory_buffer result;
+
+		fmt::format_to(std::back_inserter(result), L"{}", L"{");
+		fmt::format_to(std::back_inserter(result), L"{}", L"\"header\":[");
+		if (_message_type != L"data_container")
+		{
+			fmt::format_to(std::back_inserter(result), L"{} \"target_id\":\"{}\" {},", L"{", _target_id, L"}");
+			fmt::format_to(std::back_inserter(result), L"{} \"target_sub_id\":\"{}\" {},", L"{", _target_sub_id, L"}");
+			fmt::format_to(std::back_inserter(result), L"{} \"source_id\":\"{}\" {},", L"{", _source_id, L"}");
+			fmt::format_to(std::back_inserter(result), L"{} \"source_sub_id\":\"{}\" {},", L"{", _source_sub_id, L"}");
+		}
+		fmt::format_to(std::back_inserter(result), L"{} \"message_type\":\"{}\" {}", L"{", _message_type, L"}");
+		fmt::format_to(std::back_inserter(result), L",{} \"version\":\"{}\" {}", L"{", _version, L"}");
+		fmt::format_to(std::back_inserter(result), L"{}", L"]");
+
+		fmt::format_to(std::back_inserter(result), L",{}", L"\"values\":[");
+
+		bool first = true;
+		for (auto& unit : _units)
+		{
+			fmt::format_to(std::back_inserter(result), first ? L"{}" : L",{}", unit->to_json());
+			first = false;
+		}
+		fmt::format_to(std::back_inserter(result), L"{}", L"]");
+		fmt::format_to(std::back_inserter(result), L"{}", L"}");
+
+		return result.data();
+	}
+
+	const std::wstring value_container::datas(void)
 	{
 		if (!_parsed_data)
 		{

@@ -62,7 +62,11 @@ namespace container
 		bool deserialize(const std::vector<unsigned char>& data_array, const bool& parse_only_header = false);
 
 	public:
-		std::wstring datas(void) const;
+		const std::wstring to_xml(void);
+		const std::wstring to_json(void);
+
+	public:
+		const std::wstring datas(void);
 
 	public:
 		void load_packet(const std::wstring& file_path);

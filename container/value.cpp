@@ -232,7 +232,46 @@ namespace container
 		return _type == value_types::container_value;
 	}
 
-	std::wstring value::serialize(void)
+	const std::wstring value::to_xml(void)
+	{
+		fmt::wmemory_buffer result;
+
+		fmt::format_to(std::back_inserter(result), L"<{0} type=\"{1}\">{2}</{0}>", name(), convert_value_type(_type), to_string(false));
+
+		for (auto& unit : _units)
+		{
+			fmt::format_to(std::back_inserter(result), L"{}", unit->to_xml());
+		}
+
+		return result.data();
+	}
+
+	const std::wstring value::to_json(void)
+	{
+		fmt::wmemory_buffer result;
+
+		if (_units.size() == 0)
+		{
+			fmt::format_to(std::back_inserter(result), L"{} \"name\":\"{}\", \"type\":\"{}\", \"value\":\"{}\" {}", L"{", name(), convert_value_type(_type), to_string(false), L"}");
+
+			return result.data();
+		}
+
+		fmt::format_to(std::back_inserter(result), L"{} \"name\":\"{}\", \"type\":\"{}\", \"value\":[", L"{", name(), convert_value_type(_type));
+
+		bool first = true;
+		for (auto& unit : _units)
+		{
+			fmt::format_to(std::back_inserter(result), first ? L"{}" : L",{}", unit->to_json());
+			first = false;
+		}
+
+		fmt::format_to(std::back_inserter(result), L"] {}", L"}");
+
+		return result.data();
+	}
+
+	const std::wstring value::serialize(void)
 	{
 		fmt::wmemory_buffer result;
 
