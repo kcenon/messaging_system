@@ -319,6 +319,7 @@ namespace container
 	std::wstring value_container::serialize(void) const
 	{
 		fmt::wmemory_buffer result;
+		result.clear();
 
 		// header
 		fmt::format_to(std::back_inserter(result), L"@header={}", L"{");
@@ -408,6 +409,7 @@ namespace container
 		}
 
 		fmt::wmemory_buffer result;
+		result.clear();
 
 		fmt::format_to(std::back_inserter(result), L"{}", L"<container>");
 		fmt::format_to(std::back_inserter(result), L"{}", L"<header>");
@@ -441,6 +443,7 @@ namespace container
 		}
 
 		fmt::wmemory_buffer result;
+		result.clear();
 
 		fmt::format_to(std::back_inserter(result), L"{}", L"{");
 		fmt::format_to(std::back_inserter(result), L"{}", L"\"header\":[");
@@ -477,6 +480,7 @@ namespace container
 		}
 
 		fmt::wmemory_buffer result;
+		result.clear();
 
 		// data
 		fmt::format_to(std::back_inserter(result), L"@data={}", L"{");

@@ -22,6 +22,7 @@ namespace converting
 		size_t offset = 0;
 		size_t last_offset = 0;
 		fmt::wmemory_buffer result;
+		result.clear();
 
 		while (true)
 		{

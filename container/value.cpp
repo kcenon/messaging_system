@@ -235,6 +235,7 @@ namespace container
 	const std::wstring value::to_xml(void)
 	{
 		fmt::wmemory_buffer result;
+		result.clear();
 
 		fmt::format_to(std::back_inserter(result), L"<{0} type=\"{1}\">{2}</{0}>", name(), convert_value_type(_type), to_string(false));
 
@@ -249,6 +250,7 @@ namespace container
 	const std::wstring value::to_json(void)
 	{
 		fmt::wmemory_buffer result;
+		result.clear();
 
 		if (_units.size() == 0)
 		{
@@ -274,6 +276,7 @@ namespace container
 	const std::wstring value::serialize(void)
 	{
 		fmt::wmemory_buffer result;
+		result.clear();
 
 		fmt::format_to(std::back_inserter(result), L"[{},{},{}];", name(), convert_value_type(_type), to_string(false));
 
