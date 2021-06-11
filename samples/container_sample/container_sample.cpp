@@ -10,6 +10,7 @@
 #include "values/ulong_value.h"
 #include "values/llong_value.h"
 #include "values/ullong_value.h"
+#include "values/container_value.h"
 
 #include "fmt/format.h"
 
@@ -56,6 +57,13 @@ int main(int argc, char* argv[])
 	data2.add(std::make_shared<ulong_value>(L"ulong_value", ULONG_MAX));
 	data2.add(std::make_shared<llong_value>(L"llong_value", LLONG_MAX));
 	data2.add(std::make_shared<ullong_value>(L"ullong_value", ULLONG_MAX));
+	data2.add(std::make_shared<container_value>(L"container_value", std::vector<std::shared_ptr<value>>
+		{
+			std::make_shared<long_value>(L"long_value", LONG_MAX),
+			std::make_shared<ulong_value>(L"ulong_value", ULONG_MAX),
+			std::make_shared<llong_value>(L"llong_value", LLONG_MAX),
+			std::make_shared<ullong_value>(L"ullong_value", ULLONG_MAX)
+		}));
 	logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data2.serialize()), start);
 	logger::handle().write(logging::logging_level::information, fmt::format(L"data xml:\n{}", data2.to_xml()), start);
 	logger::handle().write(logging::logging_level::information, fmt::format(L"data json:\n{}", data2.to_json()), start);
@@ -66,6 +74,7 @@ int main(int argc, char* argv[])
 	data3.remove(L"true_value");
 	data3.remove(L"float_value");
 	data3.remove(L"double_value");
+	data3.remove(L"container_value");
 	logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data3.serialize()), start);
 	logger::handle().write(logging::logging_level::information, fmt::format(L"data xml:\n{}", data3.to_xml()), start);
 	logger::handle().write(logging::logging_level::information, fmt::format(L"data json:\n{}", data3.to_json()), start);
