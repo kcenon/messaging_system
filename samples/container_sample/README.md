@@ -1,4 +1,4 @@
-## How to use logging
+## How to use data container
 
 Basically, this data container can store all types on it, serialize, and deserialize.
 

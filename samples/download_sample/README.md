@@ -1,4 +1,4 @@
-## How to use logging
+## How to use file download
 
 If you want to test this sample, you have to run two programs such as main_server and middle_server on build/micro_service before.
 The next thing is that fill out two factors such as source_folder and target_folder.
