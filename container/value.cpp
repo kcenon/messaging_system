@@ -237,12 +237,19 @@ namespace container
 		fmt::wmemory_buffer result;
 		result.clear();
 
-		fmt::format_to(std::back_inserter(result), L"<{0} type=\"{1}\">{2}</{0}>", name(), convert_value_type(_type), to_string(false));
+		if (_units.size() == 0)
+		{
+			fmt::format_to(std::back_inserter(result), L"<{0}>{1}</{0}>", name(), to_string(false));
 
+			return result.data();
+		}
+
+		fmt::format_to(std::back_inserter(result), L"<{}>", name());
 		for (auto& unit : _units)
 		{
 			fmt::format_to(std::back_inserter(result), L"{}", unit->to_xml());
 		}
+		fmt::format_to(std::back_inserter(result), L"</{}>", name());
 
 		return result.data();
 	}
@@ -254,12 +261,19 @@ namespace container
 
 		if (_units.size() == 0)
 		{
-			fmt::format_to(std::back_inserter(result), L"{} \"name\":\"{}\", \"type\":\"{}\", \"value\":\"{}\" {}", L"{", name(), convert_value_type(_type), to_string(false), L"}");
+			switch (_type)
+			{
+			case value_types::bytes_value: 
+			case value_types::string_value: 
+				fmt::format_to(std::back_inserter(result), L"{} \"{}\":\"{}\" {}", L"{", name(), to_string(false), L"}"); break;
+			default:
+				fmt::format_to(std::back_inserter(result), L"{} \"{}\":{} {}", L"{", name(), to_string(false), L"}"); break;
+			}
 
 			return result.data();
 		}
 
-		fmt::format_to(std::back_inserter(result), L"{} \"name\":\"{}\", \"type\":\"{}\", \"value\":[", L"{", name(), convert_value_type(_type));
+		fmt::format_to(std::back_inserter(result), L"{} \"{}\":[", L"{", name());
 
 		bool first = true;
 		for (auto& unit : _units)
