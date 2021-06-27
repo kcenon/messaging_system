@@ -325,13 +325,13 @@ namespace container
 		fmt::format_to(std::back_inserter(result), L"@header={}", L"{");
 		if (_message_type != L"data_container")
 		{
-			fmt::format_to(std::back_inserter(result), L"[target_id,{}];", _target_id);
-			fmt::format_to(std::back_inserter(result), L"[target_sub_id,{}];", _target_sub_id);
-			fmt::format_to(std::back_inserter(result), L"[source_id,{}];", _source_id);
-			fmt::format_to(std::back_inserter(result), L"[source_sub_id,{}];", _source_sub_id);
+			fmt::format_to(std::back_inserter(result), L"[1,{}];", _target_id);
+			fmt::format_to(std::back_inserter(result), L"[2,{}];", _target_sub_id);
+			fmt::format_to(std::back_inserter(result), L"[3,{}];", _source_id);
+			fmt::format_to(std::back_inserter(result), L"[4,{}];", _source_sub_id);
 		}
-		fmt::format_to(std::back_inserter(result), L"[message_type,{}];", _message_type);
-		fmt::format_to(std::back_inserter(result), L"[version,{}];", _version);
+		fmt::format_to(std::back_inserter(result), L"[5,{}];", _message_type);
+		fmt::format_to(std::back_inserter(result), L"[6,{}];", _version);
 		fmt::format_to(std::back_inserter(result), L"{}", L"};");
 
 		if (!_parsed_data)
@@ -383,12 +383,12 @@ namespace container
 		std::wsregex_iterator header_end;
 		while (header_iter != header_end)
 		{
-			parsing((*header_iter)[1], L"target_id", (*header_iter)[2], _target_id);
-			parsing((*header_iter)[1], L"target_sub_id", (*header_iter)[2], _target_sub_id);
-			parsing((*header_iter)[1], L"source_id", (*header_iter)[2], _source_id);
-			parsing((*header_iter)[1], L"source_sub_id", (*header_iter)[2], _source_sub_id);
-			parsing((*header_iter)[1], L"message_type", (*header_iter)[2], _message_type);
-			parsing((*header_iter)[1], L"version", (*header_iter)[2], _version);
+			parsing((*header_iter)[1], L"1", (*header_iter)[2], _target_id);
+			parsing((*header_iter)[1], L"2", (*header_iter)[2], _target_sub_id);
+			parsing((*header_iter)[1], L"3", (*header_iter)[2], _source_id);
+			parsing((*header_iter)[1], L"4", (*header_iter)[2], _source_sub_id);
+			parsing((*header_iter)[1], L"5", (*header_iter)[2], _message_type);
+			parsing((*header_iter)[1], L"6", (*header_iter)[2], _version);
 
 			header_iter++;
 		}
@@ -449,13 +449,13 @@ namespace container
 		fmt::format_to(std::back_inserter(result), L"{}", L"\"header\":[");
 		if (_message_type != L"data_container")
 		{
-			fmt::format_to(std::back_inserter(result), L"{} \"target_id\":\"{}\" {},", L"{", _target_id, L"}");
-			fmt::format_to(std::back_inserter(result), L"{} \"target_sub_id\":\"{}\" {},", L"{", _target_sub_id, L"}");
-			fmt::format_to(std::back_inserter(result), L"{} \"source_id\":\"{}\" {},", L"{", _source_id, L"}");
-			fmt::format_to(std::back_inserter(result), L"{} \"source_sub_id\":\"{}\" {},", L"{", _source_sub_id, L"}");
+			fmt::format_to(std::back_inserter(result), L"{}\"target_id\":\"{}\"{},", L"{", _target_id, L"}");
+			fmt::format_to(std::back_inserter(result), L"{}\"target_sub_id\":\"{}\"{},", L"{", _target_sub_id, L"}");
+			fmt::format_to(std::back_inserter(result), L"{}\"source_id\":\"{}\"{},", L"{", _source_id, L"}");
+			fmt::format_to(std::back_inserter(result), L"{}\"source_sub_id\":\"{}\"{},", L"{", _source_sub_id, L"}");
 		}
-		fmt::format_to(std::back_inserter(result), L"{} \"message_type\":\"{}\" {}", L"{", _message_type, L"}");
-		fmt::format_to(std::back_inserter(result), L",{} \"version\":\"{}\" {}", L"{", _version, L"}");
+		fmt::format_to(std::back_inserter(result), L"{}\"message_type\":\"{}\"{}", L"{", _message_type, L"}");
+		fmt::format_to(std::back_inserter(result), L",{}\"version\":\"{}\"{}", L"{", _version, L"}");
 		fmt::format_to(std::back_inserter(result), L"{}", L"]");
 
 		fmt::format_to(std::back_inserter(result), L",{}", L"\"values\":[");

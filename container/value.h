@@ -15,7 +15,7 @@ namespace container
 		value(void);
 		value(std::shared_ptr<value> object);
 		value(const std::wstring& name, const std::vector<std::shared_ptr<value>>& units = {});
-		value(const std::wstring& name, const std::wstring& type, const std::wstring& data);
+		value(const std::wstring& name, const value_types& type, const std::wstring& data);
 		value(const std::wstring& name, const unsigned char* data, const size_t& size, const value_types& type = value_types::null_value);
 		virtual ~value(void);
 
@@ -25,7 +25,7 @@ namespace container
 	public:
 		void set_parent(std::shared_ptr<value> parent);
 		void set_data(const unsigned char* data, const size_t& size, const value_types& type);
-		void set_data(const std::wstring& name, const std::wstring& type, const std::wstring& data);
+		void set_data(const std::wstring& name, const value_types& type, const std::wstring& data);
 
 	public:
 		std::wstring name(void) const;

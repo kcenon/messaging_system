@@ -9,12 +9,12 @@ namespace container
 	}
 
 	bool_value::bool_value(const std::wstring& name, const bool& value)
-		: value(name, L"bool", value ? L"true" : L"false")
+		: value(name, value_types::bool_value, value ? L"true" : L"false")
 	{
 	}
 
 	bool_value::bool_value(const std::wstring& name, const std::wstring& value)
-		: value(name, L"bool", value)
+		: value(name, value_types::bool_value, value)
 	{
 	}
 

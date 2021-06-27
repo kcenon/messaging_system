@@ -48,7 +48,7 @@ namespace container
 		set_data((const unsigned char*)&size, sizeof(long), value_types::container_value);
 	}
 
-	value::value(const std::wstring& name, const std::wstring& type, const std::wstring& data)
+	value::value(const std::wstring& name, const value_types& type, const std::wstring& data)
 		: value()
 	{
 		set_data(name, type, data);
@@ -90,10 +90,10 @@ namespace container
 		_data = std::vector<unsigned char>(data, data + size);
 	}
 
-	void value::set_data(const std::wstring& name, const std::wstring& type, const std::wstring& data)
+	void value::set_data(const std::wstring& name, const value_types& type, const std::wstring& data)
 	{
 		_name = name;
-		_type = convert_value_type(type);
+		_type = type;
 
 		switch (_type)
 		{
@@ -265,9 +265,9 @@ namespace container
 			{
 			case value_types::bytes_value: 
 			case value_types::string_value: 
-				fmt::format_to(std::back_inserter(result), L"{} \"{}\":\"{}\" {}", L"{", name(), to_string(false), L"}"); break;
+				fmt::format_to(std::back_inserter(result), L"{}\"{}\":\"{}\"{}", L"{", name(), to_string(false), L"}"); break;
 			default:
-				fmt::format_to(std::back_inserter(result), L"{} \"{}\":{} {}", L"{", name(), to_string(false), L"}"); break;
+				fmt::format_to(std::back_inserter(result), L"{}\"{}\":{}{}", L"{", name(), to_string(false), L"}"); break;
 			}
 
 			return result.data();
@@ -283,7 +283,7 @@ namespace container
 		}
 
 		fmt::format_to(std::back_inserter(result), L"] {}", L"}");
-
+		
 		return result.data();
 	}
 
