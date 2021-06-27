@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{CD9D24D1-9E92-4D3F-972C-91FDBDE51122}</ProjectGuid>
+    <ProjectGuid>{299C85D1-A631-48B3-9CA9-14BCAA67E6D3}</ProjectGuid>
     <RootNamespace>threadssample</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -72,23 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\build\sample\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\build\cpp_sample\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\cpp_sample\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\build\sample\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\build\cpp_sample\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\cpp_sample\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\build\sample\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\build\cpp_sample\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\cpp_sample\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\build\sample\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\build\cpp_sample\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\cpp_sample\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -99,7 +99,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../../utilities/;../../threads/;../../container/;../../network/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../cpp_libraries/utilities/;../../cpp_libraries/threads/;../../cpp_libraries/container/;../../cpp_libraries/network/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -118,7 +118,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../../utilities/;../../threads/;../../container/;../../network/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../cpp_libraries/utilities/;../../cpp_libraries/threads/;../../cpp_libraries/container/;../../cpp_libraries/network/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -137,7 +137,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../../utilities/;../../threads/;../../container/;../../network/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../cpp_libraries/utilities/;../../cpp_libraries/threads/;../../cpp_libraries/container/;../../cpp_libraries/network/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -156,7 +156,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>../../utilities/;../../threads/;../../container/;../../network/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../cpp_libraries/utilities/;../../cpp_libraries/threads/;../../cpp_libraries/container/;../../cpp_libraries/network/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -167,19 +167,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="download_sample.cpp" />
+    <ClCompile Include="network_sample.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\container\container.vcxproj">
+    <ProjectReference Include="..\..\cpp_libraries\container\container.vcxproj">
       <Project>{82a9da7d-8e60-4e90-9061-88e6f7756387}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\network\network.vcxproj">
+    <ProjectReference Include="..\..\cpp_libraries\network\network.vcxproj">
       <Project>{bbe3c8f7-4d0a-478c-969f-3f20b55f9f06}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\threads\threads.vcxproj">
+    <ProjectReference Include="..\..\cpp_libraries\threads\threads.vcxproj">
       <Project>{237acd99-0ce3-46cf-80e5-df64ab9bbe4c}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\utilities\utilities.vcxproj">
+    <ProjectReference Include="..\..\cpp_libraries\utilities\utilities.vcxproj">
       <Project>{6a8e08f7-e020-4926-9e2c-4dc01802ba20}</Project>
     </ProjectReference>
   </ItemGroup>

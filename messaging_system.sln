@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utilities", "utilities\utilities.vcxproj", "{6A8E08F7-E020-4926-9E2C-4DC01802BA20}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utilities", "cpp_libraries\utilities\utilities.vcxproj", "{6A8E08F7-E020-4926-9E2C-4DC01802BA20}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C523CF87-90A3-4BB5-B91A-20305DD5471D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpp samples", "cpp samples", "{C523CF87-90A3-4BB5-B91A-20305DD5471D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libraries", "libraries", "{9682E0B8-306A-4953-8C43-7FCFFAA73281}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpp libraries", "cpp libraries", "{9682E0B8-306A-4953-8C43-7FCFFAA73281}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "threads", "threads\threads.vcxproj", "{237ACD99-0CE3-46CF-80E5-DF64AB9BBE4C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "threads", "cpp_libraries\threads\threads.vcxproj", "{237ACD99-0CE3-46CF-80E5-DF64AB9BBE4C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "container", "container\container.vcxproj", "{82A9DA7D-8E60-4E90-9061-88E6F7756387}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "container", "cpp_libraries\container\container.vcxproj", "{82A9DA7D-8E60-4E90-9061-88E6F7756387}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "network", "network\network.vcxproj", "{BBE3C8F7-4D0A-478C-969F-3F20B55F9F06}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "network", "cpp_libraries\network\network.vcxproj", "{BBE3C8F7-4D0A-478C-969F-3F20B55F9F06}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logging_sample", "samples\logging_sample\logging_sample.vcxproj", "{F6318E57-EEC4-46C4-834E-A12841413365}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logging_sample", "cpp_samples\logging_sample\logging_sample.vcxproj", "{F6318E57-EEC4-46C4-834E-A12841413365}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "container_sample", "samples\container_sample\container_sample.vcxproj", "{601CFE72-DB93-4EEF-9782-84321F0DFA2D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "container_sample", "cpp_samples\container_sample\container_sample.vcxproj", "{601CFE72-DB93-4EEF-9782-84321F0DFA2D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "threads_sample", "samples\threads_sample\threads_sample.vcxproj", "{26EF1615-5BCC-431D-B446-775061C941DF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "threads_sample", "cpp_samples\threads_sample\threads_sample.vcxproj", "{26EF1615-5BCC-431D-B446-775061C941DF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "network_sample", "samples\network_sample\network_sample.vcxproj", "{299C85D1-A631-48B3-9CA9-14BCAA67E6D3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "network_sample", "cpp_samples\network_sample\network_sample.vcxproj", "{299C85D1-A631-48B3-9CA9-14BCAA67E6D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "micro_services", "micro_services", "{8E6ED347-8187-40C8-9E8B-F36645EEC5AF}"
 EndProject
@@ -29,9 +29,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "main_server", "micro_servic
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "middle_server", "micro_services\middle_server\middle_server.vcxproj", "{AE14A4E2-14BC-4F22-960D-38BA6DC746B3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "download_sample", "samples\download_sample\download_sample.vcxproj", "{CD9D24D1-9E92-4D3F-972C-91FDBDE51122}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "download_sample", "cpp_samples\download_sample\download_sample.vcxproj", "{CD9D24D1-9E92-4D3F-972C-91FDBDE51122}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "upload_sample", "samples\upload_sample\upload_sample.vcxproj", "{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "upload_sample", "cpp_samples\upload_sample\upload_sample.vcxproj", "{FC378800-49FF-4ECF-A2AD-9BCFEC89DDC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "csharp libraries", "csharp libraries", "{BCCECD71-C03D-46AB-898C-1C309CA20153}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
