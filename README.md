@@ -6,7 +6,7 @@ Normally, it is pretty hard to implement a TCP server and client with a proper t
 So, it will contain several systems like below,
 1. File log system
 2. Concurrency control by the thread pool system
-```mermaid
+```
 graph LR
 thread_pool(Thread Pool)
 send_worker(Send worker: top priority)
@@ -35,9 +35,9 @@ worker_1 -.get a job.- job_list_2
 worker_2 -.get a job.- job_list_2
 worker_3 -.get a job.- job_list_2
 ```
-3. Serializable data packet container
-4. Asynchronous multi-session TCP server
-5. Asynchronous TCP Client
+1. Serializable data packet container
+2. Asynchronous multi-session TCP server
+3. Asynchronous TCP Client
 
 And, it will provide functions like below,
 1. Callback functions for each sequence such as connection, receiving data and receiving file
