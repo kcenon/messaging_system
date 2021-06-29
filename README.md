@@ -6,38 +6,9 @@ Normally, it is pretty hard to implement a TCP server and client with a proper t
 So, it will contain several systems like below,
 1. File log system
 2. Concurrency control by the thread pool system
-```
-graph LR
-thread_pool(Thread Pool)
-send_worker(Send worker: top priority)
-worker_1(worker: high priority)
-worker_2(worker: normal priority)
-worker_3(worker: low priority)
-job_manager(job manager)
-job_list_1(external job list)
-job_list_2(internal job list)
-
-subgraph "Concurrent Process"
-subgraph "Thread Pool"
-thread_pool --- send_worker
-thread_pool --- worker_1
-thread_pool --- worker_2
-thread_pool --- worker_3
-end
-subgraph "Job Pool"
-job_list_1 --- job_manager
-job_list_2 --- job_manager
-end
-end
-
-send_worker -.get a job.- job_list_1
-worker_1 -.get a job.- job_list_2
-worker_2 -.get a job.- job_list_2
-worker_3 -.get a job.- job_list_2
-```
-1. Serializable data packet container
-2. Asynchronous multi-session TCP server
-3. Asynchronous TCP Client
+3. Serializable data packet container
+4. Asynchronous multi-session TCP server
+5. Asynchronous TCP Client
 
 And, it will provide functions like below,
 1. Callback functions for each sequence such as connection, receiving data and receiving file
