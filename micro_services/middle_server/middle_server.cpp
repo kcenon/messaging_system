@@ -12,6 +12,10 @@
 #include "values/ushort_value.h"
 #include "values/string_value.h"
 
+#ifdef _CONSOLE
+#include <Windows.h>
+#endif
+
 #include <signal.h>
 
 #include "fmt/format.h"
@@ -54,6 +58,10 @@ std::shared_ptr<messaging_client> _data_line = nullptr;
 std::shared_ptr<messaging_client> _file_line = nullptr;
 std::shared_ptr<messaging_server> _middle_server = nullptr;
 
+#ifdef _CONSOLE
+BOOL ctrl_handler(DWORD ctrl_type);
+#endif
+
 bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
 void create_middle_server(void);
 void create_data_line(void);
@@ -77,6 +85,10 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
+#ifdef _CONSOLE
+	SetConsoleCtrlHandler((PHANDLER_ROUTINE)ctrl_handler, TRUE);
+#endif
+
 	if (compress_mode)
 	{
 		compressor::set_block_bytes(compress_block_size);
@@ -99,6 +111,41 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
+#ifdef _CONSOLE
+BOOL ctrl_handler(DWORD ctrl_type)
+{
+	switch (ctrl_type)
+	{
+	case CTRL_C_EVENT:
+	case CTRL_CLOSE_EVENT:
+	case CTRL_LOGOFF_EVENT:
+	case CTRL_SHUTDOWN_EVENT:
+	case CTRL_BREAK_EVENT:
+		{
+			if (_middle_server != nullptr)
+			{
+				_middle_server->stop();
+				_middle_server.reset();
+			}
+			if (_data_line != nullptr)
+			{
+				_data_line->stop();
+				_data_line.reset();
+			}
+			if (_file_line != nullptr)
+			{
+				_file_line->stop();
+				_file_line.reset();
+			}
+			logger::handle().stop();
+		}
+		break;
+	}
+
+	return FALSE;
+}
+#endif
 
 bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 {
@@ -353,6 +400,11 @@ void connection_from_data_line(const std::wstring& target_id, const std::wstring
 		return;
 	}
 
+	if (_middle_server == nullptr)
+	{
+		return;
+	}
+
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 
 	_data_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
@@ -382,6 +434,11 @@ void connection_from_file_line(const std::wstring& target_id, const std::wstring
 		fmt::format(L"{} on middle server is {} from target: {}[{}]", _file_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
 
 	if (condition)
+	{
+		return;
+	}
+
+	if (_middle_server == nullptr)
 	{
 		return;
 	}

@@ -12,6 +12,10 @@
 #include <algorithm>
 #include <signal.h>
 
+#ifdef _CONSOLE
+#include <Windows.h>
+#endif
+
 #include "fmt/format.h"
 
 constexpr auto PROGRAM_NAME = L"main_server";
@@ -43,6 +47,10 @@ size_t session_limit_count = 0;
 
 std::shared_ptr<messaging_server> _main_server = nullptr;
 
+#ifdef _CONSOLE
+BOOL ctrl_handler(DWORD ctrl_type);
+#endif
+
 bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
 void create_main_server(void);
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
@@ -56,6 +64,10 @@ int main(int argc, char* argv[])
 	{
 		return 0;
 	}
+
+#ifdef _CONSOLE
+	SetConsoleCtrlHandler((PHANDLER_ROUTINE)ctrl_handler, TRUE);
+#endif
 
 	if (compress_mode)
 	{
@@ -74,6 +86,25 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
+#ifdef _CONSOLE
+BOOL ctrl_handler(DWORD ctrl_type)
+{
+	switch (ctrl_type)
+	{
+	case CTRL_C_EVENT:
+	case CTRL_CLOSE_EVENT:
+	case CTRL_LOGOFF_EVENT:
+	case CTRL_SHUTDOWN_EVENT:
+	case CTRL_BREAK_EVENT:
+		_main_server->stop();
+		logger::handle().stop();
+		break;
+	}
+
+	return FALSE;
+}
+#endif
 
 bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 {
