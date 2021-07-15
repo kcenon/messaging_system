@@ -17,6 +17,13 @@
 
 namespace container
 {
+	constexpr auto TARGET_ID = L"1";
+	constexpr auto TARGET_SUB_ID = L"2";
+	constexpr auto SOURCE_ID = L"3";
+	constexpr auto SOURCE_SUB_ID = L"4";
+	constexpr auto MESSAGE_TYPE = L"5";
+	constexpr auto MESSAGE_VERSION = L"6";
+
 	using namespace converting;
 	using namespace file_handling;
 
@@ -325,13 +332,13 @@ namespace container
 		fmt::format_to(std::back_inserter(result), L"@header={}", L"{");
 		if (_message_type != L"data_container")
 		{
-			fmt::format_to(std::back_inserter(result), L"[1,{}];", _target_id);
-			fmt::format_to(std::back_inserter(result), L"[2,{}];", _target_sub_id);
-			fmt::format_to(std::back_inserter(result), L"[3,{}];", _source_id);
-			fmt::format_to(std::back_inserter(result), L"[4,{}];", _source_sub_id);
+			fmt::format_to(std::back_inserter(result), L"[{},{}];", TARGET_ID, _target_id);
+			fmt::format_to(std::back_inserter(result), L"[{},{}];", TARGET_SUB_ID, _target_sub_id);
+			fmt::format_to(std::back_inserter(result), L"[{},{}];", SOURCE_ID, _source_id);
+			fmt::format_to(std::back_inserter(result), L"[{},{}];", SOURCE_SUB_ID, _source_sub_id);
 		}
-		fmt::format_to(std::back_inserter(result), L"[5,{}];", _message_type);
-		fmt::format_to(std::back_inserter(result), L"[6,{}];", _version);
+		fmt::format_to(std::back_inserter(result), L"[{},{}];", MESSAGE_TYPE, _message_type);
+		fmt::format_to(std::back_inserter(result), L"[{},{}];", MESSAGE_VERSION, _version);
 		fmt::format_to(std::back_inserter(result), L"{}", L"};");
 
 		if (!_parsed_data)
@@ -377,12 +384,12 @@ namespace container
 		std::wsregex_iterator header_end;
 		while (header_iter != header_end)
 		{
-			parsing((*header_iter)[1], L"1", (*header_iter)[2], _target_id);
-			parsing((*header_iter)[1], L"2", (*header_iter)[2], _target_sub_id);
-			parsing((*header_iter)[1], L"3", (*header_iter)[2], _source_id);
-			parsing((*header_iter)[1], L"4", (*header_iter)[2], _source_sub_id);
-			parsing((*header_iter)[1], L"5", (*header_iter)[2], _message_type);
-			parsing((*header_iter)[1], L"6", (*header_iter)[2], _version);
+			parsing((*header_iter)[1], TARGET_ID, (*header_iter)[2], _target_id);
+			parsing((*header_iter)[1], TARGET_SUB_ID, (*header_iter)[2], _target_sub_id);
+			parsing((*header_iter)[1], SOURCE_ID, (*header_iter)[2], _source_id);
+			parsing((*header_iter)[1], SOURCE_SUB_ID, (*header_iter)[2], _source_sub_id);
+			parsing((*header_iter)[1], MESSAGE_TYPE, (*header_iter)[2], _message_type);
+			parsing((*header_iter)[1], MESSAGE_VERSION, (*header_iter)[2], _version);
 
 			header_iter++;
 		}
