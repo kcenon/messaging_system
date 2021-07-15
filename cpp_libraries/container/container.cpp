@@ -341,13 +341,7 @@ namespace container
 			return result.data();
 		}
 
-		// data
-		fmt::format_to(std::back_inserter(result), L"@data={}", L"{");
-		for (auto& unit : _units)
-		{
-			fmt::format_to(std::back_inserter(result), L"{}", unit->serialize());
-		}
-		fmt::format_to(std::back_inserter(result), L"{}", L"};");
+		fmt::format_to(std::back_inserter(result), L"{}", datas());
 
 		return result.data();
 	}
@@ -408,8 +402,7 @@ namespace container
 			deserialize_values(_data_string, false);
 		}
 
-		fmt::wmemory_buffer result;
-		result.clear();
+		std::wstring result;
 
 		fmt::format_to(std::back_inserter(result), L"{}", L"<container>");
 		fmt::format_to(std::back_inserter(result), L"{}", L"<header>");
@@ -432,7 +425,7 @@ namespace container
 		fmt::format_to(std::back_inserter(result), L"{}", L"</values>");
 		fmt::format_to(std::back_inserter(result), L"{}", L"</container>");
 
-		return result.data();
+		return result;
 	}
 
 	const std::wstring value_container::to_json(void)
@@ -442,8 +435,7 @@ namespace container
 			deserialize_values(_data_string, false);
 		}
 
-		fmt::wmemory_buffer result;
-		result.clear();
+		std::wstring result;
 
 		fmt::format_to(std::back_inserter(result), L"{}", L"{");
 		fmt::format_to(std::back_inserter(result), L"{}", L"\"header\":[");
@@ -469,10 +461,10 @@ namespace container
 		fmt::format_to(std::back_inserter(result), L"{}", L"]");
 		fmt::format_to(std::back_inserter(result), L"{}", L"}");
 
-		return result.data();
+		return result;;
 	}
 
-	const std::wstring value_container::datas(void)
+	std::wstring value_container::datas(void) const
 	{
 		if (!_parsed_data)
 		{

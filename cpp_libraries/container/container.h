@@ -11,10 +11,10 @@ namespace container
 	{
 	public:
 		value_container(void);
-		value_container(const std::wstring& data_string, const bool& parse_only_header = false);
-		value_container(const std::vector<unsigned char>& data_array, const bool& parse_only_header = false);
-		value_container(const value_container& data_container, const bool& parse_only_header = false);
-		value_container(std::shared_ptr<value_container> data_container, const bool& parse_only_header = false);
+		value_container(const std::wstring& data_string, const bool& parse_only_header = true);
+		value_container(const std::vector<unsigned char>& data_array, const bool& parse_only_header = true);
+		value_container(const value_container& data_container, const bool& parse_only_header = true);
+		value_container(std::shared_ptr<value_container> data_container, const bool& parse_only_header = true);
 		value_container(const std::wstring& message_type, const std::vector<std::shared_ptr<value>>& units = {});
 		value_container(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& message_type = L"packet_container",
 			const std::vector<std::shared_ptr<value>>& units = {});
@@ -54,19 +54,19 @@ namespace container
 
 	public:
 		void initialize(void);
-
+		
 	public:
 		std::wstring serialize(void) const;
 		std::vector<unsigned char> serialize_array(void) const;
-		bool deserialize(const std::wstring& data_string, const bool& parse_only_header = false);
-		bool deserialize(const std::vector<unsigned char>& data_array, const bool& parse_only_header = false);
+		bool deserialize(const std::wstring& data_string, const bool& parse_only_header = true);
+		bool deserialize(const std::vector<unsigned char>& data_array, const bool& parse_only_header = true);
 
 	public:
 		const std::wstring to_xml(void);
 		const std::wstring to_json(void);
 
 	public:
-		const std::wstring datas(void);
+		std::wstring datas(void) const;
 
 	public:
 		void load_packet(const std::wstring& file_path);
@@ -91,7 +91,7 @@ namespace container
 		friend std::wstring& operator <<(std::wstring& out, std::shared_ptr<value_container> other);
 
 	protected:
-		bool deserialize_values(const std::wstring& data, const bool& parse_only_header);
+		bool deserialize_values(const std::wstring& data, const bool& parse_only_header = true);
 		void parsing(const std::wstring& source_name, const std::wstring& target_name, const std::wstring& target_value, std::wstring& target_variable);
 
 	private:
