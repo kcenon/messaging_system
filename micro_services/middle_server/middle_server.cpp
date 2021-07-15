@@ -123,21 +123,9 @@ BOOL ctrl_handler(DWORD ctrl_type)
 	case CTRL_SHUTDOWN_EVENT:
 	case CTRL_BREAK_EVENT:
 		{
-			if (_middle_server != nullptr)
-			{
-				_middle_server->stop();
-				_middle_server.reset();
-			}
-			if (_data_line != nullptr)
-			{
-				_data_line->stop();
-				_data_line.reset();
-			}
-			if (_file_line != nullptr)
-			{
-				_file_line->stop();
-				_file_line.reset();
-			}
+			_middle_server->stop();
+			_data_line->stop();
+			_file_line->stop();
 			logger::handle().stop();
 		}
 		break;

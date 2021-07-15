@@ -184,7 +184,6 @@ namespace network
 				{
 					logger::handle().write(logging::logging_level::information, fmt::format(L"start messaging_client({})", _source_id));
 					context->run();
-					logger::handle().write(logging::logging_level::information, fmt::format(L"stop messaging_client({})", _source_id));
 				}
 				catch (const std::overflow_error&) { 
 					if (_socket != nullptr) {
@@ -206,6 +205,7 @@ namespace network
 						logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with error", _source_id));
 					}
 				}
+				logger::handle().write(logging::logging_level::information, fmt::format(L"stop messaging_client({})", _source_id));
 				connection_notification(false);
 			}, _io_context);
 
