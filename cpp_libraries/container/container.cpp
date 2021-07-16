@@ -28,7 +28,7 @@ namespace container
 	using namespace file_handling;
 
 	value_container::value_container(void)
-		: _source_id(L""), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _message_type(L"data_container"), _version(L"1.0"),
+		: _source_id(L""), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _message_type(L"data_container"), _version(L"1.0.0.0"),
 		_parsed_data(true), _data_string(L"")
 	{
 	}
