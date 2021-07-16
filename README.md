@@ -35,9 +35,8 @@ To understand how to use this library, it provided several sample programs on th
 1. [logging_sample](https://github.com/kcenon/messaging_system/tree/main/samples/logging_sample): implemented how to use logging
 2. [container_sample](https://github.com/kcenon/messaging_system/tree/main/samples/container_sample): implemented how to use data container
 3. [threads_sample](https://github.com/kcenon/messaging_system/tree/main/samples/threads_sample): implemented how to use priority thread with job or callback function
-4. [network_sample](https://github.com/kcenon/messaging_system/tree/main/samples/network_sample): implemented how to use simple server and client
-5. [download_sample](https://github.com/kcenon/messaging_system/tree/main/samples/download_sample): implemented how to use file download via provided micro-server on the micro-services folder
-6. [upload_sample](https://github.com/kcenon/messaging_system/tree/main/samples/upload_sample): implemented how to use file upload via provided micro-server on the micro-services folder
+4. [download_sample](https://github.com/kcenon/messaging_system/tree/main/samples/download_sample): implemented how to use file download via provided micro-server on the micro-services folder
+5. [upload_sample](https://github.com/kcenon/messaging_system/tree/main/samples/upload_sample): implemented how to use file upload via provided micro-server on the micro-services folder
 
 ## License
 
