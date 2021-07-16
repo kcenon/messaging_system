@@ -229,6 +229,7 @@ void create_main_server(void)
 	_main_server->set_compress_mode(compress_mode);
 	_main_server->set_connection_key(connection_key);
 	_main_server->set_session_limit_count(session_limit_count);
+	_main_server->set_possible_session_types({ session_types::message_line, session_types::file_line });
 	_main_server->set_connection_notification(&connection);
 	_main_server->set_message_notification(&received_message);
 	_main_server->set_file_notification(&received_file);

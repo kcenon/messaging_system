@@ -107,13 +107,15 @@ namespace network
 		return _target_sub_id;
 	}
 
-	void messaging_session::start(const bool& encrypt_mode, const bool& compress_mode, const std::vector<std::wstring>& ignore_snipping_targets, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
+	void messaging_session::start(const bool& encrypt_mode, const bool& compress_mode, const std::vector<std::wstring>& ignore_snipping_targets, const std::vector<session_types>& possible_session_types, 
+		const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
 		stop();
 
 		_encrypt_mode = encrypt_mode;
 		_compress_mode = compress_mode;
 		_ignore_snipping_targets = ignore_snipping_targets;
+		_possible_session_types = possible_session_types;
 		_thread_pool = std::make_shared<threads::thread_pool>();
 
 		_thread_pool->append(std::make_shared<thread_worker>(priorities::top), true);

@@ -276,6 +276,7 @@ void create_middle_server(void)
 	_middle_server->set_compress_mode(compress_mode);
 	_middle_server->set_connection_key(middle_connection_key);
 	_middle_server->set_session_limit_count(session_limit_count);
+	_middle_server->set_possible_session_types({ session_types::message_line });
 	_middle_server->set_connection_notification(&connection_from_middle_server);
 	_middle_server->set_message_notification(&received_message_from_middle_server);
 	_middle_server->start(middle_server_port, high_priority_count, normal_priority_count, low_priority_count);
@@ -534,7 +535,6 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 
 	container->set_message_type(L"transfer_file");
 	
-
 	if (_file_line)
 	{
 		container << std::make_shared<container::string_value>(L"gateway_source_id", container->source_id());
