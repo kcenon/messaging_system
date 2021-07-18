@@ -244,7 +244,7 @@ namespace network
 		if (data.empty())
 		{
 			return;
-	}
+		}
 
 		for (auto& session : _sessions)
 		{
