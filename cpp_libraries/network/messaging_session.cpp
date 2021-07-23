@@ -132,9 +132,6 @@ namespace network
 			_thread_pool->append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 		}
 
-		// check connection message from client
-		_thread_pool->push(std::make_shared<job>(priorities::high, std::bind(&messaging_session::check_confirm_condition, this)));
-
 		read_start_code(_socket);
 
 		logger::handle().write(logging::logging_level::information, fmt::format(L"started session: {}:{}", 
@@ -345,18 +342,6 @@ namespace network
 		{
 			_connection(get_ptr() , false);
 		}
-	}
-
-	bool messaging_session::check_confirm_condition(void)
-	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-
-		if (!_confirm)
-		{
-			disconnected();
-		}
-
-		return true;
 	}
 
 	bool messaging_session::contained_snipping_target(const std::wstring& snipping_target)
