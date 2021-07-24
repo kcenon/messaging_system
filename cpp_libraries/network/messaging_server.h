@@ -2,6 +2,7 @@
 
 #include "container.h"
 #include "session_types.h"
+#include "thread_pool.h"
 
 #include <memory>
 #include <vector>
@@ -53,6 +54,7 @@ namespace network
 
 	protected:
 		void wait_connection(void);
+		bool check_confirm_condition(void);
 		void connect_condition(std::shared_ptr<messaging_session> target, const bool& condition);
 
 	private:
@@ -86,5 +88,8 @@ namespace network
 		std::function<void(std::shared_ptr<container::value_container>)> _received_message;
 		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)> _received_file;
 		std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)> _received_data;
+
+	private:
+		std::shared_ptr<threads::thread_pool> _thread_pool;
 	};
 }

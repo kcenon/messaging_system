@@ -3,6 +3,8 @@
 #include "logging.h"
 #include "converting.h"
 #include "messaging_session.h"
+#include "thread_worker.h"
+#include "job.h"
 
 #include "fmt/format.h"
 
@@ -11,6 +13,7 @@
 namespace network
 {
 	using namespace logging;
+	using namespace threads;
 	using namespace converting;
 
 	messaging_server::messaging_server(const std::wstring& source_id)
@@ -85,6 +88,9 @@ namespace network
 	{
 		stop();
 
+		_thread_pool = std::make_shared<threads::thread_pool>();
+		_thread_pool->append(std::make_shared<thread_worker>(priorities::high), true);
+
 		_high_priority = high_priority;
 		_normal_priority = normal_priority;
 		_low_priority = low_priority;
@@ -128,6 +134,12 @@ namespace network
 
 	void messaging_server::stop(void)
 	{
+		if (_thread_pool != nullptr)
+		{
+			_thread_pool->stop();
+			_thread_pool.reset();
+		}
+
 		if (_acceptor != nullptr)
 		{
 			if (_acceptor->is_open())
@@ -292,8 +304,31 @@ namespace network
 
 				_sessions.push_back(session);
 
+				_thread_pool->push(std::make_shared<job>(priorities::high, std::bind(&messaging_server::check_confirm_condition, this)));
+
 				wait_connection();
 			});
+	}
+
+	bool messaging_server::check_confirm_condition(void)
+	{
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+
+		std::vector<std::shared_ptr<messaging_session>> sessions = _sessions;
+		for (auto& session : sessions)
+		{
+			if (session == nullptr)
+			{
+				continue;
+			}
+
+			if (session->get_confirom_status() == session_conditions::expired)
+			{
+				connect_condition(session, false);
+			}
+		}
+
+		return true;
 	}
 
 	void messaging_server::connect_condition(std::shared_ptr<messaging_session> target, const bool& condition)

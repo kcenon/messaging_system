@@ -29,7 +29,7 @@ namespace network
 	using namespace file_handling;
 
 	messaging_session::messaging_session(const std::wstring& source_id, const std::wstring& connection_key, asio::ip::tcp::socket& socket)
-		: data_handling(246, 135), _confirm(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _received_message(nullptr),
+		: data_handling(246, 135), _confirm(session_conditions::waiting), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _received_message(nullptr),
 		_key(L""), _iv(L""), _thread_pool(nullptr), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), 
 		_connection_key(connection_key), _received_file(nullptr), _received_data(nullptr), _connection(nullptr), _kill_code(false),
 		_socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket)))
@@ -92,6 +92,11 @@ namespace network
 		_received_data = notification;
 	}
 
+	const session_conditions messaging_session::get_confirom_status(void)
+	{
+		return _confirm;
+	}
+
 	const session_types messaging_session::get_session_type(void)
 	{
 		return _session_type;
@@ -131,6 +136,8 @@ namespace network
 		{
 			_thread_pool->append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 		}
+
+		_thread_pool->push(std::make_shared<job>(priorities::high, std::bind(&messaging_session::check_confirm_condition, this)));
 
 		read_start_code(_socket);
 
@@ -342,6 +349,20 @@ namespace network
 		{
 			_connection(get_ptr() , false);
 		}
+	}
+
+	bool messaging_session::check_confirm_condition(void)
+	{
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+
+		if (_confirm == session_conditions::confirmed)
+		{
+			return true;
+		}
+
+		_confirm = session_conditions::expired;
+
+		return true;
 	}
 
 	bool messaging_session::contained_snipping_target(const std::wstring& snipping_target)
@@ -739,7 +760,7 @@ namespace network
 			return false;
 		}
 
-		if (!_confirm)
+		if (_confirm != session_conditions::confirmed)
 		{
 			return false;
 		}
@@ -794,7 +815,7 @@ namespace network
 			return false;
 		}
 
-		_confirm = true;
+		_confirm = session_conditions::confirmed;
 
 		// check snipping target list
 		std::shared_ptr<value> acceptable_snipping_targets = std::make_shared<container::container_value>(L"snipping_targets");
@@ -864,7 +885,7 @@ namespace network
 			return false;
 		}
 
-		if (!_confirm)
+		if (_confirm != session_conditions::confirmed)
 		{
 			return false;
 		}
@@ -894,7 +915,7 @@ namespace network
 			return false;
 		}
 
-		if (!_confirm)
+		if (_confirm != session_conditions::confirmed)
 		{
 			return false;
 		}

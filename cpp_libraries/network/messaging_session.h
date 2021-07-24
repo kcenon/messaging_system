@@ -31,6 +31,7 @@ namespace network
 		void set_binary_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)>& notification);
 
 	public:
+		const session_conditions get_confirom_status(void);
 		const session_types get_session_type(void);
 		const std::wstring target_id(void);
 		const std::wstring target_sub_id(void);
@@ -52,6 +53,7 @@ namespace network
 		void disconnected(void) override;
 
 	protected:
+		bool check_confirm_condition(void);
 		bool contained_snipping_target(const std::wstring& snipping_target);
 
 		// packet
@@ -101,7 +103,7 @@ namespace network
 		bool same_id_check(void);
 
 	private:
-		bool _confirm;
+		session_conditions _confirm;
 		bool _kill_code;
 		bool _auto_echo;
 		bool _bridge_line;
