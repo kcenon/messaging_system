@@ -267,7 +267,7 @@ namespace network
 			return;
 		}
 
-		if (_session_type != session_types::message_line)
+		if (_session_type == session_types::binary_line)
 		{
 			return;
 		}
