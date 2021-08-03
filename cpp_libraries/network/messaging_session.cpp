@@ -72,6 +72,16 @@ namespace network
 		_kill_code = kill_code;
 	}
 
+	void messaging_session::set_ignore_target_ids(const std::vector<std::wstring>& ignore_target_ids)
+	{
+		_ignore_target_ids = ignore_target_ids;
+	}
+
+	void messaging_session::set_ignore_snipping_targets(const std::vector<std::wstring>& ignore_snipping_targets)
+	{
+		_ignore_snipping_targets = ignore_snipping_targets;
+	}
+
 	void messaging_session::set_connection_notification(const std::function<void(std::shared_ptr<messaging_session>, const bool&)>& notification)
 	{
 		_connection = notification;
@@ -112,14 +122,13 @@ namespace network
 		return _target_sub_id;
 	}
 
-	void messaging_session::start(const bool& encrypt_mode, const bool& compress_mode, const std::vector<std::wstring>& ignore_snipping_targets, const std::vector<session_types>& possible_session_types, 
+	void messaging_session::start(const bool& encrypt_mode, const bool& compress_mode, const std::vector<session_types>& possible_session_types, 
 		const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
 		stop();
 
 		_encrypt_mode = encrypt_mode;
 		_compress_mode = compress_mode;
-		_ignore_snipping_targets = ignore_snipping_targets;
 		_possible_session_types = possible_session_types;
 		_thread_pool = std::make_shared<threads::thread_pool>();
 
@@ -345,10 +354,7 @@ namespace network
 	{
 		stop();
 
-		if (_connection != nullptr)
-		{
-			_connection(get_ptr() , false);
-		}
+		_confirm = session_conditions::expired;
 	}
 
 	bool messaging_session::check_confirm_condition(void)
@@ -788,6 +794,17 @@ namespace network
 			_confirm = session_conditions::expired;
 
 			return false;
+		}
+
+		if (!_ignore_target_ids.empty())
+		{
+			auto target = std::find(_ignore_target_ids.begin(), _ignore_target_ids.end(), _target_id);
+			if (target != _ignore_target_ids.end())
+			{
+				_confirm = session_conditions::expired;
+
+				return false;
+			}
 		}
 
 		if (_kill_code)

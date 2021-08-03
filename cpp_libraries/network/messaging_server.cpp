@@ -49,6 +49,11 @@ namespace network
 		_connection_key = connection_key;
 	}
 
+	void messaging_server::set_ignore_target_ids(const std::vector<std::wstring>& ignore_target_ids)
+	{
+		_ignore_target_ids = ignore_target_ids;
+	}
+
 	void messaging_server::set_ignore_snipping_targets(const std::vector<std::wstring>& ignore_snipping_targets)
 	{
 		_ignore_snipping_targets = ignore_snipping_targets;
@@ -295,12 +300,14 @@ namespace network
 					session->set_kill_code(_sessions.size() >= _session_limit_count);
 				}
 
+				session->set_ignore_target_ids(_ignore_target_ids);
+				session->set_ignore_snipping_targets(_ignore_snipping_targets);
 				session->set_connection_notification(std::bind(&messaging_server::connect_condition, this, std::placeholders::_1, std::placeholders::_2));
 				session->set_message_notification(std::bind(&messaging_server::received_message, this, std::placeholders::_1));
 				session->set_file_notification(_received_file);
 				session->set_binary_notification(std::bind(&messaging_server::received_binary, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
 
-				session->start(_encrypt_mode, _compress_mode, _ignore_snipping_targets, _possible_session_types, _high_priority, _normal_priority, _low_priority);
+				session->start(_encrypt_mode, _compress_mode, _possible_session_types, _high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);
 
@@ -338,15 +345,6 @@ namespace network
 			return;
 		}
 
-		std::thread thread([this](const std::wstring& target_id, const std::wstring& target_sub_id, const bool& connection)
-			{
-				if (_connection)
-				{
-					_connection(target_id, target_sub_id, connection);
-				}
-			}, target->target_id(), target->target_sub_id(), condition);
-		thread.detach();
-
 		if (!condition)
 		{
 			auto iter = std::find(_sessions.begin(), _sessions.end(), target);
@@ -355,6 +353,15 @@ namespace network
 				_sessions.erase(iter);
 			}
 		}
+
+		std::thread thread([this](const std::wstring& target_id, const std::wstring& target_sub_id, const bool& connection)
+			{
+				if (_connection)
+				{
+					_connection(target_id, target_sub_id, connection);
+				}
+			}, target->target_id(), target->target_sub_id(), condition);
+		thread.detach();
 	}
 
 	void messaging_server::received_message(std::shared_ptr<container::value_container> message)

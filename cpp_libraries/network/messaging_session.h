@@ -25,6 +25,8 @@ namespace network
 
 	public:
 		void set_kill_code(const bool& kill_code);
+		void set_ignore_target_ids(const std::vector<std::wstring>& ignore_target_ids);
+		void set_ignore_snipping_targets(const std::vector<std::wstring>& ignore_snipping_targets);
 		void set_connection_notification(const std::function<void(std::shared_ptr<messaging_session>, const bool&)>& notification);
 		void set_message_notification(const std::function<void(std::shared_ptr<container::value_container>)>& notification);
 		void set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification);
@@ -37,7 +39,7 @@ namespace network
 		const std::wstring target_sub_id(void);
 
 	public:
-		void start(const bool& encrypt_mode, const bool& compress_mode, const std::vector<std::wstring>& ignore_snipping_targets, const std::vector<session_types>& possible_session_types, 
+		void start(const bool& encrypt_mode, const bool& compress_mode, const std::vector<session_types>& possible_session_types, 
 			const unsigned short& high_priority = 8, const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
 		void stop(void);
 
@@ -114,6 +116,7 @@ namespace network
 		std::wstring _target_sub_id;
 		std::wstring _connection_key;
 		std::vector<std::wstring> _snipping_targets;
+		std::vector<std::wstring> _ignore_target_ids;
 		std::vector<std::wstring> _ignore_snipping_targets;
 		std::vector<session_types> _possible_session_types;
 
