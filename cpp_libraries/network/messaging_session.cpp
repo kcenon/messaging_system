@@ -783,12 +783,16 @@ namespace network
 		_target_id = message->source_id();
 		_session_type = (session_types)message->get_value(L"session_type")->to_short();
 
+		if (_source_id == _target_id)
+		{
+			_confirm = session_conditions::expired;
+
+			return false;
+		}
+
 		if (_kill_code)
 		{
-			if (_connection)
-			{
-				_connection(get_ptr(), false);
-			}
+			_confirm = session_conditions::expired;
 
 			return false;
 		}
@@ -796,10 +800,7 @@ namespace network
 		// check connection key
 		if (!same_key_check(message->get_value(L"connection_key")))
 		{
-			if (_connection)
-			{
-				_connection(get_ptr(), false);
-			}
+			_confirm = session_conditions::expired;
 
 			return false;
 		}
@@ -807,10 +808,7 @@ namespace network
 		// compare both session id an client id
 		if (!same_id_check())
 		{
-			if (_connection)
-			{
-				_connection(get_ptr(), false);
-			}
+			_confirm = session_conditions::expired;
 
 			return false;
 		}
