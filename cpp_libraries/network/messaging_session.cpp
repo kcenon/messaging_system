@@ -354,7 +354,10 @@ namespace network
 	{
 		stop();
 
-		_confirm = session_conditions::expired;
+		if (_connection)
+		{
+			_connection(get_ptr(), false);
+		}
 	}
 
 	bool messaging_session::check_confirm_condition(void)

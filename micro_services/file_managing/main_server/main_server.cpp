@@ -97,7 +97,8 @@ BOOL ctrl_handler(DWORD ctrl_type)
 	case CTRL_LOGOFF_EVENT:
 	case CTRL_SHUTDOWN_EVENT:
 	case CTRL_BREAK_EVENT:
-		_main_server->stop();
+		_main_server.reset();
+
 		logger::handle().stop();
 		break;
 	}
