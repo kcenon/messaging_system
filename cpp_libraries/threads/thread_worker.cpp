@@ -64,17 +64,13 @@ namespace threads
 			return;
 		}
 
-		for (auto& other : _others)
+		auto target = std::find(_others.begin(), _others.end(), priority);
+		if (target == _others.end())
 		{
-			if (other != _priority)
-			{
-				continue;
-			}
-
-			_condition.notify_one();
-
 			return;
 		}
+
+		_condition.notify_one();
 	}
 
 	void thread_worker::run(void)
