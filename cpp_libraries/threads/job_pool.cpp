@@ -41,6 +41,8 @@ namespace threads
 			return;
 		}
 
+		new_job->set_job_pool(get_ptr());
+
 		std::scoped_lock<std::mutex> guard(_mutex);
 
 		auto iterator = _jobs.find(new_job->priority());

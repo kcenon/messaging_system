@@ -25,6 +25,7 @@ Secondly, should install libraries like below followed vcpkg install rule,
 2. [fmt library](https://github.com/fmtlib/fmt): to support string formatting
 3. [cryptopp library](https://www.cryptopp.com/): to support data encryption
 4. [lz4 library](https://github.com/lz4/lz4): to support data compression
+5. [Chakra library](https://github.com/chakra-core/ChakraCore): to support javascript engine
 
 After all installations, you can build this project with Visual Studio 2019.
 

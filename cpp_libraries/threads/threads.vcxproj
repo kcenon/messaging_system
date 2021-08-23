@@ -101,7 +101,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../utilities/;../container/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -123,7 +123,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../utilities/;../container/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -145,7 +145,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../utilities/;../container/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -167,7 +167,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../utilities/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../utilities/;../container/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -192,6 +192,9 @@
     <ClCompile Include="thread_worker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\container\container.vcxproj">
+      <Project>{82a9da7d-8e60-4e90-9061-88e6f7756387}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\utilities\utilities.vcxproj">
       <Project>{6a8e08f7-e020-4926-9e2c-4dc01802ba20}</Project>
     </ProjectReference>

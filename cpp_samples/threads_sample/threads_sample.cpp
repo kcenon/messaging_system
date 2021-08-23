@@ -145,6 +145,13 @@ int main(int argc, char* argv[])
 		manager.push(std::make_shared<test2_job>(priorities::low));
 	}
 
+	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
+	{
+		manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"(()=>{return \'테스트5_high_in_thread\';})()")));
+		manager.push(std::make_shared<job>(priorities::normal, converter::to_array(L"(()=>{return \'테스트5_normal_in_thread\';})()")));
+		manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"(()=>{return \'테스트5_low_in_thread\';})()")));
+	}
+
 	manager.start();
 	manager.stop(false);
 

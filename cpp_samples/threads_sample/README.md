@@ -1,4 +1,4 @@
-## How to use priority thread
+﻿## How to use priority thread
 
 Basically, this thread library can support thread handling with multi-workers to an inherited job and a callback function.
 
@@ -87,15 +87,18 @@ protected:
         switch (priority())
         {
         case priorities::high: 
-            logger::handle().write(logging_level::information, L"test4_high_in_thread", start);
+            logger::handle().write(logging_level::information, 
+                L"test4_high_in_thread", start);
             break;
-	case priorities::normal:
-            logger::handle().write(logging_level::information, L"test4_normal_in_thread", start);
+        case priorities::normal:
+            logger::handle().write(logging_level::information, 
+                L"test4_normal_in_thread", start);
             break;
         case priorities::low:
-            logger::handle().write(logging_level::information, L"test4_low_in_thread", start);
+            logger::handle().write(logging_level::information, 
+                L"test4_low_in_thread", start);
             break;
-        }		
+        }
 
         return true;
     }
@@ -151,6 +154,16 @@ int main(int argc, char* argv[])
         manager.push(std::make_shared<test2_job>(priorities::high));
         manager.push(std::make_shared<test2_job>(priorities::normal));
         manager.push(std::make_shared<test2_job>(priorities::low));
+    }
+
+    for (unsigned int log_index = 0; log_index < 1000; ++log_index)
+    {
+        manager.push(std::make_shared<job>(priorities::high, 
+            converter::to_array(L"(()=>{return \'테스트5_high_in_thread\';})()")));
+        manager.push(std::make_shared<job>(priorities::normal, 
+            converter::to_array(L"(()=>{return \'테스트5_normal_in_thread\';})()")));
+        manager.push(std::make_shared<job>(priorities::low, 
+            converter::to_array(L"(()=>{return \'테스트5_low_in_thread\';})()")));
     }
 
     // If you want to check the thread-safe of priority job-pool, 
