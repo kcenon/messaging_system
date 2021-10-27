@@ -16,6 +16,7 @@
 #include "data_lengths.h"
 #include "file_handling.h"
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 namespace network

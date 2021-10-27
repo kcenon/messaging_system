@@ -1,5 +1,6 @@
 #include "container_value.h"
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 #include <algorithm>

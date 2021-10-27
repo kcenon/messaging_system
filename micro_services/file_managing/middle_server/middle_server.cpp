@@ -18,6 +18,7 @@
 
 #include <signal.h>
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 constexpr auto PROGRAM_NAME = L"middle_server";

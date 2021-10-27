@@ -3,6 +3,7 @@
 #include "job.h"
 #include "logging.h"
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 namespace threads

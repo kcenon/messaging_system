@@ -2,6 +2,7 @@
 
 #include <codecvt>
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 #include "cryptopp/base64.h"
 

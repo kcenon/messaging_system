@@ -6,6 +6,7 @@
 #include "values/string_value.h"
 #include "job_pool.h"
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 #include "ChakraCore.h"
 

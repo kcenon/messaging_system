@@ -19,6 +19,7 @@
 
 #include <sstream>
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 namespace container
@@ -167,13 +168,13 @@ namespace container
 
 		std::vector<std::shared_ptr<value>> result_list;
 
-		std::for_each(_units.begin(), _units.end(), [&result_list](std::shared_ptr<value> source) 
+		for (auto& unit : _units)
+		{
+			if (unit->is_container())
 			{
-				if (source->is_container())
-				{
-					result_list.push_back(source);
-				}
-			});
+				result_list.push_back(unit);
+			}
+		};
 
 		return result_list;
 	}
@@ -182,13 +183,13 @@ namespace container
 	{
 		std::vector<std::shared_ptr<value>> result_list;
 
-		std::for_each(_units.begin(), _units.end(), [&key, &result_list](std::shared_ptr<value> source) 
+		for (auto& unit : _units)
+		{
+			if (unit->name() == key)
 			{
-				if (source->name() == key)
-				{
-					result_list.push_back(source);
-				}
-			});
+				result_list.push_back(unit);
+			}
+		};
 
 		return result_list;
 	}

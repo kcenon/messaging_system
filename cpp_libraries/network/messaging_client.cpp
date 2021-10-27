@@ -21,6 +21,7 @@
 
 #include <functional>
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 namespace network

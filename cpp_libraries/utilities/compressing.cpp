@@ -5,6 +5,7 @@
 #include "lz4.h"
 
 #include "fmt/format.h"
+#include "fmt/xchar.h"
 
 namespace compressing
 {

@@ -16,6 +16,7 @@
 #include <Windows.h>
 #endif
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 constexpr auto PROGRAM_NAME = L"main_server";

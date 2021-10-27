@@ -12,6 +12,7 @@
 #include "values/ullong_value.h"
 #include "values/container_value.h"
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 #include <limits.h>

@@ -2,6 +2,7 @@
 
 #include "argument_parsing.h"
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 #include <iostream>

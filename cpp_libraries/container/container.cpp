@@ -13,6 +13,7 @@
 #include <regex>
 #include <sstream>
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 namespace container

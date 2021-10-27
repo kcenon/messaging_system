@@ -1,5 +1,6 @@
 #include "ullong_value.h"
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 namespace container
