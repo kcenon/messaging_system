@@ -1,8 +1,6 @@
 ## What is?
 Normally, it is pretty hard to implement a TCP server and client with a proper thread system in the C++ language. To support newbie's desire to make their own TCP communication system, I planned its project.
 
-[![deepcode](https://www.deepcode.ai/api/gh/badge?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF0Zm9ybTEiOiJnaCIsIm93bmVyMSI6ImtjZW5vbiIsInJlcG8xIjoibWVzc2FnaW5nX3N5c3RlbSIsImluY2x1ZGVMaW50IjpmYWxzZSwiYXV0aG9ySWQiOjI5ODcwLCJpYXQiOjE2MjEyNjMzOTN9.-KzDKL9SaIF4Ep0S2JjPYg6PooKzgWkEM6RrcpuA954)](https://www.deepcode.ai/app/gh/kcenon/messaging_system/_/dashboard?utm_content=gh%2Fkcenon%2Fmessaging_system)
-
 So, it will contain several systems like below,
 1. File log system
 2. Concurrency control by the thread pool system
