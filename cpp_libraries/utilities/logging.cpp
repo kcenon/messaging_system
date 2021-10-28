@@ -1,6 +1,7 @@
 #include "logging.h"
 
 #include "file_handler.h"
+#include "datetime_handler.h"
 
 #include "fmt/chrono.h"
 #include "fmt/format.h"
@@ -17,6 +18,7 @@
 namespace logging
 {
 	using namespace file_handler;
+	using namespace datetime_handler;
 
 	logger::logger(void) : _target_level(logging_level::information), _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
 	{
@@ -32,7 +34,8 @@ namespace logging
 
 	}
 
-	bool logger::start(const std::wstring& store_log_file_name, const std::wstring& store_log_extention, const std::wstring& store_log_root_path, const bool& append_date_on_file_name)
+	bool logger::start(const std::wstring& store_log_file_name, const std::wstring& store_log_extention, const std::wstring& store_log_root_path, 
+		const bool& append_date_on_file_name, const unsigned short& places_of_decimal)
 	{
 		stop();
 
@@ -40,6 +43,7 @@ namespace logging
 		_store_log_extention = store_log_extention;
 		_store_log_root_path = store_log_root_path;
 		_append_date_on_file_name.store(append_date_on_file_name);
+		_places_of_decimal = places_of_decimal;
 
 		_thread = std::thread(&logger::run, this);
 
@@ -223,14 +227,14 @@ namespace logging
 		}
 
 		std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
-		auto seconds = get_under_seconds(current.time_since_epoch());
+		auto time_string = datetime::time(current, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			store_log(file, fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][{}]\n", fmt::localtime(current), std::get<0>(seconds), std::get<1>(seconds), flag));
+			store_log(file, fmt::format(L"[{:%Y-%m-%d} {}][{}]\n", fmt::localtime(current), time_string, flag));
 		}
 		else
 		{
-			store_log(file, fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][{}]\n", fmt::localtime(current), std::get<0>(seconds), std::get<1>(seconds), flag));
+			store_log(file, fmt::format(L"[{}][{}]\n", time_string, flag));
 		}
 
 		_commit(file);
@@ -269,65 +273,57 @@ namespace logging
 
 	std::wstring logger::exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto seconds = get_under_seconds(time.time_since_epoch());
+		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][EXCEPTION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
+			return fmt::format(L"[{:%Y-%m-%d} {}][EXCEPTION]: {}\n", fmt::localtime(time), time_string, data);
 		}
 		
-		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][EXCEPTION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
+		return fmt::format(L"[{}][EXCEPTION]: {}\n", time_string, data);
 	}
 
 	std::wstring logger::error_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto seconds = get_under_seconds(time.time_since_epoch());
+		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][ERROR]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
+			return fmt::format(L"[{:%Y-%m-%d} {}][ERROR]: {}\n", fmt::localtime(time), time_string, data);
 		}
 
-		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][ERROR]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
+		return fmt::format(L"[{}][ERROR]: {}\n", time_string, data);
 	}
 
 	std::wstring logger::information_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto seconds = get_under_seconds(time.time_since_epoch());
+		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][INFORMATION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
+			return fmt::format(L"[{:%Y-%m-%d} {}][INFORMATION]: {}\n", fmt::localtime(time), time_string, data);
 		}
 
-		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][INFORMATION]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
+		return fmt::format(L"[{}][INFORMATION]: {}\n", time_string, data);
 	}
 
 	std::wstring logger::sequence_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto seconds = get_under_seconds(time.time_since_epoch());
+		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][SEQUENCE]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
+			return fmt::format(L"[{:%Y-%m-%d} {}][SEQUENCE]: {}\n", fmt::localtime(time), time_string, data);
 		}
 
-		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][SEQUENCE]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
+		return fmt::format(L"[{}][SEQUENCE]: {}\n", time_string, data);
 	}
 
 	std::wstring logger::parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
 	{
-		auto seconds = get_under_seconds(time.time_since_epoch());
+		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d %H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
+			return fmt::format(L"[{:%Y-%m-%d} {}][PARAMETER]: {}\n", fmt::localtime(time), time_string, data);
 		}
 
-		return fmt::format(L"[{:%H:%M:%S}.{:0>3}{:0>3}][PARAMETER]: {}\n", fmt::localtime(time), std::get<0>(seconds), std::get<1>(seconds), data);
-	}
-
-	std::tuple<long long, long long> logger::get_under_seconds(const std::chrono::system_clock::duration& duration)
-	{
-		return { 
-			std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() % 1000 ,
-			std::chrono::duration_cast<std::chrono::microseconds>(duration).count() % 1000 
-		};
+		return fmt::format(L"[{}][PARAMETER]: {}\n", time_string, data);
 	}
 
 #pragma region singleton

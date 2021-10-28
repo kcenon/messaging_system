@@ -54,6 +54,8 @@ public:
 	test_job(const priorities& priority, const std::vector<unsigned char>& data) : job(priority)
 	{
 		_data = data;
+
+		save();
 	}
 
 protected:

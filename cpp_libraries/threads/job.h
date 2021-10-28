@@ -13,9 +13,9 @@ namespace threads
 	{
 	public:
 		job(const priorities& priority);
-		job(const priorities& priority, const std::vector<unsigned char>& data, const bool& temporary_stored = false);
+		job(const priorities& priority, const std::vector<unsigned char>& data);
 		job(const priorities& priority, const std::function<bool(void)>& working_callback);
-		job(const priorities& priority, const std::vector<unsigned char>& data, const std::function<bool(const std::vector<unsigned char>&)>& working_callback, const bool& temporary_stored = false);
+		job(const priorities& priority, const std::vector<unsigned char>& data, const std::function<bool(const std::vector<unsigned char>&)>& working_callback);
 		~job(void);
 
 	public:
@@ -28,6 +28,7 @@ namespace threads
 		void set_job_pool(std::shared_ptr<job_pool> job_pool);
 
 	public:
+		void save(void);
 		bool work(const priorities& worker_priority);
 
 	protected:
@@ -37,7 +38,6 @@ namespace threads
 		std::wstring do_script(const std::wstring& script);
 
 	private:
-		void save(void);
 		void load(void);
 
 	private:

@@ -27,7 +27,8 @@ namespace logging
 		~logger(void);
 
 	public:
-		bool start(const std::wstring& store_log_file_name = L"log", const std::wstring& store_log_extention = L"log", const std::wstring& store_log_root_path = L"", const bool& append_date_on_file_name = true);
+		bool start(const std::wstring& store_log_file_name = L"log", const std::wstring& store_log_extention = L"log", 
+			const std::wstring& store_log_root_path = L"", const bool& append_date_on_file_name = true, const unsigned short& places_of_decimal = 7);
 		bool stop(void);
 
 	public:
@@ -55,9 +56,6 @@ namespace logging
 		std::wstring parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
 
 	private:
-		std::tuple<long long, long long> get_under_seconds(const std::chrono::system_clock::duration& duration);
-
-	private:
 		std::vector<std::tuple<logging_level, std::chrono::system_clock::time_point,std::wstring>> _buffer;
 
 	private:
@@ -65,6 +63,7 @@ namespace logging
 		std::wstring _store_log_root_path;
 		std::wstring _store_log_file_name;
 		std::wstring _store_log_extention;
+		unsigned short _places_of_decimal;
 
 	private:
 		std::atomic<bool> _thread_stop{ true };
