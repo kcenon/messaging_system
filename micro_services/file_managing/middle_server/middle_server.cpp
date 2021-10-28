@@ -5,7 +5,7 @@
 #include "messaging_client.h"
 #include "compressing.h"
 #include "file_manager.h"
-#include "argument_parsing.h"
+#include "argument_parser.h"
 
 #include "value.h"
 #include "values/bool_value.h"
@@ -26,7 +26,7 @@ constexpr auto PROGRAM_NAME = L"middle_server";
 using namespace logging;
 using namespace network;
 using namespace compressing;
-using namespace argument_parsing;
+using namespace argument_parser;
 
 #ifdef _DEBUG
 bool write_console = true;
@@ -81,7 +81,7 @@ void display_help(void);
 
 int main(int argc, char* argv[])
 {
-	if (!parse_arguments(argument_parser::parse(argc, argv)))
+	if (!parse_arguments(argument::parse(argc, argv)))
 	{
 		return 0;
 	}

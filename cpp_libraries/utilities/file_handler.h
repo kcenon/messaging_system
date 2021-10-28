@@ -3,9 +3,9 @@
 #include <string>
 #include <vector>
 
-namespace file_handling
+namespace file_handler
 {
-	class file_handler
+	class file
 	{
 	public:
 		static bool remove(const std::wstring& path);

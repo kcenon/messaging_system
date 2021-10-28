@@ -1,10 +1,14 @@
 ﻿#include "job.h"
 
 #include "logging.h"
-#include "container.h"
-#include "converting.h"
-#include "values/string_value.h"
 #include "job_pool.h"
+#include "converting.h"
+#include "folder_handler.h"
+#include "datetime_handler.h"
+#include "file_handler.h"
+
+#include "container.h"
+#include "values/string_value.h"
 
 #include "fmt/xchar.h"
 #include "fmt/format.h"
@@ -15,25 +19,32 @@ namespace threads
 	using namespace logging;
 	using namespace container;
 	using namespace converting;
+	using namespace file_handler;
+	using namespace folder_handler;
+	using namespace datetime_handler;
 
 	job::job(const priorities& priority)
-		: _priority(priority), _working_callback(nullptr), _working_callback2(nullptr)
+		: _priority(priority), _working_callback(nullptr), _working_callback2(nullptr), _temporary_stored(false), _temporary_stored_path(L"")
 	{
+		save();
 	}
 
-	job::job(const priorities& priority, const std::vector<unsigned char>& data)
-		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(nullptr)
+	job::job(const priorities& priority, const std::vector<unsigned char>& data, const bool& temporary_stored)
+		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(nullptr), _temporary_stored(temporary_stored), _temporary_stored_path(L"")
 	{
+		save();
 	}
 
 	job::job(const priorities& priority, const std::function<bool(void)>& working_callback)
-		: _priority(priority), _working_callback(working_callback), _working_callback2(nullptr)
+		: _priority(priority), _working_callback(working_callback), _working_callback2(nullptr), _temporary_stored(false), _temporary_stored_path(L"")
 	{
+		save();
 	}
 
-	job::job(const priorities& priority, const std::vector<unsigned char>& data, const std::function<bool(const std::vector<unsigned char>&)>& working_callback)
-		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(working_callback)
+	job::job(const priorities& priority, const std::vector<unsigned char>& data, const std::function<bool(const std::vector<unsigned char>&)>& working_callback, const bool& temporary_stored)
+		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(working_callback), _temporary_stored(temporary_stored), _temporary_stored_path(L"")
 	{
+		save();
 	}
 
 	job::~job(void)
@@ -57,6 +68,8 @@ namespace threads
 
 	bool job::work(const priorities& worker_priority)
 	{
+		load();
+
 		if (_working_callback != nullptr)
 		{
 			bool result = _working_callback();
@@ -151,5 +164,28 @@ namespace threads
 		JsDisposeRuntime(runtime);
 
 		return resultW;
+	}
+
+	void job::save(void)
+	{
+		if (!_temporary_stored)
+		{
+			return;
+		}
+
+		_temporary_stored_path = fmt::format(L"{}{}.job", folder::get_temporary_folder(), datetime::current_time(false));
+
+		file::save(_temporary_stored_path, _data);
+		_data.clear();
+	}
+
+	void job::load(void)
+	{
+		if (!_temporary_stored)
+		{
+			return;
+		}
+
+		_data = file::load(_temporary_stored_path);
 	}
 }

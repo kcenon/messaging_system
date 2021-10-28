@@ -1,12 +1,12 @@
-#include "argument_parsing.h"
+#include "argument_parser.h"
 
 #include "converting.h"
 
 using namespace converting;
 
-namespace argument_parsing
+namespace argument_parser
 {
-	std::map<std::wstring, std::wstring> argument_parser::parse(int argc, char* argv[])
+	std::map<std::wstring, std::wstring> argument::parse(int argc, char* argv[])
 	{
 		std::map<std::wstring, std::wstring> result;
 
@@ -48,7 +48,7 @@ namespace argument_parsing
 		return result;
 	}
 	
-	std::map<std::wstring, std::wstring> argument_parser::parse(int argc, wchar_t* argv[])
+	std::map<std::wstring, std::wstring> argument::parse(int argc, wchar_t* argv[])
 	{
 		std::map<std::wstring, std::wstring> result;
 

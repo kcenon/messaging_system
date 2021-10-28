@@ -2,7 +2,7 @@
 
 #include "value_types.h"
 #include "converting.h"
-#include "file_handling.h"
+#include "file_handler.h"
 
 #include "values/container_value.h"
 
@@ -26,7 +26,7 @@ namespace container
 	constexpr auto MESSAGE_VERSION = L"6";
 
 	using namespace converting;
-	using namespace file_handling;
+	using namespace file_handler;
 
 	value_container::value_container(void)
 		: _source_id(L""), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _message_type(L"data_container"), _version(L"1.0.0.0"),
@@ -495,12 +495,12 @@ namespace container
 
 	void value_container::load_packet(const std::wstring& file_path)
 	{
-		deserialize(converter::to_wstring(file_handler::load(file_path)));
+		deserialize(converter::to_wstring(file::load(file_path)));
 	}
 
 	void value_container::save_packet(const std::wstring& file_path)
 	{
-		file_handler::save(file_path, converter::to_array(serialize()));
+		file::save(file_path, converter::to_array(serialize()));
 	}
 
 	std::vector<std::shared_ptr<value>> value_container::operator[](const std::wstring& key)

@@ -175,21 +175,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="argument_parsing.cpp" />
+    <ClCompile Include="argument_parser.cpp" />
     <ClCompile Include="compressing.cpp" />
     <ClCompile Include="converting.cpp" />
+    <ClCompile Include="datetime_handler.cpp" />
     <ClCompile Include="encrypting.cpp" />
-    <ClCompile Include="file_handling.cpp" />
-    <ClCompile Include="folder_handling.cpp" />
+    <ClCompile Include="file_handler.cpp" />
+    <ClCompile Include="folder_handler.cpp" />
     <ClCompile Include="logging.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="argument_parsing.h" />
+    <ClInclude Include="argument_parser.h" />
     <ClInclude Include="compressing.h" />
     <ClInclude Include="converting.h" />
+    <ClInclude Include="datetime_handler.h" />
     <ClInclude Include="encrypting.h" />
-    <ClInclude Include="file_handling.h" />
-    <ClInclude Include="folder_handling.h" />
+    <ClInclude Include="file_handler.h" />
+    <ClInclude Include="folder_handler.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="logging_level.h" />
   </ItemGroup>

@@ -3,8 +3,8 @@
 #include "logging.h"
 #include "converting.h"
 #include "messaging_client.h"
-#include "folder_handling.h"
-#include "argument_parsing.h"
+#include "folder_handler.h"
+#include "argument_parser.h"
 
 #include "container.h"
 #include "values/string_value.h"
@@ -20,8 +20,8 @@ constexpr auto PROGRAM_NAME = L"download_sample";
 using namespace logging;
 using namespace network;
 using namespace converting;
-using namespace folder_handling;
-using namespace argument_parsing;
+using namespace folder_handler;
+using namespace argument_parser;
 
 bool write_console = false;
 bool encrypt_mode = false;
@@ -46,12 +46,12 @@ void display_help(void);
 
 int main(int argc, char* argv[])
 {
-	if (!parse_arguments(argument_parser::parse(argc, argv)))
+	if (!parse_arguments(argument::parse(argc, argv)))
 	{
 		return 0;
 	}
 
-	std::vector<std::wstring> sources = folder_handler::get_files(source_folder);
+	std::vector<std::wstring> sources = folder::get_files(source_folder);
 	if (sources.empty())
 	{
 		display_help();

@@ -1,6 +1,6 @@
 #include "logging.h"
 
-#include "file_handling.h"
+#include "file_handler.h"
 
 #include "fmt/chrono.h"
 #include "fmt/format.h"
@@ -16,7 +16,7 @@
 
 namespace logging
 {
-	using namespace file_handling;
+	using namespace file_handler;
 
 	logger::logger(void) : _target_level(logging_level::information), _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
 	{
@@ -249,7 +249,7 @@ namespace logging
 			return;
 		}
 
-		file_handler::append(backup_path, file_handler::load(target_path));
+		file::append(backup_path, file::load(target_path));
 	}
 
 	void logger::store_log(int& file_handle, const std::wstring& log)

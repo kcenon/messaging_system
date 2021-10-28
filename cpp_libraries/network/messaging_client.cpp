@@ -17,7 +17,7 @@
 #include "job.h"
 
 #include "data_lengths.h"
-#include "file_handling.h"
+#include "file_handler.h"
 
 #include <functional>
 
@@ -32,7 +32,7 @@ namespace network
 	using namespace converting;
 	using namespace encrypting;
 	using namespace compressing;
-	using namespace file_handling;
+	using namespace file_handler;
 
 	messaging_client::messaging_client(const std::wstring& source_id)
 		: data_handling(246, 135), _confirm(false), _auto_echo(false), _compress_mode(false), _encrypt_mode(false), _bridge_line(false),
@@ -539,7 +539,7 @@ namespace network
 		append_binary_on_packet(result, converter::to_array(message->target_sub_id()));
 		append_binary_on_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
 		append_binary_on_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
-		append_binary_on_packet(result, file_handler::load(message->get_value(L"source")->to_string()));
+		append_binary_on_packet(result, file::load(message->get_value(L"source")->to_string()));
 
 		if (_compress_mode)
 		{
@@ -658,7 +658,7 @@ namespace network
 		append_binary_on_packet(result, converter::to_array(indication_id));
 		append_binary_on_packet(result, converter::to_array(target_id));
 		append_binary_on_packet(result, converter::to_array(target_sub_id));
-		if (file_handler::save(target_path, devide_binary_on_packet(data, index)))
+		if (file::save(target_path, devide_binary_on_packet(data, index)))
 		{
 			append_binary_on_packet(result, converter::to_array(target_path));
 		}

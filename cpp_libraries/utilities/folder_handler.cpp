@@ -1,10 +1,15 @@
-﻿#include "folder_handling.h"
+﻿#include "folder_handler.h"
 
 #include <filesystem>
 
-namespace folder_handling
+namespace folder_handler
 {
-	std::vector<std::wstring> folder_handler::get_files(const std::wstring& target_folder, const bool& search_sub_folder, const std::vector<std::wstring> extensions)
+	std::wstring folder::get_temporary_folder(void)
+	{
+		return std::filesystem::temp_directory_path().wstring();
+	}
+
+	std::vector<std::wstring> folder::get_files(const std::wstring& target_folder, const bool& search_sub_folder, const std::vector<std::wstring> extensions)
 	{
 		std::vector<std::wstring> result;
 

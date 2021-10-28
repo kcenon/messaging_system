@@ -1,6 +1,6 @@
 ﻿#include "logging.h"
 
-#include "argument_parsing.h"
+#include "argument_parser.h"
 
 #include "fmt/xchar.h"
 #include "fmt/format.h"
@@ -10,7 +10,7 @@
 constexpr auto PROGRAM_NAME = L"logging_sample";
 
 using namespace logging;
-using namespace argument_parsing;
+using namespace argument_parser;
 
 bool write_console = false;
 logging_level log_level = logging_level::information;
@@ -20,7 +20,7 @@ void display_help(void);
 
 int main(int argc, char* argv[])
 {
-	if (!parse_arguments(argument_parser::parse(argc, argv)))
+	if (!parse_arguments(argument::parse(argc, argv)))
 	{
 		return 0;
 	}

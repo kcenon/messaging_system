@@ -3,9 +3,9 @@
 #include <map>
 #include <string>
 
-namespace argument_parsing
+namespace argument_parser
 {
-	class argument_parser
+	class argument
 	{
 	public:
 		static std::map<std::wstring, std::wstring> parse(int argc, char* argv[]);

@@ -1,12 +1,12 @@
-#include "file_handling.h"
+#include "file_handler.h"
 
 #include <io.h>
 #include <fcntl.h>
 #include <filesystem>
 
-namespace file_handling
+namespace file_handler
 {
-	bool file_handler::remove(const std::wstring& path)
+	bool file::remove(const std::wstring& path)
 	{
 		if (!std::filesystem::exists(path))
 		{
@@ -16,7 +16,7 @@ namespace file_handling
 		return std::filesystem::remove(path);
 	}
 
-	std::vector<unsigned char> file_handler::load(const std::wstring& path)
+	std::vector<unsigned char> file::load(const std::wstring& path)
 	{
 		if (!std::filesystem::exists(path))
 		{
@@ -49,7 +49,7 @@ namespace file_handling
 		return target;
 	}
 
-	bool file_handler::save(const std::wstring& path, const std::vector<unsigned char>& data)
+	bool file::save(const std::wstring& path, const std::vector<unsigned char>& data)
 	{
 		std::filesystem::path target_path(path);
 		if (target_path.parent_path().empty() != true)
@@ -70,7 +70,7 @@ namespace file_handling
 		return true;
 	}
 
-	bool file_handler::append(const std::wstring& source, const std::vector<unsigned char>& data)
+	bool file::append(const std::wstring& source, const std::vector<unsigned char>& data)
 	{
 		int file;
 		errno_t err = _wsopen_s(&file, source.c_str(), _O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
