@@ -52,16 +52,18 @@ namespace threads
 			iterator->second.push(new_job);
 
 			logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
-		}
-		else
-		{
-			std::queue<std::shared_ptr<job>> queue;
-			queue.push(new_job);
 
-			_jobs.insert({ new_job->priority(), queue });
+			notification(new_job->priority());
 
-			logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
+			return;
 		}
+		
+		std::queue<std::shared_ptr<job>> queue;
+		queue.push(new_job);
+
+		_jobs.insert({ new_job->priority(), queue });
+
+		logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
 
 		notification(new_job->priority());
 	}
@@ -84,15 +86,17 @@ namespace threads
 		for (auto& other : others)
 		{
 			auto iterator2 = _jobs.find(other);
-			if (iterator2 != _jobs.end() && !iterator2->second.empty())
+			if (iterator2 == _jobs.end() || iterator2->second.empty())
 			{
-				std::shared_ptr<job> temp = iterator2->second.front();
-				iterator2->second.pop();
-
-				logger::handle().write(logging::logging_level::parameter, fmt::format(L"pop a job: priority - {}", temp->priority()));
-
-				return temp;
+				continue;
 			}
+
+			std::shared_ptr<job> temp = iterator2->second.front();
+			iterator2->second.pop();
+
+			logger::handle().write(logging::logging_level::parameter, fmt::format(L"pop a job: priority - {}", temp->priority()));
+
+			return temp;
 		}
 
 		return nullptr;
@@ -112,13 +116,15 @@ namespace threads
 
 		for (auto& other : others)
 		{
-			auto iterator = _jobs.find(priority);
-			if (iterator != _jobs.end() && !iterator->second.empty())
+			auto iterator2 = _jobs.find(priority);
+			if (iterator2 == _jobs.end() || iterator2->second.empty())
 			{
-				std::shared_ptr<job> temp = iterator->second.front();
-
-				return temp != nullptr;
+				continue;
 			}
+
+			std::shared_ptr<job> temp = iterator2->second.front();
+
+			return temp != nullptr;
 		}
 
 		return false;
