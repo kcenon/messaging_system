@@ -17,6 +17,7 @@ Basically, this thread library can support thread handling with multi-workers to
 
 #include "argument_parsing.h"
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 constexpr auto PROGRAM_NAME = L"thread_sample";

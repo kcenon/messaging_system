@@ -6,7 +6,10 @@ Basically, this logging library is a thread-safe module. So, if you want to writ
 
 ``` C++
 #include "logging.h"
+
+#include "fmt/xchar.h"
 #include "fmt/format.h"
+
 #include <iostream>
 
 constexpr auto PROGRAM_NAME = L"logging_sample";

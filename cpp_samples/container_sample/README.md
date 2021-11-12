@@ -16,6 +16,7 @@ Basically, this data container can store all types on it, serialize, and deseria
 #include "values/llong_value.h"
 #include "values/ullong_value.h"
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 #include <limits.h>
