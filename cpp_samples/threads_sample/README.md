@@ -157,6 +157,7 @@ int main(int argc, char* argv[])
         manager.push(std::make_shared<test2_job>(priorities::low));
     }
 
+#ifdef __USE_CHAKRA_CORE__
     for (unsigned int log_index = 0; log_index < 1000; ++log_index)
     {
         manager.push(std::make_shared<job>(priorities::high, 
@@ -166,6 +167,7 @@ int main(int argc, char* argv[])
         manager.push(std::make_shared<job>(priorities::low, 
             converter::to_array(L"(()=>{return \'테스트5_low_in_thread\';})()")));
     }
+#endif
 
     // If you want to check the thread-safe of priority job-pool, 
     // you can call the below function before appending jobs.
