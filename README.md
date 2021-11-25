@@ -24,7 +24,7 @@ Secondly, should install libraries like below followed vcpkg install rule,
 3. [cryptopp library](https://www.cryptopp.com/): to support data encryption
 4. [lz4 library](https://github.com/lz4/lz4): to support data compression
 5. ~~[Chakra library](https://github.com/chakra-core/ChakraCore): to support javascript engine~~
-6. [crossguid library](https://github.com/graeme-hill/crossguid): to support creating guid
+6. [libuuid library](https://github.com/iamaleksey/libuuid): to support creating guid
 
 After all installations, you can build this project with Visual Studio 2019.
 
