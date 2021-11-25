@@ -11,7 +11,10 @@
 
 #include "fmt/xchar.h"
 #include "fmt/format.h"
+
+#ifdef __USE_CHAKRA_CORE__
 #include "ChakraCore.h"
+#endif
 
 #include "crossguid/guid.hpp"
 
@@ -105,6 +108,7 @@ namespace threads
 
 	bool job::working(const priorities& worker_priority)
 	{
+#ifdef __USE_CHAKRA_CORE__
 		auto start = logger::handle().chrono_start();
 
 		std::shared_ptr<value_container> source_data = std::make_shared<value_container>(_data);
@@ -140,8 +144,12 @@ namespace threads
 		}
 
 		return true;
+#else
+		return false;
+#endif
 	}
 
+#ifdef __USE_CHAKRA_CORE__
 	std::wstring job::do_script(const std::wstring& script)
 	{
 		try
@@ -177,6 +185,7 @@ namespace threads
 			return L"";
 		}
 	}
+#endif
 
 	void job::load(void)
 	{

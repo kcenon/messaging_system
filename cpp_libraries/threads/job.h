@@ -34,8 +34,10 @@ namespace threads
 	protected:
 		virtual bool working(const priorities& worker_priority);
 
+#ifdef __USE_CHAKRA_CORE__
 	private:
 		std::wstring do_script(const std::wstring& script);
+#endif
 
 	private:
 		void load(void);
