@@ -48,13 +48,11 @@ bool write_low(void)
 	return write_data(converter::to_array(L"테스트2_low_in_thread"));
 }
 
-class test_job : public job
+class saving_test_job : public job
 {
 public:
-	test_job(const priorities& priority, const std::vector<unsigned char>& data) : job(priority)
+	saving_test_job(const priorities& priority, const std::vector<unsigned char>& data) : job(priority, data)
 	{
-		_data = data;
-
 		save();
 	}
 
@@ -66,15 +64,12 @@ protected:
 
 		return true;
 	}
-
-private:
-	std::vector<unsigned char> _data;
 };
 
-class test2_job : public job
+class test_job_without_data : public job
 {
 public:
-	test2_job(const priorities& priority) : job(priority)
+	test_job_without_data(const priorities& priority) : job(priority)
 	{
 	}
 
@@ -119,6 +114,7 @@ int main(int argc, char* argv[])
 	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
 	manager.append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
 	
+	// unit job with callback and data
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
 		manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data));
@@ -126,6 +122,7 @@ int main(int argc, char* argv[])
 		manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data));
 	}
 
+	// unit job with callback
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
 		manager.push(std::make_shared<job>(priorities::high, &write_high));
@@ -133,18 +130,20 @@ int main(int argc, char* argv[])
 		manager.push(std::make_shared<job>(priorities::low, &write_low));
 	}
 
+	// derived job with data
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(std::make_shared<test_job>(priorities::high, converter::to_array(L"테스트3_high_in_thread")));
-		manager.push(std::make_shared<test_job>(priorities::normal, converter::to_array(L"테스트3_normal_in_thread")));
-		manager.push(std::make_shared<test_job>(priorities::low, converter::to_array(L"테스트3_low_in_thread")));
+		manager.push(std::make_shared<saving_test_job>(priorities::high, converter::to_array(L"테스트3_high_in_thread")));
+		manager.push(std::make_shared<saving_test_job>(priorities::normal, converter::to_array(L"테스트3_normal_in_thread")));
+		manager.push(std::make_shared<saving_test_job>(priorities::low, converter::to_array(L"테스트3_low_in_thread")));
 	}
 
+	// derived job without data
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(std::make_shared<test2_job>(priorities::high));
-		manager.push(std::make_shared<test2_job>(priorities::normal));
-		manager.push(std::make_shared<test2_job>(priorities::low));
+		manager.push(std::make_shared<test_job_without_data>(priorities::high));
+		manager.push(std::make_shared<test_job_without_data>(priorities::normal));
+		manager.push(std::make_shared<test_job_without_data>(priorities::low));
 	}
 
 #ifdef __USE_CHAKRA_CORE__

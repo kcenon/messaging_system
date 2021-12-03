@@ -77,7 +77,8 @@ namespace threads
 		{
 			bool result = _working_callback();
 
-			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function without value on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
+			logger::handle().write(logging::logging_level::sequence, 
+				fmt::format(L"completed working callback function without value on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
 
 			return result;
 		}
@@ -86,14 +87,16 @@ namespace threads
 		{
 			bool result = _working_callback2(_data);
 
-			logger::handle().write(logging::logging_level::sequence, fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
+			logger::handle().write(logging::logging_level::sequence, 
+				fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
 
 			return result;
 		}
 
 		if (!working(worker_priority))
 		{
-			logger::handle().write(logging::logging_level::sequence, fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
+			logger::handle().write(logging::logging_level::sequence, 
+				fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
 
 			return false;
 		}
@@ -104,6 +107,7 @@ namespace threads
 	void job::save(void)
 	{
 		_temporary_stored = true;
+
 #ifdef __OSX__
 		uuid_t uuidObj;
 		uuid_generate(uuidObj);
@@ -159,11 +163,11 @@ namespace threads
 #endif
 	}
 
-#ifdef __USE_CHAKRA_CORE__
 	std::wstring job::do_script(const std::wstring& script)
 	{
 		try
 		{
+#ifdef __USE_CHAKRA_CORE__
 			JsRuntimeHandle runtime;
 			JsContextRef context;
 			JsValueRef result;
@@ -189,13 +193,15 @@ namespace threads
 			JsDisposeRuntime(runtime);
 
 			return resultW;
+#else
+			return L"";
+#endif
 		}
 		catch (...)
 		{
 			return L"";
 		}
 	}
-#endif
 
 	void job::load(void)
 	{

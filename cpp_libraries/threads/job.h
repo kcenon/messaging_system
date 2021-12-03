@@ -34,19 +34,19 @@ namespace threads
 	protected:
 		virtual bool working(const priorities& worker_priority);
 
-#ifdef __USE_CHAKRA_CORE__
 	private:
 		std::wstring do_script(const std::wstring& script);
-#endif
 
 	private:
 		void load(void);
+
+	protected:
+		std::vector<unsigned char> _data;
 
 	private:
 		priorities _priority;
 		bool _temporary_stored;
 		std::wstring _temporary_stored_path;
-		std::vector<unsigned char> _data;
 		std::weak_ptr<job_pool> _job_pool;
 		std::function<bool(void)> _working_callback;
 		std::function<bool(const std::vector<unsigned char>&)> _working_callback2;
