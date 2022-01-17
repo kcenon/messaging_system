@@ -319,7 +319,7 @@ void create_file_line(void)
 
 void connection_from_middle_server(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
-	logger::handle().write(logging::logging_level::information,
+	logger::handle().write(logging_level::information,
 		fmt::format(L"a client on middle server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
@@ -383,7 +383,7 @@ void connection_from_data_line(const std::wstring& target_id, const std::wstring
 		return;
 	}
 
-	logger::handle().write(logging::logging_level::sequence,
+	logger::handle().write(logging_level::sequence,
 		fmt::format(L"{} on middle server is {} from target: {}[{}]", _data_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
 
 	if (condition)
@@ -421,7 +421,7 @@ void connection_from_file_line(const std::wstring& target_id, const std::wstring
 		return;
 	}
 
-	logger::handle().write(logging::logging_level::sequence,
+	logger::handle().write(logging_level::sequence,
 		fmt::format(L"{} on middle server is {} from target: {}[{}]", _file_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
 
 	if (condition)
@@ -461,7 +461,7 @@ void received_message_from_file_line(std::shared_ptr<container::value_container>
 
 void received_file_from_file_line(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& indication_id, const std::wstring& target_path)
 {
-	logger::handle().write(logging::logging_level::parameter,
+	logger::handle().write(logging_level::parameter,
 		fmt::format(L"target_id: {}, target_sub_id: {}, indication_id: {}, file_path: {}", target_id, target_sub_id, indication_id, target_path));
 
 	std::shared_ptr<container::value_container> container = _file_manager.received(target_id, target_sub_id, indication_id, target_path);

@@ -43,7 +43,7 @@ namespace threads
 		worker->set_job_pool(_job_pool);
 		_workers.push_back(worker);
 
-		logger::handle().write(logging::logging_level::parameter, fmt::format(L"appended new worker: priority - {}", worker->priority()));
+		logger::handle().write(logging_level::parameter, fmt::format(L"appended new worker: priority - {}", (int)worker->priority()));
 
 		unique.unlock();
 

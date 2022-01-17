@@ -48,9 +48,9 @@ int main(int argc, char* argv[])
 	data.add(bool_value(L"true_value", true));
 	data.add(float_value(L"float_value", (float)1.234567890123456789));
 	data.add(double_value(L"double_value", (double)1.234567890123456789));
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data.serialize()), start);
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data xml:\n{}", data.to_xml()), start);
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data json:\n{}", data.to_json()), start);
+	logger::handle().write(logging_level::information, fmt::format(L"data serialize:\n{}", data.serialize()), start);
+	logger::handle().write(logging_level::information, fmt::format(L"data xml:\n{}", data.to_xml()), start);
+	logger::handle().write(logging_level::information, fmt::format(L"data json:\n{}", data.to_json()), start);
 
 	start = logger::handle().chrono_start();
 	value_container data2(data);
@@ -65,9 +65,9 @@ int main(int argc, char* argv[])
 			std::make_shared<llong_value>(L"llong_value", LLONG_MAX),
 			std::make_shared<ullong_value>(L"ullong_value", ULLONG_MAX)
 		}));
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data2.serialize()), start);
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data xml:\n{}", data2.to_xml()), start);
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data json:\n{}", data2.to_json()), start);
+	logger::handle().write(logging_level::information, fmt::format(L"data serialize:\n{}", data2.serialize()), start);
+	logger::handle().write(logging_level::information, fmt::format(L"data xml:\n{}", data2.to_xml()), start);
+	logger::handle().write(logging_level::information, fmt::format(L"data json:\n{}", data2.to_json()), start);
 
 	start = logger::handle().chrono_start();
 	value_container data3(data2);
@@ -76,9 +76,9 @@ int main(int argc, char* argv[])
 	data3.remove(L"float_value");
 	data3.remove(L"double_value");
 	data3.remove(L"container_value");
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data serialize:\n{}", data3.serialize()), start);
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data xml:\n{}", data3.to_xml()), start);
-	logger::handle().write(logging::logging_level::information, fmt::format(L"data json:\n{}", data3.to_json()), start);
+	logger::handle().write(logging_level::information, fmt::format(L"data serialize:\n{}", data3.serialize()), start);
+	logger::handle().write(logging_level::information, fmt::format(L"data xml:\n{}", data3.to_xml()), start);
+	logger::handle().write(logging_level::information, fmt::format(L"data json:\n{}", data3.to_json()), start);
 
 	logger::handle().stop();
 

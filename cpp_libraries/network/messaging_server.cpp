@@ -112,15 +112,15 @@ namespace network
 				{
 					try
 					{
-						logger::handle().write(logging::logging_level::information, fmt::format(L"start messaging_server({})", _source_id));
+						logger::handle().write(logging_level::information, fmt::format(L"start messaging_server({})", _source_id));
 						context->run();
-						logger::handle().write(logging::logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
+						logger::handle().write(logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
 						break;
 					}
-					catch (const std::overflow_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_server({}) with overflow error", _source_id)); context->reset(); }
-					catch (const std::runtime_error&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_server({}) with runtime error", _source_id)); context->reset(); }
-					catch (const std::exception&) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_server({}) with exception", _source_id)); context->reset(); }
-					catch (...) { if (context == nullptr) { break; } logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_server({}) with error", _source_id)); context->reset(); }
+					catch (const std::overflow_error&) { if (context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with overflow error", _source_id)); context->reset(); }
+					catch (const std::runtime_error&) { if (context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with runtime error", _source_id)); context->reset(); }
+					catch (const std::exception&) { if (context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with exception", _source_id)); context->reset(); }
+					catch (...) { if (context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with error", _source_id)); context->reset(); }
 				}
 			}, _io_context);
 	}
@@ -285,7 +285,7 @@ namespace network
 					return;
 				}
 
-				logger::handle().write(logging::logging_level::information, fmt::format(L"accepted new client: {}:{}", 
+				logger::handle().write(logging_level::information, fmt::format(L"accepted new client: {}:{}", 
 					converter::to_wstring(socket.remote_endpoint().address().to_string()), socket.remote_endpoint().port()));
 
 				std::shared_ptr<messaging_session> session = std::make_shared<messaging_session>(_source_id, _connection_key, socket);

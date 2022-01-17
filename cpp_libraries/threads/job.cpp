@@ -77,8 +77,8 @@ namespace threads
 		{
 			bool result = _working_callback();
 
-			logger::handle().write(logging::logging_level::sequence, 
-				fmt::format(L"completed working callback function without value on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
+			logger::handle().write(logging_level::sequence, 
+				fmt::format(L"completed working callback function without value on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
 
 			return result;
 		}
@@ -87,16 +87,16 @@ namespace threads
 		{
 			bool result = _working_callback2(_data);
 
-			logger::handle().write(logging::logging_level::sequence, 
-				fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
+			logger::handle().write(logging_level::sequence, 
+				fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
 
 			return result;
 		}
 
 		if (!working(worker_priority))
 		{
-			logger::handle().write(logging::logging_level::sequence, 
-				fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", _priority, worker_priority));
+			logger::handle().write(logging_level::sequence, 
+				fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
 
 			return false;
 		}
@@ -134,14 +134,14 @@ namespace threads
 		std::wstring script = source_data->get_value(L"scripts")->to_string();
 		if (script.empty())
 		{
-			logger::handle().write(logging::logging_level::information, do_script(converter::to_wstring(_data)), start);
+			logger::handle().write(logging_level::information, do_script(converter::to_wstring(_data)), start);
 
 			return true;
 		}
 
 		if (source_data->message_type() == L"data_container")
 		{
-			logger::handle().write(logging::logging_level::information, do_script(script), start);
+			logger::handle().write(logging_level::information, do_script(script), start);
 		}
 		else
 		{

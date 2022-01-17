@@ -51,7 +51,7 @@ namespace threads
 		{
 			iterator->second.push(new_job);
 
-			logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
+			logger::handle().write(logging_level::parameter, fmt::format(L"push new job: priority - {}", (int)new_job->priority()));
 
 			notification(new_job->priority());
 
@@ -63,7 +63,7 @@ namespace threads
 
 		_jobs.insert({ new_job->priority(), queue });
 
-		logger::handle().write(logging::logging_level::parameter, fmt::format(L"push new job: priority - {}", new_job->priority()));
+		logger::handle().write(logging_level::parameter, fmt::format(L"push new job: priority - {}", (int)new_job->priority()));
 
 		notification(new_job->priority());
 	}
@@ -78,7 +78,7 @@ namespace threads
 			std::shared_ptr<job> temp = iterator->second.front();
 			iterator->second.pop();
 
-			logger::handle().write(logging::logging_level::parameter, fmt::format(L"pop a job: priority - {}", temp->priority()));
+			logger::handle().write(logging_level::parameter, fmt::format(L"pop a job: priority - {}", (int)temp->priority()));
 
 			return temp;
 		}
@@ -94,7 +94,7 @@ namespace threads
 			std::shared_ptr<job> temp = iterator2->second.front();
 			iterator2->second.pop();
 
-			logger::handle().write(logging::logging_level::parameter, fmt::format(L"pop a job: priority - {}", temp->priority()));
+			logger::handle().write(logging_level::parameter, fmt::format(L"pop a job: priority - {}", (int)temp->priority()));
 
 			return temp;
 		}

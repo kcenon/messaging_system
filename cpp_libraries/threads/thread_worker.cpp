@@ -76,7 +76,7 @@ namespace threads
 
 	void thread_worker::run(void)
 	{
-		logger::handle().write(logging::logging_level::sequence, fmt::format(L"start working thread: priority - {}", _priority));
+		logger::handle().write(logging_level::sequence, fmt::format(L"start working thread: priority - {}", (int)_priority));
 
 		while (!_thread_stop.load() || !_ignore_contained_job.load())
 		{
@@ -103,7 +103,7 @@ namespace threads
 			working(current_job);
 		}
 
-		logger::handle().write(logging::logging_level::sequence, fmt::format(L"stop working thread: priority - {}", _priority));
+		logger::handle().write(logging_level::sequence, fmt::format(L"stop working thread: priority - {}", (int)_priority));
 	}
 
 	void thread_worker::working(std::shared_ptr<job> current_job)

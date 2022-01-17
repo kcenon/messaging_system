@@ -151,7 +151,7 @@ namespace network
 
 		read_start_code(_socket);
 
-		logger::handle().write(logging::logging_level::information, fmt::format(L"started session: {}:{}", 
+		logger::handle().write(logging_level::information, fmt::format(L"started session: {}:{}", 
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port()));
 	}
 
@@ -942,7 +942,7 @@ namespace network
 		std::vector<std::shared_ptr<value>> response = (*message)[L"response"];
 		if (!response.empty())
 		{
-			logger::handle().write(logging::logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
+			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
 
 			return true;
 		}
@@ -978,7 +978,7 @@ namespace network
 			return true;
 		}
 
-		logger::handle().write(logging::logging_level::information, L"ignored this line = \"unknown connection key\"");
+		logger::handle().write(logging_level::information, L"ignored this line = \"unknown connection key\"");
 
 		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
 			std::vector<std::shared_ptr<container::value>> {
@@ -998,7 +998,7 @@ namespace network
 			return true;
 		}
 
-		logger::handle().write(logging::logging_level::information, L"ignored this line = \"cannot use same id with server\"");
+		logger::handle().write(logging_level::information, L"ignored this line = \"cannot use same id with server\"");
 
 		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
 			std::vector<std::shared_ptr<container::value>> {

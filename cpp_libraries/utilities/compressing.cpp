@@ -77,12 +77,12 @@ namespace compressing
 		
 		if (compressed_data.size() == 0)
 		{
-			logger::handle().write(logging::logging_level::error, L"cannot complete to compress data");
+			logger::handle().write(logging_level::error, L"cannot complete to compress data");
 
 			return std::vector<unsigned char>();
 		}
 		
-		logger::handle().write(logging::logging_level::sequence, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
+		logger::handle().write(logging_level::sequence, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
 			_block_bytes, original_data.size(), compressed_data.size(), (((double)compressed_data.size() / (double)original_data.size()) * 100)), start);
 
 		return compressed_data;
@@ -158,12 +158,12 @@ namespace compressing
 		
 		if (decompressed_data.size() == 0)
 		{
-			logger::handle().write(logging::logging_level::error, L"cannot complete to decompress data");
+			logger::handle().write(logging_level::error, L"cannot complete to decompress data");
 
 			return std::vector<unsigned char>();
 		}
 		
-		logger::handle().write(logging::logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
+		logger::handle().write(logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
 			_block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)), start);
 
 		return decompressed_data;

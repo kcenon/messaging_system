@@ -140,11 +140,11 @@ namespace network
 			_thread_pool->append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
 		}
 
-		logger::handle().write(logging::logging_level::sequence, L"attempts to create io_context");
+		logger::handle().write(logging_level::sequence, L"attempts to create io_context");
 
 		_io_context = std::make_shared<asio::io_context>();
 
-		logger::handle().write(logging::logging_level::sequence, L"attempts to create socket");
+		logger::handle().write(logging_level::sequence, L"attempts to create socket");
 
 		try
 		{
@@ -183,30 +183,30 @@ namespace network
 			{
 				try
 				{
-					logger::handle().write(logging::logging_level::information, fmt::format(L"start messaging_client({})", _source_id));
+					logger::handle().write(logging_level::information, fmt::format(L"start messaging_client({})", _source_id));
 					context->run();
 				}
 				catch (const std::overflow_error&) { 
 					if (_socket != nullptr) {
-						logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with overflow error", _source_id));
+						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with overflow error", _source_id));
 					}
 				}
 				catch (const std::runtime_error&) { 
 					if (_socket != nullptr) {
-						logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with runtime error", _source_id));
+						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with runtime error", _source_id));
 					}
 				}
 				catch (const std::exception&) { 
 					if (_socket != nullptr) {
-						logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with exception", _source_id));
+						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with exception", _source_id));
 					}
 				}
 				catch (...) { 
 					if (_socket != nullptr) {
-						logger::handle().write(logging::logging_level::exception, fmt::format(L"break messaging_client({}) with error", _source_id));
+						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with error", _source_id));
 					}
 				}
-				logger::handle().write(logging::logging_level::information, fmt::format(L"stop messaging_client({})", _source_id));
+				logger::handle().write(logging_level::information, fmt::format(L"stop messaging_client({})", _source_id));
 				connection_notification(false);
 			}, _io_context);
 
@@ -847,7 +847,7 @@ namespace network
 				continue;
 			}
 
-			logger::handle().write(logging::logging_level::information, fmt::format(L"accepted snipping target: {}", snipping_target->to_string()));
+			logger::handle().write(logging_level::information, fmt::format(L"accepted snipping target: {}", snipping_target->to_string()));
 		}
 
 		connection_notification(true);
@@ -870,7 +870,7 @@ namespace network
 		std::vector<std::shared_ptr<value>> response = (*message)[L"response"];
 		if (!response.empty())
 		{
-			logger::handle().write(logging::logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
+			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
 
 			return true;
 		}

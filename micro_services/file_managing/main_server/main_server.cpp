@@ -240,7 +240,7 @@ void create_main_server(void)
 
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
-	logger::handle().write(logging::logging_level::information,
+	logger::handle().write(logging_level::information,
 		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
@@ -261,7 +261,7 @@ void received_message(std::shared_ptr<container::value_container> container)
 		return;
 	}
 
-	logger::handle().write(logging::logging_level::information,
+	logger::handle().write(logging_level::information,
 		fmt::format(L"received message: {}", container->serialize()));
 }
 

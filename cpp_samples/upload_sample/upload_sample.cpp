@@ -215,7 +215,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 
 void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
 {
-	logger::handle().write(logging::logging_level::information,
+	logger::handle().write(logging_level::information,
 		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
@@ -230,25 +230,25 @@ void received_message(std::shared_ptr<container::value_container> container)
 	{
 		if (container->get_value(L"percentage")->to_ushort() == 0)
 		{
-			logger::handle().write(logging::logging_level::information,
+			logger::handle().write(logging_level::information,
 				fmt::format(L"started upload: [{}]", container->get_value(L"indication_id")->to_string()));
 
 			return;
 		}
 
-		logger::handle().write(logging::logging_level::information,
+		logger::handle().write(logging_level::information,
 			fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
 
 		if (container->get_value(L"completed")->to_boolean())
 		{
-			logger::handle().write(logging::logging_level::information,
+			logger::handle().write(logging_level::information,
 				fmt::format(L"completed download: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(), container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
 
 			_promise_status.set_value(false);
 		}
 		else if (container->get_value(L"percentage")->to_ushort() == 100)
 		{
-			logger::handle().write(logging::logging_level::information,
+			logger::handle().write(logging_level::information,
 				fmt::format(L"completed upload: [{}]", container->get_value(L"indication_id")->to_string()));
 
 			_promise_status.set_value(true);
@@ -257,7 +257,7 @@ void received_message(std::shared_ptr<container::value_container> container)
 		return;
 	}
 
-	logger::handle().write(logging::logging_level::information,
+	logger::handle().write(logging_level::information,
 		fmt::format(L"received message: {}", container->serialize()));
 }
 
