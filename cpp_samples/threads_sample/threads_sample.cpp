@@ -19,6 +19,7 @@ using namespace converting;
 using namespace threads;
 using namespace argument_parser;
 
+bool async_callback = true;
 bool write_console = false;
 logging_level log_level = logging_level::information;
 
@@ -117,17 +118,17 @@ int main(int argc, char* argv[])
 	// unit job with callback and data
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data));
-		manager.push(std::make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data));
-		manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data));
+		manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data, async_callback));
+		manager.push(std::make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data, async_callback));
+		manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data, async_callback));
 	}
 
 	// unit job with callback
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(std::make_shared<job>(priorities::high, &write_high));
-		manager.push(std::make_shared<job>(priorities::normal, &write_normal));
-		manager.push(std::make_shared<job>(priorities::low, &write_low));
+		manager.push(std::make_shared<job>(priorities::high, &write_high, async_callback));
+		manager.push(std::make_shared<job>(priorities::normal, &write_normal, async_callback));
+		manager.push(std::make_shared<job>(priorities::low, &write_low, async_callback));
 	}
 
 	// derived job with data
