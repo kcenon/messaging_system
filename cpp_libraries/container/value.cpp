@@ -30,7 +30,7 @@ namespace container
 	{
 	}
 
-	value::value(std::shared_ptr<value> object)
+	value::value(shared_ptr<value> object)
 	{
 		_name = object->name();
 		_type = object->type();
@@ -39,7 +39,7 @@ namespace container
 		_units = object->children();
 	}
 
-	value::value(const std::wstring& name, const std::vector<std::shared_ptr<value>>& units)
+	value::value(const wstring& name, const vector<shared_ptr<value>>& units)
 		: value()
 	{
 		_name = name;
@@ -49,13 +49,13 @@ namespace container
 		set_data((const unsigned char*)&size, sizeof(long), value_types::container_value);
 	}
 
-	value::value(const std::wstring& name, const value_types& type, const std::wstring& data)
+	value::value(const wstring& name, const value_types& type, const wstring& data)
 		: value()
 	{
 		set_data(name, type, data);
 	}
 
-	value::value(const std::wstring& name, const unsigned char* data, const size_t& size, const value_types& type)
+	value::value(const wstring& name, const unsigned char* data, const size_t& size, const value_types& type)
 		: value()
 	{
 		_name = name;
@@ -66,12 +66,12 @@ namespace container
 	{
 	}
 
-	std::shared_ptr<value> value::get_ptr(void)
+	shared_ptr<value> value::get_ptr(void)
 	{
 		return shared_from_this();
 	}
 
-	void value::set_parent(std::shared_ptr<value> parent)
+	void value::set_parent(shared_ptr<value> parent)
 	{
 		_parent = parent;
 	}
@@ -88,10 +88,10 @@ namespace container
 
 		_type = type;
 		_size = size;
-		_data = std::vector<unsigned char>(data, data + size);
+		_data = vector<unsigned char>(data, data + size);
 	}
 
-	void value::set_data(const std::wstring& name, const value_types& type, const std::wstring& data)
+	void value::set_data(const wstring& name, const value_types& type, const wstring& data)
 	{
 		_name = name;
 		_type = type;
@@ -115,7 +115,7 @@ namespace container
 		}
 	}
 
-	std::wstring value::name(void) const
+	wstring value::name(void) const
 	{
 		return _name;
 	}
@@ -125,14 +125,14 @@ namespace container
 		return _type;
 	}
 
-	std::wstring value::data(void) const
+	wstring value::data(void) const
 	{
 		if (_type != value_types::string_value)
 		{
 			return to_string();
 		}
 
-		std::wstring temp = to_string();
+		wstring temp = to_string();
 
 		converter::replace(temp, L"</0x0A;>", L"\r");
 		converter::replace(temp, L"</0x0B;>", L"\n");
@@ -147,9 +147,9 @@ namespace container
 		return _data.size();
 	}
 
-	std::shared_ptr<value> value::parent(void)
+	shared_ptr<value> value::parent(void)
 	{
-		std::shared_ptr<value> parent = _parent.lock();
+		shared_ptr<value> parent = _parent.lock();
 
 		return parent;
 	}
@@ -159,14 +159,14 @@ namespace container
 		return _units.size();
 	}
 
-	std::vector<std::shared_ptr<value>> value::children(const bool& only_container)
+	vector<shared_ptr<value>> value::children(const bool& only_container)
 	{
 		if (!only_container)
 		{
 			return _units;
 		}
 
-		std::vector<std::shared_ptr<value>> result_list;
+		vector<shared_ptr<value>> result_list;
 
 		for (auto& unit : _units)
 		{
@@ -179,9 +179,9 @@ namespace container
 		return result_list;
 	}
 
-	std::vector<std::shared_ptr<value>> value::value_array(const std::wstring& key)
+	vector<shared_ptr<value>> value::value_array(const wstring& key)
 	{
-		std::vector<std::shared_ptr<value>> result_list;
+		vector<shared_ptr<value>> result_list;
 
 		for (auto& unit : _units)
 		{
@@ -194,7 +194,7 @@ namespace container
 		return result_list;
 	}
 
-	const std::vector<unsigned char> value::to_bytes(void) const
+	const vector<unsigned char> value::to_bytes(void) const
 	{
 		return _data;
 	}
@@ -233,29 +233,29 @@ namespace container
 		return _type == value_types::container_value;
 	}
 
-	const std::wstring value::to_xml(void)
+	const wstring value::to_xml(void)
 	{
 		fmt::wmemory_buffer result;
 		result.clear();
 
 		if (_units.size() == 0)
 		{
-			fmt::format_to(std::back_inserter(result), L"<{0}>{1}</{0}>", name(), to_string(false));
+			fmt::format_to(back_inserter(result), L"<{0}>{1}</{0}>", name(), to_string(false));
 
 			return result.data();
 		}
 
-		fmt::format_to(std::back_inserter(result), L"<{}>", name());
+		fmt::format_to(back_inserter(result), L"<{}>", name());
 		for (auto& unit : _units)
 		{
-			fmt::format_to(std::back_inserter(result), L"{}", unit->to_xml());
+			fmt::format_to(back_inserter(result), L"{}", unit->to_xml());
 		}
-		fmt::format_to(std::back_inserter(result), L"</{}>", name());
+		fmt::format_to(back_inserter(result), L"</{}>", name());
 
 		return result.data();
 	}
 
-	const std::wstring value::to_json(void)
+	const wstring value::to_json(void)
 	{
 		fmt::wmemory_buffer result;
 		result.clear();
@@ -266,111 +266,111 @@ namespace container
 			{
 			case value_types::bytes_value: 
 			case value_types::string_value: 
-				fmt::format_to(std::back_inserter(result), L"{}\"{}\":\"{}\"{}", L"{", name(), to_string(false), L"}"); break;
+				fmt::format_to(back_inserter(result), L"{}\"{}\":\"{}\"{}", L"{", name(), to_string(false), L"}"); break;
 			default:
-				fmt::format_to(std::back_inserter(result), L"{}\"{}\":{}{}", L"{", name(), to_string(false), L"}"); break;
+				fmt::format_to(back_inserter(result), L"{}\"{}\":{}{}", L"{", name(), to_string(false), L"}"); break;
 			}
 
 			return result.data();
 		}
 
-		fmt::format_to(std::back_inserter(result), L"{} \"{}\":[", L"{", name());
+		fmt::format_to(back_inserter(result), L"{} \"{}\":[", L"{", name());
 
 		bool first = true;
 		for (auto& unit : _units)
 		{
-			fmt::format_to(std::back_inserter(result), first ? L"{}" : L",{}", unit->to_json());
+			fmt::format_to(back_inserter(result), first ? L"{}" : L",{}", unit->to_json());
 			first = false;
 		}
 
-		fmt::format_to(std::back_inserter(result), L"] {}", L"}");
+		fmt::format_to(back_inserter(result), L"] {}", L"}");
 		
 		return result.data();
 	}
 
-	const std::wstring value::serialize(void)
+	const wstring value::serialize(void)
 	{
 		fmt::wmemory_buffer result;
 		result.clear();
 
-		fmt::format_to(std::back_inserter(result), L"[{},{},{}];", name(), convert_value_type(_type), to_string(false));
+		fmt::format_to(back_inserter(result), L"[{},{},{}];", name(), convert_value_type(_type), to_string(false));
 
 		for (auto& unit : _units)
 		{
-			fmt::format_to(std::back_inserter(result), L"{}", unit->serialize());
+			fmt::format_to(back_inserter(result), L"{}", unit->serialize());
 		}
 
 		return result.data();
 	}
 
-	std::shared_ptr<value> value::operator[](const std::wstring& key)
+	shared_ptr<value> value::operator[](const wstring& key)
 	{
-		std::vector<std::shared_ptr<value>> searched_values = value_array(key);
+		vector<shared_ptr<value>> searched_values = value_array(key);
 		if (searched_values.empty())
 		{
-			return std::make_shared<value>(key);
+			return make_shared<value>(key);
 		}
 
 		return searched_values[0];
 	}
 
-	std::shared_ptr<value> operator<<(std::shared_ptr<value> container, std::shared_ptr<value> other)
+	shared_ptr<value> operator<<(shared_ptr<value> container, shared_ptr<value> other)
 	{
 		container->add(other);
 
 		return container;
 	}
 
-	std::ostream& operator<<(std::ostream& out, std::shared_ptr<value> other) // output
+	ostream& operator<<(ostream& out, shared_ptr<value> other) // output
 	{
 		out << converter::to_string(other->serialize());
 
 		return out;
 	}
 
-	std::wostream& operator<<(std::wostream& out, std::shared_ptr<value> other) // output
+	wostream& operator<<(wostream& out, shared_ptr<value> other) // output
 	{
 		out << other->serialize();
 
 		return out;
 	}
 
-	std::string& operator<<(std::string& out, std::shared_ptr<value> other)
+	string& operator<<(string& out, shared_ptr<value> other)
 	{
 		out = converter::to_string(other->serialize());
 
 		return out;
 	}
 
-	std::wstring& operator<<(std::wstring& out, std::shared_ptr<value> other)
+	wstring& operator<<(wstring& out, shared_ptr<value> other)
 	{
 		out = other->serialize();
 
 		return out;
 	}
 
-	std::shared_ptr<value> value::generate_value(const std::wstring& target_name, const std::wstring& target_type, const std::wstring& target_value)
+	shared_ptr<value> value::generate_value(const wstring& target_name, const wstring& target_type, const wstring& target_value)
 	{
-		std::shared_ptr<value> result = nullptr;
+		shared_ptr<value> result = nullptr;
 		value_types current_type = convert_value_type(target_type);
 
 		switch (current_type)
 		{
-		case value_types::bool_value: result = std::make_shared<bool_value>(target_name, target_value); break;
-		case value_types::short_value: result = std::make_shared<short_value>(target_name, (short)_wtoi(target_value.c_str())); break;
-		case value_types::ushort_value: result = std::make_shared<ushort_value>(target_name, (unsigned short)_wtoi(target_value.c_str())); break;
-		case value_types::int_value: result = std::make_shared<int_value>(target_name, (int)_wtoi(target_value.c_str())); break;
-		case value_types::uint_value: result = std::make_shared<uint_value>(target_name, (unsigned int)_wtoi(target_value.c_str())); break;
-		case value_types::long_value: result = std::make_shared<long_value>(target_name, (long)_wtol(target_value.c_str())); break;
-		case value_types::ulong_value: result = std::make_shared<ulong_value>(target_name, (unsigned long)_wtol(target_value.c_str())); break;
-		case value_types::llong_value: result = std::make_shared<llong_value>(target_name, (long long)_wtoll(target_value.c_str())); break;
-		case value_types::ullong_value: result = std::make_shared<ullong_value>(target_name, (unsigned long long)_wtoll(target_value.c_str())); break;
-		case value_types::float_value: result = std::make_shared<float_value>(target_name, (float)_wtof(target_value.c_str())); break;
-		case value_types::double_value: result = std::make_shared<double_value>(target_name, (double)_wtof(target_value.c_str())); break;
-		case value_types::bytes_value: result = std::make_shared<bytes_value>(target_name, converter::from_base64(target_value.c_str())); break;
-		case value_types::string_value: result = std::make_shared<string_value>(target_name, target_value); break;
-		case value_types::container_value: result = std::make_shared<container_value>(target_name, (long)_wtol(target_value.c_str())); break;
-		default: result = std::make_shared<value>(target_name, nullptr, 0, value_types::null_value); break;
+		case value_types::bool_value: result = make_shared<bool_value>(target_name, target_value); break;
+		case value_types::short_value: result = make_shared<short_value>(target_name, (short)_wtoi(target_value.c_str())); break;
+		case value_types::ushort_value: result = make_shared<ushort_value>(target_name, (unsigned short)_wtoi(target_value.c_str())); break;
+		case value_types::int_value: result = make_shared<int_value>(target_name, (int)_wtoi(target_value.c_str())); break;
+		case value_types::uint_value: result = make_shared<uint_value>(target_name, (unsigned int)_wtoi(target_value.c_str())); break;
+		case value_types::long_value: result = make_shared<long_value>(target_name, (long)_wtol(target_value.c_str())); break;
+		case value_types::ulong_value: result = make_shared<ulong_value>(target_name, (unsigned long)_wtol(target_value.c_str())); break;
+		case value_types::llong_value: result = make_shared<llong_value>(target_name, (long long)_wtoll(target_value.c_str())); break;
+		case value_types::ullong_value: result = make_shared<ullong_value>(target_name, (unsigned long long)_wtoll(target_value.c_str())); break;
+		case value_types::float_value: result = make_shared<float_value>(target_name, (float)_wtof(target_value.c_str())); break;
+		case value_types::double_value: result = make_shared<double_value>(target_name, (double)_wtof(target_value.c_str())); break;
+		case value_types::bytes_value: result = make_shared<bytes_value>(target_name, converter::from_base64(target_value.c_str())); break;
+		case value_types::string_value: result = make_shared<string_value>(target_name, target_value); break;
+		case value_types::container_value: result = make_shared<container_value>(target_name, (long)_wtol(target_value.c_str())); break;
+		default: result = make_shared<value>(target_name, nullptr, 0, value_types::null_value); break;
 		}
 
 		return result;
@@ -381,24 +381,24 @@ namespace container
 		char* data_ptr = (char*)&data;
 
 		_size = sizeof(T);
-		_data = std::vector<unsigned char>(data_ptr, data_ptr + _size);
+		_data = vector<unsigned char>(data_ptr, data_ptr + _size);
 	}
 
-	void value::set_byte_string(const std::wstring& data)
+	void value::set_byte_string(const wstring& data)
 	{
 		_data = converter::from_base64(data);
 		_size = _data.size();
 		_type = value_types::bytes_value;
 	}
 
-	void value::set_string(const std::wstring& data)
+	void value::set_string(const wstring& data)
 	{
 		_data = converter::to_array(data);
 		_size = _data.size();
 		_type = value_types::string_value;
 	}
 
-	void value::set_boolean(const std::wstring& data)
+	void value::set_boolean(const wstring& data)
 	{
 		set_data((data == L"true") ? true : false);
 		_type = value_types::bool_value;

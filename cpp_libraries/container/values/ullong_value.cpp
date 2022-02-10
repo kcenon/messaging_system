@@ -11,7 +11,7 @@ namespace container
 		_type = value_types::ullong_value;
 	}
 
-	ullong_value::ullong_value(const std::wstring& name, const unsigned long long& value)
+	ullong_value::ullong_value(const wstring& name, const unsigned long long& value)
 		: value(name, (const unsigned char*)&value, sizeof(unsigned long long), value_types::ullong_value)
 	{
 	}
@@ -100,7 +100,7 @@ namespace container
 		return static_cast<double>(temp);
 	}
 
-	std::wstring ullong_value::to_string(const bool&) const
+	wstring ullong_value::to_string(const bool&) const
 	{
 		return fmt::format(L"{}", to_ullong());
 	}

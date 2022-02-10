@@ -11,7 +11,7 @@ namespace container
 		_type = value_types::uint_value;
 	}
 
-	uint_value::uint_value(const std::wstring& name, const unsigned int& value)
+	uint_value::uint_value(const wstring& name, const unsigned int& value)
 		: value(name, (const unsigned char*)&value, sizeof(unsigned int), value_types::uint_value)
 	{
 	}
@@ -100,7 +100,7 @@ namespace container
 		return static_cast<double>(temp);
 	}
 
-	std::wstring uint_value::to_string(const bool&) const
+	wstring uint_value::to_string(const bool&) const
 	{
 		return fmt::format(L"{}", to_uint());
 	}

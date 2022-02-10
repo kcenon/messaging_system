@@ -21,9 +21,9 @@ namespace network
 	{
 	}
 
-	void data_handling::read_start_code(std::weak_ptr<asio::ip::tcp::socket> socket)
+	void data_handling::read_start_code(weak_ptr<asio::ip::tcp::socket> socket)
 	{
-		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
 			disconnected();
@@ -34,7 +34,7 @@ namespace network
 		_received_data.clear();
 
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, start_code),
-			[this, socket](std::error_code ec, std::size_t length)
+			[this, socket](error_code ec, size_t length)
 			{
 				if (ec)
 				{
@@ -72,9 +72,9 @@ namespace network
 			});
 	}
 
-	void data_handling::read_packet_code(std::weak_ptr<asio::ip::tcp::socket> socket)
+	void data_handling::read_packet_code(weak_ptr<asio::ip::tcp::socket> socket)
 	{
-		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
 			disconnected();
@@ -83,7 +83,7 @@ namespace network
 		}
 
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, mode_code),
-			[this, socket](std::error_code ec, std::size_t length)
+			[this, socket](error_code ec, size_t length)
 			{
 				if (ec)
 				{
@@ -108,9 +108,9 @@ namespace network
 			});
 	}
 
-	void data_handling::read_length_code(const data_modes& packet_mode, std::weak_ptr<asio::ip::tcp::socket> socket)
+	void data_handling::read_length_code(const data_modes& packet_mode, weak_ptr<asio::ip::tcp::socket> socket)
 	{
-		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
 			disconnected();
@@ -121,7 +121,7 @@ namespace network
 		memset(_receiving_buffer, 0, buffer_size);
 
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, length_code),
-			[this, packet_mode, socket](std::error_code ec, std::size_t length)
+			[this, packet_mode, socket](error_code ec, size_t length)
 			{
 				if (ec)
 				{
@@ -148,7 +148,7 @@ namespace network
 			});
 	}
 
-	void data_handling::read_data(const data_modes& packet_mode, const size_t& remained_length, std::weak_ptr<asio::ip::tcp::socket> socket)
+	void data_handling::read_data(const data_modes& packet_mode, const size_t& remained_length, weak_ptr<asio::ip::tcp::socket> socket)
 	{
 		if (remained_length == 0)
 		{
@@ -157,7 +157,7 @@ namespace network
 			return;
 		}
 
-		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
 			disconnected();
@@ -170,7 +170,7 @@ namespace network
 		if (remained_length >= buffer_size)
 		{
 			asio::async_read(*current_socket, asio::buffer(_receiving_buffer, buffer_size),
-				[this, packet_mode, remained_length, socket](std::error_code ec, std::size_t length)
+				[this, packet_mode, remained_length, socket](error_code ec, size_t length)
 				{
 					if (ec)
 					{
@@ -199,7 +199,7 @@ namespace network
 		}
 
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, remained_length),
-			[this, packet_mode, socket](std::error_code ec, std::size_t length)
+			[this, packet_mode, socket](error_code ec, size_t length)
 			{
 				if (ec)
 				{
@@ -216,9 +216,9 @@ namespace network
 		current_socket.reset();
 	}
 
-	void data_handling::read_end_code(const data_modes& packet_mode, std::weak_ptr<asio::ip::tcp::socket> socket)
+	void data_handling::read_end_code(const data_modes& packet_mode, weak_ptr<asio::ip::tcp::socket> socket)
 	{
-		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
 			disconnected();
@@ -229,7 +229,7 @@ namespace network
 		memset(_receiving_buffer, 0, buffer_size);
 
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, end_code),
-			[this, packet_mode, socket](std::error_code ec, std::size_t length)
+			[this, packet_mode, socket](error_code ec, size_t length)
 			{
 				if (ec)
 				{
@@ -271,14 +271,14 @@ namespace network
 		current_socket.reset();
 	}
 
-	bool data_handling::send_on_tcp(std::weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const std::vector<unsigned char>& data)
+	bool data_handling::send_on_tcp(weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
 			return false;
 		}
 
-		std::shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
 			disconnected();
@@ -338,7 +338,7 @@ namespace network
 		return true;
 	}
 
-	void data_handling::append_binary_on_packet(std::vector<unsigned char>& result, const std::vector<unsigned char>& source)
+	void data_handling::append_binary_on_packet(vector<unsigned char>& result, const vector<unsigned char>& source)
 	{
 		size_t temp;
 		const int size = sizeof(size_t);
@@ -355,11 +355,11 @@ namespace network
 		result.insert(result.end(), source.begin(), source.end());
 	}
 
-	std::vector<unsigned char> data_handling::devide_binary_on_packet(const std::vector<unsigned char>& source, size_t& index)
+	vector<unsigned char> data_handling::devide_binary_on_packet(const vector<unsigned char>& source, size_t& index)
 	{
 		if (source.empty())
 		{
-			return std::vector<unsigned char>();
+			return vector<unsigned char>();
 		}
 
 		size_t temp;
@@ -367,7 +367,7 @@ namespace network
 
 		if (source.size() < index + size)
 		{
-			return std::vector<unsigned char>();
+			return vector<unsigned char>();
 		}
 
 		memcpy(&temp, source.data() + index, size);
@@ -375,10 +375,10 @@ namespace network
 
 		if (temp == 0 || source.size() < index + temp)
 		{
-			return std::vector<unsigned char>();
+			return vector<unsigned char>();
 		}
 
-		std::vector<unsigned char> result;
+		vector<unsigned char> result;
 		result.insert(result.end(), source.begin() + index, source.begin() + index + temp);
 		index += temp;
 

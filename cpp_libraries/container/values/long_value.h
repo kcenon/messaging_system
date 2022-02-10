@@ -2,13 +2,15 @@
 
 #include "../value.h"
 
+using namespace std;
+
 namespace container
 {
 	class long_value : public value
 	{
 	public:
 		long_value(void);
-		long_value(const std::wstring& name, const long& value);
+		long_value(const wstring& name, const long& value);
 		~long_value(void);
 
 	public:
@@ -22,6 +24,6 @@ namespace container
 		unsigned long long to_ullong(void) const override;
 		float to_float(void) const override;
 		double to_double(void) const override;
-		std::wstring to_string(const bool& original = true) const override;
+		wstring to_string(const bool& original = true) const override;
 	};
 }

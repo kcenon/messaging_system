@@ -23,10 +23,10 @@ bool async_callback = true;
 bool write_console = false;
 logging_level log_level = logging_level::information;
 
-bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
+bool parse_arguments(const map<wstring, wstring>& arguments);
 void display_help(void);
 
-bool write_data(const std::vector<unsigned char>& data)
+bool write_data(const vector<unsigned char>& data)
 {
 	auto start = logger::handle().chrono_start();
 	logger::handle().write(logging_level::information, converter::to_wstring(data), start);
@@ -52,7 +52,7 @@ bool write_low(void)
 class saving_test_job : public job
 {
 public:
-	saving_test_job(const priorities& priority, const std::vector<unsigned char>& data) : job(priority, data)
+	saving_test_job(const priorities& priority, const vector<unsigned char>& data) : job(priority, data)
 	{
 		save();
 	}
@@ -108,51 +108,51 @@ int main(int argc, char* argv[])
 	logger::handle().start(PROGRAM_NAME);
 
 	thread_pool manager;
-	manager.append(std::make_shared<thread_worker>(priorities::high));
-	manager.append(std::make_shared<thread_worker>(priorities::high));
-	manager.append(std::make_shared<thread_worker>(priorities::high));
-	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
-	manager.append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high }));
-	manager.append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }));
+	manager.append(make_shared<thread_worker>(priorities::high));
+	manager.append(make_shared<thread_worker>(priorities::high));
+	manager.append(make_shared<thread_worker>(priorities::high));
+	manager.append(make_shared<thread_worker>(priorities::normal, vector<priorities> { priorities::high }));
+	manager.append(make_shared<thread_worker>(priorities::normal, vector<priorities> { priorities::high }));
+	manager.append(make_shared<thread_worker>(priorities::low, vector<priorities> { priorities::high, priorities::normal }));
 	
 	// unit job with callback and data
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data, async_callback));
-		manager.push(std::make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data, async_callback));
-		manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data, async_callback));
+		manager.push(make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data, async_callback));
+		manager.push(make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data, async_callback));
+		manager.push(make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data, async_callback));
 	}
 
 	// unit job with callback
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(std::make_shared<job>(priorities::high, &write_high, async_callback));
-		manager.push(std::make_shared<job>(priorities::normal, &write_normal, async_callback));
-		manager.push(std::make_shared<job>(priorities::low, &write_low, async_callback));
+		manager.push(make_shared<job>(priorities::high, &write_high, async_callback));
+		manager.push(make_shared<job>(priorities::normal, &write_normal, async_callback));
+		manager.push(make_shared<job>(priorities::low, &write_low, async_callback));
 	}
 
 	// derived job with data
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(std::make_shared<saving_test_job>(priorities::high, converter::to_array(L"테스트3_high_in_thread")));
-		manager.push(std::make_shared<saving_test_job>(priorities::normal, converter::to_array(L"테스트3_normal_in_thread")));
-		manager.push(std::make_shared<saving_test_job>(priorities::low, converter::to_array(L"테스트3_low_in_thread")));
+		manager.push(make_shared<saving_test_job>(priorities::high, converter::to_array(L"테스트3_high_in_thread")));
+		manager.push(make_shared<saving_test_job>(priorities::normal, converter::to_array(L"테스트3_normal_in_thread")));
+		manager.push(make_shared<saving_test_job>(priorities::low, converter::to_array(L"테스트3_low_in_thread")));
 	}
 
 	// derived job without data
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(std::make_shared<test_job_without_data>(priorities::high));
-		manager.push(std::make_shared<test_job_without_data>(priorities::normal));
-		manager.push(std::make_shared<test_job_without_data>(priorities::low));
+		manager.push(make_shared<test_job_without_data>(priorities::high));
+		manager.push(make_shared<test_job_without_data>(priorities::normal));
+		manager.push(make_shared<test_job_without_data>(priorities::low));
 	}
 
 #ifdef __USE_CHAKRA_CORE__
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(std::make_shared<job>(priorities::high, converter::to_array(L"(()=>{return \'테스트5_high_in_thread\';})()")));
-		manager.push(std::make_shared<job>(priorities::normal, converter::to_array(L"(()=>{return \'테스트5_normal_in_thread\';})()")));
-		manager.push(std::make_shared<job>(priorities::low, converter::to_array(L"(()=>{return \'테스트5_low_in_thread\';})()")));
+		manager.push(make_shared<job>(priorities::high, converter::to_array(L"(()=>{return \'테스트5_high_in_thread\';})()")));
+		manager.push(make_shared<job>(priorities::normal, converter::to_array(L"(()=>{return \'테스트5_normal_in_thread\';})()")));
+		manager.push(make_shared<job>(priorities::low, converter::to_array(L"(()=>{return \'테스트5_low_in_thread\';})()")));
 	}
 #endif
 
@@ -164,9 +164,9 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
+bool parse_arguments(const map<wstring, wstring>& arguments)
 {
-	std::wstring temp;
+	wstring temp;
 
 	auto target = arguments.find(L"--help");
 	if (target != arguments.end())
@@ -180,7 +180,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	if (target != arguments.end())
 	{
 		temp = target->second;
-		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
 		if (temp.compare(L"true") == 0)
 		{
@@ -203,9 +203,9 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 
 void display_help(void)
 {
-	std::wcout << L"download sample options:" << std::endl << std::endl;
-	std::wcout << L"--write_console_mode [value] " << std::endl;
-	std::wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << std::endl << std::endl;
-	std::wcout << L"--logging_level [value]" << std::endl;
-	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
+	wcout << L"download sample options:" << endl << endl;
+	wcout << L"--write_console_mode [value] " << endl;
+	wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << endl << endl;
+	wcout << L"--logging_level [value]" << endl;
+	wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << endl;
 }

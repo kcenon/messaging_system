@@ -6,12 +6,12 @@ using namespace converting;
 
 namespace argument_parser
 {
-	std::map<std::wstring, std::wstring> argument::parse(int argc, char* argv[])
+	map<wstring, wstring> argument::parse(int argc, char* argv[])
 	{
-		std::map<std::wstring, std::wstring> result;
+		map<wstring, wstring> result;
 
 		size_t offset = 0;
-		std::wstring argument_id;
+		wstring argument_id;
 		for (int index = 1; index < argc; ++index)
 		{
 			argument_id = converter::to_wstring(argv[index]);
@@ -48,12 +48,12 @@ namespace argument_parser
 		return result;
 	}
 	
-	std::map<std::wstring, std::wstring> argument::parse(int argc, wchar_t* argv[])
+	map<wstring, wstring> argument::parse(int argc, wchar_t* argv[])
 	{
-		std::map<std::wstring, std::wstring> result;
+		map<wstring, wstring> result;
 
 		size_t offset = 0;
-		std::wstring argument_id;
+		wstring argument_id;
 		for (int index = 1; index < argc; ++index)
 		{
 			argument_id = argv[index];

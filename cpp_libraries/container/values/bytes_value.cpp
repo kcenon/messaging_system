@@ -12,12 +12,12 @@ namespace container
 		_type = value_types::bytes_value;
 	}
 
-	bytes_value::bytes_value(const std::wstring& name, const std::vector<unsigned char>& data)
+	bytes_value::bytes_value(const wstring& name, const vector<unsigned char>& data)
 		: value(name, data.data(), data.size(), value_types::bytes_value)
 	{
 	}
 
-	bytes_value::bytes_value(const std::wstring& name, const unsigned char* data, const size_t& size)
+	bytes_value::bytes_value(const wstring& name, const unsigned char* data, const size_t& size)
 		: value(name, data, size, value_types::bytes_value)
 	{
 	}
@@ -26,7 +26,7 @@ namespace container
 	{
 	}
 
-	std::wstring bytes_value::to_string(const bool&) const
+	wstring bytes_value::to_string(const bool&) const
 	{
 		return converter::to_base64(_data);
 	}

@@ -16,7 +16,7 @@ file_manager::~file_manager(void)
 
 }
 
-bool file_manager::set(const std::wstring& indication_id, const std::vector<std::wstring>& file_list)
+bool file_manager::set(const wstring& indication_id, const vector<wstring>& file_list)
 {
 	auto target = _transferring_list.find(indication_id);
 	if (target != _transferring_list.end())
@@ -25,14 +25,14 @@ bool file_manager::set(const std::wstring& indication_id, const std::vector<std:
 	}
 
 	_transferring_list.insert({ indication_id, file_list });
-	_transferred_list.insert({ indication_id, std::vector<std::wstring>() });
-	_failed_list.insert({ indication_id, std::vector<std::wstring>() });
+	_transferred_list.insert({ indication_id, vector<wstring>() });
+	_failed_list.insert({ indication_id, vector<wstring>() });
 	_transferred_percentage.insert({ indication_id, 0 });
 
 	return true;
 }
 
-std::shared_ptr<container::value_container> file_manager::received(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& indication_id, const std::wstring& file_path)
+shared_ptr<container::value_container> file_manager::received(const wstring& target_id, const wstring& target_sub_id, const wstring& indication_id, const wstring& file_path)
 {
 	auto source = _transferring_list.find(indication_id);
 	if (source == _transferring_list.end())
@@ -80,10 +80,10 @@ std::shared_ptr<container::value_container> file_manager::received(const std::ws
 			_transferred_percentage.erase(percentage);
 		}
 
-		return std::make_shared<container::value_container>(target_id, target_sub_id, L"transfer_condition",
-			std::vector<std::shared_ptr<container::value>> {
-				std::make_shared<container::string_value>(L"indication_id", indication_id),
-				std::make_shared<container::ushort_value>(L"percentage", temp)
+		return make_shared<container::value_container>(target_id, target_sub_id, L"transfer_condition",
+			vector<shared_ptr<container::value>> {
+				make_shared<container::string_value>(L"indication_id", indication_id),
+				make_shared<container::ushort_value>(L"percentage", temp)
 		});
 	}
 	
@@ -97,13 +97,13 @@ std::shared_ptr<container::value_container> file_manager::received(const std::ws
 		_failed_list.erase(fail);
 		_transferred_percentage.erase(percentage);
 
-		return std::make_shared<container::value_container>(target_id, target_sub_id, L"transfer_condition",
-			std::vector<std::shared_ptr<container::value>> {
-				std::make_shared<container::string_value>(L"indication_id", indication_id),
-				std::make_shared<container::ushort_value>(L"percentage", temp),
-				std::make_shared<container::ullong_value>(L"completed_count", completed),
-				std::make_shared<container::ullong_value>(L"failed_count", failed),
-				std::make_shared<container::bool_value>(L"completed", true)
+		return make_shared<container::value_container>(target_id, target_sub_id, L"transfer_condition",
+			vector<shared_ptr<container::value>> {
+				make_shared<container::string_value>(L"indication_id", indication_id),
+				make_shared<container::ushort_value>(L"percentage", temp),
+				make_shared<container::ullong_value>(L"completed_count", completed),
+				make_shared<container::ullong_value>(L"failed_count", failed),
+				make_shared<container::bool_value>(L"completed", true)
 		});
 	}
 

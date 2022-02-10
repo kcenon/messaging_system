@@ -4,7 +4,7 @@
 
 namespace container
 {
-	std::map<std::wstring, value_types> value_type_map =
+	map<wstring, value_types> value_type_map =
 	{
 		{ L"1", value_types::bool_value },
 		{ L"2", value_types::short_value },
@@ -22,9 +22,9 @@ namespace container
 		{ L"e", value_types::container_value }
 	};
 
-	const value_types convert_value_type(const std::wstring& target)
+	const value_types convert_value_type(const wstring& target)
 	{
-		std::map<std::wstring, value_types>::iterator iterator = value_type_map.find(target);
+		map<wstring, value_types>::iterator iterator = value_type_map.find(target);
 		if (iterator == value_type_map.end())
 		{
 			return value_types::null_value;
@@ -33,9 +33,9 @@ namespace container
 		return iterator->second;
 	}
 
-	const std::wstring convert_value_type(const value_types& target)
+	const wstring convert_value_type(const value_types& target)
 	{
-		std::wstring result;
+		wstring result;
 
 		switch (target)
 		{

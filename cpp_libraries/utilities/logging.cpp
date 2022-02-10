@@ -22,11 +22,11 @@ namespace logging
 
 	logger::logger(void) : _target_level(logging_level::information), _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
 	{
-		_log_datas.insert({ logging_level::exception, std::bind(&logger::exception_log, this, std::placeholders::_1, std::placeholders::_2) });
-		_log_datas.insert({ logging_level::error, std::bind(&logger::error_log, this, std::placeholders::_1, std::placeholders::_2) });
-		_log_datas.insert({ logging_level::information, std::bind(&logger::information_log, this, std::placeholders::_1, std::placeholders::_2) });
-		_log_datas.insert({ logging_level::sequence, std::bind(&logger::sequence_log, this, std::placeholders::_1, std::placeholders::_2) });
-		_log_datas.insert({ logging_level::parameter, std::bind(&logger::parameter_log, this, std::placeholders::_1, std::placeholders::_2) });
+		_log_datas.insert({ logging_level::exception, bind(&logger::exception_log, this, placeholders::_1, placeholders::_2) });
+		_log_datas.insert({ logging_level::error, bind(&logger::error_log, this, placeholders::_1, placeholders::_2) });
+		_log_datas.insert({ logging_level::information, bind(&logger::information_log, this, placeholders::_1, placeholders::_2) });
+		_log_datas.insert({ logging_level::sequence, bind(&logger::sequence_log, this, placeholders::_1, placeholders::_2) });
+		_log_datas.insert({ logging_level::parameter, bind(&logger::parameter_log, this, placeholders::_1, placeholders::_2) });
 	}
 
 	logger::~logger(void)
@@ -34,7 +34,7 @@ namespace logging
 
 	}
 
-	bool logger::start(const std::wstring& store_log_file_name, const std::wstring& store_log_extention, const std::wstring& store_log_root_path, 
+	bool logger::start(const wstring& store_log_file_name, const wstring& store_log_extention, const wstring& store_log_root_path, 
 		const bool& append_date_on_file_name, const unsigned short& places_of_decimal)
 	{
 		stop();
@@ -45,7 +45,7 @@ namespace logging
 		_append_date_on_file_name.store(append_date_on_file_name);
 		_places_of_decimal = places_of_decimal;
 
-		_thread = std::thread(&logger::run, this);
+		_thread = thread(&logger::run, this);
 
 		return true;
 	}
@@ -79,41 +79,41 @@ namespace logging
 		_limit_log_file_size.store(limit_log_file_size);
 	}
 
-	std::chrono::time_point<std::chrono::high_resolution_clock> logger::chrono_start(void)
+	chrono::time_point<chrono::high_resolution_clock> logger::chrono_start(void)
 	{
-		return std::chrono::high_resolution_clock::now();
+		return chrono::high_resolution_clock::now();
 	}
 
-	void logger::write(const logging_level& target_level, const std::wstring& log_data, const std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>& time)
+	void logger::write(const logging_level& target_level, const wstring& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time)
 	{
 		if (target_level > _target_level)
 		{
 			return;
 		}
 
-		std::scoped_lock<std::mutex> guard(_mutex);
+		scoped_lock<mutex> guard(_mutex);
 
 		if (!time.has_value())
 		{
-			_buffer.push_back({ target_level , std::chrono::system_clock::now(), log_data });
+			_buffer.push_back({ target_level , chrono::system_clock::now(), log_data });
 
 			_condition.notify_one();
 
 			return;
 		}
 
-		auto end = std::chrono::high_resolution_clock::now();
+		auto end = chrono::high_resolution_clock::now();
 
-		std::chrono::duration<double, std::milli> diff = end - time.value();
+		chrono::duration<double, milli> diff = end - time.value();
 
-		_buffer.push_back({ target_level , std::chrono::system_clock::now(), fmt::format(L"{} [{} ms]", log_data, diff.count()) });
+		_buffer.push_back({ target_level , chrono::system_clock::now(), fmt::format(L"{} [{} ms]", log_data, diff.count()) });
 
 		_condition.notify_one();
 	}
 
 	void logger::run(void)
 	{
-		std::vector<std::tuple<logging_level, std::chrono::system_clock::time_point, std::wstring>> buffers;
+		vector<tuple<logging_level, chrono::system_clock::time_point, wstring>> buffers;
 
 		if (_setmode(_fileno(stdout), _O_U8TEXT) == -1)
 		{
@@ -124,17 +124,17 @@ namespace logging
 
 		while (!_thread_stop.load() || !_buffer.empty())
 		{
-			std::unique_lock<std::mutex> unique(_mutex);
+			unique_lock<mutex> unique(_mutex);
 			_condition.wait(unique, [this] { return _thread_stop.load() || !_buffer.empty(); });
 
 			buffers.swap(_buffer);
 			unique.unlock();
 
-			std::filesystem::path target_path;
+			filesystem::path target_path;
 			if (_append_date_on_file_name.load())
 			{
 				target_path = fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path,
-					_store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention);
+					_store_log_file_name, fmt::localtime(chrono::system_clock::now()), _store_log_extention);
 			}
 			else
 			{
@@ -143,13 +143,13 @@ namespace logging
 
 			if (!target_path.parent_path().empty())
 			{
-				std::filesystem::create_directories(target_path.parent_path());
+				filesystem::create_directories(target_path.parent_path());
 			}
 
 			if (_append_date_on_file_name.load())
 			{
 				backup_log(target_path.wstring(), fmt::format(L"{}{}_{:%Y-%m-%d}_backup.{}", _store_log_root_path,
-					_store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention));
+					_store_log_file_name, fmt::localtime(chrono::system_clock::now()), _store_log_extention));
 			}
 			else
 			{
@@ -161,7 +161,7 @@ namespace logging
 			errno_t err;
 			if (_append_date_on_file_name.load())
 			{
-				err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention).c_str(),
+				err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(chrono::system_clock::now()), _store_log_extention).c_str(),
 					_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
 			}
 			else
@@ -182,13 +182,13 @@ namespace logging
 
 			for (auto& buffer : buffers)
 			{
-				auto iterator = _log_datas.find(std::get<0>(buffer));
+				auto iterator = _log_datas.find(get<0>(buffer));
 				if (iterator == _log_datas.end())
 				{
 					continue;
 				}
 
-				store_log(file, iterator->second(std::get<1>(buffer), std::get<2>(buffer)));
+				store_log(file, iterator->second(get<1>(buffer), get<2>(buffer)));
 			}
 
 			_commit(file);
@@ -200,14 +200,14 @@ namespace logging
 		set_log_flag(L"END");
 	}
 
-	void logger::set_log_flag(const std::wstring& flag)
+	void logger::set_log_flag(const wstring& flag)
 	{
 		int file;
 
 		errno_t err;
 		if (_append_date_on_file_name.load())
 		{
-			err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(std::chrono::system_clock::now()), _store_log_extention).c_str(),
+			err = _wsopen_s(&file, fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(chrono::system_clock::now()), _store_log_extention).c_str(),
 				_O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
 		}
 		else
@@ -226,7 +226,7 @@ namespace logging
 			return;
 		}
 
-		std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
+		chrono::system_clock::time_point current = chrono::system_clock::now();
 		auto time_string = datetime::time(current, true, _places_of_decimal);
 		if (_write_date.load())
 		{
@@ -241,14 +241,14 @@ namespace logging
 		_close(file);
 	}
 
-	void logger::backup_log(const std::wstring& target_path, const std::wstring& backup_path)
+	void logger::backup_log(const wstring& target_path, const wstring& backup_path)
 	{
-		if (!std::filesystem::exists(target_path))
+		if (!filesystem::exists(target_path))
 		{
 			return;
 		}
 
-		if (std::filesystem::file_size(target_path) < _limit_log_file_size.load())
+		if (filesystem::file_size(target_path) < _limit_log_file_size.load())
 		{
 			return;
 		}
@@ -256,7 +256,7 @@ namespace logging
 		file::append(backup_path, file::load(target_path));
 	}
 
-	void logger::store_log(int& file_handle, const std::wstring& log)
+	void logger::store_log(int& file_handle, const wstring& log)
 	{
 		if (log.empty())
 		{
@@ -265,13 +265,13 @@ namespace logging
 
 		if (_write_console.load())
 		{
-			std::wcout << log;
+			wcout << log;
 		}
 
 		_write(file_handle, log.data(), (unsigned int)(log.size() * sizeof(wchar_t)));
 	}
 
-	std::wstring logger::exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	wstring logger::exception_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
 		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
@@ -282,7 +282,7 @@ namespace logging
 		return fmt::format(L"[{}][EXCEPTION]: {}\n", time_string, data);
 	}
 
-	std::wstring logger::error_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	wstring logger::error_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
 		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
@@ -293,7 +293,7 @@ namespace logging
 		return fmt::format(L"[{}][ERROR]: {}\n", time_string, data);
 	}
 
-	std::wstring logger::information_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	wstring logger::information_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
 		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
@@ -304,7 +304,7 @@ namespace logging
 		return fmt::format(L"[{}][INFORMATION]: {}\n", time_string, data);
 	}
 
-	std::wstring logger::sequence_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	wstring logger::sequence_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
 		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
@@ -315,7 +315,7 @@ namespace logging
 		return fmt::format(L"[{}][SEQUENCE]: {}\n", time_string, data);
 	}
 
-	std::wstring logger::parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data)
+	wstring logger::parameter_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
 		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
@@ -327,12 +327,12 @@ namespace logging
 	}
 
 #pragma region singleton
-	std::unique_ptr<logger> logger::_handle;
-	std::once_flag logger::_once;
+	unique_ptr<logger> logger::_handle;
+	once_flag logger::_once;
 
 	logger& logger::handle(void)
 	{
-		std::call_once(_once, []()
+		call_once(_once, []()
 			{
 				_handle.reset(new logger);
 			});

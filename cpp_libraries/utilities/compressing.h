@@ -2,13 +2,15 @@
 
 #include <vector>
 
+using namespace std;
+
 namespace compressing
 {
 	class compressor
 	{
 	public:
-		static std::vector<unsigned char> compression(const std::vector<unsigned char>& original_data);
-		static std::vector<unsigned char> decompression(const std::vector<unsigned char>& compressed_data);
+		static vector<unsigned char> compression(const vector<unsigned char>& original_data);
+		static vector<unsigned char> decompression(const vector<unsigned char>& compressed_data);
 
 	public:
 		static void set_block_bytes(const unsigned short& block_bytes);

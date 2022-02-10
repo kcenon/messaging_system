@@ -28,7 +28,7 @@ using namespace argument_parser;
 bool write_console = false;
 logging_level log_level = logging_level::information;
 
-bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
+bool parse_arguments(const map<wstring, wstring>& arguments);
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -54,16 +54,16 @@ int main(int argc, char* argv[])
 
 	start = logger::handle().chrono_start();
 	value_container data2(data);
-	data2.add(std::make_shared<long_value>(L"long_value", LONG_MAX));
-	data2.add(std::make_shared<ulong_value>(L"ulong_value", ULONG_MAX));
-	data2.add(std::make_shared<llong_value>(L"llong_value", LLONG_MAX));
-	data2.add(std::make_shared<ullong_value>(L"ullong_value", ULLONG_MAX));
-	data2.add(std::make_shared<container_value>(L"container_value", std::vector<std::shared_ptr<value>>
+	data2.add(make_shared<long_value>(L"long_value", LONG_MAX));
+	data2.add(make_shared<ulong_value>(L"ulong_value", ULONG_MAX));
+	data2.add(make_shared<llong_value>(L"llong_value", LLONG_MAX));
+	data2.add(make_shared<ullong_value>(L"ullong_value", ULLONG_MAX));
+	data2.add(make_shared<container_value>(L"container_value", vector<shared_ptr<value>>
 		{
-			std::make_shared<long_value>(L"long_value", LONG_MAX),
-			std::make_shared<ulong_value>(L"ulong_value", ULONG_MAX),
-			std::make_shared<llong_value>(L"llong_value", LLONG_MAX),
-			std::make_shared<ullong_value>(L"ullong_value", ULLONG_MAX)
+			make_shared<long_value>(L"long_value", LONG_MAX),
+			make_shared<ulong_value>(L"ulong_value", ULONG_MAX),
+			make_shared<llong_value>(L"llong_value", LLONG_MAX),
+			make_shared<ullong_value>(L"ullong_value", ULLONG_MAX)
 		}));
 	logger::handle().write(logging_level::information, fmt::format(L"data serialize:\n{}", data2.serialize()), start);
 	logger::handle().write(logging_level::information, fmt::format(L"data xml:\n{}", data2.to_xml()), start);
@@ -85,9 +85,9 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
+bool parse_arguments(const map<wstring, wstring>& arguments)
 {
-	std::wstring temp;
+	wstring temp;
 
 	auto target = arguments.find(L"--help");
 	if (target != arguments.end())
@@ -101,7 +101,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	if (target != arguments.end())
 	{
 		temp = target->second;
-		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
 		if (temp.compare(L"true") == 0)
 		{
@@ -124,9 +124,9 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 
 void display_help(void)
 {
-	std::wcout << L"container sample options:" << std::endl << std::endl;
-	std::wcout << L"--write_console_mode [value] " << std::endl;
-	std::wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << std::endl << std::endl;
-	std::wcout << L"--logging_level [value]" << std::endl;
-	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
+	wcout << L"container sample options:" << endl << endl;
+	wcout << L"--write_console_mode [value] " << endl;
+	wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << endl << endl;
+	wcout << L"--logging_level [value]" << endl;
+	wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << endl;
 }

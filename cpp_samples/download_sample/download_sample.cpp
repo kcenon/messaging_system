@@ -27,21 +27,21 @@ bool write_console = false;
 bool encrypt_mode = false;
 bool compress_mode = false;
 logging_level log_level = logging_level::information;
-std::wstring source_folder = L"";
-std::wstring target_folder = L"";
-std::wstring connection_key = L"middle_connection_key";
-std::wstring server_ip = L"127.0.0.1";
+wstring source_folder = L"";
+wstring target_folder = L"";
+wstring connection_key = L"middle_connection_key";
+wstring server_ip = L"127.0.0.1";
 unsigned short server_port = 8642;
 unsigned short high_priority_count = 1;
 unsigned short normal_priority_count = 2;
 unsigned short low_priority_count = 3;
 
-std::promise<bool> _promise_status;
-std::future<bool> _future_status;
+promise<bool> _promise_status;
+future<bool> _future_status;
 
-bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
-void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
-void received_message(std::shared_ptr<container::value_container> container);
+bool parse_arguments(const map<wstring, wstring>& arguments);
+void connection(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
+void received_message(shared_ptr<container::value_container> container);
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	std::vector<std::wstring> sources = folder::get_files(source_folder);
+	vector<wstring> sources = folder::get_files(source_folder);
 	if (sources.empty())
 	{
 		display_help();
@@ -63,31 +63,31 @@ int main(int argc, char* argv[])
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
 
-	std::shared_ptr<messaging_client> client = std::make_shared<messaging_client>(PROGRAM_NAME);
+	shared_ptr<messaging_client> client = make_shared<messaging_client>(PROGRAM_NAME);
 	client->set_compress_mode(compress_mode);
 	client->set_connection_key(connection_key);
 	client->set_connection_notification(&connection);
 	client->set_message_notification(&received_message);
 	client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
 
-	std::vector<std::shared_ptr<container::value>> files;
+	vector<shared_ptr<container::value>> files;
 
-	files.push_back(std::make_shared<container::string_value>(L"indication_id", L"download_test"));
+	files.push_back(make_shared<container::string_value>(L"indication_id", L"download_test"));
 	for (auto& source : sources)
 	{
-		files.push_back(std::make_shared<container::container_value>(L"file", std::vector<std::shared_ptr<container::value>> {
-			std::make_shared<container::string_value>(L"source", source),
-			std::make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
+		files.push_back(make_shared<container::container_value>(L"file", vector<shared_ptr<container::value>> {
+			make_shared<container::string_value>(L"source", source),
+			make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
 		}));
 	}
 
 	_future_status = _promise_status.get_future();
 
-	std::shared_ptr<container::value_container> container = 
-		std::make_shared<container::value_container>(L"main_server", L"", L"download_files", files);
+	shared_ptr<container::value_container> container = 
+		make_shared<container::value_container>(L"main_server", L"", L"download_files", files);
 	client->send(container);
 
-	_future_status.wait_for(std::chrono::seconds(100));
+	_future_status.wait_for(chrono::seconds(100));
 
 	client->stop();
 
@@ -96,9 +96,9 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
+bool parse_arguments(const map<wstring, wstring>& arguments)
 {
-	std::wstring temp;
+	wstring temp;
 
 	auto target = arguments.find(L"--help");
 	if (target != arguments.end())
@@ -112,7 +112,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	if (target != arguments.end())
 	{
 		temp = target->second;
-		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
 		if (temp.compare(L"true") == 0)
 		{
@@ -128,7 +128,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	if (target != arguments.end())
 	{
 		temp = target->second;
-		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
 		if (temp.compare(L"true") == 0)
 		{
@@ -192,7 +192,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	if (target != arguments.end())
 	{
 		temp = target->second;
-		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
 		if (temp.compare(L"true") == 0)
 		{
@@ -213,13 +213,13 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	return true;
 }
 
-void connection(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
+void connection(const wstring& target_id, const wstring& target_sub_id, const bool& condition)
 {
 	logger::handle().write(logging_level::information,
 		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
-void received_message(std::shared_ptr<container::value_container> container)
+void received_message(shared_ptr<container::value_container> container)
 {
 	if (container == nullptr)
 	{
@@ -263,27 +263,27 @@ void received_message(std::shared_ptr<container::value_container> container)
 
 void display_help(void)
 {
-	std::wcout << L"download sample options:" << std::endl << std::endl;
-	std::wcout << L"--encrypt_mode [value] " << std::endl;
-	std::wcout << L"\tThe encrypt_mode on/off. If you want to use encrypt mode must be appended '--encrypt_mode true'.\n\tInitialize value is --encrypt_mode off." << std::endl << std::endl;
-	std::wcout << L"--compress_mode [value]" << std::endl;
-	std::wcout << L"\tThe compress_mode on/off. If you want to use compress mode must be appended '--compress_mode true'.\n\tInitialize value is --compress_mode off." << std::endl << std::endl;
-	std::wcout << L"--connection_key [value]" << std::endl;
-	std::wcout << L"\tIf you want to change a specific key string for the connection to the main server must be appended\n\t'--connection_key [specific key string]'." << std::endl << std::endl;
-	std::wcout << L"--server_port [value]" << std::endl;
-	std::wcout << L"\tIf you want to change a port number for the connection to the main server must be appended\n\t'--server_port [port number]'." << std::endl << std::endl;
-	std::wcout << L"--high_priority_count [value]" << std::endl;
-	std::wcout << L"\tIf you want to change high priority thread workers must be appended '--high_priority_count [count]'." << std::endl << std::endl;
-	std::wcout << L"--normal_priority_count [value]" << std::endl;
-	std::wcout << L"\tIf you want to change normal priority thread workers must be appended '--normal_priority_count [count]'." << std::endl << std::endl;
-	std::wcout << L"--low_priority_count [value]" << std::endl;
-	std::wcout << L"\tIf you want to change low priority thread workers must be appended '--low_priority_count [count]'." << std::endl << std::endl;
-	std::wcout << L"--source_folder [path]" << std::endl;
-	std::wcout << L"\tIf you want to download folder on middle server on computer must be appended '--source_folder [path]'." << std::endl << std::endl;
-	std::wcout << L"--target_folder [path]" << std::endl;
-	std::wcout << L"\tIf you want to download on your computer must be appended '--target_folder [path]'." << std::endl << std::endl;
-	std::wcout << L"--write_console_mode [value] " << std::endl;
-	std::wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << std::endl << std::endl;
-	std::wcout << L"--logging_level [value]" << std::endl;
-	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
+	wcout << L"download sample options:" << endl << endl;
+	wcout << L"--encrypt_mode [value] " << endl;
+	wcout << L"\tThe encrypt_mode on/off. If you want to use encrypt mode must be appended '--encrypt_mode true'.\n\tInitialize value is --encrypt_mode off." << endl << endl;
+	wcout << L"--compress_mode [value]" << endl;
+	wcout << L"\tThe compress_mode on/off. If you want to use compress mode must be appended '--compress_mode true'.\n\tInitialize value is --compress_mode off." << endl << endl;
+	wcout << L"--connection_key [value]" << endl;
+	wcout << L"\tIf you want to change a specific key string for the connection to the main server must be appended\n\t'--connection_key [specific key string]'." << endl << endl;
+	wcout << L"--server_port [value]" << endl;
+	wcout << L"\tIf you want to change a port number for the connection to the main server must be appended\n\t'--server_port [port number]'." << endl << endl;
+	wcout << L"--high_priority_count [value]" << endl;
+	wcout << L"\tIf you want to change high priority thread workers must be appended '--high_priority_count [count]'." << endl << endl;
+	wcout << L"--normal_priority_count [value]" << endl;
+	wcout << L"\tIf you want to change normal priority thread workers must be appended '--normal_priority_count [count]'." << endl << endl;
+	wcout << L"--low_priority_count [value]" << endl;
+	wcout << L"\tIf you want to change low priority thread workers must be appended '--low_priority_count [count]'." << endl << endl;
+	wcout << L"--source_folder [path]" << endl;
+	wcout << L"\tIf you want to download folder on middle server on computer must be appended '--source_folder [path]'." << endl << endl;
+	wcout << L"--target_folder [path]" << endl;
+	wcout << L"\tIf you want to download on your computer must be appended '--target_folder [path]'." << endl << endl;
+	wcout << L"--write_console_mode [value] " << endl;
+	wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << endl << endl;
+	wcout << L"--logging_level [value]" << endl;
+	wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << endl;
 }

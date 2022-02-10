@@ -3,13 +3,15 @@
 #include <map>
 #include <string>
 
+using namespace std;
+
 namespace argument_parser
 {
 	class argument
 	{
 	public:
-		static std::map<std::wstring, std::wstring> parse(int argc, char* argv[]);
-		static std::map<std::wstring, std::wstring> parse(int argc, wchar_t* argv[]);
+		static map<wstring, wstring> parse(int argc, char* argv[]);
+		static map<wstring, wstring> parse(int argc, wchar_t* argv[]);
 	};
 }
 

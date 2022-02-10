@@ -3,12 +3,14 @@
 #include <string>
 #include <chrono>
 
+using namespace std;
+
 namespace datetime_handler
 {
 	class datetime
 	{
 	public:
-		static std::wstring current_time(const bool& use_seperator = true, const unsigned short& places_of_decimal = 9);
-		static std::wstring time(const std::chrono::system_clock::time_point& time, const bool& use_seperator = true, const unsigned short& places_of_decimal = 9);
+		static wstring current_time(const bool& use_seperator = true, const unsigned short& places_of_decimal = 9);
+		static wstring time(const chrono::system_clock::time_point& time, const bool& use_seperator = true, const unsigned short& places_of_decimal = 9);
 	};
 }

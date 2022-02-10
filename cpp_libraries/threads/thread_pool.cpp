@@ -10,10 +10,10 @@ namespace threads
 {
 	using namespace logging;
 
-	thread_pool::thread_pool(const std::vector<std::shared_ptr<thread_worker>>& workers)
-		: _workers(workers), _job_pool(std::make_shared<job_pool>())
+	thread_pool::thread_pool(const vector<shared_ptr<thread_worker>>& workers)
+		: _workers(workers), _job_pool(make_shared<job_pool>())
 	{
-		_job_pool->append_notification(std::bind(&thread_pool::notification, this, std::placeholders::_1));
+		_job_pool->append_notification(bind(&thread_pool::notification, this, placeholders::_1));
 	}
 
 	thread_pool::~thread_pool(void)
@@ -23,7 +23,7 @@ namespace threads
 
 	void thread_pool::start(void)
 	{
-		std::scoped_lock<std::mutex> guard(_mutex);
+		scoped_lock<mutex> guard(_mutex);
 
 		for (auto& worker : _workers)
 		{
@@ -36,9 +36,9 @@ namespace threads
 		}
 	}
 
-	void thread_pool::append(std::shared_ptr<thread_worker> worker, const bool& start)
+	void thread_pool::append(shared_ptr<thread_worker> worker, const bool& start)
 	{
-		std::unique_lock<std::mutex> unique(_mutex);
+		unique_lock<mutex> unique(_mutex);
 		
 		worker->set_job_pool(_job_pool);
 		_workers.push_back(worker);
@@ -55,7 +55,7 @@ namespace threads
 
 	void thread_pool::stop(const bool& ignore_contained_job)
 	{
-		std::scoped_lock<std::mutex> guard(_mutex);
+		scoped_lock<mutex> guard(_mutex);
 
 		if (_job_pool != nullptr)
 		{
@@ -75,7 +75,7 @@ namespace threads
 		_workers.clear();
 	}
 
-	void thread_pool::push(std::shared_ptr<job> job)
+	void thread_pool::push(shared_ptr<job> job)
 	{
 		if (_job_pool == nullptr)
 		{
@@ -87,7 +87,7 @@ namespace threads
 
 	void thread_pool::notification(const priorities& priority)
 	{
-		std::scoped_lock<std::mutex> guard(_mutex);
+		scoped_lock<mutex> guard(_mutex);
 
 		for (auto& worker : _workers)
 		{

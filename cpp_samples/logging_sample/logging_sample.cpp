@@ -15,7 +15,7 @@ using namespace argument_parser;
 bool write_console = false;
 logging_level log_level = logging_level::information;
 
-bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
+bool parse_arguments(const map<wstring, wstring>& arguments);
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -29,11 +29,11 @@ int main(int argc, char* argv[])
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
 
-	std::vector<std::thread> threads;
+	vector<thread> threads;
 	for (unsigned short thread_index = 0; thread_index < 10; ++thread_index)
 	{
 		threads.push_back(
-			std::thread([](const unsigned short& thread_index)
+			thread([](const unsigned short& thread_index)
 				{
 					for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 					{
@@ -54,9 +54,9 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
+bool parse_arguments(const map<wstring, wstring>& arguments)
 {
-	std::wstring temp;
+	wstring temp;
 
 	auto target = arguments.find(L"--help");
 	if (target != arguments.end())
@@ -70,7 +70,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	if (target != arguments.end())
 	{
 		temp = target->second;
-		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
 		if (temp.compare(L"true") == 0)
 		{
@@ -93,9 +93,9 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 
 void display_help(void)
 {
-	std::wcout << L"logging sample options:" << std::endl << std::endl;
-	std::wcout << L"--write_console_mode [value] " << std::endl;
-	std::wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << std::endl << std::endl;
-	std::wcout << L"--logging_level [value]" << std::endl;
-	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
+	wcout << L"logging sample options:" << endl << endl;
+	wcout << L"--write_console_mode [value] " << endl;
+	wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << endl << endl;
+	wcout << L"--logging_level [value]" << endl;
+	wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << endl;
 }

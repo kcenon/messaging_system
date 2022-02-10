@@ -23,6 +23,7 @@
 
 constexpr auto PROGRAM_NAME = L"middle_server";
 
+using namespace std;
 using namespace logging;
 using namespace network;
 using namespace compressing;
@@ -41,10 +42,10 @@ logging_level log_level = logging_level::parameter;
 #else
 logging_level log_level = logging_level::information;
 #endif
-std::wstring main_connection_key = L"main_connection_key";
-std::wstring middle_connection_key = L"middle_connection_key";
+wstring main_connection_key = L"main_connection_key";
+wstring middle_connection_key = L"middle_connection_key";
 unsigned short middle_server_port = 8642;
-std::wstring main_server_ip = L"127.0.0.1";
+wstring main_server_ip = L"127.0.0.1";
 unsigned short main_server_port = 9753;
 unsigned short high_priority_count = 4;
 unsigned short normal_priority_count = 4;
@@ -53,30 +54,30 @@ size_t session_limit_count = 0;
 
 file_manager _file_manager;
 
-std::map<std::wstring, std::function<bool(std::shared_ptr<container::value_container>)>> _file_commands;
+map<wstring, function<bool(shared_ptr<container::value_container>)>> _file_commands;
 
-std::shared_ptr<messaging_client> _data_line = nullptr;
-std::shared_ptr<messaging_client> _file_line = nullptr;
-std::shared_ptr<messaging_server> _middle_server = nullptr;
+shared_ptr<messaging_client> _data_line = nullptr;
+shared_ptr<messaging_client> _file_line = nullptr;
+shared_ptr<messaging_server> _middle_server = nullptr;
 
 #ifdef _CONSOLE
 BOOL ctrl_handler(DWORD ctrl_type);
 #endif
 
-bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments);
+bool parse_arguments(const map<wstring, wstring>& arguments);
 void create_middle_server(void);
 void create_data_line(void);
 void create_file_line(void);
-void connection_from_middle_server(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
-void received_message_from_middle_server(std::shared_ptr<container::value_container> container);
-void connection_from_data_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
-void received_message_from_data_line(std::shared_ptr<container::value_container> container);
-void connection_from_file_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition);
-void received_message_from_file_line(std::shared_ptr<container::value_container> container);
-void received_file_from_file_line(const std::wstring& source_id, const std::wstring& source_sub_id, const std::wstring& indication_id, const std::wstring& target_path);
-bool download_files(std::shared_ptr<container::value_container> container);
-bool upload_files(std::shared_ptr<container::value_container> container);
-void uploaded_file(std::shared_ptr<container::value_container> container);
+void connection_from_middle_server(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
+void received_message_from_middle_server(shared_ptr<container::value_container> container);
+void connection_from_data_line(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
+void received_message_from_data_line(shared_ptr<container::value_container> container);
+void connection_from_file_line(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
+void received_message_from_file_line(shared_ptr<container::value_container> container);
+void received_file_from_file_line(const wstring& source_id, const wstring& source_sub_id, const wstring& indication_id, const wstring& target_path);
+bool download_files(shared_ptr<container::value_container> container);
+bool upload_files(shared_ptr<container::value_container> container);
+void uploaded_file(shared_ptr<container::value_container> container);
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -137,9 +138,9 @@ BOOL ctrl_handler(DWORD ctrl_type)
 }
 #endif
 
-bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
+bool parse_arguments(const map<wstring, wstring>& arguments)
 {
-	std::wstring temp;
+	wstring temp;
 
 	auto target = arguments.find(L"--help");
 	if (target != arguments.end())
@@ -153,7 +154,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	if (target != arguments.end())
 	{
 		temp = target->second;
-		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
 		if (temp.compare(L"true") == 0)
 		{
@@ -169,7 +170,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	if (target != arguments.end())
 	{
 		temp = target->second;
-		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
 		if (temp.compare(L"true") == 0)
 		{
@@ -245,7 +246,7 @@ bool parse_arguments(const std::map<std::wstring, std::wstring>& arguments)
 	if (target != arguments.end())
 	{
 		temp = target->second;
-		std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
 		if (temp.compare(L"true") == 0)
 		{
@@ -273,7 +274,7 @@ void create_middle_server(void)
 		_middle_server.reset();
 	}
 
-	_middle_server = std::make_shared<messaging_server>(PROGRAM_NAME);
+	_middle_server = make_shared<messaging_server>(PROGRAM_NAME);
 	_middle_server->set_encrypt_mode(encrypt_mode);
 	_middle_server->set_compress_mode(compress_mode);
 	_middle_server->set_connection_key(middle_connection_key);
@@ -291,7 +292,7 @@ void create_data_line(void)
 		_data_line.reset();
 	}
 
-	_data_line = std::make_shared<messaging_client>(L"data_line");
+	_data_line = make_shared<messaging_client>(L"data_line");
 	_data_line->set_compress_mode(compress_mode);
 	_data_line->set_connection_key(main_connection_key);
 	_data_line->set_session_types(session_types::message_line);
@@ -307,7 +308,7 @@ void create_file_line(void)
 		_file_line.reset();
 	}
 
-	_file_line = std::make_shared<messaging_client>(L"file_line");
+	_file_line = make_shared<messaging_client>(L"file_line");
 	_file_line->set_compress_mode(compress_mode);
 	_file_line->set_connection_key(main_connection_key);
 	_file_line->set_session_types(session_types::file_line);
@@ -317,13 +318,13 @@ void create_file_line(void)
 	_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 }
 
-void connection_from_middle_server(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
+void connection_from_middle_server(const wstring& target_id, const wstring& target_sub_id, const bool& condition)
 {
 	logger::handle().write(logging_level::information,
 		fmt::format(L"a client on middle server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
-void received_message_from_middle_server(std::shared_ptr<container::value_container> container)
+void received_message_from_middle_server(shared_ptr<container::value_container> container)
 {
 	if (container == nullptr)
 	{
@@ -337,11 +338,11 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 		{
 			if (_middle_server)
 			{
-				std::shared_ptr<container::value_container> response = container->copy(false);
+				shared_ptr<container::value_container> response = container->copy(false);
 				response->swap_header();
 
-				response << std::make_shared<container::bool_value>(L"error", true);
-				response << std::make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
+				response << make_shared<container::bool_value>(L"error", true);
+				response << make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
 
 				_middle_server->send(response);
 			}
@@ -361,11 +362,11 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 	{
 		if (_middle_server)
 		{
-			std::shared_ptr<container::value_container> response = container->copy(false);
+			shared_ptr<container::value_container> response = container->copy(false);
 			response->swap_header();
 
-			response << std::make_shared<container::bool_value>(L"error", true);
-			response << std::make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
+			response << make_shared<container::bool_value>(L"error", true);
+			response << make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
 
 			_middle_server->send(response);
 		}
@@ -376,7 +377,7 @@ void received_message_from_middle_server(std::shared_ptr<container::value_contai
 	target->second(container);
 }
 
-void connection_from_data_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
+void connection_from_data_line(const wstring& target_id, const wstring& target_sub_id, const bool& condition)
 {
 	if (_data_line == nullptr)
 	{
@@ -396,12 +397,12 @@ void connection_from_data_line(const std::wstring& target_id, const std::wstring
 		return;
 	}
 
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+	this_thread::sleep_for(chrono::seconds(1));
 
 	_data_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 }
 
-void received_message_from_data_line(std::shared_ptr<container::value_container> container)
+void received_message_from_data_line(shared_ptr<container::value_container> container)
 {
 	if (container == nullptr)
 	{
@@ -414,7 +415,7 @@ void received_message_from_data_line(std::shared_ptr<container::value_container>
 	}
 }
 
-void connection_from_file_line(const std::wstring& target_id, const std::wstring& target_sub_id, const bool& condition)
+void connection_from_file_line(const wstring& target_id, const wstring& target_sub_id, const bool& condition)
 {
 	if (_file_line == nullptr)
 	{
@@ -434,12 +435,12 @@ void connection_from_file_line(const std::wstring& target_id, const std::wstring
 		return;
 	}
 
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+	this_thread::sleep_for(chrono::seconds(1));
 
 	_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 }
 
-void received_message_from_file_line(std::shared_ptr<container::value_container> container)
+void received_message_from_file_line(shared_ptr<container::value_container> container)
 {
 	if (container == nullptr)
 	{
@@ -459,12 +460,12 @@ void received_message_from_file_line(std::shared_ptr<container::value_container>
 	}
 }
 
-void received_file_from_file_line(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& indication_id, const std::wstring& target_path)
+void received_file_from_file_line(const wstring& target_id, const wstring& target_sub_id, const wstring& indication_id, const wstring& target_path)
 {
 	logger::handle().write(logging_level::parameter,
 		fmt::format(L"target_id: {}, target_sub_id: {}, indication_id: {}, file_path: {}", target_id, target_sub_id, indication_id, target_path));
 
-	std::shared_ptr<container::value_container> container = _file_manager.received(target_id, target_sub_id, indication_id, target_path);
+	shared_ptr<container::value_container> container = _file_manager.received(target_id, target_sub_id, indication_id, target_path);
 	if(container != nullptr)
 	{
 		if (_middle_server)
@@ -474,16 +475,16 @@ void received_file_from_file_line(const std::wstring& target_id, const std::wstr
 	}
 }
 
-bool download_files(std::shared_ptr<container::value_container> container)
+bool download_files(shared_ptr<container::value_container> container)
 {
 	if (container == nullptr)
 	{
 		return false;
 	}
 
-	std::vector<std::shared_ptr<container::value>> files = container->value_array(L"file");
+	vector<shared_ptr<container::value>> files = container->value_array(L"file");
 
-	std::vector<std::wstring> target_paths;
+	vector<wstring> target_paths;
 	for (auto& file : files)
 	{
 		target_paths.push_back((*file)[L"target"]->to_string());
@@ -492,14 +493,14 @@ bool download_files(std::shared_ptr<container::value_container> container)
 
 	if (_middle_server)
 	{
-		_middle_server->send(std::make_shared<container::value_container>(container->source_id(), container->source_sub_id(), L"transfer_condition",
-			std::vector<std::shared_ptr<container::value>> {
-				std::make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string()),
-				std::make_shared<container::ushort_value>(L"percentage", 0)
+		_middle_server->send(make_shared<container::value_container>(container->source_id(), container->source_sub_id(), L"transfer_condition",
+			vector<shared_ptr<container::value>> {
+				make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string()),
+				make_shared<container::ushort_value>(L"percentage", 0)
 		}));
 	}
 
-	std::shared_ptr<container::value_container> temp = container->copy();
+	shared_ptr<container::value_container> temp = container->copy();
 	temp->set_message_type(L"request_files");
 
 	if (_file_line)
@@ -510,16 +511,16 @@ bool download_files(std::shared_ptr<container::value_container> container)
 	return true;
 }
 
-bool upload_files(std::shared_ptr<container::value_container> container)
+bool upload_files(shared_ptr<container::value_container> container)
 {
 	if (container == nullptr)
 	{
 		return false;
 	}
 
-	std::vector<std::shared_ptr<container::value>> files = container->value_array(L"file");
+	vector<shared_ptr<container::value>> files = container->value_array(L"file");
 
-	std::vector<std::wstring> target_paths;
+	vector<wstring> target_paths;
 	for (auto& file : files)
 	{
 		target_paths.push_back((*file)[L"target"]->to_string());
@@ -528,10 +529,10 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 
 	if (_middle_server)
 	{
-		_middle_server->send(std::make_shared<container::value_container>(container->source_id(), container->source_sub_id(), L"transfer_condition",
-			std::vector<std::shared_ptr<container::value>> {
-				std::make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string()),
-				std::make_shared<container::ushort_value>(L"percentage", 0)
+		_middle_server->send(make_shared<container::value_container>(container->source_id(), container->source_sub_id(), L"transfer_condition",
+			vector<shared_ptr<container::value>> {
+				make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string()),
+				make_shared<container::ushort_value>(L"percentage", 0)
 		}));
 	}
 
@@ -539,8 +540,8 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 	
 	if (_file_line)
 	{
-		container << std::make_shared<container::string_value>(L"gateway_source_id", container->source_id());
-		container << std::make_shared<container::string_value>(L"gateway_source_sub_id", container->source_sub_id());
+		container << make_shared<container::string_value>(L"gateway_source_id", container->source_id());
+		container << make_shared<container::string_value>(L"gateway_source_sub_id", container->source_sub_id());
 		container->set_source(_file_line->source_id(), _file_line->source_sub_id());
 
 		_file_line->send(container);
@@ -549,14 +550,14 @@ bool upload_files(std::shared_ptr<container::value_container> container)
 	return true;
 }
 
-void uploaded_file(std::shared_ptr<container::value_container> container)
+void uploaded_file(shared_ptr<container::value_container> container)
 {
 	if (container == nullptr)
 	{
 		return;
 	}
 
-	std::shared_ptr<container::value_container> temp = _file_manager.received(
+	shared_ptr<container::value_container> temp = _file_manager.received(
 		container->target_id(), container->target_sub_id(), container->get_value(L"indication_id")->to_string(), container->get_value(L"target_path")->to_string());
 	if (temp != nullptr)
 	{
@@ -569,31 +570,31 @@ void uploaded_file(std::shared_ptr<container::value_container> container)
 
 void display_help(void)
 {
-	std::wcout << L"main server options:" << std::endl << std::endl;
-	std::wcout << L"--encrypt_mode [value] " << std::endl;
-	std::wcout << L"\tThe encrypt_mode on/off. If you want to use encrypt mode must be appended '--encrypt_mode true'.\n\tInitialize value is --encrypt_mode off." << std::endl << std::endl;
-	std::wcout << L"--compress_mode [value]" << std::endl;
-	std::wcout << L"\tThe compress_mode on/off. If you want to use compress mode must be appended '--compress_mode true'.\n\tInitialize value is --compress_mode off." << std::endl << std::endl;
-	std::wcout << L"--compress_block_size [value]" << std::endl;
-	std::wcout << L"\tThe compress_mode on/off. If you want to change compress block size must be appended '--compress_block_size size'.\n\tInitialize value is --compress_mode 1024." << std::endl << std::endl;
-	std::wcout << L"--main_connection_key [value]" << std::endl;
-	std::wcout << L"\tIf you want to change a specific key string for the connection to the main server must be appended\n\t'--main_connection_key [specific key string]'." << std::endl << std::endl;
-	std::wcout << L"--middle_connection_key [value]" << std::endl;
-	std::wcout << L"\tIf you want to change a specific key string for the connection to the middle server must be appended\n\t'--middle_connection_key [specific key string]'." << std::endl << std::endl;
-	std::wcout << L"--main_server_port [value]" << std::endl;
-	std::wcout << L"\tIf you want to change a port number for the connection to the main server must be appended\n\t'--main_server_port [port number]'." << std::endl << std::endl;
-	std::wcout << L"--middle_server_port [value]" << std::endl;
-	std::wcout << L"\tIf you want to change a port number for the connection to the middle server must be appended\n\t'--middle_server_port [port number]'." << std::endl << std::endl;
-	std::wcout << L"--high_priority_count [value]" << std::endl;
-	std::wcout << L"\tIf you want to change high priority thread workers must be appended '--high_priority_count [count]'." << std::endl << std::endl;
-	std::wcout << L"--normal_priority_count [value]" << std::endl;
-	std::wcout << L"\tIf you want to change normal priority thread workers must be appended '--normal_priority_count [count]'." << std::endl << std::endl;
-	std::wcout << L"--low_priority_count [value]" << std::endl;
-	std::wcout << L"\tIf you want to change low priority thread workers must be appended '--low_priority_count [count]'." << std::endl << std::endl;
-	std::wcout << L"--session_limit_count [value]" << std::endl;
-	std::wcout << L"\tIf you want to change session limit count must be appended '--session_limit_count [count]'." << std::endl << std::endl;
-	std::wcout << L"--write_console_mode [value] " << std::endl;
-	std::wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << std::endl << std::endl;
-	std::wcout << L"--logging_level [value]" << std::endl;
-	std::wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << std::endl;
+	wcout << L"main server options:" << endl << endl;
+	wcout << L"--encrypt_mode [value] " << endl;
+	wcout << L"\tThe encrypt_mode on/off. If you want to use encrypt mode must be appended '--encrypt_mode true'.\n\tInitialize value is --encrypt_mode off." << endl << endl;
+	wcout << L"--compress_mode [value]" << endl;
+	wcout << L"\tThe compress_mode on/off. If you want to use compress mode must be appended '--compress_mode true'.\n\tInitialize value is --compress_mode off." << endl << endl;
+	wcout << L"--compress_block_size [value]" << endl;
+	wcout << L"\tThe compress_mode on/off. If you want to change compress block size must be appended '--compress_block_size size'.\n\tInitialize value is --compress_mode 1024." << endl << endl;
+	wcout << L"--main_connection_key [value]" << endl;
+	wcout << L"\tIf you want to change a specific key string for the connection to the main server must be appended\n\t'--main_connection_key [specific key string]'." << endl << endl;
+	wcout << L"--middle_connection_key [value]" << endl;
+	wcout << L"\tIf you want to change a specific key string for the connection to the middle server must be appended\n\t'--middle_connection_key [specific key string]'." << endl << endl;
+	wcout << L"--main_server_port [value]" << endl;
+	wcout << L"\tIf you want to change a port number for the connection to the main server must be appended\n\t'--main_server_port [port number]'." << endl << endl;
+	wcout << L"--middle_server_port [value]" << endl;
+	wcout << L"\tIf you want to change a port number for the connection to the middle server must be appended\n\t'--middle_server_port [port number]'." << endl << endl;
+	wcout << L"--high_priority_count [value]" << endl;
+	wcout << L"\tIf you want to change high priority thread workers must be appended '--high_priority_count [count]'." << endl << endl;
+	wcout << L"--normal_priority_count [value]" << endl;
+	wcout << L"\tIf you want to change normal priority thread workers must be appended '--normal_priority_count [count]'." << endl << endl;
+	wcout << L"--low_priority_count [value]" << endl;
+	wcout << L"\tIf you want to change low priority thread workers must be appended '--low_priority_count [count]'." << endl << endl;
+	wcout << L"--session_limit_count [value]" << endl;
+	wcout << L"\tIf you want to change session limit count must be appended '--session_limit_count [count]'." << endl << endl;
+	wcout << L"--write_console_mode [value] " << endl;
+	wcout << L"\tThe write_console_mode on/off. If you want to display log on console must be appended '--write_console_mode true'.\n\tInitialize value is --write_console_mode off." << endl << endl;
+	wcout << L"--logging_level [value]" << endl;
+	wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << endl;
 }

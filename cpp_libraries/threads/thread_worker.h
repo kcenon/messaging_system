@@ -8,6 +8,8 @@
 #include <vector>
 #include <condition_variable>
 
+using namespace std;
+
 namespace threads
 {
 	class job;
@@ -15,11 +17,11 @@ namespace threads
 	class thread_worker
 	{
 	public:
-		thread_worker(const priorities& priority, const std::vector<priorities>& others = {});
+		thread_worker(const priorities& priority, const vector<priorities>& others = {});
 		~thread_worker(void);
 
 	public:
-		void set_job_pool(std::shared_ptr<job_pool> job_pool);
+		void set_job_pool(shared_ptr<job_pool> job_pool);
 
 	public:
 		void start(void);
@@ -33,24 +35,24 @@ namespace threads
 		void run(void);
 
 	protected:
-		virtual void working(std::shared_ptr<job> current_job);
+		virtual void working(shared_ptr<job> current_job);
 
 	protected:
 		bool check_condition(void);
 
 	private:
-		std::atomic<bool> _thread_stop{ false };
-		std::atomic<bool> _ignore_contained_job{ false };
+		atomic<bool> _thread_stop{ false };
+		atomic<bool> _ignore_contained_job{ false };
 
 	private:
 		priorities _priority;
-		std::vector<priorities> _others;
-		std::shared_ptr<job_pool> _job_pool;
+		vector<priorities> _others;
+		shared_ptr<job_pool> _job_pool;
 
 	private:
-		std::mutex _mutex;
-		std::thread _thread;
-		std::condition_variable _condition;
+		mutex _mutex;
+		thread _thread;
+		condition_variable _condition;
 	};
 }
 

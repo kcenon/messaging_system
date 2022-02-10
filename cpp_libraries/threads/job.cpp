@@ -37,17 +37,17 @@ namespace threads
 	{
 	}
 
-	job::job(const priorities& priority, const std::vector<unsigned char>& data, const bool& is_async_callback)
+	job::job(const priorities& priority, const vector<unsigned char>& data, const bool& is_async_callback)
 		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(nullptr), _temporary_stored(false), _temporary_stored_path(L""), _is_async_callback(is_async_callback)
 	{
 	}
 
-	job::job(const priorities& priority, const std::function<bool(void)>& working_callback, const bool& is_async_callback)
+	job::job(const priorities& priority, const function<bool(void)>& working_callback, const bool& is_async_callback)
 		: _priority(priority), _working_callback(working_callback), _working_callback2(nullptr), _temporary_stored(false), _temporary_stored_path(L""), _is_async_callback(is_async_callback)
 	{
 	}
 
-	job::job(const priorities& priority, const std::vector<unsigned char>& data, const std::function<bool(const std::vector<unsigned char>&)>& working_callback, const bool& is_async_callback)
+	job::job(const priorities& priority, const vector<unsigned char>& data, const function<bool(const vector<unsigned char>&)>& working_callback, const bool& is_async_callback)
 		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(working_callback), _temporary_stored(false), _temporary_stored_path(L""), _is_async_callback(is_async_callback)
 	{
 	}
@@ -56,7 +56,7 @@ namespace threads
 	{
 	}
 
-	std::shared_ptr<job> job::get_ptr(void)
+	shared_ptr<job> job::get_ptr(void)
 	{
 		return shared_from_this();
 	}
@@ -66,7 +66,7 @@ namespace threads
 		return _priority;
 	}
 
-	void job::set_job_pool(std::shared_ptr<job_pool> job_pool)
+	void job::set_job_pool(shared_ptr<job_pool> job_pool)
 	{
 		_job_pool = job_pool;
 	}
@@ -82,7 +82,7 @@ namespace threads
 				logger::handle().write(logging_level::sequence,
 					fmt::format(L"attempt to call async callback function without value on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
 
-				std::async(std::launch::async, _working_callback);
+				async(launch::async, _working_callback);
 
 				return true;
 			}
@@ -102,7 +102,7 @@ namespace threads
 				logger::handle().write(logging_level::sequence,
 					fmt::format(L"attempt to call async callback function with value on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
 
-				std::async(std::launch::async, _working_callback2, _data);
+				async(launch::async, _working_callback2, _data);
 
 				return true;
 			}
@@ -133,7 +133,7 @@ namespace threads
 #ifdef __OSX__
 		uuid_t uuidObj;
 		uuid_generate(uuidObj);
-		_temporary_stored_path = fmt::format(L"{}{}.job", folder::get_temporary_folder(), converter::to_wstring(std::string(uuidObj, uuidObj + 16)));
+		_temporary_stored_path = fmt::format(L"{}{}.job", folder::get_temporary_folder(), converter::to_wstring(string(uuidObj, uuidObj + 16)));
 #else
 		_temporary_stored_path = fmt::format(L"{}{}.job", folder::get_temporary_folder(), converter::to_wstring(xg::newGuid().str()));
 #endif
@@ -147,13 +147,13 @@ namespace threads
 #ifdef __USE_CHAKRA_CORE__
 		auto start = logger::handle().chrono_start();
 
-		std::shared_ptr<value_container> source_data = std::make_shared<value_container>(_data);
+		shared_ptr<value_container> source_data = make_shared<value_container>(_data);
 		if (source_data == nullptr)
 		{
 			return false;
 		}
 
-		std::wstring script = source_data->get_value(L"scripts")->to_string();
+		wstring script = source_data->get_value(L"scripts")->to_string();
 		if (script.empty())
 		{
 			logger::handle().write(logging_level::information, do_script(converter::to_wstring(_data)), start);
@@ -167,14 +167,14 @@ namespace threads
 		}
 		else
 		{
-			std::shared_ptr<job_pool> current_job_pool = _job_pool.lock();
+			shared_ptr<job_pool> current_job_pool = _job_pool.lock();
 			if (current_job_pool != nullptr)
 			{
-				std::shared_ptr<value_container> target_data = source_data->copy(false);
+				shared_ptr<value_container> target_data = source_data->copy(false);
 				target_data->swap_header();
-				target_data->add(std::make_shared<string_value>(L"script_result", do_script(script)));
+				target_data->add(make_shared<string_value>(L"script_result", do_script(script)));
 
-				current_job_pool->push(std::make_shared<job>(_priority, target_data->serialize_array()));
+				current_job_pool->push(make_shared<job>(_priority, target_data->serialize_array()));
 				current_job_pool.reset();
 			}
 		}
@@ -185,7 +185,7 @@ namespace threads
 #endif
 	}
 
-	std::wstring job::do_script(const std::wstring& script)
+	wstring job::do_script(const wstring& script)
 	{
 		try
 		{
@@ -209,7 +209,7 @@ namespace threads
 			size_t stringLength;
 			JsStringToPointer(resultJSString, &resultWC, &stringLength);
 
-			std::wstring resultW(resultWC);
+			wstring resultW(resultWC);
 
 			JsSetCurrentContext(JS_INVALID_REFERENCE);
 			JsDisposeRuntime(runtime);

@@ -11,7 +11,7 @@ namespace container
 		_type = value_types::short_value;
 	}
 
-	short_value::short_value(const std::wstring& name, const short& value)
+	short_value::short_value(const wstring& name, const short& value)
 		: value(name, (const unsigned char*)&value, sizeof(short), value_types::short_value)
 	{
 	}
@@ -100,7 +100,7 @@ namespace container
 		return static_cast<double>(temp);
 	}
 
-	std::wstring short_value::to_string(const bool&) const
+	wstring short_value::to_string(const bool&) const
 	{
 		return fmt::format(L"{}", to_short());
 	}

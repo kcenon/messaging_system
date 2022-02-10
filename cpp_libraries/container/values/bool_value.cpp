@@ -8,12 +8,12 @@ namespace container
 		_type = value_types::bool_value;
 	}
 
-	bool_value::bool_value(const std::wstring& name, const bool& value)
+	bool_value::bool_value(const wstring& name, const bool& value)
 		: value(name, value_types::bool_value, value ? L"true" : L"false")
 	{
 	}
 
-	bool_value::bool_value(const std::wstring& name, const std::wstring& value)
+	bool_value::bool_value(const wstring& name, const wstring& value)
 		: value(name, value_types::bool_value, value)
 	{
 	}
@@ -110,7 +110,7 @@ namespace container
 		return static_cast<double>(temp);
 	}
 
-	std::wstring bool_value::to_string(const bool&) const
+	wstring bool_value::to_string(const bool&) const
 	{
 		return (to_boolean() ? L"true" : L"false");
 	}

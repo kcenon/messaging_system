@@ -6,6 +6,8 @@
 #include "fmt/xchar.h"
 #include "fmt/format.h"
 
+#include <future>
+
 namespace threads
 {
 	using namespace logging;
@@ -20,7 +22,7 @@ namespace threads
 		_jobs.clear();
 	}
 
-	std::shared_ptr<job_pool> job_pool::get_ptr(void)
+	shared_ptr<job_pool> job_pool::get_ptr(void)
 	{
 		return shared_from_this();
 	}
@@ -30,7 +32,7 @@ namespace threads
 		_lock_condition = lock_condition;
 	}
 
-	void job_pool::push(std::shared_ptr<job> new_job)
+	void job_pool::push(shared_ptr<job> new_job)
 	{
 		if (new_job == nullptr)
 		{
@@ -44,7 +46,7 @@ namespace threads
 
 		new_job->set_job_pool(get_ptr());
 
-		std::scoped_lock<std::mutex> guard(_mutex);
+		scoped_lock<mutex> guard(_mutex);
 
 		auto iterator = _jobs.find(new_job->priority());
 		if (iterator != _jobs.end())
@@ -58,7 +60,7 @@ namespace threads
 			return;
 		}
 		
-		std::queue<std::shared_ptr<job>> queue;
+		queue<shared_ptr<job>> queue;
 		queue.push(new_job);
 
 		_jobs.insert({ new_job->priority(), queue });
@@ -68,14 +70,14 @@ namespace threads
 		notification(new_job->priority());
 	}
 
-	std::shared_ptr<job> job_pool::pop(const priorities& priority, const std::vector<priorities>& others)
+	shared_ptr<job> job_pool::pop(const priorities& priority, const vector<priorities>& others)
 	{
-		std::scoped_lock<std::mutex> guard(_mutex);
+		scoped_lock<mutex> guard(_mutex);
 
 		auto iterator = _jobs.find(priority);
 		if (iterator != _jobs.end() && !iterator->second.empty())
 		{
-			std::shared_ptr<job> temp = iterator->second.front();
+			shared_ptr<job> temp = iterator->second.front();
 			iterator->second.pop();
 
 			logger::handle().write(logging_level::parameter, fmt::format(L"pop a job: priority - {}", (int)temp->priority()));
@@ -91,7 +93,7 @@ namespace threads
 				continue;
 			}
 
-			std::shared_ptr<job> temp = iterator2->second.front();
+			shared_ptr<job> temp = iterator2->second.front();
 			iterator2->second.pop();
 
 			logger::handle().write(logging_level::parameter, fmt::format(L"pop a job: priority - {}", (int)temp->priority()));
@@ -102,14 +104,14 @@ namespace threads
 		return nullptr;
 	}
 
-	bool job_pool::contain(const priorities& priority, const std::vector<priorities>& others)
+	bool job_pool::contain(const priorities& priority, const vector<priorities>& others)
 	{
-		std::scoped_lock<std::mutex> guard(_mutex);
+		scoped_lock<mutex> guard(_mutex);
 
 		auto iterator = _jobs.find(priority);
 		if (iterator != _jobs.end() && !iterator->second.empty())
 		{
-			std::shared_ptr<job> temp = iterator->second.front();
+			shared_ptr<job> temp = iterator->second.front();
 
 			return temp != nullptr;
 		}
@@ -122,7 +124,7 @@ namespace threads
 				continue;
 			}
 
-			std::shared_ptr<job> temp = iterator2->second.front();
+			shared_ptr<job> temp = iterator2->second.front();
 
 			return temp != nullptr;
 		}
@@ -130,7 +132,7 @@ namespace threads
 		return false;
 	}
 
-	void job_pool::append_notification(const std::function<void(const priorities&)>& notification)
+	void job_pool::append_notification(const function<void(const priorities&)>& notification)
 	{
 		_notifications.push_back(notification);
 	}
@@ -144,7 +146,7 @@ namespace threads
 				continue;
 			}
 
-			notification(priority);
+			async(launch::async, notification, priority);
 		}
 	}
 }

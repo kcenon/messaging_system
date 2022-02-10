@@ -11,7 +11,7 @@ namespace container
 		_type = value_types::int_value;
 	}
 
-	int_value::int_value(const std::wstring& name, const int& value)
+	int_value::int_value(const wstring& name, const int& value)
 		: value(name, (const unsigned char*)&value, sizeof(int), value_types::int_value)
 	{
 	}
@@ -100,7 +100,7 @@ namespace container
 		return static_cast<double>(temp);
 	}
 
-	std::wstring int_value::to_string(const bool&) const
+	wstring int_value::to_string(const bool&) const
 	{
 		return fmt::format(L"{}", to_int());
 	}

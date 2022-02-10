@@ -6,30 +6,30 @@
 
 namespace file_handler
 {
-	bool file::remove(const std::wstring& path)
+	bool file::remove(const wstring& path)
 	{
-		if (!std::filesystem::exists(path))
+		if (!filesystem::exists(path))
 		{
 			return false;
 		}
 
-		return std::filesystem::remove(path);
+		return filesystem::remove(path);
 	}
 
-	std::vector<unsigned char> file::load(const std::wstring& path)
+	vector<unsigned char> file::load(const wstring& path)
 	{
-		if (!std::filesystem::exists(path))
+		if (!filesystem::exists(path))
 		{
-			return std::vector<unsigned char>();
+			return vector<unsigned char>();
 		}
 
-		size_t file_size = std::filesystem::file_size(path);
+		size_t file_size = filesystem::file_size(path);
 
 		int file;
 		errno_t err = _wsopen_s(&file, path.c_str(), _O_RDONLY | _O_BINARY | _O_SEQUENTIAL, _SH_DENYRD, _S_IREAD);
 		if (err != 0)
 		{
-			return std::vector<unsigned char>();
+			return vector<unsigned char>();
 		}
 
 		char* temp = new char[file_size];
@@ -37,7 +37,7 @@ namespace file_handler
 
 		file_size = _read(file, temp, (unsigned int)file_size);
 
-		std::vector<unsigned char> target;
+		vector<unsigned char> target;
 		target.reserve(file_size);
 		target.insert(target.begin(), temp, temp + file_size);
 
@@ -49,12 +49,12 @@ namespace file_handler
 		return target;
 	}
 
-	bool file::save(const std::wstring& path, const std::vector<unsigned char>& data)
+	bool file::save(const wstring& path, const vector<unsigned char>& data)
 	{
-		std::filesystem::path target_path(path);
+		filesystem::path target_path(path);
 		if (target_path.parent_path().empty() != true)
 		{
-			std::filesystem::create_directories(target_path.parent_path());
+			filesystem::create_directories(target_path.parent_path());
 		}
 
 		int file;
@@ -70,7 +70,7 @@ namespace file_handler
 		return true;
 	}
 
-	bool file::append(const std::wstring& source, const std::vector<unsigned char>& data)
+	bool file::append(const wstring& source, const vector<unsigned char>& data)
 	{
 		int file;
 		errno_t err = _wsopen_s(&file, source.c_str(), _O_WRONLY | _O_CREAT | _O_APPEND | _O_BINARY, _SH_DENYWR, _S_IWRITE);
@@ -82,7 +82,7 @@ namespace file_handler
 		_write(file, data.data(), (unsigned int)data.size());
 		_close(file);
 
-		std::filesystem::remove(source);
+		filesystem::remove(source);
 
 		return true;
 	}

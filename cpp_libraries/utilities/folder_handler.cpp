@@ -4,33 +4,33 @@
 
 namespace folder_handler
 {
-	std::wstring folder::get_temporary_folder(void)
+	wstring folder::get_temporary_folder(void)
 	{
-		return std::filesystem::temp_directory_path().wstring();
+		return filesystem::temp_directory_path().wstring();
 	}
 
-	std::vector<std::wstring> folder::get_files(const std::wstring& target_folder, const bool& search_sub_folder, const std::vector<std::wstring> extensions)
+	vector<wstring> folder::get_files(const wstring& target_folder, const bool& search_sub_folder, const vector<wstring> extensions)
 	{
-		std::vector<std::wstring> result;
+		vector<wstring> result;
 
 		if (target_folder.empty())
 		{
 			return result;
 		}
 
-		std::wstring extension;
-		std::filesystem::path targetDir(target_folder);
+		wstring extension;
+		filesystem::path targetDir(target_folder);
 
-		if (std::filesystem::exists(targetDir) != true)
+		if (filesystem::exists(targetDir) != true)
 		{
 			return result;
 		}
 
-		std::filesystem::directory_iterator iterator(targetDir), endItr;
+		filesystem::directory_iterator iterator(targetDir), endItr;
 
 		for (; iterator != endItr; ++iterator)
 		{
-			if (std::filesystem::is_regular_file(iterator->path()) == true)
+			if (filesystem::is_regular_file(iterator->path()) == true)
 			{
 				if (extensions.size() == 0)
 				{
@@ -39,8 +39,8 @@ namespace folder_handler
 				}
 
 				extension = iterator->path().extension().wstring();
-				std::vector<std::wstring>::const_iterator target_extension = std::find_if(extensions.begin(), extensions.end(),
-					[&extension](std::wstring item)
+				vector<wstring>::const_iterator target_extension = find_if(extensions.begin(), extensions.end(),
+					[&extension](wstring item)
 					{
 						return item == extension;
 					});
@@ -54,9 +54,9 @@ namespace folder_handler
 				continue;
 			}
 
-			if (std::filesystem::is_directory(iterator->path()) == true && search_sub_folder == true)
+			if (filesystem::is_directory(iterator->path()) == true && search_sub_folder == true)
 			{
-				std::vector<std::wstring> innerFiles = get_files(iterator->path().wstring(), search_sub_folder, extensions);
+				vector<wstring> innerFiles = get_files(iterator->path().wstring(), search_sub_folder, extensions);
 				if (innerFiles.empty() == true)
 				{
 					continue;

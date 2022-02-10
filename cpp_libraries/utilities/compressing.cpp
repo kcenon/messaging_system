@@ -13,7 +13,7 @@ namespace compressing
 
 	unsigned short compressor::_block_bytes = 1024;
 
-	std::vector<unsigned char> compressor::compression(const std::vector<unsigned char>& original_data)
+	vector<unsigned char> compressor::compression(const vector<unsigned char>& original_data)
 	{
 		if (original_data.empty())
 		{
@@ -26,16 +26,16 @@ namespace compressing
 		size_t read_index = 0;
 		int source_buffer_index = 0;
 
-		std::vector<std::vector<char>> source_buffer;
-		source_buffer.push_back(std::vector<char>());
-		source_buffer.push_back(std::vector<char>());
+		vector<vector<char>> source_buffer;
+		source_buffer.push_back(vector<char>());
+		source_buffer.push_back(vector<char>());
 		source_buffer[0].reserve(_block_bytes);
 		source_buffer[1].reserve(_block_bytes);
 
 		int compress_size = LZ4_COMPRESSBOUND(_block_bytes);
-		std::vector<char> compress_buffer;
+		vector<char> compress_buffer;
 		compress_buffer.reserve(compress_size);
-		std::vector<unsigned char> compressed_data;
+		vector<unsigned char> compressed_data;
 
 		char compress_size_data[4];
 
@@ -79,7 +79,7 @@ namespace compressing
 		{
 			logger::handle().write(logging_level::error, L"cannot complete to compress data");
 
-			return std::vector<unsigned char>();
+			return vector<unsigned char>();
 		}
 		
 		logger::handle().write(logging_level::sequence, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
@@ -88,14 +88,14 @@ namespace compressing
 		return compressed_data;
 	}
 
-	std::vector<unsigned char> compressor::decompression(const std::vector<unsigned char>& compressed_data)
+	vector<unsigned char> compressor::decompression(const vector<unsigned char>& compressed_data)
 	{
 		if (compressed_data.empty())
 		{
 			return compressed_data;
 		}
 
-		auto start = std::chrono::steady_clock::now();
+		auto start = chrono::steady_clock::now();
 
 		LZ4_streamDecode_t lz4StreamDecode_body;
 
@@ -104,16 +104,16 @@ namespace compressing
 
 		int target_buffer_index = 0;
 
-		std::vector<std::vector<char>> target_buffer;
-		target_buffer.push_back(std::vector<char>());
-		target_buffer.push_back(std::vector<char>());
+		vector<vector<char>> target_buffer;
+		target_buffer.push_back(vector<char>());
+		target_buffer.push_back(vector<char>());
 		target_buffer[0].reserve(_block_bytes);
 		target_buffer[1].reserve(_block_bytes);
 
 		int compress_size = LZ4_COMPRESSBOUND(_block_bytes);
-		std::vector<char> compress_buffer;
+		vector<char> compress_buffer;
 		compress_buffer.reserve(compress_size);
-		std::vector<unsigned char> decompressed_data;
+		vector<unsigned char> decompressed_data;
 
 		LZ4_setStreamDecode(&lz4StreamDecode_body, NULL, 0);
 
@@ -160,7 +160,7 @@ namespace compressing
 		{
 			logger::handle().write(logging_level::error, L"cannot complete to decompress data");
 
-			return std::vector<unsigned char>();
+			return vector<unsigned char>();
 		}
 		
 		logger::handle().write(logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",

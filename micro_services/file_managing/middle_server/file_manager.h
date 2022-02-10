@@ -7,6 +7,8 @@
 #include <vector>
 #include <memory>
 
+using namespace std;
+
 class file_manager
 {
 public:
@@ -14,13 +16,13 @@ public:
 	~file_manager(void);
 
 public:
-	bool set(const std::wstring& indication_id, const std::vector<std::wstring> &file_list);
-	std::shared_ptr<container::value_container> received(const std::wstring& target_id, const std::wstring& target_sub_id, const std::wstring& indication_id, const std::wstring& file_path);
+	bool set(const wstring& indication_id, const vector<wstring> &file_list);
+	shared_ptr<container::value_container> received(const wstring& target_id, const wstring& target_sub_id, const wstring& indication_id, const wstring& file_path);
 
 private:
-	std::map<std::wstring, unsigned short> _transferred_percentage;
-	std::map<std::wstring, std::vector<std::wstring>> _transferring_list;
-	std::map<std::wstring, std::vector<std::wstring>> _transferred_list;
-	std::map<std::wstring, std::vector<std::wstring>> _failed_list;
+	map<wstring, unsigned short> _transferred_percentage;
+	map<wstring, vector<wstring>> _transferring_list;
+	map<wstring, vector<wstring>> _transferred_list;
+	map<wstring, vector<wstring>> _failed_list;
 };
 

@@ -2,6 +2,8 @@
 
 #include <string>
 
+using namespace std;
+
 namespace container
 {
 	enum class value_types
@@ -23,6 +25,6 @@ namespace container
 		container_value
 	};
 
-	const value_types convert_value_type(const std::wstring& target);
-	const std::wstring convert_value_type(const value_types& target);
+	const value_types convert_value_type(const wstring& target);
+	const wstring convert_value_type(const value_types& target);
 }

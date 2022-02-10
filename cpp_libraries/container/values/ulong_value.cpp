@@ -11,7 +11,7 @@ namespace container
 		_type = value_types::ulong_value;
 	}
 
-	ulong_value::ulong_value(const std::wstring& name, const unsigned long& value)
+	ulong_value::ulong_value(const wstring& name, const unsigned long& value)
 		: value(name, (const unsigned char*)&value, sizeof(unsigned long), value_types::ulong_value)
 	{
 	}
@@ -100,7 +100,7 @@ namespace container
 		return static_cast<double>(temp);
 	}
 
-	std::wstring ulong_value::to_string(const bool&) const
+	wstring ulong_value::to_string(const bool&) const
 	{
 		return fmt::format(L"{}", to_ulong());
 	}

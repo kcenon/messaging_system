@@ -16,6 +16,8 @@
 #include <functional>
 #include <condition_variable>
 
+using namespace std;
+
 namespace logging
 {
 	class logger
@@ -27,8 +29,8 @@ namespace logging
 		~logger(void);
 
 	public:
-		bool start(const std::wstring& store_log_file_name = L"log", const std::wstring& store_log_extention = L"log", 
-			const std::wstring& store_log_root_path = L"", const bool& append_date_on_file_name = true, const unsigned short& places_of_decimal = 7);
+		bool start(const wstring& store_log_file_name = L"log", const wstring& store_log_extention = L"log", 
+			const wstring& store_log_root_path = L"", const bool& append_date_on_file_name = true, const unsigned short& places_of_decimal = 7);
 		bool stop(void);
 
 	public:
@@ -37,54 +39,54 @@ namespace logging
 		void set_limit_log_file_size(const size_t& limit_log_file_size);
 
 	public:
-		std::chrono::time_point<std::chrono::high_resolution_clock> chrono_start(void);
-		void write(const logging_level& target_level, const std::wstring& log_data, const std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>>& time = std::nullopt);
+		chrono::time_point<chrono::high_resolution_clock> chrono_start(void);
+		void write(const logging_level& target_level, const wstring& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time = nullopt);
 
 	protected:
 		void run(void);
 
 	private:
-		void set_log_flag(const std::wstring& flag);
-		void backup_log(const std::wstring& target_path, const std::wstring& backup_path);
-		void store_log(int& file_handle, const std::wstring& log);
+		void set_log_flag(const wstring& flag);
+		void backup_log(const wstring& target_path, const wstring& backup_path);
+		void store_log(int& file_handle, const wstring& log);
 
 	private:
-		std::wstring exception_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
-		std::wstring error_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
-		std::wstring information_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
-		std::wstring sequence_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
-		std::wstring parameter_log(const std::chrono::system_clock::time_point& time, const std::wstring& data);
+		wstring exception_log(const chrono::system_clock::time_point& time, const wstring& data);
+		wstring error_log(const chrono::system_clock::time_point& time, const wstring& data);
+		wstring information_log(const chrono::system_clock::time_point& time, const wstring& data);
+		wstring sequence_log(const chrono::system_clock::time_point& time, const wstring& data);
+		wstring parameter_log(const chrono::system_clock::time_point& time, const wstring& data);
 
 	private:
-		std::vector<std::tuple<logging_level, std::chrono::system_clock::time_point,std::wstring>> _buffer;
+		vector<tuple<logging_level, chrono::system_clock::time_point,wstring>> _buffer;
 
 	private:
 		logging_level _target_level;
-		std::wstring _store_log_root_path;
-		std::wstring _store_log_file_name;
-		std::wstring _store_log_extention;
+		wstring _store_log_root_path;
+		wstring _store_log_file_name;
+		wstring _store_log_extention;
 		unsigned short _places_of_decimal;
 
 	private:
-		std::atomic<bool> _thread_stop{ true };
-		std::atomic<bool> _write_date{ false };
-		std::atomic<bool> _write_console{ false };
-		std::atomic<bool> _append_date_on_file_name{ true };
-		std::atomic<size_t> _limit_log_file_size{ 2097152 };
+		atomic<bool> _thread_stop{ true };
+		atomic<bool> _write_date{ false };
+		atomic<bool> _write_console{ false };
+		atomic<bool> _append_date_on_file_name{ true };
+		atomic<size_t> _limit_log_file_size{ 2097152 };
 
 	private:
-		std::mutex _mutex;
-		std::thread _thread;
-		std::condition_variable _condition;
-		std::map<logging_level, std::function<std::wstring(const std::chrono::system_clock::time_point&, const std::wstring&)>> _log_datas;
+		mutex _mutex;
+		thread _thread;
+		condition_variable _condition;
+		map<logging_level, function<wstring(const chrono::system_clock::time_point&, const wstring&)>> _log_datas;
 
 #pragma region singleton
 	public:
 		static logger& handle(void);
 
 	private:
-		static std::unique_ptr<logger> _handle;
-		static std::once_flag _once;
+		static unique_ptr<logger> _handle;
+		static once_flag _once;
 #pragma endregion
 	};
 }

@@ -8,12 +8,12 @@
 
 namespace converting
 {
-	void converter::replace(std::wstring& source, const std::wstring& token, const std::wstring& target)
+	void converter::replace(wstring& source, const wstring& token, const wstring& target)
 	{
 		source = replace2(source, token, target);
 	}
 
-	const std::wstring converter::replace2(const std::wstring& source, const std::wstring& token, const std::wstring& target)
+	const wstring converter::replace2(const wstring& source, const wstring& token, const wstring& target)
 	{
 		if (source.empty() == true)
 		{
@@ -28,19 +28,19 @@ namespace converting
 		while (true)
 		{
 			offset = source.find(token, last_offset);
-			if (offset == std::wstring::npos)
+			if (offset == wstring::npos)
 			{
 				break;
 			}
 
-			fmt::format_to(std::back_inserter(result), L"{}{}", source.substr(last_offset, offset - last_offset), target);
+			fmt::format_to(back_inserter(result), L"{}{}", source.substr(last_offset, offset - last_offset), target);
 
 			last_offset = offset + wcslen(token.c_str());
 		}
 
-		if (last_offset != 0 && last_offset != std::string::npos)
+		if (last_offset != 0 && last_offset != string::npos)
 		{
-			fmt::format_to(std::back_inserter(result), L"{}", source.substr(last_offset, offset - last_offset));
+			fmt::format_to(back_inserter(result), L"{}", source.substr(last_offset, offset - last_offset));
 		}
 
 		if (last_offset == 0)
@@ -51,20 +51,20 @@ namespace converting
 		return result.data();
 	}
 
-	std::wstring converter::to_wstring(const std::string& value)
+	wstring converter::to_wstring(const string& value)
 	{
 		if (value.empty())
 		{
-			return std::wstring();
+			return wstring();
 		}
 
-		typedef std::codecvt<char16_t, char, std::mbstate_t> codecvt_t;
-		codecvt_t const& codecvt = std::use_facet<codecvt_t>(std::locale(""));
+		typedef codecvt<char16_t, char, mbstate_t> codecvt_t;
+		codecvt_t const& codecvt = use_facet<codecvt_t>(locale(""));
 
-		std::mbstate_t state;
-		memset(&state, 0, sizeof(std::mbstate_t));
+		mbstate_t state;
+		memset(&state, 0, sizeof(mbstate_t));
 
-		std::vector<char16_t> result(value.size() + 1);
+		vector<char16_t> result(value.size() + 1);
 		char const* in_text = value.data();
 		char16_t* out_text = &result[0];
 		codecvt_t::result condition = codecvt.in(state, value.data(), value.data() + value.size(), in_text, &result[0], &result[0] + result.size(), out_text);
@@ -72,21 +72,21 @@ namespace converting
 		return convert(result.data());
 	}
 
-	std::string converter::to_string(const std::wstring& value)
+	string converter::to_string(const wstring& value)
 	{
 		if (value.empty())
 		{
-			return std::string();
+			return string();
 		}
 
-		std::u16string temp = convert(value);
+		u16string temp = convert(value);
 
-		typedef std::codecvt<char16_t, char, std::mbstate_t> codecvt_t;
-		codecvt_t const& codecvt = std::use_facet<codecvt_t>(std::locale());
+		typedef codecvt<char16_t, char, mbstate_t> codecvt_t;
+		codecvt_t const& codecvt = use_facet<codecvt_t>(locale());
 
-		std::mbstate_t state = std::mbstate_t();
+		mbstate_t state = mbstate_t();
 
-		std::vector<char> result((temp.size() + 1) * codecvt.max_length());
+		vector<char> result((temp.size() + 1) * codecvt.max_length());
 		char16_t const* in_text = temp.data();
 		char* out_text = &result[0];
 
@@ -95,69 +95,69 @@ namespace converting
 		return result.data();
 	}
 
-	std::vector<unsigned char> converter::to_array(const std::wstring& value)
+	vector<unsigned char> converter::to_array(const wstring& value)
 	{
 		if (value.empty())
 		{
-			return std::vector<unsigned char>();
+			return vector<unsigned char>();
 		}
 
-		std::string temp = to_string(value);
+		string temp = to_string(value);
 
-		return std::vector<unsigned char>(temp.data(), temp.data() + temp.size());
+		return vector<unsigned char>(temp.data(), temp.data() + temp.size());
 	}
 
-	std::wstring converter::to_wstring(const std::vector<unsigned char>& value)
+	wstring converter::to_wstring(const vector<unsigned char>& value)
 	{
 		if (value.empty())
 		{
-			return std::wstring();
+			return wstring();
 		}
 
 		// UTF-8 BOM
 		if (value.size() >= 3 && value[0] == 0xef && value[1] == 0xbb && value[2] == 0xbf)
 		{
-			return to_wstring(std::string((char*)value.data() + 2, value.size() - 2));
+			return to_wstring(string((char*)value.data() + 2, value.size() - 2));
 		}
 
 		// UTF-8 no BOM
-		return to_wstring(std::string((char*)value.data(), value.size()));
+		return to_wstring(string((char*)value.data(), value.size()));
 	}
 
-	std::vector<unsigned char> converter::from_base64(const std::wstring& value)
+	vector<unsigned char> converter::from_base64(const wstring& value)
 	{
 		if (value.empty())
 		{
-			return std::vector<unsigned char>();
+			return vector<unsigned char>();
 		}
 
-		std::string source = to_string(value);
-		std::string encoded;
+		string source = to_string(value);
+		string encoded;
 		CryptoPP::StringSource(source.data(), true, new CryptoPP::Base64Decoder(new CryptoPP::StringSink(encoded)));
 
-		return std::vector<unsigned char>(encoded.data(), encoded.data() + encoded.size());
+		return vector<unsigned char>(encoded.data(), encoded.data() + encoded.size());
 	}
 
-	std::wstring converter::to_base64(const std::vector<unsigned char>& value)
+	wstring converter::to_base64(const vector<unsigned char>& value)
 	{
 		if (value.empty())
 		{
-			return std::wstring();
+			return wstring();
 		}
 
-		std::string decoded;
+		string decoded;
 		CryptoPP::StringSource(value.data(), true, new CryptoPP::Base64Encoder(new CryptoPP::StringSink(decoded)));
 
 		return to_wstring(decoded);
 	}
 
-	std::wstring converter::convert(const std::u16string& value)
+	wstring converter::convert(const u16string& value)
 	{
-		return std::wstring(value.begin(), value.end());
+		return wstring(value.begin(), value.end());
 	}
 
-	std::u16string converter::convert(const std::wstring& value)
+	u16string converter::convert(const wstring& value)
 	{
-		return std::u16string(value.begin(), value.end());
+		return u16string(value.begin(), value.end());
 	}
 }

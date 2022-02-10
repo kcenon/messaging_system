@@ -12,7 +12,7 @@ namespace encrypting
 {
 	using namespace converting;
 
-	std::pair<std::wstring, std::wstring> encryptor::create_key(void)
+	pair<wstring, wstring> encryptor::create_key(void)
 	{
 		CryptoPP::AutoSeededRandomPool rng;
 
@@ -25,12 +25,12 @@ namespace encrypting
 		rng.GenerateBlock(iv, CryptoPP::AES::BLOCKSIZE);
 
 		return {
-			converter::to_base64(std::vector<unsigned char>(key, key + CryptoPP::AES::DEFAULT_KEYLENGTH)),
-			converter::to_base64(std::vector<unsigned char>(iv, iv + CryptoPP::AES::BLOCKSIZE))
+			converter::to_base64(vector<unsigned char>(key, key + CryptoPP::AES::DEFAULT_KEYLENGTH)),
+			converter::to_base64(vector<unsigned char>(iv, iv + CryptoPP::AES::BLOCKSIZE))
 		};
 	}
 
-	std::vector<unsigned char> encryptor::encryption(const std::vector<unsigned char>& original_data, const std::wstring& key_string, const std::wstring& iv_string)
+	vector<unsigned char> encryptor::encryption(const vector<unsigned char>& original_data, const wstring& key_string, const wstring& iv_string)
 	{
 		if (original_data.empty())
 		{
@@ -42,9 +42,9 @@ namespace encrypting
 			return original_data;
 		}
 
-		std::vector<unsigned char> encrypted;
-		std::vector<unsigned char> key = converter::from_base64(key_string);
-		std::vector<unsigned char> iv = converter::from_base64(iv_string);
+		vector<unsigned char> encrypted;
+		vector<unsigned char> key = converter::from_base64(key_string);
+		vector<unsigned char> iv = converter::from_base64(iv_string);
 
 		CryptoPP::CBC_Mode<CryptoPP::AES>::Encryption enc;
 		enc.SetKeyWithIV(key.data(), key.size(), iv.data(), iv.size());
@@ -60,7 +60,7 @@ namespace encrypting
 		return encrypted;
 	}
 
-	std::vector<unsigned char> encryptor::decryption(const std::vector<unsigned char>& encrypted_data, const std::wstring& key_string, const std::wstring& iv_string)
+	vector<unsigned char> encryptor::decryption(const vector<unsigned char>& encrypted_data, const wstring& key_string, const wstring& iv_string)
 	{
 		if (encrypted_data.empty())
 		{
@@ -72,9 +72,9 @@ namespace encrypting
 			return encrypted_data;
 		}
 
-		std::vector<unsigned char> decrypted;
-		std::vector<unsigned char> key = converter::from_base64(key_string);
-		std::vector<unsigned char> iv = converter::from_base64(iv_string);
+		vector<unsigned char> decrypted;
+		vector<unsigned char> key = converter::from_base64(key_string);
+		vector<unsigned char> iv = converter::from_base64(iv_string);
 
 		CryptoPP::CBC_Mode<CryptoPP::AES>::Decryption dec;
 		dec.SetKeyWithIV(key.data(), key.size(), iv.data(), iv.size());

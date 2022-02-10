@@ -11,7 +11,7 @@ namespace container
 		_type = value_types::float_value;
 	}
 
-	float_value::float_value(const std::wstring& name, const float& value)
+	float_value::float_value(const wstring& name, const float& value)
 		: value(name, (const unsigned char*)&value, sizeof(float), value_types::float_value)
 	{
 	}
@@ -100,7 +100,7 @@ namespace container
 		return static_cast<double>(temp);
 	}
 
-	std::wstring float_value::to_string(const bool&) const
+	wstring float_value::to_string(const bool&) const
 	{
 		return fmt::format(L"{}", to_float());
 	}

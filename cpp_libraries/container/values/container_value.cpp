@@ -13,7 +13,7 @@ namespace container
 		_type = value_types::container_value;
 	}
 
-	container_value::container_value(const std::wstring& name, const long& reserved_count)
+	container_value::container_value(const wstring& name, const long& reserved_count)
 		: value()
 	{
 		_name = name;
@@ -21,10 +21,10 @@ namespace container
 		_size = sizeof(long);
 
 		char* data_ptr = (char*)&reserved_count;
-		_data = std::vector<unsigned char>(data_ptr, data_ptr + _size);
+		_data = vector<unsigned char>(data_ptr, data_ptr + _size);
 	}
 
-	container_value::container_value(const std::wstring& name, const std::vector<std::shared_ptr<value>>& units)
+	container_value::container_value(const wstring& name, const vector<shared_ptr<value>>& units)
 		: value(name, units)
 	{
 	}
@@ -35,16 +35,16 @@ namespace container
 		_units.clear();
 	}
 
-	std::shared_ptr<value> container_value::add(const value& item, const bool& update_count)
+	shared_ptr<value> container_value::add(const value& item, const bool& update_count)
 	{
 		return add(value::generate_value(item.name(), convert_value_type(item.type()), item.to_string()), update_count);
 	}
 
-	std::shared_ptr<value> container_value::add(std::shared_ptr<value> item, const bool& update_count)
+	shared_ptr<value> container_value::add(shared_ptr<value> item, const bool& update_count)
 	{
-		std::vector<std::shared_ptr<value>>::iterator target;
-		target = std::find_if(_units.begin(), _units.end(),
-			[&item](std::shared_ptr<value> current)
+		vector<shared_ptr<value>>::iterator target;
+		target = find_if(_units.begin(), _units.end(),
+			[&item](shared_ptr<value> current)
 			{
 				return current == item;
 			});
@@ -66,9 +66,9 @@ namespace container
 		return item;
 	}
 
-	void container_value::add(const std::vector<value>& target_values, const bool& update_count)
+	void container_value::add(const vector<value>& target_values, const bool& update_count)
 	{
-		std::vector<std::shared_ptr<value>> temp_values;
+		vector<shared_ptr<value>> temp_values;
 		for (auto& target_value : target_values)
 		{
 			temp_values.push_back(value::generate_value(target_value.name(), convert_value_type(target_value.type()), target_value.to_string()));
@@ -77,13 +77,13 @@ namespace container
 		add(temp_values, update_count);
 	}
 
-	void container_value::add(const std::vector<std::shared_ptr<value>>& target_values, const bool& update_count)
+	void container_value::add(const vector<shared_ptr<value>>& target_values, const bool& update_count)
 	{
-		std::vector<std::shared_ptr<value>>::iterator target;
+		vector<shared_ptr<value>>::iterator target;
 		for (auto& target_value : target_values)
 		{
-			target = std::find_if(_units.begin(), _units.end(),
-				[&target_value](std::shared_ptr<value> item)
+			target = find_if(_units.begin(), _units.end(),
+				[&target_value](shared_ptr<value> item)
 				{
 					return item == target_value;
 				});
@@ -104,13 +104,13 @@ namespace container
 		}
 	}
 
-	void container_value::remove(const std::wstring& target_name, const bool& update_count)
+	void container_value::remove(const wstring& target_name, const bool& update_count)
 	{
-		std::vector<std::shared_ptr<value>>::iterator target;
+		vector<shared_ptr<value>>::iterator target;
 
 		while (true) {
-			target = std::find_if(_units.begin(), _units.end(),
-				[&target_name](std::shared_ptr<value> current)
+			target = find_if(_units.begin(), _units.end(),
+				[&target_name](shared_ptr<value> current)
 				{
 					return current->name() == target_name;
 				});
@@ -130,11 +130,11 @@ namespace container
 		}
 	}
 
-	void container_value::remove(std::shared_ptr<value> item, const bool& update_count)
+	void container_value::remove(shared_ptr<value> item, const bool& update_count)
 	{
-		std::vector<std::shared_ptr<value>>::iterator target;
-		target = std::find_if(_units.begin(), _units.end(),
-			[&item](std::shared_ptr<value> current)
+		vector<shared_ptr<value>>::iterator target;
+		target = find_if(_units.begin(), _units.end(),
+			[&item](shared_ptr<value> current)
 			{
 				return current == item;
 			});
@@ -241,7 +241,7 @@ namespace container
 		return static_cast<double>(temp);
 	}
 
-	std::wstring container_value::to_string(const bool&) const
+	wstring container_value::to_string(const bool&) const
 	{
 		return fmt::format(L"{}", to_long());
 	}

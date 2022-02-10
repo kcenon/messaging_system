@@ -11,7 +11,7 @@ namespace container
 		_type = value_types::double_value;
 	}
 
-	double_value::double_value(const std::wstring& name, const double& value)
+	double_value::double_value(const wstring& name, const double& value)
 		: value(name, (const unsigned char*)&value, sizeof(double), value_types::double_value)
 	{
 	}
@@ -100,7 +100,7 @@ namespace container
 		return static_cast<double>(temp);
 	}
 
-	std::wstring double_value::to_string(const bool&) const
+	wstring double_value::to_string(const bool&) const
 	{
 		return fmt::format(L"{}", to_double());
 	}

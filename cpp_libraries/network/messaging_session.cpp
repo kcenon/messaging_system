@@ -29,11 +29,11 @@ namespace network
 	using namespace compressing;
 	using namespace file_handler;
 
-	messaging_session::messaging_session(const std::wstring& source_id, const std::wstring& connection_key, asio::ip::tcp::socket& socket)
+	messaging_session::messaging_session(const wstring& source_id, const wstring& connection_key, asio::ip::tcp::socket& socket)
 		: data_handling(246, 135), _confirm(session_conditions::waiting), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _received_message(nullptr),
 		_key(L""), _iv(L""), _thread_pool(nullptr), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), 
 		_connection_key(connection_key), _received_file(nullptr), _received_data(nullptr), _connection(nullptr), _kill_code(false),
-		_socket(std::make_shared<asio::ip::tcp::socket>(std::move(socket)))
+		_socket(make_shared<asio::ip::tcp::socket>(move(socket)))
 	{
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));
@@ -44,9 +44,9 @@ namespace network
 		_target_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
-		_message_handlers.insert({ L"request_connection", std::bind(&messaging_session::connection_message, this, std::placeholders::_1) });
-		_message_handlers.insert({ L"request_files", std::bind(&messaging_session::request_files, this, std::placeholders::_1) });
-		_message_handlers.insert({ L"echo", std::bind(&messaging_session::echo_message, this, std::placeholders::_1) });
+		_message_handlers.insert({ L"request_connection", bind(&messaging_session::connection_message, this, placeholders::_1) });
+		_message_handlers.insert({ L"request_files", bind(&messaging_session::request_files, this, placeholders::_1) });
+		_message_handlers.insert({ L"echo", bind(&messaging_session::echo_message, this, placeholders::_1) });
 	}
 
 	messaging_session::~messaging_session(void)
@@ -63,7 +63,7 @@ namespace network
 		stop();
 	}
 
-	std::shared_ptr<messaging_session> messaging_session::get_ptr(void)
+	shared_ptr<messaging_session> messaging_session::get_ptr(void)
 	{
 		return shared_from_this();
 	}
@@ -73,32 +73,32 @@ namespace network
 		_kill_code = kill_code;
 	}
 
-	void messaging_session::set_ignore_target_ids(const std::vector<std::wstring>& ignore_target_ids)
+	void messaging_session::set_ignore_target_ids(const vector<wstring>& ignore_target_ids)
 	{
 		_ignore_target_ids = ignore_target_ids;
 	}
 
-	void messaging_session::set_ignore_snipping_targets(const std::vector<std::wstring>& ignore_snipping_targets)
+	void messaging_session::set_ignore_snipping_targets(const vector<wstring>& ignore_snipping_targets)
 	{
 		_ignore_snipping_targets = ignore_snipping_targets;
 	}
 
-	void messaging_session::set_connection_notification(const std::function<void(std::shared_ptr<messaging_session>, const bool&)>& notification)
+	void messaging_session::set_connection_notification(const function<void(shared_ptr<messaging_session>, const bool&)>& notification)
 	{
 		_connection = notification;
 	}
 
-	void messaging_session::set_message_notification(const std::function<void(std::shared_ptr<container::value_container>)>& notification)
+	void messaging_session::set_message_notification(const function<void(shared_ptr<container::value_container>)>& notification)
 	{
 		_received_message = notification;
 	}
 
-	void messaging_session::set_file_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&)>& notification)
+	void messaging_session::set_file_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&)>& notification)
 	{
 		_received_file = notification;
 	}
 
-	void messaging_session::set_binary_notification(const std::function<void(const std::wstring&, const std::wstring&, const std::wstring&, const std::wstring&, const std::vector<unsigned char>&)>& notification)
+	void messaging_session::set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)>& notification)
 	{
 		_received_data = notification;
 	}
@@ -113,17 +113,17 @@ namespace network
 		return _session_type;
 	}
 
-	const std::wstring messaging_session::target_id(void)
+	const wstring messaging_session::target_id(void)
 	{
 		return _target_id;
 	}
 
-	const std::wstring messaging_session::target_sub_id(void)
+	const wstring messaging_session::target_sub_id(void)
 	{
 		return _target_sub_id;
 	}
 
-	void messaging_session::start(const bool& encrypt_mode, const bool& compress_mode, const std::vector<session_types>& possible_session_types, 
+	void messaging_session::start(const bool& encrypt_mode, const bool& compress_mode, const vector<session_types>& possible_session_types, 
 		const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
 		stop();
@@ -131,23 +131,23 @@ namespace network
 		_encrypt_mode = encrypt_mode;
 		_compress_mode = compress_mode;
 		_possible_session_types = possible_session_types;
-		_thread_pool = std::make_shared<threads::thread_pool>();
+		_thread_pool = make_shared<threads::thread_pool>();
 
-		_thread_pool->append(std::make_shared<thread_worker>(priorities::top), true);
+		_thread_pool->append(make_shared<thread_worker>(priorities::top), true);
 		for (unsigned short high = 0; high < high_priority; ++high)
 		{
-			_thread_pool->append(std::make_shared<thread_worker>(priorities::high, std::vector<priorities> { priorities::normal, priorities::low }), true);
+			_thread_pool->append(make_shared<thread_worker>(priorities::high, vector<priorities> { priorities::normal, priorities::low }), true);
 		}
 		for (unsigned short normal = 0; normal < normal_priority; ++normal)
 		{
-			_thread_pool->append(std::make_shared<thread_worker>(priorities::normal, std::vector<priorities> { priorities::high, priorities::low }), true);
+			_thread_pool->append(make_shared<thread_worker>(priorities::normal, vector<priorities> { priorities::high, priorities::low }), true);
 		}
 		for (unsigned short low = 0; low < low_priority; ++low)
 		{
-			_thread_pool->append(std::make_shared<thread_worker>(priorities::low, std::vector<priorities> { priorities::high, priorities::normal }), true);
+			_thread_pool->append(make_shared<thread_worker>(priorities::low, vector<priorities> { priorities::high, priorities::normal }), true);
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, std::bind(&messaging_session::check_confirm_condition, this)));
+		_thread_pool->push(make_shared<job>(priorities::high, bind(&messaging_session::check_confirm_condition, this)));
 
 		read_start_code(_socket);
 
@@ -166,13 +166,13 @@ namespace network
 
 	void messaging_session::echo(void)
 	{
-		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"echo",
-			std::vector<std::shared_ptr<container::value>> {});
+		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"echo",
+			vector<shared_ptr<container::value>> {});
 
 		send(container);
 	}
 
-	void messaging_session::send(std::shared_ptr<container::value_container> message)
+	void messaging_session::send(shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -191,22 +191,22 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::high, message->serialize_array(), std::bind(&messaging_session::compress_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, message->serialize_array(), bind(&messaging_session::compress_packet, this, placeholders::_1)));
 
 			return;
 		}
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, message->serialize_array(), std::bind(&messaging_session::encrypt_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, message->serialize_array(), bind(&messaging_session::encrypt_packet, this, placeholders::_1)));
 
 			return;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&messaging_session::send_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), bind(&messaging_session::send_packet, this, placeholders::_1)));
 	}
 
-	void messaging_session::send_files(std::shared_ptr<container::value_container> message)
+	void messaging_session::send_files(shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -228,24 +228,24 @@ namespace network
 			message->set_source(_source_id, _source_sub_id);
 		}
 
-		std::shared_ptr<container::value_container> container = message->copy(false);
+		shared_ptr<container::value_container> container = message->copy(false);
 		container->swap_header();
 		container->set_target(message->get_value(L"gateway_source_id")->to_string(), message->get_value(L"gateway_source_sub_id")->to_string());
 		container->set_message_type(L"request_file");
 
-		std::vector<std::shared_ptr<container::value>> files = message->value_array(L"file");
+		vector<shared_ptr<container::value>> files = message->value_array(L"file");
 		for (auto& file : files)
 		{
-			container << std::make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
-			container << std::make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
-			container << std::make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
+			container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
+			container << make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
+			container << make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
 
-			_thread_pool->push(std::make_shared<job>(priorities::low, container->serialize_array(), std::bind(&messaging_session::load_file_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::low, container->serialize_array(), bind(&messaging_session::load_file_packet, this, placeholders::_1)));
 			container->clear_value();
 		}
 	}
 
-	void messaging_session::send_binary(const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	void messaging_session::send_binary(const wstring target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -267,7 +267,7 @@ namespace network
 			return;
 		}
 
-		std::vector<unsigned char> result;
+		vector<unsigned char> result;
 		append_binary_on_packet(result, converter::to_array(_source_id));
 		append_binary_on_packet(result, converter::to_array(_source_sub_id));
 		append_binary_on_packet(result, converter::to_array(target_id));
@@ -276,22 +276,22 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&messaging_session::compress_binary_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, result, bind(&messaging_session::compress_binary_packet, this, placeholders::_1)));
 
 			return;
 		}
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&messaging_session::encrypt_binary_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, result, bind(&messaging_session::encrypt_binary_packet, this, placeholders::_1)));
 
 			return;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&messaging_session::send_binary_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, result, bind(&messaging_session::send_binary_packet, this, placeholders::_1)));
 	}
 
-	void messaging_session::send_binary(const std::wstring source_id, const std::wstring& source_sub_id, const std::wstring target_id, const std::wstring& target_sub_id, const std::vector<unsigned char>& data)
+	void messaging_session::send_binary(const wstring source_id, const wstring& source_sub_id, const wstring target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -313,7 +313,7 @@ namespace network
 			return;
 		}
 
-		std::vector<unsigned char> result;
+		vector<unsigned char> result;
 		append_binary_on_packet(result, converter::to_array(source_id));
 		append_binary_on_packet(result, converter::to_array(source_sub_id));
 		append_binary_on_packet(result, converter::to_array(target_id));
@@ -322,30 +322,30 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&messaging_session::compress_binary_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, result, bind(&messaging_session::compress_binary_packet, this, placeholders::_1)));
 
 			return;
 		}
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&messaging_session::encrypt_binary_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, result, bind(&messaging_session::encrypt_binary_packet, this, placeholders::_1)));
 
 			return;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&messaging_session::send_binary_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, result, bind(&messaging_session::send_binary_packet, this, placeholders::_1)));
 	}
 
-	void messaging_session::receive_on_tcp(const data_modes& data_mode, const std::vector<unsigned char>& data)
+	void messaging_session::receive_on_tcp(const data_modes& data_mode, const vector<unsigned char>& data)
 	{
 		switch (data_mode)
 		{
 		case data_modes::packet_mode:
-			_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&messaging_session::decrypt_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&messaging_session::decrypt_packet, this, placeholders::_1)));
 			break;
 		case data_modes::file_mode:
-			_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&messaging_session::decrypt_file_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&messaging_session::decrypt_file_packet, this, placeholders::_1)));
 			break;
 		}
 
@@ -363,7 +363,7 @@ namespace network
 
 	bool messaging_session::check_confirm_condition(void)
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		this_thread::sleep_for(chrono::seconds(1));
 
 		if (_confirm == session_conditions::confirmed)
 		{
@@ -375,9 +375,9 @@ namespace network
 		return true;
 	}
 
-	bool messaging_session::contained_snipping_target(const std::wstring& snipping_target)
+	bool messaging_session::contained_snipping_target(const wstring& snipping_target)
 	{
-		auto target = std::find(_snipping_targets.begin(), _snipping_targets.end(), snipping_target);
+		auto target = find(_snipping_targets.begin(), _snipping_targets.end(), snipping_target);
 		if (target == _snipping_targets.end())
 		{
 			return false;
@@ -386,7 +386,7 @@ namespace network
 		return true;
 	}
 
-	bool messaging_session::compress_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::compress_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -395,29 +395,29 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::compression(data), std::bind(&messaging_session::encrypt_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, compressor::compression(data), bind(&messaging_session::encrypt_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, compressor::compression(data), std::bind(&messaging_session::send_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data), bind(&messaging_session::send_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::encrypt_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::encrypt_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
 			return false;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), std::bind(&messaging_session::send_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&messaging_session::send_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::send_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::send_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -427,7 +427,7 @@ namespace network
 		return send_on_tcp(_socket, data_modes::packet_mode, data);
 	}
 
-	bool messaging_session::decompress_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::decompress_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -436,17 +436,17 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&messaging_session::receive_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, compressor::decompression(data), bind(&messaging_session::receive_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&messaging_session::receive_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&messaging_session::receive_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::decrypt_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::decrypt_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -455,24 +455,24 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&messaging_session::decompress_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), bind(&messaging_session::decompress_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&messaging_session::decompress_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&messaging_session::decompress_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::receive_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::receive_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
 			return false;
 		}
 
-		std::shared_ptr<container::value_container> message = std::make_shared<container::value_container>(data, true);
+		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
 		if (message == nullptr)
 		{
 			return false;
@@ -487,20 +487,20 @@ namespace network
 		return target->second(message);
 	}
 
-	bool messaging_session::load_file_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::load_file_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
 			return false;
 		}
 
-		std::shared_ptr<container::value_container> message = std::make_shared<container::value_container>(data);
+		shared_ptr<container::value_container> message = make_shared<container::value_container>(data);
 		if (message == nullptr)
 		{
 			return false;
 		}
 
-		std::vector<unsigned char> result;
+		vector<unsigned char> result;
 		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
 		append_binary_on_packet(result, converter::to_array(message->source_id()));
 		append_binary_on_packet(result, converter::to_array(message->source_sub_id()));
@@ -512,24 +512,24 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&messaging_session::compress_file_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, result, bind(&messaging_session::compress_file_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, result, std::bind(&messaging_session::encrypt_file_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, result, bind(&messaging_session::encrypt_file_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, result, std::bind(&messaging_session::send_file_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, result, bind(&messaging_session::send_file_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::compress_file_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::compress_file_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -538,29 +538,29 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::high, compressor::compression(data), std::bind(&messaging_session::encrypt_file_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, compressor::compression(data), bind(&messaging_session::encrypt_file_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, compressor::compression(data), std::bind(&messaging_session::send_file_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data), bind(&messaging_session::send_file_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::encrypt_file_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::encrypt_file_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
 			return false;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), std::bind(&messaging_session::send_file_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&messaging_session::send_file_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::send_file_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::send_file_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -570,7 +570,7 @@ namespace network
 		return send_on_tcp(_socket, data_modes::file_mode, data);
 	}
 
-	bool messaging_session::decompress_file_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::decompress_file_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -579,17 +579,17 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::low, compressor::decompression(data), std::bind(&messaging_session::receive_file_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::low, compressor::decompression(data), bind(&messaging_session::receive_file_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::low , data, std::bind(&messaging_session::receive_file_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::low , data, bind(&messaging_session::receive_file_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::decrypt_file_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::decrypt_file_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -598,17 +598,17 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, encryptor::decryption(data, _key, _iv), std::bind(&messaging_session::decompress_file_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, encryptor::decryption(data, _key, _iv), bind(&messaging_session::decompress_file_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::normal, data, std::bind(&messaging_session::decompress_file_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&messaging_session::decompress_file_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::receive_file_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::receive_file_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -616,15 +616,15 @@ namespace network
 		}
 
 		size_t index = 0;
-		std::wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring source_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring source_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring source_path = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring source_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring source_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring source_path = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
 
-		std::vector<unsigned char> result;
+		vector<unsigned char> result;
 		append_binary_on_packet(result, converter::to_array(indication_id));
 		append_binary_on_packet(result, converter::to_array(target_id));
 		append_binary_on_packet(result, converter::to_array(target_sub_id));
@@ -637,12 +637,12 @@ namespace network
 			append_binary_on_packet(result, converter::to_array(L""));
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, result, std::bind(&messaging_session::notify_file_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::high, result, bind(&messaging_session::notify_file_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::notify_file_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::notify_file_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -650,10 +650,10 @@ namespace network
 		}
 
 		size_t index = 0;
-		std::wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
 
 		if (_received_file)
 		{
@@ -663,7 +663,7 @@ namespace network
 		return true;
 	}
 
-	bool messaging_session::compress_binary_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::compress_binary_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -672,29 +672,29 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::compression(data), std::bind(&messaging_session::encrypt_binary_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, compressor::compression(data), bind(&messaging_session::encrypt_binary_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, compressor::compression(data), std::bind(&messaging_session::send_binary_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data), bind(&messaging_session::send_binary_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::encrypt_binary_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::encrypt_binary_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
 			return false;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), std::bind(&messaging_session::send_binary_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&messaging_session::send_binary_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::send_binary_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::send_binary_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -704,7 +704,7 @@ namespace network
 		return send_on_tcp(_socket, data_modes::binary_mode, data);
 	}
 
-	bool messaging_session::decompress_binary_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::decompress_binary_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -713,17 +713,17 @@ namespace network
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::normal, compressor::decompression(data), std::bind(&messaging_session::receive_binary_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, compressor::decompression(data), bind(&messaging_session::receive_binary_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&messaging_session::receive_binary_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&messaging_session::receive_binary_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::decrypt_binary_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::decrypt_binary_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -732,17 +732,17 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), std::bind(&messaging_session::decompress_binary_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), bind(&messaging_session::decompress_binary_packet, this, placeholders::_1)));
 
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::high, data, std::bind(&messaging_session::decompress_binary_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&messaging_session::decompress_binary_packet, this, placeholders::_1)));
 
 		return true;
 	}
 
-	bool messaging_session::receive_binary_packet(const std::vector<unsigned char>& data)
+	bool messaging_session::receive_binary_packet(const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
@@ -750,11 +750,11 @@ namespace network
 		}
 
 		size_t index = 0;
-		std::wstring source_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring source_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		std::vector<unsigned char> target_data = devide_binary_on_packet(data, index);
+		wstring source_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring source_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		vector<unsigned char> target_data = devide_binary_on_packet(data, index);
 		if (_received_data)
 		{
 			_received_data(source_id, source_sub_id, target_id, target_sub_id, target_data);
@@ -763,7 +763,7 @@ namespace network
 		return true;
 	}
 
-	bool messaging_session::normal_message(std::shared_ptr<container::value_container> message)
+	bool messaging_session::normal_message(shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -783,7 +783,7 @@ namespace network
 		return true;
 	}
 
-	bool messaging_session::connection_message(std::shared_ptr<container::value_container> message)
+	bool messaging_session::connection_message(shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -802,7 +802,7 @@ namespace network
 
 		if (!_ignore_target_ids.empty())
 		{
-			auto target = std::find(_ignore_target_ids.begin(), _ignore_target_ids.end(), _target_id);
+			auto target = find(_ignore_target_ids.begin(), _ignore_target_ids.end(), _target_id);
 			if (target != _ignore_target_ids.end())
 			{
 				_confirm = session_conditions::expired;
@@ -837,10 +837,10 @@ namespace network
 		_confirm = session_conditions::confirmed;
 
 		// check snipping target list
-		std::shared_ptr<value> acceptable_snipping_targets = std::make_shared<container::container_value>(L"snipping_targets");
+		shared_ptr<value> acceptable_snipping_targets = make_shared<container::container_value>(L"snipping_targets");
 
 		_snipping_targets.clear();		
-		std::vector<std::shared_ptr<value>> snipping_targets = message->get_value(L"snipping_targets")->children();
+		vector<shared_ptr<value>> snipping_targets = message->get_value(L"snipping_targets")->children();
 		for (auto& snipping_target : snipping_targets)
 		{
 			if (snipping_target == nullptr)
@@ -853,7 +853,7 @@ namespace network
 				continue;
 			}
 
-			auto target = std::find(_ignore_snipping_targets.begin(), _ignore_snipping_targets.end(), snipping_target->to_string());
+			auto target = find(_ignore_snipping_targets.begin(), _ignore_snipping_targets.end(), snipping_target->to_string());
 			if (target == _snipping_targets.end())
 			{
 				continue;
@@ -861,23 +861,23 @@ namespace network
 
 			_snipping_targets.push_back(snipping_target->to_string());
 
-			acceptable_snipping_targets->add(std::make_shared<container::string_value>(L"snipping_target", snipping_target->to_string()));
+			acceptable_snipping_targets->add(make_shared<container::string_value>(L"snipping_target", snipping_target->to_string()));
 		}
 
 		generate_key();
 
-		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
-			std::vector<std::shared_ptr<container::value>> {
-				std::make_shared<container::bool_value>(L"confirm", true),
-				std::make_shared<container::string_value>(L"key", _key),
-				std::make_shared<container::string_value>(L"iv", _iv),
-				std::make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode),
+		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
+			vector<shared_ptr<container::value>> {
+				make_shared<container::bool_value>(L"confirm", true),
+				make_shared<container::string_value>(L"key", _key),
+				make_shared<container::string_value>(L"iv", _iv),
+				make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode),
 				acceptable_snipping_targets
 		});
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(std::make_shared<job>(priorities::high, compressor::compression(container->serialize_array()), std::bind(&messaging_session::send_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, compressor::compression(container->serialize_array()), bind(&messaging_session::send_packet, this, placeholders::_1)));
 
 			if (_connection)
 			{
@@ -887,7 +887,7 @@ namespace network
 			return true;
 		}
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, container->serialize_array(), std::bind(&messaging_session::send_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, container->serialize_array(), bind(&messaging_session::send_packet, this, placeholders::_1)));
 
 		if (_connection)
 		{
@@ -897,7 +897,7 @@ namespace network
 		return true;
 	}
 
-	bool messaging_session::request_files(std::shared_ptr<container::value_container> message)
+	bool messaging_session::request_files(shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -909,25 +909,25 @@ namespace network
 			return false;
 		}
 
-		std::shared_ptr<container::value_container> container = message->copy(false);
+		shared_ptr<container::value_container> container = message->copy(false);
 		container->swap_header();
 		container->set_message_type(L"request_file");
 
-		std::vector<std::shared_ptr<container::value>> files = message->value_array(L"file");
+		vector<shared_ptr<container::value>> files = message->value_array(L"file");
 		for (auto& file : files)
 		{
-			container << std::make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
-			container << std::make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
-			container << std::make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
+			container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
+			container << make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
+			container << make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
 
-			_thread_pool->push(std::make_shared<job>(priorities::low, container->serialize_array(), std::bind(&messaging_session::load_file_packet, this, std::placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::low, container->serialize_array(), bind(&messaging_session::load_file_packet, this, placeholders::_1)));
 			container->clear_value();
 		}
 
 		return true;
 	}
 
-	bool messaging_session::echo_message(std::shared_ptr<container::value_container> message)
+	bool messaging_session::echo_message(shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -939,7 +939,7 @@ namespace network
 			return false;
 		}
 
-		std::vector<std::shared_ptr<value>> response = (*message)[L"response"];
+		vector<shared_ptr<value>> response = (*message)[L"response"];
 		if (!response.empty())
 		{
 			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
@@ -949,9 +949,9 @@ namespace network
 
 		message->swap_header();
 
-		message << std::make_shared<bool_value>(L"response", true);
+		message << make_shared<bool_value>(L"response", true);
 
-		_thread_pool->push(std::make_shared<job>(priorities::top, message->serialize_array(), std::bind(&messaging_session::send_packet, this, std::placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), bind(&messaging_session::send_packet, this, placeholders::_1)));
 
 		return true;
 	}
@@ -971,7 +971,7 @@ namespace network
 		_iv = encrypt_key.second;
 	}
 
-	bool messaging_session::same_key_check(std::shared_ptr<container::value> key)
+	bool messaging_session::same_key_check(shared_ptr<container::value> key)
 	{
 		if (key != nullptr && _connection_key == key->to_string())
 		{
@@ -980,10 +980,10 @@ namespace network
 
 		logger::handle().write(logging_level::information, L"ignored this line = \"unknown connection key\"");
 
-		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
-			std::vector<std::shared_ptr<container::value>> {
-				std::make_shared<container::bool_value>(L"confirm", false),
-				std::make_shared<container::string_value>(L"reason", L"ignored this line = \"unknown connection key\"")
+		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
+			vector<shared_ptr<container::value>> {
+				make_shared<container::bool_value>(L"confirm", false),
+				make_shared<container::string_value>(L"reason", L"ignored this line = \"unknown connection key\"")
 		});
 
 		send(container);
@@ -1000,10 +1000,10 @@ namespace network
 
 		logger::handle().write(logging_level::information, L"ignored this line = \"cannot use same id with server\"");
 
-		std::shared_ptr<container::value_container> container = std::make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
-			std::vector<std::shared_ptr<container::value>> {
-				std::make_shared<container::bool_value>(L"confirm", false),
-				std::make_shared<container::string_value>(L"reason", L"ignored this line = \"cannot use same id with server\"")
+		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
+			vector<shared_ptr<container::value>> {
+				make_shared<container::bool_value>(L"confirm", false),
+				make_shared<container::string_value>(L"reason", L"ignored this line = \"cannot use same id with server\"")
 		});
 
 		send(container);

@@ -6,26 +6,28 @@
 #include <vector>
 #include <functional>
 
+using namespace std;
+
 namespace threads
 {
 	class job_pool;
-	class job : public std::enable_shared_from_this<job>
+	class job : public enable_shared_from_this<job>
 	{
 	public:
 		job(const priorities& priority);
-		job(const priorities& priority, const std::vector<unsigned char>& data, const bool& is_async_callback = false);
-		job(const priorities& priority, const std::function<bool(void)>& working_callback, const bool& is_async_callback = false);
-		job(const priorities& priority, const std::vector<unsigned char>& data, const std::function<bool(const std::vector<unsigned char>&)>& working_callback, const bool& is_async_callback = false);
+		job(const priorities& priority, const vector<unsigned char>& data, const bool& is_async_callback = false);
+		job(const priorities& priority, const function<bool(void)>& working_callback, const bool& is_async_callback = false);
+		job(const priorities& priority, const vector<unsigned char>& data, const function<bool(const vector<unsigned char>&)>& working_callback, const bool& is_async_callback = false);
 		~job(void);
 
 	public:
-		std::shared_ptr<job> get_ptr(void);
+		shared_ptr<job> get_ptr(void);
 
 	public:
 		const priorities priority(void);
 
 	public:
-		void set_job_pool(std::shared_ptr<job_pool> job_pool);
+		void set_job_pool(shared_ptr<job_pool> job_pool);
 
 	public:
 		void save(void);
@@ -35,22 +37,22 @@ namespace threads
 		virtual bool working(const priorities& worker_priority);
 
 	private:
-		std::wstring do_script(const std::wstring& script);
+		wstring do_script(const wstring& script);
 
 	private:
 		void load(void);
 
 	protected:
-		std::vector<unsigned char> _data;
+		vector<unsigned char> _data;
 
 	private:
 		priorities _priority;
 		bool _temporary_stored;
-		std::wstring _temporary_stored_path;
-		std::weak_ptr<job_pool> _job_pool;
+		wstring _temporary_stored_path;
+		weak_ptr<job_pool> _job_pool;
 		
 		bool _is_async_callback;
-		std::function<bool(void)> _working_callback;
-		std::function<bool(const std::vector<unsigned char>&)> _working_callback2;
+		function<bool(void)> _working_callback;
+		function<bool(const vector<unsigned char>&)> _working_callback2;
 	};
 }

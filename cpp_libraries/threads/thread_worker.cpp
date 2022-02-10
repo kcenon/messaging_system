@@ -12,7 +12,7 @@ namespace threads
 {
 	using namespace logging;
 
-	thread_worker::thread_worker(const priorities& priority, const std::vector<priorities>& others)
+	thread_worker::thread_worker(const priorities& priority, const vector<priorities>& others)
 		: _priority(priority), _others(others), _job_pool(nullptr)
 	{
 	}
@@ -22,7 +22,7 @@ namespace threads
 		stop();
 	}
 
-	void thread_worker::set_job_pool(std::shared_ptr<job_pool> job_pool)
+	void thread_worker::set_job_pool(shared_ptr<job_pool> job_pool)
 	{
 		_job_pool = job_pool;
 	}
@@ -32,7 +32,7 @@ namespace threads
 		stop();
 
 		_thread_stop.store(false);
-		_thread = std::thread(&thread_worker::run, this);
+		_thread = thread(&thread_worker::run, this);
 	}
 
 	void thread_worker::stop(const bool& ignore_contained_job)
@@ -65,7 +65,7 @@ namespace threads
 			return;
 		}
 
-		auto target = std::find(_others.begin(), _others.end(), priority);
+		auto target = find(_others.begin(), _others.end(), priority);
 		if (target == _others.end())
 		{
 			return;
@@ -80,7 +80,7 @@ namespace threads
 
 		while (!_thread_stop.load() || !_ignore_contained_job.load())
 		{
-			std::unique_lock<std::mutex> unique(_mutex);
+			unique_lock<mutex> unique(_mutex);
 			_condition.wait(unique, [this] { return check_condition(); });
 			if (_job_pool == nullptr)
 			{
@@ -92,7 +92,7 @@ namespace threads
 				break;
 			}
 
-			std::shared_ptr<job> current_job = _job_pool->pop(_priority, _others);
+			shared_ptr<job> current_job = _job_pool->pop(_priority, _others);
 			unique.unlock();
 
 			if (current_job == nullptr && _thread_stop.load())
@@ -106,7 +106,7 @@ namespace threads
 		logger::handle().write(logging_level::sequence, fmt::format(L"stop working thread: priority - {}", (int)_priority));
 	}
 
-	void thread_worker::working(std::shared_ptr<job> current_job)
+	void thread_worker::working(shared_ptr<job> current_job)
 	{
 		if (current_job == nullptr)
 		{

@@ -11,7 +11,7 @@ namespace container
 		_type = value_types::llong_value;
 	}
 
-	llong_value::llong_value(const std::wstring& name, const long long& value)
+	llong_value::llong_value(const wstring& name, const long long& value)
 		: value(name, (const unsigned char*)&value, sizeof(long long), value_types::llong_value)
 	{
 	}
@@ -100,7 +100,7 @@ namespace container
 		return static_cast<double>(temp);
 	}
 
-	std::wstring llong_value::to_string(const bool&) const
+	wstring llong_value::to_string(const bool&) const
 	{
 		return fmt::format(L"{}", to_llong());
 	}
