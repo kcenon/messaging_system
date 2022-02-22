@@ -2,6 +2,7 @@
 
 #include "file_handler.h"
 #include "datetime_handler.h"
+#include "converting.h"
 
 #include "fmt/chrono.h"
 #include "fmt/format.h"
@@ -17,6 +18,7 @@
 
 namespace logging
 {
+	using namespace converting;
 	using namespace file_handler;
 	using namespace datetime_handler;
 
@@ -27,6 +29,7 @@ namespace logging
 		_log_datas.insert({ logging_level::information, bind(&logger::information_log, this, placeholders::_1, placeholders::_2) });
 		_log_datas.insert({ logging_level::sequence, bind(&logger::sequence_log, this, placeholders::_1, placeholders::_2) });
 		_log_datas.insert({ logging_level::parameter, bind(&logger::parameter_log, this, placeholders::_1, placeholders::_2) });
+		_log_datas.insert({ logging_level::packet, bind(&logger::packet_log, this, placeholders::_1, placeholders::_2) });
 	}
 
 	logger::~logger(void)
@@ -109,6 +112,16 @@ namespace logging
 		_buffer.push_back({ target_level , chrono::system_clock::now(), fmt::format(L"{} [{} ms]", log_data, diff.count()) });
 
 		_condition.notify_one();
+	}
+
+	void logger::write(const logging_level& target_level, const vector<unsigned char>& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time)
+	{
+		if (target_level > _target_level)
+		{
+			return;
+		}
+
+		write(target_level, converter::to_wstring(log_data), time);
 	}
 
 	void logger::run(void)
@@ -324,6 +337,17 @@ namespace logging
 		}
 
 		return fmt::format(L"[{}][PARAMETER]: {}\n", time_string, data);
+	}
+
+	wstring logger::packet_log(const chrono::system_clock::time_point& time, const wstring& data)
+	{
+		auto time_string = datetime::time(time, true, _places_of_decimal);
+		if (_write_date.load())
+		{
+			return fmt::format(L"[{:%Y-%m-%d} {}][PACKET]: {}\n", fmt::localtime(time), time_string, data);
+		}
+
+		return fmt::format(L"[{}][PACKET]: {}\n", time_string, data);
 	}
 
 #pragma region singleton

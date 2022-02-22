@@ -8,6 +8,7 @@ namespace logging
 		error = 1,
 		information = 2,
 		sequence = 3,
-		parameter = 4
+		parameter = 4,
+		packet = 5
 	};
 }

@@ -41,6 +41,7 @@ namespace logging
 	public:
 		chrono::time_point<chrono::high_resolution_clock> chrono_start(void);
 		void write(const logging_level& target_level, const wstring& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time = nullopt);
+		void write(const logging_level& target_level, const vector<unsigned char>& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time = nullopt);
 
 	protected:
 		void run(void);
@@ -56,6 +57,7 @@ namespace logging
 		wstring information_log(const chrono::system_clock::time_point& time, const wstring& data);
 		wstring sequence_log(const chrono::system_clock::time_point& time, const wstring& data);
 		wstring parameter_log(const chrono::system_clock::time_point& time, const wstring& data);
+		wstring packet_log(const chrono::system_clock::time_point& time, const wstring& data);
 
 	private:
 		vector<tuple<logging_level, chrono::system_clock::time_point,wstring>> _buffer;
