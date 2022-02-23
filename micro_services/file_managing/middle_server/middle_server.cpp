@@ -125,9 +125,9 @@ BOOL ctrl_handler(DWORD ctrl_type)
 	case CTRL_SHUTDOWN_EVENT:
 	case CTRL_BREAK_EVENT:
 		{
+			_middle_server.reset();
 			_data_line.reset();
 			_file_line.reset();
-			_middle_server.reset();
 
 			logger::handle().stop();
 		}

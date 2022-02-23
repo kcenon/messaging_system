@@ -106,23 +106,23 @@ namespace network
 
 		wait_connection();
 
-		_thread = thread([this](shared_ptr<asio::io_context> context)
+		_thread = thread([&]()
 			{
-				while (context)
+				while (_io_context)
 				{
 					try
 					{
 						logger::handle().write(logging_level::information, fmt::format(L"start messaging_server({})", _source_id));
-						context->run();
+						_io_context->run();
 						logger::handle().write(logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
 						break;
 					}
-					catch (const overflow_error&) { if (context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with overflow error", _source_id)); context->reset(); }
-					catch (const runtime_error&) { if (context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with runtime error", _source_id)); context->reset(); }
-					catch (const exception&) { if (context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with exception", _source_id)); context->reset(); }
-					catch (...) { if (context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with error", _source_id)); context->reset(); }
+					catch (const overflow_error&) { if (_io_context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with overflow error", _source_id)); _io_context->reset(); }
+					catch (const runtime_error&) { if (_io_context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with runtime error", _source_id)); _io_context->reset(); }
+					catch (const exception&) { if (_io_context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with exception", _source_id)); _io_context->reset(); }
+					catch (...) { if (_io_context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with error", _source_id)); _io_context->reset(); }
 				}
-			}, _io_context);
+			});
 	}
 
 	void messaging_server::wait_stop(const unsigned int& seconds)

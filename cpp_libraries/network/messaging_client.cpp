@@ -179,36 +179,36 @@ namespace network
 		_target_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
-		_thread = thread([this](shared_ptr<asio::io_context> context)
+		_thread = thread([&]()
 			{
 				try
 				{
 					logger::handle().write(logging_level::information, fmt::format(L"start messaging_client({})", _source_id));
-					context->run();
+					_io_context->run();
 				}
 				catch (const overflow_error&) { 
-					if (_socket != nullptr) {
+					if (_io_context != nullptr) {
 						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with overflow error", _source_id));
 					}
 				}
 				catch (const runtime_error&) { 
-					if (_socket != nullptr) {
+					if (_io_context != nullptr) {
 						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with runtime error", _source_id));
 					}
 				}
 				catch (const exception&) { 
-					if (_socket != nullptr) {
+					if (_io_context != nullptr) {
 						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with exception", _source_id));
 					}
 				}
 				catch (...) { 
-					if (_socket != nullptr) {
+					if (_io_context != nullptr) {
 						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with error", _source_id));
 					}
 				}
 				logger::handle().write(logging_level::information, fmt::format(L"stop messaging_client({})", _source_id));
 				connection_notification(false);
-			}, _io_context);
+			});
 
 		read_start_code(_socket);
 		send_connection();
@@ -278,21 +278,25 @@ namespace network
 			message->set_source(_source_id, _source_sub_id);
 		}
 
+		auto serialize_array = message->serialize_array();
+
+		logger::handle().write(logging_level::packet, serialize_array);
+
 		if (_compress_mode)
 		{
-			_thread_pool->push(make_shared<job>(priorities::high, message->serialize_array(), bind(&messaging_client::compress_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, serialize_array, bind(&messaging_client::compress_packet, this, placeholders::_1)));
 
 			return;
 		}
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(make_shared<job>(priorities::normal, message->serialize_array(), bind(&messaging_client::encrypt_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, serialize_array, bind(&messaging_client::encrypt_packet, this, placeholders::_1)));
 
 			return;
 		}
 
-		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), bind(&messaging_client::send_packet, this, placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, serialize_array, bind(&messaging_client::send_packet, this, placeholders::_1)));
 	}
 
 	void messaging_client::send_files(const container::value_container& message)
@@ -508,6 +512,8 @@ namespace network
 		{
 			return false;
 		}
+
+		logger::handle().write(logging_level::packet, data);
 
 		auto target = _message_handlers.find(message->message_type());
 		if (target == _message_handlers.end())

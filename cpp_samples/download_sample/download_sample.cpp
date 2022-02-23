@@ -39,9 +39,12 @@ unsigned short low_priority_count = 3;
 promise<bool> _promise_status;
 future<bool> _future_status;
 
+map<wstring, function<void(shared_ptr<container::value_container>)>> _registered_messages;
+
 bool parse_arguments(const map<wstring, wstring>& arguments);
 void connection(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
 void received_message(shared_ptr<container::value_container> container);
+void transfer_condition(shared_ptr<container::value_container> container);
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -63,9 +66,12 @@ int main(int argc, char* argv[])
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
 
+	_registered_messages.insert({ L"transfer_condition", transfer_condition });
+
 	shared_ptr<messaging_client> client = make_shared<messaging_client>(PROGRAM_NAME);
 	client->set_compress_mode(compress_mode);
 	client->set_connection_key(connection_key);
+	client->set_session_types(session_types::message_line);
 	client->set_connection_notification(&connection);
 	client->set_message_notification(&received_message);
 	client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
@@ -226,39 +232,54 @@ void received_message(shared_ptr<container::value_container> container)
 		return;
 	}
 
-	if (container->message_type() == L"transfer_condition")
+	auto message_type = _registered_messages.find(container->message_type());
+	if (message_type != _registered_messages.end())
 	{
-		if (container->get_value(L"percentage")->to_ushort() == 0)
-		{
-			logger::handle().write(logging_level::information,
-				fmt::format(L"started download: [{}]", container->get_value(L"indication_id")->to_string()));
+		message_type->second(container);
 
-			return;
-		}
+		return;
+	}
 
+	logger::handle().write(logging_level::sequence, fmt::format(L"unknown message: {}", container->serialize()));
+}
+
+void transfer_condition(shared_ptr<container::value_container> container)
+{
+	if (container == nullptr)
+	{
+		return;
+	}
+
+	if (container->message_type() != L"transfer_condition")
+	{
+		return;
+	}
+
+	if (container->get_value(L"percentage")->to_ushort() == 0)
+	{
 		logger::handle().write(logging_level::information,
-			fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
-
-		if (container->get_value(L"completed")->to_boolean())
-		{
-			logger::handle().write(logging_level::information,
-				fmt::format(L"completed download: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(), container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
-
-			_promise_status.set_value(false);
-		}
-		else if (container->get_value(L"percentage")->to_ushort() == 100)
-		{
-			logger::handle().write(logging_level::information,
-				fmt::format(L"completed download: [{}]", container->get_value(L"indication_id")->to_string()));
-
-			_promise_status.set_value(true);
-		}
+			fmt::format(L"started download: [{}]", container->get_value(L"indication_id")->to_string()));
 
 		return;
 	}
 
 	logger::handle().write(logging_level::information,
-		fmt::format(L"received message: {}", container->serialize()));
+		fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
+
+	if (container->get_value(L"completed")->to_boolean())
+	{
+		logger::handle().write(logging_level::information,
+			fmt::format(L"completed download: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(), container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
+
+		_promise_status.set_value(false);
+	}
+	else if (container->get_value(L"percentage")->to_ushort() == 100)
+	{
+		logger::handle().write(logging_level::information,
+			fmt::format(L"completed download: [{}]", container->get_value(L"indication_id")->to_string()));
+
+		_promise_status.set_value(true);
+	}
 }
 
 void display_help(void)

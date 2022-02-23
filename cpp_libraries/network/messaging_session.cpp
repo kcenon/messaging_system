@@ -188,22 +188,26 @@ namespace network
 		{
 			return;
 		}
+		
+		auto serialize_array = message->serialize_array();
+
+		logger::handle().write(logging_level::packet, serialize_array);
 
 		if (_compress_mode)
 		{
-			_thread_pool->push(make_shared<job>(priorities::high, message->serialize_array(), bind(&messaging_session::compress_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, serialize_array, bind(&messaging_session::compress_packet, this, placeholders::_1)));
 
 			return;
 		}
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(make_shared<job>(priorities::normal, message->serialize_array(), bind(&messaging_session::encrypt_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, serialize_array, bind(&messaging_session::encrypt_packet, this, placeholders::_1)));
 
 			return;
 		}
 
-		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), bind(&messaging_session::send_packet, this, placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, serialize_array, bind(&messaging_session::send_packet, this, placeholders::_1)));
 	}
 
 	void messaging_session::send_files(shared_ptr<container::value_container> message)
@@ -477,6 +481,8 @@ namespace network
 		{
 			return false;
 		}
+
+		logger::handle().write(logging_level::packet, data);
 
 		auto target = _message_handlers.find(message->message_type());
 		if (target == _message_handlers.end())
@@ -793,9 +799,23 @@ namespace network
 		_target_id = message->source_id();
 		_session_type = (session_types)message->get_value(L"session_type")->to_short();
 
+		auto iter = find_if(_possible_session_types.begin(), _possible_session_types.end(), 
+			[&](const session_types& type) 
+			{
+				return type == _session_type;
+			});
+		if (iter == _possible_session_types.end())
+		{
+			_confirm = session_conditions::expired;
+			logger::handle().write(logging_level::error, L"expired this line = \"cannot accept unknown session type\"");
+
+			return false;
+		}
+
 		if (_source_id == _target_id)
 		{
 			_confirm = session_conditions::expired;
+			logger::handle().write(logging_level::error, L"expired this line = \"cannot use same id with server\"");
 
 			return false;
 		}
@@ -806,6 +826,7 @@ namespace network
 			if (target != _ignore_target_ids.end())
 			{
 				_confirm = session_conditions::expired;
+				logger::handle().write(logging_level::error, L"expired this line = \"cannot connect with ignored id on server\"");
 
 				return false;
 			}
@@ -814,6 +835,7 @@ namespace network
 		if (_kill_code)
 		{
 			_confirm = session_conditions::expired;
+			logger::handle().write(logging_level::error, L"expired this line = \"set kill code\"");
 
 			return false;
 		}
