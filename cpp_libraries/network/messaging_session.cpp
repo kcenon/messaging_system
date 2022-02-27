@@ -177,7 +177,7 @@ namespace network
 	void messaging_session::echo(void)
 	{
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 #else
 		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"echo",
 			vector<shared_ptr<container::value>> {});
@@ -275,7 +275,7 @@ namespace network
 		auto& files = (*message)[L"data"][L"files"].as_array();
 		for (int index = 0; index < files.size(); ++index)
 		{
-			shared_ptr<json::value> container = make_shared<json::value>();
+			shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 			(*container)[L"header"][L"source_id"] = (*message)[L"header"][L"target_id"];
 			(*container)[L"header"][L"source_sub_id"] = (*message)[L"header"][L"target_sub_id"];
@@ -546,8 +546,7 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> message = make_shared<json::value>();
-		message->parse(converter::to_wstring(data));
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
 #else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
 #endif
@@ -559,7 +558,7 @@ namespace network
 		logger::handle().write(logging_level::packet, data);
 
 #ifndef __USE_TYPE_CONTAINER__
-		auto target = _message_handlers.find((*message)[L"header"][L"message_type"].as_string());
+		auto target = _message_handlers.find((*message.get())[L"header"][L"message_type"].as_string());
 #else
 		auto target = _message_handlers.find(message->message_type());
 #endif
@@ -579,8 +578,8 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> message = make_shared<json::value>();
-		message->parse(converter::to_wstring(data));
+		auto temp = converter::to_wstring(data);
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
 #else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data);
 #endif
@@ -592,10 +591,10 @@ namespace network
 		vector<unsigned char> result;
 #ifndef __USE_TYPE_CONTAINER__
 		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"indication_id"].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"source_id"].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"source_sub_id"].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"target_id"].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"target_sub_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"header"][L"source_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"header"][L"source_sub_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"header"][L"target_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"header"][L"target_sub_id"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"source"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"target"].as_string()));
 		append_binary_on_packet(result, file::load((*message)[L"data"][L"source"].as_string()));
@@ -900,7 +899,7 @@ namespace network
 
 #ifndef __USE_TYPE_CONTAINER__
 		_target_id = (*message)[L"header"][L"source_id"].as_string();
-		_session_type = (session_types)(*message)[L"header"][L"session_type"].as_integer();
+		_session_type = (session_types)(*message)[L"data"][L"session_type"].as_integer();
 #else
 		_target_id = message->source_id();
 		_session_type = (session_types)message->get_value(L"session_type")->to_short();
@@ -972,7 +971,7 @@ namespace network
 
 		// check snipping target list
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 		(*container)[L"header"][L"source_id"] = json::value::string(_source_id);
 		(*container)[L"header"][L"source_sub_id"] = json::value::string(_source_sub_id);
@@ -983,6 +982,7 @@ namespace network
 		_snipping_targets.clear();
 
 		int index2 = 0;
+		(*container)[L"data"][L"snipping_targets"] = json::value::array();
 		auto& snipping_targets = (*message)[L"data"][L"snipping_targets"].as_array();
 		for (int index = 0; index < snipping_targets.size(); ++index)
 		{
@@ -1093,7 +1093,7 @@ namespace network
 		auto& files = (*message)[L"data"][L"files"].as_array();
 		for (int index = 0; index < files.size(); ++index)
 		{
-			shared_ptr<json::value> container = make_shared<json::value>();
+			shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 			(*container)[L"header"][L"source_id"] = (*message)[L"header"][L"target_id"];
 			(*container)[L"header"][L"source_sub_id"] = (*message)[L"header"][L"target_sub_id"];
@@ -1151,7 +1151,7 @@ namespace network
 			return true;
 		}
 
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 		(*container)[L"header"][L"source_id"] = (*message)[L"header"][L"target_id"];
 		(*container)[L"header"][L"source_sub_id"] = (*message)[L"header"][L"target_sub_id"];
@@ -1215,7 +1215,7 @@ namespace network
 		logger::handle().write(logging_level::information, L"ignored this line = \"unknown connection key\"");
 
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 #else
 		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
 			vector<shared_ptr<container::value>> {
@@ -1239,7 +1239,7 @@ namespace network
 		logger::handle().write(logging_level::information, L"ignored this line = \"cannot use same id with server\"");
 
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 #else
 		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
 			vector<shared_ptr<container::value>> {

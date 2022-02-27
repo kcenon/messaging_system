@@ -42,7 +42,7 @@ bool encrypt_mode = false;
 bool compress_mode = false;
 unsigned short compress_block_size = 1024;
 #ifdef _DEBUG
-logging_level log_level = logging_level::parameter;
+logging_level log_level = logging_level::packet;
 #else
 logging_level log_level = logging_level::information;
 #endif
@@ -374,12 +374,12 @@ void received_message_from_middle_server(shared_ptr<container::value_container> 
 			}
 
 #ifndef __USE_TYPE_CONTAINER__
-			shared_ptr<json::value> response = make_shared<json::value>();
+			shared_ptr<json::value> response = make_shared<json::value>(json::value::object(true));
 
 			(*response)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
 			(*response)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
-			(*response)[L"header"][L"target_id"] = (*container)[L"header"][L"gateway_source_id"];
-			(*response)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"gateway_source_sub_id"];
+			(*response)[L"header"][L"target_id"] = (*container)[L"data"][L"gateway_source_id"];
+			(*response)[L"header"][L"target_sub_id"] = (*container)[L"data"][L"gateway_source_sub_id"];
 			(*response)[L"header"][L"message_type"] = (*container)[L"header"][L"message_type"];
 
 			(*response)[L"data"] = (*container)[L"data"];
@@ -414,12 +414,12 @@ void received_message_from_middle_server(shared_ptr<container::value_container> 
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> response = make_shared<json::value>();
+		shared_ptr<json::value> response = make_shared<json::value>(json::value::object(true));
 
 		(*response)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
 		(*response)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
-		(*response)[L"header"][L"target_id"] = (*container)[L"header"][L"gateway_source_id"];
-		(*response)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"gateway_source_sub_id"];
+		(*response)[L"header"][L"target_id"] = (*container)[L"data"][L"gateway_source_id"];
+		(*response)[L"header"][L"target_sub_id"] = (*container)[L"data"][L"gateway_source_sub_id"];
 		(*response)[L"header"][L"message_type"] = (*container)[L"header"][L"message_type"];
 
 		(*response)[L"data"] = (*container)[L"data"];
@@ -591,8 +591,10 @@ bool download_files(shared_ptr<container::value_container> container)
 	if (_middle_server)
 	{
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> start_message = make_shared<json::value>();
+		shared_ptr<json::value> start_message = make_shared<json::value>(json::value::object(true));
 
+		(*start_message)[L"header"][L"source_id"] = json::value::string(L"");
+		(*start_message)[L"header"][L"source_sub_id"] = json::value::string(L"");
 		(*start_message)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
 		(*start_message)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
 		(*start_message)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
@@ -611,8 +613,7 @@ bool download_files(shared_ptr<container::value_container> container)
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	shared_ptr<json::value> temp = make_shared<json::value>();
-	temp->parse(container->serialize());
+	shared_ptr<json::value> temp = make_shared<json::value>(json::value::parse(container->serialize()));
 
 	(*temp)[L"header"][L"message_type"] = json::value::string(L"request_files");
 #else
@@ -662,8 +663,10 @@ bool upload_files(shared_ptr<container::value_container> container)
 	if (_middle_server)
 	{
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> start_message = make_shared<json::value>();
+		shared_ptr<json::value> start_message = make_shared<json::value>(json::value::object(true));
 
+		(*start_message)[L"header"][L"source_id"] = json::value::string(L"");
+		(*start_message)[L"header"][L"source_sub_id"] = json::value::string(L"");
 		(*start_message)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
 		(*start_message)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
 		(*start_message)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");

@@ -93,14 +93,18 @@ int main(int argc, char* argv[])
 	client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
 
 #ifndef __USE_TYPE_CONTAINER__
-	shared_ptr<json::value> container = make_shared<json::value>();
+	shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
+	(*container)[L"header"][L"source_id"] = json::value::string(L"");
+	(*container)[L"header"][L"source_sub_id"] = json::value::string(L"");
 	(*container)[L"header"][L"target_id"] = json::value::string(L"main_server");
+	(*container)[L"header"][L"target_sub_id"] = json::value::string(L"");
 	(*container)[L"header"][L"message_type"] = json::value::string(L"download_files");
 
 	(*container)[L"data"][L"indication_id"] = json::value::string(L"download_test");
 
 	int index = 0;
+	(*container)[L"data"][L"files"] = json::value::array();
 	for (auto& source : sources)
 	{
 		(*container)[L"data"][L"files"][index][L"source"] = json::value::string(source);

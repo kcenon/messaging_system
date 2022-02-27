@@ -87,7 +87,7 @@ shared_ptr<container::value_container> file_manager::received(const wstring& tar
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 		(*container)[L"header"][L"target_id"] = json::value::string(target_id);
 		(*container)[L"header"][L"target_sub_id"] = json::value::string(target_sub_id);
@@ -117,7 +117,7 @@ shared_ptr<container::value_container> file_manager::received(const wstring& tar
 		_transferred_percentage.erase(percentage);
 
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 		(*container)[L"header"][L"target_id"] = json::value::string(target_id);
 		(*container)[L"header"][L"target_sub_id"] = json::value::string(target_sub_id);

@@ -40,7 +40,7 @@ bool encrypt_mode = false;
 bool compress_mode = false;
 unsigned short compress_block_size = 1024;
 #ifdef _DEBUG
-logging_level log_level = logging_level::parameter;
+logging_level log_level = logging_level::packet;
 #else
 logging_level log_level = logging_level::information;
 #endif
@@ -289,8 +289,10 @@ void received_file(const wstring& target_id, const wstring& target_sub_id, const
 	if (_main_server != nullptr)
 	{
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
+		(*container)[L"header"][L"source_id"] = json::value::string(L"");
+		(*container)[L"header"][L"source_sub_id"] = json::value::string(L"");
 		(*container)[L"header"][L"target_id"] = json::value::string(target_id);
 		(*container)[L"header"][L"target_sub_id"] = json::value::string(target_sub_id);
 		(*container)[L"header"][L"message_type"] = json::value::string(L"uploaded_file");

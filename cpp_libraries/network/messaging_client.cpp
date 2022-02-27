@@ -256,7 +256,7 @@ namespace network
 	void messaging_client::echo(void)
 	{
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 #else
 		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"echo",
 			vector<shared_ptr<container::value>> {});
@@ -380,7 +380,7 @@ namespace network
 		auto& files = (*message)[L"data"][L"files"].as_array();
 		for (int index = 0; index < files.size(); ++index)
 		{
-			shared_ptr<json::value> container = make_shared<json::value>();
+			shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 			(*container)[L"header"][L"source_id"] = (*message)[L"header"][L"target_id"];
 			(*container)[L"header"][L"source_sub_id"] = (*message)[L"header"][L"target_sub_id"];
@@ -456,7 +456,7 @@ namespace network
 	void messaging_client::send_connection(void)
 	{
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 		
 		(*container)[L"header"][L"source_id"] = json::value::string(_source_id);
 		(*container)[L"header"][L"source_sub_id"] = json::value::string(_source_sub_id);
@@ -471,6 +471,7 @@ namespace network
 		(*container)[L"data"][L"bridge_mode"] = json::value::boolean(_bridge_line);
 
 		int index = 0;
+		(*container)[L"data"][L"snipping_targets"] = json::value::array();
 		for (auto& snipping_target : _snipping_targets)
 		{
 			(*container)[L"data"][L"snipping_targets"][index++] = json::value::string(snipping_target);
@@ -605,8 +606,7 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> message = make_shared<json::value>();
-		message->parse(converter::to_wstring(data));
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
 #else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
 #endif
@@ -638,8 +638,7 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> message = make_shared<json::value>();
-		message->parse(converter::to_wstring(data));
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
 #else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
 #endif
@@ -651,10 +650,10 @@ namespace network
 		vector<unsigned char> result;
 #ifndef __USE_TYPE_CONTAINER__
 		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"indication_id"].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"source_id"].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"source_sub_id"].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"target_id"].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"target_sub_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"header"][L"source_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"header"][L"source_sub_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"header"][L"target_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"header"][L"target_sub_id"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"source"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"target"].as_string()));
 		append_binary_on_packet(result, file::load((*message)[L"data"][L"source"].as_string()));
@@ -1036,7 +1035,7 @@ namespace network
 			return true;
 		}
 
-		shared_ptr<json::value> container = make_shared<json::value>();
+		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 		(*container)[L"header"][L"source_id"] = (*message)[L"header"][L"target_id"];
 		(*container)[L"header"][L"source_sub_id"] = (*message)[L"header"][L"target_sub_id"];
