@@ -1,5 +1,7 @@
 #include "container_value.h"
 
+#ifdef __USE_TYPE_CONTAINER__
+
 #include "fmt/xchar.h"
 #include "fmt/format.h"
 
@@ -246,3 +248,5 @@ namespace container
 		return fmt::format(L"{}", to_long());
 	}
 }
+
+#endif

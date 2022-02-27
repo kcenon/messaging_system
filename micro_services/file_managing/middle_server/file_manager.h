@@ -1,6 +1,10 @@
 #pragma once
 
+#ifndef __USE_TYPE_CONTAINER__
+#include "cpprest/json.h"
+#else
 #include "container.h"
+#endif
 
 #include <map>
 #include <string>
@@ -8,6 +12,10 @@
 #include <memory>
 
 using namespace std;
+
+#ifndef __USE_TYPE_CONTAINER__
+using namespace web;
+#endif
 
 class file_manager
 {
@@ -17,7 +25,14 @@ public:
 
 public:
 	bool set(const wstring& indication_id, const vector<wstring> &file_list);
-	shared_ptr<container::value_container> received(const wstring& target_id, const wstring& target_sub_id, const wstring& indication_id, const wstring& file_path);
+
+#ifndef __USE_TYPE_CONTAINER__
+	shared_ptr<json::value> received(const wstring& target_id, const wstring& target_sub_id,
+		const wstring& indication_id, const wstring& file_path);
+#else
+	shared_ptr<container::value_container> received(const wstring& target_id, const wstring& target_sub_id, 
+		const wstring& indication_id, const wstring& file_path);
+#endif
 
 private:
 	map<wstring, unsigned short> _transferred_percentage;

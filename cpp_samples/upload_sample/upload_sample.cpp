@@ -6,9 +6,13 @@
 #include "folder_handler.h"
 #include "argument_parser.h"
 
+#ifndef __USE_TYPE_CONTAINER__
+#include "cpprest/json.h"
+#else
 #include "container.h"
 #include "values/string_value.h"
 #include "values/container_value.h"
+#endif
 
 #include "fmt/xchar.h"
 #include "fmt/format.h"
@@ -17,6 +21,7 @@
 
 constexpr auto PROGRAM_NAME = L"upload_sample";
 
+using namespace std;
 using namespace logging;
 using namespace network;
 using namespace converting;
@@ -39,12 +44,23 @@ unsigned short low_priority_count = 3;
 promise<bool> _promise_status;
 future<bool> _future_status;
 
+#ifndef __USE_TYPE_CONTAINER__
+map<wstring, function<void(shared_ptr<json::value>)>> _registered_messages;
+#else
 map<wstring, function<void(shared_ptr<container::value_container>)>> _registered_messages;
+#endif
 
 bool parse_arguments(const map<wstring, wstring>& arguments);
 void connection(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
+
+#ifndef __USE_TYPE_CONTAINER__
+void received_message(shared_ptr<json::value> container);
+void transfer_condition(shared_ptr<json::value> container);
+#else
 void received_message(shared_ptr<container::value_container> container);
 void transfer_condition(shared_ptr<container::value_container> container);
+#endif
+
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -76,6 +92,22 @@ int main(int argc, char* argv[])
 	client->set_message_notification(&received_message);
 	client->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
 
+#ifndef __USE_TYPE_CONTAINER__
+	shared_ptr<json::value> container = make_shared<json::value>();
+
+	(*container)[L"header"][L"target_id"] = json::value::string(L"main_server");
+	(*container)[L"header"][L"message_type"] = json::value::string(L"download_files");
+
+	(*container)[L"data"][L"indication_id"] = json::value::string(L"download_test");
+
+	int index = 0;
+	for (auto& source : sources)
+	{
+		(*container)[L"data"][L"files"][index][L"source"] = json::value::string(source);
+		(*container)[L"data"][L"files"][index][L"target"] = json::value::string(converter::replace2(source, source_folder, target_folder));
+		index++;
+	}
+#else
 	vector<shared_ptr<container::value>> files;
 
 	files.push_back(make_shared<container::string_value>(L"indication_id", L"upload_test"));
@@ -87,10 +119,12 @@ int main(int argc, char* argv[])
 		}));
 	}
 
+	shared_ptr<container::value_container> container =
+		make_shared<container::value_container>(L"main_server", L"", L"upload_files", files);
+#endif
+
 	_future_status = _promise_status.get_future();
 
-	shared_ptr<container::value_container> container = 
-		make_shared<container::value_container>(L"main_server", L"", L"upload_files", files);
 	client->send(container);
 
 	_future_status.wait_for(chrono::seconds(100));
@@ -225,14 +259,22 @@ void connection(const wstring& target_id, const wstring& target_sub_id, const bo
 		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
+#ifndef __USE_TYPE_CONTAINER__
+void received_message(shared_ptr<json::value> container)
+#else
 void received_message(shared_ptr<container::value_container> container)
+#endif
 {
 	if (container == nullptr)
 	{
 		return;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
+#else
 	auto message_type = _registered_messages.find(container->message_type());
+#endif
 	if (message_type != _registered_messages.end())
 	{
 		message_type->second(container);
@@ -243,40 +285,84 @@ void received_message(shared_ptr<container::value_container> container)
 	logger::handle().write(logging_level::sequence, fmt::format(L"unknown message: {}", container->serialize()));
 }
 
+#ifndef __USE_TYPE_CONTAINER__
+void transfer_condition(shared_ptr<json::value> container)
+#else
 void transfer_condition(shared_ptr<container::value_container> container)
+#endif
 {
 	if (container == nullptr)
 	{
 		return;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	if ((*container)[L"header"][L"message_type"].as_string() != L"transfer_condition")
+#else
 	if (container->message_type() != L"transfer_condition")
+#endif
 	{
 		return;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	if ((*container)[L"data"][L"percentage"].as_integer() == 0)
+#else
 	if (container->get_value(L"percentage")->to_ushort() == 0)
+#endif
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		logger::handle().write(logging_level::information,
+			fmt::format(L"started upload: [{}]", (*container)[L"data"][L"indication_id"].as_string()));
+#else
 		logger::handle().write(logging_level::information,
 			fmt::format(L"started upload: [{}]", container->get_value(L"indication_id")->to_string()));
+#endif
 
 		return;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
 	logger::handle().write(logging_level::information,
-		fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), container->get_value(L"percentage")->to_ushort()));
+		fmt::format(L"received percentage: [{}] {}%", (*container)[L"data"][L"indication_id"].as_string(),
+			(*container)[L"data"][L"percentage"].as_integer()));
+#else
+	logger::handle().write(logging_level::information,
+		fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(),
+			container->get_value(L"percentage")->to_ushort()));
+#endif
 
+#ifndef __USE_TYPE_CONTAINER__
+	if ((*container)[L"data"][L"completed"].as_bool())
+#else
 	if (container->get_value(L"completed")->to_boolean())
+#endif
 	{
+#ifndef __USE_TYPE_CONTAINER__
 		logger::handle().write(logging_level::information,
-			fmt::format(L"completed download: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(), container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
+			fmt::format(L"completed upload: [{}] success-{}, fail-{}", (*container)[L"data"][L"indication_id"].as_string(),
+				(*container)[L"data"][L"completed_count"].as_integer(), (*container)[L"data"][L"failed_count"].as_integer()));
+#else
+		logger::handle().write(logging_level::information,
+			fmt::format(L"completed upload: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(),
+				container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
+#endif
 
 		_promise_status.set_value(false);
 	}
+#ifndef __USE_TYPE_CONTAINER__
+	if ((*container)[L"data"][L"percentage"].as_integer() == 100)
+#else
 	else if (container->get_value(L"percentage")->to_ushort() == 100)
+#endif
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		logger::handle().write(logging_level::information,
+			fmt::format(L"completed upload: [{}]", (*container)[L"data"][L"indication_id"].as_string()));
+#else
 		logger::handle().write(logging_level::information,
 			fmt::format(L"completed upload: [{}]", container->get_value(L"indication_id")->to_string()));
+#endif
 
 		_promise_status.set_value(true);
 	}

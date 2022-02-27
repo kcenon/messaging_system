@@ -1,6 +1,11 @@
 #pragma once
 
+#ifndef __USE_TYPE_CONTAINER__
+#include "cpprest/json.h"
+#else
 #include "container.h"
+#endif
+
 #include "thread_pool.h"
 #include "data_handling.h"
 #include "session_types.h"
@@ -14,6 +19,10 @@
 #include "asio.hpp"
 
 using namespace std;
+
+#ifndef __USE_TYPE_CONTAINER__
+using namespace web;
+#endif
 
 namespace network
 {
@@ -40,7 +49,13 @@ namespace network
 
 	public:
 		void set_connection_notification(const function<void(const wstring&, const wstring&, const bool&)>& notification);
+
+#ifndef __USE_TYPE_CONTAINER__
+		void set_message_notification(const function<void(shared_ptr<json::value>)>& notification);
+#else
 		void set_message_notification(const function<void(shared_ptr<container::value_container>)>& notification);
+#endif
+
 		void set_file_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&)>& notification);
 		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)>& notification);
 
@@ -51,10 +66,19 @@ namespace network
 
 	public:
 		void echo(void);
+
+#ifndef __USE_TYPE_CONTAINER__
+		void send(const json::value& message);
+		void send(shared_ptr<json::value> message);
+		void send_files(const json::value& message);
+		void send_files(shared_ptr<json::value> message);
+#else
 		void send(const container::value_container& message);
 		void send(shared_ptr<container::value_container> message);
 		void send_files(const container::value_container& message);
 		void send_files(shared_ptr<container::value_container> message);
+#endif
+
 		void send_binary(const wstring target_id, const wstring& target_sub_id, const vector<unsigned char>& data);
 
 	protected:
@@ -98,9 +122,15 @@ namespace network
 		bool receive_binary_packet(const vector<unsigned char>& data);
 
 	private:
+#ifndef __USE_TYPE_CONTAINER__
+		bool normal_message(shared_ptr<json::value> message);
+		bool confirm_message(shared_ptr<json::value> message);
+		bool echo_message(shared_ptr<json::value> message);
+#else
 		bool normal_message(shared_ptr<container::value_container> message);
 		bool confirm_message(shared_ptr<container::value_container> message);
 		bool echo_message(shared_ptr<container::value_container> message);
+#endif
 
 	private:
 		void connection_notification(const bool& condition);
@@ -126,7 +156,13 @@ namespace network
 
 	private:
 		function<void(const wstring&, const wstring&, const bool&)> _connection;
+
+#ifndef __USE_TYPE_CONTAINER__
+		function<void(shared_ptr<json::value>)> _received_message;
+#else
 		function<void(shared_ptr<container::value_container>)> _received_message;
+#endif
+
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&)> _received_file;
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)> _received_data;
 
@@ -137,6 +173,11 @@ namespace network
 
 	private:
 		shared_ptr<threads::thread_pool> _thread_pool;
+
+#ifndef __USE_TYPE_CONTAINER__
+		map<wstring, function<bool(shared_ptr<json::value>)>> _message_handlers;
+#else
 		map<wstring, function<bool(shared_ptr<container::value_container>)>> _message_handlers;
+#endif
 	};
 }

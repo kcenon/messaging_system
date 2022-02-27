@@ -1,21 +1,27 @@
 #include <iostream>
 
 #include "logging.h"
+#include "converting.h"
+#include "compressing.h"
 #include "messaging_server.h"
 #include "messaging_client.h"
-#include "compressing.h"
 #include "argument_parser.h"
 
+#ifdef __USE_TYPE_CONTAINER__
+#include "container.h"
 #include "value.h"
 #include "values/bool_value.h"
 #include "values/ushort_value.h"
 #include "values/string_value.h"
+#include "values/container_value.h"
+#endif
 
 #ifdef _CONSOLE
 #include <Windows.h>
 #endif
 
 #include <future>
+#include <vector>
 #include <signal.h>
 
 #include "fmt/xchar.h"
@@ -29,6 +35,7 @@ constexpr auto PROGRAM_NAME = L"restapi_gateway";
 using namespace std;
 using namespace logging;
 using namespace network;
+using namespace converting;
 using namespace compressing;
 using namespace argument_parser;
 
@@ -63,6 +70,14 @@ future<bool> _future_status;
 shared_ptr<messaging_client> _data_line = nullptr;
 shared_ptr<http_listener> _http_listener = nullptr;
 
+vector<json::value> _messages;
+
+#ifdef __USE_TYPE_CONTAINER__
+map<wstring, function<void(shared_ptr<container::value_container>)>> _registered_messages;
+#else
+map<wstring, function<void(shared_ptr<json::value>)>> _registered_messages;
+#endif
+
 #ifdef _CONSOLE
 BOOL ctrl_handler(DWORD ctrl_type);
 #endif
@@ -71,7 +86,15 @@ bool parse_arguments(const map<wstring, wstring>& arguments);
 void create_data_line(void);
 void create_http_listener(void);
 void connection(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
+
+#ifdef __USE_TYPE_CONTAINER__
 void received_message(shared_ptr<container::value_container> container);
+void transfer_condition(shared_ptr<container::value_container> container);
+#else
+void received_message(shared_ptr<json::value> container);
+void transfer_condition(shared_ptr<json::value> container);
+#endif
+
 void get_method(http_request request);
 void post_method(http_request request);
 void put_method(http_request request);
@@ -97,6 +120,8 @@ int main(int argc, char* argv[])
 	logger::handle().set_write_console(write_console);
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
+
+	_registered_messages.insert({ L"transfer_condition", transfer_condition });
 
 	create_data_line();
 	create_http_listener();
@@ -272,7 +297,7 @@ void create_http_listener(void)
 	_http_listener->support(methods::PUT, put_method);
 	_http_listener->support(methods::DEL, del_method);
 	_http_listener->open()
-		.then([]()
+		.then([&]()
 			{
 				logger::handle().write(logging_level::information, L"starting to listen");
 			})
@@ -302,12 +327,67 @@ void connection(const wstring& target_id, const wstring& target_sub_id, const bo
 	_data_line->start(server_ip, server_port, high_priority_count, normal_priority_count, low_priority_count);
 }
 
+#ifdef __USE_TYPE_CONTAINER__
 void received_message(shared_ptr<container::value_container> container)
+#else
+void received_message(shared_ptr<json::value> container)
+#endif
 {
 	if (container == nullptr)
 	{
 		return;
 	}
+
+#ifdef __USE_TYPE_CONTAINER__
+	auto message_type = _registered_messages.find(container->message_type());
+#else
+	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
+#endif
+	if (message_type != _registered_messages.end())
+	{
+		message_type->second(container);
+
+		return;
+	}
+
+	logger::handle().write(logging_level::sequence, fmt::format(L"unknown message: {}", container->serialize()));
+}
+
+#ifdef __USE_TYPE_CONTAINER__
+void transfer_condition(shared_ptr<container::value_container> container)
+#else
+void transfer_condition(shared_ptr<json::value> container)
+#endif
+{
+	if (container == nullptr)
+	{
+		return;
+	}
+
+#ifdef __USE_TYPE_CONTAINER__
+	if (container->message_type() != L"transfer_condition")
+#else
+	if ((*container)[L"header"][L"message_type"].as_string() != L"transfer_condition")
+#endif
+	{
+		return;
+	}
+
+	auto transfer_condition = json::value::object();
+
+#ifdef __USE_TYPE_CONTAINER__
+	transfer_condition[L"message_type"] = json::value::string(container->message_type());
+	transfer_condition[L"indication_id"] = json::value::string(container->get_value(L"indication_id")->to_string());
+	transfer_condition[L"percentage"] = json::value::number(container->get_value(L"percentage")->to_ushort());
+	transfer_condition[L"completed"] = json::value::boolean(container->get_value(L"completed")->to_boolean());
+#else
+	transfer_condition[L"message_type"] = (*container)[L"header"][L"message_type"];
+	transfer_condition[L"indication_id"] = (*container)[L"data"][L"message_type"];
+	transfer_condition[L"percentage"] = (*container)[L"data"][L"percentage"];
+	transfer_condition[L"completed"] = (*container)[L"data"][L"completed"];
+#endif
+
+	_messages.push_back(transfer_condition);
 }
 
 void get_method(http_request request)
@@ -328,6 +408,29 @@ void post_method(http_request request)
 	auto answer = json::value::object();
 
 	// do something
+	auto action = request.extract_json().get();
+	if (action.is_null())
+	{
+		request.reply(status_codes::OK, answer);
+		return;
+	}
+
+	/*
+	vector<shared_ptr<container::value>> files;
+
+	files.push_back(make_shared<container::string_value>(L"indication_id", L"download_test"));
+	for (auto& source : sources)
+	{
+		files.push_back(make_shared<container::container_value>(L"file", vector<shared_ptr<container::value>> {
+			make_shared<container::string_value>(L"source", source),
+				make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
+		}));
+	}
+
+	shared_ptr<container::value_container> container =
+		make_shared<container::value_container>(L"main_server", L"", L"download_files", files);
+	_data_line->send(container);
+	*/
 
 	request.reply(status_codes::OK, answer);
 }

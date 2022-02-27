@@ -1,5 +1,6 @@
 ﻿#include "messaging_client.h"
 
+#ifdef __USE_TYPE_CONTAINER__
 #include "value.h"
 #include "values/bool_value.h"
 #include "values/bytes_value.h"
@@ -7,6 +8,7 @@
 #include "values/ushort_value.h"
 #include "values/string_value.h"
 #include "values/container_value.h"
+#endif
 
 #include "logging.h"
 #include "converting.h"
@@ -28,7 +30,11 @@ namespace network
 {
 	using namespace logging;
 	using namespace threads;
+
+#ifdef __USE_TYPE_CONTAINER__
 	using namespace container;
+#endif
+
 	using namespace converting;
 	using namespace encrypting;
 	using namespace compressing;
@@ -100,7 +106,11 @@ namespace network
 		_connection = notification;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_client::set_message_notification(const function<void(shared_ptr<json::value>)>& notification)
+#else
 	void messaging_client::set_message_notification(const function<void(shared_ptr<container::value_container>)>& notification)
+#endif
 	{
 		_received_message = notification;
 	}
@@ -245,18 +255,34 @@ namespace network
 
 	void messaging_client::echo(void)
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> container = make_shared<json::value>();
+#else
 		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"echo",
 			vector<shared_ptr<container::value>> {});
+#endif
 
 		send(container);
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_client::send(const json::value& message)
+#else
 	void messaging_client::send(const container::value_container& message)
+#endif
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		send(make_shared<json::value>(message));
+#else
 		send(make_shared<container::value_container>(message));
+#endif
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_client::send(shared_ptr<json::value> message)
+#else
 	void messaging_client::send(shared_ptr<container::value_container> message)
+#endif
 	{
 		if (_socket == nullptr)
 		{
@@ -273,12 +299,23 @@ namespace network
 			return;
 		}
 
+#ifndef __USE_TYPE_CONTAINER__
+		if ((*message)[L"header"][L"source_id"].is_null())
+		{
+			(*message)[L"header"][L"source_id"] = json::value::string(_source_id);
+			(*message)[L"header"][L"source_sub_id"] = json::value::string(_source_sub_id);
+		}
+
+		auto serialize_array = converter::to_array(message->serialize());
+#else
 		if (message->source_id().empty())
 		{
 			message->set_source(_source_id, _source_sub_id);
 		}
 
 		auto serialize_array = message->serialize_array();
+#endif
+
 
 		logger::handle().write(logging_level::packet, serialize_array);
 
@@ -299,12 +336,24 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::top, serialize_array, bind(&messaging_client::send_packet, this, placeholders::_1)));
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_client::send_files(const json::value& message)
+#else
 	void messaging_client::send_files(const container::value_container& message)
+#endif
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		send_files(make_shared<json::value>(message));
+#else
 		send_files(make_shared<container::value_container>(message));
+#endif
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_client::send_files(shared_ptr<json::value> message)
+#else
 	void messaging_client::send_files(shared_ptr<container::value_container> message)
+#endif
 	{
 		if (_socket == nullptr)
 		{
@@ -321,6 +370,31 @@ namespace network
 			return;
 		}
 
+#ifndef __USE_TYPE_CONTAINER__
+		if ((*message)[L"header"][L"source_id"].is_null())
+		{
+			(*message)[L"header"][L"source_id"] = json::value::string(_source_id);
+			(*message)[L"header"][L"source_sub_id"] = json::value::string(_source_sub_id);
+		}
+
+		auto& files = (*message)[L"data"][L"files"].as_array();
+		for (int index = 0; index < files.size(); ++index)
+		{
+			shared_ptr<json::value> container = make_shared<json::value>();
+
+			(*container)[L"header"][L"source_id"] = (*message)[L"header"][L"target_id"];
+			(*container)[L"header"][L"source_sub_id"] = (*message)[L"header"][L"target_sub_id"];
+			(*container)[L"header"][L"target_id"] = (*message)[L"header"][L"source_id"];
+			(*container)[L"header"][L"target_sub_id"] = (*message)[L"header"][L"source_sub_id"];
+			(*container)[L"header"][L"message_type"] = json::value::string(L"request_file");
+
+			(*container)[L"data"][L"indication_id"] = (*message)[L"data"][L"indication_id"];
+			(*container)[L"data"][L"source"] = files[index][L"source"];
+			(*container)[L"data"][L"target"] = files[index][L"target"];
+
+			_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_client::load_file_packet, this, placeholders::_1)));
+		}
+#else
 		if (message->source_id().empty())
 		{
 			message->set_source(_source_id, _source_sub_id);
@@ -340,6 +414,7 @@ namespace network
 			_thread_pool->push(make_shared<job>(priorities::low, container->serialize_array(), bind(&messaging_client::load_file_packet, this, placeholders::_1)));
 			container->clear_value();
 		}
+#endif
 	}
 
 	void messaging_client::send_binary(const wstring target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
@@ -380,6 +455,27 @@ namespace network
 
 	void messaging_client::send_connection(void)
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> container = make_shared<json::value>();
+		
+		(*container)[L"header"][L"source_id"] = json::value::string(_source_id);
+		(*container)[L"header"][L"source_sub_id"] = json::value::string(_source_sub_id);
+		(*container)[L"header"][L"target_id"] = json::value::string(_target_id);
+		(*container)[L"header"][L"target_sub_id"] = json::value::string(_target_sub_id);
+		(*container)[L"header"][L"message_type"] = json::value::string(L"request_connection");
+
+		(*container)[L"data"][L"connection_key"] = json::value::string(_connection_key);
+		(*container)[L"data"][L"auto_echo"] = json::value::boolean(_auto_echo);
+		(*container)[L"data"][L"auto_echo_interval_seconds"] = json::value::boolean(_auto_echo_interval_seconds);
+		(*container)[L"data"][L"session_type"] = json::value::number((short)_session_type);
+		(*container)[L"data"][L"bridge_mode"] = json::value::boolean(_bridge_line);
+
+		int index = 0;
+		for (auto& snipping_target : _snipping_targets)
+		{
+			(*container)[L"data"][L"snipping_targets"][index++] = json::value::string(snipping_target);
+		}
+#else
 		shared_ptr<container::container_value> snipping_targets = make_shared<container::container_value>(L"snipping_targets");
 		for (auto& snipping_target : _snipping_targets)
 		{
@@ -395,6 +491,7 @@ namespace network
 				make_shared<container::bool_value>(L"bridge_mode", _bridge_line),
 				snipping_targets
 		});
+#endif
 
 		send(container);
 	}
@@ -507,7 +604,12 @@ namespace network
 			return false;
 		}
 
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> message = make_shared<json::value>();
+		message->parse(converter::to_wstring(data));
+#else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
+#endif
 		if (message == nullptr)
 		{
 			return false;
@@ -515,7 +617,11 @@ namespace network
 
 		logger::handle().write(logging_level::packet, data);
 
+#ifndef __USE_TYPE_CONTAINER__
+		auto target = _message_handlers.find((*message)[L"header"][L"message_type"].as_string());
+#else
 		auto target = _message_handlers.find(message->message_type());
+#endif
 		if (target == _message_handlers.end())
 		{
 			return normal_message(message);
@@ -531,13 +637,28 @@ namespace network
 			return false;
 		}
 
-		shared_ptr<container::value_container> message = make_shared<container::value_container>(data);
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> message = make_shared<json::value>();
+		message->parse(converter::to_wstring(data));
+#else
+		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
+#endif
 		if (message == nullptr)
 		{
 			return false;
 		}
 
 		vector<unsigned char> result;
+#ifndef __USE_TYPE_CONTAINER__
+		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"indication_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"source_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"source_sub_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"target_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"target_sub_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"source"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"target"].as_string()));
+		append_binary_on_packet(result, file::load((*message)[L"data"][L"source"].as_string()));
+#else
 		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
 		append_binary_on_packet(result, converter::to_array(message->source_id()));
 		append_binary_on_packet(result, converter::to_array(message->source_sub_id()));
@@ -546,6 +667,7 @@ namespace network
 		append_binary_on_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
 		append_binary_on_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
 		append_binary_on_packet(result, file::load(message->get_value(L"source")->to_string()));
+#endif
 
 		if (_compress_mode)
 		{
@@ -799,7 +921,11 @@ namespace network
 		return true;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	bool messaging_client::normal_message(shared_ptr<json::value> message)
+#else
 	bool messaging_client::normal_message(shared_ptr<container::value_container> message)
+#endif
 	{
 		if (message == nullptr)
 		{
@@ -819,16 +945,28 @@ namespace network
 		return true;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	bool messaging_client::confirm_message(shared_ptr<json::value> message)
+#else
 	bool messaging_client::confirm_message(shared_ptr<container::value_container> message)
+#endif
 	{
 		if (message == nullptr)
 		{
 			return false;
 		}
 
+#ifndef __USE_TYPE_CONTAINER__
+		_target_id = (*message)[L"header"][L"source_id"].as_string();
+#else
 		_target_id = message->source_id();
+#endif
 
+#ifndef __USE_TYPE_CONTAINER__
+		if (!(*message)[L"data"][L"confirm"].as_bool())
+#else
 		if (!message->get_value(L"confirm")->to_boolean())
+#endif
 		{
 			connection_notification(false);
 
@@ -836,6 +974,18 @@ namespace network
 		}
 
 		_confirm = true;
+
+#ifndef __USE_TYPE_CONTAINER__
+		_key = (*message)[L"data"][L"key"].as_string();
+		_iv = (*message)[L"data"][L"iv"].as_string();
+		_encrypt_mode = (*message)[L"data"][L"encrypt_mode"].as_bool();
+
+		auto& snipping_targets = (*message)[L"data"][L"snipping_targets"].as_array();
+		for (int index = 0; index < snipping_targets.size(); ++index)
+		{
+			logger::handle().write(logging_level::information, fmt::format(L"accepted snipping target: {}", snipping_targets[index].as_string()));
+		}
+#else
 		_key = message->get_value(L"key")->to_string();
 		_iv = message->get_value(L"iv")->to_string();
 		_encrypt_mode = message->get_value(L"encrypt_mode")->to_boolean();
@@ -855,13 +1005,18 @@ namespace network
 
 			logger::handle().write(logging_level::information, fmt::format(L"accepted snipping target: {}", snipping_target->to_string()));
 		}
+#endif
 
 		connection_notification(true);
 
 		return true;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	bool messaging_client::echo_message(shared_ptr<json::value> message)
+#else
 	bool messaging_client::echo_message(shared_ptr<container::value_container> message)
+#endif
 	{
 		if (message == nullptr)
 		{
@@ -873,6 +1028,27 @@ namespace network
 			return false;
 		}
 
+#ifndef __USE_TYPE_CONTAINER__
+		if (!(*message)[L"data"][L"response"].is_null())
+		{
+			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
+
+			return true;
+		}
+
+		shared_ptr<json::value> container = make_shared<json::value>();
+
+		(*container)[L"header"][L"source_id"] = (*message)[L"header"][L"target_id"];
+		(*container)[L"header"][L"source_sub_id"] = (*message)[L"header"][L"target_sub_id"];
+		(*container)[L"header"][L"target_id"] = (*message)[L"header"][L"source_id"];
+		(*container)[L"header"][L"target_sub_id"] = (*message)[L"header"][L"source_sub_id"];
+		(*container)[L"header"][L"message_type"] = (*message)[L"header"][L"message_type"];
+
+		(*container)[L"data"] = (*message)[L"data"];
+		(*container)[L"data"][L"response"] = json::value::boolean(true);
+
+		_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_client::send_packet, this, placeholders::_1)));
+#else
 		vector<shared_ptr<value>> response = (*message)[L"response"];
 		if (!response.empty())
 		{
@@ -886,6 +1062,7 @@ namespace network
 		message << make_shared<bool_value>(L"response", true);
 
 		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), bind(&messaging_client::send_packet, this, placeholders::_1)));
+#endif
 
 		return true;
 	}

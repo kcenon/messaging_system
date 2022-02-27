@@ -32,7 +32,13 @@ bool file_manager::set(const wstring& indication_id, const vector<wstring>& file
 	return true;
 }
 
-shared_ptr<container::value_container> file_manager::received(const wstring& target_id, const wstring& target_sub_id, const wstring& indication_id, const wstring& file_path)
+#ifndef __USE_TYPE_CONTAINER__
+shared_ptr<json::value> file_manager::received(const wstring& target_id, const wstring& target_sub_id,
+	const wstring& indication_id, const wstring& file_path)
+#else
+shared_ptr<container::value_container> file_manager::received(const wstring& target_id, const wstring& target_sub_id,
+	const wstring& indication_id, const wstring& file_path)
+#endif
 {
 	auto source = _transferring_list.find(indication_id);
 	if (source == _transferring_list.end())
@@ -80,11 +86,24 @@ shared_ptr<container::value_container> file_manager::received(const wstring& tar
 			_transferred_percentage.erase(percentage);
 		}
 
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> container = make_shared<json::value>();
+
+		(*container)[L"header"][L"target_id"] = json::value::string(target_id);
+		(*container)[L"header"][L"target_sub_id"] = json::value::string(target_sub_id);
+		(*container)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
+
+		(*container)[L"data"][L"indication_id"] = json::value::string(indication_id);
+		(*container)[L"data"][L"percentage"] = json::value::number(temp);
+
+		return container;
+#else
 		return make_shared<container::value_container>(target_id, target_sub_id, L"transfer_condition",
 			vector<shared_ptr<container::value>> {
 				make_shared<container::string_value>(L"indication_id", indication_id),
 				make_shared<container::ushort_value>(L"percentage", temp)
 		});
+#endif
 	}
 	
 	if (source->second.size() == (target->second.size() + fail->second.size()))
@@ -97,6 +116,21 @@ shared_ptr<container::value_container> file_manager::received(const wstring& tar
 		_failed_list.erase(fail);
 		_transferred_percentage.erase(percentage);
 
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> container = make_shared<json::value>();
+
+		(*container)[L"header"][L"target_id"] = json::value::string(target_id);
+		(*container)[L"header"][L"target_sub_id"] = json::value::string(target_sub_id);
+		(*container)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
+
+		(*container)[L"data"][L"indication_id"] = json::value::string(indication_id);
+		(*container)[L"data"][L"percentage"] = json::value::number(temp);
+		(*container)[L"data"][L"completed_count"] = json::value::number(completed);
+		(*container)[L"data"][L"failed_count"] = json::value::number(failed);
+		(*container)[L"data"][L"completed"] = json::value::boolean(true);
+
+		return container;
+#else
 		return make_shared<container::value_container>(target_id, target_sub_id, L"transfer_condition",
 			vector<shared_ptr<container::value>> {
 				make_shared<container::string_value>(L"indication_id", indication_id),
@@ -105,6 +139,7 @@ shared_ptr<container::value_container> file_manager::received(const wstring& tar
 				make_shared<container::ullong_value>(L"failed_count", failed),
 				make_shared<container::bool_value>(L"completed", true)
 		});
+#endif
 	}
 
 	return nullptr;

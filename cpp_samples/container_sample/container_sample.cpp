@@ -1,5 +1,7 @@
 ﻿#include "logging.h"
 
+#ifdef __USE_TYPE_CONTAINER__
+
 #include "argument_parser.h"
 
 #include "container.h"
@@ -130,3 +132,10 @@ void display_help(void)
 	wcout << L"--logging_level [value]" << endl;
 	wcout << L"\tIf you want to change log level must be appended '--logging_level [level]'." << endl;
 }
+
+#else
+int main(int argc, char* argv[])
+{
+	return 0;
+}
+#endif

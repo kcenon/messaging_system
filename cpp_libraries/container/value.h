@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef __USE_TYPE_CONTAINER__
+
 #include "value_types.h"
 
 #include <string>
@@ -111,3 +113,5 @@ namespace container
 		vector<shared_ptr<value>> _units;
 	};
 }
+
+#endif

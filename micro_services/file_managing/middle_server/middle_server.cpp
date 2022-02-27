@@ -7,10 +7,14 @@
 #include "file_manager.h"
 #include "argument_parser.h"
 
+#ifndef __USE_TYPE_CONTAINER__
+#include "cpprest/json.h"
+#else
 #include "value.h"
 #include "values/bool_value.h"
 #include "values/ushort_value.h"
 #include "values/string_value.h"
+#endif
 
 #ifdef _CONSOLE
 #include <Windows.h>
@@ -54,7 +58,11 @@ size_t session_limit_count = 0;
 
 file_manager _file_manager;
 
+#ifndef __USE_TYPE_CONTAINER__
+map<wstring, function<bool(shared_ptr<json::value>)>> _file_commands;
+#else
 map<wstring, function<bool(shared_ptr<container::value_container>)>> _file_commands;
+#endif
 
 shared_ptr<messaging_client> _data_line = nullptr;
 shared_ptr<messaging_client> _file_line = nullptr;
@@ -69,15 +77,31 @@ void create_middle_server(void);
 void create_data_line(void);
 void create_file_line(void);
 void connection_from_middle_server(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
-void received_message_from_middle_server(shared_ptr<container::value_container> container);
 void connection_from_data_line(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
-void received_message_from_data_line(shared_ptr<container::value_container> container);
 void connection_from_file_line(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
+
+#ifndef __USE_TYPE_CONTAINER__
+void received_message_from_middle_server(shared_ptr<json::value> container);
+void received_message_from_data_line(shared_ptr<json::value> container);
+void received_message_from_file_line(shared_ptr<json::value> container);
+#else
+void received_message_from_middle_server(shared_ptr<container::value_container> container);
+void received_message_from_data_line(shared_ptr<container::value_container> container);
 void received_message_from_file_line(shared_ptr<container::value_container> container);
+#endif
+
 void received_file_from_file_line(const wstring& source_id, const wstring& source_sub_id, const wstring& indication_id, const wstring& target_path);
+
+#ifndef __USE_TYPE_CONTAINER__
+bool download_files(shared_ptr<json::value> container);
+bool upload_files(shared_ptr<json::value> container);
+void uploaded_file(shared_ptr<json::value> container);
+#else
 bool download_files(shared_ptr<container::value_container> container);
 bool upload_files(shared_ptr<container::value_container> container);
 void uploaded_file(shared_ptr<container::value_container> container);
+#endif
+
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -324,28 +348,52 @@ void connection_from_middle_server(const wstring& target_id, const wstring& targ
 		fmt::format(L"a client on middle server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
+#ifndef __USE_TYPE_CONTAINER__
+void received_message_from_middle_server(shared_ptr<json::value> container)
+#else
 void received_message_from_middle_server(shared_ptr<container::value_container> container)
+#endif
 {
 	if (container == nullptr)
 	{
 		return;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	auto target = _file_commands.find((*container)[L"header"][L"message_type"].as_string());
+#else
 	auto target = _file_commands.find(container->message_type());
+#endif
 	if (target == _file_commands.end())
 	{
 		if (_data_line == nullptr || !_data_line->is_confirmed())
 		{
-			if (_middle_server)
+			if (_middle_server == nullptr)
 			{
-				shared_ptr<container::value_container> response = container->copy(false);
-				response->swap_header();
-
-				response << make_shared<container::bool_value>(L"error", true);
-				response << make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
-
-				_middle_server->send(response);
+				return;
 			}
+
+#ifndef __USE_TYPE_CONTAINER__
+			shared_ptr<json::value> response = make_shared<json::value>();
+
+			(*response)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
+			(*response)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
+			(*response)[L"header"][L"target_id"] = (*container)[L"header"][L"gateway_source_id"];
+			(*response)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"gateway_source_sub_id"];
+			(*response)[L"header"][L"message_type"] = (*container)[L"header"][L"message_type"];
+
+			(*response)[L"data"] = (*container)[L"data"];
+			(*response)[L"data"][L"error"] = json::value::boolean(true);
+			(*response)[L"data"][L"reason"] = json::value::string(L"main_server has not been connected.");
+#else
+			shared_ptr<container::value_container> response = container->copy(false);
+			response->swap_header();
+
+			response << make_shared<container::bool_value>(L"error", true);
+			response << make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
+#endif
+
+			_middle_server->send(response);
 
 			return;
 		}
@@ -362,14 +410,30 @@ void received_message_from_middle_server(shared_ptr<container::value_container> 
 	{
 		if (_middle_server)
 		{
-			shared_ptr<container::value_container> response = container->copy(false);
-			response->swap_header();
-
-			response << make_shared<container::bool_value>(L"error", true);
-			response << make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
-
-			_middle_server->send(response);
+			return;
 		}
+
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> response = make_shared<json::value>();
+
+		(*response)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
+		(*response)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
+		(*response)[L"header"][L"target_id"] = (*container)[L"header"][L"gateway_source_id"];
+		(*response)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"gateway_source_sub_id"];
+		(*response)[L"header"][L"message_type"] = (*container)[L"header"][L"message_type"];
+
+		(*response)[L"data"] = (*container)[L"data"];
+		(*response)[L"data"][L"error"] = json::value::boolean(true);
+		(*response)[L"data"][L"reason"] = json::value::string(L"main_server has not been connected.");
+#else
+		shared_ptr<container::value_container> response = container->copy(false);
+		response->swap_header();
+
+		response << make_shared<container::bool_value>(L"error", true);
+		response << make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
+#endif
+
+		_middle_server->send(response);
 
 		return;
 	}
@@ -402,19 +466,6 @@ void connection_from_data_line(const wstring& target_id, const wstring& target_s
 	_data_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 }
 
-void received_message_from_data_line(shared_ptr<container::value_container> container)
-{
-	if (container == nullptr)
-	{
-		return;
-	}
-
-	if (_middle_server)
-	{
-		_middle_server->send(container);
-	}
-}
-
 void connection_from_file_line(const wstring& target_id, const wstring& target_sub_id, const bool& condition)
 {
 	if (_file_line == nullptr)
@@ -440,14 +491,39 @@ void connection_from_file_line(const wstring& target_id, const wstring& target_s
 	_file_line->start(main_server_ip, main_server_port, high_priority_count, normal_priority_count, low_priority_count);
 }
 
-void received_message_from_file_line(shared_ptr<container::value_container> container)
+#ifndef __USE_TYPE_CONTAINER__
+void received_message_from_data_line(shared_ptr<json::value> container)
+#else
+void received_message_from_data_line(shared_ptr<container::value_container> container)
+#endif
 {
 	if (container == nullptr)
 	{
 		return;
 	}
 
+	if (_middle_server)
+	{
+		_middle_server->send(container);
+	}
+}
+
+#ifndef __USE_TYPE_CONTAINER__
+void received_message_from_file_line(shared_ptr<json::value> container)
+#else
+void received_message_from_file_line(shared_ptr<container::value_container> container)
+#endif
+{
+	if (container == nullptr)
+	{
+		return;
+	}
+
+#ifndef __USE_TYPE_CONTAINER__
+	if ((*container)[L"header"][L"message_type"].as_string() == L"uploaded_file")
+#else
 	if (container->message_type() == L"uploaded_file")
+#endif
 	{
 		uploaded_file(container);
 
@@ -465,7 +541,13 @@ void received_file_from_file_line(const wstring& target_id, const wstring& targe
 	logger::handle().write(logging_level::parameter,
 		fmt::format(L"target_id: {}, target_sub_id: {}, indication_id: {}, file_path: {}", target_id, target_sub_id, indication_id, target_path));
 
-	shared_ptr<container::value_container> container = _file_manager.received(target_id, target_sub_id, indication_id, target_path);
+#ifndef __USE_TYPE_CONTAINER__
+	shared_ptr<json::value> container = _file_manager.received(target_id, target_sub_id,
+		indication_id, target_path);
+#else
+	shared_ptr<container::value_container> container = _file_manager.received(target_id, target_sub_id, 
+		indication_id, target_path);
+#endif
 	if(container != nullptr)
 	{
 		if (_middle_server)
@@ -475,33 +557,68 @@ void received_file_from_file_line(const wstring& target_id, const wstring& targe
 	}
 }
 
+#ifndef __USE_TYPE_CONTAINER__
+bool download_files(shared_ptr<json::value> container)
+#else
 bool download_files(shared_ptr<container::value_container> container)
+#endif
 {
 	if (container == nullptr)
 	{
 		return false;
 	}
 
-	vector<shared_ptr<container::value>> files = container->value_array(L"file");
-
 	vector<wstring> target_paths;
+
+#ifndef __USE_TYPE_CONTAINER__
+	auto& files = (*container)[L"data"][L"files"].as_array();
+	for (int index = 0; index < files.size(); ++index)
+	{
+		target_paths.push_back(files[index][L"target"].as_string());
+	}
+	
+	_file_manager.set((*container)[L"data"][L"indication_id"].as_string(), target_paths);
+#else
+	vector<shared_ptr<container::value>> files = container->value_array(L"file");
 	for (auto& file : files)
 	{
 		target_paths.push_back((*file)[L"target"]->to_string());
 	}
+
 	_file_manager.set(container->get_value(L"indication_id")->to_string(), target_paths);
+#endif
 
 	if (_middle_server)
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> start_message = make_shared<json::value>();
+
+		(*start_message)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
+		(*start_message)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
+		(*start_message)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
+
+		(*start_message)[L"data"][L"indication_id"] = (*container)[L"header"][L"target_id"];
+		(*start_message)[L"data"][L"percentage"] = json::value::number(0);
+
+		_middle_server->send(start_message);
+#else
 		_middle_server->send(make_shared<container::value_container>(container->source_id(), container->source_sub_id(), L"transfer_condition",
 			vector<shared_ptr<container::value>> {
 				make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string()),
 				make_shared<container::ushort_value>(L"percentage", 0)
 		}));
+#endif
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	shared_ptr<json::value> temp = make_shared<json::value>();
+	temp->parse(container->serialize());
+
+	(*temp)[L"header"][L"message_type"] = json::value::string(L"request_files");
+#else
 	shared_ptr<container::value_container> temp = container->copy();
 	temp->set_message_type(L"request_files");
+#endif
 
 	if (_file_line)
 	{
@@ -511,38 +628,77 @@ bool download_files(shared_ptr<container::value_container> container)
 	return true;
 }
 
+#ifndef __USE_TYPE_CONTAINER__
+bool upload_files(shared_ptr<json::value> container)
+#else
 bool upload_files(shared_ptr<container::value_container> container)
+#endif
 {
 	if (container == nullptr)
 	{
 		return false;
 	}
 
-	vector<shared_ptr<container::value>> files = container->value_array(L"file");
-
 	vector<wstring> target_paths;
+
+#ifndef __USE_TYPE_CONTAINER__
+	auto& files = (*container)[L"data"][L"files"].as_array();
+	for (int index = 0; index < files.size(); ++index)
+	{
+		target_paths.push_back(files[index][L"target"].as_string());
+	}
+
+	_file_manager.set((*container)[L"data"][L"indication_id"].as_string(), target_paths);
+#else
+	vector<shared_ptr<container::value>> files = container->value_array(L"file");
 	for (auto& file : files)
 	{
 		target_paths.push_back((*file)[L"target"]->to_string());
 	}
+
 	_file_manager.set(container->get_value(L"indication_id")->to_string(), target_paths);
+#endif
 
 	if (_middle_server)
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> start_message = make_shared<json::value>();
+
+		(*start_message)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
+		(*start_message)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
+		(*start_message)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
+
+		(*start_message)[L"data"][L"indication_id"] = (*container)[L"header"][L"target_id"];
+		(*start_message)[L"data"][L"percentage"] = json::value::number(0);
+
+		_middle_server->send(start_message);
+#else
 		_middle_server->send(make_shared<container::value_container>(container->source_id(), container->source_sub_id(), L"transfer_condition",
 			vector<shared_ptr<container::value>> {
 				make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string()),
 				make_shared<container::ushort_value>(L"percentage", 0)
 		}));
+#endif
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	(*container)[L"header"][L"message_type"] = json::value::string(L"transfer_file");
+#else
 	container->set_message_type(L"transfer_file");
+#endif
 	
 	if (_file_line)
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		(*container)[L"data"][L"gateway_source_id"] = (*container)[L"header"][L"source_id"];
+		(*container)[L"data"][L"gateway_source_sub_id"] = (*container)[L"header"][L"source_sub_id"];
+		(*container)[L"header"][L"source_id"] = json::value::string(_file_line->source_id());
+		(*container)[L"header"][L"source_sub_id"] = json::value::string(_file_line->source_sub_id());
+#else
 		container << make_shared<container::string_value>(L"gateway_source_id", container->source_id());
 		container << make_shared<container::string_value>(L"gateway_source_sub_id", container->source_sub_id());
 		container->set_source(_file_line->source_id(), _file_line->source_sub_id());
+#endif
 
 		_file_line->send(container);
 	}
@@ -550,15 +706,27 @@ bool upload_files(shared_ptr<container::value_container> container)
 	return true;
 }
 
+#ifndef __USE_TYPE_CONTAINER__
+void uploaded_file(shared_ptr<json::value> container)
+#else
 void uploaded_file(shared_ptr<container::value_container> container)
+#endif
 {
 	if (container == nullptr)
 	{
 		return;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	shared_ptr<json::value> temp = _file_manager.received(
+		(*container)[L"header"][L"target_id"].as_string(), (*container)[L"header"][L"target_sub_id"].as_string(),
+		(*container)[L"data"][L"indication_id"].as_string(), (*container)[L"data"][L"target_path"].as_string());
+#else
 	shared_ptr<container::value_container> temp = _file_manager.received(
-		container->target_id(), container->target_sub_id(), container->get_value(L"indication_id")->to_string(), container->get_value(L"target_path")->to_string());
+		container->target_id(), container->target_sub_id(), 
+		container->get_value(L"indication_id")->to_string(), container->get_value(L"target_path")->to_string());
+#endif
+
 	if (temp != nullptr)
 	{
 		if (_middle_server)

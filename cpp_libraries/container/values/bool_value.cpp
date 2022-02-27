@@ -1,5 +1,7 @@
 #include "bool_value.h"
 
+#ifdef __USE_TYPE_CONTAINER__
+
 namespace container
 {
 	bool_value::bool_value(void)
@@ -115,3 +117,5 @@ namespace container
 		return (to_boolean() ? L"true" : L"false");
 	}
 }
+
+#endif

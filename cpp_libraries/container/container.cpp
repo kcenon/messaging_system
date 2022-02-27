@@ -1,5 +1,7 @@
 #include "container.h"
 
+#ifdef __USE_TYPE_CONTAINER__
+
 #include "value_types.h"
 #include "converting.h"
 #include "file_handler.h"
@@ -688,3 +690,5 @@ namespace container
 		return;
 	}
 }
+
+#endif

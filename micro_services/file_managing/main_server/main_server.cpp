@@ -5,8 +5,12 @@
 #include "compressing.h"
 #include "argument_parser.h"
 
+#ifndef __USE_TYPE_CONTAINER__
+#include "cpprest/json.h"
+#else
 #include "value.h"
 #include "values/string_value.h"
+#endif
 
 #include <wchar.h>
 #include <algorithm>
@@ -56,7 +60,13 @@ BOOL ctrl_handler(DWORD ctrl_type);
 bool parse_arguments(const map<wstring, wstring>& arguments);
 void create_main_server(void);
 void connection(const wstring& target_id, const wstring& target_sub_id, const bool& condition);
+
+#ifndef __USE_TYPE_CONTAINER__
+void received_message(shared_ptr<json::value> container);
+#else
 void received_message(shared_ptr<container::value_container> container);
+#endif
+
 void received_file(const wstring& source_id, const wstring& source_sub_id, const wstring& indication_id, const wstring& target_path);
 void display_help(void);
 
@@ -245,14 +255,22 @@ void connection(const wstring& target_id, const wstring& target_sub_id, const bo
 		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
 }
 
+#ifndef __USE_TYPE_CONTAINER__
+void received_message(shared_ptr<json::value> container)
+#else
 void received_message(shared_ptr<container::value_container> container)
+#endif
 {
 	if (container == nullptr)
 	{
 		return;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	if ((*container)[L"header"][L"message_type"].as_string() == L"transfer_file")
+#else
 	if (container->message_type() == L"transfer_file")
+#endif
 	{
 		if (_main_server != nullptr)
 		{
@@ -270,11 +288,24 @@ void received_file(const wstring& target_id, const wstring& target_sub_id, const
 {
 	if (_main_server != nullptr)
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> container = make_shared<json::value>();
+
+		(*container)[L"header"][L"target_id"] = json::value::string(target_id);
+		(*container)[L"header"][L"target_sub_id"] = json::value::string(target_sub_id);
+		(*container)[L"header"][L"message_type"] = json::value::string(L"uploaded_file");
+
+		(*container)[L"data"][L"indication_id"] = json::value::string(indication_id);
+		(*container)[L"data"][L"target_path"] = json::value::string(target_path);
+
+		_main_server->send(container);
+#else
 		_main_server->send(make_shared<container::value_container>(target_id, target_sub_id, L"uploaded_file",
 			vector<shared_ptr<container::value>> {
 				make_shared<container::string_value>(L"indication_id", indication_id),
 				make_shared<container::string_value>(L"target_path", target_path)
 		}));
+#endif
 	}
 }
 

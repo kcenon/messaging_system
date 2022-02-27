@@ -75,7 +75,11 @@ namespace network
 		_connection = notification;
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_server::set_message_notification(const function<void(shared_ptr<json::value>)>& notification)
+#else
 	void messaging_server::set_message_notification(const function<void(shared_ptr<container::value_container>)>& notification)
+#endif
 	{
 		_received_message = notification;
 	}
@@ -193,12 +197,24 @@ namespace network
 		}
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_server::send(const json::value& message)
+#else
 	void messaging_server::send(const container::value_container& message)
+#endif
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		send(make_shared<json::value>(message));
+#else
 		send(make_shared<container::value_container>(message));
+#endif
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_server::send(shared_ptr<json::value> message)
+#else
 	void messaging_server::send(shared_ptr<container::value_container> message)
+#endif
 	{
 		if (message == nullptr)
 		{
@@ -216,12 +232,24 @@ namespace network
 		}
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_server::send_files(const json::value& message)
+#else
 	void messaging_server::send_files(const container::value_container& message)
+#endif
 	{
+#ifndef __USE_TYPE_CONTAINER__
+		send_files(make_shared<json::value>(message));
+#else
 		send_files(make_shared<container::value_container>(message));
+#endif
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_server::send_files(shared_ptr<json::value> message)
+#else
 	void messaging_server::send_files(shared_ptr<container::value_container> message)
+#endif
 	{
 		if (message == nullptr)
 		{
@@ -365,7 +393,11 @@ namespace network
 		thread.detach();
 	}
 
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_server::received_message(shared_ptr<json::value> message)
+#else
 	void messaging_server::received_message(shared_ptr<container::value_container> message)
+#endif
 	{
 		if (message == nullptr)
 		{

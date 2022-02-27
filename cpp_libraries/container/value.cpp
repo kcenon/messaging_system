@@ -1,5 +1,7 @@
 #include "value.h"
 
+#ifdef __USE_TYPE_CONTAINER__
+
 #include "converting.h"
 
 #include "values/bool_value.h"
@@ -404,3 +406,5 @@ namespace container
 		_type = value_types::bool_value;
 	}
 }
+
+#endif

@@ -6,8 +6,12 @@
 #include "folder_handler.h"
 #include "file_handler.h"
 
+#ifndef __USE_TYPE_CONTAINER__
+#include "cpprest/json.h"
+#else
 #include "container.h"
 #include "values/string_value.h"
+#endif
 
 #include "fmt/xchar.h"
 #include "fmt/format.h"
@@ -27,7 +31,13 @@
 namespace threads
 {
 	using namespace logging;
+
+#ifndef __USE_TYPE_CONTAINER__
+	using namespace web;
+#else
 	using namespace container;
+#endif
+
 	using namespace converting;
 	using namespace file_handler;
 	using namespace folder_handler;

@@ -1,5 +1,7 @@
 #include "string_value.h"
 
+#ifdef __USE_TYPE_CONTAINER__
+
 #include "converting.h"
 
 namespace container
@@ -46,3 +48,5 @@ namespace container
 		return temp;
 	}
 }
+
+#endif
