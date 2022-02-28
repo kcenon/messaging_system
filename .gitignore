@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.lastcodeanalysissucceeded
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -18,6 +19,8 @@
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+[Ii]ntermediate/
+[Ll]ibraries/
 x64/
 x86/
 [Aa][Rr][Mm]/

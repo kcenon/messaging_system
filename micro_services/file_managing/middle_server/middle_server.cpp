@@ -42,7 +42,7 @@ bool encrypt_mode = false;
 bool compress_mode = false;
 unsigned short compress_block_size = 1024;
 #ifdef _DEBUG
-logging_level log_level = logging_level::packet;
+logging_level log_level = logging_level::parameter;
 #else
 logging_level log_level = logging_level::information;
 #endif
@@ -374,15 +374,13 @@ void received_message_from_middle_server(shared_ptr<container::value_container> 
 			}
 
 #ifndef __USE_TYPE_CONTAINER__
-			shared_ptr<json::value> response = make_shared<json::value>(json::value::object(true));
+			shared_ptr<json::value> response = make_shared<json::value>(json::value::parse(container->serialize()));
 
 			(*response)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
 			(*response)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
-			(*response)[L"header"][L"target_id"] = (*container)[L"data"][L"gateway_source_id"];
-			(*response)[L"header"][L"target_sub_id"] = (*container)[L"data"][L"gateway_source_sub_id"];
-			(*response)[L"header"][L"message_type"] = (*container)[L"header"][L"message_type"];
+			(*response)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
+			(*response)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
 
-			(*response)[L"data"] = (*container)[L"data"];
 			(*response)[L"data"][L"error"] = json::value::boolean(true);
 			(*response)[L"data"][L"reason"] = json::value::string(L"main_server has not been connected.");
 #else
@@ -414,15 +412,13 @@ void received_message_from_middle_server(shared_ptr<container::value_container> 
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> response = make_shared<json::value>(json::value::object(true));
+		shared_ptr<json::value> response = make_shared<json::value>(json::value::parse(container->serialize()));
 
 		(*response)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
 		(*response)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
-		(*response)[L"header"][L"target_id"] = (*container)[L"data"][L"gateway_source_id"];
-		(*response)[L"header"][L"target_sub_id"] = (*container)[L"data"][L"gateway_source_sub_id"];
-		(*response)[L"header"][L"message_type"] = (*container)[L"header"][L"message_type"];
+		(*response)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
+		(*response)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
 
-		(*response)[L"data"] = (*container)[L"data"];
 		(*response)[L"data"][L"error"] = json::value::boolean(true);
 		(*response)[L"data"][L"reason"] = json::value::string(L"main_server has not been connected.");
 #else

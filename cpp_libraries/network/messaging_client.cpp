@@ -300,7 +300,8 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		if ((*message)[L"header"][L"source_id"].is_null())
+		if ((*message)[L"header"][L"source_id"].is_null() ||
+			(*message)[L"header"][L"source_id"].as_string().empty())
 		{
 			(*message)[L"header"][L"source_id"] = json::value::string(_source_id);
 			(*message)[L"header"][L"source_sub_id"] = json::value::string(_source_sub_id);
@@ -371,7 +372,8 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		if ((*message)[L"header"][L"source_id"].is_null())
+		if ((*message)[L"header"][L"source_id"].is_null() ||
+			(*message)[L"header"][L"source_id"].as_string().empty())
 		{
 			(*message)[L"header"][L"source_id"] = json::value::string(_source_id);
 			(*message)[L"header"][L"source_sub_id"] = json::value::string(_source_sub_id);
@@ -657,6 +659,11 @@ namespace network
 		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"source"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"target"].as_string()));
 		append_binary_on_packet(result, file::load((*message)[L"data"][L"source"].as_string()));
+
+		logger::handle().write(logging_level::parameter,
+			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)[L"data"][L"indication_id"].as_string(), 
+				(*message)[L"header"][L"source_id"].as_string(), (*message)[L"header"][L"source_sub_id"].as_string(),
+				(*message)[L"header"][L"target_id"].as_string(), (*message)[L"header"][L"target_sub_id"].as_string()));
 #else
 		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
 		append_binary_on_packet(result, converter::to_array(message->source_id()));
@@ -666,6 +673,10 @@ namespace network
 		append_binary_on_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
 		append_binary_on_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
 		append_binary_on_packet(result, file::load(message->get_value(L"source")->to_string()));
+
+		logger::handle().write(logging_level::parameter,
+			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", message->get_value(L"indication_id")->to_string(),
+				message->source_id(), message->source_sub_id(), message->target_id(), message->target_sub_id()));
 #endif
 
 		if (_compress_mode)
@@ -781,6 +792,9 @@ namespace network
 		wstring source_path = converter::to_wstring(devide_binary_on_packet(data, index));
 		wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
 
+		logger::handle().write(logging_level::parameter, 
+			fmt::format(L"receive_file_packet: [{}] => [{}:{}] -> [{}:{}]", indication_id, source_id, source_sub_id, target_id, target_sub_id));
+
 		vector<unsigned char> result;
 		append_binary_on_packet(result, converter::to_array(indication_id));
 		append_binary_on_packet(result, converter::to_array(target_id));
@@ -814,7 +828,7 @@ namespace network
 
 		if (_received_file)
 		{
-			_received_file(target_id, target_sub_id, indication_id, target_path);
+			async(launch::async, _received_file, target_id, target_sub_id, indication_id, target_path);
 		}
 
 		return true;
@@ -914,7 +928,7 @@ namespace network
 		vector<unsigned char> target_data = devide_binary_on_packet(data, index);
 		if (_received_data)
 		{
-			_received_data(source_id, source_sub_id, target_id, target_sub_id, target_data);
+			async(launch::async, _received_data, source_id, source_sub_id, target_id, target_sub_id, target_data);
 		}
 
 		return true;
@@ -938,7 +952,7 @@ namespace network
 
 		if (_received_message)
 		{
-			_received_message(message);
+			async(launch::async, _received_message, message);
 		}
 
 		return true;

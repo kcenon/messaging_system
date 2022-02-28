@@ -40,7 +40,7 @@ bool encrypt_mode = false;
 bool compress_mode = false;
 unsigned short compress_block_size = 1024;
 #ifdef _DEBUG
-logging_level log_level = logging_level::packet;
+logging_level log_level = logging_level::parameter;
 #else
 logging_level log_level = logging_level::information;
 #endif
