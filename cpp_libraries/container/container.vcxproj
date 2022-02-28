@@ -126,50 +126,50 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\libraries\cpp\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\cpp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\libraries\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_TypeContainer|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\libraries\cpp\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\cpp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\libraries\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\libraries\cpp\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\cpp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\libraries\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_TypeContainer|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\libraries\cpp\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\cpp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\libraries\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\libraries\cpp\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\cpp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\libraries\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_TypeContainer|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\libraries\cpp\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\cpp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\libraries\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\libraries\cpp\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\cpp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\libraries\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_TypeContainer|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\libraries\cpp\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\..\intermediate\cpp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\..\libraries\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\..\intermediate\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
