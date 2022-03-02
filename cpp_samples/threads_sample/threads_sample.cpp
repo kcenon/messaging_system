@@ -15,8 +15,8 @@
 constexpr auto PROGRAM_NAME = L"thread_sample";
 
 using namespace logging;
-using namespace converting;
 using namespace threads;
+using namespace converting;
 using namespace argument_parser;
 
 bool async_callback = true;

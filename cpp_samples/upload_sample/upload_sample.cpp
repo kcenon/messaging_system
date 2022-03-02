@@ -70,17 +70,19 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
+	logger::handle().set_write_console(write_console);
+	logger::handle().set_target_level(log_level);
+	logger::handle().start(PROGRAM_NAME);
+
 	vector<wstring> sources = folder::get_files(source_folder);
 	if (sources.empty())
 	{
+		logger::handle().stop();
+
 		display_help();
 
 		return 0;
 	}
-
-	logger::handle().set_write_console(write_console);
-	logger::handle().set_target_level(log_level);
-	logger::handle().start(PROGRAM_NAME);
 
 	_registered_messages.insert({ L"transfer_condition", transfer_condition });
 
@@ -129,7 +131,7 @@ int main(int argc, char* argv[])
 
 	client->send(container);
 
-	_future_status.wait_for(chrono::seconds(100));
+	_future_status.wait();
 
 	client->stop();
 

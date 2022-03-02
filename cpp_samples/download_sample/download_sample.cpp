@@ -69,17 +69,19 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
+	logger::handle().set_write_console(write_console);
+	logger::handle().set_target_level(log_level);
+	logger::handle().start(PROGRAM_NAME);
+
 	vector<wstring> sources = folder::get_files(source_folder);
 	if (sources.empty())
 	{
+		logger::handle().stop();
+
 		display_help();
 
 		return 0;
 	}
-
-	logger::handle().set_write_console(write_console);
-	logger::handle().set_target_level(log_level);
-	logger::handle().start(PROGRAM_NAME);
 
 	_registered_messages.insert({ L"transfer_condition", transfer_condition });
 
@@ -128,7 +130,7 @@ int main(int argc, char* argv[])
 
 	client->send(container);
 
-	_future_status.wait_for(chrono::seconds(100));
+	_future_status.wait();
 
 	client->stop();
 
@@ -349,10 +351,10 @@ void transfer_condition(shared_ptr<container::value_container> container)
 				container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
 #endif
 
-		_promise_status.set_value(false);
+		_promise_status.set_value(true);
 	}
 #ifndef __USE_TYPE_CONTAINER__
-	if ((*container)[L"data"][L"percentage"].as_integer() == 100)
+	else if ((*container)[L"data"][L"percentage"].as_integer() == 100)
 #else
 	else if (container->get_value(L"percentage")->to_ushort() == 100)
 #endif

@@ -16,8 +16,17 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "network", "cpp_libraries\network\network.vcxproj", "{BBE3C8F7-4D0A-478C-969F-3F20B55F9F06}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logging_sample", "cpp_samples\logging_sample\logging_sample.vcxproj", "{F6318E57-EEC4-46C4-834E-A12841413365}"
+	ProjectSection(ProjectDependencies) = postProject
+		{82A9DA7D-8E60-4E90-9061-88E6F7756387} = {82A9DA7D-8E60-4E90-9061-88E6F7756387}
+		{237ACD99-0CE3-46CF-80E5-DF64AB9BBE4C} = {237ACD99-0CE3-46CF-80E5-DF64AB9BBE4C}
+		{BBE3C8F7-4D0A-478C-969F-3F20B55F9F06} = {BBE3C8F7-4D0A-478C-969F-3F20B55F9F06}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "container_sample", "cpp_samples\container_sample\container_sample.vcxproj", "{601CFE72-DB93-4EEF-9782-84321F0DFA2D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{237ACD99-0CE3-46CF-80E5-DF64AB9BBE4C} = {237ACD99-0CE3-46CF-80E5-DF64AB9BBE4C}
+		{BBE3C8F7-4D0A-478C-969F-3F20B55F9F06} = {BBE3C8F7-4D0A-478C-969F-3F20B55F9F06}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "threads_sample", "cpp_samples\threads_sample\threads_sample.vcxproj", "{26EF1615-5BCC-431D-B446-775061C941DF}"
 EndProject
@@ -36,6 +45,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "middle_server", "micro_services\file_managing\middle_server\middle_server.vcxproj", "{AE14A4E2-14BC-4F22-960D-38BA6DC746B3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "restapi_gateway", "micro_services\file_managing\restapi_gateway\restapi_gateway.vcxproj", "{C412E2BF-F586-4D30-A4D2-E88AB0F25EFB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "restapi_client_sample", "cpp_samples\restapi_client_sample\restapi_client_sample.vcxproj", "{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -241,6 +252,22 @@ Global
 		{C412E2BF-F586-4D30-A4D2-E88AB0F25EFB}.Release|x64.Build.0 = Release|x64
 		{C412E2BF-F586-4D30-A4D2-E88AB0F25EFB}.Release|x86.ActiveCfg = Release|Win32
 		{C412E2BF-F586-4D30-A4D2-E88AB0F25EFB}.Release|x86.Build.0 = Release|Win32
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Debug_TypeContainer|x64.ActiveCfg = Debug_TypeContainer|x64
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Debug_TypeContainer|x64.Build.0 = Debug_TypeContainer|x64
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Debug_TypeContainer|x86.ActiveCfg = Debug_TypeContainer|Win32
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Debug_TypeContainer|x86.Build.0 = Debug_TypeContainer|Win32
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Debug|x64.ActiveCfg = Debug|x64
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Debug|x64.Build.0 = Debug|x64
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Debug|x86.ActiveCfg = Debug|Win32
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Debug|x86.Build.0 = Debug|Win32
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Release_TypeContainer|x64.ActiveCfg = Release_TypeContainer|x64
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Release_TypeContainer|x64.Build.0 = Release_TypeContainer|x64
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Release_TypeContainer|x86.ActiveCfg = Release_TypeContainer|Win32
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Release_TypeContainer|x86.Build.0 = Release_TypeContainer|Win32
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Release|x64.ActiveCfg = Release|x64
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Release|x64.Build.0 = Release|x64
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Release|x86.ActiveCfg = Release|Win32
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -259,6 +286,7 @@ Global
 		{F4C004E7-7EDE-4404-9FFD-EF76D59481B2} = {8B340FB3-11C0-48B3-8A00-C0ED982629F1}
 		{AE14A4E2-14BC-4F22-960D-38BA6DC746B3} = {8B340FB3-11C0-48B3-8A00-C0ED982629F1}
 		{C412E2BF-F586-4D30-A4D2-E88AB0F25EFB} = {8B340FB3-11C0-48B3-8A00-C0ED982629F1}
+		{1B0975A3-E088-4CEF-8A75-B0C371D6FEB5} = {C523CF87-90A3-4BB5-B91A-20305DD5471D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BA577ED-B16E-4A1D-97C7-A7981CF700AC}

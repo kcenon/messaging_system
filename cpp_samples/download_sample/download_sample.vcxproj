@@ -336,17 +336,8 @@
     <ClCompile Include="download_sample.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\cpp_libraries\container\container.vcxproj">
-      <Project>{82a9da7d-8e60-4e90-9061-88e6f7756387}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\cpp_libraries\network\network.vcxproj">
       <Project>{bbe3c8f7-4d0a-478c-969f-3f20b55f9f06}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cpp_libraries\threads\threads.vcxproj">
-      <Project>{237acd99-0ce3-46cf-80e5-df64ab9bbe4c}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cpp_libraries\utilities\utilities.vcxproj">
-      <Project>{6a8e08f7-e020-4926-9e2c-4dc01802ba20}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

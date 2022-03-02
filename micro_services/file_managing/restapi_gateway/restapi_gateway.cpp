@@ -39,6 +39,10 @@ using namespace converting;
 using namespace compressing;
 using namespace argument_parser;
 
+#ifdef __USE_TYPE_CONTAINER__
+using namespace container;
+#endif
+
 using namespace web;
 using namespace web::http;
 using namespace web::http::experimental::listener;
@@ -291,7 +295,7 @@ void create_data_line(void)
 
 void create_http_listener(void)
 {
-	_http_listener = make_shared<http_listener>(fmt::format(L"http://localhost:{}/rest", rest_port));
+	_http_listener = make_shared<http_listener>(fmt::format(L"http://localhost:{}/restapi", rest_port));
 	_http_listener->support(methods::GET, get_method);
 	_http_listener->support(methods::POST, post_method);
 	_http_listener->support(methods::PUT, put_method);
