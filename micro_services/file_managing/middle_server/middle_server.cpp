@@ -595,7 +595,7 @@ bool download_files(shared_ptr<container::value_container> container)
 		(*start_message)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
 		(*start_message)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
 
-		(*start_message)[L"data"][L"indication_id"] = (*container)[L"header"][L"target_id"];
+		(*start_message)[L"data"][L"indication_id"] = (*container)[L"data"][L"indication_id"];
 		(*start_message)[L"data"][L"percentage"] = json::value::number(0);
 
 		_middle_server->send(start_message);
@@ -667,7 +667,7 @@ bool upload_files(shared_ptr<container::value_container> container)
 		(*start_message)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
 		(*start_message)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
 
-		(*start_message)[L"data"][L"indication_id"] = (*container)[L"header"][L"target_id"];
+		(*start_message)[L"data"][L"indication_id"] = (*container)[L"data"][L"indication_id"];
 		(*start_message)[L"data"][L"percentage"] = json::value::number(0);
 
 		_middle_server->send(start_message);

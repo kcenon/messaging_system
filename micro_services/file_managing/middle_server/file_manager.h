@@ -7,6 +7,7 @@
 #endif
 
 #include <map>
+#include <mutex>
 #include <string>
 #include <vector>
 #include <memory>
@@ -35,6 +36,7 @@ public:
 #endif
 
 private:
+	mutex _mutex;
 	map<wstring, unsigned short> _transferred_percentage;
 	map<wstring, vector<wstring>> _transferring_list;
 	map<wstring, vector<wstring>> _transferred_list;

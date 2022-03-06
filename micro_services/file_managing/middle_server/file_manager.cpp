@@ -18,6 +18,8 @@ file_manager::~file_manager(void)
 
 bool file_manager::set(const wstring& indication_id, const vector<wstring>& file_list)
 {
+	scoped_lock<mutex> guard(_mutex);
+
 	auto target = _transferring_list.find(indication_id);
 	if (target != _transferring_list.end())
 	{
@@ -40,6 +42,8 @@ shared_ptr<container::value_container> file_manager::received(const wstring& tar
 	const wstring& indication_id, const wstring& file_path)
 #endif
 {
+	scoped_lock<mutex> guard(_mutex);
+
 	auto source = _transferring_list.find(indication_id);
 	if (source == _transferring_list.end())
 	{
@@ -78,14 +82,6 @@ shared_ptr<container::value_container> file_manager::received(const wstring& tar
 	{
 		percentage->second = temp;
 
-		if (temp == 100)
-		{
-			_transferring_list.erase(source);
-			_transferred_list.erase(target);
-			_failed_list.erase(fail);
-			_transferred_percentage.erase(percentage);
-		}
-
 #ifndef __USE_TYPE_CONTAINER__
 		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
@@ -95,6 +91,21 @@ shared_ptr<container::value_container> file_manager::received(const wstring& tar
 
 		(*container)[L"data"][L"indication_id"] = json::value::string(indication_id);
 		(*container)[L"data"][L"percentage"] = json::value::number(temp);
+
+		if (temp == 100)
+		{
+			size_t completed = target->second.size();
+			size_t failed = fail->second.size();
+
+			_transferring_list.erase(source);
+			_transferred_list.erase(target);
+			_failed_list.erase(fail);
+			_transferred_percentage.erase(percentage);
+
+			(*container)[L"data"][L"completed_count"] = json::value::number(completed);
+			(*container)[L"data"][L"failed_count"] = json::value::number(failed);
+			(*container)[L"data"][L"completed"] = json::value::boolean(true);
+		}
 
 		return container;
 #else
@@ -127,7 +138,7 @@ shared_ptr<container::value_container> file_manager::received(const wstring& tar
 		(*container)[L"data"][L"percentage"] = json::value::number(temp);
 		(*container)[L"data"][L"completed_count"] = json::value::number(completed);
 		(*container)[L"data"][L"failed_count"] = json::value::number(failed);
-		(*container)[L"data"][L"completed"] = json::value::boolean(true);
+		(*container)[L"data"][L"completed"] = json::value::boolean(false);
 
 		return container;
 #else

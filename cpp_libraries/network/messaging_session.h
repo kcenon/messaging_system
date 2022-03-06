@@ -84,50 +84,50 @@ namespace network
 
 		// packet
 	private:
-		bool compress_packet(const vector<unsigned char>& data);
-		bool encrypt_packet(const vector<unsigned char>& data);
-		bool send_packet(const vector<unsigned char>& data);
+		void compress_packet(const vector<unsigned char>& data);
+		void encrypt_packet(const vector<unsigned char>& data);
+		void send_packet(const vector<unsigned char>& data);
 
 	private:
-		bool decompress_packet(const vector<unsigned char>& data);
-		bool decrypt_packet(const vector<unsigned char>& data);
-		bool receive_packet(const vector<unsigned char>& data);
+		void decompress_packet(const vector<unsigned char>& data);
+		void decrypt_packet(const vector<unsigned char>& data);
+		void receive_packet(const vector<unsigned char>& data);
 
 		// file
 	private:
-		bool load_file_packet(const vector<unsigned char>& data);
-		bool compress_file_packet(const vector<unsigned char>& data);
-		bool encrypt_file_packet(const vector<unsigned char>& data);
-		bool send_file_packet(const vector<unsigned char>& data);
+		void load_file_packet(const vector<unsigned char>& data);
+		void compress_file_packet(const vector<unsigned char>& data);
+		void encrypt_file_packet(const vector<unsigned char>& data);
+		void send_file_packet(const vector<unsigned char>& data);
 
 	private:
-		bool decompress_file_packet(const vector<unsigned char>& data);
-		bool decrypt_file_packet(const vector<unsigned char>& data);
-		bool receive_file_packet(const vector<unsigned char>& data);
-		bool notify_file_packet(const vector<unsigned char>& data);
+		void decompress_file_packet(const vector<unsigned char>& data);
+		void decrypt_file_packet(const vector<unsigned char>& data);
+		void receive_file_packet(const vector<unsigned char>& data);
+		void notify_file_packet(const vector<unsigned char>& data);
 
 		// binary
 	private:
-		bool compress_binary_packet(const vector<unsigned char>& data);
-		bool encrypt_binary_packet(const vector<unsigned char>& data);
-		bool send_binary_packet(const vector<unsigned char>& data);
+		void compress_binary_packet(const vector<unsigned char>& data);
+		void encrypt_binary_packet(const vector<unsigned char>& data);
+		void send_binary_packet(const vector<unsigned char>& data);
 
 	private:
-		bool decompress_binary_packet(const vector<unsigned char>& data);
-		bool decrypt_binary_packet(const vector<unsigned char>& data);
-		bool receive_binary_packet(const vector<unsigned char>& data);
+		void decompress_binary_packet(const vector<unsigned char>& data);
+		void decrypt_binary_packet(const vector<unsigned char>& data);
+		void receive_binary_packet(const vector<unsigned char>& data);
 
 	private:
 #ifndef __USE_TYPE_CONTAINER__
-		bool normal_message(shared_ptr<json::value> message);
-		bool connection_message(shared_ptr<json::value> message);
-		bool request_files(shared_ptr<json::value> message);
-		bool echo_message(shared_ptr<json::value> message);
+		void normal_message(shared_ptr<json::value> message);
+		void connection_message(shared_ptr<json::value> message);
+		void request_files(shared_ptr<json::value> message);
+		void echo_message(shared_ptr<json::value> message);
 #else
-		bool normal_message(shared_ptr<container::value_container> message);
-		bool connection_message(shared_ptr<container::value_container> message);
-		bool request_files(shared_ptr<container::value_container> message);
-		bool echo_message(shared_ptr<container::value_container> message);
+		void normal_message(shared_ptr<container::value_container> message);
+		void connection_message(shared_ptr<container::value_container> message);
+		void request_files(shared_ptr<container::value_container> message);
+		void echo_message(shared_ptr<container::value_container> message);
 #endif
 
 	private:
@@ -182,9 +182,9 @@ namespace network
 		shared_ptr<threads::thread_pool> _thread_pool;
 
 #ifndef __USE_TYPE_CONTAINER__
-		map<wstring, function<bool(shared_ptr<json::value>)>> _message_handlers;
+		map<wstring, function<void(shared_ptr<json::value>)>> _message_handlers;
 #else
-		map<wstring, function<bool(shared_ptr<container::value_container>)>> _message_handlers;
+		map<wstring, function<void(shared_ptr<container::value_container>)>> _message_handlers;
 #endif
 	};
 }

@@ -15,9 +15,9 @@ namespace threads
 	{
 	public:
 		job(const priorities& priority);
-		job(const priorities& priority, const vector<unsigned char>& data, const bool& is_async_callback = false);
-		job(const priorities& priority, const function<bool(void)>& working_callback, const bool& is_async_callback = false);
-		job(const priorities& priority, const vector<unsigned char>& data, const function<bool(const vector<unsigned char>&)>& working_callback, const bool& is_async_callback = false);
+		job(const priorities& priority, const vector<unsigned char>& data);
+		job(const priorities& priority, const function<void(void)>& working_callback);
+		job(const priorities& priority, const vector<unsigned char>& data, const function<void(const vector<unsigned char>&)>& working_callback);
 		~job(void);
 
 	public:
@@ -34,7 +34,7 @@ namespace threads
 		bool work(const priorities& worker_priority);
 
 	protected:
-		virtual bool working(const priorities& worker_priority);
+		virtual void working(const priorities& worker_priority);
 
 	private:
 		wstring do_script(const wstring& script);
@@ -51,8 +51,7 @@ namespace threads
 		wstring _temporary_stored_path;
 		weak_ptr<job_pool> _job_pool;
 		
-		bool _is_async_callback;
-		function<bool(void)> _working_callback;
-		function<bool(const vector<unsigned char>&)> _working_callback2;
+		function<void(void)> _working_callback;
+		function<void(const vector<unsigned char>&)> _working_callback2;
 	};
 }

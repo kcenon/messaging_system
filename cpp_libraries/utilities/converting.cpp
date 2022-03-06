@@ -6,6 +6,8 @@
 #include "fmt/format.h"
 #include "cryptopp/base64.h"
 
+using namespace CryptoPP;
+
 namespace converting
 {
 	void converter::replace(wstring& source, const wstring& token, const wstring& target)
@@ -133,7 +135,7 @@ namespace converting
 
 		string source = to_string(value);
 		string encoded;
-		CryptoPP::StringSource(source.data(), true, new CryptoPP::Base64Decoder(new CryptoPP::StringSink(encoded)));
+		StringSource(source.data(), true, new Base64Decoder(new StringSink(encoded)));
 
 		return vector<unsigned char>(encoded.data(), encoded.data() + encoded.size());
 	}
@@ -146,7 +148,7 @@ namespace converting
 		}
 
 		string decoded;
-		CryptoPP::StringSource(value.data(), true, new CryptoPP::Base64Encoder(new CryptoPP::StringSink(decoded)));
+		StringSource(value.data(), true, new Base64Encoder(new StringSink(decoded)));
 
 		return to_wstring(decoded);
 	}

@@ -19,34 +19,31 @@ using namespace threads;
 using namespace converting;
 using namespace argument_parser;
 
-bool async_callback = true;
 bool write_console = false;
 logging_level log_level = logging_level::information;
 
 bool parse_arguments(const map<wstring, wstring>& arguments);
 void display_help(void);
 
-bool write_data(const vector<unsigned char>& data)
+void write_data(const vector<unsigned char>& data)
 {
 	auto start = logger::handle().chrono_start();
 	logger::handle().write(logging_level::information, converter::to_wstring(data), start);
-
-	return true;
 }
 
-bool write_high(void)
+void write_high(void)
 {
-	return write_data(converter::to_array(L"테스트2_high_in_thread"));
+	write_data(converter::to_array(L"테스트2_high_in_thread"));
 }
 
-bool write_normal(void)
+void write_normal(void)
 {
-	return write_data(converter::to_array(L"테스트2_normal_in_thread"));
+	write_data(converter::to_array(L"테스트2_normal_in_thread"));
 }
 
-bool write_low(void)
+void write_low(void)
 {
-	return write_data(converter::to_array(L"테스트2_low_in_thread"));
+	write_data(converter::to_array(L"테스트2_low_in_thread"));
 }
 
 class saving_test_job : public job
@@ -58,12 +55,10 @@ public:
 	}
 
 protected:
-	bool working(const priorities& worker_priority) override
+	void working(const priorities& worker_priority) override
 	{
 		auto start = logger::handle().chrono_start();
 		logger::handle().write(logging_level::information, converter::to_wstring(_data), start);
-
-		return true;
 	}
 };
 
@@ -75,7 +70,7 @@ public:
 	}
 
 protected:
-	bool working(const priorities& worker_priority) override
+	void working(const priorities& worker_priority) override
 	{
 		auto start = logger::handle().chrono_start();
 
@@ -90,9 +85,7 @@ protected:
 		case priorities::low:
 			logger::handle().write(logging_level::information, L"테스트4_low_in_thread", start);
 			break;
-		}		
-
-		return true;
+		}
 	}
 };
 
@@ -118,17 +111,17 @@ int main(int argc, char* argv[])
 	// unit job with callback and data
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data, async_callback));
-		manager.push(make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data, async_callback));
-		manager.push(make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data, async_callback));
+		manager.push(make_shared<job>(priorities::high, converter::to_array(L"테스트_high_in_thread"), &write_data));
+		manager.push(make_shared<job>(priorities::normal, converter::to_array(L"테스트_normal_in_thread"), &write_data));
+		manager.push(make_shared<job>(priorities::low, converter::to_array(L"테스트_low_in_thread"), &write_data));
 	}
 
 	// unit job with callback
 	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
 	{
-		manager.push(make_shared<job>(priorities::high, &write_high, async_callback));
-		manager.push(make_shared<job>(priorities::normal, &write_normal, async_callback));
-		manager.push(make_shared<job>(priorities::low, &write_low, async_callback));
+		manager.push(make_shared<job>(priorities::high, &write_high));
+		manager.push(make_shared<job>(priorities::normal, &write_normal));
+		manager.push(make_shared<job>(priorities::low, &write_low));
 	}
 
 	// derived job with data

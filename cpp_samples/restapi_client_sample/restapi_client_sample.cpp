@@ -34,7 +34,6 @@ using namespace web::http;
 using namespace web::http::client;
 
 bool write_console = false;
-bool async_callback = true;
 
 logging_level log_level = logging_level::information;
 wstring source_folder = L"";
@@ -47,8 +46,8 @@ shared_ptr<http_client> _rest_client;
 promise<bool> _promise_status;
 future<bool> _future_status;
 
-bool get_request(void);
-bool post_request(const vector<unsigned char>& data);
+void get_request(void);
+void post_request(const vector<unsigned char>& data);
 bool parse_arguments(const map<wstring, wstring>& arguments);
 void display_help(void);
 
@@ -96,8 +95,8 @@ int main(int argc, char* argv[])
 		index++;
 	}
 
-	_thread_pool->push(make_shared<job>(priorities::high, converter::to_array(container.serialize()), &post_request, async_callback));
-	_thread_pool->push(make_shared<job>(priorities::low, &get_request, async_callback));
+	_thread_pool->push(make_shared<job>(priorities::high, converter::to_array(container.serialize()), &post_request));
+	_thread_pool->push(make_shared<job>(priorities::low, &get_request));
 
 	_future_status.wait_for(chrono::seconds(100));
 
@@ -109,7 +108,7 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-bool get_request(void)
+void get_request(void)
 {
 	_rest_client->request(methods::GET)
 		.then([](http_response response)
@@ -121,12 +120,10 @@ bool get_request(void)
 			})
 		.wait();
 
-	_thread_pool->push(make_shared<job>(priorities::low, &get_request, async_callback));
-
-	return true;
+	_thread_pool->push(make_shared<job>(priorities::low, &get_request));
 }
 
-bool post_request(const vector<unsigned char>& data)
+void post_request(const vector<unsigned char>& data)
 {
 	auto request_value = json::value::parse(converter::to_wstring(data));
 
@@ -139,8 +136,6 @@ bool post_request(const vector<unsigned char>& data)
 				}
 			})
 		.wait();
-
-	return true;
 }
 
 bool parse_arguments(const map<wstring, wstring>& arguments)
