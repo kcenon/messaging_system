@@ -344,12 +344,10 @@ void transfer_condition(shared_ptr<container::value_container> container)
 	{
 #ifndef __USE_TYPE_CONTAINER__
 		logger::handle().write(logging_level::information,
-			fmt::format(L"completed upload: [{}] success-{}, fail-{}", (*container)[L"data"][L"indication_id"].as_string(),
-				(*container)[L"data"][L"completed_count"].as_integer(), (*container)[L"data"][L"failed_count"].as_integer()));
+			fmt::format(L"completed upload: [{}]", (*container)[L"data"][L"indication_id"].as_string()));
 #else
 		logger::handle().write(logging_level::information,
-			fmt::format(L"completed upload: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(),
-				container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
+			fmt::format(L"completed upload: [{}]", container->get_value(L"indication_id")->to_string()));
 #endif
 
 		_promise_status.set_value(false);
@@ -362,10 +360,12 @@ void transfer_condition(shared_ptr<container::value_container> container)
 	{
 #ifndef __USE_TYPE_CONTAINER__
 		logger::handle().write(logging_level::information,
-			fmt::format(L"completed upload: [{}]", (*container)[L"data"][L"indication_id"].as_string()));
+			fmt::format(L"completed upload: [{}] success-{}, fail-{}", (*container)[L"data"][L"indication_id"].as_string(),
+				(*container)[L"data"][L"completed_count"].as_integer(), (*container)[L"data"][L"failed_count"].as_integer()));
 #else
 		logger::handle().write(logging_level::information,
-			fmt::format(L"completed upload: [{}]", container->get_value(L"indication_id")->to_string()));
+			fmt::format(L"completed upload: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(),
+				container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
 #endif
 
 		_promise_status.set_value(true);
