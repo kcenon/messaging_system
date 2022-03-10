@@ -66,13 +66,13 @@ namespace network
 		void echo(void);
 
 #ifndef __USE_TYPE_CONTAINER__
-		void send(const json::value& message, optional<session_types> type = nullopt);
-		void send(shared_ptr<json::value> message, optional<session_types> type = nullopt);
+		void send(const json::value& message, optional<session_types> type = session_types::message_line);
+		void send(shared_ptr<json::value> message, optional<session_types> type = session_types::message_line);
 		void send_files(const json::value& message);
 		void send_files(shared_ptr<json::value> message);
 #else
-		void send(const container::value_container& message, optional<session_types> type = nullopt);
-		void send(shared_ptr<container::value_container> message, optional<session_types> type = nullopt);
+		void send(const container::value_container& message, optional<session_types> type = session_types::message_line);
+		void send(shared_ptr<container::value_container> message, optional<session_types> type = session_types::message_line);
 		void send_files(const container::value_container& message);
 		void send_files(shared_ptr<container::value_container> message);
 #endif
