@@ -14,6 +14,7 @@
 #include <string>
 #include <thread>
 #include <future>
+#include <optional>
 
 #include "asio.hpp"
 
@@ -65,13 +66,13 @@ namespace network
 		void echo(void);
 
 #ifndef __USE_TYPE_CONTAINER__
-		void send(const json::value& message);
-		void send(shared_ptr<json::value> message);
+		void send(const json::value& message, optional<session_types> type = nullopt);
+		void send(shared_ptr<json::value> message, optional<session_types> type = nullopt);
 		void send_files(const json::value& message);
 		void send_files(shared_ptr<json::value> message);
 #else
-		void send(const container::value_container& message);
-		void send(shared_ptr<container::value_container> message);
+		void send(const container::value_container& message, optional<session_types> type = nullopt);
+		void send(shared_ptr<container::value_container> message, optional<session_types> type = nullopt);
 		void send_files(const container::value_container& message);
 		void send_files(shared_ptr<container::value_container> message);
 #endif

@@ -101,8 +101,6 @@ void transfer_condition(shared_ptr<json::value> container);
 
 void get_method(http_request request);
 void post_method(http_request request);
-void put_method(http_request request);
-void del_method(http_request request);
 void display_help(void);
 
 int main(int argc, char* argv[])
@@ -298,8 +296,6 @@ void create_http_listener(void)
 	_http_listener = make_shared<http_listener>(fmt::format(L"http://localhost:{}/restapi", rest_port));
 	_http_listener->support(methods::GET, get_method);
 	_http_listener->support(methods::POST, post_method);
-	_http_listener->support(methods::PUT, put_method);
-	_http_listener->support(methods::DEL, del_method);
 	_http_listener->open()
 		.then([&]()
 			{
@@ -319,7 +315,8 @@ void connection(const wstring& target_id, const wstring& target_sub_id, const bo
 	}
 
 	logger::handle().write(logging_level::sequence,
-		fmt::format(L"{} on middle server is {} from target: {}[{}]", _data_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
+		fmt::format(L"{} on middle server is {} from target: {}[{}]", 
+			_data_line->source_id(), condition ? L"connected" : L"disconnected", target_id, target_sub_id));
 
 	if (condition)
 	{
@@ -435,28 +432,6 @@ void post_method(http_request request)
 		make_shared<container::value_container>(L"main_server", L"", L"download_files", files);
 	_data_line->send(container);
 	*/
-
-	request.reply(status_codes::OK, answer);
-}
-
-void put_method(http_request request)
-{
-	logger::handle().write(logging_level::information, fmt::format(L"call put method: {}", request.extract_string().get()));
-
-	auto answer = json::value::object();
-
-	// do something
-
-	request.reply(status_codes::OK, answer);
-}
-
-void del_method(http_request request)
-{
-	logger::handle().write(logging_level::information, fmt::format(L"call del method: {}", request.extract_string().get()));
-
-	auto answer = json::value::object();
-
-	// do something
 
 	request.reply(status_codes::OK, answer);
 }

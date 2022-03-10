@@ -35,7 +35,11 @@ using namespace web::http::client;
 
 bool write_console = false;
 
+#ifdef _DEBUG
+logging_level log_level = logging_level::parameter;
+#else
 logging_level log_level = logging_level::information;
+#endif
 wstring source_folder = L"";
 wstring target_folder = L"";
 unsigned short server_port = 8642;

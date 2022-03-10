@@ -47,6 +47,7 @@ namespace network
 		_received_message(nullptr), _received_data(nullptr), _session_type(session_types::binary_line)
 	{
 		_message_handlers.insert({ L"confirm_connection", bind(&messaging_client::confirm_message, this, placeholders::_1) });
+		_message_handlers.insert({ L"request_files", bind(&messaging_client::request_files, this, placeholders::_1) });
 		_message_handlers.insert({ L"echo", bind(&messaging_client::echo_message, this, placeholders::_1) });
 	}
 
@@ -468,7 +469,7 @@ namespace network
 
 		(*container)[L"data"][L"connection_key"] = json::value::string(_connection_key);
 		(*container)[L"data"][L"auto_echo"] = json::value::boolean(_auto_echo);
-		(*container)[L"data"][L"auto_echo_interval_seconds"] = json::value::boolean(_auto_echo_interval_seconds);
+		(*container)[L"data"][L"auto_echo_interval_seconds"] = json::value::number(_auto_echo_interval_seconds);
 		(*container)[L"data"][L"session_type"] = json::value::number((short)_session_type);
 		(*container)[L"data"][L"bridge_mode"] = json::value::boolean(_bridge_line);
 
@@ -987,6 +988,58 @@ namespace network
 #endif
 
 		connection_notification(true);
+	}
+
+#ifndef __USE_TYPE_CONTAINER__
+	void messaging_client::request_files(shared_ptr<json::value> message)
+#else
+	void messaging_client::request_files(shared_ptr<container::value_container> message)
+#endif
+	{
+		if (message == nullptr)
+		{
+			return;
+		}
+
+		if (!_confirm)
+		{
+			return;
+		}
+
+#ifndef __USE_TYPE_CONTAINER__
+		auto& files = (*message)[L"data"][L"files"].as_array();
+		for (int index = 0; index < files.size(); ++index)
+		{
+			shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
+
+			(*container)[L"header"][L"source_id"] = (*message)[L"header"][L"target_id"];
+			(*container)[L"header"][L"source_sub_id"] = (*message)[L"header"][L"target_sub_id"];
+			(*container)[L"header"][L"target_id"] = (*message)[L"header"][L"source_id"];
+			(*container)[L"header"][L"target_sub_id"] = (*message)[L"header"][L"source_sub_id"];
+			(*container)[L"header"][L"message_type"] = json::value::string(L"request_file");
+
+			(*container)[L"data"][L"indication_id"] = (*message)[L"data"][L"indication_id"];
+			(*container)[L"data"][L"source"] = files[index][L"source"];
+			(*container)[L"data"][L"target"] = files[index][L"target"];
+
+			_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_client::load_file_packet, this, placeholders::_1)));
+		}
+#else
+		shared_ptr<container::value_container> container = message->copy(false);
+		container->swap_header();
+		container->set_message_type(L"request_file");
+
+		vector<shared_ptr<container::value>> files = message->value_array(L"file");
+		for (auto& file : files)
+		{
+			container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
+			container << make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
+			container << make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
+
+			_thread_pool->push(make_shared<job>(priorities::low, container->serialize_array(), bind(&messaging_client::load_file_packet, this, placeholders::_1)));
+			container->clear_value();
+		}
+#endif
 	}
 
 #ifndef __USE_TYPE_CONTAINER__

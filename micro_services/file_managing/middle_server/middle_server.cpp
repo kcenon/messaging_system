@@ -42,7 +42,7 @@ bool encrypt_mode = false;
 bool compress_mode = false;
 unsigned short compress_block_size = 1024;
 #ifdef _DEBUG
-logging_level log_level = logging_level::parameter;
+logging_level log_level = logging_level::packet;
 #else
 logging_level log_level = logging_level::information;
 #endif
@@ -56,14 +56,13 @@ unsigned short normal_priority_count = 4;
 unsigned short low_priority_count = 4;
 size_t session_limit_count = 0;
 
-file_manager _file_manager;
-
 #ifndef __USE_TYPE_CONTAINER__
-map<wstring, function<bool(shared_ptr<json::value>)>> _file_commands;
+map<wstring, function<void(shared_ptr<json::value>)>> _file_commands;
 #else
-map<wstring, function<bool(shared_ptr<container::value_container>)>> _file_commands;
+map<wstring, function<void(shared_ptr<container::value_container>)>> _file_commands;
 #endif
 
+shared_ptr<file_manager> _file_manager = nullptr;
 shared_ptr<messaging_client> _data_line = nullptr;
 shared_ptr<messaging_client> _file_line = nullptr;
 shared_ptr<messaging_server> _middle_server = nullptr;
@@ -93,12 +92,12 @@ void received_message_from_file_line(shared_ptr<container::value_container> cont
 void received_file_from_file_line(const wstring& source_id, const wstring& source_sub_id, const wstring& indication_id, const wstring& target_path);
 
 #ifndef __USE_TYPE_CONTAINER__
-bool download_files(shared_ptr<json::value> container);
-bool upload_files(shared_ptr<json::value> container);
+void download_files(shared_ptr<json::value> container);
+void upload_files(shared_ptr<json::value> container);
 void uploaded_file(shared_ptr<json::value> container);
 #else
-bool download_files(shared_ptr<container::value_container> container);
-bool upload_files(shared_ptr<container::value_container> container);
+void download_files(shared_ptr<container::value_container> container);
+void upload_files(shared_ptr<container::value_container> container);
 void uploaded_file(shared_ptr<container::value_container> container);
 #endif
 
@@ -126,6 +125,8 @@ int main(int argc, char* argv[])
 	logger::handle().set_write_console(write_console);
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);
+
+	_file_manager = make_shared<file_manager>();
 
 	create_middle_server();
 	create_data_line();
@@ -317,6 +318,7 @@ void create_data_line(void)
 	}
 
 	_data_line = make_shared<messaging_client>(L"data_line");
+	_data_line->set_bridge_line(true);
 	_data_line->set_compress_mode(compress_mode);
 	_data_line->set_connection_key(main_connection_key);
 	_data_line->set_session_types(session_types::message_line);
@@ -333,6 +335,7 @@ void create_file_line(void)
 	}
 
 	_file_line = make_shared<messaging_client>(L"file_line");
+	_file_line->set_bridge_line(true);
 	_file_line->set_compress_mode(compress_mode);
 	_file_line->set_connection_key(main_connection_key);
 	_file_line->set_session_types(session_types::file_line);
@@ -364,49 +367,16 @@ void received_message_from_middle_server(shared_ptr<container::value_container> 
 #else
 	auto target = _file_commands.find(container->message_type());
 #endif
-	if (target == _file_commands.end())
+	if (target != _file_commands.end())
 	{
-		if (_data_line == nullptr || !_data_line->is_confirmed())
-		{
-			if (_middle_server == nullptr)
-			{
-				return;
-			}
-
-#ifndef __USE_TYPE_CONTAINER__
-			shared_ptr<json::value> response = make_shared<json::value>(json::value::parse(container->serialize()));
-
-			(*response)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
-			(*response)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
-			(*response)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
-			(*response)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
-
-			(*response)[L"data"][L"error"] = json::value::boolean(true);
-			(*response)[L"data"][L"reason"] = json::value::string(L"main_server has not been connected.");
-#else
-			shared_ptr<container::value_container> response = container->copy(false);
-			response->swap_header();
-
-			response << make_shared<container::bool_value>(L"error", true);
-			response << make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
-#endif
-
-			_middle_server->send(response);
-
-			return;
-		}
-
-		if (_data_line)
-		{
-			_data_line->send(container);
-		}
+		target->second(container);
 
 		return;
 	}
 
-	if (_file_line == nullptr || !_file_line->is_confirmed())
+	if (_data_line == nullptr || !_data_line->is_confirmed())
 	{
-		if (_middle_server)
+		if (_middle_server == nullptr)
 		{
 			return;
 		}
@@ -434,7 +404,10 @@ void received_message_from_middle_server(shared_ptr<container::value_container> 
 		return;
 	}
 
-	target->second(container);
+	if (_data_line)
+	{
+		_data_line->send(container);
+	}
 }
 
 void connection_from_data_line(const wstring& target_id, const wstring& target_sub_id, const bool& condition)
@@ -538,12 +511,11 @@ void received_file_from_file_line(const wstring& target_id, const wstring& targe
 		fmt::format(L"target_id: {}, target_sub_id: {}, indication_id: {}, file_path: {}", target_id, target_sub_id, indication_id, target_path));
 
 #ifndef __USE_TYPE_CONTAINER__
-	shared_ptr<json::value> container = _file_manager.received(target_id, target_sub_id,
-		indication_id, target_path);
+	shared_ptr<json::value> container = _file_manager->received(indication_id, target_path);
 #else
-	shared_ptr<container::value_container> container = _file_manager.received(target_id, target_sub_id, 
-		indication_id, target_path);
+	shared_ptr<container::value_container> container = _file_manager->received(indication_id, target_path);
 #endif
+
 	if(container != nullptr)
 	{
 		if (_middle_server)
@@ -554,14 +526,44 @@ void received_file_from_file_line(const wstring& target_id, const wstring& targe
 }
 
 #ifndef __USE_TYPE_CONTAINER__
-bool download_files(shared_ptr<json::value> container)
+void download_files(shared_ptr<json::value> container)
 #else
-bool download_files(shared_ptr<container::value_container> container)
+void download_files(shared_ptr<container::value_container> container)
 #endif
 {
 	if (container == nullptr)
 	{
-		return false;
+		return;
+	}
+
+	if (_file_line == nullptr || !_file_line->is_confirmed())
+	{
+		if (_middle_server)
+		{
+			return;
+		}
+
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> response = make_shared<json::value>(json::value::parse(container->serialize()));
+
+		(*response)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
+		(*response)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
+		(*response)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
+		(*response)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
+
+		(*response)[L"data"][L"error"] = json::value::boolean(true);
+		(*response)[L"data"][L"reason"] = json::value::string(L"main_server has not been connected.");
+#else
+		shared_ptr<container::value_container> response = container->copy(false);
+		response->swap_header();
+
+		response << make_shared<container::bool_value>(L"error", true);
+		response << make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
+#endif
+
+		_middle_server->send(response);
+
+		return;
 	}
 
 	vector<wstring> target_paths;
@@ -572,8 +574,10 @@ bool download_files(shared_ptr<container::value_container> container)
 	{
 		target_paths.push_back(files[index][L"target"].as_string());
 	}
-	
-	_file_manager.set((*container)[L"data"][L"indication_id"].as_string(), target_paths);
+
+	_file_manager->set((*container)[L"data"][L"indication_id"].as_string(),
+		(*container)[L"header"][L"source_id"].as_string(),
+		(*container)[L"header"][L"source_sub_id"].as_string(), target_paths);
 #else
 	vector<shared_ptr<container::value>> files = container->value_array(L"file");
 	for (auto& file : files)
@@ -581,7 +585,8 @@ bool download_files(shared_ptr<container::value_container> container)
 		target_paths.push_back((*file)[L"target"]->to_string());
 	}
 
-	_file_manager.set(container->get_value(L"indication_id")->to_string(), target_paths);
+	_file_manager->set(container->get_value(L"indication_id")->to_string(),
+		container->source_id(), container->source_sub_id(), target_paths);
 #endif
 
 	if (_middle_server)
@@ -621,70 +626,48 @@ bool download_files(shared_ptr<container::value_container> container)
 	{
 		_file_line->send(temp);
 	}
-
-	return true;
 }
 
 #ifndef __USE_TYPE_CONTAINER__
-bool upload_files(shared_ptr<json::value> container)
+void upload_files(shared_ptr<json::value> container)
 #else
-bool upload_files(shared_ptr<container::value_container> container)
+void upload_files(shared_ptr<container::value_container> container)
 #endif
 {
 	if (container == nullptr)
 	{
-		return false;
+		return;
 	}
 
-	vector<wstring> target_paths;
+	if (_file_line == nullptr || !_file_line->is_confirmed())
+	{
+		if (_middle_server)
+		{
+			return;
+		}
 
 #ifndef __USE_TYPE_CONTAINER__
-	auto& files = (*container)[L"data"][L"files"].as_array();
-	for (int index = 0; index < files.size(); ++index)
-	{
-		target_paths.push_back(files[index][L"target"].as_string());
-	}
+		shared_ptr<json::value> response = make_shared<json::value>(json::value::parse(container->serialize()));
 
-	_file_manager.set((*container)[L"data"][L"indication_id"].as_string(), target_paths);
+		(*response)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
+		(*response)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
+		(*response)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
+		(*response)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
+
+		(*response)[L"data"][L"error"] = json::value::boolean(true);
+		(*response)[L"data"][L"reason"] = json::value::string(L"main_server has not been connected.");
 #else
-	vector<shared_ptr<container::value>> files = container->value_array(L"file");
-	for (auto& file : files)
-	{
-		target_paths.push_back((*file)[L"target"]->to_string());
-	}
+		shared_ptr<container::value_container> response = container->copy(false);
+		response->swap_header();
 
-	_file_manager.set(container->get_value(L"indication_id")->to_string(), target_paths);
+		response << make_shared<container::bool_value>(L"error", true);
+		response << make_shared<container::string_value>(L"reason", L"main_server has not been connected.");
 #endif
 
-	if (_middle_server)
-	{
-#ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> start_message = make_shared<json::value>(json::value::object(true));
+		_middle_server->send(response);
 
-		(*start_message)[L"header"][L"source_id"] = json::value::string(L"");
-		(*start_message)[L"header"][L"source_sub_id"] = json::value::string(L"");
-		(*start_message)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
-		(*start_message)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
-		(*start_message)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
-
-		(*start_message)[L"data"][L"indication_id"] = (*container)[L"data"][L"indication_id"];
-		(*start_message)[L"data"][L"percentage"] = json::value::number(0);
-
-		_middle_server->send(start_message);
-#else
-		_middle_server->send(make_shared<container::value_container>(container->source_id(), container->source_sub_id(), L"transfer_condition",
-			vector<shared_ptr<container::value>> {
-				make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string()),
-				make_shared<container::ushort_value>(L"percentage", 0)
-		}));
-#endif
+		return;
 	}
-
-#ifndef __USE_TYPE_CONTAINER__
-	(*container)[L"header"][L"message_type"] = json::value::string(L"transfer_file");
-#else
-	container->set_message_type(L"transfer_file");
-#endif
 	
 	if (_file_line)
 	{
@@ -701,8 +684,6 @@ bool upload_files(shared_ptr<container::value_container> container)
 
 		_file_line->send(container);
 	}
-
-	return true;
 }
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -717,12 +698,10 @@ void uploaded_file(shared_ptr<container::value_container> container)
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	shared_ptr<json::value> temp = _file_manager.received(
-		(*container)[L"header"][L"target_id"].as_string(), (*container)[L"header"][L"target_sub_id"].as_string(),
+	shared_ptr<json::value> temp = _file_manager->received(
 		(*container)[L"data"][L"indication_id"].as_string(), (*container)[L"data"][L"target_path"].as_string());
 #else
-	shared_ptr<container::value_container> temp = _file_manager.received(
-		container->target_id(), container->target_sub_id(), 
+	shared_ptr<container::value_container> temp = _file_manager->received(
 		container->get_value(L"indication_id")->to_string(), container->get_value(L"target_path")->to_string());
 #endif
 

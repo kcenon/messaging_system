@@ -156,6 +156,7 @@ namespace network
 		vector<wstring> _ignore_target_ids;
 		vector<wstring> _ignore_snipping_targets;
 		vector<session_types> _possible_session_types;
+		unsigned short _auto_echo_interval_seconds;
 
 	private:
 		bool _compress_mode;

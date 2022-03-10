@@ -25,8 +25,8 @@ public:
 	~file_manager(void);
 
 public:
-	bool set(const wstring& indication_id, const wstring& source_id, const wstring& source_sub_id,
-		const vector<wstring>& file_list);
+	bool set(const wstring& indication_id, const wstring& source_id, const wstring& source_sub_id, 
+		const vector<wstring> &file_list);
 
 #ifndef __USE_TYPE_CONTAINER__
 	shared_ptr<json::value> received(const wstring& indication_id, const wstring& file_path);

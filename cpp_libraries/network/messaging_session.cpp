@@ -39,7 +39,7 @@ namespace network
 		: data_handling(246, 135), _confirm(session_conditions::waiting), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _received_message(nullptr),
 		_key(L""), _iv(L""), _thread_pool(nullptr), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), 
 		_connection_key(connection_key), _received_file(nullptr), _received_data(nullptr), _connection(nullptr), _kill_code(false),
-		_socket(make_shared<asio::ip::tcp::socket>(move(socket)))
+		_socket(make_shared<asio::ip::tcp::socket>(move(socket))), _auto_echo_interval_seconds(1), _auto_echo(false)
 	{
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));
@@ -196,7 +196,6 @@ namespace network
 		{
 			return;
 		}
-
 
 #ifndef __USE_TYPE_CONTAINER__
 		if (!_bridge_line && (*message)[L"header"][L"target_id"].as_string() != _target_id && !contained_snipping_target((*message)[L"header"][L"target_id"].as_string()))
@@ -878,9 +877,15 @@ namespace network
 #ifndef __USE_TYPE_CONTAINER__
 		_target_id = (*message)[L"header"][L"source_id"].as_string();
 		_session_type = (session_types)(*message)[L"data"][L"session_type"].as_integer();
+		_bridge_line = (*message)[L"data"][L"bridge_mode"].as_bool();
+		_auto_echo = (*message)[L"data"][L"auto_echo"].as_bool();
+		_auto_echo_interval_seconds = (unsigned short)(*message)[L"data"][L"auto_echo_interval_seconds"].as_integer();
 #else
 		_target_id = message->source_id();
 		_session_type = (session_types)message->get_value(L"session_type")->to_short();
+		_bridge_line = message->get_value(L"bridge_mode")->to_boolean();
+		_auto_echo = message->get_value(L"auto_echo")->to_boolean();
+		_auto_echo_interval_seconds = message->get_value(L"auto_echo_interval_seconds")->to_ushort();
 #endif
 
 

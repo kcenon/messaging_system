@@ -198,22 +198,22 @@ namespace network
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	void messaging_server::send(const json::value& message)
+	void messaging_server::send(const json::value& message, optional<session_types> type)
 #else
-	void messaging_server::send(const container::value_container& message)
+	void messaging_server::send(const container::value_container& message, optional<session_types> type)
 #endif
 	{
 #ifndef __USE_TYPE_CONTAINER__
-		send(make_shared<json::value>(message));
+		send(make_shared<json::value>(message), type);
 #else
-		send(make_shared<container::value_container>(message));
+		send(make_shared<container::value_container>(message), type);
 #endif
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	void messaging_server::send(shared_ptr<json::value> message)
+	void messaging_server::send(shared_ptr<json::value> message, optional<session_types> type)
 #else
-	void messaging_server::send(shared_ptr<container::value_container> message)
+	void messaging_server::send(shared_ptr<container::value_container> message, optional<session_types> type)
 #endif
 	{
 		if (message == nullptr)
@@ -224,6 +224,11 @@ namespace network
 		for (auto& session : _sessions)
 		{
 			if (session == nullptr)
+			{
+				continue;
+			}
+
+			if (type.has_value() && session->get_session_type() != type.value())
 			{
 				continue;
 			}

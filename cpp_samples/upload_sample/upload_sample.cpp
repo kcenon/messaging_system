@@ -31,7 +31,11 @@ using namespace argument_parser;
 bool write_console = false;
 bool encrypt_mode = false;
 bool compress_mode = false;
+#ifdef _DEBUG
+logging_level log_level = logging_level::parameter;
+#else
 logging_level log_level = logging_level::information;
+#endif
 wstring source_folder = L"";
 wstring target_folder = L"";
 wstring connection_key = L"middle_connection_key";
@@ -99,16 +103,17 @@ int main(int argc, char* argv[])
 
 	(*container)[L"header"][L"target_id"] = json::value::string(L"main_server");
 	(*container)[L"header"][L"target_sub_id"] = json::value::string(L"");
-	(*container)[L"header"][L"message_type"] = json::value::string(L"download_files");
+	(*container)[L"header"][L"message_type"] = json::value::string(L"upload_files");
 
-	(*container)[L"data"][L"indication_id"] = json::value::string(L"download_test");
+	(*container)[L"data"][L"indication_id"] = json::value::string(L"upload_test");
 
 	int index = 0;
 	(*container)[L"data"][L"files"] = json::value::array();
 	for (auto& source : sources)
 	{
 		(*container)[L"data"][L"files"][index][L"source"] = json::value::string(source);
-		(*container)[L"data"][L"files"][index][L"target"] = json::value::string(converter::replace2(source, source_folder, target_folder));
+		(*container)[L"data"][L"files"][index][L"target"] = 
+			json::value::string(converter::replace2(source, source_folder, target_folder));
 		index++;
 	}
 #else
@@ -260,7 +265,8 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 void connection(const wstring& target_id, const wstring& target_sub_id, const bool& condition)
 {
 	logger::handle().write(logging_level::information,
-		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, condition ? L"connected" : L"disconnected"));
+		fmt::format(L"a client on main server: {}[{}] is {}", target_id, target_sub_id, 
+			condition ? L"connected" : L"disconnected"));
 }
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -351,11 +357,14 @@ void transfer_condition(shared_ptr<container::value_container> container)
 #endif
 
 		_promise_status.set_value(false);
+
+		return;
 	}
 #ifndef __USE_TYPE_CONTAINER__
+	
 	if ((*container)[L"data"][L"percentage"].as_integer() == 100)
 #else
-	else if (container->get_value(L"percentage")->to_ushort() == 100)
+	if (container->get_value(L"percentage")->to_ushort() == 100)
 #endif
 	{
 #ifndef __USE_TYPE_CONTAINER__

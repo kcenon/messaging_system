@@ -333,12 +333,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="file_manager.cpp" />
     <ClCompile Include="main_server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\cpp_libraries\network\network.vcxproj">
       <Project>{bbe3c8f7-4d0a-478c-969f-3f20b55f9f06}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="file_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

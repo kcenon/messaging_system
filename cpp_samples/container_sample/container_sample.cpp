@@ -28,7 +28,11 @@ using namespace container;
 using namespace argument_parser;
 
 bool write_console = false;
+#ifdef _DEBUG
+logging_level log_level = logging_level::parameter;
+#else
 logging_level log_level = logging_level::information;
+#endif
 
 bool parse_arguments(const map<wstring, wstring>& arguments);
 void display_help(void);
