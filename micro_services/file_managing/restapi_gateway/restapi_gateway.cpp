@@ -392,8 +392,10 @@ void transfer_condition(shared_ptr<json::value> container)
 	(*condition)[L"message_type"] = (*container)[L"header"][L"message_type"];
 	(*condition)[L"indication_id"] = (*container)[L"data"][L"indication_id"];
 	(*condition)[L"percentage"] = (*container)[L"data"][L"percentage"];
-	(*condition)[L"completed"] = (*container)[L"data"][L"completed"];
+	(*condition)[L"completed"] = (*container)[L"data"][L"completed"].is_null() ?
+		json::value::boolean(false) : (*container)[L"data"][L"completed"];
 #endif
+
 
 	_messages.push_back(condition);
 }

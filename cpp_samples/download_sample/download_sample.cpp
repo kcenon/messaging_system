@@ -376,7 +376,7 @@ void transfer_condition(shared_ptr<container::value_container> container)
 				container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
 #endif
 
-		_promise_status.set_value(true);
+		_promise_status.set_value(false);
 	}
 }
 

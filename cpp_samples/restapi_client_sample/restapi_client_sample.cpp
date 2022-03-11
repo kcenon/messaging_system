@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
 	_thread_pool->push(make_shared<job>(priorities::high, converter::to_array(container.serialize()), &post_request));
 	_thread_pool->push(make_shared<job>(priorities::low, &get_request));
 
-	_future_status.wait_for(chrono::seconds(100));
+	_future_status.wait();
 
 	_thread_pool->stop();
 	_thread_pool.reset();
@@ -144,20 +144,22 @@ void get_request(void)
 						continue;
 					}
 
+					logger::handle().write(logging_level::information,
+						fmt::format(L"received percentage: [{}] {}%", message[L"indication_id"].as_string(),
+							message[L"percentage"].as_integer()));
+
 					if (message[L"percentage"].as_integer() != 100)
 					{
-						logger::handle().write(logging_level::information,
-							fmt::format(L"received percentage: [{}] {}%", message[L"indication_id"].as_string(),
-								message[L"percentage"].as_integer()));
-
 						continue;
 					}
 
-					if (message[L"data"][L"completed"].as_bool())
+					if (message[L"completed"].as_bool())
 					{
 						logger::handle().write(logging_level::information,
 							fmt::format(L"completed {}: [{}]", message[L"message_type"].as_string(), 
 								message[L"indication_id"].as_string()));
+
+						_promise_status.set_value(true);
 
 						return;
 					}
@@ -165,6 +167,8 @@ void get_request(void)
 					logger::handle().write(logging_level::information,
 						fmt::format(L"cannot complete {}: [{}]", message[L"message_type"].as_string(), 
 							message[L"indication_id"].as_string()));
+
+					_promise_status.set_value(false);
 
 					return;
 				}
