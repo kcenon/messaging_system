@@ -74,13 +74,15 @@ future<bool> _future_status;
 shared_ptr<messaging_client> _data_line = nullptr;
 shared_ptr<http_listener> _http_listener = nullptr;
 
-vector<json::value> _messages;
+vector<shared_ptr<json::value>> _messages;
 
 #ifdef __USE_TYPE_CONTAINER__
 map<wstring, function<void(shared_ptr<container::value_container>)>> _registered_messages;
 #else
 map<wstring, function<void(shared_ptr<json::value>)>> _registered_messages;
 #endif
+
+map<wstring, function<void(shared_ptr<json::value>)>> _registered_restapi;
 
 #ifdef _CONSOLE
 BOOL ctrl_handler(DWORD ctrl_type);
@@ -98,6 +100,8 @@ void transfer_condition(shared_ptr<container::value_container> container);
 void received_message(shared_ptr<json::value> container);
 void transfer_condition(shared_ptr<json::value> container);
 #endif
+
+void transfer_files(shared_ptr<json::value> request);
 
 void get_method(http_request request);
 void post_method(http_request request);
@@ -124,6 +128,9 @@ int main(int argc, char* argv[])
 	logger::handle().start(PROGRAM_NAME);
 
 	_registered_messages.insert({ L"transfer_condition", transfer_condition });
+
+	_registered_restapi.insert({ L"upload_files", transfer_files });
+	_registered_restapi.insert({ L"download_files", transfer_files });
 
 	create_data_line();
 	create_http_listener();
@@ -374,66 +381,113 @@ void transfer_condition(shared_ptr<json::value> container)
 		return;
 	}
 
-	auto transfer_condition = json::value::object();
+	shared_ptr<json::value> condition = make_shared<json::value>(json::value::object(true));
 
 #ifdef __USE_TYPE_CONTAINER__
-	transfer_condition[L"message_type"] = json::value::string(container->message_type());
-	transfer_condition[L"indication_id"] = json::value::string(container->get_value(L"indication_id")->to_string());
-	transfer_condition[L"percentage"] = json::value::number(container->get_value(L"percentage")->to_ushort());
-	transfer_condition[L"completed"] = json::value::boolean(container->get_value(L"completed")->to_boolean());
+	(*condition)[L"message_type"] = json::value::string(container->message_type());
+	(*condition)[L"indication_id"] = json::value::string(container->get_value(L"indication_id")->to_string());
+	(*condition)[L"percentage"] = json::value::number(container->get_value(L"percentage")->to_ushort());
+	(*condition)[L"completed"] = json::value::boolean(container->get_value(L"completed")->to_boolean());
 #else
-	transfer_condition[L"message_type"] = (*container)[L"header"][L"message_type"];
-	transfer_condition[L"indication_id"] = (*container)[L"data"][L"message_type"];
-	transfer_condition[L"percentage"] = (*container)[L"data"][L"percentage"];
-	transfer_condition[L"completed"] = (*container)[L"data"][L"completed"];
+	(*condition)[L"message_type"] = (*container)[L"header"][L"message_type"];
+	(*condition)[L"indication_id"] = (*container)[L"data"][L"indication_id"];
+	(*condition)[L"percentage"] = (*container)[L"data"][L"percentage"];
+	(*condition)[L"completed"] = (*container)[L"data"][L"completed"];
 #endif
 
-	_messages.push_back(transfer_condition);
+	_messages.push_back(condition);
+}
+
+void transfer_files(shared_ptr<json::value> request)
+{
+	auto& file_array = (*request)[L"files"].as_array();
+
+#ifndef __USE_TYPE_CONTAINER__
+	shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
+
+	(*container)[L"header"][L"target_id"] = json::value::string(L"main_server");
+	(*container)[L"header"][L"target_sub_id"] = json::value::string(L"");
+	(*container)[L"header"][L"message_type"] = (*request)[L"message_type"];
+
+	(*container)[L"data"][L"indication_id"] = (*request)[L"indication_id"];
+
+	int index = 0;
+	(*container)[L"data"][L"files"] = json::value::array();
+	for (auto& file : file_array)
+	{
+		(*container)[L"data"][L"files"][index][L"source"] = file[L"source"];
+		(*container)[L"data"][L"files"][index][L"target"] = file[L"target"];
+		index++;
+	}
+#else
+	vector<shared_ptr<container::value>> files;
+
+	files.push_back(make_shared<container::string_value>(L"indication_id", (*request)[L"indication_id"].as_string()));
+	for (auto& file : file_array)
+	{
+		files.push_back(make_shared<container::container_value>(L"file", vector<shared_ptr<container::value>> {
+			make_shared<container::string_value>(L"source", file[L"source"].as_string()),
+			make_shared<container::string_value>(L"target", file[L"target"].as_string())
+		}));
+	}
+
+	shared_ptr<container::value_container> container =
+		make_shared<container::value_container>(L"main_server", L"", (*request)[L"message_type"].as_string(), files);
+#endif
+
+	_data_line->send(container);
 }
 
 void get_method(http_request request)
 {
-	logger::handle().write(logging_level::information, fmt::format(L"call get method: {}", request.extract_string().get()));
-
-	auto answer = json::value::object();
-
 	// do something
+	vector<shared_ptr<json::value>> messages;
+	messages.swap(_messages);
+
+	if (messages.empty())
+	{
+		request.reply(status_codes::NoContent);
+		return;
+	}
+
+	json::value answer = json::value::object(true);
+	answer[L"messages"] = json::value::array();
+
+	int index = 0;
+	for (auto& message : messages)
+	{
+		answer[L"messages"][index][L"message_type"] = (*message)[L"message_type"];
+		answer[L"messages"][index][L"indication_id"] = (*message)[L"indication_id"];
+		answer[L"messages"][index][L"percentage"] = (*message)[L"percentage"];
+		answer[L"messages"][index][L"completed"] = (*message)[L"completed"];
+
+		index++;
+	}
 
 	request.reply(status_codes::OK, answer);
 }
 
 void post_method(http_request request)
 {
-	logger::handle().write(logging_level::information, fmt::format(L"call post method: {}", request.extract_string().get()));
-
-	auto answer = json::value::object();
-
-	// do something
 	auto action = request.extract_json().get();
 	if (action.is_null())
 	{
-		request.reply(status_codes::OK, answer);
+		request.reply(status_codes::NoContent);
+		return;
+	}
+	
+	logger::handle().write(logging_level::packet, fmt::format(L"post method: {}", action.serialize()));
+
+	auto message_type = _registered_restapi.find(action[L"message_type"].as_string());
+	if (message_type != _registered_restapi.end())
+	{
+		message_type->second(make_shared<json::value>(action));
+
+		request.reply(status_codes::OK);
 		return;
 	}
 
-	/*
-	vector<shared_ptr<container::value>> files;
-
-	files.push_back(make_shared<container::string_value>(L"indication_id", L"download_test"));
-	for (auto& source : sources)
-	{
-		files.push_back(make_shared<container::container_value>(L"file", vector<shared_ptr<container::value>> {
-			make_shared<container::string_value>(L"source", source),
-				make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
-		}));
-	}
-
-	shared_ptr<container::value_container> container =
-		make_shared<container::value_container>(L"main_server", L"", L"download_files", files);
-	_data_line->send(container);
-	*/
-
-	request.reply(status_codes::OK, answer);
+	request.reply(status_codes::NotImplemented);
 }
 
 void display_help(void)

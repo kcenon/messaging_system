@@ -42,7 +42,7 @@ logging_level log_level = logging_level::information;
 #endif
 wstring source_folder = L"";
 wstring target_folder = L"";
-unsigned short server_port = 8642;
+unsigned short server_port = 7654;
 
 shared_ptr<thread_pool> _thread_pool;
 shared_ptr<http_client> _rest_client;
@@ -117,14 +117,61 @@ void get_request(void)
 	_rest_client->request(methods::GET)
 		.then([](http_response response)
 			{
-				if (response.status_code() == status_codes::OK)
+				if (response.status_code() != status_codes::OK)
 				{
-					logger::handle().write(logging_level::information, response.extract_string().get());
+					this_thread::sleep_for(chrono::seconds(1));
+
+					_thread_pool->push(make_shared<job>(priorities::low, &get_request));
+
+					return;
 				}
+
+				auto answer = response.extract_json().get();
+				if (answer.is_null())
+				{
+					return;
+				}
+
+				auto& messages = answer[L"messages"].as_array();
+				for (auto& message : messages)
+				{
+					if (message[L"percentage"].as_integer() == 0)
+					{
+						logger::handle().write(logging_level::information,
+							fmt::format(L"started {}: [{}]", message[L"message_type"].as_string(), 
+								message[L"indication_id"].as_string()));
+
+						continue;
+					}
+
+					if (message[L"percentage"].as_integer() != 100)
+					{
+						logger::handle().write(logging_level::information,
+							fmt::format(L"received percentage: [{}] {}%", message[L"indication_id"].as_string(),
+								message[L"percentage"].as_integer()));
+
+						continue;
+					}
+
+					if (message[L"data"][L"completed"].as_bool())
+					{
+						logger::handle().write(logging_level::information,
+							fmt::format(L"completed {}: [{}]", message[L"message_type"].as_string(), 
+								message[L"indication_id"].as_string()));
+
+						return;
+					}
+
+					logger::handle().write(logging_level::information,
+						fmt::format(L"cannot complete {}: [{}]", message[L"message_type"].as_string(), 
+							message[L"indication_id"].as_string()));
+
+					return;
+				}
+
+				_thread_pool->push(make_shared<job>(priorities::low, &get_request));
 			})
 		.wait();
-
-	_thread_pool->push(make_shared<job>(priorities::low, &get_request));
 }
 
 void post_request(const vector<unsigned char>& data)
@@ -140,6 +187,8 @@ void post_request(const vector<unsigned char>& data)
 				}
 			})
 		.wait();
+
+	_thread_pool->push(make_shared<job>(priorities::low, &get_request));
 }
 
 bool parse_arguments(const map<wstring, wstring>& arguments)
