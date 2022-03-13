@@ -74,7 +74,7 @@ future<bool> _future_status;
 shared_ptr<messaging_client> _data_line = nullptr;
 shared_ptr<http_listener> _http_listener = nullptr;
 
-vector<shared_ptr<json::value>> _messages;
+map<wstring, vector<shared_ptr<json::value>>> _messages;
 
 #ifdef __USE_TYPE_CONTAINER__
 map<wstring, function<void(shared_ptr<container::value_container>)>> _registered_messages;
@@ -381,23 +381,34 @@ void transfer_condition(shared_ptr<json::value> container)
 		return;
 	}
 
+	wstring indication_id = L"";
 	shared_ptr<json::value> condition = make_shared<json::value>(json::value::object(true));
 
 #ifdef __USE_TYPE_CONTAINER__
+	indication_id = container->get_value(L"indication_id")->to_string();
+
 	(*condition)[L"message_type"] = json::value::string(container->message_type());
-	(*condition)[L"indication_id"] = json::value::string(container->get_value(L"indication_id")->to_string());
+	(*condition)[L"indication_id"] = json::value::string(indication_id);
 	(*condition)[L"percentage"] = json::value::number(container->get_value(L"percentage")->to_ushort());
 	(*condition)[L"completed"] = json::value::boolean(container->get_value(L"completed")->to_boolean());
 #else
+	indication_id = (*container)[L"data"][L"indication_id"].as_string();
+
 	(*condition)[L"message_type"] = (*container)[L"header"][L"message_type"];
 	(*condition)[L"indication_id"] = (*container)[L"data"][L"indication_id"];
 	(*condition)[L"percentage"] = (*container)[L"data"][L"percentage"];
 	(*condition)[L"completed"] = (*container)[L"data"][L"completed"].is_null() ?
 		json::value::boolean(false) : (*container)[L"data"][L"completed"];
+
 #endif
+	auto indication = _messages.find(indication_id);
+	if (indication == _messages.end())
+	{
+		_messages.insert({ indication_id, { condition } });
+		return;
+	}
 
-
-	_messages.push_back(condition);
+	indication->second.push_back(condition);
 }
 
 void transfer_files(shared_ptr<json::value> request)
@@ -442,9 +453,22 @@ void transfer_files(shared_ptr<json::value> request)
 
 void get_method(http_request request)
 {
+	if (request.headers().empty())
+	{
+		request.reply(status_codes::NotAcceptable);
+		return;
+	}
+
+	auto indication = _messages.find(request.headers()[L"indication_id"]);
+	if (indication == _messages.end())
+	{
+		request.reply(status_codes::NotAcceptable);
+		return;
+	}
+
 	// do something
 	vector<shared_ptr<json::value>> messages;
-	messages.swap(_messages);
+	messages.swap(indication->second);
 
 	if (messages.empty())
 	{
