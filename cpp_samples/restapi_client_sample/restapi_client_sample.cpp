@@ -114,13 +114,8 @@ int main(int argc, char* argv[])
 
 void get_request(void)
 {
-	json::value container = json::value::object(true);
-
-	container[L"message_type"] = json::value::string(L"download_files");
-	container[L"indication_id"] = json::value::string(L"download_test");
-
 	http_request request(methods::GET);
-	request.headers().add(L"message_type", L"download_files");
+	request.headers().add(L"previous_message", L"clear");
 	request.headers().add(L"indication_id", L"download_test");
 
 	_rest_client->request(request)

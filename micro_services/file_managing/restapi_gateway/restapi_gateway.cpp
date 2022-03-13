@@ -468,7 +468,15 @@ void get_method(http_request request)
 
 	// do something
 	vector<shared_ptr<json::value>> messages;
-	messages.swap(indication->second);
+
+	if (request.headers()[L"previous_message"] == L"clear")
+	{
+		messages.swap(indication->second);
+	}
+	else
+	{
+		messages = indication->second;
+	}
 
 	if (messages.empty())
 	{
