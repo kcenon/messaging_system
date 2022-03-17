@@ -268,15 +268,15 @@ namespace container
 			{
 			case value_types::bytes_value: 
 			case value_types::string_value: 
-				fmt::format_to(back_inserter(result), L"{}\"{}\":\"{}\"{}", L"{", name(), to_string(false), L"}"); break;
+				fmt::format_to(back_inserter(result), L"\"{}\":\"{}\"", name(), to_string(false)); break;
 			default:
-				fmt::format_to(back_inserter(result), L"{}\"{}\":{}{}", L"{", name(), to_string(false), L"}"); break;
+				fmt::format_to(back_inserter(result), L"\"{}\":{}", name(), to_string(false)); break;
 			}
 
 			return result.data();
 		}
 
-		fmt::format_to(back_inserter(result), L"{} \"{}\":[", L"{", name());
+		fmt::format_to(back_inserter(result), L"\"{}\":{}", name(), L"{");
 
 		bool first = true;
 		for (auto& unit : _units)
@@ -285,7 +285,7 @@ namespace container
 			first = false;
 		}
 
-		fmt::format_to(back_inserter(result), L"] {}", L"}");
+		fmt::format_to(back_inserter(result), L"{}", L"}");
 		
 		return result.data();
 	}
