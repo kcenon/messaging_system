@@ -7,3 +7,4 @@ To understand how to use this library, it provided several sample programs on th
 3. [threads_sample](https://github.com/kcenon/messaging_system/tree/main/cpp_samples/threads_sample): implemented how to use priority thread with job or callback function
 4. [download_sample](https://github.com/kcenon/messaging_system/tree/main/cpp_samples/download_sample): implemented how to use file download via provided micro-server on the micro-services folder
 5. [upload_sample](https://github.com/kcenon/messaging_system/tree/main/cpp_samples/upload_sample): implemented how to use file upload via provided micro-server on the micro-services folder
+6. [restapi_client_sample](https://github.com/kcenon/messaging_system/tree/main/cpp_samples/restapi_client_sample): implemented how to use restapi via provided micro-server on the micro-services folder
