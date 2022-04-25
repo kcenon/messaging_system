@@ -8,3 +8,4 @@ This sample provides a message network grid for microservice, and file transferr
 
 1. [main_server](https://github.com/kcenon/messaging_system/tree/main/micro_services/file_managing/main_server) : the main_server acts for message transferring root. Each middle_server has connected to main_server and all messages have passed through the main_server to each middle_server standardly.
 2. [middle_server](https://github.com/kcenon/messaging_system/tree/main/micro_services/file_managing/middle_server): the middle_server acts as a gateway between the main_server and each client. For example, send and receive a message packet, and make a file transferring progress packet to send a client. 
+3. [restapi_gateway](https://github.com/kcenon/messaging_system/tree/main/micro_services/file_managing/restapi_gateway): the restapi_gateway acts for message transferrring to middle_server using RESTAPI.
