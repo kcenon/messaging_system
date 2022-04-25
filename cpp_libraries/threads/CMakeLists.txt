@@ -1,0 +1,29 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
+
+SET(LIBRARY_NAME threads)
+SET(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_STANDARD_REQUIRED True)
+
+PROJECT(${LIBRARY_NAME})
+
+ADD_LIBRARY(${LIBRARY_NAME} STATIC
+    job_priorities.h 
+    job.h job.cpp 
+    job_pool.h job_pool.cpp 
+    thread_pool.h thread_pool.cpp
+    thread_worker.h thread_worker.cpp)
+    
+FIND_PACKAGE(crossguid CONFIG REQUIRED)
+TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC crossguid)
+
+INCLUDE_DIRECTORIES(../utilities)
+
+ADD_DEPENDENCIES(${LIBRARY_NAME} utilities)
+TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC utilities)
+
+IF(DEFINED __USE_TYPE_CONTAINER__)
+    INCLUDE_DIRECTORIES(../container)
+
+    ADD_DEPENDENCIES(${LIBRARY_NAME} container)
+    TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC container)
+ENDIF()

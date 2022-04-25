@@ -1,10 +1,12 @@
 #include "file_manager.h"
 
+#ifdef __USE_TYPE_CONTAINER__
 #include "value.h"
 #include "values/bool_value.h"
 #include "values/ushort_value.h"
 #include "values/ullong_value.h"
 #include "values/string_value.h"
+#endif
 
 file_manager::file_manager(void)
 {

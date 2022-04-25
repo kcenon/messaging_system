@@ -2,8 +2,8 @@
 
 #include "argument_parser.h"
 
-#include "fmt/xchar.h"
 #include "fmt/format.h"
+#include "fmt/xchar.h"
 
 #include <iostream>
 
