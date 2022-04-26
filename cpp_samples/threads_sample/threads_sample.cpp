@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
 
 	logger::handle().set_write_console(write_console);
 	logger::handle().set_target_level(log_level);
-	logger::handle().start(PROGRAM_NAME);
+	logger::handle().start(PROGRAM_NAME, locale("ko_KR.UTF-8"));
 
 	thread_pool manager;
 	manager.append(make_shared<thread_worker>(priorities::high));

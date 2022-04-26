@@ -43,22 +43,22 @@ namespace threads
 	using namespace folder_handler;
 
 	job::job(const priorities& priority)
-		: _priority(priority), _working_callback(nullptr), _working_callback2(nullptr), _temporary_stored(false), _temporary_stored_path(L"")
+		: _priority(priority), _working_callback(nullptr), _working_callback2(nullptr), _temporary_stored_path(L"")
 	{
 	}
 
 	job::job(const priorities& priority, const vector<unsigned char>& data)
-		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(nullptr), _temporary_stored(false), _temporary_stored_path(L"")
+		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(nullptr), _temporary_stored_path(L"")
 	{
 	}
 
 	job::job(const priorities& priority, const function<void(void)>& working_callback)
-		: _priority(priority), _working_callback(working_callback), _working_callback2(nullptr), _temporary_stored(false), _temporary_stored_path(L"")
+		: _priority(priority), _working_callback(working_callback), _working_callback2(nullptr), _temporary_stored_path(L"")
 	{
 	}
 
 	job::job(const priorities& priority, const vector<unsigned char>& data, const function<void(const vector<unsigned char>&)>& working_callback)
-		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(working_callback), _temporary_stored(false), _temporary_stored_path(L"")
+		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(working_callback), _temporary_stored_path(L"")
 	{
 	}
 
@@ -145,7 +145,10 @@ namespace threads
 
 	void job::save(void)
 	{
-		_temporary_stored = true;
+		if (_data.empty())
+		{
+			return;
+		}
 
 #ifdef __OSX__
 		uuid_t uuidObj;
@@ -241,12 +244,13 @@ namespace threads
 
 	void job::load(void)
 	{
-		if (!_temporary_stored)
+		if (_temporary_stored_path.empty())
 		{
 			return;
 		}
 
 		_data = file::load(_temporary_stored_path);
 		file::remove(_temporary_stored_path);
+		_temporary_stored_path.clear();
 	}
 }

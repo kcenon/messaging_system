@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
 
 SET(LIBRARY_NAME network)
 SET(CMAKE_CXX_STANDARD 17)
@@ -18,8 +18,7 @@ FIND_PACKAGE(asio CONFIG REQUIRED)
 TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC asio asio::asio)
     
 FIND_PACKAGE(cpprestsdk CONFIG REQUIRED)
-TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC cpprestsdk::cpprest 
-    cpprestsdk::cpprestsdk_zlib_internal cpprestsdk::cpprestsdk_brotli_internal)
+TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC cpprestsdk::cpprest)
 
 INCLUDE_DIRECTORIES(../utilities)
 

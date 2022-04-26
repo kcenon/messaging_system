@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <fstream>
 #include <optional>
 #include <iostream>
 #include <functional>
@@ -29,8 +30,9 @@ namespace logging
 		~logger(void);
 
 	public:
-		bool start(const wstring& store_log_file_name = L"log", const wstring& store_log_extention = L"log", 
-			const wstring& store_log_root_path = L"", const bool& append_date_on_file_name = true, const unsigned short& places_of_decimal = 7);
+		bool start(const wstring& store_log_file_name = L"log", locale target_locale = locale(""), 
+			const wstring& store_log_extention = L"log", const wstring& store_log_root_path = L"",
+			const bool& append_date_on_file_name = true, const unsigned short& places_of_decimal = 7);
 		bool stop(void);
 
 	public:
@@ -49,7 +51,7 @@ namespace logging
 	private:
 		void set_log_flag(const wstring& flag);
 		void backup_log(const wstring& target_path, const wstring& backup_path);
-		void store_log(int& file_handle, const wstring& log);
+		void store_log(wfstream& buffer, const wstring& log);
 
 	private:
 		wstring exception_log(const chrono::system_clock::time_point& time, const wstring& data);
@@ -68,6 +70,7 @@ namespace logging
 		wstring _store_log_file_name;
 		wstring _store_log_extention;
 		unsigned short _places_of_decimal;
+		locale _locale;
 
 	private:
 		atomic<bool> _thread_stop{ true };

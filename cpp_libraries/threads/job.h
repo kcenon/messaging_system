@@ -2,8 +2,9 @@
 
 #include "job_priorities.h"
 
-#include <memory>
+#include <string>
 #include <vector>
+#include <memory>
 #include <functional>
 
 using namespace std;
@@ -30,10 +31,10 @@ namespace threads
 		void set_job_pool(shared_ptr<job_pool> job_pool);
 
 	public:
-		void save(void);
 		bool work(const priorities& worker_priority);
 
 	protected:
+		void save(void);
 		virtual void working(const priorities& worker_priority);
 
 	private:
@@ -47,7 +48,6 @@ namespace threads
 
 	private:
 		priorities _priority;
-		bool _temporary_stored;
 		wstring _temporary_stored_path;
 		weak_ptr<job_pool> _job_pool;
 		

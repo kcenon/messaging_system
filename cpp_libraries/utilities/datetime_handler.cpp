@@ -16,7 +16,11 @@ namespace datetime_handler
 		auto in_time_t = chrono::system_clock::to_time_t(time);
 
 		tm buf;
+#if WIN32
 		localtime_s(&buf, &in_time_t);
+#else
+		localtime_r(&in_time_t, &buf);
+#endif
 
 		wostringstream oss;
 		oss << put_time(&buf, (use_seperator) ? L"%H:%M:%S" : L"%H%M%S");
