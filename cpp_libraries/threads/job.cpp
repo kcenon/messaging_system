@@ -166,7 +166,11 @@ namespace threads
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		wstring script = (*source_data)[L"data"][L"scripts"].as_string();
+#else
+		wstring script = converter::to_wstring((*source_data)["data"]["scripts"].as_string());
+#endif
 #else
 		wstring script = source_data->get_value(L"scripts")->to_string();
 #endif
@@ -178,7 +182,11 @@ namespace threads
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		if ((*source_data)[L"header"][L"message_type"].as_string() == L"data_container")
+#else
+		if ((*source_data)["header"]["message_type"].as_string() == "data_container")
+#endif
 #else
 		if (source_data->message_type() == L"data_container")
 #endif
@@ -195,11 +203,19 @@ namespace threads
 
 #ifndef __USE_TYPE_CONTAINER__
 			shared_ptr<json::value> target_data = make_shared<json::value>(json::value::parse(converter::to_string(_data)));
+#ifdef _WIN32
 			(*target_data)[L"header"][L"source_id"] = (*source_data)[L"header"][L"target_id"];
 			(*target_data)[L"header"][L"source_sub_id"] = (*source_data)[L"header"][L"target_sub_id"];
 			(*target_data)[L"header"][L"target_id"] = (*source_data)[L"header"][L"source_id"];
 			(*target_data)[L"header"][L"target_sub_id"] = (*source_data)[L"header"][L"source_sub_id"];
 			(*target_data)[L"data"][L"script_result"] = json::value::string(do_script(script));
+#else
+			(*target_data)["header"]["source_id"] = (*source_data)["header"]["target_id"];
+			(*target_data)["header"]["source_sub_id"] = (*source_data)[L"header"]["target_sub_id"];
+			(*target_data)["header"]["target_id"] = (*source_data)["header"]["source_id"];
+			(*target_data)["header"]["target_sub_id"] = (*source_data)["header"]["source_sub_id"];
+			(*target_data)["data"]["script_result"] = json::value::string(converter::to_string(do_script(script)));
+#endif
 
 			current_job_pool->push(make_shared<job>(_priority, converter::to_array(target_data->serialize())));
 #else

@@ -100,6 +100,7 @@ int main(int argc, char* argv[])
 #ifndef __USE_TYPE_CONTAINER__
 	shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
+#ifdef _WIN32
 	(*container)[L"header"][L"target_id"] = json::value::string(L"main_server");
 	(*container)[L"header"][L"target_sub_id"] = json::value::string(L"");
 	(*container)[L"header"][L"message_type"] = json::value::string(L"download_files");
@@ -115,6 +116,23 @@ int main(int argc, char* argv[])
 			json::value::string(converter::replace2(source, source_folder, target_folder));
 		index++;
 	}
+#else
+	(*container)["header"]["target_id"] = json::value::string("main_server");
+	(*container)["header"]["target_sub_id"] = json::value::string("");
+	(*container)["header"]["message_type"] = json::value::string("download_files");
+
+	(*container)["data"]["indication_id"] = json::value::string("download_test");
+
+	int index = 0;
+	(*container)["data"]["files"] = json::value::array();
+	for (auto& source : sources)
+	{
+		(*container)["data"]["files"][index]["source"] = json::value::string(source);
+		(*container)["data"]["files"][index]["target"] =
+			json::value::string(converter::replace2(source, source_folder, target_folder));
+		index++;
+	}
+#endif
 #else
 	vector<shared_ptr<container::value>> files;
 
@@ -306,7 +324,11 @@ void transfer_condition(shared_ptr<container::value_container> container)
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 	if ((*container)[L"header"][L"message_type"].as_string() != L"transfer_condition")
+#else
+	if ((*container)["header"]["message_type"].as_string() != "transfer_condition")
+#endif
 #else
 	if (container->message_type() != L"transfer_condition")
 #endif
@@ -315,14 +337,23 @@ void transfer_condition(shared_ptr<container::value_container> container)
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 	if ((*container)[L"data"][L"percentage"].as_integer() == 0)
+#else
+	if ((*container)["data"]["percentage"].as_integer() == 0)
+#endif
 #else
 	if (container->get_value(L"percentage")->to_ushort() == 0)
 #endif
 	{
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		logger::handle().write(logging_level::information,
 			fmt::format(L"started download: [{}]", (*container)[L"data"][L"indication_id"].as_string()));
+#else
+		logger::handle().write(logging_level::information,
+			converter::to_wstring(fmt::format("started download: [{}]", (*container)["data"]["indication_id"].as_string())));
+#endif
 #else
 		logger::handle().write(logging_level::information,
 			fmt::format(L"started download: [{}]", container->get_value(L"indication_id")->to_string()));
@@ -332,9 +363,15 @@ void transfer_condition(shared_ptr<container::value_container> container)
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 	logger::handle().write(logging_level::information,
 		fmt::format(L"received percentage: [{}] {}%", (*container)[L"data"][L"indication_id"].as_string(),
 			(*container)[L"data"][L"percentage"].as_integer()));
+#else
+	logger::handle().write(logging_level::information,
+		converter::to_wstring(fmt::format("received percentage: [{}] {}%", (*container)["data"]["indication_id"].as_string(),
+			(*container)["data"]["percentage"].as_integer())));
+#endif
 #else
 	logger::handle().write(logging_level::information,
 		fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(), 
@@ -342,14 +379,23 @@ void transfer_condition(shared_ptr<container::value_container> container)
 #endif
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 	if ((*container)[L"data"][L"completed"].as_bool())
+#else
+	if ((*container)["data"]["completed"].as_bool())
+#endif
 #else
 	if (container->get_value(L"completed")->to_boolean())
 #endif
 	{
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		logger::handle().write(logging_level::information,
 			fmt::format(L"completed download: [{}]", (*container)[L"data"][L"indication_id"].as_string()));
+#else
+		logger::handle().write(logging_level::information,
+			converter::to_wstring(fmt::format("completed download: [{}]", (*container)["data"]["indication_id"].as_string())));
+#endif
 #else
 		logger::handle().write(logging_level::information,
 			fmt::format(L"completed download: [{}]", container->get_value(L"indication_id")->to_string()));
@@ -359,17 +405,27 @@ void transfer_condition(shared_ptr<container::value_container> container)
 
 		return;
 	}
+
 #ifndef __USE_TYPE_CONTAINER__
-	
+#ifdef _WIN32
 	if ((*container)[L"data"][L"percentage"].as_integer() == 100)
+#else
+	if ((*container)["data"]["percentage"].as_integer() == 100)
+#endif
 #else
 	if (container->get_value(L"percentage")->to_ushort() == 100)
 #endif
 	{
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		logger::handle().write(logging_level::information,
 			fmt::format(L"completed download: [{}] success-{}, fail-{}", (*container)[L"data"][L"indication_id"].as_string(),
 				(*container)[L"data"][L"completed_count"].as_integer(), (*container)[L"data"][L"failed_count"].as_integer()));
+#else
+		logger::handle().write(logging_level::information,
+			converter::to_wstring(fmt::format("completed download: [{}] success-{}, fail-{}", (*container)["data"]["indication_id"].as_string(),
+				(*container)["data"]["completed_count"].as_integer(), (*container)["data"]["failed_count"].as_integer())));
+#endif
 #else
 		logger::handle().write(logging_level::information,
 			fmt::format(L"completed download: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(),

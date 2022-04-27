@@ -198,7 +198,9 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		if (!_bridge_line && (*message)[L"header"][L"target_id"].as_string() != _target_id && !contained_snipping_target((*message)[L"header"][L"target_id"].as_string()))
+#ifdef _WIN32
+		if (!_bridge_line && (*message)[L"header"][L"target_id"].as_string() != _target_id && 
+			!contained_snipping_target((*message)[L"header"][L"target_id"].as_string()))
 		{
 			return;
 		}
@@ -208,6 +210,19 @@ namespace network
 		{
 			return;
 		}
+#else
+		if (!_bridge_line && (*message)["header"]["target_id"].as_string() != converter::to_string(_target_id) && 
+			!contained_snipping_target(converter::to_wstring((*message)["header"]["target_id"].as_string())))
+		{
+			return;
+		}
+
+		if (!_bridge_line && !contained_snipping_target(converter::to_wstring((*message)["header"]["target_id"].as_string())) &&
+			!(*message)["header"]["target_sub_id"].is_null() && (*message)["header"]["target_sub_id"].as_string() != converter::to_string(_target_sub_id))
+		{
+			return;
+		}
+#endif
 
 		auto serialize_array = converter::to_array(message->serialize());
 #else
@@ -260,6 +275,7 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		if (_target_id != (*message)[L"header"][L"source_id"].as_string() && _target_sub_id != (*message)[L"header"][L"source_sub_id"].as_string())
 		{
 			return;
@@ -288,6 +304,37 @@ namespace network
 
 			_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_session::load_file_packet, this, placeholders::_1)));
 		}
+#else
+		if (converter::to_string(_target_id) != (*message)["header"]["source_id"].as_string() && 
+			converter::to_string(_target_sub_id) != (*message)["header"]["source_sub_id"].as_string())
+		{
+			return;
+		}
+
+		if ((*message)["header"]["source_id"].is_null())
+		{
+			(*message)["header"]["source_id"] = json::value::string(converter::to_string(_source_id));
+			(*message)["header"]["source_sub_id"] = json::value::string(converter::to_string(_source_sub_id));
+		}
+
+		auto& files = (*message)["data"]["files"].as_array();
+		for (int index = 0; index < files.size(); ++index)
+		{
+			shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
+
+			(*container)["header"]["source_id"] = (*message)["header"]["target_id"];
+			(*container)["header"]["source_sub_id"] = (*message)["header"]["target_sub_id"];
+			(*container)["header"]["target_id"] = (*message)["header"]["gateway_source_id"];
+			(*container)["header"]["target_sub_id"] = (*message)["header"]["gateway_source_sub_id"];
+			(*container)["header"]["message_type"] = json::value::string("request_file");
+
+			(*container)["data"]["indication_id"] = (*message)["data"]["indication_id"];
+			(*container)["data"]["source"] = files[index]["source"];
+			(*container)["data"]["target"] = files[index]["target"];
+
+			_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_session::load_file_packet, this, placeholders::_1)));
+	}
+#endif
 #else
 		if (_target_id != message->source_id() && _target_sub_id != message->source_sub_id())
 		{
@@ -581,6 +628,7 @@ namespace network
 
 		vector<unsigned char> result;
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		append_binary_on_packet(result, converter::to_array((*message)[L"data"][L"indication_id"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)[L"header"][L"source_id"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)[L"header"][L"source_sub_id"].as_string()));
@@ -594,6 +642,21 @@ namespace network
 			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)[L"data"][L"indication_id"].as_string(),
 				(*message)[L"header"][L"source_id"].as_string(), (*message)[L"header"][L"source_sub_id"].as_string(),
 				(*message)[L"header"][L"target_id"].as_string(), (*message)[L"header"][L"target_sub_id"].as_string()));
+#else
+		append_binary_on_packet(result, converter::to_array((*message)["data"]["indication_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)["header"]["source_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)["header"]["source_sub_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)["header"]["target_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)["header"]["target_sub_id"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)["data"]["source"].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)["data"]["target"].as_string()));
+		append_binary_on_packet(result, file::load((*message)["data"]["source"].as_string()));
+
+		logger::handle().write(logging_level::parameter,
+			converter::to_wstring(fmt::format("load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)["data"]["indication_id"].as_string(),
+				(*message)["header"]["source_id"].as_string(), (*message)["header"]["source_sub_id"].as_string(),
+				(*message)["header"]["target_id"].as_string(), (*message)["header"]["target_sub_id"].as_string())));
+#endif
 #else
 		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
 		append_binary_on_packet(result, converter::to_array(message->source_id()));
@@ -875,11 +938,19 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		_target_id = (*message)[L"header"][L"source_id"].as_string();
 		_session_type = (session_types)(*message)[L"data"][L"session_type"].as_integer();
 		_bridge_line = (*message)[L"data"][L"bridge_mode"].as_bool();
 		_auto_echo = (*message)[L"data"][L"auto_echo"].as_bool();
 		_auto_echo_interval_seconds = (unsigned short)(*message)[L"data"][L"auto_echo_interval_seconds"].as_integer();
+#else
+		_target_id = converter::to_wstring((*message)["header"]["source_id"].as_string());
+		_session_type = (session_types)(*message)["data"]["session_type"].as_integer();
+		_bridge_line = (*message)["data"]["bridge_mode"].as_bool();
+		_auto_echo = (*message)["data"]["auto_echo"].as_bool();
+		_auto_echo_interval_seconds = (unsigned short)(*message)["data"]["auto_echo_interval_seconds"].as_integer();
+#endif
 #else
 		_target_id = message->source_id();
 		_session_type = (session_types)message->get_value(L"session_type")->to_short();
@@ -956,17 +1027,30 @@ namespace network
 #ifndef __USE_TYPE_CONTAINER__
 		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
+#ifdef _WIN32
 		(*container)[L"header"][L"source_id"] = json::value::string(_source_id);
 		(*container)[L"header"][L"source_sub_id"] = json::value::string(_source_sub_id);
 		(*container)[L"header"][L"target_id"] = json::value::string(_target_id);
 		(*container)[L"header"][L"target_sub_id"] = json::value::string(_target_sub_id);
 		(*container)[L"header"][L"message_type"] = json::value::string(L"confirm_connection");
+#else
+		(*container)["header"]["source_id"] = json::value::string(converter::to_string(source_id));
+		(*container)["header"]["source_sub_id"] = json::value::string(converter::to_string(_source_sub_id));
+		(*container)["header"]["target_id"] = json::value::string(converter::to_string(_target_id));
+		(*container)["header"]["target_sub_id"] = json::value::string(converter::to_string(_target_sub_id));
+		(*container)["header"]["message_type"] = json::value::string("confirm_connection");
+#endif
 
 		_snipping_targets.clear();
 
 		int index2 = 0;
+#ifdef _WIN32
 		(*container)[L"data"][L"snipping_targets"] = json::value::array();
 		auto& snipping_targets = (*message)[L"data"][L"snipping_targets"].as_array();
+#else
+		(*container)["data"]["snipping_targets"] = json::value::array();
+		auto& snipping_targets = (*message)["data"]["snipping_targets"].as_array();
+#endif
 		for (int index = 0; index < snipping_targets.size(); ++index)
 		{
 			auto target = find(_ignore_snipping_targets.begin(), _ignore_snipping_targets.end(), snipping_targets[index].as_string());
@@ -982,10 +1066,17 @@ namespace network
 
 		generate_key();
 
+#ifdef _WIN32
 		(*container)[L"data"][L"confirm"] = json::value::boolean(true);
 		(*container)[L"data"][L"key"] = json::value::string(_target_sub_id);
 		(*container)[L"data"][L"iv"] = json::value::string(_target_sub_id);
 		(*container)[L"data"][L"encrypt_mode"] = json::value::boolean(_encrypt_mode);
+#else
+		(*container)["data"]["confirm"] = json::value::boolean(true);
+		(*container)["data"]["key"] = json::value::string(converter::to_string(_target_sub_id));
+		(*container)["data"]["iv"] = json::value::string(converter::to_string(_target_sub_id));
+		(*container)["data"]["encrypt_mode"] = json::value::boolean(_encrypt_mode);
+#endif
 #else
 		shared_ptr<value> acceptable_snipping_targets = make_shared<container::container_value>(L"snipping_targets");
 
@@ -1071,6 +1162,7 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		auto& files = (*message)[L"data"][L"files"].as_array();
 		for (int index = 0; index < files.size(); ++index)
 		{
@@ -1088,6 +1180,25 @@ namespace network
 
 			_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_session::load_file_packet, this, placeholders::_1)));
 		}
+#else
+		auto& files = (*message)["data"]["files"].as_array();
+		for (int index = 0; index < files.size(); ++index)
+		{
+			shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
+
+			(*container)["header"]["source_id"] = (*message)["header"]["target_id"];
+			(*container)["header"]["source_sub_id"] = (*message)["header"]["target_sub_id"];
+			(*container)["header"]["target_id"] = (*message)["header"]["source_id"];
+			(*container)["header"]["target_sub_id"] = (*message)["header"]["source_sub_id"];
+			(*container)["header"]["message_type"] = json::value::string("request_file");
+
+			(*container)["data"]["indication_id"] = (*message)["data"]["indication_id"];
+			(*container)["data"]["source"] = files[index]["source"];
+			(*container)["data"]["target"] = files[index]["target"];
+
+			_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_session::load_file_packet, this, placeholders::_1)));
+	}
+#endif
 #else
 		shared_ptr<container::value_container> container = message->copy(false);
 		container->swap_header();
@@ -1123,7 +1234,11 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		if (!(*message)[L"data"][L"response"].is_null())
+#else
+		if (!(*message)["data"]["response"].is_null())
+#endif
 		{
 			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
 
@@ -1132,6 +1247,7 @@ namespace network
 
 		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
+#ifdef _WIN32
 		(*container)[L"header"][L"source_id"] = (*message)[L"header"][L"target_id"];
 		(*container)[L"header"][L"source_sub_id"] = (*message)[L"header"][L"target_sub_id"];
 		(*container)[L"header"][L"target_id"] = (*message)[L"header"][L"source_id"];
@@ -1142,6 +1258,18 @@ namespace network
 		(*container)[L"data"][L"response"] = json::value::boolean(true);
 
 		_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_session::send_packet, this, placeholders::_1)));
+#else
+		(*container)["header"]["source_id"] = (*message)["header"]["target_id"];
+		(*container)["header"]["source_sub_id"] = (*message)["header"]["target_sub_id"];
+		(*container)["header"]["target_id"] = (*message)["header"]["source_id"];
+		(*container)["header"]["target_sub_id"] = (*message)["header"]["source_sub_id"];
+		(*container)["header"]["message_type"] = (*message)["header"]["message_type"];
+
+		(*container)["data"] = (*message)["data"];
+		(*container)["data"]["response"] = json::value::boolean(true);
+
+		_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_session::send_packet, this, placeholders::_1)));
+#endif
 #else
 		vector<shared_ptr<value>> response = (*message)[L"response"];
 		if (!response.empty())
