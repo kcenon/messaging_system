@@ -655,8 +655,8 @@ namespace network
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER_
-#ifdef _WIN32_
+#ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
 #else
 		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));
@@ -695,8 +695,8 @@ namespace network
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER_
-#ifdef _WIN32_
+#ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
 #else
 		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));

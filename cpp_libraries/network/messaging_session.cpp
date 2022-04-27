@@ -599,8 +599,8 @@ namespace network
 
 		logger::handle().write(logging_level::packet, data);
 
-#ifndef __USE_TYPE_CONTAINER_
-#ifdef _WIN32_
+#ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		auto target = _message_handlers.find((*message)[L"header"][L"message_type"].as_string());
 #else
 		auto target = _message_handlers.find(converter::to_wstring((*message)["header"]["message_type"].as_string()));
@@ -1010,8 +1010,8 @@ namespace network
 		}
 
 		// check connection key
-#ifndef __USE_TYPE_CONTAINER_
-#ifdef _WIN32_
+#ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		if (!same_key_check((*message)[L"data"][L"connection_key"]))
 #else
 		if (!same_key_check((*message)["data"]["connection_key"]))

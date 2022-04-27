@@ -300,7 +300,11 @@ void create_data_line(void)
 
 void create_http_listener(void)
 {
+#ifdef _WIN32
 	_http_listener = make_shared<http_listener>(fmt::format(L"http://localhost:{}/restapi", rest_port));
+#else
+	_http_listener = make_shared<http_listener>(fmt::format("http://localhost:{}/restapi", rest_port));
+#endif
 	_http_listener->support(methods::GET, get_method);
 	_http_listener->support(methods::POST, post_method);
 	_http_listener->open()
@@ -375,7 +379,11 @@ void transfer_condition(shared_ptr<json::value> container)
 #ifdef __USE_TYPE_CONTAINER__
 	if (container->message_type() != L"transfer_condition")
 #else
+#ifdef _WIN32
 	if ((*container)[L"header"][L"message_type"].as_string() != L"transfer_condition")
+#else
+	if ((*container)["header"]["message_type"].as_string() != "transfer_condition")
+#endif
 #endif
 	{
 		return;
@@ -392,6 +400,7 @@ void transfer_condition(shared_ptr<json::value> container)
 	(*condition)[L"percentage"] = json::value::number(container->get_value(L"percentage")->to_ushort());
 	(*condition)[L"completed"] = json::value::boolean(container->get_value(L"completed")->to_boolean());
 #else
+#ifdef _WIN32
 	indication_id = (*container)[L"data"][L"indication_id"].as_string();
 
 	(*condition)[L"message_type"] = (*container)[L"header"][L"message_type"];
@@ -399,7 +408,15 @@ void transfer_condition(shared_ptr<json::value> container)
 	(*condition)[L"percentage"] = (*container)[L"data"][L"percentage"];
 	(*condition)[L"completed"] = (*container)[L"data"][L"completed"].is_null() ?
 		json::value::boolean(false) : (*container)[L"data"][L"completed"];
+#else
+	indication_id = converter::to_wstring((*container)["data"]["indication_id"].as_string());
 
+	(*condition)["message_type"] = (*container)["header"]["message_type"];
+	(*condition)["indication_id"] = (*container)["data"]["indication_id"];
+	(*condition)["percentage"] = (*container)["data"]["percentage"];
+	(*condition)["completed"] = (*container)["data"]["completed"].is_null() ?
+		json::value::boolean(false) : (*container)["data"]["completed"];
+#endif
 #endif
 	auto indication = _messages.find(indication_id);
 	if (indication == _messages.end())
@@ -418,6 +435,7 @@ void transfer_files(shared_ptr<json::value> request)
 #ifndef __USE_TYPE_CONTAINER__
 	shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
+#ifdef _WIN32
 	(*container)[L"header"][L"target_id"] = json::value::string(L"main_server");
 	(*container)[L"header"][L"target_sub_id"] = json::value::string(L"");
 	(*container)[L"header"][L"message_type"] = (*request)[L"message_type"];
@@ -432,6 +450,22 @@ void transfer_files(shared_ptr<json::value> request)
 		(*container)[L"data"][L"files"][index][L"target"] = file[L"target"];
 		index++;
 	}
+#else
+	(*container)["header"]["target_id"] = json::value::string("main_server");
+	(*container)["header"]["target_sub_id"] = json::value::string("");
+	(*container)["header"]["message_type"] = (*request)["message_type"];
+
+	(*container)["data"]["indication_id"] = (*request)["indication_id"];
+
+	int index = 0;
+	(*container)["data"]["files"] = json::value::array();
+	for (auto& file : file_array)
+	{
+		(*container)["data"]["files"][index]["source"] = file["source"];
+		(*container)["data"]["files"][index]["target"] = file["target"];
+		index++;
+	}
+#endif
 #else
 	vector<shared_ptr<container::value>> files;
 
@@ -459,7 +493,11 @@ void get_method(http_request request)
 		return;
 	}
 
+#ifdef _WIN32
 	auto indication = _messages.find(request.headers()[L"indication_id"]);
+#else
+	auto indication = _messages.find(converter::to_wstring(request.headers()["indication_id"]));
+#endif
 	if (indication == _messages.end())
 	{
 		request.reply(status_codes::NotAcceptable);
@@ -469,7 +507,11 @@ void get_method(http_request request)
 	// do something
 	vector<shared_ptr<json::value>> messages;
 
+#ifdef _WIN32
 	if (request.headers()[L"previous_message"] == L"clear")
+#else
+	if (request.headers()["previous_message"] == "clear")
+#endif
 	{
 		messages.swap(indication->second);
 	}
@@ -485,15 +527,27 @@ void get_method(http_request request)
 	}
 
 	json::value answer = json::value::object(true);
+
+#ifdef _WIN32
 	answer[L"messages"] = json::value::array();
+#else
+	answer["messages"] = json::value::array();
+#endif
 
 	int index = 0;
 	for (auto& message : messages)
 	{
+#ifdef _WIN32
 		answer[L"messages"][index][L"message_type"] = (*message)[L"message_type"];
 		answer[L"messages"][index][L"indication_id"] = (*message)[L"indication_id"];
 		answer[L"messages"][index][L"percentage"] = (*message)[L"percentage"];
 		answer[L"messages"][index][L"completed"] = (*message)[L"completed"];
+#else
+		answer["messages"][index]["message_type"] = (*message)["message_type"];
+		answer["messages"][index]["indication_id"] = (*message)["indication_id"];
+		answer["messages"][index]["percentage"] = (*message)["percentage"];
+		answer["messages"][index]["completed"] = (*message)["completed"];
+#endif
 
 		index++;
 	}
@@ -509,10 +563,18 @@ void post_method(http_request request)
 		request.reply(status_codes::NoContent);
 		return;
 	}
-	
-	logger::handle().write(logging_level::packet, fmt::format(L"post method: {}", action.serialize()));
 
+#ifdef _WIN32
+	logger::handle().write(logging_level::packet, fmt::format(L"post method: {}", action.serialize()));
+#else
+	logger::handle().write(logging_level::packet, converter::to_wstring(fmt::format("post method: {}", action.serialize())));
+#endif
+
+#ifdef _WIN32
 	auto message_type = _registered_restapi.find(action[L"message_type"].as_string());
+#else
+	auto message_type = _registered_restapi.find(converter::to_wstring(action[L"message_type"].as_string()));
+#endif
 	if (message_type != _registered_restapi.end())
 	{
 		message_type->second(make_shared<json::value>(action));

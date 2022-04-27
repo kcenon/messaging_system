@@ -2,6 +2,7 @@
 
 #include "logging.h"
 #include "messaging_server.h"
+#include "converting.h"
 #include "compressing.h"
 #include "file_manager.h"
 #include "argument_parser.h"
@@ -30,6 +31,7 @@ constexpr auto PROGRAM_NAME = L"main_server";
 using namespace std;
 using namespace logging;
 using namespace network;
+using namespace converting;
 using namespace compressing;
 using namespace argument_parser;
 
@@ -184,7 +186,7 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--compress_block_size");
 	if (target != arguments.end())
 	{
-		compress_block_size = (unsigned short)_wtoi(target->second.c_str());
+		compress_block_size = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--connection_key");
@@ -196,31 +198,31 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--server_port");
 	if (target != arguments.end())
 	{
-		server_port = (unsigned short)_wtoi(target->second.c_str());
+		server_port = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--high_priority_count");
 	if (target != arguments.end())
 	{
-		high_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		high_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--normal_priority_count");
 	if (target != arguments.end())
 	{
-		normal_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		normal_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--low_priority_count");
 	if (target != arguments.end())
 	{
-		low_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		low_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--session_limit_count");
 	if (target != arguments.end())
 	{
-		session_limit_count = (unsigned short)_wtoi(target->second.c_str());
+		session_limit_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--write_console_mode");
@@ -242,7 +244,7 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--logging_level");
 	if (target != arguments.end())
 	{
-		log_level = (logging_level)_wtoi(target->second.c_str());
+		log_level = (logging_level)atoi(converter::to_string(target->second).c_str());
 	}
 
 	return true;
@@ -377,6 +379,7 @@ void upload_files(shared_ptr<container::value_container> container)
 #ifndef __USE_TYPE_CONTAINER__
 		shared_ptr<json::value> start_message = make_shared<json::value>(json::value::object(true));
 
+#ifdef _WIN32
 		(*start_message)[L"header"][L"source_id"] = json::value::string(L"");
 		(*start_message)[L"header"][L"source_sub_id"] = json::value::string(L"");
 		(*start_message)[L"header"][L"target_id"] = (*container)[L"data"][L"gateway_source_id"];
@@ -385,6 +388,16 @@ void upload_files(shared_ptr<container::value_container> container)
 
 		(*start_message)[L"data"][L"indication_id"] = (*container)[L"data"][L"indication_id"];
 		(*start_message)[L"data"][L"percentage"] = json::value::number(0);
+#else
+		(*start_message)["header"]["source_id"] = json::value::string("");
+		(*start_message)["header"]["source_sub_id"] = json::value::string(L");
+		(*start_message)["header"]["target_id"] = (*container)["data"]["gateway_source_id"];
+		(*start_message)["header"]["target_sub_id"] = (*container)["data"]["gateway_source_sub_id"];
+		(*start_message)["header"]["message_type"] = json::value::string("transfer_condition");
+
+		(*start_message)["data"]["indication_id"] = (*container)["data"]["indication_id"];
+		(*start_message)["data"]["percentage"] = json::value::number(0);
+#endif
 
 		_main_server->send(start_message, session_types::file_line);
 #else
@@ -401,13 +414,22 @@ void upload_files(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 	shared_ptr<json::value> temp = make_shared<json::value>(json::value::parse(container->serialize()));
-	
+
+#ifdef _WIN32
 	(*temp)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
 	(*temp)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
 	(*temp)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
 	(*temp)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
 
 	(*temp)[L"header"][L"message_type"] = json::value::string(L"request_files");
+#else
+	(*temp)["header"]["source_id"] = (*container)["header"]["target_id"];
+	(*temp)["header"]["source_sub_id"] = (*container)["header"]["target_sub_id"];
+	(*temp)["header"]["target_id"] = (*container)["header"]["source_id"];
+	(*temp)["header"]["target_sub_id"] = (*container)["header"]["source_sub_id"];
+
+	(*temp)["header"]["message_type"] = json::value::string("request_files");
+#endif
 #else
 	shared_ptr<container::value_container> temp = container->copy();
 	temp->swap_header();
