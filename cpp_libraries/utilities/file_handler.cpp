@@ -1,11 +1,17 @@
 #include "file_handler.h"
 
+#include "converting.h"
+
 #include <fcntl.h>
 #include <fstream>
 #include <filesystem>
 
+#include <string.h>
+
 namespace file_handler
 {
+	using namespace converting;
+
 	bool file::remove(const wstring& path)
 	{
 		if (!filesystem::exists(path))
@@ -25,7 +31,11 @@ namespace file_handler
 
 		size_t file_size = filesystem::file_size(path);
 
+#ifdef _WIN32
 		fstream stream(path, ios::in | ios::binary);
+#else
+		fstream stream(converter::to_string(path), ios::in | ios::binary);
+#endif
 		if (!stream.is_open())
 		{
 			return vector<unsigned char>();
@@ -56,7 +66,11 @@ namespace file_handler
 			filesystem::create_directories(target_path.parent_path());
 		}
 
+#ifdef _WIN32
 		fstream stream(path, ios::out | ios::binary | ios::trunc);
+#else
+		fstream stream(converter::to_string(path), ios::out | ios::binary | ios::trunc);
+#endif
 		if (!stream.is_open())
 		{
 			return false;
@@ -70,7 +84,11 @@ namespace file_handler
 
 	bool file::append(const wstring& source, const vector<unsigned char>& data)
 	{
+#ifdef _WIN32
 		fstream stream(source, ios::out | ios::binary | ios::app);
+#else
+		fstream stream(converter::to_string(source), ios::out | ios::binary | ios::app);
+#endif
 		if (!stream.is_open())
 		{
 			return false;

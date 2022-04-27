@@ -175,7 +175,11 @@ namespace logging
 				source = fmt::format(L"{}{}.{}", _store_log_root_path, _store_log_file_name, _store_log_extention).c_str();
 			}
 
+#ifdef _WIN32
 			wfstream stream(source, ios::out | ios::app);
+#else
+			fstream stream(converter::to_string(source), ios::out | ios::app);
+#endif
 			if (!stream.is_open())
 			{
 				return;
@@ -200,7 +204,11 @@ namespace logging
 			}
 			buffers.clear();
 
+#ifdef _WIN32
 			stream << string_buffer.str();
+#else
+			stream << converter::to_string(string_buffer.str());
+#endif
 			string_buffer.str(L"");
 
 			stream.flush();
@@ -222,7 +230,11 @@ namespace logging
 			source = fmt::format(L"{}{}.{}", _store_log_root_path, _store_log_file_name, _store_log_extention).c_str();
 		}
 
+#ifdef _WIN32
 		wfstream stream(source, ios::out | ios::app);
+#else
+		fstream stream(converter::to_string(source), ios::out | ios::app);
+#endif
 		if (!stream.is_open())
 		{
 			return;
@@ -239,7 +251,11 @@ namespace logging
 			{
 				wcout << source;
 			}
+#ifdef _WIN32
 			stream << source;
+#else
+			stream << converter::to_string(source);
+#endif
 		}
 		else
 		{
@@ -248,7 +264,11 @@ namespace logging
 			{
 				wcout << source;
 			}
+#ifdef _WIN32
 			stream << source;
+#else
+			stream << converter::to_string(source);
+#endif
 		}
 
 		stream.flush();

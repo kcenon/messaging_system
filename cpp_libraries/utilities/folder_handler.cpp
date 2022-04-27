@@ -1,5 +1,6 @@
 ﻿#include "folder_handler.h"
 
+#include <algorithm>
 #include <filesystem>
 
 namespace folder_handler
