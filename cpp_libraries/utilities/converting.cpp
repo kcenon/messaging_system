@@ -109,6 +109,11 @@ namespace converting
 		return vector<unsigned char>(temp.data(), temp.data() + temp.size());
 	}
 
+	vector<unsigned char> converter::to_array(const string& value)
+	{
+		return to_array(to_wstring(value));
+	}
+
 	wstring converter::to_wstring(const vector<unsigned char>& value)
 	{
 		if (value.empty())
@@ -124,6 +129,11 @@ namespace converting
 
 		// UTF-8 no BOM
 		return to_wstring(string((char*)value.data(), value.size()));
+	}
+
+	string converter::to_string(const vector<unsigned char>& value)
+	{
+		return to_string(to_wstring(value));
 	}
 
 	vector<unsigned char> converter::from_base64(const wstring& value)

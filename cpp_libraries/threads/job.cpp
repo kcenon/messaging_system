@@ -6,16 +6,10 @@
 #include "folder_handler.h"
 #include "file_handler.h"
 
-#ifndef __USE_TYPE_CONTAINER__
-#include "cpprest/json.h"
-#else
-#include "container.h"
-#include "values/string_value.h"
-#endif
-
 #include "fmt/xchar.h"
 #include "fmt/format.h"
 
+#include <chrono>
 #include <future>
 
 #ifdef __USE_CHAKRA_CORE__
@@ -33,13 +27,6 @@
 namespace threads
 {
 	using namespace logging;
-
-#ifndef __USE_TYPE_CONTAINER__
-	using namespace web;
-#else
-	using namespace container;
-#endif
-
 	using namespace converting;
 	using namespace file_handler;
 	using namespace folder_handler;
@@ -166,16 +153,23 @@ namespace threads
 
 	void job::working(const priorities& worker_priority)
 	{
-#ifdef __USE_CHAKRA_CORE__
 		auto start = logger::handle().chrono_start();
 
-		shared_ptr<value_container> source_data = make_shared<value_container>(_data);
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> source_data = make_shared<json::value>(json::value::parse(converter::to_string(_data)));
+#else
+		shared_ptr<value_container> source_data = make_shared<value_container>(_data, true);
+#endif
 		if (source_data == nullptr)
 		{
 			return;
 		}
 
+#ifndef __USE_TYPE_CONTAINER__
+		wstring script = (*source_data)[L"data"][L"scripts"].as_string();
+#else
 		wstring script = source_data->get_value(L"scripts")->to_string();
+#endif
 		if (script.empty())
 		{
 			logger::handle().write(logging_level::information, do_script(converter::to_wstring(_data)), start);
@@ -183,25 +177,40 @@ namespace threads
 			return;
 		}
 
+#ifndef __USE_TYPE_CONTAINER__
+		if ((*source_data)[L"header"][L"message_type"].as_string() == L"data_container")
+#else
 		if (source_data->message_type() == L"data_container")
+#endif
 		{
 			logger::handle().write(logging_level::information, do_script(script), start);
 		}
 		else
 		{
 			shared_ptr<job_pool> current_job_pool = _job_pool.lock();
-			if (current_job_pool != nullptr)
+			if (current_job_pool == nullptr)
 			{
-				shared_ptr<value_container> target_data = source_data->copy(false);
-				target_data->swap_header();
-				target_data->add(make_shared<string_value>(L"script_result", do_script(script)));
-
-				current_job_pool->push(make_shared<job>(_priority, target_data->serialize_array()));
-				current_job_pool.reset();
+				return;
 			}
-		}
+
+#ifndef __USE_TYPE_CONTAINER__
+			shared_ptr<json::value> target_data = make_shared<json::value>(json::value::parse(converter::to_string(_data)));
+			(*target_data)[L"header"][L"source_id"] = (*source_data)[L"header"][L"target_id"];
+			(*target_data)[L"header"][L"source_sub_id"] = (*source_data)[L"header"][L"target_sub_id"];
+			(*target_data)[L"header"][L"target_id"] = (*source_data)[L"header"][L"source_id"];
+			(*target_data)[L"header"][L"target_sub_id"] = (*source_data)[L"header"][L"source_sub_id"];
+			(*target_data)[L"data"][L"script_result"] = json::value::string(do_script(script));
+
+			current_job_pool->push(make_shared<job>(_priority, converter::to_array(target_data->serialize())));
 #else
+			shared_ptr<value_container> target_data = source_data->copy(false);
+			target_data->swap_header();
+			target_data->add(make_shared<string_value>(L"script_result", do_script(script)));
+
+			current_job_pool->push(make_shared<job>(_priority, target_data->serialize_array()));
 #endif
+			current_job_pool.reset();
+		}
 	}
 
 	wstring job::do_script(const wstring& script)

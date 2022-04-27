@@ -18,14 +18,14 @@
 #include <thread>
 #include "asio.hpp"
 
-using namespace std;
-
-#ifndef __USE_TYPE_CONTAINER__
-using namespace web;
-#endif
-
 namespace network
 {
+	using namespace std;
+
+#ifndef __USE_TYPE_CONTAINER__
+	using namespace web;
+#endif
+
 	class messaging_client : public enable_shared_from_this<messaging_client>, data_handling
 	{
 	public:

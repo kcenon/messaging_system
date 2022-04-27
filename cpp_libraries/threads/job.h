@@ -2,6 +2,13 @@
 
 #include "job_priorities.h"
 
+#ifndef __USE_TYPE_CONTAINER__
+#include "cpprest/json.h"
+#else
+#include "container.h"
+#include "values/string_value.h"
+#endif
+
 #include <string>
 #include <vector>
 #include <memory>
@@ -11,6 +18,12 @@ using namespace std;
 
 namespace threads
 {
+#ifndef __USE_TYPE_CONTAINER__
+	using namespace web;
+#else
+	using namespace container;
+#endif
+
 	class job_pool;
 	class job : public enable_shared_from_this<job>
 	{

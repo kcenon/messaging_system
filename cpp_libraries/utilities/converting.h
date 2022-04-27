@@ -20,7 +20,9 @@ namespace converting
 
 	public:
 		static vector<unsigned char> to_array(const wstring& value);
+		static vector<unsigned char> to_array(const string& value);
 		static wstring to_wstring(const vector<unsigned char>& value);
+		static string to_string(const vector<unsigned char>& value);
 
 	public:
 		static vector<unsigned char> from_base64(const wstring& value);
