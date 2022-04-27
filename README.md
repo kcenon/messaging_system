@@ -23,8 +23,8 @@ Secondly, should install libraries like below followed vcpkg install rule,
 2. [fmt library](https://github.com/fmtlib/fmt): to support string formatting
 3. [cryptopp library](https://www.cryptopp.com/): to support data encryption
 4. [lz4 library](https://github.com/lz4/lz4): to support data compression
-5. ~~[Chakra library](https://github.com/chakra-core/ChakraCore): to support javascript engine~~
-6. [crossguid library](https://github.com/graeme-hill/crossguid): to support creating guid
+5. [crossguid library](https://github.com/graeme-hill/crossguid): to support creating guid
+6. [cpprestsdk library](https://github.com/microsoft/cpprestsdk): to support RESTAPI server & client
 
 After all installations, you can build this project on Both Linux and Windows
 
