@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
 	logger::handle().set_write_console(write_console);
 	logger::handle().set_target_level(log_level);
-	logger::handle().start(PROGRAM_NAME, locale("ko_KR.UTF-8"));
+	logger::handle().start(PROGRAM_NAME);
 
 	vector<thread> threads;
 	for (unsigned short thread_index = 0; thread_index < 10; ++thread_index)
