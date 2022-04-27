@@ -1,5 +1,3 @@
-echo ""
-
 apt update
 apt upgrade -y
 
