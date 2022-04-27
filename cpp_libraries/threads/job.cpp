@@ -20,6 +20,8 @@
 
 #ifdef __USE_CHAKRA_CORE__
 #include "ChakraCore.h"
+#else
+#include "Python.h"
 #endif
 
 #ifdef __OSX__
@@ -233,6 +235,12 @@ namespace threads
 
 			return resultW;
 #else
+			Py_Initialize();
+
+			PyRun_SimpleString(converter::to_string(script).c_str());
+
+			Py_Finalize();
+
 			return L"";
 #endif
 		}
