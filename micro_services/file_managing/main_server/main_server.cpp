@@ -353,6 +353,7 @@ void upload_files(shared_ptr<container::value_container> container)
 	vector<wstring> target_paths;
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 	auto& files = (*container)[L"data"][L"files"].as_array();
 	for (int index = 0; index < files.size(); ++index)
 	{
@@ -362,6 +363,17 @@ void upload_files(shared_ptr<container::value_container> container)
 	_file_manager->set((*container)[L"data"][L"indication_id"].as_string(),
 		(*container)[L"data"][L"gateway_source_id"].as_string(),
 		(*container)[L"data"][L"gateway_source_sub_id"].as_string(), target_paths);
+#else
+	auto& files = (*container)["data"]["files"].as_array();
+	for (int index = 0; index < files.size(); ++index)
+	{
+		target_paths.push_back(converter::to_wstring(files[index]["target"].as_string()));
+	}
+
+	_file_manager->set(converter::to_wstring((*container)["data"]["indication_id"].as_string()),
+		converter::to_wstring((*container)["data"]["gateway_source_id"].as_string()),
+		converter::to_wstring((*container)["data"]["gateway_source_sub_id"].as_string()), target_paths);
+#endif
 #else
 	vector<shared_ptr<container::value>> files = container->value_array(L"file");
 	for (auto& file : files)
