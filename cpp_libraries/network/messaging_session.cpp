@@ -584,7 +584,11 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
+#else
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));
+#endif
 #else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
 #endif
@@ -595,8 +599,12 @@ namespace network
 
 		logger::handle().write(logging_level::packet, data);
 
-#ifndef __USE_TYPE_CONTAINER__
-		auto target = _message_handlers.find((*message.get())[L"header"][L"message_type"].as_string());
+#ifndef __USE_TYPE_CONTAINER_
+#ifdef _WIN32_
+		auto target = _message_handlers.find((*message)[L"header"][L"message_type"].as_string());
+#else
+		auto target = _message_handlers.find(converter::to_wstring((*message)["header"]["message_type"].as_string()));
+#endif
 #else
 		auto target = _message_handlers.find(message->message_type());
 #endif
@@ -617,7 +625,7 @@ namespace network
 
 #ifndef __USE_TYPE_CONTAINER__
 		auto temp = converter::to_wstring(data);
-		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));
 #else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data);
 #endif
@@ -650,7 +658,7 @@ namespace network
 		append_binary_on_packet(result, converter::to_array((*message)["header"]["target_sub_id"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)["data"]["source"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)["data"]["target"].as_string()));
-		append_binary_on_packet(result, file::load((*message)["data"]["source"].as_string()));
+		append_binary_on_packet(result, file::load(converter::to_wstring((*message)["data"]["source"].as_string())));
 
 		logger::handle().write(logging_level::parameter,
 			converter::to_wstring(fmt::format("load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)["data"]["indication_id"].as_string(),
@@ -1002,8 +1010,12 @@ namespace network
 		}
 
 		// check connection key
-#ifndef __USE_TYPE_CONTAINER__
+#ifndef __USE_TYPE_CONTAINER_
+#ifdef _WIN32_
 		if (!same_key_check((*message)[L"data"][L"connection_key"]))
+#else
+		if (!same_key_check((*message)["data"]["connection_key"]))
+#endif
 #else
 		if (!same_key_check(message->get_value(L"connection_key")))
 #endif
@@ -1034,7 +1046,7 @@ namespace network
 		(*container)[L"header"][L"target_sub_id"] = json::value::string(_target_sub_id);
 		(*container)[L"header"][L"message_type"] = json::value::string(L"confirm_connection");
 #else
-		(*container)["header"]["source_id"] = json::value::string(converter::to_string(source_id));
+		(*container)["header"]["source_id"] = json::value::string(converter::to_string(_source_id));
 		(*container)["header"]["source_sub_id"] = json::value::string(converter::to_string(_source_sub_id));
 		(*container)["header"]["target_id"] = json::value::string(converter::to_string(_target_id));
 		(*container)["header"]["target_sub_id"] = json::value::string(converter::to_string(_target_sub_id));
@@ -1053,15 +1065,23 @@ namespace network
 #endif
 		for (int index = 0; index < snipping_targets.size(); ++index)
 		{
+#ifdef _WIN32
 			auto target = find(_ignore_snipping_targets.begin(), _ignore_snipping_targets.end(), snipping_targets[index].as_string());
+#else
+			auto target = find(_ignore_snipping_targets.begin(), _ignore_snipping_targets.end(), converter::to_wstring(snipping_targets[index].as_string()));
+#endif
 			if (target != _ignore_snipping_targets.end())
 			{
 				continue;
 			}
 
+#ifdef _WIN32
 			_snipping_targets.push_back(snipping_targets[index].as_string());
-
 			(*container)[L"data"][L"snipping_targets"][index2++] = json::value::string(snipping_targets[index].as_string());
+#else
+			_snipping_targets.push_back(converter::to_wstring(snipping_targets[index].as_string()));
+			(*container)["data"]["snipping_targets"][index2++] = json::value::string(snipping_targets[index].as_string());
+#endif
 		}
 
 		generate_key();
@@ -1236,14 +1256,19 @@ namespace network
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
 		if (!(*message)[L"data"][L"response"].is_null())
-#else
-		if (!(*message)["data"]["response"].is_null())
-#endif
 		{
 			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
 
 			return;
 		}
+#else
+		if (!(*message)["data"]["response"].is_null())
+		{
+			logger::handle().write(logging_level::information, converter::to_wstring(fmt::format("received echo: {}", message->serialize())));
+
+			return;
+		}
+#endif
 
 		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
@@ -1309,7 +1334,11 @@ namespace network
 #endif
 	{
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		if (!key.is_null() && _connection_key == key.as_string())
+#else
+		if (!key.is_null() && converter::to_string(_connection_key) == key.as_string())
+#endif
 #else
 		if (key != nullptr && _connection_key == key->to_string())
 #endif

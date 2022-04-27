@@ -211,7 +211,7 @@ namespace threads
 			(*target_data)[L"data"][L"script_result"] = json::value::string(do_script(script));
 #else
 			(*target_data)["header"]["source_id"] = (*source_data)["header"]["target_id"];
-			(*target_data)["header"]["source_sub_id"] = (*source_data)[L"header"]["target_sub_id"];
+			(*target_data)["header"]["source_sub_id"] = (*source_data)["header"]["target_sub_id"];
 			(*target_data)["header"]["target_id"] = (*source_data)["header"]["source_id"];
 			(*target_data)["header"]["target_sub_id"] = (*source_data)["header"]["source_sub_id"];
 			(*target_data)["data"]["script_result"] = json::value::string(converter::to_string(do_script(script)));

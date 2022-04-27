@@ -127,9 +127,9 @@ int main(int argc, char* argv[])
 	(*container)["data"]["files"] = json::value::array();
 	for (auto& source : sources)
 	{
-		(*container)["data"]["files"][index]["source"] = json::value::string(source);
+		(*container)["data"]["files"][index]["source"] = json::value::string(converter::to_string(source));
 		(*container)["data"]["files"][index]["target"] =
-			json::value::string(converter::replace2(source, source_folder, target_folder));
+			json::value::string(converter::to_string(converter::replace2(source, source_folder, target_folder)));
 		index++;
 	}
 #endif
@@ -221,7 +221,7 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--server_port");
 	if (target != arguments.end())
 	{
-		server_port = (unsigned short)_wtoi(target->second.c_str());
+		server_port = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--source_folder");
@@ -239,19 +239,19 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--high_priority_count");
 	if (target != arguments.end())
 	{
-		high_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		high_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--normal_priority_count");
 	if (target != arguments.end())
 	{
-		normal_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		normal_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--low_priority_count");
 	if (target != arguments.end())
 	{
-		low_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		low_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--write_console_mode");
@@ -273,7 +273,7 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--logging_level");
 	if (target != arguments.end())
 	{
-		log_level = (logging_level)_wtoi(target->second.c_str());
+		log_level = (logging_level)atoi(converter::to_string(target->second).c_str());
 	}
 
 	return true;
@@ -297,8 +297,12 @@ void received_message(shared_ptr<container::value_container> container)
 		return;
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
+#ifndef __USE_TYPE_CONTAINER_
+#ifdef _WIN32
 	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
+#else
+	auto message_type = _registered_messages.find(converter::to_wstring((*container)["header"]["message_type"].as_string()));
+#endif
 #else
 	auto message_type = _registered_messages.find(container->message_type());
 #endif
@@ -309,7 +313,11 @@ void received_message(shared_ptr<container::value_container> container)
 		return;
 	}
 
+#ifdef _WIN32
 	logger::handle().write(logging_level::sequence, fmt::format(L"unknown message: {}", container->serialize()));
+#else
+	logger::handle().write(logging_level::sequence, converter::to_wstring(fmt::format("unknown message: {}", container->serialize())));
+#endif
 }
 
 #ifndef __USE_TYPE_CONTAINER__

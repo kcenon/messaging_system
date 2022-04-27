@@ -81,16 +81,26 @@ int main(int argc, char* argv[])
 	_thread_pool->append(make_shared<thread_worker>(priorities::normal, vector<priorities> { priorities::high, priorities::low }), true);
 	_thread_pool->append(make_shared<thread_worker>(priorities::low, vector<priorities> { priorities::high, priorities::normal }), true);
 
+#ifdef _WIN32
 	_rest_client = make_shared<http_client>(fmt::format(L"http://localhost:{}/restapi", server_port));
+#else
+	_rest_client = make_shared<http_client>(fmt::format("http://localhost:{}/restapi", server_port));
+#endif
 
 	_future_status = _promise_status.get_future();
 	
 	json::value container = json::value::object(true);
 
+#ifdef _WIN32
 	container[L"message_type"] = json::value::string(L"download_files");
 	container[L"indication_id"] = json::value::string(L"download_test");
+#else
+	container["message_type"] = json::value::string("download_files");
+	container["indication_id"] = json::value::string("download_test");
+#endif
 
 	int index = 0;
+#ifdef _WIN32
 	container[L"files"] = json::value::array();
 	for (auto& source : sources)
 	{
@@ -98,6 +108,15 @@ int main(int argc, char* argv[])
 		container[L"files"][index][L"target"] = json::value::string(converter::replace2(source, source_folder, target_folder));
 		index++;
 	}
+#else
+	container["files"] = json::value::array();
+	for (auto& source : sources)
+	{
+		container["files"][index]["source"] = json::value::string(converter::to_string(source));
+		container["files"][index]["target"] = json::value::string(converter::to_string(converter::replace2(source, source_folder, target_folder)));
+		index++;
+	}
+#endif
 
 	_thread_pool->push(make_shared<job>(priorities::high, converter::to_array(container.serialize()), &post_request));
 	_thread_pool->push(make_shared<job>(priorities::low, &get_request));
@@ -115,9 +134,14 @@ int main(int argc, char* argv[])
 void get_request(void)
 {
 	http_request request(methods::GET);
+
+#ifdef _WIN32
 	request.headers().add(L"previous_message", L"clear");
 	request.headers().add(L"indication_id", L"download_test");
-
+#else
+	request.headers().add("previous_message", "clear");
+	request.headers().add("indication_id", "download_test");
+#endif
 	_rest_client->request(request)
 		.then([](http_response response)
 			{
@@ -136,6 +160,7 @@ void get_request(void)
 					return;
 				}
 
+#ifdef _WIN32
 				auto& messages = answer[L"messages"].as_array();
 				for (auto& message : messages)
 				{
@@ -176,6 +201,48 @@ void get_request(void)
 
 					return;
 				}
+#else
+				auto& messages = answer["messages"].as_array();
+				for (auto& message : messages)
+				{
+					if (message["percentage"].as_integer() == 0)
+					{
+						logger::handle().write(logging_level::information,
+							converter::to_wstring(fmt::format("started {}: [{}]", message["message_type"].as_string(),
+								message["indication_id"].as_string())));
+						
+						continue;
+					}
+
+					logger::handle().write(logging_level::information,
+						converter::to_wstring(fmt::format("received percentage: [{}] {}%", message["indication_id"].as_string(),
+							message["percentage"].as_integer())));
+
+					if (message["percentage"].as_integer() != 100)
+					{
+						continue;
+					}
+
+					if (message["completed"].as_bool())
+					{
+						logger::handle().write(logging_level::information,
+							converter::to_wstring(fmt::format("completed {}: [{}]", message["message_type"].as_string(),
+								message["indication_id"].as_string())));
+					
+						_promise_status.set_value(true);
+
+						return;
+					}
+
+					logger::handle().write(logging_level::information,
+						converter::to_wstring(fmt::format("cannot complete {}: [{}]", message["message_type"].as_string(),
+							message["indication_id"].as_string())));
+
+					_promise_status.set_value(false);
+
+					return;
+				}
+#endif
 
 				_thread_pool->push(make_shared<job>(priorities::low, &get_request));
 			})
@@ -184,14 +251,26 @@ void get_request(void)
 
 void post_request(const vector<unsigned char>& data)
 {
+#ifdef _WIN32
 	auto request_value = json::value::parse(converter::to_wstring(data));
-	
+#else
+	auto request_value = json::value::parse(converter::to_string(data));
+#endif
+
+#ifdef _WIN32
 	_rest_client->request(methods::POST, L"", request_value)
+#else
+	_rest_client->request(methods::POST, "", request_value)
+#endif
 		.then([](http_response response)
 			{
 				if (response.status_code() == status_codes::OK)
 				{
+#ifdef _WIN32
 					logger::handle().write(logging_level::information, response.extract_string().get());
+#else
+					logger::handle().write(logging_level::information, converter::to_wstring(response.extract_string().get()));
+#endif
 				}
 			})
 		.wait();
@@ -214,7 +293,7 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--server_port");
 	if (target != arguments.end())
 	{
-		server_port = (unsigned short)_wtoi(target->second.c_str());
+		server_port = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--source_folder");
@@ -248,7 +327,7 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--logging_level");
 	if (target != arguments.end())
 	{
-		log_level = (logging_level)_wtoi(target->second.c_str());
+		log_level = (logging_level)atoi(converter::to_string(target->second).c_str());
 	}
 
 	return true;

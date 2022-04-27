@@ -398,7 +398,11 @@ namespace network
 		}
 #endif
 
+#ifdef _WIN32
 		auto& files = (*message)[L"data"][L"files"].as_array();
+#else
+		auto& files = (*message)["data"]["files"].as_array();
+#endif
 		for (int index = 0; index < files.size(); ++index)
 		{
 			shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
@@ -651,8 +655,12 @@ namespace network
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
+#ifndef __USE_TYPE_CONTAINER_
+#ifdef _WIN32_
 		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
+#else
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));
+#endif
 #else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
 #endif
@@ -664,7 +672,11 @@ namespace network
 		logger::handle().write(logging_level::packet, data);
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 		auto target = _message_handlers.find((*message)[L"header"][L"message_type"].as_string());
+#else
+		auto target = _message_handlers.find(converter::to_wstring((*message)["header"]["message_type"].as_string()));
+#endif
 #else
 		auto target = _message_handlers.find(message->message_type());
 #endif
@@ -683,8 +695,12 @@ namespace network
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
+#ifndef __USE_TYPE_CONTAINER_
+#ifdef _WIN32_
 		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
+#else
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));
+#endif
 #else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
 #endif
@@ -717,7 +733,7 @@ namespace network
 		append_binary_on_packet(result, converter::to_array((*message)["header"]["target_sub_id"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)["data"]["source"].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)["data"]["target"].as_string()));
-		append_binary_on_packet(result, file::load((*message)["data"]["source"].as_string()));
+		append_binary_on_packet(result, file::load(converter::to_wstring((*message)["data"]["source"].as_string())));
 
 		logger::handle().write(logging_level::parameter,
 			converter::to_wstring(fmt::format("load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)["data"]["indication_id"].as_string(),
@@ -1042,11 +1058,15 @@ namespace network
 		_iv = converter::to_wstring((*message)["data"]["iv"].as_string());
 		_encrypt_mode = (*message)["data"]["encrypt_mode"].as_bool();
 
-		auto& snipping_targets = (*message)[L"data"][L"snipping_targets"].as_array();
+		auto& snipping_targets = (*message)["data"]["snipping_targets"].as_array();
 #endif
 		for (int index = 0; index < snipping_targets.size(); ++index)
 		{
+#ifdef _WIN32
 			logger::handle().write(logging_level::information, fmt::format(L"accepted snipping target: {}", snipping_targets[index].as_string()));
+#else
+			logger::handle().write(logging_level::information, converter::to_wstring(fmt::format("accepted snipping target: {}", snipping_targets[index].as_string())));
+#endif
 		}
 #else
 		_key = message->get_value(L"key")->to_string();
