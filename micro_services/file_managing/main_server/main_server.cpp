@@ -286,8 +286,8 @@ void received_message(shared_ptr<container::value_container> container)
 		return;
 	}
 
-#ifndef __USE_TYPE_CONTAINER_
-#ifdef _WIN32_
+#ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
 #else
 	auto message_type = _registered_messages.find(converter::to_wstring((*container)["header"]["message_type"].as_string()));
@@ -322,8 +322,8 @@ void transfer_file(shared_ptr<container::value_container> container)
 		return;
 	}
 
-#ifndef __USE_TYPE_CONTAINER_
-#ifdef _WIN32_
+#ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 	if ((*container)[L"header"][L"message_type"].as_string() != L"transfer_file")
 #else
 	if ((*container)["header"]["message_type"].as_string() != "transfer_file")
