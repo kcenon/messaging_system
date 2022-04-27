@@ -286,8 +286,12 @@ void received_message(shared_ptr<container::value_container> container)
 		return;
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
+#ifndef __USE_TYPE_CONTAINER_
+#ifdef _WIN32_
 	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
+#else
+	auto message_type = _registered_messages.find(converter::to_wstring((*container)["header"]["message_type"].as_string()));
+#endif
 #else
 	auto message_type = _registered_messages.find(container->message_type());
 #endif
@@ -298,8 +302,13 @@ void received_message(shared_ptr<container::value_container> container)
 		return;
 	}
 
+#ifdef _WIN32
 	logger::handle().write(logging_level::information,
 		fmt::format(L"received message: {}", container->serialize()));
+#else
+	logger::handle().write(logging_level::information,
+		converter::to_wstring(fmt::format("received message: {}", container->serialize())));
+#endif
 }
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -313,8 +322,12 @@ void transfer_file(shared_ptr<container::value_container> container)
 		return;
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
+#ifndef __USE_TYPE_CONTAINER_
+#ifdef _WIN32_
 	if ((*container)[L"header"][L"message_type"].as_string() != L"transfer_file")
+#else
+	if ((*container)["header"]["message_type"].as_string() != "transfer_file")
+#endif
 #else
 	if (container->message_type() != L"transfer_file")
 #endif
@@ -342,7 +355,11 @@ void upload_files(shared_ptr<container::value_container> container)
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 	if ((*container)[L"header"][L"message_type"].as_string() != L"upload_files")
+#else
+	if ((*container)["header"]["message_type"].as_string() != "upload_files")
+#endif
 #else
 	if (container->message_type() != L"upload_files")
 #endif
@@ -402,7 +419,7 @@ void upload_files(shared_ptr<container::value_container> container)
 		(*start_message)[L"data"][L"percentage"] = json::value::number(0);
 #else
 		(*start_message)["header"]["source_id"] = json::value::string("");
-		(*start_message)["header"]["source_sub_id"] = json::value::string(L");
+		(*start_message)["header"]["source_sub_id"] = json::value::string("");
 		(*start_message)["header"]["target_id"] = (*container)["data"]["gateway_source_id"];
 		(*start_message)["header"]["target_sub_id"] = (*container)["data"]["gateway_source_sub_id"];
 		(*start_message)["header"]["message_type"] = json::value::string("transfer_condition");

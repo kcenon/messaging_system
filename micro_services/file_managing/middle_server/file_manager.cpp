@@ -105,11 +105,11 @@ shared_ptr<container::value_container> file_manager::received(const wstring& ind
 		(*container)[L"data"][L"indication_id"] = json::value::string(indication_id);
 		(*container)[L"data"][L"percentage"] = json::value::number(temp);
 #else
-		(*container)["header"]["target_id"] = json::value::string(ids->second.first);
-		(*container)["header"]["target_sub_id"] = json::value::string(ids->second.second);
-		(*container)["header"]["message_type"] = json::value::string(L"transfer_condition");
+		(*container)["header"]["target_id"] = json::value::string(converter::to_string(ids->second.first));
+		(*container)["header"]["target_sub_id"] = json::value::string(converter::to_string(ids->second.second));
+		(*container)["header"]["message_type"] = json::value::string("transfer_condition");
 
-		(*container)["data"]["indication_id"] = json::value::string(indication_id);
+		(*container)["data"]["indication_id"] = json::value::string(converter::to_string(indication_id));
 		(*container)["data"]["percentage"] = json::value::number(temp);
 #endif
 

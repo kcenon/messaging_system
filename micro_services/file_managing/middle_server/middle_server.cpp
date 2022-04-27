@@ -212,7 +212,7 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--compress_block_size");
 	if (target != arguments.end())
 	{
-		compress_block_size = (unsigned short)_wtoi(target->second.c_str());
+		compress_block_size = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--main_connection_key");
@@ -236,37 +236,37 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--main_server_port");
 	if (target != arguments.end())
 	{
-		main_server_port = (unsigned short)_wtoi(target->second.c_str());
+		main_server_port = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--middle_server_port");
 	if (target != arguments.end())
 	{
-		middle_server_port = (unsigned short)_wtoi(target->second.c_str());
+		middle_server_port = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--high_priority_count");
 	if (target != arguments.end())
 	{
-		high_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		high_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--normal_priority_count");
 	if (target != arguments.end())
 	{
-		normal_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		normal_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--low_priority_count");
 	if (target != arguments.end())
 	{
-		low_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		low_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--session_limit_count");
 	if (target != arguments.end())
 	{
-		session_limit_count = (unsigned short)_wtoi(target->second.c_str());
+		session_limit_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--write_console_mode");
@@ -288,7 +288,7 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--logging_level");
 	if (target != arguments.end())
 	{
-		log_level = (logging_level)_wtoi(target->second.c_str());
+		log_level = (logging_level)atoi(converter::to_string(target->second).c_str());
 	}
 
 	return true;
@@ -365,7 +365,11 @@ void received_message_from_middle_server(shared_ptr<container::value_container> 
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
 	auto target = _file_commands.find((*container)[L"header"][L"message_type"].as_string());
+#else
+	auto target = _file_commands.find(converter::to_wstring((*container)["header"]["message_type"].as_string()));
+#endif
 #else
 	auto target = _file_commands.find(container->message_type());
 #endif

@@ -212,7 +212,7 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--compress_block_size");
 	if (target != arguments.end())
 	{
-		compress_block_size = (unsigned short)_wtoi(target->second.c_str());
+		compress_block_size = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--connection_key");
@@ -230,31 +230,31 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--server_port");
 	if (target != arguments.end())
 	{
-		server_port = (unsigned short)_wtoi(target->second.c_str());
+		server_port = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--rest_port");
 	if (target != arguments.end())
 	{
-		rest_port = (unsigned short)_wtoi(target->second.c_str());
+		rest_port = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--high_priority_count");
 	if (target != arguments.end())
 	{
-		high_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		high_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--normal_priority_count");
 	if (target != arguments.end())
 	{
-		normal_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		normal_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--low_priority_count");
 	if (target != arguments.end())
 	{
-		low_priority_count = (unsigned short)_wtoi(target->second.c_str());
+		low_priority_count = (unsigned short)atoi(converter::to_string(target->second).c_str());
 	}
 
 	target = arguments.find(L"--write_console_mode");
@@ -276,7 +276,7 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--logging_level");
 	if (target != arguments.end())
 	{
-		log_level = (logging_level)_wtoi(target->second.c_str());
+		log_level = (logging_level)atoi(converter::to_string(target->second).c_str());
 	}
 
 	return true;
@@ -353,7 +353,11 @@ void received_message(shared_ptr<json::value> container)
 #ifdef __USE_TYPE_CONTAINER__
 	auto message_type = _registered_messages.find(container->message_type());
 #else
+#ifdef _WIN32
 	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
+#else
+	auto message_type = _registered_messages.find(converter::to_wstring((*container)["header"]["message_type"].as_string()));
+#endif
 #endif
 	if (message_type != _registered_messages.end())
 	{
@@ -362,7 +366,11 @@ void received_message(shared_ptr<json::value> container)
 		return;
 	}
 
+#ifdef _WIN32
 	logger::handle().write(logging_level::sequence, fmt::format(L"unknown message: {}", container->serialize()));
+#else
+	logger::handle().write(logging_level::sequence, converter::to_wstring(fmt::format("unknown message: {}", container->serialize())));
+#endif
 }
 
 #ifdef __USE_TYPE_CONTAINER__
@@ -430,7 +438,11 @@ void transfer_condition(shared_ptr<json::value> container)
 
 void transfer_files(shared_ptr<json::value> request)
 {
+#ifdef _WIN32
 	auto& file_array = (*request)[L"files"].as_array();
+#else
+	auto& file_array = (*request)["files"].as_array();
+#endif
 
 #ifndef __USE_TYPE_CONTAINER__
 	shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
@@ -573,7 +585,7 @@ void post_method(http_request request)
 #ifdef _WIN32
 	auto message_type = _registered_restapi.find(action[L"message_type"].as_string());
 #else
-	auto message_type = _registered_restapi.find(converter::to_wstring(action[L"message_type"].as_string()));
+	auto message_type = _registered_restapi.find(converter::to_wstring(action["message_type"].as_string()));
 #endif
 	if (message_type != _registered_restapi.end())
 	{
