@@ -6,7 +6,7 @@ IF NOT EXIST "./vcpkg/" (
 )
 cd vcpkg
 git pull
-powershell.exe -NoProfile -ExecutionPolicy Bypass "& {& '%~dp0..\vcpkg\scripts\bootstrap.ps1' %*}"
+call bootstrap-vcpkg.bat
 vcpkg install lz4:x86-windows lz4:x64-windows
 vcpkg install fmt:x86-windows fmt:x64-windows
 vcpkg install cpprestsdk:x86-windows cpprestsdk:x64-windows
