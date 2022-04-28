@@ -110,7 +110,7 @@ shared_ptr<container::value_container> file_manager::received(const wstring& ind
 		(*container)["header"]["message_type"] = json::value::string("transfer_condition");
 
 		(*container)["data"]["indication_id"] = json::value::string(converter::to_string(indication_id));
-		(*container)["data"]["percentage"] = json::value::number(temp);
+		(*container)["data"]["percentage"] = json::value::number((uint64_t)temp);
 #endif
 
 		if (temp == 100)
@@ -125,12 +125,12 @@ shared_ptr<container::value_container> file_manager::received(const wstring& ind
 			_transferred_percentage.erase(percentage);
 
 #ifdef _WIN32
-			(*container)[L"data"][L"completed_count"] = json::value::number(completed);
-			(*container)[L"data"][L"failed_count"] = json::value::number(failed);
+			(*container)[L"data"][L"completed_count"] = json::value::number((uint64_t)completed);
+			(*container)[L"data"][L"failed_count"] = json::value::number((uint64_t)failed);
 			(*container)[L"data"][L"completed"] = json::value::boolean(true);;
 #else
-			(*container)["data"]["completed_count"] = json::value::number(completed);
-			(*container)["data"]["failed_count"] = json::value::number(failed);
+			(*container)["data"]["completed_count"] = json::value::number((uint64_t)completed);
+			(*container)["data"]["failed_count"] = json::value::number((uint64_t)failed);
 			(*container)["data"]["completed"] = json::value::boolean(true);;
 #endif
 		}
@@ -188,8 +188,8 @@ shared_ptr<container::value_container> file_manager::received(const wstring& ind
 
 		(*container)[L"data"][L"indication_id"] = json::value::string(indication_id);
 		(*container)[L"data"][L"percentage"] = json::value::number(temp);
-		(*container)[L"data"][L"completed_count"] = json::value::number(completed);
-		(*container)[L"data"][L"failed_count"] = json::value::number(failed);
+		(*container)[L"data"][L"completed_count"] = json::value::number((uint64_t)completed);
+		(*container)[L"data"][L"failed_count"] = json::value::number((uint64_t)failed);
 		(*container)[L"data"][L"completed"] = json::value::boolean(false);
 #else
 		(*container)["header"]["target_id"] = json::value::string(converter::to_string(source_id));
@@ -198,8 +198,8 @@ shared_ptr<container::value_container> file_manager::received(const wstring& ind
 
 		(*container)["data"]["indication_id"] = json::value::string(converter::to_string(indication_id));
 		(*container)["data"]["percentage"] = json::value::number(temp);
-		(*container)["data"]["completed_count"] = json::value::number(completed);
-		(*container)["data"]["failed_count"] = json::value::number(failed);
+		(*container)["data"]["completed_count"] = json::value::number((uint64_t)completed);
+		(*container)["data"]["failed_count"] = json::value::number((uint64_t)failed);
 		(*container)["data"]["completed"] = json::value::boolean(false);
 #endif
 
