@@ -12,9 +12,6 @@
 #include <chrono>
 #include <future>
 
-#ifdef __USE_CHAKRA_CORE__
-#include "ChakraCore.h"
-#endif
 #ifdef __USE_PYTHON__
 #include "Python.h"
 #endif
@@ -154,7 +151,7 @@ namespace threads
 
 	void job::working(const priorities& worker_priority)
 	{
-#if defined(__USE_CHAKRA_CORE__) || defined(__USE_PYTHON__)
+#ifdef __USE_PYTHON__
 		auto start = logger::handle().chrono_start();
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -236,33 +233,7 @@ namespace threads
 	{
 		try
 		{
-#ifdef __USE_CHAKRA_CORE__
-			JsRuntimeHandle runtime;
-			JsContextRef context;
-			JsValueRef result;
-			unsigned currentSourceContext = 0;
-
-			JsCreateRuntime(JsRuntimeAttributeNone, nullptr, &runtime);
-
-			JsCreateContext(runtime, &context);
-			JsSetCurrentContext(context);
-
-			JsRunScript(script.c_str(), currentSourceContext++, L"", &result);
-
-			JsValueRef resultJSString;
-			JsConvertValueToString(result, &resultJSString);
-
-			const wchar_t* resultWC;
-			size_t stringLength;
-			JsStringToPointer(resultJSString, &resultWC, &stringLength);
-
-			wstring resultW(resultWC);
-
-			JsSetCurrentContext(JS_INVALID_REFERENCE);
-			JsDisposeRuntime(runtime);
-
-			return resultW;
-#elif __USE_PYTHON__
+#ifdef __USE_PYTHON__
 			Py_Initialize();
 
 			PyRun_SimpleString(converter::to_string(script).c_str());
