@@ -39,6 +39,7 @@ namespace logging
 		void set_target_level(const logging_level& target_level);
 		void set_write_console(const bool& write_console);
 		void set_limit_log_file_size(const size_t& limit_log_file_size);
+		void set_backup_notification(const function<void(const wstring&)>& notification);
 
 	public:
 		chrono::time_point<chrono::high_resolution_clock> chrono_start(void);
@@ -83,6 +84,7 @@ namespace logging
 		mutex _mutex;
 		thread _thread;
 		condition_variable _condition;
+		function<void(const wstring&)> _backup_notification;
 		map<logging_level, function<wstring(const chrono::system_clock::time_point&, const wstring&)>> _log_datas;
 
 #pragma region singleton

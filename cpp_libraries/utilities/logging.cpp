@@ -21,7 +21,7 @@ namespace logging
 	using namespace datetime_handler;
 
 	logger::logger(void) : _target_level(logging_level::information), _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
-		, _places_of_decimal(7), _locale(locale(""))
+		, _places_of_decimal(7), _locale(locale("")), _backup_notification(nullptr)
 	{
 		_log_datas.insert({ logging_level::exception, bind(&logger::exception_log, this, placeholders::_1, placeholders::_2) });
 		_log_datas.insert({ logging_level::error, bind(&logger::error_log, this, placeholders::_1, placeholders::_2) });
@@ -79,6 +79,11 @@ namespace logging
 	void logger::set_limit_log_file_size(const size_t& limit_log_file_size)
 	{
 		_limit_log_file_size.store(limit_log_file_size);
+	}
+
+	void logger::set_backup_notification(const function<void(const wstring&)>& notification)
+	{
+		_backup_notification = notification;
 	}
 
 	chrono::time_point<chrono::high_resolution_clock> logger::chrono_start(void)
@@ -288,6 +293,11 @@ namespace logging
 		}
 
 		file::append(backup_path, file::load(target_path));
+
+		if (_backup_notification != nullptr)
+		{
+			_backup_notification(backup_path);
+		}
 	}
 
 	void logger::store_log(wfstream& buffer, const wstring& log)
