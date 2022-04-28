@@ -14,7 +14,8 @@
 
 #ifdef __USE_CHAKRA_CORE__
 #include "ChakraCore.h"
-#else
+#endif
+#ifdef __USE_PYTHON__
 #include "Python.h"
 #endif
 
@@ -153,6 +154,7 @@ namespace threads
 
 	void job::working(const priorities& worker_priority)
 	{
+#if defined(__USE_CHAKRA_CORE__) || defined(__USE_PYTHON__)
 		auto start = logger::handle().chrono_start();
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -227,6 +229,7 @@ namespace threads
 #endif
 			current_job_pool.reset();
 		}
+#endif
 	}
 
 	wstring job::do_script(const wstring& script)
@@ -259,13 +262,15 @@ namespace threads
 			JsDisposeRuntime(runtime);
 
 			return resultW;
-#else
+#elif __USE_PYTHON__
 			Py_Initialize();
 
 			PyRun_SimpleString(converter::to_string(script).c_str());
 
 			Py_Finalize();
 
+			return L"";
+#else
 			return L"";
 #endif
 		}
