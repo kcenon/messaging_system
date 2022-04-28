@@ -18,4 +18,7 @@ fi
 cd vcpkg
 git pull
 ./bootstrap-vcpkg.sh
+./vcpkg integrate install
 ./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid
+./vcpkg upgrade --no-dry-run
+cd ..
