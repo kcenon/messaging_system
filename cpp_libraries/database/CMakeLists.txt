@@ -10,7 +10,7 @@ ADD_LIBRARY(${LIBRARY_NAME} STATIC
     database.h
     postgre_manager.h postgre_manager.cpp)
     
-FIND_PACKAGE(PostgreSQL CONFIG REQUIRED)
+FIND_PACKAGE(PostgreSQL REQUIRED)
 TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC PostgreSQL::PostgreSQL)
 
 INCLUDE_DIRECTORIES(../utilities)
