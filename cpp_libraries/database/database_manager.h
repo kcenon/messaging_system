@@ -18,7 +18,7 @@ namespace database
         bool connect();
         bool query();
         bool disconnect();
-        
+
 #pragma region singleton
 	public:
 		static database_manager& handle(void);
@@ -27,5 +27,5 @@ namespace database
 		static unique_ptr<database_manager> _handle;
 		static once_flag _once;
 #pragma endregion
-    }
+    };
 };
