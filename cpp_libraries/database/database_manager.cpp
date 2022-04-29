@@ -1,9 +1,11 @@
 #include "database_manager.h"
 
+#include "postgre_manager.h"
+
 namespace database
 {
     database_manager::database_manager() :
-        _connected(false), _database_type(database_types::postgres)
+        _connected(false), _database(nullptr)
     {
     }
 
@@ -18,24 +20,61 @@ namespace database
         {
             return false;
         }
+
+        _database.reset();
         
-        _database_type = database_type;
+        switch(database_type)
+        {
+            case database_types::postgres:
+                _database = make_shared<postgre_manager>();
+                break;
+        }
+
+        if(_database == nullptr)
+        {
+            return false;
+        }
 
         return true;
     }
 
+    database_types database_manager::database_type(void)
+    {
+        if(_database == nullptr)
+        {
+            return database_types::none;
+        }
+
+        return _database->database_type();
+    }
+
     bool database_manager::connect(const wstring& connect_string)
     {
+        if(_database == nullptr)
+        {
+            return false;
+        }
+
         return true;
     }
 
     bool database_manager::query(const wstring& query_string)
     {
+        if(_database == nullptr)
+        {
+            return false;
+        }
+
         return true;
     }
 
     bool database_manager::disconnect(void)
     {
+        if(_database == nullptr)
+        {
+            return false;
+        }
+
         return true;
     }
 

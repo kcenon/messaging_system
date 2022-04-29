@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "database.h"
-#include "database_types.h"
 
 namespace database
 {
@@ -16,14 +15,16 @@ namespace database
 
     public:
         bool set_mode(const database_types& database_type);
+        database_types database_type(void);
+
+    public:
         bool connect(const wstring& connect_string);
         bool query(const wstring& query_string);
         bool disconnect(void);
 
     private:
         bool _connected;
-        database_types _database_type;
-        shared_ptr<database> _databse;
+        shared_ptr<database> _database;
 
 #pragma region singleton
 	public:

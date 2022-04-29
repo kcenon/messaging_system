@@ -12,6 +12,11 @@ namespace database
 
     }
 
+    database_types postgre_manager::database_type(void)
+    {
+        return database_types::postgres;
+    }
+
     bool postgre_manager::connect(const wstring& connect_string)
     {
         return true;

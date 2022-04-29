@@ -4,6 +4,7 @@ namespace database
 {
     enum class database_types
     {
-        postgres = 0
+        none = 0,
+        postgres = 1
     };
 };
