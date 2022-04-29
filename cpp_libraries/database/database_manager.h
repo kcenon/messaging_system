@@ -4,11 +4,10 @@
 #include <memory>
 
 #include "database.h"
+#include "database_types.h"
 
 namespace database
 {
-    using namespace std;
-    
     class database_manager
     {
     public:
@@ -16,12 +15,14 @@ namespace database
         virtual ~database_manager(void);
 
     public:
-        bool set_mode();
-        bool connect();
-        bool query();
-        bool disconnect();
+        bool set_mode(const database_types& database_type);
+        bool connect(const wstring& connect_string);
+        bool query(const wstring& query_string);
+        bool disconnect(void);
 
     private:
+        bool _connected;
+        database_types _database_type;
         shared_ptr<database> _databse;
 
 #pragma region singleton

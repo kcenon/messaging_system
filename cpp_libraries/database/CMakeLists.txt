@@ -7,7 +7,7 @@ SET(CMAKE_CXX_STANDARD_REQUIRED True)
 PROJECT(${LIBRARY_NAME})
 
 ADD_LIBRARY(${LIBRARY_NAME} STATIC
-    database.h
+    database.h database_types.h
     database_manager.h database_manager.cpp
     postgre_manager.h postgre_manager.cpp)
     

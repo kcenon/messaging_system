@@ -1,16 +1,20 @@
 #pragma once
 
+#include <string>
+
 namespace database
 {
+    using namespace std;
+    
     class database
     {
     public:
-        database() {}
-        virtual ~database() {}
+        database(void) {}
+        virtual ~database(void) {}
 
     public:
-        virtual bool connect() = 0;
-        virtual bool query() = 0;
-        virtual bool disconnect() = 0;
+        virtual bool connect(const wstring& connect_string) = 0;
+        virtual bool query(const wstring& query_string) = 0;
+        virtual bool disconnect(void) = 0;
     };
 };

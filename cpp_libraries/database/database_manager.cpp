@@ -2,9 +2,9 @@
 
 namespace database
 {
-    database_manager::database_manager()
+    database_manager::database_manager() :
+        _connected(false), _database_type(database_types::postgres)
     {
-
     }
 
     database_manager::~database_manager()
@@ -12,22 +12,29 @@ namespace database
 
     }
 
-    bool database_manager::set_mode()
+    bool database_manager::set_mode(const database_types& database_type)
+    {
+        if(_connected)
+        {
+            return false;
+        }
+        
+        _database_type = database_type;
+
+        return true;
+    }
+
+    bool database_manager::connect(const wstring& connect_string)
     {
         return true;
     }
 
-    bool database_manager::connect()
+    bool database_manager::query(const wstring& query_string)
     {
         return true;
     }
 
-    bool database_manager::query()
-    {
-        return true;
-    }
-
-    bool database_manager::disconnect()
+    bool database_manager::disconnect(void)
     {
         return true;
     }
