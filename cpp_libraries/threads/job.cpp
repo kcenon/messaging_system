@@ -16,11 +16,7 @@
 #include "Python.h"
 #endif
 
-#ifdef __OSX__
-#include <uuid/uuid.h>
-#else
 #include "crossguid/guid.hpp"
-#endif
 
 namespace threads
 {
@@ -137,13 +133,7 @@ namespace threads
 			return;
 		}
 
-#ifdef __OSX__
-		uuid_t uuidObj;
-		uuid_generate(uuidObj);
-		_temporary_stored_path = fmt::format(L"{}{}.job", folder::get_temporary_folder(), converter::to_wstring(string(uuidObj, uuidObj + 16)));
-#else
 		_temporary_stored_path = fmt::format(L"{}{}.job", folder::get_temporary_folder(), converter::to_wstring(xg::newGuid().str()));
-#endif
 
 		file::save(_temporary_stored_path, _data);
 		_data.clear();
