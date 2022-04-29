@@ -3,10 +3,12 @@
 #include <mutex>
 #include <memory>
 
+#include "database.h"
+
 namespace database
 {
     using namespace std;
-
+    
     class database_manager
     {
     public:
@@ -18,6 +20,9 @@ namespace database
         bool connect();
         bool query();
         bool disconnect();
+
+    private:
+        shared_ptr<database> _databse;
 
 #pragma region singleton
 	public:

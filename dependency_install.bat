@@ -14,6 +14,7 @@ vcpkg install cryptopp:x86-windows cryptopp:x64-windows
 vcpkg install asio:x86-windows asio:x64-windows
 vcpkg install python3:x86-windows python3:x64-windows
 vcpkg install crossguid:x86-windows crossguid:x64-windows
+vcpkg install libpq:x86-windows libpq:x64-windows
 vcpkg upgrade --no-dry-run
 cd ..
 cd messaging_system
