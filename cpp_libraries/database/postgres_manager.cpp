@@ -25,10 +25,10 @@ namespace database
 
     bool postgre_manager::connect(const wstring& connect_string)
     {
-        _connection = PQconnectdb(converter::to_string(connect_string));
-        if(PQstatus(_connection) != CONNECTION_OK)
+        _connection = PQconnectdb(converter::to_string(connect_string).c_str());
+        if(PQstatus((PGconn *)_connection) != CONNECTION_OK)
         {
-            PQfinish(_connection);
+            PQfinish((PGconn *)_connection);
             _connection = nullptr;
 
             return false;
@@ -44,9 +44,9 @@ namespace database
             return false;
         }
 
-        if(PQstatus(_connection) != CONNECTION_OK)
+        if(PQstatus((PGconn *)_connection) != CONNECTION_OK)
         {
-            PQfinish(_connection);
+            PQfinish((PGconn *)_connection);
             _connection = nullptr;
 
             return false;
@@ -61,7 +61,7 @@ namespace database
             return false;
         }
 
-        PQfinish(_connection);
+        PQfinish((PGconn *)_connection);
         _connection = nullptr;
 
         return true;

@@ -9,7 +9,7 @@ PROJECT(${LIBRARY_NAME})
 ADD_LIBRARY(${LIBRARY_NAME} STATIC
     database.h database_types.h
     database_manager.h database_manager.cpp
-    postgre_manager.h postgre_manager.cpp)
+    postgres_manager.h postgres_manager.cpp)
     
 FIND_PACKAGE(PostgreSQL REQUIRED)
 TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC PostgreSQL::PostgreSQL)

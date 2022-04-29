@@ -2,7 +2,6 @@
 
 namespace database
 {
-    class PGconn;
     class postgre_manager : public database
     {
     public:
@@ -16,6 +15,6 @@ namespace database
         bool disconnect(void) override;
 
     private:
-        PGconn *_connection;
+        void *_connection;
     };
 };
