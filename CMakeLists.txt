@@ -15,6 +15,7 @@ IF(DEFINED __USE_TYPE_CONTAINER__)
     ADD_SUBDIRECTORY(cpp_libraries/container)
 ENDIF()
 ADD_SUBDIRECTORY(cpp_libraries/threads)
+ADD_SUBDIRECTORY(cpp_libraries/database)
 ADD_SUBDIRECTORY(cpp_libraries/network)
 
 # cpp_samples
