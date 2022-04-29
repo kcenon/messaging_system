@@ -40,7 +40,7 @@ namespace database
 	{
 		call_once(_once, []()
 			{
-				_handle.reset(new logger);
+				_handle.reset(new database_manager);
 			});
 
 		return *_handle.get();
