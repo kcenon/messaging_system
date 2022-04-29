@@ -1,8 +1,14 @@
-#include "postgre_manager.h"
+#include "postgres_manager.h"
+
+#include "libpq-fe.h"
+
+#include "converting.h"
 
 namespace database
 {
-    postgre_manager::postgre_manager(void)
+    using namespace converting;
+
+    postgre_manager::postgre_manager(void) : _connection(nullptr)
     {
 
     }
@@ -19,15 +25,45 @@ namespace database
 
     bool postgre_manager::connect(const wstring& connect_string)
     {
+        _connection = PQconnectdb(converter::to_string(connect_string));
+        if(PQstatus(_connection) != CONNECTION_OK)
+        {
+            PQfinish(_connection);
+            _connection = nullptr;
+
+            return false;
+        }
+        
         return true;
     }
 
     bool postgre_manager::query(const wstring& query_string)
     {
+        if(_connection == nullptr)
+        {
+            return false;
+        }
+
+        if(PQstatus(_connection) != CONNECTION_OK)
+        {
+            PQfinish(_connection);
+            _connection = nullptr;
+
+            return false;
+        }
+
         return true;
     }
     bool postgre_manager::disconnect(void)
     {
+        if(_connection == nullptr)
+        {
+            return false;
+        }
+
+        PQfinish(_connection);
+        _connection = nullptr;
+
         return true;
     }
 };

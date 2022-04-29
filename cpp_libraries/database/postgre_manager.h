@@ -2,6 +2,7 @@
 
 namespace database
 {
+    class PGconn;
     class postgre_manager : public database
     {
     public:
@@ -13,5 +14,8 @@ namespace database
         bool connect(const wstring& connect_string) override;
         bool query(const wstring& query_string) override;
         bool disconnect(void) override;
+
+    private:
+        PGconn *_connection;
     };
 };

@@ -1,6 +1,6 @@
 #include "database_manager.h"
 
-#include "postgre_manager.h"
+#include "postgres_manager.h"
 
 namespace database
 {
@@ -55,7 +55,7 @@ namespace database
             return false;
         }
 
-        return true;
+        return _database->connect(connect_string);
     }
 
     bool database_manager::query(const wstring& query_string)
@@ -65,7 +65,7 @@ namespace database
             return false;
         }
 
-        return true;
+        return _database->query(query_string);
     }
 
     bool database_manager::disconnect(void)
@@ -75,7 +75,7 @@ namespace database
             return false;
         }
 
-        return true;
+        return _database->disconnect();
     }
 
 #pragma region singleton
