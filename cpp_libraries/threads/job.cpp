@@ -216,6 +216,8 @@ namespace threads
 #endif
 			current_job_pool.reset();
 		}
+#else
+		logger::handle().write(logging_level::error, L"cannot complete script working because it does not have interpreter");
 #endif
 	}
 
