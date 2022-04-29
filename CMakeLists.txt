@@ -7,8 +7,6 @@ SET(CMAKE_CXX_STANDARD_REQUIRED True)
 # set the project name
 PROJECT(${PROJECT_NAME} VERSION 1.0)
 
-INCLUDE(../vcpkg/scripts/buildsystems/vcpkg.cmake)
-
 # cpp_libraries
 ADD_SUBDIRECTORY(cpp_libraries/utilities)
 IF(DEFINED __USE_TYPE_CONTAINER__)
