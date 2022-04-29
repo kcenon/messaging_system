@@ -8,6 +8,7 @@ PROJECT(${LIBRARY_NAME})
 
 ADD_LIBRARY(${LIBRARY_NAME} STATIC
     database.h
+    database_manager.h database_manager.cpp
     postgre_manager.h postgre_manager.cpp)
     
 FIND_PACKAGE(PostgreSQL REQUIRED)
