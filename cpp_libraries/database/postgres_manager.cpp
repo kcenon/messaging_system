@@ -52,6 +52,21 @@ namespace database
             return false;
         }
 
+        PGresult *result = PQexec((PGconn *)_connection, converter::to_string(query_string).c_str());
+        if(PQresultStatus(result) != PGRES_TUPLES_OK)
+        {
+            PQclear(result);
+            result = nullptr;
+
+            PQfinish((PGconn *)_connection);
+            _connection = nullptr;
+
+            return false;
+        }
+
+        PQclear(result);
+        result = nullptr;
+
         return true;
     }
     bool postgre_manager::disconnect(void)
