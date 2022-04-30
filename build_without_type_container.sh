@@ -3,6 +3,6 @@ then
     mkdir build
 fi
 cd build
-cmake .. -DCMAKE_TOOLCHAIN_FILE="../../vcpkg/scripts/buildsystems/vcpkg.cmake" -D__USE_PYTHON__=1
+cmake .. -DCMAKE_TOOLCHAIN_FILE="../../vcpkg/scripts/buildsystems/vcpkg.cmake" -DUSE_PYTHON=ON
 make -B
 #make install

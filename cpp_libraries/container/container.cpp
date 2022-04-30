@@ -8,7 +8,6 @@
 
 #include "values/container_value.h"
 
-#include <io.h>
 #include <fcntl.h>
 #include <wchar.h>
 
@@ -61,7 +60,7 @@ namespace container
 		deserialize(data_container->serialize(), parse_only_header);
 	}
 
-	value_container::value_container(const vector<shared_ptr<value>>& units) : value_container()
+	value_container::value_container(const wstring& message_type, const vector<shared_ptr<value>>& units) : value_container()
 	{
 		set_message_type(L"data_container");
 		set_units(units);

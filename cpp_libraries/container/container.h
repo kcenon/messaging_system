@@ -19,7 +19,7 @@ namespace container
 		value_container(const vector<unsigned char>& data_array, const bool& parse_only_header = true);
 		value_container(const value_container& data_container, const bool& parse_only_header = true);
 		value_container(shared_ptr<value_container> data_container, const bool& parse_only_header = true);
-		value_container(const vector<shared_ptr<value>>& units = {});
+		value_container(const wstring& message_type, const vector<shared_ptr<value>>& units = {});
 		value_container(const wstring& target_id, const wstring& target_sub_id, const wstring& message_type = L"packet_container",
 			const vector<shared_ptr<value>>& units = {});
 		value_container(const wstring& source_id, const wstring& source_sub_id,

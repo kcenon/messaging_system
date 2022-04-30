@@ -4,12 +4,20 @@ SET(PROJECT_NAME messaging_system)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED True)
 
+IF(USE_PYTHON)
+    ADD_DEFINITIONS(-D__USE_PYTHON__)
+ENDIF()
+
+IF(USE_TYPE_CONTAINER)
+    ADD_DEFINITIONS(-D__USE_TYPE_CONTAINER__)
+ENDIF()
+
 # set the project name
 PROJECT(${PROJECT_NAME} VERSION 1.0)
 
 # cpp_libraries
 ADD_SUBDIRECTORY(cpp_libraries/utilities)
-IF(DEFINED __USE_TYPE_CONTAINER__)
+IF(DEFINED USE_TYPE_CONTAINER)
     ADD_SUBDIRECTORY(cpp_libraries/container)
 ENDIF()
 ADD_SUBDIRECTORY(cpp_libraries/threads)
@@ -18,7 +26,7 @@ ADD_SUBDIRECTORY(cpp_libraries/network)
 
 # cpp_samples
 ADD_SUBDIRECTORY(cpp_samples/logging_sample)
-IF(DEFINED __USE_TYPE_CONTAINER__)
+IF(DEFINED USE_TYPE_CONTAINER)
     ADD_SUBDIRECTORY(cpp_samples/container_sample)
 ENDIF()
 ADD_SUBDIRECTORY(cpp_samples/threads_sample)

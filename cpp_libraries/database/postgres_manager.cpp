@@ -133,7 +133,7 @@ namespace database
 #else
     shared_ptr<container::value_container> postgres_manager::select_query(const wstring& query_string)
     {
-        hared_ptr<container::value_container> container = make_shared<container::value_container>(L"query",
+        shared_ptr<container::value_container> container = make_shared<container::value_container>(L"query",
 			vector<shared_ptr<container::value>> {});
 
         return container;

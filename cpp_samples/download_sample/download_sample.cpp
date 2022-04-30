@@ -297,7 +297,7 @@ void received_message(shared_ptr<container::value_container> container)
 		return;
 	}
 
-#ifndef __USE_TYPE_CONTAINER_
+#ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
 	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
 #else
