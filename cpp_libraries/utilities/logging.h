@@ -38,6 +38,7 @@ namespace logging
 	public:
 		void set_target_level(const logging_level& target_level);
 		void set_write_console(const bool& write_console);
+		void set_write_date(const bool& write_date);
 		void set_limit_log_file_size(const size_t& limit_log_file_size);
 		void set_backup_notification(const function<void(const wstring&)>& notification);
 

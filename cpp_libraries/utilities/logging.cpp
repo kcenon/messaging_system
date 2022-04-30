@@ -76,6 +76,11 @@ namespace logging
 		_write_console.store(write_console);
 	}
 
+	void logger::set_write_date(const bool& write_date)
+	{
+		_write_date.store(write_date);
+	}
+
 	void logger::set_limit_log_file_size(const size_t& limit_log_file_size)
 	{
 		_limit_log_file_size.store(limit_log_file_size);
