@@ -88,6 +88,30 @@ namespace database
         return _database->update_query(query_string);
     }
 
+    unsigned int database_manager::delete_query(const wstring& query_string)
+    {
+        if(_database == nullptr)
+        {
+            return 0;
+        }
+
+        return _database->update_query(query_string);
+    }
+
+#ifndef __USE_TYPE_CONTAINER__
+    shared_ptr<json::value> database_manager::select_query(const wstring& query_string)
+#else
+    shared_ptr<container::value_container> database_manager::select_query(const wstring& query_string)
+#endif
+    {
+        if(_database == nullptr)
+        {
+            return 0;
+        }
+
+        return _database->select_query(query_string);
+    }
+
     bool database_manager::disconnect(void)
     {
         if(_database == nullptr)

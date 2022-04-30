@@ -14,6 +14,12 @@ namespace database
         bool create_query(const wstring& query_string) override;
         unsigned int insert_query(const wstring& query_string) override;
         unsigned int update_query(const wstring& query_string) override;
+        unsigned int delete_query(const wstring& query_string) override;
+#ifndef __USE_TYPE_CONTAINER__
+        shared_ptr<json::value> select_query(const wstring& query_string) override;
+#else
+        shared_ptr<container::value_container> select_query(const wstring& query_string) override;
+#endif
         bool disconnect(void) override;
 
     private:

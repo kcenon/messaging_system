@@ -22,6 +22,12 @@ namespace database
         bool create_query(const wstring& query_string);
         unsigned int insert_query(const wstring& query_string);
         unsigned int update_query(const wstring& query_string);
+        unsigned int delete_query(const wstring& query_string);
+#ifndef __USE_TYPE_CONTAINER__
+        shared_ptr<json::value> select_query(const wstring& query_string);
+#else
+        shared_ptr<container::value_container> select_query(const wstring& query_string);
+#endif
         bool disconnect(void);
 
     private:

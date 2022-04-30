@@ -101,6 +101,45 @@ namespace database
         return result_count;
     }
 
+    unsigned int postgres_manager::delete_query(const wstring& query_string)
+    {
+        PGresult *result = (PGresult *)query_result(query_string);
+        if(PQresultStatus(result) != PGRES_TUPLES_OK)
+        {
+            PQclear(result);
+            result = nullptr;
+
+            PQfinish((PGconn *)_connection);
+            _connection = nullptr;
+
+            return 0;
+        }
+
+        unsigned int result_count = atoi(PQcmdTuples(result));
+
+        PQclear(result);
+        result = nullptr;
+
+        return result_count;
+    }
+    
+#ifndef __USE_TYPE_CONTAINER__
+    shared_ptr<json::value> postgres_manager::select_query(const wstring& query_string)
+    {
+        shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
+
+        return container;
+    }
+#else
+    shared_ptr<container::value_container> postgres_manager::select_query(const wstring& query_string)
+    {
+        hared_ptr<container::value_container> container = make_shared<container::value_container>(L"query",
+			vector<shared_ptr<container::value>> {});
+
+        return container;
+    }
+#endif
+
     bool postgres_manager::disconnect(void)
     {
         if(_connection == nullptr)
