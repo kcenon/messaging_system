@@ -26,7 +26,7 @@ namespace database
         switch(database_type)
         {
             case database_types::postgres:
-                _database = make_shared<postgre_manager>();
+                _database = make_shared<postgres_manager>();
                 break;
         }
 
@@ -58,14 +58,34 @@ namespace database
         return _database->connect(connect_string);
     }
 
-    bool database_manager::query(const wstring& query_string)
+    bool database_manager::create_query(const wstring& query_string)
     {
         if(_database == nullptr)
         {
             return false;
         }
 
-        return _database->query(query_string);
+        return _database->create_query(query_string);
+    }
+
+    unsigned int database_manager::insert_query(const wstring& query_string)
+    {
+        if(_database == nullptr)
+        {
+            return 0;
+        }
+
+        return _database->insert_query(query_string);
+    }
+
+    unsigned int database_manager::update_query(const wstring& query_string)
+    {
+        if(_database == nullptr)
+        {
+            return 0;
+        }
+
+        return _database->update_query(query_string);
     }
 
     bool database_manager::disconnect(void)

@@ -19,7 +19,9 @@ namespace database
 
     public:
         bool connect(const wstring& connect_string);
-        bool query(const wstring& query_string);
+        bool create_query(const wstring& query_string);
+        unsigned int insert_query(const wstring& query_string);
+        unsigned int update_query(const wstring& query_string);
         bool disconnect(void);
 
     private:
