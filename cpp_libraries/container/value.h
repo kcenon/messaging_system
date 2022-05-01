@@ -41,13 +41,13 @@ namespace container
 		vector<shared_ptr<value>> children(const bool& only_container = false);
 
 	public:
-		virtual shared_ptr<value> add(const value& item, const bool& update_count = true) { throw exception("cannot add value object on this object"); }
-		virtual shared_ptr<value> add(shared_ptr<value> item, const bool& update_count = true) { throw exception("cannot add value object on this object"); }
-		virtual void add(const vector<value>& target_values, const bool& update_count = true) { throw exception("cannot add value objects on this object"); }
-		virtual void add(const vector<shared_ptr<value>>& target_values, const bool& update_count = true) { throw exception("cannot add value objects on this object"); }
-		virtual void remove(const wstring& target_name, const bool& update_count = true) { throw exception("cannot remove value objects on this object"); }
-		virtual void remove(shared_ptr<value> item, const bool& update_count = true) { throw exception("cannot remove value object on this object"); }
-		virtual void remove_all(void) { throw exception("cannot remove value object on this object"); }
+		virtual shared_ptr<value> add(const value& item, const bool& update_count = true) { throw exception(logic_error("cannot add value object on this object")); }
+		virtual shared_ptr<value> add(shared_ptr<value> item, const bool& update_count = true) { throw exception(logic_error("cannot add value object on this object")); }
+		virtual void add(const vector<value>& target_values, const bool& update_count = true) { throw exception(logic_error("cannot add value objects on this object")); }
+		virtual void add(const vector<shared_ptr<value>>& target_values, const bool& update_count = true) { throw exception(logic_error("cannot add value objects on this object")); }
+		virtual void remove(const wstring& target_name, const bool& update_count = true) { throw exception(logic_error("cannot remove value objects on this object")); }
+		virtual void remove(shared_ptr<value> item, const bool& update_count = true) { throw exception(logic_error("cannot remove value object on this object")); }
+		virtual void remove_all(void) { throw exception(logic_error("cannot remove value object on this object")); }
 		vector<shared_ptr<value>> value_array(const wstring& key);
 
 	public:
