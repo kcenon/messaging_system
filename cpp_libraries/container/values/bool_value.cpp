@@ -1,8 +1,8 @@
 #include "bool_value.h"
 
-#nclude <cstring>
+#include <cstring>
 
-ifdef __USE_TYPE_CONTAINER__
+#ifdef __USE_TYPE_CONTAINER__
 
 namespace container
 {
