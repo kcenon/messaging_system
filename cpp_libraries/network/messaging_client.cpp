@@ -233,13 +233,11 @@ namespace network
 			{
 				_socket->close();
 			}
-			_socket.reset();
 		}
 
 		if (_io_context != nullptr)
 		{
 			_io_context->stop();
-			_io_context.reset();
 		}
 
 		if (_thread.joinable())
@@ -250,7 +248,6 @@ namespace network
 		if (_thread_pool != nullptr)
 		{
 			_thread_pool->stop();
-			_thread_pool.reset();
 		}
 	}
 

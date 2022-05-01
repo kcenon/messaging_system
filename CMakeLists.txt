@@ -3,6 +3,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
 SET(PROJECT_NAME messaging_system)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED True)
+SET(USE_PYTHON ON)
+SET(USE_TYPE_CONTAINER OFF)
 
 IF(USE_PYTHON)
     ADD_DEFINITIONS(-D__USE_PYTHON__)
@@ -33,6 +35,8 @@ ADD_SUBDIRECTORY(cpp_samples/threads_sample)
 ADD_SUBDIRECTORY(cpp_samples/upload_sample)
 ADD_SUBDIRECTORY(cpp_samples/download_sample)
 ADD_SUBDIRECTORY(cpp_samples/restapi_client_sample)
+ADD_SUBDIRECTORY(cpp_samples/echo_client)
+ADD_SUBDIRECTORY(cpp_samples/echo_server)
 
 # micro_services
 ADD_SUBDIRECTORY(micro_services/file_managing/main_server)

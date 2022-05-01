@@ -147,7 +147,6 @@ namespace network
 		if (_thread_pool != nullptr)
 		{
 			_thread_pool->stop();
-			_thread_pool.reset();
 		}
 
 		if (_acceptor != nullptr)
@@ -156,7 +155,6 @@ namespace network
 			{
 				_acceptor->close();
 			}
-			_acceptor.reset();
 		}
 
 		for (auto& session : _sessions)
@@ -175,7 +173,6 @@ namespace network
 			_promise_status.set_value(true);
 
 			_io_context->stop();
-			_io_context.reset();
 		}
 
 		if (_thread.joinable())
