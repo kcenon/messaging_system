@@ -375,6 +375,7 @@ namespace container
 
 		switch (current_type)
 		{
+#ifdef _WIN32
 		case value_types::bool_value: result = make_shared<bool_value>(target_name, target_value); break;
 		case value_types::short_value: result = make_shared<short_value>(target_name, (short)_wtoi(target_value.c_str())); break;
 		case value_types::ushort_value: result = make_shared<ushort_value>(target_name, (unsigned short)_wtoi(target_value.c_str())); break;
@@ -390,6 +391,23 @@ namespace container
 		case value_types::string_value: result = make_shared<string_value>(target_name, target_value); break;
 		case value_types::container_value: result = make_shared<container_value>(target_name, (long)_wtol(target_value.c_str())); break;
 		default: result = make_shared<value>(target_name, nullptr, 0, value_types::null_value); break;
+#else
+		case value_types::bool_value: result = make_shared<bool_value>(target_name, target_value); break;
+		case value_types::short_value: result = make_shared<short_value>(target_name, (short)atoi(converter::to_string(target_value).c_str())); break;
+		case value_types::ushort_value: result = make_shared<ushort_value>(target_name, (unsigned short)atoi(converter::to_string(target_value).c_str())); break;
+		case value_types::int_value: result = make_shared<int_value>(target_name, (int)atoi(converter::to_string(target_value).c_str())); break;
+		case value_types::uint_value: result = make_shared<uint_value>(target_name, (unsigned int)atoi(converter::to_string(target_value).c_str())); break;
+		case value_types::long_value: result = make_shared<long_value>(target_name, (long)atol(converter::to_string(target_value).c_str())); break;
+		case value_types::ulong_value: result = make_shared<ulong_value>(target_name, (unsigned long)atol(converter::to_string(target_value).c_str())); break;
+		case value_types::llong_value: result = make_shared<llong_value>(target_name, (long long)atoll(converter::to_string(target_value).c_str())); break;
+		case value_types::ullong_value: result = make_shared<ullong_value>(target_name, (unsigned long long)atoll(converter::to_string(target_value).c_str())); break;
+		case value_types::float_value: result = make_shared<float_value>(target_name, (float)atof(converter::to_string(target_value).c_str())); break;
+		case value_types::double_value: result = make_shared<double_value>(target_name, (double)atof(converter::to_string(target_value).c_str())); break;
+		case value_types::bytes_value: result = make_shared<bytes_value>(target_name, converter::from_base64(target_value.c_str())); break;
+		case value_types::string_value: result = make_shared<string_value>(target_name, target_value); break;
+		case value_types::container_value: result = make_shared<container_value>(target_name, (long)atol(converter::to_string(target_value).c_str())); break;
+		default: result = make_shared<value>(target_name, nullptr, 0, value_types::null_value); break;
+#endif
 		}
 
 		return result;
