@@ -145,7 +145,11 @@ namespace threads
 		auto start = logger::handle().chrono_start();
 
 #ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
+		shared_ptr<json::value> source_data = make_shared<json::value>(json::value::parse(converter::to_wstring(_data)));
+#else
 		shared_ptr<json::value> source_data = make_shared<json::value>(json::value::parse(converter::to_string(_data)));
+#endif
 #else
 		shared_ptr<value_container> source_data = make_shared<value_container>(_data, true);
 #endif
