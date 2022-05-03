@@ -108,7 +108,7 @@ namespace network
 		vector<session_types> _possible_session_types;
 
 	private:
-		thread _thread;
+		shared_ptr<thread> _thread;
 		shared_ptr<asio::io_context> _io_context;
 		shared_ptr<asio::ip::tcp::acceptor> _acceptor;
 

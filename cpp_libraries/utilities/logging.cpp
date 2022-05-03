@@ -47,7 +47,7 @@ namespace logging
 		_places_of_decimal = places_of_decimal;
 		_locale = target_locale;
 
-		_thread = thread(&logger::run, this);
+		_thread = make_shared<thread>(&logger::run, this);
 
 		return true;
 	}
@@ -56,9 +56,13 @@ namespace logging
 	{
 		_thread_stop.store(true);
 
-		if (_thread.joinable())
+		if (_thread != nullptr)
 		{
-			_thread.join();
+			if (_thread->joinable())
+			{
+				_thread->join();
+			}
+			_thread.reset();
 		}
 
 		_thread_stop.store(false);

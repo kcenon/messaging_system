@@ -4,6 +4,7 @@
 
 #include <mutex>
 #include <atomic>
+#include <memory>
 #include <thread>
 #include <vector>
 #include <condition_variable>
@@ -51,7 +52,7 @@ namespace threads
 
 	private:
 		mutex _mutex;
-		thread _thread;
+		shared_ptr<thread> _thread;
 		condition_variable _condition;
 	};
 }

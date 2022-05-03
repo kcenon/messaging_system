@@ -110,7 +110,7 @@ namespace network
 
 		wait_connection();
 
-		_thread = thread([&]()
+		_thread = make_shared<thread>([&]()
 			{
 				while (_io_context)
 				{
@@ -178,9 +178,13 @@ namespace network
 			_io_context.reset();
 		}
 
-		if (_thread.joinable())
+		if (_thread != nullptr)
 		{
-			_thread.join();
+			if (_thread->joinable())
+			{
+				_thread->join();
+			}
+			_thread.reset();
 		}
 	}
 

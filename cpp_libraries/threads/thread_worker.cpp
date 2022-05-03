@@ -32,12 +32,12 @@ namespace threads
 		stop();
 
 		_thread_stop.store(false);
-		_thread = thread(&thread_worker::run, this);
+		_thread = make_shared<thread>(&thread_worker::run, this);
 	}
 
 	void thread_worker::stop(const bool& ignore_contained_job)
 	{
-		if (!_thread.joinable())
+		if (_thread == nullptr)
 		{
 			return;
 		}
@@ -48,7 +48,14 @@ namespace threads
 
 		_condition.notify_one();
 
-		_thread.join();
+		if (_thread != nullptr)
+		{
+			if (_thread->joinable())
+			{
+				_thread->join();
+			}
+			_thread.reset();
+		}
 	}
 
 	const priorities thread_worker::priority(void)

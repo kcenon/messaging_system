@@ -7,6 +7,7 @@
 #include <tuple>
 #include <mutex>
 #include <atomic>
+#include <memory>
 #include <thread>
 #include <vector>
 #include <string>
@@ -83,7 +84,7 @@ namespace logging
 
 	private:
 		mutex _mutex;
-		thread _thread;
+		shared_ptr<thread> _thread;
 		condition_variable _condition;
 		function<void(const wstring&)> _backup_notification;
 		map<logging_level, function<wstring(const chrono::system_clock::time_point&, const wstring&)>> _log_datas;

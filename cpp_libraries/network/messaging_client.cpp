@@ -190,7 +190,7 @@ namespace network
 		_target_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
-		_thread = thread([&]()
+		_thread = make_shared<thread>([&]()
 			{
 				try
 				{
@@ -242,9 +242,13 @@ namespace network
 			_io_context.reset();
 		}
 
-		if (_thread.joinable())
+		if (_thread != nullptr)
 		{
-			_thread.join();
+			if (_thread->joinable())
+			{
+				_thread->join();
+			}
+			_thread.reset();
 		}
 
 		if (_thread_pool != nullptr)

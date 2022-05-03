@@ -18,6 +18,9 @@ namespace threads
 
 	thread_pool::~thread_pool(void)
 	{
+		stop(true);
+
+		_workers.clear();
 		_job_pool.reset();
 	}
 
@@ -71,8 +74,6 @@ namespace threads
 
 			worker->stop(ignore_contained_job);
 		}
-
-		_workers.clear();
 	}
 
 	void thread_pool::push(shared_ptr<job> job)

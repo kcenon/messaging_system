@@ -169,7 +169,7 @@ namespace network
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)> _received_data;
 
 	private:
-		thread _thread;
+		shared_ptr<thread> _thread;
 		shared_ptr<asio::io_context> _io_context;
 		shared_ptr<asio::ip::tcp::socket> _socket;
 
