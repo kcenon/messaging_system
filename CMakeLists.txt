@@ -20,7 +20,7 @@ PROJECT(${PROJECT_NAME} VERSION 1.0)
 
 # cpp_libraries
 ADD_SUBDIRECTORY(cpp_libraries/utilities)
-IF(DEFINED USE_TYPE_CONTAINER)
+IF(USE_TYPE_CONTAINER)
     ADD_SUBDIRECTORY(cpp_libraries/container)
 ENDIF()
 ADD_SUBDIRECTORY(cpp_libraries/threads)
@@ -29,7 +29,7 @@ ADD_SUBDIRECTORY(cpp_libraries/network)
 
 # cpp_samples
 ADD_SUBDIRECTORY(cpp_samples/logging_sample)
-IF(DEFINED USE_TYPE_CONTAINER)
+IF(USE_TYPE_CONTAINER)
     ADD_SUBDIRECTORY(cpp_samples/container_sample)
 ENDIF()
 ADD_SUBDIRECTORY(cpp_samples/threads_sample)
