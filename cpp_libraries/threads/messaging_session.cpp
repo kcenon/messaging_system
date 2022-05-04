@@ -1,4 +1,4 @@
-﻿#include "messaging_session.h"
+#include "messaging_session.h"
 
 #ifdef __USE_TYPE_CONTAINER__
 #include "values/bool_value.h"
@@ -818,7 +818,7 @@ namespace network
 
 		if (_received_file)
 		{
-			_received_file(target_id, target_sub_id, indication_id, target_path);
+			#include <boost/thread.hpp> async(launch::async, _received_file, target_id, target_sub_id, indication_id, target_path);
 		}
 	}
 
