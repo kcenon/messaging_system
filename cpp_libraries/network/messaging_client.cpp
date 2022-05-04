@@ -896,7 +896,7 @@ namespace network
 
 		if (_received_file)
 		{
-			async(launch::async, _received_file, target_id, target_sub_id, indication_id, target_path);
+			auto result = async(launch::async, _received_file, target_id, target_sub_id, indication_id, target_path);
 		}
 	}
 
@@ -986,7 +986,7 @@ namespace network
 		vector<unsigned char> target_data = devide_binary_on_packet(data, index);
 		if (_received_data)
 		{
-			async(launch::async, _received_data, source_id, source_sub_id, target_id, target_sub_id, target_data);
+			auto result = async(launch::async, _received_data, source_id, source_sub_id, target_id, target_sub_id, target_data);
 		}
 	}
 
@@ -1008,7 +1008,7 @@ namespace network
 
 		if (_received_message)
 		{
-			async(launch::async, _received_message, message);
+			auto result = async(launch::async, _received_message, message);
 		}
 	}
 
