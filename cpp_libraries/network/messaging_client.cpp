@@ -986,7 +986,7 @@ namespace network
 		vector<unsigned char> target_data = devide_binary_on_packet(data, index);
 		if (_received_data)
 		{
-			_received_date(source_id, source_sub_id, target_id, target_sub_id, target_data);
+			_received_data(source_id, source_sub_id, target_id, target_sub_id, target_data);
 		}
 	}
 
