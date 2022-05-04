@@ -227,6 +227,12 @@ namespace network
 
 	void messaging_client::stop(void)
 	{
+		if (_thread_pool != nullptr)
+		{
+			_thread_pool->stop();
+			_thread_pool.reset();
+		}
+
 		if (_socket != nullptr)
 		{
 			if (_socket->is_open())
@@ -249,12 +255,6 @@ namespace network
 				_thread->join();
 			}
 			_thread.reset();
-		}
-
-		if (_thread_pool != nullptr)
-		{
-			_thread_pool->stop();
-			_thread_pool.reset();
 		}
 	}
 
