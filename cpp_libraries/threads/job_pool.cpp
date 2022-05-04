@@ -146,7 +146,7 @@ namespace threads
 				continue;
 			}
 
-			auto result = async(launch::async, notification, priority);
+			notification(priority);
 		}
 	}
 }
