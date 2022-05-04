@@ -148,15 +148,6 @@ int main(int argc, char* argv[])
 		manager.push(make_shared<test_job_without_data>(priorities::low));
 	}
 
-#ifdef __USE_CHAKRA_CORE__
-	for (unsigned int log_index = 0; log_index < 1000; ++log_index)
-	{
-		manager.push(make_shared<job>(priorities::high, converter::to_array(L"(()=>{return \'테스트5_high_in_thread\';})()")));
-		manager.push(make_shared<job>(priorities::normal, converter::to_array(L"(()=>{return \'테스트5_normal_in_thread\';})()")));
-		manager.push(make_shared<job>(priorities::low, converter::to_array(L"(()=>{return \'테스트5_low_in_thread\';})()")));
-	}
-#endif
-
 	manager.start();
 	manager.stop(false);
 

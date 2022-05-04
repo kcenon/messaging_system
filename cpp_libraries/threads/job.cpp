@@ -12,10 +12,6 @@
 #include <chrono>
 #include <future>
 
-#ifdef __USE_PYTHON__
-#include "Python.h"
-#endif
-
 #include "crossguid/guid.hpp"
 
 namespace threads
@@ -141,110 +137,8 @@ namespace threads
 
 	void job::working(const priorities& worker_priority)
 	{
-#ifdef __USE_PYTHON__
-		auto start = logger::handle().chrono_start();
-
-#ifndef __USE_TYPE_CONTAINER__
-#ifdef _WIN32
-		shared_ptr<json::value> source_data = make_shared<json::value>(json::value::parse(converter::to_wstring(_data)));
-#else
-		shared_ptr<json::value> source_data = make_shared<json::value>(json::value::parse(converter::to_string(_data)));
-#endif
-#else
-		shared_ptr<value_container> source_data = make_shared<value_container>(_data, true);
-#endif
-		if (source_data == nullptr)
-		{
-			return;
-		}
-
-#ifndef __USE_TYPE_CONTAINER__
-#ifdef _WIN32
-		wstring script = (*source_data)[L"data"][L"scripts"].as_string();
-#else
-		wstring script = converter::to_wstring((*source_data)["data"]["scripts"].as_string());
-#endif
-#else
-		wstring script = source_data->get_value(L"scripts")->to_string();
-#endif
-		if (script.empty())
-		{
-			logger::handle().write(logging_level::information, do_script(converter::to_wstring(_data)), start);
-
-			return;
-		}
-
-#ifndef __USE_TYPE_CONTAINER__
-#ifdef _WIN32
-		if ((*source_data)[L"header"][L"message_type"].as_string() == L"data_container")
-#else
-		if ((*source_data)["header"]["message_type"].as_string() == "data_container")
-#endif
-#else
-		if (source_data->message_type() == L"data_container")
-#endif
-		{
-			logger::handle().write(logging_level::information, do_script(script), start);
-		}
-		else
-		{
-			shared_ptr<job_pool> current_job_pool = _job_pool.lock();
-			if (current_job_pool == nullptr)
-			{
-				return;
-			}
-
-#ifndef __USE_TYPE_CONTAINER__
-			shared_ptr<json::value> target_data = make_shared<json::value>(json::value::parse(converter::to_string(_data)));
-#ifdef _WIN32
-			(*target_data)[L"header"][L"source_id"] = (*source_data)[L"header"][L"target_id"];
-			(*target_data)[L"header"][L"source_sub_id"] = (*source_data)[L"header"][L"target_sub_id"];
-			(*target_data)[L"header"][L"target_id"] = (*source_data)[L"header"][L"source_id"];
-			(*target_data)[L"header"][L"target_sub_id"] = (*source_data)[L"header"][L"source_sub_id"];
-			(*target_data)[L"data"][L"script_result"] = json::value::string(do_script(script));
-#else
-			(*target_data)["header"]["source_id"] = (*source_data)["header"]["target_id"];
-			(*target_data)["header"]["source_sub_id"] = (*source_data)["header"]["target_sub_id"];
-			(*target_data)["header"]["target_id"] = (*source_data)["header"]["source_id"];
-			(*target_data)["header"]["target_sub_id"] = (*source_data)["header"]["source_sub_id"];
-			(*target_data)["data"]["script_result"] = json::value::string(converter::to_string(do_script(script)));
-#endif
-
-			current_job_pool->push(make_shared<job>(_priority, converter::to_array(target_data->serialize())));
-#else
-			shared_ptr<value_container> target_data = source_data->copy(false);
-			target_data->swap_header();
-			target_data->add(make_shared<string_value>(L"script_result", do_script(script)));
-
-			current_job_pool->push(make_shared<job>(_priority, target_data->serialize_array()));
-#endif
-			current_job_pool.reset();
-		}
-#else
-		logger::handle().write(logging_level::error, L"cannot complete script working because it does not have interpreter");
-#endif
-	}
-
-	wstring job::do_script(const wstring& script)
-	{
-		try
-		{
-#ifdef __USE_PYTHON__
-			Py_Initialize();
-
-			PyRun_SimpleString(converter::to_string(script).c_str());
-
-			Py_Finalize();
-
-			return L"";
-#else
-			return L"";
-#endif
-		}
-		catch (...)
-		{
-			return L"";
-		}
+		logger::handle().write(logging_level::error, 
+			L"cannot complete job::working because it does not implemented");
 	}
 
 	void job::load(void)
