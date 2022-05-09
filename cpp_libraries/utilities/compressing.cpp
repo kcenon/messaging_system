@@ -1,6 +1,9 @@
 ﻿#include "compressing.h"
 
 #include "logging.h"
+#include "converting.h"
+#include "file_handler.h"
+#include "folder_handler.h"
 
 #include "lz4.h"
 
@@ -10,8 +13,11 @@
 namespace compressing
 {
 	using namespace logging;
+	using namespace converting;
+	using namespace file_handler;
+	using namespace folder_handler;
 
-	vector<unsigned char> compressor::compression(const vector<unsigned char>& original_data, const unsigned short& _block_bytes)
+	vector<unsigned char> compressor::compression(const vector<unsigned char>& original_data, const unsigned short& block_bytes)
 	{
 		if (original_data.empty())
 		{
@@ -27,10 +33,10 @@ namespace compressing
 		vector<vector<char>> source_buffer;
 		source_buffer.push_back(vector<char>());
 		source_buffer.push_back(vector<char>());
-		source_buffer[0].reserve(_block_bytes);
-		source_buffer[1].reserve(_block_bytes);
+		source_buffer[0].reserve(block_bytes);
+		source_buffer[1].reserve(block_bytes);
 
-		int compress_size = LZ4_COMPRESSBOUND(_block_bytes);
+		int compress_size = LZ4_COMPRESSBOUND(block_bytes);
 		vector<char> compress_buffer;
 		compress_buffer.reserve(compress_size);
 		vector<unsigned char> compressed_data;
@@ -41,9 +47,9 @@ namespace compressing
 
 		while (true) {
 			char* const source_buffer_pointer = source_buffer[source_buffer_index].data();
-			memset(source_buffer_pointer, 0, sizeof(char) * _block_bytes);
+			memset(source_buffer_pointer, 0, sizeof(char) * block_bytes);
 
-			const size_t inpBytes = ((original_data.size() - read_index) > _block_bytes) ? _block_bytes : (original_data.size() - read_index);
+			const size_t inpBytes = ((original_data.size() - read_index) > block_bytes) ? block_bytes : (original_data.size() - read_index);
 			if (0 == inpBytes) {
 				break;
 			}
@@ -81,12 +87,12 @@ namespace compressing
 		}
 		
 		logger::handle().write(logging_level::sequence, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
-			_block_bytes, original_data.size(), compressed_data.size(), (((double)compressed_data.size() / (double)original_data.size()) * 100)), start);
+			block_bytes, original_data.size(), compressed_data.size(), (((double)compressed_data.size() / (double)original_data.size()) * 100)), start);
 
 		return compressed_data;
 	}
 
-	vector<unsigned char> compressor::decompression(const vector<unsigned char>& compressed_data, const unsigned short& _block_bytes)
+	vector<unsigned char> compressor::decompression(const vector<unsigned char>& compressed_data, const unsigned short& block_bytes)
 	{
 		if (compressed_data.empty())
 		{
@@ -105,10 +111,10 @@ namespace compressing
 		vector<vector<char>> target_buffer;
 		target_buffer.push_back(vector<char>());
 		target_buffer.push_back(vector<char>());
-		target_buffer[0].reserve(_block_bytes);
-		target_buffer[1].reserve(_block_bytes);
+		target_buffer[0].reserve(block_bytes);
+		target_buffer[1].reserve(block_bytes);
 
-		int compress_size = LZ4_COMPRESSBOUND(_block_bytes);
+		int compress_size = LZ4_COMPRESSBOUND(block_bytes);
 		vector<char> compress_buffer;
 		compress_buffer.reserve(compress_size);
 		vector<unsigned char> decompressed_data;
@@ -126,7 +132,7 @@ namespace compressing
 				}
 
 				memcpy(&compressed_size, compressed_data.data() + read_index, sizeof(int));
-				if (0 >= compressed_size || _block_bytes < compressed_size) {
+				if (0 >= compressed_size || block_bytes < compressed_size) {
 					break;
 				}
 
@@ -139,7 +145,7 @@ namespace compressing
 
 			{
 				char* const target_buffer_pointer = target_buffer[target_buffer_index].data();
-				const int decompressed_size = LZ4_decompress_safe_continue(&lz4StreamDecode_body, (const char*)compress_buffer_pointer, (char*)target_buffer_pointer, compressed_size, _block_bytes);
+				const int decompressed_size = LZ4_decompress_safe_continue(&lz4StreamDecode_body, (const char*)compress_buffer_pointer, (char*)target_buffer_pointer, compressed_size, block_bytes);
 				if (decompressed_size <= 0) {
 					break;
 				}
@@ -161,9 +167,130 @@ namespace compressing
 			return vector<unsigned char>();
 		}
 		
-//		logger::handle().write(logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
-//			_block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)), start);
+		logger::handle().write(logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
+			block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)), start);
 
 		return decompressed_data;
+	}
+
+	vector<unsigned char> compressor::compression_folder(const wstring& root_path, const wstring& folder_path, const bool& contain_sub_folder,
+		const unsigned short& block_bytes)
+	{
+		vector<unsigned char> result;
+
+		if (!contain_sub_folder)
+		{
+			return result;
+		}
+
+		wstring temp;
+		auto files = folder::get_files(folder_path, false);
+		for (auto& file : files)
+		{
+			temp = file;
+			converter::replace(temp, root_path, L"");
+#ifdef _WIN32
+			converter::replace(temp, L"\\", L"/");
+#endif
+			vector<unsigned char> temp_buffer;
+			append_binary(temp_buffer, converter::to_array(temp));
+			append_binary(temp_buffer, file::load(file));
+
+			//temp_buffer = compression(temp_buffer, block_bytes);
+			append_binary(result, temp_buffer);
+		}
+
+		auto folders = folder::get_folders(folder_path);
+		for (auto& folder : folders)
+		{
+			auto temp_result = compression_folder(root_path, folder, contain_sub_folder, block_bytes);
+			if (temp_result.empty())
+			{
+				continue;
+			}
+
+			result.insert(result.end(), temp_result.begin(), temp_result.end());
+		}
+
+		return result;
+	}
+
+	bool compressor::decompression_folder(const wstring& source_path, const wstring& target_path, const unsigned short& block_bytes)
+	{
+		if (!folder::create_folder(target_path))
+		{
+			return false;
+		}
+
+		auto source = file::load(source_path);
+		if (source.empty())
+		{
+			return false;
+		}
+
+		size_t index = 0;
+		size_t index2 = 0;
+		size_t count = source.size();
+		while (index < count)
+		{
+			vector<unsigned char> temp;
+			//temp = devide_binary(source, index);
+			temp = decompression(temp, block_bytes);
+
+			index2 = 0;
+			auto file_path = fmt::format(L"{}{}", target_path, converter::to_wstring(devide_binary(temp, index2)));
+			auto file_data = devide_binary(temp, index2);
+
+			file::save(file_path, file_data);
+		}
+
+		return true;
+	}
+
+	void compressor::append_binary(vector<unsigned char>& result, const vector<unsigned char>& source)
+	{
+		size_t temp;
+		const int size = sizeof(size_t);
+		char temp_size[size];
+
+		temp = source.size();
+		memcpy(temp_size, (char*)&temp, size);
+		result.insert(result.end(), temp_size, temp_size + size);
+		if (temp == 0)
+		{
+			return;
+		}
+
+		result.insert(result.end(), source.begin(), source.end());
+	}
+
+	vector<unsigned char> compressor::devide_binary(const vector<unsigned char>& source, size_t& index)
+	{
+		if (source.empty())
+		{
+			return vector<unsigned char>();
+		}
+
+		size_t temp;
+		const int size = sizeof(size_t);
+
+		if (source.size() < index + size)
+		{
+			return vector<unsigned char>();
+		}
+
+		memcpy(&temp, source.data() + index, size);
+		index += size;
+
+		if (temp == 0 || source.size() < index + temp)
+		{
+			return vector<unsigned char>();
+		}
+
+		vector<unsigned char> result;
+		result.insert(result.end(), source.begin() + index, source.begin() + index + temp);
+		index += temp;
+
+		return result;
 	}
 }
