@@ -51,6 +51,38 @@ namespace folder_handler
 		}
 	}
 
+	vector<wstring> folder::get_folders(const wstring& target_folder)
+	{
+		vector<wstring> result;
+
+		if (target_folder.empty())
+		{
+			return result;
+		}
+
+		wstring extension;
+		filesystem::path targetDir(target_folder);
+
+		if (filesystem::exists(targetDir) != true)
+		{
+			return result;
+		}
+
+		filesystem::directory_iterator iterator(targetDir), endItr;
+
+		for (; iterator != endItr; ++iterator)
+		{
+			if (!filesystem::is_directory(iterator->path()))
+			{
+				continue;
+			}
+
+			result.push_back(iterator->path().wstring());
+		}
+
+		return result;
+	}
+
 	vector<wstring> folder::get_files(const wstring& target_folder, const bool& search_sub_folder, const vector<wstring> extensions)
 	{
 		vector<wstring> result;
