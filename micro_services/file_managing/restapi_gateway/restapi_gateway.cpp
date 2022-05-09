@@ -120,11 +120,6 @@ int main(int argc, char* argv[])
 	SetConsoleCtrlHandler((PHANDLER_ROUTINE)ctrl_handler, TRUE);
 #endif
 
-	if (compress_mode)
-	{
-		compressor::set_block_bytes(compress_block_size);
-	}
-
 	logger::handle().set_write_console(write_console);
 	logger::handle().set_target_level(log_level);
 	logger::handle().start(PROGRAM_NAME);

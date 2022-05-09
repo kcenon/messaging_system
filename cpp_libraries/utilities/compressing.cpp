@@ -11,9 +11,7 @@ namespace compressing
 {
 	using namespace logging;
 
-	unsigned short compressor::_block_bytes = 1024;
-
-	vector<unsigned char> compressor::compression(const vector<unsigned char>& original_data)
+	vector<unsigned char> compressor::compression(const vector<unsigned char>& original_data, const unsigned short& _block_bytes)
 	{
 		if (original_data.empty())
 		{
@@ -88,7 +86,7 @@ namespace compressing
 		return compressed_data;
 	}
 
-	vector<unsigned char> compressor::decompression(const vector<unsigned char>& compressed_data)
+	vector<unsigned char> compressor::decompression(const vector<unsigned char>& compressed_data, const unsigned short& _block_bytes)
 	{
 		if (compressed_data.empty())
 		{
@@ -128,7 +126,7 @@ namespace compressing
 				}
 
 				memcpy(&compressed_size, compressed_data.data() + read_index, sizeof(int));
-				if (0 >= compressed_size || compressor::_block_bytes < compressed_size) {
+				if (0 >= compressed_size || _block_bytes < compressed_size) {
 					break;
 				}
 
@@ -167,15 +165,5 @@ namespace compressing
 //			_block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)), start);
 
 		return decompressed_data;
-	}
-
-	void compressor::set_block_bytes(const unsigned short& block_bytes)
-	{
-		_block_bytes = block_bytes;
-	}
-
-	unsigned short compressor::get_block_bytes(void)
-	{
-		return _block_bytes;
 	}
 }

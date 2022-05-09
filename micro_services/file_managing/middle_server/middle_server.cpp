@@ -118,11 +118,6 @@ int main(int argc, char* argv[])
 	SetConsoleCtrlHandler((PHANDLER_ROUTINE)ctrl_handler, TRUE);
 #endif
 
-	if (compress_mode)
-	{
-		compressor::set_block_bytes(compress_block_size);
-	}
-
 	_file_commands.insert({ L"download_files", &download_files });
 	_file_commands.insert({ L"upload_files", &upload_files });
 
