@@ -3,11 +3,52 @@
 #include <algorithm>
 #include <filesystem>
 
+#include "fmt/xchar.h"
+#include "fmt/format.h"
+
 namespace folder_handler
 {
 	wstring folder::get_temporary_folder(void)
 	{
 		return filesystem::temp_directory_path().wstring();
+	}
+
+	bool folder::create_folder(const wstring& root, const wstring& target)
+	{
+		if (root.empty())
+		{
+			return false;
+		}
+
+		if (!filesystem::exists(root))
+		{
+			filesystem::create_directories(root);
+		}
+
+		if (target.empty())
+		{
+			return true;
+		}
+
+		return filesystem::create_directory(fmt::format(L"{}/{}", root, target));
+	}
+
+	void folder::delete_folder(const wstring& target)
+	{
+		if (!filesystem::exists(target))
+		{
+			return;
+		}
+
+		filesystem::remove_all(target);
+	}
+
+	void folder::delete_folders(const vector<wstring>& targets)
+	{
+		for (auto& target : targets)
+		{
+			delete_folder(target);
+		}
 	}
 
 	vector<wstring> folder::get_files(const wstring& target_folder, const bool& search_sub_folder, const vector<wstring> extensions)
