@@ -2,6 +2,7 @@
 
 #include "logging.h"
 #include "converting.h"
+#include "file_handler.h"
 #include "messaging_client.h"
 #include "folder_handler.h"
 #include "argument_parser.h"
@@ -24,12 +25,17 @@ constexpr auto PROGRAM_NAME = L"download_sample";
 using namespace logging;
 using namespace network;
 using namespace converting;
+using namespace file_handler;
 using namespace folder_handler;
 using namespace argument_parser;
 
+#ifdef _DEBUG
+bool write_console = true;
+#else
 bool write_console = false;
+#endif
 bool encrypt_mode = false;
-bool compress_mode = false;
+bool compress_mode = true;
 #ifdef _DEBUG
 logging_level log_level = logging_level::parameter;
 #else
@@ -209,7 +215,11 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--connection_key");
 	if (target != arguments.end())
 	{
-		connection_key = target->second;
+		temp = converter::to_wstring(file::load(target->second));
+		if (!temp.empty())
+		{
+			connection_key = temp;
+		}
 	}
 
 	target = arguments.find(L"--server_ip");

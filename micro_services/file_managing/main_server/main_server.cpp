@@ -4,6 +4,7 @@
 #include "messaging_server.h"
 #include "converting.h"
 #include "compressing.h"
+#include "file_handler.h"
 #include "file_manager.h"
 #include "argument_parser.h"
 
@@ -33,6 +34,7 @@ using namespace logging;
 using namespace network;
 using namespace converting;
 using namespace compressing;
+using namespace file_handler;
 using namespace argument_parser;
 
 #ifdef _DEBUG
@@ -41,7 +43,7 @@ bool write_console = true;
 bool write_console = false;
 #endif
 bool encrypt_mode = false;
-bool compress_mode = false;
+bool compress_mode = true;
 unsigned short compress_block_size = 1024;
 #ifdef _DEBUG
 logging_level log_level = logging_level::packet;
@@ -192,7 +194,11 @@ bool parse_arguments(const map<wstring, wstring>& arguments)
 	target = arguments.find(L"--connection_key");
 	if (target != arguments.end())
 	{
-		connection_key = target->second;
+		temp = converter::to_wstring(file::load(target->second));
+		if (!temp.empty())
+		{
+			connection_key = temp;
+		}
 	}
 
 	target = arguments.find(L"--server_port");
