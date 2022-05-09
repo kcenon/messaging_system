@@ -60,6 +60,7 @@ namespace logging
 		{
 			if (_thread->joinable())
 			{
+				_condition.notify_one();
 				_thread->join();
 			}
 			_thread.reset();
