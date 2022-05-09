@@ -32,28 +32,17 @@ namespace file_handler
 		size_t file_size = filesystem::file_size(path);
 
 #ifdef _WIN32
-		fstream stream(path, ios::in | ios::binary);
+		ifstream stream(path, ios::binary);
 #else
-		fstream stream(converter::to_string(path), ios::in | ios::binary);
+		ifstream stream(converter::to_string(path), ios::binary);
 #endif
 		if (!stream.is_open())
 		{
 			return vector<unsigned char>();
 		}
 
-		char* temp = new char[file_size];
-		memset(temp, 0, file_size);
-
-		stream.seekg(0, ios::beg);
-		stream.read(temp, file_size);
+		std::vector<unsigned char> target((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
 		stream.close();
-
-		vector<unsigned char> target;
-		target.reserve(file_size);
-		target.insert(target.begin(), temp, temp + file_size);
-
-		delete[] temp;
-		temp = nullptr;
 
 		return target;
 	}
@@ -67,9 +56,9 @@ namespace file_handler
 		}
 
 #ifdef _WIN32
-		fstream stream(path, ios::out | ios::binary | ios::trunc);
+		ofstream stream(path, ios::binary | ios::trunc);
 #else
-		fstream stream(converter::to_string(path), ios::out | ios::binary | ios::trunc);
+		ofstream stream(converter::to_string(path), ios::binary | ios::trunc);
 #endif
 		if (!stream.is_open())
 		{
