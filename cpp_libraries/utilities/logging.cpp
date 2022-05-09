@@ -303,6 +303,7 @@ namespace logging
 		}
 
 		file::append(backup_path, file::load(target_path));
+		filesystem::resize_file(target_path, 0);
 
 		if (_backup_notification != nullptr)
 		{
