@@ -50,7 +50,7 @@ namespace converting
 			return source;
 		}
 
-		return result.data();
+		return wstring(result.begin(), result.end());
 	}
 
 	wstring converter::to_wstring(const string& value)

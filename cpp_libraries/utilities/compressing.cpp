@@ -234,8 +234,8 @@ namespace compressing
 		while (index < count)
 		{
 			vector<unsigned char> temp;
-			//temp = devide_binary(source, index);
-			temp = decompression(temp, block_bytes);
+			temp = devide_binary(source, index);
+			//temp = decompression(temp, block_bytes);
 
 			index2 = 0;
 			auto file_path = fmt::format(L"{}{}", target_path, converter::to_wstring(devide_binary(temp, index2)));
