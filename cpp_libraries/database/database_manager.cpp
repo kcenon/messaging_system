@@ -28,6 +28,8 @@ namespace database
             case database_types::postgres:
                 _database = make_shared<postgres_manager>();
                 break;
+            default:
+                break;
         }
 
         if(_database == nullptr)

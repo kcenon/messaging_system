@@ -569,6 +569,8 @@ namespace network
 		case data_modes::file_mode:
 			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&messaging_client::decrypt_file_packet, this, placeholders::_1)));
 			break;
+		default:
+			break;
 		}
 	}
 
