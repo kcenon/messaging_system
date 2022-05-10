@@ -6,8 +6,9 @@
 #include "container.h"
 #endif
 
-#include "session_types.h"
 #include "thread_pool.h"
+#include "session_types.h"
+#include "constexpr_string.h"
 
 #include <memory>
 #include <vector>

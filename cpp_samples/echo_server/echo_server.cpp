@@ -276,9 +276,9 @@ void received_message(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
+	auto message_type = _registered_messages.find((*container)[HEADER][MESSAGE_TYPE].as_string());
 #else
-	auto message_type = _registered_messages.find(converter::to_wstring((*container)["header"]["message_type"].as_string()));
+	auto message_type = _registered_messages.find(converter::to_wstring((*container)[HEADER][MESSAGE_TYPE].as_string()));
 #endif
 #else
 	auto message_type = _registered_messages.find(container->message_type());
@@ -318,19 +318,11 @@ void received_echo_test(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 	shared_ptr<json::value> message = make_shared<json::value>(json::value::object(true));
-#ifdef _WIN32
-	(*message)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
-	(*message)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
-	(*message)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
-	(*message)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
-	(*message)[L"header"][L"message_type"] = (*container)[L"header"][L"message_type"];
-#else
-	(*message)["header"]["source_id"] = (*container)["header"]["target_id"];
-	(*message)["header"]["source_sub_id"] = (*container)["header"]["target_sub_id"];
-	(*message)["header"]["target_id"] = (*container)["header"]["source_id"];
-	(*message)["header"]["target_sub_id"] = (*container)["header"]["source_sub_id"];
-	(*message)["header"]["message_type"] = (*container)["header"]["message_type"];
-#endif
+	(*message)[HEADER][SOURCE_ID] = (*container)[HEADER][TARGET_ID];
+	(*message)[HEADER][SOURCE_SUB_ID] = (*container)[HEADER][TARGET_SUB_ID];
+	(*message)[HEADER][TARGET_ID] = (*container)[HEADER][SOURCE_ID];
+	(*message)[HEADER][TARGET_SUB_ID] = (*container)[HEADER][SOURCE_SUB_ID];
+	(*message)[HEADER][MESSAGE_TYPE] = (*container)[HEADER][MESSAGE_TYPE];
 #else
 	shared_ptr<container::value_container> message = container->copy(false);
 	container->swap_header();

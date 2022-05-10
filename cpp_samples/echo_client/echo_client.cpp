@@ -182,13 +182,13 @@ void send_echo_test_message(void)
 	shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 #ifdef _WIN32
-	(*container)[L"header"][L"target_id"] = json::value::string(L"main_server");
-	(*container)[L"header"][L"target_sub_id"] = json::value::string(L"");
-	(*container)[L"header"][L"message_type"] = json::value::string(L"echo_test");
+	(*container)[HEADER][TARGET_ID] = json::value::string(L"main_server");
+	(*container)[HEADER][TARGET_SUB_ID] = json::value::string(L"");
+	(*container)[HEADER][MESSAGE_TYPE] = json::value::string(L"echo_test");
 #else
-	(*container)["header"]["target_id"] = json::value::string("main_server");
-	(*container)["header"]["target_sub_id"] = json::value::string("");
-	(*container)["header"]["message_type"] = json::value::string("echo_test");
+	(*container)[HEADER][TARGET_ID] = json::value::string("main_server");
+	(*container)[HEADER][TARGET_SUB_ID] = json::value::string("");
+	(*container)[HEADER][MESSAGE_TYPE] = json::value::string("echo_test");
 #endif
 #else
 	shared_ptr<container::value_container> container =
@@ -223,9 +223,9 @@ void received_message(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
+	auto message_type = _registered_messages.find((*container)[HEADER][MESSAGE_TYPE].as_string());
 #else
-	auto message_type = _registered_messages.find(converter::to_wstring((*container)["header"]["message_type"].as_string()));
+	auto message_type = _registered_messages.find(converter::to_wstring((*container)[HEADER][MESSAGE_TYPE].as_string()));
 #endif
 #else
 	auto message_type = _registered_messages.find(container->message_type());

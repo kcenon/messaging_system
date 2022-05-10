@@ -9,6 +9,7 @@
 #include "thread_pool.h"
 #include "data_handling.h"
 #include "session_types.h"
+#include "constexpr_string.h"
 
 #include <map>
 #include <memory>

@@ -289,9 +289,9 @@ void received_message(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
+	auto message_type = _registered_messages.find((*container)[HEADER][MESSAGE_TYPE].as_string());
 #else
-	auto message_type = _registered_messages.find(converter::to_wstring((*container)["header"]["message_type"].as_string()));
+	auto message_type = _registered_messages.find(converter::to_wstring((*container)[HEADER][MESSAGE_TYPE].as_string()));
 #endif
 #else
 	auto message_type = _registered_messages.find(container->message_type());
@@ -325,9 +325,9 @@ void transfer_file(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	if ((*container)[L"header"][L"message_type"].as_string() != L"transfer_file")
+	if ((*container)[HEADER][MESSAGE_TYPE].as_string() != L"transfer_file")
 #else
-	if ((*container)["header"]["message_type"].as_string() != "transfer_file")
+	if ((*container)[HEADER][MESSAGE_TYPE].as_string() != "transfer_file")
 #endif
 #else
 	if (container->message_type() != L"transfer_file")
@@ -357,9 +357,9 @@ void upload_files(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	if ((*container)[L"header"][L"message_type"].as_string() != L"upload_files")
+	if ((*container)[HEADER][MESSAGE_TYPE].as_string() != L"upload_files")
 #else
-	if ((*container)["header"]["message_type"].as_string() != "upload_files")
+	if ((*container)[HEADER][MESSAGE_TYPE].as_string() != "upload_files")
 #endif
 #else
 	if (container->message_type() != L"upload_files")
@@ -372,36 +372,36 @@ void upload_files(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	auto& files = (*container)[L"data"][L"files"].as_array();
+	auto& files = (*container)[DATA][FILES].as_array();
 	for (int index = 0; index < files.size(); ++index)
 	{
-		target_paths.push_back(files[index][L"target"].as_string());
+		target_paths.push_back(files[index][TARGET].as_string());
 	}
 
-	_file_manager->set((*container)[L"data"][L"indication_id"].as_string(),
-		(*container)[L"data"][L"gateway_source_id"].as_string(),
-		(*container)[L"data"][L"gateway_source_sub_id"].as_string(), target_paths);
+	_file_manager->set((*container)[DATA][INDICATION_ID].as_string(),
+		(*container)[DATA][GATEWAY_SOURCE_ID].as_string(),
+		(*container)[DATA][GATEWAY_SOURCE_SUB_ID].as_string(), target_paths);
 #else
-	auto& files = (*container)["data"]["files"].as_array();
+	auto& files = (*container)[DATA][FILES].as_array();
 	for (int index = 0; index < files.size(); ++index)
 	{
-		target_paths.push_back(converter::to_wstring(files[index]["target"].as_string()));
+		target_paths.push_back(converter::to_wstring(files[index][TARGET].as_string()));
 	}
 
-	_file_manager->set(converter::to_wstring((*container)["data"]["indication_id"].as_string()),
-		converter::to_wstring((*container)["data"]["gateway_source_id"].as_string()),
-		converter::to_wstring((*container)["data"]["gateway_source_sub_id"].as_string()), target_paths);
+	_file_manager->set(converter::to_wstring((*container)[DATA][INDICATION_ID].as_string()),
+		converter::to_wstring((*container)[DATA][GATEWAY_SOURCE_ID].as_string()),
+		converter::to_wstring((*container)[DATA][GATEWAY_SOURCE_SUB_ID].as_string()), target_paths);
 #endif
 #else
 	vector<shared_ptr<container::value>> files = container->value_array(L"file");
 	for (auto& file : files)
 	{
-		target_paths.push_back((*file)[L"target"]->to_string());
+		target_paths.push_back((*file)[TARGET]->to_string());
 	}
 
-	_file_manager->set(container->get_value(L"indication_id")->to_string(),
-		container->get_value(L"gateway_source_id")->to_string(),
-		container->get_value(L"gateway_source_sub_id")->to_string(), target_paths);
+	_file_manager->set(container->get_value(INDICATION_ID)->to_string(),
+		container->get_value(GATEWAY_SOURCE_ID)->to_string(),
+		container->get_value(GATEWAY_SOURCE_SUB_ID)->to_string(), target_paths);
 #endif
 
 	if (_main_server)
@@ -410,33 +410,33 @@ void upload_files(shared_ptr<container::value_container> container)
 		shared_ptr<json::value> start_message = make_shared<json::value>(json::value::object(true));
 
 #ifdef _WIN32
-		(*start_message)[L"header"][L"source_id"] = json::value::string(L"");
-		(*start_message)[L"header"][L"source_sub_id"] = json::value::string(L"");
-		(*start_message)[L"header"][L"target_id"] = (*container)[L"data"][L"gateway_source_id"];
-		(*start_message)[L"header"][L"target_sub_id"] = (*container)[L"data"][L"gateway_source_sub_id"];
-		(*start_message)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
+		(*start_message)[HEADER][SOURCE_ID] = json::value::string(L"");
+		(*start_message)[HEADER][SOURCE_SUB_ID] = json::value::string(L"");
+		(*start_message)[HEADER][TARGET_ID] = (*container)[DATA][GATEWAY_SOURCE_ID];
+		(*start_message)[HEADER][TARGET_SUB_ID] = (*container)[DATA][GATEWAY_SOURCE_SUB_ID];
+		(*start_message)[HEADER][MESSAGE_TYPE] = json::value::string(TRANSFER_CONDITON);
 
-		(*start_message)[L"data"][L"indication_id"] = (*container)[L"data"][L"indication_id"];
-		(*start_message)[L"data"][L"percentage"] = json::value::number(0);
+		(*start_message)[DATA][INDICATION_ID] = (*container)[DATA][INDICATION_ID];
+		(*start_message)[DATA][L"percentage"] = json::value::number(0);
 #else
-		(*start_message)["header"]["source_id"] = json::value::string("");
-		(*start_message)["header"]["source_sub_id"] = json::value::string("");
-		(*start_message)["header"]["target_id"] = (*container)["data"]["gateway_source_id"];
-		(*start_message)["header"]["target_sub_id"] = (*container)["data"]["gateway_source_sub_id"];
-		(*start_message)["header"]["message_type"] = json::value::string("transfer_condition");
+		(*start_message)[HEADER][SOURCE_ID] = json::value::string("");
+		(*start_message)[HEADER][SOURCE_SUB_ID] = json::value::string("");
+		(*start_message)[HEADER][TARGET_ID] = (*container)[DATA][GATEWAY_SOURCE_ID];
+		(*start_message)[HEADER][TARGET_SUB_ID] = (*container)[DATA][GATEWAY_SOURCE_SUB_ID];
+		(*start_message)[HEADER][MESSAGE_TYPE] = json::value::string(TRANSFER_CONDITON);
 
-		(*start_message)["data"]["indication_id"] = (*container)["data"]["indication_id"];
-		(*start_message)["data"]["percentage"] = json::value::number(0);
+		(*start_message)[DATA][INDICATION_ID] = (*container)[DATA][INDICATION_ID];
+		(*start_message)[DATA]["percentage"] = json::value::number(0);
 #endif
 
 		_main_server->send(start_message, session_types::file_line);
 #else
 		_main_server->send(make_shared<container::value_container>(
-			container->get_value(L"gateway_source_id")->to_string(), 
-			container->get_value(L"gateway_source_sub_id")->to_string(),
-			L"transfer_condition", 
+			container->get_value(GATEWAY_SOURCE_ID)->to_string(), 
+			container->get_value(GATEWAY_SOURCE_SUB_ID)->to_string(),
+			TRANSFER_CONDITON, 
 			vector<shared_ptr<container::value>> {
-				make_shared<container::string_value>(L"indication_id", container->get_value(L"indication_id")->to_string()),
+				make_shared<container::string_value>(INDICATION_ID, container->get_value(INDICATION_ID)->to_string()),
 				make_shared<container::ushort_value>(L"percentage", 0)
 		}), session_types::file_line);
 #endif
@@ -446,19 +446,19 @@ void upload_files(shared_ptr<container::value_container> container)
 	shared_ptr<json::value> temp = make_shared<json::value>(json::value::parse(container->serialize()));
 
 #ifdef _WIN32
-	(*temp)[L"header"][L"source_id"] = (*container)[L"header"][L"target_id"];
-	(*temp)[L"header"][L"source_sub_id"] = (*container)[L"header"][L"target_sub_id"];
-	(*temp)[L"header"][L"target_id"] = (*container)[L"header"][L"source_id"];
-	(*temp)[L"header"][L"target_sub_id"] = (*container)[L"header"][L"source_sub_id"];
+	(*temp)[HEADER][SOURCE_ID] = (*container)[HEADER][TARGET_ID];
+	(*temp)[HEADER][SOURCE_SUB_ID] = (*container)[HEADER][TARGET_SUB_ID];
+	(*temp)[HEADER][TARGET_ID] = (*container)[HEADER][SOURCE_ID];
+	(*temp)[HEADER][TARGET_SUB_ID] = (*container)[HEADER][SOURCE_SUB_ID];
 
-	(*temp)[L"header"][L"message_type"] = json::value::string(L"request_files");
+	(*temp)[HEADER][MESSAGE_TYPE] = json::value::string(L"request_files");
 #else
-	(*temp)["header"]["source_id"] = (*container)["header"]["target_id"];
-	(*temp)["header"]["source_sub_id"] = (*container)["header"]["target_sub_id"];
-	(*temp)["header"]["target_id"] = (*container)["header"]["source_id"];
-	(*temp)["header"]["target_sub_id"] = (*container)["header"]["source_sub_id"];
+	(*temp)[HEADER][SOURCE_ID] = (*container)[HEADER][TARGET_ID];
+	(*temp)[HEADER][SOURCE_SUB_ID] = (*container)[HEADER][TARGET_SUB_ID];
+	(*temp)[HEADER][TARGET_ID] = (*container)[HEADER][SOURCE_ID];
+	(*temp)[HEADER][TARGET_SUB_ID] = (*container)[HEADER][SOURCE_SUB_ID];
 
-	(*temp)["header"]["message_type"] = json::value::string("request_files");
+	(*temp)[HEADER][MESSAGE_TYPE] = json::value::string("request_files");
 #endif
 #else
 	shared_ptr<container::value_container> temp = container->copy();

@@ -108,34 +108,34 @@ int main(int argc, char* argv[])
 	shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 #ifdef _WIN32
-	(*container)[L"header"][L"target_id"] = json::value::string(L"main_server");
-	(*container)[L"header"][L"target_sub_id"] = json::value::string(L"");
-	(*container)[L"header"][L"message_type"] = json::value::string(L"upload_files");
+	(*container)[HEADER][TARGET_ID] = json::value::string(L"main_server");
+	(*container)[HEADER][TARGET_SUB_ID] = json::value::string(L"");
+	(*container)[HEADER][MESSAGE_TYPE] = json::value::string(L"upload_files");
 
-	(*container)[L"data"][L"indication_id"] = json::value::string(L"upload_test");
+	(*container)[DATA][INDICATION_ID] = json::value::string(L"upload_test");
 
 	int index = 0;
-	(*container)[L"data"][L"files"] = json::value::array();
+	(*container)[DATA][FILES] = json::value::array();
 	for (auto& source : sources)
 	{
-		(*container)[L"data"][L"files"][index][L"source"] = json::value::string(source);
-		(*container)[L"data"][L"files"][index][L"target"] = 
+		(*container)[DATA][FILES][index][SOURCE] = json::value::string(source);
+		(*container)[DATA][FILES][index][TARGET] = 
 			json::value::string(converter::replace2(source, source_folder, target_folder));
 		index++;
 	}
 #else
-	(*container)["header"]["target_id"] = json::value::string("main_server");
-	(*container)["header"]["target_sub_id"] = json::value::string("");
-	(*container)["header"]["message_type"] = json::value::string("upload_files");
+	(*container)[HEADER][TARGET_ID] = json::value::string("main_server");
+	(*container)[HEADER][TARGET_SUB_ID] = json::value::string("");
+	(*container)[HEADER][MESSAGE_TYPE] = json::value::string("upload_files");
 
-	(*container)["data"]["indication_id"] = json::value::string("upload_test");
+	(*container)[DATA][INDICATION_ID] = json::value::string("upload_test");
 
 	int index = 0;
-	(*container)["data"]["files"] = json::value::array();
+	(*container)[DATA][FILES] = json::value::array();
 	for (auto& source : sources)
 	{
-		(*container)["data"]["files"][index]["source"] = json::value::string(converter::to_string(source));
-		(*container)["data"]["files"][index]["target"] =
+		(*container)[DATA][FILES][index][SOURCE] = json::value::string(converter::to_string(source));
+		(*container)[DATA][FILES][index][TARGET] =
 			json::value::string(converter::to_string(converter::replace2(source, source_folder, target_folder)));
 		index++;
 	}
@@ -143,12 +143,12 @@ int main(int argc, char* argv[])
 #else
 	vector<shared_ptr<container::value>> files;
 
-	files.push_back(make_shared<container::string_value>(L"indication_id", L"upload_test"));
+	files.push_back(make_shared<container::string_value>(INDICATION_ID, L"upload_test"));
 	for (auto& source : sources)
 	{
 		files.push_back(make_shared<container::container_value>(L"file", vector<shared_ptr<container::value>> {
-			make_shared<container::string_value>(L"source", source),
-			make_shared<container::string_value>(L"target", converter::replace2(source, source_folder, target_folder))
+			make_shared<container::string_value>(SOURCE, source),
+			make_shared<container::string_value>(TARGET, converter::replace2(source, source_folder, target_folder))
 		}));
 	}
 
@@ -310,9 +310,9 @@ void received_message(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	auto message_type = _registered_messages.find((*container)[L"header"][L"message_type"].as_string());
+	auto message_type = _registered_messages.find((*container)[HEADER][MESSAGE_TYPE].as_string());
 #else
-	auto message_type = _registered_messages.find(converter::to_wstring((*container)["header"]["message_type"].as_string()));
+	auto message_type = _registered_messages.find(converter::to_wstring((*container)[HEADER][MESSAGE_TYPE].as_string()));
 #endif
 #else
 	auto message_type = _registered_messages.find(container->message_type());
@@ -343,12 +343,12 @@ void transfer_condition(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	if ((*container)[L"header"][L"message_type"].as_string() != L"transfer_condition")
+	if ((*container)[HEADER][MESSAGE_TYPE].as_string() != TRANSFER_CONDITON)
 #else
-	if ((*container)["header"]["message_type"].as_string() != "transfer_condition")
+	if ((*container)[HEADER][MESSAGE_TYPE].as_string() != TRANSFER_CONDITON)
 #endif
 #else
-	if (container->message_type() != L"transfer_condition")
+	if (container->message_type() != TRANSFER_CONDITON)
 #endif
 	{
 		return;
@@ -356,9 +356,9 @@ void transfer_condition(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	if ((*container)[L"data"][L"percentage"].as_integer() == 0)
+	if ((*container)[DATA][L"percentage"].as_integer() == 0)
 #else
-	if ((*container)["data"]["percentage"].as_integer() == 0)
+	if ((*container)[DATA]["percentage"].as_integer() == 0)
 #endif
 #else
 	if (container->get_value(L"percentage")->to_ushort() == 0)
@@ -367,14 +367,14 @@ void transfer_condition(shared_ptr<container::value_container> container)
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
 		logger::handle().write(logging_level::information,
-			fmt::format(L"started upload: [{}]", (*container)[L"data"][L"indication_id"].as_string()));
+			fmt::format(L"started upload: [{}]", (*container)[DATA][INDICATION_ID].as_string()));
 #else
 		logger::handle().write(logging_level::information,
-			converter::to_wstring(fmt::format("started upload: [{}]", (*container)["data"]["indication_id"].as_string())));
+			converter::to_wstring(fmt::format("started upload: [{}]", (*container)[DATA][INDICATION_ID].as_string())));
 #endif
 #else
 		logger::handle().write(logging_level::information,
-			fmt::format(L"started upload: [{}]", container->get_value(L"indication_id")->to_string()));
+			fmt::format(L"started upload: [{}]", container->get_value(INDICATION_ID)->to_string()));
 #endif
 
 		return;
@@ -383,24 +383,24 @@ void transfer_condition(shared_ptr<container::value_container> container)
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
 	logger::handle().write(logging_level::information,
-		fmt::format(L"received percentage: [{}] {}%", (*container)[L"data"][L"indication_id"].as_string(),
-			(*container)[L"data"][L"percentage"].as_integer()));
+		fmt::format(L"received percentage: [{}] {}%", (*container)[DATA][INDICATION_ID].as_string(),
+			(*container)[DATA][L"percentage"].as_integer()));
 #else
 	logger::handle().write(logging_level::information,
-		converter::to_wstring(fmt::format("received percentage: [{}] {}%", (*container)["data"]["indication_id"].as_string(),
-			(*container)["data"]["percentage"].as_integer())));
+		converter::to_wstring(fmt::format("received percentage: [{}] {}%", (*container)[DATA][INDICATION_ID].as_string(),
+			(*container)[DATA]["percentage"].as_integer())));
 #endif
 #else
 	logger::handle().write(logging_level::information,
-		fmt::format(L"received percentage: [{}] {}%", container->get_value(L"indication_id")->to_string(),
+		fmt::format(L"received percentage: [{}] {}%", container->get_value(INDICATION_ID)->to_string(),
 			container->get_value(L"percentage")->to_ushort()));
 #endif
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	if ((*container)[L"data"][L"completed"].as_bool())
+	if ((*container)[DATA][L"completed"].as_bool())
 #else
-	if ((*container)["data"]["completed"].as_bool())
+	if ((*container)[DATA]["completed"].as_bool())
 #endif
 #else
 	if (container->get_value(L"completed")->to_boolean())
@@ -409,14 +409,14 @@ void transfer_condition(shared_ptr<container::value_container> container)
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
 		logger::handle().write(logging_level::information,
-			fmt::format(L"completed upload: [{}]", (*container)[L"data"][L"indication_id"].as_string()));
+			fmt::format(L"completed upload: [{}]", (*container)[DATA][INDICATION_ID].as_string()));
 #else
 		logger::handle().write(logging_level::information,
-			converter::to_wstring(fmt::format("completed upload: [{}]", (*container)["data"]["indication_id"].as_string())));
+			converter::to_wstring(fmt::format("completed upload: [{}]", (*container)[DATA][INDICATION_ID].as_string())));
 #endif
 #else
 		logger::handle().write(logging_level::information,
-			fmt::format(L"completed upload: [{}]", container->get_value(L"indication_id")->to_string()));
+			fmt::format(L"completed upload: [{}]", container->get_value(INDICATION_ID)->to_string()));
 #endif
 
 		_promise_status.set_value(true);
@@ -426,9 +426,9 @@ void transfer_condition(shared_ptr<container::value_container> container)
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-	if ((*container)[L"data"][L"percentage"].as_integer() == 100)
+	if ((*container)[DATA][L"percentage"].as_integer() == 100)
 #else
-	if ((*container)["data"]["percentage"].as_integer() == 100)
+	if ((*container)[DATA]["percentage"].as_integer() == 100)
 #endif
 #else
 	if (container->get_value(L"percentage")->to_ushort() == 100)
@@ -437,16 +437,16 @@ void transfer_condition(shared_ptr<container::value_container> container)
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
 		logger::handle().write(logging_level::information,
-			fmt::format(L"completed upload: [{}] success-{}, fail-{}", (*container)[L"data"][L"indication_id"].as_string(),
-				(*container)[L"data"][L"completed_count"].as_integer(), (*container)[L"data"][L"failed_count"].as_integer()));
+			fmt::format(L"completed upload: [{}] success-{}, fail-{}", (*container)[DATA][INDICATION_ID].as_string(),
+				(*container)[DATA][L"completed_count"].as_integer(), (*container)[DATA][L"failed_count"].as_integer()));
 #else
 		logger::handle().write(logging_level::information,
-			converter::to_wstring(fmt::format("completed upload: [{}] success-{}, fail-{}", (*container)["data"]["indication_id"].as_string(),
-				(*container)["data"]["completed_count"].as_integer(), (*container)["data"]["failed_count"].as_integer())));
+			converter::to_wstring(fmt::format("completed upload: [{}] success-{}, fail-{}", (*container)[DATA][INDICATION_ID].as_string(),
+				(*container)[DATA]["completed_count"].as_integer(), (*container)[DATA]["failed_count"].as_integer())));
 #endif
 #else
 		logger::handle().write(logging_level::information,
-			fmt::format(L"completed upload: [{}] success-{}, fail-{}", container->get_value(L"indication_id")->to_string(),
+			fmt::format(L"completed upload: [{}] success-{}, fail-{}", container->get_value(INDICATION_ID)->to_string(),
 				container->get_value(L"completed_count")->to_ushort(), container->get_value(L"failed_count")->to_ushort()));
 #endif
 

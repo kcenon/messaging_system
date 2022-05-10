@@ -10,7 +10,7 @@
 #include "converting.h"
 #include "folder_handler.h"
 #include "argument_parser.h"
-
+#include "constexpr_string.h"
 #include "cpprest/json.h"
 #include "cpprest/http_client.h"
 
@@ -92,28 +92,28 @@ int main(int argc, char* argv[])
 	json::value container = json::value::object(true);
 
 #ifdef _WIN32
-	container[L"message_type"] = json::value::string(L"download_files");
-	container[L"indication_id"] = json::value::string(L"download_test");
+	container[MESSAGE_TYPE] = json::value::string(L"download_files");
+	container[INDICATION_ID] = json::value::string(L"download_test");
 #else
-	container["message_type"] = json::value::string("download_files");
-	container["indication_id"] = json::value::string("download_test");
+	container[MESSAGE_TYPE] = json::value::string("download_files");
+	container[INDICATION_ID] = json::value::string("download_test");
 #endif
 
 	int index = 0;
 #ifdef _WIN32
-	container[L"files"] = json::value::array();
+	container[FILES] = json::value::array();
 	for (auto& source : sources)
 	{
-		container[L"files"][index][L"source"] = json::value::string(source);
-		container[L"files"][index][L"target"] = json::value::string(converter::replace2(source, source_folder, target_folder));
+		container[FILES][index][SOURCE] = json::value::string(source);
+		container[FILES][index][TARGET] = json::value::string(converter::replace2(source, source_folder, target_folder));
 		index++;
 	}
 #else
-	container["files"] = json::value::array();
+	container[FILES] = json::value::array();
 	for (auto& source : sources)
 	{
-		container["files"][index]["source"] = json::value::string(converter::to_string(source));
-		container["files"][index]["target"] = json::value::string(converter::to_string(converter::replace2(source, source_folder, target_folder)));
+		container[FILES][index][SOURCE] = json::value::string(converter::to_string(source));
+		container[FILES][index][TARGET] = json::value::string(converter::to_string(converter::replace2(source, source_folder, target_folder)));
 		index++;
 	}
 #endif
@@ -137,7 +137,7 @@ void get_request(void)
 
 #ifdef _WIN32
 	request.headers().add(L"previous_message", L"clear");
-	request.headers().add(L"indication_id", L"download_test");
+	request.headers().add(INDICATION_ID, L"download_test");
 #else
 	request.headers().add("previous_message", "clear");
 	request.headers().add("indication_id", "download_test");
@@ -167,14 +167,14 @@ void get_request(void)
 					if (message[L"percentage"].as_integer() == 0)
 					{
 						logger::handle().write(logging_level::information,
-							fmt::format(L"started {}: [{}]", message[L"message_type"].as_string(), 
-								message[L"indication_id"].as_string()));
+							fmt::format(L"started {}: [{}]", message[MESSAGE_TYPE].as_string(), 
+								message[INDICATION_ID].as_string()));
 
 						continue;
 					}
 
 					logger::handle().write(logging_level::information,
-						fmt::format(L"received percentage: [{}] {}%", message[L"indication_id"].as_string(),
+						fmt::format(L"received percentage: [{}] {}%", message[INDICATION_ID].as_string(),
 							message[L"percentage"].as_integer()));
 
 					if (message[L"percentage"].as_integer() != 100)
@@ -185,8 +185,8 @@ void get_request(void)
 					if (message[L"completed"].as_bool())
 					{
 						logger::handle().write(logging_level::information,
-							fmt::format(L"completed {}: [{}]", message[L"message_type"].as_string(), 
-								message[L"indication_id"].as_string()));
+							fmt::format(L"completed {}: [{}]", message[MESSAGE_TYPE].as_string(), 
+								message[INDICATION_ID].as_string()));
 
 						_promise_status.set_value(true);
 
@@ -194,8 +194,8 @@ void get_request(void)
 					}
 
 					logger::handle().write(logging_level::information,
-						fmt::format(L"cannot complete {}: [{}]", message[L"message_type"].as_string(), 
-							message[L"indication_id"].as_string()));
+						fmt::format(L"cannot complete {}: [{}]", message[MESSAGE_TYPE].as_string(), 
+							message[INDICATION_ID].as_string()));
 
 					_promise_status.set_value(false);
 
@@ -208,14 +208,14 @@ void get_request(void)
 					if (message["percentage"].as_integer() == 0)
 					{
 						logger::handle().write(logging_level::information,
-							converter::to_wstring(fmt::format("started {}: [{}]", message["message_type"].as_string(),
-								message["indication_id"].as_string())));
+							converter::to_wstring(fmt::format("started {}: [{}]", message[MESSAGE_TYPE].as_string(),
+								message[INDICATION_ID].as_string())));
 						
 						continue;
 					}
 
 					logger::handle().write(logging_level::information,
-						converter::to_wstring(fmt::format("received percentage: [{}] {}%", message["indication_id"].as_string(),
+						converter::to_wstring(fmt::format("received percentage: [{}] {}%", message[INDICATION_ID].as_string(),
 							message["percentage"].as_integer())));
 
 					if (message["percentage"].as_integer() != 100)
@@ -226,8 +226,8 @@ void get_request(void)
 					if (message["completed"].as_bool())
 					{
 						logger::handle().write(logging_level::information,
-							converter::to_wstring(fmt::format("completed {}: [{}]", message["message_type"].as_string(),
-								message["indication_id"].as_string())));
+							converter::to_wstring(fmt::format("completed {}: [{}]", message[MESSAGE_TYPE].as_string(),
+								message[INDICATION_ID].as_string())));
 					
 						_promise_status.set_value(true);
 
@@ -235,8 +235,8 @@ void get_request(void)
 					}
 
 					logger::handle().write(logging_level::information,
-						converter::to_wstring(fmt::format("cannot complete {}: [{}]", message["message_type"].as_string(),
-							message["indication_id"].as_string())));
+						converter::to_wstring(fmt::format("cannot complete {}: [{}]", message[MESSAGE_TYPE].as_string(),
+							message[INDICATION_ID].as_string())));
 
 					_promise_status.set_value(false);
 

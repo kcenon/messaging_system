@@ -1,6 +1,7 @@
 #include "file_manager.h"
 
 #include "converting.h"
+#include "constexpr_string.h"
 
 #ifdef __USE_TYPE_CONTAINER__
 #include "value.h"
@@ -98,19 +99,19 @@ shared_ptr<container::value_container> file_manager::received(const wstring& ind
 		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 #ifdef _WIN32
-		(*container)[L"header"][L"target_id"] = json::value::string(ids->second.first);
-		(*container)[L"header"][L"target_sub_id"] = json::value::string(ids->second.second);
-		(*container)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
+		(*container)[HEADER][TARGET_ID] = json::value::string(ids->second.first);
+		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(ids->second.second);
+		(*container)[HEADER][MESSAGE_TYPE] = json::value::string(TRANSFER_CONDITON);
 
-		(*container)[L"data"][L"indication_id"] = json::value::string(indication_id);
-		(*container)[L"data"][L"percentage"] = json::value::number(temp);
+		(*container)[DATA][INDICATION_ID] = json::value::string(indication_id);
+		(*container)[DATA][L"percentage"] = json::value::number(temp);
 #else
-		(*container)["header"]["target_id"] = json::value::string(converter::to_string(ids->second.first));
-		(*container)["header"]["target_sub_id"] = json::value::string(converter::to_string(ids->second.second));
-		(*container)["header"]["message_type"] = json::value::string("transfer_condition");
+		(*container)[HEADER][TARGET_ID] = json::value::string(converter::to_string(ids->second.first));
+		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(converter::to_string(ids->second.second));
+		(*container)[HEADER][MESSAGE_TYPE] = json::value::string(TRANSFER_CONDITON);
 
-		(*container)["data"]["indication_id"] = json::value::string(converter::to_string(indication_id));
-		(*container)["data"]["percentage"] = json::value::number(temp);
+		(*container)[DATA][INDICATION_ID] = json::value::string(converter::to_string(indication_id));
+		(*container)[DATA]["percentage"] = json::value::number(temp);
 #endif
 
 		if (temp == 100)
@@ -125,13 +126,13 @@ shared_ptr<container::value_container> file_manager::received(const wstring& ind
 			_transferred_percentage.erase(percentage);
 
 #ifdef _WIN32
-			(*container)[L"data"][L"completed_count"] = json::value::number((uint64_t)completed);
-			(*container)[L"data"][L"failed_count"] = json::value::number((uint64_t)failed);
-			(*container)[L"data"][L"completed"] = json::value::boolean(true);
+			(*container)[DATA][L"completed_count"] = json::value::number((uint64_t)completed);
+			(*container)[DATA][L"failed_count"] = json::value::number((uint64_t)failed);
+			(*container)[DATA][L"completed"] = json::value::boolean(true);
 #else
-			(*container)["data"]["completed_count"] = json::value::number((uint64_t)completed);
-			(*container)["data"]["failed_count"] = json::value::number((uint64_t)failed);
-			(*container)["data"]["completed"] = json::value::boolean(true);
+			(*container)[DATA]["completed_count"] = json::value::number((uint64_t)completed);
+			(*container)[DATA]["failed_count"] = json::value::number((uint64_t)failed);
+			(*container)[DATA]["completed"] = json::value::boolean(true);
 #endif
 		}
 
@@ -139,9 +140,9 @@ shared_ptr<container::value_container> file_manager::received(const wstring& ind
 #else
 		if (temp != 100)
 		{
-			return make_shared<container::value_container>(ids->second.first, ids->second.second, L"transfer_condition",
+			return make_shared<container::value_container>(ids->second.first, ids->second.second, TRANSFER_CONDITON,
 				vector<shared_ptr<container::value>> {
-					make_shared<container::string_value>(L"indication_id", indication_id),
+					make_shared<container::string_value>(INDICATION_ID, indication_id),
 					make_shared<container::ushort_value>(L"percentage", temp)
 			});
 		}
@@ -149,9 +150,9 @@ shared_ptr<container::value_container> file_manager::received(const wstring& ind
 		size_t completed = target->second.size();
 		size_t failed = fail->second.size();
 
-		return make_shared<container::value_container>(ids->second.first, ids->second.second, L"transfer_condition",
+		return make_shared<container::value_container>(ids->second.first, ids->second.second, TRANSFER_CONDITON,
 			vector<shared_ptr<container::value>> {
-				make_shared<container::string_value>(L"indication_id", indication_id),
+				make_shared<container::string_value>(INDICATION_ID, indication_id),
 				make_shared<container::ushort_value>(L"percentage", temp),
 				make_shared<container::ullong_value>(L"completed_count", completed),
 				make_shared<container::ullong_value>(L"failed_count", failed),
@@ -182,32 +183,32 @@ shared_ptr<container::value_container> file_manager::received(const wstring& ind
 		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 #ifdef _WIN32
-		(*container)[L"header"][L"target_id"] = json::value::string(source_id);
-		(*container)[L"header"][L"target_sub_id"] = json::value::string(source_sub_id);
-		(*container)[L"header"][L"message_type"] = json::value::string(L"transfer_condition");
+		(*container)[HEADER][TARGET_ID] = json::value::string(source_id);
+		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(source_sub_id);
+		(*container)[HEADER][MESSAGE_TYPE] = json::value::string(TRANSFER_CONDITON);
 
-		(*container)[L"data"][L"indication_id"] = json::value::string(indication_id);
-		(*container)[L"data"][L"percentage"] = json::value::number(temp);
-		(*container)[L"data"][L"completed_count"] = json::value::number((uint64_t)completed);
-		(*container)[L"data"][L"failed_count"] = json::value::number((uint64_t)failed);
-		(*container)[L"data"][L"completed"] = json::value::boolean(false);
+		(*container)[DATA][INDICATION_ID] = json::value::string(indication_id);
+		(*container)[DATA][L"percentage"] = json::value::number(temp);
+		(*container)[DATA][L"completed_count"] = json::value::number((uint64_t)completed);
+		(*container)[DATA][L"failed_count"] = json::value::number((uint64_t)failed);
+		(*container)[DATA][L"completed"] = json::value::boolean(false);
 #else
-		(*container)["header"]["target_id"] = json::value::string(converter::to_string(source_id));
-		(*container)["header"]["target_sub_id"] = json::value::string(converter::to_string(source_sub_id));
-		(*container)["header"]["message_type"] = json::value::string("transfer_condition");
+		(*container)[HEADER][TARGET_ID] = json::value::string(converter::to_string(source_id));
+		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(converter::to_string(source_sub_id));
+		(*container)[HEADER][MESSAGE_TYPE] = json::value::string(TRANSFER_CONDITON);
 
-		(*container)["data"]["indication_id"] = json::value::string(converter::to_string(indication_id));
-		(*container)["data"]["percentage"] = json::value::number(temp);
-		(*container)["data"]["completed_count"] = json::value::number((uint64_t)completed);
-		(*container)["data"]["failed_count"] = json::value::number((uint64_t)failed);
-		(*container)["data"]["completed"] = json::value::boolean(false);
+		(*container)[DATA][INDICATION_ID] = json::value::string(converter::to_string(indication_id));
+		(*container)[DATA]["percentage"] = json::value::number(temp);
+		(*container)[DATA]["completed_count"] = json::value::number((uint64_t)completed);
+		(*container)[DATA]["failed_count"] = json::value::number((uint64_t)failed);
+		(*container)[DATA]["completed"] = json::value::boolean(false);
 #endif
 
 		return container;
 #else
-		return make_shared<container::value_container>(source_id, source_sub_id, L"transfer_condition",
+		return make_shared<container::value_container>(source_id, source_sub_id, TRANSFER_CONDITON,
 			vector<shared_ptr<container::value>> {
-				make_shared<container::string_value>(L"indication_id", indication_id),
+				make_shared<container::string_value>(INDICATION_ID, indication_id),
 				make_shared<container::ushort_value>(L"percentage", temp),
 				make_shared<container::ullong_value>(L"completed_count", completed),
 				make_shared<container::ullong_value>(L"failed_count", failed),
