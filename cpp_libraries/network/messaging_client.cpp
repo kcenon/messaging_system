@@ -491,7 +491,7 @@ namespace network
 		(*container)[HEADER][TARGET_ID] = json::value::string(_target_id);
 		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(_target_sub_id);
 
-		(*container)[DATA][LCONNECTION_KEY] = json::value::string(_connection_key);
+		(*container)[DATA][CONNECTION_KEY] = json::value::string(_connection_key);
 		(*container)[DATA][L"auto_echo"] = json::value::boolean(_auto_echo);
 		(*container)[DATA][L"auto_echo_interval_seconds"] = json::value::number(_auto_echo_interval_seconds);
 		(*container)[DATA][L"session_type"] = json::value::number((short)_session_type);
@@ -531,7 +531,7 @@ namespace network
 
 		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, REQUEST_CONNECTION,
 			vector<shared_ptr<container::value>> {
-				make_shared<container::string_value>(LCONNECTION_KEY, _connection_key),
+				make_shared<container::string_value>(L"connection_key", _connection_key),
 				make_shared<container::bool_value>(L"auto_echo", _auto_echo),
 				make_shared<container::ushort_value>(L"auto_echo_interval_seconds", _auto_echo_interval_seconds),
 				make_shared<container::short_value>(L"session_type", (short)_session_type),

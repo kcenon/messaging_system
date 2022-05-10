@@ -23,7 +23,7 @@ constexpr auto SOURCE = L"source";
 constexpr auto TARGET = L"target";
 constexpr auto GATEWAY_SOURCE_ID = L"gateway_source_id";
 constexpr auto GATEWAY_SOURCE_SUB_ID = L"gateway_source_sub_id";
-constexpr auto CONNECTION_KEY = LCONNECTION_KEY;
+constexpr auto CONNECTION_KEY = L"connection_key";
 #else
 constexpr auto HEADER = "header";
 constexpr auto DATA = "data";
