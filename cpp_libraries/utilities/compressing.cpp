@@ -24,8 +24,6 @@ namespace compressing
 			return original_data;
 		}
 
-		auto start = logger::handle().chrono_start();
-
 		LZ4_stream_t lz4Stream_body;
 		size_t read_index = 0;
 		int source_buffer_index = 0;
@@ -87,7 +85,7 @@ namespace compressing
 		}
 		
 		logger::handle().write(logging_level::sequence, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
-			block_bytes, original_data.size(), compressed_data.size(), (((double)compressed_data.size() / (double)original_data.size()) * 100)), start);
+			block_bytes, original_data.size(), compressed_data.size(), (((double)compressed_data.size() / (double)original_data.size()) * 100)));
 
 		return compressed_data;
 	}
@@ -98,8 +96,6 @@ namespace compressing
 		{
 			return compressed_data;
 		}
-
-		auto start = chrono::steady_clock::now();
 
 		LZ4_streamDecode_t lz4StreamDecode_body;
 
@@ -166,9 +162,9 @@ namespace compressing
 
 			return vector<unsigned char>();
 		}
-		
+
 		logger::handle().write(logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
-			block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)), start);
+			block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)));
 
 		return decompressed_data;
 	}
