@@ -24,6 +24,7 @@ ADD_SUBDIRECTORY(cpp_libraries/network)
 
 # cpp_samples
 ADD_SUBDIRECTORY(cpp_samples/logging_sample)
+ADD_SUBDIRECTORY(cpp_samples/compression_sample)
 IF(USE_TYPE_CONTAINER)
     ADD_SUBDIRECTORY(cpp_samples/container_sample)
 ENDIF()

@@ -10,6 +10,8 @@
 #include "fmt/format.h"
 #include "fmt/xchar.h"
 
+#include <filesystem>
+
 namespace compressing
 {
 	using namespace logging;
@@ -168,16 +170,21 @@ namespace compressing
 
 		return decompressed_data;
 	}
-
-	vector<unsigned char> compressor::compression_folder(const wstring& root_path, const wstring& folder_path, const bool& contain_sub_folder,
-		const unsigned short& block_bytes)
+	
+	bool compressor::compression_folder(const wstring& target_file, const wstring& root_path, const wstring& folder_path, 
+		const bool& contain_sub_folder, const unsigned short& block_bytes)
 	{
-		vector<unsigned char> result;
-
-		if (!contain_sub_folder)
+		if(target_file.empty())
 		{
-			return result;
+			return false;
 		}
+		
+		if(!filesystem::exists(root_path))
+		{
+			return false;
+		}
+
+		vector<unsigned char> result;
 
 		wstring temp;
 		auto files = folder::get_files(folder_path, false);
@@ -191,26 +198,25 @@ namespace compressing
 			vector<unsigned char> temp_buffer;
 			append_binary(temp_buffer, converter::to_array(temp));
 			append_binary(temp_buffer, file::load(file));
+			append_binary(result, compression(temp_buffer, block_bytes));
+		}
 
-			//temp_buffer = compression(temp_buffer, block_bytes);
-			append_binary(result, temp_buffer);
+		file::append(target_file, result);
+
+		if (!contain_sub_folder)
+		{
+			return true;
 		}
 
 		auto folders = folder::get_folders(folder_path);
 		for (auto& folder : folders)
 		{
-			auto temp_result = compression_folder(root_path, folder, contain_sub_folder, block_bytes);
-			if (temp_result.empty())
-			{
-				continue;
-			}
-
-			result.insert(result.end(), temp_result.begin(), temp_result.end());
+			compression_folder(target_file, root_path, folder, contain_sub_folder);
 		}
 
-		return result;
+		return true;
 	}
-
+	
 	bool compressor::decompression_folder(const wstring& source_path, const wstring& target_path, const unsigned short& block_bytes)
 	{
 		if (!folder::create_folder(target_path))

@@ -16,7 +16,7 @@ namespace compressing
 			const unsigned short& block_bytes = 1024);
 
 	public:
-		static vector<unsigned char> compression_folder(const wstring& root_path, const wstring& folder_path,
+		static bool compression_folder(const wstring& target_file, const wstring& root_path, const wstring& folder_path,
 			const bool& contain_sub_folder = false, const unsigned short& block_bytes = 1024);
 		static bool decompression_folder(const wstring& source_path, const wstring& target_path,
 			const unsigned short& block_bytes = 1024);
