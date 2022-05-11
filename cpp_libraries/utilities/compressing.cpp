@@ -123,33 +123,27 @@ namespace compressing
 			char* const compress_buffer_pointer = compress_buffer.data();
 
 			memset(compress_buffer_pointer, 0, sizeof(char) * compress_size);
-
-			{
-				if ((compressed_data.size() - read_index) < 1) {
-					break;
-				}
-
-				memcpy(&compressed_size, compressed_data.data() + read_index, sizeof(int));
-				if (0 >= compressed_size || block_bytes < compressed_size) {
-					break;
-				}
-
-				read_index += sizeof(int);
-
-				memcpy(compress_buffer_pointer, compressed_data.data() + read_index, sizeof(char) * compressed_size);
-
-				read_index += compressed_size;
+			if ((compressed_data.size() - read_index) < 1) {
+				break;
 			}
 
-			{
-				char* const target_buffer_pointer = target_buffer[target_buffer_index].data();
-				const int decompressed_size = LZ4_decompress_safe_continue(&lz4StreamDecode_body, (const char*)compress_buffer_pointer, (char*)target_buffer_pointer, compressed_size, block_bytes);
-				if (decompressed_size <= 0) {
-					break;
-				}
-
-				decompressed_data.insert(decompressed_data.end(), target_buffer_pointer, target_buffer_pointer + decompressed_size);
+			memcpy(&compressed_size, compressed_data.data() + read_index, sizeof(int));
+			if (0 >= compressed_size) {
+				break;
 			}
+
+			read_index += sizeof(int);
+			memcpy(compress_buffer_pointer, compressed_data.data() + read_index, sizeof(char) * compressed_size);
+			read_index += compressed_size;
+			
+			char* const target_buffer_pointer = target_buffer[target_buffer_index].data();
+			const int decompressed_size = LZ4_decompress_safe_continue(&lz4StreamDecode_body, (const char*)compress_buffer_pointer, 
+				(char*)target_buffer_pointer, compressed_size, block_bytes);
+			if (decompressed_size <= 0) {
+				break;
+			}
+
+			decompressed_data.insert(decompressed_data.end(), target_buffer_pointer, target_buffer_pointer + decompressed_size);
 
 			target_buffer_index = (target_buffer_index + 1) % 2;
 		}
@@ -237,7 +231,7 @@ namespace compressing
 		{
 			vector<unsigned char> temp;
 			temp = devide_binary(source, index);
-			//temp = decompression(temp, block_bytes);
+			temp = decompression(temp, block_bytes);
 
 			index2 = 0;
 			auto file_path = fmt::format(L"{}{}", target_path, converter::to_wstring(devide_binary(temp, index2)));
