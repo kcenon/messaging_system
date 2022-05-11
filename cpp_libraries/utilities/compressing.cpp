@@ -10,7 +10,10 @@
 #include "fmt/format.h"
 #include "fmt/xchar.h"
 
+#include <algorithm>
 #include <filesystem>
+
+constexpr auto FILE_HEADE = "PCAI[1000]";
 
 namespace compressing
 {
@@ -178,9 +181,15 @@ namespace compressing
 			return false;
 		}
 
+		wstring temp;
 		vector<unsigned char> result;
 
-		wstring temp;
+		if(root_path == folder_path)
+		{
+			auto header = converter::to_array(FILE_HEADE);
+			result.insert(result.end(), header.begin(), header.end());
+		}
+
 		auto files = folder::get_files(folder_path, false);
 		for (auto& file : files)
 		{
@@ -195,7 +204,10 @@ namespace compressing
 			append_binary(result, compression(temp_buffer, block_bytes));
 		}
 
-		file::append(target_file, result);
+		if (!result.empty())
+		{
+			file::append(target_file, result);
+		}
 
 		if (!contain_sub_folder)
 		{
@@ -224,7 +236,13 @@ namespace compressing
 			return false;
 		}
 
-		size_t index = 0;
+		auto header = converter::to_array(FILE_HEADE);
+		if (!equal(source.begin(), source.begin() + header.size(), header.begin()))
+		{
+			return false;
+		}
+
+		size_t index = header.size();
 		size_t index2 = 0;
 		size_t count = source.size();
 		while (index < count)
