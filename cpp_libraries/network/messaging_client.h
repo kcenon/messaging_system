@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef __USE_TYPE_CONTAINER__
-#include "cpprest/json.h"
-#else
+#ifdef __USE_TYPE_CONTAINER__
 #include "container.h"
+#else
+#include "cpprest/json.h"
 #endif
 
 #include "thread_pool.h"
