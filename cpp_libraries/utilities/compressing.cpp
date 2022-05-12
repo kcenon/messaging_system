@@ -22,7 +22,7 @@ namespace compressing
 	using namespace file_handler;
 	using namespace folder_handler;
 
-	vector<unsigned char> compressor::compression(const vector<unsigned char>& original_data, const unsigned short& block_bytes)
+	vector<uint8_t> compressor::compression(const vector<uint8_t>& original_data, const unsigned short& block_bytes)
 	{
 		if (original_data.empty())
 		{
@@ -42,7 +42,7 @@ namespace compressing
 		int compress_size = LZ4_COMPRESSBOUND(block_bytes);
 		vector<char> compress_buffer;
 		compress_buffer.reserve(compress_size);
-		vector<unsigned char> compressed_data;
+		vector<uint8_t> compressed_data;
 
 		char compress_size_data[4];
 
@@ -86,7 +86,7 @@ namespace compressing
 		{
 			logger::handle().write(logging_level::error, L"cannot complete to compress data");
 
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 		
 		logger::handle().write(logging_level::sequence, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
@@ -95,7 +95,7 @@ namespace compressing
 		return compressed_data;
 	}
 
-	vector<unsigned char> compressor::decompression(const vector<unsigned char>& compressed_data, const unsigned short& block_bytes)
+	vector<uint8_t> compressor::decompression(const vector<uint8_t>& compressed_data, const unsigned short& block_bytes)
 	{
 		if (compressed_data.empty())
 		{
@@ -118,7 +118,7 @@ namespace compressing
 		int compress_size = LZ4_COMPRESSBOUND(block_bytes);
 		vector<char> compress_buffer;
 		compress_buffer.reserve(compress_size);
-		vector<unsigned char> decompressed_data;
+		vector<uint8_t> decompressed_data;
 
 		LZ4_setStreamDecode(&lz4StreamDecode_body, NULL, 0);
 
@@ -159,7 +159,7 @@ namespace compressing
 		{
 			logger::handle().write(logging_level::error, L"cannot complete to decompress data");
 
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
 		logger::handle().write(logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
@@ -169,7 +169,8 @@ namespace compressing
 	}
 	
 	bool compressor::compression_folder(const wstring& target_file, const wstring& root_path, const wstring& folder_path, 
-		const bool& contain_sub_folder, const unsigned short& block_bytes)
+		const bool& contain_sub_folder, const unsigned short& block_bytes, 
+		const function<void(vector<uint8_t>&, const wstring&, const vector<uint8_t>&)>& combination_rule)
 	{
 		if(target_file.empty())
 		{
@@ -182,7 +183,7 @@ namespace compressing
 		}
 
 		wstring temp;
-		vector<unsigned char> result;
+		vector<uint8_t> result;
 
 		if(root_path == folder_path)
 		{
@@ -198,10 +199,18 @@ namespace compressing
 #ifdef _WIN32
 			converter::replace(temp, L"\\", L"/");
 #endif
-			vector<unsigned char> temp_buffer;
-			append_binary(temp_buffer, converter::to_array(temp));
-			append_binary(temp_buffer, file::load(file));
-			append_binary(result, compression(temp_buffer, block_bytes));
+
+			if(combination_rule == nullptr)
+			{
+				vector<uint8_t> temp_buffer;
+				append_binary(temp_buffer, converter::to_array(temp));
+				append_binary(temp_buffer, file::load(file));
+				append_binary(result, compression(temp_buffer, block_bytes));
+			}
+			else
+			{
+				combination_rule(result, temp, file::load(file));
+			}
 		}
 
 		if (!result.empty())
@@ -223,7 +232,8 @@ namespace compressing
 		return true;
 	}
 	
-	bool compressor::decompression_folder(const wstring& source_path, const wstring& target_path, const unsigned short& block_bytes)
+	bool compressor::decompression_folder(const wstring& source_path, const wstring& target_path, const unsigned short& block_bytes, 
+		const function<void(const vector<uint8_t>&, wstring&, vector<uint8_t>&)>& combination_rule)
 	{
 		if (!folder::create_folder(target_path))
 		{
@@ -242,26 +252,39 @@ namespace compressing
 			return false;
 		}
 
+		wstring file_path;
+		vector<uint8_t> file_data;
 		size_t index = header.size();
 		size_t index2 = 0;
 		size_t count = source.size();
 		while (index < count)
 		{
-			vector<unsigned char> temp;
-			temp = devide_binary(source, index);
-			temp = decompression(temp, block_bytes);
+			if(combination_rule == nullptr)
+			{
+				vector<uint8_t> temp;
+				temp = devide_binary(source, index);
+				temp = decompression(temp, block_bytes);
 
-			index2 = 0;
-			auto file_path = fmt::format(L"{}{}", target_path, converter::to_wstring(devide_binary(temp, index2)));
-			auto file_data = devide_binary(temp, index2);
+				index2 = 0;
+				file_path = fmt::format(L"{}{}", target_path, converter::to_wstring(devide_binary(temp, index2)));
+				file_data = devide_binary(temp, index2);
 
-			file::save(file_path, file_data);
+				file::save(file_path, file_data);
+			}
+			else
+			{
+				file_path = L"";
+				file_data.clear();
+				combination_rule(devide_binary(source, index), file_path, file_data);
+
+				file::save(file_path, file_data);
+			}
 		}
 
 		return true;
 	}
 
-	void compressor::append_binary(vector<unsigned char>& result, const vector<unsigned char>& source)
+	void compressor::append_binary(vector<uint8_t>& result, const vector<uint8_t>& source)
 	{
 		size_t temp;
 		const int size = sizeof(size_t);
@@ -278,11 +301,11 @@ namespace compressing
 		result.insert(result.end(), source.begin(), source.end());
 	}
 
-	vector<unsigned char> compressor::devide_binary(const vector<unsigned char>& source, size_t& index)
+	vector<uint8_t> compressor::devide_binary(const vector<uint8_t>& source, size_t& index)
 	{
 		if (source.empty())
 		{
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
 		size_t temp;
@@ -290,7 +313,7 @@ namespace compressing
 
 		if (source.size() < index + size)
 		{
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
 		memcpy(&temp, source.data() + index, size);
@@ -298,10 +321,10 @@ namespace compressing
 
 		if (temp == 0 || source.size() < index + temp)
 		{
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
-		vector<unsigned char> result;
+		vector<uint8_t> result;
 		result.insert(result.end(), source.begin() + index, source.begin() + index + temp);
 		index += temp;
 

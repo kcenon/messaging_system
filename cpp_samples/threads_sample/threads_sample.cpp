@@ -89,6 +89,8 @@ protected:
 		case priorities::low:
 			logger::handle().write(logging_level::information, L"테스트4_low_in_thread", start);
 			break;
+		default:
+			break;
 		}
 	}
 };
