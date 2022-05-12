@@ -13,8 +13,6 @@
 #include <algorithm>
 #include <filesystem>
 
-constexpr auto FILE_HEADE = "PCAI[1000]";
-
 namespace compressing
 {
 	using namespace logging;
@@ -169,7 +167,7 @@ namespace compressing
 	}
 	
 	bool compressor::compression_folder(const wstring& target_file, const wstring& root_path, const wstring& folder_path, 
-		const bool& contain_sub_folder, const unsigned short& block_bytes, 
+		const bool& contain_sub_folder, const unsigned short& block_bytes, const wstring& file_header,
 		const function<void(vector<uint8_t>&, const wstring&, const vector<uint8_t>&)>& combination_rule)
 	{
 		if(target_file.empty())
@@ -187,7 +185,7 @@ namespace compressing
 
 		if(root_path == folder_path)
 		{
-			auto header = converter::to_array(FILE_HEADE);
+			auto header = converter::to_array(file_header);
 			result.insert(result.end(), header.begin(), header.end());
 		}
 
@@ -232,8 +230,8 @@ namespace compressing
 		return true;
 	}
 	
-	bool compressor::decompression_folder(const wstring& source_path, const wstring& target_path, const unsigned short& block_bytes, 
-		const function<void(const vector<uint8_t>&, wstring&, vector<uint8_t>&)>& combination_rule)
+	bool compressor::decompression_folder(const wstring& source_path, const wstring& target_path, const unsigned short& block_bytes,
+		const wstring& file_header, const function<void(const vector<uint8_t>&, wstring&, vector<uint8_t>&)>& combination_rule)
 	{
 		if (!folder::create_folder(target_path))
 		{
@@ -246,7 +244,7 @@ namespace compressing
 			return false;
 		}
 
-		auto header = converter::to_array(FILE_HEADE);
+		auto header = converter::to_array(file_header);
 		if (!equal(source.begin(), source.begin() + header.size(), header.begin()))
 		{
 			return false;
