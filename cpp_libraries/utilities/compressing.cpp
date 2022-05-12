@@ -198,17 +198,18 @@ namespace compressing
 			converter::replace(temp, L"\\", L"/");
 #endif
 
+			vector<uint8_t> temp_buffer;
 			if(combination_rule == nullptr)
 			{
-				vector<uint8_t> temp_buffer;
 				append_binary(temp_buffer, converter::to_array(temp));
 				append_binary(temp_buffer, file::load(file));
-				append_binary(result, compression(temp_buffer, block_bytes));
 			}
 			else
 			{
-				combination_rule(result, temp, file::load(file));
+				combination_rule(temp_buffer, temp, file::load(file));
 			}
+
+			append_binary(result, compression(temp_buffer, block_bytes));
 		}
 
 		if (!result.empty())
@@ -257,12 +258,12 @@ namespace compressing
 		size_t count = source.size();
 		while (index < count)
 		{
+			vector<uint8_t> temp;
+			temp = devide_binary(source, index);
+			temp = decompression(temp, block_bytes);
+
 			if(combination_rule == nullptr)
 			{
-				vector<uint8_t> temp;
-				temp = devide_binary(source, index);
-				temp = decompression(temp, block_bytes);
-
 				index2 = 0;
 				file_path = fmt::format(L"{}{}", target_path, converter::to_wstring(devide_binary(temp, index2)));
 				file_data = devide_binary(temp, index2);
@@ -273,7 +274,7 @@ namespace compressing
 			{
 				file_path = L"";
 				file_data.clear();
-				combination_rule(devide_binary(source, index), file_path, file_data);
+				combination_rule(temp, file_path, file_data);
 
 				file::save(file_path, file_data);
 			}
