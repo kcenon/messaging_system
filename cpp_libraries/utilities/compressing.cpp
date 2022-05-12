@@ -267,17 +267,15 @@ namespace compressing
 				index2 = 0;
 				file_path = fmt::format(L"{}{}", target_path, converter::to_wstring(devide_binary(temp, index2)));
 				file_data = devide_binary(temp, index2);
-
-				file::save(file_path, file_data);
 			}
 			else
 			{
 				file_path = L"";
 				file_data.clear();
 				combination_rule(temp, file_path, file_data);
-
-				file::save(file_path, file_data);
 			}
+
+			file::save(file_path, file_data);
 		}
 
 		return true;
