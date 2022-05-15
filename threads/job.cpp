@@ -129,7 +129,17 @@ namespace threads
 			return;
 		}
 
-		_temporary_stored_path = fmt::format(L"{}{}/{}.job", folder::get_temporary_folder(), folder_name, converter::to_wstring(xg::newGuid().str()));
+		wstring priority = L"";
+		switch(_priority)
+		{
+			case priorities::low: priority = L"low"; break;
+			case priorities::normal: priority = L"normal"; break;
+			case priorities::high: priority = L"high"; break;
+			case priorities::top: priority = L"top"; break;
+		}
+
+		_temporary_stored_path = fmt::format(L"{}{}/{}/{}.job", folder::get_temporary_folder(), 
+			folder_name, priority, converter::to_wstring(xg::newGuid().str()));
 
 		file::save(_temporary_stored_path, _data);
 		_data.clear();
