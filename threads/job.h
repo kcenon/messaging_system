@@ -34,7 +34,7 @@ namespace threads
 		bool work(const priorities& worker_priority);
 
 	protected:
-		void save(void);
+		void save(const wstring& folder_name);
 		virtual void working(const priorities& worker_priority);
 
 	private:

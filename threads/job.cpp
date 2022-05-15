@@ -122,14 +122,14 @@ namespace threads
 		return true;
 	}
 
-	void job::save(void)
+	void job::save(const wstring& folder_name)
 	{
 		if (_data.empty())
 		{
 			return;
 		}
 
-		_temporary_stored_path = fmt::format(L"{}{}.job", folder::get_temporary_folder(), converter::to_wstring(xg::newGuid().str()));
+		_temporary_stored_path = fmt::format(L"{}{}/{}.job", folder::get_temporary_folder(), folder_name, converter::to_wstring(xg::newGuid().str()));
 
 		file::save(_temporary_stored_path, _data);
 		_data.clear();
