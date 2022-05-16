@@ -15,8 +15,8 @@ namespace converting
 		static const wstring replace2(const wstring& source, const wstring& token, const wstring& target);
 
 	public:
-		static wstring to_wstring(const string& value);
-		static string to_string(const wstring& value);
+		static wstring to_wstring(const string& value, locale target_locale = locale(""));
+		static string to_string(const wstring& value, locale target_locale = locale(""));
 
 	public:
 		static vector<unsigned char> to_array(const wstring& value);

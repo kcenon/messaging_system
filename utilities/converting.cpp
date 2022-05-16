@@ -53,7 +53,7 @@ namespace converting
 		return wstring(result.begin(), result.end());
 	}
 
-	wstring converter::to_wstring(const string& value)
+	wstring converter::to_wstring(const string& value, locale target_locale)
 	{
 		if (value.empty())
 		{
@@ -61,7 +61,7 @@ namespace converting
 		}
 
 		typedef codecvt<char16_t, char, mbstate_t> codecvt_t;
-		codecvt_t const& codecvt = use_facet<codecvt_t>(locale(""));
+		codecvt_t const& codecvt = use_facet<codecvt_t>(target_locale);
 
 		mbstate_t state;
 		memset(&state, 0, sizeof(mbstate_t));
@@ -74,7 +74,7 @@ namespace converting
 		return convert(result.data());
 	}
 
-	string converter::to_string(const wstring& value)
+	string converter::to_string(const wstring& value, locale target_locale)
 	{
 		if (value.empty())
 		{
@@ -84,7 +84,7 @@ namespace converting
 		u16string temp = convert(value);
 
 		typedef codecvt<char16_t, char, mbstate_t> codecvt_t;
-		codecvt_t const& codecvt = use_facet<codecvt_t>(locale());
+		codecvt_t const& codecvt = use_facet<codecvt_t>(target_locale);
 
 		mbstate_t state = mbstate_t();
 
