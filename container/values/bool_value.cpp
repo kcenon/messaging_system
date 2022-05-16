@@ -13,13 +13,15 @@ namespace container
 	}
 
 	bool_value::bool_value(const wstring& name, const bool& value)
-		: value(name, value_types::bool_value, value ? L"true" : L"false")
+		: bool_value()
 	{
+		set_data(name, value_types::bool_value, value ? L"true" : L"false");
 	}
 
 	bool_value::bool_value(const wstring& name, const wstring& value)
-		: value(name, value_types::bool_value, value)
+		: bool_value()
 	{
+		set_data(name, value_types::bool_value, value);
 	}
 
 	bool_value::~bool_value(void)

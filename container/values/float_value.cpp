@@ -14,8 +14,10 @@ namespace container
 	}
 
 	float_value::float_value(const wstring& name, const float& value)
-		: value(name, (const unsigned char*)&value, sizeof(float), value_types::float_value)
+		: float_value()
 	{
+		_name = name;
+		set_data((const unsigned char*)&value, sizeof(float), value_types::float_value);
 	}
 
 	float_value::~float_value(void)

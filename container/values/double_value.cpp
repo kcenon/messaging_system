@@ -14,8 +14,10 @@ namespace container
 	}
 
 	double_value::double_value(const wstring& name, const double& value)
-		: value(name, (const unsigned char*)&value, sizeof(double), value_types::double_value)
+		: double_value()
 	{
+		_name = name;
+		set_data((const unsigned char*)&value, sizeof(double), value_types::double_value);
 	}
 
 	double_value::~double_value(void)

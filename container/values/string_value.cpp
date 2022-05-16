@@ -15,7 +15,7 @@ namespace container
 	}
 
 	string_value::string_value(const wstring& name, const wstring& value)
-		: value(name, nullptr, 0, value_types::null_value)
+		: string_value()
 	{
 		wstring temp = value;
 		converter::replace(temp, L"\r", L"</0x0A;>");
@@ -25,6 +25,7 @@ namespace container
 
 		vector<unsigned char> data = converter::to_array(temp);
 
+		_name = name;
 		set_data(data.data(), data.size(), value_types::string_value);
 	}
 

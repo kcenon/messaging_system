@@ -15,13 +15,17 @@ namespace container
 	}
 
 	bytes_value::bytes_value(const wstring& name, const vector<unsigned char>& data)
-		: value(name, data.data(), data.size(), value_types::bytes_value)
+		: bytes_value()
 	{
+		_name = name;
+		set_data(data.data(), data.size(), value_types::bytes_value);
 	}
 
 	bytes_value::bytes_value(const wstring& name, const unsigned char* data, const size_t& size)
-		: value(name, data, size, value_types::bytes_value)
+		: bytes_value()
 	{
+		_name = name;
+		set_data(data, size, value_types::bytes_value);
 	}
 
 	bytes_value::~bytes_value(void)

@@ -14,8 +14,10 @@ namespace container
 	}
 
 	uint_value::uint_value(const wstring& name, const unsigned int& value)
-		: value(name, (const unsigned char*)&value, sizeof(unsigned int), value_types::uint_value)
+		: uint_value()
 	{
+		_name = name;
+		set_data((const unsigned char*)&value, sizeof(unsigned int), value_types::uint_value);
 	}
 
 	uint_value::~uint_value(void)
