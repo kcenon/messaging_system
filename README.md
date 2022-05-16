@@ -26,7 +26,7 @@ Secondly, should install libraries like below followed vcpkg install rule,
 5. [crossguid library](https://github.com/graeme-hill/crossguid): to support creating guid
 6. [cpprestsdk library](https://github.com/microsoft/cpprestsdk): to support RESTAPI server & client
 
-After all installations, you can build this project on Both Linux, OSX and Windows
+After all installations, you can build this project on Linux, OSX and Windows
 
 ## How to use
 
