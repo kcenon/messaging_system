@@ -131,6 +131,7 @@ namespace container
 		case value_types::string_value: set_string(data); break;
 		case value_types::container_value: set_data((long)atol(converter::to_string(data).c_str())); break;
 #endif
+		default: break;
 		}
 	}
 
