@@ -333,16 +333,16 @@ namespace network
 		shared_ptr<container::value_container> container = message->copy(false);
 		container->swap_header();
 		container->set_target(
-			message->get_value(GATEWAY_SOURCE_ID)->to_string(), 
-			message->get_value(GATEWAY_SOURCE_SUB_ID)->to_string());
-		container->set_message_type(REQUEST_FILE);
+			message->get_value(L"gateway_source_id")->to_string(), 
+			message->get_value(L"gateway_source_sub_id")->to_string());
+		container->set_message_type(L"request_files");
 
 		vector<shared_ptr<container::value>> files = message->value_array(L"file");
 		for (auto& file : files)
 		{
-			container << make_shared<container::string_value>(INDICATION_ID, message->get_value(INDICATION_ID)->to_string());
-			container << make_shared<container::string_value>(SOURCE, (*file)[SOURCE]->to_string());
-			container << make_shared<container::string_value>(TARGET, (*file)[TARGET]->to_string());
+			container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
+			container << make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
+			container << make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
 
 			_thread_pool->push(make_shared<job>(priorities::low, container->serialize_array(), 
 				bind(&messaging_session::load_file_packet, this, placeholders::_1)));
@@ -648,17 +648,17 @@ namespace network
 				(*message)[HEADER][TARGET_ID].as_string(), (*message)[HEADER][TARGET_SUB_ID].as_string())));
 #endif
 #else
-		append_binary_on_packet(result, converter::to_array(message->get_value(INDICATION_ID)->to_string()));
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
 		append_binary_on_packet(result, converter::to_array(message->source_id()));
 		append_binary_on_packet(result, converter::to_array(message->source_sub_id()));
 		append_binary_on_packet(result, converter::to_array(message->target_id()));
 		append_binary_on_packet(result, converter::to_array(message->target_sub_id()));
-		append_binary_on_packet(result, converter::to_array(message->get_value(SOURCE)->to_string()));
-		append_binary_on_packet(result, converter::to_array(message->get_value(TARGET)->to_string()));
-		append_binary_on_packet(result, file::load(message->get_value(SOURCE)->to_string()));
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
+		append_binary_on_packet(result, file::load(message->get_value(L"source")->to_string()));
 
 		logger::handle().write(logging_level::parameter,
-			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", message->get_value(INDICATION_ID)->to_string(),
+			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", message->get_value(L"indication_id")->to_string(),
 				message->source_id(), message->source_sub_id(), message->target_id(), message->target_sub_id()));
 #endif
 
@@ -995,7 +995,7 @@ namespace network
 #ifndef __USE_TYPE_CONTAINER__
 		if (!same_key_check((*message)[DATA][CONNECTION_KEY]))
 #else
-		if (!same_key_check(message->get_value(CONNECTION_KEY)))
+		if (!same_key_check(message->get_value(L"connection_key")))
 #endif
 		{
 			_confirm = session_conditions::expired;
@@ -1076,10 +1076,10 @@ namespace network
 		(*container)[DATA][ENCRYPT_MODE] = json::value::boolean(_encrypt_mode);
 #endif
 #else
-		shared_ptr<value> acceptable_snipping_targets = make_shared<container::container_value>(SNIPPING_TARGETS);
+		shared_ptr<value> acceptable_snipping_targets = make_shared<container::container_value>(L"snipping_targets");
 
 		_snipping_targets.clear();
-		vector<shared_ptr<value>> snipping_targets = message->get_value(SNIPPING_TARGETS)->children();
+		vector<shared_ptr<value>> snipping_targets = message->get_value(L"snipping_targets")->children();
 		for (auto& snipping_target : snipping_targets)
 		{
 			if (snipping_target == nullptr)
@@ -1110,7 +1110,7 @@ namespace network
 			make_shared<container::bool_value>(L"confirm", true),
 				make_shared<container::string_value>(L"key", _key),
 				make_shared<container::string_value>(L"iv", _iv),
-				make_shared<container::bool_value>(ENCRYPT_MODE, _encrypt_mode),
+				make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode),
 				acceptable_snipping_targets
 		});
 #endif
@@ -1180,14 +1180,14 @@ namespace network
 #else
 		shared_ptr<container::value_container> container = message->copy(false);
 		container->swap_header();
-		container->set_message_type(REQUEST_FILE);
+		container->set_message_type(L"request_files");
 
 		vector<shared_ptr<container::value>> files = message->value_array(L"file");
 		for (auto& file : files)
 		{
-			container << make_shared<container::string_value>(INDICATION_ID, message->get_value(INDICATION_ID)->to_string());
-			container << make_shared<container::string_value>(SOURCE, (*file)[SOURCE]->to_string());
-			container << make_shared<container::string_value>(TARGET, (*file)[TARGET]->to_string());
+			container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
+			container << make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
+			container << make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
 
 			_thread_pool->push(make_shared<job>(priorities::low, container->serialize_array(), bind(&messaging_session::load_file_packet, this, placeholders::_1)));
 			container->clear_value();
@@ -1236,7 +1236,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), 
 			bind(&messaging_session::send_packet, this, placeholders::_1)));
 #else
-		vector<shared_ptr<value>> response = (*message)[RESPONSE];
+		vector<shared_ptr<value>> response = (*message)[L"response"];
 		if (!response.empty())
 		{
 			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
@@ -1246,7 +1246,7 @@ namespace network
 
 		message->swap_header();
 
-		message << make_shared<bool_value>(RESPONSE, true);
+		message << make_shared<bool_value>(L"response", true);
 
 		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), bind(&messaging_session::send_packet, this, placeholders::_1)));
 #endif

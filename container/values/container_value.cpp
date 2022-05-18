@@ -16,7 +16,7 @@ namespace container
 	}
 
 	container_value::container_value(const wstring& name, const long& reserved_count)
-		: value()
+		: container_value()
 	{
 		_name = name;
 		_type = value_types::container_value;

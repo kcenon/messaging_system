@@ -100,22 +100,6 @@ namespace container
 
 		switch (_type)
 		{
-#ifdef _WIN32
-		case value_types::bool_value: set_boolean(data); break;
-		case value_types::short_value: set_data((short)_wtoi(data.c_str())); break;
-		case value_types::ushort_value: set_data((unsigned short)_wtoi(data.c_str())); break;
-		case value_types::int_value: set_data((int)_wtoi(data.c_str())); break;
-		case value_types::uint_value: set_data((unsigned int)_wtoi(data.c_str())); break;
-		case value_types::long_value: set_data((long)_wtol(data.c_str())); break;
-		case value_types::ulong_value: set_data((unsigned long)_wtol(data.c_str())); break;
-		case value_types::llong_value: set_data((long long)_wtoll(data.c_str())); break;
-		case value_types::ullong_value: set_data((unsigned long long)_wtoll(data.c_str())); break;
-		case value_types::float_value: set_data((float)_wtof(data.c_str())); break;
-		case value_types::double_value: set_data((double)_wtof(data.c_str())); break;
-		case value_types::bytes_value: set_byte_string(data); break;
-		case value_types::string_value: set_string(data); break;
-		case value_types::container_value: set_data((long)_wtol(data.c_str())); break;
-#else
 		case value_types::bool_value: set_boolean(data); break;
 		case value_types::short_value: set_data((short)atoi(converter::to_string(data).c_str())); break;
 		case value_types::ushort_value: set_data((unsigned short)atoi(converter::to_string(data).c_str())); break;
@@ -130,7 +114,6 @@ namespace container
 		case value_types::bytes_value: set_byte_string(data); break;
 		case value_types::string_value: set_string(data); break;
 		case value_types::container_value: set_data((long)atol(converter::to_string(data).c_str())); break;
-#endif
 		default: break;
 		}
 	}
