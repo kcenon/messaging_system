@@ -43,21 +43,80 @@ To understand how to use this library, it provided several sample programs on th
 9. [upload_sample](https://github.com/kcenon/file_manager/tree/main/upload_sample): implemented how to use file upload via provided micro-server on the micro-services folder
 10. [restapi_client_sample](https://github.com/kcenon/file_manager/tree/main/restapi_client_sample): implemented how to use restapi via provided micro-server on the micro-services folder
 
-## License
+## Architecture
 
-Note: This license has also been called the "New BSD License" or "Modified BSD License". See also the 2-clause BSD License.
+#### Server/Client structure
+```mermaid
+graph LR
+server_3(TCP Server)
+client_3_1(TCP Client)
+client_3_2(TCP Client)
+client_3_3(TCP Client)
+session_1(Client Session)
+session_2(Client Session)
+session_3(Client Session)
+subgraph Server/Client Block Diagram
+subgraph Server Block
+server_3 -->|assigned| session_1
+server_3 -->|assigned| session_2
+server_3 -->|assigned| session_3
+end
+subgraph Client Block
+session_1 -.-|connection| client_3_1
+end
+subgraph Client Block
+session_2 -.-|connection| client_3_2
+end
+subgraph Client Block
+session_3 -.-|connection| client_3_3
+end
+end
+```
+  
+#### connection process
+  
+```mermaid
+graph LR
+server(TCP Server)
+client(TCP Client)
+session(Client Session)
+subgraph Connection Step
+client -->|Step1. request| server
+server -->|Step2. create & assign| session
+session -.-|Step3. connection| client
+end
+```
 
-Copyright 2021 🍀☀🌕🌥 🌊
+#### Currency process
 
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+```mermaid
+graph LR
+thread_pool(Thread Pool)
+send_worker(Send worker: top priority)
+worker_1(worker: high priority)
+worker_2(worker: normal priority)
+worker_3(worker: low priority)
+job_manager(job manager)
+job_list_1(external job list)
+job_list_2(internal job list)
+subgraph Concurrent Process
+subgraph Thread Pool
+thread_pool --- send_worker
+thread_pool --- worker_1
+thread_pool --- worker_2
+thread_pool --- worker_3
+end
+subgraph Job Pool
+job_list_1 --- job_manager
+job_list_2 --- job_manager
+end
+end
+send_worker -.get a job.- job_list_1
+worker_1 -.get a job.- job_list_2
+worker_2 -.get a job.- job_list_2
+worker_3 -.get a job.- job_list_2
+```
 
 ## Contact
 Please report issues or questions here: https://github.com/kcenon/messaging_system/issues
+s
