@@ -304,7 +304,12 @@ namespace network
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
+#ifdef __USE_TYPE_CONTAINER__
+		if (message->source_id().empty())
+		{
+			message->set_source(_source_id, _source_sub_id);
+		}
+#else
 		if ((*message)[HEADER][SOURCE_ID].is_null() ||
 			(*message)[HEADER][SOURCE_ID].as_string().empty())
 		{
@@ -316,19 +321,20 @@ namespace network
 			(*message)[HEADER][SOURCE_SUB_ID] = json::value::string(converter::to_string(_source_sub_id));
 #endif
 		}
-
-		auto serialize_array = converter::to_array(message->serialize());
-#else
-		if (message->source_id().empty())
-		{
-			message->set_source(_source_id, _source_sub_id);
-		}
-
-		auto serialize_array = message->serialize_array();
 #endif
 
+		auto serialize = message->serialize();
+		auto serialize_array = converter::to_array(serialize);
 
-		logger::handle().write(logging_level::packet, serialize_array);
+#ifdef __USE_TYPE_CONTAINER__
+		logger::handle().write(logging_level::packet, fmt::format(L"send: {}", serialize));
+#else
+#ifdef _WIN32
+		logger::handle().write(logging_level::packet, fmt::format(L"send: {}", serialize));
+#else
+		logger::handle().write(logging_level::packet, converter::to_wstring(fmt::format("send: {}", serialize)));
+#endif
+#endif
 
 		if (_compress_mode)
 		{
@@ -659,16 +665,24 @@ namespace network
 			return;
 		}
 
-		logger::handle().write(logging_level::packet, data);
+#ifdef __USE_TYPE_CONTAINER__
+		logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
+#else
+#ifdef _WIN32
+		logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
+#else
+		logger::handle().write(logging_level::packet, converter::to_wstring(fmt::format("received: {}", message->serialize())));
+#endif
+#endif
 
-#ifndef __USE_TYPE_CONTAINER__
+#ifdef __USE_TYPE_CONTAINER__
+		auto target = _message_handlers.find(message->message_type());
+#else
 #ifdef _WIN32
 		auto target = _message_handlers.find((*message)[HEADER][MESSAGE_TYPE].as_string());
 #else
 		auto target = _message_handlers.find(converter::to_wstring((*message)[HEADER][MESSAGE_TYPE].as_string()));
 #endif
-#else
-		auto target = _message_handlers.find(message->message_type());
 #endif
 		if (target == _message_handlers.end())
 		{

@@ -223,23 +223,32 @@ namespace network
 			return;
 		}
 #endif
-
-		auto serialize_array = converter::to_array(message->serialize());
 #else
-		if (!_bridge_line && message->target_id() != _target_id && !contained_snipping_target(message->target_id()))
+		if (!_bridge_line && message->target_id() != _target_id && 
+			!contained_snipping_target(message->target_id()))
 		{
 			return;
 		}
 
-		if (!_bridge_line && !contained_snipping_target(message->target_id()) && !message->target_sub_id().empty() && message->target_sub_id() != _target_sub_id)
+		if (!_bridge_line && !contained_snipping_target(message->target_id()) && 
+			!message->target_sub_id().empty() && message->target_sub_id() != _target_sub_id)
 		{
 			return;
 		}
-
-		auto serialize_array = message->serialize_array();
 #endif
 
-		logger::handle().write(logging_level::packet, serialize_array);
+		auto serialize = message->serialize();
+		auto serialize_array = converter::to_array(serialize);
+
+#ifdef __USE_TYPE_CONTAINER__
+		logger::handle().write(logging_level::packet, fmt::format(L"send: {}", serialize));
+#else
+#ifdef _WIN32
+		logger::handle().write(logging_level::packet, fmt::format(L"send: {}", serialize));
+#else
+		logger::handle().write(logging_level::packet, converter::to_wstring(fmt::format("send: {}", serialize)));
+#endif
+#endif
 
 		if (_compress_mode)
 		{
@@ -586,7 +595,15 @@ namespace network
 			return;
 		}
 
-		logger::handle().write(logging_level::packet, data);
+#ifdef __USE_TYPE_CONTAINER__
+		logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
+#else
+#ifdef _WIN32
+		logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
+#else
+		logger::handle().write(logging_level::packet, converter::to_wstring(fmt::format("received: {}", message->serialize())));
+#endif
+#endif
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
@@ -1003,6 +1020,8 @@ namespace network
 			return;
 		}
 
+		logger::handle().write(logging_level::sequence, L"confirmed connection key");
+
 		// compare both session id an client id
 		if (!same_id_check())
 		{
@@ -1011,7 +1030,11 @@ namespace network
 			return;
 		}
 
+		logger::handle().write(logging_level::sequence, L"confirmed client id");
+
 		_confirm = session_conditions::confirmed;
+
+		generate_key();
 
 		// check snipping target list
 #ifndef __USE_TYPE_CONTAINER__
@@ -1062,8 +1085,6 @@ namespace network
 #endif
 		}
 
-		generate_key();
-
 #ifdef _WIN32
 		(*container)[DATA][L"confirm"] = json::value::boolean(true);
 		(*container)[DATA][L"key"] = json::value::string(_target_sub_id);
@@ -1103,10 +1124,8 @@ namespace network
 			acceptable_snipping_targets->add(make_shared<container::string_value>(L"snipping_target", snipping_target->to_string()));
 		}
 
-		generate_key();
-
-		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
-			vector<shared_ptr<container::value>> {
+		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, 
+			L"confirm_connection", vector<shared_ptr<container::value>> {
 			make_shared<container::bool_value>(L"confirm", true),
 				make_shared<container::string_value>(L"key", _key),
 				make_shared<container::string_value>(L"iv", _iv),
@@ -1117,11 +1136,8 @@ namespace network
 
 		if (_compress_mode)
 		{
-#ifndef __USE_TYPE_CONTAINER__
-			_thread_pool->push(make_shared<job>(priorities::high, compressor::compression(converter::to_array(container->serialize())), bind(&messaging_session::send_packet, this, placeholders::_1)));
-#else
-			_thread_pool->push(make_shared<job>(priorities::high, compressor::compression(container->serialize_array()), bind(&messaging_session::send_packet, this, placeholders::_1)));
-#endif
+			_thread_pool->push(make_shared<job>(priorities::high, compressor::compression(converter::to_array(container->serialize())), 
+				bind(&messaging_session::send_packet, this, placeholders::_1)));
 
 			if (_connection)
 			{
@@ -1131,11 +1147,8 @@ namespace network
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
-		_thread_pool->push(make_shared<job>(priorities::top, converter::to_array(container->serialize()), bind(&messaging_session::send_packet, this, placeholders::_1)));
-#else
-		_thread_pool->push(make_shared<job>(priorities::top, container->serialize_array(), bind(&messaging_session::send_packet, this, placeholders::_1)));
-#endif
+		_thread_pool->push(make_shared<job>(priorities::top, converter::to_array(container->serialize()), 
+			bind(&messaging_session::send_packet, this, placeholders::_1)));
 
 		if (_connection)
 		{
@@ -1175,22 +1188,23 @@ namespace network
 			(*container)[DATA][SOURCE] = files[index][SOURCE];
 			(*container)[DATA][TARGET] = files[index][TARGET];
 
-			_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_session::load_file_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), 
+				bind(&messaging_session::load_file_packet, this, placeholders::_1)));
 		}
 #else
-		shared_ptr<container::value_container> container = message->copy(false);
-		container->swap_header();
-		container->set_message_type(L"request_files");
-
 		vector<shared_ptr<container::value>> files = message->value_array(L"file");
 		for (auto& file : files)
 		{
+			shared_ptr<container::value_container> container = message->copy(false);
+			container->swap_header();
+			container->set_message_type(L"request_files");
+
 			container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
 			container << make_shared<container::string_value>(L"source", (*file)[L"source"]->to_string());
 			container << make_shared<container::string_value>(L"target", (*file)[L"target"]->to_string());
 
-			_thread_pool->push(make_shared<job>(priorities::low, container->serialize_array(), bind(&messaging_session::load_file_packet, this, placeholders::_1)));
-			container->clear_value();
+			_thread_pool->push(make_shared<job>(priorities::low, container->serialize_array(), 
+				bind(&messaging_session::load_file_packet, this, placeholders::_1)));
 		}
 #endif
 	}
@@ -1211,7 +1225,22 @@ namespace network
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
+#ifdef __USE_TYPE_CONTAINER__
+		vector<shared_ptr<value>> response = (*message)[L"response"];
+		if (!response.empty())
+		{
+			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
+
+			return;
+		}
+
+		message->swap_header();
+
+		message << make_shared<bool_value>(L"response", true);
+
+		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), 
+			bind(&messaging_session::send_packet, this, placeholders::_1)));
+#else
 		if (!(*message)[DATA][RESPONSE].is_null())
 		{
 #ifdef _WIN32
@@ -1235,20 +1264,6 @@ namespace network
 
 		_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), 
 			bind(&messaging_session::send_packet, this, placeholders::_1)));
-#else
-		vector<shared_ptr<value>> response = (*message)[L"response"];
-		if (!response.empty())
-		{
-			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
-
-			return;
-		}
-
-		message->swap_header();
-
-		message << make_shared<bool_value>(L"response", true);
-
-		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), bind(&messaging_session::send_packet, this, placeholders::_1)));
 #endif
 	}
 
@@ -1265,6 +1280,8 @@ namespace network
 		auto encrypt_key = encryptor::create_key();
 		_key = encrypt_key.first;
 		_iv = encrypt_key.second;
+
+		logger::handle().write(logging_level::sequence, L"generated encrypt key");
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -1273,14 +1290,14 @@ namespace network
 	bool messaging_session::same_key_check(shared_ptr<container::value> key)
 #endif
 	{
-#ifndef __USE_TYPE_CONTAINER__
+#ifdef __USE_TYPE_CONTAINER__
+		if (key != nullptr && _connection_key == key->to_string())
+#else
 #ifdef _WIN32
 		if (!key.is_null() && _connection_key == key.as_string())
 #else
 		if (!key.is_null() && converter::to_string(_connection_key) == key.as_string())
 #endif
-#else
-		if (key != nullptr && _connection_key == key->to_string())
 #endif
 		{
 			return true;
@@ -1291,9 +1308,9 @@ namespace network
 #ifndef __USE_TYPE_CONTAINER__
 		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 #else
-		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
-			vector<shared_ptr<container::value>> {
-			make_shared<container::bool_value>(L"confirm", false),
+		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, 
+			L"confirm_connection", vector<shared_ptr<container::value>> {
+				make_shared<container::bool_value>(L"confirm", false),
 				make_shared<container::string_value>(L"reason", L"ignored this line = \"unknown connection key\"")
 		});
 #endif
@@ -1315,8 +1332,8 @@ namespace network
 #ifndef __USE_TYPE_CONTAINER__
 		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 #else
-		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"confirm_connection",
-			vector<shared_ptr<container::value>> {
+		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, 
+			L"confirm_connection", vector<shared_ptr<container::value>> {
 				make_shared<container::bool_value>(L"confirm", false),
 				make_shared<container::string_value>(L"reason", L"ignored this line = \"cannot use same id with server\"")
 		});
