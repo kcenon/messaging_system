@@ -238,14 +238,13 @@ namespace container
 
 	const wstring value::to_xml(void)
 	{
-		fmt::wmemory_buffer result;
-		result.clear();
+		wstring result;
 
 		if (_units.size() == 0)
 		{
 			fmt::format_to(back_inserter(result), L"<{0}>{1}</{0}>", name(), to_string(false));
 
-			return result.data();
+			return result;
 		}
 
 		fmt::format_to(back_inserter(result), L"<{}>", name());
@@ -255,13 +254,12 @@ namespace container
 		}
 		fmt::format_to(back_inserter(result), L"</{}>", name());
 
-		return result.data();
+		return result;
 	}
 
 	const wstring value::to_json(void)
 	{
-		fmt::wmemory_buffer result;
-		result.clear();
+		wstring result;
 
 		if (_units.size() == 0)
 		{
@@ -274,7 +272,7 @@ namespace container
 				fmt::format_to(back_inserter(result), L"\"{}\":{}", name(), to_string(false)); break;
 			}
 
-			return result.data();
+			return result;
 		}
 
 		fmt::format_to(back_inserter(result), L"\"{}\":{}", name(), L"{");
@@ -288,13 +286,12 @@ namespace container
 
 		fmt::format_to(back_inserter(result), L"{}", L"}");
 		
-		return result.data();
+		return result;
 	}
 
 	const wstring value::serialize(void)
 	{
-		fmt::wmemory_buffer result;
-		result.clear();
+		wstring result;
 
 		fmt::format_to(back_inserter(result), L"[{},{},{}];", name(), convert_value_type(_type), to_string(false));
 
@@ -303,7 +300,7 @@ namespace container
 			fmt::format_to(back_inserter(result), L"{}", unit->serialize());
 		}
 
-		return result.data();
+		return result;
 	}
 
 	shared_ptr<value> value::operator[](const wstring& key)

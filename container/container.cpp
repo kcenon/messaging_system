@@ -326,8 +326,13 @@ namespace container
 
 	wstring value_container::serialize(void) const
 	{
-		fmt::wmemory_buffer result;
-		result.clear();
+		wstring data_string = _data_string;
+		if (_parsed_data)
+		{
+			data_string = datas();
+		}
+
+		wstring result;
 
 		// header
 		fmt::format_to(back_inserter(result), L"@header={}", L"{");
@@ -341,17 +346,9 @@ namespace container
 		fmt::format_to(back_inserter(result), L"[{},{}];", MESSAGE_TYPE, _message_type);
 		fmt::format_to(back_inserter(result), L"[{},{}];", MESSAGE_VERSION, _version);
 		fmt::format_to(back_inserter(result), L"{}", L"};");
+		fmt::format_to(back_inserter(result), L"{}", data_string);
 
-		if (!_parsed_data)
-		{
-			fmt::format_to(back_inserter(result), L"{}", _data_string);
-
-			return result.data();
-		}
-
-		fmt::format_to(back_inserter(result), L"{}", datas());
-
-		return result.data();
+		return result;
 	}
 
 	vector<unsigned char> value_container::serialize_array(void) const
@@ -480,8 +477,7 @@ namespace container
 			return _data_string;
 		}
 
-		fmt::wmemory_buffer result;
-		result.clear();
+		wstring result;
 
 		// data
 		fmt::format_to(back_inserter(result), L"@data={}", L"{");
@@ -491,7 +487,7 @@ namespace container
 		}
 		fmt::format_to(back_inserter(result), L"{}", L"};");
 
-		return result.data();
+		return result;
 	}
 
 	void value_container::load_packet(const wstring& file_path)
