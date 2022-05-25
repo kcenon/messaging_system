@@ -2,6 +2,8 @@
     "files.associations": {
         "bitset": "cpp",
         "*.ipp": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "vector": "cpp",
+        "atomic": "cpp"
     }
 }
