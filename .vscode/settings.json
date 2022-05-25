@@ -4,6 +4,7 @@
         "*.ipp": "cpp",
         "iterator": "cpp",
         "vector": "cpp",
-        "atomic": "cpp"
+        "atomic": "cpp",
+        "chrono": "cpp"
     }
 }

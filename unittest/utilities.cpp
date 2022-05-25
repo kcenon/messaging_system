@@ -68,29 +68,14 @@ TEST(converter, test)
     EXPECT_TRUE(converter::to_wstring(converter::to_array(L"test has passed")).compare(L"test has passed") == 0);
 }
 
-TEST(datetime_handler, test)
-{
-
-}
-
 TEST(encryptor, test)
 {
+    auto key = encryptor::create_key();
 
-}
+    auto encrypted = encryptor::encryption(converter::to_array(L"I am a programmer"), key.first, key.second);
+    auto decrypted = converter::to_wstring(encryptor::decryption(encrypted, key.first, key.second));
 
-TEST(file, test)
-{
-
-}
-
-TEST(folder, test)
-{
-
-}
-
-TEST(logger, test)
-{
-
+    EXPECT_TRUE(decrypted.compare(L"I am a programmer") == 0);
 }
 
 #endif

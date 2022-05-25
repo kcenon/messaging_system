@@ -6,11 +6,6 @@
 
 namespace datetime_handler
 {
-	wstring datetime::current_time(const bool& use_seperator, const unsigned short& places_of_decimal)
-	{
-		return time(chrono::system_clock::now(), use_seperator, places_of_decimal);
-	}
-
 	wstring datetime::time(const chrono::system_clock::time_point& time, const bool& use_seperator, const unsigned short& places_of_decimal)
 	{
 		auto in_time_t = chrono::system_clock::to_time_t(time);
