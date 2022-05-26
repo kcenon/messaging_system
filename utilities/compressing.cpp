@@ -232,7 +232,7 @@ namespace compressing
 	}
 	
 	bool compressor::decompression_folder(const wstring& source_path, const wstring& target_path, const unsigned short& block_bytes,
-		const wstring& file_header, const function<void(const vector<uint8_t>&, const wstring&, const wstring&, vector<uint8_t>&)>& decompression_rule)
+		const wstring& file_header, const function<void(const vector<uint8_t>&, const wstring&, wstring&, vector<uint8_t>&)>& decompression_rule)
 	{
 		if (!folder::create_folder(target_path))
 		{
