@@ -168,7 +168,7 @@ namespace compressing
 	
 	bool compressor::compression_folder(const wstring& target_file, const wstring& root_path, const wstring& folder_path, 
 		const bool& contain_sub_folder, const unsigned short& block_bytes, const wstring& file_header,
-		const function<void(vector<uint8_t>&, const wstring&, const vector<uint8_t>&)>& combination_rule)
+		const function<void(vector<uint8_t>&, const wstring&, const vector<uint8_t>&)>& compression_rule)
 	{
 		if(target_file.empty())
 		{
@@ -199,14 +199,14 @@ namespace compressing
 #endif
 
 			vector<uint8_t> temp_buffer;
-			if(combination_rule == nullptr)
+			if(compression_rule == nullptr)
 			{
 				append_binary(temp_buffer, converter::to_array(temp));
 				append_binary(temp_buffer, file::load(file));
 			}
 			else
 			{
-				combination_rule(temp_buffer, temp, file::load(file));
+				compression_rule(temp_buffer, temp, file::load(file));
 			}
 
 			append_binary(result, compression(temp_buffer, block_bytes));
@@ -232,7 +232,7 @@ namespace compressing
 	}
 	
 	bool compressor::decompression_folder(const wstring& source_path, const wstring& target_path, const unsigned short& block_bytes,
-		const wstring& file_header, const function<void(const vector<uint8_t>&, wstring&, vector<uint8_t>&)>& combination_rule)
+		const wstring& file_header, const function<void(const vector<uint8_t>&, const wstring&, const wstring&, vector<uint8_t>&)>& decompression_rule)
 	{
 		if (!folder::create_folder(target_path))
 		{
@@ -262,7 +262,7 @@ namespace compressing
 			temp = devide_binary(source, index);
 			temp = decompression(temp, block_bytes);
 
-			if(combination_rule == nullptr)
+			if(decompression_rule == nullptr)
 			{
 				index2 = 0;
 				file_path = fmt::format(L"{}{}", target_path, converter::to_wstring(devide_binary(temp, index2)));
@@ -272,7 +272,7 @@ namespace compressing
 			{
 				file_path = L"";
 				file_data.clear();
-				combination_rule(temp, file_path, file_data);
+				decompression_rule(temp, target_path, file_path, file_data);
 			}
 
 			file::save(file_path, file_data);

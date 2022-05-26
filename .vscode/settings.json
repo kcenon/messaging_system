@@ -5,6 +5,7 @@
         "iterator": "cpp",
         "vector": "cpp",
         "atomic": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "functional": "cpp"
     }
 }
