@@ -11,7 +11,7 @@ ELSE()
 ENDIF()
 
 OPTION(USE_UNIT_TEST "Use unit test" ON)
-OPTION(USE_TYPE_CONTAINER "Contains type container library" OFF)
+OPTION(USE_TYPE_CONTAINER "Contains type container library" ON)
 
 IF(USE_UNIT_TEST)
     ENABLE_TESTING()
