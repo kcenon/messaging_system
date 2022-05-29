@@ -23,7 +23,7 @@ IF(USE_TYPE_CONTAINER)
 ENDIF()
 
 # set the project name
-PROJECT(${PROJECT_NAME} VERSION 1.0)
+PROJECT(${PROJECT_NAME} VERSION 1.0.0.0)
 
 # cpp_libraries
 ADD_SUBDIRECTORY(utilities)
