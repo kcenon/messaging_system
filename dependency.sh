@@ -1,4 +1,11 @@
-if [ ! "$(uname)" == "Darwin" ]; then
+if [ "$(uname)" == "Darwin" ]
+then
+    brew install pkg-config
+    brew install autoconf
+fi
+
+if [ "$(uname)" == "Linux" ]
+then
     apt update
     apt upgrade -y
 
@@ -9,20 +16,31 @@ if [ ! "$(uname)" == "Darwin" ]; then
 
     apt-get install curl zip unzip tar ninja-build -y
     apt-get install pkg-config autoconf -y
-else
-    brew install pkg-config
-    brew install autoconf
 fi
+
 cd ..
 
 if [ ! -d "./vcpkg/" ]
 then
     git clone https://github.com/microsoft/vcpkg.git
 fi
+
 cd vcpkg
-git pull
-./bootstrap-vcpkg.sh
-./vcpkg integrate install
-./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest
-./vcpkg upgrade --no-dry-run
+
+if git checkout master &&
+    git fetch origin master &&
+    [ `git rev-list HEAD...origin/master --count` != 0 ] &&
+    git merge origin/master
+then
+    ./bootstrap-vcpkg.sh
+    ./vcpkg upgrade --no-dry-run
+else
+    if [ ! -d "./vcpkg" ]
+    then
+        ./bootstrap-vcpkg.sh
+        ./vcpkg integrate install
+        ./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest
+    fi
+fi
+
 cd ..
