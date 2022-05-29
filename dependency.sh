@@ -35,7 +35,7 @@ then
     ./bootstrap-vcpkg.sh
     ./vcpkg upgrade --no-dry-run
 else
-    if [ ! -d "./vcpkg" ]
+    if [ ! -f "./vcpkg" ]
     then
         ./bootstrap-vcpkg.sh
         ./vcpkg integrate install
