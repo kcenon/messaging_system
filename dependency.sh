@@ -17,7 +17,7 @@ then
     apt-get install curl zip unzip tar ninja-build -y
     apt-get install pkg-config autoconf -y
 
-    if [ "$(version_id)" == "20.04" ]
+    if [ "$(uname)" == "Linux" && "$(version_id)" == "20.04" ]
     then
         apt-get install python3-pip -y
         pip3 install cmake
