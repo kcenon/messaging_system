@@ -17,6 +17,10 @@ elif [ "$(uname)" == "Linux" ]; then
         apt-get install python3-pip -y
         pip3 install cmake
     fi
+
+    if [ $(uname -m) != "aarch64" ]; then
+        export VCPKG_FORCE_SYSTEM_BINARIES=arm
+    fi
 fi
 
 cd ..
