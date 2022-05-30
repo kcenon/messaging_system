@@ -16,6 +16,12 @@ then
 
     apt-get install curl zip unzip tar ninja-build -y
     apt-get install pkg-config autoconf -y
+
+    if [ "$(version_id)" == "20.04" ]
+    then
+        apt-get install python3-pip -y
+        pip3 install cmake
+    fi
 fi
 
 cd ..
@@ -23,6 +29,7 @@ cd ..
 if [ ! -d "./vcpkg/" ]
 then
     git clone https://github.com/microsoft/vcpkg.git
+else
 fi
 
 cd vcpkg
