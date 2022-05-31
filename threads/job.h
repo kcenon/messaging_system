@@ -67,10 +67,11 @@ namespace threads
 
 	protected:
 		void save(const wstring& folder_name);
-		virtual void working(const priorities& worker_priority);
-
-	private:
 		void load(void);
+		void destroy(void);
+
+	protected:
+		virtual void working(const priorities& worker_priority);
 
 	protected:
 		vector<unsigned char> _data;

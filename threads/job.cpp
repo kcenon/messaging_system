@@ -177,12 +177,6 @@ namespace threads
 		_data.clear();
 	}
 
-	void job::working(const priorities& worker_priority)
-	{
-		logger::handle().write(logging_level::error, 
-			L"cannot complete job::working because it does not implemented");
-	}
-
 	void job::load(void)
 	{
 		if (_temporary_stored_path.empty())
@@ -191,7 +185,22 @@ namespace threads
 		}
 
 		_data = file::load(_temporary_stored_path);
+	}
+
+	void job::destroy(void)
+	{
+		if (_temporary_stored_path.empty())
+		{
+			return;
+		}
+
 		file::remove(_temporary_stored_path);
 		_temporary_stored_path.clear();
+	}
+
+	void job::working(const priorities& worker_priority)
+	{
+		logger::handle().write(logging_level::error, 
+			L"cannot complete job::working because it does not implemented");
 	}
 }
