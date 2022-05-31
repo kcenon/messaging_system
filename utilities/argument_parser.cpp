@@ -76,7 +76,7 @@ namespace argument_parser
 
 			if (argument_id.compare(L"--help") == 0)
 			{
-				result.insert({ argument_id, L"" });
+				result.insert({ argument_id, L"display help" });
 				continue;
 			}
 
@@ -118,7 +118,7 @@ namespace argument_parser
 
 			if (argument_id.compare(L"--help") == 0)
 			{
-				result.insert({ argument_id, L"" });
+				result.insert({ argument_id, L"display help" });
 				continue;
 			}
 
