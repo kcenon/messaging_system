@@ -21,10 +21,10 @@ TEST(argument, test)
     char* test1[] = {(char*)"test.exe", (char*)"--version", (char*)"1.000"};
     wchar_t* test2[] = {(wchar_t*)L"test.exe", (wchar_t*)L"--version", (wchar_t*)L"1.000"};
     
-    auto result1 = argument::parse(3, test1);
-    auto result2 = argument::parse(3, test2);
+    argument_manager manager1(3, test1);
+    argument_manager manager2(3, test2);
 
-    EXPECT_EQ(result1, result2);
+    EXPECT_EQ(manager1.get(L"--version"), manager2.get(L"--version"));
 }
 
 TEST(compressor, test)

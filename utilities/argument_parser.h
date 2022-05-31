@@ -39,11 +39,21 @@ using namespace std;
 
 namespace argument_parser
 {
-	class argument
+	class argument_manager
 	{
 	public:
-		static map<wstring, wstring> parse(int argc, char* argv[]);
-		static map<wstring, wstring> parse(int argc, wchar_t* argv[]);
+		argument_manager(int argc, char* argv[]);
+		argument_manager(int argc, wchar_t* argv[]);
+
+	public:
+		wstring get(const wstring& key);
+
+	protected:
+		map<wstring, wstring> parse(int argc, char* argv[]);
+		map<wstring, wstring> parse(int argc, wchar_t* argv[]);
+
+	private:
+		map<wstring, wstring> _arguments;
 	};
 }
 

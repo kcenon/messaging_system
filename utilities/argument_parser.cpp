@@ -38,7 +38,28 @@ using namespace converting;
 
 namespace argument_parser
 {
-	map<wstring, wstring> argument::parse(int argc, char* argv[])
+	argument_manager::argument_manager(int argc, char* argv[])
+	{
+		_arguments = parse(argc, argv);
+	}
+
+	argument_manager::argument_manager(int argc, wchar_t* argv[])
+	{
+		_arguments = parse(argc, argv);
+	}
+
+	wstring argument_manager::get(const wstring& key)
+	{
+		auto target = _arguments.find(key);
+		if(target == _arguments.end())
+		{
+			return L"";
+		}
+
+		return target->second;
+	}
+
+	map<wstring, wstring> argument_manager::parse(int argc, char* argv[])
 	{
 		map<wstring, wstring> result;
 
@@ -80,7 +101,7 @@ namespace argument_parser
 		return result;
 	}
 	
-	map<wstring, wstring> argument::parse(int argc, wchar_t* argv[])
+	map<wstring, wstring> argument_manager::parse(int argc, wchar_t* argv[])
 	{
 		map<wstring, wstring> result;
 
