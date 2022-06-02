@@ -63,7 +63,8 @@ namespace threads
 		bool contain(const priorities& priority, const vector<priorities>& others = {});
 
 	public:
-		void append_notification(const function<void(const priorities&)>& notification);
+		bool append_notification(const wstring& id, const function<void(const priorities&)>& notification);
+		bool remove_notification(const wstring& id);
 
 	private:
 		void notification(const priorities& priority);
@@ -72,6 +73,6 @@ namespace threads
 		mutex _mutex;
 		bool _lock_condition;
 		map<priorities, queue<shared_ptr<job>>> _jobs;
-		vector<function<void(const priorities&)>> _notifications;
+		map<wstring, function<void(const priorities&)>> _notifications;
 	};
 }

@@ -164,21 +164,42 @@ namespace threads
 		return false;
 	}
 
-	void job_pool::append_notification(const function<void(const priorities&)>& notification)
+	bool job_pool::append_notification(const wstring& id, const function<void(const priorities&)>& notification)
 	{
-		_notifications.push_back(notification);
+		auto target = _notifications.find(id);
+		if(target != _notifications.end())
+		{
+			return false;
+		}
+
+		_notifications.insert({ id, notification });
+
+		return true;
+	}
+	
+	bool job_pool::remove_notification(const wstring& id)
+	{
+		auto target = _notifications.find(id);
+		if(target == _notifications.end())
+		{
+			return false;
+		}
+
+		_notifications.erase(target);
+
+		return true;
 	}
 
 	void job_pool::notification(const priorities& priority)
 	{
 		for (auto& notification : _notifications)
 		{
-			if (notification == nullptr)
+			if (notification.second == nullptr)
 			{
 				continue;
 			}
 
-			notification(priority);
+			notification.second(priority);
 		}
 	}
 }

@@ -45,7 +45,7 @@ namespace threads
 	thread_pool::thread_pool(const vector<shared_ptr<thread_worker>>& workers)
 		: _workers(workers), _job_pool(make_shared<job_pool>())
 	{
-		_job_pool->append_notification(bind(&thread_pool::notification, this, placeholders::_1));
+		_job_pool->append_notification(L"thread_pool", bind(&thread_pool::notification, this, placeholders::_1));
 	}
 
 	thread_pool::~thread_pool(void)
