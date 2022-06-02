@@ -94,6 +94,8 @@ namespace threads
 
 	bool job::work(const priorities& worker_priority)
 	{
+		auto start = logger::handle().chrono_start();
+
 		load();
 
 		if (_working_callback != nullptr)
@@ -105,13 +107,15 @@ namespace threads
 			catch (...)
 			{
 				logger::handle().write(logging_level::sequence,
-					fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
+					fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", 
+						(int)_priority, (int)worker_priority), start);
 
 				return false;
 			}
 
 			logger::handle().write(logging_level::sequence, 
-				fmt::format(L"completed working callback function without value on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
+				fmt::format(L"completed working callback function without value on job: job priority[{}], worker priority[{}]", 
+					(int)_priority, (int)worker_priority), start);
 
 			return true;
 		}
@@ -125,13 +129,15 @@ namespace threads
 			catch (...)
 			{
 				logger::handle().write(logging_level::sequence,
-					fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
+					fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", 
+						(int)_priority, (int)worker_priority), start);
 
 				return false;
 			}
 
 			logger::handle().write(logging_level::sequence, 
-				fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
+				fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", 
+					(int)_priority, (int)worker_priority), start);
 
 			return true;
 		}
@@ -141,12 +147,14 @@ namespace threads
 			working(worker_priority);
 
 			logger::handle().write(logging_level::sequence,
-				fmt::format(L"completed working function on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
+				fmt::format(L"completed working function on job: job priority[{}], worker priority[{}]", 
+					(int)_priority, (int)worker_priority), start);
 		}
 		catch (...) 
 		{
 			logger::handle().write(logging_level::sequence,
-				fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", (int)_priority, (int)worker_priority));
+				fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", 
+					(int)_priority, (int)worker_priority), start);
 
 			return false;
 		}
