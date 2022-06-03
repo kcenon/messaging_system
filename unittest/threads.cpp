@@ -19,8 +19,8 @@ constexpr auto TEST = L"test";
 bool test_function(const vector<uint8_t>& data)
 {
     wstring temp = converter::to_wstring(data);
-
-    return true;
+    
+    return !temp.empty();
 }
 
 bool test_function2(void)

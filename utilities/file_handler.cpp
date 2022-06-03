@@ -61,8 +61,6 @@ namespace file_handler
 			return vector<unsigned char>();
 		}
 
-		size_t file_size = filesystem::file_size(path);
-
 #ifdef _WIN32
 		ifstream stream(path, ios::binary);
 #else

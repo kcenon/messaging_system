@@ -4,7 +4,6 @@
 
 TEST(network, test)
 {
-
 }
 
 #endif

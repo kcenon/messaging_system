@@ -497,7 +497,6 @@ namespace network
 		default:
 			break;
 		}
-
 	}
 
 	void messaging_session::disconnected(void)
@@ -662,7 +661,6 @@ namespace network
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
-		auto temp = converter::to_wstring(data);
 		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));
 #else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data);
@@ -816,7 +814,7 @@ namespace network
 		wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
 
 		logger::handle().write(logging_level::parameter,
-			fmt::format(L"receive_file_packet: [{}] => [{}:{}] -> [{}:{}]", indication_id, source_id, source_sub_id, target_id, target_sub_id));
+			fmt::format(L"receive_file_packet: [{}] => [{}:{}] -> [{}:{}]", source_path, source_id, source_sub_id, target_id, target_sub_id));
 
 		vector<unsigned char> result;
 		append_binary_on_packet(result, converter::to_array(indication_id));

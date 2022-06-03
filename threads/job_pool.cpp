@@ -46,7 +46,6 @@ namespace threads
 
 	job_pool::job_pool(void) : _lock_condition(false)
 	{
-
 	}
 
 	job_pool::~job_pool(void)

@@ -43,7 +43,6 @@ namespace database
 
     database_manager::~database_manager()
     {
-
     }
 
     bool database_manager::set_mode(const database_types& database_type)

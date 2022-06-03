@@ -54,7 +54,6 @@ namespace network
 		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _compress_mode(false),
 		_high_priority(8), _normal_priority(8), _low_priority(8), _session_limit_count(0), _possible_session_types({ session_types::binary_line })
 	{
-
 	}
 
 	messaging_server::~messaging_server(void)

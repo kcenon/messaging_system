@@ -890,7 +890,7 @@ namespace network
 		wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
 
 		logger::handle().write(logging_level::parameter, 
-			fmt::format(L"receive_file_packet: [{}] => [{}:{}] -> [{}:{}]", indication_id, source_id, source_sub_id, target_id, target_sub_id));
+			fmt::format(L"receive_file_packet: [{}] => [{}:{}] -> [{}:{}]", source_path, source_id, source_sub_id, target_id, target_sub_id));
 
 		vector<unsigned char> result;
 		append_binary_on_packet(result, converter::to_array(indication_id));
