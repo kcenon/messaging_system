@@ -113,6 +113,8 @@ namespace threads
 				return false;
 			}
 
+			destroy();
+
 			logger::handle().write(logging_level::sequence, 
 				fmt::format(L"completed working callback function without value on job: job priority[{}], worker priority[{}]", 
 					(int)_priority, (int)worker_priority), start);
@@ -135,6 +137,8 @@ namespace threads
 				return false;
 			}
 
+			destroy();
+
 			logger::handle().write(logging_level::sequence, 
 				fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", 
 					(int)_priority, (int)worker_priority), start);
@@ -145,10 +149,6 @@ namespace threads
 		try
 		{
 			working(worker_priority);
-
-			logger::handle().write(logging_level::sequence,
-				fmt::format(L"completed working function on job: job priority[{}], worker priority[{}]", 
-					(int)_priority, (int)worker_priority), start);
 		}
 		catch (...) 
 		{
@@ -158,6 +158,12 @@ namespace threads
 
 			return false;
 		}
+
+		destroy();
+
+		logger::handle().write(logging_level::sequence,
+			fmt::format(L"completed working function on job: job priority[{}], worker priority[{}]", 
+				(int)_priority, (int)worker_priority), start);
 
 		return true;
 	}
