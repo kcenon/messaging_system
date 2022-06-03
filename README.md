@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/kcenon/messaging_system/badge)](https://www.codefactor.io/repository/github/kcenon/messaging_system)
+
 ## What is?
 Normally, it is pretty hard to implement a TCP server and client with a proper thread system in the C++ language. To support newbie's desire to make their own TCP communication system, I planned its project.
 
