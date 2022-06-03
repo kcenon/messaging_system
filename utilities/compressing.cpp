@@ -286,7 +286,7 @@ namespace compressing
 		wstring file_path;
 		vector<uint8_t> file_data;
 		size_t index = header.size();
-		size_t index2 = 0;
+		size_t index2;
 		size_t count = source.size();
 		while (index < count)
 		{

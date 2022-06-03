@@ -63,7 +63,7 @@ namespace argument_parser
 	{
 		map<wstring, wstring> result;
 
-		size_t offset = 0;
+		size_t offset;
 		wstring argument_id;
 		for (int index = 1; index < argc; ++index)
 		{

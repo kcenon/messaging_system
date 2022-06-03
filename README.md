@@ -1,7 +1,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/kcenon/messaging_system/badge)](https://www.codefactor.io/repository/github/kcenon/messaging_system)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cacfad55304e44c3af21d3a6b5bcb4dd)](https://www.codacy.com/gh/kcenon/messaging_system/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kcenon/messaging_system&amp;utm_campaign=Badge_Grade)
 
-## What is?
+## What is
 
 Normally, it is pretty hard to implement a TCP server and client with a proper thread system in the C++ language. To support newbie's desire to make their own TCP communication system, I planned its project.
 
