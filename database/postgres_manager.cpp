@@ -42,12 +42,10 @@ namespace database
 
     postgres_manager::postgres_manager(void) : _connection(nullptr)
     {
-
     }
 
     postgres_manager::~postgres_manager(void)
     {
-
     }
 
     database_types postgres_manager::database_type(void)
