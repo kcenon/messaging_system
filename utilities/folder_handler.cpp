@@ -115,7 +115,7 @@ namespace folder_handler
 		return result;
 	}
 
-	vector<wstring> folder::get_files(const wstring& target_folder, const bool& search_sub_folder, const vector<wstring> extensions)
+	vector<wstring> folder::get_files(const wstring& target_folder, const bool& search_sub_folder, const vector<wstring>& extensions)
 	{
 		vector<wstring> result;
 

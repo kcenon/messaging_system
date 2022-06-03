@@ -47,7 +47,7 @@ namespace folder_handler
 		static void delete_folder(const wstring& target);
 		static void delete_folders(const vector<wstring>& targets);
 		static vector<wstring> get_folders(const wstring& target_folder);
-		static vector<wstring> get_files(const wstring& target_folder, const bool& search_sub_folder = true, const vector<wstring> extensions = {});
+		static vector<wstring> get_files(const wstring& target_folder, const bool& search_sub_folder = true, const vector<wstring>& extensions = {});
 	};
 }
 

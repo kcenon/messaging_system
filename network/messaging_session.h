@@ -104,8 +104,8 @@ namespace network
 		void send_files(shared_ptr<container::value_container> message);
 #endif
 
-		void send_binary(const wstring target_id, const wstring& target_sub_id, const vector<unsigned char>& data);
-		void send_binary(const wstring source_id, const wstring& source_sub_id, const wstring target_id, const wstring& target_sub_id, const vector<unsigned char>& data);
+		void send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data);
+		void send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring target_id, const wstring& target_sub_id, const vector<unsigned char>& data);
 
 	protected:
 		void receive_on_tcp(const data_modes& data_mode, const vector<unsigned char>& data) override;

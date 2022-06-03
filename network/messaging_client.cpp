@@ -481,7 +481,7 @@ namespace network
 #endif
 	}
 
-	void messaging_client::send_binary(const wstring target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
+	void messaging_client::send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
 	{
 		if (_socket == nullptr)
 		{
