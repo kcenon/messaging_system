@@ -146,7 +146,7 @@ namespace folder_handler
 
 				extension = iterator->path().extension().wstring();
 				vector<wstring>::const_iterator target_extension = find_if(extensions.begin(), extensions.end(),
-					[&extension](wstring item)
+					[&extension](const wstring& item)
 					{
 						return item == extension;
 					});

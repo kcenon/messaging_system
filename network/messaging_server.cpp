@@ -326,7 +326,7 @@ namespace network
 		}
 	}
 
-	void messaging_server::send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
+	void messaging_server::send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
 	{
 		if (data.empty())
 		{
