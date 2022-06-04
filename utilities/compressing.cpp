@@ -286,7 +286,6 @@ namespace compressing
 		wstring file_path;
 		vector<uint8_t> file_data;
 		size_t index = header.size();
-		size_t index2;
 		size_t count = source.size();
 		while (index < count)
 		{
@@ -296,7 +295,7 @@ namespace compressing
 
 			if(decompression_rule == nullptr)
 			{
-				index2 = 0;
+				size_t index2 = 0;
 				file_path = fmt::format(L"{}{}", target_path, converter::to_wstring(devide_binary(temp, index2)));
 				file_data = devide_binary(temp, index2);
 			}
