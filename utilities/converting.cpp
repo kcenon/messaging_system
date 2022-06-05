@@ -69,7 +69,7 @@ namespace converting
 
 			fmt::format_to(back_inserter(result), L"{}{}", source.substr(last_offset, offset - last_offset), target);
 
-			last_offset = offset + wcslen(token.c_str());
+			last_offset = offset + token.size();
 		}
 
 		if (last_offset != 0 && last_offset != string::npos)
