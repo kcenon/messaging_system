@@ -288,33 +288,32 @@ namespace logging
 		}
 		stream.imbue(_locale);
 
-		source = L"";
 		chrono::system_clock::time_point current = chrono::system_clock::now();
 		auto time_string = datetime::time(current, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			source = fmt::format(L"[{:%Y-%m-%d} {}][{}]\n", fmt::localtime(current), time_string, flag);
+			wstring temp = fmt::format(L"[{:%Y-%m-%d} {}][{}]\n", fmt::localtime(current), time_string, flag);
 			if (_write_console.load())
 			{
-				wcout << source;
+				wcout << temp;
 			}
 #ifdef _WIN32
-			stream << source;
+			stream << temp;
 #else
-			stream << converter::to_string(source);
+			stream << converter::to_string(temp);
 #endif
 		}
 		else
 		{
-			source = fmt::format(L"[{}][{}]\n", time_string, flag);
+			wstring temp = fmt::format(L"[{}][{}]\n", time_string, flag);
 			if (_write_console.load())
 			{
-				wcout << source;
+				wcout << temp;
 			}
 #ifdef _WIN32
-			stream << source;
+			stream << temp;
 #else
-			stream << converter::to_string(source);
+			stream << converter::to_string(temp);
 #endif
 		}
 
