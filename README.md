@@ -48,7 +48,7 @@ To understand how to use this library, it provided several sample programs on th
 7.  [echo_client](https://github.com/kcenon/samples/tree/main/echo_client): implemented how to use network library for creating an echo client
 8.  [download_sample](https://github.com/kcenon/file_manager/tree/main/download_sample): implemented how to use file download via provided micro-server on the micro-services folder
 9.  [upload_sample](https://github.com/kcenon/file_manager/tree/main/upload_sample): implemented how to use file upload via provided micro-server on the micro-services folder
-10.  [restapi_client_sample](https://github.com/kcenon/file_manager/tree/main/restapi_client_sample): implemented how to use restapi via provided micro-server on the micro-services folder
+10. [restapi_client_sample](https://github.com/kcenon/file_manager/tree/main/restapi_client_sample): implemented how to use restapi via provided micro-server on the micro-services folder
 
 ## License
 
