@@ -167,21 +167,7 @@ namespace network
 	{
 		stop();
 
-		_thread_pool = make_shared<threads::thread_pool>();
-
-		_thread_pool->append(make_shared<thread_worker>(priorities::top), true);
-		for (unsigned short high = 0; high < high_priority; ++high)
-		{
-			_thread_pool->append(make_shared<thread_worker>(priorities::high, vector<priorities> { priorities::normal, priorities::low }), true);
-		}
-		for (unsigned short normal = 0; normal < normal_priority; ++normal)
-		{
-			_thread_pool->append(make_shared<thread_worker>(priorities::normal, vector<priorities> { priorities::high, priorities::low }), true);
-		}
-		for (unsigned short low = 0; low < low_priority; ++low)
-		{
-			_thread_pool->append(make_shared<thread_worker>(priorities::low, vector<priorities> { priorities::high, priorities::normal }), true);
-		}
+		create_thread_pool(high_priority, normal_priority, low_priority);
 
 		logger::handle().write(logging_level::sequence, L"attempts to create io_context");
 
@@ -189,31 +175,8 @@ namespace network
 
 		logger::handle().write(logging_level::sequence, L"attempts to create socket");
 
-		try
+		if (!create_socket(ip, port))
 		{
-			_socket = make_shared<asio::ip::tcp::socket>(*_io_context);
-			_socket->open(asio::ip::tcp::v4());
-			_socket->bind(asio::ip::tcp::endpoint(asio::ip::tcp::v4(), 0));
-			_socket->connect(asio::ip::tcp::endpoint(asio::ip::address::from_string(converter::to_string(ip)), port));
-
-			_socket->set_option(asio::ip::tcp::no_delay(true));
-			_socket->set_option(asio::socket_base::keep_alive(true));
-			_socket->set_option(asio::socket_base::receive_buffer_size(buffer_size));
-		}
-		catch (const overflow_error&) {
-			connection_notification(false);
-			return; 
-		}
-		catch (const runtime_error&) {
-			connection_notification(false);
-			return;
-		}
-		catch (const exception&) {
-			connection_notification(false);
-			return;
-		}
-		catch (...) {
-			connection_notification(false);
 			return;
 		}
 
@@ -222,36 +185,7 @@ namespace network
 		_target_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
-		_thread = make_shared<thread>([&]()
-			{
-				try
-				{
-					logger::handle().write(logging_level::information, fmt::format(L"start messaging_client({})", _source_id));
-					_io_context->run();
-				}
-				catch (const overflow_error&) { 
-					if (_io_context != nullptr) {
-						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with overflow error", _source_id));
-					}
-				}
-				catch (const runtime_error&) { 
-					if (_io_context != nullptr) {
-						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with runtime error", _source_id));
-					}
-				}
-				catch (const exception&) { 
-					if (_io_context != nullptr) {
-						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with exception", _source_id));
-					}
-				}
-				catch (...) { 
-					if (_io_context != nullptr) {
-						logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with error", _source_id));
-					}
-				}
-				logger::handle().write(logging_level::information, fmt::format(L"stop messaging_client({})", _source_id));
-				connection_notification(false);
-			});
+		_thread = make_shared<thread>(bind(&messaging_client::run, this));
 
 		read_start_code(_socket);
 		send_connection();
@@ -1245,5 +1179,94 @@ namespace network
 				}
 			}, condition);
 		thread.detach();
+	}
+
+	bool messaging_client::create_socket(const wstring& ip, const unsigned short& port)
+	{
+		try
+		{
+			_socket = make_shared<asio::ip::tcp::socket>(*_io_context);
+			_socket->open(asio::ip::tcp::v4());
+			_socket->bind(asio::ip::tcp::endpoint(asio::ip::tcp::v4(), 0));
+			_socket->connect(asio::ip::tcp::endpoint(asio::ip::address::from_string(converter::to_string(ip)), port));
+
+			_socket->set_option(asio::ip::tcp::no_delay(true));
+			_socket->set_option(asio::socket_base::keep_alive(true));
+			_socket->set_option(asio::socket_base::receive_buffer_size(buffer_size));
+
+			return true;
+		}
+		catch (const overflow_error&) {
+			connection_notification(false);
+
+			return false;
+		}
+		catch (const runtime_error&) {
+			connection_notification(false);
+
+			return false;
+		}
+		catch (const exception&) {
+			connection_notification(false);
+
+			return false;
+		}
+		catch (...) {
+			connection_notification(false);
+
+			return false;
+		}
+	}
+
+	void messaging_client::run(void)
+	{
+		try
+		{
+			logger::handle().write(logging_level::information, fmt::format(L"start messaging_client({})", _source_id));
+			_io_context->run();
+		}
+		catch (const overflow_error&) { 
+			if (_io_context != nullptr) {
+				logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with overflow error", _source_id));
+			}
+		}
+		catch (const runtime_error&) { 
+			if (_io_context != nullptr) {
+				logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with runtime error", _source_id));
+			}
+		}
+		catch (const exception&) { 
+			if (_io_context != nullptr) {
+				logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with exception", _source_id));
+			}
+		}
+		catch (...) { 
+			if (_io_context != nullptr) {
+				logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with error", _source_id));
+			}
+		}
+
+		logger::handle().write(logging_level::information, fmt::format(L"stop messaging_client({})", _source_id));
+		connection_notification(false);
+	}
+
+	void messaging_client::create_thread_pool(const unsigned short& high_priority, const unsigned short& normal_priority, 
+		const unsigned short& low_priority)
+	{
+		_thread_pool = make_shared<threads::thread_pool>();
+
+		_thread_pool->append(make_shared<thread_worker>(priorities::top), true);
+		for (unsigned short high = 0; high < high_priority; ++high)
+		{
+			_thread_pool->append(make_shared<thread_worker>(priorities::high, vector<priorities> { priorities::normal, priorities::low }), true);
+		}
+		for (unsigned short normal = 0; normal < normal_priority; ++normal)
+		{
+			_thread_pool->append(make_shared<thread_worker>(priorities::normal, vector<priorities> { priorities::high, priorities::low }), true);
+		}
+		for (unsigned short low = 0; low < low_priority; ++low)
+		{
+			_thread_pool->append(make_shared<thread_worker>(priorities::low, vector<priorities> { priorities::high, priorities::normal }), true);
+		}
 	}
 }

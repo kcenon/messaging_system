@@ -94,7 +94,8 @@ namespace network
 
 	public:
 		bool is_confirmed(void) const;
-		void start(const wstring& ip, const unsigned short& port, const unsigned short& high_priority = 8, const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
+		void start(const wstring& ip, const unsigned short& port, const unsigned short& high_priority = 8, 
+			const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
 		void stop(void);
 
 	public:
@@ -169,6 +170,12 @@ namespace network
 
 	private:
 		void connection_notification(const bool& condition);
+
+	private:
+		bool create_socket(const wstring& ip, const unsigned short& port);
+		void run(void);
+		void create_thread_pool(const unsigned short& high_priority, const unsigned short& normal_priority, 
+			const unsigned short& low_priority);
 
 	private:
 		bool _confirm;

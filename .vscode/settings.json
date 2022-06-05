@@ -6,6 +6,10 @@
         "vector": "cpp",
         "atomic": "cpp",
         "chrono": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "*.tcc": "cpp",
+        "cstdlib": "cpp",
+        "mutex": "cpp",
+        "regex": "cpp"
     }
 }
