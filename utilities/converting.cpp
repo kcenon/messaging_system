@@ -101,7 +101,8 @@ namespace converting
 		vector<char16_t> result(value.size() + 1);
 		char const* in_text = value.data();
 		char16_t* out_text = &result[0];
-		codecvt_t::result condition = codecvt.in(state, value.data(), value.data() + value.size(), in_text, &result[0], &result[0] + result.size(), out_text);
+		codecvt_t::result condition = codecvt.in(state, value.data(), value.data() + value.size(), in_text, 
+			out_text, out_text + result.size(), out_text);
 
 		return convert(result.data());
 	}
@@ -124,7 +125,8 @@ namespace converting
 		char16_t const* in_text = temp.data();
 		char* out_text = &result[0];
 
-		codecvt_t::result condition = codecvt.out(state, temp.data(), temp.data() + value.size(), in_text, &result[0], &result[0] + result.size(), out_text);
+		codecvt_t::result condition = codecvt.out(state, temp.data(), temp.data() + value.size(), in_text, 
+			out_text, out_text + result.size(), out_text);
 
 		return result.data();
 	}
