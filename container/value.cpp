@@ -66,6 +66,15 @@ namespace container
 
 	value::value(shared_ptr<value> object)
 	{
+		if(object == nullptr)
+		{
+			_name = L"";
+			_type = value_types::null_value;
+			_size = 0;
+			
+			return;
+		}
+
 		_name = object->name();
 		_type = object->type();
 		_size = object->size();
