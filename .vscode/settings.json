@@ -10,6 +10,7 @@
         "*.tcc": "cpp",
         "cstdlib": "cpp",
         "mutex": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "iosfwd": "cpp"
     }
 }

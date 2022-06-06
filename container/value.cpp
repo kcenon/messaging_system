@@ -62,9 +62,23 @@ namespace container
 
 	value::value(void) : _name(L""), _type(value_types::null_value), _size(0)
 	{
+		_data_type_map.insert({ value_types::bool_value, bind(&value::set_boolean, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::short_value, bind(&value::set_short, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::ushort_value, bind(&value::set_ushort, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::int_value, bind(&value::set_int, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::uint_value, bind(&value::set_uint, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::long_value, bind(&value::set_long, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::ulong_value, bind(&value::set_ulong, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::llong_value, bind(&value::set_llong, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::ullong_value, bind(&value::set_ullong, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::float_value, bind(&value::set_float, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::double_value, bind(&value::set_double, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::bytes_value, bind(&value::set_byte_string, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::string_value, bind(&value::set_string, this, placeholders::_1) });
+		_data_type_map.insert({ value_types::container_value, bind(&value::set_long, this, placeholders::_1) });
 	}
 
-	value::value(shared_ptr<value> object)
+	value::value(shared_ptr<value> object) : value()
 	{
 		if(object == nullptr)
 		{
@@ -139,24 +153,14 @@ namespace container
 		_name = name;
 		_type = type;
 
-		switch (_type)
+		auto target = _data_type_map.find(_type);
+		if (target == _data_type_map.end())
 		{
-		case value_types::bool_value: set_boolean(data); break;
-		case value_types::short_value: set_data((short)atoi(converter::to_string(data).c_str())); break;
-		case value_types::ushort_value: set_data((unsigned short)atoi(converter::to_string(data).c_str())); break;
-		case value_types::int_value: set_data((int)atoi(converter::to_string(data).c_str())); break;
-		case value_types::uint_value: set_data((unsigned int)atoi(converter::to_string(data).c_str())); break;
-		case value_types::long_value: set_data((long)atol(converter::to_string(data).c_str())); break;
-		case value_types::ulong_value: set_data((unsigned long)atol(converter::to_string(data).c_str())); break;
-		case value_types::llong_value: set_data((long long)atoll(converter::to_string(data).c_str())); break;
-		case value_types::ullong_value: set_data((unsigned long long)atoll(converter::to_string(data).c_str())); break;
-		case value_types::float_value: set_data((float)atof(converter::to_string(data).c_str())); break;
-		case value_types::double_value: set_data((double)atof(converter::to_string(data).c_str())); break;
-		case value_types::bytes_value: set_byte_string(data); break;
-		case value_types::string_value: set_string(data); break;
-		case value_types::container_value: set_data((long)atol(converter::to_string(data).c_str())); break;
-		default: break;
+			_data.clear();
+			return;
 		}
+
+		target->second(data);
 	}
 
 	wstring value::name(void) const
@@ -397,23 +401,6 @@ namespace container
 
 		switch (current_type)
 		{
-#ifdef _WIN32
-		case value_types::bool_value: result = make_shared<bool_value>(target_name, target_value); break;
-		case value_types::short_value: result = make_shared<short_value>(target_name, (short)_wtoi(target_value.c_str())); break;
-		case value_types::ushort_value: result = make_shared<ushort_value>(target_name, (unsigned short)_wtoi(target_value.c_str())); break;
-		case value_types::int_value: result = make_shared<int_value>(target_name, (int)_wtoi(target_value.c_str())); break;
-		case value_types::uint_value: result = make_shared<uint_value>(target_name, (unsigned int)_wtoi(target_value.c_str())); break;
-		case value_types::long_value: result = make_shared<long_value>(target_name, (long)_wtol(target_value.c_str())); break;
-		case value_types::ulong_value: result = make_shared<ulong_value>(target_name, (unsigned long)_wtol(target_value.c_str())); break;
-		case value_types::llong_value: result = make_shared<llong_value>(target_name, (long long)_wtoll(target_value.c_str())); break;
-		case value_types::ullong_value: result = make_shared<ullong_value>(target_name, (unsigned long long)_wtoll(target_value.c_str())); break;
-		case value_types::float_value: result = make_shared<float_value>(target_name, (float)_wtof(target_value.c_str())); break;
-		case value_types::double_value: result = make_shared<double_value>(target_name, (double)_wtof(target_value.c_str())); break;
-		case value_types::bytes_value: result = make_shared<bytes_value>(target_name, converter::from_base64(target_value.c_str())); break;
-		case value_types::string_value: result = make_shared<string_value>(target_name, target_value); break;
-		case value_types::container_value: result = make_shared<container_value>(target_name, (long)_wtol(target_value.c_str())); break;
-		default: result = make_shared<value>(target_name, nullptr, 0, value_types::null_value); break;
-#else
 		case value_types::bool_value: result = make_shared<bool_value>(target_name, target_value); break;
 		case value_types::short_value: result = make_shared<short_value>(target_name, (short)atoi(converter::to_string(target_value).c_str())); break;
 		case value_types::ushort_value: result = make_shared<ushort_value>(target_name, (unsigned short)atoi(converter::to_string(target_value).c_str())); break;
@@ -429,7 +416,6 @@ namespace container
 		case value_types::string_value: result = make_shared<string_value>(target_name, target_value); break;
 		case value_types::container_value: result = make_shared<container_value>(target_name, (long)atol(converter::to_string(target_value).c_str())); break;
 		default: result = make_shared<value>(target_name, nullptr, 0, value_types::null_value); break;
-#endif
 		}
 
 		return result;
@@ -461,6 +447,56 @@ namespace container
 	{
 		set_data((data == L"true") ? true : false);
 		_type = value_types::bool_value;
+	}
+
+	void value::set_short(const wstring& data)
+	{
+		set_data((short)atoi(converter::to_string(data).c_str()));
+	}
+
+	void value::set_ushort(const wstring& data)
+	{
+		set_data((unsigned short)atoi(converter::to_string(data).c_str()));
+	}
+	
+	void value::set_int(const wstring& data)
+	{
+		set_data((int)atoi(converter::to_string(data).c_str()));
+	}
+	
+	void value::set_uint(const wstring& data)
+	{
+		set_data((unsigned int)atoi(converter::to_string(data).c_str()));
+	}
+	
+	void value::set_long(const wstring& data)
+	{
+		set_data((long)atol(converter::to_string(data).c_str()));
+	}
+	
+	void value::set_ulong(const wstring& data)
+	{
+		set_data((unsigned long)atol(converter::to_string(data).c_str()));
+	}
+	
+	void value::set_llong(const wstring& data)
+	{
+		set_data((long long)atoll(converter::to_string(data).c_str()));
+	}
+	
+	void value::set_ullong(const wstring& data)
+	{
+		set_data((unsigned long long)atoll(converter::to_string(data).c_str()));
+	}
+	
+	void value::set_float(const wstring& data)
+	{
+		set_data((float)atof(converter::to_string(data).c_str()));
+	}
+	
+	void value::set_double(const wstring& data)
+	{
+		set_data((double)atof(converter::to_string(data).c_str()));
 	}
 }
 

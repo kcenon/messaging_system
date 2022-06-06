@@ -36,10 +36,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "value_types.h"
 
+#include <map>
 #include <string>
 #include <vector>
 #include <memory>
 #include <stdexcept>
+#include <functional>
 
 using namespace std;
 
@@ -133,6 +135,18 @@ namespace container
 		void set_byte_string(const wstring& data);
 		void set_string(const wstring& data);
 		void set_boolean(const wstring& data);
+	
+	private:
+		void set_short(const wstring& data);
+		void set_ushort(const wstring& data);
+		void set_int(const wstring& data);
+		void set_uint(const wstring& data);
+		void set_long(const wstring& data);
+		void set_ulong(const wstring& data);
+		void set_llong(const wstring& data);
+		void set_ullong(const wstring& data);
+		void set_float(const wstring& data);
+		void set_double(const wstring& data);
 
 	protected:
 		size_t _size;
@@ -143,6 +157,9 @@ namespace container
 	protected:
 		weak_ptr<value> _parent;
 		vector<shared_ptr<value>> _units;
+
+	private:
+		map<value_types, function<void(const wstring&)>> _data_type_map;
 	};
 }
 
