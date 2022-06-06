@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ "$(uname)" == "Darwin" ]; then
     brew install pkg-config
     brew install autoconf
