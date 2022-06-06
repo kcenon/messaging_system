@@ -38,6 +38,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "converting.h"
 #include "file_handler.h"
 
+#include "values/bool_value.h"
+#include "values/bytes_value.h"
+#include "values/double_value.h"
+#include "values/float_value.h"
+#include "values/int_value.h"
+#include "values/long_value.h"
+#include "values/ulong_value.h"
+#include "values/llong_value.h"
+#include "values/ullong_value.h"
+#include "values/short_value.h"
+#include "values/string_value.h"
+#include "values/uint_value.h"
+#include "values/ushort_value.h"
 #include "values/container_value.h"
 
 #include <fcntl.h>
@@ -65,6 +78,20 @@ namespace container
 		: _source_id(L""), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _message_type(L"data_container"), _version(L"1.0.0.0"),
 		_parsed_data(true), _data_string(L"")
 	{
+		_data_type_map.insert({ value_types::bool_value, bind(&value_container::set_boolean, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::short_value, bind(&value_container::set_short, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::ushort_value, bind(&value_container::set_ushort, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::int_value, bind(&value_container::set_int, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::uint_value, bind(&value_container::set_uint, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::long_value, bind(&value_container::set_long, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::ulong_value, bind(&value_container::set_ulong, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::llong_value, bind(&value_container::set_llong, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::ullong_value, bind(&value_container::set_ullong, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::float_value, bind(&value_container::set_float, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::double_value, bind(&value_container::set_double, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::bytes_value, bind(&value_container::set_bytes, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::string_value, bind(&value_container::set_string, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::container_value, bind(&value_container::set_long, this, placeholders::_1, placeholders::_2) });
 	}
 
 	value_container::value_container(const wstring& data_string, const bool& parse_only_header) : value_container()
@@ -229,7 +256,13 @@ namespace container
 
 	shared_ptr<value> value_container::add(const value& target_value)
 	{
-		return add(value::generate_value(target_value.name(), convert_value_type(target_value.type()), target_value.to_string()));
+		auto target = _data_type_map.find(target_value.type());
+		if (target == _data_type_map.end())
+		{
+			return add(make_shared<value>(target_value.name(), nullptr, 0, value_types::null_value));
+		}
+		
+		return add(target->second(target_value.name(), target_value.to_string()));
 	}
 
 	shared_ptr<value> value_container::add(shared_ptr<value> target_value)
@@ -659,7 +692,14 @@ namespace container
 		vector<shared_ptr<value>> temp_list;
 		while (start != end)
 		{
-			temp_list.push_back(value::generate_value((*start)[1], (*start)[2], (*start)[3]));
+			auto target = _data_type_map.find(convert_value_type((*start)[2]));
+			if (target == _data_type_map.end())
+			{
+				temp_list.push_back(make_shared<value>((*start)[1], nullptr, 0, value_types::null_value));
+				continue;
+			}
+
+			temp_list.push_back(target->second((*start)[1], (*start)[3]));
 
 			start++;
 		}
@@ -715,6 +755,76 @@ namespace container
 		}
 
 		return;
+	}
+
+	shared_ptr<value> value_container::set_boolean(const wstring& name, const wstring& data)
+	{
+		return make_shared<bool_value>(name, data);
+	}
+
+	shared_ptr<value> value_container::set_short(const wstring& name, const wstring& data)
+	{
+		return make_shared<short_value>(name, (short)atoi(converter::to_string(data).c_str()));
+	}
+
+	shared_ptr<value> value_container::set_ushort(const wstring& name, const wstring& data)
+	{
+		return make_shared<ushort_value>(name, (unsigned short)atoi(converter::to_string(data).c_str()));
+	}
+	
+	shared_ptr<value> value_container::set_int(const wstring& name, const wstring& data)
+	{
+		return make_shared<int_value>(name, (int)atoi(converter::to_string(data).c_str()));
+	}
+
+	shared_ptr<value> value_container::set_uint(const wstring& name, const wstring& data)
+	{
+		return make_shared<uint_value>(name, (unsigned int)atoi(converter::to_string(data).c_str()));
+	}
+	
+	shared_ptr<value> value_container::set_long(const wstring& name, const wstring& data)
+	{
+		return make_shared<long_value>(name, (long)atol(converter::to_string(data).c_str()));
+	}
+	
+	shared_ptr<value> value_container::set_ulong(const wstring& name, const wstring& data)
+	{
+		return make_shared<ulong_value>(name, (unsigned long)atol(converter::to_string(data).c_str()));
+	}
+	
+	shared_ptr<value> value_container::set_llong(const wstring& name, const wstring& data)
+	{
+		return make_shared<llong_value>(name, (long long)atoll(converter::to_string(data).c_str()));
+	}
+	
+	shared_ptr<value> value_container::set_ullong(const wstring& name, const wstring& data)
+	{
+		return make_shared<ullong_value>(name, (unsigned long long)atoll(converter::to_string(data).c_str()));
+	}
+	
+	shared_ptr<value> value_container::set_float(const wstring& name, const wstring& data)
+	{
+		return make_shared<float_value>(name, (float)atof(converter::to_string(data).c_str()));
+	}
+
+	shared_ptr<value> value_container::set_double(const wstring& name, const wstring& data)
+	{
+		return make_shared<double_value>(name, (double)atof(converter::to_string(data).c_str()));
+	}
+	
+	shared_ptr<value> value_container::set_bytes(const wstring& name, const wstring& data)
+	{
+		return make_shared<bytes_value>(name, converter::from_base64(data.c_str()));
+	}
+
+	shared_ptr<value> value_container::set_string(const wstring& name, const wstring& data)
+	{
+		return make_shared<string_value>(name, data);
+	}
+
+	shared_ptr<value> value_container::set_container(const wstring& name, const wstring& data)
+	{
+		return make_shared<container_value>(name, (long)atol(converter::to_string(data).c_str()));
 	}
 }
 

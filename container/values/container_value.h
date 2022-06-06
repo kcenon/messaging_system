@@ -69,6 +69,25 @@ namespace container
 		float to_float(void) const override;
 		double to_double(void) const override;
 		wstring to_string(const bool& original = true) const override;
+
+	private:
+		shared_ptr<value> set_boolean(const wstring& name, const wstring& data);
+		shared_ptr<value> set_short(const wstring& name, const wstring& data);
+		shared_ptr<value> set_ushort(const wstring& name, const wstring& data);
+		shared_ptr<value> set_int(const wstring& name, const wstring& data);
+		shared_ptr<value> set_uint(const wstring& name, const wstring& data);
+		shared_ptr<value> set_long(const wstring& name, const wstring& data);
+		shared_ptr<value> set_ulong(const wstring& name, const wstring& data);
+		shared_ptr<value> set_llong(const wstring& name, const wstring& data);
+		shared_ptr<value> set_ullong(const wstring& name, const wstring& data);
+		shared_ptr<value> set_float(const wstring& name, const wstring& data);
+		shared_ptr<value> set_double(const wstring& name, const wstring& data);
+		shared_ptr<value> set_byte_string(const wstring& name, const wstring& data);
+		shared_ptr<value> set_string(const wstring& name, const wstring& data);
+		shared_ptr<value> set_container(const wstring& name, const wstring& data);
+
+	private:
+		map<value_types, function<shared_ptr<value>(const wstring&, const wstring&)>> _data_type_map;
 	};
 }
 
