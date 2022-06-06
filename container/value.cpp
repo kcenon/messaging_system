@@ -179,15 +179,8 @@ namespace container
 		{
 			return to_string();
 		}
-
-		wstring temp = to_string();
-
-		converter::replace(temp, L"</0x0A;>", L"\r");
-		converter::replace(temp, L"</0x0B;>", L"\n");
-		converter::replace(temp, L"</0x0C;>", L" ");
-		converter::replace(temp, L"</0x0D;>", L"\t");
-
-		return temp;
+		
+		return convert_specific_string(_data);
 	}
 
 	size_t value::size(void) const
@@ -392,6 +385,27 @@ namespace container
 		out = other->serialize();
 
 		return out;
+	}
+
+	wstring value::convert_specific_string(const vector<unsigned char>& data) const
+	{
+		wstring temp = converter::to_wstring(data);
+		converter::replace(temp, L"</0x0A;>", L"\r");
+		converter::replace(temp, L"</0x0B;>", L"\n");
+		converter::replace(temp, L"</0x0C;>", L" ");
+		converter::replace(temp, L"</0x0D;>", L"\t");
+
+		return temp;
+	}
+
+	vector<unsigned char> value::convert_specific_string(wstring data) const
+	{
+		converter::replace(data, L"\r", L"</0x0A;>");
+		converter::replace(data, L"\n", L"</0x0B;>");
+		converter::replace(data, L" ", L"</0x0C;>");
+		converter::replace(data, L"\t", L"</0x0D;>");
+
+		return converter::to_array(data);
 	}
 
 	template <typename T> void value::set_data(T data)

@@ -128,6 +128,10 @@ namespace container
 		friend wstring& operator<<(wstring& out, shared_ptr<value> other);
 
 	protected:
+		wstring convert_specific_string(const vector<unsigned char>& data) const;
+		vector<unsigned char> convert_specific_string(wstring data) const;
+
+	protected:
 		template <typename T> void set_data(T data);
 		void set_byte_string(const wstring& data);
 		void set_string(const wstring& data);
