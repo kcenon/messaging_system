@@ -11,6 +11,7 @@
         "cstdlib": "cpp",
         "mutex": "cpp",
         "regex": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "exception": "cpp"
     }
 }
