@@ -58,7 +58,7 @@ namespace threads
 
 	public:
 		void start(void);
-		void stop(const bool& ignore_contained_job = true);
+		void stop(void);
 
 	public:
 		const priorities priority(void);
@@ -75,12 +75,11 @@ namespace threads
 
 	private:
 		atomic<bool> _thread_stop{ false };
-		atomic<bool> _ignore_contained_job{ false };
 
 	private:
 		priorities _priority;
 		vector<priorities> _others;
-		shared_ptr<job_pool> _job_pool;
+		weak_ptr<job_pool> _job_pool;
 
 	private:
 		mutex _mutex;

@@ -94,7 +94,12 @@ namespace threads
 
 		if (_job_pool != nullptr)
 		{
-			_job_pool->set_push_lock(!ignore_contained_job);
+			_job_pool->set_push_lock(true);
+
+			if (ignore_contained_job)
+			{
+				_job_pool.reset();
+			}
 		}
 
 		for (auto& worker : _workers)
@@ -104,7 +109,7 @@ namespace threads
 				continue;
 			}
 
-			worker->stop(ignore_contained_job);
+			worker->stop();
 		}
 	}
 
