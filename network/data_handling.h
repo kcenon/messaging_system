@@ -34,16 +34,30 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "data_modes.h"
 #include "data_lengths.h"
+#include "thread_pool.h"
 
+#include <map>
+#include <memory>
 #include <vector>
+#include <functional>
 #include <system_error>
 
 #include "asio.hpp"
 
-using namespace std;
+#ifdef __USE_TYPE_CONTAINER__
+#include "container.h"
+#else
+#include "cpprest/json.h"
+#endif
 
 namespace network
 {
+	using namespace std;
+
+#ifndef __USE_TYPE_CONTAINER__
+	using namespace web;
+#endif
+
 	class data_handling
 	{
 	public:
@@ -68,10 +82,34 @@ namespace network
 		void append_binary_on_packet(vector<unsigned char>& result, const vector<unsigned char>& source);
 		vector<unsigned char> devide_binary_on_packet(const vector<unsigned char>& source, size_t& index);
 
+	protected:
+#ifndef __USE_TYPE_CONTAINER__
+		function<void(shared_ptr<json::value>)> _received_message;
+#else
+		function<void(shared_ptr<container::value_container>)> _received_message;
+#endif
+
+		function<void(const wstring&, const wstring&, const wstring&, const wstring&)> _received_file;
+		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)> _received_data;
+
+	protected:
+		shared_ptr<threads::thread_pool> _thread_pool;
+
+#ifndef __USE_TYPE_CONTAINER__
+		map<wstring, function<void(shared_ptr<json::value>)>> _message_handlers;
+#else
+		map<wstring, function<void(shared_ptr<container::value_container>)>> _message_handlers;
+#endif
+	protected:
+		bool _compress_mode;
+		bool _encrypt_mode;
+		wstring _key;
+		wstring _iv;
+
 	private:
 		char _start_code_tag[start_code];
 		char _end_code_tag[end_code];
 		char _receiving_buffer[buffer_size];
-		vector<unsigned char> _received_data;
+		vector<unsigned char> _received_data_vector;
 	};
 }

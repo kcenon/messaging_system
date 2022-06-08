@@ -43,6 +43,8 @@ namespace network
 	using namespace logging;
 
 	data_handling::data_handling(const unsigned char& start_code_value, const unsigned char& end_code_value)
+		: _key(L""), _iv(L""), _compress_mode(false), _encrypt_mode(false), _received_message(nullptr),
+		_thread_pool(nullptr), _received_file(nullptr), _received_data(nullptr)
 	{
 		memset(_start_code_tag, start_code_value, start_code);
 		memset(_end_code_tag, end_code_value, end_code);
@@ -63,7 +65,7 @@ namespace network
 			return;
 		}
 
-		_received_data.clear();
+		_received_data_vector.clear();
 
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, start_code),
 			[this, socket](error_code ec, size_t length)
@@ -220,7 +222,7 @@ namespace network
 						return;
 					}
 
-					_received_data.insert(_received_data.end(), _receiving_buffer, _receiving_buffer + length);
+					_received_data_vector.insert(_received_data_vector.end(), _receiving_buffer, _receiving_buffer + length);
 					memset(_receiving_buffer, 0, buffer_size);
 
 					read_data(packet_mode, remained_length - length, socket);
@@ -240,7 +242,7 @@ namespace network
 					return;
 				}
 
-				_received_data.insert(_received_data.end(), _receiving_buffer, _receiving_buffer + length);
+				_received_data_vector.insert(_received_data_vector.end(), _receiving_buffer, _receiving_buffer + length);
 				memset(_receiving_buffer, 0, buffer_size);
 
 				read_data(packet_mode, 0, socket);
@@ -293,8 +295,8 @@ namespace network
 					return;
 				}
 
-				receive_on_tcp(packet_mode, _received_data);
-				_received_data.clear();
+				receive_on_tcp(packet_mode, _received_data_vector);
+				_received_data_vector.clear();
 
 				memset(_receiving_buffer, 0, buffer_size);
 

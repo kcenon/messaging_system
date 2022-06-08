@@ -49,10 +49,11 @@ namespace network
 	using namespace threads;
 	using namespace converting;
 
-	messaging_server::messaging_server(const wstring& source_id)
+	messaging_server::messaging_server(const wstring& source_id, const unsigned char& start_code_value, const unsigned char& end_code_value)
 		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), _encrypt_mode(false),
 		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _compress_mode(false),
-		_high_priority(8), _normal_priority(8), _low_priority(8), _session_limit_count(0), _possible_session_types({ session_types::binary_line })
+		_high_priority(8), _normal_priority(8), _low_priority(8), _session_limit_count(0), _possible_session_types({ session_types::binary_line }),
+		_start_code_value(start_code_value), _end_code_value(end_code_value)
 	{
 	}
 
@@ -356,7 +357,8 @@ namespace network
 				logger::handle().write(logging_level::information, fmt::format(L"accepted new client: {}:{}", 
 					converter::to_wstring(socket.remote_endpoint().address().to_string()), socket.remote_endpoint().port()));
 
-				shared_ptr<messaging_session> session = make_shared<messaging_session>(_source_id, _connection_key, socket);
+				shared_ptr<messaging_session> session = make_shared<messaging_session>(
+					_source_id, _connection_key, socket, _start_code_value, _end_code_value);
 				if (session == nullptr)
 				{
 					wait_connection();

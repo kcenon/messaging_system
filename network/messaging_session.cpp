@@ -67,10 +67,11 @@ namespace network
 	using namespace compressing;
 	using namespace file_handler;
 
-	messaging_session::messaging_session(const wstring& source_id, const wstring& connection_key, asio::ip::tcp::socket& socket)
-		: data_handling(246, 135), _confirm(session_conditions::waiting), _compress_mode(false), _encrypt_mode(false), _bridge_line(false), _received_message(nullptr),
-		_key(L""), _iv(L""), _thread_pool(nullptr), _source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), 
-		_connection_key(connection_key), _received_file(nullptr), _received_data(nullptr), _connection(nullptr), _kill_code(false),
+	messaging_session::messaging_session(const wstring& source_id, const wstring& connection_key, asio::ip::tcp::socket& socket,
+		const unsigned char& start_code_value, const unsigned char& end_code_value)
+		: data_handling(start_code_value, end_code_value), _confirm(session_conditions::waiting), _bridge_line(false),
+		_source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), 
+		_connection_key(connection_key), _connection(nullptr), _kill_code(false),
 		_socket(make_shared<asio::ip::tcp::socket>(move(socket))), _auto_echo_interval_seconds(1), _auto_echo(false)
 	{
 		_socket->set_option(asio::ip::tcp::no_delay(true));

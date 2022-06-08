@@ -63,7 +63,7 @@ namespace network
 	class messaging_server : public enable_shared_from_this<messaging_server>
 	{
 	public:
-		messaging_server(const wstring& source_id);
+		messaging_server(const wstring& source_id, const unsigned char& start_code_value = 231, const unsigned char& end_code_value = 67);
 		~messaging_server(void);
 
 	public:
@@ -139,6 +139,10 @@ namespace network
 		vector<wstring> _ignore_target_ids;
 		vector<wstring> _ignore_snipping_targets;
 		vector<session_types> _possible_session_types;
+
+	private:
+		unsigned char _start_code_value;
+		unsigned char _end_code_value;
 
 	private:
 		shared_ptr<thread> _thread;

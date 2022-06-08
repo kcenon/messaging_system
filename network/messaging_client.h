@@ -62,7 +62,7 @@ namespace network
 	class messaging_client : public enable_shared_from_this<messaging_client>, data_handling
 	{
 	public:
-		messaging_client(const wstring& source_id);
+		messaging_client(const wstring& source_id, const unsigned char& start_code_value = 231, const unsigned char& end_code_value = 67);
 		~messaging_client(void);
 
 	public:
@@ -191,35 +191,11 @@ namespace network
 		vector<wstring> _snipping_targets;
 
 	private:
-		bool _compress_mode;
-		bool _encrypt_mode;
-		wstring _key;
-		wstring _iv;
-
-	private:
 		function<void(const wstring&, const wstring&, const bool&)> _connection;
-
-#ifndef __USE_TYPE_CONTAINER__
-		function<void(shared_ptr<json::value>)> _received_message;
-#else
-		function<void(shared_ptr<container::value_container>)> _received_message;
-#endif
-
-		function<void(const wstring&, const wstring&, const wstring&, const wstring&)> _received_file;
-		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)> _received_data;
 
 	private:
 		shared_ptr<thread> _thread;
-		shared_ptr<asio::io_context> _io_context;
 		shared_ptr<asio::ip::tcp::socket> _socket;
-
-	private:
-		shared_ptr<threads::thread_pool> _thread_pool;
-
-#ifndef __USE_TYPE_CONTAINER__
-		map<wstring, function<void(shared_ptr<json::value>)>> _message_handlers;
-#else
-		map<wstring, function<void(shared_ptr<container::value_container>)>> _message_handlers;
-#endif
+		shared_ptr<asio::io_context> _io_context;
 	};
 }
