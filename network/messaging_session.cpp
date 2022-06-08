@@ -818,8 +818,7 @@ namespace network
 
 		message << make_shared<bool_value>(L"response", true);
 
-		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), 
-			bind(&messaging_session::send_packet, this, placeholders::_1)));
+		send_packer_job(converter::to_array(message->serialize()));
 #else
 		if (!(*message)[DATA][RESPONSE].is_null())
 		{
@@ -842,8 +841,7 @@ namespace network
 		(*container)[DATA] = (*message)[DATA];
 		(*container)[DATA][RESPONSE] = json::value::boolean(true);
 
-		_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), 
-			bind(&messaging_session::send_packet, this, placeholders::_1)));
+		send_packer_job(converter::to_array(container->serialize()));
 #endif
 	}
 

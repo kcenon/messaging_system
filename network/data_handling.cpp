@@ -79,6 +79,8 @@ namespace network
 
 		_received_data_vector.clear();
 
+		logger::handle().write(logging_level::parameter, L"attempt to read start code");
+
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, start_code),
 			[this, socket](error_code ec, size_t length)
 			{
@@ -111,6 +113,8 @@ namespace network
 
 					return;
 				}
+				
+				logger::handle().write(logging_level::parameter, L"read start code");
 
 				memset(_receiving_buffer, 0, buffer_size);
 
@@ -146,6 +150,8 @@ namespace network
 
 					return;
 				}
+				
+				logger::handle().write(logging_level::parameter, L"read packet code");
 
 				data_modes mode = (data_modes)_receiving_buffer[0];
 				memset(_receiving_buffer, 0, buffer_size);
@@ -184,6 +190,8 @@ namespace network
 
 					return;
 				}
+				
+				logger::handle().write(logging_level::parameter, L"read length code");
 
 				unsigned int target_length = 0;
 				memcpy(&target_length, _receiving_buffer, length);
@@ -253,6 +261,8 @@ namespace network
 
 					return;
 				}
+				
+				logger::handle().write(logging_level::parameter, L"read data");
 
 				_received_data_vector.insert(_received_data_vector.end(), _receiving_buffer, _receiving_buffer + length);
 				memset(_receiving_buffer, 0, buffer_size);
@@ -286,6 +296,8 @@ namespace network
 
 				if (length != end_code)
 				{
+					logger::handle().write(logging_level::parameter, L"drop read data");
+
 					memset(_receiving_buffer, 0, buffer_size);
 
 					read_start_code(socket);
@@ -299,6 +311,8 @@ namespace network
 					{
 						continue;
 					}
+				
+					logger::handle().write(logging_level::parameter, L"drop read data");
 
 					memset(_receiving_buffer, 0, buffer_size);
 
@@ -306,6 +320,8 @@ namespace network
 
 					return;
 				}
+				
+				logger::handle().write(logging_level::parameter, L"read end code");
 
 				receive_on_tcp(packet_mode, _received_data_vector);
 				_received_data_vector.clear();
@@ -342,6 +358,8 @@ namespace network
 			return false;
 		}
 
+		logger::handle().write(logging_level::parameter, L"sent start code");
+
 		sended_size = current_socket->send(asio::buffer(&data_mode, mode_code));
 		if (sended_size != sizeof(unsigned char))
 		{
@@ -350,6 +368,8 @@ namespace network
 			current_socket.reset();
 			return false;
 		}
+
+		logger::handle().write(logging_level::parameter, L"sent data type code");
 
 		unsigned int length = (unsigned int)data.size();
 		sended_size = current_socket->send(asio::buffer(&length, length_code));
@@ -361,6 +381,8 @@ namespace network
 			return false;
 		}
 
+		logger::handle().write(logging_level::parameter, L"sent length code");
+
 		sended_size = current_socket->send(asio::buffer(data.data(), data.size()));
 		if (sended_size != data.size())
 		{
@@ -370,6 +392,8 @@ namespace network
 			return false;
 		}
 
+		logger::handle().write(logging_level::parameter, L"sent data");
+
 		sended_size = current_socket->send(asio::buffer(_end_code_tag, end_code));
 		if (sended_size != 4)
 		{
@@ -378,6 +402,8 @@ namespace network
 			current_socket.reset();
 			return false;
 		}
+
+		logger::handle().write(logging_level::parameter, L"sent end code");
 
 		current_socket.reset();
 

@@ -485,7 +485,7 @@ namespace network
 		});
 #endif
 
-		send(container);
+		send_packer_job(converter::to_array(container->serialize()), true);
 	}
 
 	void messaging_client::disconnected(void)
