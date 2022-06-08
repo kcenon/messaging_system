@@ -153,12 +153,12 @@ namespace network
 
 	private:
 #ifndef __USE_TYPE_CONTAINER__
-		void normal_message(shared_ptr<json::value> message);
+		void normal_message(shared_ptr<json::value> message) override;
 		void connection_message(shared_ptr<json::value> message);
 		void request_files(shared_ptr<json::value> message);
 		void echo_message(shared_ptr<json::value> message);
 #else
-		void normal_message(shared_ptr<container::value_container> message);
+		void normal_message(shared_ptr<container::value_container> message) override;
 		void connection_message(shared_ptr<container::value_container> message);
 		void request_files(shared_ptr<container::value_container> message);
 		void echo_message(shared_ptr<container::value_container> message);

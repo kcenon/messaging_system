@@ -77,7 +77,12 @@ namespace network
 
 	protected:
 		virtual void disconnected(void) = 0;
-
+		
+#ifndef __USE_TYPE_CONTAINER__
+		virtual void normal_message(shared_ptr<json::value> message) = 0;
+#else
+		virtual void normal_message(shared_ptr<container::value_container> message) = 0;
+#endif
 	protected:
 		void append_binary_on_packet(vector<unsigned char>& result, const vector<unsigned char>& source);
 		vector<unsigned char> devide_binary_on_packet(const vector<unsigned char>& source, size_t& index);
@@ -100,6 +105,7 @@ namespace network
 #else
 		map<wstring, function<void(shared_ptr<container::value_container>)>> _message_handlers;
 #endif
+
 	protected:
 		bool _compress_mode;
 		bool _encrypt_mode;
