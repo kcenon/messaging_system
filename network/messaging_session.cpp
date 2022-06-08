@@ -729,21 +729,7 @@ namespace network
 		});
 #endif
 
-		if (_compress_mode)
-		{
-			_thread_pool->push(make_shared<job>(priorities::high, compressor::compression(converter::to_array(container->serialize())), 
-				bind(&messaging_session::send_packet, this, placeholders::_1)));
-
-			if (_connection)
-			{
-				_connection(get_ptr(), true);
-			}
-
-			return;
-		}
-
-		_thread_pool->push(make_shared<job>(priorities::top, converter::to_array(container->serialize()), 
-			bind(&messaging_session::send_packet, this, placeholders::_1)));
+		send_packer_job(converter::to_array(container->serialize()), true);
 
 		if (_connection)
 		{

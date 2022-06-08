@@ -399,9 +399,9 @@ namespace network
 		}
 	}
 
-	void data_handling::send_packer_job(const vector<unsigned char>& data)
+	void data_handling::send_packer_job(const vector<unsigned char>& data, const bool& ignored_encryption)
 	{
-		if (_compress_mode)
+		if (_compress_mode && !ignored_encryption)
 		{
 			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::compress_packet, this, placeholders::_1)));
 
