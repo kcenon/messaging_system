@@ -186,10 +186,10 @@ namespace network
 		_target_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
 
-		_thread = make_shared<thread>(bind(&messaging_client::run, this));
-
 		read_start_code(_socket);
 		send_connection();
+
+		_thread = make_shared<thread>(bind(&messaging_client::run, this));
 	}
 
 	void messaging_client::stop(void)
@@ -557,6 +557,8 @@ namespace network
 		{
 			return;
 		}
+		
+		logger::handle().write(logging_level::sequence, L"received confirm_message");
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
@@ -586,14 +588,18 @@ namespace network
 		_confirm = true;
 
 #ifndef __USE_TYPE_CONTAINER__
-#ifdef _WIN32
-		_key = (*message)[DATA][L"key"].as_string();
-		_iv = (*message)[DATA][L"iv"].as_string();
-#else
-		_key = converter::to_wstring((*message)[DATA]["key"].as_string());
-		_iv = converter::to_wstring((*message)[DATA]["iv"].as_string());
-#endif
 		_encrypt_mode = (*message)[DATA][ENCRYPT_MODE].as_bool();
+
+		if (_encrypt_mode)
+		{
+#ifdef _WIN32
+			_key = (*message)[DATA][L"key"].as_string();
+			_iv = (*message)[DATA][L"iv"].as_string();
+#else
+			_key = converter::to_wstring((*message)[DATA]["key"].as_string());
+			_iv = converter::to_wstring((*message)[DATA]["iv"].as_string());
+#endif
+		}
 
 		auto& snipping_targets = (*message)[DATA][SNIPPING_TARGETS].as_array();
 		for (int index = 0; index < snipping_targets.size(); ++index)
@@ -605,9 +611,13 @@ namespace network
 #endif
 		}
 #else
-		_key = message->get_value(L"key")->to_string();
-		_iv = message->get_value(L"iv")->to_string();
 		_encrypt_mode = message->get_value(L"encrypt_mode")->to_boolean();
+
+		if (_encrypt_mode)
+		{
+			_key = message->get_value(L"key")->to_string();
+			_iv = message->get_value(L"iv")->to_string();
+		}
 
 		vector<shared_ptr<value>> snipping_targets = message->get_value(L"snipping_targets")->children();
 		for (auto& snipping_target : snipping_targets)

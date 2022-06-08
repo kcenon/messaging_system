@@ -190,9 +190,9 @@ namespace network
 			_thread_pool->append(make_shared<thread_worker>(priorities::low, vector<priorities> { priorities::high, priorities::normal }), true);
 		}
 
-		_thread_pool->push(make_shared<job>(priorities::high, bind(&messaging_session::check_confirm_condition, this)));
-
 		read_start_code(_socket);
+
+		_thread_pool->push(make_shared<job>(priorities::high, bind(&messaging_session::check_confirm_condition, this)));
 
 		logger::handle().write(logging_level::information, fmt::format(L"started session: {}:{}", 
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port()));
@@ -561,7 +561,6 @@ namespace network
 		_auto_echo_interval_seconds = message->get_value(L"auto_echo_interval_seconds")->to_ushort();
 #endif
 
-
 		auto iter = find_if(_possible_session_types.begin(), _possible_session_types.end(), 
 			[&](const session_types& type) 
 			{
@@ -682,13 +681,19 @@ namespace network
 
 #ifdef _WIN32
 		(*container)[DATA][L"confirm"] = json::value::boolean(true);
-		(*container)[DATA][L"key"] = json::value::string(_target_sub_id);
-		(*container)[DATA][L"iv"] = json::value::string(_target_sub_id);
+		if (_encrypt_mode)
+		{
+			(*container)[DATA][L"key"] = json::value::string(_target_sub_id);
+			(*container)[DATA][L"iv"] = json::value::string(_target_sub_id);
+		}
 		(*container)[DATA][ENCRYPT_MODE] = json::value::boolean(_encrypt_mode);
 #else
 		(*container)[DATA]["confirm"] = json::value::boolean(true);
-		(*container)[DATA]["key"] = json::value::string(converter::to_string(_target_sub_id));
-		(*container)[DATA]["iv"] = json::value::string(converter::to_string(_target_sub_id));
+		if (_encrypt_mode)
+		{
+			(*container)[DATA]["key"] = json::value::string(converter::to_string(_target_sub_id));
+			(*container)[DATA]["iv"] = json::value::string(converter::to_string(_target_sub_id));
+		}
 		(*container)[DATA][ENCRYPT_MODE] = json::value::boolean(_encrypt_mode);
 #endif
 #else
@@ -719,14 +724,18 @@ namespace network
 			acceptable_snipping_targets->add(make_shared<container::string_value>(L"snipping_target", snipping_target->to_string()));
 		}
 
+		vector<shared_ptr<container::value>> temp;
+		temp.push_back(make_shared<container::bool_value>(L"confirm", true));
+		temp.push_back(make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode));
+		temp.push_back(acceptable_snipping_targets);
+		if (_encrypt_mode)
+		{
+			temp.push_back(make_shared<container::string_value>(L"key", _key));
+			temp.push_back(make_shared<container::string_value>(L"iv", _iv));
+		}
+
 		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, 
-			L"confirm_connection", vector<shared_ptr<container::value>> {
-			make_shared<container::bool_value>(L"confirm", true),
-				make_shared<container::string_value>(L"key", _key),
-				make_shared<container::string_value>(L"iv", _iv),
-				make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode),
-				acceptable_snipping_targets
-		});
+			L"confirm_connection", temp);
 #endif
 
 		send_packer_job(converter::to_array(container->serialize()), true);
