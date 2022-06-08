@@ -109,47 +109,16 @@ namespace network
 		void send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data);
 
 	protected:
-		void receive_on_tcp(const data_modes& data_mode, const vector<unsigned char>& data) override;
 		void disconnected(void) override;
 
 	protected:
 		bool check_confirm_condition(void);
 		bool contained_snipping_target(const wstring& snipping_target);
 
-		// packet
 	private:
-		void compress_packet(const vector<unsigned char>& data);
-		void encrypt_packet(const vector<unsigned char>& data);
-		void send_packet(const vector<unsigned char>& data);
-
-	private:
-		void decompress_packet(const vector<unsigned char>& data);
-		void decrypt_packet(const vector<unsigned char>& data);
-		void receive_packet(const vector<unsigned char>& data);
-
-		// file
-	private:
-		void load_file_packet(const vector<unsigned char>& data);
-		void compress_file_packet(const vector<unsigned char>& data);
-		void encrypt_file_packet(const vector<unsigned char>& data);
-		void send_file_packet(const vector<unsigned char>& data);
-
-	private:
-		void decompress_file_packet(const vector<unsigned char>& data);
-		void decrypt_file_packet(const vector<unsigned char>& data);
-		void receive_file_packet(const vector<unsigned char>& data);
-		void notify_file_packet(const vector<unsigned char>& data);
-
-		// binary
-	private:
-		void compress_binary_packet(const vector<unsigned char>& data);
-		void encrypt_binary_packet(const vector<unsigned char>& data);
-		void send_binary_packet(const vector<unsigned char>& data);
-
-	private:
-		void decompress_binary_packet(const vector<unsigned char>& data);
-		void decrypt_binary_packet(const vector<unsigned char>& data);
-		void receive_binary_packet(const vector<unsigned char>& data);
+		void send_packet(const vector<unsigned char>& data) override;
+		void send_file_packet(const vector<unsigned char>& data) override;
+		void send_binary_packet(const vector<unsigned char>& data) override;
 
 	private:
 #ifndef __USE_TYPE_CONTAINER__

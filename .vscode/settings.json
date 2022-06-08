@@ -12,6 +12,7 @@
         "mutex": "cpp",
         "regex": "cpp",
         "iosfwd": "cpp",
-        "exception": "cpp"
+        "exception": "cpp",
+        "__locale": "cpp"
     }
 }

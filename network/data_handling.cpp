@@ -32,15 +32,27 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "data_handling.h"
 
+#include "job.h"
 #include "logging.h"
+#include "converting.h"
+#include "encrypting.h"
+#include "compressing.h"
+#include "file_handler.h"
+#include "constexpr_string.h"
 
 #include <utility>
 
+#include "fmt/xchar.h"
 #include "fmt/format.h"
 
 namespace network
 {
 	using namespace logging;
+	using namespace threads;
+	using namespace converting;
+	using namespace encrypting;
+	using namespace compressing;
+	using namespace file_handler;
 
 	data_handling::data_handling(const unsigned char& start_code_value, const unsigned char& end_code_value)
 		: _key(L""), _iv(L""), _compress_mode(false), _encrypt_mode(false), _received_message(nullptr),
@@ -370,6 +382,442 @@ namespace network
 		current_socket.reset();
 
 		return true;
+	}
+	
+	void data_handling::receive_on_tcp(const data_modes& data_mode, const vector<unsigned char>& data)
+	{
+		switch (data_mode)
+		{
+		case data_modes::packet_mode:
+			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decrypt_packet, this, placeholders::_1)));
+			break;
+		case data_modes::file_mode:
+			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decrypt_file_packet, this, placeholders::_1)));
+			break;
+		default:
+			break;
+		}
+	}
+
+	void data_handling::send_packer_job(const vector<unsigned char>& data)
+	{
+		if (_compress_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::compress_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::encrypt_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::top, data, bind(&data_handling::send_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::send_file_job(const vector<unsigned char>& data)
+	{
+		_thread_pool->push(make_shared<job>(priorities::low, data, 
+				bind(&data_handling::load_file_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::send_binary_job(const vector<unsigned char>& data)
+	{
+		if (_compress_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::compress_binary_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::encrypt_binary_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::top, data, bind(&data_handling::send_binary_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::compress_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, compressor::compression(data), bind(&data_handling::encrypt_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data), bind(&data_handling::send_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::encrypt_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&data_handling::send_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::decompress_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (_compress_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, compressor::decompression(data), bind(&data_handling::receive_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::receive_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::decrypt_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), bind(&data_handling::decompress_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decompress_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::receive_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+#ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
+#else
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));
+#endif
+#else
+		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
+#endif
+		if (message == nullptr)
+		{
+			return;
+		}
+
+#ifdef __USE_TYPE_CONTAINER__
+		logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
+#else
+#ifdef _WIN32
+		logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
+#else
+		logger::handle().write(logging_level::packet, converter::to_wstring(fmt::format("received: {}", message->serialize())));
+#endif
+#endif
+
+#ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
+		auto target = _message_handlers.find((*message)[HEADER][MESSAGE_TYPE].as_string());
+#else
+		auto target = _message_handlers.find(converter::to_wstring((*message)[HEADER][MESSAGE_TYPE].as_string()));
+#endif
+#else
+		auto target = _message_handlers.find(message->message_type());
+#endif
+		if (target == _message_handlers.end())
+		{
+			return normal_message(message);
+		}
+
+		target->second(message);
+	}
+
+	void data_handling::load_file_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+#ifndef __USE_TYPE_CONTAINER__
+		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));
+#else
+		shared_ptr<container::value_container> message = make_shared<container::value_container>(data);
+#endif
+		if (message == nullptr)
+		{
+			return;
+		}
+
+		vector<unsigned char> result;
+#ifndef __USE_TYPE_CONTAINER__
+		append_binary_on_packet(result, converter::to_array((*message)[DATA][INDICATION_ID].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[HEADER][SOURCE_ID].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[HEADER][SOURCE_SUB_ID].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[HEADER][TARGET_ID].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[HEADER][TARGET_SUB_ID].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[DATA][SOURCE].as_string()));
+		append_binary_on_packet(result, converter::to_array((*message)[DATA][TARGET].as_string()));
+#ifdef _WIN32
+		append_binary_on_packet(result, file::load((*message)[DATA][SOURCE].as_string()));
+
+		logger::handle().write(logging_level::parameter,
+			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)[DATA][INDICATION_ID].as_string(),
+				(*message)[HEADER][SOURCE_ID].as_string(), (*message)[HEADER][SOURCE_SUB_ID].as_string(),
+				(*message)[HEADER][TARGET_ID].as_string(), (*message)[HEADER][TARGET_SUB_ID].as_string()));
+#else
+		append_binary_on_packet(result, file::load(converter::to_wstring((*message)[DATA][SOURCE].as_string())));
+
+		logger::handle().write(logging_level::parameter,
+			converter::to_wstring(fmt::format("load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)[DATA][INDICATION_ID].as_string(),
+				(*message)[HEADER][SOURCE_ID].as_string(), (*message)[HEADER][SOURCE_SUB_ID].as_string(),
+				(*message)[HEADER][TARGET_ID].as_string(), (*message)[HEADER][TARGET_SUB_ID].as_string())));
+#endif
+#else
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
+		append_binary_on_packet(result, converter::to_array(message->source_id()));
+		append_binary_on_packet(result, converter::to_array(message->source_sub_id()));
+		append_binary_on_packet(result, converter::to_array(message->target_id()));
+		append_binary_on_packet(result, converter::to_array(message->target_sub_id()));
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
+		append_binary_on_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
+		append_binary_on_packet(result, file::load(message->get_value(L"source")->to_string()));
+
+		logger::handle().write(logging_level::parameter,
+			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", message->get_value(L"indication_id")->to_string(),
+				message->source_id(), message->source_sub_id(), message->target_id(), message->target_sub_id()));
+#endif
+
+		if (_compress_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, result, bind(&data_handling::compress_file_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, result, bind(&data_handling::encrypt_file_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::top, result, bind(&data_handling::send_file_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::compress_file_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::high, compressor::compression(data), bind(&data_handling::encrypt_file_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data), bind(&data_handling::send_file_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::encrypt_file_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&data_handling::send_file_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::decompress_file_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (_compress_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::low, compressor::decompression(data), bind(&data_handling::receive_file_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::low , data, bind(&data_handling::receive_file_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::decrypt_file_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, encryptor::decryption(data, _key, _iv), bind(&data_handling::decompress_file_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::decompress_file_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::receive_file_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		size_t index = 0;
+		wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring source_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring source_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring source_path = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
+
+		logger::handle().write(logging_level::parameter,
+			fmt::format(L"receive_file_packet: [{}] => [{}:{}] -> [{}:{}]", source_path, source_id, source_sub_id, target_id, target_sub_id));
+
+		vector<unsigned char> result;
+		append_binary_on_packet(result, converter::to_array(indication_id));
+		append_binary_on_packet(result, converter::to_array(target_id));
+		append_binary_on_packet(result, converter::to_array(target_sub_id));
+		if (file::save(target_path, devide_binary_on_packet(data, index)))
+		{
+			append_binary_on_packet(result, converter::to_array(target_path));
+		}
+		else
+		{
+			append_binary_on_packet(result, converter::to_array(L""));
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::high, result, bind(&data_handling::notify_file_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::notify_file_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		size_t index = 0;
+		wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
+
+		if (_received_file)
+		{
+			_received_file(target_id, target_sub_id, indication_id, target_path);
+		}
+	}
+
+	void data_handling::compress_binary_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, compressor::compression(data), bind(&data_handling::encrypt_binary_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data), bind(&data_handling::send_binary_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::encrypt_binary_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&data_handling::send_binary_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::decompress_binary_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (_compress_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, compressor::decompression(data), bind(&data_handling::receive_binary_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::receive_binary_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::decrypt_binary_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		if (_encrypt_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), bind(&data_handling::decompress_binary_packet, this, placeholders::_1)));
+
+			return;
+		}
+
+		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decompress_binary_packet, this, placeholders::_1)));
+	}
+
+	void data_handling::receive_binary_packet(const vector<unsigned char>& data)
+	{
+		if (data.empty())
+		{
+			return;
+		}
+
+		size_t index = 0;
+		wstring source_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring source_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
+		vector<unsigned char> target_data = devide_binary_on_packet(data, index);
+		if (_received_data)
+		{
+			_received_data(source_id, source_sub_id, target_id, target_sub_id, target_data);
+		}
 	}
 
 	void data_handling::append_binary_on_packet(vector<unsigned char>& result, const vector<unsigned char>& source)

@@ -73,16 +73,57 @@ namespace network
 
 	protected:
 		bool send_on_tcp(weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const vector<unsigned char>& data);
-		virtual void receive_on_tcp(const data_modes& data_mode, const vector<unsigned char>& data) = 0;
+		void receive_on_tcp(const data_modes& data_mode, const vector<unsigned char>& data);
 
 	protected:
 		virtual void disconnected(void) = 0;
-		
+
 #ifndef __USE_TYPE_CONTAINER__
 		virtual void normal_message(shared_ptr<json::value> message) = 0;
 #else
 		virtual void normal_message(shared_ptr<container::value_container> message) = 0;
 #endif
+
+	protected:
+		void send_packer_job(const vector<unsigned char>& data);
+		void send_file_job(const vector<unsigned char>& data);
+		void send_binary_job(const vector<unsigned char>& data);
+
+		// packet
+	protected:
+		void compress_packet(const vector<unsigned char>& data);
+		void encrypt_packet(const vector<unsigned char>& data);
+		virtual void send_packet(const vector<unsigned char>& data) = 0;
+
+	protected:
+		void decompress_packet(const vector<unsigned char>& data);
+		void decrypt_packet(const vector<unsigned char>& data);
+		void receive_packet(const vector<unsigned char>& data);
+
+		// file
+	protected:
+		void load_file_packet(const vector<unsigned char>& data);
+		void compress_file_packet(const vector<unsigned char>& data);
+		void encrypt_file_packet(const vector<unsigned char>& data);
+		virtual void send_file_packet(const vector<unsigned char>& data) = 0;
+
+	protected:
+		void decompress_file_packet(const vector<unsigned char>& data);
+		void decrypt_file_packet(const vector<unsigned char>& data);
+		void receive_file_packet(const vector<unsigned char>& data);
+		void notify_file_packet(const vector<unsigned char>& data);
+
+		// binary
+	protected:
+		void compress_binary_packet(const vector<unsigned char>& data);
+		void encrypt_binary_packet(const vector<unsigned char>& data);
+		virtual void send_binary_packet(const vector<unsigned char>& data) = 0;
+
+	protected:
+		void decompress_binary_packet(const vector<unsigned char>& data);
+		void decrypt_binary_packet(const vector<unsigned char>& data);
+		void receive_binary_packet(const vector<unsigned char>& data);
+
 	protected:
 		void append_binary_on_packet(vector<unsigned char>& result, const vector<unsigned char>& source);
 		vector<unsigned char> devide_binary_on_packet(const vector<unsigned char>& source, size_t& index);
