@@ -47,10 +47,8 @@ namespace threads
 	class job : public enable_shared_from_this<job>
 	{
 	public:
-		job(const priorities& priority);
-		job(const priorities& priority, const vector<unsigned char>& data);
 		job(const priorities& priority, const function<void(void)>& working_callback);
-		job(const priorities& priority, const vector<unsigned char>& data, const function<void(const vector<unsigned char>&)>& working_callback);
+		job(const priorities& priority, const vector<unsigned char>& data = {}, const function<void(const vector<unsigned char>&)>& working_callback = nullptr);
 		~job(void);
 
 	public:

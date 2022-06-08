@@ -53,16 +53,6 @@ namespace threads
 	using namespace file_handler;
 	using namespace folder_handler;
 
-	job::job(const priorities& priority)
-		: _priority(priority), _working_callback(nullptr), _working_callback2(nullptr), _temporary_stored_path(L"")
-	{
-	}
-
-	job::job(const priorities& priority, const vector<unsigned char>& data)
-		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(nullptr), _temporary_stored_path(L"")
-	{
-	}
-
 	job::job(const priorities& priority, const function<void(void)>& working_callback)
 		: _priority(priority), _working_callback(working_callback), _working_callback2(nullptr), _temporary_stored_path(L"")
 	{
