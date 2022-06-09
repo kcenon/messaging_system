@@ -759,14 +759,16 @@ namespace network
 			_confirm = false;
 		}
 
+		if(_connection == nullptr)
+		{
+			return;
+		}
+
 		// Need to find out more efficient way
-		thread thread([this](const bool& connection) 
+		thread thread([this](function<void(const wstring&, const wstring&, const bool&)> connection, const bool& condition) 
 			{
-				if (_connection)
-				{
-					_connection(_target_id, _target_sub_id, connection);
-				}
-			}, condition);
+				connection(_target_id, _target_sub_id, condition);
+			}, _connection, condition);
 		thread.detach();
 	}
 
