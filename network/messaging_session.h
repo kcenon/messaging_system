@@ -90,8 +90,9 @@ namespace network
 		const wstring target_sub_id(void);
 
 	public:
-		void start(const bool& encrypt_mode, const bool& compress_mode, const vector<session_types>& possible_session_types, 
-			const unsigned short& high_priority = 8, const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
+		void start(const bool& encrypt_mode, const bool& compress_mode, const unsigned short& compress_block_size, 
+			const vector<session_types>& possible_session_types, const unsigned short& high_priority = 8, 
+			const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
 		void stop(void);
 
 	public:

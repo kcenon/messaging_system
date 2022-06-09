@@ -72,6 +72,7 @@ namespace network
 	public:
 		void set_encrypt_mode(const bool& encrypt_mode);
 		void set_compress_mode(const bool& compress_mode);
+		void set_compress_block_size(const unsigned short& compress_block_size);
 		void set_connection_key(const wstring& connection_key);
 		void set_ignore_target_ids(const vector<wstring>& ignore_target_ids);
 		void set_ignore_snipping_targets(const vector<wstring>& ignore_snipping_targets);
@@ -130,6 +131,7 @@ namespace network
 	private:
 		bool _encrypt_mode;
 		bool _compress_mode;
+		unsigned short _compress_block_size;
 		wstring _source_id;
 		wstring _connection_key;
 		unsigned short _high_priority;

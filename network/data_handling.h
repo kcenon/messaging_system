@@ -149,6 +149,8 @@ namespace network
 
 	protected:
 		bool _compress_mode;
+		unsigned short _compress_block_size;
+
 		bool _encrypt_mode;
 		wstring _key;
 		wstring _iv;

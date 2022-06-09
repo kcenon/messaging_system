@@ -120,6 +120,11 @@ namespace network
 		_compress_mode = compress_mode;
 	}
 
+	void messaging_client::set_compress_block_size(const unsigned short& compress_block_size)
+	{
+		_compress_block_size = compress_block_size;
+	}
+
 	void messaging_client::set_session_types(const session_types& session_type)
 	{
 		_session_type = session_type;

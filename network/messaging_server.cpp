@@ -53,7 +53,7 @@ namespace network
 		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), _encrypt_mode(false),
 		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _compress_mode(false),
 		_high_priority(8), _normal_priority(8), _low_priority(8), _session_limit_count(0), _possible_session_types({ session_types::binary_line }),
-		_start_code_value(start_code_value), _end_code_value(end_code_value)
+		_start_code_value(start_code_value), _end_code_value(end_code_value), _compress_block_size(1024)
 	{
 	}
 
@@ -75,6 +75,11 @@ namespace network
 	void messaging_server::set_compress_mode(const bool& compress_mode)
 	{
 		_compress_mode = compress_mode;
+	}
+
+	void messaging_server::set_compress_block_size(const unsigned short& compress_block_size)
+	{
+		_compress_block_size = compress_block_size;
 	}
 
 	void messaging_server::set_connection_key(const wstring& connection_key)
@@ -378,7 +383,7 @@ namespace network
 				session->set_file_notification(_received_file);
 				session->set_binary_notification(bind(&messaging_server::received_binary, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4, placeholders::_5));
 
-				session->start(_encrypt_mode, _compress_mode, _possible_session_types, _high_priority, _normal_priority, _low_priority);
+				session->start(_encrypt_mode, _compress_mode, _compress_block_size, _possible_session_types, _high_priority, _normal_priority, _low_priority);
 
 				_sessions.push_back(session);
 
