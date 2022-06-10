@@ -14,5 +14,6 @@
         "iosfwd": "cpp",
         "exception": "cpp",
         "__locale": "cpp"
-    }
+    },
+    "files.eol": "\n"
 }
