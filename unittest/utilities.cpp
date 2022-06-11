@@ -72,6 +72,9 @@ TEST(encryptor, test)
 {
     auto key = encryptor::create_key();
 
+    EXPECT_TRUE(!key.first.empty());
+    EXPECT_TRUE(!key.second.empty());
+    
     auto encrypted = encryptor::encryption(converter::to_array(L"I am a programmer"), key.first, key.second);
     auto decrypted = converter::to_wstring(encryptor::decryption(encrypted, key.first, key.second));
 

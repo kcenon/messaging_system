@@ -192,7 +192,7 @@ namespace converting
 		}
 
 		string decoded;
-		StringSource(value.data(), true, new Base64Encoder(new StringSink(decoded)));
+		StringSource(value.data(), value.size(), true, new Base64Encoder(new StringSink(decoded)));
 
 		return to_wstring(decoded);
 	}
