@@ -56,7 +56,8 @@ namespace network
 
 	data_handling::data_handling(const unsigned char& start_code_value, const unsigned char& end_code_value)
 		: _key(L""), _iv(L""), _compress_mode(false), _encrypt_mode(false), _received_message(nullptr),
-		_thread_pool(nullptr), _received_file(nullptr), _received_data(nullptr), _compress_block_size(1024)
+		_thread_pool(nullptr), _received_file(nullptr), _received_data(nullptr), _compress_block_size(1024), 
+		_confirm(connection_conditions::waiting)
 	{
 		memset(_start_code_tag, start_code_value, start_code);
 		memset(_end_code_tag, end_code_value, end_code);
@@ -425,16 +426,16 @@ namespace network
 		}
 	}
 
-	void data_handling::send_packer_job(const vector<unsigned char>& data, const bool& ignored_encryption)
+	void data_handling::send_packer_job(const vector<unsigned char>& data)
 	{
-		if (_compress_mode && !ignored_encryption)
+		if (_compress_mode)
 		{
 			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::compress_packet, this, placeholders::_1)));
 
 			return;
 		}
 
-		if (_encrypt_mode)
+		if (_encrypt_mode && _confirm == connection_conditions::confirmed)
 		{
 			_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::encrypt_packet, this, placeholders::_1)));
 
@@ -526,7 +527,7 @@ namespace network
 			return;
 		}
 
-		if (_encrypt_mode)
+		if (_encrypt_mode && _confirm == connection_conditions::confirmed)
 		{
 			logger::handle().write(logging_level::parameter, L"attempt to decrypt a packet");
 

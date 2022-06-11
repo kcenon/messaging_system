@@ -34,10 +34,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace network
 {
-	enum class session_types : short
+	enum class connection_conditions : short
 	{
-		message_line = 1,
-		file_line = 2,
-		binary_line = 3
+		waiting = 1,
+		expired = 2,
+		confirmed = 3
 	};
 }

@@ -94,7 +94,7 @@ namespace network
 		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)>& notification);
 
 	public:
-		bool is_confirmed(void) const;
+		connection_conditions get_confirom_status(void) const;
 		void start(const wstring& ip, const unsigned short& port, const unsigned short& high_priority = 8, 
 			const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
 		void stop(void);
@@ -148,7 +148,6 @@ namespace network
 			const unsigned short& low_priority);
 
 	private:
-		bool _confirm;
 		bool _auto_echo;
 		bool _bridge_line;
 		session_types _session_type;

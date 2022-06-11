@@ -69,7 +69,7 @@ namespace network
 
 	messaging_session::messaging_session(const wstring& source_id, const wstring& connection_key, asio::ip::tcp::socket& socket,
 		const unsigned char& start_code_value, const unsigned char& end_code_value)
-		: data_handling(start_code_value, end_code_value), _confirm(session_conditions::waiting), _bridge_line(false),
+		: data_handling(start_code_value, end_code_value), _bridge_line(false),
 		_source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), 
 		_connection_key(connection_key), _connection(nullptr), _kill_code(false),
 		_socket(make_shared<asio::ip::tcp::socket>(move(socket))), _auto_echo_interval_seconds(1), _auto_echo(false)
@@ -146,7 +146,7 @@ namespace network
 		_received_data = notification;
 	}
 
-	const session_conditions messaging_session::get_confirom_status(void)
+	const connection_conditions messaging_session::get_confirom_status(void)
 	{
 		return _confirm;
 	}
@@ -457,12 +457,12 @@ namespace network
 	{
 		this_thread::sleep_for(chrono::seconds(1));
 
-		if (_confirm == session_conditions::confirmed)
+		if (_confirm == connection_conditions::confirmed)
 		{
 			return true;
 		}
 
-		_confirm = session_conditions::expired;
+		_confirm = connection_conditions::expired;
 
 		return true;
 	}
@@ -519,7 +519,7 @@ namespace network
 			return;
 		}
 
-		if (_confirm != session_conditions::confirmed)
+		if (_confirm != connection_conditions::confirmed)
 		{
 			return;
 		}
@@ -570,7 +570,7 @@ namespace network
 			});
 		if (iter == _possible_session_types.end())
 		{
-			_confirm = session_conditions::expired;
+			_confirm = connection_conditions::expired;
 			logger::handle().write(logging_level::error, L"expired this line = \"cannot accept unknown session type\"");
 
 			return;
@@ -578,7 +578,7 @@ namespace network
 
 		if (_source_id == _target_id)
 		{
-			_confirm = session_conditions::expired;
+			_confirm = connection_conditions::expired;
 			logger::handle().write(logging_level::error, L"expired this line = \"cannot use same id with server\"");
 
 			return;
@@ -589,7 +589,7 @@ namespace network
 			auto target = find(_ignore_target_ids.begin(), _ignore_target_ids.end(), _target_id);
 			if (target != _ignore_target_ids.end())
 			{
-				_confirm = session_conditions::expired;
+				_confirm = connection_conditions::expired;
 				logger::handle().write(logging_level::error, L"expired this line = \"cannot connect with ignored id on server\"");
 
 				return;
@@ -598,7 +598,7 @@ namespace network
 
 		if (_kill_code)
 		{
-			_confirm = session_conditions::expired;
+			_confirm = connection_conditions::expired;
 			logger::handle().write(logging_level::error, L"expired this line = \"set kill code\"");
 
 			return;
@@ -611,7 +611,7 @@ namespace network
 		if (!same_key_check(message->get_value(L"connection_key")))
 #endif
 		{
-			_confirm = session_conditions::expired;
+			_confirm = connection_conditions::expired;
 
 			return;
 		}
@@ -621,14 +621,12 @@ namespace network
 		// compare both session id an client id
 		if (!same_id_check())
 		{
-			_confirm = session_conditions::expired;
+			_confirm = connection_conditions::expired;
 
 			return;
 		}
 
 		logger::handle().write(logging_level::sequence, L"confirmed client id");
-
-		_confirm = session_conditions::confirmed;
 
 		generate_key();
 
@@ -740,7 +738,9 @@ namespace network
 			L"confirm_connection", temp);
 #endif
 
-		send_packer_job(converter::to_array(container->serialize()), true);
+		send_packer_job(converter::to_array(container->serialize()));
+
+		_confirm = connection_conditions::confirmed;
 
 		if (_connection)
 		{
@@ -759,7 +759,7 @@ namespace network
 			return;
 		}
 
-		if (_confirm != session_conditions::confirmed)
+		if (_confirm != connection_conditions::confirmed)
 		{
 			return;
 		}
@@ -811,7 +811,7 @@ namespace network
 			return;
 		}
 
-		if (_confirm != session_conditions::confirmed)
+		if (_confirm != connection_conditions::confirmed)
 		{
 			return;
 		}

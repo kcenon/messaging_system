@@ -405,7 +405,7 @@ namespace network
 				continue;
 			}
 
-			if (session->get_confirom_status() == session_conditions::expired)
+			if (session->get_confirom_status() == connection_conditions::expired)
 			{
 				connect_condition(session, false);
 			}

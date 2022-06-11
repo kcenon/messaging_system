@@ -42,6 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "data_handling.h"
 #include "session_types.h"
 #include "constexpr_string.h"
+#include "connection_conditions.h"
 
 #include <map>
 #include <memory>
@@ -84,7 +85,7 @@ namespace network
 		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)>& notification);
 
 	public:
-		const session_conditions get_confirom_status(void);
+		const connection_conditions get_confirom_status(void);
 		const session_types get_session_type(void);
 		const wstring target_id(void);
 		const wstring target_sub_id(void);
@@ -146,7 +147,6 @@ namespace network
 		bool same_id_check(void);
 
 	private:
-		session_conditions _confirm;
 		bool _kill_code;
 		bool _auto_echo;
 		bool _bridge_line;

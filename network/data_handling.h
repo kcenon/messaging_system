@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "data_modes.h"
 #include "data_lengths.h"
 #include "thread_pool.h"
+#include "connection_conditions.h"
 
 #include <map>
 #include <memory>
@@ -85,7 +86,7 @@ namespace network
 #endif
 
 	protected:
-		void send_packer_job(const vector<unsigned char>& data, const bool& ignored_encryption = false);
+		void send_packer_job(const vector<unsigned char>& data);
 		void send_file_job(const vector<unsigned char>& data);
 		void send_binary_job(const vector<unsigned char>& data);
 
@@ -148,6 +149,7 @@ namespace network
 #endif
 
 	protected:
+		connection_conditions _confirm;
 		bool _compress_mode;
 		unsigned short _compress_block_size;
 

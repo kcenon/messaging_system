@@ -73,7 +73,7 @@ namespace network
 	using namespace file_handler;
 
 	messaging_client::messaging_client(const wstring& source_id, const unsigned char& start_code_value, const unsigned char& end_code_value)
-		: data_handling(start_code_value, end_code_value), _confirm(false), _auto_echo(false), _bridge_line(false),
+		: data_handling(start_code_value, end_code_value), _auto_echo(false), _bridge_line(false),
 		_io_context(nullptr), _auto_echo_interval_seconds(1), _connection(nullptr),
 		_connection_key(L"connection_key"), _source_id(source_id), _source_sub_id(L""), 
 		_target_id(L"unknown"), _target_sub_id(L"0.0.0.0:0"), _socket(nullptr),
@@ -164,7 +164,7 @@ namespace network
 		_received_data = notification;
 	}
 
-	bool messaging_client::is_confirmed(void) const
+	connection_conditions messaging_client::get_confirom_status(void) const
 	{
 		return _confirm;
 	}
@@ -490,7 +490,7 @@ namespace network
 		});
 #endif
 
-		send_packer_job(converter::to_array(container->serialize()), true);
+		send_packer_job(converter::to_array(container->serialize()));
 	}
 
 	void messaging_client::disconnected(void)
@@ -541,7 +541,7 @@ namespace network
 			return;
 		}
 
-		if (!_confirm)
+		if (_confirm != connection_conditions::confirmed)
 		{
 			return;
 		}
@@ -590,7 +590,7 @@ namespace network
 			return;
 		}
 
-		_confirm = true;
+		_confirm = connection_conditions::confirmed;
 
 #ifndef __USE_TYPE_CONTAINER__
 		_encrypt_mode = (*message)[DATA][ENCRYPT_MODE].as_bool();
@@ -655,7 +655,7 @@ namespace network
 			return;
 		}
 
-		if (!_confirm)
+		if (_confirm != connection_conditions::confirmed)
 		{
 			return;
 		}
@@ -707,7 +707,7 @@ namespace network
 			return;
 		}
 
-		if (!_confirm)
+		if (_confirm != connection_conditions::confirmed)
 		{
 			return;
 		}
@@ -756,7 +756,7 @@ namespace network
 	{
 		if (!condition)
 		{
-			_confirm = false;
+			_confirm = connection_conditions::expired;
 		}
 
 		if(_connection == nullptr)
