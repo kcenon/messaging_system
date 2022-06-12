@@ -428,7 +428,7 @@ namespace network
 
 	void data_handling::send_packet_job(const vector<unsigned char>& data)
 	{
-		if (_encrypt_mode && _confirm == connection_conditions::confirmed)
+		if (_confirm == connection_conditions::confirmed)
 		{
 			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::encrypt_packet, this, placeholders::_1)));
 
@@ -508,7 +508,7 @@ namespace network
 			return;
 		}
 
-		if (!_compress_mode || _confirm != connection_conditions::confirmed)
+		if (!_compress_mode)
 		{
 			_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::decrypt_packet, this, placeholders::_1)));
 
@@ -527,7 +527,7 @@ namespace network
 			return;
 		}
 
-		if (!_encrypt_mode)
+		if (!_encrypt_mode || _confirm != connection_conditions::confirmed)
 		{
 			_thread_pool->push(make_shared<job>(priorities::low, data, bind(&data_handling::receive_packet, this, placeholders::_1)));	
 
