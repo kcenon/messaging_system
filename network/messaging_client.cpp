@@ -308,7 +308,7 @@ namespace network
 #endif
 #endif
 
-		send_packer_job(serialize_array);
+		send_packet_job(serialize_array);
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -490,7 +490,7 @@ namespace network
 		});
 #endif
 
-		send_packer_job(converter::to_array(container->serialize()));
+		send_packet_job(converter::to_array(container->serialize()));
 	}
 
 	void messaging_client::disconnected(void)

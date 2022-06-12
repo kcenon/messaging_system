@@ -416,7 +416,7 @@ namespace network
 		switch (data_mode)
 		{
 		case data_modes::packet_mode:
-			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decrypt_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decompress_packet, this, placeholders::_1)));
 			break;
 		case data_modes::file_mode:
 			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decrypt_file_packet, this, placeholders::_1)));
@@ -426,23 +426,16 @@ namespace network
 		}
 	}
 
-	void data_handling::send_packer_job(const vector<unsigned char>& data)
+	void data_handling::send_packet_job(const vector<unsigned char>& data)
 	{
-		if (_compress_mode)
-		{
-			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::compress_packet, this, placeholders::_1)));
-
-			return;
-		}
-
 		if (_encrypt_mode && _confirm == connection_conditions::confirmed)
 		{
-			_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::encrypt_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::encrypt_packet, this, placeholders::_1)));
 
 			return;
 		}
 
-		_thread_pool->push(make_shared<job>(priorities::top, data, bind(&data_handling::send_packet, this, placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::compress_packet, this, placeholders::_1)));
 	}
 
 	void data_handling::send_file_job(const vector<unsigned char>& data)
@@ -477,16 +470,16 @@ namespace network
 			return;
 		}
 			
-		logger::handle().write(logging_level::parameter, L"attempt to compress a packet");	
-
-		if (_encrypt_mode)
+		if (!_compress_mode)
 		{
-			_thread_pool->push(make_shared<job>(priorities::normal, compressor::compression(data, _compress_block_size), bind(&data_handling::encrypt_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::low, data, bind(&data_handling::send_packet, this, placeholders::_1)));
 
 			return;
 		}
 
-		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data, _compress_block_size), bind(&data_handling::send_packet, this, placeholders::_1)));
+		logger::handle().write(logging_level::parameter, L"attempt to compress a packet");
+
+		_thread_pool->push(make_shared<job>(priorities::low, compressor::compression(data, _compress_block_size), bind(&data_handling::send_packet, this, placeholders::_1)));
 	}
 
 	void data_handling::encrypt_packet(const vector<unsigned char>& data)
@@ -496,9 +489,16 @@ namespace network
 			return;
 		}
 			
+		if (!_encrypt_mode)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::compress_packet, this, placeholders::_1)));
+			
+			return;
+		}
+
 		logger::handle().write(logging_level::parameter, L"attempt to encrypt a packet");	
 
-		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&data_handling::send_packet, this, placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::normal, encryptor::encryption(data, _key, _iv), bind(&data_handling::compress_packet, this, placeholders::_1)));
 	}
 
 	void data_handling::decompress_packet(const vector<unsigned char>& data)
@@ -508,16 +508,16 @@ namespace network
 			return;
 		}
 
-		if (_compress_mode)
+		if (!_compress_mode || _confirm != connection_conditions::confirmed)
 		{
-			logger::handle().write(logging_level::parameter, L"attempt to decompress a packet");
-			
-			_thread_pool->push(make_shared<job>(priorities::normal, compressor::decompression(data, _compress_block_size), bind(&data_handling::receive_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::decrypt_packet, this, placeholders::_1)));
 
 			return;
 		}
 
-		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::receive_packet, this, placeholders::_1)));
+		logger::handle().write(logging_level::parameter, L"attempt to decompress a packet");
+			
+		_thread_pool->push(make_shared<job>(priorities::normal, compressor::decompression(data, _compress_block_size), bind(&data_handling::decrypt_packet, this, placeholders::_1)));
 	}
 
 	void data_handling::decrypt_packet(const vector<unsigned char>& data)
@@ -527,16 +527,16 @@ namespace network
 			return;
 		}
 
-		if (_encrypt_mode && _confirm == connection_conditions::confirmed)
+		if (!_encrypt_mode)
 		{
-			logger::handle().write(logging_level::parameter, L"attempt to decrypt a packet");
-
-			_thread_pool->push(make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), bind(&data_handling::decompress_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::low, data, bind(&data_handling::receive_packet, this, placeholders::_1)));	
 
 			return;
 		}
 
-		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decompress_packet, this, placeholders::_1)));
+		logger::handle().write(logging_level::parameter, L"attempt to decrypt a packet");
+
+		_thread_pool->push(make_shared<job>(priorities::low, encryptor::decryption(data, _key, _iv), bind(&data_handling::receive_packet, this, placeholders::_1)));		
 	}
 
 	void data_handling::receive_packet(const vector<unsigned char>& data)

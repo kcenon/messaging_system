@@ -86,7 +86,7 @@ namespace network
 #endif
 
 	protected:
-		void send_packer_job(const vector<unsigned char>& data);
+		void send_packet_job(const vector<unsigned char>& data);
 		void send_file_job(const vector<unsigned char>& data);
 		void send_binary_job(const vector<unsigned char>& data);
 

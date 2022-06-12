@@ -285,7 +285,7 @@ namespace network
 #endif
 #endif
 
-		send_packer_job(serialize_array);
+		send_packet_job(serialize_array);
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -738,7 +738,7 @@ namespace network
 			L"confirm_connection", temp);
 #endif
 
-		send_packer_job(converter::to_array(container->serialize()));
+		send_packet_job(converter::to_array(container->serialize()));
 
 		_confirm = connection_conditions::confirmed;
 
@@ -829,7 +829,7 @@ namespace network
 
 		message << make_shared<bool_value>(L"response", true);
 
-		send_packer_job(converter::to_array(message->serialize()));
+		send_packet_job(converter::to_array(message->serialize()));
 #else
 		if (!(*message)[DATA][RESPONSE].is_null())
 		{
