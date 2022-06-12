@@ -852,7 +852,7 @@ namespace network
 		(*container)[DATA] = (*message)[DATA];
 		(*container)[DATA][RESPONSE] = json::value::boolean(true);
 
-		send_packer_job(converter::to_array(container->serialize()));
+		send_packet_job(converter::to_array(container->serialize()));
 #endif
 	}
 
