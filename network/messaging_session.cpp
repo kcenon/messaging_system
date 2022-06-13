@@ -825,11 +825,10 @@ namespace network
 			return;
 		}
 
-		message->swap_header();
+		shared_ptr<container::value_container> container = message->copy(false);
+		container->swap_header();
 
-		message << make_shared<bool_value>(L"response", true);
-
-		send_packet_job(converter::to_array(message->serialize()));
+		container << make_shared<bool_value>(L"response", true);
 #else
 		if (!(*message)[DATA][RESPONSE].is_null())
 		{
@@ -851,9 +850,9 @@ namespace network
 
 		(*container)[DATA] = (*message)[DATA];
 		(*container)[DATA][RESPONSE] = json::value::boolean(true);
+#endif
 
 		send_packet_job(converter::to_array(container->serialize()));
-#endif
 	}
 
 	void messaging_session::generate_key(void)
