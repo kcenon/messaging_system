@@ -257,7 +257,7 @@ namespace compressing
 		auto folders = folder::get_folders(folder_path);
 		for (auto& folder : folders)
 		{
-			compression_folder(target_file, root_path, folder, contain_sub_folder);
+			compression_folder(target_file, root_path, folder, contain_sub_folder, block_bytes, file_header, compression_rule);
 		}
 
 		return true;
