@@ -202,6 +202,10 @@ namespace compressing
 		const bool& contain_sub_folder, const unsigned short& block_bytes, const wstring& file_header,
 		const function<void(vector<uint8_t>&, const wstring&, const vector<uint8_t>&)>& compression_rule)
 	{
+		logger::handle().write(logging_level::sequence,
+			fmt::format(L"attempt to compress folder: {} -> {}", root_path, target_file)
+		);
+
 		if(target_file.empty())
 		{
 			return false;
@@ -266,8 +270,16 @@ namespace compressing
 	bool compressor::decompression_folder(const wstring& source_path, const wstring& target_path, const unsigned short& block_bytes,
 		const wstring& file_header, const function<void(const vector<uint8_t>&, const wstring&, wstring&, vector<uint8_t>&)>& decompression_rule)
 	{
+		logger::handle().write(logging_level::sequence,
+			fmt::format(L"attempt to decompress folder: {} -> {}", source_path, target_path)
+		);
+
 		if (!folder::create_folder(target_path))
 		{
+			logger::handle().write(logging_level::sequence,
+				fmt::format(L"created folder: {}", target_path)
+			);
+
 			return false;
 		}
 
