@@ -115,6 +115,11 @@ namespace network
 		_bridge_line = bridge_line;
 	}
 
+	void messaging_client::set_encrypt_mode(const bool& encrypt_mode)
+	{
+		_encrypt_mode = encrypt_mode;
+	}
+
 	void messaging_client::set_compress_mode(const bool& compress_mode)
 	{
 		_compress_mode = compress_mode;

@@ -75,6 +75,7 @@ namespace network
 	public:
 		void set_auto_echo(const bool& auto_echo, const unsigned short& echo_interval);
 		void set_bridge_line(const bool& bridge_line);
+		void set_encrypt_mode(const bool& encrypt_mode);
 		void set_compress_mode(const bool& compress_mode);
 		void set_compress_block_size(const unsigned short& compress_block_size);
 		void set_session_types(const session_types& session_type);
