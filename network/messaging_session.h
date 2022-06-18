@@ -71,6 +71,7 @@ namespace network
 
 	public:
 		void set_kill_code(const bool& kill_code);
+		void set_acceptable_target_ids(const vector<wstring>& acceptable_target_ids);
 		void set_ignore_target_ids(const vector<wstring>& ignore_target_ids);
 		void set_ignore_snipping_targets(const vector<wstring>& ignore_snipping_targets);
 		void set_connection_notification(const function<void(shared_ptr<messaging_session>, const bool&)>& notification);
@@ -157,6 +158,7 @@ namespace network
 		wstring _target_sub_id;
 		wstring _connection_key;
 		vector<wstring> _snipping_targets;
+		vector<wstring> _acceptable_target_ids;
 		vector<wstring> _ignore_target_ids;
 		vector<wstring> _ignore_snipping_targets;
 		vector<session_types> _possible_session_types;

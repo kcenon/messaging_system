@@ -74,6 +74,7 @@ namespace network
 		void set_compress_mode(const bool& compress_mode);
 		void set_compress_block_size(const unsigned short& compress_block_size);
 		void set_connection_key(const wstring& connection_key);
+		void set_acceptable_target_ids(const vector<wstring>& acceptable_target_ids);
 		void set_ignore_target_ids(const vector<wstring>& ignore_target_ids);
 		void set_ignore_snipping_targets(const vector<wstring>& ignore_snipping_targets);
 		void set_possible_session_types(const vector<session_types>& possible_session_types);
@@ -138,6 +139,7 @@ namespace network
 		unsigned short _normal_priority;
 		unsigned short _low_priority;
 		size_t _session_limit_count;
+		vector<wstring> _acceptable_target_ids;
 		vector<wstring> _ignore_target_ids;
 		vector<wstring> _ignore_snipping_targets;
 		vector<session_types> _possible_session_types;

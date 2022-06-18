@@ -87,6 +87,11 @@ namespace network
 		_connection_key = connection_key;
 	}
 
+	void messaging_server::set_acceptable_target_ids(const vector<wstring>& acceptable_target_ids)
+	{
+		_acceptable_target_ids = acceptable_target_ids;
+	}
+
 	void messaging_server::set_ignore_target_ids(const vector<wstring>& ignore_target_ids)
 	{
 		_ignore_target_ids = ignore_target_ids;
@@ -376,6 +381,7 @@ namespace network
 					session->set_kill_code(_sessions.size() >= _session_limit_count);
 				}
 
+				session->set_acceptable_target_ids(_acceptable_target_ids);
 				session->set_ignore_target_ids(_ignore_target_ids);
 				session->set_ignore_snipping_targets(_ignore_snipping_targets);
 				session->set_connection_notification(bind(&messaging_server::connect_condition, this, placeholders::_1, placeholders::_2));

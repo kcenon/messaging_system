@@ -112,6 +112,11 @@ namespace network
 		_kill_code = kill_code;
 	}
 
+	void messaging_session::set_acceptable_target_ids(const vector<wstring>& acceptable_target_ids)
+	{
+		_acceptable_target_ids = acceptable_target_ids;
+	}
+
 	void messaging_session::set_ignore_target_ids(const vector<wstring>& ignore_target_ids)
 	{
 		_ignore_target_ids = ignore_target_ids;
@@ -582,6 +587,18 @@ namespace network
 			logger::handle().write(logging_level::error, L"expired this line = \"cannot use same id with server\"");
 
 			return;
+		}
+
+		if (!_acceptable_target_ids.empty())
+		{
+			auto target = find(_acceptable_target_ids.begin(), _acceptable_target_ids.end(), _target_id);
+			if (target == _acceptable_target_ids.end())
+			{
+				_confirm = connection_conditions::expired;
+				logger::handle().write(logging_level::error, L"expired this line = \"cannot connect with unknown id on server\"");
+
+				return;
+			}
 		}
 
 		if (!_ignore_target_ids.empty())
