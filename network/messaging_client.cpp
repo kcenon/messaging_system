@@ -552,9 +552,9 @@ namespace network
 			return;
 		}
 
-		if (_received_message)
+		if (_received_message != nullptr)
 		{
-			_received_message(message);
+			auto result = async(launch::async, _received_message, message);
 		}
 	}
 

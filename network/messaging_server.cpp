@@ -481,6 +481,12 @@ namespace network
 			return;
 		}
 
+		logger::handle().write(logging_level::sequence,
+			fmt::format(L"{} a client with manager: {}[{}]", 
+				condition ? L"connected" : L"disconnected",
+				target->target_id(), target->target_sub_id())
+    	);
+
 		if (!condition)
 		{
 			auto iter = find(_sessions.begin(), _sessions.end(), target);

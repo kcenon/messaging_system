@@ -73,8 +73,6 @@ namespace network
 		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
-			disconnected();
-
 			return;
 		}
 
@@ -87,6 +85,9 @@ namespace network
 			{
 				if (ec)
 				{
+					logger::handle().write(logging_level::error, 
+						fmt::format(L"cannot read start code: {}", converter::to_wstring(ec.message())));
+					
 					disconnected();
 
 					return;
@@ -128,8 +129,6 @@ namespace network
 		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
-			disconnected();
-
 			return;
 		}
 
@@ -138,6 +137,9 @@ namespace network
 			{
 				if (ec)
 				{
+					logger::handle().write(logging_level::error, 
+						fmt::format(L"cannot read packet code: {}", converter::to_wstring(ec.message())));
+
 					disconnected();
 
 					return;
@@ -166,8 +168,6 @@ namespace network
 		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
-			disconnected();
-
 			return;
 		}
 
@@ -178,6 +178,9 @@ namespace network
 			{
 				if (ec)
 				{
+					logger::handle().write(logging_level::error, 
+						fmt::format(L"cannot read length code: {}", converter::to_wstring(ec.message())));
+
 					disconnected();
 
 					return;
@@ -215,8 +218,6 @@ namespace network
 		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
-			disconnected();
-
 			return;
 		}
 
@@ -229,6 +230,9 @@ namespace network
 				{
 					if (ec)
 					{
+						logger::handle().write(logging_level::error, 
+							fmt::format(L"cannot read data: {}", converter::to_wstring(ec.message())));
+
 						disconnected();
 
 						return;
@@ -258,6 +262,9 @@ namespace network
 			{
 				if (ec)
 				{
+					logger::handle().write(logging_level::error, 
+						fmt::format(L"cannot read data: {}", converter::to_wstring(ec.message())));
+						
 					disconnected();
 
 					return;
@@ -278,8 +285,6 @@ namespace network
 		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
-			disconnected();
-
 			return;
 		}
 
@@ -290,6 +295,9 @@ namespace network
 			{
 				if (ec)
 				{
+					logger::handle().write(logging_level::error, 
+						fmt::format(L"cannot read end code: {}", converter::to_wstring(ec.message())));
+
 					disconnected();
 
 					return;
@@ -344,8 +352,6 @@ namespace network
 		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
 		if (current_socket == nullptr)
 		{
-			disconnected();
-
 			return false;
 		}
 

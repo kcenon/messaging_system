@@ -545,6 +545,8 @@ namespace network
 	{
 		if (message == nullptr)
 		{
+			logger::handle().write(logging_level::error, L"cannot parse connection message with empty message");
+
 			return;
 		}
 
@@ -883,6 +885,8 @@ namespace network
 
 			return;
 		}
+
+		logger::handle().write(logging_level::sequence, L"attempt to generate encrypt key");
 		
 		auto encrypt_key = encryptor::create_key();
 		_key = encrypt_key.first;
