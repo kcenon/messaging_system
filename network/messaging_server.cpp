@@ -163,9 +163,30 @@ namespace network
 						logger::handle().write(logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
 						break;
 					}
-					catch (const overflow_error&) { if (_io_context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with overflow error", _source_id)); _io_context->reset(); }
-					catch (const runtime_error&) { if (_io_context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with runtime error", _source_id)); _io_context->reset(); }
-					catch (const exception&) { if (_io_context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with exception", _source_id)); _io_context->reset(); }
+					catch (const overflow_error& e) 
+					{ 
+						if (_io_context == nullptr) { break; } 
+						logger::handle().write(logging_level::exception, 
+							fmt::format(L"break messaging_server({}) with overflow error: {}", 
+								_source_id, converter::to_wstring(e.what()))); 
+						_io_context->reset(); 
+					}
+					catch (const runtime_error& e) 
+					{ 
+						if (_io_context == nullptr) { break; } 
+						logger::handle().write(logging_level::exception, 
+							fmt::format(L"break messaging_server({}) with runtime error: {}", 
+								_source_id, converter::to_wstring(e.what()))); 
+						_io_context->reset(); 
+					}
+					catch (const exception& e) 
+					{ 
+						if (_io_context == nullptr) { break; } 
+						logger::handle().write(logging_level::exception, 
+							fmt::format(L"break messaging_server({}) with exception: {}", 
+								_source_id, converter::to_wstring(e.what()))); 
+						_io_context->reset(); 
+					}
 					catch (...) { if (_io_context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with error", _source_id)); _io_context->reset(); }
 				}
 			});

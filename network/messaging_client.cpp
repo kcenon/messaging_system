@@ -215,8 +215,8 @@ namespace network
 			if (_socket->is_open())
 			{
 				_socket->close();
-				_socket.reset();
 			}
+			_socket.reset();
 		}
 
 		if (_io_context != nullptr)
@@ -818,27 +818,35 @@ namespace network
 	{
 		try
 		{
-			logger::handle().write(logging_level::information, fmt::format(L"start messaging_client({})", _source_id));
+			logger::handle().write(logging_level::information, 
+				fmt::format(L"start messaging_client({})", _source_id));
 			_io_context->run();
 		}
-		catch (const overflow_error&) { 
+		catch (const overflow_error& e) { 
 			if (_io_context != nullptr) {
-				logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with overflow error", _source_id));
+				logger::handle().write(logging_level::exception, 
+					fmt::format(L"break messaging_client({}) with overflow error: {}", 
+						_source_id, converter::to_wstring(e.what())));
 			}
 		}
-		catch (const runtime_error&) { 
+		catch (const runtime_error& e) { 
 			if (_io_context != nullptr) {
-				logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with runtime error", _source_id));
+				logger::handle().write(logging_level::exception, 
+					fmt::format(L"break messaging_client({}) with runtime error: {}", 
+						_source_id, converter::to_wstring(e.what())));
 			}
 		}
-		catch (const exception&) { 
+		catch (const exception& e) { 
 			if (_io_context != nullptr) {
-				logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with exception", _source_id));
+				logger::handle().write(logging_level::exception, 
+					fmt::format(L"break messaging_client({}) with exception: {}", 
+						_source_id, converter::to_wstring(e.what())));
 			}
 		}
 		catch (...) { 
 			if (_io_context != nullptr) {
-				logger::handle().write(logging_level::exception, fmt::format(L"break messaging_client({}) with error", _source_id));
+				logger::handle().write(logging_level::exception, 
+					fmt::format(L"break messaging_client({}) with error", _source_id));
 			}
 		}
 
