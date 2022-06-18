@@ -73,7 +73,7 @@ namespace network
 		void set_encrypt_mode(const bool& encrypt_mode);
 		void set_compress_mode(const bool& compress_mode);
 		void set_compress_block_size(const unsigned short& compress_block_size);
-		void set_drop_connection_time(const unsigned short& compress_block_size);
+		void set_drop_connection_time(const unsigned short& drop_connection_time);
 		void set_connection_key(const wstring& connection_key);
 		void set_acceptable_target_ids(const vector<wstring>& acceptable_target_ids);
 		void set_ignore_target_ids(const vector<wstring>& ignore_target_ids);
