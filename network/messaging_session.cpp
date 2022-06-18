@@ -175,13 +175,14 @@ namespace network
 
 	void messaging_session::start(const bool& encrypt_mode, const bool& compress_mode, const unsigned short& compress_block_size, 
 		const vector<session_types>& possible_session_types, const unsigned short& high_priority, const unsigned short& normal_priority, 
-		const unsigned short& low_priority)
+		const unsigned short& low_priority, const unsigned short& drop_connection_time)
 	{
 		stop();
 
 		_encrypt_mode = encrypt_mode;
 		_compress_mode = compress_mode;
 		_compress_block_size = compress_block_size;
+		_drop_connection_time = drop_connection_time;
 		_possible_session_types = possible_session_types;
 		_thread_pool = make_shared<threads::thread_pool>();
 
@@ -462,7 +463,7 @@ namespace network
 
 	bool messaging_session::check_confirm_condition(void)
 	{
-		this_thread::sleep_for(chrono::seconds(1));
+		this_thread::sleep_for(chrono::seconds(_drop_connection_time));
 
 		if (_confirm == connection_conditions::confirmed)
 		{

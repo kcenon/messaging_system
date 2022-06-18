@@ -94,7 +94,7 @@ namespace network
 	public:
 		void start(const bool& encrypt_mode, const bool& compress_mode, const unsigned short& compress_block_size, 
 			const vector<session_types>& possible_session_types, const unsigned short& high_priority = 8, 
-			const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
+			const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8, const unsigned short& drop_connection_time = 1);
 		void stop(void);
 
 	public:
@@ -152,6 +152,7 @@ namespace network
 		bool _auto_echo;
 		bool _bridge_line;
 		session_types _session_type;
+		unsigned short _drop_connection_time;
 		wstring _source_id;
 		wstring _source_sub_id;
 		wstring _target_id;
