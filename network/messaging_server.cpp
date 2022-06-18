@@ -230,6 +230,28 @@ namespace network
 		}
 	}
 
+	void messaging_server::disconnect(const wstring& target_id, const wstring& target_sub_id)
+	{
+		vector<shared_ptr<messaging_session>>::iterator target = _sessions.begin();
+		while (target != _sessions.end())
+		{
+			if (*target == nullptr)
+			{
+				target++;
+				continue;
+			}
+
+			if ((*target)->target_id() != target_id ||
+				(*target)->target_sub_id() != target_sub_id)
+			{
+				target++;
+				continue;
+			}
+
+			target = _sessions.erase(target);
+		}
+	}
+
 	void messaging_server::echo(void)
 	{
 		for (auto& session : _sessions)

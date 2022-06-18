@@ -98,6 +98,9 @@ namespace network
 		void stop(void);
 
 	public:
+		void disconnect(const wstring& target_id, const wstring& target_sub_id);
+		
+	public:
 		void echo(void);
 
 #ifndef __USE_TYPE_CONTAINER__
