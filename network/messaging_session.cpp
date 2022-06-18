@@ -50,6 +50,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "data_lengths.h"
 #include "file_handler.h"
 
+#include <future>
+
 #include "fmt/xchar.h"
 #include "fmt/format.h"
 
@@ -452,9 +454,9 @@ namespace network
 	{
 		stop();
 
-		if (_connection)
+		if(_connection != nullptr)
 		{
-			_connection(get_ptr(), false);
+			auto result = async(launch::async, _connection, get_ptr(), false);
 		}
 	}
 
@@ -758,10 +760,10 @@ namespace network
 		send_packet_job(converter::to_array(container->serialize()));
 
 		_confirm = connection_conditions::confirmed;
-
-		if (_connection)
+		
+		if(_connection != nullptr)
 		{
-			_connection(get_ptr(), true);
+			auto result = async(launch::async, _connection, get_ptr(), true);
 		}
 	}
 

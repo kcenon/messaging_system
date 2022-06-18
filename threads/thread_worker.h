@@ -74,7 +74,7 @@ namespace threads
 		bool check_condition(void);
 
 	private:
-		atomic<bool> _thread_stop{ false };
+		bool _thread_stop;
 
 	private:
 		priorities _priority;

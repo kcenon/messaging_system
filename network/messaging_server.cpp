@@ -41,6 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "fmt/xchar.h"
 #include "fmt/format.h"
 
+#include <future>
 #include <algorithm>
 
 namespace network
@@ -194,15 +195,22 @@ namespace network
 
 	void messaging_server::wait_stop(const unsigned int& seconds)
 	{
-		_future_status = _promise_status.get_future();
+		if (!_promise_status.has_value())
+		{
+			_promise_status = { promise<bool>() };
+		}
+
+		_future_status = _promise_status.value().get_future();
 
 		if (seconds == 0)
 		{
 			_future_status.wait();
+			_promise_status.reset();
 			return;
 		}
 
 		_future_status.wait_for(chrono::seconds(seconds));
+		_promise_status.reset();
 	}
 
 	void messaging_server::stop(void)
@@ -221,7 +229,7 @@ namespace network
 				_acceptor.reset();
 			}
 		}
-
+		
 		for (auto& session : _sessions)
 		{
 			if (session == nullptr)
@@ -235,8 +243,6 @@ namespace network
 
 		if (_io_context != nullptr)
 		{
-			_promise_status.set_value(true);
-
 			_io_context->reset();
 			_io_context.reset();
 		}
@@ -248,6 +254,11 @@ namespace network
 				_thread->join();
 			}
 			_thread.reset();
+		}
+
+		if (_promise_status.has_value())
+		{
+			_promise_status.value().set_value(true);
 		}
 	}
 
@@ -479,14 +490,10 @@ namespace network
 			}
 		}
 
-		thread thread([this](const wstring& target_id, const wstring& target_sub_id, const bool& connection)
-			{
-				if (_connection)
-				{
-					_connection(target_id, target_sub_id, connection);
-				}
-			}, target->target_id(), target->target_sub_id(), condition);
-		thread.detach();
+		if(_connection != nullptr)
+		{
+			auto result = async(launch::async, _connection, target->target_id(), target->target_sub_id(), condition);
+		}
 	}
 
 #ifndef __USE_TYPE_CONTAINER__

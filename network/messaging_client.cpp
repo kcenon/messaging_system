@@ -53,6 +53,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "data_lengths.h"
 #include "file_handler.h"
 
+#include <future>
 #include <functional>
 
 #include "fmt/xchar.h"
@@ -764,17 +765,10 @@ namespace network
 			_confirm = connection_conditions::expired;
 		}
 
-		if(_connection == nullptr)
+		if(_connection != nullptr)
 		{
-			return;
+			auto result = async(launch::async, _connection, _target_id, _target_sub_id, condition);
 		}
-
-		// Need to find out more efficient way
-		thread thread([this](function<void(const wstring&, const wstring&, const bool&)> connection, const bool& condition) 
-			{
-				connection(_target_id, _target_sub_id, condition);
-			}, _connection, condition);
-		thread.detach();
 	}
 
 	bool messaging_client::create_socket(const wstring& ip, const unsigned short& port)

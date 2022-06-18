@@ -63,7 +63,7 @@ namespace threads
 	{
 		stop();
 
-		_thread_stop.store(false);
+		_thread_stop = false;
 		_thread = make_shared<thread>(&thread_worker::run, this);
 	}
 
@@ -74,18 +74,18 @@ namespace threads
 			return;
 		}
 
-		_thread_stop.store(true);
+		logger::handle().write(logging_level::parameter, 
+			fmt::format(L"attempt to stop working thread: priority - {}", (int)_priority));
 
-		_condition.notify_one();
-
-		if (_thread != nullptr)
+		if (_thread->joinable())
 		{
-			if (_thread->joinable())
-			{
-				_thread->join();
-			}
-			_thread.reset();
+			_thread_stop = true;
+			_condition.notify_one();
+
+			_thread->join();
 		}
+
+		_thread.reset();
 	}
 
 	const priorities thread_worker::priority(void)
@@ -115,7 +115,7 @@ namespace threads
 	{
 		logger::handle().write(logging_level::sequence, fmt::format(L"start working thread: priority - {}", (int)_priority));
 
-		while (!_thread_stop.load())
+		while (!_thread_stop)
 		{
 			unique_lock<mutex> unique(_mutex);
 			_condition.wait(unique, [this] { return check_condition(); });
@@ -123,10 +123,10 @@ namespace threads
 			auto jobs = _job_pool.lock();
 			if (jobs == nullptr)
 			{
-				continue;
+				break;
 			}
 
-			if (_thread_stop.load())
+			if (_thread_stop)
 			{
 				break;
 			}
@@ -135,7 +135,7 @@ namespace threads
 			jobs.reset();
 			unique.unlock();
 
-			if (current_job == nullptr && _thread_stop.load())
+			if (current_job == nullptr && _thread_stop)
 			{
 				break;
 			}
@@ -158,7 +158,7 @@ namespace threads
 
 	bool thread_worker::check_condition(void)
 	{
-		if (_thread_stop.load())
+		if (_thread_stop)
 		{
 			return true;
 		}

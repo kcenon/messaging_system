@@ -157,7 +157,7 @@ namespace network
 		shared_ptr<asio::ip::tcp::acceptor> _acceptor;
 
 	private:
-		promise<bool> _promise_status;
+		optional<promise<bool>> _promise_status;
 		future<bool> _future_status;
 		vector<shared_ptr<messaging_session>> _sessions;
 
