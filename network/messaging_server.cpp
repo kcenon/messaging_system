@@ -519,9 +519,30 @@ namespace network
 			return;
 		}
 
-		if (_received_message)
+#ifndef __USE_TYPE_CONTAINER__
+#ifdef _WIN32
+		auto target_id = (*message)[HEADER][SOURCE_ID].as_string();
+#else
+		auto target_id = converter::to_wstring((*message)[HEADER][SOURCE_ID].as_string());
+#endif
+#else
+		auto target_id = message->source_id();
+#endif
+
+		if (target_id != _source_id)
 		{
-			_received_message(message);
+			logger::handle().write(logging_level::sequence,
+				fmt::format(L"attempt to transfer message to {}", 
+					target_id));
+
+			send(message);
+
+			return;
+		}
+
+		if (_received_message != nullptr)
+		{
+			auto result = async(launch::async, _received_message, message);
 		}
 	}
 
