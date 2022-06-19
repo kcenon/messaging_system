@@ -202,8 +202,6 @@ namespace network
 
 		read_start_code(_socket);
 
-		_thread_pool->push(make_shared<job>(priorities::high, bind(&messaging_session::check_confirm_condition, this)));
-
 		logger::handle().write(logging_level::information, fmt::format(L"started session: {}:{}", 
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port()));
 	}
@@ -461,20 +459,6 @@ namespace network
 		}
 	}
 
-	bool messaging_session::check_confirm_condition(void)
-	{
-		this_thread::sleep_for(chrono::seconds(_drop_connection_time));
-
-		if (_confirm == connection_conditions::confirmed)
-		{
-			return true;
-		}
-
-		_confirm = connection_conditions::expired;
-
-		return true;
-	}
-
 	bool messaging_session::contained_snipping_target(const wstring& snipping_target)
 	{
 		auto target = find(_snipping_targets.begin(), _snipping_targets.end(), snipping_target);
@@ -534,7 +518,7 @@ namespace network
 
 		if (_received_message)
 		{
-			_received_message(message);
+			auto result = async(launch::async, _received_message, message);
 		}
 	}
 

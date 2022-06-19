@@ -282,6 +282,11 @@ namespace network
 			return;
 		}
 
+		if (get_confirom_status() != connection_conditions::confirmed)
+		{
+			return;
+		}
+
 #ifdef __USE_TYPE_CONTAINER__
 		if (message->source_id().empty())
 		{
@@ -347,6 +352,11 @@ namespace network
 		}
 
 		if (_session_type != session_types::file_line)
+		{
+			return;
+		}
+
+		if (get_confirom_status() != connection_conditions::confirmed)
 		{
 			return;
 		}
@@ -421,6 +431,11 @@ namespace network
 		}
 
 		if (_session_type != session_types::binary_line)
+		{
+			return;
+		}
+
+		if (get_confirom_status() != connection_conditions::confirmed)
 		{
 			return;
 		}

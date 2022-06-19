@@ -115,7 +115,6 @@ namespace network
 		void disconnected(void) override;
 
 	protected:
-		bool check_confirm_condition(void);
 		bool contained_snipping_target(const wstring& snipping_target);
 
 	private:

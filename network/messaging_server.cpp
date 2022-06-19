@@ -334,6 +334,11 @@ namespace network
 				continue;
 			}
 
+			if (session->get_confirom_status() != connection_conditions::confirmed)
+			{
+				continue;
+			}
+
 			if (type.has_value() && session->get_session_type() != type.value())
 			{
 				continue;
@@ -374,6 +379,11 @@ namespace network
 				continue;
 			}
 
+			if (session->get_confirom_status() != connection_conditions::confirmed)
+			{
+				continue;
+			}
+
 			session->send_files(message);
 		}
 	}
@@ -392,6 +402,11 @@ namespace network
 				continue;
 			}
 
+			if (session->get_confirom_status() != connection_conditions::confirmed)
+			{
+				continue;
+			}
+
 			session->send_binary(target_id, target_sub_id, data);
 		}
 	}
@@ -406,6 +421,11 @@ namespace network
 		for (auto& session : _sessions)
 		{
 			if (session == nullptr)
+			{
+				continue;
+			}
+
+			if (session->get_confirom_status() != connection_conditions::confirmed)
 			{
 				continue;
 			}
@@ -453,7 +473,7 @@ namespace network
 
 				_sessions.push_back(session);
 
-				_thread_pool->push(make_shared<job>(priorities::high, bind(&messaging_server::check_confirm_condition, this)));
+				_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_server::check_confirm_condition, this)));
 
 				wait_connection();
 			});
@@ -476,6 +496,8 @@ namespace network
 				connect_condition(session, false);
 			}
 		}
+
+		_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_server::check_confirm_condition, this)));
 
 		return true;
 	}
