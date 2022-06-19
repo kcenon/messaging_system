@@ -521,12 +521,12 @@ namespace network
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
-		auto target_id = (*message)[HEADER][SOURCE_ID].as_string();
+		auto target_id = (*message)[HEADER][TARGET_ID].as_string();
 #else
-		auto target_id = converter::to_wstring((*message)[HEADER][SOURCE_ID].as_string());
+		auto target_id = converter::to_wstring((*message)[HEADER][TARGET_ID].as_string());
 #endif
 #else
-		auto target_id = message->source_id();
+		auto target_id = message->target_id();
 #endif
 
 		if (target_id != _source_id)
