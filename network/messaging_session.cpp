@@ -705,16 +705,16 @@ namespace network
 		(*container)[DATA][L"confirm"] = json::value::boolean(true);
 		if (_encrypt_mode)
 		{
-			(*container)[DATA][L"key"] = json::value::string(_target_sub_id);
-			(*container)[DATA][L"iv"] = json::value::string(_target_sub_id);
+			(*container)[DATA][L"key"] = json::value::string(_key);
+			(*container)[DATA][L"iv"] = json::value::string(_iv);
 		}
 		(*container)[DATA][ENCRYPT_MODE] = json::value::boolean(_encrypt_mode);
 #else
 		(*container)[DATA]["confirm"] = json::value::boolean(true);
 		if (_encrypt_mode)
 		{
-			(*container)[DATA]["key"] = json::value::string(converter::to_string(_target_sub_id));
-			(*container)[DATA]["iv"] = json::value::string(converter::to_string(_target_sub_id));
+			(*container)[DATA]["key"] = json::value::string(converter::to_string(_key));
+			(*container)[DATA]["iv"] = json::value::string(converter::to_string(_iv));
 		}
 		(*container)[DATA][ENCRYPT_MODE] = json::value::boolean(_encrypt_mode);
 #endif
