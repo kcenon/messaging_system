@@ -645,13 +645,13 @@ namespace network
 		(*container)[HEADER][SOURCE_SUB_ID] = json::value::string(_source_sub_id);
 		(*container)[HEADER][TARGET_ID] = json::value::string(_target_id);
 		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(_target_sub_id);
-		(*container)[HEADER][MESSAGE_TYPE] = json::value::string(L"confirm_connection");
+		(*container)[HEADER][MESSAGE_TYPE] = json::value::string(CONFIRM_CONNECTION);
 #else
 		(*container)[HEADER][SOURCE_ID] = json::value::string(converter::to_string(_source_id));
 		(*container)[HEADER][SOURCE_SUB_ID] = json::value::string(converter::to_string(_source_sub_id));
 		(*container)[HEADER][TARGET_ID] = json::value::string(converter::to_string(_target_id));
 		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(converter::to_string(_target_sub_id));
-		(*container)[HEADER][MESSAGE_TYPE] = json::value::string("confirm_connection");
+		(*container)[HEADER][MESSAGE_TYPE] = json::value::string(CONFIRM_CONNECTION);
 #endif
 
 		_snipping_targets.clear();

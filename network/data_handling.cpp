@@ -566,15 +566,19 @@ namespace network
 			return;
 		}
 
+		if ((*message)[HEADER][MESSAGE_TYPE].as_string() != REQUEST_CONNECTION &&
+			(*message)[HEADER][MESSAGE_TYPE].as_string() != CONFIRM_CONNECTION)
+		{
 #ifdef __USE_TYPE_CONTAINER__
-		logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
+			logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
 #else
 #ifdef _WIN32
-		logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
+			logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
 #else
-		logger::handle().write(logging_level::packet, converter::to_wstring(fmt::format("received: {}", message->serialize())));
+			logger::handle().write(logging_level::packet, converter::to_wstring(fmt::format("received: {}", message->serialize())));
 #endif
 #endif
+		}
 
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
@@ -585,6 +589,7 @@ namespace network
 #else
 		auto target = _message_handlers.find(message->message_type());
 #endif
+
 		if (target == _message_handlers.end())
 		{
 			return normal_message(message);
