@@ -222,17 +222,18 @@ namespace network
 
 		if (_io_context != nullptr)
 		{
-			_io_context->reset();
-			_io_context.reset();
-		}
-
-		if (_thread != nullptr)
-		{
-			if (_thread->joinable())
+			if (_thread != nullptr)
 			{
-				_thread->join();
+				if (_thread->joinable() && !_io_context->stopped())
+				{
+					_io_context->stop();
+					_thread->join();
+				}
+
+				_thread.reset();
 			}
-			_thread.reset();
+			
+			_io_context.reset();
 		}
 	}
 
@@ -780,7 +781,7 @@ namespace network
 			_confirm = connection_conditions::expired;
 		}
 
-		if(_connection != nullptr)
+		if(_connection != nullptr && _thread_pool != nullptr)
 		{
 			auto result = async(launch::async, _connection, _target_id, _target_sub_id, condition);
 		}
@@ -831,32 +832,13 @@ namespace network
 				fmt::format(L"start messaging_client({})", _source_id));
 			_io_context->run();
 		}
-		catch (const overflow_error& e) { 
-			if (_io_context != nullptr) {
-				logger::handle().write(logging_level::exception, 
-					fmt::format(L"break messaging_client({}) with overflow error: {}", 
-						_source_id, converter::to_wstring(e.what())));
-			}
+		catch (const overflow_error&) { 
 		}
-		catch (const runtime_error& e) { 
-			if (_io_context != nullptr) {
-				logger::handle().write(logging_level::exception, 
-					fmt::format(L"break messaging_client({}) with runtime error: {}", 
-						_source_id, converter::to_wstring(e.what())));
-			}
+		catch (const runtime_error&) { 
 		}
-		catch (const exception& e) { 
-			if (_io_context != nullptr) {
-				logger::handle().write(logging_level::exception, 
-					fmt::format(L"break messaging_client({}) with exception: {}", 
-						_source_id, converter::to_wstring(e.what())));
-			}
+		catch (const exception&) { 
 		}
 		catch (...) { 
-			if (_io_context != nullptr) {
-				logger::handle().write(logging_level::exception, 
-					fmt::format(L"break messaging_client({}) with error", _source_id));
-			}
 		}
 
 		logger::handle().write(logging_level::information, fmt::format(L"stop messaging_client({})", _source_id));

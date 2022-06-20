@@ -172,29 +172,36 @@ namespace network
 					}
 					catch (const overflow_error& e) 
 					{ 
-						if (_io_context == nullptr) { break; } 
-						logger::handle().write(logging_level::exception, 
-							fmt::format(L"break messaging_server({}) with overflow error: {}", 
-								_source_id, converter::to_wstring(e.what()))); 
-						_io_context->reset(); 
+						if (_io_context != nullptr) 
+						{ 
+							_io_context->reset(); 
+							logger::handle().write(logging_level::information, fmt::format(L"reset messaging_server({})", _source_id));
+						} 						
 					}
 					catch (const runtime_error& e) 
 					{ 
-						if (_io_context == nullptr) { break; } 
-						logger::handle().write(logging_level::exception, 
-							fmt::format(L"break messaging_server({}) with runtime error: {}", 
-								_source_id, converter::to_wstring(e.what()))); 
-						_io_context->reset(); 
+						if (_io_context != nullptr) 
+						{ 
+							_io_context->reset(); 
+							logger::handle().write(logging_level::information, fmt::format(L"reset messaging_server({})", _source_id));
+						}  	
 					}
 					catch (const exception& e) 
 					{ 
-						if (_io_context == nullptr) { break; } 
-						logger::handle().write(logging_level::exception, 
-							fmt::format(L"break messaging_server({}) with exception: {}", 
-								_source_id, converter::to_wstring(e.what()))); 
-						_io_context->reset(); 
+						if (_io_context != nullptr) 
+						{ 
+							_io_context->reset(); 
+							logger::handle().write(logging_level::information, fmt::format(L"reset messaging_server({})", _source_id));
+						} 	
 					}
-					catch (...) { if (_io_context == nullptr) { break; } logger::handle().write(logging_level::exception, fmt::format(L"break messaging_server({}) with error", _source_id)); _io_context->reset(); }
+					catch (...)
+					{ 
+						if (_io_context != nullptr) 
+						{ 
+							_io_context->reset(); 
+							logger::handle().write(logging_level::information, fmt::format(L"reset messaging_server({})", _source_id));
+						} 	
+					}
 				}
 			});
 	}
@@ -249,17 +256,18 @@ namespace network
 
 		if (_io_context != nullptr)
 		{
-			_io_context->reset();
-			_io_context.reset();
-		}
-
-		if (_thread != nullptr)
-		{
-			if (_thread->joinable())
+			if (_thread != nullptr)
 			{
-				_thread->join();
+				if (_thread->joinable() && !_io_context->stopped())
+				{
+					_io_context->stop();
+					_thread->join();
+				}
+
+				_thread.reset();
 			}
-			_thread.reset();
+			
+			_io_context.reset();
 		}
 
 		if (_promise_status.has_value())
@@ -524,7 +532,7 @@ namespace network
 			}
 		}
 
-		if(_connection != nullptr)
+		if(_connection != nullptr && _thread_pool != nullptr)
 		{
 			auto result = async(launch::async, _connection, target->target_id(), target->target_sub_id(), condition);
 		}
