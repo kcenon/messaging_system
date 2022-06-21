@@ -56,6 +56,7 @@ constexpr auto TARGET = L"target";
 constexpr auto GATEWAY_SOURCE_ID = L"gateway_source_id";
 constexpr auto GATEWAY_SOURCE_SUB_ID = L"gateway_source_sub_id";
 constexpr auto CONNECTION_KEY = L"connection_key";
+constexpr auto CANNOT_SEND_MESSAGE = L"cannot_send_message";
 #else
 constexpr auto HEADER = "header";
 constexpr auto DATA = "data";
@@ -80,4 +81,5 @@ constexpr auto TARGET = "target";
 constexpr auto GATEWAY_SOURCE_ID = "gateway_source_id";
 constexpr auto GATEWAY_SOURCE_SUB_ID = "gateway_source_sub_id";
 constexpr auto CONNECTION_KEY = "connection_key";
+constexpr auto CANNOT_SEND_MESSAGE = "cannot_send_message";
 #endif

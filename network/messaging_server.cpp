@@ -312,29 +312,30 @@ namespace network
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	void messaging_server::send(const json::value& message, optional<session_types> type)
+	bool messaging_server::send(const json::value& message, optional<session_types> type)
 #else
-	void messaging_server::send(const container::value_container& message, optional<session_types> type)
+	bool messaging_server::send(const container::value_container& message, optional<session_types> type)
 #endif
 	{
 #ifndef __USE_TYPE_CONTAINER__
-		send(make_shared<json::value>(message), type);
+		return send(make_shared<json::value>(message), type);
 #else
-		send(make_shared<container::value_container>(message), type);
+		return send(make_shared<container::value_container>(message), type);
 #endif
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	void messaging_server::send(shared_ptr<json::value> message, optional<session_types> type)
+	bool messaging_server::send(shared_ptr<json::value> message, optional<session_types> type)
 #else
-	void messaging_server::send(shared_ptr<container::value_container> message, optional<session_types> type)
+	bool messaging_server::send(shared_ptr<container::value_container> message, optional<session_types> type)
 #endif
 	{
 		if (message == nullptr)
 		{
-			return;
+			return false;
 		}
 
+		bool result = false;
 		for (auto& session : _sessions)
 		{
 			if (session == nullptr)
@@ -352,8 +353,10 @@ namespace network
 				continue;
 			}
 
-			session->send(message);
+			result |= session->send(message);
 		}
+
+		return result;
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -565,7 +568,26 @@ namespace network
 				fmt::format(L"attempt to transfer message to {}", 
 					target_id));
 
-			send(message);
+			if (!send(message))
+			{
+				logger::handle().write(logging_level::sequence,
+					fmt::format(L"there is no target id on server: {}", 
+						target_id));
+
+				shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
+
+				(*container)[HEADER][SOURCE_ID] = (*message)[HEADER][TARGET_ID];
+				(*container)[HEADER][SOURCE_SUB_ID] = (*message)[HEADER][TARGET_SUB_ID];
+				(*container)[HEADER][TARGET_ID] = (*message)[HEADER][SOURCE_ID];
+				(*container)[HEADER][TARGET_SUB_ID] = (*message)[HEADER][SOURCE_SUB_ID];
+				(*container)[HEADER][MESSAGE_TYPE] = json::value::string(CANNOT_SEND_MESSAGE);
+
+				(*container)[DATA][INDICATION_ID] = (*message)[DATA][INDICATION_ID];
+				(*container)[DATA][MESSAGE_TYPE] = (*message)[HEADER][MESSAGE_TYPE];
+    			(*container)[DATA][RESPONSE] = json::value::boolean(false);
+
+    			send(container);
+			}
 
 			return;
 		}

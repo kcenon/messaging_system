@@ -101,10 +101,10 @@ namespace network
 		void echo(void);
 
 #ifndef __USE_TYPE_CONTAINER__
-		void send(shared_ptr<json::value> message);
+		bool send(shared_ptr<json::value> message);
 		void send_files(shared_ptr<json::value> message);
 #else
-		void send(shared_ptr<container::value_container> message);
+		bool send(shared_ptr<container::value_container> message);
 		void send_files(shared_ptr<container::value_container> message);
 #endif
 

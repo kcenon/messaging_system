@@ -228,14 +228,14 @@ namespace network
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	void messaging_session::send(shared_ptr<json::value> message)
+	bool messaging_session::send(shared_ptr<json::value> message)
 #else
-	void messaging_session::send(shared_ptr<container::value_container> message)
+	bool messaging_session::send(shared_ptr<container::value_container> message)
 #endif
 	{
 		if (message == nullptr)
 		{
-			return;
+			return false;
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -243,38 +243,38 @@ namespace network
 		if (!_bridge_line && (*message)[HEADER][TARGET_ID].as_string() != _target_id && 
 			!contained_snipping_target((*message)[HEADER][TARGET_ID].as_string()))
 		{
-			return;
+			return false;
 		}
 		
 		if (!_bridge_line && !contained_snipping_target((*message)[HEADER][TARGET_ID].as_string()) && 
 			!(*message)[HEADER][TARGET_SUB_ID].is_null() && (*message)[HEADER][TARGET_SUB_ID].as_string() != _target_sub_id)
 		{
-			return;
+			return false;
 		}
 #else
 		if (!_bridge_line && (*message)[HEADER][TARGET_ID].as_string() != converter::to_string(_target_id) && 
 			!contained_snipping_target(converter::to_wstring((*message)[HEADER][TARGET_ID].as_string())))
 		{
-			return;
+			return false;
 		}
 
 		if (!_bridge_line && !contained_snipping_target(converter::to_wstring((*message)[HEADER][TARGET_ID].as_string())) &&
 			!(*message)[HEADER][TARGET_SUB_ID].is_null() && (*message)[HEADER][TARGET_SUB_ID].as_string() != converter::to_string(_target_sub_id))
 		{
-			return;
+			return false;
 		}
 #endif
 #else
 		if (!_bridge_line && message->target_id() != _target_id && 
 			!contained_snipping_target(message->target_id()))
 		{
-			return;
+			return false;
 		}
 
 		if (!_bridge_line && !contained_snipping_target(message->target_id()) && 
 			!message->target_sub_id().empty() && message->target_sub_id() != _target_sub_id)
 		{
-			return;
+			return false;
 		}
 #endif
 
@@ -292,6 +292,8 @@ namespace network
 #endif
 
 		send_packet_job(serialize_array);
+
+		return true;
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
