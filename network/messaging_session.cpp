@@ -247,7 +247,8 @@ namespace network
 		}
 		
 		if (!_bridge_line && !contained_snipping_target((*message)[HEADER][TARGET_ID].as_string()) && 
-			!(*message)[HEADER][TARGET_SUB_ID].is_null() && (*message)[HEADER][TARGET_SUB_ID].as_string() != _target_sub_id)
+			!(*message)[HEADER][TARGET_SUB_ID].is_null() && !(*message)[HEADER][TARGET_SUB_ID].as_string().empty() && 
+			(*message)[HEADER][TARGET_SUB_ID].as_string() != _target_sub_id)
 		{
 			return false;
 		}
@@ -255,12 +256,15 @@ namespace network
 		if (!_bridge_line && (*message)[HEADER][TARGET_ID].as_string() != converter::to_string(_target_id) && 
 			!contained_snipping_target(converter::to_wstring((*message)[HEADER][TARGET_ID].as_string())))
 		{
+			logger::handle().write(logging_level::error, fmt::format(L"TARGET_ID[{}] != TARGET_ID[{}]", converter::to_wstring((*message)[HEADER][TARGET_ID].as_string()), _target_id));
 			return false;
 		}
 
 		if (!_bridge_line && !contained_snipping_target(converter::to_wstring((*message)[HEADER][TARGET_ID].as_string())) &&
-			!(*message)[HEADER][TARGET_SUB_ID].is_null() && (*message)[HEADER][TARGET_SUB_ID].as_string() != converter::to_string(_target_sub_id))
+			!(*message)[HEADER][TARGET_SUB_ID].is_null() && !(*message)[HEADER][TARGET_SUB_ID].as_string().empty() && 
+			(*message)[HEADER][TARGET_SUB_ID].as_string() != converter::to_string(_target_sub_id))
 		{
+			logger::handle().write(logging_level::error, fmt::format(L"TARGET_SUB_ID[{}] != TARGET_SUB_ID[{}]", converter::to_wstring((*message)[HEADER][TARGET_SUB_ID].as_string()), _target_sub_id));
 			return false;
 		}
 #endif
