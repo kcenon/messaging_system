@@ -57,7 +57,6 @@ namespace threads
 		shared_ptr<job_pool> get_ptr(void);
 
 	public:
-		void set_push_lock(const bool& lock_condition);
 		void push(shared_ptr<job> new_job);
 		shared_ptr<job> pop(const priorities& priority, const vector<priorities>& others = {});
 		bool contain(const priorities& priority, const vector<priorities>& others = {});
@@ -71,7 +70,6 @@ namespace threads
 
 	private:
 		mutex _mutex;
-		bool _lock_condition;
 		map<priorities, queue<shared_ptr<job>>> _jobs;
 		map<wstring, function<void(const priorities&)>> _notifications;
 	};

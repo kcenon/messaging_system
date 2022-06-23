@@ -61,6 +61,7 @@ namespace threads
 
 	private:
 		mutex _mutex;
+		bool _close_after_empty;
 		shared_ptr<job_pool> _job_pool;
 		vector<shared_ptr<thread_worker>> _workers;
 	};

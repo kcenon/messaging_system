@@ -44,7 +44,7 @@ namespace threads
 {
 	using namespace logging;
 
-	job_pool::job_pool(void) : _lock_condition(false)
+	job_pool::job_pool(void)
 	{
 	}
 
@@ -58,19 +58,9 @@ namespace threads
 		return shared_from_this();
 	}
 
-	void job_pool::set_push_lock(const bool& lock_condition)
-	{
-		_lock_condition = lock_condition;
-	}
-
 	void job_pool::push(shared_ptr<job> new_job)
 	{
 		if (new_job == nullptr)
-		{
-			return;
-		}
-
-		if (_lock_condition)
 		{
 			return;
 		}
@@ -130,6 +120,17 @@ namespace threads
 			logger::handle().write(logging_level::parameter, fmt::format(L"pop a job: priority - {}", (int)temp->priority()));
 
 			return temp;
+		}
+
+		size_t count = 0;
+		for (auto& target : _jobs)
+		{
+			count += target.second.size();
+		}
+
+		if(count == 0)
+		{
+			notification(priorities::none);
 		}
 
 		return nullptr;
