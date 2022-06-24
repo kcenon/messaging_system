@@ -226,7 +226,7 @@ namespace threads
 				continue;
 			}
 			
-			auto result = async(launch::async, notification.second, priority);
+			notification.second(priority);
 		}
 	}
 }
