@@ -62,7 +62,6 @@ namespace threads
 
 	public:
 		const priorities priority(void);
-		void notification(const priorities& priority);
 
 	protected:
 		void run(void);
@@ -71,6 +70,7 @@ namespace threads
 		virtual void working(shared_ptr<job> current_job);
 
 	protected:
+		void notification(const priorities& priority);
 		bool check_condition(void);
 
 	private:

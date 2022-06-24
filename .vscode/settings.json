@@ -13,7 +13,9 @@
         "regex": "cpp",
         "iosfwd": "cpp",
         "exception": "cpp",
-        "__locale": "cpp"
+        "__locale": "cpp",
+        "optional": "cpp",
+        "future": "cpp"
     },
     "files.eol": "\n"
 }

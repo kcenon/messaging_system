@@ -42,7 +42,7 @@ TEST(threads, test)
     }
 
     manager.start();
-    manager.stop();
+    manager.stop(false);
 }
 
 #endif

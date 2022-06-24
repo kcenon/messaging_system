@@ -37,6 +37,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <mutex>
 #include <memory>
 #include <vector>
+#include <future>
+#include <optional>
 
 using namespace std;
 
@@ -51,10 +53,17 @@ namespace threads
 	public:
 		void start(void);
 		void append(shared_ptr<thread_worker> worker, const bool& start = false);
-		void stop(void);
+		void stop(const bool& stop_immediately = true);
 
 	public:
 		void push(shared_ptr<job> job);
+
+	protected:
+		void notification(const priorities& priority);
+
+	private:
+		optional<promise<bool>> _promise_status;
+		future<bool> _future_status;
 
 	private:
 		mutex _mutex;

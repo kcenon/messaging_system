@@ -43,7 +43,7 @@ namespace threads
 	using namespace logging;
 
 	thread_pool::thread_pool(const vector<shared_ptr<thread_worker>>& workers)
-		: _workers(workers), _job_pool(make_shared<job_pool>())
+		: _workers(workers), _job_pool(make_shared<job_pool>()), _promise_status({ promise<bool>() })
 	{
 	}
 
@@ -55,6 +55,8 @@ namespace threads
 	void thread_pool::start(void)
 	{
 		scoped_lock<mutex> guard(_mutex);
+
+		_job_pool->append_notification(L"thread_pool", bind(&thread_pool::notification, this, placeholders::_1));
 
 		for (auto& worker : _workers)
 		{
@@ -84,12 +86,25 @@ namespace threads
 		}
 	}
 
-	void thread_pool::stop(void)
+	void thread_pool::stop(const bool& stop_immediately)
 	{
+		if (!stop_immediately && _job_pool != nullptr)
+		{
+			_job_pool->set_push_lock(true);
+
+			if (_promise_status.has_value())
+			{
+				_future_status = _promise_status.value().get_future();
+				_future_status.wait();
+				_promise_status.reset();
+			}
+		}
+
 		scoped_lock<mutex> guard(_mutex);
 
 		if (_job_pool != nullptr)
 		{
+			_job_pool->remove_notification(L"thread_pool");
 			_job_pool.reset();
 		}
 
@@ -114,5 +129,18 @@ namespace threads
 		}
 
 		_job_pool->push(job);
+	}
+
+	void thread_pool::notification(const priorities& priority)
+	{
+		if (priority != priorities::none)
+		{
+			return;
+		}
+
+		if (_promise_status.has_value())
+		{
+			_promise_status.value().set_value(true);
+		}
 	}
 }

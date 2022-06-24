@@ -44,7 +44,7 @@ namespace threads
 {
 	using namespace logging;
 
-	job_pool::job_pool(void)
+	job_pool::job_pool(void) : _push_lock(false)
 	{
 	}
 
@@ -58,11 +58,16 @@ namespace threads
 		return shared_from_this();
 	}
 
-	void job_pool::push(shared_ptr<job> new_job)
+	bool job_pool::push(shared_ptr<job> new_job)
 	{
 		if (new_job == nullptr)
 		{
-			return;
+			return false;
+		}
+
+		if (_push_lock)
+		{
+			return false;
 		}
 
 		new_job->set_job_pool(get_ptr());
@@ -78,7 +83,7 @@ namespace threads
 
 			notification(new_job->priority());
 
-			return;
+			return true;
 		}
 		
 		queue<shared_ptr<job>> queue;
@@ -89,6 +94,8 @@ namespace threads
 		logger::handle().write(logging_level::parameter, fmt::format(L"push new job: priority - {}", (int)new_job->priority()));
 
 		notification(new_job->priority());
+
+		return true;
 	}
 
 	shared_ptr<job> job_pool::pop(const priorities& priority, const vector<priorities>& others)
@@ -102,6 +109,11 @@ namespace threads
 			iterator->second.pop();
 
 			logger::handle().write(logging_level::parameter, fmt::format(L"pop a job: priority - {}", (int)temp->priority()));
+
+			if (count() == 0)
+			{
+				notification(priorities::none);
+			}
 
 			return temp;
 		}
@@ -119,13 +131,17 @@ namespace threads
 
 			logger::handle().write(logging_level::parameter, fmt::format(L"pop a job: priority - {}", (int)temp->priority()));
 
+			if (count() == 0)
+			{
+				notification(priorities::none);
+			}
+
 			return temp;
 		}
 
-		size_t count = 0;
-		for (auto& target : _jobs)
+		if (count() == 0)
 		{
-			count += target.second.size();
+			notification(priorities::none);
 		}
 
 		return nullptr;
@@ -159,6 +175,11 @@ namespace threads
 		return false;
 	}
 
+	void job_pool::set_push_lock(const bool& lock)
+	{
+		_push_lock = lock;
+	}
+
 	bool job_pool::append_notification(const wstring& id, const function<void(const priorities&)>& notification)
 	{
 		auto target = _notifications.find(id);
@@ -185,6 +206,17 @@ namespace threads
 		return true;
 	}
 
+	size_t job_pool::count(void)
+	{
+		size_t count = 0;
+		for (auto& target : _jobs)
+		{
+			count += target.second.size();
+		}
+
+		return count;
+	}
+
 	void job_pool::notification(const priorities& priority)
 	{
 		for (auto& notification : _notifications)
@@ -193,8 +225,8 @@ namespace threads
 			{
 				continue;
 			}
-
-			notification.second(priority);
+			
+			auto result = async(launch::async, notification.second, priority);
 		}
 	}
 }

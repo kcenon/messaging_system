@@ -61,8 +61,6 @@ namespace threads
 
 	void thread_worker::set_job_pool(shared_ptr<job_pool> job_pool)
 	{
-		
-
 		_job_pool = job_pool;
 	}
 
@@ -114,24 +112,6 @@ namespace threads
 		return _priority;
 	}
 
-	void thread_worker::notification(const priorities& priority)
-	{
-		if (_priority == priority)
-		{
-			_condition.notify_one();
-
-			return;
-		}
-
-		auto target = find(_others.begin(), _others.end(), priority);
-		if (target == _others.end())
-		{
-			return;
-		}
-
-		_condition.notify_one();
-	}
-
 	void thread_worker::run(void)
 	{
 		logger::handle().write(logging_level::sequence, fmt::format(L"start working thread: priority - {}", (int)_priority));
@@ -175,6 +155,29 @@ namespace threads
 		}
 
 		current_job->work(_priority);
+	}
+
+	void thread_worker::notification(const priorities& priority)
+	{
+		if (priority == priorities::none)
+		{
+			return;
+		}
+		
+		if (_priority == priority)
+		{
+			_condition.notify_one();
+
+			return;
+		}
+
+		auto target = find(_others.begin(), _others.end(), priority);
+		if (target == _others.end())
+		{
+			return;
+		}
+
+		_condition.notify_one();
 	}
 
 	bool thread_worker::check_condition(void)
