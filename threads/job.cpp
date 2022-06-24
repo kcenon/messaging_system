@@ -54,12 +54,22 @@ namespace threads
 	using namespace folder_handler;
 
 	job::job(const priorities& priority, const function<void(void)>& working_callback)
-		: _priority(priority), _working_callback(working_callback), _working_callback2(nullptr), _temporary_stored_path(L"")
+		: _priority(priority), _temporary_stored_path(L""), _working_callback(working_callback), 
+		_working_callback2(nullptr), _working_callback3(nullptr)
 	{
 	}
 
-	job::job(const priorities& priority, const vector<unsigned char>& data, const function<void(const vector<unsigned char>&)>& working_callback)
-		: _priority(priority), _data(data), _working_callback(nullptr), _working_callback2(working_callback), _temporary_stored_path(L"")
+	job::job(const priorities& priority, const vector<unsigned char>& data, 
+			const function<void(const vector<unsigned char>&)>& working_callback)
+		: _priority(priority), _data(data), _temporary_stored_path(L""), _working_callback(nullptr), 
+		_working_callback2(working_callback), _working_callback3(nullptr)
+	{
+	}
+
+	job::job(const priorities& priority, const vector<unsigned char>& data, 
+			const function<void(weak_ptr<job_pool> job_pool, const vector<unsigned char>&)>& working_callback)
+		: _priority(priority), _data(data), _temporary_stored_path(L""), _working_callback(nullptr), 
+		_working_callback2(nullptr), _working_callback3(working_callback)
 	{
 	}
 
@@ -136,6 +146,30 @@ namespace threads
 			return true;
 		}
 
+		if (_working_callback3 != nullptr)
+		{
+			try
+			{
+				_working_callback3(_job_pool, _data);
+			}
+			catch (...)
+			{
+				logger::handle().write(logging_level::sequence,
+					fmt::format(L"cannot complete working function on job: job priority[{}], worker priority[{}]", 
+						(int)_priority, (int)worker_priority), start);
+
+				return false;
+			}
+
+			destroy();
+
+			logger::handle().write(logging_level::sequence, 
+				fmt::format(L"completed working callback function with value on job: job priority[{}], worker priority[{}]", 
+					(int)_priority, (int)worker_priority), start);
+
+			return true;
+		}
+
 		try
 		{
 			working(worker_priority);
@@ -172,6 +206,7 @@ namespace threads
 			case priorities::normal: priority = L"normal"; break;
 			case priorities::high: priority = L"high"; break;
 			case priorities::top: priority = L"top"; break;
+			default: return;
 		}
 
 		_temporary_stored_path = fmt::format(L"{}{}/{}/{}.job", folder::get_temporary_folder(), 

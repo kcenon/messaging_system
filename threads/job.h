@@ -48,7 +48,10 @@ namespace threads
 	{
 	public:
 		job(const priorities& priority, const function<void(void)>& working_callback);
-		job(const priorities& priority, const vector<unsigned char>& data = {}, const function<void(const vector<unsigned char>&)>& working_callback = nullptr);
+		job(const priorities& priority, const vector<unsigned char>& data = {}, 
+			const function<void(const vector<unsigned char>&)>& working_callback = nullptr);
+		job(const priorities& priority, const vector<unsigned char>& data = {}, 
+			const function<void(weak_ptr<job_pool> job_pool, const vector<unsigned char>&)>& working_callback = nullptr);
 		~job(void);
 
 	public:
@@ -81,5 +84,6 @@ namespace threads
 		
 		function<void(void)> _working_callback;
 		function<void(const vector<unsigned char>&)> _working_callback2;
+		function<void(weak_ptr<job_pool>, const vector<unsigned char>&)> _working_callback3;
 	};
 }
