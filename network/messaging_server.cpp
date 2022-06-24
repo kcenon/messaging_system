@@ -38,6 +38,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "thread_worker.h"
 #include "job.h"
 
+#ifdef __USE_TYPE_CONTAINER__
+#include "values/bool_value.h"
+#include "values/string_value.h"
+#endif
+
 #include "fmt/xchar.h"
 #include "fmt/format.h"
 
@@ -574,6 +579,7 @@ namespace network
 					fmt::format(L"there is no target id on server: {}", 
 						target_id));
 
+#ifndef __USE_TYPE_CONTAINER__
 				shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
 
 				(*container)[HEADER][SOURCE_ID] = (*message)[HEADER][TARGET_ID];
@@ -585,6 +591,18 @@ namespace network
 				(*container)[DATA][INDICATION_ID] = (*message)[DATA][INDICATION_ID];
 				(*container)[DATA][MESSAGE_TYPE] = (*message)[HEADER][MESSAGE_TYPE];
     			(*container)[DATA][RESPONSE] = json::value::boolean(false);
+#else
+				shared_ptr<container::value_container> container = message->copy(false);
+				container->swap_header();
+#ifdef _WIN32
+				container->set_message_type(CANNOT_SEND_MESSAGE);
+#else
+				container->set_message_type(converter::to_wstring(CANNOT_SEND_MESSAGE));
+#endif
+				container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
+				container << make_shared<container::string_value>(L"message_type", message->message_type());
+				container << make_shared<container::bool_value>(L"response", false);
+#endif
 
     			send(container);
 			}
