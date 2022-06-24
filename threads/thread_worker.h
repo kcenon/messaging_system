@@ -83,6 +83,7 @@ namespace threads
 
 	private:
 		mutex _mutex;
+		wstring _guid;
 		shared_ptr<thread> _thread;
 		condition_variable _condition;
 	};

@@ -36,17 +36,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "job_pool.h"
 
 #include "logging.h"
+#include "converting.h"
 
 #include "fmt/xchar.h"
 #include "fmt/format.h"
 
+#include "crossguid/guid.hpp"
+
 namespace threads
 {
 	using namespace logging;
+	using namespace converting;
 
 	thread_worker::thread_worker(const priorities& priority, const vector<priorities>& others)
 		: _priority(priority), _others(others)
 	{
+		_guid = converter::to_wstring(xg::newGuid().str());
 	}
 
 	thread_worker::~thread_worker(void)
@@ -56,6 +61,8 @@ namespace threads
 
 	void thread_worker::set_job_pool(shared_ptr<job_pool> job_pool)
 	{
+		
+
 		_job_pool = job_pool;
 	}
 
@@ -65,6 +72,13 @@ namespace threads
 
 		_thread_stop = false;
 		_thread = make_shared<thread>(&thread_worker::run, this);
+
+		auto job_pool = _job_pool.lock();
+		if (job_pool != nullptr)
+		{
+			job_pool->append_notification(_guid, bind(&thread_worker::notification, this, placeholders::_1));
+			job_pool.reset();
+		}
 	}
 
 	void thread_worker::stop(void)
@@ -76,6 +90,13 @@ namespace threads
 
 		logger::handle().write(logging_level::parameter, 
 			fmt::format(L"attempt to stop working thread: priority - {}", (int)_priority));
+
+		auto job_pool = _job_pool.lock();
+		if (job_pool != nullptr)
+		{
+			job_pool->remove_notification(_guid);
+			job_pool.reset();
+		}
 
 		if (_thread->joinable())
 		{

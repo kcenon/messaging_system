@@ -128,11 +128,6 @@ namespace threads
 			count += target.second.size();
 		}
 
-		if(count == 0)
-		{
-			notification(priorities::none);
-		}
-
 		return nullptr;
 	}
 

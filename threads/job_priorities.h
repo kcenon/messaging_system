@@ -36,10 +36,9 @@ namespace threads
 {
 	enum class priorities : unsigned short
 	{
-		none = 0,
-		low = 1,
-		normal = 2,
-		high = 3,
-		top = 4
+		low = 0,
+		normal = 1,
+		high = 2,
+		top = 3
 	};
 }

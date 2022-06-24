@@ -51,17 +51,13 @@ namespace threads
 	public:
 		void start(void);
 		void append(shared_ptr<thread_worker> worker, const bool& start = false);
-		void stop(const bool& ignore_contained_job = true);
+		void stop(void);
 
 	public:
 		void push(shared_ptr<job> job);
 
-	protected:
-		void notification(const priorities& priority);
-
 	private:
 		mutex _mutex;
-		bool _close_after_empty;
 		shared_ptr<job_pool> _job_pool;
 		vector<shared_ptr<thread_worker>> _workers;
 	};

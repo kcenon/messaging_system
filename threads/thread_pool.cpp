@@ -43,17 +43,13 @@ namespace threads
 	using namespace logging;
 
 	thread_pool::thread_pool(const vector<shared_ptr<thread_worker>>& workers)
-		: _workers(workers), _job_pool(make_shared<job_pool>()), _close_after_empty(false)
+		: _workers(workers), _job_pool(make_shared<job_pool>())
 	{
-		_job_pool->append_notification(L"thread_pool", bind(&thread_pool::notification, this, placeholders::_1));
 	}
 
 	thread_pool::~thread_pool(void)
 	{
-		stop(true);
-
-		_workers.clear();
-		_job_pool.reset();
+		stop();
 	}
 
 	void thread_pool::start(void)
@@ -88,15 +84,9 @@ namespace threads
 		}
 	}
 
-	void thread_pool::stop(const bool& ignore_contained_job)
+	void thread_pool::stop(void)
 	{
 		scoped_lock<mutex> guard(_mutex);
-
-		_close_after_empty = !ignore_contained_job;
-		if (_close_after_empty)
-		{
-			return;
-		}
 
 		if (_job_pool != nullptr)
 		{
@@ -112,6 +102,7 @@ namespace threads
 
 			worker->stop();
 		}
+
 		_workers.clear();
 	}
 
@@ -123,35 +114,5 @@ namespace threads
 		}
 
 		_job_pool->push(job);
-	}
-
-	void thread_pool::notification(const priorities& priority)
-	{
-		scoped_lock<mutex> guard(_mutex);
-
-		if (_close_after_empty && priority == priorities::none)
-		{
-			for (auto& worker : _workers)
-			{
-				if (worker == nullptr)
-				{
-					continue;
-				}
-
-				worker->stop();
-			}
-
-			return;
-		}
-
-		for (auto& worker : _workers)
-		{
-			if (worker == nullptr)
-			{
-				continue;
-			}
-
-			worker->notification(priority);
-		}
 	}
 }
