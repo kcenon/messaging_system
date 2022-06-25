@@ -110,11 +110,6 @@ namespace threads
 
 			logger::handle().write(logging_level::parameter, fmt::format(L"pop a job: priority - {}", (int)temp->priority()));
 
-			if (count() == 0)
-			{
-				notification(priorities::none);
-			}
-
 			return temp;
 		}
 
@@ -131,17 +126,7 @@ namespace threads
 
 			logger::handle().write(logging_level::parameter, fmt::format(L"pop a job: priority - {}", (int)temp->priority()));
 
-			if (count() == 0)
-			{
-				notification(priorities::none);
-			}
-
 			return temp;
-		}
-
-		if (count() == 0)
-		{
-			notification(priorities::none);
 		}
 
 		return nullptr;
@@ -206,7 +191,7 @@ namespace threads
 		return true;
 	}
 
-	size_t job_pool::count(void)
+	void job_pool::check_empty(void)
 	{
 		size_t count = 0;
 		for (auto& target : _jobs)
@@ -214,7 +199,10 @@ namespace threads
 			count += target.second.size();
 		}
 
-		return count;
+		if (count == 0)
+		{
+			notification(priorities::none);
+		}
 	}
 
 	void job_pool::notification(const priorities& priority)

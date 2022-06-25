@@ -133,7 +133,6 @@ namespace threads
 			}
 
 			shared_ptr<job> current_job = jobs->pop(_priority, _others);
-			jobs.reset();
 			unique.unlock();
 
 			if (current_job == nullptr && _thread_stop)
@@ -142,6 +141,9 @@ namespace threads
 			}
 
 			working(current_job);
+
+			jobs->check_empty();
+			jobs.reset();
 		}
 
 		logger::handle().write(logging_level::sequence, fmt::format(L"stop working thread: priority - {}", (int)_priority));

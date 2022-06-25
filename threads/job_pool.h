@@ -66,8 +66,10 @@ namespace threads
 		bool append_notification(const wstring& id, const function<void(const priorities&)>& notification);
 		bool remove_notification(const wstring& id);
 
+	public:
+		void check_empty(void);
+
 	private:
-		size_t count(void);
 		void notification(const priorities& priority);
 
 	private:
