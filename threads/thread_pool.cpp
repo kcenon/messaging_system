@@ -86,11 +86,11 @@ namespace threads
 		}
 	}
 
-	void thread_pool::stop(const bool& stop_immediately)
+	void thread_pool::stop(const bool& stop_immediately, const bool& jop_pool_lock)
 	{
 		if (!stop_immediately && _job_pool != nullptr)
 		{
-			_job_pool->set_push_lock(true);
+			_job_pool->set_push_lock(jop_pool_lock);
 
 			if (_promise_status.has_value())
 			{

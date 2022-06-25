@@ -53,7 +53,7 @@ namespace threads
 	public:
 		void start(void);
 		void append(shared_ptr<thread_worker> worker, const bool& start = false);
-		void stop(const bool& stop_immediately = true);
+		void stop(const bool& stop_immediately = true, const bool& jop_pool_lock = false);
 
 	public:
 		void push(shared_ptr<job> job);
