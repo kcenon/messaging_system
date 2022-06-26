@@ -56,8 +56,6 @@ namespace threads
 	{
 		scoped_lock<mutex> guard(_mutex);
 
-		_job_pool->append_notification(L"thread_pool", bind(&thread_pool::notification, this, placeholders::_1));
-
 		for (auto& worker : _workers)
 		{
 			if (worker == nullptr)
@@ -94,9 +92,13 @@ namespace threads
 
 			if (_promise_status.has_value())
 			{
+				_job_pool->append_notification(L"thread_pool", bind(&thread_pool::notification, this, placeholders::_1));
+
 				_future_status = _promise_status.value().get_future();
 				_future_status.wait();
 				_promise_status.reset();
+
+				_job_pool->remove_notification(L"thread_pool");
 			}
 		}
 
@@ -104,7 +106,6 @@ namespace threads
 
 		if (_job_pool != nullptr)
 		{
-			_job_pool->remove_notification(L"thread_pool");
 			_job_pool.reset();
 		}
 
