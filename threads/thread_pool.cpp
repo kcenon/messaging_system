@@ -43,7 +43,7 @@ namespace threads
 	using namespace logging;
 
 	thread_pool::thread_pool(const vector<shared_ptr<thread_worker>>& workers)
-		: _workers(workers), _job_pool(make_shared<job_pool>()), _promise_status({ promise<bool>() })
+		: _workers(workers), _job_pool(make_shared<job_pool>()), _promise_status({})
 	{
 	}
 
@@ -71,8 +71,10 @@ namespace threads
 	{
 		unique_lock<mutex> unique(_mutex);
 		
+		worker->set_worker_notification(bind(&thread_pool::worker_notification, this, placeholders::_1, placeholders::_2));
 		worker->set_job_pool(_job_pool);
 		_workers.push_back(worker);
+		_worker_conditions.insert({ worker->guid(), false });
 
 		logger::handle().write(logging_level::parameter, fmt::format(L"appended new worker: priority - {}", (int)worker->priority()));
 
@@ -90,10 +92,11 @@ namespace threads
 		{
 			_job_pool->set_push_lock(jop_pool_lock);
 
-			if (_promise_status.has_value())
+			if (!_promise_status.has_value())
 			{
-				_job_pool->append_notification(L"thread_pool", bind(&thread_pool::notification, this, placeholders::_1));
+				_job_pool->append_notification(L"thread_pool", bind(&thread_pool::empty_pool_notification, this, placeholders::_1));
 
+				_promise_status = { promise<bool>() };
 				_future_status = _promise_status.value().get_future();
 				_future_status.wait();
 				_promise_status.reset();
@@ -132,16 +135,52 @@ namespace threads
 		_job_pool->push(job);
 	}
 
-	void thread_pool::notification(const priorities& priority)
+	void thread_pool::empty_pool_notification(const priorities& priority)
 	{
+		if (!_promise_status.has_value())
+		{
+			return;
+		}
+
 		if (priority != priorities::none)
 		{
 			return;
 		}
 
-		if (_promise_status.has_value())
+		for (auto& worker_condition : _worker_conditions)
 		{
-			_promise_status.value().set_value(true);
+			if (worker_condition.second)
+			{
+				return;
+			}
 		}
+
+		_promise_status.value().set_value(true);
+	}
+
+	void thread_pool::worker_notification(const wstring& id, const bool& working_condition)
+	{
+		if (!_promise_status.has_value())
+		{
+			return;
+		}
+
+		auto target = _worker_conditions.find(id);
+		if (target == _worker_conditions.end())
+		{
+			return;
+		}
+
+		target->second = working_condition;
+
+		for (auto& worker_condition : _worker_conditions)
+		{
+			if (worker_condition.second)
+			{
+				return;
+			}
+		}
+
+		_job_pool->check_empty();
 	}
 }

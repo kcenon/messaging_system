@@ -39,6 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <thread>
 #include <vector>
+#include <functional>
 #include <condition_variable>
 
 using namespace std;
@@ -55,12 +56,14 @@ namespace threads
 
 	public:
 		void set_job_pool(shared_ptr<job_pool> job_pool);
+		void set_worker_notification(const function<void(const wstring&, const bool&)>& notification);
 
 	public:
 		void start(void);
 		void stop(void);
 
 	public:
+		const wstring guid(void);
 		const priorities priority(void);
 
 	protected:
@@ -70,11 +73,12 @@ namespace threads
 		virtual void working(shared_ptr<job> current_job);
 
 	protected:
-		void notification(const priorities& priority);
+		void append_notification(const priorities& priority);
 		bool check_condition(void);
 
 	private:
 		bool _thread_stop;
+		function<void(const wstring&, const bool&)> _worker_condition;
 
 	private:
 		priorities _priority;

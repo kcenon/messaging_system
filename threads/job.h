@@ -78,11 +78,11 @@ namespace threads
 
 	protected:
 		vector<unsigned char> _data;
+		weak_ptr<job_pool> _job_pool;
 
 	private:
 		priorities _priority;
 		wstring _temporary_stored_path;
-		weak_ptr<job_pool> _job_pool;
 		
 		function<void(void)> _working_callback;
 		function<void(const vector<unsigned char>&)> _working_callback2;

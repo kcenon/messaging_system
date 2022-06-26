@@ -64,6 +64,11 @@ namespace threads
 		_job_pool = job_pool;
 	}
 
+	void thread_worker::set_worker_notification(const function<void(const wstring&, const bool&)>& notification)
+	{
+		_worker_condition = notification;
+	}
+
 	void thread_worker::start(void)
 	{
 		stop();
@@ -74,7 +79,7 @@ namespace threads
 		auto job_pool = _job_pool.lock();
 		if (job_pool != nullptr)
 		{
-			job_pool->append_notification(_guid, bind(&thread_worker::notification, this, placeholders::_1));
+			job_pool->append_notification(_guid, bind(&thread_worker::append_notification, this, placeholders::_1));
 			job_pool.reset();
 		}
 	}
@@ -107,6 +112,11 @@ namespace threads
 		_thread.reset();
 	}
 
+	const wstring thread_worker::guid(void)
+	{
+		return _guid;
+	}
+
 	const priorities thread_worker::priority(void)
 	{
 		return _priority;
@@ -121,14 +131,20 @@ namespace threads
 			unique_lock<mutex> unique(_mutex);
 			_condition.wait(unique, [this] { return check_condition(); });
 
+			if (_worker_condition) _worker_condition(_guid, true);
+
 			auto jobs = _job_pool.lock();
 			if (jobs == nullptr)
 			{
+				if (_worker_condition) _worker_condition(_guid, false);
+
 				break;
 			}
 
 			if (_thread_stop)
 			{
+				if (_worker_condition) _worker_condition(_guid, false);
+
 				break;
 			}
 
@@ -137,13 +153,16 @@ namespace threads
 
 			if (current_job == nullptr && _thread_stop)
 			{
+				if (_worker_condition) _worker_condition(_guid, false);
+
 				break;
 			}
 
 			working(current_job);
 
-			jobs->check_empty();
 			jobs.reset();
+
+			if (_worker_condition) _worker_condition(_guid, false);
 		}
 
 		logger::handle().write(logging_level::sequence, fmt::format(L"stop working thread: priority - {}", (int)_priority));
@@ -159,7 +178,7 @@ namespace threads
 		current_job->work(_priority);
 	}
 
-	void thread_worker::notification(const priorities& priority)
+	void thread_worker::append_notification(const priorities& priority)
 	{
 		if (priority == priorities::none)
 		{

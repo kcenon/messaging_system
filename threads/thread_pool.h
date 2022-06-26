@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "thread_worker.h"
 
+#include <map>
 #include <mutex>
 #include <memory>
 #include <vector>
@@ -59,7 +60,8 @@ namespace threads
 		void push(shared_ptr<job> job);
 
 	protected:
-		void notification(const priorities& priority);
+		void empty_pool_notification(const priorities& priority);
+		void worker_notification(const wstring& id, const bool& working_condition);
 
 	private:
 		optional<promise<bool>> _promise_status;
@@ -68,6 +70,7 @@ namespace threads
 	private:
 		mutex _mutex;
 		shared_ptr<job_pool> _job_pool;
+		map<wstring, bool> _worker_conditions;
 		vector<shared_ptr<thread_worker>> _workers;
 	};
 }
