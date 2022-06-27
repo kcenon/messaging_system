@@ -91,7 +91,7 @@ namespace network
 #endif
 
 		void set_file_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&)>& notification);
-		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)>& notification);
+		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)>& notification);
 
 	public:
 		void start(const unsigned short& port, const unsigned short& high_priority = 8, const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
@@ -116,8 +116,8 @@ namespace network
 		void send_files(shared_ptr<container::value_container> message);
 #endif
 
-		void send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data);
-		void send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data);
+		void send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
+		void send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
 
 	protected:
 		void wait_connection(void);
@@ -131,7 +131,7 @@ namespace network
 		void received_message(shared_ptr<container::value_container> message);
 #endif
 
-		void received_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data);
+		void received_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
 
 	private:
 		bool _encrypt_mode;
@@ -173,7 +173,7 @@ namespace network
 #endif
 
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&)> _received_file;
-		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)> _received_data;
+		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)> _received_data;
 
 	private:
 		shared_ptr<threads::thread_pool> _thread_pool;

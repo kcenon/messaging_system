@@ -131,24 +131,24 @@ namespace converting
 		return result.data();
 	}
 
-	vector<unsigned char> converter::to_array(const wstring& value)
+	vector<uint8_t> converter::to_array(const wstring& value)
 	{
 		if (value.empty())
 		{
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
 		string temp = to_string(value);
 
-		return vector<unsigned char>(temp.data(), temp.data() + temp.size());
+		return vector<uint8_t>(temp.data(), temp.data() + temp.size());
 	}
 
-	vector<unsigned char> converter::to_array(const string& value)
+	vector<uint8_t> converter::to_array(const string& value)
 	{
 		return to_array(to_wstring(value));
 	}
 
-	wstring converter::to_wstring(const vector<unsigned char>& value)
+	wstring converter::to_wstring(const vector<uint8_t>& value)
 	{
 		if (value.empty())
 		{
@@ -165,26 +165,26 @@ namespace converting
 		return to_wstring(string((char*)value.data(), value.size()));
 	}
 
-	string converter::to_string(const vector<unsigned char>& value)
+	string converter::to_string(const vector<uint8_t>& value)
 	{
 		return to_string(to_wstring(value));
 	}
 
-	vector<unsigned char> converter::from_base64(const wstring& value)
+	vector<uint8_t> converter::from_base64(const wstring& value)
 	{
 		if (value.empty())
 		{
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
 		string source = to_string(value);
 		string encoded;
 		StringSource(source.data(), true, new Base64Decoder(new StringSink(encoded)));
 
-		return vector<unsigned char>(encoded.data(), encoded.data() + encoded.size());
+		return vector<uint8_t>(encoded.data(), encoded.data() + encoded.size());
 	}
 
-	wstring converter::to_base64(const vector<unsigned char>& value)
+	wstring converter::to_base64(const vector<uint8_t>& value)
 	{
 		if (value.empty())
 		{

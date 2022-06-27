@@ -88,7 +88,7 @@ namespace container
 		_size = sizeof(long);
 
 		char* data_ptr = (char*)&reserved_count;
-		_data = vector<unsigned char>(data_ptr, data_ptr + _size);
+		_data = vector<uint8_t>(data_ptr, data_ptr + _size);
 	}
 
 	container_value::container_value(const wstring& name, const vector<shared_ptr<value>>& units)

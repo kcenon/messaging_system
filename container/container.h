@@ -48,7 +48,7 @@ namespace container
 	public:
 		value_container(void);
 		value_container(const wstring& data_string, const bool& parse_only_header = true);
-		value_container(const vector<unsigned char>& data_array, const bool& parse_only_header = true);
+		value_container(const vector<uint8_t>& data_array, const bool& parse_only_header = true);
 		value_container(const value_container& data_container, const bool& parse_only_header = true);
 		value_container(shared_ptr<value_container> data_container, const bool& parse_only_header = true);
 		value_container(const wstring& message_type, const vector<shared_ptr<value>>& units = {});
@@ -93,9 +93,9 @@ namespace container
 		
 	public:
 		wstring serialize(void) const;
-		vector<unsigned char> serialize_array(void) const;
+		vector<uint8_t> serialize_array(void) const;
 		bool deserialize(const wstring& data_string, const bool& parse_only_header = true);
-		bool deserialize(const vector<unsigned char>& data_array, const bool& parse_only_header = true);
+		bool deserialize(const vector<uint8_t>& data_array, const bool& parse_only_header = true);
 
 	public:
 		const wstring to_xml(void);

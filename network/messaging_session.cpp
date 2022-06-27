@@ -148,7 +148,7 @@ namespace network
 		_received_file = notification;
 	}
 
-	void messaging_session::set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)>& notification)
+	void messaging_session::set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)>& notification)
 	{
 		_received_data = notification;
 	}
@@ -389,7 +389,7 @@ namespace network
 #endif
 	}
 
-	void messaging_session::send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
+	void messaging_session::send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -411,7 +411,7 @@ namespace network
 			return;
 		}
 
-		vector<unsigned char> result;
+		vector<uint8_t> result;
 		append_binary_on_packet(result, converter::to_array(_source_id));
 		append_binary_on_packet(result, converter::to_array(_source_sub_id));
 		append_binary_on_packet(result, converter::to_array(target_id));
@@ -421,7 +421,7 @@ namespace network
 		send_binary_job(result);
 	}
 
-	void messaging_session::send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
+	void messaging_session::send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -443,7 +443,7 @@ namespace network
 			return;
 		}
 
-		vector<unsigned char> result;
+		vector<uint8_t> result;
 		append_binary_on_packet(result, converter::to_array(source_id));
 		append_binary_on_packet(result, converter::to_array(source_sub_id));
 		append_binary_on_packet(result, converter::to_array(target_id));
@@ -474,7 +474,7 @@ namespace network
 		return true;
 	}
 
-	void messaging_session::send_packet(const vector<unsigned char>& data)
+	void messaging_session::send_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -484,7 +484,7 @@ namespace network
 		send_on_tcp(_socket, data_modes::packet_mode, data);
 	}
 
-	void messaging_session::send_file_packet(const vector<unsigned char>& data)
+	void messaging_session::send_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -494,7 +494,7 @@ namespace network
 		send_on_tcp(_socket, data_modes::file_mode, data);
 	}
 
-	void messaging_session::send_binary_packet(const vector<unsigned char>& data)
+	void messaging_session::send_binary_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{

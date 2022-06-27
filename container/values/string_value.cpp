@@ -49,7 +49,7 @@ namespace container
 	string_value::string_value(const wstring& name, const wstring& value)
 		: string_value()
 	{
-		vector<unsigned char> data = convert_specific_string(value);
+		vector<uint8_t> data = convert_specific_string(value);
 
 		_name = name;
 		set_data(data.data(), data.size(), value_types::string_value);

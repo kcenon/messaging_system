@@ -85,7 +85,7 @@ namespace container
 		vector<shared_ptr<value>> value_array(const wstring& key);
 
 	public:
-		const vector<unsigned char> to_bytes(void) const;
+		const vector<uint8_t> to_bytes(void) const;
 
 	public:
 		bool is_null(void) const;
@@ -128,8 +128,8 @@ namespace container
 		friend wstring& operator<<(wstring& out, shared_ptr<value> other);
 
 	protected:
-		wstring convert_specific_string(const vector<unsigned char>& data) const;
-		vector<unsigned char> convert_specific_string(wstring data) const;
+		wstring convert_specific_string(const vector<uint8_t>& data) const;
+		vector<uint8_t> convert_specific_string(wstring data) const;
 
 	protected:
 		template <typename T> void set_data(T data);
@@ -153,7 +153,7 @@ namespace container
 		size_t _size;
 		value_types _type;
 		wstring _name;
-		vector<unsigned char> _data;
+		vector<uint8_t> _data;
 
 	protected:
 		weak_ptr<value> _parent;

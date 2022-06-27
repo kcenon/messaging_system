@@ -73,8 +73,8 @@ namespace network
 		void read_end_code(const data_modes& packet_mode, weak_ptr<asio::ip::tcp::socket> socket);
 
 	protected:
-		bool send_on_tcp(weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const vector<unsigned char>& data);
-		void receive_on_tcp(const data_modes& data_mode, const vector<unsigned char>& data);
+		bool send_on_tcp(weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const vector<uint8_t>& data);
+		void receive_on_tcp(const data_modes& data_mode, const vector<uint8_t>& data);
 
 	protected:
 		virtual void disconnected(void) = 0;
@@ -86,48 +86,48 @@ namespace network
 #endif
 
 	protected:
-		void send_packet_job(const vector<unsigned char>& data);
-		void send_file_job(const vector<unsigned char>& data);
-		void send_binary_job(const vector<unsigned char>& data);
+		void send_packet_job(const vector<uint8_t>& data);
+		void send_file_job(const vector<uint8_t>& data);
+		void send_binary_job(const vector<uint8_t>& data);
 
 		// packet
 	protected:
-		void compress_packet(const vector<unsigned char>& data);
-		void encrypt_packet(const vector<unsigned char>& data);
-		virtual void send_packet(const vector<unsigned char>& data) = 0;
+		void compress_packet(const vector<uint8_t>& data);
+		void encrypt_packet(const vector<uint8_t>& data);
+		virtual void send_packet(const vector<uint8_t>& data) = 0;
 
 	protected:
-		void decompress_packet(const vector<unsigned char>& data);
-		void decrypt_packet(const vector<unsigned char>& data);
-		void receive_packet(const vector<unsigned char>& data);
+		void decompress_packet(const vector<uint8_t>& data);
+		void decrypt_packet(const vector<uint8_t>& data);
+		void receive_packet(const vector<uint8_t>& data);
 
 		// file
 	protected:
-		void load_file_packet(const vector<unsigned char>& data);
-		void compress_file_packet(const vector<unsigned char>& data);
-		void encrypt_file_packet(const vector<unsigned char>& data);
-		virtual void send_file_packet(const vector<unsigned char>& data) = 0;
+		void load_file_packet(const vector<uint8_t>& data);
+		void compress_file_packet(const vector<uint8_t>& data);
+		void encrypt_file_packet(const vector<uint8_t>& data);
+		virtual void send_file_packet(const vector<uint8_t>& data) = 0;
 
 	protected:
-		void decompress_file_packet(const vector<unsigned char>& data);
-		void decrypt_file_packet(const vector<unsigned char>& data);
-		void receive_file_packet(const vector<unsigned char>& data);
-		void notify_file_packet(const vector<unsigned char>& data);
+		void decompress_file_packet(const vector<uint8_t>& data);
+		void decrypt_file_packet(const vector<uint8_t>& data);
+		void receive_file_packet(const vector<uint8_t>& data);
+		void notify_file_packet(const vector<uint8_t>& data);
 
 		// binary
 	protected:
-		void compress_binary_packet(const vector<unsigned char>& data);
-		void encrypt_binary_packet(const vector<unsigned char>& data);
-		virtual void send_binary_packet(const vector<unsigned char>& data) = 0;
+		void compress_binary_packet(const vector<uint8_t>& data);
+		void encrypt_binary_packet(const vector<uint8_t>& data);
+		virtual void send_binary_packet(const vector<uint8_t>& data) = 0;
 
 	protected:
-		void decompress_binary_packet(const vector<unsigned char>& data);
-		void decrypt_binary_packet(const vector<unsigned char>& data);
-		void receive_binary_packet(const vector<unsigned char>& data);
+		void decompress_binary_packet(const vector<uint8_t>& data);
+		void decrypt_binary_packet(const vector<uint8_t>& data);
+		void receive_binary_packet(const vector<uint8_t>& data);
 
 	protected:
-		void append_binary_on_packet(vector<unsigned char>& result, const vector<unsigned char>& source);
-		vector<unsigned char> devide_binary_on_packet(const vector<unsigned char>& source, size_t& index);
+		void append_binary_on_packet(vector<uint8_t>& result, const vector<uint8_t>& source);
+		vector<uint8_t> devide_binary_on_packet(const vector<uint8_t>& source, size_t& index);
 
 	protected:
 #ifndef __USE_TYPE_CONTAINER__
@@ -137,7 +137,7 @@ namespace network
 #endif
 
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&)> _received_file;
-		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)> _received_data;
+		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)> _received_data;
 
 	protected:
 		shared_ptr<threads::thread_pool> _thread_pool;
@@ -161,6 +161,6 @@ namespace network
 		char _start_code_tag[start_code];
 		char _end_code_tag[end_code];
 		char _receiving_buffer[buffer_size];
-		vector<unsigned char> _received_data_vector;
+		vector<uint8_t> _received_data_vector;
 	};
 }

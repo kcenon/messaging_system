@@ -54,11 +54,11 @@ namespace file_handler
 		return filesystem::remove(path);
 	}
 
-	vector<unsigned char> file::load(const wstring& path)
+	vector<uint8_t> file::load(const wstring& path)
 	{
 		if (!filesystem::exists(path))
 		{
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
 #ifdef _WIN32
@@ -68,16 +68,16 @@ namespace file_handler
 #endif
 		if (!stream.is_open())
 		{
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
-		std::vector<unsigned char> target((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
+		std::vector<uint8_t> target((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
 		stream.close();
 
 		return target;
 	}
 
-	bool file::save(const wstring& path, const vector<unsigned char>& data)
+	bool file::save(const wstring& path, const vector<uint8_t>& data)
 	{
 		filesystem::path target_path(path);
 		if (target_path.parent_path().empty() != true)
@@ -101,7 +101,7 @@ namespace file_handler
 		return true;
 	}
 
-	bool file::append(const wstring& source, const vector<unsigned char>& data)
+	bool file::append(const wstring& source, const vector<uint8_t>& data)
 	{
 #ifdef _WIN32
 		fstream stream(source, ios::out | ios::binary | ios::app);

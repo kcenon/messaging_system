@@ -60,7 +60,7 @@ namespace threads
 
 	}
 
-	job::job(const priorities& priority, const vector<unsigned char>& data)
+	job::job(const priorities& priority, const vector<uint8_t>& data)
 		: _priority(priority), _data(data), _temporary_stored_path(L""), _working_callback(nullptr), 
 		_working_callback2(nullptr), _working_callback3(nullptr)
 	{
@@ -73,15 +73,15 @@ namespace threads
 	{
 	}
 
-	job::job(const priorities& priority, const vector<unsigned char>& data, 
-			const function<void(const vector<unsigned char>&)>& working_callback)
+	job::job(const priorities& priority, const vector<uint8_t>& data, 
+			const function<void(const vector<uint8_t>&)>& working_callback)
 		: _priority(priority), _data(data), _temporary_stored_path(L""), _working_callback(nullptr), 
 		_working_callback2(working_callback), _working_callback3(nullptr)
 	{
 	}
 
-	job::job(const priorities& priority, const vector<unsigned char>& data, 
-			const function<void(weak_ptr<job_pool> job_pool, const vector<unsigned char>&)>& working_callback)
+	job::job(const priorities& priority, const vector<uint8_t>& data, 
+			const function<void(weak_ptr<job_pool> job_pool, const vector<uint8_t>&)>& working_callback)
 		: _priority(priority), _data(data), _temporary_stored_path(L""), _working_callback(nullptr), 
 		_working_callback2(nullptr), _working_callback3(working_callback)
 	{

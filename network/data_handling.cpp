@@ -324,7 +324,7 @@ namespace network
 		current_socket.reset();
 	}
 
-	bool data_handling::send_on_tcp(weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const vector<unsigned char>& data)
+	bool data_handling::send_on_tcp(weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -399,7 +399,7 @@ namespace network
 		return true;
 	}
 	
-	void data_handling::receive_on_tcp(const data_modes& data_mode, const vector<unsigned char>& data)
+	void data_handling::receive_on_tcp(const data_modes& data_mode, const vector<uint8_t>& data)
 	{
 		switch (data_mode)
 		{
@@ -414,7 +414,7 @@ namespace network
 		}
 	}
 
-	void data_handling::send_packet_job(const vector<unsigned char>& data)
+	void data_handling::send_packet_job(const vector<uint8_t>& data)
 	{
 		if (_confirm == connection_conditions::confirmed)
 		{
@@ -426,13 +426,13 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::compress_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::send_file_job(const vector<unsigned char>& data)
+	void data_handling::send_file_job(const vector<uint8_t>& data)
 	{
 		_thread_pool->push(make_shared<job>(priorities::low, data, 
 				bind(&data_handling::load_file_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::send_binary_job(const vector<unsigned char>& data)
+	void data_handling::send_binary_job(const vector<uint8_t>& data)
 	{
 		if (_compress_mode)
 		{
@@ -451,7 +451,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::top, data, bind(&data_handling::send_binary_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::compress_packet(const vector<unsigned char>& data)
+	void data_handling::compress_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -470,7 +470,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::low, compressor::compression(data, _compress_block_size), bind(&data_handling::send_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::encrypt_packet(const vector<unsigned char>& data)
+	void data_handling::encrypt_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -489,7 +489,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::normal, encryptor::encryption(data, _key, _iv), bind(&data_handling::compress_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::decompress_packet(const vector<unsigned char>& data)
+	void data_handling::decompress_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -508,7 +508,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::normal, compressor::decompression(data, _compress_block_size), bind(&data_handling::decrypt_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::decrypt_packet(const vector<unsigned char>& data)
+	void data_handling::decrypt_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -527,7 +527,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::low, encryptor::decryption(data, _key, _iv), bind(&data_handling::receive_packet, this, placeholders::_1)));		
 	}
 
-	void data_handling::receive_packet(const vector<unsigned char>& data)
+	void data_handling::receive_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -590,7 +590,7 @@ namespace network
 		target->second(message);
 	}
 
-	void data_handling::load_file_packet(const vector<unsigned char>& data)
+	void data_handling::load_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -607,7 +607,7 @@ namespace network
 			return;
 		}
 
-		vector<unsigned char> result;
+		vector<uint8_t> result;
 #ifndef __USE_TYPE_CONTAINER__
 		append_binary_on_packet(result, converter::to_array((*message)[DATA][INDICATION_ID].as_string()));
 		append_binary_on_packet(result, converter::to_array((*message)[HEADER][SOURCE_ID].as_string()));
@@ -663,7 +663,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::top, result, bind(&data_handling::send_file_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::compress_file_packet(const vector<unsigned char>& data)
+	void data_handling::compress_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -680,7 +680,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data, _compress_block_size), bind(&data_handling::send_file_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::encrypt_file_packet(const vector<unsigned char>& data)
+	void data_handling::encrypt_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -690,7 +690,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&data_handling::send_file_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::decompress_file_packet(const vector<unsigned char>& data)
+	void data_handling::decompress_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -707,7 +707,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::low , data, bind(&data_handling::receive_file_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::decrypt_file_packet(const vector<unsigned char>& data)
+	void data_handling::decrypt_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -724,7 +724,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::decompress_file_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::receive_file_packet(const vector<unsigned char>& data)
+	void data_handling::receive_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -743,7 +743,7 @@ namespace network
 		logger::handle().write(logging_level::parameter,
 			fmt::format(L"receive_file_packet: [{}] => [{}:{}] -> [{}:{}]", source_path, source_id, source_sub_id, target_id, target_sub_id));
 
-		vector<unsigned char> result;
+		vector<uint8_t> result;
 		append_binary_on_packet(result, converter::to_array(indication_id));
 		append_binary_on_packet(result, converter::to_array(target_id));
 		append_binary_on_packet(result, converter::to_array(target_sub_id));
@@ -759,7 +759,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::high, result, bind(&data_handling::notify_file_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::notify_file_packet(const vector<unsigned char>& data)
+	void data_handling::notify_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -778,7 +778,7 @@ namespace network
 		}
 	}
 
-	void data_handling::compress_binary_packet(const vector<unsigned char>& data)
+	void data_handling::compress_binary_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -795,7 +795,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data, _compress_block_size), bind(&data_handling::send_binary_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::encrypt_binary_packet(const vector<unsigned char>& data)
+	void data_handling::encrypt_binary_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -805,7 +805,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&data_handling::send_binary_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::decompress_binary_packet(const vector<unsigned char>& data)
+	void data_handling::decompress_binary_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -822,7 +822,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::receive_binary_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::decrypt_binary_packet(const vector<unsigned char>& data)
+	void data_handling::decrypt_binary_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -839,7 +839,7 @@ namespace network
 		_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decompress_binary_packet, this, placeholders::_1)));
 	}
 
-	void data_handling::receive_binary_packet(const vector<unsigned char>& data)
+	void data_handling::receive_binary_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -851,14 +851,14 @@ namespace network
 		wstring source_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
 		wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
 		wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		vector<unsigned char> target_data = devide_binary_on_packet(data, index);
+		vector<uint8_t> target_data = devide_binary_on_packet(data, index);
 		if (_received_data)
 		{
 			_received_data(source_id, source_sub_id, target_id, target_sub_id, target_data);
 		}
 	}
 
-	void data_handling::append_binary_on_packet(vector<unsigned char>& result, const vector<unsigned char>& source)
+	void data_handling::append_binary_on_packet(vector<uint8_t>& result, const vector<uint8_t>& source)
 	{
 		size_t temp;
 		const int size = sizeof(size_t);
@@ -875,11 +875,11 @@ namespace network
 		result.insert(result.end(), source.begin(), source.end());
 	}
 
-	vector<unsigned char> data_handling::devide_binary_on_packet(const vector<unsigned char>& source, size_t& index)
+	vector<uint8_t> data_handling::devide_binary_on_packet(const vector<uint8_t>& source, size_t& index)
 	{
 		if (source.empty())
 		{
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
 		size_t temp;
@@ -887,7 +887,7 @@ namespace network
 
 		if (source.size() < index + size)
 		{
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
 		memcpy(&temp, source.data() + index, size);
@@ -895,10 +895,10 @@ namespace network
 
 		if (temp == 0 || source.size() < index + temp)
 		{
-			return vector<unsigned char>();
+			return vector<uint8_t>();
 		}
 
-		vector<unsigned char> result;
+		vector<uint8_t> result;
 		result.insert(result.end(), source.begin() + index, source.begin() + index + temp);
 		index += temp;
 

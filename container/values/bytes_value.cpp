@@ -46,7 +46,7 @@ namespace container
 		_type = value_types::bytes_value;
 	}
 
-	bytes_value::bytes_value(const wstring& name, const vector<unsigned char>& data)
+	bytes_value::bytes_value(const wstring& name, const vector<uint8_t>& data)
 		: bytes_value()
 	{
 		_name = name;

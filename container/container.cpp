@@ -99,7 +99,7 @@ namespace container
 		deserialize(data_string, parse_only_header);
 	}
 
-	value_container::value_container(const vector<unsigned char>& data_array, const bool& parse_only_header) : value_container()
+	value_container::value_container(const vector<uint8_t>& data_array, const bool& parse_only_header) : value_container()
 	{
 		deserialize(data_array, parse_only_header);
 	}
@@ -416,7 +416,7 @@ namespace container
 		return result;
 	}
 
-	vector<unsigned char> value_container::serialize_array(void) const
+	vector<uint8_t> value_container::serialize_array(void) const
 	{
 		return converter::to_array(serialize());
 	}
@@ -460,7 +460,7 @@ namespace container
 		return deserialize_values(removed_newline, parse_only_header);
 	}
 
-	bool value_container::deserialize(const vector<unsigned char>& data_array, const bool& parse_only_header)
+	bool value_container::deserialize(const vector<uint8_t>& data_array, const bool& parse_only_header)
 	{
 		return deserialize(converter::to_wstring(data_array), parse_only_header);
 	}

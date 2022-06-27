@@ -165,7 +165,7 @@ namespace network
 		_received_file = notification;
 	}
 
-	void messaging_client::set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)>& notification)
+	void messaging_client::set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)>& notification)
 	{
 		_received_data = notification;
 	}
@@ -424,7 +424,7 @@ namespace network
 #endif
 	}
 
-	void messaging_client::send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
+	void messaging_client::send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data)
 	{
 		if (_socket == nullptr)
 		{
@@ -441,7 +441,7 @@ namespace network
 			return;
 		}
 
-		vector<unsigned char> result;
+		vector<uint8_t> result;
 		append_binary_on_packet(result, converter::to_array(_source_id));
 		append_binary_on_packet(result, converter::to_array(_source_sub_id));
 		append_binary_on_packet(result, converter::to_array(target_id));
@@ -522,7 +522,7 @@ namespace network
 		connection_notification(false);
 	}
 
-	void messaging_client::send_packet(const vector<unsigned char>& data)
+	void messaging_client::send_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -532,7 +532,7 @@ namespace network
 		send_on_tcp(_socket, data_modes::packet_mode, data);
 	}
 
-	void messaging_client::send_file_packet(const vector<unsigned char>& data)
+	void messaging_client::send_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -542,7 +542,7 @@ namespace network
 		send_on_tcp(_socket, data_modes::file_mode, data);
 	}
 
-	void messaging_client::send_binary_packet(const vector<unsigned char>& data)
+	void messaging_client::send_binary_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{

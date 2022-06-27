@@ -145,7 +145,7 @@ namespace container
 
 		_type = type;
 		_size = size;
-		_data = vector<unsigned char>(data, data + size);
+		_data = vector<uint8_t>(data, data + size);
 	}
 
 	void value::set_data(const wstring& name, const value_types& type, const wstring& data)
@@ -235,7 +235,7 @@ namespace container
 		return result_list;
 	}
 
-	const vector<unsigned char> value::to_bytes(void) const
+	const vector<uint8_t> value::to_bytes(void) const
 	{
 		return _data;
 	}
@@ -387,7 +387,7 @@ namespace container
 		return out;
 	}
 
-	wstring value::convert_specific_string(const vector<unsigned char>& data) const
+	wstring value::convert_specific_string(const vector<uint8_t>& data) const
 	{
 		wstring temp = converter::to_wstring(data);
 		converter::replace(temp, L"</0x0A;>", L"\r");
@@ -398,7 +398,7 @@ namespace container
 		return temp;
 	}
 
-	vector<unsigned char> value::convert_specific_string(wstring data) const
+	vector<uint8_t> value::convert_specific_string(wstring data) const
 	{
 		converter::replace(data, L"\r", L"</0x0A;>");
 		converter::replace(data, L"\n", L"</0x0B;>");
@@ -413,7 +413,7 @@ namespace container
 		char* data_ptr = (char*)&data;
 
 		_size = sizeof(T);
-		_data = vector<unsigned char>(data_ptr, data_ptr + _size);
+		_data = vector<uint8_t>(data_ptr, data_ptr + _size);
 	}
 
 	void value::set_byte_string(const wstring& data)

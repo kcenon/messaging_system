@@ -143,7 +143,7 @@ namespace network
 		_received_file = notification;
 	}
 
-	void messaging_server::set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)>& notification)
+	void messaging_server::set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)>& notification)
 	{
 		_received_data = notification;
 	}
@@ -404,7 +404,7 @@ namespace network
 		}
 	}
 
-	void messaging_server::send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
+	void messaging_server::send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -427,7 +427,7 @@ namespace network
 		}
 	}
 
-	void messaging_server::send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
+	void messaging_server::send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -616,7 +616,7 @@ namespace network
 		}
 	}
 
-	void messaging_server::received_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data)
+	void messaging_server::received_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{

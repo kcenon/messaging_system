@@ -160,7 +160,7 @@ namespace logging
 		_condition.notify_one();
 	}
 
-	void logger::write(const logging_level& target_level, const vector<unsigned char>& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time)
+	void logger::write(const logging_level& target_level, const vector<uint8_t>& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time)
 	{
 		if (target_level > _target_level)
 		{

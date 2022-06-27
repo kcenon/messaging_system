@@ -43,9 +43,9 @@ namespace file_handler
 	{
 	public:
 		static bool remove(const wstring& path);
-		static vector<unsigned char> load(const wstring& path);
-		static bool save(const wstring& path, const vector<unsigned char>& data);
-		static bool append(const wstring& path, const vector<unsigned char>& data);
+		static vector<uint8_t> load(const wstring& path);
+		static bool save(const wstring& path, const vector<uint8_t>& data);
+		static bool append(const wstring& path, const vector<uint8_t>& data);
 	};
 }
 

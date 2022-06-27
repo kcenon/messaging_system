@@ -92,7 +92,7 @@ namespace network
 #endif
 
 		void set_file_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&)>& notification);
-		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<unsigned char>&)>& notification);
+		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)>& notification);
 
 	public:
 		connection_conditions get_confirom_status(void) const;
@@ -115,16 +115,16 @@ namespace network
 		void send_files(shared_ptr<container::value_container> message);
 #endif
 
-		void send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<unsigned char>& data);
+		void send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
 
 	protected:
 		void send_connection(void);
 		void disconnected(void) override;
 
 	private:
-		void send_packet(const vector<unsigned char>& data) override;
-		void send_file_packet(const vector<unsigned char>& data) override;
-		void send_binary_packet(const vector<unsigned char>& data) override;
+		void send_packet(const vector<uint8_t>& data) override;
+		void send_file_packet(const vector<uint8_t>& data) override;
+		void send_binary_packet(const vector<uint8_t>& data) override;
 
 	private:
 #ifndef __USE_TYPE_CONTAINER__

@@ -44,7 +44,7 @@ namespace container
 	{
 	public:
 		bytes_value(void);
-		bytes_value(const wstring& name, const vector<unsigned char>& data);
+		bytes_value(const wstring& name, const vector<uint8_t>& data);
 		bytes_value(const wstring& name, const unsigned char* data, const size_t& size);
 		~bytes_value(void);
 

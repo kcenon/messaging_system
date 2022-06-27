@@ -57,12 +57,12 @@ namespace encrypting
 		rng.GenerateBlock(iv, CryptoPP::AES::BLOCKSIZE);
 
 		return {
-			converter::to_base64(vector<unsigned char>(key, key + CryptoPP::AES::DEFAULT_KEYLENGTH)),
-			converter::to_base64(vector<unsigned char>(iv, iv + CryptoPP::AES::BLOCKSIZE))
+			converter::to_base64(vector<uint8_t>(key, key + CryptoPP::AES::DEFAULT_KEYLENGTH)),
+			converter::to_base64(vector<uint8_t>(iv, iv + CryptoPP::AES::BLOCKSIZE))
 		};
 	}
 
-	vector<unsigned char> encryptor::encryption(const vector<unsigned char>& original_data, const wstring& key_string, const wstring& iv_string)
+	vector<uint8_t> encryptor::encryption(const vector<uint8_t>& original_data, const wstring& key_string, const wstring& iv_string)
 	{
 		if (original_data.empty())
 		{
@@ -74,9 +74,9 @@ namespace encrypting
 			return original_data;
 		}
 
-		vector<unsigned char> encrypted;
-		vector<unsigned char> key = converter::from_base64(key_string);
-		vector<unsigned char> iv = converter::from_base64(iv_string);
+		vector<uint8_t> encrypted;
+		vector<uint8_t> key = converter::from_base64(key_string);
+		vector<uint8_t> iv = converter::from_base64(iv_string);
 
 		CryptoPP::CBC_Mode<CryptoPP::AES>::Encryption enc;
 		enc.SetKeyWithIV(key.data(), key.size(), iv.data(), iv.size());
@@ -92,7 +92,7 @@ namespace encrypting
 		return encrypted;
 	}
 
-	vector<unsigned char> encryptor::decryption(const vector<unsigned char>& encrypted_data, const wstring& key_string, const wstring& iv_string)
+	vector<uint8_t> encryptor::decryption(const vector<uint8_t>& encrypted_data, const wstring& key_string, const wstring& iv_string)
 	{
 		if (encrypted_data.empty())
 		{
@@ -104,9 +104,9 @@ namespace encrypting
 			return encrypted_data;
 		}
 
-		vector<unsigned char> decrypted;
-		vector<unsigned char> key = converter::from_base64(key_string);
-		vector<unsigned char> iv = converter::from_base64(iv_string);
+		vector<uint8_t> decrypted;
+		vector<uint8_t> key = converter::from_base64(key_string);
+		vector<uint8_t> iv = converter::from_base64(iv_string);
 
 		CryptoPP::CBC_Mode<CryptoPP::AES>::Decryption dec;
 		dec.SetKeyWithIV(key.data(), key.size(), iv.data(), iv.size());

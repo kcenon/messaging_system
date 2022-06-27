@@ -51,14 +51,14 @@ namespace converting
 		static string to_string(const wstring& value, locale target_locale = locale(""));
 
 	public:
-		static vector<unsigned char> to_array(const wstring& value);
-		static vector<unsigned char> to_array(const string& value);
-		static wstring to_wstring(const vector<unsigned char>& value);
-		static string to_string(const vector<unsigned char>& value);
+		static vector<uint8_t> to_array(const wstring& value);
+		static vector<uint8_t> to_array(const string& value);
+		static wstring to_wstring(const vector<uint8_t>& value);
+		static string to_string(const vector<uint8_t>& value);
 
 	public:
-		static vector<unsigned char> from_base64(const wstring& value);
-		static wstring to_base64(const vector<unsigned char>& value);
+		static vector<uint8_t> from_base64(const wstring& value);
+		static wstring to_base64(const vector<uint8_t>& value);
 
 	private:
 		static wstring convert(const u16string& value);

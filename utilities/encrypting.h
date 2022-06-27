@@ -43,7 +43,7 @@ namespace encrypting
 	{
 	public:
 		static pair<wstring, wstring> create_key(void);
-		static vector<unsigned char> encryption(const vector<unsigned char>& original_data, const wstring& key, const wstring& iv);
-		static vector<unsigned char> decryption(const vector<unsigned char>& encrypted_data, const wstring& key, const wstring& iv);
+		static vector<uint8_t> encryption(const vector<uint8_t>& original_data, const wstring& key, const wstring& iv);
+		static vector<uint8_t> decryption(const vector<uint8_t>& encrypted_data, const wstring& key, const wstring& iv);
 	};
 }

@@ -48,12 +48,12 @@ namespace threads
 	{
 	public:
 		job(const priorities& priority);
-		job(const priorities& priority, const vector<unsigned char>& data);
+		job(const priorities& priority, const vector<uint8_t>& data);
 		job(const priorities& priority, const function<void(void)>& working_callback);
-		job(const priorities& priority, const vector<unsigned char>& data, 
-			const function<void(const vector<unsigned char>&)>& working_callback);
-		job(const priorities& priority, const vector<unsigned char>& data, 
-			const function<void(weak_ptr<job_pool> job_pool, const vector<unsigned char>&)>& working_callback);
+		job(const priorities& priority, const vector<uint8_t>& data, 
+			const function<void(const vector<uint8_t>&)>& working_callback);
+		job(const priorities& priority, const vector<uint8_t>& data, 
+			const function<void(weak_ptr<job_pool> job_pool, const vector<uint8_t>&)>& working_callback);
 		~job(void);
 
 	public:
@@ -77,7 +77,7 @@ namespace threads
 		virtual void working(const priorities& worker_priority);
 
 	protected:
-		vector<unsigned char> _data;
+		vector<uint8_t> _data;
 		weak_ptr<job_pool> _job_pool;
 
 	private:
@@ -85,7 +85,7 @@ namespace threads
 		wstring _temporary_stored_path;
 		
 		function<void(void)> _working_callback;
-		function<void(const vector<unsigned char>&)> _working_callback2;
-		function<void(weak_ptr<job_pool>, const vector<unsigned char>&)> _working_callback3;
+		function<void(const vector<uint8_t>&)> _working_callback2;
+		function<void(weak_ptr<job_pool>, const vector<uint8_t>&)> _working_callback3;
 	};
 }

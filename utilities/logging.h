@@ -78,7 +78,7 @@ namespace logging
 	public:
 		chrono::time_point<chrono::high_resolution_clock> chrono_start(void);
 		void write(const logging_level& target_level, const wstring& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time = nullopt);
-		void write(const logging_level& target_level, const vector<unsigned char>& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time = nullopt);
+		void write(const logging_level& target_level, const vector<uint8_t>& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time = nullopt);
 
 	protected:
 		void run(void);
