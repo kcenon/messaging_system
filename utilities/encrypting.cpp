@@ -44,7 +44,7 @@ namespace encrypting
 {
 	using namespace converting;
 
-	pair<wstring, wstring> encryptor::create_key(void)
+	pair<wstring, wstring> cryptor::create_key(void)
 	{
 		CryptoPP::AutoSeededRandomPool rng;
 
@@ -62,7 +62,7 @@ namespace encrypting
 		};
 	}
 
-	vector<uint8_t> encryptor::encryption(const vector<uint8_t>& original_data, const wstring& key_string, const wstring& iv_string)
+	vector<uint8_t> cryptor::encryption(const vector<uint8_t>& original_data, const wstring& key_string, const wstring& iv_string)
 	{
 		if (original_data.empty())
 		{
@@ -92,7 +92,7 @@ namespace encrypting
 		return encrypted;
 	}
 
-	vector<uint8_t> encryptor::decryption(const vector<uint8_t>& encrypted_data, const wstring& key_string, const wstring& iv_string)
+	vector<uint8_t> cryptor::decryption(const vector<uint8_t>& encrypted_data, const wstring& key_string, const wstring& iv_string)
 	{
 		if (encrypted_data.empty())
 		{

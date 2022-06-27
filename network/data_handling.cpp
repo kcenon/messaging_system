@@ -486,7 +486,7 @@ namespace network
 
 		logger::handle().write(logging_level::parameter, L"attempt to encrypt a packet");	
 
-		_thread_pool->push(make_shared<job>(priorities::normal, encryptor::encryption(data, _key, _iv), bind(&data_handling::compress_packet, this, placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::normal, cryptor::encryption(data, _key, _iv), bind(&data_handling::compress_packet, this, placeholders::_1)));
 	}
 
 	void data_handling::decompress_packet(const vector<uint8_t>& data)
@@ -524,7 +524,7 @@ namespace network
 
 		logger::handle().write(logging_level::parameter, L"attempt to decrypt a packet");
 
-		_thread_pool->push(make_shared<job>(priorities::low, encryptor::decryption(data, _key, _iv), bind(&data_handling::receive_packet, this, placeholders::_1)));		
+		_thread_pool->push(make_shared<job>(priorities::low, cryptor::decryption(data, _key, _iv), bind(&data_handling::receive_packet, this, placeholders::_1)));		
 	}
 
 	void data_handling::receive_packet(const vector<uint8_t>& data)
@@ -687,7 +687,7 @@ namespace network
 			return;
 		}
 
-		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&data_handling::send_file_packet, this, placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, cryptor::encryption(data, _key, _iv), bind(&data_handling::send_file_packet, this, placeholders::_1)));
 	}
 
 	void data_handling::decompress_file_packet(const vector<uint8_t>& data)
@@ -716,7 +716,7 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(make_shared<job>(priorities::normal, encryptor::decryption(data, _key, _iv), bind(&data_handling::decompress_file_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::normal, cryptor::decryption(data, _key, _iv), bind(&data_handling::decompress_file_packet, this, placeholders::_1)));
 
 			return;
 		}
@@ -732,13 +732,13 @@ namespace network
 		}
 
 		size_t index = 0;
-		wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring source_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring source_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring source_path = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring indication_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring source_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring source_sub_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring target_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring target_sub_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring source_path = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring target_path = converter::to_wstring(divide_binary_on_packet(data, index));
 
 		logger::handle().write(logging_level::parameter,
 			fmt::format(L"receive_file_packet: [{}] => [{}:{}] -> [{}:{}]", source_path, source_id, source_sub_id, target_id, target_sub_id));
@@ -747,7 +747,7 @@ namespace network
 		append_binary_on_packet(result, converter::to_array(indication_id));
 		append_binary_on_packet(result, converter::to_array(target_id));
 		append_binary_on_packet(result, converter::to_array(target_sub_id));
-		if (file::save(target_path, devide_binary_on_packet(data, index)))
+		if (file::save(target_path, divide_binary_on_packet(data, index)))
 		{
 			append_binary_on_packet(result, converter::to_array(target_path));
 		}
@@ -767,10 +767,10 @@ namespace network
 		}
 
 		size_t index = 0;
-		wstring indication_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring target_path = converter::to_wstring(devide_binary_on_packet(data, index));
+		wstring indication_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring target_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring target_sub_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring target_path = converter::to_wstring(divide_binary_on_packet(data, index));
 
 		if (_received_file)
 		{
@@ -802,7 +802,7 @@ namespace network
 			return;
 		}
 
-		_thread_pool->push(make_shared<job>(priorities::top, encryptor::encryption(data, _key, _iv), bind(&data_handling::send_binary_packet, this, placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, cryptor::encryption(data, _key, _iv), bind(&data_handling::send_binary_packet, this, placeholders::_1)));
 	}
 
 	void data_handling::decompress_binary_packet(const vector<uint8_t>& data)
@@ -831,7 +831,7 @@ namespace network
 
 		if (_encrypt_mode)
 		{
-			_thread_pool->push(make_shared<job>(priorities::high, encryptor::decryption(data, _key, _iv), bind(&data_handling::decompress_binary_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, cryptor::decryption(data, _key, _iv), bind(&data_handling::decompress_binary_packet, this, placeholders::_1)));
 
 			return;
 		}
@@ -847,11 +847,11 @@ namespace network
 		}
 
 		size_t index = 0;
-		wstring source_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring source_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring target_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		wstring target_sub_id = converter::to_wstring(devide_binary_on_packet(data, index));
-		vector<uint8_t> target_data = devide_binary_on_packet(data, index);
+		wstring source_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring source_sub_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring target_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring target_sub_id = converter::to_wstring(divide_binary_on_packet(data, index));
+		vector<uint8_t> target_data = divide_binary_on_packet(data, index);
 		if (_received_data)
 		{
 			_received_data(source_id, source_sub_id, target_id, target_sub_id, target_data);
@@ -875,7 +875,7 @@ namespace network
 		result.insert(result.end(), source.begin(), source.end());
 	}
 
-	vector<uint8_t> data_handling::devide_binary_on_packet(const vector<uint8_t>& source, size_t& index)
+	vector<uint8_t> data_handling::divide_binary_on_packet(const vector<uint8_t>& source, size_t& index)
 	{
 		if (source.empty())
 		{

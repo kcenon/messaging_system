@@ -348,7 +348,7 @@ namespace network
 				continue;
 			}
 
-			if (session->get_confirom_status() != connection_conditions::confirmed)
+			if (session->get_confirm_status() != connection_conditions::confirmed)
 			{
 				continue;
 			}
@@ -395,7 +395,7 @@ namespace network
 				continue;
 			}
 
-			if (session->get_confirom_status() != connection_conditions::confirmed)
+			if (session->get_confirm_status() != connection_conditions::confirmed)
 			{
 				continue;
 			}
@@ -418,7 +418,7 @@ namespace network
 				continue;
 			}
 
-			if (session->get_confirom_status() != connection_conditions::confirmed)
+			if (session->get_confirm_status() != connection_conditions::confirmed)
 			{
 				continue;
 			}
@@ -441,7 +441,7 @@ namespace network
 				continue;
 			}
 
-			if (session->get_confirom_status() != connection_conditions::confirmed)
+			if (session->get_confirm_status() != connection_conditions::confirmed)
 			{
 				continue;
 			}
@@ -507,7 +507,7 @@ namespace network
 				continue;
 			}
 
-			if (session->get_confirom_status() == connection_conditions::expired)
+			if (session->get_confirm_status() == connection_conditions::expired)
 			{
 				connect_condition(session, false);
 			}

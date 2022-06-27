@@ -127,7 +127,7 @@ namespace network
 
 	protected:
 		void append_binary_on_packet(vector<uint8_t>& result, const vector<uint8_t>& source);
-		vector<uint8_t> devide_binary_on_packet(const vector<uint8_t>& source, size_t& index);
+		vector<uint8_t> divide_binary_on_packet(const vector<uint8_t>& source, size_t& index);
 
 	protected:
 #ifndef __USE_TYPE_CONTAINER__

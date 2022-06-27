@@ -86,7 +86,7 @@ namespace network
 		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)>& notification);
 
 	public:
-		const connection_conditions get_confirom_status(void);
+		const connection_conditions get_confirm_status(void);
 		const session_types get_session_type(void);
 		const wstring target_id(void);
 		const wstring target_sub_id(void);

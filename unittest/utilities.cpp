@@ -68,15 +68,15 @@ TEST(converter, test)
     EXPECT_TRUE(converter::to_wstring(converter::to_array(L"test has passed")).compare(L"test has passed") == 0);
 }
 
-TEST(encryptor, test)
+TEST(cryptor, test)
 {
-    auto key = encryptor::create_key();
+    auto key = cryptor::create_key();
 
     EXPECT_TRUE(!key.first.empty());
     EXPECT_TRUE(!key.second.empty());
     
-    auto encrypted = encryptor::encryption(converter::to_array(L"I am a programmer"), key.first, key.second);
-    auto decrypted = converter::to_wstring(encryptor::decryption(encrypted, key.first, key.second));
+    auto encrypted = cryptor::encryption(converter::to_array(L"I am a programmer"), key.first, key.second);
+    auto decrypted = converter::to_wstring(cryptor::decryption(encrypted, key.first, key.second));
 
     EXPECT_TRUE(decrypted.compare(L"I am a programmer") == 0);
 }

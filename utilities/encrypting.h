@@ -39,7 +39,7 @@ using namespace std;
 
 namespace encrypting
 {
-	class encryptor
+	class cryptor
 	{
 	public:
 		static pair<wstring, wstring> create_key(void);

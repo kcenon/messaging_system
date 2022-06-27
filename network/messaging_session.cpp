@@ -153,7 +153,7 @@ namespace network
 		_received_data = notification;
 	}
 
-	const connection_conditions messaging_session::get_confirom_status(void)
+	const connection_conditions messaging_session::get_confirm_status(void)
 	{
 		return _confirm;
 	}
@@ -877,7 +877,7 @@ namespace network
 
 		logger::handle().write(logging_level::sequence, L"attempt to generate encrypt key");
 		
-		auto encrypt_key = encryptor::create_key();
+		auto encrypt_key = cryptor::create_key();
 		_key = encrypt_key.first;
 		_iv = encrypt_key.second;
 
