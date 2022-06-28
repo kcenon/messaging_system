@@ -173,9 +173,7 @@ namespace threads
 			return false;
 		}
 
-		_notifications.insert({ id, notification });
-
-		logger::handle().write(logging_level::parameter, fmt::format(L"appended notification: {}", id));			
+		_notifications.insert({ id, notification });		
 
 		return true;
 	}
@@ -188,9 +186,7 @@ namespace threads
 			return false;
 		}
 
-		_notifications.erase(target);
-
-		logger::handle().write(logging_level::parameter, fmt::format(L"removed notification: {}", id));			
+		_notifications.erase(target);		
 
 		return true;
 	}
