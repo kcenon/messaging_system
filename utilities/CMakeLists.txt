@@ -16,6 +16,7 @@ ADD_LIBRARY(${LIBRARY_NAME} STATIC
     logging_level.h logging.h logging.cpp
     folder_handler.h folder_handler.cpp 
     file_handler.h file_handler.cpp
+    binary_combiner.h binary_combiner.cpp
     encrypting.h encrypting.cpp
     datetime_handler.h datetime_handler.cpp
     converting.h converting.cpp
