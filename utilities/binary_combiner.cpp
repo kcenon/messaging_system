@@ -32,6 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "binary_combiner.h"
 
+#include <cstring>
+#include <algorithm>
+
 namespace binary_parser
 {
     void combiner::append(vector<uint8_t>& result, const vector<uint8_t>& source)
