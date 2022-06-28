@@ -49,6 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "data_lengths.h"
 #include "file_handler.h"
+#include "binary_combiner.h"
 
 #include <future>
 
@@ -68,6 +69,7 @@ namespace network
 	using namespace encrypting;
 	using namespace compressing;
 	using namespace file_handler;
+	using namespace binary_parser;
 
 	messaging_session::messaging_session(const wstring& source_id, const wstring& connection_key, asio::ip::tcp::socket& socket,
 		const unsigned char& start_code_value, const unsigned char& end_code_value)
@@ -412,11 +414,11 @@ namespace network
 		}
 
 		vector<uint8_t> result;
-		append_binary_on_packet(result, converter::to_array(_source_id));
-		append_binary_on_packet(result, converter::to_array(_source_sub_id));
-		append_binary_on_packet(result, converter::to_array(target_id));
-		append_binary_on_packet(result, converter::to_array(target_sub_id));
-		append_binary_on_packet(result, data);
+		combiner::append(result, converter::to_array(_source_id));
+		combiner::append(result, converter::to_array(_source_sub_id));
+		combiner::append(result, converter::to_array(target_id));
+		combiner::append(result, converter::to_array(target_sub_id));
+		combiner::append(result, data);
 
 		send_binary_job(result);
 	}
@@ -444,11 +446,11 @@ namespace network
 		}
 
 		vector<uint8_t> result;
-		append_binary_on_packet(result, converter::to_array(source_id));
-		append_binary_on_packet(result, converter::to_array(source_sub_id));
-		append_binary_on_packet(result, converter::to_array(target_id));
-		append_binary_on_packet(result, converter::to_array(target_sub_id));
-		append_binary_on_packet(result, data);
+		combiner::append(result, converter::to_array(source_id));
+		combiner::append(result, converter::to_array(source_sub_id));
+		combiner::append(result, converter::to_array(target_id));
+		combiner::append(result, converter::to_array(target_sub_id));
+		combiner::append(result, data);
 
 		send_binary_job(result);
 	}

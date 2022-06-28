@@ -38,6 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "encrypting.h"
 #include "compressing.h"
 #include "file_handler.h"
+#include "binary_combiner.h"
 #include "constexpr_string.h"
 
 #include <utility>
@@ -53,6 +54,7 @@ namespace network
 	using namespace encrypting;
 	using namespace compressing;
 	using namespace file_handler;
+	using namespace binary_parser;
 
 	data_handling::data_handling(const unsigned char& start_code_value, const unsigned char& end_code_value)
 		: _key(L""), _iv(L""), _compress_mode(false), _encrypt_mode(false), _received_message(nullptr),
@@ -609,22 +611,22 @@ namespace network
 
 		vector<uint8_t> result;
 #ifndef __USE_TYPE_CONTAINER__
-		append_binary_on_packet(result, converter::to_array((*message)[DATA][INDICATION_ID].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[HEADER][SOURCE_ID].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[HEADER][SOURCE_SUB_ID].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[HEADER][TARGET_ID].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[HEADER][TARGET_SUB_ID].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[DATA][SOURCE].as_string()));
-		append_binary_on_packet(result, converter::to_array((*message)[DATA][TARGET].as_string()));
+		combiner::append(result, converter::to_array((*message)[DATA][INDICATION_ID].as_string()));
+		combiner::append(result, converter::to_array((*message)[HEADER][SOURCE_ID].as_string()));
+		combiner::append(result, converter::to_array((*message)[HEADER][SOURCE_SUB_ID].as_string()));
+		combiner::append(result, converter::to_array((*message)[HEADER][TARGET_ID].as_string()));
+		combiner::append(result, converter::to_array((*message)[HEADER][TARGET_SUB_ID].as_string()));
+		combiner::append(result, converter::to_array((*message)[DATA][SOURCE].as_string()));
+		combiner::append(result, converter::to_array((*message)[DATA][TARGET].as_string()));
 #ifdef _WIN32
-		append_binary_on_packet(result, file::load((*message)[DATA][SOURCE].as_string()));
+		combiner::append(result, file::load((*message)[DATA][SOURCE].as_string()));
 
 		logger::handle().write(logging_level::parameter,
 			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)[DATA][INDICATION_ID].as_string(),
 				(*message)[HEADER][SOURCE_ID].as_string(), (*message)[HEADER][SOURCE_SUB_ID].as_string(),
 				(*message)[HEADER][TARGET_ID].as_string(), (*message)[HEADER][TARGET_SUB_ID].as_string()));
 #else
-		append_binary_on_packet(result, file::load(converter::to_wstring((*message)[DATA][SOURCE].as_string())));
+		combiner::append(result, file::load(converter::to_wstring((*message)[DATA][SOURCE].as_string())));
 
 		logger::handle().write(logging_level::parameter,
 			converter::to_wstring(fmt::format("load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)[DATA][INDICATION_ID].as_string(),
@@ -632,14 +634,14 @@ namespace network
 				(*message)[HEADER][TARGET_ID].as_string(), (*message)[HEADER][TARGET_SUB_ID].as_string())));
 #endif
 #else
-		append_binary_on_packet(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
-		append_binary_on_packet(result, converter::to_array(message->source_id()));
-		append_binary_on_packet(result, converter::to_array(message->source_sub_id()));
-		append_binary_on_packet(result, converter::to_array(message->target_id()));
-		append_binary_on_packet(result, converter::to_array(message->target_sub_id()));
-		append_binary_on_packet(result, converter::to_array(message->get_value(L"source")->to_string()));
-		append_binary_on_packet(result, converter::to_array(message->get_value(L"target")->to_string()));
-		append_binary_on_packet(result, file::load(message->get_value(L"source")->to_string()));
+		combiner::append(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
+		combiner::append(result, converter::to_array(message->source_id()));
+		combiner::append(result, converter::to_array(message->source_sub_id()));
+		combiner::append(result, converter::to_array(message->target_id()));
+		combiner::append(result, converter::to_array(message->target_sub_id()));
+		combiner::append(result, converter::to_array(message->get_value(L"source")->to_string()));
+		combiner::append(result, converter::to_array(message->get_value(L"target")->to_string()));
+		combiner::append(result, file::load(message->get_value(L"source")->to_string()));
 
 		logger::handle().write(logging_level::parameter,
 			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", message->get_value(L"indication_id")->to_string(),
@@ -732,28 +734,28 @@ namespace network
 		}
 
 		size_t index = 0;
-		wstring indication_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring source_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring source_sub_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring target_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring target_sub_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring source_path = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring target_path = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring indication_id = converter::to_wstring(combiner::divide(data, index));
+		wstring source_id = converter::to_wstring(combiner::divide(data, index));
+		wstring source_sub_id = converter::to_wstring(combiner::divide(data, index));
+		wstring target_id = converter::to_wstring(combiner::divide(data, index));
+		wstring target_sub_id = converter::to_wstring(combiner::divide(data, index));
+		wstring source_path = converter::to_wstring(combiner::divide(data, index));
+		wstring target_path = converter::to_wstring(combiner::divide(data, index));
 
 		logger::handle().write(logging_level::parameter,
 			fmt::format(L"receive_file_packet: [{}] => [{}:{}] -> [{}:{}]", source_path, source_id, source_sub_id, target_id, target_sub_id));
 
 		vector<uint8_t> result;
-		append_binary_on_packet(result, converter::to_array(indication_id));
-		append_binary_on_packet(result, converter::to_array(target_id));
-		append_binary_on_packet(result, converter::to_array(target_sub_id));
-		if (file::save(target_path, divide_binary_on_packet(data, index)))
+		combiner::append(result, converter::to_array(indication_id));
+		combiner::append(result, converter::to_array(target_id));
+		combiner::append(result, converter::to_array(target_sub_id));
+		if (file::save(target_path, combiner::divide(data, index)))
 		{
-			append_binary_on_packet(result, converter::to_array(target_path));
+			combiner::append(result, converter::to_array(target_path));
 		}
 		else
 		{
-			append_binary_on_packet(result, converter::to_array(L""));
+			combiner::append(result, converter::to_array(L""));
 		}
 
 		_thread_pool->push(make_shared<job>(priorities::high, result, bind(&data_handling::notify_file_packet, this, placeholders::_1)));
@@ -767,10 +769,10 @@ namespace network
 		}
 
 		size_t index = 0;
-		wstring indication_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring target_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring target_sub_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring target_path = converter::to_wstring(divide_binary_on_packet(data, index));
+		wstring indication_id = converter::to_wstring(combiner::divide(data, index));
+		wstring target_id = converter::to_wstring(combiner::divide(data, index));
+		wstring target_sub_id = converter::to_wstring(combiner::divide(data, index));
+		wstring target_path = converter::to_wstring(combiner::divide(data, index));
 
 		if (_received_file)
 		{
@@ -847,61 +849,14 @@ namespace network
 		}
 
 		size_t index = 0;
-		wstring source_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring source_sub_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring target_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		wstring target_sub_id = converter::to_wstring(divide_binary_on_packet(data, index));
-		vector<uint8_t> target_data = divide_binary_on_packet(data, index);
+		wstring source_id = converter::to_wstring(combiner::divide(data, index));
+		wstring source_sub_id = converter::to_wstring(combiner::divide(data, index));
+		wstring target_id = converter::to_wstring(combiner::divide(data, index));
+		wstring target_sub_id = converter::to_wstring(combiner::divide(data, index));
+		vector<uint8_t> target_data = combiner::divide(data, index);
 		if (_received_data)
 		{
 			_received_data(source_id, source_sub_id, target_id, target_sub_id, target_data);
 		}
-	}
-
-	void data_handling::append_binary_on_packet(vector<uint8_t>& result, const vector<uint8_t>& source)
-	{
-		size_t temp;
-		const int size = sizeof(size_t);
-		char temp_size[size];
-
-		temp = source.size();
-		memcpy(temp_size, &temp, size);
-		result.insert(result.end(), temp_size, temp_size + size);
-		if (size == 0)
-		{
-			return;
-		}
-
-		result.insert(result.end(), source.begin(), source.end());
-	}
-
-	vector<uint8_t> data_handling::divide_binary_on_packet(const vector<uint8_t>& source, size_t& index)
-	{
-		if (source.empty())
-		{
-			return vector<uint8_t>();
-		}
-
-		size_t temp;
-		const int size = sizeof(size_t);
-
-		if (source.size() < index + size)
-		{
-			return vector<uint8_t>();
-		}
-
-		memcpy(&temp, source.data() + index, size);
-		index += size;
-
-		if (temp == 0 || source.size() < index + temp)
-		{
-			return vector<uint8_t>();
-		}
-
-		vector<uint8_t> result;
-		result.insert(result.end(), source.begin() + index, source.begin() + index + temp);
-		index += temp;
-
-		return result;
 	}
 }

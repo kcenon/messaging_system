@@ -126,10 +126,6 @@ namespace network
 		void receive_binary_packet(const vector<uint8_t>& data);
 
 	protected:
-		void append_binary_on_packet(vector<uint8_t>& result, const vector<uint8_t>& source);
-		vector<uint8_t> divide_binary_on_packet(const vector<uint8_t>& source, size_t& index);
-
-	protected:
 #ifndef __USE_TYPE_CONTAINER__
 		function<void(shared_ptr<json::value>)> _received_message;
 #else
