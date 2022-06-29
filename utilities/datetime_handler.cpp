@@ -32,12 +32,43 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "datetime_handler.h"
 
+#include "converting.h"
+
 #include <ctime>
 #include <iomanip>
 #include <sstream>
 
 namespace datetime_handler
 {
+	using namespace converting;
+
+	chrono::system_clock::time_point datetime::parse(const wstring& date_string, const wstring& format_string)
+	{
+		struct std::tm tm;
+
+		istringstream ss(converter::to_string(date_string));
+		ss >> get_time(&tm, converter::to_string(format_string).c_str());
+
+		return chrono::system_clock::from_time_t(mktime(&tm));
+	}
+
+	wstring datetime::date(const chrono::system_clock::time_point& time, const bool& use_seperator)
+	{
+		auto in_time_t = chrono::system_clock::to_time_t(time);
+
+		tm buf;
+#if WIN32
+		localtime_s(&buf, &in_time_t);
+#else
+		localtime_r(&in_time_t, &buf);
+#endif
+
+		wostringstream oss;
+		oss << put_time(&buf, (use_seperator) ? L"%Y-%m-%d" : L"%Y%m%d");
+
+		return oss.str();
+	}
+
 	wstring datetime::time(const chrono::system_clock::time_point& time, const bool& use_seperator, const unsigned short& places_of_decimal)
 	{
 		auto in_time_t = chrono::system_clock::to_time_t(time);
