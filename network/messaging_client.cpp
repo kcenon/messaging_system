@@ -172,7 +172,7 @@ namespace network
 		_received_data = notification;
 	}
 
-	connection_conditions messaging_client::get_confirom_status(void) const
+	connection_conditions messaging_client::get_confirm_status(void) const
 	{
 		return _confirm;
 	}
@@ -285,7 +285,7 @@ namespace network
 			return;
 		}
 
-		if (get_confirom_status() != connection_conditions::confirmed)
+		if (get_confirm_status() != connection_conditions::confirmed)
 		{
 			return;
 		}
@@ -359,7 +359,7 @@ namespace network
 			return;
 		}
 
-		if (get_confirom_status() != connection_conditions::confirmed)
+		if (get_confirm_status() != connection_conditions::confirmed)
 		{
 			return;
 		}
@@ -438,7 +438,7 @@ namespace network
 			return;
 		}
 
-		if (get_confirom_status() != connection_conditions::confirmed)
+		if (get_confirm_status() != connection_conditions::confirmed)
 		{
 			return;
 		}
