@@ -175,7 +175,7 @@ namespace network
 						logger::handle().write(logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
 						break;
 					}
-					catch (const overflow_error& e) 
+					catch (const overflow_error&) 
 					{ 
 						if (_io_context != nullptr) 
 						{ 
@@ -183,7 +183,7 @@ namespace network
 							logger::handle().write(logging_level::information, fmt::format(L"reset messaging_server({})", _source_id));
 						} 						
 					}
-					catch (const runtime_error& e) 
+					catch (const runtime_error&) 
 					{ 
 						if (_io_context != nullptr) 
 						{ 
@@ -191,7 +191,7 @@ namespace network
 							logger::handle().write(logging_level::information, fmt::format(L"reset messaging_server({})", _source_id));
 						}  	
 					}
-					catch (const exception& e) 
+					catch (const exception&) 
 					{ 
 						if (_io_context != nullptr) 
 						{ 
