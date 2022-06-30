@@ -42,8 +42,7 @@ namespace datetime_handler
 	class datetime
 	{
 	public:
-      static chrono::system_clock::time_point parse(const wstring& date_string, const wstring& format_string = L"%Y-%m-%d %H:%M:%S");
-		static wstring date(const chrono::system_clock::time_point& time, const bool& use_seperator = true);
+      static wstring date(const chrono::system_clock::time_point& time, const bool& use_seperator = true);
 		static wstring time(const chrono::system_clock::time_point& time, const bool& use_seperator = true, const unsigned short& places_of_decimal = 9);
 	};
 }

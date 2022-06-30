@@ -42,16 +42,6 @@ namespace datetime_handler
 {
 	using namespace converting;
 
-	chrono::system_clock::time_point datetime::parse(const wstring& date_string, const wstring& format_string)
-	{
-		struct std::tm tm;
-
-		istringstream ss(converter::to_string(date_string));
-		ss >> get_time(&tm, converter::to_string(format_string).c_str());
-
-		return chrono::system_clock::from_time_t(mktime(&tm));
-	}
-
 	wstring datetime::date(const chrono::system_clock::time_point& time, const bool& use_seperator)
 	{
 		auto in_time_t = chrono::system_clock::to_time_t(time);
