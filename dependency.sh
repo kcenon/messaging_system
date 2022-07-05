@@ -19,7 +19,7 @@ elif [ "$(uname)" == "Linux" ]; then
         pip3 install cmake
     fi
 
-    if [ $(uname -m) != "aarch64" ]; then
+    if [ $(uname -m) == "aarch64" ]; then
         export VCPKG_FORCE_SYSTEM_BINARIES=arm
     fi
 fi
