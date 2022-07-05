@@ -546,21 +546,30 @@ namespace network
 		_target_id = (*message)[HEADER][SOURCE_ID].as_string();
 		_session_type = (session_types)(*message)[DATA][L"session_type"].as_integer();
 		_bridge_line = (*message)[DATA][L"bridge_mode"].as_bool();
-		_auto_echo = (*message)[DATA][L"auto_echo"].as_bool();
-		_auto_echo_interval_seconds = (unsigned short)(*message)[DATA][L"auto_echo_interval_seconds"].as_integer();
+		if (_session_type != session_types::binary_line)
+		{
+			_auto_echo = (*message)[DATA][L"auto_echo"].as_bool();
+			_auto_echo_interval_seconds = (unsigned short)(*message)[DATA][L"auto_echo_interval_seconds"].as_integer();
+		}
 #else
 		_target_id = converter::to_wstring((*message)[HEADER][SOURCE_ID].as_string());
 		_session_type = (session_types)(*message)[DATA]["session_type"].as_integer();
 		_bridge_line = (*message)[DATA]["bridge_mode"].as_bool();
-		_auto_echo = (*message)[DATA]["auto_echo"].as_bool();
-		_auto_echo_interval_seconds = (unsigned short)(*message)[DATA]["auto_echo_interval_seconds"].as_integer();
+		if (_session_type != session_types::binary_line)
+		{
+			_auto_echo = (*message)[DATA]["auto_echo"].as_bool();
+			_auto_echo_interval_seconds = (unsigned short)(*message)[DATA]["auto_echo_interval_seconds"].as_integer();
+		}
 #endif
 #else
 		_target_id = message->source_id();
 		_session_type = (session_types)message->get_value(L"session_type")->to_short();
 		_bridge_line = message->get_value(L"bridge_mode")->to_boolean();
-		_auto_echo = message->get_value(L"auto_echo")->to_boolean();
-		_auto_echo_interval_seconds = message->get_value(L"auto_echo_interval_seconds")->to_ushort();
+		if (_session_type != session_types::binary_line)
+		{
+			_auto_echo = message->get_value(L"auto_echo")->to_boolean();
+			_auto_echo_interval_seconds = message->get_value(L"auto_echo_interval_seconds")->to_ushort();
+		}
 #endif
 
 		auto iter = find_if(_possible_session_types.begin(), _possible_session_types.end(), 

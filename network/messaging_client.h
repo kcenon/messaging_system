@@ -101,21 +101,21 @@ namespace network
 		void stop(void);
 
 	public:
-		void echo(void);
+		bool echo(void);
 
 #ifndef __USE_TYPE_CONTAINER__
-		void send(const json::value& message);
-		void send(shared_ptr<json::value> message);
-		void send_files(const json::value& message);
-		void send_files(shared_ptr<json::value> message);
+		bool send(const json::value& message);
+		bool send(shared_ptr<json::value> message);
+		bool send_files(const json::value& message);
+		bool send_files(shared_ptr<json::value> message);
 #else
-		void send(const container::value_container& message);
-		void send(shared_ptr<container::value_container> message);
-		void send_files(const container::value_container& message);
-		void send_files(shared_ptr<container::value_container> message);
+		bool send(const container::value_container& message);
+		bool send(shared_ptr<container::value_container> message);
+		bool send_files(const container::value_container& message);
+		bool send_files(shared_ptr<container::value_container> message);
 #endif
 
-		void send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
+		bool send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
 
 	protected:
 		void send_connection(void);

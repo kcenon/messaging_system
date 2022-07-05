@@ -80,7 +80,7 @@ namespace network
 		_io_context(nullptr), _auto_echo_interval_seconds(1), _connection(nullptr),
 		_connection_key(L"connection_key"), _source_id(source_id), _source_sub_id(L""), 
 		_target_id(L"unknown"), _target_sub_id(L"0.0.0.0:0"), _socket(nullptr),
-		_session_type(session_types::binary_line)
+		_session_type(session_types::message_line)
 	{
 		_message_handlers.insert({ L"confirm_connection", bind(&messaging_client::confirm_message, this, placeholders::_1) });
 		_message_handlers.insert({ L"request_files", bind(&messaging_client::request_files, this, placeholders::_1) });
@@ -109,6 +109,12 @@ namespace network
 
 	void messaging_client::set_auto_echo(const bool& auto_echo, const unsigned short& echo_interval)
 	{
+		if (_session_type == session_types::binary_line)
+		{
+			logger::handle().write(logging_level::error, L"cannot set auto echo mode on binary line");
+			return;
+		}
+
 		_auto_echo = auto_echo;
 		_auto_echo_interval_seconds = echo_interval;
 	}
@@ -239,7 +245,7 @@ namespace network
 		}
 	}
 
-	void messaging_client::echo(void)
+	bool messaging_client::echo(void)
 	{
 #ifndef __USE_TYPE_CONTAINER__
 		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
@@ -248,46 +254,46 @@ namespace network
 			vector<shared_ptr<container::value>> {});
 #endif
 
-		send(container);
+		return send(container);
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	void messaging_client::send(const json::value& message)
+	bool messaging_client::send(const json::value& message)
 #else
-	void messaging_client::send(const container::value_container& message)
+	bool messaging_client::send(const container::value_container& message)
 #endif
 	{
 #ifndef __USE_TYPE_CONTAINER__
-		send(make_shared<json::value>(message));
+		return send(make_shared<json::value>(message));
 #else
-		send(make_shared<container::value_container>(message));
+		return send(make_shared<container::value_container>(message));
 #endif
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	void messaging_client::send(shared_ptr<json::value> message)
+	bool messaging_client::send(shared_ptr<json::value> message)
 #else
-	void messaging_client::send(shared_ptr<container::value_container> message)
+	bool messaging_client::send(shared_ptr<container::value_container> message)
 #endif
 	{
 		if (_socket == nullptr)
 		{
-			return;
+			return false;
 		}
 
 		if (message == nullptr)
 		{
-			return;
+			return false;
 		}
 
 		if (_session_type == session_types::binary_line)
 		{
-			return;
+			return false;
 		}
 
 		if (get_confirm_status() != connection_conditions::confirmed)
 		{
-			return;
+			return false;
 		}
 
 #ifdef __USE_TYPE_CONTAINER__
@@ -323,45 +329,47 @@ namespace network
 #endif
 
 		send_packet_job(serialize_array);
+
+		return true;
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	void messaging_client::send_files(const json::value& message)
+	bool messaging_client::send_files(const json::value& message)
 #else
-	void messaging_client::send_files(const container::value_container& message)
+	bool messaging_client::send_files(const container::value_container& message)
 #endif
 	{
 #ifndef __USE_TYPE_CONTAINER__
-		send_files(make_shared<json::value>(message));
+		return send_files(make_shared<json::value>(message));
 #else
-		send_files(make_shared<container::value_container>(message));
+		return send_files(make_shared<container::value_container>(message));
 #endif
 	}
 
 #ifndef __USE_TYPE_CONTAINER__
-	void messaging_client::send_files(shared_ptr<json::value> message)
+	bool messaging_client::send_files(shared_ptr<json::value> message)
 #else
-	void messaging_client::send_files(shared_ptr<container::value_container> message)
+	bool messaging_client::send_files(shared_ptr<container::value_container> message)
 #endif
 	{
 		if (_socket == nullptr)
 		{
-			return;
+			return false;
 		}
 
 		if (message == nullptr)
 		{
-			return;
+			return false;
 		}
 
 		if (_session_type != session_types::file_line)
 		{
-			return;
+			return false;
 		}
 
 		if (get_confirm_status() != connection_conditions::confirmed)
 		{
-			return;
+			return false;
 		}
 
 #ifndef __USE_TYPE_CONTAINER__
@@ -424,23 +432,25 @@ namespace network
 			container->clear_value();
 		}
 #endif
+
+		return true;
 	}
 
-	void messaging_client::send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data)
+	bool messaging_client::send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data)
 	{
 		if (_socket == nullptr)
 		{
-			return;
+			return false;
 		}
 
 		if (_session_type != session_types::binary_line)
 		{
-			return;
+			return false;
 		}
 
 		if (get_confirm_status() != connection_conditions::confirmed)
 		{
-			return;
+			return false;
 		}
 
 		vector<uint8_t> result;
@@ -451,6 +461,8 @@ namespace network
 		combiner::append(result, data);
 
 		send_binary_job(result);
+
+		return true;
 	}
 
 	void messaging_client::send_connection(void)
@@ -466,8 +478,11 @@ namespace network
 		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(_target_sub_id);
 
 		(*container)[DATA][CONNECTION_KEY] = json::value::string(_connection_key);
-		(*container)[DATA][L"auto_echo"] = json::value::boolean(_auto_echo);
-		(*container)[DATA][L"auto_echo_interval_seconds"] = json::value::number(_auto_echo_interval_seconds);
+		if (_session_type != session_types::binary_line)
+		{
+			(*container)[DATA][L"auto_echo"] = json::value::boolean(_auto_echo);
+			(*container)[DATA][L"auto_echo_interval_seconds"] = json::value::number(_auto_echo_interval_seconds);
+		}
 		(*container)[DATA][L"session_type"] = json::value::number((short)_session_type);
 		(*container)[DATA][L"bridge_mode"] = json::value::boolean(_bridge_line);
 
@@ -484,8 +499,11 @@ namespace network
 		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(converter::to_string(_target_sub_id));
 
 		(*container)[DATA][CONNECTION_KEY] = json::value::string(converter::to_string(_connection_key));
-		(*container)[DATA]["auto_echo"] = json::value::boolean(_auto_echo);
-		(*container)[DATA]["auto_echo_interval_seconds"] = json::value::number(_auto_echo_interval_seconds);
+		if (_session_type != session_types::binary_line)
+		{
+			(*container)[DATA]["auto_echo"] = json::value::boolean(_auto_echo);
+			(*container)[DATA]["auto_echo_interval_seconds"] = json::value::number(_auto_echo_interval_seconds);
+		}
 		(*container)[DATA]["session_type"] = json::value::number((short)_session_type);
 		(*container)[DATA]["bridge_mode"] = json::value::boolean(_bridge_line);
 

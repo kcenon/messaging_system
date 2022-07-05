@@ -58,7 +58,7 @@ namespace network
 	messaging_server::messaging_server(const wstring& source_id, const unsigned char& start_code_value, const unsigned char& end_code_value)
 		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), _encrypt_mode(false),
 		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _compress_mode(false),
-		_high_priority(8), _normal_priority(8), _low_priority(8), _session_limit_count(0), _possible_session_types({ session_types::binary_line }),
+		_high_priority(8), _normal_priority(8), _low_priority(8), _session_limit_count(0), _possible_session_types({ session_types::message_line }),
 		_start_code_value(start_code_value), _end_code_value(end_code_value), _compress_block_size(1024),
 		_drop_connection_time(10)
 	{
