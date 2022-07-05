@@ -42,6 +42,52 @@ using namespace CryptoPP;
 
 namespace converting
 {
+	vector<wstring> converter::split(const wstring& source, const wstring& token)
+	{
+		if (source.empty() == true)
+		{
+			return {};
+		}
+
+		size_t offset = 0;
+		size_t last_offset = 0;
+		vector<wstring> result = {};
+		wstring temp;
+
+		while (true)
+		{
+			offset = source.find(token, last_offset);
+			if (offset == wstring::npos)
+			{
+				break;
+			}
+
+			temp = source.substr(last_offset, offset - last_offset);
+			if (!temp.empty())
+			{
+				result.push_back(temp);
+			}
+
+			last_offset = offset + token.size();
+		}
+
+		if (last_offset != 0 && last_offset != string::npos)
+		{
+			temp = source.substr(last_offset, offset - last_offset);
+			if (!temp.empty())
+			{
+				result.push_back(temp);
+			}
+		}
+
+		if (last_offset == 0)
+		{
+			return { source };
+		}
+
+		return result;
+	}
+
 	void converter::replace(wstring& source, const wstring& token, const wstring& target)
 	{
 		source = replace2(source, token, target);

@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <map>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -42,6 +43,9 @@ namespace argument_parser
 	class argument_manager
 	{
 	public:
+		argument_manager(void);
+		argument_manager(const string& arguments);
+		argument_manager(const wstring& arguments);
 		argument_manager(int argc, char* argv[]);
 		argument_manager(int argc, wchar_t* argv[]);
 
@@ -51,6 +55,9 @@ namespace argument_parser
 	protected:
 		map<wstring, wstring> parse(int argc, char* argv[]);
 		map<wstring, wstring> parse(int argc, wchar_t* argv[]);
+
+	private:
+		map<wstring, wstring> parse(const vector<wstring>& arguments);
 
 	private:
 		map<wstring, wstring> _arguments;

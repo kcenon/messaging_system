@@ -43,6 +43,9 @@ namespace converting
 	class converter
 	{
 	public:
+		static vector<wstring> split(const wstring& source, const wstring& token);
+
+	public:
 		static void replace(wstring& source, const wstring& token, const wstring& target);
 		static const wstring replace2(const wstring& source, const wstring& token, const wstring& target);
 

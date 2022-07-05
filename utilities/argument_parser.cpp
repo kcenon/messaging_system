@@ -38,6 +38,20 @@ using namespace converting;
 
 namespace argument_parser
 {
+	argument_manager::argument_manager(void)
+	{
+	}
+
+	argument_manager::argument_manager(const string& arguments)
+	{
+		_arguments = parse(converter::split(converter::to_wstring(arguments), L" "));
+	}
+
+	argument_manager::argument_manager(const wstring& arguments)
+	{
+		_arguments = parse(converter::split(arguments, L" "));
+	}
+
 	argument_manager::argument_manager(int argc, char* argv[])
 	{
 		_arguments = parse(argc, argv);
@@ -61,53 +75,35 @@ namespace argument_parser
 
 	map<wstring, wstring> argument_manager::parse(int argc, char* argv[])
 	{
-		map<wstring, wstring> result;
-		
-		wstring argument_id;
+		vector<wstring> arguments;
 		for (int index = 1; index < argc; ++index)
 		{
-			argument_id = converter::to_wstring(argv[index]);
-			size_t offset = argument_id.find(L"--", 0);
-			if (offset != 0)
-			{
-				continue;
-			}
-
-			if (argument_id.compare(L"--help") == 0)
-			{
-				result.insert({ argument_id, L"display help" });
-				continue;
-			}
-
-			if (index + 1 >= argc)
-			{
-				break;
-			}
-
-			auto target = result.find(argument_id);
-			if (target == result.end())
-			{
-				result.insert({ argument_id, converter::to_wstring(argv[index + 1]) });
-				++index;
-
-				continue;
-			}
-			
-			target->second = converter::to_wstring(argv[index + 1]);
-			++index;
+			arguments.push_back(converter::to_wstring(argv[index]));
 		}
 
-		return result;
+		return parse(arguments);
 	}
 	
 	map<wstring, wstring> argument_manager::parse(int argc, wchar_t* argv[])
 	{
-		map<wstring, wstring> result;
-		
-		wstring argument_id;
+		vector<wstring> arguments;
 		for (int index = 1; index < argc; ++index)
 		{
-			argument_id = argv[index];
+			arguments.push_back(argv[index]);
+		}
+
+		return parse(arguments);
+	}
+
+	map<wstring, wstring> argument_manager::parse(const vector<wstring>& arguments)
+	{
+		map<wstring, wstring> result;
+
+		int argc = arguments.size();
+		wstring argument_id;
+		for (int index = 0; index < argc; ++index)
+		{
+			argument_id = arguments[index];
 			size_t offset = argument_id.find(L"--", 0);
 			if (offset != 0)
 			{
@@ -128,13 +124,13 @@ namespace argument_parser
 			auto target = result.find(argument_id);
 			if (target == result.end())
 			{
-				result.insert({ argument_id, argv[index + 1] });
+				result.insert({ argument_id, arguments[index + 1] });
 				++index;
 
 				continue;
 			}
 
-			target->second = argv[index + 1];
+			target->second = arguments[index + 1];
 			++index;
 		}
 
