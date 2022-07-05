@@ -119,7 +119,7 @@ namespace network
 		_possible_session_types = possible_session_types;
 	}
 
-	void messaging_server::set_session_limit_count(const bool& session_limit_count)
+	void messaging_server::set_session_limit_count(const size_t& session_limit_count)
 	{
 		_session_limit_count = session_limit_count;
 	}

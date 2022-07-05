@@ -79,7 +79,7 @@ namespace network
 		void set_ignore_target_ids(const vector<wstring>& ignore_target_ids);
 		void set_ignore_snipping_targets(const vector<wstring>& ignore_snipping_targets);
 		void set_possible_session_types(const vector<session_types>& possible_session_types);
-		void set_session_limit_count(const bool& session_limit_count);
+		void set_session_limit_count(const size_t& session_limit_count);
 
 	public:
 		void set_connection_notification(const function<void(const wstring&, const wstring&, const bool&)>& notification);
