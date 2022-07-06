@@ -610,11 +610,17 @@ namespace network
 #ifndef __USE_TYPE_CONTAINER__
 #ifdef _WIN32
 		_target_id = (*message)[HEADER][SOURCE_ID].as_string();
+		_target_sub_id = (*message)[HEADER][SOURCE_SUB_ID].as_string();
+		_source_sub_id = (*message)[HEADER][TARGET_SUB_ID].as_string();
 #else
 		_target_id = converter::to_wstring((*message)[HEADER][SOURCE_ID].as_string());
+		_target_sub_id = converter::to_wstring((*message)[HEADER][SOURCE_SUB_ID].as_string());
+		_source_sub_id = converter::to_wstring((*message)[HEADER][TARGET_SUB_ID].as_string());
 #endif
 #else
 		_target_id = message->source_id();
+		_target_sub_id = message->source_sub_id();
+		_source_sub_id = message->target_sub_id();
 #endif
 
 #ifndef __USE_TYPE_CONTAINER__
