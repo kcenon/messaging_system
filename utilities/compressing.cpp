@@ -52,7 +52,8 @@ namespace compressing
 	using namespace file_handler;
 	using namespace folder_handler;
 
-	vector<uint8_t> compressor::compression(const vector<uint8_t>& original_data, const unsigned short& block_bytes)
+	vector<uint8_t> compressor::compression(const vector<uint8_t>& original_data, 
+		const unsigned short& block_bytes, const bool& hide_log)
 	{
 		if (original_data.empty())
 		{
@@ -119,13 +120,17 @@ namespace compressing
 			return vector<uint8_t>();
 		}
 		
-		logger::handle().write(logging_level::sequence, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
-			block_bytes, original_data.size(), compressed_data.size(), (((double)compressed_data.size() / (double)original_data.size()) * 100)));
+		if (!hide_log)
+		{
+			logger::handle().write(logging_level::sequence, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", 
+				block_bytes, original_data.size(), compressed_data.size(), (((double)compressed_data.size() / (double)original_data.size()) * 100)));
+		}
 
 		return compressed_data;
 	}
 
-	vector<uint8_t> compressor::decompression(const vector<uint8_t>& compressed_data, const unsigned short& block_bytes)
+	vector<uint8_t> compressor::decompression(const vector<uint8_t>& compressed_data, 
+		const unsigned short& block_bytes, const bool& hide_log)
 	{
 		if (compressed_data.empty())
 		{
@@ -192,9 +197,12 @@ namespace compressing
 			return vector<uint8_t>();
 		}
 
-		logger::handle().write(logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
-			block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)));
-
+		if (!hide_log)
+		{
+			logger::handle().write(logging_level::sequence, fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
+				block_bytes, compressed_data.size(), decompressed_data.size(), (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)));
+		}
+		
 		return decompressed_data;
 	}
 }
