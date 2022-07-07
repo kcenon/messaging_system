@@ -802,6 +802,9 @@ namespace network
 
 	void messaging_client::connection_notification(const bool& condition)
 	{
+		logger::handle().write(logging_level::information, fmt::format(L"{} a client {} {}[{}]", 
+			(condition?L"connected":L"disconnected"), (condition?L"to":L"from"), _target_id, _target_sub_id));
+
 		if (!condition)
 		{
 			_confirm = connection_conditions::expired;

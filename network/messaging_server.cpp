@@ -525,11 +525,8 @@ namespace network
 			return;
 		}
 
-		logger::handle().write(logging_level::sequence,
-			fmt::format(L"{} a client with manager: {}[{}]", 
-				condition ? L"connected" : L"disconnected",
-				target->target_id(), target->target_sub_id())
-    	);
+		logger::handle().write(logging_level::information, fmt::format(L"{} a client({}[{}]) {} server", 
+			(condition?L"connected":L"disconnected"), target->target_id(), target->target_sub_id(), (condition?L"to":L"from")));
 
 		if (!condition)
 		{
