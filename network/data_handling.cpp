@@ -64,10 +64,14 @@ namespace network
 		memset(_start_code_tag, start_code_value, start_code);
 		memset(_end_code_tag, end_code_value, end_code);
 		memset(_receiving_buffer, 0, buffer_size);
+
+		_packet_parser = make_shared<packet_parser>(start_code_value, end_code_value);
+		_packet_parser->set_notification(bind(&data_handling::receive_on_tcp, this, placeholders::_1, placeholders::_2));
 	}
 
 	data_handling::~data_handling(void)
 	{
+		_packet_parser.reset();
 	}
 
 	void data_handling::read_buffer(weak_ptr<asio::ip::tcp::socket> socket)

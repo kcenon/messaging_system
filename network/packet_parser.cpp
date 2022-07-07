@@ -10,10 +10,25 @@ namespace network
     {
         memset(_start_code_tag, start_code_value, start_code);
 		memset(_end_code_tag, end_code_value, end_code);
+
+        _thread = make_shared<thread>(&packet_parser::run, this);
     }
 
     packet_parser::~packet_parser(void)
     {
+        _thread_stop =true;
+
+		if (_thread != nullptr)
+		{
+			if (_thread->joinable())
+			{
+				_condition.notify_one();
+				_thread->join();
+			}
+			_thread.reset();
+		}
+
+		_thread_stop = false;
     }
 
     bool packet_parser::append(const vector<uint8_t>& data)
