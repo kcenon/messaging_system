@@ -70,6 +70,35 @@ namespace network
 	{
 	}
 
+	void data_handling::read_buffer(weak_ptr<asio::ip::tcp::socket> socket)
+	{
+		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
+		if (current_socket == nullptr)
+		{
+			return;
+		}
+
+		memset(_receiving_buffer, 0, buffer_size);
+
+		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, buffer_size),
+			[this, socket](error_code ec, size_t length)
+			{
+				if (ec)
+				{
+					disconnected();
+
+					return;
+				}
+
+				vector<uint8_t> temp;
+				temp.insert(temp.end(), _receiving_buffer, _receiving_buffer + length);
+
+				_packet_parser->append(temp);
+
+				read_buffer(socket);
+			});
+	}
+
 	void data_handling::read_start_code(weak_ptr<asio::ip::tcp::socket> socket)
 	{
 		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();

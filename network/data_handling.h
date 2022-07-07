@@ -36,6 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "data_lengths.h"
 #include "thread_pool.h"
 #include "connection_conditions.h"
+#include "packet_parser.h"
 
 #include <map>
 #include <memory>
@@ -65,6 +66,9 @@ namespace network
 		data_handling(const unsigned char& start_code_value, const unsigned char& end_code_value);
 		~data_handling(void);
 
+	protected:
+		void read_buffer(weak_ptr<asio::ip::tcp::socket> socket);
+		
 	protected:
 		void read_start_code(weak_ptr<asio::ip::tcp::socket> socket);
 		void read_packet_code(weak_ptr<asio::ip::tcp::socket> socket);
@@ -158,5 +162,6 @@ namespace network
 		char _end_code_tag[end_code];
 		char _receiving_buffer[buffer_size];
 		vector<uint8_t> _received_data_vector;
+		shared_ptr<packet_parser> _packet_parser;
 	};
 }

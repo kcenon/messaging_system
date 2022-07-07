@@ -172,39 +172,39 @@ namespace network
 					{
 						logger::handle().write(logging_level::information, fmt::format(L"start messaging_server({})", _source_id));
 						_io_context->run();
+						_io_context.reset(); 
 						logger::handle().write(logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
-						break;
 					}
 					catch (const overflow_error&) 
 					{ 
 						if (_io_context != nullptr) 
 						{ 
-							_io_context->reset(); 
-							logger::handle().write(logging_level::information, fmt::format(L"reset messaging_server({})", _source_id));
+							_io_context.reset(); 
+							logger::handle().write(logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
 						} 						
 					}
 					catch (const runtime_error&) 
 					{ 
 						if (_io_context != nullptr) 
 						{ 
-							_io_context->reset(); 
-							logger::handle().write(logging_level::information, fmt::format(L"reset messaging_server({})", _source_id));
+							_io_context.reset(); 
+							logger::handle().write(logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
 						}  	
 					}
 					catch (const exception&) 
 					{ 
 						if (_io_context != nullptr) 
 						{ 
-							_io_context->reset(); 
-							logger::handle().write(logging_level::information, fmt::format(L"reset messaging_server({})", _source_id));
+							_io_context.reset(); 
+							logger::handle().write(logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
 						} 	
 					}
 					catch (...)
 					{ 
 						if (_io_context != nullptr) 
 						{ 
-							_io_context->reset(); 
-							logger::handle().write(logging_level::information, fmt::format(L"reset messaging_server({})", _source_id));
+							_io_context.reset(); 
+							logger::handle().write(logging_level::information, fmt::format(L"stop messaging_server({})", _source_id));
 						} 	
 					}
 				}
