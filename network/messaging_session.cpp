@@ -203,7 +203,7 @@ namespace network
 		}
 
 		read_start_code(_socket);
-
+		
 		logger::handle().write(logging_level::information, fmt::format(L"started session: {}:{}", 
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port()));
 	}

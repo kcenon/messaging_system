@@ -204,8 +204,9 @@ namespace network
 			converter::to_wstring(_socket->local_endpoint().address().to_string()), _socket->local_endpoint().port());
 		_target_sub_id = fmt::format(L"{}:{}",
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
-
+			
 		read_start_code(_socket);
+
 		send_connection();
 
 		_thread = make_shared<thread>(bind(&messaging_client::run, this));

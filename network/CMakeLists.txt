@@ -18,8 +18,7 @@ ADD_LIBRARY(${LIBRARY_NAME} STATIC
     data_handling.h data_handling.cpp 
     messaging_client.h messaging_client.cpp 
     messaging_session.h messaging_session.cpp
-    messaging_server.h messaging_server.cpp
-    packet_parser.h packet_parser.cpp)
+    messaging_server.h messaging_server.cpp)
     
 FIND_PACKAGE(asio CONFIG REQUIRED)
 TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC asio asio::asio)
