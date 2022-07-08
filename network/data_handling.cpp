@@ -68,43 +68,7 @@ namespace network
 	data_handling::~data_handling(void)
 	{
 	}
-
-	/*
-	void data_handling::read_buffer(weak_ptr<asio::ip::tcp::socket> socket)
-	{
-		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
-		if (current_socket == nullptr)
-		{
-			logger::handle().write(logging_level::parameter, L"there in no working socker");
-			return;
-		}
-
-		size_t available = current_socket->available();
-
-		memset(_receiving_buffer, 0, buffer_size);
-		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, buffer_size), asio::transfer_at_least(available),
-			[this, socket](error_code ec, size_t length)
-			{
-				if (ec)
-				{
-					disconnected();
-
-					return;
-				}
-
-				if (length > 0)
-				{
-					vector<uint8_t> temp;
-					temp.insert(temp.end(), _receiving_buffer, _receiving_buffer + length);
-
-					_packet_parser->append(move(temp));
-				}
-
-				read_buffer(socket);
-			});
-	}
-	*/
-
+	
 	void data_handling::read_start_code(weak_ptr<asio::ip::tcp::socket> socket)
 	{
 		shared_ptr<asio::ip::tcp::socket> current_socket = socket.lock();
@@ -115,8 +79,7 @@ namespace network
 
 		_received_data_vector.clear();
 
-		logger::handle().write(logging_level::parameter, L"attempt to read start code");
-
+		memset(_receiving_buffer, 0, buffer_size);
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, start_code), asio::transfer_exactly(start_code),
 			[this, socket](error_code ec, size_t length)
 			{
@@ -129,8 +92,6 @@ namespace network
 
 				if (length != start_code)
 				{
-					memset(_receiving_buffer, 0, buffer_size);
-
 					read_start_code(socket);
 
 					return;
@@ -143,14 +104,12 @@ namespace network
 						continue;
 					}
 
-					memset(_receiving_buffer, 0, buffer_size);
-
 					read_start_code(socket);
 
 					return;
 				}
 				
-				logger::handle().write(logging_level::parameter, L"read start code");
+				logger::handle().write(logging_level::parameter, fmt::format(L"read start code: {} bytes", start_code));
 
 				memset(_receiving_buffer, 0, buffer_size);
 
@@ -166,6 +125,7 @@ namespace network
 			return;
 		}
 
+		memset(_receiving_buffer, 0, buffer_size);
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, mode_code), asio::transfer_exactly(mode_code),
 			[this, socket](error_code ec, size_t length)
 			{
@@ -178,17 +138,16 @@ namespace network
 
 				if (length != mode_code)
 				{
-					memset(_receiving_buffer, 0, buffer_size);
+					logger::handle().write(logging_level::parameter, fmt::format(L"read wrong data: {} bytes", length));
 
-					read_start_code(socket);
+					disconnected();
 
 					return;
 				}
 				
-				logger::handle().write(logging_level::parameter, L"read packet code");
+				logger::handle().write(logging_level::parameter, fmt::format(L"read packet code: {} bytes", mode_code));
 
 				data_modes mode = (data_modes)_receiving_buffer[0];
-				memset(_receiving_buffer, 0, buffer_size);
 
 				read_length_code(mode, socket);
 			});
@@ -203,7 +162,6 @@ namespace network
 		}
 
 		memset(_receiving_buffer, 0, buffer_size);
-
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, length_code), asio::transfer_exactly(length_code),
 			[this, packet_mode, socket](error_code ec, size_t length)
 			{
@@ -223,7 +181,7 @@ namespace network
 					return;
 				}
 				
-				logger::handle().write(logging_level::parameter, L"read length code");
+				logger::handle().write(logging_level::parameter, fmt::format(L"read length code: {} bytes", length_code));
 
 				unsigned int target_length = 0;
 				memcpy(&target_length, _receiving_buffer, length);
@@ -249,10 +207,9 @@ namespace network
 			return;
 		}
 
-		memset(_receiving_buffer, 0, buffer_size);
-
 		if (remained_length >= buffer_size)
 		{
+			memset(_receiving_buffer, 0, buffer_size);
 			asio::async_read(*current_socket, asio::buffer(_receiving_buffer, buffer_size), asio::transfer_exactly(buffer_size),
 				[this, packet_mode, remained_length, socket](error_code ec, size_t length)
 				{
@@ -278,10 +235,10 @@ namespace network
 					read_data(packet_mode, remained_length - length, socket);
 				});
 
-			current_socket.reset();
 			return;
 		}
 
+		memset(_receiving_buffer, 0, buffer_size);
 		asio::async_read(*current_socket, asio::buffer(_receiving_buffer, remained_length), asio::transfer_exactly(remained_length),
 			[this, packet_mode, socket](error_code ec, size_t length)
 			{
@@ -292,14 +249,13 @@ namespace network
 					return;
 				}
 				
-				logger::handle().write(logging_level::parameter, L"read data");
-
 				_received_data_vector.insert(_received_data_vector.end(), _receiving_buffer, _receiving_buffer + length);
 				memset(_receiving_buffer, 0, buffer_size);
 
+				logger::handle().write(logging_level::parameter, fmt::format(L"read data: {} bytes", _received_data_vector.size()));
+
 				read_data(packet_mode, 0, socket);
 			});
-		current_socket.reset();
 	}
 
 	void data_handling::read_end_code(const data_modes& packet_mode, weak_ptr<asio::ip::tcp::socket> socket)
@@ -349,7 +305,7 @@ namespace network
 					return;
 				}
 				
-				logger::handle().write(logging_level::parameter, L"read end code");
+				logger::handle().write(logging_level::parameter, fmt::format(L"read end code: {} bytes", end_code));
 
 				receive_on_tcp(packet_mode, _received_data_vector);
 				_received_data_vector.clear();
@@ -358,7 +314,6 @@ namespace network
 
 				read_start_code(socket);
 			});
-		current_socket.reset();
 	}
 
 	bool data_handling::send_on_tcp(weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const vector<uint8_t>& data)

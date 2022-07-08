@@ -98,6 +98,8 @@ namespace network
 		{
 			if (_socket->is_open())
 			{
+				asio::error_code ec;
+				_socket->shutdown(asio::ip::tcp::socket::shutdown_both, ec);
 				_socket->close();
 			}
 			_socket.reset();
