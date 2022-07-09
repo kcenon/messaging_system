@@ -813,7 +813,7 @@ namespace network
 			_confirm = connection_conditions::expired;
 		}
 
-		if(_connection != nullptr && _thread_pool != nullptr)
+		if(_connection != nullptr)
 		{
 			auto result = async(launch::async, _connection, _target_id, _target_sub_id, condition);
 		}
