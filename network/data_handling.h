@@ -69,11 +69,11 @@ namespace network
 		//void read_buffer(weak_ptr<asio::ip::tcp::socket> socket);
 		
 	protected:
-		void read_start_code(weak_ptr<asio::ip::tcp::socket> socket);
+		void read_start_code(weak_ptr<asio::ip::tcp::socket> socket, const unsigned short& matched_code = 0);
 		void read_packet_code(weak_ptr<asio::ip::tcp::socket> socket);
 		void read_length_code(const data_modes& packet_mode, weak_ptr<asio::ip::tcp::socket> socket);
 		void read_data(const data_modes& packet_mode, const size_t& remained_length, weak_ptr<asio::ip::tcp::socket> socket);
-		void read_end_code(const data_modes& packet_mode, weak_ptr<asio::ip::tcp::socket> socket);
+		void read_end_code(const data_modes& packet_mode, weak_ptr<asio::ip::tcp::socket> socket, const unsigned short& matched_code = 0);
 
 	protected:
 		bool send_on_tcp(weak_ptr<asio::ip::tcp::socket> socket, const data_modes& data_mode, const vector<uint8_t>& data);
