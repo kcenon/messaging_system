@@ -138,14 +138,17 @@ namespace network
 
 				if (length != mode_code)
 				{
-					logger::handle().write(logging_level::packet, fmt::format(L"read wrong data: {} bytes", length));
+					logger::handle().write(logging_level::error, 
+						L"drop read data: not matched packet code");
 
-					disconnected();
+					read_start_code(socket);
 
 					return;
 				}
 				
+#ifdef _DEBUG
 				logger::handle().write(logging_level::packet, fmt::format(L"read packet code: {} bytes", mode_code));
+#endif
 
 				data_modes mode = (data_modes)_receiving_buffer[0];
 
@@ -174,14 +177,17 @@ namespace network
 
 				if (length != length_code)
 				{
-					memset(_receiving_buffer, 0, buffer_size);
+					logger::handle().write(logging_level::error, 
+						L"drop read data: not matched length code");
 
 					read_start_code(socket);
 
 					return;
 				}
 				
+#ifdef _DEBUG
 				logger::handle().write(logging_level::packet, fmt::format(L"read length code: {} bytes", length_code));
+#endif
 
 				unsigned int target_length = 0;
 				memcpy(&target_length, _receiving_buffer, length);
@@ -222,7 +228,8 @@ namespace network
 
 					if (length != buffer_size)
 					{
-						memset(_receiving_buffer, 0, buffer_size);
+						logger::handle().write(logging_level::error, 
+							L"drop read data: not matched data length");
 
 						read_start_code(socket);
 
@@ -252,7 +259,9 @@ namespace network
 				_received_data_vector.insert(_received_data_vector.end(), _receiving_buffer, _receiving_buffer + length);
 				memset(_receiving_buffer, 0, buffer_size);
 
+#ifdef _DEBUG
 				logger::handle().write(logging_level::packet, fmt::format(L"read data: {} bytes", _received_data_vector.size()));
+#endif
 
 				read_data(packet_mode, 0, socket);
 			});
@@ -268,7 +277,9 @@ namespace network
 		
 		if (matched_code == 4)
 		{
+#ifdef _DEBUG
 			logger::handle().write(logging_level::packet, fmt::format(L"read end code: {} bytes", end_code));
+#endif
 
 			receive_on_tcp(packet_mode, _received_data_vector);
 			_received_data_vector.clear();
@@ -292,7 +303,7 @@ namespace network
 
 				if (length != 1 || _receiving_buffer[0] != _end_code_tag[matched_code])
 				{
-					logger::handle().write(logging_level::packet, 
+					logger::handle().write(logging_level::error, 
 						L"drop read data: not matched end code");
 
 					read_start_code(socket);
@@ -327,7 +338,9 @@ namespace network
 			return false;
 		}
 
+#ifdef _DEBUG
 		logger::handle().write(logging_level::packet, fmt::format(L"sent start code: {} bytes", start_code));
+#endif
 
 		sended_size = current_socket->send(asio::buffer(&data_mode, mode_code));
 		if (sended_size != sizeof(unsigned char))
@@ -338,7 +351,9 @@ namespace network
 			return false;
 		}
 
+#ifdef _DEBUG
 		logger::handle().write(logging_level::packet, fmt::format(L"sent data type code: {} bytes", mode_code));
+#endif
 
 		unsigned int length = (unsigned int)data.size();
 		sended_size = current_socket->send(asio::buffer(&length, length_code));
@@ -350,7 +365,9 @@ namespace network
 			return false;
 		}
 
+#ifdef _DEBUG
 		logger::handle().write(logging_level::packet, fmt::format(L"sent length code: {} bytes", length_code));
+#endif
 
 		sended_size = current_socket->send(asio::buffer(data.data(), data.size()));
 		if (sended_size != data.size())
@@ -361,7 +378,9 @@ namespace network
 			return false;
 		}
 
+#ifdef _DEBUG
 		logger::handle().write(logging_level::packet, fmt::format(L"sent data: {} bytes", data.size()));
+#endif
 
 		sended_size = current_socket->send(asio::buffer(_end_code_tag, end_code));
 		if (sended_size != 4)
@@ -372,7 +391,9 @@ namespace network
 			return false;
 		}
 
+#ifdef _DEBUG
 		logger::handle().write(logging_level::packet, fmt::format(L"sent end code: {} bytes", end_code));
+#endif
 
 		current_socket.reset();
 
@@ -440,14 +461,14 @@ namespace network
 			
 		if (!_compress_mode)
 		{
-			_thread_pool->push(make_shared<job>(priorities::low, data, bind(&data_handling::send_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::top, data, bind(&data_handling::send_packet, this, placeholders::_1)));
 
 			return;
 		}
 
 		logger::handle().write(logging_level::parameter, L"attempt to compress a packet");
 
-		_thread_pool->push(make_shared<job>(priorities::low, compressor::compression(data, _compress_block_size), bind(&data_handling::send_packet, this, placeholders::_1)));
+		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data, _compress_block_size), bind(&data_handling::send_packet, this, placeholders::_1)));
 	}
 
 	void data_handling::encrypt_packet(const vector<uint8_t>& data)
