@@ -95,6 +95,8 @@ namespace logging
 		wstring sequence_log(const chrono::system_clock::time_point& time, const wstring& data);
 		wstring parameter_log(const chrono::system_clock::time_point& time, const wstring& data);
 		wstring packet_log(const chrono::system_clock::time_point& time, const wstring& data);
+		wstring make_log_string(const chrono::system_clock::time_point& time, 
+			const wstring& data, const wstring& type, const wstring& time_color, const wstring& type_color);
 
 	private:
 		vector<tuple<logging_level, chrono::system_clock::time_point,wstring>> _buffer;

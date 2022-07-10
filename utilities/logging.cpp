@@ -242,12 +242,7 @@ namespace logging
 					continue;
 				}
 
-				source = iterator->second(get<1>(buffer), get<2>(buffer));
-				if (_write_console.load())
-				{
-					wcout << source;
-				}
-				string_buffer << source;
+				string_buffer << iterator->second(get<1>(buffer), get<2>(buffer));
 			}
 			buffers.clear();
 
@@ -295,7 +290,7 @@ namespace logging
 			wstring temp = fmt::format(L"[{:%Y-%m-%d} {}][{}]\n", fmt::localtime(current), time_string, flag);
 			if (_write_console.load())
 			{
-				wcout << temp;
+				wcout << fmt::format(L"[\033[0;94m{:%Y-%m-%d} {}\033[0m][\033[0;34m{}\033[0m]\n", fmt::localtime(current), time_string, flag);
 			}
 #ifdef _WIN32
 			stream << temp;
@@ -308,7 +303,7 @@ namespace logging
 			wstring temp = fmt::format(L"[{}][{}]\n", time_string, flag);
 			if (_write_console.load())
 			{
-				wcout << temp;
+				wcout << fmt::format(L"[\033[0;94m{}\033[0m][\033[0;34m{}\033[0m]\n", time_string, flag);
 			}
 #ifdef _WIN32
 			stream << temp;
@@ -359,68 +354,56 @@ namespace logging
 
 	wstring logger::exception_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		auto time_string = datetime::time(time, true, _places_of_decimal);
-		if (_write_date.load())
-		{
-			return fmt::format(L"[{:%Y-%m-%d} {}][EXCEPTION]: {}\n", fmt::localtime(time), time_string, data);
-		}
-		
-		return fmt::format(L"[{}][EXCEPTION]: {}\n", time_string, data);
+		return make_log_string(time, data, L"EXCEPTION", L"\033[0;94m", L"\033[0;95m");
 	}
 
 	wstring logger::error_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		auto time_string = datetime::time(time, true, _places_of_decimal);
-		if (_write_date.load())
-		{
-			return fmt::format(L"[{:%Y-%m-%d} {}][ERROR]: {}\n", fmt::localtime(time), time_string, data);
-		}
-
-		return fmt::format(L"[{}][ERROR]: {}\n", time_string, data);
+		return make_log_string(time, data, L"ERROR", L"\033[0;94m", L"\033[0;31m");
 	}
 
 	wstring logger::information_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		auto time_string = datetime::time(time, true, _places_of_decimal);
-		if (_write_date.load())
-		{
-			return fmt::format(L"[{:%Y-%m-%d} {}][INFORMATION]: {}\n", fmt::localtime(time), time_string, data);
-		}
-
-		return fmt::format(L"[{}][INFORMATION]: {}\n", time_string, data);
+		return make_log_string(time, data, L"INFORMATION", L"\033[0;94m", L"\033[0;92m");
 	}
 
 	wstring logger::sequence_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		auto time_string = datetime::time(time, true, _places_of_decimal);
-		if (_write_date.load())
-		{
-			return fmt::format(L"[{:%Y-%m-%d} {}][SEQUENCE]: {}\n", fmt::localtime(time), time_string, data);
-		}
-
-		return fmt::format(L"[{}][SEQUENCE]: {}\n", time_string, data);
+		return make_log_string(time, data, L"SEQUENCE", L"\033[0;94m", L"\033[0;90m");
 	}
 
 	wstring logger::parameter_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		auto time_string = datetime::time(time, true, _places_of_decimal);
-		if (_write_date.load())
-		{
-			return fmt::format(L"[{:%Y-%m-%d} {}][PARAMETER]: {}\n", fmt::localtime(time), time_string, data);
-		}
-
-		return fmt::format(L"[{}][PARAMETER]: {}\n", time_string, data);
+		return make_log_string(time, data, L"PARAMETER", L"\033[0;94m", L"\033[0;97m");
 	}
 
 	wstring logger::packet_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
+		return make_log_string(time, data, L"PACKET", L"\033[0;94m", L"\033[0;91m");
+	}
+
+	wstring logger::make_log_string(const chrono::system_clock::time_point& time, const wstring& data, const wstring& type, 
+		const wstring& time_color, const wstring& type_color)
+	{
 		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			return fmt::format(L"[{:%Y-%m-%d} {}][PACKET]: {}\n", fmt::localtime(time), time_string, data);
+			if (_write_console.load())
+			{
+				wcout << fmt::format(L"[{}{:%Y-%m-%d} {}\033[0m][{}{}\033[0m]: {}\n", 
+					time_color, fmt::localtime(time), time_string, type_color, type, data);
+			}
+
+			return fmt::format(L"[{:%Y-%m-%d} {}][{}]: {}\n", fmt::localtime(time), time_string, type, data);
 		}
 
-		return fmt::format(L"[{}][PACKET]: {}\n", time_string, data);
+		if (_write_console.load())
+		{
+			wcout << fmt::format(L"[{}{}\033[0m][{}{}\033[0m]: {}\n", 
+				time_color, time_string, type_color, type, data);
+		}
+
+		return fmt::format(L"[{}][{}]: {}\n", time_string, type, data);
 	}
 
 #pragma region singleton
