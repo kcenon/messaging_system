@@ -110,6 +110,14 @@ namespace logging
 
 	void logger::set_write_console(const bool& write_console, const bool& write_console_only)
 	{
+		if (!write_console && write_console_only)
+		{
+			_write_console.store(false);
+			_write_console_only.store(false);
+
+			return;
+		}
+
 		_write_console.store(write_console);
 		_write_console_only.store(write_console_only);
 	}
