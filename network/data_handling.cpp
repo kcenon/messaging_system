@@ -79,7 +79,9 @@ namespace network
 
 		if (matched_code == 4)
 		{
+#ifdef _DEBUG
 			logger::handle().write(logging_level::packet, fmt::format(L"read start code: {} bytes", start_code));
+#endif
 
 			read_packet_code(socket);
 			

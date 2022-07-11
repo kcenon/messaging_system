@@ -108,9 +108,10 @@ namespace logging
 		_target_level = target_level;
 	}
 
-	void logger::set_write_console(const bool& write_console)
+	void logger::set_write_console(const bool& write_console, const bool& write_console_only)
 	{
 		_write_console.store(write_console);
+		_write_console_only.store(write_console_only);
 	}
 
 	void logger::set_write_date(const bool& write_date)
@@ -223,15 +224,23 @@ namespace logging
 			}
 
 #ifdef _WIN32
-			wfstream stream(source, ios::out | ios::app);
+			wfstream stream;
 #else
-			fstream stream(converter::to_string(source), ios::out | ios::app);
+			fstream stream;
 #endif
-			if (!stream.is_open())
+			if (!_write_console_only.load())
 			{
-				return;
+#ifdef _WIN32
+				stream.open(source, ios::out | ios::app);
+#else
+				stream.open(converter::to_string(source), ios::out | ios::app);
+#endif
+				if (!stream.is_open())
+				{
+					return;
+				}
+				stream.imbue(_locale);
 			}
-			stream.imbue(_locale);
 
 			source = L"";
 			for (auto& buffer : buffers)
@@ -246,15 +255,21 @@ namespace logging
 			}
 			buffers.clear();
 
+			if (!_write_console_only.load())
+			{
 #ifdef _WIN32
-			stream << string_buffer.str();
+				stream << string_buffer.str();
 #else
-			stream << converter::to_string(string_buffer.str());
+				stream << converter::to_string(string_buffer.str());
 #endif
+			}
 			string_buffer.str(L"");
 
-			stream.flush();
-			stream.close();
+			if (!_write_console_only.load())
+			{
+				stream.flush();
+				stream.close();
+			}
 		}
 
 		set_log_flag(L"END");
@@ -273,15 +288,23 @@ namespace logging
 		}
 
 #ifdef _WIN32
-		wfstream stream(source, ios::out | ios::app);
+		wfstream stream;
 #else
-		fstream stream(converter::to_string(source), ios::out | ios::app);
+		fstream stream;
 #endif
-		if (!stream.is_open())
+		if (!_write_console_only.load())
 		{
-			return;
+#ifdef _WIN32
+			stream.open(source, ios::out | ios::app);
+#else
+			stream.open(converter::to_string(source), ios::out | ios::app);
+#endif
+			if (!stream.is_open())
+			{
+				return;
+			}
+			stream.imbue(_locale);
 		}
-		stream.imbue(_locale);
 
 		chrono::system_clock::time_point current = chrono::system_clock::now();
 		auto time_string = datetime::time(current, true, _places_of_decimal);
@@ -292,11 +315,15 @@ namespace logging
 			{
 				wcout << fmt::format(L"[\033[0;94m{:%Y-%m-%d} {}\033[0m][\033[0;34m{}\033[0m]\n", fmt::localtime(current), time_string, flag);
 			}
+
+			if (!_write_console_only.load())
+			{
 #ifdef _WIN32
-			stream << temp;
+				stream << temp;
 #else
-			stream << converter::to_string(temp);
+				stream << converter::to_string(temp);
 #endif
+			}
 		}
 		else
 		{
@@ -305,15 +332,22 @@ namespace logging
 			{
 				wcout << fmt::format(L"[\033[0;94m{}\033[0m][\033[0;34m{}\033[0m]\n", time_string, flag);
 			}
+
+			if (!_write_console_only.load())
+			{
 #ifdef _WIN32
-			stream << temp;
+				stream << temp;
 #else
-			stream << converter::to_string(temp);
+				stream << converter::to_string(temp);
 #endif
+			}
 		}
 
-		stream.flush();
-		stream.close();
+		if (!_write_console_only.load())
+		{
+			stream.flush();
+			stream.close();
+		}
 	}
 
 	void logger::backup_log(const wstring& target_path, const wstring& backup_path)
