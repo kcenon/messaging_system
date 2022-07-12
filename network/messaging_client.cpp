@@ -80,7 +80,7 @@ namespace network
 		_io_context(nullptr), _auto_echo_interval_seconds(1), _connection(nullptr),
 		_connection_key(L"connection_key"), _source_id(source_id), _source_sub_id(L""), 
 		_target_id(L"unknown"), _target_sub_id(L"0.0.0.0:0"), _socket(nullptr),
-		_session_type(session_types::message_line)
+		_session_type(session_types::message_line), _thread(nullptr)
 	{
 		_message_handlers.insert({ L"confirm_connection", bind(&messaging_client::confirm_message, this, placeholders::_1) });
 		_message_handlers.insert({ L"request_files", bind(&messaging_client::request_files, this, placeholders::_1) });
@@ -220,17 +220,6 @@ namespace network
 			_thread_pool.reset();
 		}
 
-		if (_socket != nullptr)
-		{
-			if (_socket->is_open())
-			{
-				asio::error_code ec;
-				_socket->shutdown(asio::ip::tcp::socket::shutdown_both, ec);
-				_socket->close();
-			}
-			_socket.reset();
-		}
-
 		if (_io_context != nullptr)
 		{
 			if (_thread != nullptr)
@@ -245,6 +234,17 @@ namespace network
 			}
 			
 			_io_context.reset();
+		}
+
+		if (_socket != nullptr)
+		{
+			if (_socket->is_open())
+			{
+				asio::error_code ec;
+				_socket->shutdown(asio::ip::tcp::socket::shutdown_both, ec);
+				_socket->close();
+			}
+			_socket.reset();
 		}
 	}
 
@@ -540,8 +540,6 @@ namespace network
 
 	void messaging_client::disconnected(void)
 	{
-		stop();
-
 		connection_notification(false);
 	}
 

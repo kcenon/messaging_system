@@ -239,6 +239,22 @@ namespace network
 			_thread_pool.reset();
 		}
 
+		if (_io_context != nullptr)
+		{
+			if (_thread != nullptr)
+			{
+				if (_thread->joinable() && !_io_context->stopped())
+				{
+					_io_context->stop();
+					_thread->join();
+				}
+
+				_thread.reset();
+			}
+			
+			_io_context.reset();
+		}
+
 		if (_acceptor != nullptr)
 		{
 			if (_acceptor->is_open())
@@ -258,22 +274,6 @@ namespace network
 			session->stop();
 		}
 		_sessions.clear();
-
-		if (_io_context != nullptr)
-		{
-			if (_thread != nullptr)
-			{
-				if (_thread->joinable() && !_io_context->stopped())
-				{
-					_io_context->stop();
-					_thread->join();
-				}
-
-				_thread.reset();
-			}
-			
-			_io_context.reset();
-		}
 
 		if (_promise_status.has_value())
 		{
