@@ -99,9 +99,9 @@ namespace argument_parser
 	{
 		map<wstring, wstring> result;
 
-		int argc = arguments.size();
+		size_t argc = arguments.size();
 		wstring argument_id;
-		for (int index = 0; index < argc; ++index)
+		for (size_t index = 0; index < argc; ++index)
 		{
 			argument_id = arguments[index];
 			size_t offset = argument_id.find(L"--", 0);
