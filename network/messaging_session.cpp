@@ -410,7 +410,7 @@ namespace network
 			return;
 		}
 
-		if (!_bridge_line && !target_sub_id.empty() && target_id != _target_sub_id)
+		if (!_bridge_line && !target_sub_id.empty() && target_sub_id != _target_sub_id)
 		{
 			return;
 		}
