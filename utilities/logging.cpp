@@ -79,6 +79,8 @@ namespace logging
 		_places_of_decimal = places_of_decimal;
 		_locale = target_locale;
 
+		wcout.imbue(_locale);
+		
 		_thread = make_shared<thread>(&logger::run, this);
 
 		return true;
@@ -377,21 +379,6 @@ namespace logging
 		{
 			_backup_notification(backup_path);
 		}
-	}
-
-	void logger::store_log(wfstream& buffer, const wstring& log)
-	{
-		if (log.empty())
-		{
-			return;
-		}
-
-		if (_write_console.load())
-		{
-			wcout << log;
-		}
-
-		buffer << log;
 	}
 
 	wstring logger::exception_log(const chrono::system_clock::time_point& time, const wstring& data)

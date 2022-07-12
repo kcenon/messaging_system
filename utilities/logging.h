@@ -86,7 +86,6 @@ namespace logging
 	private:
 		void set_log_flag(const wstring& flag);
 		void backup_log(const wstring& target_path, const wstring& backup_path);
-		void store_log(wfstream& buffer, const wstring& log);
 
 	private:
 		wstring exception_log(const chrono::system_clock::time_point& time, const wstring& data);
