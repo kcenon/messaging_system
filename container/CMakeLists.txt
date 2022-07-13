@@ -4,15 +4,7 @@ SET(LIBRARY_NAME container)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
-ELSE()
-    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
-ENDIF()
-
-PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
-
-ADD_LIBRARY(${LIBRARY_NAME} STATIC
+SET(SOURCE_FILES
     container.h container.cpp
     value.h value.cpp 
     value_types.h value_types.cpp
@@ -30,6 +22,16 @@ ADD_LIBRARY(${LIBRARY_NAME} STATIC
     values/ullong_value.h values/ullong_value.cpp
     values/ulong_value.h values/ulong_value.cpp
     values/ushort_value.h values/ushort_value.cpp)
+
+IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
+ELSE()
+    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
+ENDIF()
+
+PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
+
+ADD_LIBRARY(${LIBRARY_NAME} STATIC ${SOURCE_FILES})
 
 INCLUDE_DIRECTORIES(../utilities)
 

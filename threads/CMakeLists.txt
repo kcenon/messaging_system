@@ -4,6 +4,13 @@ SET(LIBRARY_NAME threads)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+SET(SOURCE_FILES
+    job_priorities.h 
+    job.h job.cpp 
+    job_pool.h job_pool.cpp 
+    thread_pool.h thread_pool.cpp
+    thread_worker.h thread_worker.cpp)
+
 IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
 ELSE()
@@ -12,12 +19,7 @@ ENDIF()
 
 PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
 
-ADD_LIBRARY(${LIBRARY_NAME} STATIC
-    job_priorities.h 
-    job.h job.cpp 
-    job_pool.h job_pool.cpp 
-    thread_pool.h thread_pool.cpp
-    thread_worker.h thread_worker.cpp)
+ADD_LIBRARY(${LIBRARY_NAME} STATIC ${SOURCE_FILES})
     
 FIND_PACKAGE(crossguid CONFIG REQUIRED)
 TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC crossguid)

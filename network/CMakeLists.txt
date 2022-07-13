@@ -4,6 +4,14 @@ SET(LIBRARY_NAME network)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+SET(SOURCE_FILES
+    session_types.h
+    data_modes.h data_lengths.h
+    data_handling.h data_handling.cpp 
+    messaging_client.h messaging_client.cpp 
+    messaging_session.h messaging_session.cpp
+    messaging_server.h messaging_server.cpp)
+
 IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
 ELSE()
@@ -12,13 +20,7 @@ ENDIF()
 
 PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
 
-ADD_LIBRARY(${LIBRARY_NAME} STATIC
-    session_types.h
-    data_modes.h data_lengths.h
-    data_handling.h data_handling.cpp 
-    messaging_client.h messaging_client.cpp 
-    messaging_session.h messaging_session.cpp
-    messaging_server.h messaging_server.cpp)
+ADD_LIBRARY(${LIBRARY_NAME} STATIC ${SOURCE_FILES})
     
 FIND_PACKAGE(asio CONFIG REQUIRED)
 TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC asio asio::asio)
