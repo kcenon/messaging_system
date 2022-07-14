@@ -2691,11 +2691,10 @@ SWIGINTERN PyObject *SWIG_PyStaticMethod_New(PyObject *SWIGUNUSEDPARM(self), PyO
 
 #define SWIGTYPE_p_char swig_types[0]
 #define SWIGTYPE_p_database__database_manager swig_types[1]
-#define SWIGTYPE_p_database__postgres_manager swig_types[2]
-#define SWIGTYPE_p_shared_ptrT_container__value_container_t swig_types[3]
-#define SWIGTYPE_p_wstring swig_types[4]
-static swig_type_info *swig_types[6];
-static swig_module_info swig_module = {swig_types, 5, 0, 0, 0, 0};
+#define SWIGTYPE_p_shared_ptrT_container__value_container_t swig_types[2]
+#define SWIGTYPE_p_wstring swig_types[3]
+static swig_type_info *swig_types[5];
+static swig_module_info swig_module = {swig_types, 4, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3314,296 +3313,6 @@ SWIGINTERN PyObject *database_manager_swiginit(PyObject *SWIGUNUSEDPARM(self), P
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_postgres_manager(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  database::postgres_manager *result = 0 ;
-  
-  if (!SWIG_Python_UnpackTuple(args, "new_postgres_manager", 0, 0, 0)) SWIG_fail;
-  result = (database::postgres_manager *)new database::postgres_manager();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_database__postgres_manager, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_postgres_manager(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  database::postgres_manager *arg1 = (database::postgres_manager *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_database__postgres_manager, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_postgres_manager" "', argument " "1"" of type '" "database::postgres_manager *""'"); 
-  }
-  arg1 = reinterpret_cast< database::postgres_manager * >(argp1);
-  delete arg1;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_postgres_manager_database_type(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  database::postgres_manager *arg1 = (database::postgres_manager *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  database::database_types result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_database__postgres_manager, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "postgres_manager_database_type" "', argument " "1"" of type '" "database::postgres_manager *""'"); 
-  }
-  arg1 = reinterpret_cast< database::postgres_manager * >(argp1);
-  result = (database::database_types)(arg1)->database_type();
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_postgres_manager_connect(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  database::postgres_manager *arg1 = (database::postgres_manager *) 0 ;
-  wstring *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  bool result;
-  
-  if (!SWIG_Python_UnpackTuple(args, "postgres_manager_connect", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_database__postgres_manager, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "postgres_manager_connect" "', argument " "1"" of type '" "database::postgres_manager *""'"); 
-  }
-  arg1 = reinterpret_cast< database::postgres_manager * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_wstring,  0  | 0);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "postgres_manager_connect" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "postgres_manager_connect" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  arg2 = reinterpret_cast< wstring * >(argp2);
-  result = (bool)(arg1)->connect((wstring const &)*arg2);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_postgres_manager_create_query(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  database::postgres_manager *arg1 = (database::postgres_manager *) 0 ;
-  wstring *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  bool result;
-  
-  if (!SWIG_Python_UnpackTuple(args, "postgres_manager_create_query", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_database__postgres_manager, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "postgres_manager_create_query" "', argument " "1"" of type '" "database::postgres_manager *""'"); 
-  }
-  arg1 = reinterpret_cast< database::postgres_manager * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_wstring,  0  | 0);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "postgres_manager_create_query" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "postgres_manager_create_query" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  arg2 = reinterpret_cast< wstring * >(argp2);
-  result = (bool)(arg1)->create_query((wstring const &)*arg2);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_postgres_manager_insert_query(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  database::postgres_manager *arg1 = (database::postgres_manager *) 0 ;
-  wstring *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  unsigned int result;
-  
-  if (!SWIG_Python_UnpackTuple(args, "postgres_manager_insert_query", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_database__postgres_manager, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "postgres_manager_insert_query" "', argument " "1"" of type '" "database::postgres_manager *""'"); 
-  }
-  arg1 = reinterpret_cast< database::postgres_manager * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_wstring,  0  | 0);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "postgres_manager_insert_query" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "postgres_manager_insert_query" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  arg2 = reinterpret_cast< wstring * >(argp2);
-  result = (unsigned int)(arg1)->insert_query((wstring const &)*arg2);
-  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_postgres_manager_update_query(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  database::postgres_manager *arg1 = (database::postgres_manager *) 0 ;
-  wstring *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  unsigned int result;
-  
-  if (!SWIG_Python_UnpackTuple(args, "postgres_manager_update_query", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_database__postgres_manager, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "postgres_manager_update_query" "', argument " "1"" of type '" "database::postgres_manager *""'"); 
-  }
-  arg1 = reinterpret_cast< database::postgres_manager * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_wstring,  0  | 0);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "postgres_manager_update_query" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "postgres_manager_update_query" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  arg2 = reinterpret_cast< wstring * >(argp2);
-  result = (unsigned int)(arg1)->update_query((wstring const &)*arg2);
-  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_postgres_manager_delete_query(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  database::postgres_manager *arg1 = (database::postgres_manager *) 0 ;
-  wstring *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  unsigned int result;
-  
-  if (!SWIG_Python_UnpackTuple(args, "postgres_manager_delete_query", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_database__postgres_manager, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "postgres_manager_delete_query" "', argument " "1"" of type '" "database::postgres_manager *""'"); 
-  }
-  arg1 = reinterpret_cast< database::postgres_manager * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_wstring,  0  | 0);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "postgres_manager_delete_query" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "postgres_manager_delete_query" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  arg2 = reinterpret_cast< wstring * >(argp2);
-  result = (unsigned int)(arg1)->delete_query((wstring const &)*arg2);
-  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_postgres_manager_select_query(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  database::postgres_manager *arg1 = (database::postgres_manager *) 0 ;
-  wstring *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject *swig_obj[2] ;
-  shared_ptr< container::value_container > result;
-  
-  if (!SWIG_Python_UnpackTuple(args, "postgres_manager_select_query", 2, 2, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_database__postgres_manager, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "postgres_manager_select_query" "', argument " "1"" of type '" "database::postgres_manager *""'"); 
-  }
-  arg1 = reinterpret_cast< database::postgres_manager * >(argp1);
-  res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_wstring,  0  | 0);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "postgres_manager_select_query" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "postgres_manager_select_query" "', argument " "2"" of type '" "wstring const &""'"); 
-  }
-  arg2 = reinterpret_cast< wstring * >(argp2);
-  result = (arg1)->select_query((wstring const &)*arg2);
-  resultobj = SWIG_NewPointerObj((new shared_ptr< container::value_container >(static_cast< const shared_ptr< container::value_container >& >(result))), SWIGTYPE_p_shared_ptrT_container__value_container_t, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_postgres_manager_disconnect(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  database::postgres_manager *arg1 = (database::postgres_manager *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject *swig_obj[1] ;
-  bool result;
-  
-  if (!args) SWIG_fail;
-  swig_obj[0] = args;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_database__postgres_manager, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "postgres_manager_disconnect" "', argument " "1"" of type '" "database::postgres_manager *""'"); 
-  }
-  arg1 = reinterpret_cast< database::postgres_manager * >(argp1);
-  result = (bool)(arg1)->disconnect();
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *postgres_manager_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!SWIG_Python_UnpackTuple(args, "swigregister", 1, 1, &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_database__postgres_manager, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *postgres_manager_swiginit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  return SWIG_Python_InitShadowInstance(args);
-}
-
 static PyMethodDef SwigMethods[] = {
 	 { "SWIG_PyInstanceMethod_New", SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { "new_database_manager", _wrap_new_database_manager, METH_NOARGS, NULL},
@@ -3620,18 +3329,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "database_manager_handle", _wrap_database_manager_handle, METH_NOARGS, NULL},
 	 { "database_manager_swigregister", database_manager_swigregister, METH_O, NULL},
 	 { "database_manager_swiginit", database_manager_swiginit, METH_VARARGS, NULL},
-	 { "new_postgres_manager", _wrap_new_postgres_manager, METH_NOARGS, NULL},
-	 { "delete_postgres_manager", _wrap_delete_postgres_manager, METH_O, NULL},
-	 { "postgres_manager_database_type", _wrap_postgres_manager_database_type, METH_O, NULL},
-	 { "postgres_manager_connect", _wrap_postgres_manager_connect, METH_VARARGS, NULL},
-	 { "postgres_manager_create_query", _wrap_postgres_manager_create_query, METH_VARARGS, NULL},
-	 { "postgres_manager_insert_query", _wrap_postgres_manager_insert_query, METH_VARARGS, NULL},
-	 { "postgres_manager_update_query", _wrap_postgres_manager_update_query, METH_VARARGS, NULL},
-	 { "postgres_manager_delete_query", _wrap_postgres_manager_delete_query, METH_VARARGS, NULL},
-	 { "postgres_manager_select_query", _wrap_postgres_manager_select_query, METH_VARARGS, NULL},
-	 { "postgres_manager_disconnect", _wrap_postgres_manager_disconnect, METH_O, NULL},
-	 { "postgres_manager_swigregister", postgres_manager_swigregister, METH_O, NULL},
-	 { "postgres_manager_swiginit", postgres_manager_swiginit, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
@@ -3644,28 +3341,24 @@ static PyMethodDef SwigMethods_proxydocs[] = {
 
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_database__database_manager = {"_p_database__database_manager", "database::database_manager *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_database__postgres_manager = {"_p_database__postgres_manager", "database::postgres_manager *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_shared_ptrT_container__value_container_t = {"_p_shared_ptrT_container__value_container_t", "shared_ptr< container::value_container > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_wstring = {"_p_wstring", "wstring *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_char,
   &_swigt__p_database__database_manager,
-  &_swigt__p_database__postgres_manager,
   &_swigt__p_shared_ptrT_container__value_container_t,
   &_swigt__p_wstring,
 };
 
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_database__database_manager[] = {  {&_swigt__p_database__database_manager, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_database__postgres_manager[] = {  {&_swigt__p_database__postgres_manager, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_shared_ptrT_container__value_container_t[] = {  {&_swigt__p_shared_ptrT_container__value_container_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_wstring[] = {  {&_swigt__p_wstring, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_char,
   _swigc__p_database__database_manager,
-  _swigc__p_database__postgres_manager,
   _swigc__p_shared_ptrT_container__value_container_t,
   _swigc__p_wstring,
 };

@@ -12,7 +12,7 @@ elif [ "$(uname)" == "Linux" ]; then
     apt-get upgrade -y
 
     apt-get install curl zip unzip tar ninja-build -y
-    apt-get install pkg-config autoconf -y
+    apt-get install swig pkg-config autoconf -y
 
     if [ $(egrep "^(VERSION_ID)=" /etc/os-release) != "VERSION_ID=\"22.04\"" ]; then
         apt-get install python3-pip -y

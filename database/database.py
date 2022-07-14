@@ -108,40 +108,5 @@ _database.database_manager_swigregister(database_manager)
 def database_manager_handle():
     return _database.database_manager_handle()
 
-class postgres_manager(object):
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def __init__(self):
-        _database.postgres_manager_swiginit(self, _database.new_postgres_manager())
-    __swig_destroy__ = _database.delete_postgres_manager
-
-    def database_type(self):
-        return _database.postgres_manager_database_type(self)
-
-    def connect(self, connect_string):
-        return _database.postgres_manager_connect(self, connect_string)
-
-    def create_query(self, query_string):
-        return _database.postgres_manager_create_query(self, query_string)
-
-    def insert_query(self, query_string):
-        return _database.postgres_manager_insert_query(self, query_string)
-
-    def update_query(self, query_string):
-        return _database.postgres_manager_update_query(self, query_string)
-
-    def delete_query(self, query_string):
-        return _database.postgres_manager_delete_query(self, query_string)
-
-    def select_query(self, query_string):
-        return _database.postgres_manager_select_query(self, query_string)
-
-    def disconnect(self):
-        return _database.postgres_manager_disconnect(self)
-
-# Register postgres_manager in _database:
-_database.postgres_manager_swigregister(postgres_manager)
-
 
 
