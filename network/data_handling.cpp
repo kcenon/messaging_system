@@ -541,13 +541,8 @@ namespace network
 			return;
 		}
 
-#ifdef _WIN32
 		if (message->message_type() != REQUEST_CONNECTION &&
 			message->message_type() != CONFIRM_CONNECTION)
-#else
-		if (message->message_type() != converter::to_wstring(REQUEST_CONNECTION) &&
-			message->message_type() != converter::to_wstring(CONFIRM_CONNECTION))
-#endif
 		{
 			logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
 		}

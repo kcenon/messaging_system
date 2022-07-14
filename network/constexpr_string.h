@@ -32,7 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#ifdef _WIN32
 constexpr auto HEADER = L"header";
 constexpr auto DATA = L"data";
 constexpr auto SOURCE_ID = L"source_id";
@@ -57,29 +56,3 @@ constexpr auto GATEWAY_SOURCE_ID = L"gateway_source_id";
 constexpr auto GATEWAY_SOURCE_SUB_ID = L"gateway_source_sub_id";
 constexpr auto CONNECTION_KEY = L"connection_key";
 constexpr auto CANNOT_SEND_MESSAGE = L"cannot_send_message";
-#else
-constexpr auto HEADER = "header";
-constexpr auto DATA = "data";
-constexpr auto SOURCE_ID = "source_id";
-constexpr auto SOURCE_SUB_ID = "source_sub_id";
-constexpr auto TARGET_ID = "target_id";
-constexpr auto TARGET_SUB_ID = "target_sub_id";
-constexpr auto MESSAGE_TYPE = "message_type";
-constexpr auto INDICATION_ID = "indication_id";
-constexpr auto RESPONSE = "response";
-constexpr auto REQUEST_CONNECTION = "request_connection";
-constexpr auto CONFIRM_CONNECTION = "confirm_connection";
-constexpr auto RESULT = "result";
-constexpr auto RESULT_MESSAGE = "result_message";
-constexpr auto TRANSFER_CONDITON = "transfer_condition";
-constexpr auto REQUEST_FILE = "request_file";
-constexpr auto SNIPPING_TARGETS = "snipping_targets";
-constexpr auto ENCRYPT_MODE = "encrypt_mode";
-constexpr auto FILES = "files";
-constexpr auto SOURCE = "source";
-constexpr auto TARGET = "target";
-constexpr auto GATEWAY_SOURCE_ID = "gateway_source_id";
-constexpr auto GATEWAY_SOURCE_SUB_ID = "gateway_source_sub_id";
-constexpr auto CONNECTION_KEY = "connection_key";
-constexpr auto CANNOT_SEND_MESSAGE = "cannot_send_message";
-#endif

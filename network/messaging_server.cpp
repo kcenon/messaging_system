@@ -536,11 +536,7 @@ namespace network
 
 				shared_ptr<container::value_container> container = message->copy(false);
 				container->swap_header();
-#ifdef _WIN32
 				container->set_message_type(CANNOT_SEND_MESSAGE);
-#else
-				container->set_message_type(converter::to_wstring(CANNOT_SEND_MESSAGE));
-#endif
 				container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
 				container << make_shared<container::string_value>(L"message_type", message->message_type());
 				container << make_shared<container::bool_value>(L"response", false);
