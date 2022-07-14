@@ -34,8 +34,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <cstring>
 
-#ifdef __USE_TYPE_CONTAINER__
-
 namespace container
 {
 	bool_value::bool_value(void)
@@ -73,5 +71,3 @@ namespace container
 		return (to_boolean() ? L"true" : L"false");
 	}
 }
-
-#endif

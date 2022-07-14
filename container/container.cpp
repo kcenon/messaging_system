@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "container.h"
 
-#ifdef __USE_TYPE_CONTAINER__
-
 #include "value_types.h"
 #include "converting.h"
 #include "file_handler.h"
@@ -121,7 +119,7 @@ namespace container
 
 	value_container::value_container(const wstring& message_type, const vector<shared_ptr<value>>& units) : value_container()
 	{
-		set_message_type(L"data_container");
+		set_message_type(message_type);
 		set_units(units);
 	}
 
@@ -827,5 +825,3 @@ namespace container
 		return make_shared<container_value>(name, (long)atol(converter::to_string(data).c_str()));
 	}
 }
-
-#endif

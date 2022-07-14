@@ -131,11 +131,7 @@ namespace database
         return _database->update_query(query_string);
     }
 
-#ifndef __USE_TYPE_CONTAINER__
-    shared_ptr<json::value> database_manager::select_query(const wstring& query_string)
-#else
     shared_ptr<container::value_container> database_manager::select_query(const wstring& query_string)
-#endif
     {
         if(_database == nullptr)
         {

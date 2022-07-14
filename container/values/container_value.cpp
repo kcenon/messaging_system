@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "container_value.h"
 
-#ifdef __USE_TYPE_CONTAINER__
-
 #include "converting.h"
 
 #include "bool_value.h"
@@ -324,5 +322,3 @@ namespace container
 		return make_shared<container_value>(name, (long)atol(converter::to_string(data).c_str()));
 	}
 }
-
-#endif

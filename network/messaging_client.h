@@ -32,12 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#ifdef __USE_TYPE_CONTAINER__
 #include "container.h"
-#else
-#include "cpprest/json.h"
-#endif
-
 #include "thread_pool.h"
 #include "data_handling.h"
 #include "session_types.h"
@@ -54,11 +49,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace network
 {
 	using namespace std;
-
-#ifndef __USE_TYPE_CONTAINER__
-	using namespace web;
-#endif
-
 	class messaging_client : public enable_shared_from_this<messaging_client>, data_handling
 	{
 	public:
@@ -84,13 +74,7 @@ namespace network
 
 	public:
 		void set_connection_notification(const function<void(const wstring&, const wstring&, const bool&)>& notification);
-
-#ifndef __USE_TYPE_CONTAINER__
-		void set_message_notification(const function<void(shared_ptr<json::value>)>& notification);
-#else
 		void set_message_notification(const function<void(shared_ptr<container::value_container>)>& notification);
-#endif
-
 		void set_file_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&)>& notification);
 		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)>& notification);
 
@@ -102,19 +86,10 @@ namespace network
 
 	public:
 		bool echo(void);
-
-#ifndef __USE_TYPE_CONTAINER__
-		bool send(const json::value& message);
-		bool send(shared_ptr<json::value> message);
-		bool send_files(const json::value& message);
-		bool send_files(shared_ptr<json::value> message);
-#else
 		bool send(const container::value_container& message);
 		bool send(shared_ptr<container::value_container> message);
 		bool send_files(const container::value_container& message);
 		bool send_files(shared_ptr<container::value_container> message);
-#endif
-
 		bool send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
 
 	protected:
@@ -127,17 +102,10 @@ namespace network
 		void send_binary_packet(const vector<uint8_t>& data) override;
 
 	private:
-#ifndef __USE_TYPE_CONTAINER__
-		void normal_message(shared_ptr<json::value> message) override;
-		void confirm_message(shared_ptr<json::value> message);
-		void request_files(shared_ptr<json::value> message);
-		void echo_message(shared_ptr<json::value> message);
-#else
 		void normal_message(shared_ptr<container::value_container> message) override;
 		void confirm_message(shared_ptr<container::value_container> message);
 		void request_files(shared_ptr<container::value_container> message);
 		void echo_message(shared_ptr<container::value_container> message);
-#endif
 
 	private:
 		void connection_notification(const bool& condition);

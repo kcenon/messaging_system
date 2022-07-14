@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "value_types.h"
 
-#ifdef __USE_TYPE_CONTAINER__
-
 #include <map>
 
 namespace container
@@ -96,5 +94,3 @@ namespace container
 		return iterator->second;
 	}
 }
-
-#endif

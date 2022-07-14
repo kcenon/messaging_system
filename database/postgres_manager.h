@@ -30,11 +30,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "database.h"
+#include "database_base.h"
 
 namespace database
 {
-    class postgres_manager : public database
+    class postgres_manager : public database_base
     {
     public:
         postgres_manager();
@@ -47,11 +47,7 @@ namespace database
         unsigned int insert_query(const wstring& query_string) override;
         unsigned int update_query(const wstring& query_string) override;
         unsigned int delete_query(const wstring& query_string) override;
-#ifndef __USE_TYPE_CONTAINER__
-        shared_ptr<json::value> select_query(const wstring& query_string) override;
-#else
         shared_ptr<container::value_container> select_query(const wstring& query_string) override;
-#endif
         bool disconnect(void) override;
 
     private:

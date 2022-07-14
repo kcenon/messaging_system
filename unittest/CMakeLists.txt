@@ -15,11 +15,7 @@ PROJECT(${PROJECT_NAME})
 ADD_EXECUTABLE(${PROJECT_NAME} utilities.cpp container.cpp threads.cpp network.cpp)
     
 INCLUDE_DIRECTORIES(../utilities)
-
-IF(USE_TYPE_CONTAINER)
-    INCLUDE_DIRECTORIES(../container)
-ENDIF()
-
+INCLUDE_DIRECTORIES(../container)
 INCLUDE_DIRECTORIES(../threads)
 INCLUDE_DIRECTORIES(../network)
 

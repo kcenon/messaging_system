@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "float_value.h"
 
-#ifdef __USE_TYPE_CONTAINER__
-
 #include "fmt/xchar.h"
 #include "fmt/format.h"
 
@@ -69,5 +67,3 @@ namespace container
 		return fmt::format(L"{}", to_float());
 	}
 }
-
-#endif

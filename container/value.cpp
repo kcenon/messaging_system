@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "value.h"
 
-#ifdef __USE_TYPE_CONTAINER__
-
 #include "converting.h"
 
 #include "values/bool_value.h"
@@ -486,5 +484,3 @@ namespace container
 		set_data((double)atof(converter::to_string(data).c_str()));
 	}
 }
-
-#endif

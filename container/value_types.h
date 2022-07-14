@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#ifdef __USE_TYPE_CONTAINER__
-
 #include <string>
 
 using namespace std;
@@ -62,5 +60,3 @@ namespace container
 	const value_types convert_value_type(const wstring& target);
 	const wstring convert_value_type(const value_types& target);
 }
-
-#endif

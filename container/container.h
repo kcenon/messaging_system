@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#ifdef __USE_TYPE_CONTAINER__
-
 #include "value.h"
 
 #include <memory>
@@ -51,12 +49,12 @@ namespace container
 		value_container(const vector<uint8_t>& data_array, const bool& parse_only_header = true);
 		value_container(const value_container& data_container, const bool& parse_only_header = true);
 		value_container(shared_ptr<value_container> data_container, const bool& parse_only_header = true);
-		value_container(const wstring& message_type, const vector<shared_ptr<value>>& units = {});
-		value_container(const wstring& target_id, const wstring& target_sub_id, const wstring& message_type = L"packet_container",
-			const vector<shared_ptr<value>>& units = {});
+		value_container(const wstring& message_type, const vector<shared_ptr<value>>& units);
+		value_container(const wstring& target_id, const wstring& target_sub_id, const wstring& message_type,
+			const vector<shared_ptr<value>>& units);
 		value_container(const wstring& source_id, const wstring& source_sub_id,
-			const wstring& target_id, const wstring& target_sub_id, const wstring& message_type = L"packet_container",
-			const vector<shared_ptr<value>>& units = {});
+			const wstring& target_id, const wstring& target_sub_id, const wstring& message_type,
+			const vector<shared_ptr<value>>& units);
 		virtual ~value_container(void);
 
 	public:
@@ -163,5 +161,3 @@ namespace container
 		map<value_types, function<shared_ptr<value>(const wstring&, const wstring&)>> _data_type_map;
 	};
 }
-
-#endif

@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#ifdef __USE_TYPE_CONTAINER__
-
 #include "../value.h"
 
 using namespace std;
@@ -52,5 +50,3 @@ namespace container
 		wstring to_string(const bool& original = true) const override;
 	};
 }
-
-#endif

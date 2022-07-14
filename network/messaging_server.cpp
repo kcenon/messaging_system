@@ -38,10 +38,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "thread_worker.h"
 #include "job.h"
 
-#ifdef __USE_TYPE_CONTAINER__
 #include "values/bool_value.h"
 #include "values/string_value.h"
-#endif
 
 #include "fmt/xchar.h"
 #include "fmt/format.h"
@@ -129,11 +127,7 @@ namespace network
 		_connection = notification;
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	void messaging_server::set_message_notification(const function<void(shared_ptr<json::value>)>& notification)
-#else
 	void messaging_server::set_message_notification(const function<void(shared_ptr<container::value_container>)>& notification)
-#endif
 	{
 		_received_message = notification;
 	}
@@ -316,24 +310,12 @@ namespace network
 		}
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	bool messaging_server::send(const json::value& message, optional<session_types> type)
-#else
 	bool messaging_server::send(const container::value_container& message, optional<session_types> type)
-#endif
 	{
-#ifndef __USE_TYPE_CONTAINER__
-		return send(make_shared<json::value>(message), type);
-#else
 		return send(make_shared<container::value_container>(message), type);
-#endif
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	bool messaging_server::send(shared_ptr<json::value> message, optional<session_types> type)
-#else
 	bool messaging_server::send(shared_ptr<container::value_container> message, optional<session_types> type)
-#endif
 	{
 		if (message == nullptr)
 		{
@@ -364,24 +346,12 @@ namespace network
 		return result;
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	void messaging_server::send_files(const json::value& message)
-#else
 	void messaging_server::send_files(const container::value_container& message)
-#endif
 	{
-#ifndef __USE_TYPE_CONTAINER__
-		send_files(make_shared<json::value>(message));
-#else
 		send_files(make_shared<container::value_container>(message));
-#endif
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	void messaging_server::send_files(shared_ptr<json::value> message)
-#else
 	void messaging_server::send_files(shared_ptr<container::value_container> message)
-#endif
 	{
 		if (message == nullptr)
 		{
@@ -543,26 +513,14 @@ namespace network
 		}
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	void messaging_server::received_message(shared_ptr<json::value> message)
-#else
 	void messaging_server::received_message(shared_ptr<container::value_container> message)
-#endif
 	{
 		if (message == nullptr)
 		{
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
-#ifdef _WIN32
-		auto target_id = (*message)[HEADER][TARGET_ID].as_string();
-#else
-		auto target_id = converter::to_wstring((*message)[HEADER][TARGET_ID].as_string());
-#endif
-#else
 		auto target_id = message->target_id();
-#endif
 
 		if (target_id != _source_id)
 		{
@@ -576,19 +534,6 @@ namespace network
 					fmt::format(L"there is no target id on server: {}", 
 						target_id));
 
-#ifndef __USE_TYPE_CONTAINER__
-				shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
-
-				(*container)[HEADER][SOURCE_ID] = (*message)[HEADER][TARGET_ID];
-				(*container)[HEADER][SOURCE_SUB_ID] = (*message)[HEADER][TARGET_SUB_ID];
-				(*container)[HEADER][TARGET_ID] = (*message)[HEADER][SOURCE_ID];
-				(*container)[HEADER][TARGET_SUB_ID] = (*message)[HEADER][SOURCE_SUB_ID];
-				(*container)[HEADER][MESSAGE_TYPE] = json::value::string(CANNOT_SEND_MESSAGE);
-
-				(*container)[DATA][INDICATION_ID] = (*message)[DATA][INDICATION_ID];
-				(*container)[DATA][MESSAGE_TYPE] = (*message)[HEADER][MESSAGE_TYPE];
-    			(*container)[DATA][RESPONSE] = json::value::boolean(false);
-#else
 				shared_ptr<container::value_container> container = message->copy(false);
 				container->swap_header();
 #ifdef _WIN32
@@ -599,7 +544,6 @@ namespace network
 				container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
 				container << make_shared<container::string_value>(L"message_type", message->message_type());
 				container << make_shared<container::bool_value>(L"response", false);
-#endif
 
     			send(container);
 			}

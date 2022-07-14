@@ -32,7 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "messaging_client.h"
 
-#ifdef __USE_TYPE_CONTAINER__
 #include "value.h"
 #include "values/bool_value.h"
 #include "values/bytes_value.h"
@@ -40,7 +39,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "values/ushort_value.h"
 #include "values/string_value.h"
 #include "values/container_value.h"
-#endif
 
 #include "logging.h"
 #include "converting.h"
@@ -64,11 +62,7 @@ namespace network
 {
 	using namespace logging;
 	using namespace threads;
-
-#ifdef __USE_TYPE_CONTAINER__
 	using namespace container;
-#endif
-
 	using namespace converting;
 	using namespace encrypting;
 	using namespace compressing;
@@ -159,11 +153,7 @@ namespace network
 		_connection = notification;
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	void messaging_client::set_message_notification(const function<void(shared_ptr<json::value>)>& notification)
-#else
 	void messaging_client::set_message_notification(const function<void(shared_ptr<container::value_container>)>& notification)
-#endif
 	{
 		_received_message = notification;
 	}
@@ -250,34 +240,18 @@ namespace network
 
 	bool messaging_client::echo(void)
 	{
-#ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
-#else
 		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, L"echo",
 			vector<shared_ptr<container::value>> {});
-#endif
 
 		return send(container);
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	bool messaging_client::send(const json::value& message)
-#else
 	bool messaging_client::send(const container::value_container& message)
-#endif
 	{
-#ifndef __USE_TYPE_CONTAINER__
-		return send(make_shared<json::value>(message));
-#else
 		return send(make_shared<container::value_container>(message));
-#endif
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	bool messaging_client::send(shared_ptr<json::value> message)
-#else
 	bool messaging_client::send(shared_ptr<container::value_container> message)
-#endif
 	{
 		if (_socket == nullptr)
 		{
@@ -299,61 +273,27 @@ namespace network
 			return false;
 		}
 
-#ifdef __USE_TYPE_CONTAINER__
 		if (message->source_id().empty())
 		{
 			message->set_source(_source_id, _source_sub_id);
 		}
-#else
-		if ((*message)[HEADER][SOURCE_ID].is_null() ||
-			(*message)[HEADER][SOURCE_ID].as_string().empty())
-		{
-#ifdef _WIN32
-			(*message)[HEADER][SOURCE_ID] = json::value::string(_source_id);
-			(*message)[HEADER][SOURCE_SUB_ID] = json::value::string(_source_sub_id);
-#else
-			(*message)[HEADER][SOURCE_ID] = json::value::string(converter::to_string(_source_id));
-			(*message)[HEADER][SOURCE_SUB_ID] = json::value::string(converter::to_string(_source_sub_id));
-#endif
-		}
-#endif
 
 		auto serialize = message->serialize();
 		auto serialize_array = converter::to_array(serialize);
 
-#ifdef __USE_TYPE_CONTAINER__
 		logger::handle().write(logging_level::packet, fmt::format(L"send: {}", serialize));
-#else
-#ifdef _WIN32
-		logger::handle().write(logging_level::packet, fmt::format(L"send: {}", serialize));
-#else
-		logger::handle().write(logging_level::packet, converter::to_wstring(fmt::format("send: {}", serialize)));
-#endif
-#endif
 
 		send_packet_job(serialize_array);
 
 		return true;
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	bool messaging_client::send_files(const json::value& message)
-#else
 	bool messaging_client::send_files(const container::value_container& message)
-#endif
 	{
-#ifndef __USE_TYPE_CONTAINER__
-		return send_files(make_shared<json::value>(message));
-#else
 		return send_files(make_shared<container::value_container>(message));
-#endif
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	bool messaging_client::send_files(shared_ptr<json::value> message)
-#else
 	bool messaging_client::send_files(shared_ptr<container::value_container> message)
-#endif
 	{
 		if (_socket == nullptr)
 		{
@@ -375,46 +315,6 @@ namespace network
 			return false;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
-		if ((*message)[HEADER][SOURCE_ID].is_null() ||
-			(*message)[HEADER][SOURCE_ID].as_string().empty())
-		{
-#ifdef _WIN32
-			(*message)[HEADER][SOURCE_ID] = json::value::string(_source_id);
-			(*message)[HEADER][SOURCE_SUB_ID] = json::value::string(_source_sub_id);
-#else
-			(*message)[HEADER][SOURCE_ID] = json::value::string(converter::to_string(_source_id));
-			(*message)[HEADER][SOURCE_SUB_ID] = json::value::string(converter::to_string(_source_sub_id));
-#endif
-		}
-
-#ifdef _WIN32
-		auto& files = (*message)[DATA][FILES].as_array();
-#else
-		auto& files = (*message)[DATA][FILES].as_array();
-#endif
-		for (int index = 0; index < files.size(); ++index)
-		{
-			shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
-
-			(*container)[HEADER][SOURCE_ID] = (*message)[HEADER][TARGET_ID];
-			(*container)[HEADER][SOURCE_SUB_ID] = (*message)[HEADER][TARGET_SUB_ID];
-			(*container)[HEADER][TARGET_ID] = (*message)[HEADER][SOURCE_ID];
-			(*container)[HEADER][TARGET_SUB_ID] = (*message)[HEADER][SOURCE_SUB_ID];
-			(*container)[HEADER][MESSAGE_TYPE] = json::value::string(REQUEST_FILE);
-
-			(*container)[DATA][INDICATION_ID] = (*message)[DATA][INDICATION_ID];
-#ifdef _WIN32
-			(*container)[DATA][SOURCE] = files[index][SOURCE];
-			(*container)[DATA][TARGET] = files[index][TARGET];
-#else
-			(*container)[DATA][SOURCE] = files[index][SOURCE];
-			(*container)[DATA][TARGET] = files[index][TARGET];
-#endif
-
-			send_file_job(converter::to_array(container->serialize()));
-		}
-#else
 		if (message->source_id().empty())
 		{
 			message->set_source(_source_id, _source_sub_id);
@@ -434,7 +334,6 @@ namespace network
 			send_file_job(container->serialize_array());
 			container->clear_value();
 		}
-#endif
 
 		return true;
 	}
@@ -470,54 +369,6 @@ namespace network
 
 	void messaging_client::send_connection(void)
 	{
-#ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
-
-		(*container)[HEADER][MESSAGE_TYPE] = json::value::string(REQUEST_CONNECTION);
-#ifdef _WIN32
-		(*container)[HEADER][SOURCE_ID] = json::value::string(_source_id);
-		(*container)[HEADER][SOURCE_SUB_ID] = json::value::string(_source_sub_id);
-		(*container)[HEADER][TARGET_ID] = json::value::string(_target_id);
-		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(_target_sub_id);
-
-		(*container)[DATA][CONNECTION_KEY] = json::value::string(_connection_key);
-		if (_session_type != session_types::binary_line)
-		{
-			(*container)[DATA][L"auto_echo"] = json::value::boolean(_auto_echo);
-			(*container)[DATA][L"auto_echo_interval_seconds"] = json::value::number(_auto_echo_interval_seconds);
-		}
-		(*container)[DATA][L"session_type"] = json::value::number((short)_session_type);
-		(*container)[DATA][L"bridge_mode"] = json::value::boolean(_bridge_line);
-
-		int index = 0;
-		(*container)[DATA][SNIPPING_TARGETS] = json::value::array();
-		for (auto& snipping_target : _snipping_targets)
-		{
-			(*container)[DATA][SNIPPING_TARGETS][index++] = json::value::string(snipping_target);
-		}
-#else
-		(*container)[HEADER][SOURCE_ID] = json::value::string(converter::to_string(_source_id));
-		(*container)[HEADER][SOURCE_SUB_ID] = json::value::string(converter::to_string(_source_sub_id));
-		(*container)[HEADER][TARGET_ID] = json::value::string(converter::to_string(_target_id));
-		(*container)[HEADER][TARGET_SUB_ID] = json::value::string(converter::to_string(_target_sub_id));
-
-		(*container)[DATA][CONNECTION_KEY] = json::value::string(converter::to_string(_connection_key));
-		if (_session_type != session_types::binary_line)
-		{
-			(*container)[DATA]["auto_echo"] = json::value::boolean(_auto_echo);
-			(*container)[DATA]["auto_echo_interval_seconds"] = json::value::number(_auto_echo_interval_seconds);
-		}
-		(*container)[DATA]["session_type"] = json::value::number((short)_session_type);
-		(*container)[DATA]["bridge_mode"] = json::value::boolean(_bridge_line);
-
-		int index = 0;
-		(*container)[DATA][SNIPPING_TARGETS] = json::value::array();
-		for (auto& snipping_target : _snipping_targets)
-		{
-			(*container)[DATA][SNIPPING_TARGETS][index++] = json::value::string(converter::to_string(snipping_target));
-		}
-#endif
-#else
 		shared_ptr<container::container_value> snipping_targets = make_shared<container::container_value>(L"snipping_targets");
 		for (auto& snipping_target : _snipping_targets)
 		{
@@ -533,7 +384,6 @@ namespace network
 				make_shared<container::bool_value>(L"bridge_mode", _bridge_line),
 				snipping_targets
 		});
-#endif
 
 		send_packet_job(converter::to_array(container->serialize()));
 	}
@@ -573,11 +423,7 @@ namespace network
 		send_on_tcp(_socket, data_modes::binary_mode, data);
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	void messaging_client::normal_message(shared_ptr<json::value> message)
-#else
 	void messaging_client::normal_message(shared_ptr<container::value_container> message)
-#endif
 	{
 		if (message == nullptr)
 		{
@@ -595,11 +441,7 @@ namespace network
 		}
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	void messaging_client::confirm_message(shared_ptr<json::value> message)
-#else
 	void messaging_client::confirm_message(shared_ptr<container::value_container> message)
-#endif
 	{
 		if (message == nullptr)
 		{
@@ -608,31 +450,11 @@ namespace network
 		
 		logger::handle().write(logging_level::sequence, L"received confirm_message");
 
-#ifndef __USE_TYPE_CONTAINER__
-#ifdef _WIN32
-		_target_id = (*message)[HEADER][SOURCE_ID].as_string();
-		_target_sub_id = (*message)[HEADER][SOURCE_SUB_ID].as_string();
-		_source_sub_id = (*message)[HEADER][TARGET_SUB_ID].as_string();
-#else
-		_target_id = converter::to_wstring((*message)[HEADER][SOURCE_ID].as_string());
-		_target_sub_id = converter::to_wstring((*message)[HEADER][SOURCE_SUB_ID].as_string());
-		_source_sub_id = converter::to_wstring((*message)[HEADER][TARGET_SUB_ID].as_string());
-#endif
-#else
 		_target_id = message->source_id();
 		_target_sub_id = message->source_sub_id();
 		_source_sub_id = message->target_sub_id();
-#endif
 
-#ifndef __USE_TYPE_CONTAINER__
-#ifdef _WIN32
-		if (!(*message)[DATA][L"confirm"].as_bool())
-#else
-		if (!(*message)[DATA]["confirm"].as_bool())
-#endif
-#else
 		if (!message->get_value(L"confirm")->to_boolean())
-#endif
 		{
 			connection_notification(false);
 
@@ -640,31 +462,6 @@ namespace network
 		}
 
 		_confirm = connection_conditions::confirmed;
-
-#ifndef __USE_TYPE_CONTAINER__
-		_encrypt_mode = (*message)[DATA][ENCRYPT_MODE].as_bool();
-
-		if (_encrypt_mode)
-		{
-#ifdef _WIN32
-			_key = (*message)[DATA][L"key"].as_string();
-			_iv = (*message)[DATA][L"iv"].as_string();
-#else
-			_key = converter::to_wstring((*message)[DATA]["key"].as_string());
-			_iv = converter::to_wstring((*message)[DATA]["iv"].as_string());
-#endif
-		}
-
-		auto& snipping_targets = (*message)[DATA][SNIPPING_TARGETS].as_array();
-		for (int index = 0; index < snipping_targets.size(); ++index)
-		{
-#ifdef _WIN32
-			logger::handle().write(logging_level::information, fmt::format(L"accepted snipping target: {}", snipping_targets[index].as_string()));
-#else
-			logger::handle().write(logging_level::information, converter::to_wstring(fmt::format("accepted snipping target: {}", snipping_targets[index].as_string())));
-#endif
-		}
-#else
 		_encrypt_mode = message->get_value(L"encrypt_mode")->to_boolean();
 
 		if (_encrypt_mode)
@@ -688,16 +485,11 @@ namespace network
 
 			logger::handle().write(logging_level::information, fmt::format(L"accepted snipping target: {}", snipping_target->to_string()));
 		}
-#endif
 
 		connection_notification(true);
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	void messaging_client::request_files(shared_ptr<json::value> message)
-#else
 	void messaging_client::request_files(shared_ptr<container::value_container> message)
-#endif
 	{
 		if (message == nullptr)
 		{
@@ -709,25 +501,6 @@ namespace network
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
-		auto& files = (*message)[DATA][FILES].as_array();
-		for (int index = 0; index < files.size(); ++index)
-		{
-			shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
-
-			(*container)[HEADER][SOURCE_ID] = (*message)[HEADER][TARGET_ID];
-			(*container)[HEADER][SOURCE_SUB_ID] = (*message)[HEADER][TARGET_SUB_ID];
-			(*container)[HEADER][TARGET_ID] = (*message)[HEADER][SOURCE_ID];
-			(*container)[HEADER][TARGET_SUB_ID] = (*message)[HEADER][SOURCE_SUB_ID];
-			(*container)[HEADER][MESSAGE_TYPE] = json::value::string(REQUEST_FILE);
-
-			(*container)[DATA][INDICATION_ID] = (*message)[DATA][INDICATION_ID];
-			(*container)[DATA][SOURCE] = files[index][SOURCE];
-			(*container)[DATA][TARGET] = files[index][TARGET];
-
-			send_file_job(converter::to_array(container->serialize()));
-		}
-#else
 		shared_ptr<container::value_container> container = message->copy(false);
 		container->swap_header();
 		container->set_message_type(L"request_file");
@@ -742,14 +515,9 @@ namespace network
 			send_file_job(container->serialize_array());
 			container->clear_value();
 		}
-#endif
 	}
 
-#ifndef __USE_TYPE_CONTAINER__
-	void messaging_client::echo_message(shared_ptr<json::value> message)
-#else
 	void messaging_client::echo_message(shared_ptr<container::value_container> message)
-#endif
 	{
 		if (message == nullptr)
 		{
@@ -761,30 +529,6 @@ namespace network
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
-		if (!(*message)[DATA][RESPONSE].is_null())
-		{
-#ifdef _WIN32
-			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
-#else
-			logger::handle().write(logging_level::information, converter::to_wstring(fmt::format("received echo: {}", message->serialize())));
-#endif
-			return;
-		}
-
-		shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
-
-		(*container)[HEADER][SOURCE_ID] = (*message)[HEADER][TARGET_ID];
-		(*container)[HEADER][SOURCE_SUB_ID] = (*message)[HEADER][TARGET_SUB_ID];
-		(*container)[HEADER][TARGET_ID] = (*message)[HEADER][SOURCE_ID];
-		(*container)[HEADER][TARGET_SUB_ID] = (*message)[HEADER][SOURCE_SUB_ID];
-		(*container)[HEADER][MESSAGE_TYPE] = (*message)[HEADER][MESSAGE_TYPE];
-
-		(*container)[DATA] = (*message)[DATA];
-		(*container)[DATA][RESPONSE] = json::value::boolean(true);
-
-		_thread_pool->push(make_shared<job>(priorities::low, converter::to_array(container->serialize()), bind(&messaging_client::send_packet, this, placeholders::_1)));
-#else
 		vector<shared_ptr<value>> response = (*message)[L"response"];
 		if (!response.empty())
 		{
@@ -798,7 +542,6 @@ namespace network
 		message << make_shared<bool_value>(L"response", true);
 
 		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), bind(&messaging_client::send_packet, this, placeholders::_1)));
-#endif
 	}
 
 	void messaging_client::connection_notification(const bool& condition)

@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "bytes_value.h"
 
-#ifdef __USE_TYPE_CONTAINER__
-
 #include "converting.h"
 
 namespace container
@@ -69,5 +67,3 @@ namespace container
 		return converter::to_base64(_data);
 	}
 }
-
-#endif

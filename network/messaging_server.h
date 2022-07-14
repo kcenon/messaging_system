@@ -32,11 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#ifndef __USE_TYPE_CONTAINER__
-#include "cpprest/json.h"
-#else
 #include "container.h"
-#endif
 
 #include "thread_pool.h"
 #include "session_types.h"
@@ -52,10 +48,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "asio.hpp"
 
 using namespace std;
-
-#ifndef __USE_TYPE_CONTAINER__
-using namespace web;
-#endif
 
 namespace network
 {
@@ -83,13 +75,7 @@ namespace network
 
 	public:
 		void set_connection_notification(const function<void(const wstring&, const wstring&, const bool&)>& notification);
-
-#ifndef __USE_TYPE_CONTAINER__
-		void set_message_notification(const function<void(shared_ptr<json::value>)>& notification);
-#else
 		void set_message_notification(const function<void(shared_ptr<container::value_container>)>& notification);
-#endif
-
 		void set_file_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&)>& notification);
 		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)>& notification);
 
@@ -103,19 +89,10 @@ namespace network
 		
 	public:
 		void echo(void);
-
-#ifndef __USE_TYPE_CONTAINER__
-		bool send(const json::value& message, optional<session_types> type = session_types::message_line);
-		bool send(shared_ptr<json::value> message, optional<session_types> type = session_types::message_line);
-		void send_files(const json::value& message);
-		void send_files(shared_ptr<json::value> message);
-#else
 		bool send(const container::value_container& message, optional<session_types> type = session_types::message_line);
 		bool send(shared_ptr<container::value_container> message, optional<session_types> type = session_types::message_line);
 		void send_files(const container::value_container& message);
 		void send_files(shared_ptr<container::value_container> message);
-#endif
-
 		void send_binary(const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
 		void send_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
 
@@ -125,11 +102,7 @@ namespace network
 		void connect_condition(shared_ptr<messaging_session> target, const bool& condition);
 
 	private:
-#ifndef __USE_TYPE_CONTAINER__
-		void received_message(shared_ptr<json::value> message);
-#else
 		void received_message(shared_ptr<container::value_container> message);
-#endif
 
 		void received_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
 
@@ -165,12 +138,7 @@ namespace network
 
 	private:
 		function<void(const wstring&, const wstring&, const bool&)> _connection;
-
-#ifndef __USE_TYPE_CONTAINER__
-		function<void(shared_ptr<json::value>)> _received_message;
-#else
 		function<void(shared_ptr<container::value_container>)> _received_message;
-#endif
 
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&)> _received_file;
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)> _received_data;

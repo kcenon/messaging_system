@@ -45,20 +45,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "asio.hpp"
 
-#ifdef __USE_TYPE_CONTAINER__
 #include "container.h"
-#else
-#include "cpprest/json.h"
-#endif
 
 namespace network
 {
 	using namespace std;
-
-#ifndef __USE_TYPE_CONTAINER__
-	using namespace web;
-#endif
-
 	class data_handling
 	{
 	public:
@@ -81,12 +72,7 @@ namespace network
 
 	protected:
 		virtual void disconnected(void) = 0;
-
-#ifndef __USE_TYPE_CONTAINER__
-		virtual void normal_message(shared_ptr<json::value> message) = 0;
-#else
 		virtual void normal_message(shared_ptr<container::value_container> message) = 0;
-#endif
 
 	protected:
 		void send_packet_job(const vector<uint8_t>& data);
@@ -129,23 +115,13 @@ namespace network
 		void receive_binary_packet(const vector<uint8_t>& data);
 
 	protected:
-#ifndef __USE_TYPE_CONTAINER__
-		function<void(shared_ptr<json::value>)> _received_message;
-#else
 		function<void(shared_ptr<container::value_container>)> _received_message;
-#endif
-
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&)> _received_file;
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)> _received_data;
 
 	protected:
 		shared_ptr<threads::thread_pool> _thread_pool;
-
-#ifndef __USE_TYPE_CONTAINER__
-		map<wstring, function<void(shared_ptr<json::value>)>> _message_handlers;
-#else
 		map<wstring, function<void(shared_ptr<container::value_container>)>> _message_handlers;
-#endif
 
 	protected:
 		connection_conditions _confirm;

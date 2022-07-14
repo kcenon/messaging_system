@@ -5,7 +5,7 @@ SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 SET(SOURCE_FILES
-    database.h database_types.h
+    database_base.h database_types.h
     database_manager.h database_manager.cpp
     postgres_manager.h postgres_manager.cpp)
 
@@ -17,20 +17,17 @@ ENDIF()
 
 PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
 
-ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES})
+IF(USE_SWIG_INTERFACE)
+    ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES} database_wrap.cxx)
+ELSE()
+    ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES})
+ENDIF()
     
 FIND_PACKAGE(PostgreSQL REQUIRED)
 TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC PostgreSQL::PostgreSQL)
 
-IF(USE_TYPE_CONTAINER)
-    INCLUDE_DIRECTORIES(../utilities)
-    INCLUDE_DIRECTORIES(../container)
+INCLUDE_DIRECTORIES(../utilities)
+INCLUDE_DIRECTORIES(../container)
 
-    ADD_DEPENDENCIES(${LIBRARY_NAME} container)
-    TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC container)
-ELSE()
-    INCLUDE_DIRECTORIES(../utilities)
-
-    ADD_DEPENDENCIES(${LIBRARY_NAME} utilities)
-    TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC utilities)
-ENDIF()
+ADD_DEPENDENCIES(${LIBRARY_NAME} container)
+TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC container)

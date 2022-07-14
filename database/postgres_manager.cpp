@@ -153,14 +153,6 @@ namespace database
         return result_count;
     }
     
-#ifndef __USE_TYPE_CONTAINER__
-    shared_ptr<json::value> postgres_manager::select_query(const wstring& query_string)
-    {
-        shared_ptr<json::value> container = make_shared<json::value>(json::value::object(true));
-
-        return container;
-    }
-#else
     shared_ptr<container::value_container> postgres_manager::select_query(const wstring& query_string)
     {
         shared_ptr<container::value_container> container = make_shared<container::value_container>(L"query",
@@ -168,7 +160,6 @@ namespace database
 
         return container;
     }
-#endif
 
     bool postgres_manager::disconnect(void)
     {

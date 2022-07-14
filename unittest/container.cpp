@@ -1,4 +1,3 @@
-#ifdef __USE_TYPE_CONTAINER__
 #ifdef __USE_UNIT_TEST__
 
 #include "gtest/gtest.h"
@@ -48,5 +47,4 @@ TEST(container, test)
     EXPECT_STREQ(converter::to_string(data.serialize()).c_str(), converter::to_string(data3.serialize()).c_str());
 }
 
-#endif
 #endif

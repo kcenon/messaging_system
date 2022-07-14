@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#ifdef __USE_TYPE_CONTAINER__
-
 #include "../value.h"
 
 using namespace std;
@@ -81,5 +79,3 @@ namespace container
 		map<value_types, function<shared_ptr<value>(const wstring&, const wstring&)>> _data_type_map;
 	};
 }
-
-#endif

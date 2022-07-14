@@ -535,24 +535,12 @@ namespace network
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
-#ifdef _WIN32
-		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_wstring(data)));
-#else
-		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));
-#endif
-#else
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data, true);
-#endif
 		if (message == nullptr)
 		{
 			return;
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
-		if ((*message)[HEADER][MESSAGE_TYPE].as_string() != REQUEST_CONNECTION &&
-			(*message)[HEADER][MESSAGE_TYPE].as_string() != CONFIRM_CONNECTION)
-#else
 #ifdef _WIN32
 		if (message->message_type() != REQUEST_CONNECTION &&
 			message->message_type() != CONFIRM_CONNECTION)
@@ -560,29 +548,11 @@ namespace network
 		if (message->message_type() != converter::to_wstring(REQUEST_CONNECTION) &&
 			message->message_type() != converter::to_wstring(CONFIRM_CONNECTION))
 #endif
-#endif
 		{
-#ifdef __USE_TYPE_CONTAINER__
 			logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
-#else
-#ifdef _WIN32
-			logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
-#else
-			logger::handle().write(logging_level::packet, converter::to_wstring(fmt::format("received: {}", message->serialize())));
-#endif
-#endif
 		}
 
-#ifndef __USE_TYPE_CONTAINER__
-#ifdef _WIN32
-		auto target = _message_handlers.find((*message)[HEADER][MESSAGE_TYPE].as_string());
-#else
-		auto target = _message_handlers.find(converter::to_wstring((*message)[HEADER][MESSAGE_TYPE].as_string()));
-#endif
-#else
 		auto target = _message_handlers.find(message->message_type());
-#endif
-
 		if (target == _message_handlers.end())
 		{
 			return normal_message(message);
@@ -597,42 +567,14 @@ namespace network
 		{
 			return;
 		}
-
-#ifndef __USE_TYPE_CONTAINER__
-		shared_ptr<json::value> message = make_shared<json::value>(json::value::parse(converter::to_string(data)));
-#else
+		
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data);
-#endif
 		if (message == nullptr)
 		{
 			return;
 		}
 
 		vector<uint8_t> result;
-#ifndef __USE_TYPE_CONTAINER__
-		combiner::append(result, converter::to_array((*message)[DATA][INDICATION_ID].as_string()));
-		combiner::append(result, converter::to_array((*message)[HEADER][SOURCE_ID].as_string()));
-		combiner::append(result, converter::to_array((*message)[HEADER][SOURCE_SUB_ID].as_string()));
-		combiner::append(result, converter::to_array((*message)[HEADER][TARGET_ID].as_string()));
-		combiner::append(result, converter::to_array((*message)[HEADER][TARGET_SUB_ID].as_string()));
-		combiner::append(result, converter::to_array((*message)[DATA][SOURCE].as_string()));
-		combiner::append(result, converter::to_array((*message)[DATA][TARGET].as_string()));
-#ifdef _WIN32
-		combiner::append(result, file::load((*message)[DATA][SOURCE].as_string()));
-
-		logger::handle().write(logging_level::parameter,
-			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)[DATA][INDICATION_ID].as_string(),
-				(*message)[HEADER][SOURCE_ID].as_string(), (*message)[HEADER][SOURCE_SUB_ID].as_string(),
-				(*message)[HEADER][TARGET_ID].as_string(), (*message)[HEADER][TARGET_SUB_ID].as_string()));
-#else
-		combiner::append(result, file::load(converter::to_wstring((*message)[DATA][SOURCE].as_string())));
-
-		logger::handle().write(logging_level::parameter,
-			converter::to_wstring(fmt::format("load_file_packet: [{}] => [{}:{}] -> [{}:{}]", (*message)[DATA][INDICATION_ID].as_string(),
-				(*message)[HEADER][SOURCE_ID].as_string(), (*message)[HEADER][SOURCE_SUB_ID].as_string(),
-				(*message)[HEADER][TARGET_ID].as_string(), (*message)[HEADER][TARGET_SUB_ID].as_string())));
-#endif
-#else
 		combiner::append(result, converter::to_array(message->get_value(L"indication_id")->to_string()));
 		combiner::append(result, converter::to_array(message->source_id()));
 		combiner::append(result, converter::to_array(message->source_sub_id()));
@@ -645,7 +587,6 @@ namespace network
 		logger::handle().write(logging_level::parameter,
 			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", message->get_value(L"indication_id")->to_string(),
 				message->source_id(), message->source_sub_id(), message->target_id(), message->target_sub_id()));
-#endif
 
 		if (_compress_mode)
 		{
