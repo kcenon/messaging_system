@@ -4,12 +4,13 @@ SET(LIBRARY_NAME threads)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+SET(HEADER_FILES
+    job_priorities.h job.h job_pool.h 
+    thread_pool.h thread_worker.h)
+
 SET(SOURCE_FILES
-    job_priorities.h 
-    job.h job.cpp 
-    job_pool.h job_pool.cpp 
-    thread_pool.h thread_pool.cpp
-    thread_worker.h thread_worker.cpp)
+    job.cpp job_pool.cpp
+    thread_pool.cpp thread_worker.cpp)
 
 IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
@@ -20,9 +21,9 @@ ENDIF()
 PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
 
 IF(USE_SWIG_INTERFACE)
-    ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES} threads_wrap.cxx)
+    ADD_LIBRARY(${LIBRARY_NAME} ${HEADER_FILES} ${SOURCE_FILES} threads_wrap.cxx)
 ELSE()
-    ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES})
+    ADD_LIBRARY(${LIBRARY_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 ENDIF()
     
 FIND_PACKAGE(crossguid CONFIG REQUIRED)

@@ -4,13 +4,14 @@ SET(LIBRARY_NAME network)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+SET(HEADER_FILES
+    session_types.h data_modes.h data_lengths.h
+    data_handling.h messaging_client.h 
+    messaging_session.h messaging_server.h)
+
 SET(SOURCE_FILES
-    session_types.h
-    data_modes.h data_lengths.h
-    data_handling.h data_handling.cpp 
-    messaging_client.h messaging_client.cpp 
-    messaging_session.h messaging_session.cpp
-    messaging_server.h messaging_server.cpp)
+    data_handling.cpp messaging_client.cpp 
+    messaging_session.cpp messaging_server.cpp)
 
 IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
@@ -21,9 +22,9 @@ ENDIF()
 PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
 
 IF(USE_SWIG_INTERFACE)
-    ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES} network_wrap.cxx)
+    ADD_LIBRARY(${LIBRARY_NAME} ${HEADER_FILES} ${SOURCE_FILES} network_wrap.cxx)
 ELSE()
-    ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES})
+    ADD_LIBRARY(${LIBRARY_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 ENDIF()
     
 FIND_PACKAGE(asio CONFIG REQUIRED)

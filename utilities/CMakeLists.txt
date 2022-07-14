@@ -4,16 +4,16 @@ SET(LIBRARY_NAME utilities)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+SET(HEADER_FILES 
+    logging_level.h logging.h folder_handler.h
+    file_handler.h binary_combiner.h encrypting.h
+    datetime_handler.h converting.h compressing.h
+    argument_parser.h)
+
 SET(SOURCE_FILES 
-    logging_level.h logging.h logging.cpp
-    folder_handler.h folder_handler.cpp 
-    file_handler.h file_handler.cpp
-    binary_combiner.h binary_combiner.cpp
-    encrypting.h encrypting.cpp
-    datetime_handler.h datetime_handler.cpp
-    converting.h converting.cpp
-    compressing.h compressing.cpp
-    argument_parser.h argument_parser.cpp)
+    logging.cpp folder_handler.cpp file_handler.cpp
+    binary_combiner.cpp encrypting.cpp datetime_handler.cpp
+    converting.cpp compressing.cpp argument_parser.cpp)
 
 IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
@@ -24,9 +24,9 @@ ENDIF()
 PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
 
 IF(USE_SWIG_INTERFACE)
-    ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES} utilities_wrap.cxx)
+    ADD_LIBRARY(${LIBRARY_NAME} ${HEADER_FILES} ${SOURCE_FILES} utilities_wrap.cxx)
 ELSE()
-    ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES})
+    ADD_LIBRARY(${LIBRARY_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 ENDIF()
 
 FIND_PACKAGE(lz4 CONFIG REQUIRED)

@@ -4,10 +4,12 @@ SET(LIBRARY_NAME database)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-SET(SOURCE_FILES
+SET(HEADER_FILES
     database_base.h database_types.h
-    database_manager.h database_manager.cpp
-    postgres_manager.h postgres_manager.cpp)
+    database_manager.h postgres_manager.h)
+
+SET(SOURCE_FILES
+    database_manager.cpp postgres_manager.cpp)
 
 IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
@@ -18,9 +20,9 @@ ENDIF()
 PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
 
 IF(USE_SWIG_INTERFACE)
-    ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES} database_wrap.cxx)
+    ADD_LIBRARY(${LIBRARY_NAME} ${HEADER_FILES} ${SOURCE_FILES} database_wrap.cxx)
 ELSE()
-    ADD_LIBRARY(${LIBRARY_NAME} ${SOURCE_FILES})
+    ADD_LIBRARY(${LIBRARY_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 ENDIF()
     
 FIND_PACKAGE(PostgreSQL REQUIRED)
