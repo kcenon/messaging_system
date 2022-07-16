@@ -55,9 +55,6 @@ namespace network
 	public:
 		data_handling(const unsigned char& start_code_value, const unsigned char& end_code_value);
 		~data_handling(void);
-
-	protected:
-		//void read_buffer(weak_ptr<asio::ip::tcp::socket> socket);
 		
 	protected:
 		void read_start_code(weak_ptr<asio::ip::tcp::socket> socket, const unsigned short& matched_code = 0);
@@ -121,6 +118,8 @@ namespace network
 
 	protected:
 		shared_ptr<threads::thread_pool> _thread_pool;
+		function<vector<uint8_t>(const vector<uint8_t>&, const bool&)> _specific_compress_sequence;
+		function<vector<uint8_t>(const vector<uint8_t>&, const bool&)> _specific_encrypt_sequence;
 		map<wstring, function<void(shared_ptr<container::value_container>)>> _message_handlers;
 
 	protected:

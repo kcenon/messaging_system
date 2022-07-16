@@ -78,6 +78,8 @@ namespace network
 		void set_message_notification(const function<void(shared_ptr<container::value_container>)>& notification);
 		void set_file_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&)>& notification);
 		void set_binary_notification(const function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)>& notification);
+		void set_specific_compress_sequence(const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>& specific_compress_sequence);
+		void set_specific_encryp_sequence(const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>& specific_encrypt_sequence);
 
 	public:
 		void start(const unsigned short& port, const unsigned short& high_priority = 8, const unsigned short& normal_priority = 8, const unsigned short& low_priority = 8);
@@ -142,6 +144,10 @@ namespace network
 
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&)> _received_file;
 		function<void(const wstring&, const wstring&, const wstring&, const wstring&, const vector<uint8_t>&)> _received_data;
+
+	private:
+		function<vector<uint8_t>(const vector<uint8_t>&, const bool&)> _specific_compress_sequence;
+		function<vector<uint8_t>(const vector<uint8_t>&, const bool&)> _specific_encrypt_sequence;
 
 	private:
 		shared_ptr<threads::thread_pool> _thread_pool;

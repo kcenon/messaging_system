@@ -141,6 +141,16 @@ namespace network
 	{
 		_received_data = notification;
 	}
+		
+	void messaging_server::set_specific_compress_sequence(const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>& specific_compress_sequence)
+	{
+		_specific_compress_sequence = specific_compress_sequence;	
+	}
+		
+	void messaging_server::set_specific_encryp_sequence(const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>& specific_encrypt_sequence)
+	{
+		_specific_encrypt_sequence = specific_encrypt_sequence;
+	}
 
 	void messaging_server::start(const unsigned short& port, const unsigned short& high_priority, const unsigned short& normal_priority, const unsigned short& low_priority)
 	{
@@ -454,6 +464,8 @@ namespace network
 				session->set_message_notification(bind(&messaging_server::received_message, this, placeholders::_1));
 				session->set_file_notification(_received_file);
 				session->set_binary_notification(bind(&messaging_server::received_binary, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4, placeholders::_5));
+				session->set_specific_compress_sequence(_specific_compress_sequence);
+				session->set_specific_encryp_sequence(_specific_encrypt_sequence);
 
 				session->start(_encrypt_mode, _compress_mode, _compress_block_size, _possible_session_types, _high_priority, _normal_priority, _low_priority, _drop_connection_time);
 

@@ -468,6 +468,13 @@ namespace network
 
 		logger::handle().write(logging_level::parameter, L"attempt to compress a packet");
 
+		if (_specific_compress_sequence)
+		{
+			_thread_pool->push(make_shared<job>(priorities::top, _specific_compress_sequence(data, true), bind(&data_handling::send_packet, this, placeholders::_1)));
+
+			return;
+		}
+
 		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data, _compress_block_size), bind(&data_handling::send_packet, this, placeholders::_1)));
 	}
 
@@ -487,6 +494,13 @@ namespace network
 
 		logger::handle().write(logging_level::parameter, L"attempt to encrypt a packet");	
 
+		if (_specific_encrypt_sequence)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, _specific_encrypt_sequence(data, true), bind(&data_handling::compress_packet, this, placeholders::_1)));
+
+			return;
+		}
+
 		_thread_pool->push(make_shared<job>(priorities::normal, cryptor::encryption(data, _key, _iv), bind(&data_handling::compress_packet, this, placeholders::_1)));
 	}
 
@@ -505,7 +519,14 @@ namespace network
 		}
 
 		logger::handle().write(logging_level::parameter, L"attempt to decompress a packet");
-			
+		
+		if (_specific_compress_sequence)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, _specific_compress_sequence(data, false), bind(&data_handling::decrypt_packet, this, placeholders::_1)));
+
+			return;
+		}
+
 		_thread_pool->push(make_shared<job>(priorities::normal, compressor::decompression(data, _compress_block_size), bind(&data_handling::decrypt_packet, this, placeholders::_1)));
 	}
 
@@ -524,6 +545,13 @@ namespace network
 		}
 
 		logger::handle().write(logging_level::parameter, L"attempt to decrypt a packet");
+
+		if (_specific_encrypt_sequence)
+		{
+			_thread_pool->push(make_shared<job>(priorities::low, _specific_encrypt_sequence(data, false), bind(&data_handling::receive_packet, this, placeholders::_1)));
+
+			return;
+		}
 
 		_thread_pool->push(make_shared<job>(priorities::low, cryptor::decryption(data, _key, _iv), bind(&data_handling::receive_packet, this, placeholders::_1)));		
 	}
@@ -735,6 +763,13 @@ namespace network
 
 		logger::handle().write(logging_level::parameter, L"attempt to compress a packet");
 
+		if (_specific_compress_sequence)
+		{
+			_thread_pool->push(make_shared<job>(priorities::top, _specific_compress_sequence(data, true), bind(&data_handling::send_binary_packet, this, placeholders::_1)));
+
+			return;
+		}
+
 		_thread_pool->push(make_shared<job>(priorities::top, compressor::compression(data, _compress_block_size), bind(&data_handling::send_binary_packet, this, placeholders::_1)));
 	}
 
@@ -754,6 +789,13 @@ namespace network
 
 		logger::handle().write(logging_level::parameter, L"attempt to encrypt a packet");	
 
+		if (_specific_encrypt_sequence)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, _specific_encrypt_sequence(data, true), bind(&data_handling::compress_binary_packet, this, placeholders::_1)));
+
+			return;
+		}
+
 		_thread_pool->push(make_shared<job>(priorities::normal, cryptor::encryption(data, _key, _iv), bind(&data_handling::compress_binary_packet, this, placeholders::_1)));
 	}
 
@@ -772,6 +814,13 @@ namespace network
 		}
 
 		logger::handle().write(logging_level::parameter, L"attempt to decompress a binary packet");
+
+		if (_specific_compress_sequence)
+		{
+			_thread_pool->push(make_shared<job>(priorities::normal, _specific_compress_sequence(data, false), bind(&data_handling::decrypt_binary_packet, this, placeholders::_1)));
+
+			return;
+		}
 			
 		_thread_pool->push(make_shared<job>(priorities::normal, compressor::decompression(data, _compress_block_size), bind(&data_handling::decrypt_binary_packet, this, placeholders::_1)));
 	}
@@ -791,6 +840,13 @@ namespace network
 		}
 
 		logger::handle().write(logging_level::parameter, L"attempt to decrypt a binary packet");
+
+		if (_specific_encrypt_sequence)
+		{
+			_thread_pool->push(make_shared<job>(priorities::low, _specific_encrypt_sequence(data, false), bind(&data_handling::receive_binary_packet, this, placeholders::_1)));
+
+			return;
+		}
 
 		_thread_pool->push(make_shared<job>(priorities::low, cryptor::decryption(data, _key, _iv), bind(&data_handling::receive_binary_packet, this, placeholders::_1)));
 	}
