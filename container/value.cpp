@@ -135,7 +135,7 @@ namespace container
 	{
 		if (data == nullptr || size == 0)
 		{
-			_type = value_types::null_value;
+			_type = type;
 			_size = 0;
 			_data.clear();
 			return;
