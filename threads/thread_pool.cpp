@@ -42,8 +42,8 @@ namespace threads
 {
 	using namespace logging;
 
-	thread_pool::thread_pool(const vector<shared_ptr<thread_worker>>& workers)
-		: _workers(workers), _job_pool(make_shared<job_pool>()), _promise_status({})
+	thread_pool::thread_pool(const wstring& title, const vector<shared_ptr<thread_worker>>& workers)
+		: _workers(workers), _job_pool(make_shared<job_pool>(title)), _promise_status({}), _title(title)
 	{
 	}
 
@@ -76,7 +76,7 @@ namespace threads
 		_workers.push_back(worker);
 		_worker_conditions.insert({ worker->guid(), false });
 
-		logger::handle().write(logging_level::parameter, fmt::format(L"appended new worker: priority - {}", (int)worker->priority()));
+		logger::handle().write(logging_level::parameter, fmt::format(L"appended new worker on {}: priority - {}", _title, (int)worker->priority()));
 
 		unique.unlock();
 

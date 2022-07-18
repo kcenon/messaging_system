@@ -48,7 +48,7 @@ namespace threads
 	class thread_pool : public enable_shared_from_this<thread_pool>
 	{
 	public:
-		thread_pool(const vector<shared_ptr<thread_worker>>& workers = {});
+		thread_pool(const wstring& title = L"thread_pool", const vector<shared_ptr<thread_worker>>& workers = {});
 		~thread_pool(void);
 
 	public:
@@ -69,6 +69,7 @@ namespace threads
 
 	private:
 		mutex _mutex;
+		wstring _title;
 		shared_ptr<job_pool> _job_pool;
 		map<wstring, bool> _worker_conditions;
 		vector<shared_ptr<thread_worker>> _workers;

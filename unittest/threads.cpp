@@ -30,7 +30,7 @@ bool test_function2(void)
 
 TEST(threads, test)
 {
-    thread_pool manager;
+    thread_pool manager(L"thread_test");
     manager.append(make_shared<thread_worker>(priorities::high));
     manager.append(make_shared<thread_worker>(priorities::normal));
     manager.append(make_shared<thread_worker>(priorities::low));

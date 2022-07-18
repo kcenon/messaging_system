@@ -631,7 +631,7 @@ namespace network
 	void messaging_client::create_thread_pool(const unsigned short& high_priority, const unsigned short& normal_priority, 
 		const unsigned short& low_priority)
 	{
-		_thread_pool = make_shared<threads::thread_pool>();
+		_thread_pool = make_shared<threads::thread_pool>(L"messaging_client");
 
 		_thread_pool->append(make_shared<thread_worker>(priorities::top), true);
 		for (unsigned short high = 0; high < high_priority; ++high)

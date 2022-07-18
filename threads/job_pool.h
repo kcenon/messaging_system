@@ -50,7 +50,7 @@ namespace threads
 	class job_pool : public enable_shared_from_this<job_pool>
 	{
 	public:
-		job_pool(void);
+		job_pool(const wstring& title);
 		~job_pool(void);
 
 	public:
@@ -75,6 +75,7 @@ namespace threads
 	private:
 		mutex _mutex;
 		bool _push_lock;
+		wstring _title;
 		map<priorities, queue<shared_ptr<job>>> _jobs;
 		map<wstring, function<void(const priorities&)>> _notifications;
 	};

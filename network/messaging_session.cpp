@@ -188,7 +188,7 @@ namespace network
 		_compress_block_size = compress_block_size;
 		_drop_connection_time = drop_connection_time;
 		_possible_session_types = possible_session_types;
-		_thread_pool = make_shared<threads::thread_pool>();
+		_thread_pool = make_shared<threads::thread_pool>(L"messaging_session");
 
 		_thread_pool->append(make_shared<thread_worker>(priorities::top), true);
 		for (unsigned short high = 0; high < high_priority; ++high)

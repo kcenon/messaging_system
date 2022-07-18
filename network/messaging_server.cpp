@@ -156,7 +156,7 @@ namespace network
 	{
 		stop();
 
-		_thread_pool = make_shared<threads::thread_pool>();
+		_thread_pool = make_shared<threads::thread_pool>(L"messaging_server");
 		_thread_pool->append(make_shared<thread_worker>(priorities::high), true);
 
 		_high_priority = high_priority;
