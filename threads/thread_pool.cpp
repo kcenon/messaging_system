@@ -88,6 +88,8 @@ namespace threads
 
 	void thread_pool::stop(const bool& stop_immediately, const bool& jop_pool_lock)
 	{
+		scoped_lock<mutex> guard(_mutex);
+		
 		if (!stop_immediately && _job_pool != nullptr)
 		{
 			_job_pool->set_push_lock(jop_pool_lock);
@@ -104,8 +106,6 @@ namespace threads
 				_job_pool->remove_notification(L"thread_pool");
 			}
 		}
-
-		scoped_lock<mutex> guard(_mutex);
 
 		if (_job_pool != nullptr)
 		{
@@ -160,11 +160,6 @@ namespace threads
 
 	void thread_pool::worker_notification(const wstring& id, const bool& working_condition)
 	{
-		if (!_promise_status.has_value())
-		{
-			return;
-		}
-
 		auto target = _worker_conditions.find(id);
 		if (target == _worker_conditions.end())
 		{
@@ -173,14 +168,17 @@ namespace threads
 
 		target->second = working_condition;
 
-		for (auto& worker_condition : _worker_conditions)
+		if (_promise_status.has_value())
 		{
-			if (worker_condition.second)
+			for (auto& worker_condition : _worker_conditions)
 			{
-				return;
+				if (worker_condition.second)
+				{
+					return;
+				}
 			}
-		}
 
-		_job_pool->check_empty();
+			_promise_status.value().set_value(true);
+		}
 	}
 }
