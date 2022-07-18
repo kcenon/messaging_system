@@ -110,7 +110,7 @@ namespace logging
 		_target_level = target_level;
 	}
 
-	void logger::set_write_console(const bool& write_console, const bool& write_console_only)
+	void logger::set_write_console(const bool& write_console, const bool& write_console_only, const vector<logging_level>& write_console_levels)
 	{
 		if (!write_console && write_console_only)
 		{
@@ -122,6 +122,7 @@ namespace logging
 
 		_write_console.store(write_console);
 		_write_console_only.store(write_console_only);
+		_write_console_levels = write_console_levels;
 	}
 
 	void logger::set_write_date(const bool& write_date)
@@ -383,41 +384,52 @@ namespace logging
 
 	wstring logger::exception_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		return make_log_string(time, data, L"EXCEPTION", L"\033[0;94m", L"\033[0;95m");
+		return make_log_string(logging_level::exception, time, data, L"EXCEPTION", L"\033[0;94m", L"\033[0;95m");
 	}
 
 	wstring logger::error_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		return make_log_string(time, data, L"ERROR", L"\033[0;94m", L"\033[0;31m");
+		return make_log_string(logging_level::error, time, data, L"ERROR", L"\033[0;94m", L"\033[0;31m");
 	}
 
 	wstring logger::information_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		return make_log_string(time, data, L"INFORMATION", L"\033[0;94m", L"\033[0;92m");
+		return make_log_string(logging_level::information, time, data, L"INFORMATION", L"\033[0;94m", L"\033[0;92m");
 	}
 
 	wstring logger::sequence_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		return make_log_string(time, data, L"SEQUENCE", L"\033[0;94m", L"\033[0;90m");
+		return make_log_string(logging_level::sequence, time, data, L"SEQUENCE", L"\033[0;94m", L"\033[0;90m");
 	}
 
 	wstring logger::parameter_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		return make_log_string(time, data, L"PARAMETER", L"\033[0;94m", L"\033[0;97m");
+		return make_log_string(logging_level::parameter, time, data, L"PARAMETER", L"\033[0;94m", L"\033[0;97m");
 	}
 
 	wstring logger::packet_log(const chrono::system_clock::time_point& time, const wstring& data)
 	{
-		return make_log_string(time, data, L"PACKET", L"\033[0;94m", L"\033[0;91m");
+		return make_log_string(logging_level::packet, time, data, L"PACKET", L"\033[0;94m", L"\033[0;91m");
 	}
 
-	wstring logger::make_log_string(const chrono::system_clock::time_point& time, const wstring& data, const wstring& type, 
+	wstring logger::make_log_string(const logging_level& target_level, const chrono::system_clock::time_point& time, const wstring& data, const wstring& type, 
 		const wstring& time_color, const wstring& type_color)
 	{
+		bool write = true;
+
+		if (!_write_console_levels.empty())
+		{
+			auto search = find(_write_console_levels.begin(), _write_console_levels.end(), target_level);
+			if (search == _write_console_levels.end())
+			{
+				write = false;
+			}
+		}
+
 		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			if (_write_console.load())
+			if (_write_console.load() && write)
 			{
 				wcout << fmt::format(L"[{}{:%Y-%m-%d} {}\033[0m][{}{}\033[0m]: {}\n", 
 					time_color, fmt::localtime(time), time_string, type_color, type, data);
@@ -426,7 +438,7 @@ namespace logging
 			return fmt::format(L"[{:%Y-%m-%d} {}][{}]: {}\n", fmt::localtime(time), time_string, type, data);
 		}
 
-		if (_write_console.load())
+		if (_write_console.load() && write)
 		{
 			wcout << fmt::format(L"[{}{}\033[0m][{}{}\033[0m]: {}\n", 
 				time_color, time_string, type_color, type, data);

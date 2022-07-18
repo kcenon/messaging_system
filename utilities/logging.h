@@ -70,7 +70,7 @@ namespace logging
 
 	public:
 		void set_target_level(const logging_level& target_level);
-		void set_write_console(const bool& write_console, const bool& write_console_only = false);
+		void set_write_console(const bool& write_console, const bool& write_console_only = false, const vector<logging_level>& write_console_levels = {});
 		void set_write_date(const bool& write_date);
 		void set_limit_log_file_size(const size_t& limit_log_file_size);
 		void set_backup_notification(const function<void(const wstring&)>& notification);
@@ -94,7 +94,7 @@ namespace logging
 		wstring sequence_log(const chrono::system_clock::time_point& time, const wstring& data);
 		wstring parameter_log(const chrono::system_clock::time_point& time, const wstring& data);
 		wstring packet_log(const chrono::system_clock::time_point& time, const wstring& data);
-		wstring make_log_string(const chrono::system_clock::time_point& time, 
+		wstring make_log_string(const logging_level& target_level, const chrono::system_clock::time_point& time, 
 			const wstring& data, const wstring& type, const wstring& time_color, const wstring& type_color);
 
 	private:
@@ -106,6 +106,7 @@ namespace logging
 		wstring _store_log_file_name;
 		wstring _store_log_extention;
 		unsigned short _places_of_decimal;
+		vector<logging_level> _write_console_levels;
 		locale _locale;
 
 	private:
