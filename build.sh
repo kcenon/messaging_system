@@ -12,7 +12,7 @@ unset LANGUAGE
 
 cd ..
 
-if [ ! -f "./bin/unittest" ]; then
+if [ -f "./bin/unittest" ]; then
     ./bin/unittest
 fi
 
