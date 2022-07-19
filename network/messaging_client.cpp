@@ -280,6 +280,8 @@ namespace network
 
 		if (get_confirm_status() != connection_conditions::confirmed)
 		{
+			logger::handle().write(logging_level::error, L"cannot send data on not confirmed line");
+
 			return false;
 		}
 
@@ -322,6 +324,8 @@ namespace network
 
 		if (get_confirm_status() != connection_conditions::confirmed)
 		{
+			logger::handle().write(logging_level::error, L"cannot send data on not confirmed line");
+
 			return false;
 		}
 
@@ -362,6 +366,8 @@ namespace network
 
 		if (get_confirm_status() != connection_conditions::confirmed)
 		{
+			logger::handle().write(logging_level::error, L"cannot send data on not confirmed line");
+
 			return false;
 		}
 
@@ -442,6 +448,8 @@ namespace network
 
 		if (_confirm != connection_conditions::confirmed)
 		{
+			logger::handle().write(logging_level::error, L"cannot send data on not confirmed line");
+
 			return;
 		}
 
@@ -508,6 +516,8 @@ namespace network
 
 		if (_confirm != connection_conditions::confirmed)
 		{
+			logger::handle().write(logging_level::error, L"cannot send data on not confirmed line");
+
 			return;
 		}
 
@@ -536,6 +546,8 @@ namespace network
 
 		if (_confirm != connection_conditions::confirmed)
 		{
+			logger::handle().write(logging_level::error, L"cannot send data on not confirmed line");
+
 			return;
 		}
 

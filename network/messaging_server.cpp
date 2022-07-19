@@ -532,6 +532,13 @@ namespace network
 			return;
 		}
 
+		if (_received_message != nullptr)
+		{
+			auto result = async(launch::async, _received_message, message);
+
+			return;
+		}
+
 		auto target_id = message->target_id();
 
 		if (target_id != _source_id)
@@ -557,11 +564,6 @@ namespace network
 			}
 
 			return;
-		}
-
-		if (_received_message != nullptr)
-		{
-			auto result = async(launch::async, _received_message, message);
 		}
 	}
 

@@ -416,7 +416,7 @@ namespace network
 			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decompress_packet, this, placeholders::_1)));
 			break;
 		case data_modes::file_mode:
-			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decrypt_file_packet, this, placeholders::_1)));
+			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decompress_file_packet, this, placeholders::_1)));
 			break;
 		case data_modes::binary_mode:
 			_thread_pool->push(make_shared<job>(priorities::high, data, bind(&data_handling::decompress_binary_packet, this, placeholders::_1)));
