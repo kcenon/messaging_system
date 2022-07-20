@@ -89,7 +89,7 @@ namespace container
 		_data_type_map.insert({ value_types::double_value, bind(&value_container::set_double, this, placeholders::_1, placeholders::_2) });
 		_data_type_map.insert({ value_types::bytes_value, bind(&value_container::set_bytes, this, placeholders::_1, placeholders::_2) });
 		_data_type_map.insert({ value_types::string_value, bind(&value_container::set_string, this, placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::container_value, bind(&value_container::set_long, this, placeholders::_1, placeholders::_2) });
+		_data_type_map.insert({ value_types::container_value, bind(&value_container::set_container, this, placeholders::_1, placeholders::_2) });
 	}
 
 	value_container::value_container(const wstring& data_string, const bool& parse_only_header) : value_container()
