@@ -378,6 +378,8 @@ namespace network
 		combiner::append(result, converter::to_array(target_sub_id));
 		combiner::append(result, data);
 
+		logger::handle().write(logging_level::packet, fmt::format(L"send binary: source[{}:{}] -> target[{}:{}], {} bytes", _source_id, _source_sub_id, target_id, target_sub_id, data.size()));
+
 		send_binary_job(result);
 
 		return true;

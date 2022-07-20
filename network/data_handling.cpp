@@ -375,7 +375,7 @@ namespace network
 
 		size_t temp = 0;
 		size_t count = data.size();
-		for(size_t index = 0; index < count; index += _compress_block_size)
+		for(size_t index = 0; index < count;)
 		{
 			temp = count - index;
 			if (temp > _compress_block_size)
@@ -383,14 +383,17 @@ namespace network
 				temp = _compress_block_size;
 			}
 
-			sended_size = current_socket->send(asio::buffer(data.data() + index, temp));
-			if (sended_size != temp)
+			vector<uint8_t> temp_buffer(data.begin() + index, data.begin() + index + temp);
+			temp = current_socket->send(asio::buffer(temp_buffer.data(), temp));
+			if (temp == 0)
 			{
-				logger::handle().write(logging_level::error, fmt::format(L"cannot send data: {} bytes", data.size()));
+				logger::handle().write(logging_level::error, fmt::format(L"cannot send data: sent [{}] / total[{}] bytes", index, count));
 
 				current_socket.reset();
 				return false;
 			}
+
+			index += temp;
 		}
 
 #ifdef _DEBUG
@@ -618,9 +621,10 @@ namespace network
 		combiner::append(result, converter::to_array(message->get_value(L"target")->to_string()));
 		combiner::append(result, file::load(message->get_value(L"source")->to_string()));
 
-		logger::handle().write(logging_level::parameter,
-			fmt::format(L"load_file_packet: [{}] => [{}:{}] -> [{}:{}]", message->get_value(L"indication_id")->to_string(),
-				message->source_id(), message->source_sub_id(), message->target_id(), message->target_sub_id()));
+		logger::handle().write(logging_level::packet,
+			fmt::format(L"send file packet: source[{}:{}] -> target[{}:{}] => {}",
+				message->source_id(), message->source_sub_id(), message->target_id(), message->target_sub_id(),
+				message->get_value(L"source")->to_string()));
 
 		_thread_pool->push(make_shared<job>(priorities::normal, result, bind(&data_handling::encrypt_file_packet, this, placeholders::_1)));
 	}
@@ -777,7 +781,9 @@ namespace network
 		wstring target_sub_id = converter::to_wstring(combiner::divide(data, index));
 		wstring target_path = converter::to_wstring(combiner::divide(data, index));
 
-		logger::handle().write(logging_level::packet, fmt::format(L"received file packet: {}", target_path));
+		logger::handle().write(logging_level::packet, 
+			fmt::format(L"received file packet: target[{}:{}], indication_id[{}], target_path[{}]", 
+				target_id, target_sub_id, indication_id, target_path));
 
 		if (_received_file)
 		{
@@ -905,7 +911,9 @@ namespace network
 		wstring target_sub_id = converter::to_wstring(combiner::divide(data, index));
 		vector<uint8_t> target_data = combiner::divide(data, index);
 
-		logger::handle().write(logging_level::packet, fmt::format(L"received binary packet: {} bytes", target_data.size()));
+		logger::handle().write(logging_level::packet, 
+			fmt::format(L"received binary packet: target_id[{}], target_sub_id[{}], target_data[{} bytes]", 
+				target_id, target_sub_id, target_data.size()));
 
 		if (_received_data)
 		{
