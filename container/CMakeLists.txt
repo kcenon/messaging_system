@@ -4,6 +4,16 @@ SET(LIBRARY_NAME container)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
+    SET(BUILD_SHARED_LIBS NO)
+ELSE()
+    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
+    SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY "../../lib")
+    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../bin")
+    SET(BUILD_SHARED_LIBS YES)
+ENDIF()
+
 SET(HEADER_FILES
     container.h value.h value_types.h 
     values/bool_value.h values/bytes_value.h
@@ -23,12 +33,6 @@ SET(SOURCE_FILES
     values/short_value.cpp values/string_value.cpp
     values/uint_value.cpp values/ullong_value.cpp
     values/ulong_value.cpp values/ushort_value.cpp)
-
-IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
-ELSE()
-    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
-ENDIF()
 
 PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
 

@@ -4,6 +4,16 @@ SET(LIBRARY_NAME utilities)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
+    SET(BUILD_SHARED_LIBS NO)
+ELSE()
+    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
+    SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY "../../lib")
+    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../../bin")
+    SET(BUILD_SHARED_LIBS YES)
+ENDIF()
+
 SET(HEADER_FILES 
     logging_level.h logging.h folder_handler.h
     file_handler.h binary_combiner.h encrypting.h
@@ -14,12 +24,6 @@ SET(SOURCE_FILES
     logging.cpp folder_handler.cpp file_handler.cpp
     binary_combiner.cpp encrypting.cpp datetime_handler.cpp
     converting.cpp compressing.cpp argument_parser.cpp)
-
-IF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG /MDd")
-ELSE()
-    SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
-ENDIF()
 
 PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
 
