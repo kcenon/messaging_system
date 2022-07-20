@@ -373,13 +373,24 @@ namespace network
 		logger::handle().write(logging_level::packet, fmt::format(L"sent length code: {} bytes", length_code));
 #endif
 
-		sended_size = current_socket->send(asio::buffer(data.data(), data.size()));
-		if (sended_size != data.size())
+		size_t temp = 0;
+		size_t count = data.size();
+		for(size_t index = 0; index < count; index += _compress_block_size)
 		{
-			logger::handle().write(logging_level::error, fmt::format(L"cannot send data: {} bytes", data.size()));
+			temp = count - index;
+			if (temp > _compress_block_size)
+			{
+				temp = _compress_block_size;
+			}
 
-			current_socket.reset();
-			return false;
+			sended_size = current_socket->send(asio::buffer(data.data() + index, temp));
+			if (sended_size != temp)
+			{
+				logger::handle().write(logging_level::error, fmt::format(L"cannot send data: {} bytes", data.size()));
+
+				current_socket.reset();
+				return false;
+			}
 		}
 
 #ifdef _DEBUG
