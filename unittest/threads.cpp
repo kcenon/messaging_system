@@ -1,5 +1,3 @@
-#ifdef __USE_UNIT_TEST__
-
 #include "gtest/gtest.h"
 
 #include "job.h"
@@ -44,5 +42,3 @@ TEST(threads, test)
     manager.start();
     manager.stop(false);
 }
-
-#endif

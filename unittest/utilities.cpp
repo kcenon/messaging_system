@@ -1,5 +1,3 @@
-#ifdef __USE_UNIT_TEST__
-
 #include "gtest/gtest.h"
 
 #include <string>
@@ -80,5 +78,3 @@ TEST(cryptor, test)
 
     EXPECT_TRUE(decrypted.compare(L"I am a programmer") == 0);
 }
-
-#endif
