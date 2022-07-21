@@ -52,7 +52,7 @@ namespace logging
 	using namespace file_handler;
 	using namespace datetime_handler;
 
-	logger::logger(void) : _target_level(logging_level::information), _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
+	logger::logger(void) : _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
 		, _places_of_decimal(7), _locale(locale("")), _backup_notification(nullptr)
 	{
 		_log_datas.insert({ logging_level::exception, bind(&logger::exception_log, this, placeholders::_1, placeholders::_2) });
@@ -107,10 +107,21 @@ namespace logging
 
 	void logger::set_target_level(const logging_level& target_level)
 	{
-		_target_level = target_level;
+		_write_console_levels.clear();
+
+		unsigned short max_value = (unsigned short)target_level;
+		for (unsigned short index = 0; index <= max_value; ++index) 
+		{
+			_write_console_levels.push_back((logging_level)index);
+		}
 	}
 
-	void logger::set_write_console(const bool& write_console, const bool& write_console_only, const vector<logging_level>& write_console_levels)
+	void logger::set_target_level(const vector<logging_level>& write_console_levels)
+	{
+		_write_console_levels = write_console_levels;
+	}
+
+	void logger::set_write_console(const bool& write_console, const bool& write_console_only)
 	{
 		if (!write_console && write_console_only)
 		{
@@ -122,7 +133,6 @@ namespace logging
 
 		_write_console.store(write_console);
 		_write_console_only.store(write_console_only);
-		_write_console_levels = write_console_levels;
 	}
 
 	void logger::set_write_date(const bool& write_date)
@@ -147,9 +157,13 @@ namespace logging
 
 	void logger::write(const logging_level& target_level, const wstring& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time)
 	{
-		if (target_level > _target_level)
+		if (!_write_console_levels.empty())
 		{
-			return;
+			auto search = find(_write_console_levels.begin(), _write_console_levels.end(), target_level);
+			if (search == _write_console_levels.end())
+			{
+				return;
+			}
 		}
 
 		scoped_lock<mutex> guard(_mutex);
@@ -174,9 +188,13 @@ namespace logging
 
 	void logger::write(const logging_level& target_level, const vector<uint8_t>& log_data, const optional<chrono::time_point<chrono::high_resolution_clock>>& time)
 	{
-		if (target_level > _target_level)
+		if (!_write_console_levels.empty())
 		{
-			return;
+			auto search = find(_write_console_levels.begin(), _write_console_levels.end(), target_level);
+			if (search == _write_console_levels.end())
+			{
+				return;
+			}
 		}
 
 		write(target_level, converter::to_wstring(log_data), time);
@@ -415,21 +433,10 @@ namespace logging
 	wstring logger::make_log_string(const logging_level& target_level, const chrono::system_clock::time_point& time, const wstring& data, const wstring& type, 
 		const wstring& time_color, const wstring& type_color)
 	{
-		bool write = true;
-
-		if (!_write_console_levels.empty())
-		{
-			auto search = find(_write_console_levels.begin(), _write_console_levels.end(), target_level);
-			if (search == _write_console_levels.end())
-			{
-				write = false;
-			}
-		}
-
 		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			if (_write_console.load() && write)
+			if (_write_console.load())
 			{
 				wcout << fmt::format(L"[{}{:%Y-%m-%d} {}\033[0m][{}{}\033[0m]: {}\n", 
 					time_color, fmt::localtime(time), time_string, type_color, type, data);
@@ -438,7 +445,7 @@ namespace logging
 			return fmt::format(L"[{:%Y-%m-%d} {}][{}]: {}\n", fmt::localtime(time), time_string, type, data);
 		}
 
-		if (_write_console.load() && write)
+		if (_write_console.load())
 		{
 			wcout << fmt::format(L"[{}{}\033[0m][{}{}\033[0m]: {}\n", 
 				time_color, time_string, type_color, type, data);
