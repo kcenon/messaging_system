@@ -403,7 +403,14 @@ namespace network
 				snipping_targets
 		});
 
-		send_packet_job(converter::to_array(container->serialize()));
+		auto serialize = container->serialize();
+		auto serialize_array = converter::to_array(serialize);
+
+#ifdef _DEBUG
+		logger::handle().write(logging_level::packet, fmt::format(L"send: {}", serialize));
+#endif
+
+		send_packet_job(serialize_array);
 	}
 
 	void messaging_client::disconnected(void)

@@ -567,8 +567,15 @@ namespace network
 
 		shared_ptr<container::value_container> container = make_shared<container::value_container>(_source_id, _source_sub_id, _target_id, _target_sub_id, 
 			L"confirm_connection", temp);
+			
+		auto serialize = container->serialize();
+		auto serialize_array = converter::to_array(serialize);
 
-		send_packet_job(converter::to_array(container->serialize()));
+#ifdef _DEBUG
+		logger::handle().write(logging_level::packet, fmt::format(L"send: {}", serialize));
+#endif
+
+		send_packet_job(serialize_array);
 
 		_confirm = connection_conditions::confirmed;
 		
