@@ -583,11 +583,15 @@ namespace network
 			return;
 		}
 
+#ifndef _DEBUG
 		if (message->message_type() != REQUEST_CONNECTION &&
 			message->message_type() != CONFIRM_CONNECTION)
 		{
+#endif
 			logger::handle().write(logging_level::packet, fmt::format(L"received: {}", message->serialize()));
+#ifndef _DEBUG
 		}
+#endif
 
 		auto target = _message_handlers.find(message->message_type());
 		if (target == _message_handlers.end())
