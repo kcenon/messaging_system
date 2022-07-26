@@ -3,17 +3,17 @@ import sys
 import socket
 
 class value:
-    def __init__(self):
-        self.name_string = None
-        self.type_string = None
-        self.value_string = None
-        self.values = []
+    
+    name_string = None
+    type_string = None
+    value_string = None
+    values = []
         
-    def __init__(self, name_string, type_string, value_string):
+    def __init__(self, name_string, type_string, value_string, values = []):
         self.name_string = name_string
         self.type_string = type_string
         self.value_string = value_string
-        self.values = []
+        self.values = values
         
     def append(self, child_value):
         self.values.append(child_value)
@@ -22,7 +22,7 @@ class value:
         result = []
         
         for current in self.values:
-            if current is None:
+            if not current:
                 continue
             
             if current.name_string == name_string:
@@ -33,10 +33,13 @@ class value:
         self.values = result
         
     def get(self, name_string):
+        if not name_string:
+            return self.values
+        
         result = []
         
         for current in self.values:
-            if current is None:
+            if not current:
                 continue
             
             if current.name_string != name_string:
@@ -50,7 +53,7 @@ class value:
         result = "[{},{},{}];".format(self.name_string, self.type_string, self.value_string)
         
         for current in self.values:
-            if current is None:
+            if not current:
                 continue
             
             result = result + current.serialize()
@@ -58,6 +61,15 @@ class value:
         return result
 
 class container:
+    
+    source_id = ''
+    source_sub_id = ''
+    target_id = ''
+    target_sub_id = ''
+    message_type = ''
+    message_version = "1.0.0.0"
+    values = []
+        
     def __init__(self, message = ''):
         self.source_id = ''
         self.source_sub_id = ''
@@ -68,7 +80,7 @@ class container:
         self.values = []
         self.parse(message, False)
         
-    def create(self, source_id, source_sub_id, target_id, target_sub_id, message_type, values):
+    def create(self, source_id, source_sub_id, target_id, target_sub_id, message_type, values = []):
         self.source_id = source_id
         self.source_sub_id = source_sub_id
         self.target_id = target_id
@@ -111,9 +123,15 @@ class container:
         if not self.deserialized:
             self._parse_data(self.data_string, True)
             
+        if not name_string:
+            return self.values
+        
         result = []
         
         for current in self.values:
+            if not current:
+                continue
+            
             if current.name_string != name_string:
                 continue
             
@@ -122,7 +140,7 @@ class container:
         return result
         
     def _parse_header(self, header_string):
-        if header_string is None:
+        if not header_string:
             return
         
         results = re.findall(r'\[(\w+),(.*?)\];', header_string)
@@ -162,7 +180,7 @@ class container:
                 #previous_value = current_value
                 continue
             
-            if previous_value is None:
+            if not previous_value:
                 self.values.append(current_value)
                 continue
             
@@ -202,7 +220,7 @@ class messaging_client:
         self.sock.close()
         
     def send_packet(self, packet):
-        if packet.target_id is None:
+        if not packet.target_id:
             print("Cannot send with null target id")
             return
             
@@ -262,4 +280,4 @@ class messaging_client:
         
         self.source_id = message.target_id
         self.source_sub_id = message.target_sub_id
-        print("connection confirm is {}".format(confirm[0].value_string))
+        print("received connection message from server: confirm [{}]".format(confirm[0].value_string))
