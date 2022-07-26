@@ -205,7 +205,7 @@ class messaging_client:
     end_code = []
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
-    def __init__(self, source_id, connection_key, start_number, end_number):
+    def __init__(self, source_id, connection_key, start_number = 231, end_number = 67):
         self.source_id = source_id
         self.connection_key = connection_key
         self.start_code = bytes([start_number, start_number, start_number, start_number])
