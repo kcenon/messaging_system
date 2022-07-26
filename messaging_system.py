@@ -80,7 +80,7 @@ class container:
         self.values = []
         self.parse(message, False)
         
-    def create(self, source_id, source_sub_id, target_id, target_sub_id, message_type, values = []):
+    def create(self, source_id = '', source_sub_id = '', target_id = '', target_sub_id = '', message_type = '', values = []):
         self.source_id = source_id
         self.source_sub_id = source_sub_id
         self.target_id = target_id
@@ -227,7 +227,7 @@ class messaging_client:
         if packet.source_id == '':
             packet.source_id = self.source_id
             packet.source_sub_id = self.source_sub_id
-            
+                    
         data_array = bytes(packet.serialize(), 'utf-8')
         len_data = len(data_array).to_bytes(4, byteorder='little')
     
@@ -264,7 +264,7 @@ class messaging_client:
         connection_packet = container()
         connection_packet.create(self.source_id, self.source_sub_id,
                                 'echo_server', '', 'request_connection', 
-                                [ value('connection_key', 'd', 'echo_network'),
+                                [ value('connection_key', 'd', self.connection_key),
                                 value('auto_echo', '1', 'false'),
                                 value('auto_echo_interval_seconds', '3', '1'),
                                 value('session_type', '2', '1'),
@@ -277,7 +277,8 @@ class messaging_client:
         if not confirm:
             print('Cannot parse confirm message from server')
             return
-        
+
         self.source_id = message.target_id
         self.source_sub_id = message.target_sub_id
         print("received connection message from server: confirm [{}]".format(confirm[0].value_string))
+        
