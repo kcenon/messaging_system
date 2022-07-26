@@ -103,9 +103,7 @@ class container:
         result = result + "[5,{}];".format(self.message_type) 
         result = result + "[6,{}];".format(self.message_version) 
         result = result + "};"
-        result = result + "@data={"
         result = result + self.data_string
-        result = result + "};"
         
         return result
         
@@ -132,13 +130,13 @@ class container:
             type_string, data_string = result
             
             if type_string == '1':
-                self.source_id = data_string
-            elif type_string == '2':
-                self.source_sub_id = data_string
-            elif type_string == '3':
                 self.target_id = data_string
-            elif type_string == '4':
+            elif type_string == '2':
                 self.target_sub_id = data_string
+            elif type_string == '3':
+                self.source_id = data_string
+            elif type_string == '4':
+                self.source_sub_id = data_string
             elif type_string == '5':
                 self.message_type = data_string
             elif type_string == '6':
@@ -161,6 +159,7 @@ class container:
         previous_value = None
         for current_value in value_list:
             if current_value.type_string == 14:
+                #previous_value = current_value
                 continue
             
             if previous_value is None:
@@ -168,19 +167,22 @@ class container:
                 continue
             
             previous_value.values.append(current_value)
+            # check - recursive condition and set None into previous_value
     
     def _make_string(self):
-        result = ''
+        result = "@data={"
         
         for current in self.values:
             result = result + current.serialize()
+            
+        result = result + "};"
             
         return result
 
 class messaging_client:
     
-    source_id = None
-    source_sub_id = None
+    source_id = ''
+    source_sub_id = ''
     start_code = []
     end_code = []
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -204,7 +206,7 @@ class messaging_client:
             print("Cannot send with null target id")
             return
             
-        if packet.source_id is None:
+        if packet.source_id == '':
             packet.source_id = self.source_id
             packet.source_sub_id = self.source_sub_id
             
@@ -258,4 +260,6 @@ class messaging_client:
             print('Cannot parse confirm message from server')
             return
         
+        self.source_id = message.target_id
+        self.source_sub_id = message.target_sub_id
         print("connection confirm is {}".format(confirm[0].value_string))
