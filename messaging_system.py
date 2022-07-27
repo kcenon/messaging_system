@@ -109,10 +109,11 @@ class container:
     def serialize(self):
         if self.deserialized:
             self.data_string = self._make_string()
+            self.deserialized = False
         
-        result = "@header={"
-        result = "{}[1,{}];[2,{}];[3,{}];[4,{}];".format(result, self.target_id, self.target_sub_id, self.source_id, self.source_sub_id) 
-        result = "{}[5,{}];[6,{}];{}{}".format(result, self.message_type, self.message_version, "};", self.data_string) 
+        result = "{}[1,{}];[2,{}];[3,{}];[4,{}];[5,{}];[6,{}];{}{}".format(\
+            "@header={", self.target_id, self.target_sub_id, self.source_id, self.source_sub_id, 
+            self.message_type, self.message_version, "};", self.data_string) 
         
         return result
         
@@ -137,6 +138,7 @@ class container:
         return result
 
     def append(self, child_value):
+        self.deserialized = True
         child_value.parent = None
         self.values.append(child_value)
         
@@ -151,16 +153,24 @@ class container:
             match type_string:
                 case '1':
                     self.target_id = data_string
+                    continue
                 case '2':
                     self.target_sub_id = data_string
+                    continue
                 case '3':
                     self.source_id = data_string
+                    continue
                 case '4':
                     self.source_sub_id = data_string
+                    continue
                 case '5':
                     self.message_type = data_string
+                    continue
                 case '6':
                     self.message_version = data_string
+                    continue
+
+            print("cannot parse header with unknown type: {}".format(type_string))
     
     def _parse_data(self, data_string, parsing):
         self.data_string = data_string
@@ -206,25 +216,31 @@ class messaging_client:
     source_sub_id = ''
     start_code = []
     end_code = []
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock = None
     
     def __init__(self, source_id, connection_key, start_number = 231, end_number = 67):
         self.source_id = source_id
         self.connection_key = connection_key
         self.start_code = bytes([start_number, start_number, start_number, start_number])
         self.end_code = bytes([end_number, end_number, end_number, end_number])
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         
     def start(self, server_ip, server_port):
         server_address = (server_ip, server_port)
-        self.sock.connect(server_address)        
-        self._send_connection()
+
+        try:
+            self.sock.connect(server_address)
+        except:
+            return False
+              
+        return self._send_connection()
         
     def stop(self):
         self.sock.close()
         
     def send_packet(self, packet):
         if not packet.target_id:
-            print("Cannot send with null target id")
+            print("cannot send with null target id")
             return
             
         if packet.source_id == '':
@@ -278,10 +294,11 @@ class messaging_client:
         
         confirm = message.get('confirm')
         if not confirm:
-            print("Cannot parse confirm message from {}".format(message.source_id))
-            return
+            print("cannot parse confirm message from {}".format(message.source_id))
+            return False
 
         self.source_id = message.target_id
         self.source_sub_id = message.target_sub_id
         print("received connection message from {}: confirm [{}]".format(message.source_id, confirm[0].value_string))
+        return True
         
