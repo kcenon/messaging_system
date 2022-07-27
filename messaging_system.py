@@ -1,9 +1,11 @@
+from email.policy import default
 import re
 import sys
 import socket
 
 class value:
     
+    parent = None
     name_string = None
     type_string = None
     value_string = None
@@ -16,6 +18,7 @@ class value:
         self.values = values
         
     def append(self, child_value):
+        child_value.parent = self
         self.values.append(child_value)
         
     def remove(self, name_string):
@@ -108,14 +111,8 @@ class container:
             self.data_string = self._make_string()
         
         result = "@header={"
-        result = result + "[1,{}];".format(self.target_id) 
-        result = result + "[2,{}];".format(self.target_sub_id) 
-        result = result + "[3,{}];".format(self.source_id) 
-        result = result + "[4,{}];".format(self.source_sub_id) 
-        result = result + "[5,{}];".format(self.message_type) 
-        result = result + "[6,{}];".format(self.message_version) 
-        result = result + "};"
-        result = result + self.data_string
+        result = "{}[1,{}];[2,{}];[3,{}];[4,{}];".format(result, self.target_id, self.target_sub_id, self.source_id, self.source_sub_id) 
+        result = "{}[5,{}];[6,{}];{}{}".format(result, self.message_type, self.message_version, "};", self.data_string) 
         
         return result
         
@@ -138,6 +135,10 @@ class container:
             result.append(current)
             
         return result
+
+    def append(self, child_value):
+        child_value.parent = None
+        self.values.append(child_value)
         
     def _parse_header(self, header_string):
         if not header_string:
@@ -147,20 +148,19 @@ class container:
         for result in results:
             type_string, data_string = result
             
-            if type_string == '1':
-                self.target_id = data_string
-            elif type_string == '2':
-                self.target_sub_id = data_string
-            elif type_string == '3':
-                self.source_id = data_string
-            elif type_string == '4':
-                self.source_sub_id = data_string
-            elif type_string == '5':
-                self.message_type = data_string
-            elif type_string == '6':
-                self.message_version = data_string
-            else:
-                print("cannot parse with unknown type [{type_string}]")
+            match type_string:
+                case '1':
+                    self.target_id = data_string
+                case '2':
+                    self.target_sub_id = data_string
+                case '3':
+                    self.source_id = data_string
+                case '4':
+                    self.source_sub_id = data_string
+                case '5':
+                    self.message_type = data_string
+                case '6':
+                    self.message_version = data_string
     
     def _parse_data(self, data_string, parsing):
         self.data_string = data_string
@@ -176,16 +176,19 @@ class container:
             
         previous_value = None
         for current_value in value_list:
-            if current_value.type_string == 14:
-                #previous_value = current_value
-                continue
-            
             if not previous_value:
-                self.values.append(current_value)
+                self.append(current_value)
+                if current_value.type_string == 'e':
+                    previous_value = current_value
                 continue
-            
-            previous_value.values.append(current_value)
-            # check - recursive condition and set None into previous_value
+
+            previous_value.append(current_value)
+            if current_value.type_string == 'e':
+                previous_value = current_value
+                continue
+
+            if "{}".format(len(previous_value.values)) == previous_value.value_string:
+                previous_value = previous_value.parent
     
     def _make_string(self):
         result = "@data={"
