@@ -266,7 +266,7 @@ class messaging_client:
     def _send_connection(self):
         connection_packet = container()
         connection_packet.create(self.source_id, self.source_sub_id,
-                                'echo_server', '', 'request_connection', 
+                                'server', '', 'request_connection', 
                                 [ value('connection_key', 'd', self.connection_key),
                                 value('auto_echo', '1', 'false'),
                                 value('auto_echo_interval_seconds', '3', '1'),
@@ -278,10 +278,10 @@ class messaging_client:
         
         confirm = message.get('confirm')
         if not confirm:
-            print('Cannot parse confirm message from server')
+            print("Cannot parse confirm message from {}".format(message.source_id))
             return
 
         self.source_id = message.target_id
         self.source_sub_id = message.target_sub_id
-        print("received connection message from server: confirm [{}]".format(confirm[0].value_string))
+        print("received connection message from {}: confirm [{}]".format(message.source_id, confirm[0].value_string))
         
