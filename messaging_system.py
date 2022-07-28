@@ -2,6 +2,7 @@ from email.policy import default
 import re
 import sys
 import socket
+import logging
 
 class value:
     
@@ -105,17 +106,11 @@ class container:
         
         self._parse_header(re.search(r'@header=[\s?]*\{[\s?]*(.*?)[\s?]*\};', message).group())
         self._parse_data(re.search(r'@data=[\s?]*\{[\s?]*(.*?)[\s?]*\};', message).group(), parsing)
-        
-    def serialize(self):
-        if self.deserialized:
-            self.data_string = self._make_string()
-            self.deserialized = False
-        
-        result = "{}[1,{}];[2,{}];[3,{}];[4,{}];[5,{}];[6,{}];{}{}".format(\
-            "@header={", self.target_id, self.target_sub_id, self.source_id, self.source_sub_id, 
-            self.message_type, self.message_version, "};", self.data_string) 
-        
-        return result
+
+    def append(self, child_value):
+        self.deserialized = True
+        child_value.parent = None
+        self.values.append(child_value)
         
     def get(self, name_string):
         if not self.deserialized:
@@ -136,11 +131,17 @@ class container:
             result.append(current)
             
         return result
-
-    def append(self, child_value):
-        self.deserialized = True
-        child_value.parent = None
-        self.values.append(child_value)
+        
+    def serialize(self):
+        if self.deserialized:
+            self.data_string = self._make_string()
+            self.deserialized = False
+        
+        result = "{}[1,{}];[2,{}];[3,{}];[4,{}];[5,{}];[6,{}];{}{}".format(\
+            "@header={", self.target_id, self.target_sub_id, self.source_id, self.source_sub_id, 
+            self.message_type, self.message_version, "};", self.data_string) 
+        
+        return result
         
     def _parse_header(self, header_string):
         if not header_string:
@@ -170,7 +171,7 @@ class container:
                     self.message_version = data_string
                     continue
 
-            print("cannot parse header with unknown type: {}".format(type_string))
+            logging.error("cannot parse header with unknown type: {}".format(type_string))
     
     def _parse_data(self, data_string, parsing):
         self.data_string = data_string
@@ -218,7 +219,7 @@ class messaging_client:
     end_code = []
     sock = None
     
-    def __init__(self, source_id, connection_key, start_number = 231, end_number = 67):
+    def __init__(self, source_id, connection_key, start_number = 231, end_number = 67): 
         self.source_id = source_id
         self.connection_key = connection_key
         self.start_code = bytes([start_number, start_number, start_number, start_number])
@@ -240,7 +241,7 @@ class messaging_client:
         
     def send_packet(self, packet):
         if not packet.target_id:
-            print("cannot send with null target id")
+            logging.error("cannot send with null target id")
             return
             
         if packet.source_id == '':
@@ -255,6 +256,8 @@ class messaging_client:
         self.sock.send(len_data)
         self.sock.send(data_array)
         self.sock.send(self.end_code)
+
+        logging.debug("[sent]=> {}".format(packet.serialize()))
         
     def recv_packet(self):
         x = 0
@@ -276,8 +279,11 @@ class messaging_client:
         
         if (x < 4):
             return container()
-    
-        return container(received_data.decode('utf-8'))
+        
+        packet_string = received_data.decode('utf-8')
+        logging.debug("[received]=> {}".format(packet_string))
+
+        return container(packet_string)
     
     def _send_connection(self):
         connection_packet = container()
@@ -294,11 +300,11 @@ class messaging_client:
         
         confirm = message.get('confirm')
         if not confirm:
-            print("cannot parse confirm message from {}".format(message.source_id))
+            logging.error("cannot parse confirm message from {}".format(message.source_id))
             return False
 
         self.source_id = message.target_id
         self.source_sub_id = message.target_sub_id
-        print("received connection message from {}: confirm [{}]".format(message.source_id, confirm[0].value_string))
+        logging.info("received connection message from {}: confirm [{}]".format(message.source_id, confirm[0].value_string))
         return True
         
