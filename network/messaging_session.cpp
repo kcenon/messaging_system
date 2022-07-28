@@ -208,6 +208,8 @@ namespace network
 		
 		logger::handle().write(logging_level::information, fmt::format(L"started session: {}:{}", 
 			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port()));
+
+		_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_session::check_confirm_condition, this)));
 	}
 
 	void messaging_session::stop(void)
@@ -382,6 +384,23 @@ namespace network
 		{
 			return false;
 		}
+
+		return true;
+	}
+
+	bool messaging_session::check_confirm_condition(void)
+	{
+		this_thread::sleep_for(chrono::seconds(1));
+
+		if (_confirm == connection_conditions::confirmed)
+		{
+			return true;
+		}
+
+		_confirm = connection_conditions::expired;
+		logger::handle().write(logging_level::error, fmt::format(L"expired line: {}[{}]", _source_id, _source_sub_id));
+
+		disconnected();
 
 		return true;
 	}

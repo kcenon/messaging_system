@@ -34,7 +34,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "container.h"
 
-#include "thread_pool.h"
 #include "session_types.h"
 #include "constexpr_string.h"
 
@@ -100,7 +99,6 @@ namespace network
 
 	protected:
 		void wait_connection(void);
-		bool check_confirm_condition(void);
 		void connect_condition(shared_ptr<messaging_session> target, const bool& condition);
 
 	private:
@@ -148,8 +146,5 @@ namespace network
 	private:
 		function<vector<uint8_t>(const vector<uint8_t>&, const bool&)> _specific_compress_sequence;
 		function<vector<uint8_t>(const vector<uint8_t>&, const bool&)> _specific_encrypt_sequence;
-
-	private:
-		shared_ptr<threads::thread_pool> _thread_pool;
 	};
 }

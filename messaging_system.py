@@ -1,6 +1,7 @@
 from email.policy import default
 import re
 import sys
+import time
 import socket
 import logging
 
@@ -295,6 +296,10 @@ class messaging_client:
                                 value('session_type', '2', '1'),
                                 value('bridge_mode', '1', 'false'),
                                 value('snipping_targets', 'e', '0') ])
+
+        time.sleep(2.4)
+        return
+        
         self.send_packet(connection_packet)
         message = self.recv_packet()
         

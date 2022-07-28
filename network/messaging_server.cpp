@@ -156,9 +156,6 @@ namespace network
 	{
 		stop();
 
-		_thread_pool = make_shared<threads::thread_pool>(L"messaging_server");
-		_thread_pool->append(make_shared<thread_worker>(priorities::high), true);
-
 		_high_priority = high_priority;
 		_normal_priority = normal_priority;
 		_low_priority = low_priority;
@@ -237,12 +234,6 @@ namespace network
 
 	void messaging_server::stop(void)
 	{
-		if (_thread_pool != nullptr)
-		{
-			_thread_pool->stop();
-			_thread_pool.reset();
-		}
-
 		if (_io_context != nullptr)
 		{
 			if (_thread != nullptr)
@@ -471,33 +462,8 @@ namespace network
 
 				_sessions.push_back(session);
 
-				_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_server::check_confirm_condition, this)));
-
 				wait_connection();
 			});
-	}
-
-	bool messaging_server::check_confirm_condition(void)
-	{
-		this_thread::sleep_for(chrono::seconds(1));
-
-		vector<shared_ptr<messaging_session>> sessions = _sessions;
-		for (auto& session : sessions)
-		{
-			if (session == nullptr)
-			{
-				continue;
-			}
-
-			if (session->get_confirm_status() == connection_conditions::expired)
-			{
-				connect_condition(session, false);
-			}
-		}
-
-		_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_server::check_confirm_condition, this)));
-
-		return true;
 	}
 
 	void messaging_server::connect_condition(shared_ptr<messaging_session> target, const bool& condition)
@@ -519,7 +485,7 @@ namespace network
 			}
 		}
 
-		if(_connection != nullptr && _thread_pool != nullptr)
+		if(_connection != nullptr)
 		{
 			auto result = async(launch::async, _connection, target->target_id(), target->target_sub_id(), condition);
 		}
