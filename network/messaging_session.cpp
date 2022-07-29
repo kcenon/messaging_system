@@ -152,7 +152,7 @@ namespace network
 		_specific_compress_sequence = specific_compress_sequence;	
 	}
 		
-	void messaging_session::set_specific_encryp_sequence(const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>& specific_encrypt_sequence)
+	void messaging_session::set_specific_encrypt_sequence(const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>& specific_encrypt_sequence)
 	{
 		_specific_encrypt_sequence = specific_encrypt_sequence;
 	}
@@ -246,6 +246,11 @@ namespace network
 			!message->target_sub_id().empty() && message->target_sub_id() != _target_sub_id)
 		{
 			return false;
+		}
+
+		if (message->source_id().empty())
+		{
+			message->set_source(_source_id, _source_sub_id);
 		}
 
 		auto serialize = message->serialize();
@@ -463,6 +468,9 @@ namespace network
 		}
 
 		_target_id = message->source_id();
+		_target_sub_id = fmt::format(L"{}:{}",
+			converter::to_wstring(_socket->remote_endpoint().address().to_string()), _socket->remote_endpoint().port());
+			
 		_session_type = (session_types)message->get_value(L"session_type")->to_short();
 		_bridge_line = message->get_value(L"bridge_mode")->to_boolean();
 		if (_session_type != session_types::binary_line)
