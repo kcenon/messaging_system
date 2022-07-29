@@ -1,7 +1,9 @@
+from concurrent.futures import thread
 import re
 import sys
 import socket
 import logging
+import threading
 
 class value:
     
@@ -223,13 +225,17 @@ class messaging_client:
     start_code = []
     end_code = []
     sock = None
+    recv_thread = None
+    recv_callback = None
     
-    def __init__(self, source_id, connection_key, start_number = 231, end_number = 67): 
+    def __init__(self, source_id, connection_key, start_number = 231, end_number = 67, callback = None): 
         self.source_id = source_id
+        self.source_sub_id = ''
         self.connection_key = connection_key
         self.start_code = bytes([start_number, start_number, start_number, start_number])
         self.end_code = bytes([end_number, end_number, end_number, end_number])
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.recv_callback = callback
         
     def start(self, server_ip, server_port):
         server_address = (server_ip, server_port)
@@ -239,10 +245,16 @@ class messaging_client:
         except:
             return False
               
-        return self._send_connection()
+        if self._send_connection():
+            self.recv_thread = threading.Thread(target=self.recv)
+            self.recv_thread.daemon = True
+            self.recv_thread.start()
+            
+        return True
         
     def stop(self):
         self.sock.close()
+        self.sock = None
         
     def send_packet(self, packet):
         if not packet.target_id:
@@ -263,8 +275,14 @@ class messaging_client:
         self.sock.send(self.end_code)
 
         logging.debug("[sent]=> {}".format(packet.serialize()))
-        
-    def recv_packet(self):
+    
+    def recv(self):
+        while not self.sock:
+            message = self._recv_packet()
+            if not self.recv_callback:
+                self.recv_callback(message)
+            
+    def _recv_packet(self):
         x = 0
         while (x < 4):
             if self.start_code[0:1] != self.sock.recv(1):
@@ -292,8 +310,8 @@ class messaging_client:
     
     def _send_connection(self):
         connection_packet = container()
-        connection_packet.create(self.source_id, self.source_sub_id,
-                                'server', '', 'request_connection', 
+        connection_packet.create('server', '', self.source_id, self.source_sub_id, 
+                                'request_connection', 
                                 [ value('connection_key', 'd', self.connection_key),
                                 value('auto_echo', '1', 'false'),
                                 value('auto_echo_interval_seconds', '3', '1'),
@@ -302,7 +320,7 @@ class messaging_client:
                                 value('snipping_targets', 'e', '0') ])
 
         self.send_packet(connection_packet)
-        message = self.recv_packet()
+        message = self._recv_packet()
         
         confirm = message.get('confirm')
         if not confirm:
