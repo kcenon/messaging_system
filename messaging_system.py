@@ -248,7 +248,7 @@ class messaging_client:
             return False
               
         self.recv_thread = threading.Thread(target=self.recv)
-        #self.recv_thread.daemon = True
+        self.recv_thread.daemon = True
         self.recv_thread.start()
         
         self._send_connection()
@@ -256,8 +256,9 @@ class messaging_client:
         return True
         
     def stop(self):
-        self.sock.close()
-        self.sock = None
+        if self.sock is not None:
+            self.sock.close()
+            self.sock = None
         
     def send_packet(self, packet):
         if not packet.target_id:
@@ -295,7 +296,7 @@ class messaging_client:
                 if not confirm:
                     logging.error("cannot parse confirm message from {}".format(message.source_id()))
                     
-                    if not self.conn_callback is not None:
+                    if self.conn_callback is not None:
                         self.conn_callback(message.source_id(), message.source_sub_id(), False)
                         
                     break

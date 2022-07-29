@@ -57,14 +57,12 @@ namespace threads
 		: _priority(priority), _temporary_stored_path(L""), _working_callback(nullptr), 
 		_working_callback2(nullptr), _working_callback3(nullptr)
 	{
-
 	}
 
 	job::job(const priorities& priority, const vector<uint8_t>& data)
 		: _priority(priority), _data(data), _temporary_stored_path(L""), _working_callback(nullptr), 
 		_working_callback2(nullptr), _working_callback3(nullptr)
 	{
-
 	}
 
 	job::job(const priorities& priority, const function<void(void)>& working_callback)

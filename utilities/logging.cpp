@@ -202,8 +202,6 @@ namespace logging
 
 	void logger::run(void)
 	{
-		vector<tuple<logging_level, chrono::system_clock::time_point, wstring>> buffers;
-
 		set_log_flag(L"START");
 
 		wstring source = L"";
@@ -213,7 +211,7 @@ namespace logging
 			unique_lock<mutex> unique(_mutex);
 			_condition.wait(unique, [this] { return _thread_stop.load() || !_buffer.empty(); });
 
-			buffers.swap(_buffer);
+			auto buffers = move(_buffer);
 			unique.unlock();
 
 			filesystem::path target_path;
