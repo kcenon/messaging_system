@@ -63,6 +63,7 @@ namespace network
 	{
 		memset(_start_code_tag, start_code_value, start_code);
 		memset(_end_code_tag, end_code_value, end_code);
+		memset(_receiving_buffer, 0, buffer_size);
 	}
 
 	data_handling::~data_handling(void)

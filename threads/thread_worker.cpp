@@ -49,7 +49,7 @@ namespace threads
 	using namespace converting;
 
 	thread_worker::thread_worker(const priorities& priority, const vector<priorities>& others)
-		: _priority(priority), _others(others)
+		: _priority(priority), _others(others), _thread_stop(false)
 	{
 		_guid = converter::to_wstring(xg::newGuid().str());
 	}
