@@ -226,16 +226,18 @@ class messaging_client:
     end_code = []
     sock = None
     recv_thread = None
+    conn_callback = None
     recv_callback = None
     
-    def __init__(self, source_id, connection_key, start_number = 231, end_number = 67, callback = None): 
+    def __init__(self, source_id, connection_key, start_number = 231, end_number = 67, conn_callback = None, recv_callback = None): 
         self.source_id = source_id
         self.source_sub_id = ''
         self.connection_key = connection_key
         self.start_code = bytes([start_number, start_number, start_number, start_number])
         self.end_code = bytes([end_number, end_number, end_number, end_number])
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.recv_callback = callback
+        self.conn_callback = conn_callback
+        self.recv_callback = recv_callback
         
     def start(self, server_ip, server_port):
         server_address = (server_ip, server_port)
@@ -245,11 +247,12 @@ class messaging_client:
         except:
             return False
               
-        if self._send_connection():
-            self.recv_thread = threading.Thread(target=self.recv)
-            self.recv_thread.daemon = True
-            self.recv_thread.start()
-            
+        self.recv_thread = threading.Thread(target=self.recv)
+        #self.recv_thread.daemon = True
+        self.recv_thread.start()
+        
+        self._send_connection()
+        
         return True
         
     def stop(self):
@@ -277,10 +280,39 @@ class messaging_client:
         logging.debug("[sent]=> {}".format(packet.serialize()))
     
     def recv(self):
-        while not self.sock:
-            message = self._recv_packet()
-            if not self.recv_callback:
+        logging.info("start messaging_client: {}".format(self.source_id))
+        
+        while self.sock is not None:
+            
+            try:
+                message = self._recv_packet()
+            except:
+                break
+            
+            if message.message_type() == "confirm_connection":
+                
+                confirm = message.get('confirm')
+                if not confirm:
+                    logging.error("cannot parse confirm message from {}".format(message.source_id()))
+                    
+                    if not self.conn_callback is not None:
+                        self.conn_callback(message.source_id(), message.source_sub_id(), False)
+                        
+                    break
+
+                self.source_id = message.target_id()
+                self.source_sub_id = message.target_sub_id()
+                logging.info("received connection message from {}: confirm [{}]".format(message.source_id(), confirm[0].value_string))
+                
+                if self.conn_callback is not None:
+                    self.conn_callback(message.source_id(), message.source_sub_id(), True)
+                        
+                continue
+            
+            if self.recv_callback is not None:
                 self.recv_callback(message)
+        
+        logging.info("stop messaging_client: {}".format(self.source_id))
             
     def _recv_packet(self):
         x = 0
@@ -320,15 +352,4 @@ class messaging_client:
                                 value('snipping_targets', 'e', '0') ])
 
         self.send_packet(connection_packet)
-        message = self._recv_packet()
-        
-        confirm = message.get('confirm')
-        if not confirm:
-            logging.error("cannot parse confirm message from {}".format(message.source_id()))
-            return False
-
-        self.source_id = message.target_id()
-        self.source_sub_id = message.target_sub_id()
-        logging.info("received connection message from {}: confirm [{}]".format(message.source_id(), confirm[0].value_string))
-        return True
         
