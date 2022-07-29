@@ -1,4 +1,3 @@
-from email.policy import default
 import re
 import sys
 import socket
@@ -66,31 +65,21 @@ class value:
 
 class container:
     
-    source_id = ''
-    source_sub_id = ''
-    target_id = ''
-    target_sub_id = ''
-    message_type = ''
-    message_version = "1.0.0.0"
+    headers = {}
     values = []
         
     def __init__(self, message = ''):
-        self.source_id = ''
-        self.source_sub_id = ''
-        self.target_id = ''
-        self.target_sub_id = ''
-        self.message_type = ''
-        self.message_version = "1.0.0.0"
+        headers = { '1':"", '2':"", '3':"", '4':"", '5':"", '6':"1.0.0.0" }
         self.values = []
         self.parse(message, False)
         
-    def create(self, source_id = '', source_sub_id = '', target_id = '', target_sub_id = '', message_type = '', values = []):
-        self.source_id = source_id
-        self.source_sub_id = source_sub_id
-        self.target_id = target_id
-        self.target_sub_id = target_sub_id
-        self.message_type = message_type
-        self.message_version = "1.0.0.0"
+    def create(self, target_id = '', target_sub_id = '', source_id = '', source_sub_id = '', message_type = '', values = []):
+        self.headers['1'] = target_id
+        self.headers['2'] = target_sub_id
+        self.headers['3'] = source_id
+        self.headers['4'] = source_sub_id
+        self.headers['5'] = message_type
+        self.headers['6'] = "1.0.0.0"
         self.data_string = ''
         self.values = values
         self.deserialized = True
@@ -138,10 +127,43 @@ class container:
             self.deserialized = False
         
         result = "{}[1,{}];[2,{}];[3,{}];[4,{}];[5,{}];[6,{}];{}{}".format(\
-            "@header={", self.target_id, self.target_sub_id, self.source_id, self.source_sub_id, 
-            self.message_type, self.message_version, "};", self.data_string) 
+            "@header={", self.headers['1'], self.headers['2'], self.headers['3'], self.headers['4'], 
+            self.headers['5'], self.headers['6'], "};", self.data_string) 
         
         return result
+    
+    def target_id(self):
+        return self.headers['1']
+    
+    def target_sub_id(self):
+        return self.headers['2']
+    
+    def source_id(self):
+        return self.headers['3']
+    
+    def source_sub_id(self):
+        return self.headers['4']
+    
+    def message_type(self):
+        return self.headers['5']
+    
+    def version(self):
+        return self.headers['6']
+    
+    def set_target_id(self, value_string):
+        self.headers['1'] = value_string
+    
+    def set_target_sub_id(self, value_string):
+        self.headers['2'] = value_string
+    
+    def set_source_id(self, value_string):
+        self.headers['3'] = value_string
+    
+    def set_source_sub_id(self, value_string):
+        self.headers['4'] = value_string
+    
+    def set_message_type(self, value_string):
+        self.headers['5'] = value_string
         
     def _parse_header(self, header_string):
         if not header_string:
@@ -151,27 +173,10 @@ class container:
         for result in results:
             type_string, data_string = result
             
-            match type_string:
-                case '1':
-                    self.target_id = data_string
-                    continue
-                case '2':
-                    self.target_sub_id = data_string
-                    continue
-                case '3':
-                    self.source_id = data_string
-                    continue
-                case '4':
-                    self.source_sub_id = data_string
-                    continue
-                case '5':
-                    self.message_type = data_string
-                    continue
-                case '6':
-                    self.message_version = data_string
-                    continue
-
-            logging.error("cannot parse header with unknown type: {}".format(type_string))
+            try:
+                self.headers[type_string] = data_string
+            except:
+                logging.error("cannot parse header with unknown type: {}".format(type_string))
     
     def _parse_data(self, data_string, parsing):
         self.data_string = data_string
@@ -244,9 +249,9 @@ class messaging_client:
             logging.error("cannot send with null target id")
             return
             
-        if packet.source_id == '':
-            packet.source_id = self.source_id
-            packet.source_sub_id = self.source_sub_id
+        if packet.source_id() == '':
+            packet.set_source_id(self.source_id)
+            packet.set_source_sub_id(self.source_sub_id)
                     
         data_array = bytes(packet.serialize(), 'utf-8')
         len_data = len(data_array).to_bytes(4, byteorder='little')
@@ -301,11 +306,11 @@ class messaging_client:
         
         confirm = message.get('confirm')
         if not confirm:
-            logging.error("cannot parse confirm message from {}".format(message.source_id))
+            logging.error("cannot parse confirm message from {}".format(message.source_id()))
             return False
 
-        self.source_id = message.target_id
-        self.source_sub_id = message.target_sub_id
-        logging.info("received connection message from {}: confirm [{}]".format(message.source_id, confirm[0].value_string))
+        self.source_id = message.target_id()
+        self.source_sub_id = message.target_sub_id()
+        logging.info("received connection message from {}: confirm [{}]".format(message.source_id(), confirm[0].value_string))
         return True
         
