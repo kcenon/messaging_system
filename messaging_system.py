@@ -71,7 +71,7 @@ class container:
     values = []
         
     def __init__(self, message = ''):
-        headers = { '1':"", '2':"", '3':"", '4':"", '5':"", '6':"1.0.0.0" }
+        self.headers = { '1':"", '2':"", '3':"", '4':"", '5':"", '6':"1.0.0.0" }
         self.values = []
         self.parse(message, False)
         
@@ -128,9 +128,9 @@ class container:
             self.data_string = self._make_string()
             self.deserialized = False
         
-        result = "{}[1,{}];[2,{}];[3,{}];[4,{}];[5,{}];[6,{}];{}{}".format(\
-            "@header={", self.headers['1'], self.headers['2'], self.headers['3'], self.headers['4'], 
-            self.headers['5'], self.headers['6'], "};", self.data_string) 
+        result = "{}[1,{}];[2,{}];[3,{}];[4,{}];[5,{}];[6,{}];{}{}".format(
+            "@header={", self.headers['1'], self.headers['2'], self.headers['3'], self.headers['4'],
+            self.headers['5'], self.headers['6'], "};", self.data_string)
         
         return result
     
@@ -183,7 +183,7 @@ class container:
     def _parse_data(self, data_string, parsing):
         self.data_string = data_string
         self.deserialized = parsing
-        if parsing != True:
+        if not parsing:
             return
         
         value_list = []
@@ -219,17 +219,8 @@ class container:
         return result
 
 class messaging_client:
-    
-    source_id = ''
-    source_sub_id = ''
-    start_code = []
-    end_code = []
-    sock = None
-    recv_thread = None
-    conn_callback = None
-    recv_callback = None
-    
-    def __init__(self, source_id, connection_key, start_number = 231, end_number = 67, conn_callback = None, recv_callback = None): 
+        
+    def __init__(self, source_id, connection_key, start_number = 231, end_number = 67, conn_callback = None, recv_callback = None):
         self.source_id = source_id
         self.source_sub_id = ''
         self.connection_key = connection_key
@@ -290,6 +281,9 @@ class messaging_client:
             except:
                 break
             
+            if message is None:
+                continue
+            
             if message.message_type() == "confirm_connection":
                 
                 confirm = message.get('confirm')
@@ -324,6 +318,9 @@ class messaging_client:
             x = x + 1
             
         type_code = self.sock.recv(1)
+        if type_code != bytes([2]):
+            return None
+        
         len_data = self.sock.recv(4)
         received_data = self.sock.recv(int.from_bytes(len_data, "little"))
         
@@ -334,7 +331,7 @@ class messaging_client:
             x = x + 1
         
         if (x < 4):
-            return container()
+            return None
         
         packet_string = received_data.decode('utf-8')
         logging.debug("[received]=> {}".format(packet_string))
