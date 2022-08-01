@@ -248,7 +248,7 @@ class messaging_client:
         
     def stop(self):
         if self.sock is not None:
-            self.sock.close()
+            self.sock.shutdown(socket.SHUT_WR)
             self.sock = None
         
     def send_packet(self, packet):
