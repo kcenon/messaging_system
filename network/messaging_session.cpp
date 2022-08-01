@@ -410,6 +410,30 @@ namespace network
 		return true;
 	}
 
+	bool messaging_session::send_auto_echo(void)
+	{
+		if (!_auto_echo)
+		{
+			return true;
+		}
+
+		for(unsigned short index = 0; index < _auto_echo_interval_seconds; ++index)
+		{
+			if (_confirm != connection_conditions::confirmed)
+			{
+				return true;
+			}
+
+			this_thread::sleep_for(chrono::seconds(1));
+		}
+
+		echo();
+
+		_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_session::send_auto_echo, this)));
+		
+		return true;
+	}
+
 	void messaging_session::send_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
@@ -477,6 +501,9 @@ namespace network
 		{
 			_auto_echo = message->get_value(L"auto_echo")->to_boolean();
 			_auto_echo_interval_seconds = message->get_value(L"auto_echo_interval_seconds")->to_ushort();
+
+			logger::handle().write(logging_level::sequence, 
+				fmt::format(L"auto echo mode: {}, interval: {}", _auto_echo, _auto_echo_interval_seconds));
 		}
 
 		auto iter = find_if(_possible_session_types.begin(), _possible_session_types.end(), 
@@ -610,6 +637,8 @@ namespace network
 		{
 			auto result = async(launch::async, _connection, get_ptr(), true);
 		}
+
+		_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_session::send_auto_echo, this)));
 	}
 
 	void messaging_session::request_files(shared_ptr<container::value_container> message)

@@ -230,7 +230,7 @@ class messaging_client:
         self.conn_callback = conn_callback
         self.recv_callback = recv_callback
         
-    def start(self, server_ip, server_port):
+    def start(self, server_ip, server_port, auto_echo = False, auto_echo_interval_seconds = 1):
         server_address = (server_ip, server_port)
 
         try:
@@ -242,7 +242,7 @@ class messaging_client:
         self.recv_thread.daemon = True
         self.recv_thread.start()
         
-        self._send_connection()
+        self._send_connection(auto_echo, auto_echo_interval_seconds)
         
         return True
         
@@ -338,13 +338,13 @@ class messaging_client:
 
         return container(packet_string)
     
-    def _send_connection(self):
+    def _send_connection(self, auto_echo, auto_echo_interval_seconds):
         connection_packet = container()
         connection_packet.create('server', '', self.source_id, self.source_sub_id, 
                                 'request_connection', 
                                 [ value('connection_key', 'd', self.connection_key),
-                                value('auto_echo', '1', 'false'),
-                                value('auto_echo_interval_seconds', '3', '1'),
+                                value('auto_echo', '1', str(auto_echo).lower()),
+                                value('auto_echo_interval_seconds', '3', str(auto_echo_interval_seconds)),
                                 value('session_type', '2', '1'),
                                 value('bridge_mode', '1', 'false'),
                                 value('snipping_targets', 'e', '0') ])
