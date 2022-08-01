@@ -173,7 +173,7 @@ namespace network
 		_specific_compress_sequence = specific_compress_sequence;	
 	}
 		
-	void messaging_client::set_specific_encryp_sequence(const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>& specific_encrypt_sequence)
+	void messaging_client::set_specific_encrypt_sequence(const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>& specific_encrypt_sequence)
 	{
 		_specific_encrypt_sequence = specific_encrypt_sequence;
 	}
