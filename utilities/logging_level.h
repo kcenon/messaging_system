@@ -43,4 +43,11 @@ namespace logging
 		parameter = 4,
 		packet = 5
 	};
+
+	enum class logging_styles : unsigned short
+	{
+		console_only = 0,
+		file_and_console = 1,
+		file_only = 2
+	};
 }

@@ -121,18 +121,9 @@ namespace logging
 		_write_console_levels = write_console_levels;
 	}
 
-	void logger::set_write_console(const bool& write_console, const bool& write_console_only)
+	void logger::set_write_console(const logging_styles& logging_style)
 	{
-		if (!write_console && write_console_only)
-		{
-			_write_console.store(false);
-			_write_console_only.store(false);
-
-			return;
-		}
-
-		_write_console.store(write_console);
-		_write_console_only.store(write_console_only);
+		_logging_style = logging_style;
 	}
 
 	void logger::set_write_date(const bool& write_date)
@@ -255,7 +246,7 @@ namespace logging
 #else
 			fstream stream;
 #endif
-			if (!_write_console_only.load())
+			if (_logging_style >= logging_styles::file_and_console)
 			{
 #ifdef _WIN32
 				stream.open(source, ios::out | ios::app);
@@ -282,7 +273,7 @@ namespace logging
 			}
 			buffers.clear();
 
-			if (!_write_console_only.load())
+			if (_logging_style >= logging_styles::file_and_console)
 			{
 #ifdef _WIN32
 				stream << string_buffer.str();
@@ -292,7 +283,7 @@ namespace logging
 			}
 			string_buffer.str(L"");
 
-			if (!_write_console_only.load())
+			if (_logging_style >= logging_styles::file_and_console)
 			{
 				stream.flush();
 				stream.close();
@@ -319,7 +310,7 @@ namespace logging
 #else
 		fstream stream;
 #endif
-		if (!_write_console_only.load())
+		if (_logging_style >= logging_styles::file_and_console)
 		{
 #ifdef _WIN32
 			stream.open(source, ios::out | ios::app);
@@ -338,12 +329,12 @@ namespace logging
 		if (_write_date.load())
 		{
 			wstring temp = fmt::format(L"[{:%Y-%m-%d} {}][{}]\n", fmt::localtime(current), time_string, flag);
-			if (_write_console.load())
+			if (_logging_style < logging_styles::file_only)
 			{
 				wcout << fmt::format(L"[\033[0;94m{:%Y-%m-%d} {}\033[0m][\033[0;34m{}\033[0m]\n", fmt::localtime(current), time_string, flag);
 			}
 
-			if (!_write_console_only.load())
+			if (_logging_style >= logging_styles::file_and_console)
 			{
 #ifdef _WIN32
 				stream << temp;
@@ -355,12 +346,12 @@ namespace logging
 		else
 		{
 			wstring temp = fmt::format(L"[{}][{}]\n", time_string, flag);
-			if (_write_console.load())
+			if (_logging_style < logging_styles::file_only)
 			{
 				wcout << fmt::format(L"[\033[0;94m{}\033[0m][\033[0;34m{}\033[0m]\n", time_string, flag);
 			}
 
-			if (!_write_console_only.load())
+			if (_logging_style >= logging_styles::file_and_console)
 			{
 #ifdef _WIN32
 				stream << temp;
@@ -370,7 +361,7 @@ namespace logging
 			}
 		}
 
-		if (!_write_console_only.load())
+		if (_logging_style >= logging_styles::file_and_console)
 		{
 			stream.flush();
 			stream.close();
@@ -434,7 +425,7 @@ namespace logging
 		auto time_string = datetime::time(time, true, _places_of_decimal);
 		if (_write_date.load())
 		{
-			if (_write_console.load())
+			if (_logging_style < logging_styles::file_only)
 			{
 				wcout << fmt::format(L"[{}{:%Y-%m-%d} {}\033[0m][{}{}\033[0m]: {}\n", 
 					time_color, fmt::localtime(time), time_string, type_color, type, data);
@@ -443,7 +434,7 @@ namespace logging
 			return fmt::format(L"[{:%Y-%m-%d} {}][{}]: {}\n", fmt::localtime(time), time_string, type, data);
 		}
 
-		if (_write_console.load())
+		if (_logging_style < logging_styles::file_only)
 		{
 			wcout << fmt::format(L"[{}{}\033[0m][{}{}\033[0m]: {}\n", 
 				time_color, time_string, type_color, type, data);

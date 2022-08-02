@@ -71,7 +71,7 @@ namespace logging
 	public:
 		void set_target_level(const logging_level& target_level);
 		void set_target_level(const vector<logging_level>& write_console_levels);
-		void set_write_console(const bool& write_console, const bool& write_console_only = false);
+		void set_write_console(const logging_styles& logging_style = logging_styles::file_only);
 		void set_write_date(const bool& write_date);
 		void set_limit_log_file_size(const size_t& limit_log_file_size);
 		void set_backup_notification(const function<void(const wstring&)>& notification);
@@ -105,6 +105,7 @@ namespace logging
 		wstring _store_log_root_path;
 		wstring _store_log_file_name;
 		wstring _store_log_extention;
+		logging_styles _logging_style;
 		unsigned short _places_of_decimal;
 		vector<logging_level> _write_console_levels;
 		locale _locale;
@@ -112,8 +113,6 @@ namespace logging
 	private:
 		atomic<bool> _thread_stop{ true };
 		atomic<bool> _write_date{ false };
-		atomic<bool> _write_console{ false };
-		atomic<bool> _write_console_only{ false };
 		atomic<bool> _append_date_on_file_name{ true };
 		atomic<size_t> _limit_log_file_size{ 2097152 };
 
