@@ -16,9 +16,10 @@ class value:
     def __init__(self, name_string, type_string, value_string, values = []):
         self.name_string = name_string
         self.type_string = type_string
-        self.value_string = value_string
+        self.value_string = value_string.replace("</0x0A;>", "\r").\
+            replace("</0x0B;>", "\n").replace("</0x0C;>", " ").replace("</0x0D;>", "\t")
         self.values = values
-        
+  
     def append(self, child_value):
         child_value.parent = self
         self.values.append(child_value)
@@ -55,7 +56,9 @@ class value:
         return result
     
     def serialize(self):
-        result = "[{},{},{}];".format(self.name_string, self.type_string, self.value_string)
+        replaced_value = self.value_string.replace("\r", "</0x0A;>").\
+            replace("\n", "</0x0B;>").replace(" ", "</0x0C;>").replace("\t", "</0x0D;>")
+        result = "[{},{},{}];".format(self.name_string, self.type_string, replaced_value)
         
         for current in self.values:
             if not current:
