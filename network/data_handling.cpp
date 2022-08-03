@@ -443,6 +443,11 @@ namespace network
 
 	void data_handling::send_packet_job(const vector<uint8_t>& data)
 	{
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
+
 		if (_confirm == connection_conditions::confirmed)
 		{
 			_thread_pool->push(make_shared<job>(priorities::high, data, 
@@ -457,12 +462,22 @@ namespace network
 
 	void data_handling::send_file_job(const vector<uint8_t>& data)
 	{
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
+		
 		_thread_pool->push(make_shared<job>(priorities::low, data, 
 				bind(&data_handling::load_file_packet, this, placeholders::_1)));
 	}
 
 	void data_handling::send_binary_job(const vector<uint8_t>& data)
 	{
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
+		
 		_thread_pool->push(make_shared<job>(priorities::top, data, 
 				bind(&data_handling::encrypt_binary_packet, this, placeholders::_1)));
 	}
@@ -499,6 +514,11 @@ namespace network
 		{
 			return;
 		}
+
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
 			
 		if (!_encrypt_mode)
 		{
@@ -526,6 +546,11 @@ namespace network
 			return;
 		}
 
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
+
 		if (!_compress_mode)
 		{
 			_thread_pool->push(make_shared<job>(priorities::normal, data, bind(&data_handling::decrypt_packet, this, placeholders::_1)));
@@ -548,6 +573,11 @@ namespace network
 	void data_handling::decrypt_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
+		{
+			return;
+		}
+
+		if (_thread_pool == nullptr)
 		{
 			return;
 		}
@@ -609,6 +639,11 @@ namespace network
 		{
 			return;
 		}
+
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
 		
 		shared_ptr<container::value_container> message = make_shared<container::value_container>(data);
 		if (message == nullptr)
@@ -640,6 +675,11 @@ namespace network
 		{
 			return;
 		}
+
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
 			
 		if (!_compress_mode)
 		{
@@ -663,6 +703,11 @@ namespace network
 	void data_handling::encrypt_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
+		{
+			return;
+		}
+
+		if (_thread_pool == nullptr)
 		{
 			return;
 		}
@@ -693,6 +738,11 @@ namespace network
 			return;
 		}
 
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
+
 		if (!_compress_mode)
 		{
 			_thread_pool->push(make_shared<job>(priorities::low, data, bind(&data_handling::decrypt_file_packet, this, placeholders::_1)));
@@ -715,6 +765,11 @@ namespace network
 	void data_handling::decrypt_file_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
+		{
+			return;
+		}
+
+		if (_thread_pool == nullptr)
 		{
 			return;
 		}
@@ -804,6 +859,11 @@ namespace network
 		{
 			return;
 		}
+
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
 			
 		if (!_compress_mode)
 		{
@@ -830,6 +890,11 @@ namespace network
 		{
 			return;
 		}
+
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
 			
 		if (!_encrypt_mode)
 		{
@@ -853,6 +918,11 @@ namespace network
 	void data_handling::decompress_binary_packet(const vector<uint8_t>& data)
 	{
 		if (data.empty())
+		{
+			return;
+		}
+
+		if (_thread_pool == nullptr)
 		{
 			return;
 		}

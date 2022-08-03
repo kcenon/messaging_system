@@ -393,35 +393,33 @@ namespace network
 		return true;
 	}
 
-	bool messaging_session::check_confirm_condition(void)
+	void messaging_session::check_confirm_condition(void)
 	{
 		this_thread::sleep_for(chrono::seconds(1));
 
 		if (_confirm == connection_conditions::confirmed)
 		{
-			return true;
+			return;
 		}
 
 		_confirm = connection_conditions::expired;
 		logger::handle().write(logging_level::error, fmt::format(L"expired line: {}[{}]", _source_id, _source_sub_id));
 
 		disconnected();
-
-		return true;
 	}
 
-	bool messaging_session::send_auto_echo(void)
+	void messaging_session::send_auto_echo(void)
 	{
 		if (!_auto_echo)
 		{
-			return true;
+			return;
 		}
 
 		for(unsigned short index = 0; index < _auto_echo_interval_seconds; ++index)
 		{
 			if (_confirm != connection_conditions::confirmed)
 			{
-				return true;
+				return;
 			}
 
 			this_thread::sleep_for(chrono::seconds(1));
@@ -429,9 +427,10 @@ namespace network
 
 		echo();
 
-		_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_session::send_auto_echo, this)));
-		
-		return true;
+		if (_thread_pool != nullptr)
+		{
+			_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_session::send_auto_echo, this)));
+		}
 	}
 
 	void messaging_session::send_packet(const vector<uint8_t>& data)
@@ -638,7 +637,10 @@ namespace network
 			auto result = async(launch::async, _connection, get_ptr(), true);
 		}
 
-		_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_session::send_auto_echo, this)));
+		if (_thread_pool != nullptr)
+		{
+			_thread_pool->push(make_shared<job>(priorities::low, bind(&messaging_session::send_auto_echo, this)));
+		}
 	}
 
 	void messaging_session::request_files(shared_ptr<container::value_container> message)

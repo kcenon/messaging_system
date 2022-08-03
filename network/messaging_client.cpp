@@ -553,6 +553,11 @@ namespace network
 			return;
 		}
 
+		if (_thread_pool == nullptr)
+		{
+			return;
+		}
+
 		if (_confirm != connection_conditions::confirmed)
 		{
 			logger::handle().write(logging_level::error, L"cannot send data on not confirmed line");
@@ -572,7 +577,7 @@ namespace network
 
 		message << make_shared<bool_value>(L"response", true);
 
-		_thread_pool->push(make_shared<job>(priorities::top, message->serialize_array(), bind(&messaging_client::send_packet, this, placeholders::_1)));
+		send_packet_job(converter::to_array(container->serialize()));
 	}
 
 	void messaging_client::connection_notification(const bool& condition)

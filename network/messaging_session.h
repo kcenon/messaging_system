@@ -96,8 +96,8 @@ namespace network
 
 	protected:
 		bool contained_snipping_target(const wstring& snipping_target);
-		bool check_confirm_condition(void);
-		bool send_auto_echo(void);
+		void check_confirm_condition(void);
+		void send_auto_echo(void);
 		
 	private:
 		void send_packet(const vector<uint8_t>& data) override;
