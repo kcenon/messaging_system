@@ -577,7 +577,7 @@ namespace network
 
 		message << make_shared<bool_value>(L"response", true);
 
-		send_packet_job(converter::to_array(container->serialize()));
+		send_packet_job(converter::to_array(message->serialize()));
 	}
 
 	void messaging_client::connection_notification(const bool& condition)
