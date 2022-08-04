@@ -188,8 +188,10 @@ namespace network
 		_compress_block_size = compress_block_size;
 		_drop_connection_time = drop_connection_time;
 		_possible_session_types = possible_session_types;
-		_thread_pool = make_shared<threads::thread_pool>(L"messaging_session");
 
+		_confirm = connection_conditions::waiting;
+
+		_thread_pool = make_shared<threads::thread_pool>(L"messaging_session");
 		_thread_pool->append(make_shared<thread_worker>(priorities::top), true);
 		for (unsigned short high = 0; high < high_priority; ++high)
 		{
@@ -214,6 +216,8 @@ namespace network
 
 	void messaging_session::stop(void)
 	{
+		_confirm = connection_conditions::expired;
+
 		if (_thread_pool != nullptr)
 		{
 			_thread_pool->stop();
@@ -397,7 +401,7 @@ namespace network
 	{
 		this_thread::sleep_for(chrono::seconds(1));
 
-		if (_confirm == connection_conditions::confirmed)
+		if (_confirm != connection_conditions::waiting)
 		{
 			return;
 		}
