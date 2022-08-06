@@ -524,6 +524,7 @@ namespace network
 				container->set_message_type(CANNOT_SEND_MESSAGE);
 				container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
 				container << make_shared<container::string_value>(L"message_type", message->message_type());
+				container << make_shared<container::string_value>(L"message", fmt::format(L"cannot send message to {}", message->target_id()));
 				container << make_shared<container::bool_value>(L"response", false);
 
     			send(container);
