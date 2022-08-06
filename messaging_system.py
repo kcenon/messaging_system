@@ -102,6 +102,9 @@ class container:
         self._parse_data(re.search(r'@data=[\s?]*\{[\s?]*(.*?)[\s?]*\};', message).group(), parsing)
 
     def append(self, child_value):
+        if child_value.type_string == '0':
+            return
+        
         self.deserialized = True
         child_value.parent = None
         self.values.append(child_value)
@@ -123,6 +126,9 @@ class container:
                 continue
             
             result.append(current)
+            
+        if len(result) == 0:
+            result.append(value(name_string, '0', ''))
             
         return result
         
@@ -197,6 +203,9 @@ class container:
             
         previous_value = None
         for current_value in value_list:
+            if current_value.type_string == '0':
+                continue
+                
             if not previous_value:
                 self.append(current_value)
                 if current_value.type_string == 'e':
