@@ -57,8 +57,8 @@ namespace network
 		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), _encrypt_mode(false),
 		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _compress_mode(false),
 		_high_priority(8), _normal_priority(8), _low_priority(8), _session_limit_count(0), _possible_session_types({ session_types::message_line }),
-		_start_code_value(start_code_value), _end_code_value(end_code_value), _compress_block_size(1024), _use_message_response(false),
-		_drop_connection_time(10)
+		_start_code_value(start_code_value), _end_code_value(end_code_value), _compress_block_size(1024), _use_message_response(true),
+		_drop_connection_time(5)
 	{
 	}
 
@@ -503,43 +503,46 @@ namespace network
 			return;
 		}
 
-		if (_received_message != nullptr)
+		auto target_id = message->target_id();
+		if (target_id == _source_id)
 		{
-			auto result = async(launch::async, _received_message, message);
+			if (_received_message != nullptr)
+			{
+				auto result = async(launch::async, _received_message, message);
+			}
 
 			return;
 		}
+		
+		logger::handle().write(logging_level::sequence,
+			fmt::format(L"attempt to transfer message to {}", 
+				target_id));
 
-		auto target_id = message->target_id();
-
-		if (target_id != _source_id)
+		bool sent = send(message);
+		if (!sent)
 		{
 			logger::handle().write(logging_level::sequence,
-				fmt::format(L"attempt to transfer message to {}", 
+				fmt::format(L"there is no target id on server: {}", 
 					target_id));
+		}
 
-			bool sent = send(message);
-			if (!sent)
-			{
-				logger::handle().write(logging_level::sequence,
-					fmt::format(L"there is no target id on server: {}", 
-						target_id));
-			}
+		if (_use_message_response)
+		{
+			logger::handle().write(logging_level::sequence,
+				fmt::format(L"attempt to response message to {}", 
+					message->source_id()));
 
-			if (_use_message_response)
-			{
-				shared_ptr<container::value_container> container = message->copy(false);
-				container->swap_header();
-				container->set_message_type(MESSAGE_SENDING_RESPONSE);
-				container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
-				container << make_shared<container::string_value>(L"message_type", message->message_type());
-				container << make_shared<container::string_value>(L"message", fmt::format(L"attempt to send message to {}", message->target_id()));
-				container << make_shared<container::bool_value>(L"response", sent);
+			shared_ptr<container::value_container> container = message->copy(false);
+			container->swap_header();
+			container->set_message_type(MESSAGE_SENDING_RESPONSE);
+			container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
+			container << make_shared<container::string_value>(L"requestor_id", message->get_value(L"requestor_id")->to_string());
+			container << make_shared<container::string_value>(L"requestor_sub_id", message->get_value(L"requestor_sub_id")->to_string());
+			container << make_shared<container::string_value>(L"message_type", message->message_type());
+			container << make_shared<container::string_value>(L"message", fmt::format(L"attempt to send message to {}", message->target_id()));
+			container << make_shared<container::bool_value>(L"response", sent);
 
-				send(container);
-			}
-
-			return;
+			send(container);
 		}
 	}
 

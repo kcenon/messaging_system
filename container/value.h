@@ -101,18 +101,18 @@ namespace container
 		const wstring serialize(void);
 
 	public:
-		virtual bool to_boolean(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual short to_short(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual unsigned short to_ushort(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual int to_int(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual unsigned int to_uint(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual long to_long(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual unsigned long to_ulong(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual long long to_llong(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual unsigned long long to_ullong(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual float to_float(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual double to_double(void) const { throw exception(logic_error("Not implemented yet!")); }
-		virtual wstring to_string(const bool& original = true) const { throw exception(logic_error("Not implemented yet!")); }
+		virtual bool to_boolean(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return false; }
+		virtual short to_short(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return 0; }
+		virtual unsigned short to_ushort(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return 0; }
+		virtual int to_int(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return 0; }
+		virtual unsigned int to_uint(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return 0; }
+		virtual long to_long(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return 0; }
+		virtual unsigned long to_ulong(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return 0; }
+		virtual long long to_llong(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return 0; }
+		virtual unsigned long long to_ullong(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return 0; }
+		virtual float to_float(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return 0; }
+		virtual double to_double(void) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return 0; }
+		virtual wstring to_string(const bool& original = true) const { if (_type == value_types::null_value) throw exception(logic_error("Not implemented yet!")); else return L""; }
 
 	public:
 		shared_ptr<value> operator[](const wstring& key);
