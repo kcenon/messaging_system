@@ -55,4 +55,4 @@ constexpr auto TARGET = L"target";
 constexpr auto GATEWAY_SOURCE_ID = L"gateway_source_id";
 constexpr auto GATEWAY_SOURCE_SUB_ID = L"gateway_source_sub_id";
 constexpr auto CONNECTION_KEY = L"connection_key";
-constexpr auto CANNOT_SEND_MESSAGE = L"cannot_send_message";
+constexpr auto MESSAGE_SENDING_RESPONSE = L"message_sending_response";

@@ -399,7 +399,15 @@ namespace network
 
 	void messaging_session::check_confirm_condition(void)
 	{
-		this_thread::sleep_for(chrono::seconds(1));
+		for(unsigned short index = 0; index < _drop_connection_time; ++index)
+		{
+			if (_confirm != connection_conditions::waiting)
+			{
+				return;
+			}
+
+			this_thread::sleep_for(chrono::seconds(1));
+		}
 
 		if (_confirm != connection_conditions::waiting)
 		{

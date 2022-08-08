@@ -64,6 +64,7 @@ namespace network
 		void set_encrypt_mode(const bool& encrypt_mode);
 		void set_compress_mode(const bool& compress_mode);
 		void set_compress_block_size(const unsigned short& compress_block_size);
+		void set_use_message_response(const bool& use_message_response);
 		void set_drop_connection_time(const unsigned short& drop_connection_time);
 		void set_connection_key(const wstring& connection_key);
 		void set_acceptable_target_ids(const vector<wstring>& acceptable_target_ids);
@@ -109,6 +110,7 @@ namespace network
 	private:
 		bool _encrypt_mode;
 		bool _compress_mode;
+		bool _use_message_response;
 		unsigned short _compress_block_size;
 		unsigned short _drop_connection_time;
 		wstring _source_id;

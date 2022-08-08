@@ -57,7 +57,7 @@ namespace network
 		: _io_context(nullptr), _acceptor(nullptr), _source_id(source_id), _connection_key(L"connection_key"), _encrypt_mode(false),
 		_received_file(nullptr), _received_data(nullptr), _connection(nullptr), _received_message(nullptr), _compress_mode(false),
 		_high_priority(8), _normal_priority(8), _low_priority(8), _session_limit_count(0), _possible_session_types({ session_types::message_line }),
-		_start_code_value(start_code_value), _end_code_value(end_code_value), _compress_block_size(1024),
+		_start_code_value(start_code_value), _end_code_value(end_code_value), _compress_block_size(1024), _use_message_response(false),
 		_drop_connection_time(10)
 	{
 	}
@@ -85,6 +85,11 @@ namespace network
 	void messaging_server::set_compress_block_size(const unsigned short& compress_block_size)
 	{
 		_compress_block_size = compress_block_size;
+	}
+
+	void messaging_server::set_use_message_response(const bool& use_message_response)
+	{
+		_use_message_response = use_message_response;
 	}
 
 	void messaging_server::set_drop_connection_time(const unsigned short& drop_connection_time)
@@ -513,21 +518,25 @@ namespace network
 				fmt::format(L"attempt to transfer message to {}", 
 					target_id));
 
-			if (!send(message))
+			bool sent = send(message);
+			if (!sent)
 			{
 				logger::handle().write(logging_level::sequence,
 					fmt::format(L"there is no target id on server: {}", 
 						target_id));
+			}
 
+			if (_use_message_response)
+			{
 				shared_ptr<container::value_container> container = message->copy(false);
 				container->swap_header();
-				container->set_message_type(CANNOT_SEND_MESSAGE);
+				container->set_message_type(MESSAGE_SENDING_RESPONSE);
 				container << make_shared<container::string_value>(L"indication_id", message->get_value(L"indication_id")->to_string());
 				container << make_shared<container::string_value>(L"message_type", message->message_type());
-				container << make_shared<container::string_value>(L"message", fmt::format(L"cannot send message to {}", message->target_id()));
-				container << make_shared<container::bool_value>(L"response", false);
+				container << make_shared<container::string_value>(L"message", fmt::format(L"attempt to send message to {}", message->target_id()));
+				container << make_shared<container::bool_value>(L"response", sent);
 
-    			send(container);
+				send(container);
 			}
 
 			return;
