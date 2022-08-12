@@ -568,7 +568,7 @@ namespace network
 		vector<shared_ptr<value>> response = (*message)[L"response"];
 		if (!response.empty())
 		{
-			logger::handle().write(logging_level::information, fmt::format(L"received echo: {}", message->serialize()));
+			logger::handle().write(logging_level::sequence, fmt::format(L"received echo: {}", response[0]->to_boolean()));
 
 			return;
 		}
