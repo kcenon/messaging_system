@@ -1,7 +1,6 @@
 #!/bin/bash
 if [ "$(uname)" == "Darwin" ]; then
-    brew install pkg-config
-    brew install autoconf
+    brew install pkg-config autoconf cmake
 elif [ "$(uname)" == "Linux" ]; then
     apt update
     apt upgrade -y
@@ -32,19 +31,10 @@ fi
 
 cd vcpkg
 
-if git checkout master &&
-    git fetch origin master &&
-    [ $(git rev-list HEAD ^origin --count) != 0 ] &&
-    git merge origin/master
-then
-    ./bootstrap-vcpkg.sh
-    ./vcpkg upgrade --no-dry-run
-else
-    if [ ! -f "./vcpkg" ]; then
-        ./bootstrap-vcpkg.sh
-        ./vcpkg integrate install
-        ./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest
-    fi
-fi
+git pull
+./bootstrap-vcpkg.sh
+./vcpkg integrate install
+./vcpkg upgrade --no-dry-run
+./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest
 
 cd ..
