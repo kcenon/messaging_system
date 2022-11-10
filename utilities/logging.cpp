@@ -53,7 +53,7 @@ namespace logging
 	using namespace datetime_handler;
 
 	logger::logger(void) : _store_log_root_path(L""), _store_log_file_name(L""), _store_log_extention(L"")
-		, _places_of_decimal(7), _locale(locale("")), _backup_notification(nullptr)
+		, _locale(locale("")), _backup_notification(nullptr)
 	{
 		_log_datas.insert({ logging_level::exception, bind(&logger::exception_log, this, placeholders::_1, placeholders::_2) });
 		_log_datas.insert({ logging_level::error, bind(&logger::error_log, this, placeholders::_1, placeholders::_2) });
@@ -68,7 +68,7 @@ namespace logging
 	}
 
 	bool logger::start(const wstring& store_log_file_name, locale target_locale, const wstring& store_log_extention, 
-		const wstring& store_log_root_path, const bool& append_date_on_file_name, const unsigned short& places_of_decimal)
+		const wstring& store_log_root_path, const bool& append_date_on_file_name)
 	{
 		stop();
 
@@ -76,7 +76,6 @@ namespace logging
 		_store_log_extention = store_log_extention;
 		_store_log_root_path = store_log_root_path;
 		_append_date_on_file_name.store(append_date_on_file_name);
-		_places_of_decimal = places_of_decimal;
 		_locale = target_locale;
 
 		wcout.imbue(_locale);
@@ -325,7 +324,7 @@ namespace logging
 		}
 
 		chrono::system_clock::time_point current = chrono::system_clock::now();
-		auto time_string = datetime::time(current, true, _places_of_decimal);
+		auto time_string = datetime::time(current, true);
 		if (_write_date.load())
 		{
 			wstring temp = fmt::format(L"[{:%Y-%m-%d} {}][{}]\n", fmt::localtime(current), time_string, flag);
@@ -422,7 +421,7 @@ namespace logging
 	wstring logger::make_log_string(const logging_level& target_level, const chrono::system_clock::time_point& time, const wstring& data, const wstring& type, 
 		const wstring& time_color, const wstring& type_color)
 	{
-		auto time_string = datetime::time(time, true, _places_of_decimal);
+		auto time_string = datetime::time(time, true);
 		if (_write_date.load())
 		{
 			if (_logging_style < logging_styles::file_only)

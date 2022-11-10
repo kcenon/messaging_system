@@ -65,7 +65,7 @@ namespace logging
 	public:
 		bool start(const wstring& store_log_file_name = L"log", locale target_locale = locale(""), 
 			const wstring& store_log_extention = L"log", const wstring& store_log_root_path = L"",
-			const bool& append_date_on_file_name = true, const unsigned short& places_of_decimal = 7);
+			const bool& append_date_on_file_name = true);
 		bool stop(void);
 
 	public:
@@ -106,7 +106,6 @@ namespace logging
 		wstring _store_log_file_name;
 		wstring _store_log_extention;
 		logging_styles _logging_style;
-		unsigned short _places_of_decimal;
 		vector<logging_level> _write_console_levels;
 		locale _locale;
 
