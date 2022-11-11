@@ -40,7 +40,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <ctime>
 #include <iomanip>
-#include <sstream>
 
 namespace datetime_handler
 {
@@ -56,7 +55,7 @@ namespace datetime_handler
 	wstring datetime::time(const chrono::system_clock::time_point& time, const bool& use_seperator)
 	{
 		auto in_time_t = chrono::system_clock::to_time_t(time);
-		
+
 		wstring result;
 
 		// header
