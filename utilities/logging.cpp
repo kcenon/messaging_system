@@ -194,7 +194,6 @@ namespace logging
 		set_log_flag(L"START");
 
 		wstring source = L"";
-		wstringstream string_buffer;
 		while (!_thread_stop.load() || !_buffer.empty())
 		{
 			unique_lock<mutex> unique(_mutex);
@@ -267,19 +266,19 @@ namespace logging
 					continue;
 				}
 
-				string_buffer << iterator->second(get<1>(buffer), get<2>(buffer));
+				fmt::format_to(back_inserter(source), L"{}", iterator->second(get<1>(buffer), get<2>(buffer)));
 			}
 			buffers.clear();
 
 			if (_logging_style >= logging_styles::file_and_console)
 			{
 #ifdef _WIN32
-				stream << string_buffer.str();
+				stream << source;
 #else
-				stream << converter::to_string(string_buffer.str());
+				stream << converter::to_string(source);
 #endif
 			}
-			string_buffer.str(L"");
+			source = L"";
 
 			if (_logging_style >= logging_styles::file_and_console)
 			{

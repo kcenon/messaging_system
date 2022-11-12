@@ -15,7 +15,8 @@
         "exception": "cpp",
         "__locale": "cpp",
         "optional": "cpp",
-        "future": "cpp"
+        "future": "cpp",
+        "sstream": "cpp"
     },
     "files.eol": "\n"
 }
