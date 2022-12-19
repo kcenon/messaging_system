@@ -103,8 +103,8 @@ namespace network
 		void connect_condition(shared_ptr<messaging_session> target, const bool& condition);
 
 	private:
+		vector<shared_ptr<messaging_session>> current_sessions(void);
 		void received_message(shared_ptr<container::value_container> message);
-
 		void received_binary(const wstring& source_id, const wstring& source_sub_id, const wstring& target_id, const wstring& target_sub_id, const vector<uint8_t>& data);
 
 	private:

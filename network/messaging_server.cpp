@@ -305,7 +305,8 @@ namespace network
 
 	void messaging_server::echo(void)
 	{
-		for (auto& session : _sessions)
+		auto sessions = current_sessions();
+		for (auto& session : sessions)
 		{
 			if (session == nullptr)
 			{
@@ -329,7 +330,8 @@ namespace network
 		}
 
 		bool result = false;
-		for (auto& session : _sessions)
+		auto sessions = current_sessions();
+		for (auto& session : sessions)
 		{
 			if (session == nullptr)
 			{
@@ -364,7 +366,8 @@ namespace network
 			return;
 		}
 
-		for (auto& session : _sessions)
+		auto sessions = current_sessions();
+		for (auto& session : sessions)
 		{
 			if (session == nullptr)
 			{
@@ -387,7 +390,8 @@ namespace network
 			return;
 		}
 
-		for (auto& session : _sessions)
+		auto sessions = current_sessions();
+		for (auto& session : sessions)
 		{
 			if (session == nullptr)
 			{
@@ -410,7 +414,8 @@ namespace network
 			return;
 		}
 
-		for (auto& session : _sessions)
+		auto sessions = current_sessions();
+		for (auto& session : sessions)
 		{
 			if (session == nullptr)
 			{
@@ -494,6 +499,15 @@ namespace network
 		{
 			auto result = async(launch::async, _connection, target->target_id(), target->target_sub_id(), condition);
 		}
+	}
+
+	vector<shared_ptr<messaging_session>> messaging_server::current_sessions(void)
+	{
+		vector<shared_ptr<messaging_session>> result;
+
+		result.assign(_sessions.begin(), _sessions.end());
+
+		return result;
 	}
 
 	void messaging_server::received_message(shared_ptr<container::value_container> message)
