@@ -64,110 +64,110 @@ namespace argument_parser
 		_arguments = parse(argc, argv);
 	}
 
-	wstring argument_manager::to_string(const wstring& key)
+	optional<wstring> argument_manager::to_string(const wstring& key)
 	{
 		auto target = _arguments.find(key);
 		if(target == _arguments.end())
 		{
-			return L"";
+			return nullopt;
 		}
 
 		return target->second;
 	}
 
-	bool argument_manager::to_bool(const wstring& key)
+	optional<bool> argument_manager::to_bool(const wstring& key)
 	{
 		auto target = to_string(key);
-		if (target.empty())
+		if (target == nullopt)
 		{
-			return false;
+			return nullopt;
 		}
 
-		auto temp = target;
+		auto temp = *target;
 		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
 		return temp.compare(L"true") == 0;
 	}
 
-	short argument_manager::to_short(const wstring& key)
+	optional<short> argument_manager::to_short(const wstring& key)
 	{
 		auto target = to_string(key);
-		if (target.empty())
+		if (target == nullopt)
 		{
-			return 0;
+			return nullopt;
 		}
 
-		return (short)atoi(converter::to_string(target).c_str());
+		return (short)atoi(converter::to_string(*target).c_str());
 	}
 
-	unsigned short argument_manager::to_ushort(const wstring& key)
+	optional<unsigned short> argument_manager::to_ushort(const wstring& key)
 	{
 		auto target = to_string(key);
-		if (target.empty())
+		if (target == nullopt)
 		{
-			return 0;
+			return nullopt;
 		}
 
-		return (unsigned short)atoi(converter::to_string(target).c_str());
+		return (unsigned short)atoi(converter::to_string(*target).c_str());
 	}
 
-	int argument_manager::to_int(const wstring& key)
+	optional<int> argument_manager::to_int(const wstring& key)
 	{
 		auto target = to_string(key);
-		if (target.empty())
+		if (target == nullopt)
 		{
-			return 0;
+			return nullopt;
 		}
 
-		return (int)atoi(converter::to_string(target).c_str());
+		return (int)atoi(converter::to_string(*target).c_str());
 	}
 
-	unsigned int argument_manager::to_uint(const wstring& key)
+	optional<unsigned int> argument_manager::to_uint(const wstring& key)
 	{
 		auto target = to_string(key);
-		if (target.empty())
+		if (target == nullopt)
 		{
-			return 0;
+			return nullopt;
 		}
 
-		return (unsigned int)atoi(converter::to_string(target).c_str());
+		return (unsigned int)atoi(converter::to_string(*target).c_str());
 	}
 
 #ifdef _WIN32
-	long long argument_manager::to_llong(const wstring& key)
+	optional<long long> argument_manager::to_llong(const wstring& key)
 #else
-	long argument_manager::to_long(const wstring& key)
+	optional<long> argument_manager::to_long(const wstring& key)
 #endif
 	{
 		auto target = to_string(key);
-		if (target.empty())
+		if (target == nullopt)
 		{
-			return 0;
+			return nullopt;
 		}
 
 #ifdef _WIN32
-		return (long long)atoll(converter::to_string(target).c_str());
+		return (long long)atoll(converter::to_string(*target).c_str());
 #else
-		return (long)atol(converter::to_string(target).c_str());
+		return (long)atol(converter::to_string(*target).c_str());
 #endif
 	}
 
 #ifdef _WIN32
-	unsigned long long argument_manager::to_ullong(const wstring& key)
+	optional<unsigned long long> argument_manager::to_ullong(const wstring& key)
 #else
-	unsigned long argument_manager::to_ulong(const wstring& key)
+	optional<unsigned long> argument_manager::to_ulong(const wstring& key)
 #endif
 	{
 		auto target = to_string(key);
-		if (target.empty())
+		if (target == nullopt)
 		{
-			return 0;
+			return nullopt;
 		}
 
 #ifdef _WIN32
-		return (unsigned long long)atoll(converter::to_string(target).c_str());
+		return (unsigned long long)atoll(converter::to_string(*target).c_str());
 #else
-		return (unsigned long)atol(converter::to_string(target).c_str());
+		return (unsigned long)atol(converter::to_string(*target).c_str());
 #endif
 	}
 

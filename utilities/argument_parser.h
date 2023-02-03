@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <map>
 #include <string>
 #include <vector>
+#include <optional>
 
 using namespace std;
 
@@ -50,20 +51,20 @@ namespace argument_parser
 		argument_manager(int argc, wchar_t* argv[]);
 
 	public:
-		wstring to_string(const wstring& key);
+		optional<wstring> to_string(const wstring& key);
 
 	public:
-		bool to_bool(const wstring& key);
-		short to_short(const wstring& key);
-		unsigned short to_ushort(const wstring& key);
-		int to_int(const wstring& key);
-		unsigned int to_uint(const wstring& key);
+		optional<bool> to_bool(const wstring& key);
+		optional<short> to_short(const wstring& key);
+		optional<unsigned short> to_ushort(const wstring& key);
+		optional<int> to_int(const wstring& key);
+		optional<unsigned int> to_uint(const wstring& key);
 #ifdef _WIN32
-		long long to_llong(const wstring& key);
-		unsigned long long to_ullong(const wstring& key);
+		optional<long long> to_llong(const wstring& key);
+		optional<unsigned long long> to_ullong(const wstring& key);
 #else
-		long to_long(const wstring& key);
-		unsigned long to_ulong(const wstring& key);
+		optional<long> to_long(const wstring& key);
+		optional<unsigned long> to_ulong(const wstring& key);
 #endif
 
 	protected:

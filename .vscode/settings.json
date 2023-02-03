@@ -27,7 +27,8 @@
         "ratio": "cpp",
         "system_error": "cpp",
         "type_traits": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "any": "cpp"
     },
     "files.eol": "\n"
 }
