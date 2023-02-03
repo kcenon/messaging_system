@@ -16,7 +16,18 @@
         "__locale": "cpp",
         "optional": "cpp",
         "future": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "array": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp",
+        "ratio": "cpp",
+        "system_error": "cpp",
+        "type_traits": "cpp",
+        "variant": "cpp"
     },
     "files.eol": "\n"
 }

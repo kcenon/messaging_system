@@ -22,7 +22,7 @@ TEST(argument, test)
     argument_manager manager1(3, test1);
     argument_manager manager2(3, test2);
 
-    EXPECT_EQ(manager1.get(L"--version"), manager2.get(L"--version"));
+    EXPECT_EQ(manager1.to_string(L"--version"), manager2.to_string(L"--version"));
 }
 
 TEST(compressor, test)

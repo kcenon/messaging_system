@@ -34,6 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "converting.h"
 
+#include <algorithm>
+
 using namespace converting;
 
 namespace argument_parser
@@ -62,7 +64,7 @@ namespace argument_parser
 		_arguments = parse(argc, argv);
 	}
 
-	wstring argument_manager::get(const wstring& key)
+	wstring argument_manager::to_string(const wstring& key)
 	{
 		auto target = _arguments.find(key);
 		if(target == _arguments.end())
@@ -71,6 +73,102 @@ namespace argument_parser
 		}
 
 		return target->second;
+	}
+
+	bool argument_manager::to_bool(const wstring& key)
+	{
+		auto target = to_string(key);
+		if (target.empty())
+		{
+			return false;
+		}
+
+		auto temp = target;
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
+		return temp.compare(L"true") == 0;
+	}
+
+	short argument_manager::to_short(const wstring& key)
+	{
+		auto target = to_string(key);
+		if (target.empty())
+		{
+			return 0;
+		}
+
+		return (short)atoi(converter::to_string(target).c_str());
+	}
+
+	unsigned short argument_manager::to_ushort(const wstring& key)
+	{
+		auto target = to_string(key);
+		if (target.empty())
+		{
+			return 0;
+		}
+
+		return (unsigned short)atoi(converter::to_string(target).c_str());
+	}
+
+	int argument_manager::to_int(const wstring& key)
+	{
+		auto target = to_string(key);
+		if (target.empty())
+		{
+			return 0;
+		}
+
+		return (int)atoi(converter::to_string(target).c_str());
+	}
+
+	unsigned int argument_manager::to_uint(const wstring& key)
+	{
+		auto target = to_string(key);
+		if (target.empty())
+		{
+			return 0;
+		}
+
+		return (unsigned int)atoi(converter::to_string(target).c_str());
+	}
+
+#ifdef _WIN32
+	long long argument_manager::to_llong(const wstring& key)
+#else
+	long argument_manager::to_long(const wstring& key)
+#endif
+	{
+		auto target = to_string(key);
+		if (target.empty())
+		{
+			return 0;
+		}
+
+#ifdef _WIN32
+		return (long long)atoll(converter::to_string(target).c_str());
+#else
+		return (long)atol(converter::to_string(target).c_str());
+#endif
+	}
+
+#ifdef _WIN32
+	unsigned long long argument_manager::to_ullong(const wstring& key)
+#else
+	unsigned long argument_manager::to_ulong(const wstring& key)
+#endif
+	{
+		auto target = to_string(key);
+		if (target.empty())
+		{
+			return 0;
+		}
+
+#ifdef _WIN32
+		return (unsigned long long)atoll(converter::to_string(target).c_str());
+#else
+		return (unsigned long)atol(converter::to_string(target).c_str());
+#endif
 	}
 
 	map<wstring, wstring> argument_manager::parse(int argc, char* argv[])

@@ -50,7 +50,21 @@ namespace argument_parser
 		argument_manager(int argc, wchar_t* argv[]);
 
 	public:
-		wstring get(const wstring& key);
+		wstring to_string(const wstring& key);
+
+	public:
+		bool to_bool(const wstring& key);
+		short to_short(const wstring& key);
+		unsigned short to_ushort(const wstring& key);
+		int to_int(const wstring& key);
+		unsigned int to_uint(const wstring& key);
+#ifdef _WIN32
+		long long to_llong(const wstring& key);
+		unsigned long long to_ullong(const wstring& key);
+#else
+		long to_long(const wstring& key);
+		unsigned long to_ulong(const wstring& key);
+#endif
 
 	protected:
 		map<wstring, wstring> parse(int argc, char* argv[]);
