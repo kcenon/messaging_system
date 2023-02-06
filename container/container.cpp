@@ -215,6 +215,8 @@ namespace container
 
 			_units.push_back(target_value);
 			target_value->set_parent(nullptr);
+
+			_parsed_data = false;
 		}
 	}
 
@@ -285,6 +287,8 @@ namespace container
 		_units.push_back(target_value);
 		target_value->set_parent(nullptr);
 
+		_parsed_data = false;
+
 		return target_value;
 	}
 
@@ -310,6 +314,8 @@ namespace container
 			}
 
 			_units.erase(target);
+
+			_parsed_data = false;
 		}
 	}
 
@@ -333,6 +339,8 @@ namespace container
 		}
 
 		_units.erase(target);
+
+		_parsed_data = false;
 	}
 
 	vector<shared_ptr<value>> value_container::value_array(const wstring& target_name)
