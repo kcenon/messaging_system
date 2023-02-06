@@ -64,7 +64,7 @@ namespace container
 		void set_source(const wstring& source_id, const wstring& source_sub_id);
 		void set_target(const wstring& target_id, const wstring& target_sub_id = L"");
 		void set_message_type(const wstring& message_type);
-		void set_units(const vector<shared_ptr<value>>& target_values);
+		void set_units(const vector<shared_ptr<value>>& target_values, const bool& update_immediately = false);
 
 	public:
 		void swap_header(void);
@@ -79,10 +79,10 @@ namespace container
 		wstring message_type(void) const;
 
 	public:
-		shared_ptr<value> add(const value& target_value);
-		shared_ptr<value> add(shared_ptr<value> target_value);		
-		void remove(const wstring& target_name);
-		void remove(shared_ptr<value> target_value);
+		shared_ptr<value> add(const value& target_value, const bool& update_immediately = false);
+		shared_ptr<value> add(shared_ptr<value> target_value, const bool& update_immediately = false);		
+		void remove(const wstring& target_name, const bool& update_immediately = false);
+		void remove(shared_ptr<value> target_value, const bool& update_immediately = false);
 		vector<shared_ptr<value>> value_array(const wstring& target_name);
 		shared_ptr<value> get_value(const wstring& target_name, const unsigned int& index = 0);
 
@@ -146,6 +146,7 @@ namespace container
 
 	private:
 		bool _parsed_data;
+		bool _changed_data;
 		wstring _data_string;
 
 	private:

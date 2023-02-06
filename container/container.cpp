@@ -74,7 +74,7 @@ namespace container
 
 	value_container::value_container(void)
 		: _source_id(L""), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), _message_type(L"data_container"), _version(L"1.0.0.0"),
-		_parsed_data(true), _data_string(L"")
+		_parsed_data(true), _data_string(L"@data={};"), _changed_data(false)
 	{
 		_data_type_map.insert({ value_types::bool_value, bind(&value_container::set_boolean, this, placeholders::_1, placeholders::_2) });
 		_data_type_map.insert({ value_types::short_value, bind(&value_container::set_short, this, placeholders::_1, placeholders::_2) });
@@ -192,7 +192,7 @@ namespace container
 		return _message_type;
 	}
 
-	void value_container::set_units(const vector<shared_ptr<value>>& target_values)
+	void value_container::set_units(const vector<shared_ptr<value>>& target_values, const bool& update_immediately)
 	{
 		if (!_parsed_data)
 		{
@@ -215,8 +215,12 @@ namespace container
 
 			_units.push_back(target_value);
 			target_value->set_parent(nullptr);
+		}
 
-			_parsed_data = false;
+		_changed_data = !update_immediately;
+		if(update_immediately)
+		{
+			_data_string = datas();
 		}
 	}
 
@@ -234,7 +238,8 @@ namespace container
 	void value_container::clear_value(void)
 	{
 		_parsed_data = true;
-		_data_string = L"";
+		_changed_data = false;
+		_data_string = L"@data={};";
 		_units.clear();
 	}
 
@@ -254,18 +259,18 @@ namespace container
 		return new_container;
 	}
 
-	shared_ptr<value> value_container::add(const value& target_value)
+	shared_ptr<value> value_container::add(const value& target_value, const bool& update_immediately)
 	{
 		auto target = _data_type_map.find(target_value.type());
 		if (target == _data_type_map.end())
 		{
-			return add(make_shared<value>(target_value.name(), nullptr, 0, value_types::null_value));
+			return add(make_shared<value>(target_value.name(), nullptr, 0, value_types::null_value), update_immediately);
 		}
 		
-		return add(target->second(target_value.name(), target_value.to_string()));
+		return add(target->second(target_value.name(), target_value.to_string()), update_immediately);
 	}
 
-	shared_ptr<value> value_container::add(shared_ptr<value> target_value)
+	shared_ptr<value> value_container::add(shared_ptr<value> target_value, const bool& update_immediately)
 	{
 		if (!_parsed_data)
 		{
@@ -287,12 +292,16 @@ namespace container
 		_units.push_back(target_value);
 		target_value->set_parent(nullptr);
 
-		_parsed_data = false;
+		_changed_data = !update_immediately;
+		if(update_immediately)
+		{
+			_data_string = datas();
+		}
 
 		return target_value;
 	}
 
-	void value_container::remove(const wstring& target_name)
+	void value_container::remove(const wstring& target_name, const bool& update_immediately)
 	{
 		if (!_parsed_data)
 		{
@@ -314,12 +323,16 @@ namespace container
 			}
 
 			_units.erase(target);
+		}
 
-			_parsed_data = false;
+		_changed_data = !update_immediately;
+		if(update_immediately)
+		{
+			_data_string = datas();
 		}
 	}
 
-	void value_container::remove(shared_ptr<value> target_value)
+	void value_container::remove(shared_ptr<value> target_value, const bool& update_immediately)
 	{
 		if (!_parsed_data)
 		{
@@ -340,7 +353,11 @@ namespace container
 
 		_units.erase(target);
 
-		_parsed_data = false;
+		_changed_data = !update_immediately;
+		if(update_immediately)
+		{
+			_data_string = datas();
+		}
 	}
 
 	vector<shared_ptr<value>> value_container::value_array(const wstring& target_name)
@@ -667,32 +684,32 @@ namespace container
 			_units.clear();
 		}
 
+		_changed_data = false;
+
 		wregex full_condition(L"@data=[\\s?]*\\{[\\s?]*(.*?)[\\s?]*\\};");
 		wsregex_iterator full_iter(data.begin(), data.end(), full_condition);
 		wsregex_iterator full_end;
 		if (full_iter == full_end)
 		{
-			_data_string = L"";
+			_data_string = L"@data={};";
 			_parsed_data = true;
 
 			return false;
 		}
 
-		wstring regex_temp = (*full_iter)[0].str();
+		_data_string = (*full_iter)[0].str();
 		
 		if (parse_only_header)
 		{
-			_data_string = regex_temp;
 			_parsed_data = false;
 
 			return true;
 		}
 
-		_data_string = L"";
 		_parsed_data = true;
 
 		wregex regex_condition(L"\\[(\\w+),[\\s?]*(\\w+),[\\s?]*(.*?)\\];");
-		wsregex_iterator start(regex_temp.begin(), regex_temp.end(), regex_condition);
+		wsregex_iterator start(_data_string.begin(), _data_string.end(), regex_condition);
 		wsregex_iterator end;
 
 		vector<shared_ptr<value>> temp_list;
