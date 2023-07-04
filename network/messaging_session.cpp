@@ -70,7 +70,7 @@ namespace network
 		: data_handling(start_code_value, end_code_value), _bridge_line(false),
 		_source_id(source_id), _source_sub_id(L""), _target_id(L""), _target_sub_id(L""), 
 		_connection_key(connection_key), _connection(nullptr), _kill_code(false),
-		_socket(make_shared<asio::ip::tcp::socket>(move(socket))), _auto_echo_interval_seconds(1), _auto_echo(false)
+		_socket(make_shared<asio::ip::tcp::socket>(std::move(socket))), _auto_echo_interval_seconds(1), _auto_echo(false)
 	{
 		_socket->set_option(asio::ip::tcp::no_delay(true));
 		_socket->set_option(asio::socket_base::keep_alive(true));

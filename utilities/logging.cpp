@@ -199,14 +199,14 @@ namespace logging
 			unique_lock<mutex> unique(_mutex);
 			_condition.wait(unique, [this] { return _thread_stop.load() || !_buffer.empty(); });
 
-			auto buffers = move(_buffer);
+			auto buffers = std::move(_buffer);
 			unique.unlock();
 
 			filesystem::path target_path;
 			if (_append_date_on_file_name.load())
 			{
 				target_path = fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path,
-					_store_log_file_name, fmt::localtime(chrono::system_clock::now()), _store_log_extention);
+					_store_log_file_name, fmt::localtime(chrono::system_clock::to_time_t(chrono::system_clock::now())), _store_log_extention);
 			}
 			else
 			{
@@ -221,7 +221,7 @@ namespace logging
 			if (_append_date_on_file_name.load())
 			{
 				backup_log(target_path.wstring(), fmt::format(L"{}{}_{:%Y-%m-%d}_backup.{}", _store_log_root_path,
-					_store_log_file_name, fmt::localtime(chrono::system_clock::now()), _store_log_extention));
+					_store_log_file_name, fmt::localtime(chrono::system_clock::to_time_t(chrono::system_clock::now())), _store_log_extention));
 			}
 			else
 			{
@@ -231,7 +231,7 @@ namespace logging
 			
 			if (_append_date_on_file_name.load())
 			{
-				source = fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(chrono::system_clock::now()), _store_log_extention).c_str();
+				source = fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(chrono::system_clock::to_time_t(chrono::system_clock::now())), _store_log_extention).c_str();
 			}
 			else
 			{
@@ -295,7 +295,7 @@ namespace logging
 		wstring source = L"";
 		if (_append_date_on_file_name.load())
 		{
-			source = fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(chrono::system_clock::now()), _store_log_extention).c_str();
+			source = fmt::format(L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path, _store_log_file_name, fmt::localtime(chrono::system_clock::to_time_t(chrono::system_clock::now())), _store_log_extention).c_str();
 		}
 		else
 		{
@@ -325,10 +325,10 @@ namespace logging
 		auto time_string = datetime::time(current, true);
 		if (_write_date.load())
 		{
-			wstring temp = fmt::format(L"[{:%Y-%m-%d} {}][{}]\n", fmt::localtime(current), time_string, flag);
+			wstring temp = fmt::format(L"[{:%Y-%m-%d} {}][{}]\n", fmt::localtime(chrono::system_clock::to_time_t(current)), time_string, flag);
 			if (_logging_style < logging_styles::file_only)
 			{
-				wcout << fmt::format(L"[\033[0;94m{:%Y-%m-%d} {}\033[0m][\033[0;34m{}\033[0m]\n", fmt::localtime(current), time_string, flag);
+				wcout << fmt::format(L"[\033[0;94m{:%Y-%m-%d} {}\033[0m][\033[0;34m{}\033[0m]\n", fmt::localtime(chrono::system_clock::to_time_t(current)), time_string, flag);
 			}
 
 			if (_logging_style >= logging_styles::file_and_console)
@@ -425,10 +425,10 @@ namespace logging
 			if (_logging_style < logging_styles::file_only)
 			{
 				wcout << fmt::format(L"[{}{:%Y-%m-%d} {}\033[0m][{}{}\033[0m]: {}\n", 
-					time_color, fmt::localtime(time), time_string, type_color, type, data);
+					time_color, fmt::localtime(chrono::system_clock::to_time_t(time)), time_string, type_color, type, data);
 			}
 
-			return fmt::format(L"[{:%Y-%m-%d} {}][{}]: {}\n", fmt::localtime(time), time_string, type, data);
+			return fmt::format(L"[{:%Y-%m-%d} {}][{}]: {}\n", fmt::localtime(chrono::system_clock::to_time_t(time)), time_string, type, data);
 		}
 
 		if (_logging_style < logging_styles::file_only)

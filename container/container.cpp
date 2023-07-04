@@ -228,11 +228,11 @@ namespace container
 	{
 		wstring temp = _source_id;
 		_source_id = _target_id;
-		_target_id = move(temp);
+		_target_id = std::move(temp);
 
 		temp = _source_sub_id;
 		_source_sub_id = _target_sub_id;
-		_target_sub_id = move(temp);
+		_target_sub_id = std::move(temp);
 	}
 
 	void value_container::clear_value(void)
