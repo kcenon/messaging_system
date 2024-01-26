@@ -33,39 +33,40 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <locale>
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 
-namespace converting
-{
-	class converter
-	{
-	public:
-		static vector<wstring> split(const wstring& source, const wstring& token);
+namespace converting {
+class converter {
+public:
+  static vector<wstring> split(const wstring &source, const wstring &token);
 
-	public:
-		static void replace(wstring& source, const wstring& token, const wstring& target);
-		static const wstring replace2(const wstring& source, const wstring& token, const wstring& target);
+public:
+  static void replace(wstring &source, const wstring &token,
+                      const wstring &target);
+  static const wstring replace2(const wstring &source, const wstring &token,
+                                const wstring &target);
 
-	public:
-		static wstring to_wstring(const string& value, locale target_locale = locale(""));
-		static string to_string(const wstring& value, locale target_locale = locale(""));
+public:
+  static wstring to_wstring(const string &value,
+                            locale target_locale = locale(""));
+  static string to_string(const wstring &value,
+                          locale target_locale = locale(""));
 
-	public:
-		static vector<uint8_t> to_array(const wstring& value);
-		static vector<uint8_t> to_array(const string& value);
-		static wstring to_wstring(const vector<uint8_t>& value);
-		static string to_string(const vector<uint8_t>& value);
+public:
+  static vector<uint8_t> to_array(const wstring &value);
+  static vector<uint8_t> to_array(const string &value);
+  static wstring to_wstring(const vector<uint8_t> &value);
+  static string to_string(const vector<uint8_t> &value);
 
-	public:
-		static vector<uint8_t> from_base64(const wstring& value);
-		static wstring to_base64(const vector<uint8_t>& value);
+public:
+  static vector<uint8_t> from_base64(const wstring &value);
+  static wstring to_base64(const vector<uint8_t> &value);
 
-	private:
-		static wstring convert(const u16string& value);
-		static u16string convert(const wstring& value);
-	};
-}
-
+private:
+  static wstring convert(const u16string &value);
+  static u16string convert(const wstring &value);
+};
+} // namespace converting

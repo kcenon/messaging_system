@@ -1,5 +1,3 @@
 #include "gtest/gtest.h"
 
-TEST(network, test)
-{
-}
+TEST(network, test) {}

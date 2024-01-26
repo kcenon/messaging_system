@@ -32,38 +32,29 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ulong_value.h"
 
-#include "fmt/xchar.h"
 #include "fmt/format.h"
+#include "fmt/xchar.h"
 
-namespace container
-{
-	ulong_value::ulong_value(void)
-		: value()
-	{
-		_type = value_types::ulong_value;
-	}
+namespace container {
+ulong_value::ulong_value(void) : value() { _type = value_types::ulong_value; }
 
-	ulong_value::ulong_value(const wstring& name, const unsigned long& value)
-		: ulong_value()
-	{
-		_name = name;
-		set_data((const unsigned char*)&value, sizeof(unsigned long), value_types::ulong_value);
-	}
-
-	ulong_value::~ulong_value(void)
-	{
-	}
-
-	unsigned long ulong_value::to_ulong(void) const
-	{
-		unsigned long temp = 0;
-		memcpy(&temp, _data.data(), _size);
-
-		return static_cast<unsigned long>(temp);
-	}
-
-	wstring ulong_value::to_string(const bool&) const
-	{
-		return fmt::format(L"{}", to_ulong());
-	}
+ulong_value::ulong_value(const wstring &name, const unsigned long &value)
+    : ulong_value() {
+  _name = name;
+  set_data((const unsigned char *)&value, sizeof(unsigned long),
+           value_types::ulong_value);
 }
+
+ulong_value::~ulong_value(void) {}
+
+unsigned long ulong_value::to_ulong(void) const {
+  unsigned long temp = 0;
+  memcpy(&temp, _data.data(), _size);
+
+  return static_cast<unsigned long>(temp);
+}
+
+wstring ulong_value::to_string(const bool &) const {
+  return fmt::format(L"{}", to_ulong());
+}
+} // namespace container

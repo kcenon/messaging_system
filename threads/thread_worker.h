@@ -34,62 +34,61 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "job_priorities.h"
 
-#include <mutex>
 #include <atomic>
+#include <condition_variable>
+#include <functional>
 #include <memory>
+#include <mutex>
 #include <thread>
 #include <vector>
-#include <functional>
-#include <condition_variable>
 
 using namespace std;
 
-namespace threads
-{
-	class job;
-	class job_pool;
-	class thread_worker
-	{
-	public:
-		thread_worker(const priorities& priority, const vector<priorities>& others = {});
-		~thread_worker(void);
+namespace threads {
+class job;
+class job_pool;
+class thread_worker {
+public:
+  thread_worker(const priorities &priority,
+                const vector<priorities> &others = {});
+  ~thread_worker(void);
 
-	public:
-		void set_job_pool(shared_ptr<job_pool> job_pool);
-		void set_worker_notification(const function<void(const wstring&, const bool&)>& notification);
+public:
+  void set_job_pool(shared_ptr<job_pool> job_pool);
+  void set_worker_notification(
+      const function<void(const wstring &, const bool &)> &notification);
 
-	public:
-		void start(void);
-		void stop(void);
+public:
+  void start(void);
+  void stop(void);
 
-	public:
-		const wstring guid(void);
-		const priorities priority(void);
+public:
+  const wstring guid(void);
+  const priorities priority(void);
 
-	protected:
-		void run(void);
+protected:
+  void run(void);
 
-	protected:
-		virtual void working(shared_ptr<job> current_job);
+protected:
+  virtual void working(shared_ptr<job> current_job);
 
-	protected:
-		void append_notification(const priorities& priority);
-		bool check_condition(void);
+protected:
+  void append_notification(const priorities &priority);
+  bool check_condition(void);
 
-	private:
-		bool _thread_stop;
-		function<void(const wstring&, const bool&)> _worker_condition;
+private:
+  bool _thread_stop;
+  function<void(const wstring &, const bool &)> _worker_condition;
 
-	private:
-		priorities _priority;
-		vector<priorities> _others;
-		weak_ptr<job_pool> _job_pool;
+private:
+  priorities _priority;
+  vector<priorities> _others;
+  weak_ptr<job_pool> _job_pool;
 
-	private:
-		mutex _mutex;
-		wstring _guid;
-		shared_ptr<thread> _thread;
-		condition_variable _condition;
-	};
-}
-
+private:
+  mutex _mutex;
+  wstring _guid;
+  shared_ptr<thread> _thread;
+  condition_variable _condition;
+};
+} // namespace threads

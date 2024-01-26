@@ -37,13 +37,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-namespace encrypting
-{
-	class cryptor
-	{
-	public:
-		static pair<wstring, wstring> create_key(void);
-		static vector<uint8_t> encryption(const vector<uint8_t>& original_data, const wstring& key, const wstring& iv);
-		static vector<uint8_t> decryption(const vector<uint8_t>& encrypted_data, const wstring& key, const wstring& iv);
-	};
-}
+namespace encrypting {
+class cryptor {
+public:
+  static pair<wstring, wstring> create_key(void);
+  static vector<uint8_t> encryption(const vector<uint8_t> &original_data,
+                                    const wstring &key, const wstring &iv);
+  static vector<uint8_t> decryption(const vector<uint8_t> &encrypted_data,
+                                    const wstring &key, const wstring &iv);
+};
+} // namespace encrypting

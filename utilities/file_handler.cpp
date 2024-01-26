@@ -35,87 +35,78 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "converting.h"
 
 #include <fcntl.h>
-#include <fstream>
 #include <filesystem>
+#include <fstream>
 
 #include <string.h>
 
-namespace file_handler
-{
-	using namespace converting;
+namespace file_handler {
+using namespace converting;
 
-	bool file::remove(const wstring& path)
-	{
-		if (!filesystem::exists(path))
-		{
-			return false;
-		}
+bool file::remove(const wstring &path) {
+  if (!filesystem::exists(path)) {
+    return false;
+  }
 
-		return filesystem::remove(path);
-	}
-
-	vector<uint8_t> file::load(const wstring& path)
-	{
-		if (!filesystem::exists(path))
-		{
-			return vector<uint8_t>();
-		}
-
-#ifdef _WIN32
-		ifstream stream(path, ios::binary);
-#else
-		ifstream stream(converter::to_string(path), ios::binary);
-#endif
-		if (!stream.is_open())
-		{
-			return vector<uint8_t>();
-		}
-
-		std::vector<uint8_t> target((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
-		stream.close();
-
-		return target;
-	}
-
-	bool file::save(const wstring& path, const vector<uint8_t>& data)
-	{
-		filesystem::path target_path(path);
-		if (target_path.parent_path().empty() != true)
-		{
-			filesystem::create_directories(target_path.parent_path());
-		}
-
-#ifdef _WIN32
-		ofstream stream(path, ios::binary | ios::trunc);
-#else
-		ofstream stream(converter::to_string(path), ios::binary | ios::trunc);
-#endif
-		if (!stream.is_open())
-		{
-			return false;
-		}
-
-		stream.write((char *)data.data(), (unsigned int)data.size());
-		stream.close();
-
-		return true;
-	}
-
-	bool file::append(const wstring& source, const vector<uint8_t>& data)
-	{
-#ifdef _WIN32
-		fstream stream(source, ios::out | ios::binary | ios::app);
-#else
-		fstream stream(converter::to_string(source), ios::out | ios::binary | ios::app);
-#endif
-		if (!stream.is_open())
-		{
-			return false;
-		}
-
-		stream.write((char*)data.data(), (unsigned int)data.size());
-		stream.close();
-
-		return true;
-	}
+  return filesystem::remove(path);
 }
+
+vector<uint8_t> file::load(const wstring &path) {
+  if (!filesystem::exists(path)) {
+    return vector<uint8_t>();
+  }
+
+#ifdef _WIN32
+  ifstream stream(path, ios::binary);
+#else
+  ifstream stream(converter::to_string(path), ios::binary);
+#endif
+  if (!stream.is_open()) {
+    return vector<uint8_t>();
+  }
+
+  std::vector<uint8_t> target((std::istreambuf_iterator<char>(stream)),
+                              std::istreambuf_iterator<char>());
+  stream.close();
+
+  return target;
+}
+
+bool file::save(const wstring &path, const vector<uint8_t> &data) {
+  filesystem::path target_path(path);
+  if (target_path.parent_path().empty() != true) {
+    filesystem::create_directories(target_path.parent_path());
+  }
+
+#ifdef _WIN32
+  ofstream stream(path, ios::binary | ios::trunc);
+#else
+  ofstream stream(converter::to_string(path), ios::binary | ios::trunc);
+#endif
+  if (!stream.is_open()) {
+    return false;
+  }
+
+  stream.write((char *)data.data(), (unsigned int)data.size());
+  stream.close();
+
+  return true;
+}
+
+bool file::append(const wstring &source, const vector<uint8_t> &data) {
+#ifdef _WIN32
+  fstream stream(source, ios::out | ios::binary | ios::app);
+#else
+  fstream stream(converter::to_string(source),
+                 ios::out | ios::binary | ios::app);
+#endif
+  if (!stream.is_open()) {
+    return false;
+  }
+
+  stream.write((char *)data.data(), (unsigned int)data.size());
+  stream.close();
+
+  return true;
+}
+} // namespace file_handler

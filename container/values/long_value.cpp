@@ -32,38 +32,28 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "long_value.h"
 
-#include "fmt/xchar.h"
 #include "fmt/format.h"
+#include "fmt/xchar.h"
 
-namespace container
-{
-	long_value::long_value(void)
-		: value()
-	{
-		_type = value_types::long_value;
-	}
+namespace container {
+long_value::long_value(void) : value() { _type = value_types::long_value; }
 
-	long_value::long_value(const wstring& name, const long& value)
-		: long_value()
-	{
-		_name = name;
-		set_data((const unsigned char*)&value, sizeof(long), value_types::long_value);
-	}
-
-	long_value::~long_value(void)
-	{
-	}
-
-	long long_value::to_long(void) const
-	{
-		long temp = 0;
-		memcpy(&temp, _data.data(), _size);
-
-		return static_cast<long>(temp);
-	}
-
-	wstring long_value::to_string(const bool&) const
-	{
-		return fmt::format(L"{}", to_long());
-	}
+long_value::long_value(const wstring &name, const long &value) : long_value() {
+  _name = name;
+  set_data((const unsigned char *)&value, sizeof(long),
+           value_types::long_value);
 }
+
+long_value::~long_value(void) {}
+
+long long_value::to_long(void) const {
+  long temp = 0;
+  memcpy(&temp, _data.data(), _size);
+
+  return static_cast<long>(temp);
+}
+
+wstring long_value::to_string(const bool &) const {
+  return fmt::format(L"{}", to_long());
+}
+} // namespace container

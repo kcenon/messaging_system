@@ -32,56 +32,50 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "binary_combiner.h"
 
-#include <cstring>
 #include <algorithm>
+#include <cstring>
 
-namespace binary_parser
-{
-    void combiner::append(vector<uint8_t>& result, const vector<uint8_t>& source)
-    {
-        size_t temp;
-        const int size = sizeof(size_t);
-        char temp_size[size];
+namespace binary_parser {
+void combiner::append(vector<uint8_t> &result, const vector<uint8_t> &source) {
+  size_t temp;
+  const int size = sizeof(size_t);
+  char temp_size[size];
 
-        temp = source.size();
-        memcpy(temp_size, (char*)&temp, size);
-        result.insert(result.end(), temp_size, temp_size + size);
-        if (temp == 0)
-        {
-            return;
-        }
+  temp = source.size();
+  memcpy(temp_size, (char *)&temp, size);
+  result.insert(result.end(), temp_size, temp_size + size);
+  if (temp == 0) {
+    return;
+  }
 
-        result.insert(result.end(), source.rbegin(), source.rend());
-    }
-
-    vector<uint8_t> combiner::divide(const vector<uint8_t>& source, size_t& index)
-    {
-        if (source.empty())
-        {
-            return vector<uint8_t>();
-        }
-
-        size_t temp;
-        const int size = sizeof(size_t);
-
-        if (source.size() < index + size)
-        {
-            return vector<uint8_t>();
-        }
-
-        memcpy(&temp, source.data() + index, size);
-        index += size;
-
-        if (temp == 0 || source.size() < index + temp)
-        {
-            return vector<uint8_t>();
-        }
-
-        vector<uint8_t> result;
-        result.insert(result.end(), source.begin() + index, source.begin() + index + temp);
-        reverse(result.begin(), result.end());
-        index += temp;
-
-        return result;
-    }
+  result.insert(result.end(), source.rbegin(), source.rend());
 }
+
+vector<uint8_t> combiner::divide(const vector<uint8_t> &source, size_t &index) {
+  if (source.empty()) {
+    return vector<uint8_t>();
+  }
+
+  size_t temp;
+  const int size = sizeof(size_t);
+
+  if (source.size() < index + size) {
+    return vector<uint8_t>();
+  }
+
+  memcpy(&temp, source.data() + index, size);
+  index += size;
+
+  if (temp == 0 || source.size() < index + temp) {
+    return vector<uint8_t>();
+  }
+
+  vector<uint8_t> result;
+  result.insert(result.end(), source.begin() + index,
+                source.begin() + index + temp);
+  reverse(result.begin(), result.end());
+  index += temp;
+
+  return result;
+}
+} // namespace binary_parser

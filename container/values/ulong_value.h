@@ -36,17 +36,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-namespace container
-{
-	class ulong_value : public value
-	{
-	public:
-		ulong_value(void);
-		ulong_value(const wstring& name, const unsigned long& value);
-		~ulong_value(void);
+namespace container {
+class ulong_value : public value {
+public:
+  ulong_value(void);
+  ulong_value(const wstring &name, const unsigned long &value);
+  ~ulong_value(void);
 
-	public:
-		unsigned long to_ulong(void) const override;
-		wstring to_string(const bool& original = true) const override;
-	};
-}
+public:
+  unsigned long to_ulong(void) const override;
+  wstring to_string(const bool &original = true) const override;
+};
+} // namespace container

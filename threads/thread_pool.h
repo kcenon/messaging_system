@@ -34,45 +34,44 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "thread_worker.h"
 
-#include <map>
-#include <mutex>
-#include <memory>
-#include <vector>
 #include <future>
+#include <map>
+#include <memory>
+#include <mutex>
 #include <optional>
+#include <vector>
 
 using namespace std;
 
-namespace threads
-{
-	class thread_pool : public enable_shared_from_this<thread_pool>
-	{
-	public:
-		thread_pool(const wstring& title = L"thread_pool", const vector<shared_ptr<thread_worker>>& workers = {});
-		~thread_pool(void);
+namespace threads {
+class thread_pool : public enable_shared_from_this<thread_pool> {
+public:
+  thread_pool(const wstring &title = L"thread_pool",
+              const vector<shared_ptr<thread_worker>> &workers = {});
+  ~thread_pool(void);
 
-	public:
-		void start(void);
-		void append(shared_ptr<thread_worker> worker, const bool& start = false);
-		void stop(const bool& stop_immediately = true, const bool& jop_pool_lock = false);
+public:
+  void start(void);
+  void append(shared_ptr<thread_worker> worker, const bool &start = false);
+  void stop(const bool &stop_immediately = true,
+            const bool &jop_pool_lock = false);
 
-	public:
-		void push(shared_ptr<job> job);
+public:
+  void push(shared_ptr<job> job);
 
-	protected:
-		void empty_pool_notification(const priorities& priority);
-		void worker_notification(const wstring& id, const bool& working_condition);
+protected:
+  void empty_pool_notification(const priorities &priority);
+  void worker_notification(const wstring &id, const bool &working_condition);
 
-	private:
-		optional<promise<bool>> _promise_status;
-		future<bool> _future_status;
+private:
+  optional<promise<bool>> _promise_status;
+  future<bool> _future_status;
 
-	private:
-		mutex _mutex;
-		wstring _title;
-		shared_ptr<job_pool> _job_pool;
-		map<wstring, bool> _worker_conditions;
-		vector<shared_ptr<thread_worker>> _workers;
-	};
-}
-
+private:
+  mutex _mutex;
+  wstring _title;
+  shared_ptr<job_pool> _job_pool;
+  map<wstring, bool> _worker_conditions;
+  vector<shared_ptr<thread_worker>> _workers;
+};
+} // namespace threads

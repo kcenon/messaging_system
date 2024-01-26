@@ -41,35 +41,43 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <ctime>
 #include <iomanip>
 
-namespace datetime_handler
-{
-	using namespace converting;
+namespace datetime_handler {
+using namespace converting;
 
-	wstring datetime::date(const chrono::system_clock::time_point& time, const bool& use_seperator)
-	{
-		auto in_time_t = chrono::system_clock::to_time_t(time);
+wstring datetime::date(const chrono::system_clock::time_point &time,
+                       const bool &use_seperator) {
+  auto in_time_t = chrono::system_clock::to_time_t(time);
 
-		return fmt::format(((use_seperator) ? L"{:%Y-%m-%d}" : L"{:%Y%m%d}"), fmt::localtime(in_time_t)).c_str();
-	}
-
-	wstring datetime::time(const chrono::system_clock::time_point& time, const bool& use_seperator)
-	{
-		auto in_time_t = chrono::system_clock::to_time_t(time);
-
-		wstring result;
-
-		// header
-		fmt::format_to(back_inserter(result), ((use_seperator) ? L"{:%H:%M:%S}" : L"{:%H%M%S}"), fmt::localtime(in_time_t));
-		if (use_seperator)
-		{
-			fmt::format_to(back_inserter(result), L"{}", L".");
-		}
-
-		auto base_time = time.time_since_epoch();
-		fmt::format_to(back_inserter(result), L"{:03}", chrono::duration_cast<chrono::milliseconds>(base_time).count() % 1000);
-		fmt::format_to(back_inserter(result), L"{:03}", chrono::duration_cast<chrono::microseconds>(base_time).count() % 1000);
-		fmt::format_to(back_inserter(result), L"{:03}", chrono::duration_cast<chrono::nanoseconds>(base_time).count() % 1000);
-
-		return result;
-	}
+  return fmt::format(((use_seperator) ? L"{:%Y-%m-%d}" : L"{:%Y%m%d}"),
+                     fmt::localtime(in_time_t))
+      .c_str();
 }
+
+wstring datetime::time(const chrono::system_clock::time_point &time,
+                       const bool &use_seperator) {
+  auto in_time_t = chrono::system_clock::to_time_t(time);
+
+  wstring result;
+
+  // header
+  fmt::format_to(back_inserter(result),
+                 ((use_seperator) ? L"{:%H:%M:%S}" : L"{:%H%M%S}"),
+                 fmt::localtime(in_time_t));
+  if (use_seperator) {
+    fmt::format_to(back_inserter(result), L"{}", L".");
+  }
+
+  auto base_time = time.time_since_epoch();
+  fmt::format_to(
+      back_inserter(result), L"{:03}",
+      chrono::duration_cast<chrono::milliseconds>(base_time).count() % 1000);
+  fmt::format_to(
+      back_inserter(result), L"{:03}",
+      chrono::duration_cast<chrono::microseconds>(base_time).count() % 1000);
+  fmt::format_to(back_inserter(result), L"{:03}",
+                 chrono::duration_cast<chrono::nanoseconds>(base_time).count() %
+                     1000);
+
+  return result;
+}
+} // namespace datetime_handler

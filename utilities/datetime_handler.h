@@ -32,17 +32,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include <string>
 #include <chrono>
+#include <string>
 
 using namespace std;
 
-namespace datetime_handler
-{
-	class datetime
-	{
-	public:
-      static wstring date(const chrono::system_clock::time_point& time, const bool& use_seperator = true);
-		static wstring time(const chrono::system_clock::time_point& time, const bool& use_seperator = true);
-	};
-}
+namespace datetime_handler {
+class datetime {
+public:
+  static wstring date(const chrono::system_clock::time_point &time,
+                      const bool &use_seperator = true);
+  static wstring time(const chrono::system_clock::time_point &time,
+                      const bool &use_seperator = true);
+};
+} // namespace datetime_handler

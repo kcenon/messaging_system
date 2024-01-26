@@ -36,17 +36,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-namespace container
-{
-	class int_value : public value
-	{
-	public:
-		int_value(void);
-		int_value(const wstring& name, const int& value);
-		~int_value(void);
+namespace container {
+class int_value : public value {
+public:
+  int_value(void);
+  int_value(const wstring &name, const int &value);
+  ~int_value(void);
 
-	public:
-		int to_int(void) const override;
-		wstring to_string(const bool& original = true) const override;
-	};
-}
+public:
+  int to_int(void) const override;
+  wstring to_string(const bool &original = true) const override;
+};
+} // namespace container

@@ -30,17 +30,15 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include <vector>
 #include <cstdint>
+#include <vector>
 
 using namespace std;
 
-namespace binary_parser
-{
-    class combiner
-    {
-    public:
-        static void append(vector<uint8_t>& result, const vector<uint8_t>& source);
-        static vector<uint8_t> divide(const vector<uint8_t>& source, size_t& index);
-    };
-}
+namespace binary_parser {
+class combiner {
+public:
+  static void append(vector<uint8_t> &result, const vector<uint8_t> &source);
+  static vector<uint8_t> divide(const vector<uint8_t> &source, size_t &index);
+};
+} // namespace binary_parser
