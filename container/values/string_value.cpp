@@ -49,8 +49,6 @@ string_value::string_value(const wstring &name, const wstring &value)
   set_data(data.data(), data.size(), value_types::string_value);
 }
 
-string_value::~string_value(void) {}
-
 wstring string_value::to_string(const bool &original) const {
   if (!original) {
     return converter::to_wstring(_data);

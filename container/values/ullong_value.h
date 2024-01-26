@@ -41,7 +41,7 @@ class ullong_value : public value {
 public:
   ullong_value(void);
   ullong_value(const wstring &name, const unsigned long long &value);
-  ~ullong_value(void);
+  ~ullong_value(void) = default;
 
 public:
   unsigned long long to_ullong(void) const override;

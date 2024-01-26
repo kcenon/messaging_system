@@ -41,7 +41,7 @@ class uint_value : public value {
 public:
   uint_value(void);
   uint_value(const wstring &name, const unsigned int &value);
-  ~uint_value(void);
+  ~uint_value(void) = default;
 
 public:
   unsigned int to_uint(void) const override;

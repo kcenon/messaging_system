@@ -41,7 +41,7 @@ class double_value : public value {
 public:
   double_value(void);
   double_value(const wstring &name, const double &value);
-  ~double_value(void);
+  ~double_value(void) = default;
 
 public:
   double to_double(void) const override;

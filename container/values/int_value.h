@@ -41,7 +41,7 @@ class int_value : public value {
 public:
   int_value(void);
   int_value(const wstring &name, const int &value);
-  ~int_value(void);
+  ~int_value(void) = default;
 
 public:
   int to_int(void) const override;

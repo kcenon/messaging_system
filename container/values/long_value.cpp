@@ -44,8 +44,6 @@ long_value::long_value(const wstring &name, const long &value) : long_value() {
            value_types::long_value);
 }
 
-long_value::~long_value(void) {}
-
 long long_value::to_long(void) const {
   long temp = 0;
   memcpy(&temp, _data.data(), _size);

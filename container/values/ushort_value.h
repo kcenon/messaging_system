@@ -41,7 +41,7 @@ class ushort_value : public value {
 public:
   ushort_value(void);
   ushort_value(const wstring &name, const unsigned short &value);
-  ~ushort_value(void);
+  ~ushort_value(void) = default;
 
 public:
   unsigned short to_ushort(void) const override;

@@ -41,7 +41,7 @@ class short_value : public value {
 public:
   short_value(void);
   short_value(const wstring &name, const short &value);
-  ~short_value(void);
+  ~short_value(void) = default;
 
 public:
   short to_short(void) const override;

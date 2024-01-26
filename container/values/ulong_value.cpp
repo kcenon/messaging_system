@@ -45,8 +45,6 @@ ulong_value::ulong_value(const wstring &name, const unsigned long &value)
            value_types::ulong_value);
 }
 
-ulong_value::~ulong_value(void) {}
-
 unsigned long ulong_value::to_ulong(void) const {
   unsigned long temp = 0;
   memcpy(&temp, _data.data(), _size);

@@ -47,8 +47,6 @@ double_value::double_value(const wstring &name, const double &value)
            value_types::double_value);
 }
 
-double_value::~double_value(void) {}
-
 double double_value::to_double(void) const {
   double temp = 0;
   memcpy(&temp, _data.data(), _size);

@@ -43,7 +43,7 @@ public:
   bytes_value(const wstring &name, const vector<uint8_t> &data);
   bytes_value(const wstring &name, const unsigned char *data,
               const size_t &size);
-  ~bytes_value(void);
+  ~bytes_value(void) = default;
 
 public:
   wstring to_string(const bool &original = true) const override;

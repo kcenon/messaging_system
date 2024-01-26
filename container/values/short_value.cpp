@@ -45,8 +45,6 @@ short_value::short_value(const wstring &name, const short &value)
            value_types::short_value);
 }
 
-short_value::~short_value(void) {}
-
 short short_value::to_short(void) const {
   short temp = 0;
   memcpy(&temp, _data.data(), _size);

@@ -52,8 +52,6 @@ bytes_value::bytes_value(const wstring &name, const unsigned char *data,
   set_data(data, size, value_types::bytes_value);
 }
 
-bytes_value::~bytes_value(void) {}
-
 wstring bytes_value::to_string(const bool &) const {
   return converter::to_base64(_data);
 }

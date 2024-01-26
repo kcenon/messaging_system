@@ -45,8 +45,6 @@ uint_value::uint_value(const wstring &name, const unsigned int &value)
            value_types::uint_value);
 }
 
-uint_value::~uint_value(void) {}
-
 unsigned int uint_value::to_uint(void) const {
   unsigned int temp = 0;
   memcpy(&temp, _data.data(), _size);

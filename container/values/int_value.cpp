@@ -43,8 +43,6 @@ int_value::int_value(const wstring &name, const int &value) : int_value() {
   set_data((const unsigned char *)&value, sizeof(int), value_types::int_value);
 }
 
-int_value::~int_value(void) {}
-
 int int_value::to_int(void) const {
   int temp = 0;
   memcpy(&temp, _data.data(), _size);

@@ -41,7 +41,7 @@ class ulong_value : public value {
 public:
   ulong_value(void);
   ulong_value(const wstring &name, const unsigned long &value);
-  ~ulong_value(void);
+  ~ulong_value(void) = default;
 
 public:
   unsigned long to_ulong(void) const override;

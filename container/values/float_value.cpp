@@ -45,8 +45,6 @@ float_value::float_value(const wstring &name, const float &value)
            value_types::float_value);
 }
 
-float_value::~float_value(void) {}
-
 float float_value::to_float(void) const {
   float temp = 0;
   memcpy(&temp, _data.data(), _size);

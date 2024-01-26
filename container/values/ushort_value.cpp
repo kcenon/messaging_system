@@ -47,8 +47,6 @@ ushort_value::ushort_value(const wstring &name, const unsigned short &value)
            value_types::ushort_value);
 }
 
-ushort_value::~ushort_value(void) {}
-
 unsigned short ushort_value::to_ushort(void) const {
   unsigned short temp = 0;
   memcpy(&temp, _data.data(), _size);

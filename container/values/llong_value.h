@@ -41,7 +41,7 @@ class llong_value : public value {
 public:
   llong_value(void);
   llong_value(const wstring &name, const long long &value);
-  ~llong_value(void);
+  ~llong_value(void) = default;
 
 public:
   long long to_llong(void) const override;

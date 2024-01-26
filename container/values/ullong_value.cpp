@@ -47,8 +47,6 @@ ullong_value::ullong_value(const wstring &name, const unsigned long long &value)
            value_types::ullong_value);
 }
 
-ullong_value::~ullong_value(void) {}
-
 unsigned long long ullong_value::to_ullong(void) const {
   unsigned long long temp = 0;
   memcpy(&temp, _data.data(), _size);
