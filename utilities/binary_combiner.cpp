@@ -37,43 +37,33 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace binary_parser {
 void combiner::append(vector<uint8_t> &result, const vector<uint8_t> &source) {
-  size_t temp;
-  const int size = sizeof(size_t);
-  char temp_size[size];
+  size_t temp = source.size();
+  const auto *temp_size = reinterpret_cast<const uint8_t *>(&temp);
 
-  temp = source.size();
-  memcpy(temp_size, (char *)&temp, size);
-  result.insert(result.end(), temp_size, temp_size + size);
+  result.insert(result.end(), temp_size, temp_size + sizeof(size_t));
   if (temp == 0) {
     return;
   }
 
-  result.insert(result.end(), source.rbegin(), source.rend());
+  result.insert(result.end(), source.begin(), source.end());
 }
 
 vector<uint8_t> combiner::divide(const vector<uint8_t> &source, size_t &index) {
-  if (source.empty()) {
-    return vector<uint8_t>();
+  if (source.empty() || source.size() < index + sizeof(size_t)) {
+    return {};
   }
 
   size_t temp;
-  const int size = sizeof(size_t);
-
-  if (source.size() < index + size) {
-    return vector<uint8_t>();
-  }
-
-  memcpy(&temp, source.data() + index, size);
-  index += size;
+  std::copy(source.begin() + index, source.begin() + index + sizeof(size_t),
+            reinterpret_cast<uint8_t *>(&temp));
+  index += sizeof(size_t);
 
   if (temp == 0 || source.size() < index + temp) {
-    return vector<uint8_t>();
+    return {};
   }
 
-  vector<uint8_t> result;
-  result.insert(result.end(), source.begin() + index,
-                source.begin() + index + temp);
-  reverse(result.begin(), result.end());
+  std::vector<uint8_t> result(source.begin() + index,
+                              source.begin() + index + temp);
   index += temp;
 
   return result;

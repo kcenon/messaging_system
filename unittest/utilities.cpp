@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "argument_parser.h"
+#include "binary_combiner.h"
 #include "compressing.h"
 #include "converting.h"
 #include "encrypting.h"
@@ -12,6 +13,7 @@ using namespace std;
 using namespace encrypting;
 using namespace converting;
 using namespace compressing;
+using namespace binary_parser;
 using namespace argument_parser;
 
 TEST(argument, test) {
@@ -23,6 +25,28 @@ TEST(argument, test) {
   argument_manager manager2(3, test2);
 
   EXPECT_EQ(manager1.to_string(L"--version"), manager2.to_string(L"--version"));
+}
+
+TEST(conbiner, test) {
+  vector<uint8_t> data1, data2;
+  for (int i = 0; i < 256; ++i) {
+    for (int j = 0; j < 256; ++j) {
+      data1.push_back((uint8_t)j);
+      data2.push_back((uint8_t)j);
+    }
+  }
+
+  vector<uint8_t> container_buffer;
+
+  combiner::append(container_buffer, data1);
+  combiner::append(container_buffer, data2);
+
+  size_t index = 0;
+  auto result1 = combiner::divide(container_buffer, index);
+  auto result2 = combiner::divide(container_buffer, index);
+
+  EXPECT_EQ(data1, result1);
+  EXPECT_EQ(data2, result2);
 }
 
 TEST(compressor, test) {
