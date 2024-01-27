@@ -59,16 +59,16 @@ vector<wstring> converter::split(const wstring &source, const wstring &token) {
 
     temp = source.substr(last_offset, offset - last_offset);
     if (!temp.empty()) {
-      result.push_back(temp);
+      result.push_back(std::move(temp));
     }
 
     last_offset = offset + token.size();
   }
 
-  if (last_offset != 0 && last_offset != string::npos) {
+  if (last_offset != 0 && last_offset != wstring::npos) {
     temp = source.substr(last_offset, offset - last_offset);
     if (!temp.empty()) {
-      result.push_back(temp);
+      result.push_back(std::move(temp));
     }
   }
 
@@ -86,91 +86,85 @@ void converter::replace(wstring &source, const wstring &token,
 
 const wstring converter::replace2(const wstring &source, const wstring &token,
                                   const wstring &target) {
-  if (source.empty() == true) {
-    return L"";
+  if (source.empty()) {
+    return std::wstring();
   }
 
-  size_t offset = 0;
-  size_t last_offset = 0;
   fmt::wmemory_buffer result;
-  result.clear();
 
-  while (true) {
-    offset = source.find(token, last_offset);
-    if (offset == wstring::npos) {
-      break;
-    }
-
-    fmt::format_to(back_inserter(result), L"{}{}",
+  size_t last_offset = 0;
+  for (size_t offset = source.find(token, last_offset);
+       offset != std::wstring::npos; last_offset = offset + token.size(),
+              offset = source.find(token, last_offset)) {
+    fmt::format_to(std::back_inserter(result), L"{}{}",
                    source.substr(last_offset, offset - last_offset), target);
-
-    last_offset = offset + token.size();
   }
 
-  if (last_offset != 0 && last_offset != string::npos) {
-    fmt::format_to(back_inserter(result), L"{}",
-                   source.substr(last_offset, offset - last_offset));
-  }
+  // Add the last part of the string (after the last token, if any)
+  fmt::format_to(std::back_inserter(result), L"{}", source.substr(last_offset));
 
-  if (last_offset == 0) {
-    return source;
-  }
-
-  return wstring(result.begin(), result.end());
+  return std::wstring(result.begin(), result.end());
 }
 
 wstring converter::to_wstring(const string &value, locale target_locale) {
   if (value.empty()) {
-    return wstring();
+    return std::wstring();
   }
 
-  typedef codecvt<char16_t, char, mbstate_t> codecvt_t;
-  codecvt_t const &codecvt = use_facet<codecvt_t>(target_locale);
+  using codecvt_t = std::codecvt<char16_t, char, std::mbstate_t>;
+  auto const &codecvt = std::use_facet<codecvt_t>(target_locale);
 
-  mbstate_t state;
-  memset(&state, 0, sizeof(mbstate_t));
+  std::mbstate_t state = std::mbstate_t(); // Zero-initialized state
 
-  vector<char16_t> result(value.size() + 1);
-  char const *in_text = value.data();
-  char16_t *out_text = &result[0];
-  codecvt_t::result condition =
-      codecvt.in(state, in_text, in_text + value.size(), in_text, out_text,
-                 out_text + result.size(), out_text);
+  std::vector<char16_t> result(value.size() + 1, u'\0');
+  const char *in_text = value.data();
+  char16_t *out_text = result.data();
+
+  auto condition = codecvt.in(state, in_text, in_text + value.size(), in_text,
+                              out_text, out_text + result.size(), out_text);
+
+  if (condition != codecvt_t::ok) {
+    return std::wstring();
+  }
 
   return convert(result.data());
 }
 
 string converter::to_string(const wstring &value, locale target_locale) {
   if (value.empty()) {
-    return string();
+    return std::string();
   }
 
-  u16string temp = convert(value);
+  std::u16string temp =
+      convert(value); // Assuming convert is correctly implemented
 
-  typedef codecvt<char16_t, char, mbstate_t> codecvt_t;
-  codecvt_t const &codecvt = use_facet<codecvt_t>(target_locale);
+  using codecvt_t = std::codecvt<char16_t, char, std::mbstate_t>;
+  auto const &codecvt = std::use_facet<codecvt_t>(target_locale);
 
-  mbstate_t state = mbstate_t();
+  std::mbstate_t state{}; // Zero-initialized
 
-  vector<char> result((temp.size() + 1) * codecvt.max_length());
-  char16_t const *in_text = temp.data();
-  char *out_text = &result[0];
+  std::vector<char> result(temp.size() * codecvt.max_length(), '\0');
+  const char16_t *in_text = temp.data();
+  char *out_text = result.data();
 
-  codecvt_t::result condition =
-      codecvt.out(state, in_text, in_text + value.size(), in_text, out_text,
-                  out_text + result.size(), out_text);
+  auto condition = codecvt.out(state, in_text, in_text + temp.size(), in_text,
+                               out_text, out_text + result.size(), out_text);
 
-  return result.data();
+  if (condition != codecvt_t::ok) {
+    return std::string();
+  }
+
+  return std::string(result.data());
 }
 
 vector<uint8_t> converter::to_array(const wstring &value) {
   if (value.empty()) {
-    return vector<uint8_t>();
+    return {};
   }
 
   string temp = to_string(value);
 
-  return vector<uint8_t>(temp.data(), temp.data() + temp.size());
+  return std::vector<uint8_t>(temp.begin(), temp.end());
 }
 
 vector<uint8_t> converter::to_array(const string &value) {
@@ -185,11 +179,13 @@ wstring converter::to_wstring(const vector<uint8_t> &value) {
   // UTF-8 BOM
   if (value.size() >= 3 && value[0] == 0xef && value[1] == 0xbb &&
       value[2] == 0xbf) {
-    return to_wstring(string((char *)value.data() + 2, value.size() - 2));
+    return to_wstring(std::string(
+        reinterpret_cast<const char *>(value.data()) + 3, value.size() - 3));
   }
 
   // UTF-8 no BOM
-  return to_wstring(string((char *)value.data(), value.size()));
+  return to_wstring(
+      std::string(reinterpret_cast<const char *>(value.data()), value.size()));
 }
 
 string converter::to_string(const vector<uint8_t> &value) {
@@ -205,7 +201,7 @@ vector<uint8_t> converter::from_base64(const wstring &value) {
   string encoded;
   StringSource(source.data(), true, new Base64Decoder(new StringSink(encoded)));
 
-  return vector<uint8_t>(encoded.data(), encoded.data() + encoded.size());
+  return vector<uint8_t>(encoded.begin(), encoded.end());
 }
 
 wstring converter::to_base64(const vector<uint8_t> &value) {
