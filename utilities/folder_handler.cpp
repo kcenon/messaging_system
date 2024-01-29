@@ -48,27 +48,29 @@ bool folder::create_folder(const wstring &root, const wstring &target) {
     return false;
   }
 
-  if (!filesystem::exists(root)) {
-    filesystem::create_directories(root);
+  std::filesystem::path root_path(root);
+  if (!std::filesystem::exists(root_path)) {
+    filesystem::create_directories(root_path);
   }
 
   if (target.empty()) {
     return true;
   }
 
-  return filesystem::create_directory(fmt::format(L"{}/{}", root, target));
+  return std::filesystem::create_directory(root_path / target);
 }
 
 void folder::delete_folder(const wstring &target) {
-  if (!filesystem::exists(target)) {
+  std::filesystem::path target_path(target);
+  if (!filesystem::exists(target_path)) {
     return;
   }
 
-  filesystem::remove_all(target);
+  filesystem::remove_all(target_path);
 }
 
 void folder::delete_folders(const vector<wstring> &targets) {
-  for (auto &target : targets) {
+  for (const auto &target : targets) {
     delete_folder(target);
   }
 }
@@ -80,21 +82,18 @@ vector<wstring> folder::get_folders(const wstring &target_folder) {
     return result;
   }
 
-  wstring extension;
   filesystem::path targetDir(target_folder);
-
   if (filesystem::exists(targetDir) != true) {
     return result;
   }
 
-  filesystem::directory_iterator iterator(targetDir), endItr;
-
-  for (; iterator != endItr; ++iterator) {
-    if (!filesystem::is_directory(iterator->path())) {
+  filesystem::directory_iterator iterator(targetDir);
+  for (const auto &entry : iterator) {
+    if (!filesystem::is_directory(entry.path())) {
       continue;
     }
 
-    result.push_back(iterator->path().wstring());
+    result.push_back(entry.path().wstring());
   }
 
   return result;
@@ -109,45 +108,29 @@ vector<wstring> folder::get_files(const wstring &target_folder,
     return result;
   }
 
-  wstring extension;
   filesystem::path targetDir(target_folder);
-
   if (filesystem::exists(targetDir) != true) {
     return result;
   }
 
-  filesystem::directory_iterator iterator(targetDir), endItr;
+  filesystem::directory_iterator iterator(targetDir);
+  for (const auto &entry : iterator) {
+    if (std::filesystem::is_directory(entry.path()) && search_sub_folder) {
+      auto innerFiles =
+          get_files(entry.path().wstring(), search_sub_folder, extensions);
+      result.insert(result.end(), innerFiles.begin(), innerFiles.end());
 
-  for (; iterator != endItr; ++iterator) {
-    if (filesystem::is_regular_file(iterator->path()) == true) {
-      if (extensions.size() == 0) {
-        result.push_back(iterator->path().wstring());
-        continue;
-      }
-
-      extension = iterator->path().extension().wstring();
-      vector<wstring>::const_iterator target_extension = find_if(
-          extensions.begin(), extensions.end(),
-          [&extension](const wstring &item) { return item == extension; });
-
-      if (target_extension == extensions.end()) {
-        continue;
-      }
-
-      result.push_back(iterator->path().wstring());
       continue;
     }
 
-    if (filesystem::is_directory(iterator->path()) == true &&
-        search_sub_folder == true) {
-      vector<wstring> innerFiles =
-          get_files(iterator->path().wstring(), search_sub_folder, extensions);
-      if (innerFiles.empty() == true) {
-        continue;
-      }
-
-      result.insert(result.end(), innerFiles.begin(), innerFiles.end());
+    if (!std::filesystem::is_regular_file(entry.path())) {
       continue;
+    }
+
+    if (extensions.empty() ||
+        std::find(extensions.begin(), extensions.end(),
+                  entry.path().extension().wstring()) != extensions.end()) {
+      result.push_back(entry.path().wstring());
     }
   }
 
