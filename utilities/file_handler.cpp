@@ -56,11 +56,7 @@ vector<uint8_t> file::load(const wstring &path) {
     return vector<uint8_t>();
   }
 
-#ifdef _WIN32
   ifstream stream(path, ios::binary);
-#else
-  ifstream stream(converter::to_string(path), ios::binary);
-#endif
   if (!stream.is_open()) {
     return vector<uint8_t>();
   }
@@ -78,11 +74,7 @@ bool file::save(const wstring &path, const vector<uint8_t> &data) {
     filesystem::create_directories(target_path.parent_path());
   }
 
-#ifdef _WIN32
   ofstream stream(path, ios::binary | ios::trunc);
-#else
-  ofstream stream(converter::to_string(path), ios::binary | ios::trunc);
-#endif
   if (!stream.is_open()) {
     return false;
   }
@@ -94,12 +86,7 @@ bool file::save(const wstring &path, const vector<uint8_t> &data) {
 }
 
 bool file::append(const wstring &source, const vector<uint8_t> &data) {
-#ifdef _WIN32
   fstream stream(source, ios::out | ios::binary | ios::app);
-#else
-  fstream stream(converter::to_string(source),
-                 ios::out | ios::binary | ios::app);
-#endif
   if (!stream.is_open()) {
     return false;
   }
