@@ -1,0 +1,34 @@
+BasedOnStyle: GNU
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  AfterNamespace: true
+  AfterStruct: true
+  AfterClass: true
+  AfterControlStatement: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: true
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+ColumnLimit: 120
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+BinPackParameters: false
+NamespaceIndentation: All
+SortIncludes: false
+AccessModifierOffset: -4
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+BreakConstructorInitializersBeforeComma: false
+PointerAlignment: Right
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 2
+AllowShortCaseLabelsOnASingleLine: false
+BreakArrays: false
+BreakConstructorInitializers: BeforeComma
+SpaceBeforeParens: ControlStatements
