@@ -37,12 +37,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-namespace file_handler {
-class file {
-public:
-  static bool remove(const wstring &path);
-  static vector<uint8_t> load(const wstring &path);
-  static bool save(const wstring &path, const vector<uint8_t> &data);
-  static bool append(const wstring &path, const vector<uint8_t> &data);
-};
+namespace file_handler
+{
+  class file
+  {
+  public:
+    static bool remove(const wstring &path);
+    static vector<uint8_t> load(const wstring &path);
+    static bool save(const wstring &path, const vector<uint8_t> &data);
+    static bool append(const wstring &path, const vector<uint8_t> &data);
+  };
 } // namespace file_handler

@@ -40,70 +40,70 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "cryptopp/modes.h"
 #include "cryptopp/osrng.h"
 
-namespace encrypting {
-using namespace converting;
+namespace encrypting
+{
+  using namespace converting;
 
-pair<wstring, wstring> cryptor::create_key(void) {
-  CryptoPP::AutoSeededRandomPool rng;
+  pair<wstring, wstring> cryptor::create_key(void)
+  {
+    CryptoPP::AutoSeededRandomPool rng;
 
-  std::vector<CryptoPP::byte> key(CryptoPP::AES::DEFAULT_KEYLENGTH);
-  rng.GenerateBlock(key.data(), CryptoPP::AES::DEFAULT_KEYLENGTH);
+    std::vector<CryptoPP::byte> key(CryptoPP::AES::DEFAULT_KEYLENGTH);
+    rng.GenerateBlock(key.data(), CryptoPP::AES::DEFAULT_KEYLENGTH);
 
-  std::vector<CryptoPP::byte> iv(CryptoPP::AES::BLOCKSIZE);
-  rng.GenerateBlock(iv.data(), CryptoPP::AES::BLOCKSIZE);
+    std::vector<CryptoPP::byte> iv(CryptoPP::AES::BLOCKSIZE);
+    rng.GenerateBlock(iv.data(), CryptoPP::AES::BLOCKSIZE);
 
-  return {converter::to_base64(key), converter::to_base64(iv)};
-}
-
-vector<uint8_t> cryptor::encryption(const vector<uint8_t> &original_data,
-                                    const wstring &key_string,
-                                    const wstring &iv_string) {
-  if (original_data.empty() || key_string.empty() || iv_string.empty()) {
-    return original_data;
+    return { converter::to_base64(key), converter::to_base64(iv) };
   }
 
-  std::vector<uint8_t> key = converter::from_base64(key_string);
-  std::vector<uint8_t> iv = converter::from_base64(iv_string);
+  vector<uint8_t>
+  cryptor::encryption(const vector<uint8_t> &original_data, const wstring &key_string, const wstring &iv_string)
+  {
+    if (original_data.empty() || key_string.empty() || iv_string.empty())
+    {
+      return original_data;
+    }
 
-  CryptoPP::CBC_Mode<CryptoPP::AES>::Encryption enc;
-  enc.SetKeyWithIV(key.data(), key.size(), iv.data(), iv.size());
+    std::vector<uint8_t> key = converter::from_base64(key_string);
+    std::vector<uint8_t> iv = converter::from_base64(iv_string);
 
-  std::vector<uint8_t> encrypted(original_data.size() +
-                                 CryptoPP::AES::BLOCKSIZE);
+    CryptoPP::CBC_Mode<CryptoPP::AES>::Encryption enc;
+    enc.SetKeyWithIV(key.data(), key.size(), iv.data(), iv.size());
 
-  CryptoPP::ArraySink cs(&encrypted[0], encrypted.size());
-  CryptoPP::ArraySource source(original_data.data(), original_data.size(), true,
-                               new CryptoPP::StreamTransformationFilter(
-                                   enc, new CryptoPP::Redirector(cs)));
+    std::vector<uint8_t> encrypted(original_data.size() + CryptoPP::AES::BLOCKSIZE);
 
-  encrypted.resize(cs.TotalPutLength());
+    CryptoPP::ArraySink cs(&encrypted[0], encrypted.size());
+    CryptoPP::ArraySource source(original_data.data(), original_data.size(), true,
+                                 new CryptoPP::StreamTransformationFilter(enc, new CryptoPP::Redirector(cs)));
 
-  return encrypted;
-}
+    encrypted.resize(cs.TotalPutLength());
 
-vector<uint8_t> cryptor::decryption(const vector<uint8_t> &encrypted_data,
-                                    const wstring &key_string,
-                                    const wstring &iv_string) {
-  if (encrypted_data.empty() || key_string.empty() || iv_string.empty()) {
-    return encrypted_data;
+    return encrypted;
   }
 
-  std::vector<uint8_t> key = converter::from_base64(key_string);
-  std::vector<uint8_t> iv = converter::from_base64(iv_string);
+  vector<uint8_t>
+  cryptor::decryption(const vector<uint8_t> &encrypted_data, const wstring &key_string, const wstring &iv_string)
+  {
+    if (encrypted_data.empty() || key_string.empty() || iv_string.empty())
+    {
+      return encrypted_data;
+    }
 
-  CryptoPP::CBC_Mode<CryptoPP::AES>::Decryption dec;
-  dec.SetKeyWithIV(key.data(), key.size(), iv.data(), iv.size());
+    std::vector<uint8_t> key = converter::from_base64(key_string);
+    std::vector<uint8_t> iv = converter::from_base64(iv_string);
 
-  std::vector<uint8_t> decrypted(encrypted_data.size());
+    CryptoPP::CBC_Mode<CryptoPP::AES>::Decryption dec;
+    dec.SetKeyWithIV(key.data(), key.size(), iv.data(), iv.size());
 
-  CryptoPP::ArraySink rs(&decrypted[0], decrypted.size());
-  CryptoPP::ArraySource source(encrypted_data.data(), encrypted_data.size(),
-                               true,
-                               new CryptoPP::StreamTransformationFilter(
-                                   dec, new CryptoPP::Redirector(rs)));
+    std::vector<uint8_t> decrypted(encrypted_data.size());
 
-  decrypted.resize(rs.TotalPutLength());
+    CryptoPP::ArraySink rs(&decrypted[0], decrypted.size());
+    CryptoPP::ArraySource source(encrypted_data.data(), encrypted_data.size(), true,
+                                 new CryptoPP::StreamTransformationFilter(dec, new CryptoPP::Redirector(rs)));
 
-  return decrypted;
-}
+    decrypted.resize(rs.TotalPutLength());
+
+    return decrypted;
+  }
 } // namespace encrypting

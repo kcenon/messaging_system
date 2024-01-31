@@ -38,14 +38,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-namespace compressing {
-class compressor {
-public:
-  static vector<uint8_t> compression(const vector<uint8_t> &original_data,
-                                     const unsigned short &block_bytes = 1024,
-                                     const bool &hide_log = true);
-  static vector<uint8_t> decompression(const vector<uint8_t> &compressed_data,
+namespace compressing
+{
+  class compressor
+  {
+  public:
+    static vector<uint8_t> compression(const vector<uint8_t> &original_data,
                                        const unsigned short &block_bytes = 1024,
                                        const bool &hide_log = true);
-};
+    static vector<uint8_t> decompression(const vector<uint8_t> &compressed_data,
+                                         const unsigned short &block_bytes = 1024,
+                                         const bool &hide_log = true);
+  };
 } // namespace compressing

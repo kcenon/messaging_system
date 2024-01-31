@@ -52,100 +52,93 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-namespace logging {
-class logger {
-private:
-  logger(void);
+namespace logging
+{
+  class logger
+  {
+  private:
+    logger(void);
 
-public:
-  ~logger(void);
+  public:
+    ~logger(void);
 
-public:
-  bool start(const wstring &store_log_file_name = L"log",
-             locale target_locale = locale(""),
-             const wstring &store_log_extention = L"log",
-             const wstring &store_log_root_path = L"",
-             const bool &append_date_on_file_name = true);
-  bool stop(void);
+  public:
+    bool start(const wstring &store_log_file_name = L"log",
+               locale target_locale = locale(""),
+               const wstring &store_log_extention = L"log",
+               const wstring &store_log_root_path = L"",
+               const bool &append_date_on_file_name = true);
+    bool stop(void);
 
-public:
-  void set_target_level(const logging_level &target_level);
-  void set_target_level(const vector<logging_level> &write_console_levels);
-  void set_write_console(
-      const logging_styles &logging_style = logging_styles::file_only);
-  void set_write_date(const bool &write_date);
-  void set_limit_log_file_size(const size_t &limit_log_file_size);
-  void
-  set_backup_notification(const function<void(const wstring &)> &notification);
+  public:
+    void set_target_level(const logging_level &target_level);
+    void set_target_level(const vector<logging_level> &write_console_levels);
+    void set_write_console(const logging_styles &logging_style = logging_styles::file_only);
+    void set_write_date(const bool &write_date);
+    void set_limit_log_file_size(const size_t &limit_log_file_size);
+    void set_backup_notification(const function<void(const wstring &)> &notification);
 
-public:
-  chrono::time_point<chrono::high_resolution_clock> chrono_start(void);
-  void write(const logging_level &target_level, const wstring &log_data,
-             const optional<chrono::time_point<chrono::high_resolution_clock>>
-                 &time = nullopt);
-  void write(const logging_level &target_level, const vector<uint8_t> &log_data,
-             const optional<chrono::time_point<chrono::high_resolution_clock>>
-                 &time = nullopt);
+  public:
+    chrono::time_point<chrono::high_resolution_clock> chrono_start(void);
+    void write(const logging_level &target_level,
+               const wstring &log_data,
+               const optional<chrono::time_point<chrono::high_resolution_clock> > &time = nullopt);
+    void write(const logging_level &target_level,
+               const vector<uint8_t> &log_data,
+               const optional<chrono::time_point<chrono::high_resolution_clock> > &time = nullopt);
 
-protected:
-  void run(void);
+  protected:
+    void run(void);
 
-private:
-  void set_log_flag(const wstring &flag);
-  void backup_log(const wstring &target_path, const wstring &backup_path);
+  private:
+    void set_log_flag(const wstring &flag);
+    void backup_log(const wstring &target_path, const wstring &backup_path);
 
-private:
-  wstring exception_log(const chrono::system_clock::time_point &time,
-                        const wstring &data);
-  wstring error_log(const chrono::system_clock::time_point &time,
-                    const wstring &data);
-  wstring information_log(const chrono::system_clock::time_point &time,
-                          const wstring &data);
-  wstring sequence_log(const chrono::system_clock::time_point &time,
-                       const wstring &data);
-  wstring parameter_log(const chrono::system_clock::time_point &time,
-                        const wstring &data);
-  wstring packet_log(const chrono::system_clock::time_point &time,
-                     const wstring &data);
-  wstring make_log_string(const logging_level &target_level,
-                          const chrono::system_clock::time_point &time,
-                          const wstring &data, const wstring &type,
-                          const wstring &time_color, const wstring &type_color);
+  private:
+    wstring exception_log(const chrono::system_clock::time_point &time, const wstring &data);
+    wstring error_log(const chrono::system_clock::time_point &time, const wstring &data);
+    wstring information_log(const chrono::system_clock::time_point &time, const wstring &data);
+    wstring sequence_log(const chrono::system_clock::time_point &time, const wstring &data);
+    wstring parameter_log(const chrono::system_clock::time_point &time, const wstring &data);
+    wstring packet_log(const chrono::system_clock::time_point &time, const wstring &data);
+    wstring make_log_string(const logging_level &target_level,
+                            const chrono::system_clock::time_point &time,
+                            const wstring &data,
+                            const wstring &type,
+                            const wstring &time_color,
+                            const wstring &type_color);
 
-private:
-  vector<tuple<logging_level, chrono::system_clock::time_point, wstring>>
-      _buffer;
+  private:
+    vector<tuple<logging_level, chrono::system_clock::time_point, wstring> > _buffer;
 
-private:
-  wstring _store_log_root_path;
-  wstring _store_log_file_name;
-  wstring _store_log_extention;
-  logging_styles _logging_style;
-  vector<logging_level> _write_console_levels;
-  locale _locale;
+  private:
+    wstring _store_log_root_path;
+    wstring _store_log_file_name;
+    wstring _store_log_extention;
+    logging_styles _logging_style;
+    vector<logging_level> _write_console_levels;
+    locale _locale;
 
-private:
-  atomic<bool> _thread_stop{true};
-  atomic<bool> _write_date{false};
-  atomic<bool> _append_date_on_file_name{true};
-  atomic<size_t> _limit_log_file_size{2097152};
+  private:
+    atomic<bool> _thread_stop{ true };
+    atomic<bool> _write_date{ false };
+    atomic<bool> _append_date_on_file_name{ true };
+    atomic<size_t> _limit_log_file_size{ 2097152 };
 
-private:
-  mutex _mutex;
-  shared_ptr<thread> _thread;
-  condition_variable _condition;
-  function<void(const wstring &)> _backup_notification;
-  map<logging_level, function<wstring(const chrono::system_clock::time_point &,
-                                      const wstring &)>>
-      _log_datas;
+  private:
+    mutex _mutex;
+    shared_ptr<thread> _thread;
+    condition_variable _condition;
+    function<void(const wstring &)> _backup_notification;
+    map<logging_level, function<wstring(const chrono::system_clock::time_point &, const wstring &)> > _log_datas;
 
 #pragma region singleton
-public:
-  static logger &handle(void);
+  public:
+    static logger &handle(void);
 
-private:
-  static unique_ptr<logger> _handle;
-  static once_flag _once;
+  private:
+    static unique_ptr<logger> _handle;
+    static once_flag _once;
 #pragma endregion
-};
+  };
 } // namespace logging

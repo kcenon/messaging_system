@@ -40,60 +40,70 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <string.h>
 
-namespace file_handler {
-using namespace converting;
+namespace file_handler
+{
+  using namespace converting;
 
-bool file::remove(const wstring &path) {
-  if (!filesystem::exists(path)) {
-    return false;
+  bool file::remove(const wstring &path)
+  {
+    if (!filesystem::exists(path))
+    {
+      return false;
+    }
+
+    return filesystem::remove(path);
   }
 
-  return filesystem::remove(path);
-}
+  vector<uint8_t> file::load(const wstring &path)
+  {
+    if (!filesystem::exists(path))
+    {
+      return vector<uint8_t>();
+    }
 
-vector<uint8_t> file::load(const wstring &path) {
-  if (!filesystem::exists(path)) {
-    return vector<uint8_t>();
+    ifstream stream(path, ios::binary);
+    if (!stream.is_open())
+    {
+      return vector<uint8_t>();
+    }
+
+    std::vector<uint8_t> target((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
+    stream.close();
+
+    return target;
   }
 
-  ifstream stream(path, ios::binary);
-  if (!stream.is_open()) {
-    return vector<uint8_t>();
+  bool file::save(const wstring &path, const vector<uint8_t> &data)
+  {
+    filesystem::path target_path(path);
+    if (target_path.parent_path().empty() != true)
+    {
+      filesystem::create_directories(target_path.parent_path());
+    }
+
+    ofstream stream(path, ios::binary | ios::trunc);
+    if (!stream.is_open())
+    {
+      return false;
+    }
+
+    stream.write((char *)data.data(), (unsigned int)data.size());
+    stream.close();
+
+    return true;
   }
 
-  std::vector<uint8_t> target((std::istreambuf_iterator<char>(stream)),
-                              std::istreambuf_iterator<char>());
-  stream.close();
+  bool file::append(const wstring &source, const vector<uint8_t> &data)
+  {
+    fstream stream(source, ios::out | ios::binary | ios::app);
+    if (!stream.is_open())
+    {
+      return false;
+    }
 
-  return target;
-}
+    stream.write((char *)data.data(), (unsigned int)data.size());
+    stream.close();
 
-bool file::save(const wstring &path, const vector<uint8_t> &data) {
-  filesystem::path target_path(path);
-  if (target_path.parent_path().empty() != true) {
-    filesystem::create_directories(target_path.parent_path());
+    return true;
   }
-
-  ofstream stream(path, ios::binary | ios::trunc);
-  if (!stream.is_open()) {
-    return false;
-  }
-
-  stream.write((char *)data.data(), (unsigned int)data.size());
-  stream.close();
-
-  return true;
-}
-
-bool file::append(const wstring &source, const vector<uint8_t> &data) {
-  fstream stream(source, ios::out | ios::binary | ios::app);
-  if (!stream.is_open()) {
-    return false;
-  }
-
-  stream.write((char *)data.data(), (unsigned int)data.size());
-  stream.close();
-
-  return true;
-}
 } // namespace file_handler

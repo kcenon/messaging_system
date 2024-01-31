@@ -1,6 +1,6 @@
 BasedOnStyle: GNU
-IndentWidth: 4
-TabWidth: 4
+IndentWidth: 2
+TabWidth: 2
 UseTab: Never
 BreakBeforeBraces: Custom
 BraceWrapping:
@@ -21,7 +21,7 @@ AlwaysBreakAfterReturnType: None
 BinPackParameters: false
 NamespaceIndentation: All
 SortIncludes: false
-AccessModifierOffset: -4
+AccessModifierOffset: -2
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 BreakConstructorInitializersBeforeComma: false
 PointerAlignment: Right

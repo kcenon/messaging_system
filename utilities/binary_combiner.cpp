@@ -35,37 +35,41 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <algorithm>
 #include <cstring>
 
-namespace binary_parser {
-void combiner::append(vector<uint8_t> &result, const vector<uint8_t> &source) {
-  size_t temp = source.size();
-  const auto *temp_size = reinterpret_cast<const uint8_t *>(&temp);
+namespace binary_parser
+{
+  void combiner::append(vector<uint8_t> &result, const vector<uint8_t> &source)
+  {
+    size_t temp = source.size();
+    const auto *temp_size = reinterpret_cast<const uint8_t *>(&temp);
 
-  result.insert(result.end(), temp_size, temp_size + sizeof(size_t));
-  if (temp == 0) {
-    return;
+    result.insert(result.end(), temp_size, temp_size + sizeof(size_t));
+    if (temp == 0)
+    {
+      return;
+    }
+
+    result.insert(result.end(), source.begin(), source.end());
   }
 
-  result.insert(result.end(), source.begin(), source.end());
-}
+  vector<uint8_t> combiner::divide(const vector<uint8_t> &source, size_t &index)
+  {
+    if (source.empty() || source.size() < index + sizeof(size_t))
+    {
+      return {};
+    }
 
-vector<uint8_t> combiner::divide(const vector<uint8_t> &source, size_t &index) {
-  if (source.empty() || source.size() < index + sizeof(size_t)) {
-    return {};
+    size_t temp;
+    std::copy(source.begin() + index, source.begin() + index + sizeof(size_t), reinterpret_cast<uint8_t *>(&temp));
+    index += sizeof(size_t);
+
+    if (temp == 0 || source.size() < index + temp)
+    {
+      return {};
+    }
+
+    std::vector<uint8_t> result(source.begin() + index, source.begin() + index + temp);
+    index += temp;
+
+    return result;
   }
-
-  size_t temp;
-  std::copy(source.begin() + index, source.begin() + index + sizeof(size_t),
-            reinterpret_cast<uint8_t *>(&temp));
-  index += sizeof(size_t);
-
-  if (temp == 0 || source.size() < index + temp) {
-    return {};
-  }
-
-  std::vector<uint8_t> result(source.begin() + index,
-                              source.begin() + index + temp);
-  index += temp;
-
-  return result;
-}
 } // namespace binary_parser

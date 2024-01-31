@@ -32,19 +32,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-namespace logging {
-enum class logging_level : unsigned short {
-  exception = 0,
-  error = 1,
-  information = 2,
-  sequence = 3,
-  parameter = 4,
-  packet = 5
-};
+namespace logging
+{
+  enum class logging_level : unsigned short {
+    exception = 0,
+    error = 1,
+    information = 2,
+    sequence = 3,
+    parameter = 4,
+    packet = 5
+  };
 
-enum class logging_styles : unsigned short {
-  console_only = 0,
-  file_and_console = 1,
-  file_only = 2
-};
+  enum class logging_styles : unsigned short { console_only = 0, file_and_console = 1, file_only = 2 };
 } // namespace logging
