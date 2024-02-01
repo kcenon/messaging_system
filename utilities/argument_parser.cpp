@@ -42,12 +42,12 @@ namespace argument_parser
 {
   argument_manager::argument_manager(void) {}
 
-  argument_manager::argument_manager(const string &arguments)
+  argument_manager::argument_manager(const std::string &arguments)
   {
     _arguments = parse(converter::split(converter::to_wstring(arguments), L" "));
   }
 
-  argument_manager::argument_manager(const wstring &arguments)
+  argument_manager::argument_manager(const std::wstring &arguments)
   {
     _arguments = parse(converter::split(arguments, L" "));
   }
@@ -56,23 +56,23 @@ namespace argument_parser
 
   argument_manager::argument_manager(int argc, wchar_t *argv[]) { _arguments = parse(argc, argv); }
 
-  optional<wstring> argument_manager::to_string(const wstring &key)
+  std::optional<std::wstring> argument_manager::to_string(const std::wstring &key)
   {
     auto target = _arguments.find(key);
     if (target == _arguments.end())
     {
-      return nullopt;
+      return std::nullopt;
     }
 
     return target->second;
   }
 
-  optional<bool> argument_manager::to_bool(const wstring &key)
+  std::optional<bool> argument_manager::to_bool(const std::wstring &key)
   {
     auto target = to_string(key);
-    if (target == nullopt)
+    if (target == std::nullopt)
     {
-      return nullopt;
+      return std::nullopt;
     }
 
     auto temp = *target;
@@ -81,60 +81,60 @@ namespace argument_parser
     return temp.compare(L"true") == 0;
   }
 
-  optional<short> argument_manager::to_short(const wstring &key)
+  std::optional<short> argument_manager::to_short(const std::wstring &key)
   {
     auto target = to_string(key);
-    if (target == nullopt)
+    if (target == std::nullopt)
     {
-      return nullopt;
+      return std::nullopt;
     }
 
     return (short)atoi(converter::to_string(*target).c_str());
   }
 
-  optional<unsigned short> argument_manager::to_ushort(const wstring &key)
+  std::optional<unsigned short> argument_manager::to_ushort(const std::wstring &key)
   {
     auto target = to_string(key);
-    if (target == nullopt)
+    if (target == std::nullopt)
     {
-      return nullopt;
+      return std::nullopt;
     }
 
     return (unsigned short)atoi(converter::to_string(*target).c_str());
   }
 
-  optional<int> argument_manager::to_int(const wstring &key)
+  std::optional<int> argument_manager::to_int(const std::wstring &key)
   {
     auto target = to_string(key);
-    if (target == nullopt)
+    if (target == std::nullopt)
     {
-      return nullopt;
+      return std::nullopt;
     }
 
     return (int)atoi(converter::to_string(*target).c_str());
   }
 
-  optional<unsigned int> argument_manager::to_uint(const wstring &key)
+  std::optional<unsigned int> argument_manager::to_uint(const std::wstring &key)
   {
     auto target = to_string(key);
-    if (target == nullopt)
+    if (target == std::nullopt)
     {
-      return nullopt;
+      return std::nullopt;
     }
 
     return (unsigned int)atoi(converter::to_string(*target).c_str());
   }
 
 #ifdef _WIN32
-  optional<long long> argument_manager::to_llong(const wstring &key)
+  std::optional<long long> argument_manager::to_llong(const std::wstring &key)
 #else
-  optional<long> argument_manager::to_long(const wstring &key)
+  std::optional<long> argument_manager::to_long(const std::wstring &key)
 #endif
   {
     auto target = to_string(key);
-    if (target == nullopt)
+    if (target == std::nullopt)
     {
-      return nullopt;
+      return std::nullopt;
     }
 
 #ifdef _WIN32
@@ -145,15 +145,15 @@ namespace argument_parser
   }
 
 #ifdef _WIN32
-  optional<unsigned long long> argument_manager::to_ullong(const wstring &key)
+  std::optional<unsigned long long> argument_manager::to_ullong(const std::wstring &key)
 #else
-  optional<unsigned long> argument_manager::to_ulong(const wstring &key)
+  std::optional<unsigned long> argument_manager::to_ulong(const std::wstring &key)
 #endif
   {
     auto target = to_string(key);
-    if (target == nullopt)
+    if (target == std::nullopt)
     {
-      return nullopt;
+      return std::nullopt;
     }
 
 #ifdef _WIN32
@@ -163,9 +163,9 @@ namespace argument_parser
 #endif
   }
 
-  map<wstring, wstring> argument_manager::parse(int argc, char *argv[])
+  std::map<std::wstring, std::wstring> argument_manager::parse(int argc, char *argv[])
   {
-    vector<wstring> arguments;
+    std::vector<std::wstring> arguments;
     for (int index = 1; index < argc; ++index)
     {
       arguments.push_back(converter::to_wstring(argv[index]));
@@ -174,9 +174,9 @@ namespace argument_parser
     return parse(arguments);
   }
 
-  map<wstring, wstring> argument_manager::parse(int argc, wchar_t *argv[])
+  std::map<std::wstring, std::wstring> argument_manager::parse(int argc, wchar_t *argv[])
   {
-    vector<wstring> arguments;
+    std::vector<std::wstring> arguments;
     for (int index = 1; index < argc; ++index)
     {
       arguments.push_back(argv[index]);
@@ -185,12 +185,12 @@ namespace argument_parser
     return parse(arguments);
   }
 
-  map<wstring, wstring> argument_manager::parse(const vector<wstring> &arguments)
+  std::map<std::wstring, std::wstring> argument_manager::parse(const std::vector<std::wstring> &arguments)
   {
-    map<wstring, wstring> result;
+    std::map<std::wstring, std::wstring> result;
 
     size_t argc = arguments.size();
-    wstring argument_id;
+    std::wstring argument_id;
     for (size_t index = 0; index < argc; ++index)
     {
       argument_id = arguments[index];

@@ -35,15 +35,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 
-using namespace std;
-
 namespace encrypting
 {
   class cryptor
   {
   public:
-    static pair<wstring, wstring> create_key(void);
-    static vector<uint8_t> encryption(const vector<uint8_t> &original_data, const wstring &key, const wstring &iv);
-    static vector<uint8_t> decryption(const vector<uint8_t> &encrypted_data, const wstring &key, const wstring &iv);
+    static std::pair<std::wstring, std::wstring> create_key(void);
+    static std::vector<uint8_t>
+    encryption(const std::vector<uint8_t> &original_data, const std::wstring &key, const std::wstring &iv);
+    static std::vector<uint8_t>
+    decryption(const std::vector<uint8_t> &encrypted_data, const std::wstring &key, const std::wstring &iv);
   };
 } // namespace encrypting

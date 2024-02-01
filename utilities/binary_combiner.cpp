@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace binary_parser
 {
-  void combiner::append(vector<uint8_t> &result, const vector<uint8_t> &source)
+  void combiner::append(std::vector<uint8_t> &result, const std::vector<uint8_t> &source)
   {
     size_t temp = source.size();
     const auto *temp_size = reinterpret_cast<const uint8_t *>(&temp);
@@ -51,7 +51,7 @@ namespace binary_parser
     result.insert(result.end(), source.begin(), source.end());
   }
 
-  vector<uint8_t> combiner::divide(const vector<uint8_t> &source, size_t &index)
+  std::vector<uint8_t> combiner::divide(const std::vector<uint8_t> &source, size_t &index)
   {
     if (source.empty() || source.size() < index + sizeof(size_t))
     {

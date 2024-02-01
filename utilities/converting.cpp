@@ -42,7 +42,7 @@ using namespace CryptoPP;
 
 namespace converting
 {
-  vector<wstring> converter::split(const wstring &source, const wstring &token)
+  std::vector<std::wstring> converter::split(const std::wstring &source, const std::wstring &token)
   {
     if (source.empty() == true)
     {
@@ -51,13 +51,13 @@ namespace converting
 
     size_t offset = 0;
     size_t last_offset = 0;
-    vector<wstring> result = {};
-    wstring temp;
+    std::vector<std::wstring> result = {};
+    std::wstring temp;
 
     while (true)
     {
       offset = source.find(token, last_offset);
-      if (offset == wstring::npos)
+      if (offset == std::wstring::npos)
       {
         break;
       }
@@ -71,7 +71,7 @@ namespace converting
       last_offset = offset + token.size();
     }
 
-    if (last_offset != 0 && last_offset != wstring::npos)
+    if (last_offset != 0 && last_offset != std::wstring::npos)
     {
       temp = source.substr(last_offset, offset - last_offset);
       if (!temp.empty())
@@ -88,12 +88,13 @@ namespace converting
     return result;
   }
 
-  void converter::replace(wstring &source, const wstring &token, const wstring &target)
+  void converter::replace(std::wstring &source, const std::wstring &token, const std::wstring &target)
   {
     source = replace2(source, token, target);
   }
 
-  const wstring converter::replace2(const wstring &source, const wstring &token, const wstring &target)
+  const std::wstring
+  converter::replace2(const std::wstring &source, const std::wstring &token, const std::wstring &target)
   {
     if (source.empty())
     {
@@ -109,13 +110,13 @@ namespace converting
       fmt::format_to(std::back_inserter(result), L"{}{}", source.substr(last_offset, offset - last_offset), target);
     }
 
-    // Add the last part of the string (after the last token, if any)
+    // Add the last part of the std::string (after the last token, if any)
     fmt::format_to(std::back_inserter(result), L"{}", source.substr(last_offset));
 
     return std::wstring(result.begin(), result.end());
   }
 
-  wstring converter::to_wstring(const string &value, locale target_locale)
+  std::wstring converter::to_wstring(const std::string &value, std::locale target_locale)
   {
     if (value.empty())
     {
@@ -127,7 +128,7 @@ namespace converting
 
     std::mbstate_t state = std::mbstate_t(); // Zero-initialized state
 
-    std::vector<char16_t> result(value.size() + 1, u '\0');
+    std::vector<char16_t> result(value.size());
     const char *in_text = value.data();
     char16_t *out_text = result.data();
 
@@ -142,7 +143,7 @@ namespace converting
     return convert(result.data());
   }
 
-  string converter::to_string(const wstring &value, locale target_locale)
+  std::string converter::to_string(const std::wstring &value, std::locale target_locale)
   {
     if (value.empty())
     {
@@ -171,25 +172,25 @@ namespace converting
     return std::string(result.data());
   }
 
-  vector<uint8_t> converter::to_array(const wstring &value)
+  std::vector<uint8_t> converter::to_array(const std::wstring &value)
   {
     if (value.empty())
     {
       return {};
     }
 
-    string temp = to_string(value);
+    std::string temp = to_string(value);
 
     return std::vector<uint8_t>(temp.begin(), temp.end());
   }
 
-  vector<uint8_t> converter::to_array(const string &value) { return to_array(to_wstring(value)); }
+  std::vector<uint8_t> converter::to_array(const std::string &value) { return to_array(to_wstring(value)); }
 
-  wstring converter::to_wstring(const vector<uint8_t> &value)
+  std::wstring converter::to_wstring(const std::vector<uint8_t> &value)
   {
     if (value.empty())
     {
-      return wstring();
+      return std::wstring();
     }
 
     // UTF-8 BOM
@@ -202,36 +203,36 @@ namespace converting
     return to_wstring(std::string(reinterpret_cast<const char *>(value.data()), value.size()));
   }
 
-  string converter::to_string(const vector<uint8_t> &value) { return to_string(to_wstring(value)); }
+  std::string converter::to_string(const std::vector<uint8_t> &value) { return to_string(to_wstring(value)); }
 
-  vector<uint8_t> converter::from_base64(const wstring &value)
+  std::vector<uint8_t> converter::from_base64(const std::wstring &value)
   {
     if (value.empty())
     {
-      return vector<uint8_t>();
+      return std::vector<uint8_t>();
     }
 
-    string source = to_string(value);
-    string encoded;
+    std::string source = to_string(value);
+    std::string encoded;
     StringSource(source.data(), true, new Base64Decoder(new StringSink(encoded)));
 
-    return vector<uint8_t>(encoded.begin(), encoded.end());
+    return std::vector<uint8_t>(encoded.begin(), encoded.end());
   }
 
-  wstring converter::to_base64(const vector<uint8_t> &value)
+  std::wstring converter::to_base64(const std::vector<uint8_t> &value)
   {
     if (value.empty())
     {
-      return wstring();
+      return std::wstring();
     }
 
-    string decoded;
+    std::string decoded;
     StringSource(value.data(), value.size(), true, new Base64Encoder(new StringSink(decoded)));
 
     return to_wstring(decoded);
   }
 
-  wstring converter::convert(const u16string &value) { return wstring(value.begin(), value.end()); }
+  std::wstring converter::convert(const std::u16string &value) { return std::wstring(value.begin(), value.end()); }
 
-  u16string converter::convert(const wstring &value) { return u16string(value.begin(), value.end()); }
+  std::u16string converter::convert(const std::wstring &value) { return std::u16string(value.begin(), value.end()); }
 } // namespace converting

@@ -32,3 +32,7 @@ AllowShortCaseLabelsOnASingleLine: false
 BreakArrays: false
 BreakConstructorInitializers: BeforeComma
 SpaceBeforeParens: ControlStatements
+SpacesInAngles: false
+SpacesInParentheses: false
+SpaceBeforeAssignmentOperators: true
+SpaceAroundUnaryOperators: false

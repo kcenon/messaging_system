@@ -40,9 +40,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace folder_handler
 {
-  wstring folder::get_temporary_folder(void) { return filesystem::temp_directory_path().wstring(); }
+  std::wstring folder::get_temporary_folder(void) { return std::filesystem::temp_directory_path().wstring(); }
 
-  bool folder::create_folder(const wstring &root, const wstring &target)
+  bool folder::create_folder(const std::wstring &root, const std::wstring &target)
   {
     if (root.empty())
     {
@@ -52,7 +52,7 @@ namespace folder_handler
     std::filesystem::path root_path(root);
     if (!std::filesystem::exists(root_path))
     {
-      filesystem::create_directories(root_path);
+      std::filesystem::create_directories(root_path);
     }
 
     if (target.empty())
@@ -63,18 +63,18 @@ namespace folder_handler
     return std::filesystem::create_directory(root_path / target);
   }
 
-  void folder::delete_folder(const wstring &target)
+  void folder::delete_folder(const std::wstring &target)
   {
     std::filesystem::path target_path(target);
-    if (!filesystem::exists(target_path))
+    if (!std::filesystem::exists(target_path))
     {
       return;
     }
 
-    filesystem::remove_all(target_path);
+    std::filesystem::remove_all(target_path);
   }
 
-  void folder::delete_folders(const vector<wstring> &targets)
+  void folder::delete_folders(const std::vector<std::wstring> &targets)
   {
     for (const auto &target : targets)
     {
@@ -82,25 +82,25 @@ namespace folder_handler
     }
   }
 
-  vector<wstring> folder::get_folders(const wstring &target_folder)
+  std::vector<std::wstring> folder::get_folders(const std::wstring &target_folder)
   {
-    vector<wstring> result;
+    std::vector<std::wstring> result;
 
     if (target_folder.empty())
     {
       return result;
     }
 
-    filesystem::path targetDir(target_folder);
-    if (filesystem::exists(targetDir) != true)
+    std::filesystem::path targetDir(target_folder);
+    if (std::filesystem::exists(targetDir) != true)
     {
       return result;
     }
 
-    filesystem::directory_iterator iterator(targetDir);
+    std::filesystem::directory_iterator iterator(targetDir);
     for (const auto &entry : iterator)
     {
-      if (!filesystem::is_directory(entry.path()))
+      if (!std::filesystem::is_directory(entry.path()))
       {
         continue;
       }
@@ -111,23 +111,24 @@ namespace folder_handler
     return result;
   }
 
-  vector<wstring>
-  folder::get_files(const wstring &target_folder, const bool &search_sub_folder, const vector<wstring> &extensions)
+  std::vector<std::wstring> folder::get_files(const std::wstring &target_folder,
+                                              const bool &search_sub_folder,
+                                              const std::vector<std::wstring> &extensions)
   {
-    vector<wstring> result;
+    std::vector<std::wstring> result;
 
     if (target_folder.empty())
     {
       return result;
     }
 
-    filesystem::path targetDir(target_folder);
-    if (filesystem::exists(targetDir) != true)
+    std::filesystem::path targetDir(target_folder);
+    if (std::filesystem::exists(targetDir) != true)
     {
       return result;
     }
 
-    filesystem::directory_iterator iterator(targetDir);
+    std::filesystem::directory_iterator iterator(targetDir);
     for (const auto &entry : iterator)
     {
       if (std::filesystem::is_directory(entry.path()) && search_sub_folder)

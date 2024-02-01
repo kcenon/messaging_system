@@ -36,35 +36,34 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 
-using namespace std;
-
 namespace converting
 {
   class converter
   {
   public:
-    static vector<wstring> split(const wstring &source, const wstring &token);
+    static std::vector<std::wstring> split(const std::wstring &source, const std::wstring &token);
 
   public:
-    static void replace(wstring &source, const wstring &token, const wstring &target);
-    static const wstring replace2(const wstring &source, const wstring &token, const wstring &target);
+    static void replace(std::wstring &source, const std::wstring &token, const std::wstring &target);
+    static const std::wstring
+    replace2(const std::wstring &source, const std::wstring &token, const std::wstring &target);
 
   public:
-    static wstring to_wstring(const string &value, locale target_locale = locale(""));
-    static string to_string(const wstring &value, locale target_locale = locale(""));
+    static std::wstring to_wstring(const std::string &value, std::locale target_locale = std::locale(""));
+    static std::string to_string(const std::wstring &value, std::locale target_locale = std::locale(""));
 
   public:
-    static vector<uint8_t> to_array(const wstring &value);
-    static vector<uint8_t> to_array(const string &value);
-    static wstring to_wstring(const vector<uint8_t> &value);
-    static string to_string(const vector<uint8_t> &value);
+    static std::vector<uint8_t> to_array(const std::wstring &value);
+    static std::vector<uint8_t> to_array(const std::string &value);
+    static std::wstring to_wstring(const std::vector<uint8_t> &value);
+    static std::string to_string(const std::vector<uint8_t> &value);
 
   public:
-    static vector<uint8_t> from_base64(const wstring &value);
-    static wstring to_base64(const vector<uint8_t> &value);
+    static std::vector<uint8_t> from_base64(const std::wstring &value);
+    static std::wstring to_base64(const std::vector<uint8_t> &value);
 
   private:
-    static wstring convert(const u16string &value);
-    static u16string convert(const wstring &value);
+    static std::wstring convert(const std::u16string &value);
+    static std::u16string convert(const std::wstring &value);
   };
 } // namespace converting

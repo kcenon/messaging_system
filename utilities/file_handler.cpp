@@ -44,27 +44,27 @@ namespace file_handler
 {
   using namespace converting;
 
-  bool file::remove(const wstring &path)
+  bool file::remove(const std::wstring &path)
   {
-    if (!filesystem::exists(path))
+    if (!std::filesystem::exists(path))
     {
       return false;
     }
 
-    return filesystem::remove(path);
+    return std::filesystem::remove(path);
   }
 
-  vector<uint8_t> file::load(const wstring &path)
+  std::vector<uint8_t> file::load(const std::wstring &path)
   {
-    if (!filesystem::exists(path))
+    if (!std::filesystem::exists(path))
     {
-      return vector<uint8_t>();
+      return std::vector<uint8_t>();
     }
 
-    ifstream stream(path, ios::binary);
+    std::ifstream stream(path, std::ios::binary);
     if (!stream.is_open())
     {
-      return vector<uint8_t>();
+      return std::vector<uint8_t>();
     }
 
     std::vector<uint8_t> target((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
@@ -73,15 +73,15 @@ namespace file_handler
     return target;
   }
 
-  bool file::save(const wstring &path, const vector<uint8_t> &data)
+  bool file::save(const std::wstring &path, const std::vector<uint8_t> &data)
   {
-    filesystem::path target_path(path);
+    std::filesystem::path target_path(path);
     if (target_path.parent_path().empty() != true)
     {
-      filesystem::create_directories(target_path.parent_path());
+      std::filesystem::create_directories(target_path.parent_path());
     }
 
-    ofstream stream(path, ios::binary | ios::trunc);
+    std::ofstream stream(path, std::ios::binary | std::ios::trunc);
     if (!stream.is_open())
     {
       return false;
@@ -93,9 +93,9 @@ namespace file_handler
     return true;
   }
 
-  bool file::append(const wstring &source, const vector<uint8_t> &data)
+  bool file::append(const std::wstring &source, const std::vector<uint8_t> &data)
   {
-    fstream stream(source, ios::out | ios::binary | ios::app);
+    std::fstream stream(source, std::ios::out | std::ios::binary | std::ios::app);
     if (!stream.is_open())
     {
       return false;

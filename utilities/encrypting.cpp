@@ -44,7 +44,7 @@ namespace encrypting
 {
   using namespace converting;
 
-  pair<wstring, wstring> cryptor::create_key(void)
+  std::pair<std::wstring, std::wstring> cryptor::create_key(void)
   {
     CryptoPP::AutoSeededRandomPool rng;
 
@@ -57,8 +57,9 @@ namespace encrypting
     return { converter::to_base64(key), converter::to_base64(iv) };
   }
 
-  vector<uint8_t>
-  cryptor::encryption(const vector<uint8_t> &original_data, const wstring &key_string, const wstring &iv_string)
+  std::vector<uint8_t> cryptor::encryption(const std::vector<uint8_t> &original_data,
+                                           const std::wstring &key_string,
+                                           const std::wstring &iv_string)
   {
     if (original_data.empty() || key_string.empty() || iv_string.empty())
     {
@@ -82,8 +83,9 @@ namespace encrypting
     return encrypted;
   }
 
-  vector<uint8_t>
-  cryptor::decryption(const vector<uint8_t> &encrypted_data, const wstring &key_string, const wstring &iv_string)
+  std::vector<uint8_t> cryptor::decryption(const std::vector<uint8_t> &encrypted_data,
+                                           const std::wstring &key_string,
+                                           const std::wstring &iv_string)
   {
     if (encrypted_data.empty() || key_string.empty() || iv_string.empty())
     {
