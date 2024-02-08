@@ -35,7 +35,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "converting.h"
 #include "file_handler.h"
 #include "folder_handler.h"
-#include "logging.h"
 
 #include "lz4.h"
 
@@ -47,18 +46,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace compressing
 {
-  using namespace logging;
   using namespace converting;
   using namespace file_handler;
   using namespace folder_handler;
 
-  std::vector<uint8_t> compressor::compression(const std::vector<uint8_t> &original_data,
-                                               const unsigned short &block_bytes,
-                                               const bool &hide_log)
+  std::tuple<std::vector<uint8_t>, std::wstring> compressor::compression(const std::vector<uint8_t> &original_data,
+                                                                         const unsigned short &block_bytes)
   {
     if (original_data.empty())
     {
-      return original_data;
+      return { {}, L"original data is empty" };
     }
 
     LZ4_stream_t lz4Stream_body;
@@ -95,29 +92,20 @@ namespace compressing
 
     if (compressed_data.size() == 0)
     {
-      logger::handle().write(logging_level::error, L"cannot complete to compress data");
-
-      return std::vector<uint8_t>();
+      return { {}, L"cannot complete to compress data" };
     }
 
-    if (!hide_log)
-    {
-      logger::handle().write(logging_level::sequence,
-                             fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", block_bytes,
-                                         original_data.size(), compressed_data.size(),
-                                         (((double)compressed_data.size() / (double)original_data.size()) * 100)));
-    }
-
-    return compressed_data;
+    return { compressed_data, fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)", block_bytes,
+                                          original_data.size(), compressed_data.size(),
+                                          (((double)compressed_data.size() / (double)original_data.size()) * 100)) };
   }
 
-  std::vector<uint8_t> compressor::decompression(const std::vector<uint8_t> &compressed_data,
-                                                 const unsigned short &block_bytes,
-                                                 const bool &hide_log)
+  std::tuple<std::vector<uint8_t>, std::wstring> compressor::decompression(const std::vector<uint8_t> &compressed_data,
+                                                                           const unsigned short &block_bytes)
   {
     if (compressed_data.empty())
     {
-      return {};
+      return { {}, L"original data is empty" };
     }
 
     LZ4_streamDecode_t lz4StreamDecode_body;
@@ -163,19 +151,12 @@ namespace compressing
 
     if (decompressed_data.size() == 0)
     {
-      logger::handle().write(logging_level::error, L"cannot complete to decompress data");
-
-      return std::vector<uint8_t>();
+      return { {}, L"cannot complete to decompress data" };
     }
 
-    if (!hide_log)
-    {
-      logger::handle().write(logging_level::sequence,
-                             fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)", block_bytes,
-                                         compressed_data.size(), decompressed_data.size(),
-                                         (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)));
-    }
-
-    return decompressed_data;
+    return { decompressed_data,
+             fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)", block_bytes, compressed_data.size(),
+                         decompressed_data.size(),
+                         (((double)compressed_data.size() / (double)decompressed_data.size()) * 100)) };
   }
 } // namespace compressing
