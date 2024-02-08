@@ -42,43 +42,39 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <queue>
 #include <vector>
 
-using namespace std;
+namespace threads
+{
+  class job;
+  class job_pool : public std::enable_shared_from_this<job_pool>
+  {
+  public:
+    job_pool(const std::wstring &title);
+    ~job_pool(void);
 
-namespace threads {
-class job;
-class job_pool : public enable_shared_from_this<job_pool> {
-public:
-  job_pool(const wstring &title);
-  ~job_pool(void);
+  public:
+    std::shared_ptr<job_pool> get_ptr(void);
 
-public:
-  shared_ptr<job_pool> get_ptr(void);
+  public:
+    bool push(std::shared_ptr<job> new_job);
+    std::shared_ptr<job> pop(const priorities &priority, const std::vector<priorities> &others = {});
+    bool contain(const priorities &priority, const std::vector<priorities> &others = {});
+    void set_push_lock(const bool &lock);
 
-public:
-  bool push(shared_ptr<job> new_job);
-  shared_ptr<job> pop(const priorities &priority,
-                      const vector<priorities> &others = {});
-  bool contain(const priorities &priority,
-               const vector<priorities> &others = {});
-  void set_push_lock(const bool &lock);
+  public:
+    bool append_notification(const std::wstring &id, const std::function<void(const priorities &)> &notification);
+    bool remove_notification(const std::wstring &id);
 
-public:
-  bool
-  append_notification(const wstring &id,
-                      const function<void(const priorities &)> &notification);
-  bool remove_notification(const wstring &id);
+  public:
+    void check_empty(void);
 
-public:
-  void check_empty(void);
+  private:
+    void notification(const priorities &priority);
 
-private:
-  void notification(const priorities &priority);
-
-private:
-  mutex _mutex;
-  bool _push_lock;
-  wstring _title;
-  map<priorities, queue<shared_ptr<job>>> _jobs;
-  map<wstring, function<void(const priorities &)>> _notifications;
-};
+  private:
+    std::mutex _mutex;
+    bool _push_lock;
+    std::wstring _title;
+    std::map<priorities, std::queue<std::shared_ptr<job> > > _jobs;
+    std::map<std::wstring, std::function<void(const priorities &)> > _notifications;
+  };
 } // namespace threads

@@ -43,162 +43,177 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "crossguid/guid.hpp"
 
-namespace threads {
-using namespace logging;
-using namespace converting;
+namespace threads
+{
+  using namespace logging;
+  using namespace converting;
 
-thread_worker::thread_worker(const priorities &priority,
-                             const vector<priorities> &others)
-    : _priority(priority), _others(others), _thread_stop(false) {
-  _guid = converter::to_wstring(xg::newGuid().str());
-}
-
-thread_worker::~thread_worker(void) { stop(); }
-
-void thread_worker::set_job_pool(shared_ptr<job_pool> job_pool) {
-  _job_pool = job_pool;
-}
-
-void thread_worker::set_worker_notification(
-    const function<void(const wstring &, const bool &)> &notification) {
-  _worker_condition = notification;
-}
-
-void thread_worker::start(void) {
-  stop();
-
-  _thread_stop = false;
-  _thread = make_shared<thread>(&thread_worker::run, this);
-
-  auto job_pool = _job_pool.lock();
-  if (job_pool != nullptr) {
-    job_pool->append_notification(
-        _guid,
-        bind(&thread_worker::append_notification, this, placeholders::_1));
-    job_pool.reset();
-  }
-}
-
-void thread_worker::stop(void) {
-  if (_thread == nullptr) {
-    return;
+  thread_worker::thread_worker(const priorities &priority, const std::vector<priorities> &others)
+      : _priority(priority), _others(others), _thread_stop(false)
+  {
+    _guid = converter::to_wstring(xg::newGuid().str());
   }
 
-  logger::handle().write(
-      logging_level::parameter,
-      fmt::format(L"attempt to stop working thread: priority - {}",
-                  (int)_priority));
+  thread_worker::~thread_worker(void) { stop(); }
 
-  auto job_pool = _job_pool.lock();
-  if (job_pool != nullptr) {
-    job_pool->remove_notification(_guid);
-    job_pool.reset();
+  std::shared_ptr<thread_worker> thread_worker::get_ptr(void) { return shared_from_this(); }
+
+  void thread_worker::set_job_pool(std::shared_ptr<job_pool> job_pool) { _job_pool = job_pool; }
+
+  void
+  thread_worker::set_worker_notification(const std::function<void(const std::wstring &, const bool &)> &notification)
+  {
+    _worker_condition = notification;
   }
 
-  if (_thread->joinable()) {
-    _thread_stop = true;
+  void thread_worker::start(void)
+  {
+    stop();
+
+    _thread_stop = false;
+    _thread = std::make_unique<std::thread>(&thread_worker::run, this);
+
+    auto job_pool = _job_pool.lock();
+    if (job_pool != nullptr)
+    {
+      job_pool->append_notification(_guid, bind(&thread_worker::append_notification, this, std::placeholders::_1));
+      job_pool.reset();
+    }
+  }
+
+  void thread_worker::stop(void)
+  {
+    if (_thread == nullptr)
+    {
+      return;
+    }
+
+    logger::handle().write(logging_level::parameter,
+                           fmt::format(L"attempt to stop working thread: priority - {}", (int)_priority));
+
+    auto job_pool = _job_pool.lock();
+    if (job_pool != nullptr)
+    {
+      job_pool->remove_notification(_guid);
+      job_pool.reset();
+    }
+
+    if (_thread->joinable())
+    {
+      _thread_stop = true;
+      _condition.notify_one();
+
+      _thread->join();
+    }
+
+    _thread.reset();
+  }
+
+  const std::wstring thread_worker::guid(void) { return _guid; }
+
+  const priorities thread_worker::priority(void) { return _priority; }
+
+  void thread_worker::run(void)
+  {
+    logger::handle().write(logging_level::sequence,
+                           fmt::format(L"start working thread: priority - {}", (int)_priority));
+
+    while (!_thread_stop)
+    {
+      std::unique_lock<std::mutex> unique(_mutex);
+      _condition.wait(unique, [this] { return check_condition(); });
+
+      if (_worker_condition)
+        _worker_condition(_guid, true);
+
+      auto jobs = _job_pool.lock();
+      if (jobs == nullptr)
+      {
+        if (_worker_condition)
+          _worker_condition(_guid, false);
+
+        break;
+      }
+
+      if (_thread_stop)
+      {
+        if (_worker_condition)
+          _worker_condition(_guid, false);
+
+        break;
+      }
+
+      std::shared_ptr<job> current_job = jobs->pop(_priority, _others);
+      unique.unlock();
+
+      if (current_job == nullptr && _thread_stop)
+      {
+        if (_worker_condition)
+          _worker_condition(_guid, false);
+
+        break;
+      }
+
+      working(current_job);
+
+      jobs.reset();
+
+      if (_worker_condition)
+        _worker_condition(_guid, false);
+    }
+
+    logger::handle().write(logging_level::sequence, fmt::format(L"stop working thread: priority - {}", (int)_priority));
+  }
+
+  void thread_worker::working(std::shared_ptr<job> current_job)
+  {
+    if (current_job == nullptr)
+    {
+      return;
+    }
+
+    current_job->work(_priority);
+  }
+
+  void thread_worker::append_notification(const priorities &priority)
+  {
+    if (priority == priorities::none)
+    {
+      return;
+    }
+
+    if (_priority == priority)
+    {
+      _condition.notify_one();
+
+      return;
+    }
+
+    auto target = find(_others.begin(), _others.end(), priority);
+    if (target == _others.end())
+    {
+      return;
+    }
+
     _condition.notify_one();
-
-    _thread->join();
   }
 
-  _thread.reset();
-}
-
-const wstring thread_worker::guid(void) { return _guid; }
-
-const priorities thread_worker::priority(void) { return _priority; }
-
-void thread_worker::run(void) {
-  logger::handle().write(
-      logging_level::sequence,
-      fmt::format(L"start working thread: priority - {}", (int)_priority));
-
-  while (!_thread_stop) {
-    unique_lock<mutex> unique(_mutex);
-    _condition.wait(unique, [this] { return check_condition(); });
-
-    if (_worker_condition)
-      _worker_condition(_guid, true);
+  bool thread_worker::check_condition(void)
+  {
+    if (_thread_stop)
+    {
+      return true;
+    }
 
     auto jobs = _job_pool.lock();
-    if (jobs == nullptr) {
-      if (_worker_condition)
-        _worker_condition(_guid, false);
-
-      break;
+    if (jobs == nullptr)
+    {
+      return false;
     }
 
-    if (_thread_stop) {
-      if (_worker_condition)
-        _worker_condition(_guid, false);
-
-      break;
-    }
-
-    shared_ptr<job> current_job = jobs->pop(_priority, _others);
-    unique.unlock();
-
-    if (current_job == nullptr && _thread_stop) {
-      if (_worker_condition)
-        _worker_condition(_guid, false);
-
-      break;
-    }
-
-    working(current_job);
-
+    bool result = jobs->contain(_priority, _others);
     jobs.reset();
 
-    if (_worker_condition)
-      _worker_condition(_guid, false);
+    return result;
   }
-
-  logger::handle().write(
-      logging_level::sequence,
-      fmt::format(L"stop working thread: priority - {}", (int)_priority));
-}
-
-void thread_worker::working(shared_ptr<job> current_job) {
-  if (current_job == nullptr) {
-    return;
-  }
-
-  current_job->work(_priority);
-}
-
-void thread_worker::append_notification(const priorities &priority) {
-  if (priority == priorities::none) {
-    return;
-  }
-
-  if (_priority == priority) {
-    _condition.notify_one();
-
-    return;
-  }
-
-  auto target = find(_others.begin(), _others.end(), priority);
-  if (target == _others.end()) {
-    return;
-  }
-
-  _condition.notify_one();
-}
-
-bool thread_worker::check_condition(void) {
-  if (_thread_stop) {
-    return true;
-  }
-
-  auto jobs = _job_pool.lock();
-  if (jobs == nullptr) {
-    return false;
-  }
-
-  bool result = jobs->contain(_priority, _others);
-  jobs.reset();
-
-  return result;
-}
 } // namespace threads

@@ -32,12 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-namespace threads {
-enum class priorities : unsigned short {
-  none = 0,
-  low = 1,
-  normal = 2,
-  high = 3,
-  top = 4
-};
+namespace threads
+{
+  enum class priorities : unsigned short { none = 0, low = 1, normal = 2, high = 3, top = 4 };
 }

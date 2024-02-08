@@ -40,158 +40,175 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <future>
 
-namespace threads {
-using namespace logging;
+namespace threads
+{
+  using namespace logging;
 
-job_pool::job_pool(const wstring &title) : _push_lock(false), _title(title) {}
+  job_pool::job_pool(const std::wstring &title) : _push_lock(false), _title(title) {}
 
-job_pool::~job_pool(void) { _jobs.clear(); }
+  job_pool::~job_pool(void) { _jobs.clear(); }
 
-shared_ptr<job_pool> job_pool::get_ptr(void) { return shared_from_this(); }
+  std::shared_ptr<job_pool> job_pool::get_ptr(void) { return shared_from_this(); }
 
-bool job_pool::push(shared_ptr<job> new_job) {
-  if (new_job == nullptr) {
-    return false;
-  }
+  bool job_pool::push(std::shared_ptr<job> new_job)
+  {
+    if (new_job == nullptr)
+    {
+      return false;
+    }
 
-  if (_push_lock) {
-    return false;
-  }
+    if (_push_lock)
+    {
+      return false;
+    }
 
-  new_job->set_job_pool(get_ptr());
+    new_job->set_job_pool(get_ptr());
 
-  scoped_lock<mutex> guard(_mutex);
+    std::scoped_lock<std::mutex> guard(_mutex);
 
-  auto iterator = _jobs.find(new_job->priority());
-  if (iterator != _jobs.end()) {
-    iterator->second.push(new_job);
+    auto iterator = _jobs.find(new_job->priority());
+    if (iterator != _jobs.end())
+    {
+      iterator->second.push(new_job);
+
+      logger::handle().write(logging_level::parameter,
+                             fmt::format(L"push new job to {}: priority - {}", _title, (int)new_job->priority()));
+
+      notification(new_job->priority());
+
+      return true;
+    }
+
+    std::queue<std::shared_ptr<job> > queue;
+    queue.push(new_job);
+
+    _jobs.insert({ new_job->priority(), queue });
 
     logger::handle().write(logging_level::parameter,
-                           fmt::format(L"push new job to {}: priority - {}",
-                                       _title, (int)new_job->priority()));
+                           fmt::format(L"push new job to {}: priority - {}", _title, (int)new_job->priority()));
 
     notification(new_job->priority());
 
     return true;
   }
 
-  queue<shared_ptr<job>> queue;
-  queue.push(new_job);
+  std::shared_ptr<job> job_pool::pop(const priorities &priority, const std::vector<priorities> &others)
+  {
+    std::scoped_lock<std::mutex> guard(_mutex);
 
-  _jobs.insert({new_job->priority(), queue});
+    auto iterator = _jobs.find(priority);
+    if (iterator != _jobs.end() && !iterator->second.empty())
+    {
+      std::shared_ptr<job> temp = iterator->second.front();
+      iterator->second.pop();
 
-  logger::handle().write(logging_level::parameter,
-                         fmt::format(L"push new job to {}: priority - {}",
-                                     _title, (int)new_job->priority()));
+      logger::handle().write(logging_level::parameter,
+                             fmt::format(L"pop a job from {}: priority - {}", _title, (int)temp->priority()));
 
-  notification(new_job->priority());
-
-  return true;
-}
-
-shared_ptr<job> job_pool::pop(const priorities &priority,
-                              const vector<priorities> &others) {
-  scoped_lock<mutex> guard(_mutex);
-
-  auto iterator = _jobs.find(priority);
-  if (iterator != _jobs.end() && !iterator->second.empty()) {
-    shared_ptr<job> temp = iterator->second.front();
-    iterator->second.pop();
-
-    logger::handle().write(logging_level::parameter,
-                           fmt::format(L"pop a job from {}: priority - {}",
-                                       _title, (int)temp->priority()));
-
-    return temp;
-  }
-
-  for (auto &other : others) {
-    auto iterator2 = _jobs.find(other);
-    if (iterator2 == _jobs.end() || iterator2->second.empty()) {
-      continue;
+      return temp;
     }
 
-    shared_ptr<job> temp = iterator2->second.front();
-    iterator2->second.pop();
+    for (auto &other : others)
+    {
+      auto iterator2 = _jobs.find(other);
+      if (iterator2 == _jobs.end() || iterator2->second.empty())
+      {
+        continue;
+      }
 
-    logger::handle().write(logging_level::parameter,
-                           fmt::format(L"pop a job from {}: priority - {}",
-                                       _title, (int)temp->priority()));
+      std::shared_ptr<job> temp = iterator2->second.front();
+      iterator2->second.pop();
 
-    return temp;
-  }
+      logger::handle().write(logging_level::parameter,
+                             fmt::format(L"pop a job from {}: priority - {}", _title, (int)temp->priority()));
 
-  return nullptr;
-}
-
-bool job_pool::contain(const priorities &priority,
-                       const vector<priorities> &others) {
-  scoped_lock<mutex> guard(_mutex);
-
-  auto iterator = _jobs.find(priority);
-  if (iterator != _jobs.end() && !iterator->second.empty()) {
-    shared_ptr<job> temp = iterator->second.front();
-
-    return temp != nullptr;
-  }
-
-  for (auto &other : others) {
-    auto iterator2 = _jobs.find(priority);
-    if (iterator2 == _jobs.end() || iterator2->second.empty()) {
-      continue;
+      return temp;
     }
 
-    shared_ptr<job> temp = iterator2->second.front();
-
-    return temp != nullptr;
+    return nullptr;
   }
 
-  return false;
-}
+  bool job_pool::contain(const priorities &priority, const std::vector<priorities> &others)
+  {
+    std::scoped_lock<std::mutex> guard(_mutex);
 
-void job_pool::set_push_lock(const bool &lock) { _push_lock = lock; }
+    auto iterator = _jobs.find(priority);
+    if (iterator != _jobs.end() && !iterator->second.empty())
+    {
+      std::shared_ptr<job> temp = iterator->second.front();
 
-bool job_pool::append_notification(
-    const wstring &id, const function<void(const priorities &)> &notification) {
-  auto target = _notifications.find(id);
-  if (target != _notifications.end()) {
+      return temp != nullptr;
+    }
+
+    for (auto &other : others)
+    {
+      auto iterator2 = _jobs.find(priority);
+      if (iterator2 == _jobs.end() || iterator2->second.empty())
+      {
+        continue;
+      }
+
+      std::shared_ptr<job> temp = iterator2->second.front();
+
+      return temp != nullptr;
+    }
+
     return false;
   }
 
-  _notifications.insert({id, notification});
+  void job_pool::set_push_lock(const bool &lock) { _push_lock = lock; }
 
-  return true;
-}
-
-bool job_pool::remove_notification(const wstring &id) {
-  auto target = _notifications.find(id);
-  if (target == _notifications.end()) {
-    return false;
-  }
-
-  _notifications.erase(target);
-
-  return true;
-}
-
-void job_pool::check_empty(void) {
-  size_t count = 0;
-  for (auto &target : _jobs) {
-    count += target.second.size();
-  }
-
-  if (count == 0) {
-    notification(priorities::none);
-  }
-}
-
-void job_pool::notification(const priorities &priority) {
-  for (auto &notification : _notifications) {
-    if (notification.second == nullptr) {
-      continue;
+  bool job_pool::append_notification(const std::wstring &id,
+                                     const std::function<void(const priorities &)> &notification)
+  {
+    auto target = _notifications.find(id);
+    if (target != _notifications.end())
+    {
+      return false;
     }
 
-    notification.second(priority);
+    _notifications.insert({ id, notification });
+
+    return true;
   }
-}
+
+  bool job_pool::remove_notification(const std::wstring &id)
+  {
+    auto target = _notifications.find(id);
+    if (target == _notifications.end())
+    {
+      return false;
+    }
+
+    _notifications.erase(target);
+
+    return true;
+  }
+
+  void job_pool::check_empty(void)
+  {
+    size_t count = 0;
+    for (auto &target : _jobs)
+    {
+      count += target.second.size();
+    }
+
+    if (count == 0)
+    {
+      notification(priorities::none);
+    }
+  }
+
+  void job_pool::notification(const priorities &priority)
+  {
+    for (auto &notification : _notifications)
+    {
+      if (notification.second == nullptr)
+      {
+        continue;
+      }
+
+      notification.second(priority);
+    }
+  }
 } // namespace threads
