@@ -36,6 +36,6 @@ git pull
 ./bootstrap-vcpkg.sh
 ./vcpkg integrate install
 ./vcpkg upgrade --no-dry-run
-./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest
+./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest --recurse
 
 cd ..
