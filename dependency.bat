@@ -7,15 +7,7 @@ IF NOT EXIST "./vcpkg/" (
 cd vcpkg
 git pull
 call bootstrap-vcpkg.bat
-vcpkg install lz4:x86-windows lz4:x64-windows
-vcpkg install fmt:x86-windows fmt:x64-windows
-vcpkg install cpprestsdk:x86-windows cpprestsdk:x64-windows
-vcpkg install cryptopp:x86-windows cryptopp:x64-windows
-vcpkg install asio:x86-windows asio:x64-windows
-vcpkg install python3:x86-windows python3:x64-windows
-vcpkg install crossguid:x86-windows crossguid:x64-windows
-vcpkg install libpq:x86-windows libpq:x64-windows
-vcpkg install gtest:x86-windows gtest:x64-windows
+vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpqgtest --triplet x64-windows --recurse
 vcpkg upgrade --no-dry-run
 cd ..
 cd messaging_system

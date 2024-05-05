@@ -36,15 +36,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-namespace container {
-class double_value : public value {
-public:
-  double_value(void);
-  double_value(const wstring &name, const double &value);
-  ~double_value(void) = default;
+namespace container
+{
+  class double_value : public value
+  {
+  public:
+    double_value(void);
+    double_value(const wstring &name, const double &value);
+    ~double_value(void) = default;
 
-public:
-  double to_double(void) const override;
-  wstring to_string(const bool &original = true) const override;
-};
+  public:
+    double to_double(void) const override;
+    wstring to_string(const bool &original = true) const override;
+  };
 } // namespace container

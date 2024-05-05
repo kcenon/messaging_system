@@ -32,10 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-namespace network {
-enum class data_modes : unsigned char {
-  binary_mode = 1,
-  packet_mode = 2,
-  file_mode = 3
-};
+namespace network
+{
+  enum class data_modes : unsigned char { binary_mode = 1, packet_mode = 2, file_mode = 3 };
 }

@@ -64,18 +64,19 @@ namespace threads
     void stop(void);
 
   public:
-    const std::wstring guid(void);
-    const priorities priority(void);
+    auto guid(void) const -> std::wstring;
+    auto priority(void) const -> priorities;
+    auto priority(const priorities &value) -> void;
 
   protected:
-    void run(void);
+    auto run(void) -> void;
 
   protected:
-    virtual void working(std::shared_ptr<job> current_job);
+    virtual auto working(std::shared_ptr<job> current_job) -> void;
 
   protected:
-    void append_notification(const priorities &priority);
-    bool check_condition(void);
+    auto append_notification(const priorities &priority) -> void;
+    auto check_condition(void) -> bool;
 
   private:
     bool _thread_stop;

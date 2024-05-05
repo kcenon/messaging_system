@@ -43,202 +43,214 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-namespace container {
-class value : public enable_shared_from_this<value> {
-public:
-  value(void);
-  value(shared_ptr<value> object);
-  value(const wstring &name, const vector<shared_ptr<value>> &units = {});
-  value(const wstring &name, const value_types &type, const wstring &data);
-  value(const wstring &name, const unsigned char *data, const size_t &size,
-        const value_types &type = value_types::null_value);
-  virtual ~value(void);
+namespace container
+{
+  class value : public enable_shared_from_this<value>
+  {
+  public:
+    value(void);
+    value(shared_ptr<value> object);
+    value(const wstring &name, const vector<shared_ptr<value> > &units = {});
+    value(const wstring &name, const value_types &type, const wstring &data);
+    value(const wstring &name,
+          const unsigned char *data,
+          const size_t &size,
+          const value_types &type = value_types::null_value);
+    virtual ~value(void);
 
-public:
-  shared_ptr<value> get_ptr(void);
+  public:
+    shared_ptr<value> get_ptr(void);
 
-public:
-  void set_parent(shared_ptr<value> parent);
-  void set_data(const unsigned char *data, const size_t &size,
-                const value_types &type);
-  void set_data(const wstring &name, const value_types &type,
-                const wstring &data);
+  public:
+    void set_parent(shared_ptr<value> parent);
+    void set_data(const unsigned char *data, const size_t &size, const value_types &type);
+    void set_data(const wstring &name, const value_types &type, const wstring &data);
 
-public:
-  wstring name(void) const;
-  value_types type(void) const;
-  wstring data(void) const;
-  size_t size(void) const;
-  shared_ptr<value> parent(void);
-  size_t child_count(void) const;
-  vector<shared_ptr<value>> children(const bool &only_container = false);
+  public:
+    wstring name(void) const;
+    value_types type(void) const;
+    wstring data(void) const;
+    size_t size(void) const;
+    shared_ptr<value> parent(void);
+    size_t child_count(void) const;
+    vector<shared_ptr<value> > children(const bool &only_container = false);
 
-public:
-  virtual shared_ptr<value> add(const value &item,
-                                const bool &update_count = true) {
-    throw exception(logic_error("cannot add value object on this object"));
-  }
-  virtual shared_ptr<value> add(shared_ptr<value> item,
-                                const bool &update_count = true) {
-    throw exception(logic_error("cannot add value object on this object"));
-  }
-  virtual void add(const vector<value> &target_values,
-                   const bool &update_count = true) {
-    throw exception(logic_error("cannot add value objects on this object"));
-  }
-  virtual void add(const vector<shared_ptr<value>> &target_values,
-                   const bool &update_count = true) {
-    throw exception(logic_error("cannot add value objects on this object"));
-  }
-  virtual void remove(const wstring &target_name,
-                      const bool &update_count = true) {
-    throw exception(logic_error("cannot remove value objects on this object"));
-  }
-  virtual void remove(shared_ptr<value> item, const bool &update_count = true) {
-    throw exception(logic_error("cannot remove value object on this object"));
-  }
-  virtual void remove_all(void) {
-    throw exception(logic_error("cannot remove value object on this object"));
-  }
-  vector<shared_ptr<value>> value_array(const wstring &key);
+  public:
+    virtual shared_ptr<value> add(const value &item, const bool &update_count = true)
+    {
+      throw exception(logic_error("cannot add value object on this object"));
+    }
+    virtual shared_ptr<value> add(shared_ptr<value> item, const bool &update_count = true)
+    {
+      throw exception(logic_error("cannot add value object on this object"));
+    }
+    virtual void add(const vector<value> &target_values, const bool &update_count = true)
+    {
+      throw exception(logic_error("cannot add value objects on this object"));
+    }
+    virtual void add(const vector<shared_ptr<value> > &target_values, const bool &update_count = true)
+    {
+      throw exception(logic_error("cannot add value objects on this object"));
+    }
+    virtual void remove(const wstring &target_name, const bool &update_count = true)
+    {
+      throw exception(logic_error("cannot remove value objects on this object"));
+    }
+    virtual void remove(shared_ptr<value> item, const bool &update_count = true)
+    {
+      throw exception(logic_error("cannot remove value object on this object"));
+    }
+    virtual void remove_all(void) { throw exception(logic_error("cannot remove value object on this object")); }
+    vector<shared_ptr<value> > value_array(const wstring &key);
 
-public:
-  const vector<uint8_t> to_bytes(void) const;
+  public:
+    const vector<uint8_t> to_bytes(void) const;
 
-public:
-  bool is_null(void) const;
-  bool is_bytes(void) const;
-  bool is_boolean(void) const;
-  bool is_numeric(void) const;
-  bool is_string(void) const;
-  bool is_container(void) const;
+  public:
+    bool is_null(void) const;
+    bool is_bytes(void) const;
+    bool is_boolean(void) const;
+    bool is_numeric(void) const;
+    bool is_string(void) const;
+    bool is_container(void) const;
 
-public:
-  const wstring to_xml(void);
-  const wstring to_json(void);
+  public:
+    const wstring to_xml(void);
+    const wstring to_json(void);
 
-public:
-  const wstring serialize(void);
+  public:
+    const wstring serialize(void);
 
-public:
-  virtual bool to_boolean(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return false;
-  }
-  virtual short to_short(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return 0;
-  }
-  virtual unsigned short to_ushort(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return 0;
-  }
-  virtual int to_int(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return 0;
-  }
-  virtual unsigned int to_uint(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return 0;
-  }
-  virtual long to_long(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return 0;
-  }
-  virtual unsigned long to_ulong(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return 0;
-  }
-  virtual long long to_llong(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return 0;
-  }
-  virtual unsigned long long to_ullong(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return 0;
-  }
-  virtual float to_float(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return 0;
-  }
-  virtual double to_double(void) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return 0;
-  }
-  virtual wstring to_string(const bool &original = true) const {
-    if (_type == value_types::null_value)
-      throw exception(logic_error("Not implemented yet!"));
-    else
-      return L"";
-  }
+  public:
+    virtual bool to_boolean(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return false;
+    }
+    virtual short to_short(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return 0;
+    }
+    virtual unsigned short to_ushort(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return 0;
+    }
+    virtual int to_int(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return 0;
+    }
+    virtual unsigned int to_uint(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return 0;
+    }
+    virtual long to_long(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return 0;
+    }
+    virtual unsigned long to_ulong(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return 0;
+    }
+    virtual long long to_llong(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return 0;
+    }
+    virtual unsigned long long to_ullong(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return 0;
+    }
+    virtual float to_float(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return 0;
+    }
+    virtual double to_double(void) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return 0;
+    }
+    virtual wstring to_string(const bool &original = true) const
+    {
+      if (_type == value_types::null_value)
+        throw exception(logic_error("Not implemented yet!"));
+      else
+        return L"";
+    }
 
-public:
-  shared_ptr<value> operator[](const wstring &key);
+  public:
+    shared_ptr<value> operator[](const wstring &key);
 
-  friend shared_ptr<value> operator<<(shared_ptr<value> container,
-                                      shared_ptr<value> other);
+    friend shared_ptr<value> operator<<(shared_ptr<value> container, shared_ptr<value> other);
 
-  friend ostream &operator<<(ostream &out, shared_ptr<value> other);
-  friend wostream &operator<<(wostream &out, shared_ptr<value> other);
+    friend ostream &operator<<(ostream &out, shared_ptr<value> other);
+    friend wostream &operator<<(wostream &out, shared_ptr<value> other);
 
-  friend string &operator<<(string &out, shared_ptr<value> other);
-  friend wstring &operator<<(wstring &out, shared_ptr<value> other);
+    friend string &operator<<(string &out, shared_ptr<value> other);
+    friend wstring &operator<<(wstring &out, shared_ptr<value> other);
 
-protected:
-  wstring convert_specific_string(const vector<uint8_t> &data) const;
-  vector<uint8_t> convert_specific_string(wstring data) const;
+  protected:
+    wstring convert_specific_string(const vector<uint8_t> &data) const;
+    vector<uint8_t> convert_specific_string(wstring data) const;
 
-protected:
-  template <typename T> void set_data(T data);
-  void set_byte_string(const wstring &data);
-  void set_string(const wstring &data);
-  void set_boolean(const wstring &data);
+  protected:
+    template <typename T> void set_data(T data);
+    void set_byte_string(const wstring &data);
+    void set_string(const wstring &data);
+    void set_boolean(const wstring &data);
 
-private:
-  void set_short(const wstring &data);
-  void set_ushort(const wstring &data);
-  void set_int(const wstring &data);
-  void set_uint(const wstring &data);
-  void set_long(const wstring &data);
-  void set_ulong(const wstring &data);
-  void set_llong(const wstring &data);
-  void set_ullong(const wstring &data);
-  void set_float(const wstring &data);
-  void set_double(const wstring &data);
+  private:
+    void set_short(const wstring &data);
+    void set_ushort(const wstring &data);
+    void set_int(const wstring &data);
+    void set_uint(const wstring &data);
+    void set_long(const wstring &data);
+    void set_ulong(const wstring &data);
+    void set_llong(const wstring &data);
+    void set_ullong(const wstring &data);
+    void set_float(const wstring &data);
+    void set_double(const wstring &data);
 
-protected:
-  size_t _size;
-  value_types _type;
-  wstring _name;
-  vector<uint8_t> _data;
+  protected:
+    size_t _size;
+    value_types _type;
+    wstring _name;
+    vector<uint8_t> _data;
 
-protected:
-  weak_ptr<value> _parent;
-  vector<shared_ptr<value>> _units;
+  protected:
+    weak_ptr<value> _parent;
+    vector<shared_ptr<value> > _units;
 
-private:
-  map<value_types, function<void(const wstring &)>> _data_type_map;
-};
+  private:
+    map<value_types, function<void(const wstring &)> > _data_type_map;
+  };
 } // namespace container

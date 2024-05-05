@@ -35,24 +35,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "fmt/format.h"
 #include "fmt/xchar.h"
 
-namespace container {
-float_value::float_value(void) : value() { _type = value_types::float_value; }
+namespace container
+{
+  float_value::float_value(void) : value() { _type = value_types::float_value; }
 
-float_value::float_value(const wstring &name, const float &value)
-    : float_value() {
-  _name = name;
-  set_data((const unsigned char *)&value, sizeof(float),
-           value_types::float_value);
-}
+  float_value::float_value(const wstring &name, const float &value) : float_value()
+  {
+    _name = name;
+    set_data((const unsigned char *)&value, sizeof(float), value_types::float_value);
+  }
 
-float float_value::to_float(void) const {
-  float temp = 0;
-  memcpy(&temp, _data.data(), _size);
+  float float_value::to_float(void) const
+  {
+    float temp = 0;
+    memcpy(&temp, _data.data(), _size);
 
-  return static_cast<float>(temp);
-}
+    return static_cast<float>(temp);
+  }
 
-wstring float_value::to_string(const bool &) const {
-  return fmt::format(L"{}", to_float());
-}
+  wstring float_value::to_string(const bool &) const { return fmt::format(L"{}", to_float()); }
 } // namespace container

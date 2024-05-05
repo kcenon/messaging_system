@@ -109,11 +109,13 @@ namespace threads
     _thread.reset();
   }
 
-  const std::wstring thread_worker::guid(void) { return _guid; }
+  auto thread_worker::guid(void) const -> std::wstring { return _guid; }
 
-  const priorities thread_worker::priority(void) { return _priority; }
+  auto thread_worker::priority(void) const -> priorities { return _priority; }
 
-  void thread_worker::run(void)
+  auto thread_worker::priority(const priorities &value) -> void { _priority = value; }
+
+  auto thread_worker::run(void) -> void
   {
     logger::handle().write(logging_level::sequence,
                            fmt::format(L"start working thread: priority - {}", (int)_priority));

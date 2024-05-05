@@ -34,26 +34,27 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "converting.h"
 
-namespace container {
-using namespace converting;
+namespace container
+{
+  using namespace converting;
 
-string_value::string_value(void) : value() {
-  _type = value_types::string_value;
-}
+  string_value::string_value(void) : value() { _type = value_types::string_value; }
 
-string_value::string_value(const wstring &name, const wstring &value)
-    : string_value() {
-  vector<uint8_t> data = convert_specific_string(value);
+  string_value::string_value(const wstring &name, const wstring &value) : string_value()
+  {
+    vector<uint8_t> data = convert_specific_string(value);
 
-  _name = name;
-  set_data(data.data(), data.size(), value_types::string_value);
-}
-
-wstring string_value::to_string(const bool &original) const {
-  if (!original) {
-    return converter::to_wstring(_data);
+    _name = name;
+    set_data(data.data(), data.size(), value_types::string_value);
   }
 
-  return convert_specific_string(_data);
-}
+  wstring string_value::to_string(const bool &original) const
+  {
+    if (!original)
+    {
+      return converter::to_wstring(_data);
+    }
+
+    return convert_specific_string(_data);
+  }
 } // namespace container

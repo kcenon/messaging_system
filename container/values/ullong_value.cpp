@@ -35,26 +35,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "fmt/format.h"
 #include "fmt/xchar.h"
 
-namespace container {
-ullong_value::ullong_value(void) : value() {
-  _type = value_types::ullong_value;
-}
+namespace container
+{
+  ullong_value::ullong_value(void) : value() { _type = value_types::ullong_value; }
 
-ullong_value::ullong_value(const wstring &name, const unsigned long long &value)
-    : ullong_value() {
-  _name = name;
-  set_data((const unsigned char *)&value, sizeof(unsigned long long),
-           value_types::ullong_value);
-}
+  ullong_value::ullong_value(const wstring &name, const unsigned long long &value) : ullong_value()
+  {
+    _name = name;
+    set_data((const unsigned char *)&value, sizeof(unsigned long long), value_types::ullong_value);
+  }
 
-unsigned long long ullong_value::to_ullong(void) const {
-  unsigned long long temp = 0;
-  memcpy(&temp, _data.data(), _size);
+  unsigned long long ullong_value::to_ullong(void) const
+  {
+    unsigned long long temp = 0;
+    memcpy(&temp, _data.data(), _size);
 
-  return static_cast<unsigned long long>(temp);
-}
+    return static_cast<unsigned long long>(temp);
+  }
 
-wstring ullong_value::to_string(const bool &) const {
-  return fmt::format(L"{}", to_ullong());
-}
+  wstring ullong_value::to_string(const bool &) const { return fmt::format(L"{}", to_ullong()); }
 } // namespace container

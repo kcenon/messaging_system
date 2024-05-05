@@ -32,10 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-namespace network {
-constexpr auto buffer_size = 65535;
-constexpr auto start_code = 4;
-constexpr auto mode_code = 1;
-constexpr auto length_code = 4;
-constexpr auto end_code = 4;
+namespace network
+{
+  constexpr auto buffer_size = 65535;
+  constexpr auto start_code = 4;
+  constexpr auto mode_code = 1;
+  constexpr auto length_code = 4;
+  constexpr auto end_code = 4;
 } // namespace network

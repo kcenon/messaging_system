@@ -36,15 +36,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-namespace container {
-class float_value : public value {
-public:
-  float_value(void);
-  float_value(const wstring &name, const float &value);
-  ~float_value(void) = default;
+namespace container
+{
+  class float_value : public value
+  {
+  public:
+    float_value(void);
+    float_value(const wstring &name, const float &value);
+    ~float_value(void) = default;
 
-public:
-  float to_float(void) const override;
-  wstring to_string(const bool &original = true) const override;
-};
+  public:
+    float to_float(void) const override;
+    wstring to_string(const bool &original = true) const override;
+  };
 } // namespace container

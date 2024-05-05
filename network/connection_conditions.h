@@ -32,10 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-namespace network {
-enum class connection_conditions : short {
-  waiting = 1,
-  expired = 2,
-  confirmed = 3
-};
+namespace network
+{
+  enum class connection_conditions : short { waiting = 1, expired = 2, confirmed = 3 };
 }

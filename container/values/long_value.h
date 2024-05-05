@@ -36,15 +36,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-namespace container {
-class long_value : public value {
-public:
-  long_value(void);
-  long_value(const wstring &name, const long &value);
-  ~long_value(void) = default;
+namespace container
+{
+  class long_value : public value
+  {
+  public:
+    long_value(void);
+    long_value(const wstring &name, const long &value);
+    ~long_value(void) = default;
 
-public:
-  long to_long(void) const override;
-  wstring to_string(const bool &original = true) const override;
-};
+  public:
+    long to_long(void) const override;
+    wstring to_string(const bool &original = true) const override;
+  };
 } // namespace container

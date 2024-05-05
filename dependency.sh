@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ "$(uname)" == "Darwin" ]; then
-    brew install pkg-config autoconf cmake
+    brew install pkg-config autoconf cmake automake autoconf-archive
 elif [ "$(uname)" == "Linux" ]; then
     apt update
     apt upgrade -y
@@ -11,7 +11,8 @@ elif [ "$(uname)" == "Linux" ]; then
     apt-get upgrade -y
 
     apt-get install curl zip unzip tar ninja-build -y
-    apt-get install swig pkg-config autoconf -y
+    apt-get install swig pkg-config -y
+    apt-get install autoconf automake autoconf-archive -y
 
     if [ $(egrep "^(VERSION_ID)=" /etc/os-release) != "VERSION_ID=\"22.04\"" ]; then
         apt-get install python3-pip -y
@@ -35,6 +36,6 @@ git pull
 ./bootstrap-vcpkg.sh
 ./vcpkg integrate install
 ./vcpkg upgrade --no-dry-run
-./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest
+./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest --recurse
 
 cd ..

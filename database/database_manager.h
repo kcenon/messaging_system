@@ -37,37 +37,38 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "database_base.h"
 
-namespace database {
-class database_manager {
-public:
-  database_manager(void);
-  virtual ~database_manager(void);
+namespace database
+{
+  class database_manager
+  {
+  public:
+    database_manager(void);
+    virtual ~database_manager(void);
 
-public:
-  bool set_mode(const database_types &database_type);
-  database_types database_type(void);
+  public:
+    bool set_mode(const database_types &database_type);
+    database_types database_type(void);
 
-public:
-  bool connect(const wstring &connect_string);
-  bool create_query(const wstring &query_string);
-  unsigned int insert_query(const wstring &query_string);
-  unsigned int update_query(const wstring &query_string);
-  unsigned int delete_query(const wstring &query_string);
-  shared_ptr<container::value_container>
-  select_query(const wstring &query_string);
-  bool disconnect(void);
+  public:
+    bool connect(const wstring &connect_string);
+    bool create_query(const wstring &query_string);
+    unsigned int insert_query(const wstring &query_string);
+    unsigned int update_query(const wstring &query_string);
+    unsigned int delete_query(const wstring &query_string);
+    shared_ptr<container::value_container> select_query(const wstring &query_string);
+    bool disconnect(void);
 
-private:
-  bool _connected;
-  shared_ptr<database_base> _database;
+  private:
+    bool _connected;
+    shared_ptr<database_base> _database;
 
 #pragma region singleton
-public:
-  static database_manager &handle(void);
+  public:
+    static database_manager &handle(void);
 
-private:
-  static unique_ptr<database_manager> _handle;
-  static once_flag _once;
+  private:
+    static unique_ptr<database_manager> _handle;
+    static once_flag _once;
 #pragma endregion
-};
+  };
 }; // namespace database

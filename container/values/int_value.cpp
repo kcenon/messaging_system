@@ -35,22 +35,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "fmt/format.h"
 #include "fmt/xchar.h"
 
-namespace container {
-int_value::int_value(void) : value() { _type = value_types::int_value; }
+namespace container
+{
+  int_value::int_value(void) : value() { _type = value_types::int_value; }
 
-int_value::int_value(const wstring &name, const int &value) : int_value() {
-  _name = name;
-  set_data((const unsigned char *)&value, sizeof(int), value_types::int_value);
-}
+  int_value::int_value(const wstring &name, const int &value) : int_value()
+  {
+    _name = name;
+    set_data((const unsigned char *)&value, sizeof(int), value_types::int_value);
+  }
 
-int int_value::to_int(void) const {
-  int temp = 0;
-  memcpy(&temp, _data.data(), _size);
+  int int_value::to_int(void) const
+  {
+    int temp = 0;
+    memcpy(&temp, _data.data(), _size);
 
-  return static_cast<int>(temp);
-}
+    return static_cast<int>(temp);
+  }
 
-wstring int_value::to_string(const bool &) const {
-  return fmt::format(L"{}", to_int());
-}
+  wstring int_value::to_string(const bool &) const { return fmt::format(L"{}", to_int()); }
 } // namespace container
