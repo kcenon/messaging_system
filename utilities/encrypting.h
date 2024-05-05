@@ -32,18 +32,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include <tuple>
 #include <string>
 #include <vector>
 
 namespace encrypting
 {
-  class cryptor
-  {
-  public:
-    static std::pair<std::wstring, std::wstring> create_key(void);
-    static std::vector<uint8_t>
-    encryption(const std::vector<uint8_t> &original_data, const std::wstring &key, const std::wstring &iv);
-    static std::vector<uint8_t>
-    decryption(const std::vector<uint8_t> &encrypted_data, const std::wstring &key, const std::wstring &iv);
-  };
+	class cryptor
+	{
+	public:
+		static auto create_key(void) -> std::tuple<std::wstring, std::wstring>;
+		static auto encryption(const std::vector<uint8_t>& original_data,
+							   const std::wstring& key,
+							   const std::wstring& iv) -> std::vector<uint8_t>;
+		static auto decryption(const std::vector<uint8_t>& encrypted_data,
+							   const std::wstring& key,
+							   const std::wstring& iv) -> std::vector<uint8_t>;
+	};
 } // namespace encrypting

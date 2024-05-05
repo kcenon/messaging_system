@@ -38,15 +38,15 @@ using namespace std;
 
 namespace container
 {
-  class ushort_value : public value
-  {
-  public:
-    ushort_value(void);
-    ushort_value(const wstring &name, const unsigned short &value);
-    ~ushort_value(void) = default;
+	class ushort_value : public value
+	{
+	public:
+		ushort_value(void);
+		ushort_value(const wstring& name, const unsigned short& value);
+		~ushort_value(void) = default;
 
-  public:
-    unsigned short to_ushort(void) const override;
-    wstring to_string(const bool &original = true) const override;
-  };
+	public:
+		unsigned short to_ushort(void) const override;
+		wstring to_string(const bool& original = true) const override;
+	};
 } // namespace container

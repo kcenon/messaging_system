@@ -35,26 +35,31 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "fmt/format.h"
 #include "fmt/xchar.h"
 
-namespace container {
-ushort_value::ushort_value(void) : value() {
-  _type = value_types::ushort_value;
-}
+namespace container
+{
+	ushort_value::ushort_value(void) : value()
+	{
+		_type = value_types::ushort_value;
+	}
 
-ushort_value::ushort_value(const wstring &name, const unsigned short &value)
-    : ushort_value() {
-  _name = name;
-  set_data((const unsigned char *)&value, sizeof(unsigned short),
-           value_types::ushort_value);
-}
+	ushort_value::ushort_value(const wstring& name, const unsigned short& value)
+		: ushort_value()
+	{
+		_name = name;
+		set_data((const unsigned char*)&value, sizeof(unsigned short),
+				 value_types::ushort_value);
+	}
 
-unsigned short ushort_value::to_ushort(void) const {
-  unsigned short temp = 0;
-  memcpy(&temp, _data.data(), _size);
+	unsigned short ushort_value::to_ushort(void) const
+	{
+		unsigned short temp = 0;
+		memcpy(&temp, _data.data(), _size);
 
-  return static_cast<unsigned short>(temp);
-}
+		return static_cast<unsigned short>(temp);
+	}
 
-wstring ushort_value::to_string(const bool &) const {
-  return fmt::format(L"{}", to_ushort());
-}
+	wstring ushort_value::to_string(const bool&) const
+	{
+		return fmt::format(L"{}", to_ushort());
+	}
 } // namespace container

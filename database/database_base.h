@@ -40,22 +40,24 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace database
 {
-  using namespace std;
+	using namespace std;
 
-  class database_base
-  {
-  public:
-    database_base(void) {}
-    virtual ~database_base(void) {}
+	class database_base
+	{
+	public:
+		database_base(void) {}
+		virtual ~database_base(void) {}
 
-  public:
-    virtual database_types database_type(void) = 0;
-    virtual bool connect(const wstring &connect_string) = 0;
-    virtual bool create_query(const wstring &query_string) = 0;
-    virtual unsigned int insert_query(const wstring &query_string) = 0;
-    virtual unsigned int update_query(const wstring &query_string) = 0;
-    virtual unsigned int delete_query(const wstring &query_string) = 0;
-    virtual shared_ptr<container::value_container> select_query(const wstring &query_string) = 0;
-    virtual bool disconnect(void) = 0;
-  };
+	public:
+		virtual database_types database_type(void) = 0;
+		virtual bool connect(const wstring& connect_string) = 0;
+		virtual bool create_query(const wstring& query_string) = 0;
+		virtual unsigned int insert_query(const wstring& query_string) = 0;
+		virtual unsigned int update_query(const wstring& query_string) = 0;
+		virtual unsigned int delete_query(const wstring& query_string) = 0;
+		virtual shared_ptr<container::value_container> select_query(
+			const wstring& query_string)
+			= 0;
+		virtual bool disconnect(void) = 0;
+	};
 }; // namespace database

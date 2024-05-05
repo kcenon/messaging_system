@@ -43,36 +43,51 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace datetime_handler
 {
-  using namespace converting;
+	using namespace converting;
 
-  std::wstring datetime::date(const std::chrono::system_clock::time_point &time, const bool &use_seperator)
-  {
-    auto in_time_t = std::chrono::system_clock::to_time_t(time);
+	auto datetime::date(const std::chrono::system_clock::time_point& time,
+						const bool& use_seperator) -> std::wstring
+	{
+		auto in_time_t = std::chrono::system_clock::to_time_t(time);
 
-    return fmt::format(((use_seperator) ? L"{:%Y-%m-%d}" : L"{:%Y%m%d}"), fmt::localtime(in_time_t)).c_str();
-  }
+		return fmt::format(((use_seperator) ? L"{:%Y-%m-%d}" : L"{:%Y%m%d}"),
+						   fmt::localtime(in_time_t))
+			.c_str();
+	}
 
-  std::wstring datetime::time(const std::chrono::system_clock::time_point &time, const bool &use_seperator)
-  {
-    auto in_time_t = std::chrono::system_clock::to_time_t(time);
+	auto datetime::time(const std::chrono::system_clock::time_point& time,
+						const bool& use_seperator) -> std::wstring
+	{
+		auto in_time_t = std::chrono::system_clock::to_time_t(time);
 
-    std::wstring result;
+		std::wstring result;
 
-    // header
-    fmt::format_to(back_inserter(result), ((use_seperator) ? L"{:%H:%M:%S}" : L"{:%H%M%S}"), fmt::localtime(in_time_t));
-    if (use_seperator)
-    {
-      fmt::format_to(back_inserter(result), L"{}", L".");
-    }
+		// header
+		fmt::format_to(back_inserter(result),
+					   ((use_seperator) ? L"{:%H:%M:%S}" : L"{:%H%M%S}"),
+					   fmt::localtime(in_time_t));
+		if (use_seperator)
+		{
+			fmt::format_to(back_inserter(result), L"{}", L".");
+		}
 
-    auto base_time = time.time_since_epoch();
-    fmt::format_to(back_inserter(result), L"{:03}",
-                   std::chrono::duration_cast<std::chrono::milliseconds>(base_time).count() % 1000);
-    fmt::format_to(back_inserter(result), L"{:03}",
-                   std::chrono::duration_cast<std::chrono::microseconds>(base_time).count() % 1000);
-    fmt::format_to(back_inserter(result), L"{:03}",
-                   std::chrono::duration_cast<std::chrono::nanoseconds>(base_time).count() % 1000);
+		auto base_time = time.time_since_epoch();
+		fmt::format_to(
+			back_inserter(result), L"{:03}",
+			std::chrono::duration_cast<std::chrono::milliseconds>(base_time)
+					.count()
+				% 1000);
+		fmt::format_to(
+			back_inserter(result), L"{:03}",
+			std::chrono::duration_cast<std::chrono::microseconds>(base_time)
+					.count()
+				% 1000);
+		fmt::format_to(
+			back_inserter(result), L"{:03}",
+			std::chrono::duration_cast<std::chrono::nanoseconds>(base_time)
+					.count()
+				% 1000);
 
-    return result;
-  }
+		return result;
+	}
 } // namespace datetime_handler

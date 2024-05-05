@@ -32,38 +32,52 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include <tuple>
 #include <locale>
 #include <string>
 #include <vector>
+#include <optional>
 
 namespace converting
 {
-  class converter
-  {
-  public:
-    static std::vector<std::wstring> split(const std::wstring &source, const std::wstring &token);
+	class converter
+	{
+	public:
+		static auto split(const std::wstring& source, const std::wstring& token)
+			-> std::tuple<std::optional<std::vector<std::wstring>>,
+						  std::optional<std::wstring>>;
 
-  public:
-    static void replace(std::wstring &source, const std::wstring &token, const std::wstring &target);
-    static const std::wstring
-    replace2(const std::wstring &source, const std::wstring &token, const std::wstring &target);
+	public:
+		static void replace(std::wstring& source,
+							const std::wstring& token,
+							const std::wstring& target);
+		static auto replace2(const std::wstring& source,
+							 const std::wstring& token,
+							 const std::wstring& target) -> const std::wstring;
 
-  public:
-    static std::wstring to_wstring(const std::string &value, std::locale target_locale = std::locale(""));
-    static std::string to_string(const std::wstring &value, std::locale target_locale = std::locale(""));
+	public:
+		static auto to_wstring(const std::string& value,
+							   std::locale target_locale = std::locale(""))
+			-> std::wstring;
+		static auto to_string(const std::wstring& value,
+							  std::locale target_locale = std::locale(""))
+			-> std::string;
 
-  public:
-    static std::vector<uint8_t> to_array(const std::wstring &value);
-    static std::vector<uint8_t> to_array(const std::string &value);
-    static std::wstring to_wstring(const std::vector<uint8_t> &value);
-    static std::string to_string(const std::vector<uint8_t> &value);
+	public:
+		static auto to_array(const std::wstring& value) -> std::vector<uint8_t>;
+		static auto to_array(const std::string& value) -> std::vector<uint8_t>;
+		static auto to_wstring(const std::vector<uint8_t>& value)
+			-> std::wstring;
+		static auto to_string(const std::vector<uint8_t>& value) -> std::string;
 
-  public:
-    static std::vector<uint8_t> from_base64(const std::wstring &value);
-    static std::wstring to_base64(const std::vector<uint8_t> &value);
+	public:
+		static auto from_base64(const std::wstring& value)
+			-> std::vector<uint8_t>;
+		static auto to_base64(const std::vector<uint8_t>& value)
+			-> std::wstring;
 
-  private:
-    static std::wstring convert(const std::u16string &value);
-    static std::u16string convert(const std::wstring &value);
-  };
+	private:
+		static auto convert(const std::u16string& value) -> std::wstring;
+		static auto convert(const std::wstring& value) -> std::u16string;
+	};
 } // namespace converting

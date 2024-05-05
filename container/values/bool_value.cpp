@@ -36,25 +36,30 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace container
 {
-  bool_value::bool_value(void) : value() { _type = value_types::bool_value; }
+	bool_value::bool_value(void) : value() { _type = value_types::bool_value; }
 
-  bool_value::bool_value(const wstring &name, const bool &value) : bool_value()
-  {
-    set_data(name, value_types::bool_value, value ? L"true" : L"false");
-  }
+	bool_value::bool_value(const wstring& name, const bool& value)
+		: bool_value()
+	{
+		set_data(name, value_types::bool_value, value ? L"true" : L"false");
+	}
 
-  bool_value::bool_value(const wstring &name, const wstring &value) : bool_value()
-  {
-    set_data(name, value_types::bool_value, value);
-  }
+	bool_value::bool_value(const wstring& name, const wstring& value)
+		: bool_value()
+	{
+		set_data(name, value_types::bool_value, value);
+	}
 
-  bool bool_value::to_boolean(void) const
-  {
-    bool temp = false;
-    memcpy(&temp, _data.data(), _size);
+	bool bool_value::to_boolean(void) const
+	{
+		bool temp = false;
+		memcpy(&temp, _data.data(), _size);
 
-    return temp;
-  }
+		return temp;
+	}
 
-  wstring bool_value::to_string(const bool &) const { return (to_boolean() ? L"true" : L"false"); }
+	wstring bool_value::to_string(const bool&) const
+	{
+		return (to_boolean() ? L"true" : L"false");
+	}
 } // namespace container

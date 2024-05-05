@@ -40,141 +40,156 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace threads
 {
-  using namespace logging;
+	using namespace logging;
 
-  thread_pool::thread_pool(const std::wstring &title, const std::vector<std::shared_ptr<thread_worker> > &workers)
-      : _workers(workers), _job_pool(make_shared<job_pool>(title)), _promise_status({}), _title(title)
-  {
-  }
+	thread_pool::thread_pool(
+		const std::wstring& title,
+		const std::vector<std::shared_ptr<thread_worker>>& workers)
+		: _workers(workers)
+		, _job_pool(make_shared<job_pool>(title))
+		, _promise_status({})
+		, _title(title)
+	{
+	}
 
-  thread_pool::~thread_pool(void) { stop(); }
+	thread_pool::~thread_pool(void) { stop(); }
 
-  std::shared_ptr<thread_pool> thread_pool::get_ptr(void) { return shared_from_this(); }
+	std::shared_ptr<thread_pool> thread_pool::get_ptr(void)
+	{
+		return shared_from_this();
+	}
 
-  void thread_pool::start(void)
-  {
-    std::scoped_lock<std::mutex> guard(_mutex);
+	void thread_pool::start(void)
+	{
+		std::scoped_lock<std::mutex> guard(_mutex);
 
-    for (auto &worker : _workers)
-    {
-      if (worker == nullptr)
-      {
-        continue;
-      }
+		for (auto& worker : _workers)
+		{
+			if (worker == nullptr)
+			{
+				continue;
+			}
 
-      worker->start();
-    }
-  }
+			worker->start();
+		}
+	}
 
-  void thread_pool::append(std::shared_ptr<thread_worker> worker, const bool &start)
-  {
-    std::unique_lock<std::mutex> unique(_mutex);
+	void thread_pool::append(std::shared_ptr<thread_worker> worker,
+							 const bool& start)
+	{
+		std::unique_lock<std::mutex> unique(_mutex);
 
-    worker->set_worker_notification(
-        bind(&thread_pool::worker_notification, this, std::placeholders::_1, std::placeholders::_2));
-    worker->set_job_pool(_job_pool);
-    _workers.push_back(worker);
-    _worker_conditions.insert({ worker->guid(), false });
+		worker->set_worker_notification(bind(&thread_pool::worker_notification,
+											 this, std::placeholders::_1,
+											 std::placeholders::_2));
+		worker->set_job_pool(_job_pool);
+		_workers.push_back(worker);
+		_worker_conditions.insert({ worker->guid(), false });
 
-    logger::handle().write(logging_level::parameter,
-                           fmt::format(L"appended new worker on {}: priority - {}", _title, (int)worker->priority()));
+		logger::handle().write(
+			logging_level::parameter,
+			fmt::format(L"appended new worker on {}: priority - {}", _title,
+						(int)worker->priority()));
 
-    unique.unlock();
+		unique.unlock();
 
-    if (start)
-    {
-      worker->start();
-    }
-  }
+		if (start)
+		{
+			worker->start();
+		}
+	}
 
-  void thread_pool::stop(const bool &stop_immediately, const bool &jop_pool_lock)
-  {
-    std::scoped_lock<std::mutex> guard(_mutex);
+	void thread_pool::stop(const bool& stop_immediately,
+						   const bool& jop_pool_lock)
+	{
+		std::scoped_lock<std::mutex> guard(_mutex);
 
-    if (stop_immediately && _job_pool != nullptr)
-    {
-      _job_pool.reset();
-    }
+		if (stop_immediately && _job_pool != nullptr)
+		{
+			_job_pool.reset();
+		}
 
-    if (_job_pool != nullptr)
-    {
-      _job_pool->set_push_lock(jop_pool_lock);
+		if (_job_pool != nullptr)
+		{
+			_job_pool->set_push_lock(jop_pool_lock);
 
-      if (!_promise_status.has_value())
-      {
-        _job_pool->append_notification(L"thread_pool",
-                                       bind(&thread_pool::empty_pool_notification, this, std::placeholders::_1));
+			if (!_promise_status.has_value())
+			{
+				_job_pool->append_notification(
+					L"thread_pool", bind(&thread_pool::empty_pool_notification,
+										 this, std::placeholders::_1));
 
-        _promise_status = { std::promise<bool>() };
-        _future_status = _promise_status.value().get_future();
-        _future_status.wait();
-        _promise_status.reset();
+				_promise_status = { std::promise<bool>() };
+				_future_status = _promise_status.value().get_future();
+				_future_status.wait();
+				_promise_status.reset();
 
-        _job_pool->remove_notification(L"thread_pool");
-      }
+				_job_pool->remove_notification(L"thread_pool");
+			}
 
-      _job_pool.reset();
-    }
+			_job_pool.reset();
+		}
 
-    for (auto &worker : _workers)
-    {
-      if (worker == nullptr)
-      {
-        continue;
-      }
+		for (auto& worker : _workers)
+		{
+			if (worker == nullptr)
+			{
+				continue;
+			}
 
-      worker->stop();
-    }
+			worker->stop();
+		}
 
-    _workers.clear();
-  }
+		_workers.clear();
+	}
 
-  void thread_pool::push(std::shared_ptr<job> job)
-  {
-    if (_job_pool == nullptr)
-    {
-      return;
-    }
+	void thread_pool::push(std::shared_ptr<job> job)
+	{
+		if (_job_pool == nullptr)
+		{
+			return;
+		}
 
-    _job_pool->push(job);
-  }
+		_job_pool->push(job);
+	}
 
-  void thread_pool::empty_pool_notification(const priorities &priority)
-  {
-    if (priority != priorities::none)
-    {
-      return;
-    }
+	void thread_pool::empty_pool_notification(const priorities& priority)
+	{
+		if (priority != priorities::none)
+		{
+			return;
+		}
 
-    for (auto &worker_condition : _worker_conditions)
-    {
-      if (worker_condition.second)
-      {
-        return;
-      }
-    }
+		for (auto& worker_condition : _worker_conditions)
+		{
+			if (worker_condition.second)
+			{
+				return;
+			}
+		}
 
-    if (_promise_status.has_value())
-    {
-      _promise_status.value().set_value(true);
-    }
-  }
+		if (_promise_status.has_value())
+		{
+			_promise_status.value().set_value(true);
+		}
+	}
 
-  void thread_pool::worker_notification(const std::wstring &id, const bool &working_condition)
-  {
-    auto target = _worker_conditions.find(id);
-    if (target == _worker_conditions.end())
-    {
-      return;
-    }
+	void thread_pool::worker_notification(const std::wstring& id,
+										  const bool& working_condition)
+	{
+		auto target = _worker_conditions.find(id);
+		if (target == _worker_conditions.end())
+		{
+			return;
+		}
 
-    target->second = working_condition;
+		target->second = working_condition;
 
-    if (_job_pool == nullptr)
-    {
-      return;
-    }
+		if (_job_pool == nullptr)
+		{
+			return;
+		}
 
-    _job_pool->check_empty();
-  }
+		_job_pool->check_empty();
+	}
 } // namespace threads

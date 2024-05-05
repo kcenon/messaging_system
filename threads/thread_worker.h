@@ -44,53 +44,56 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace threads
 {
-  class job;
-  class job_pool;
-  class thread_worker : public std::enable_shared_from_this<thread_worker>
-  {
-  public:
-    thread_worker(const priorities &priority, const std::vector<priorities> &others = {});
-    ~thread_worker(void);
+	class job;
+	class job_pool;
+	class thread_worker : public std::enable_shared_from_this<thread_worker>
+	{
+	public:
+		thread_worker(const priorities& priority,
+					  const std::vector<priorities>& others = {});
+		~thread_worker(void);
 
-  public:
-    std::shared_ptr<thread_worker> get_ptr(void);
+	public:
+		std::shared_ptr<thread_worker> get_ptr(void);
 
-  public:
-    void set_job_pool(std::shared_ptr<job_pool> job_pool);
-    void set_worker_notification(const std::function<void(const std::wstring &, const bool &)> &notification);
+	public:
+		void set_job_pool(std::shared_ptr<job_pool> job_pool);
+		void set_worker_notification(
+			const std::function<void(const std::wstring&, const bool&)>&
+				notification);
 
-  public:
-    void start(void);
-    void stop(void);
+	public:
+		void start(void);
+		void stop(void);
 
-  public:
-    auto guid(void) const -> std::wstring;
-    auto priority(void) const -> priorities;
-    auto priority(const priorities &value) -> void;
+	public:
+		auto guid(void) const -> std::wstring;
+		auto priority(void) const -> priorities;
+		auto priority(const priorities& value) -> void;
 
-  protected:
-    auto run(void) -> void;
+	protected:
+		auto run(void) -> void;
 
-  protected:
-    virtual auto working(std::shared_ptr<job> current_job) -> void;
+	protected:
+		virtual auto working(std::shared_ptr<job> current_job) -> void;
 
-  protected:
-    auto append_notification(const priorities &priority) -> void;
-    auto check_condition(void) -> bool;
+	protected:
+		auto append_notification(const priorities& priority) -> void;
+		auto check_condition(void) -> bool;
 
-  private:
-    bool _thread_stop;
-    std::function<void(const std::wstring &, const bool &)> _worker_condition;
+	private:
+		bool _thread_stop;
+		std::function<void(const std::wstring&, const bool&)> _worker_condition;
 
-  private:
-    priorities _priority;
-    std::vector<priorities> _others;
-    std::weak_ptr<job_pool> _job_pool;
+	private:
+		priorities _priority;
+		std::vector<priorities> _others;
+		std::weak_ptr<job_pool> _job_pool;
 
-  private:
-    std::mutex _mutex;
-    std::wstring _guid;
-    std::unique_ptr<std::thread> _thread;
-    std::condition_variable _condition;
-  };
+	private:
+		std::mutex _mutex;
+		std::wstring _guid;
+		std::unique_ptr<std::thread> _thread;
+		std::condition_variable _condition;
+	};
 } // namespace threads

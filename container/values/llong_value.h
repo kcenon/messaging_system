@@ -38,15 +38,15 @@ using namespace std;
 
 namespace container
 {
-  class llong_value : public value
-  {
-  public:
-    llong_value(void);
-    llong_value(const wstring &name, const long long &value);
-    ~llong_value(void) = default;
+	class llong_value : public value
+	{
+	public:
+		llong_value(void);
+		llong_value(const wstring& name, const long long& value);
+		~llong_value(void) = default;
 
-  public:
-    long long to_llong(void) const override;
-    wstring to_string(const bool &original = true) const override;
-  };
+	public:
+		long long to_llong(void) const override;
+		wstring to_string(const bool& original = true) const override;
+	};
 } // namespace container

@@ -34,5 +34,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace network
 {
-  enum class session_types : short { message_line = 1, file_line = 2, binary_line = 3 };
+	enum class session_types : short {
+		message_line = 1,
+		file_line = 2,
+		binary_line = 3
+	};
 }

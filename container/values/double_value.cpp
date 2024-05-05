@@ -37,21 +37,29 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace container
 {
-  double_value::double_value(void) : value() { _type = value_types::double_value; }
+	double_value::double_value(void) : value()
+	{
+		_type = value_types::double_value;
+	}
 
-  double_value::double_value(const wstring &name, const double &value) : double_value()
-  {
-    _name = name;
-    set_data((const unsigned char *)&value, sizeof(double), value_types::double_value);
-  }
+	double_value::double_value(const wstring& name, const double& value)
+		: double_value()
+	{
+		_name = name;
+		set_data((const unsigned char*)&value, sizeof(double),
+				 value_types::double_value);
+	}
 
-  double double_value::to_double(void) const
-  {
-    double temp = 0;
-    memcpy(&temp, _data.data(), _size);
+	double double_value::to_double(void) const
+	{
+		double temp = 0;
+		memcpy(&temp, _data.data(), _size);
 
-    return static_cast<double>(temp);
-  }
+		return static_cast<double>(temp);
+	}
 
-  wstring double_value::to_string(const bool &) const { return fmt::format(L"{}", to_double()); }
+	wstring double_value::to_string(const bool&) const
+	{
+		return fmt::format(L"{}", to_double());
+	}
 } // namespace container

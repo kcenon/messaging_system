@@ -38,16 +38,16 @@ using namespace std;
 
 namespace container
 {
-  class bool_value : public value
-  {
-  public:
-    bool_value(void);
-    bool_value(const wstring &name, const bool &value);
-    bool_value(const wstring &name, const wstring &value);
-    ~bool_value(void) = default;
+	class bool_value : public value
+	{
+	public:
+		bool_value(void);
+		bool_value(const wstring& name, const bool& value);
+		bool_value(const wstring& name, const wstring& value);
+		~bool_value(void) = default;
 
-  public:
-    bool to_boolean(void) const override;
-    wstring to_string(const bool &original = true) const override;
-  };
+	public:
+		bool to_boolean(void) const override;
+		wstring to_string(const bool& original = true) const override;
+	};
 } // namespace container

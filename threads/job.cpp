@@ -48,243 +48,264 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace threads
 {
-  using namespace logging;
-  using namespace converting;
-  using namespace file_handler;
-  using namespace folder_handler;
+	using namespace logging;
+	using namespace converting;
+	using namespace file_handler;
+	using namespace folder_handler;
 
-  job::job(const priorities &priority)
-      : _priority(priority)
-      , _temporary_stored_path(L"")
-      , _working_callback(nullptr)
-      , _working_callback2(nullptr)
-      , _working_callback3(nullptr)
-  {
-  }
+	job::job(const priorities& priority)
+		: _priority(priority)
+		, _temporary_stored_path(L"")
+		, _working_callback(nullptr)
+		, _working_callback2(nullptr)
+		, _working_callback3(nullptr)
+	{
+	}
 
-  job::job(const priorities &priority, const std::vector<uint8_t> &data)
-      : _priority(priority)
-      , _data(data)
-      , _temporary_stored_path(L"")
-      , _working_callback(nullptr)
-      , _working_callback2(nullptr)
-      , _working_callback3(nullptr)
-  {
-  }
+	job::job(const priorities& priority, const std::vector<uint8_t>& data)
+		: _priority(priority)
+		, _data(data)
+		, _temporary_stored_path(L"")
+		, _working_callback(nullptr)
+		, _working_callback2(nullptr)
+		, _working_callback3(nullptr)
+	{
+	}
 
-  job::job(const priorities &priority, const std::function<void(void)> &working_callback)
-      : _priority(priority)
-      , _temporary_stored_path(L"")
-      , _working_callback(working_callback)
-      , _working_callback2(nullptr)
-      , _working_callback3(nullptr)
-  {
-  }
+	job::job(const priorities& priority,
+			 const std::function<void(void)>& working_callback)
+		: _priority(priority)
+		, _temporary_stored_path(L"")
+		, _working_callback(working_callback)
+		, _working_callback2(nullptr)
+		, _working_callback3(nullptr)
+	{
+	}
 
-  job::job(const priorities &priority,
-           const std::vector<uint8_t> &data,
-           const std::function<void(const std::vector<uint8_t> &)> &working_callback)
-      : _priority(priority)
-      , _data(data)
-      , _temporary_stored_path(L"")
-      , _working_callback(nullptr)
-      , _working_callback2(working_callback)
-      , _working_callback3(nullptr)
-  {
-  }
+	job::job(const priorities& priority,
+			 const std::vector<uint8_t>& data,
+			 const std::function<void(const std::vector<uint8_t>&)>&
+				 working_callback)
+		: _priority(priority)
+		, _data(data)
+		, _temporary_stored_path(L"")
+		, _working_callback(nullptr)
+		, _working_callback2(working_callback)
+		, _working_callback3(nullptr)
+	{
+	}
 
-  job::job(const priorities &priority,
-           const std::vector<uint8_t> &data,
-           const std::function<void(std::weak_ptr<job_pool> job_pool, const std::vector<uint8_t> &)> &working_callback)
-      : _priority(priority)
-      , _data(data)
-      , _temporary_stored_path(L"")
-      , _working_callback(nullptr)
-      , _working_callback2(nullptr)
-      , _working_callback3(working_callback)
-  {
-  }
+	job::job(const priorities& priority,
+			 const std::vector<uint8_t>& data,
+			 const std::function<void(std::weak_ptr<job_pool> job_pool,
+									  const std::vector<uint8_t>&)>&
+				 working_callback)
+		: _priority(priority)
+		, _data(data)
+		, _temporary_stored_path(L"")
+		, _working_callback(nullptr)
+		, _working_callback2(nullptr)
+		, _working_callback3(working_callback)
+	{
+	}
 
-  job::~job(void) {}
+	job::~job(void) {}
 
-  std::shared_ptr<job> job::get_ptr(void) { return shared_from_this(); }
+	std::shared_ptr<job> job::get_ptr(void) { return shared_from_this(); }
 
-  const priorities job::priority(void) { return _priority; }
+	const priorities job::priority(void) { return _priority; }
 
-  void job::set_job_pool(std::shared_ptr<job_pool> job_pool) { _job_pool = job_pool; }
+	void job::set_job_pool(std::shared_ptr<job_pool> job_pool)
+	{
+		_job_pool = job_pool;
+	}
 
-  bool job::work(const priorities &worker_priority)
-  {
-    auto start = logger::handle().chrono_start();
+	bool job::work(const priorities& worker_priority)
+	{
+		auto start = logger::handle().chrono_start();
 
-    load();
+		load();
 
-    if (_working_callback != nullptr)
-    {
-      try
-      {
-        _working_callback();
-      }
-      catch (...)
-      {
-        logger::handle().write(logging_level::sequence,
-                               fmt::format(L"cannot complete working function on job: job "
-                                           L"priority[{}], worker priority[{}]",
-                                           (int)_priority, (int)worker_priority),
-                               start);
+		if (_working_callback != nullptr)
+		{
+			try
+			{
+				_working_callback();
+			}
+			catch (...)
+			{
+				logger::handle().write(
+					logging_level::sequence,
+					fmt::format(L"cannot complete working function on job: job "
+								L"priority[{}], worker priority[{}]",
+								(int)_priority, (int)worker_priority),
+					start);
 
-        return false;
-      }
+				return false;
+			}
 
-      destroy();
+			destroy();
 
-      logger::handle().write(logging_level::sequence,
-                             fmt::format(L"completed working callback function without value on "
-                                         L"job: job priority[{}], worker priority[{}]",
-                                         (int)_priority, (int)worker_priority),
-                             start);
+			logger::handle().write(
+				logging_level::sequence,
+				fmt::format(
+					L"completed working callback function without value on "
+					L"job: job priority[{}], worker priority[{}]",
+					(int)_priority, (int)worker_priority),
+				start);
 
-      return true;
-    }
+			return true;
+		}
 
-    if (_working_callback2 != nullptr)
-    {
-      try
-      {
-        _working_callback2(_data);
-      }
-      catch (...)
-      {
-        logger::handle().write(logging_level::sequence,
-                               fmt::format(L"cannot complete working function on job: job "
-                                           L"priority[{}], worker priority[{}]",
-                                           (int)_priority, (int)worker_priority),
-                               start);
+		if (_working_callback2 != nullptr)
+		{
+			try
+			{
+				_working_callback2(_data);
+			}
+			catch (...)
+			{
+				logger::handle().write(
+					logging_level::sequence,
+					fmt::format(L"cannot complete working function on job: job "
+								L"priority[{}], worker priority[{}]",
+								(int)_priority, (int)worker_priority),
+					start);
 
-        return false;
-      }
+				return false;
+			}
 
-      destroy();
+			destroy();
 
-      logger::handle().write(logging_level::sequence,
-                             fmt::format(L"completed working callback function with value on job: "
-                                         L"job priority[{}], worker priority[{}]",
-                                         (int)_priority, (int)worker_priority),
-                             start);
+			logger::handle().write(
+				logging_level::sequence,
+				fmt::format(
+					L"completed working callback function with value on job: "
+					L"job priority[{}], worker priority[{}]",
+					(int)_priority, (int)worker_priority),
+				start);
 
-      return true;
-    }
+			return true;
+		}
 
-    if (_working_callback3 != nullptr)
-    {
-      try
-      {
-        _working_callback3(_job_pool, _data);
-      }
-      catch (...)
-      {
-        logger::handle().write(logging_level::sequence,
-                               fmt::format(L"cannot complete working function on job: job "
-                                           L"priority[{}], worker priority[{}]",
-                                           (int)_priority, (int)worker_priority),
-                               start);
+		if (_working_callback3 != nullptr)
+		{
+			try
+			{
+				_working_callback3(_job_pool, _data);
+			}
+			catch (...)
+			{
+				logger::handle().write(
+					logging_level::sequence,
+					fmt::format(L"cannot complete working function on job: job "
+								L"priority[{}], worker priority[{}]",
+								(int)_priority, (int)worker_priority),
+					start);
 
-        return false;
-      }
+				return false;
+			}
 
-      destroy();
+			destroy();
 
-      logger::handle().write(logging_level::sequence,
-                             fmt::format(L"completed working callback function with value on job: "
-                                         L"job priority[{}], worker priority[{}]",
-                                         (int)_priority, (int)worker_priority),
-                             start);
+			logger::handle().write(
+				logging_level::sequence,
+				fmt::format(
+					L"completed working callback function with value on job: "
+					L"job priority[{}], worker priority[{}]",
+					(int)_priority, (int)worker_priority),
+				start);
 
-      return true;
-    }
+			return true;
+		}
 
-    try
-    {
-      working(worker_priority);
-    }
-    catch (...)
-    {
-      logger::handle().write(logging_level::sequence,
-                             fmt::format(L"cannot complete working function on job: job "
-                                         L"priority[{}], worker priority[{}]",
-                                         (int)_priority, (int)worker_priority),
-                             start);
+		try
+		{
+			working(worker_priority);
+		}
+		catch (...)
+		{
+			logger::handle().write(
+				logging_level::sequence,
+				fmt::format(L"cannot complete working function on job: job "
+							L"priority[{}], worker priority[{}]",
+							(int)_priority, (int)worker_priority),
+				start);
 
-      return false;
-    }
+			return false;
+		}
 
-    destroy();
+		destroy();
 
-    logger::handle().write(logging_level::sequence,
-                           fmt::format(L"completed working function on job: job "
-                                       L"priority[{}], worker priority[{}]",
-                                       (int)_priority, (int)worker_priority),
-                           start);
+		logger::handle().write(
+			logging_level::sequence,
+			fmt::format(L"completed working function on job: job "
+						L"priority[{}], worker priority[{}]",
+						(int)_priority, (int)worker_priority),
+			start);
 
-    return true;
-  }
+		return true;
+	}
 
-  void job::save(const std::wstring &folder_name)
-  {
-    if (_data.empty())
-    {
-      return;
-    }
+	void job::save(const std::wstring& folder_name)
+	{
+		if (_data.empty())
+		{
+			return;
+		}
 
-    std::wstring priority = L"";
-    switch (_priority)
-    {
-    case priorities::low:
-      priority = L"low";
-      break;
-    case priorities::normal:
-      priority = L"normal";
-      break;
-    case priorities::high:
-      priority = L"high";
-      break;
-    case priorities::top:
-      priority = L"top";
-      break;
-    default:
-      return;
-    }
+		std::wstring priority = L"";
+		switch (_priority)
+		{
+		case priorities::low:
+			priority = L"low";
+			break;
+		case priorities::normal:
+			priority = L"normal";
+			break;
+		case priorities::high:
+			priority = L"high";
+			break;
+		case priorities::top:
+			priority = L"top";
+			break;
+		default:
+			return;
+		}
 
-    _temporary_stored_path = fmt::format(L"{}{}/{}/{}.job", folder::get_temporary_folder(), folder_name, priority,
-                                         converter::to_wstring(xg::newGuid().str()));
+		_temporary_stored_path = fmt::format(
+			L"{}{}/{}/{}.job", folder::get_temporary_folder(), folder_name,
+			priority, converter::to_wstring(xg::newGuid().str()));
 
-    file::save(_temporary_stored_path, _data);
-    _data.clear();
-  }
+		file::save(_temporary_stored_path, _data);
+		_data.clear();
+	}
 
-  void job::load(void)
-  {
-    if (_temporary_stored_path.empty())
-    {
-      return;
-    }
+	void job::load(void)
+	{
+		if (_temporary_stored_path.empty())
+		{
+			return;
+		}
 
-    _data = file::load(_temporary_stored_path);
-  }
+		_data = file::load(_temporary_stored_path);
+	}
 
-  void job::destroy(void)
-  {
-    if (_temporary_stored_path.empty())
-    {
-      return;
-    }
+	void job::destroy(void)
+	{
+		if (_temporary_stored_path.empty())
+		{
+			return;
+		}
 
-    file::remove(_temporary_stored_path);
-    _temporary_stored_path.clear();
-  }
+		file::remove(_temporary_stored_path);
+		_temporary_stored_path.clear();
+	}
 
-  void job::working(const priorities &worker_priority)
-  {
-    logger::handle().write(logging_level::error, L"cannot complete job::working because it does not implemented");
-  }
+	void job::working(const priorities& worker_priority)
+	{
+		logger::handle().write(
+			logging_level::error,
+			L"cannot complete job::working because it does not implemented");
+	}
 } // namespace threads

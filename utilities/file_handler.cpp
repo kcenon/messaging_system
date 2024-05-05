@@ -42,68 +42,72 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace file_handler
 {
-  using namespace converting;
+	using namespace converting;
 
-  bool file::remove(const std::wstring &path)
-  {
-    if (!std::filesystem::exists(path))
-    {
-      return false;
-    }
+	auto file::remove(const std::wstring& path) -> bool
+	{
+		if (!std::filesystem::exists(path))
+		{
+			return false;
+		}
 
-    return std::filesystem::remove(path);
-  }
+		return std::filesystem::remove(path);
+	}
 
-  std::vector<uint8_t> file::load(const std::wstring &path)
-  {
-    if (!std::filesystem::exists(path))
-    {
-      return std::vector<uint8_t>();
-    }
+	auto file::load(const std::wstring& path) -> std::vector<uint8_t>
+	{
+		if (!std::filesystem::exists(path))
+		{
+			return std::vector<uint8_t>();
+		}
 
-    std::ifstream stream(path, std::ios::binary);
-    if (!stream.is_open())
-    {
-      return std::vector<uint8_t>();
-    }
+		std::ifstream stream(path, std::ios::binary);
+		if (!stream.is_open())
+		{
+			return std::vector<uint8_t>();
+		}
 
-    std::vector<uint8_t> target((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
-    stream.close();
+		std::vector<uint8_t> target((std::istreambuf_iterator<char>(stream)),
+									std::istreambuf_iterator<char>());
+		stream.close();
 
-    return target;
-  }
+		return target;
+	}
 
-  bool file::save(const std::wstring &path, const std::vector<uint8_t> &data)
-  {
-    std::filesystem::path target_path(path);
-    if (target_path.parent_path().empty() != true)
-    {
-      std::filesystem::create_directories(target_path.parent_path());
-    }
+	auto file::save(const std::wstring& path, const std::vector<uint8_t>& data)
+		-> bool
+	{
+		std::filesystem::path target_path(path);
+		if (target_path.parent_path().empty() != true)
+		{
+			std::filesystem::create_directories(target_path.parent_path());
+		}
 
-    std::ofstream stream(path, std::ios::binary | std::ios::trunc);
-    if (!stream.is_open())
-    {
-      return false;
-    }
+		std::ofstream stream(path, std::ios::binary | std::ios::trunc);
+		if (!stream.is_open())
+		{
+			return false;
+		}
 
-    stream.write((char *)data.data(), (unsigned int)data.size());
-    stream.close();
+		stream.write((char*)data.data(), (unsigned int)data.size());
+		stream.close();
 
-    return true;
-  }
+		return true;
+	}
 
-  bool file::append(const std::wstring &source, const std::vector<uint8_t> &data)
-  {
-    std::fstream stream(source, std::ios::out | std::ios::binary | std::ios::app);
-    if (!stream.is_open())
-    {
-      return false;
-    }
+	auto file::append(const std::wstring& source,
+					  const std::vector<uint8_t>& data) -> bool
+	{
+		std::fstream stream(source,
+							std::ios::out | std::ios::binary | std::ios::app);
+		if (!stream.is_open())
+		{
+			return false;
+		}
 
-    stream.write((char *)data.data(), (unsigned int)data.size());
-    stream.close();
+		stream.write((char*)data.data(), (unsigned int)data.size());
+		stream.close();
 
-    return true;
-  }
+		return true;
+	}
 } // namespace file_handler

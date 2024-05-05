@@ -1,7 +1,7 @@
 BasedOnStyle: GNU
-IndentWidth: 2
-TabWidth: 2
-UseTab: Never
+IndentWidth: 4
+TabWidth: 4
+UseTab: Always
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterFunction: true
@@ -15,16 +15,17 @@ BraceWrapping:
   SplitEmptyFunction: true
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
-ColumnLimit: 120
+ColumnLimit: 80
+PenaltyReturnTypeOnItsOwnLine: 9999
 AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 BinPackParameters: false
 NamespaceIndentation: All
 SortIncludes: false
-AccessModifierOffset: -2
+AccessModifierOffset: -4
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 BreakConstructorInitializersBeforeComma: false
-PointerAlignment: Right
+PointerAlignment: Left
 AlignTrailingComments:
   Kind: Always
   OverEmptyLines: 2
@@ -32,7 +33,4 @@ AllowShortCaseLabelsOnASingleLine: false
 BreakArrays: false
 BreakConstructorInitializers: BeforeComma
 SpaceBeforeParens: ControlStatements
-SpacesInAngles: false
-SpacesInParentheses: false
-SpaceBeforeAssignmentOperators: true
-SpaceAroundUnaryOperators: false
+Standard: c++14

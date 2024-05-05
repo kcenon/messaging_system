@@ -35,10 +35,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace binary_parser
 {
-  class combiner
-  {
-  public:
-    static void append(std::vector<uint8_t> &result, const std::vector<uint8_t> &source);
-    static std::vector<uint8_t> divide(const std::vector<uint8_t> &source, size_t &index);
-  };
+	class combiner
+	{
+	public:
+		static void append(std::vector<uint8_t>& result,
+						   const std::vector<uint8_t>& source);
+		static std::vector<uint8_t> divide(const std::vector<uint8_t>& source,
+										   size_t& index);
+	};
 } // namespace binary_parser

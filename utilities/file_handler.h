@@ -37,12 +37,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace file_handler
 {
-  class file
-  {
-  public:
-    static bool remove(const std::wstring &path);
-    static std::vector<uint8_t> load(const std::wstring &path);
-    static bool save(const std::wstring &path, const std::vector<uint8_t> &data);
-    static bool append(const std::wstring &path, const std::vector<uint8_t> &data);
-  };
+	class file
+	{
+	public:
+		static auto remove(const std::wstring& path) -> bool;
+		static auto load(const std::wstring& path) -> std::vector<uint8_t>;
+		static auto save(const std::wstring& path,
+						 const std::vector<uint8_t>& data) -> bool;
+		static auto append(const std::wstring& path,
+						   const std::vector<uint8_t>& data) -> bool;
+	};
 } // namespace file_handler

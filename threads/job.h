@@ -41,51 +41,57 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace threads
 {
-  class job_pool;
-  class job : public std::enable_shared_from_this<job>
-  {
-  public:
-    job(const priorities &priority);
-    job(const priorities &priority, const std::vector<uint8_t> &data);
-    job(const priorities &priority, const std::function<void(void)> &working_callback);
-    job(const priorities &priority,
-        const std::vector<uint8_t> &data,
-        const std::function<void(const std::vector<uint8_t> &)> &working_callback);
-    job(const priorities &priority,
-        const std::vector<uint8_t> &data,
-        const std::function<void(std::weak_ptr<job_pool> job_pool, const std::vector<uint8_t> &)> &working_callback);
-    ~job(void);
+	class job_pool;
+	class job : public std::enable_shared_from_this<job>
+	{
+	public:
+		job(const priorities& priority);
+		job(const priorities& priority, const std::vector<uint8_t>& data);
+		job(const priorities& priority,
+			const std::function<void(void)>& working_callback);
+		job(const priorities& priority,
+			const std::vector<uint8_t>& data,
+			const std::function<void(const std::vector<uint8_t>&)>&
+				working_callback);
+		job(const priorities& priority,
+			const std::vector<uint8_t>& data,
+			const std::function<void(std::weak_ptr<job_pool> job_pool,
+									 const std::vector<uint8_t>&)>&
+				working_callback);
+		~job(void);
 
-  public:
-    std::shared_ptr<job> get_ptr(void);
+	public:
+		std::shared_ptr<job> get_ptr(void);
 
-  public:
-    const priorities priority(void);
+	public:
+		const priorities priority(void);
 
-  public:
-    void set_job_pool(std::shared_ptr<job_pool> job_pool);
+	public:
+		void set_job_pool(std::shared_ptr<job_pool> job_pool);
 
-  public:
-    bool work(const priorities &worker_priority);
+	public:
+		bool work(const priorities& worker_priority);
 
-  protected:
-    void save(const std::wstring &folder_name);
-    void load(void);
-    void destroy(void);
+	protected:
+		void save(const std::wstring& folder_name);
+		void load(void);
+		void destroy(void);
 
-  protected:
-    virtual void working(const priorities &worker_priority);
+	protected:
+		virtual void working(const priorities& worker_priority);
 
-  protected:
-    std::vector<uint8_t> _data;
-    std::weak_ptr<job_pool> _job_pool;
+	protected:
+		std::vector<uint8_t> _data;
+		std::weak_ptr<job_pool> _job_pool;
 
-  private:
-    priorities _priority;
-    std::wstring _temporary_stored_path;
+	private:
+		priorities _priority;
+		std::wstring _temporary_stored_path;
 
-    std::function<void(void)> _working_callback;
-    std::function<void(const std::vector<uint8_t> &)> _working_callback2;
-    std::function<void(std::weak_ptr<job_pool>, const std::vector<uint8_t> &)> _working_callback3;
-  };
+		std::function<void(void)> _working_callback;
+		std::function<void(const std::vector<uint8_t>&)> _working_callback2;
+		std::function<void(std::weak_ptr<job_pool>,
+						   const std::vector<uint8_t>&)>
+			_working_callback3;
+	};
 } // namespace threads

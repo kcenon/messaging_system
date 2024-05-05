@@ -34,5 +34,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace network
 {
-  enum class connection_conditions : short { waiting = 1, expired = 2, confirmed = 3 };
+	enum class connection_conditions : short {
+		waiting = 1,
+		expired = 2,
+		confirmed = 3
+	};
 }

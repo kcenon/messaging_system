@@ -38,15 +38,15 @@ using namespace std;
 
 namespace container
 {
-  class uint_value : public value
-  {
-  public:
-    uint_value(void);
-    uint_value(const wstring &name, const unsigned int &value);
-    ~uint_value(void) = default;
+	class uint_value : public value
+	{
+	public:
+		uint_value(void);
+		uint_value(const wstring& name, const unsigned int& value);
+		~uint_value(void) = default;
 
-  public:
-    unsigned int to_uint(void) const override;
-    wstring to_string(const bool &original = true) const override;
-  };
+	public:
+		unsigned int to_uint(void) const override;
+		wstring to_string(const bool& original = true) const override;
+	};
 } // namespace container

@@ -43,37 +43,41 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace threads
 {
-  class thread_pool : public std::enable_shared_from_this<thread_pool>
-  {
-  public:
-    thread_pool(const std::wstring &title = L"thread_pool",
-                const std::vector<std::shared_ptr<thread_worker> > &workers = {});
-    ~thread_pool(void);
+	class thread_pool : public std::enable_shared_from_this<thread_pool>
+	{
+	public:
+		thread_pool(const std::wstring& title = L"thread_pool",
+					const std::vector<std::shared_ptr<thread_worker>>& workers
+					= {});
+		~thread_pool(void);
 
-  public:
-    std::shared_ptr<thread_pool> get_ptr(void);
+	public:
+		std::shared_ptr<thread_pool> get_ptr(void);
 
-  public:
-    void start(void);
-    void append(std::shared_ptr<thread_worker> worker, const bool &start = false);
-    void stop(const bool &stop_immediately = true, const bool &jop_pool_lock = false);
+	public:
+		void start(void);
+		void append(std::shared_ptr<thread_worker> worker,
+					const bool& start = false);
+		void stop(const bool& stop_immediately = true,
+				  const bool& jop_pool_lock = false);
 
-  public:
-    void push(std::shared_ptr<job> job);
+	public:
+		void push(std::shared_ptr<job> job);
 
-  protected:
-    void empty_pool_notification(const priorities &priority);
-    void worker_notification(const std::wstring &id, const bool &working_condition);
+	protected:
+		void empty_pool_notification(const priorities& priority);
+		void worker_notification(const std::wstring& id,
+								 const bool& working_condition);
 
-  private:
-    std::optional<std::promise<bool> > _promise_status;
-    std::future<bool> _future_status;
+	private:
+		std::optional<std::promise<bool>> _promise_status;
+		std::future<bool> _future_status;
 
-  private:
-    std::mutex _mutex;
-    std::wstring _title;
-    std::shared_ptr<job_pool> _job_pool;
-    std::map<std::wstring, bool> _worker_conditions;
-    std::vector<std::shared_ptr<thread_worker> > _workers;
-  };
+	private:
+		std::mutex _mutex;
+		std::wstring _title;
+		std::shared_ptr<job_pool> _job_pool;
+		std::map<std::wstring, bool> _worker_conditions;
+		std::vector<std::shared_ptr<thread_worker>> _workers;
+	};
 } // namespace threads

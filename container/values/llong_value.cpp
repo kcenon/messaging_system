@@ -37,21 +37,29 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace container
 {
-  llong_value::llong_value(void) : value() { _type = value_types::llong_value; }
+	llong_value::llong_value(void) : value()
+	{
+		_type = value_types::llong_value;
+	}
 
-  llong_value::llong_value(const wstring &name, const long long &value) : llong_value()
-  {
-    _name = name;
-    set_data((const unsigned char *)&value, sizeof(long long), value_types::llong_value);
-  }
+	llong_value::llong_value(const wstring& name, const long long& value)
+		: llong_value()
+	{
+		_name = name;
+		set_data((const unsigned char*)&value, sizeof(long long),
+				 value_types::llong_value);
+	}
 
-  long long llong_value::to_llong(void) const
-  {
-    long long temp = 0;
-    memcpy(&temp, _data.data(), _size);
+	long long llong_value::to_llong(void) const
+	{
+		long long temp = 0;
+		memcpy(&temp, _data.data(), _size);
 
-    return static_cast<long long>(temp);
-  }
+		return static_cast<long long>(temp);
+	}
 
-  wstring llong_value::to_string(const bool &) const { return fmt::format(L"{}", to_llong()); }
+	wstring llong_value::to_string(const bool&) const
+	{
+		return fmt::format(L"{}", to_llong());
+	}
 } // namespace container

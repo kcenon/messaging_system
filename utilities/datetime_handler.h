@@ -37,10 +37,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace datetime_handler
 {
-  class datetime
-  {
-  public:
-    static std::wstring date(const std::chrono::system_clock::time_point &time, const bool &use_seperator = true);
-    static std::wstring time(const std::chrono::system_clock::time_point &time, const bool &use_seperator = true);
-  };
+	class datetime
+	{
+	public:
+		static auto date(const std::chrono::system_clock::time_point& time,
+						 const bool& use_seperator = true) -> std::wstring;
+		static auto time(const std::chrono::system_clock::time_point& time,
+						 const bool& use_seperator = true) -> std::wstring;
+	};
 } // namespace datetime_handler

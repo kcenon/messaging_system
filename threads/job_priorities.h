@@ -34,5 +34,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace threads
 {
-  enum class priorities : unsigned short { none = 0, low = 1, normal = 2, high = 3, top = 4 };
+	enum class priorities : unsigned short {
+		none = 0,
+		low = 1,
+		normal = 2,
+		high = 3,
+		top = 4
+	};
 }

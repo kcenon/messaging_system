@@ -40,190 +40,215 @@ using namespace converting;
 
 namespace argument_parser
 {
-  argument_manager::argument_manager(void) {}
+	argument_manager::argument_manager(void) {}
 
-  argument_manager::argument_manager(const std::string &arguments)
-  {
-    _arguments = parse(converter::split(converter::to_wstring(arguments), L" "));
-  }
+	argument_manager::argument_manager(const std::string& arguments)
+	{
+		auto [splited, message]
+			= converter::split(converter::to_wstring(arguments), L" ");
 
-  argument_manager::argument_manager(const std::wstring &arguments)
-  {
-    _arguments = parse(converter::split(arguments, L" "));
-  }
+		if (splited.has_value())
+		{
+			_arguments = parse(splited.value());
+		}
+	}
 
-  argument_manager::argument_manager(int argc, char *argv[]) { _arguments = parse(argc, argv); }
+	argument_manager::argument_manager(const std::wstring& arguments)
+	{
+		auto [splited, message] = converter::split(arguments, L" ");
 
-  argument_manager::argument_manager(int argc, wchar_t *argv[]) { _arguments = parse(argc, argv); }
+		if (splited.has_value())
+		{
+			_arguments = parse(splited.value());
+		}
+	}
 
-  std::optional<std::wstring> argument_manager::to_string(const std::wstring &key)
-  {
-    auto target = _arguments.find(key);
-    if (target == _arguments.end())
-    {
-      return std::nullopt;
-    }
+	argument_manager::argument_manager(int argc, char* argv[])
+	{
+		_arguments = parse(argc, argv);
+	}
 
-    return target->second;
-  }
+	argument_manager::argument_manager(int argc, wchar_t* argv[])
+	{
+		_arguments = parse(argc, argv);
+	}
 
-  std::optional<bool> argument_manager::to_bool(const std::wstring &key)
-  {
-    auto target = to_string(key);
-    if (target == std::nullopt)
-    {
-      return std::nullopt;
-    }
+	std::optional<std::wstring> argument_manager::to_string(
+		const std::wstring& key)
+	{
+		auto target = _arguments.find(key);
+		if (target == _arguments.end())
+		{
+			return std::nullopt;
+		}
 
-    auto temp = *target;
-    transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+		return target->second;
+	}
 
-    return temp.compare(L"true") == 0;
-  }
+	std::optional<bool> argument_manager::to_bool(const std::wstring& key)
+	{
+		auto target = to_string(key);
+		if (target == std::nullopt)
+		{
+			return std::nullopt;
+		}
 
-  std::optional<short> argument_manager::to_short(const std::wstring &key)
-  {
-    auto target = to_string(key);
-    if (target == std::nullopt)
-    {
-      return std::nullopt;
-    }
+		auto temp = *target;
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
-    return (short)atoi(converter::to_string(*target).c_str());
-  }
+		return temp.compare(L"true") == 0;
+	}
 
-  std::optional<unsigned short> argument_manager::to_ushort(const std::wstring &key)
-  {
-    auto target = to_string(key);
-    if (target == std::nullopt)
-    {
-      return std::nullopt;
-    }
+	std::optional<short> argument_manager::to_short(const std::wstring& key)
+	{
+		auto target = to_string(key);
+		if (target == std::nullopt)
+		{
+			return std::nullopt;
+		}
 
-    return (unsigned short)atoi(converter::to_string(*target).c_str());
-  }
+		return (short)atoi(converter::to_string(*target).c_str());
+	}
 
-  std::optional<int> argument_manager::to_int(const std::wstring &key)
-  {
-    auto target = to_string(key);
-    if (target == std::nullopt)
-    {
-      return std::nullopt;
-    }
+	std::optional<unsigned short> argument_manager::to_ushort(
+		const std::wstring& key)
+	{
+		auto target = to_string(key);
+		if (target == std::nullopt)
+		{
+			return std::nullopt;
+		}
 
-    return (int)atoi(converter::to_string(*target).c_str());
-  }
+		return (unsigned short)atoi(converter::to_string(*target).c_str());
+	}
 
-  std::optional<unsigned int> argument_manager::to_uint(const std::wstring &key)
-  {
-    auto target = to_string(key);
-    if (target == std::nullopt)
-    {
-      return std::nullopt;
-    }
+	std::optional<int> argument_manager::to_int(const std::wstring& key)
+	{
+		auto target = to_string(key);
+		if (target == std::nullopt)
+		{
+			return std::nullopt;
+		}
 
-    return (unsigned int)atoi(converter::to_string(*target).c_str());
-  }
+		return (int)atoi(converter::to_string(*target).c_str());
+	}
 
-#ifdef _WIN32
-  std::optional<long long> argument_manager::to_llong(const std::wstring &key)
-#else
-  std::optional<long> argument_manager::to_long(const std::wstring &key)
-#endif
-  {
-    auto target = to_string(key);
-    if (target == std::nullopt)
-    {
-      return std::nullopt;
-    }
+	std::optional<unsigned int> argument_manager::to_uint(
+		const std::wstring& key)
+	{
+		auto target = to_string(key);
+		if (target == std::nullopt)
+		{
+			return std::nullopt;
+		}
 
-#ifdef _WIN32
-    return (long long)atoll(converter::to_string(*target).c_str());
-#else
-    return (long)atol(converter::to_string(*target).c_str());
-#endif
-  }
-
-#ifdef _WIN32
-  std::optional<unsigned long long> argument_manager::to_ullong(const std::wstring &key)
-#else
-  std::optional<unsigned long> argument_manager::to_ulong(const std::wstring &key)
-#endif
-  {
-    auto target = to_string(key);
-    if (target == std::nullopt)
-    {
-      return std::nullopt;
-    }
+		return (unsigned int)atoi(converter::to_string(*target).c_str());
+	}
 
 #ifdef _WIN32
-    return (unsigned long long)atoll(converter::to_string(*target).c_str());
+	std::optional<long long> argument_manager::to_llong(const std::wstring& key)
 #else
-    return (unsigned long)atol(converter::to_string(*target).c_str());
+	std::optional<long> argument_manager::to_long(const std::wstring& key)
 #endif
-  }
+	{
+		auto target = to_string(key);
+		if (target == std::nullopt)
+		{
+			return std::nullopt;
+		}
 
-  std::map<std::wstring, std::wstring> argument_manager::parse(int argc, char *argv[])
-  {
-    std::vector<std::wstring> arguments;
-    for (int index = 1; index < argc; ++index)
-    {
-      arguments.push_back(converter::to_wstring(argv[index]));
-    }
+#ifdef _WIN32
+		return (long long)atoll(converter::to_string(*target).c_str());
+#else
+		return (long)atol(converter::to_string(*target).c_str());
+#endif
+	}
 
-    return parse(arguments);
-  }
+#ifdef _WIN32
+	std::optional<unsigned long long> argument_manager::to_ullong(
+		const std::wstring& key)
+#else
+	std::optional<unsigned long> argument_manager::to_ulong(
+		const std::wstring& key)
+#endif
+	{
+		auto target = to_string(key);
+		if (target == std::nullopt)
+		{
+			return std::nullopt;
+		}
 
-  std::map<std::wstring, std::wstring> argument_manager::parse(int argc, wchar_t *argv[])
-  {
-    std::vector<std::wstring> arguments;
-    for (int index = 1; index < argc; ++index)
-    {
-      arguments.push_back(argv[index]);
-    }
+#ifdef _WIN32
+		return (unsigned long long)atoll(converter::to_string(*target).c_str());
+#else
+		return (unsigned long)atol(converter::to_string(*target).c_str());
+#endif
+	}
 
-    return parse(arguments);
-  }
+	std::map<std::wstring, std::wstring> argument_manager::parse(int argc,
+																 char* argv[])
+	{
+		std::vector<std::wstring> arguments;
+		for (int index = 1; index < argc; ++index)
+		{
+			arguments.push_back(converter::to_wstring(argv[index]));
+		}
 
-  std::map<std::wstring, std::wstring> argument_manager::parse(const std::vector<std::wstring> &arguments)
-  {
-    std::map<std::wstring, std::wstring> result;
+		return parse(arguments);
+	}
 
-    size_t argc = arguments.size();
-    std::wstring argument_id;
-    for (size_t index = 0; index < argc; ++index)
-    {
-      argument_id = arguments[index];
-      size_t offset = argument_id.find(L"--", 0);
-      if (offset != 0)
-      {
-        continue;
-      }
+	std::map<std::wstring, std::wstring> argument_manager::parse(
+		int argc, wchar_t* argv[])
+	{
+		std::vector<std::wstring> arguments;
+		for (int index = 1; index < argc; ++index)
+		{
+			arguments.push_back(argv[index]);
+		}
 
-      if (argument_id.compare(L"--help") == 0)
-      {
-        result.insert({ argument_id, L"display help" });
-        continue;
-      }
+		return parse(arguments);
+	}
 
-      if (index + 1 >= argc)
-      {
-        break;
-      }
+	std::map<std::wstring, std::wstring> argument_manager::parse(
+		const std::vector<std::wstring>& arguments)
+	{
+		std::map<std::wstring, std::wstring> result;
 
-      auto target = result.find(argument_id);
-      if (target == result.end())
-      {
-        result.insert({ argument_id, arguments[index + 1] });
-        ++index;
+		size_t argc = arguments.size();
+		std::wstring argument_id;
+		for (size_t index = 0; index < argc; ++index)
+		{
+			argument_id = arguments[index];
+			size_t offset = argument_id.find(L"--", 0);
+			if (offset != 0)
+			{
+				continue;
+			}
 
-        continue;
-      }
+			if (argument_id.compare(L"--help") == 0)
+			{
+				result.insert({ argument_id, L"display help" });
+				continue;
+			}
 
-      target->second = arguments[index + 1];
-      ++index;
-    }
+			if (index + 1 >= argc)
+			{
+				break;
+			}
 
-    return result;
-  }
+			auto target = result.find(argument_id);
+			if (target == result.end())
+			{
+				result.insert({ argument_id, arguments[index + 1] });
+				++index;
+
+				continue;
+			}
+
+			target->second = arguments[index + 1];
+			++index;
+		}
+
+		return result;
+	}
 } // namespace argument_parser

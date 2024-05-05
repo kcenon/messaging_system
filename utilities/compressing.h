@@ -33,18 +33,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <tuple>
-#include <functional>
 #include <string>
 #include <vector>
+#include <optional>
+#include <functional>
 
 namespace compressing
 {
-  class compressor
-  {
-  public:
-    static std::tuple<std::vector<uint8_t>, std::wstring> compression(const std::vector<uint8_t> &original_data,
-                                                                      const unsigned short &block_bytes = 1024);
-    static std::tuple<std::vector<uint8_t>, std::wstring> decompression(const std::vector<uint8_t> &compressed_data,
-                                                                        const unsigned short &block_bytes = 1024);
-  };
+	class compressor
+	{
+	public:
+		static auto compression(const std::vector<uint8_t>& original_data,
+								const unsigned short& block_bytes = 1024)
+			-> std::tuple<std::optional<std::vector<uint8_t>>, std::wstring>;
+		static auto decompression(const std::vector<uint8_t>& compressed_data,
+								  const unsigned short& block_bytes = 1024)
+			-> std::tuple<std::optional<std::vector<uint8_t>>, std::wstring>;
+	};
 } // namespace compressing
