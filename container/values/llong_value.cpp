@@ -39,13 +39,13 @@ namespace container
 {
 	llong_value::llong_value(void) : value()
 	{
-		_type = value_types::llong_value;
+		type_ = value_types::llong_value;
 	}
 
-	llong_value::llong_value(const wstring& name, const long long& value)
+	llong_value::llong_value(const std::string& name, const long long& value)
 		: llong_value()
 	{
-		_name = name;
+		name_ = name;
 		set_data((const unsigned char*)&value, sizeof(long long),
 				 value_types::llong_value);
 	}
@@ -53,13 +53,13 @@ namespace container
 	long long llong_value::to_llong(void) const
 	{
 		long long temp = 0;
-		memcpy(&temp, _data.data(), _size);
+		memcpy(&temp, data_.data(), size_);
 
 		return static_cast<long long>(temp);
 	}
 
-	wstring llong_value::to_string(const bool&) const
+	std::string llong_value::to_string(const bool&) const
 	{
-		return fmt::format(L"{}", to_llong());
+		return fmt::format("{}", to_llong());
 	}
 } // namespace container

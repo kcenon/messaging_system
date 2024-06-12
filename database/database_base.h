@@ -40,7 +40,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace database
 {
-	using namespace std;
 
 	class database_base
 	{
@@ -50,13 +49,13 @@ namespace database
 
 	public:
 		virtual database_types database_type(void) = 0;
-		virtual bool connect(const wstring& connect_string) = 0;
-		virtual bool create_query(const wstring& query_string) = 0;
-		virtual unsigned int insert_query(const wstring& query_string) = 0;
-		virtual unsigned int update_query(const wstring& query_string) = 0;
-		virtual unsigned int delete_query(const wstring& query_string) = 0;
-		virtual shared_ptr<container::value_container> select_query(
-			const wstring& query_string)
+		virtual bool connect(const std::string& connect_string) = 0;
+		virtual bool create_query(const std::string& query_string) = 0;
+		virtual unsigned int insert_query(const std::string& query_string) = 0;
+		virtual unsigned int update_query(const std::string& query_string) = 0;
+		virtual unsigned int delete_query(const std::string& query_string) = 0;
+		virtual std::shared_ptr<container::value_container> select_query(
+			const std::string& query_string)
 			= 0;
 		virtual bool disconnect(void) = 0;
 	};

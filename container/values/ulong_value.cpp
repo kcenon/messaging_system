@@ -39,13 +39,14 @@ namespace container
 {
 	ulong_value::ulong_value(void) : value()
 	{
-		_type = value_types::ulong_value;
+		type_ = value_types::ulong_value;
 	}
 
-	ulong_value::ulong_value(const wstring& name, const unsigned long& value)
+	ulong_value::ulong_value(const std::string& name,
+							 const unsigned long& value)
 		: ulong_value()
 	{
-		_name = name;
+		name_ = name;
 		set_data((const unsigned char*)&value, sizeof(unsigned long),
 				 value_types::ulong_value);
 	}
@@ -53,13 +54,13 @@ namespace container
 	unsigned long ulong_value::to_ulong(void) const
 	{
 		unsigned long temp = 0;
-		memcpy(&temp, _data.data(), _size);
+		memcpy(&temp, data_.data(), size_);
 
 		return static_cast<unsigned long>(temp);
 	}
 
-	wstring ulong_value::to_string(const bool&) const
+	std::string ulong_value::to_string(const bool&) const
 	{
-		return fmt::format(L"{}", to_ulong());
+		return fmt::format("{}", to_ulong());
 	}
 } // namespace container

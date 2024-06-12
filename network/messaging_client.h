@@ -48,22 +48,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace network
 {
-	using namespace std;
-	class messaging_client : public enable_shared_from_this<messaging_client>,
-							 data_handling
+
+	class messaging_client
+		: public std::enable_shared_from_this<messaging_client>,
+		  data_handling
 	{
 	public:
-		messaging_client(const wstring& source_id,
+		messaging_client(const std::string& source_id,
 						 const unsigned char& start_code_value = 231,
 						 const unsigned char& end_code_value = 67);
 		~messaging_client(void);
 
 	public:
-		shared_ptr<messaging_client> get_ptr(void);
+		std::shared_ptr<messaging_client> get_ptr(void);
 
 	public:
-		wstring source_id(void) const;
-		wstring source_sub_id(void) const;
+		std::string source_id(void) const;
+		std::string source_sub_id(void) const;
 
 	public:
 		void set_auto_echo(const bool& auto_echo,
@@ -73,39 +74,42 @@ namespace network
 		void set_compress_mode(const bool& compress_mode);
 		void set_compress_block_size(const unsigned short& compress_block_size);
 		void set_session_types(const session_types& session_type);
-		void set_connection_key(const wstring& connection_key);
-		void set_snipping_targets(const vector<wstring>& snipping_targets);
+		void set_connection_key(const std::string& connection_key);
+		void set_snipping_targets(
+			const std::vector<std::string>& snipping_targets);
 
 	public:
 		void set_connection_notification(
-			const function<void(const wstring&, const wstring&, const bool&)>&
-				notification);
+			const std::function<void(const std::string&,
+									 const std::string&,
+									 const bool&)>& notification);
 		void set_message_notification(
-			const function<void(shared_ptr<container::value_container>)>&
-				notification);
+			const std::function<void(
+				std::shared_ptr<container::value_container>)>& notification);
 		void set_file_notification(
-			const function<void(const wstring&,
-								const wstring&,
-								const wstring&,
-								const wstring&)>& notification);
+			const std::function<void(const std::string&,
+									 const std::string&,
+									 const std::string&,
+									 const std::string&)>& notification);
 		void set_binary_notification(
-			const function<void(const wstring&,
-								const wstring&,
-								const wstring&,
-								const wstring&,
-								const vector<uint8_t>&)>& notification);
+			const std::function<void(const std::string&,
+									 const std::string&,
+									 const std::string&,
+									 const std::string&,
+									 const std::vector<uint8_t>&)>&
+				notification);
 		void set_specific_compress_sequence(
-			const function<vector<uint8_t>(const vector<uint8_t>&,
-										   const bool&)>&
+			const std::function<
+				std::vector<uint8_t>(const std::vector<uint8_t>&, const bool&)>&
 				specific_compress_sequence);
 		void set_specific_encrypt_sequence(
-			const function<vector<uint8_t>(const vector<uint8_t>&,
-										   const bool&)>&
+			const std::function<
+				std::vector<uint8_t>(const std::vector<uint8_t>&, const bool&)>&
 				specific_encrypt_sequence);
 
 	public:
 		connection_conditions get_confirm_status(void) const;
-		void start(const wstring& ip,
+		void start(const std::string& ip,
 				   const unsigned short& port,
 				   const unsigned short& high_priority = 8,
 				   const unsigned short& normal_priority = 8,
@@ -115,57 +119,59 @@ namespace network
 	public:
 		bool echo(void);
 		bool send(const container::value_container& message);
-		bool send(shared_ptr<container::value_container> message);
+		bool send(std::shared_ptr<container::value_container> message);
 		bool send_files(const container::value_container& message);
-		bool send_files(shared_ptr<container::value_container> message);
-		bool send_binary(const wstring& target_id,
-						 const wstring& target_sub_id,
-						 const vector<uint8_t>& data);
+		bool send_files(std::shared_ptr<container::value_container> message);
+		bool send_binary(const std::string& target_id,
+						 const std::string& target_sub_id,
+						 const std::vector<uint8_t>& data);
 
 	protected:
 		void send_connection(void);
 		void disconnected(void) override;
 
 	private:
-		void send_packet(const vector<uint8_t>& data) override;
-		void send_file_packet(const vector<uint8_t>& data) override;
-		void send_binary_packet(const vector<uint8_t>& data) override;
+		void send_packet(const std::vector<uint8_t>& data) override;
+		void send_file_packet(const std::vector<uint8_t>& data) override;
+		void send_binary_packet(const std::vector<uint8_t>& data) override;
 
 	private:
 		void normal_message(
-			shared_ptr<container::value_container> message) override;
-		void confirm_message(shared_ptr<container::value_container> message);
-		void request_files(shared_ptr<container::value_container> message);
-		void echo_message(shared_ptr<container::value_container> message);
+			std::shared_ptr<container::value_container> message) override;
+		void confirm_message(
+			std::shared_ptr<container::value_container> message);
+		void request_files(std::shared_ptr<container::value_container> message);
+		void echo_message(std::shared_ptr<container::value_container> message);
 
 	private:
 		void connection_notification(const bool& condition);
 
 	private:
-		bool create_socket(const wstring& ip, const unsigned short& port);
+		bool create_socket(const std::string& ip, const unsigned short& port);
 		void run(void);
 		void create_thread_pool(const unsigned short& high_priority,
 								const unsigned short& normal_priority,
 								const unsigned short& low_priority);
 
 	private:
-		bool _auto_echo;
-		bool _bridge_line;
-		session_types _session_type;
-		wstring _source_id;
-		wstring _source_sub_id;
-		wstring _target_id;
-		wstring _target_sub_id;
-		wstring _connection_key;
-		unsigned short _auto_echo_interval_seconds;
-		vector<wstring> _snipping_targets;
+		bool auto_echo_;
+		bool bridge_line_;
+		session_types session_type_;
+		std::string source_id_;
+		std::string source_sub_id_;
+		std::string target_id_;
+		std::string target_sub_id_;
+		std::string connection_key_;
+		unsigned short auto_echo_interval_seconds_;
+		std::vector<std::string> snipping_targets_;
 
 	private:
-		function<void(const wstring&, const wstring&, const bool&)> _connection;
+		std::function<void(const std::string&, const std::string&, const bool&)>
+			connection_;
 
 	private:
-		shared_ptr<thread> _thread;
-		shared_ptr<asio::ip::tcp::socket> _socket;
-		shared_ptr<asio::io_context> _io_context;
+		std::shared_ptr<std::thread> thread_;
+		std::shared_ptr<asio::ip::tcp::socket> socket_;
+		std::shared_ptr<asio::io_context> io_context_;
 	};
 } // namespace network

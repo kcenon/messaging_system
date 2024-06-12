@@ -62,79 +62,93 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace container
 {
-	constexpr auto TARGET_ID = L"1";
-	constexpr auto TARGET_SUB_ID = L"2";
-	constexpr auto SOURCE_ID = L"3";
-	constexpr auto SOURCE_SUB_ID = L"4";
-	constexpr auto MESSAGE_TYPE = L"5";
-	constexpr auto MESSAGE_VERSION = L"6";
+	constexpr auto TARGET_ID = "1";
+	constexpr auto TARGET_SUB_ID = "2";
+	constexpr auto SOURCE_ID = "3";
+	constexpr auto SOURCE_SUB_ID = "4";
+	constexpr auto MESSAGE_TYPE = "5";
+	constexpr auto MESSAGE_VERSION = "6";
 
 	using namespace converting;
 	using namespace file_handler;
 
 	value_container::value_container(void)
-		: _source_id(L"")
-		, _source_sub_id(L"")
-		, _target_id(L"")
-		, _target_sub_id(L"")
-		, _message_type(L"data_container")
-		, _version(L"1.0.0.0")
-		, _parsed_data(true)
-		, _data_string(L"@data={};")
-		, _changed_data(false)
+		: source_id_("")
+		, source_sub_id_("")
+		, target_id_("")
+		, target_sub_id_("")
+		, message_type_("data_container")
+		, version_("1.0.0.0")
+		, parsed_data_(true)
+		, data_string_("@data={};")
+		, changed_data_(false)
 	{
-		_data_type_map.insert({ value_types::bool_value,
-								bind(&value_container::set_boolean, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::short_value,
-								bind(&value_container::set_short, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::ushort_value,
-								bind(&value_container::set_ushort, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::int_value,
-								bind(&value_container::set_int, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::uint_value,
-								bind(&value_container::set_uint, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::long_value,
-								bind(&value_container::set_long, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::ulong_value,
-								bind(&value_container::set_ulong, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::llong_value,
-								bind(&value_container::set_llong, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::ullong_value,
-								bind(&value_container::set_ullong, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::float_value,
-								bind(&value_container::set_float, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::double_value,
-								bind(&value_container::set_double, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::bytes_value,
-								bind(&value_container::set_bytes, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::string_value,
-								bind(&value_container::set_string, this,
-									 placeholders::_1, placeholders::_2) });
-		_data_type_map.insert({ value_types::container_value,
-								bind(&value_container::set_container, this,
-									 placeholders::_1, placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::bool_value,
+			  std::bind(&value_container::set_boolean, this,
+						std::placeholders::_1, std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::short_value,
+			  std::bind(&value_container::set_short, this,
+						std::placeholders::_1, std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::ushort_value,
+			  std::bind(&value_container::set_ushort, this,
+						std::placeholders::_1, std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::int_value,
+			  std::bind(&value_container::set_int, this, std::placeholders::_1,
+						std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::uint_value,
+			  std::bind(&value_container::set_uint, this, std::placeholders::_1,
+						std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::long_value,
+			  std::bind(&value_container::set_long, this, std::placeholders::_1,
+						std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::ulong_value,
+			  std::bind(&value_container::set_ulong, this,
+						std::placeholders::_1, std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::llong_value,
+			  std::bind(&value_container::set_llong, this,
+						std::placeholders::_1, std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::ullong_value,
+			  std::bind(&value_container::set_ullong, this,
+						std::placeholders::_1, std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::float_value,
+			  std::bind(&value_container::set_float, this,
+						std::placeholders::_1, std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::double_value,
+			  std::bind(&value_container::set_double, this,
+						std::placeholders::_1, std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::bytes_value,
+			  std::bind(&value_container::set_bytes, this,
+						std::placeholders::_1, std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::string_value,
+			  std::bind(&value_container::set_string, this,
+						std::placeholders::_1, std::placeholders::_2) });
+		data_type_map_.insert(
+			{ value_types::container_value,
+			  std::bind(&value_container::set_container, this,
+						std::placeholders::_1, std::placeholders::_2) });
 	}
 
-	value_container::value_container(const wstring& data_string,
+	value_container::value_container(const std::string& data_string,
 									 const bool& parse_only_header)
 		: value_container()
 	{
 		deserialize(data_string, parse_only_header);
 	}
 
-	value_container::value_container(const vector<uint8_t>& data_array,
+	value_container::value_container(const std::vector<uint8_t>& data_array,
 									 const bool& parse_only_header)
 		: value_container()
 	{
@@ -148,8 +162,9 @@ namespace container
 		deserialize(data_container.serialize(), parse_only_header);
 	}
 
-	value_container::value_container(shared_ptr<value_container> data_container,
-									 const bool& parse_only_header)
+	value_container::value_container(
+		std::shared_ptr<value_container> data_container,
+		const bool& parse_only_header)
 		: value_container()
 	{
 		if (data_container == nullptr)
@@ -160,18 +175,20 @@ namespace container
 		deserialize(data_container->serialize(), parse_only_header);
 	}
 
-	value_container::value_container(const wstring& message_type,
-									 const vector<shared_ptr<value>>& units)
+	value_container::value_container(
+		const std::string& message_type,
+		const std::vector<std::shared_ptr<value>>& units)
 		: value_container()
 	{
 		set_message_type(message_type);
 		set_units(units);
 	}
 
-	value_container::value_container(const wstring& target_id,
-									 const wstring& target_sub_id,
-									 const wstring& message_type,
-									 const vector<shared_ptr<value>>& units)
+	value_container::value_container(
+		const std::string& target_id,
+		const std::string& target_sub_id,
+		const std::string& message_type,
+		const std::vector<std::shared_ptr<value>>& units)
 		: value_container()
 	{
 		set_target(target_id, target_sub_id);
@@ -179,12 +196,13 @@ namespace container
 		set_units(units);
 	}
 
-	value_container::value_container(const wstring& source_id,
-									 const wstring& source_sub_id,
-									 const wstring& target_id,
-									 const wstring& target_sub_id,
-									 const wstring& message_type,
-									 const vector<shared_ptr<value>>& units)
+	value_container::value_container(
+		const std::string& source_id,
+		const std::string& source_sub_id,
+		const std::string& target_id,
+		const std::string& target_sub_id,
+		const std::string& message_type,
+		const std::vector<std::shared_ptr<value>>& units)
 		: value_container()
 	{
 		set_source(source_id, source_sub_id);
@@ -195,102 +213,106 @@ namespace container
 
 	value_container::~value_container(void) {}
 
-	shared_ptr<value_container> value_container::get_ptr(void)
+	std::shared_ptr<value_container> value_container::get_ptr(void)
 	{
 		return shared_from_this();
 	}
 
-	void value_container::set_source(const wstring& source_id,
-									 const wstring& source_sub_id)
+	void value_container::set_source(const std::string& source_id,
+									 const std::string& source_sub_id)
 	{
-		_source_id = source_id;
-		_source_sub_id = source_sub_id;
+		source_id_ = source_id;
+		source_sub_id_ = source_sub_id;
 	}
 
-	void value_container::set_target(const wstring& target_id,
-									 const wstring& target_sub_id)
+	void value_container::set_target(const std::string& target_id,
+									 const std::string& target_sub_id)
 	{
-		_target_id = target_id;
-		_target_sub_id = target_sub_id;
+		target_id_ = target_id;
+		target_sub_id_ = target_sub_id;
 	}
 
-	void value_container::set_message_type(const wstring& message_type)
+	void value_container::set_message_type(const std::string& message_type)
 	{
-		_message_type = message_type;
+		message_type_ = message_type;
 	}
 
-	wstring value_container::source_id(void) const { return _source_id; }
+	std::string value_container::source_id(void) const { return source_id_; }
 
-	wstring value_container::source_sub_id(void) const
+	std::string value_container::source_sub_id(void) const
 	{
-		return _source_sub_id;
+		return source_sub_id_;
 	}
 
-	wstring value_container::target_id(void) const { return _target_id; }
+	std::string value_container::target_id(void) const { return target_id_; }
 
-	wstring value_container::target_sub_id(void) const
+	std::string value_container::target_sub_id(void) const
 	{
-		return _target_sub_id;
+		return target_sub_id_;
 	}
 
-	wstring value_container::message_type(void) const { return _message_type; }
+	std::string value_container::message_type(void) const
+	{
+		return message_type_;
+	}
 
 	void value_container::set_units(
-		const vector<shared_ptr<value>>& target_values,
+		const std::vector<std::shared_ptr<value>>& target_values,
 		const bool& update_immediately)
 	{
-		if (!_parsed_data)
+		if (!parsed_data_)
 		{
-			deserialize_values(_data_string, false);
+			deserialize_values(data_string_, false);
 		}
 
-		vector<shared_ptr<value>>::iterator target;
+		std::vector<std::shared_ptr<value>>::iterator target;
 		for (auto& target_value : target_values)
 		{
-			target = find_if(_units.begin(), _units.end(),
-							 [&target_value](shared_ptr<value> item)
+			target = find_if(units_.begin(), units_.end(),
+							 [&target_value](std::shared_ptr<value> item)
 							 { return item == target_value; });
 
-			if (target != _units.end())
+			if (target != units_.end())
 			{
 				continue;
 			}
 
-			_units.push_back(target_value);
+			units_.push_back(target_value);
 			target_value->set_parent(nullptr);
 		}
 
-		_changed_data = !update_immediately;
+		changed_data_ = !update_immediately;
 		if (update_immediately)
 		{
-			_data_string = datas();
+			data_string_ = datas();
 		}
 	}
 
 	void value_container::swap_header(void)
 	{
-		wstring temp = _source_id;
-		_source_id = _target_id;
-		_target_id = std::move(temp);
+		std::string temp = source_id_;
+		source_id_ = target_id_;
+		target_id_ = std::move(temp);
 
-		temp = _source_sub_id;
-		_source_sub_id = _target_sub_id;
-		_target_sub_id = std::move(temp);
+		temp = source_sub_id_;
+		source_sub_id_ = target_sub_id_;
+		target_sub_id_ = std::move(temp);
 	}
 
 	void value_container::clear_value(void)
 	{
-		_parsed_data = true;
-		_changed_data = false;
-		_data_string = L"@data={};";
-		_units.clear();
+		parsed_data_ = true;
+		changed_data_ = false;
+		data_string_ = "@data={};";
+		units_.clear();
 	}
 
-	shared_ptr<value_container> value_container::copy(
+	std::shared_ptr<value_container> value_container::copy(
 		const bool& containing_values)
 	{
-		shared_ptr<value_container> new_container
-			= make_shared<value_container>(serialize(), !containing_values);
+		std::shared_ptr<value_container> new_container
+			= std::make_shared<value_container>(serialize(),
+												!containing_values);
 		if (new_container == nullptr)
 		{
 			return nullptr;
@@ -304,14 +326,14 @@ namespace container
 		return new_container;
 	}
 
-	shared_ptr<value> value_container::add(const value& target_value,
-										   const bool& update_immediately)
+	std::shared_ptr<value> value_container::add(const value& target_value,
+												const bool& update_immediately)
 	{
-		auto target = _data_type_map.find(target_value.type());
-		if (target == _data_type_map.end())
+		auto target = data_type_map_.find(target_value.type());
+		if (target == data_type_map_.end())
 		{
-			return add(make_shared<value>(target_value.name(), nullptr, 0,
-										  value_types::null_value),
+			return add(std::make_shared<value>(target_value.name(), nullptr, 0,
+											   value_types::null_value),
 					   update_immediately);
 		}
 
@@ -320,106 +342,106 @@ namespace container
 			update_immediately);
 	}
 
-	shared_ptr<value> value_container::add(shared_ptr<value> target_value,
-										   const bool& update_immediately)
+	std::shared_ptr<value> value_container::add(
+		std::shared_ptr<value> target_value, const bool& update_immediately)
 	{
-		if (!_parsed_data)
+		if (!parsed_data_)
 		{
-			deserialize_values(_data_string, false);
+			deserialize_values(data_string_, false);
 		}
 
-		vector<shared_ptr<value>>::iterator target;
-		target = find_if(_units.begin(), _units.end(),
-						 [&target_value](shared_ptr<value> item)
+		std::vector<std::shared_ptr<value>>::iterator target;
+		target = find_if(units_.begin(), units_.end(),
+						 [&target_value](std::shared_ptr<value> item)
 						 { return item == target_value; });
 
-		if (target != _units.end())
+		if (target != units_.end())
 		{
 			return nullptr;
 		}
 
-		_units.push_back(target_value);
+		units_.push_back(target_value);
 		target_value->set_parent(nullptr);
 
-		_changed_data = !update_immediately;
+		changed_data_ = !update_immediately;
 		if (update_immediately)
 		{
-			_data_string = datas();
+			data_string_ = datas();
 		}
 
 		return target_value;
 	}
 
-	void value_container::remove(const wstring& target_name,
+	void value_container::remove(const std::string& target_name,
 								 const bool& update_immediately)
 	{
-		if (!_parsed_data)
+		if (!parsed_data_)
 		{
-			deserialize_values(_data_string, false);
+			deserialize_values(data_string_, false);
 		}
 
-		vector<shared_ptr<value>>::iterator target;
+		std::vector<std::shared_ptr<value>>::iterator target;
 
 		while (true)
 		{
-			target = find_if(_units.begin(), _units.end(),
-							 [&target_name](shared_ptr<value> item)
+			target = find_if(units_.begin(), units_.end(),
+							 [&target_name](std::shared_ptr<value> item)
 							 { return item->name() == target_name; });
 
-			if (target == _units.end())
+			if (target == units_.end())
 			{
 				break;
 			}
 
-			_units.erase(target);
+			units_.erase(target);
 		}
 
-		_changed_data = !update_immediately;
+		changed_data_ = !update_immediately;
 		if (update_immediately)
 		{
-			_data_string = datas();
+			data_string_ = datas();
 		}
 	}
 
-	void value_container::remove(shared_ptr<value> target_value,
+	void value_container::remove(std::shared_ptr<value> target_value,
 								 const bool& update_immediately)
 	{
-		if (!_parsed_data)
+		if (!parsed_data_)
 		{
-			deserialize_values(_data_string, false);
+			deserialize_values(data_string_, false);
 		}
 
-		vector<shared_ptr<value>>::iterator target;
-		target = find_if(_units.begin(), _units.end(),
-						 [&target_value](shared_ptr<value> item)
+		std::vector<std::shared_ptr<value>>::iterator target;
+		target = find_if(units_.begin(), units_.end(),
+						 [&target_value](std::shared_ptr<value> item)
 						 { return item == target_value; });
 
-		if (target == _units.end())
+		if (target == units_.end())
 		{
 			return;
 		}
 
-		_units.erase(target);
+		units_.erase(target);
 
-		_changed_data = !update_immediately;
+		changed_data_ = !update_immediately;
 		if (update_immediately)
 		{
-			_data_string = datas();
+			data_string_ = datas();
 		}
 	}
 
-	vector<shared_ptr<value>> value_container::value_array(
-		const wstring& target_name)
+	std::vector<std::shared_ptr<value>> value_container::value_array(
+		const std::string& target_name)
 	{
-		if (!_parsed_data)
+		if (!parsed_data_)
 		{
-			deserialize_values(_data_string, false);
+			deserialize_values(data_string_, false);
 		}
 
-		vector<shared_ptr<value>> result_list;
+		std::vector<std::shared_ptr<value>> result_list;
 
-		for_each(_units.begin(), _units.end(),
-				 [&target_name, &result_list](shared_ptr<value> source)
+		for_each(units_.begin(), units_.end(),
+				 [&target_name, &result_list](std::shared_ptr<value> source)
 				 {
 					 if (source->name() == target_name)
 					 {
@@ -430,23 +452,24 @@ namespace container
 		return result_list;
 	}
 
-	shared_ptr<value> value_container::get_value(const wstring& target_name,
-												 const unsigned int& index)
+	std::shared_ptr<value> value_container::get_value(
+		const std::string& target_name, const unsigned int& index)
 	{
-		if (!_parsed_data)
+		if (!parsed_data_)
 		{
-			deserialize_values(_data_string, false);
+			deserialize_values(data_string_, false);
 		}
 
-		vector<shared_ptr<value>> result_list = value_array(target_name);
+		std::vector<std::shared_ptr<value>> result_list
+			= value_array(target_name);
 		if (result_list.empty())
 		{
-			return make_shared<value>(target_name);
+			return std::make_shared<value>(target_name);
 		}
 
 		if (index >= result_list.size())
 		{
-			return make_shared<value>(target_name);
+			return std::make_shared<value>(target_name);
 		}
 
 		return result_list[index];
@@ -454,55 +477,55 @@ namespace container
 
 	void value_container::initialize(void)
 	{
-		_source_id = L"";
-		_source_sub_id = L"";
-		_target_id = L"";
-		_target_sub_id = L"";
-		_message_type = L"data_container";
-		_version = L"1.0";
+		source_id_ = "";
+		source_sub_id_ = "";
+		target_id_ = "";
+		target_sub_id_ = "";
+		message_type_ = "data_container";
+		version_ = "1.0";
 
 		clear_value();
 	}
 
-	wstring value_container::serialize(void) const
+	std::string value_container::serialize(void) const
 	{
-		wstring data_string = _data_string;
-		if (_parsed_data)
+		std::string data_string = data_string_;
+		if (parsed_data_)
 		{
 			data_string = datas();
 		}
 
-		wstring result;
+		std::string result;
 
 		// header
-		fmt::format_to(back_inserter(result), L"@header={}", L"{");
-		if (_message_type != L"data_container")
+		fmt::format_to(std::back_inserter(result), "@header={}", "{");
+		if (message_type_ != "data_container")
 		{
-			fmt::format_to(back_inserter(result), L"[{},{}];", TARGET_ID,
-						   _target_id);
-			fmt::format_to(back_inserter(result), L"[{},{}];", TARGET_SUB_ID,
-						   _target_sub_id);
-			fmt::format_to(back_inserter(result), L"[{},{}];", SOURCE_ID,
-						   _source_id);
-			fmt::format_to(back_inserter(result), L"[{},{}];", SOURCE_SUB_ID,
-						   _source_sub_id);
+			fmt::format_to(std::back_inserter(result), "[{},{}];", TARGET_ID,
+						   target_id_);
+			fmt::format_to(std::back_inserter(result), "[{},{}];",
+						   TARGET_SUB_ID, target_sub_id_);
+			fmt::format_to(std::back_inserter(result), "[{},{}];", SOURCE_ID,
+						   source_id_);
+			fmt::format_to(std::back_inserter(result), "[{},{}];",
+						   SOURCE_SUB_ID, source_sub_id_);
 		}
-		fmt::format_to(back_inserter(result), L"[{},{}];", MESSAGE_TYPE,
-					   _message_type);
-		fmt::format_to(back_inserter(result), L"[{},{}];", MESSAGE_VERSION,
-					   _version);
-		fmt::format_to(back_inserter(result), L"{}", L"};");
-		fmt::format_to(back_inserter(result), L"{}", data_string);
+		fmt::format_to(std::back_inserter(result), "[{},{}];", MESSAGE_TYPE,
+					   message_type_);
+		fmt::format_to(std::back_inserter(result), "[{},{}];", MESSAGE_VERSION,
+					   version_);
+		fmt::format_to(std::back_inserter(result), "{}", "};");
+		fmt::format_to(std::back_inserter(result), "{}", data_string);
 
 		return result;
 	}
 
-	vector<uint8_t> value_container::serialize_array(void) const
+	std::vector<uint8_t> value_container::serialize_array(void) const
 	{
 		return converter::to_array(serialize());
 	}
 
-	bool value_container::deserialize(const wstring& data_string,
+	bool value_container::deserialize(const std::string& data_string,
 									  const bool& parse_only_header)
 	{
 		initialize();
@@ -512,37 +535,38 @@ namespace container
 			return false;
 		}
 
-		wregex newlines_re(L"\\r\\n?|\\n");
-		wstring removed_newline = regex_replace(data_string, newlines_re, L"");
+		std::regex newlines_re("\\r\\n?|\\n");
+		std::string removed_newline
+			= regex_replace(data_string, newlines_re, "");
 
-		wregex full_condition(L"@header=[\\s?]*\\{[\\s?]*(.*?)[\\s?]*\\};");
-		wsregex_iterator full_iter(removed_newline.begin(),
-								   removed_newline.end(), full_condition);
-		wsregex_iterator full_end;
+		std::regex full_condition("@header=[\\s?]*\\{[\\s?]*(.*?)[\\s?]*\\};");
+		std::sregex_iterator full_iter(removed_newline.begin(),
+									   removed_newline.end(), full_condition);
+		std::sregex_iterator full_end;
 		if (full_iter == full_end)
 		{
 			return deserialize_values(removed_newline, parse_only_header);
 		}
 
-		wstring temp = (*full_iter)[1];
-		wregex header_condition(L"\\[(\\w+),(.*?)\\];");
-		wsregex_iterator header_iter(temp.begin(), temp.end(),
-									 header_condition);
-		wsregex_iterator header_end;
+		std::string temp = (*full_iter)[1];
+		std::regex header_condition("\\[(\\w+),(.*?)\\];");
+		std::sregex_iterator header_iter(temp.begin(), temp.end(),
+										 header_condition);
+		std::sregex_iterator header_end;
 		while (header_iter != header_end)
 		{
 			parsing((*header_iter)[1], TARGET_ID, (*header_iter)[2],
-					_target_id);
+					target_id_);
 			parsing((*header_iter)[1], TARGET_SUB_ID, (*header_iter)[2],
-					_target_sub_id);
+					target_sub_id_);
 			parsing((*header_iter)[1], SOURCE_ID, (*header_iter)[2],
-					_source_id);
+					source_id_);
 			parsing((*header_iter)[1], SOURCE_SUB_ID, (*header_iter)[2],
-					_source_sub_id);
+					source_sub_id_);
 			parsing((*header_iter)[1], MESSAGE_TYPE, (*header_iter)[2],
-					_message_type);
+					message_type_);
 			parsing((*header_iter)[1], MESSAGE_VERSION, (*header_iter)[2],
-					_version);
+					version_);
 
 			header_iter++;
 		}
@@ -550,129 +574,128 @@ namespace container
 		return deserialize_values(removed_newline, parse_only_header);
 	}
 
-	bool value_container::deserialize(const vector<uint8_t>& data_array,
+	bool value_container::deserialize(const std::vector<uint8_t>& data_array,
 									  const bool& parse_only_header)
 	{
-		return deserialize(converter::to_wstring(data_array),
-						   parse_only_header);
+		return deserialize(converter::to_string(data_array), parse_only_header);
 	}
 
-	const wstring value_container::to_xml(void)
+	const std::string value_container::to_xml(void)
 	{
-		if (!_parsed_data)
+		if (!parsed_data_)
 		{
-			deserialize_values(_data_string, false);
+			deserialize_values(data_string_, false);
 		}
 
-		wstring result;
+		std::string result;
 
-		fmt::format_to(back_inserter(result), L"{}", L"<container>");
-		fmt::format_to(back_inserter(result), L"{}", L"<header>");
-		if (_message_type != L"data_container")
+		fmt::format_to(std::back_inserter(result), "{}", "<container>");
+		fmt::format_to(std::back_inserter(result), "{}", "<header>");
+		if (message_type_ != "data_container")
 		{
-			fmt::format_to(back_inserter(result), L"<target_id>{}</target_id>",
-						   _target_id);
-			fmt::format_to(back_inserter(result),
-						   L"<target_sub_id>{}</target_sub_id>",
-						   _target_sub_id);
-			fmt::format_to(back_inserter(result), L"<source_id>{}</source_id>",
-						   _source_id);
-			fmt::format_to(back_inserter(result),
-						   L"<source_sub_id>{}</source_sub_id>",
-						   _source_sub_id);
+			fmt::format_to(std::back_inserter(result),
+						   "<target_id>{}</target_id>", target_id_);
+			fmt::format_to(std::back_inserter(result),
+						   "<target_sub_id>{}</target_sub_id>", target_sub_id_);
+			fmt::format_to(std::back_inserter(result),
+						   "<source_id>{}</source_id>", source_id_);
+			fmt::format_to(std::back_inserter(result),
+						   "<source_sub_id>{}</source_sub_id>", source_sub_id_);
 		}
-		fmt::format_to(back_inserter(result),
-					   L"<message_type>{}</message_type>", _message_type);
-		fmt::format_to(back_inserter(result), L"<version>{}</version>",
-					   _version);
-		fmt::format_to(back_inserter(result), L"{}", L"</header>");
+		fmt::format_to(std::back_inserter(result),
+					   "<message_type>{}</message_type>", message_type_);
+		fmt::format_to(std::back_inserter(result), "<version>{}</version>",
+					   version_);
+		fmt::format_to(std::back_inserter(result), "{}", "</header>");
 
-		fmt::format_to(back_inserter(result), L"{}", L"<values>");
-		for (auto& unit : _units)
+		fmt::format_to(std::back_inserter(result), "{}", "<values>");
+		for (auto& unit : units_)
 		{
-			fmt::format_to(back_inserter(result), L"{}", unit->to_xml());
+			fmt::format_to(std::back_inserter(result), "{}", unit->to_xml());
 		}
-		fmt::format_to(back_inserter(result), L"{}", L"</values>");
-		fmt::format_to(back_inserter(result), L"{}", L"</container>");
+		fmt::format_to(std::back_inserter(result), "{}", "</values>");
+		fmt::format_to(std::back_inserter(result), "{}", "</container>");
 
 		return result;
 	}
 
-	const wstring value_container::to_json(void)
+	const std::string value_container::to_json(void)
 	{
-		if (!_parsed_data)
+		if (!parsed_data_)
 		{
-			deserialize_values(_data_string, false);
+			deserialize_values(data_string_, false);
 		}
 
-		wstring result;
+		std::string result;
 
-		fmt::format_to(back_inserter(result), L"{}", L"{");
-		fmt::format_to(back_inserter(result), L"{}", L"\"header\":{");
-		if (_message_type != L"data_container")
+		fmt::format_to(std::back_inserter(result), "{}", "{");
+		fmt::format_to(std::back_inserter(result), "{}", "\"header\":{");
+		if (message_type_ != "data_container")
 		{
-			fmt::format_to(back_inserter(result), L"\"target_id\":\"{}\",",
-						   _target_id);
-			fmt::format_to(back_inserter(result), L"\"target_sub_id\":\"{}\",",
-						   _target_sub_id);
-			fmt::format_to(back_inserter(result), L"\"source_id\":\"{}\",",
-						   _source_id);
-			fmt::format_to(back_inserter(result), L"\"source_sub_id\":\"{}\",",
-						   _source_sub_id);
+			fmt::format_to(std::back_inserter(result), "\"target_id\":\"{}\",",
+						   target_id_);
+			fmt::format_to(std::back_inserter(result),
+						   "\"target_sub_id\":\"{}\",", target_sub_id_);
+			fmt::format_to(std::back_inserter(result), "\"source_id\":\"{}\",",
+						   source_id_);
+			fmt::format_to(std::back_inserter(result),
+						   "\"source_sub_id\":\"{}\",", source_sub_id_);
 		}
-		fmt::format_to(back_inserter(result), L"\"message_type\":\"{}\"",
-					   _message_type);
-		fmt::format_to(back_inserter(result), L",\"version\":\"{}\"", _version);
-		fmt::format_to(back_inserter(result), L"{}", L"}");
+		fmt::format_to(std::back_inserter(result), "\"message_type\":\"{}\"",
+					   message_type_);
+		fmt::format_to(std::back_inserter(result), ",\"version\":\"{}\"",
+					   version_);
+		fmt::format_to(std::back_inserter(result), "{}", "}");
 
-		fmt::format_to(back_inserter(result), L",{}", L"\"values\":{");
+		fmt::format_to(std::back_inserter(result), ",{}", "\"values\":{");
 
 		bool first = true;
-		for (auto& unit : _units)
+		for (auto& unit : units_)
 		{
-			fmt::format_to(back_inserter(result), first ? L"{}" : L",{}",
+			fmt::format_to(std::back_inserter(result), first ? "{}" : ",{}",
 						   unit->to_json());
 			first = false;
 		}
 
-		fmt::format_to(back_inserter(result), L"{}", L"}");
-		fmt::format_to(back_inserter(result), L"{}", L"}");
+		fmt::format_to(std::back_inserter(result), "{}", "}");
+		fmt::format_to(std::back_inserter(result), "{}", "}");
 
 		return result;
 		;
 	}
 
-	wstring value_container::datas(void) const
+	std::string value_container::datas(void) const
 	{
-		if (!_parsed_data)
+		if (!parsed_data_)
 		{
-			return _data_string;
+			return data_string_;
 		}
 
-		wstring result;
+		std::string result;
 
 		// data
-		fmt::format_to(back_inserter(result), L"@data={}", L"{");
-		for (auto& unit : _units)
+		fmt::format_to(std::back_inserter(result), "@data={}", "{");
+		for (auto& unit : units_)
 		{
-			fmt::format_to(back_inserter(result), L"{}", unit->serialize());
+			fmt::format_to(std::back_inserter(result), "{}", unit->serialize());
 		}
-		fmt::format_to(back_inserter(result), L"{}", L"};");
+		fmt::format_to(std::back_inserter(result), "{}", "};");
 
 		return result;
 	}
 
-	void value_container::load_packet(const wstring& file_path)
+	void value_container::load_packet(const std::string& file_path)
 	{
-		deserialize(converter::to_wstring(file::load(file_path)));
+		deserialize(file::load(file_path));
 	}
 
-	void value_container::save_packet(const wstring& file_path)
+	void value_container::save_packet(const std::string& file_path)
 	{
 		file::save(file_path, converter::to_array(serialize()));
 	}
 
-	vector<shared_ptr<value>> value_container::operator[](const wstring& key)
+	std::vector<std::shared_ptr<value>> value_container::operator[](
+		const std::string& key)
 	{
 		return value_array(key);
 	}
@@ -685,131 +708,106 @@ namespace container
 	}
 
 	value_container operator<<(value_container target_container,
-							   shared_ptr<value> other)
+							   std::shared_ptr<value> other)
 	{
 		target_container.add(other);
 
 		return target_container;
 	}
 
-	shared_ptr<value_container> operator<<(
-		shared_ptr<value_container> target_container, value& other)
+	std::shared_ptr<value_container> operator<<(
+		std::shared_ptr<value_container> target_container, value& other)
 	{
 		target_container->add(other);
 
 		return target_container;
 	}
 
-	shared_ptr<value_container> operator<<(
-		shared_ptr<value_container> target_container, shared_ptr<value> other)
+	std::shared_ptr<value_container> operator<<(
+		std::shared_ptr<value_container> target_container,
+		std::shared_ptr<value> other)
 	{
 		target_container->add(other);
 
 		return target_container;
 	}
 
-	ostream& operator<<(ostream& out, value_container& other) // output
+	std::ostream& operator<<(std::ostream& out,
+							 value_container& other) // output
 	{
 		out << converter::to_string(other.serialize());
 
 		return out;
 	}
 
-	ostream& operator<<(ostream& out,
-						shared_ptr<value_container> other) // output
+	std::ostream& operator<<(std::ostream& out,
+							 std::shared_ptr<value_container> other) // output
 	{
 		out << converter::to_string(other->serialize());
 
 		return out;
 	}
 
-	wostream& operator<<(wostream& out, value_container& other) // output
-	{
-		out << other.serialize();
-
-		return out;
-	}
-
-	wostream& operator<<(wostream& out,
-						 shared_ptr<value_container> other) // output
-	{
-		out << other->serialize();
-
-		return out;
-	}
-
-	string& operator<<(string& out, value_container& other)
-	{
-		out = converter::to_string(other.serialize());
-
-		return out;
-	}
-
-	string& operator<<(string& out, shared_ptr<value_container> other)
-	{
-		out = converter::to_string(other->serialize());
-
-		return out;
-	}
-
-	wstring& operator<<(wstring& out, value_container& other)
+	std::string& operator<<(std::string& out, value_container& other)
 	{
 		out = other.serialize();
 
 		return out;
 	}
 
-	wstring& operator<<(wstring& out, shared_ptr<value_container> other)
+	std::string& operator<<(std::string& out,
+							std::shared_ptr<value_container> other)
 	{
 		out = other->serialize();
 
 		return out;
 	}
 
-	bool value_container::deserialize_values(const wstring& data,
+	bool value_container::deserialize_values(const std::string& data,
 											 const bool& parse_only_header)
 	{
-		if (_units.size() > 0)
+		if (units_.size() > 0)
 		{
-			_units.clear();
+			units_.clear();
 		}
 
-		_changed_data = false;
+		changed_data_ = false;
 
-		wregex full_condition(L"@data=[\\s?]*\\{[\\s?]*(.*?)[\\s?]*\\};");
-		wsregex_iterator full_iter(data.begin(), data.end(), full_condition);
-		wsregex_iterator full_end;
+		std::regex full_condition("@data=[\\s?]*\\{[\\s?]*(.*?)[\\s?]*\\};");
+		std::sregex_iterator full_iter(data.begin(), data.end(),
+									   full_condition);
+		std::sregex_iterator full_end;
 		if (full_iter == full_end)
 		{
-			_data_string = L"@data={};";
-			_parsed_data = true;
+			data_string_ = "@data={};";
+			parsed_data_ = true;
 
 			return false;
 		}
 
-		_data_string = (*full_iter)[0].str();
+		data_string_ = (*full_iter)[0].str();
 
 		if (parse_only_header)
 		{
-			_parsed_data = false;
+			parsed_data_ = false;
 
 			return true;
 		}
 
-		_parsed_data = true;
+		parsed_data_ = true;
 
-		wregex regex_condition(L"\\[(\\w+),[\\s?]*(\\w+),[\\s?]*(.*?)\\];");
-		wsregex_iterator start(_data_string.begin(), _data_string.end(),
-							   regex_condition);
-		wsregex_iterator end;
+		std::regex regex_condition("\\[(\\w+),[\\s?]*(\\w+),[\\s?]*(.*?)\\];");
+		std::sregex_iterator start(data_string_.begin(), data_string_.end(),
+								   regex_condition);
+		std::sregex_iterator end;
 
-		vector<shared_ptr<value>> temp_list;
+		std::vector<std::shared_ptr<value>> temp_list;
 		while (start != end)
 		{
-			auto target = _data_type_map.find(convert_value_type((*start)[2]));
-			if (target == _data_type_map.end())
+			auto target = data_type_map_.find(convert_value_type((*start)[2]));
+			if (target == data_type_map_.end())
 			{
-				temp_list.push_back(make_shared<value>(
+				temp_list.push_back(std::make_shared<value>(
 					(*start)[1], nullptr, 0, value_types::null_value));
 				continue;
 			}
@@ -819,8 +817,8 @@ namespace container
 			start++;
 		}
 
-		shared_ptr<value> container = nullptr;
-		vector<shared_ptr<value>>::iterator iterator;
+		std::shared_ptr<value> container = nullptr;
+		std::vector<std::shared_ptr<value>>::iterator iterator;
 		for (iterator = temp_list.begin(); iterator != temp_list.end();
 			 ++iterator)
 		{
@@ -858,10 +856,10 @@ namespace container
 		return true;
 	}
 
-	void value_container::parsing(const wstring& source_name,
-								  const wstring& target_name,
-								  const wstring& target_value,
-								  wstring& target_variable)
+	void value_container::parsing(const std::string& source_name,
+								  const std::string& target_name,
+								  const std::string& target_value,
+								  std::string& target_variable)
 	{
 		if (source_name != target_name)
 		{
@@ -870,7 +868,7 @@ namespace container
 
 		target_variable = target_value;
 
-		if (target_value.find_first_not_of(' ') != string::npos)
+		if (target_value.find_first_not_of(' ') != std::string::npos)
 		{
 			target_variable
 				= target_variable.erase(target_value.find_last_not_of(' ') + 1);
@@ -879,100 +877,100 @@ namespace container
 		return;
 	}
 
-	shared_ptr<value> value_container::set_boolean(const wstring& name,
-												   const wstring& data)
+	std::shared_ptr<value> value_container::set_boolean(const std::string& name,
+														const std::string& data)
 	{
-		return make_shared<bool_value>(name, data);
+		return std::make_shared<bool_value>(name, data);
 	}
 
-	shared_ptr<value> value_container::set_short(const wstring& name,
-												 const wstring& data)
+	std::shared_ptr<value> value_container::set_short(const std::string& name,
+													  const std::string& data)
 	{
-		return make_shared<short_value>(
+		return std::make_shared<short_value>(
 			name, (short)atoi(converter::to_string(data).c_str()));
 	}
 
-	shared_ptr<value> value_container::set_ushort(const wstring& name,
-												  const wstring& data)
+	std::shared_ptr<value> value_container::set_ushort(const std::string& name,
+													   const std::string& data)
 	{
-		return make_shared<ushort_value>(
+		return std::make_shared<ushort_value>(
 			name, (unsigned short)atoi(converter::to_string(data).c_str()));
 	}
 
-	shared_ptr<value> value_container::set_int(const wstring& name,
-											   const wstring& data)
+	std::shared_ptr<value> value_container::set_int(const std::string& name,
+													const std::string& data)
 	{
-		return make_shared<int_value>(
+		return std::make_shared<int_value>(
 			name, (int)atoi(converter::to_string(data).c_str()));
 	}
 
-	shared_ptr<value> value_container::set_uint(const wstring& name,
-												const wstring& data)
+	std::shared_ptr<value> value_container::set_uint(const std::string& name,
+													 const std::string& data)
 	{
-		return make_shared<uint_value>(
+		return std::make_shared<uint_value>(
 			name, (unsigned int)atoi(converter::to_string(data).c_str()));
 	}
 
-	shared_ptr<value> value_container::set_long(const wstring& name,
-												const wstring& data)
+	std::shared_ptr<value> value_container::set_long(const std::string& name,
+													 const std::string& data)
 	{
-		return make_shared<long_value>(
+		return std::make_shared<long_value>(
 			name, (long)atol(converter::to_string(data).c_str()));
 	}
 
-	shared_ptr<value> value_container::set_ulong(const wstring& name,
-												 const wstring& data)
+	std::shared_ptr<value> value_container::set_ulong(const std::string& name,
+													  const std::string& data)
 	{
-		return make_shared<ulong_value>(
+		return std::make_shared<ulong_value>(
 			name, (unsigned long)atol(converter::to_string(data).c_str()));
 	}
 
-	shared_ptr<value> value_container::set_llong(const wstring& name,
-												 const wstring& data)
+	std::shared_ptr<value> value_container::set_llong(const std::string& name,
+													  const std::string& data)
 	{
-		return make_shared<llong_value>(
+		return std::make_shared<llong_value>(
 			name, (long long)atoll(converter::to_string(data).c_str()));
 	}
 
-	shared_ptr<value> value_container::set_ullong(const wstring& name,
-												  const wstring& data)
+	std::shared_ptr<value> value_container::set_ullong(const std::string& name,
+													   const std::string& data)
 	{
-		return make_shared<ullong_value>(
+		return std::make_shared<ullong_value>(
 			name,
 			(unsigned long long)atoll(converter::to_string(data).c_str()));
 	}
 
-	shared_ptr<value> value_container::set_float(const wstring& name,
-												 const wstring& data)
+	std::shared_ptr<value> value_container::set_float(const std::string& name,
+													  const std::string& data)
 	{
-		return make_shared<float_value>(
+		return std::make_shared<float_value>(
 			name, (float)atof(converter::to_string(data).c_str()));
 	}
 
-	shared_ptr<value> value_container::set_double(const wstring& name,
-												  const wstring& data)
+	std::shared_ptr<value> value_container::set_double(const std::string& name,
+													   const std::string& data)
 	{
-		return make_shared<double_value>(
+		return std::make_shared<double_value>(
 			name, (double)atof(converter::to_string(data).c_str()));
 	}
 
-	shared_ptr<value> value_container::set_bytes(const wstring& name,
-												 const wstring& data)
+	std::shared_ptr<value> value_container::set_bytes(const std::string& name,
+													  const std::string& data)
 	{
-		return make_shared<bytes_value>(name,
-										converter::from_base64(data.c_str()));
+		return std::make_shared<bytes_value>(
+			name, converter::from_base64(data.c_str()));
 	}
 
-	shared_ptr<value> value_container::set_string(const wstring& name,
-												  const wstring& data)
+	std::shared_ptr<value> value_container::set_string(const std::string& name,
+													   const std::string& data)
 	{
-		return make_shared<string_value>(name, data);
+		return std::make_shared<string_value>(name, data);
 	}
 
-	shared_ptr<value> value_container::set_container(const wstring& name,
-													 const wstring& data)
+	std::shared_ptr<value> value_container::set_container(
+		const std::string& name, const std::string& data)
 	{
-		return make_shared<container_value>(
+		return std::make_shared<container_value>(
 			name, (long)atol(converter::to_string(data).c_str()));
 	}
 } // namespace container

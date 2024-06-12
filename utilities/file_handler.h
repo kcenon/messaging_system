@@ -34,17 +34,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <string>
 #include <vector>
+#include <cstdint>
 
 namespace file_handler
 {
 	class file
 	{
 	public:
-		static auto remove(const std::wstring& path) -> bool;
-		static auto load(const std::wstring& path) -> std::vector<uint8_t>;
-		static auto save(const std::wstring& path,
+		static auto remove(const std::string& path) -> bool;
+		static auto load(const std::string& path) -> std::vector<uint8_t>;
+		static auto save(const std::string& path,
 						 const std::vector<uint8_t>& data) -> bool;
-		static auto append(const std::wstring& path,
+		static auto append(const std::string& path,
 						   const std::vector<uint8_t>& data) -> bool;
 	};
 } // namespace file_handler

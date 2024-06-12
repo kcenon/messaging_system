@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <tuple>
 #include <string>
 #include <vector>
+#include <cstdint>
 #include <optional>
 #include <functional>
 
@@ -45,9 +46,9 @@ namespace compressing
 	public:
 		static auto compression(const std::vector<uint8_t>& original_data,
 								const unsigned short& block_bytes = 1024)
-			-> std::tuple<std::optional<std::vector<uint8_t>>, std::wstring>;
+			-> std::tuple<std::optional<std::vector<uint8_t>>, std::string>;
 		static auto decompression(const std::vector<uint8_t>& compressed_data,
 								  const unsigned short& block_bytes = 1024)
-			-> std::tuple<std::optional<std::vector<uint8_t>>, std::wstring>;
+			-> std::tuple<std::optional<std::vector<uint8_t>>, std::string>;
 	};
 } // namespace compressing

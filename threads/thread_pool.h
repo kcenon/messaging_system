@@ -46,7 +46,7 @@ namespace threads
 	class thread_pool : public std::enable_shared_from_this<thread_pool>
 	{
 	public:
-		thread_pool(const std::wstring& title = L"thread_pool",
+		thread_pool(const std::string& title = "thread_pool",
 					const std::vector<std::shared_ptr<thread_worker>>& workers
 					= {});
 		~thread_pool(void);
@@ -66,7 +66,7 @@ namespace threads
 
 	protected:
 		void empty_pool_notification(const priorities& priority);
-		void worker_notification(const std::wstring& id,
+		void worker_notification(const std::string& id,
 								 const bool& working_condition);
 
 	private:
@@ -74,10 +74,10 @@ namespace threads
 		std::future<bool> _future_status;
 
 	private:
-		std::mutex _mutex;
-		std::wstring _title;
+		std::mutex mutex_;
+		std::string title_;
 		std::shared_ptr<job_pool> _job_pool;
-		std::map<std::wstring, bool> _worker_conditions;
+		std::map<std::string, bool> _worker_conditions;
 		std::vector<std::shared_ptr<thread_worker>> _workers;
 	};
 } // namespace threads

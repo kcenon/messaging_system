@@ -38,13 +38,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <filesystem>
 #include <fstream>
 
-#include <string.h>
+#include <string>
 
 namespace file_handler
 {
 	using namespace converting;
 
-	auto file::remove(const std::wstring& path) -> bool
+	auto file::remove(const std::string& path) -> bool
 	{
 		if (!std::filesystem::exists(path))
 		{
@@ -54,7 +54,7 @@ namespace file_handler
 		return std::filesystem::remove(path);
 	}
 
-	auto file::load(const std::wstring& path) -> std::vector<uint8_t>
+	auto file::load(const std::string& path) -> std::vector<uint8_t>
 	{
 		if (!std::filesystem::exists(path))
 		{
@@ -74,8 +74,8 @@ namespace file_handler
 		return target;
 	}
 
-	auto file::save(const std::wstring& path, const std::vector<uint8_t>& data)
-		-> bool
+	auto file::save(const std::string& path,
+					const std::vector<uint8_t>& data) -> bool
 	{
 		std::filesystem::path target_path(path);
 		if (target_path.parent_path().empty() != true)
@@ -95,7 +95,7 @@ namespace file_handler
 		return true;
 	}
 
-	auto file::append(const std::wstring& source,
+	auto file::append(const std::string& source,
 					  const std::vector<uint8_t>& data) -> bool
 	{
 		std::fstream stream(source,

@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <mutex>
 #include <thread>
+#include <string>
 #include <vector>
 
 namespace threads
@@ -59,7 +60,7 @@ namespace threads
 	public:
 		void set_job_pool(std::shared_ptr<job_pool> job_pool);
 		void set_worker_notification(
-			const std::function<void(const std::wstring&, const bool&)>&
+			const std::function<void(const std::string&, const bool&)>&
 				notification);
 
 	public:
@@ -67,7 +68,7 @@ namespace threads
 		void stop(void);
 
 	public:
-		auto guid(void) const -> std::wstring;
+		auto guid(void) const -> std::string;
 		auto priority(void) const -> priorities;
 		auto priority(const priorities& value) -> void;
 
@@ -83,7 +84,7 @@ namespace threads
 
 	private:
 		bool _thread_stop;
-		std::function<void(const std::wstring&, const bool&)> _worker_condition;
+		std::function<void(const std::string&, const bool&)> _worker_condition;
 
 	private:
 		priorities _priority;
@@ -91,9 +92,9 @@ namespace threads
 		std::weak_ptr<job_pool> _job_pool;
 
 	private:
-		std::mutex _mutex;
-		std::wstring _guid;
-		std::unique_ptr<std::thread> _thread;
+		std::mutex mutex_;
+		std::string _guid;
+		std::unique_ptr<std::thread> thread_;
 		std::condition_variable _condition;
 	};
 } // namespace threads

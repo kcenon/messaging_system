@@ -9,7 +9,6 @@
 #include "converting.h"
 #include "encrypting.h"
 
-using namespace std;
 using namespace encrypting;
 using namespace converting;
 using namespace compressing;
@@ -19,19 +18,15 @@ using namespace argument_parser;
 TEST(argument, test)
 {
 	char* test1[] = { (char*)"test.exe", (char*)"--version", (char*)"1.000" };
-	wchar_t* test2[]
-		= { (wchar_t*)L"test.exe", (wchar_t*)L"--version", (wchar_t*)L"1.000" };
 
 	argument_manager manager1(3, test1);
-	argument_manager manager2(3, test2);
 
-	EXPECT_EQ(manager1.to_string(L"--version"),
-			  manager2.to_string(L"--version"));
+	EXPECT_EQ(manager1.to_string("--version"), "1.000");
 }
 
 TEST(conbiner, test)
 {
-	vector<uint8_t> data1, data2;
+	std::vector<uint8_t> data1, data2;
 	for (int i = 0; i < 256; ++i)
 	{
 		for (int j = 0; j < 256; ++j)
@@ -41,7 +36,7 @@ TEST(conbiner, test)
 		}
 	}
 
-	vector<uint8_t> container_buffer;
+	std::vector<uint8_t> container_buffer;
 
 	combiner::append(container_buffer, data1);
 	combiner::append(container_buffer, data2);
@@ -56,7 +51,7 @@ TEST(conbiner, test)
 
 TEST(compressor, test)
 {
-	vector<uint8_t> original;
+	std::vector<uint8_t> original;
 	for (int i = 0; i < 256; ++i)
 	{
 		for (int j = 0; j < 256; ++j)
@@ -79,30 +74,30 @@ TEST(compressor, test)
 
 TEST(converter, test)
 {
-	wstring original = L"Itestamtestatestprogrammer";
-	wstring source = original;
-	wstring token = L"test";
-	wstring target = L" ";
+	std::string original = "Itestamtestatestprogrammer";
+	std::string source = original;
+	std::string token = "test";
+	std::string target = " ";
 
 	converter::replace(source, token, target);
 
-	EXPECT_TRUE(source.compare(L"I am a programmer") == 0);
+	EXPECT_TRUE(source.compare("I am a programmer") == 0);
 
 	source = converter::replace2(original, token, target);
 
-	EXPECT_TRUE(source.compare(L"I am a programmer") == 0);
+	EXPECT_TRUE(source.compare("I am a programmer") == 0);
 
 	EXPECT_TRUE(
-		converter::to_string(L"test has passed").compare("test has passed")
+		converter::to_string("test has passed").compare("test has passed")
 		== 0);
 	EXPECT_TRUE(
-		converter::to_wstring("test has passed").compare(L"test has passed")
+		converter::to_string("test has passed").compare("test has passed")
 		== 0);
 	EXPECT_TRUE(converter::to_string(converter::to_array("test has passed"))
 					.compare("test has passed")
 				== 0);
-	EXPECT_TRUE(converter::to_wstring(converter::to_array(L"test has passed"))
-					.compare(L"test has passed")
+	EXPECT_TRUE(converter::to_string(converter::to_array("test has passed"))
+					.compare("test has passed")
 				== 0);
 }
 
@@ -114,9 +109,9 @@ TEST(cryptor, test)
 	EXPECT_TRUE(!iv.empty());
 
 	auto encrypted = cryptor::encryption(
-		converter::to_array(L"I am a programmer"), key, iv);
+		converter::to_array("I am a programmer"), key, iv);
 	auto decrypted
-		= converter::to_wstring(cryptor::decryption(encrypted, key, iv));
+		= converter::to_string(cryptor::decryption(encrypted, key, iv));
 
-	EXPECT_TRUE(decrypted.compare(L"I am a programmer") == 0);
+	EXPECT_TRUE(decrypted.compare("I am a programmer") == 0);
 }

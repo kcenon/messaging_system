@@ -34,19 +34,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../value.h"
 
-using namespace std;
-
 namespace container
 {
 	class uint_value : public value
 	{
 	public:
 		uint_value(void);
-		uint_value(const wstring& name, const unsigned int& value);
+		uint_value(const std::string& name, const unsigned int& value);
 		~uint_value(void) = default;
 
 	public:
 		unsigned int to_uint(void) const override;
-		wstring to_string(const bool& original = true) const override;
+		std::string to_string(const bool& original = true) const override;
 	};
 } // namespace container

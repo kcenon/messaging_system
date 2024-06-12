@@ -33,9 +33,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <map>
-#include <optional>
 #include <string>
 #include <vector>
+#include <optional>
 
 namespace argument_parser
 {
@@ -44,36 +44,31 @@ namespace argument_parser
 	public:
 		argument_manager(void);
 		argument_manager(const std::string& arguments);
-		argument_manager(const std::wstring& arguments);
 		argument_manager(int argc, char* argv[]);
-		argument_manager(int argc, wchar_t* argv[]);
 
 	public:
-		std::optional<std::wstring> to_string(const std::wstring& key);
+		std::optional<std::string> to_string(const std::string& key);
 
 	public:
-		std::optional<bool> to_bool(const std::wstring& key);
-		std::optional<short> to_short(const std::wstring& key);
-		std::optional<unsigned short> to_ushort(const std::wstring& key);
-		std::optional<int> to_int(const std::wstring& key);
-		std::optional<unsigned int> to_uint(const std::wstring& key);
+		std::optional<bool> to_bool(const std::string& key);
+		std::optional<short> to_short(const std::string& key);
+		std::optional<unsigned short> to_ushort(const std::string& key);
+		std::optional<int> to_int(const std::string& key);
+		std::optional<unsigned int> to_uint(const std::string& key);
 #ifdef _WIN32
-		std::optional<long long> to_llong(const std::wstring& key);
-		std::optional<unsigned long long> to_ullong(const std::wstring& key);
+		std::optional<long long> to_llong(const std::string& key);
 #else
-		std::optional<long> to_long(const std::wstring& key);
-		std::optional<unsigned long> to_ulong(const std::wstring& key);
+		std::optional<long> to_long(const std::string& key);
 #endif
 
 	protected:
-		std::map<std::wstring, std::wstring> parse(int argc, char* argv[]);
-		std::map<std::wstring, std::wstring> parse(int argc, wchar_t* argv[]);
+		std::map<std::string, std::string> parse(int argc, char* argv[]);
 
 	private:
-		std::map<std::wstring, std::wstring> parse(
-			const std::vector<std::wstring>& arguments);
+		std::map<std::string, std::string> parse(
+			const std::vector<std::string>& arguments);
 
 	private:
-		std::map<std::wstring, std::wstring> _arguments;
+		std::map<std::string, std::string> _arguments;
 	};
 } // namespace argument_parser

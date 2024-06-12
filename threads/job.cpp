@@ -55,7 +55,7 @@ namespace threads
 
 	job::job(const priorities& priority)
 		: _priority(priority)
-		, _temporary_stored_path(L"")
+		, _temporary_stored_path("")
 		, _working_callback(nullptr)
 		, _working_callback2(nullptr)
 		, _working_callback3(nullptr)
@@ -64,8 +64,8 @@ namespace threads
 
 	job::job(const priorities& priority, const std::vector<uint8_t>& data)
 		: _priority(priority)
-		, _data(data)
-		, _temporary_stored_path(L"")
+		, data_(data)
+		, _temporary_stored_path("")
 		, _working_callback(nullptr)
 		, _working_callback2(nullptr)
 		, _working_callback3(nullptr)
@@ -75,7 +75,7 @@ namespace threads
 	job::job(const priorities& priority,
 			 const std::function<void(void)>& working_callback)
 		: _priority(priority)
-		, _temporary_stored_path(L"")
+		, _temporary_stored_path("")
 		, _working_callback(working_callback)
 		, _working_callback2(nullptr)
 		, _working_callback3(nullptr)
@@ -87,8 +87,8 @@ namespace threads
 			 const std::function<void(const std::vector<uint8_t>&)>&
 				 working_callback)
 		: _priority(priority)
-		, _data(data)
-		, _temporary_stored_path(L"")
+		, data_(data)
+		, _temporary_stored_path("")
 		, _working_callback(nullptr)
 		, _working_callback2(working_callback)
 		, _working_callback3(nullptr)
@@ -101,8 +101,8 @@ namespace threads
 									  const std::vector<uint8_t>&)>&
 				 working_callback)
 		: _priority(priority)
-		, _data(data)
-		, _temporary_stored_path(L"")
+		, data_(data)
+		, _temporary_stored_path("")
 		, _working_callback(nullptr)
 		, _working_callback2(nullptr)
 		, _working_callback3(working_callback)
@@ -136,8 +136,8 @@ namespace threads
 			{
 				logger::handle().write(
 					logging_level::sequence,
-					fmt::format(L"cannot complete working function on job: job "
-								L"priority[{}], worker priority[{}]",
+					fmt::format("cannot complete working function on job: job "
+								"priority[{}], worker priority[{}]",
 								(int)_priority, (int)worker_priority),
 					start);
 
@@ -149,8 +149,8 @@ namespace threads
 			logger::handle().write(
 				logging_level::sequence,
 				fmt::format(
-					L"completed working callback function without value on "
-					L"job: job priority[{}], worker priority[{}]",
+					"completed working callback function without value on "
+					"job: job priority[{}], worker priority[{}]",
 					(int)_priority, (int)worker_priority),
 				start);
 
@@ -161,14 +161,14 @@ namespace threads
 		{
 			try
 			{
-				_working_callback2(_data);
+				_working_callback2(data_);
 			}
 			catch (...)
 			{
 				logger::handle().write(
 					logging_level::sequence,
-					fmt::format(L"cannot complete working function on job: job "
-								L"priority[{}], worker priority[{}]",
+					fmt::format("cannot complete working function on job: job "
+								"priority[{}], worker priority[{}]",
 								(int)_priority, (int)worker_priority),
 					start);
 
@@ -180,8 +180,8 @@ namespace threads
 			logger::handle().write(
 				logging_level::sequence,
 				fmt::format(
-					L"completed working callback function with value on job: "
-					L"job priority[{}], worker priority[{}]",
+					"completed working callback function with value on job: "
+					"job priority[{}], worker priority[{}]",
 					(int)_priority, (int)worker_priority),
 				start);
 
@@ -192,14 +192,14 @@ namespace threads
 		{
 			try
 			{
-				_working_callback3(_job_pool, _data);
+				_working_callback3(_job_pool, data_);
 			}
 			catch (...)
 			{
 				logger::handle().write(
 					logging_level::sequence,
-					fmt::format(L"cannot complete working function on job: job "
-								L"priority[{}], worker priority[{}]",
+					fmt::format("cannot complete working function on job: job "
+								"priority[{}], worker priority[{}]",
 								(int)_priority, (int)worker_priority),
 					start);
 
@@ -211,8 +211,8 @@ namespace threads
 			logger::handle().write(
 				logging_level::sequence,
 				fmt::format(
-					L"completed working callback function with value on job: "
-					L"job priority[{}], worker priority[{}]",
+					"completed working callback function with value on job: "
+					"job priority[{}], worker priority[{}]",
 					(int)_priority, (int)worker_priority),
 				start);
 
@@ -227,8 +227,8 @@ namespace threads
 		{
 			logger::handle().write(
 				logging_level::sequence,
-				fmt::format(L"cannot complete working function on job: job "
-							L"priority[{}], worker priority[{}]",
+				fmt::format("cannot complete working function on job: job "
+							"priority[{}], worker priority[{}]",
 							(int)_priority, (int)worker_priority),
 				start);
 
@@ -239,46 +239,46 @@ namespace threads
 
 		logger::handle().write(
 			logging_level::sequence,
-			fmt::format(L"completed working function on job: job "
-						L"priority[{}], worker priority[{}]",
+			fmt::format("completed working function on job: job "
+						"priority[{}], worker priority[{}]",
 						(int)_priority, (int)worker_priority),
 			start);
 
 		return true;
 	}
 
-	void job::save(const std::wstring& folder_name)
+	void job::save(const std::string& folder_name)
 	{
-		if (_data.empty())
+		if (data_.empty())
 		{
 			return;
 		}
 
-		std::wstring priority = L"";
+		std::string priority = "";
 		switch (_priority)
 		{
 		case priorities::low:
-			priority = L"low";
+			priority = "low";
 			break;
 		case priorities::normal:
-			priority = L"normal";
+			priority = "normal";
 			break;
 		case priorities::high:
-			priority = L"high";
+			priority = "high";
 			break;
 		case priorities::top:
-			priority = L"top";
+			priority = "top";
 			break;
 		default:
 			return;
 		}
 
 		_temporary_stored_path = fmt::format(
-			L"{}{}/{}/{}.job", folder::get_temporary_folder(), folder_name,
-			priority, converter::to_wstring(xg::newGuid().str()));
+			"{}{}/{}/{}.job", folder::get_temporary_folder(), folder_name,
+			priority, converter::to_string(xg::newGuid().str()));
 
-		file::save(_temporary_stored_path, _data);
-		_data.clear();
+		file::save(_temporary_stored_path, data_);
+		data_.clear();
 	}
 
 	void job::load(void)
@@ -288,7 +288,7 @@ namespace threads
 			return;
 		}
 
-		_data = file::load(_temporary_stored_path);
+		data_ = file::load(_temporary_stored_path);
 	}
 
 	void job::destroy(void)
@@ -306,6 +306,6 @@ namespace threads
 	{
 		logger::handle().write(
 			logging_level::error,
-			L"cannot complete job::working because it does not implemented");
+			"cannot complete job::working because it does not implemented");
 	}
 } // namespace threads

@@ -40,27 +40,28 @@ namespace container
 
 	bytes_value::bytes_value(void) : value()
 	{
-		_type = value_types::bytes_value;
+		type_ = value_types::bytes_value;
 	}
 
-	bytes_value::bytes_value(const wstring& name, const vector<uint8_t>& data)
+	bytes_value::bytes_value(const std::string& name,
+							 const std::vector<uint8_t>& data)
 		: bytes_value()
 	{
-		_name = name;
+		name_ = name;
 		set_data(data.data(), data.size(), value_types::bytes_value);
 	}
 
-	bytes_value::bytes_value(const wstring& name,
+	bytes_value::bytes_value(const std::string& name,
 							 const unsigned char* data,
 							 const size_t& size)
 		: bytes_value()
 	{
-		_name = name;
+		name_ = name;
 		set_data(data, size, value_types::bytes_value);
 	}
 
-	wstring bytes_value::to_string(const bool&) const
+	std::string bytes_value::to_string(const bool&) const
 	{
-		return converter::to_base64(_data);
+		return converter::to_base64(data_);
 	}
 } // namespace container

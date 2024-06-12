@@ -39,14 +39,14 @@ namespace container
 {
 	ullong_value::ullong_value(void) : value()
 	{
-		_type = value_types::ullong_value;
+		type_ = value_types::ullong_value;
 	}
 
-	ullong_value::ullong_value(const wstring& name,
+	ullong_value::ullong_value(const std::string& name,
 							   const unsigned long long& value)
 		: ullong_value()
 	{
-		_name = name;
+		name_ = name;
 		set_data((const unsigned char*)&value, sizeof(unsigned long long),
 				 value_types::ullong_value);
 	}
@@ -54,13 +54,13 @@ namespace container
 	unsigned long long ullong_value::to_ullong(void) const
 	{
 		unsigned long long temp = 0;
-		memcpy(&temp, _data.data(), _size);
+		memcpy(&temp, data_.data(), size_);
 
 		return static_cast<unsigned long long>(temp);
 	}
 
-	wstring ullong_value::to_string(const bool&) const
+	std::string ullong_value::to_string(const bool&) const
 	{
-		return fmt::format(L"{}", to_ullong());
+		return fmt::format("{}", to_ullong());
 	}
 } // namespace container

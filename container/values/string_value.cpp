@@ -40,25 +40,26 @@ namespace container
 
 	string_value::string_value(void) : value()
 	{
-		_type = value_types::string_value;
+		type_ = value_types::string_value;
 	}
 
-	string_value::string_value(const wstring& name, const wstring& value)
+	string_value::string_value(const std::string& name,
+							   const std::string& value)
 		: string_value()
 	{
-		vector<uint8_t> data = convert_specific_string(value);
+		std::vector<uint8_t> data = convert_specific_string(value);
 
-		_name = name;
+		name_ = name;
 		set_data(data.data(), data.size(), value_types::string_value);
 	}
 
-	wstring string_value::to_string(const bool& original) const
+	std::string string_value::to_string(const bool& original) const
 	{
 		if (!original)
 		{
-			return converter::to_wstring(_data);
+			return converter::to_string(data_);
 		}
 
-		return convert_specific_string(_data);
+		return convert_specific_string(data_);
 	}
 } // namespace container

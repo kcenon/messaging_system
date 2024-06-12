@@ -39,13 +39,14 @@ namespace container
 {
 	ushort_value::ushort_value(void) : value()
 	{
-		_type = value_types::ushort_value;
+		type_ = value_types::ushort_value;
 	}
 
-	ushort_value::ushort_value(const wstring& name, const unsigned short& value)
+	ushort_value::ushort_value(const std::string& name,
+							   const unsigned short& value)
 		: ushort_value()
 	{
-		_name = name;
+		name_ = name;
 		set_data((const unsigned char*)&value, sizeof(unsigned short),
 				 value_types::ushort_value);
 	}
@@ -53,13 +54,13 @@ namespace container
 	unsigned short ushort_value::to_ushort(void) const
 	{
 		unsigned short temp = 0;
-		memcpy(&temp, _data.data(), _size);
+		memcpy(&temp, data_.data(), size_);
 
 		return static_cast<unsigned short>(temp);
 	}
 
-	wstring ushort_value::to_string(const bool&) const
+	std::string ushort_value::to_string(const bool&) const
 	{
-		return fmt::format(L"{}", to_ushort());
+		return fmt::format("{}", to_ushort());
 	}
 } // namespace container

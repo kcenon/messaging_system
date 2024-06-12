@@ -1,0 +1,13 @@
+{
+  "dependencies": [
+    "lz4",
+    "fmt",
+    "cpprestsdk",
+    "cryptopp",
+    "asio",
+    "python3",
+    "crossguid",
+    "libpq",
+    "gtest"
+  ]
+}

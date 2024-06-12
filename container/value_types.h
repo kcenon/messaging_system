@@ -34,8 +34,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <string>
 
-using namespace std;
-
 namespace container
 {
 	enum class value_types {
@@ -56,6 +54,6 @@ namespace container
 		container_value
 	};
 
-	const value_types convert_value_type(const wstring& target);
-	const wstring convert_value_type(const value_types& target);
+	const value_types convert_value_type(const std::string& target);
+	const std::string convert_value_type(const value_types& target);
 } // namespace container

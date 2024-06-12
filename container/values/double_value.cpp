@@ -39,13 +39,13 @@ namespace container
 {
 	double_value::double_value(void) : value()
 	{
-		_type = value_types::double_value;
+		type_ = value_types::double_value;
 	}
 
-	double_value::double_value(const wstring& name, const double& value)
+	double_value::double_value(const std::string& name, const double& value)
 		: double_value()
 	{
-		_name = name;
+		name_ = name;
 		set_data((const unsigned char*)&value, sizeof(double),
 				 value_types::double_value);
 	}
@@ -53,13 +53,13 @@ namespace container
 	double double_value::to_double(void) const
 	{
 		double temp = 0;
-		memcpy(&temp, _data.data(), _size);
+		memcpy(&temp, data_.data(), size_);
 
 		return static_cast<double>(temp);
 	}
 
-	wstring double_value::to_string(const bool&) const
+	std::string double_value::to_string(const bool&) const
 	{
-		return fmt::format(L"{}", to_double());
+		return fmt::format("{}", to_double());
 	}
 } // namespace container

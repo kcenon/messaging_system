@@ -44,7 +44,7 @@ namespace encrypting
 {
 	using namespace converting;
 
-	auto cryptor::create_key(void) -> std::tuple<std::wstring, std::wstring>
+	auto cryptor::create_key(void) -> std::tuple<std::string, std::string>
 	{
 		CryptoPP::AutoSeededRandomPool rng;
 
@@ -58,8 +58,8 @@ namespace encrypting
 	}
 
 	auto cryptor::encryption(const std::vector<uint8_t>& original_data,
-							 const std::wstring& key_string,
-							 const std::wstring& iv_string)
+							 const std::string& key_string,
+							 const std::string& iv_string)
 		-> std::vector<uint8_t>
 	{
 		if (original_data.empty() || key_string.empty() || iv_string.empty())
@@ -88,8 +88,8 @@ namespace encrypting
 	}
 
 	auto cryptor::decryption(const std::vector<uint8_t>& encrypted_data,
-							 const std::wstring& key_string,
-							 const std::wstring& iv_string)
+							 const std::string& key_string,
+							 const std::string& iv_string)
 		-> std::vector<uint8_t>
 	{
 		if (encrypted_data.empty() || key_string.empty() || iv_string.empty())

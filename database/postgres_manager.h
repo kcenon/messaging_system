@@ -42,19 +42,19 @@ namespace database
 
 	public:
 		database_types database_type(void) override;
-		bool connect(const wstring& connect_string) override;
-		bool create_query(const wstring& query_string) override;
-		unsigned int insert_query(const wstring& query_string) override;
-		unsigned int update_query(const wstring& query_string) override;
-		unsigned int delete_query(const wstring& query_string) override;
-		shared_ptr<container::value_container> select_query(
-			const wstring& query_string) override;
+		bool connect(const std::string& connect_string) override;
+		bool create_query(const std::string& query_string) override;
+		unsigned int insert_query(const std::string& query_string) override;
+		unsigned int update_query(const std::string& query_string) override;
+		unsigned int delete_query(const std::string& query_string) override;
+		std::shared_ptr<container::value_container> select_query(
+			const std::string& query_string) override;
 		bool disconnect(void) override;
 
 	private:
-		void* query_result(const wstring& query_string);
+		void* query_result(const std::string& query_string);
 
 	private:
-		void* _connection;
+		void* connection_;
 	};
 }; // namespace database

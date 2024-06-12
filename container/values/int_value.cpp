@@ -37,11 +37,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace container
 {
-	int_value::int_value(void) : value() { _type = value_types::int_value; }
+	int_value::int_value(void) : value() { type_ = value_types::int_value; }
 
-	int_value::int_value(const wstring& name, const int& value) : int_value()
+	int_value::int_value(const std::string& name, const int& value)
+		: int_value()
 	{
-		_name = name;
+		name_ = name;
 		set_data((const unsigned char*)&value, sizeof(int),
 				 value_types::int_value);
 	}
@@ -49,13 +50,13 @@ namespace container
 	int int_value::to_int(void) const
 	{
 		int temp = 0;
-		memcpy(&temp, _data.data(), _size);
+		memcpy(&temp, data_.data(), size_);
 
 		return static_cast<int>(temp);
 	}
 
-	wstring int_value::to_string(const bool&) const
+	std::string int_value::to_string(const bool&) const
 	{
-		return fmt::format(L"{}", to_int());
+		return fmt::format("{}", to_int());
 	}
 } // namespace container

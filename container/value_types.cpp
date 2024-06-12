@@ -36,41 +36,41 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace container
 {
-	map<wstring, value_types> value_to_type_map
-		= { { L"1", value_types::bool_value },
-			{ L"2", value_types::short_value },
-			{ L"3", value_types::ushort_value },
-			{ L"4", value_types::int_value },
-			{ L"5", value_types::uint_value },
-			{ L"6", value_types::long_value },
-			{ L"7", value_types::ulong_value },
-			{ L"8", value_types::llong_value },
-			{ L"9", value_types::ullong_value },
-			{ L"a", value_types::float_value },
-			{ L"b", value_types::double_value },
-			{ L"c", value_types::bytes_value },
-			{ L"d", value_types::string_value },
-			{ L"e", value_types::container_value } };
+	std::map<std::string, value_types> value_to_type_map
+		= { { "1", value_types::bool_value },
+			{ "2", value_types::short_value },
+			{ "3", value_types::ushort_value },
+			{ "4", value_types::int_value },
+			{ "5", value_types::uint_value },
+			{ "6", value_types::long_value },
+			{ "7", value_types::ulong_value },
+			{ "8", value_types::llong_value },
+			{ "9", value_types::ullong_value },
+			{ "a", value_types::float_value },
+			{ "b", value_types::double_value },
+			{ "c", value_types::bytes_value },
+			{ "d", value_types::string_value },
+			{ "e", value_types::container_value } };
 
-	map<value_types, wstring> type_to_value_map
-		= { { value_types::bool_value, L"1" },
-			{ value_types::short_value, L"2" },
-			{ value_types::ushort_value, L"3" },
-			{ value_types::int_value, L"4" },
-			{ value_types::uint_value, L"5" },
-			{ value_types::long_value, L"6" },
-			{ value_types::ulong_value, L"7" },
-			{ value_types::llong_value, L"8" },
-			{ value_types::ullong_value, L"9" },
-			{ value_types::float_value, L"a" },
-			{ value_types::double_value, L"b" },
-			{ value_types::bytes_value, L"c" },
-			{ value_types::string_value, L"d" },
-			{ value_types::container_value, L"e" } };
+	std::map<value_types, std::string> type_to_value_map
+		= { { value_types::bool_value, "1" },
+			{ value_types::short_value, "2" },
+			{ value_types::ushort_value, "3" },
+			{ value_types::int_value, "4" },
+			{ value_types::uint_value, "5" },
+			{ value_types::long_value, "6" },
+			{ value_types::ulong_value, "7" },
+			{ value_types::llong_value, "8" },
+			{ value_types::ullong_value, "9" },
+			{ value_types::float_value, "a" },
+			{ value_types::double_value, "b" },
+			{ value_types::bytes_value, "c" },
+			{ value_types::string_value, "d" },
+			{ value_types::container_value, "e" } };
 
-	const value_types convert_value_type(const wstring& target)
+	const value_types convert_value_type(const std::string& target)
 	{
-		map<wstring, value_types>::iterator iterator
+		std::map<std::string, value_types>::iterator iterator
 			= value_to_type_map.find(target);
 		if (iterator == value_to_type_map.end())
 		{
@@ -80,13 +80,13 @@ namespace container
 		return iterator->second;
 	}
 
-	const wstring convert_value_type(const value_types& target)
+	const std::string convert_value_type(const value_types& target)
 	{
-		map<value_types, wstring>::iterator iterator
+		std::map<value_types, std::string>::iterator iterator
 			= type_to_value_map.find(target);
 		if (iterator == type_to_value_map.end())
 		{
-			return L"0";
+			return "0";
 		}
 
 		return iterator->second;

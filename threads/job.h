@@ -73,7 +73,7 @@ namespace threads
 		bool work(const priorities& worker_priority);
 
 	protected:
-		void save(const std::wstring& folder_name);
+		void save(const std::string& folder_name);
 		void load(void);
 		void destroy(void);
 
@@ -81,12 +81,12 @@ namespace threads
 		virtual void working(const priorities& worker_priority);
 
 	protected:
-		std::vector<uint8_t> _data;
+		std::vector<uint8_t> data_;
 		std::weak_ptr<job_pool> _job_pool;
 
 	private:
 		priorities _priority;
-		std::wstring _temporary_stored_path;
+		std::string _temporary_stored_path;
 
 		std::function<void(void)> _working_callback;
 		std::function<void(const std::vector<uint8_t>&)> _working_callback2;

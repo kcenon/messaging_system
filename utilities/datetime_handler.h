@@ -41,8 +41,8 @@ namespace datetime_handler
 	{
 	public:
 		static auto date(const std::chrono::system_clock::time_point& time,
-						 const bool& use_seperator = true) -> std::wstring;
+						 const bool& use_seperator = true) -> std::string;
 		static auto time(const std::chrono::system_clock::time_point& time,
-						 const bool& use_seperator = true) -> std::wstring;
+						 const bool& use_seperator = true) -> std::string;
 	};
 } // namespace datetime_handler

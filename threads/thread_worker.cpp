@@ -52,7 +52,7 @@ namespace threads
 								 const std::vector<priorities>& others)
 		: _priority(priority), _others(others), _thread_stop(false)
 	{
-		_guid = converter::to_wstring(xg::newGuid().str());
+		_guid = converter::to_string(xg::newGuid().str());
 	}
 
 	thread_worker::~thread_worker(void) { stop(); }
@@ -68,7 +68,7 @@ namespace threads
 	}
 
 	void thread_worker::set_worker_notification(
-		const std::function<void(const std::wstring&, const bool&)>&
+		const std::function<void(const std::string&, const bool&)>&
 			notification)
 	{
 		_worker_condition = notification;
@@ -79,28 +79,28 @@ namespace threads
 		stop();
 
 		_thread_stop = false;
-		_thread = std::make_unique<std::thread>(&thread_worker::run, this);
+		thread_ = std::make_unique<std::thread>(&thread_worker::run, this);
 
 		auto job_pool = _job_pool.lock();
 		if (job_pool != nullptr)
 		{
 			job_pool->append_notification(
-				_guid, bind(&thread_worker::append_notification, this,
-							std::placeholders::_1));
+				_guid, std::bind(&thread_worker::append_notification, this,
+								 std::placeholders::_1));
 			job_pool.reset();
 		}
 	}
 
 	void thread_worker::stop(void)
 	{
-		if (_thread == nullptr)
+		if (thread_ == nullptr)
 		{
 			return;
 		}
 
 		logger::handle().write(
 			logging_level::parameter,
-			fmt::format(L"attempt to stop working thread: priority - {}",
+			fmt::format("attempt to stop working std::thread: priority - {}",
 						(int)_priority));
 
 		auto job_pool = _job_pool.lock();
@@ -110,18 +110,18 @@ namespace threads
 			job_pool.reset();
 		}
 
-		if (_thread->joinable())
+		if (thread_->joinable())
 		{
 			_thread_stop = true;
 			_condition.notify_one();
 
-			_thread->join();
+			thread_->join();
 		}
 
-		_thread.reset();
+		thread_.reset();
 	}
 
-	auto thread_worker::guid(void) const -> std::wstring { return _guid; }
+	auto thread_worker::guid(void) const -> std::string { return _guid; }
 
 	auto thread_worker::priority(void) const -> priorities { return _priority; }
 
@@ -134,12 +134,12 @@ namespace threads
 	{
 		logger::handle().write(
 			logging_level::sequence,
-			fmt::format(L"start working thread: priority - {}",
+			fmt::format("start working std::thread: priority - {}",
 						(int)_priority));
 
 		while (!_thread_stop)
 		{
-			std::unique_lock<std::mutex> unique(_mutex);
+			std::unique_lock<std::mutex> unique(mutex_);
 			_condition.wait(unique, [this] { return check_condition(); });
 
 			if (_worker_condition)
@@ -183,7 +183,8 @@ namespace threads
 
 		logger::handle().write(
 			logging_level::sequence,
-			fmt::format(L"stop working thread: priority - {}", (int)_priority));
+			fmt::format("stop working std::thread: priority - {}",
+						(int)_priority));
 	}
 
 	void thread_worker::working(std::shared_ptr<job> current_job)

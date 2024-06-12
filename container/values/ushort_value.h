@@ -34,19 +34,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../value.h"
 
-using namespace std;
-
 namespace container
 {
 	class ushort_value : public value
 	{
 	public:
 		ushort_value(void);
-		ushort_value(const wstring& name, const unsigned short& value);
+		ushort_value(const std::string& name, const unsigned short& value);
 		~ushort_value(void) = default;
 
 	public:
 		unsigned short to_ushort(void) const override;
-		wstring to_string(const bool& original = true) const override;
+		std::string to_string(const bool& original = true) const override;
 	};
 } // namespace container

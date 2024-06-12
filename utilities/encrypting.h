@@ -35,18 +35,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <tuple>
 #include <string>
 #include <vector>
+#include <cstdint>
 
 namespace encrypting
 {
 	class cryptor
 	{
 	public:
-		static auto create_key(void) -> std::tuple<std::wstring, std::wstring>;
+		static auto create_key(void) -> std::tuple<std::string, std::string>;
 		static auto encryption(const std::vector<uint8_t>& original_data,
-							   const std::wstring& key,
-							   const std::wstring& iv) -> std::vector<uint8_t>;
+							   const std::string& key,
+							   const std::string& iv) -> std::vector<uint8_t>;
 		static auto decryption(const std::vector<uint8_t>& encrypted_data,
-							   const std::wstring& key,
-							   const std::wstring& iv) -> std::vector<uint8_t>;
+							   const std::string& key,
+							   const std::string& iv) -> std::vector<uint8_t>;
 	};
 } // namespace encrypting

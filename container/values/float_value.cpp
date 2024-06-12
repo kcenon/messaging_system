@@ -39,13 +39,13 @@ namespace container
 {
 	float_value::float_value(void) : value()
 	{
-		_type = value_types::float_value;
+		type_ = value_types::float_value;
 	}
 
-	float_value::float_value(const wstring& name, const float& value)
+	float_value::float_value(const std::string& name, const float& value)
 		: float_value()
 	{
-		_name = name;
+		name_ = name;
 		set_data((const unsigned char*)&value, sizeof(float),
 				 value_types::float_value);
 	}
@@ -53,13 +53,13 @@ namespace container
 	float float_value::to_float(void) const
 	{
 		float temp = 0;
-		memcpy(&temp, _data.data(), _size);
+		memcpy(&temp, data_.data(), size_);
 
 		return static_cast<float>(temp);
 	}
 
-	wstring float_value::to_string(const bool&) const
+	std::string float_value::to_string(const bool&) const
 	{
-		return fmt::format(L"{}", to_float());
+		return fmt::format("{}", to_float());
 	}
 } // namespace container

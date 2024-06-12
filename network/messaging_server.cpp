@@ -53,19 +53,19 @@ namespace network
 	using namespace threads;
 	using namespace converting;
 
-	messaging_server::messaging_server(const wstring& source_id,
+	messaging_server::messaging_server(const std::string& source_id,
 									   const unsigned char& start_code_value,
 									   const unsigned char& end_code_value)
-		: _io_context(nullptr)
+		: io_context_(nullptr)
 		, _acceptor(nullptr)
-		, _source_id(source_id)
-		, _connection_key(L"connection_key")
-		, _encrypt_mode(false)
-		, _received_file(nullptr)
-		, _received_data(nullptr)
-		, _connection(nullptr)
-		, _received_message(nullptr)
-		, _compress_mode(false)
+		, source_id_(source_id)
+		, connection_key_("connection_key")
+		, encrypt_mode_(false)
+		, received_file_(nullptr)
+		, received_data_(nullptr)
+		, connection_(nullptr)
+		, received_message_(nullptr)
+		, compress_mode_(false)
 		, _high_priority(8)
 		, _normal_priority(8)
 		, _low_priority(8)
@@ -73,7 +73,7 @@ namespace network
 		, _possible_session_types({ session_types::message_line })
 		, _start_code_value(start_code_value)
 		, _end_code_value(end_code_value)
-		, _compress_block_size(1024)
+		, compress_block_size_(1024)
 		, _use_message_response(true)
 		, _drop_connection_time(5)
 	{
@@ -81,25 +81,25 @@ namespace network
 
 	messaging_server::~messaging_server(void) { stop(); }
 
-	shared_ptr<messaging_server> messaging_server::get_ptr(void)
+	std::shared_ptr<messaging_server> messaging_server::get_ptr(void)
 	{
 		return shared_from_this();
 	}
 
 	void messaging_server::set_encrypt_mode(const bool& encrypt_mode)
 	{
-		_encrypt_mode = encrypt_mode;
+		encrypt_mode_ = encrypt_mode;
 	}
 
 	void messaging_server::set_compress_mode(const bool& compress_mode)
 	{
-		_compress_mode = compress_mode;
+		compress_mode_ = compress_mode;
 	}
 
 	void messaging_server::set_compress_block_size(
 		const unsigned short& compress_block_size)
 	{
-		_compress_block_size = compress_block_size;
+		compress_block_size_ = compress_block_size;
 	}
 
 	void messaging_server::set_use_message_response(
@@ -114,31 +114,31 @@ namespace network
 		_drop_connection_time = drop_connection_time;
 	}
 
-	void messaging_server::set_connection_key(const wstring& connection_key)
+	void messaging_server::set_connection_key(const std::string& connection_key)
 	{
-		_connection_key = connection_key;
+		connection_key_ = connection_key;
 	}
 
 	void messaging_server::set_acceptable_target_ids(
-		const vector<wstring>& acceptable_target_ids)
+		const std::vector<std::string>& acceptable_target_ids)
 	{
 		_acceptable_target_ids = acceptable_target_ids;
 	}
 
 	void messaging_server::set_ignore_target_ids(
-		const vector<wstring>& ignore_target_ids)
+		const std::vector<std::string>& ignore_target_ids)
 	{
 		_ignore_target_ids = ignore_target_ids;
 	}
 
 	void messaging_server::set_ignore_snipping_targets(
-		const vector<wstring>& ignore_snipping_targets)
+		const std::vector<std::string>& ignore_snipping_targets)
 	{
 		_ignore_snipping_targets = ignore_snipping_targets;
 	}
 
 	void messaging_server::set_possible_session_types(
-		const vector<session_types>& possible_session_types)
+		const std::vector<session_types>& possible_session_types)
 	{
 		_possible_session_types = possible_session_types;
 	}
@@ -150,49 +150,52 @@ namespace network
 	}
 
 	void messaging_server::set_connection_notification(
-		const function<void(const wstring&, const wstring&, const bool&)>&
-			notification)
+		const std::function<void(
+			const std::string&, const std::string&, const bool&)>& notification)
 	{
-		_connection = notification;
+		connection_ = notification;
 	}
 
 	void messaging_server::set_message_notification(
-		const function<void(shared_ptr<container::value_container>)>&
+		const std::function<void(std::shared_ptr<container::value_container>)>&
 			notification)
 	{
-		_received_message = notification;
+		received_message_ = notification;
 	}
 
 	void messaging_server::set_file_notification(
-		const function<void(
-			const wstring&, const wstring&, const wstring&, const wstring&)>&
-			notification)
+		const std::function<void(const std::string&,
+								 const std::string&,
+								 const std::string&,
+								 const std::string&)>& notification)
 	{
-		_received_file = notification;
+		received_file_ = notification;
 	}
 
 	void messaging_server::set_binary_notification(
-		const function<void(const wstring&,
-							const wstring&,
-							const wstring&,
-							const wstring&,
-							const vector<uint8_t>&)>& notification)
+		const std::function<void(const std::string&,
+								 const std::string&,
+								 const std::string&,
+								 const std::string&,
+								 const std::vector<uint8_t>&)>& notification)
 	{
-		_received_data = notification;
+		received_data_ = notification;
 	}
 
 	void messaging_server::set_specific_compress_sequence(
-		const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>&
+		const std::function<std::vector<uint8_t>(const std::vector<uint8_t>&,
+												 const bool&)>&
 			specific_compress_sequence)
 	{
-		_specific_compress_sequence = specific_compress_sequence;
+		specific_compress_sequence_ = specific_compress_sequence;
 	}
 
 	void messaging_server::set_specific_encrypt_sequence(
-		const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>&
+		const std::function<std::vector<uint8_t>(const std::vector<uint8_t>&,
+												 const bool&)>&
 			specific_encrypt_sequence)
 	{
-		_specific_encrypt_sequence = specific_encrypt_sequence;
+		specific_encrypt_sequence_ = specific_encrypt_sequence;
 	}
 
 	void messaging_server::start(const unsigned short& port,
@@ -206,72 +209,72 @@ namespace network
 		_normal_priority = normal_priority;
 		_low_priority = low_priority;
 
-		_io_context = make_shared<asio::io_context>();
-		_acceptor = make_shared<asio::ip::tcp::acceptor>(
-			*_io_context, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port));
+		io_context_ = std::make_shared<asio::io_context>();
+		_acceptor = std::make_shared<asio::ip::tcp::acceptor>(
+			*io_context_, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port));
 
 		wait_connection();
 
-		_thread = make_shared<thread>(
+		thread_ = std::make_shared<std::thread>(
 			[&]()
 			{
-				while (_io_context)
+				while (io_context_)
 				{
 					try
 					{
 						logger::handle().write(
 							logging_level::information,
-							fmt::format(L"start messaging_server({})",
-										_source_id));
-						_io_context->run();
-						_io_context.reset();
+							fmt::format("start messaging_server({})",
+										source_id_));
+						io_context_->run();
+						io_context_.reset();
 						logger::handle().write(
 							logging_level::information,
-							fmt::format(L"stop messaging_server({})",
-										_source_id));
+							fmt::format("stop messaging_server({})",
+										source_id_));
 					}
-					catch (const overflow_error&)
+					catch (const std::overflow_error&)
 					{
-						if (_io_context != nullptr)
+						if (io_context_ != nullptr)
 						{
-							_io_context.reset();
+							io_context_.reset();
 							logger::handle().write(
 								logging_level::information,
-								fmt::format(L"stop messaging_server({})",
-											_source_id));
+								fmt::format("stop messaging_server({})",
+											source_id_));
 						}
 					}
-					catch (const runtime_error&)
+					catch (const std::runtime_error&)
 					{
-						if (_io_context != nullptr)
+						if (io_context_ != nullptr)
 						{
-							_io_context.reset();
+							io_context_.reset();
 							logger::handle().write(
 								logging_level::information,
-								fmt::format(L"stop messaging_server({})",
-											_source_id));
+								fmt::format("stop messaging_server({})",
+											source_id_));
 						}
 					}
-					catch (const exception&)
+					catch (const std::exception&)
 					{
-						if (_io_context != nullptr)
+						if (io_context_ != nullptr)
 						{
-							_io_context.reset();
+							io_context_.reset();
 							logger::handle().write(
 								logging_level::information,
-								fmt::format(L"stop messaging_server({})",
-											_source_id));
+								fmt::format("stop messaging_server({})",
+											source_id_));
 						}
 					}
 					catch (...)
 					{
-						if (_io_context != nullptr)
+						if (io_context_ != nullptr)
 						{
-							_io_context.reset();
+							io_context_.reset();
 							logger::handle().write(
 								logging_level::information,
-								fmt::format(L"stop messaging_server({})",
-											_source_id));
+								fmt::format("stop messaging_server({})",
+											source_id_));
 						}
 					}
 				}
@@ -282,7 +285,7 @@ namespace network
 	{
 		if (!_promise_status.has_value())
 		{
-			_promise_status = { promise<bool>() };
+			_promise_status = { std::promise<bool>() };
 		}
 
 		_future_status = _promise_status.value().get_future();
@@ -294,26 +297,26 @@ namespace network
 			return;
 		}
 
-		_future_status.wait_for(chrono::seconds(seconds));
+		_future_status.wait_for(std::chrono::seconds(seconds));
 		_promise_status.reset();
 	}
 
 	void messaging_server::stop(void)
 	{
-		if (_io_context != nullptr)
+		if (io_context_ != nullptr)
 		{
-			if (_thread != nullptr)
+			if (thread_ != nullptr)
 			{
-				if (_thread->joinable() && !_io_context->stopped())
+				if (thread_->joinable() && !io_context_->stopped())
 				{
-					_io_context->stop();
-					_thread->join();
+					io_context_->stop();
+					thread_->join();
 				}
 
-				_thread.reset();
+				thread_.reset();
 			}
 
-			_io_context.reset();
+			io_context_.reset();
 		}
 
 		if (_acceptor != nullptr)
@@ -342,10 +345,10 @@ namespace network
 		}
 	}
 
-	void messaging_server::disconnect(const wstring& target_id,
-									  const wstring& target_sub_id)
+	void messaging_server::disconnect(const std::string& target_id,
+									  const std::string& target_sub_id)
 	{
-		vector<shared_ptr<messaging_session>>::iterator target
+		std::vector<std::shared_ptr<messaging_session>>::iterator target
 			= _sessions.begin();
 		while (target != _sessions.end())
 		{
@@ -381,13 +384,15 @@ namespace network
 	}
 
 	bool messaging_server::send(const container::value_container& message,
-								optional<session_types> type)
+								std::optional<session_types> type)
 	{
-		return send(make_shared<container::value_container>(message), type);
+		return send(std::make_shared<container::value_container>(message),
+					type);
 	}
 
-	bool messaging_server::send(shared_ptr<container::value_container> message,
-								optional<session_types> type)
+	bool messaging_server::send(
+		std::shared_ptr<container::value_container> message,
+		std::optional<session_types> type)
 	{
 		if (message == nullptr)
 		{
@@ -422,11 +427,11 @@ namespace network
 
 	void messaging_server::send_files(const container::value_container& message)
 	{
-		send_files(make_shared<container::value_container>(message));
+		send_files(std::make_shared<container::value_container>(message));
 	}
 
 	void messaging_server::send_files(
-		shared_ptr<container::value_container> message)
+		std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -451,9 +456,9 @@ namespace network
 		}
 	}
 
-	void messaging_server::send_binary(const wstring& target_id,
-									   const wstring& target_sub_id,
-									   const vector<uint8_t>& data)
+	void messaging_server::send_binary(const std::string& target_id,
+									   const std::string& target_sub_id,
+									   const std::vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -478,11 +483,11 @@ namespace network
 		}
 	}
 
-	void messaging_server::send_binary(const wstring& source_id,
-									   const wstring& source_sub_id,
-									   const wstring& target_id,
-									   const wstring& target_sub_id,
-									   const vector<uint8_t>& data)
+	void messaging_server::send_binary(const std::string& source_id,
+									   const std::string& source_sub_id,
+									   const std::string& target_id,
+									   const std::string& target_sub_id,
+									   const std::vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
@@ -511,7 +516,7 @@ namespace network
 	void messaging_server::wait_connection(void)
 	{
 		_acceptor->async_accept(
-			[this](error_code ec, asio::ip::tcp::socket socket)
+			[this](std::error_code ec, asio::ip::tcp::socket socket)
 			{
 				if (ec)
 				{
@@ -521,14 +526,14 @@ namespace network
 				logger::handle().write(
 					logging_level::information,
 					fmt::format(
-						L"accepted new client: {}:{}",
-						converter::to_wstring(
+						"accepted new client: {}:{}",
+						converter::to_string(
 							socket.remote_endpoint().address().to_string()),
 						socket.remote_endpoint().port()));
 
-				shared_ptr<messaging_session> session
-					= make_shared<messaging_session>(
-						_source_id, _connection_key, socket, _start_code_value,
+				std::shared_ptr<messaging_session> session
+					= std::make_shared<messaging_session>(
+						source_id_, connection_key_, socket, _start_code_value,
 						_end_code_value);
 				if (session == nullptr)
 				{
@@ -547,23 +552,24 @@ namespace network
 				session->set_ignore_target_ids(_ignore_target_ids);
 				session->set_ignore_snipping_targets(_ignore_snipping_targets);
 				session->set_connection_notification(
-					bind(&messaging_server::connect_condition, this,
-						 placeholders::_1, placeholders::_2));
+					std::bind(&messaging_server::connect_condition, this,
+							  std::placeholders::_1, std::placeholders::_2));
 				session->set_message_notification(
-					bind(&messaging_server::received_message, this,
-						 placeholders::_1));
-				session->set_file_notification(_received_file);
+					std::bind(&messaging_server::received_message, this,
+							  std::placeholders::_1));
+				session->set_file_notification(received_file_);
 				session->set_binary_notification(
-					bind(&messaging_server::received_binary, this,
-						 placeholders::_1, placeholders::_2, placeholders::_3,
-						 placeholders::_4, placeholders::_5));
+					std::bind(&messaging_server::received_binary, this,
+							  std::placeholders::_1, std::placeholders::_2,
+							  std::placeholders::_3, std::placeholders::_4,
+							  std::placeholders::_5));
 				session->set_specific_compress_sequence(
-					_specific_compress_sequence);
+					specific_compress_sequence_);
 				session->set_specific_encrypt_sequence(
-					_specific_encrypt_sequence);
+					specific_encrypt_sequence_);
 
-				session->start(_encrypt_mode, _compress_mode,
-							   _compress_block_size, _possible_session_types,
+				session->start(encrypt_mode_, compress_mode_,
+							   compress_block_size_, _possible_session_types,
 							   _high_priority, _normal_priority, _low_priority,
 							   _drop_connection_time);
 
@@ -574,7 +580,7 @@ namespace network
 	}
 
 	void messaging_server::connect_condition(
-		shared_ptr<messaging_session> target, const bool& condition)
+		std::shared_ptr<messaging_session> target, const bool& condition)
 	{
 		if (target == nullptr)
 		{
@@ -583,10 +589,10 @@ namespace network
 
 		logger::handle().write(
 			logging_level::information,
-			fmt::format(L"{} a client({}[{}]) {} server",
-						(condition ? L"connected" : L"disconnected"),
+			fmt::format("{} a client({}[{}]) {} server",
+						(condition ? "connected" : "disconnected"),
 						target->target_id(), target->target_sub_id(),
-						(condition ? L"to" : L"from")));
+						(condition ? "to" : "from")));
 
 		if (!condition)
 		{
@@ -597,17 +603,18 @@ namespace network
 			}
 		}
 
-		if (_connection != nullptr)
+		if (connection_ != nullptr)
 		{
-			auto result = async(launch::async, _connection, target->target_id(),
-								target->target_sub_id(), condition);
+			auto result
+				= async(std::launch::async, connection_, target->target_id(),
+						target->target_sub_id(), condition);
 		}
 	}
 
-	vector<shared_ptr<messaging_session>> messaging_server::current_sessions(
-		void)
+	std::vector<std::shared_ptr<messaging_session>> messaging_server::
+		current_sessions(void)
 	{
-		vector<shared_ptr<messaging_session>> result;
+		std::vector<std::shared_ptr<messaging_session>> result;
 
 		result.assign(_sessions.begin(), _sessions.end());
 
@@ -615,7 +622,7 @@ namespace network
 	}
 
 	void messaging_server::received_message(
-		shared_ptr<container::value_container> message)
+		std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
@@ -623,11 +630,12 @@ namespace network
 		}
 
 		auto target_id = message->target_id();
-		if (target_id == _source_id)
+		if (target_id == source_id_)
 		{
-			if (_received_message != nullptr)
+			if (received_message_ != nullptr)
 			{
-				auto result = async(launch::async, _received_message, message);
+				auto result
+					= async(std::launch::async, received_message_, message);
 			}
 
 			return;
@@ -635,61 +643,62 @@ namespace network
 
 		logger::handle().write(
 			logging_level::sequence,
-			fmt::format(L"attempt to transfer message to {}", target_id));
+			fmt::format("attempt to transfer message to {}", target_id));
 
 		bool sent = send(message);
 		if (!sent)
 		{
 			logger::handle().write(
 				logging_level::sequence,
-				fmt::format(L"there is no target id on server: {}", target_id));
+				fmt::format("there is no target id on server: {}", target_id));
 		}
 
 		if (_use_message_response)
 		{
 			logger::handle().write(
 				logging_level::sequence,
-				fmt::format(L"attempt to response message to {}",
+				fmt::format("attempt to response message to {}",
 							message->source_id()));
 
-			shared_ptr<container::value_container> container
+			std::shared_ptr<container::value_container> container
 				= message->copy(false);
 			container->swap_header();
 			container->set_message_type(MESSAGE_SENDING_RESPONSE);
-			container << make_shared<container::string_value>(
-				L"indication_id",
-				message->get_value(L"indication_id")->to_string());
-			container << make_shared<container::string_value>(
-				L"requestor_id",
-				message->get_value(L"requestor_id")->to_string());
-			container << make_shared<container::string_value>(
-				L"requestor_sub_id",
-				message->get_value(L"requestor_sub_id")->to_string());
-			container << make_shared<container::string_value>(
-				L"message_type", message->message_type());
-			container << make_shared<container::string_value>(
-				L"message", fmt::format(L"attempt to send message to {}",
-										message->target_id()));
-			container << make_shared<container::bool_value>(L"response", sent);
+			container << std::make_shared<container::string_value>(
+				"indication_id",
+				message->get_value("indication_id")->to_string());
+			container << std::make_shared<container::string_value>(
+				"requestor_id",
+				message->get_value("requestor_id")->to_string());
+			container << std::make_shared<container::string_value>(
+				"requestor_sub_id",
+				message->get_value("requestor_sub_id")->to_string());
+			container << std::make_shared<container::string_value>(
+				"message_type", message->message_type());
+			container << std::make_shared<container::string_value>(
+				"message", fmt::format("attempt to send message to {}",
+									   message->target_id()));
+			container << std::make_shared<container::bool_value>("response",
+																 sent);
 
 			send(container);
 		}
 	}
 
-	void messaging_server::received_binary(const wstring& source_id,
-										   const wstring& source_sub_id,
-										   const wstring& target_id,
-										   const wstring& target_sub_id,
-										   const vector<uint8_t>& data)
+	void messaging_server::received_binary(const std::string& source_id,
+										   const std::string& source_sub_id,
+										   const std::string& target_id,
+										   const std::string& target_sub_id,
+										   const std::vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
 			return;
 		}
 
-		if (_received_data)
+		if (received_data_)
 		{
-			_received_data(source_id, source_sub_id, target_id, target_sub_id,
+			received_data_(source_id, source_sub_id, target_id, target_sub_id,
 						   data);
 		}
 	}

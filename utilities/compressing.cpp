@@ -52,11 +52,11 @@ namespace compressing
 
 	auto compressor::compression(const std::vector<uint8_t>& original_data,
 								 const unsigned short& block_bytes)
-		-> std::tuple<std::optional<std::vector<uint8_t>>, std::wstring>
+		-> std::tuple<std::optional<std::vector<uint8_t>>, std::string>
 	{
 		if (original_data.empty())
 		{
-			return { std::nullopt, L"original data is empty" };
+			return { std::nullopt, "original data is empty" };
 		}
 
 		LZ4_stream_t lz4Stream_body;
@@ -101,11 +101,11 @@ namespace compressing
 
 		if (compressed_data.size() == 0)
 		{
-			return { std::nullopt, L"cannot complete to compress data" };
+			return { std::nullopt, "cannot complete to compress data" };
 		}
 
 		return { compressed_data,
-				 fmt::format(L"compressing(buffer {}): ({} -> {} : {:.2f} %)",
+				 fmt::format("compressing(buffer {}): ({} -> {} : {:.2f} %)",
 							 block_bytes, original_data.size(),
 							 compressed_data.size(),
 							 (((double)compressed_data.size()
@@ -115,11 +115,11 @@ namespace compressing
 
 	auto compressor::decompression(const std::vector<uint8_t>& compressed_data,
 								   const unsigned short& block_bytes)
-		-> std::tuple<std::optional<std::vector<uint8_t>>, std::wstring>
+		-> std::tuple<std::optional<std::vector<uint8_t>>, std::string>
 	{
 		if (compressed_data.empty())
 		{
-			return { std::nullopt, L"original data is empty" };
+			return { std::nullopt, "original data is empty" };
 		}
 
 		LZ4_streamDecode_t lz4StreamDecode_body;
@@ -173,11 +173,11 @@ namespace compressing
 
 		if (decompressed_data.size() == 0)
 		{
-			return { std::nullopt, L"cannot complete to decompress data" };
+			return { std::nullopt, "cannot complete to decompress data" };
 		}
 
 		return { decompressed_data,
-				 fmt::format(L"decompressing(buffer {}): ({} -> {} : {:.2f} %)",
+				 fmt::format("decompressing(buffer {}): ({} -> {} : {:.2f} %)",
 							 block_bytes, compressed_data.size(),
 							 decompressed_data.size(),
 							 (((double)compressed_data.size()

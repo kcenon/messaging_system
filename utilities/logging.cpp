@@ -52,44 +52,44 @@ namespace logging
 	using namespace datetime_handler;
 
 	logger::logger(void)
-		: _store_log_root_path(L"")
-		, _store_log_file_name(L"")
-		, _store_log_extention(L"")
+		: _store_log_root_path("")
+		, _store_log_file_name("")
+		, _store_log_extention("")
 		, _locale(std::locale(""))
 		, _backup_notification(nullptr)
 	{
 		_log_datas.insert(
 			{ logging_level::exception,
-			  bind(&logger::exception_log, this, std::placeholders::_1,
-				   std::placeholders::_2) });
+			  std::bind(&logger::exception_log, this, std::placeholders::_1,
+						std::placeholders::_2) });
 		_log_datas.insert(
 			{ logging_level::error,
-			  bind(&logger::error_log, this, std::placeholders::_1,
-				   std::placeholders::_2) });
+			  std::bind(&logger::error_log, this, std::placeholders::_1,
+						std::placeholders::_2) });
 		_log_datas.insert(
 			{ logging_level::information,
-			  bind(&logger::information_log, this, std::placeholders::_1,
-				   std::placeholders::_2) });
+			  std::bind(&logger::information_log, this, std::placeholders::_1,
+						std::placeholders::_2) });
 		_log_datas.insert(
 			{ logging_level::sequence,
-			  bind(&logger::sequence_log, this, std::placeholders::_1,
-				   std::placeholders::_2) });
+			  std::bind(&logger::sequence_log, this, std::placeholders::_1,
+						std::placeholders::_2) });
 		_log_datas.insert(
 			{ logging_level::parameter,
-			  bind(&logger::parameter_log, this, std::placeholders::_1,
-				   std::placeholders::_2) });
+			  std::bind(&logger::parameter_log, this, std::placeholders::_1,
+						std::placeholders::_2) });
 		_log_datas.insert(
 			{ logging_level::packet,
-			  bind(&logger::packet_log, this, std::placeholders::_1,
-				   std::placeholders::_2) });
+			  std::bind(&logger::packet_log, this, std::placeholders::_1,
+						std::placeholders::_2) });
 	}
 
 	logger::~logger(void) {}
 
-	bool logger::start(const std::wstring& store_log_file_name,
+	bool logger::start(const std::string& store_log_file_name,
 					   std::locale target_locale,
-					   const std::wstring& store_log_extention,
-					   const std::wstring& store_log_root_path,
+					   const std::string& store_log_extention,
+					   const std::string& store_log_root_path,
 					   const bool& append_date_on_file_name)
 	{
 		stop();
@@ -100,9 +100,9 @@ namespace logging
 		_append_date_on_file_name.store(append_date_on_file_name);
 		_locale = target_locale;
 
-		std::wcout.imbue(_locale);
+		std::cout.imbue(_locale);
 
-		_thread = std::make_shared<std::thread>(&logger::run, this);
+		thread_ = std::make_shared<std::thread>(&logger::run, this);
 
 		return true;
 	}
@@ -111,14 +111,14 @@ namespace logging
 	{
 		_thread_stop.store(true);
 
-		if (_thread != nullptr)
+		if (thread_ != nullptr)
 		{
-			if (_thread->joinable())
+			if (thread_->joinable())
 			{
 				_condition.notify_one();
-				_thread->join();
+				thread_->join();
 			}
-			_thread.reset();
+			thread_.reset();
 		}
 
 		_thread_stop.store(false);
@@ -159,7 +159,7 @@ namespace logging
 	}
 
 	void logger::set_backup_notification(
-		const std::function<void(const std::wstring&)>& notification)
+		const std::function<void(const std::string&)>& notification)
 	{
 		_backup_notification = notification;
 	}
@@ -172,7 +172,7 @@ namespace logging
 
 	void logger::write(
 		const logging_level& target_level,
-		const std::wstring& log_data,
+		const std::string& log_data,
 		const std::optional<
 			std::chrono::time_point<std::chrono::high_resolution_clock>>& time)
 	{
@@ -186,7 +186,7 @@ namespace logging
 			}
 		}
 
-		std::scoped_lock<std::mutex> guard(_mutex);
+		std::scoped_lock<std::mutex> guard(mutex_);
 
 		if (!time.has_value())
 		{
@@ -204,7 +204,7 @@ namespace logging
 
 		_buffer.push_back(
 			{ target_level, std::chrono::system_clock::now(),
-			  fmt::format(L"{} [{} ms]", log_data, diff.count()) });
+			  fmt::format("{} [{} ms]", log_data, diff.count()) });
 
 		_condition.notify_one();
 	}
@@ -225,17 +225,17 @@ namespace logging
 			}
 		}
 
-		write(target_level, converter::to_wstring(log_data), time);
+		write(target_level, converter::to_string(log_data), time);
 	}
 
 	void logger::run(void)
 	{
-		set_log_flag(L"START");
+		set_log_flag("START");
 
-		std::wstring source = L"";
+		std::string source = "";
 		while (!_thread_stop.load() || !_buffer.empty())
 		{
-			std::unique_lock<std::mutex> unique(_mutex);
+			std::unique_lock<std::mutex> unique(mutex_);
 			_condition.wait(
 				unique,
 				[this] { return _thread_stop.load() || !_buffer.empty(); });
@@ -247,7 +247,7 @@ namespace logging
 			if (_append_date_on_file_name.load())
 			{
 				target_path = fmt::format(
-					L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path,
+					"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path,
 					_store_log_file_name,
 					fmt::localtime(std::chrono::system_clock::to_time_t(
 						std::chrono::system_clock::now())),
@@ -256,7 +256,7 @@ namespace logging
 			else
 			{
 				target_path
-					= fmt::format(L"{}{}.{}", _store_log_root_path,
+					= fmt::format("{}{}.{}", _store_log_root_path,
 								  _store_log_file_name, _store_log_extention);
 			}
 
@@ -268,9 +268,9 @@ namespace logging
 			if (_append_date_on_file_name.load())
 			{
 				backup_log(
-					target_path.wstring(),
+					target_path.string(),
 					fmt::format(
-						L"{}{}_{:%Y-%m-%d}_backup.{}", _store_log_root_path,
+						"{}{}_{:%Y-%m-%d}_backup.{}", _store_log_root_path,
 						_store_log_file_name,
 						fmt::localtime(std::chrono::system_clock::to_time_t(
 							std::chrono::system_clock::now())),
@@ -278,15 +278,15 @@ namespace logging
 			}
 			else
 			{
-				backup_log(target_path.wstring(),
-						   fmt::format(L"{}{}_backup.{}", _store_log_root_path,
+				backup_log(target_path.string(),
+						   fmt::format("{}{}_backup.{}", _store_log_root_path,
 									   _store_log_file_name,
 									   _store_log_extention));
 			}
 
 			if (_append_date_on_file_name.load())
 			{
-				source = fmt::format(L"{}{}_{:%Y-%m-%d}.{}",
+				source = fmt::format("{}{}_{:%Y-%m-%d}.{}",
 									 _store_log_root_path, _store_log_file_name,
 									 fmt::localtime(
 										 std::chrono::system_clock::to_time_t(
@@ -296,7 +296,7 @@ namespace logging
 			}
 			else
 			{
-				source = fmt::format(L"{}{}.{}", _store_log_root_path,
+				source = fmt::format("{}{}.{}", _store_log_root_path,
 									 _store_log_file_name, _store_log_extention)
 							 .c_str();
 			}
@@ -321,7 +321,7 @@ namespace logging
 				stream.imbue(_locale);
 			}
 
-			source = L"";
+			source = "";
 			for (auto& buffer : buffers)
 			{
 				auto iterator = _log_datas.find(std::get<0>(buffer));
@@ -331,7 +331,7 @@ namespace logging
 				}
 
 				fmt::format_to(
-					back_inserter(source), L"{}",
+					std::back_inserter(source), "{}",
 					iterator->second(std::get<1>(buffer), std::get<2>(buffer)));
 			}
 			buffers.clear();
@@ -344,7 +344,7 @@ namespace logging
 				stream << converter::to_string(source);
 #endif
 			}
-			source = L"";
+			source = "";
 
 			if (_logging_style >= logging_styles::file_and_console)
 			{
@@ -353,16 +353,16 @@ namespace logging
 			}
 		}
 
-		set_log_flag(L"END");
+		set_log_flag("END");
 	}
 
-	void logger::set_log_flag(const std::wstring& flag)
+	void logger::set_log_flag(const std::string& flag)
 	{
-		std::wstring source = L"";
+		std::string source = "";
 		if (_append_date_on_file_name.load())
 		{
 			source = fmt::format(
-						 L"{}{}_{:%Y-%m-%d}.{}", _store_log_root_path,
+						 "{}{}_{:%Y-%m-%d}.{}", _store_log_root_path,
 						 _store_log_file_name,
 						 fmt::localtime(std::chrono::system_clock::to_time_t(
 							 std::chrono::system_clock::now())),
@@ -371,7 +371,7 @@ namespace logging
 		}
 		else
 		{
-			source = fmt::format(L"{}{}.{}", _store_log_root_path,
+			source = fmt::format("{}{}.{}", _store_log_root_path,
 								 _store_log_file_name, _store_log_extention)
 						 .c_str();
 		}
@@ -401,14 +401,14 @@ namespace logging
 		auto time_string = datetime::time(current, true);
 		if (_write_date.load())
 		{
-			std::wstring temp = fmt::format(
-				L"[{:%Y-%m-%d} {}][{}]\n",
+			std::string temp = fmt::format(
+				"[{:%Y-%m-%d} {}][{}]\n",
 				fmt::localtime(std::chrono::system_clock::to_time_t(current)),
 				time_string, flag);
 			if (_logging_style < logging_styles::file_only)
 			{
-				std::wcout << fmt::format(
-					L"[\033[0;94m{:%Y-%m-%d} {}\033[0m][\033[0;34m{}\033[0m]\n",
+				std::cout << fmt::format(
+					"[\033[0;94m{:%Y-%m-%d} {}\033[0m][\033[0;34m{}\033[0m]\n",
 					fmt::localtime(
 						std::chrono::system_clock::to_time_t(current)),
 					time_string, flag);
@@ -425,12 +425,12 @@ namespace logging
 		}
 		else
 		{
-			std::wstring temp = fmt::format(L"[{}][{}]\n", time_string, flag);
+			std::string temp = fmt::format("[{}][{}]\n", time_string, flag);
 			if (_logging_style < logging_styles::file_only)
 			{
-				std::wcout << fmt::format(
-					L"[\033[0;94m{}\033[0m][\033[0;34m{}\033[0m]\n",
-					time_string, flag);
+				std::cout << fmt::format(
+					"[\033[0;94m{}\033[0m][\033[0;34m{}\033[0m]\n", time_string,
+					flag);
 			}
 
 			if (_logging_style >= logging_styles::file_and_console)
@@ -450,8 +450,8 @@ namespace logging
 		}
 	}
 
-	void logger::backup_log(const std::wstring& target_path,
-							const std::wstring& backup_path)
+	void logger::backup_log(const std::string& target_path,
+							const std::string& backup_path)
 	{
 		if (!std::filesystem::exists(target_path))
 		{
@@ -473,98 +473,98 @@ namespace logging
 		}
 	}
 
-	std::wstring logger::exception_log(
+	std::string logger::exception_log(
 		const std::chrono::system_clock::time_point& time,
-		const std::wstring& data)
+		const std::string& data)
 	{
 		return make_log_string(logging_level::exception, time, data,
-							   L"EXCEPTION", L"\033[0;94m", L"\033[0;95m");
+							   "EXCEPTION", "\033[0;94m", "\033[0;95m");
 	}
 
-	std::wstring logger::error_log(
+	std::string logger::error_log(
 		const std::chrono::system_clock::time_point& time,
-		const std::wstring& data)
+		const std::string& data)
 	{
-		return make_log_string(logging_level::error, time, data, L"ERROR",
-							   L"\033[0;94m", L"\033[0;31m");
+		return make_log_string(logging_level::error, time, data, "ERROR",
+							   "\033[0;94m", "\033[0;31m");
 	}
 
-	std::wstring logger::information_log(
+	std::string logger::information_log(
 		const std::chrono::system_clock::time_point& time,
-		const std::wstring& data)
+		const std::string& data)
 	{
 		return make_log_string(logging_level::information, time, data,
-							   L"INFORMATION", L"\033[0;94m", L"\033[0;92m");
+							   "INFORMATION", "\033[0;94m", "\033[0;92m");
 	}
 
-	std::wstring logger::sequence_log(
+	std::string logger::sequence_log(
 		const std::chrono::system_clock::time_point& time,
-		const std::wstring& data)
+		const std::string& data)
 	{
-		return make_log_string(logging_level::sequence, time, data, L"SEQUENCE",
-							   L"\033[0;94m", L"\033[0;90m");
+		return make_log_string(logging_level::sequence, time, data, "SEQUENCE",
+							   "\033[0;94m", "\033[0;90m");
 	}
 
-	std::wstring logger::parameter_log(
+	std::string logger::parameter_log(
 		const std::chrono::system_clock::time_point& time,
-		const std::wstring& data)
+		const std::string& data)
 	{
 		return make_log_string(logging_level::parameter, time, data,
-							   L"PARAMETER", L"\033[0;94m", L"\033[0;97m");
+							   "PARAMETER", "\033[0;94m", "\033[0;97m");
 	}
 
-	std::wstring logger::packet_log(
+	std::string logger::packet_log(
 		const std::chrono::system_clock::time_point& time,
-		const std::wstring& data)
+		const std::string& data)
 	{
-		return make_log_string(logging_level::packet, time, data, L"PACKET",
-							   L"\033[0;94m", L"\033[0;91m");
+		return make_log_string(logging_level::packet, time, data, "PACKET",
+							   "\033[0;94m", "\033[0;91m");
 	}
 
-	std::wstring logger::make_log_string(
+	std::string logger::make_log_string(
 		const logging_level& target_level,
 		const std::chrono::system_clock::time_point& time,
-		const std::wstring& data,
-		const std::wstring& type,
-		const std::wstring& time_color,
-		const std::wstring& type_color)
+		const std::string& data,
+		const std::string& type,
+		const std::string& time_color,
+		const std::string& type_color)
 	{
 		auto time_string = datetime::time(time, true);
 		if (_write_date.load())
 		{
 			if (_logging_style < logging_styles::file_only)
 			{
-				std::wcout << fmt::format(
-					L"[{}{:%Y-%m-%d} {}\033[0m][{}{}\033[0m]: {}\n", time_color,
+				std::cout << fmt::format(
+					"[{}{:%Y-%m-%d} {}\033[0m][{}{}\033[0m]: {}\n", time_color,
 					fmt::localtime(std::chrono::system_clock::to_time_t(time)),
 					time_string, type_color, type, data);
 			}
 
 			return fmt::format(
-				L"[{:%Y-%m-%d} {}][{}]: {}\n",
+				"[{:%Y-%m-%d} {}][{}]: {}\n",
 				fmt::localtime(std::chrono::system_clock::to_time_t(time)),
 				time_string, type, data);
 		}
 
 		if (_logging_style < logging_styles::file_only)
 		{
-			std::wcout << fmt::format(L"[{}{}\033[0m][{}{}\033[0m]: {}\n",
-									  time_color, time_string, type_color, type,
-									  data);
+			std::cout << fmt::format("[{}{}\033[0m][{}{}\033[0m]: {}\n",
+									 time_color, time_string, type_color, type,
+									 data);
 		}
 
-		return fmt::format(L"[{}][{}]: {}\n", time_string, type, data);
+		return fmt::format("[{}][{}]: {}\n", time_string, type, data);
 	}
 
 #pragma region singleton
-	std::unique_ptr<logger> logger::_handle;
-	std::once_flag logger::_once;
+	std::unique_ptr<logger> logger::handle_;
+	std::once_flag logger::once_;
 
 	logger& logger::handle(void)
 	{
-		call_once(_once, []() { _handle.reset(new logger); });
+		call_once(once_, []() { handle_.reset(new logger); });
 
-		return *_handle.get();
+		return *handle_.get();
 	}
 #pragma endregion
 } // namespace logging

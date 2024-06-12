@@ -40,16 +40,16 @@ namespace folder_handler
 	class folder
 	{
 	public:
-		static std::wstring get_temporary_folder(void);
-		static bool create_folder(const std::wstring& root,
-								  const std::wstring& target = L"");
-		static void delete_folder(const std::wstring& target);
-		static void delete_folders(const std::vector<std::wstring>& targets);
-		static std::vector<std::wstring> get_folders(
-			const std::wstring& target_folder);
-		static std::vector<std::wstring> get_files(
-			const std::wstring& target_folder,
+		static std::string get_temporary_folder(void);
+		static bool create_folder(const std::string& root,
+								  const std::string& target = "");
+		static void delete_folder(const std::string& target);
+		static void delete_folders(const std::vector<std::string>& targets);
+		static std::vector<std::string> get_folders(
+			const std::string& target_folder);
+		static std::vector<std::string> get_files(
+			const std::string& target_folder,
 			const bool& search_sub_folder = true,
-			const std::vector<std::wstring>& extensions = {});
+			const std::vector<std::string>& extensions = {});
 	};
 } // namespace folder_handler

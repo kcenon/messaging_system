@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace database
 {
-	database_manager::database_manager() : _connected(false), _database(nullptr)
+	database_manager::database_manager() : connected_(false), database_(nullptr)
 	{
 	}
 
@@ -44,23 +44,23 @@ namespace database
 
 	bool database_manager::set_mode(const database_types& database_type)
 	{
-		if (_connected)
+		if (connected_)
 		{
 			return false;
 		}
 
-		_database.reset();
+		database_.reset();
 
 		switch (database_type)
 		{
 		case database_types::postgres:
-			_database = make_shared<postgres_manager>();
+			database_ = std::make_shared<postgres_manager>();
 			break;
 		default:
 			break;
 		}
 
-		if (_database == nullptr)
+		if (database_ == nullptr)
 		{
 			return false;
 		}
@@ -70,94 +70,94 @@ namespace database
 
 	database_types database_manager::database_type(void)
 	{
-		if (_database == nullptr)
+		if (database_ == nullptr)
 		{
 			return database_types::none;
 		}
 
-		return _database->database_type();
+		return database_->database_type();
 	}
 
-	bool database_manager::connect(const wstring& connect_string)
+	bool database_manager::connect(const std::string& connect_string)
 	{
-		if (_database == nullptr)
+		if (database_ == nullptr)
 		{
 			return false;
 		}
 
-		return _database->connect(connect_string);
+		return database_->connect(connect_string);
 	}
 
-	bool database_manager::create_query(const wstring& query_string)
+	bool database_manager::create_query(const std::string& query_string)
 	{
-		if (_database == nullptr)
+		if (database_ == nullptr)
 		{
 			return false;
 		}
 
-		return _database->create_query(query_string);
+		return database_->create_query(query_string);
 	}
 
-	unsigned int database_manager::insert_query(const wstring& query_string)
+	unsigned int database_manager::insert_query(const std::string& query_string)
 	{
-		if (_database == nullptr)
+		if (database_ == nullptr)
 		{
 			return 0;
 		}
 
-		return _database->insert_query(query_string);
+		return database_->insert_query(query_string);
 	}
 
-	unsigned int database_manager::update_query(const wstring& query_string)
+	unsigned int database_manager::update_query(const std::string& query_string)
 	{
-		if (_database == nullptr)
+		if (database_ == nullptr)
 		{
 			return 0;
 		}
 
-		return _database->update_query(query_string);
+		return database_->update_query(query_string);
 	}
 
-	unsigned int database_manager::delete_query(const wstring& query_string)
+	unsigned int database_manager::delete_query(const std::string& query_string)
 	{
-		if (_database == nullptr)
+		if (database_ == nullptr)
 		{
 			return 0;
 		}
 
-		return _database->update_query(query_string);
+		return database_->update_query(query_string);
 	}
 
-	shared_ptr<container::value_container> database_manager::select_query(
-		const wstring& query_string)
+	std::shared_ptr<container::value_container> database_manager::select_query(
+		const std::string& query_string)
 	{
-		if (_database == nullptr)
+		if (database_ == nullptr)
 		{
 			return 0;
 		}
 
-		return _database->select_query(query_string);
+		return database_->select_query(query_string);
 	}
 
 	bool database_manager::disconnect(void)
 	{
-		if (_database == nullptr)
+		if (database_ == nullptr)
 		{
 			return false;
 		}
 
-		return _database->disconnect();
+		return database_->disconnect();
 	}
 
 #pragma region singleton
-	unique_ptr<database_manager> database_manager::_handle;
-	once_flag database_manager::_once;
+	std::unique_ptr<database_manager> database_manager::handle_;
+	std::once_flag database_manager::once_;
 
 	database_manager& database_manager::handle(void)
 	{
-		call_once(_once, []() { _handle.reset(new database_manager); });
+		std::call_once(once_, []() { handle_.reset(new database_manager); });
 
-		return *_handle.get();
+		return *handle_.get();
 	}
 #pragma endregion
 }; // namespace database

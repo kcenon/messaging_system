@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <mutex>
 #include <optional>
 #include <queue>
+#include <string>
 #include <vector>
 
 namespace threads
@@ -48,7 +49,7 @@ namespace threads
 	class job_pool : public std::enable_shared_from_this<job_pool>
 	{
 	public:
-		job_pool(const std::wstring& title);
+		job_pool(const std::string& title);
 		~job_pool(void);
 
 	public:
@@ -64,9 +65,9 @@ namespace threads
 
 	public:
 		bool append_notification(
-			const std::wstring& id,
+			const std::string& id,
 			const std::function<void(const priorities&)>& notification);
-		bool remove_notification(const std::wstring& id);
+		bool remove_notification(const std::string& id);
 
 	public:
 		void check_empty(void);
@@ -75,11 +76,11 @@ namespace threads
 		void notification(const priorities& priority);
 
 	private:
-		std::mutex _mutex;
-		bool _push_lock;
-		std::wstring _title;
-		std::map<priorities, std::queue<std::shared_ptr<job>>> _jobs;
-		std::map<std::wstring, std::function<void(const priorities&)>>
-			_notifications;
+		std::mutex mutex_;
+		bool push_lock_;
+		std::string title_;
+		std::map<priorities, std::queue<std::shared_ptr<job>>> jobs_;
+		std::map<std::string, std::function<void(const priorities&)>>
+			notifications_;
 	};
 } // namespace threads

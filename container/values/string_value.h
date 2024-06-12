@@ -34,18 +34,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../value.h"
 
-using namespace std;
-
 namespace container
 {
 	class string_value : public value
 	{
 	public:
 		string_value(void);
-		string_value(const wstring& name, const wstring& value);
+		string_value(const std::string& name, const std::string& value);
 		~string_value(void) = default;
 
 	public:
-		wstring to_string(const bool& original = true) const override;
+		std::string to_string(const bool& original = true) const override;
 	};
 } // namespace container

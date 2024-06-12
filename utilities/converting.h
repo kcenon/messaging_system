@@ -36,6 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <locale>
 #include <string>
 #include <vector>
+#include <cstdint>
 #include <optional>
 
 namespace converting
@@ -43,41 +44,34 @@ namespace converting
 	class converter
 	{
 	public:
-		static auto split(const std::wstring& source, const std::wstring& token)
-			-> std::tuple<std::optional<std::vector<std::wstring>>,
-						  std::optional<std::wstring>>;
+		static auto split(const std::string& source, const std::string& token)
+			-> std::tuple<std::optional<std::vector<std::string>>,
+						  std::optional<std::string>>;
 
 	public:
-		static void replace(std::wstring& source,
-							const std::wstring& token,
-							const std::wstring& target);
-		static auto replace2(const std::wstring& source,
-							 const std::wstring& token,
-							 const std::wstring& target) -> const std::wstring;
+		static void replace(std::string& source,
+							const std::string& token,
+							const std::string& target);
+		static auto replace2(const std::string& source,
+							 const std::string& token,
+							 const std::string& target) -> const std::string;
 
 	public:
-		static auto to_wstring(const std::string& value,
-							   std::locale target_locale = std::locale(""))
-			-> std::wstring;
-		static auto to_string(const std::wstring& value,
-							  std::locale target_locale = std::locale(""))
-			-> std::string;
+		static auto to_string(const std::string& value,
+							  std::locale target_locale
+							  = std::locale("")) -> std::string;
 
 	public:
-		static auto to_array(const std::wstring& value) -> std::vector<uint8_t>;
 		static auto to_array(const std::string& value) -> std::vector<uint8_t>;
-		static auto to_wstring(const std::vector<uint8_t>& value)
-			-> std::wstring;
 		static auto to_string(const std::vector<uint8_t>& value) -> std::string;
 
 	public:
-		static auto from_base64(const std::wstring& value)
+		static auto from_base64(const std::string& value)
 			-> std::vector<uint8_t>;
-		static auto to_base64(const std::vector<uint8_t>& value)
-			-> std::wstring;
+		static auto to_base64(const std::vector<uint8_t>& value) -> std::string;
 
 	private:
-		static auto convert(const std::u16string& value) -> std::wstring;
-		static auto convert(const std::wstring& value) -> std::u16string;
+		static auto convert(const std::u16string& value) -> std::string;
+		static auto convert(const std::string& value) -> std::u16string;
 	};
 } // namespace converting

@@ -50,26 +50,26 @@ namespace database
 		database_types database_type(void);
 
 	public:
-		bool connect(const wstring& connect_string);
-		bool create_query(const wstring& query_string);
-		unsigned int insert_query(const wstring& query_string);
-		unsigned int update_query(const wstring& query_string);
-		unsigned int delete_query(const wstring& query_string);
-		shared_ptr<container::value_container> select_query(
-			const wstring& query_string);
+		bool connect(const std::string& connect_string);
+		bool create_query(const std::string& query_string);
+		unsigned int insert_query(const std::string& query_string);
+		unsigned int update_query(const std::string& query_string);
+		unsigned int delete_query(const std::string& query_string);
+		std::shared_ptr<container::value_container> select_query(
+			const std::string& query_string);
 		bool disconnect(void);
 
 	private:
-		bool _connected;
-		shared_ptr<database_base> _database;
+		bool connected_;
+		std::shared_ptr<database_base> database_;
 
 #pragma region singleton
 	public:
 		static database_manager& handle(void);
 
 	private:
-		static unique_ptr<database_manager> _handle;
-		static once_flag _once;
+		static std::unique_ptr<database_manager> handle_;
+		static std::once_flag once_;
 #pragma endregion
 	};
 }; // namespace database

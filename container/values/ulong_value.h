@@ -34,19 +34,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../value.h"
 
-using namespace std;
-
 namespace container
 {
 	class ulong_value : public value
 	{
 	public:
 		ulong_value(void);
-		ulong_value(const wstring& name, const unsigned long& value);
+		ulong_value(const std::string& name, const unsigned long& value);
 		~ulong_value(void) = default;
 
 	public:
 		unsigned long to_ulong(void) const override;
-		wstring to_string(const bool& original = true) const override;
+		std::string to_string(const bool& original = true) const override;
 	};
 } // namespace container

@@ -40,7 +40,7 @@ namespace database
 {
 	using namespace converting;
 
-	postgres_manager::postgres_manager(void) : _connection(nullptr) {}
+	postgres_manager::postgres_manager(void) : connection_(nullptr) {}
 
 	postgres_manager::~postgres_manager(void) {}
 
@@ -49,13 +49,13 @@ namespace database
 		return database_types::postgres;
 	}
 
-	bool postgres_manager::connect(const wstring& connect_string)
+	bool postgres_manager::connect(const std::string& connect_string)
 	{
-		_connection = PQconnectdb(converter::to_string(connect_string).c_str());
-		if (PQstatus((PGconn*)_connection) != CONNECTION_OK)
+		connection_ = PQconnectdb(converter::to_string(connect_string).c_str());
+		if (PQstatus((PGconn*)connection_) != CONNECTION_OK)
 		{
-			PQfinish((PGconn*)_connection);
-			_connection = nullptr;
+			PQfinish((PGconn*)connection_);
+			connection_ = nullptr;
 
 			return false;
 		}
@@ -63,7 +63,7 @@ namespace database
 		return true;
 	}
 
-	bool postgres_manager::create_query(const wstring& query_string)
+	bool postgres_manager::create_query(const std::string& query_string)
 	{
 		PGresult* result = (PGresult*)query_result(query_string);
 		if (PQresultStatus(result) != PGRES_TUPLES_OK)
@@ -71,8 +71,8 @@ namespace database
 			PQclear(result);
 			result = nullptr;
 
-			PQfinish((PGconn*)_connection);
-			_connection = nullptr;
+			PQfinish((PGconn*)connection_);
+			connection_ = nullptr;
 
 			return false;
 		}
@@ -83,7 +83,7 @@ namespace database
 		return true;
 	}
 
-	unsigned int postgres_manager::insert_query(const wstring& query_string)
+	unsigned int postgres_manager::insert_query(const std::string& query_string)
 	{
 		PGresult* result = (PGresult*)query_result(query_string);
 		if (PQresultStatus(result) != PGRES_TUPLES_OK)
@@ -91,8 +91,8 @@ namespace database
 			PQclear(result);
 			result = nullptr;
 
-			PQfinish((PGconn*)_connection);
-			_connection = nullptr;
+			PQfinish((PGconn*)connection_);
+			connection_ = nullptr;
 
 			return 0;
 		}
@@ -105,7 +105,7 @@ namespace database
 		return result_count;
 	}
 
-	unsigned int postgres_manager::update_query(const wstring& query_string)
+	unsigned int postgres_manager::update_query(const std::string& query_string)
 	{
 		PGresult* result = (PGresult*)query_result(query_string);
 		if (PQresultStatus(result) != PGRES_TUPLES_OK)
@@ -113,8 +113,8 @@ namespace database
 			PQclear(result);
 			result = nullptr;
 
-			PQfinish((PGconn*)_connection);
-			_connection = nullptr;
+			PQfinish((PGconn*)connection_);
+			connection_ = nullptr;
 
 			return 0;
 		}
@@ -127,7 +127,7 @@ namespace database
 		return result_count;
 	}
 
-	unsigned int postgres_manager::delete_query(const wstring& query_string)
+	unsigned int postgres_manager::delete_query(const std::string& query_string)
 	{
 		PGresult* result = (PGresult*)query_result(query_string);
 		if (PQresultStatus(result) != PGRES_TUPLES_OK)
@@ -135,8 +135,8 @@ namespace database
 			PQclear(result);
 			result = nullptr;
 
-			PQfinish((PGconn*)_connection);
-			_connection = nullptr;
+			PQfinish((PGconn*)connection_);
+			connection_ = nullptr;
 
 			return 0;
 		}
@@ -149,45 +149,45 @@ namespace database
 		return result_count;
 	}
 
-	shared_ptr<container::value_container> postgres_manager::select_query(
-		const wstring& query_string)
+	std::shared_ptr<container::value_container> postgres_manager::select_query(
+		const std::string& query_string)
 	{
-		shared_ptr<container::value_container> container
-			= make_shared<container::value_container>(
-				L"query", vector<shared_ptr<container::value>>{});
+		std::shared_ptr<container::value_container> container
+			= std::make_shared<container::value_container>(
+				"query", std::vector<std::shared_ptr<container::value>>{});
 
 		return container;
 	}
 
 	bool postgres_manager::disconnect(void)
 	{
-		if (_connection == nullptr)
+		if (connection_ == nullptr)
 		{
 			return false;
 		}
 
-		PQfinish((PGconn*)_connection);
-		_connection = nullptr;
+		PQfinish((PGconn*)connection_);
+		connection_ = nullptr;
 
 		return true;
 	}
 
-	void* postgres_manager::query_result(const wstring& query_string)
+	void* postgres_manager::query_result(const std::string& query_string)
 	{
-		if (_connection == nullptr)
+		if (connection_ == nullptr)
 		{
 			return nullptr;
 		}
 
-		if (PQstatus((PGconn*)_connection) != CONNECTION_OK)
+		if (PQstatus((PGconn*)connection_) != CONNECTION_OK)
 		{
-			PQfinish((PGconn*)_connection);
-			_connection = nullptr;
+			PQfinish((PGconn*)connection_);
+			connection_ = nullptr;
 
 			return nullptr;
 		}
 
-		return PQexec((PGconn*)_connection,
+		return PQexec((PGconn*)connection_,
 					  converter::to_string(query_string).c_str());
 	}
 }; // namespace database

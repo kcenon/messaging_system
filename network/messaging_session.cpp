@@ -65,68 +65,69 @@ namespace network
 	using namespace file_handler;
 	using namespace binary_parser;
 
-	messaging_session::messaging_session(const wstring& source_id,
-										 const wstring& connection_key,
+	messaging_session::messaging_session(const std::string& source_id,
+										 const std::string& connection_key,
 										 asio::ip::tcp::socket& socket,
 										 const unsigned char& start_code_value,
 										 const unsigned char& end_code_value)
 		: data_handling(start_code_value, end_code_value)
-		, _bridge_line(false)
-		, _source_id(source_id)
-		, _source_sub_id(L"")
-		, _target_id(L"")
-		, _target_sub_id(L"")
-		, _connection_key(connection_key)
-		, _connection(nullptr)
+		, bridge_line_(false)
+		, source_id_(source_id)
+		, source_sub_id_("")
+		, target_id_("")
+		, target_sub_id_("")
+		, connection_key_(connection_key)
+		, connection_(nullptr)
 		, _kill_code(false)
-		, _socket(make_shared<asio::ip::tcp::socket>(std::move(socket)))
-		, _auto_echo_interval_seconds(1)
-		, _auto_echo(false)
+		, socket_(std::make_shared<asio::ip::tcp::socket>(std::move(socket)))
+		, auto_echo_interval_seconds_(1)
+		, auto_echo_(false)
 	{
-		_socket->set_option(asio::ip::tcp::no_delay(true));
-		_socket->set_option(asio::socket_base::keep_alive(true));
-		_socket->set_option(
+		socket_->set_option(asio::ip::tcp::no_delay(true));
+		socket_->set_option(asio::socket_base::keep_alive(true));
+		socket_->set_option(
 			asio::socket_base::receive_buffer_size(buffer_size));
 
-		_source_sub_id
-			= fmt::format(L"{}:{}",
-						  converter::to_wstring(
-							  _socket->local_endpoint().address().to_string()),
-						  _socket->local_endpoint().port());
-		_target_sub_id
-			= fmt::format(L"{}:{}",
-						  converter::to_wstring(
-							  _socket->remote_endpoint().address().to_string()),
-						  _socket->remote_endpoint().port());
+		source_sub_id_
+			= fmt::format("{}:{}",
+						  converter::to_string(
+							  socket_->local_endpoint().address().to_string()),
+						  socket_->local_endpoint().port());
+		target_sub_id_
+			= fmt::format("{}:{}",
+						  converter::to_string(
+							  socket_->remote_endpoint().address().to_string()),
+						  socket_->remote_endpoint().port());
 
-		_message_handlers.insert({ L"request_connection",
-								   bind(&messaging_session::connection_message,
-										this, placeholders::_1) });
-		_message_handlers.insert(
-			{ L"request_files", bind(&messaging_session::request_files, this,
-									 placeholders::_1) });
-		_message_handlers.insert(
-			{ L"echo",
-			  bind(&messaging_session::echo_message, this, placeholders::_1) });
+		message_handlers_.insert(
+			{ "request_connection",
+			  std::bind(&messaging_session::connection_message, this,
+						std::placeholders::_1) });
+		message_handlers_.insert(
+			{ "request_files", std::bind(&messaging_session::request_files,
+										 this, std::placeholders::_1) });
+		message_handlers_.insert(
+			{ "echo", std::bind(&messaging_session::echo_message, this,
+								std::placeholders::_1) });
 	}
 
 	messaging_session::~messaging_session(void)
 	{
-		if (_socket != nullptr)
+		if (socket_ != nullptr)
 		{
-			if (_socket->is_open())
+			if (socket_->is_open())
 			{
 				asio::error_code ec;
-				_socket->shutdown(asio::ip::tcp::socket::shutdown_both, ec);
-				_socket->close();
+				socket_->shutdown(asio::ip::tcp::socket::shutdown_both, ec);
+				socket_->close();
 			}
-			_socket.reset();
+			socket_.reset();
 		}
 
 		stop();
 	}
 
-	shared_ptr<messaging_session> messaging_session::get_ptr(void)
+	std::shared_ptr<messaging_session> messaging_session::get_ptr(void)
 	{
 		return shared_from_this();
 	}
@@ -137,91 +138,94 @@ namespace network
 	}
 
 	void messaging_session::set_acceptable_target_ids(
-		const vector<wstring>& acceptable_target_ids)
+		const std::vector<std::string>& acceptable_target_ids)
 	{
 		_acceptable_target_ids = acceptable_target_ids;
 	}
 
 	void messaging_session::set_ignore_target_ids(
-		const vector<wstring>& ignore_target_ids)
+		const std::vector<std::string>& ignore_target_ids)
 	{
 		_ignore_target_ids = ignore_target_ids;
 	}
 
 	void messaging_session::set_ignore_snipping_targets(
-		const vector<wstring>& ignore_snipping_targets)
+		const std::vector<std::string>& ignore_snipping_targets)
 	{
 		_ignore_snipping_targets = ignore_snipping_targets;
 	}
 
 	void messaging_session::set_connection_notification(
-		const function<void(shared_ptr<messaging_session>, const bool&)>&
-			notification)
+		const std::function<void(std::shared_ptr<messaging_session>,
+								 const bool&)>& notification)
 	{
-		_connection = notification;
+		connection_ = notification;
 	}
 
 	void messaging_session::set_message_notification(
-		const function<void(shared_ptr<container::value_container>)>&
+		const std::function<void(std::shared_ptr<container::value_container>)>&
 			notification)
 	{
-		_received_message = notification;
+		received_message_ = notification;
 	}
 
 	void messaging_session::set_file_notification(
-		const function<void(
-			const wstring&, const wstring&, const wstring&, const wstring&)>&
-			notification)
+		const std::function<void(const std::string&,
+								 const std::string&,
+								 const std::string&,
+								 const std::string&)>& notification)
 	{
-		_received_file = notification;
+		received_file_ = notification;
 	}
 
 	void messaging_session::set_binary_notification(
-		const function<void(const wstring&,
-							const wstring&,
-							const wstring&,
-							const wstring&,
-							const vector<uint8_t>&)>& notification)
+		const std::function<void(const std::string&,
+								 const std::string&,
+								 const std::string&,
+								 const std::string&,
+								 const std::vector<uint8_t>&)>& notification)
 	{
-		_received_data = notification;
+		received_data_ = notification;
 	}
 
 	void messaging_session::set_specific_compress_sequence(
-		const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>&
+		const std::function<std::vector<uint8_t>(const std::vector<uint8_t>&,
+												 const bool&)>&
 			specific_compress_sequence)
 	{
-		_specific_compress_sequence = specific_compress_sequence;
+		specific_compress_sequence_ = specific_compress_sequence;
 	}
 
 	void messaging_session::set_specific_encrypt_sequence(
-		const function<vector<uint8_t>(const vector<uint8_t>&, const bool&)>&
+		const std::function<std::vector<uint8_t>(const std::vector<uint8_t>&,
+												 const bool&)>&
 			specific_encrypt_sequence)
 	{
-		_specific_encrypt_sequence = specific_encrypt_sequence;
+		specific_encrypt_sequence_ = specific_encrypt_sequence;
 	}
 
 	const connection_conditions messaging_session::get_confirm_status(void)
 	{
-		return _confirm;
+		return confirm_;
 	}
 
 	const session_types messaging_session::get_session_type(void)
 	{
-		return _session_type;
+		return session_type_;
 	}
 
-	const wstring messaging_session::target_id(void) { return _target_id; }
+	const std::string messaging_session::target_id(void) { return target_id_; }
 
-	const wstring messaging_session::target_sub_id(void)
+	const std::string messaging_session::target_sub_id(void)
 	{
-		return _target_sub_id;
+		return target_sub_id_;
 	}
 
 	void messaging_session::start(
 		const bool& encrypt_mode,
 		const bool& compress_mode,
 		const unsigned short& compress_block_size,
-		const vector<session_types>& possible_session_types,
+		const std::vector<session_types>& possible_session_types,
 		const unsigned short& high_priority,
 		const unsigned short& normal_priority,
 		const unsigned short& low_priority,
@@ -229,58 +233,61 @@ namespace network
 	{
 		stop();
 
-		_encrypt_mode = encrypt_mode;
-		_compress_mode = compress_mode;
-		_compress_block_size = compress_block_size;
+		encrypt_mode_ = encrypt_mode;
+		compress_mode_ = compress_mode;
+		compress_block_size_ = compress_block_size;
 		_drop_connection_time = drop_connection_time;
 		_possible_session_types = possible_session_types;
 
-		_confirm = connection_conditions::waiting;
+		confirm_ = connection_conditions::waiting;
 
-		_thread_pool = make_shared<threads::thread_pool>(L"messaging_session");
-		_thread_pool->append(make_shared<thread_worker>(priorities::top), true);
+		_thread_pool
+			= std::make_shared<threads::thread_pool>("messaging_session");
+		_thread_pool->append(std::make_shared<thread_worker>(priorities::top),
+							 true);
 		for (unsigned short high = 0; high < high_priority; ++high)
 		{
-			_thread_pool->append(
-				make_shared<thread_worker>(
-					priorities::high,
-					vector<priorities>{ priorities::normal, priorities::low }),
-				true);
+			_thread_pool->append(std::make_shared<thread_worker>(
+									 priorities::high,
+									 std::vector<priorities>{
+										 priorities::normal, priorities::low }),
+								 true);
 		}
 		for (unsigned short normal = 0; normal < normal_priority; ++normal)
 		{
-			_thread_pool->append(
-				make_shared<thread_worker>(
-					priorities::normal,
-					vector<priorities>{ priorities::high, priorities::low }),
-				true);
+			_thread_pool->append(std::make_shared<thread_worker>(
+									 priorities::normal,
+									 std::vector<priorities>{
+										 priorities::high, priorities::low }),
+								 true);
 		}
 		for (unsigned short low = 0; low < low_priority; ++low)
 		{
 			_thread_pool->append(
-				make_shared<thread_worker>(
+				std::make_shared<thread_worker>(
 					priorities::low,
-					vector<priorities>{ priorities::high, priorities::normal }),
+					std::vector<priorities>{ priorities::high,
+											 priorities::normal }),
 				true);
 		}
 
-		read_start_code(_socket);
+		read_start_code(socket_);
 
 		logger::handle().write(
 			logging_level::information,
-			fmt::format(L"started session: {}:{}",
-						converter::to_wstring(
-							_socket->remote_endpoint().address().to_string()),
-						_socket->remote_endpoint().port()));
+			fmt::format("started session: {}:{}",
+						converter::to_string(
+							socket_->remote_endpoint().address().to_string()),
+						socket_->remote_endpoint().port()));
 
-		_thread_pool->push(make_shared<job>(
+		_thread_pool->push(std::make_shared<job>(
 			priorities::low,
-			bind(&messaging_session::check_confirm_condition, this)));
+			std::bind(&messaging_session::check_confirm_condition, this)));
 	}
 
 	void messaging_session::stop(void)
 	{
-		_confirm = connection_conditions::expired;
+		confirm_ = connection_conditions::expired;
 
 		if (_thread_pool != nullptr)
 		{
@@ -291,44 +298,45 @@ namespace network
 
 	void messaging_session::echo(void)
 	{
-		shared_ptr<container::value_container> container
-			= make_shared<container::value_container>(
-				_source_id, _source_sub_id, _target_id, _target_sub_id, L"echo",
-				vector<shared_ptr<container::value>>{});
+		std::shared_ptr<container::value_container> container
+			= std::make_shared<container::value_container>(
+				source_id_, source_sub_id_, target_id_, target_sub_id_, "echo",
+				std::vector<std::shared_ptr<container::value>>{});
 
 		send(container);
 	}
 
-	bool messaging_session::send(shared_ptr<container::value_container> message)
+	bool messaging_session::send(
+		std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
 			return false;
 		}
 
-		if (!_bridge_line && message->target_id() != _target_id
+		if (!bridge_line_ && message->target_id() != target_id_
 			&& !contained_snipping_target(message->target_id()))
 		{
 			return false;
 		}
 
-		if (!_bridge_line && !contained_snipping_target(message->target_id())
+		if (!bridge_line_ && !contained_snipping_target(message->target_id())
 			&& !message->target_sub_id().empty()
-			&& message->target_sub_id() != _target_sub_id)
+			&& message->target_sub_id() != target_sub_id_)
 		{
 			return false;
 		}
 
 		if (message->source_id().empty())
 		{
-			message->set_source(_source_id, _source_sub_id);
+			message->set_source(source_id_, source_sub_id_);
 		}
 
 		auto serialize = message->serialize();
 		auto serialize_array = converter::to_array(serialize);
 
 		logger::handle().write(logging_level::packet,
-							   fmt::format(L"send: {}", serialize));
+							   fmt::format("send: {}", serialize));
 
 		send_packet_job(serialize_array);
 
@@ -336,123 +344,123 @@ namespace network
 	}
 
 	void messaging_session::send_files(
-		shared_ptr<container::value_container> message)
+		std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
 			return;
 		}
 
-		if (_session_type != session_types::file_line)
+		if (session_type_ != session_types::file_line)
 		{
 			return;
 		}
 
-		if (_target_id != message->source_id()
-			&& _target_sub_id != message->source_sub_id())
+		if (target_id_ != message->source_id()
+			&& target_sub_id_ != message->source_sub_id())
 		{
 			return;
 		}
 
 		if (message->source_id().empty())
 		{
-			message->set_source(_source_id, _source_sub_id);
+			message->set_source(source_id_, source_sub_id_);
 		}
 
-		shared_ptr<container::value_container> container = message->copy(false);
+		std::shared_ptr<container::value_container> container
+			= message->copy(false);
 		container->swap_header();
 		container->set_target(
-			message->get_value(L"gateway_source_id")->to_string(),
-			message->get_value(L"gateway_source_sub_id")->to_string());
-		container->set_message_type(L"request_files");
+			message->get_value("gateway_source_id")->to_string(),
+			message->get_value("gateway_source_sub_id")->to_string());
+		container->set_message_type("request_files");
 
-		vector<shared_ptr<container::value>> files
-			= message->value_array(L"file");
+		std::vector<std::shared_ptr<container::value>> files
+			= message->value_array("file");
 		for (auto& file : files)
 		{
-			container << make_shared<container::string_value>(
-				L"indication_id",
-				message->get_value(L"indication_id")->to_string());
-			container << make_shared<container::string_value>(
-				L"source", (*file)[L"source"]->to_string());
-			container << make_shared<container::string_value>(
-				L"target", (*file)[L"target"]->to_string());
+			container << std::make_shared<container::string_value>(
+				"indication_id",
+				message->get_value("indication_id")->to_string());
+			container << std::make_shared<container::string_value>(
+				"source", (*file)["source"]->to_string());
+			container << std::make_shared<container::string_value>(
+				"target", (*file)["target"]->to_string());
 
 			send_file_job(container->serialize_array());
 			container->clear_value();
 		}
 	}
 
-	void messaging_session::send_binary(const wstring& target_id,
-										const wstring& target_sub_id,
-										const vector<uint8_t>& data)
+	void messaging_session::send_binary(const std::string& target_id,
+										const std::string& target_sub_id,
+										const std::vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
 			return;
 		}
 
-		if (_session_type != session_types::binary_line)
+		if (session_type_ != session_types::binary_line)
 		{
 			return;
 		}
 
-		if (!_bridge_line && target_id != _target_id)
+		if (!bridge_line_ && target_id != target_id_)
 		{
 			return;
 		}
 
-		if (!_bridge_line && !target_sub_id.empty()
-			&& target_sub_id != _target_sub_id)
+		if (!bridge_line_ && !target_sub_id.empty()
+			&& target_sub_id != target_sub_id_)
 		{
 			return;
 		}
 
-		vector<uint8_t> result;
-		combiner::append(result, converter::to_array(_source_id));
-		combiner::append(result, converter::to_array(_source_sub_id));
+		std::vector<uint8_t> result;
+		combiner::append(result, converter::to_array(source_id_));
+		combiner::append(result, converter::to_array(source_sub_id_));
 		combiner::append(result, converter::to_array(target_id));
 		combiner::append(result, converter::to_array(target_sub_id));
 		combiner::append(result, data);
 
 		logger::handle().write(
 			logging_level::packet,
-			fmt::format(
-				L"send binary: source[{}:{}] -> target[{}:{}], {} bytes",
-				_source_id, _source_sub_id, target_id, target_sub_id,
-				data.size()));
+			fmt::format("send binary: source[{}:{}] -> target[{}:{}], {} bytes",
+						source_id_, source_sub_id_, target_id, target_sub_id,
+						data.size()));
 
 		send_binary_job(result);
 	}
 
-	void messaging_session::send_binary(const wstring& source_id,
-										const wstring& source_sub_id,
-										const wstring& target_id,
-										const wstring& target_sub_id,
-										const vector<uint8_t>& data)
+	void messaging_session::send_binary(const std::string& source_id,
+										const std::string& source_sub_id,
+										const std::string& target_id,
+										const std::string& target_sub_id,
+										const std::vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
 			return;
 		}
 
-		if (_session_type != session_types::binary_line)
+		if (session_type_ != session_types::binary_line)
 		{
 			return;
 		}
 
-		if (!_bridge_line && target_id != _target_id)
+		if (!bridge_line_ && target_id != target_id_)
 		{
 			return;
 		}
 
-		if (!_bridge_line && !target_sub_id.empty()
-			&& target_id != _target_sub_id)
+		if (!bridge_line_ && !target_sub_id.empty()
+			&& target_id != target_sub_id_)
 		{
 			return;
 		}
 
-		vector<uint8_t> result;
+		std::vector<uint8_t> result;
 		combiner::append(result, converter::to_array(source_id));
 		combiner::append(result, converter::to_array(source_sub_id));
 		combiner::append(result, converter::to_array(target_id));
@@ -461,10 +469,9 @@ namespace network
 
 		logger::handle().write(
 			logging_level::packet,
-			fmt::format(
-				L"send binary: source[{}:{}] -> target[{}:{}], {} bytes",
-				source_id, source_sub_id, target_id, target_sub_id,
-				data.size()));
+			fmt::format("send binary: source[{}:{}] -> target[{}:{}], {} bytes",
+						source_id, source_sub_id, target_id, target_sub_id,
+						data.size()));
 
 		send_binary_job(result);
 	}
@@ -473,18 +480,19 @@ namespace network
 	{
 		stop();
 
-		if (_connection != nullptr)
+		if (connection_ != nullptr)
 		{
-			auto result = async(launch::async, _connection, get_ptr(), false);
+			auto result
+				= async(std::launch::async, connection_, get_ptr(), false);
 		}
 	}
 
 	bool messaging_session::contained_snipping_target(
-		const wstring& snipping_target)
+		const std::string& snipping_target)
 	{
-		auto target = find(_snipping_targets.begin(), _snipping_targets.end(),
+		auto target = find(snipping_targets_.begin(), snipping_targets_.end(),
 						   snipping_target);
-		if (target == _snipping_targets.end())
+		if (target == snipping_targets_.end())
 		{
 			return false;
 		}
@@ -496,158 +504,157 @@ namespace network
 	{
 		for (unsigned short index = 0; index < _drop_connection_time; ++index)
 		{
-			if (_confirm != connection_conditions::waiting)
+			if (confirm_ != connection_conditions::waiting)
 			{
 				return;
 			}
 
-			this_thread::sleep_for(chrono::seconds(1));
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 		}
 
-		if (_confirm != connection_conditions::waiting)
+		if (confirm_ != connection_conditions::waiting)
 		{
 			return;
 		}
 
-		_confirm = connection_conditions::expired;
+		confirm_ = connection_conditions::expired;
 		logger::handle().write(
 			logging_level::error,
-			fmt::format(L"expired line: {}[{}]", _source_id, _source_sub_id));
+			fmt::format("expired line: {}[{}]", source_id_, source_sub_id_));
 
 		disconnected();
 	}
 
 	void messaging_session::send_auto_echo(void)
 	{
-		if (!_auto_echo)
+		if (!auto_echo_)
 		{
 			return;
 		}
 
-		for (unsigned short index = 0; index < _auto_echo_interval_seconds;
+		for (unsigned short index = 0; index < auto_echo_interval_seconds_;
 			 ++index)
 		{
-			if (_confirm != connection_conditions::confirmed)
+			if (confirm_ != connection_conditions::confirmed)
 			{
 				return;
 			}
 
-			this_thread::sleep_for(chrono::seconds(1));
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 		}
 
 		echo();
 
 		if (_thread_pool != nullptr)
 		{
-			_thread_pool->push(make_shared<job>(
+			_thread_pool->push(std::make_shared<job>(
 				priorities::low,
-				bind(&messaging_session::send_auto_echo, this)));
+				std::bind(&messaging_session::send_auto_echo, this)));
 		}
 	}
 
-	void messaging_session::send_packet(const vector<uint8_t>& data)
+	void messaging_session::send_packet(const std::vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
 			return;
 		}
 
-		send_on_tcp(_socket, data_modes::packet_mode, data);
+		send_on_tcp(socket_, data_modes::packet_mode, data);
 	}
 
-	void messaging_session::send_file_packet(const vector<uint8_t>& data)
+	void messaging_session::send_file_packet(const std::vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
 			return;
 		}
 
-		send_on_tcp(_socket, data_modes::file_mode, data);
+		send_on_tcp(socket_, data_modes::file_mode, data);
 	}
 
-	void messaging_session::send_binary_packet(const vector<uint8_t>& data)
+	void messaging_session::send_binary_packet(const std::vector<uint8_t>& data)
 	{
 		if (data.empty())
 		{
 			return;
 		}
 
-		send_on_tcp(_socket, data_modes::binary_mode, data);
+		send_on_tcp(socket_, data_modes::binary_mode, data);
 	}
 
 	void messaging_session::normal_message(
-		shared_ptr<container::value_container> message)
+		std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
 			return;
 		}
 
-		if (_confirm != connection_conditions::confirmed)
+		if (confirm_ != connection_conditions::confirmed)
 		{
 			return;
 		}
 
-		if (_received_message)
+		if (received_message_)
 		{
-			auto result = async(launch::async, _received_message, message);
+			auto result = async(std::launch::async, received_message_, message);
 		}
 	}
 
 	void messaging_session::connection_message(
-		shared_ptr<container::value_container> message)
+		std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
 			logger::handle().write(
 				logging_level::error,
-				L"cannot parse connection message with empty message");
+				"cannot parse connection message with empty message");
 
 			return;
 		}
 
-		_target_id = message->source_id();
-		_target_sub_id
-			= fmt::format(L"{}:{}",
-						  converter::to_wstring(
-							  _socket->remote_endpoint().address().to_string()),
-						  _socket->remote_endpoint().port());
+		target_id_ = message->source_id();
+		target_sub_id_
+			= fmt::format("{}:{}",
+						  converter::to_string(
+							  socket_->remote_endpoint().address().to_string()),
+						  socket_->remote_endpoint().port());
 
-		_session_type
-			= (session_types)message->get_value(L"session_type")->to_short();
-		_bridge_line = message->get_value(L"bridge_mode")->to_boolean();
-		if (_session_type != session_types::binary_line)
+		session_type_
+			= (session_types)message->get_value("session_type")->to_short();
+		bridge_line_ = message->get_value("bridge_mode")->to_boolean();
+		if (session_type_ != session_types::binary_line)
 		{
-			_auto_echo = message->get_value(L"auto_echo")->to_boolean();
-			_auto_echo_interval_seconds
-				= message->get_value(L"auto_echo_interval_seconds")
-					  ->to_ushort();
+			auto_echo_ = message->get_value("auto_echo")->to_boolean();
+			auto_echo_interval_seconds_
+				= message->get_value("auto_echo_interval_seconds")->to_ushort();
 
 			logger::handle().write(
 				logging_level::sequence,
-				fmt::format(L"auto echo mode: {}, interval: {}", _auto_echo,
-							_auto_echo_interval_seconds));
+				fmt::format("auto echo mode: {}, interval: {}", auto_echo_,
+							auto_echo_interval_seconds_));
 		}
 
 		auto iter = find_if(
 			_possible_session_types.begin(), _possible_session_types.end(),
-			[&](const session_types& type) { return type == _session_type; });
+			[&](const session_types& type) { return type == session_type_; });
 		if (iter == _possible_session_types.end())
 		{
-			_confirm = connection_conditions::expired;
+			confirm_ = connection_conditions::expired;
 			logger::handle().write(
 				logging_level::error,
-				L"expired this line = \"cannot accept unknown session type\"");
+				"expired this line = \"cannot accept unknown session type\"");
 
 			return;
 		}
 
-		if (_source_id == _target_id)
+		if (source_id_ == target_id_)
 		{
-			_confirm = connection_conditions::expired;
+			confirm_ = connection_conditions::expired;
 			logger::handle().write(
 				logging_level::error,
-				L"expired this line = \"cannot use same id with server\"");
+				"expired this line = \"cannot use same id with server\"");
 
 			return;
 		}
@@ -655,13 +662,13 @@ namespace network
 		if (!_acceptable_target_ids.empty())
 		{
 			auto target = find(_acceptable_target_ids.begin(),
-							   _acceptable_target_ids.end(), _target_id);
+							   _acceptable_target_ids.end(), target_id_);
 			if (target == _acceptable_target_ids.end())
 			{
-				_confirm = connection_conditions::expired;
+				confirm_ = connection_conditions::expired;
 				logger::handle().write(logging_level::error,
-									   L"expired this line = \"cannot connect "
-									   L"with unknown id on server\"");
+									   "expired this line = \"cannot connect "
+									   "with unknown id on server\"");
 
 				return;
 			}
@@ -670,13 +677,13 @@ namespace network
 		if (!_ignore_target_ids.empty())
 		{
 			auto target = find(_ignore_target_ids.begin(),
-							   _ignore_target_ids.end(), _target_id);
+							   _ignore_target_ids.end(), target_id_);
 			if (target != _ignore_target_ids.end())
 			{
-				_confirm = connection_conditions::expired;
+				confirm_ = connection_conditions::expired;
 				logger::handle().write(logging_level::error,
-									   L"expired this line = \"cannot connect "
-									   L"with ignored id on server\"");
+									   "expired this line = \"cannot connect "
+									   "with ignored id on server\"");
 
 				return;
 			}
@@ -684,43 +691,43 @@ namespace network
 
 		if (_kill_code)
 		{
-			_confirm = connection_conditions::expired;
+			confirm_ = connection_conditions::expired;
 			logger::handle().write(logging_level::error,
-								   L"expired this line = \"set kill code\"");
+								   "expired this line = \"set kill code\"");
 
 			return;
 		}
 
 		// check connection key
-		if (!same_key_check(message->get_value(L"connection_key")))
+		if (!same_key_check(message->get_value("connection_key")))
 		{
-			_confirm = connection_conditions::expired;
+			confirm_ = connection_conditions::expired;
 
 			return;
 		}
 
 		logger::handle().write(logging_level::sequence,
-							   L"confirmed connection key");
+							   "confirmed connection key");
 
 		// compare both session id an client id
 		if (!same_id_check())
 		{
-			_confirm = connection_conditions::expired;
+			confirm_ = connection_conditions::expired;
 
 			return;
 		}
 
-		logger::handle().write(logging_level::sequence, L"confirmed client id");
+		logger::handle().write(logging_level::sequence, "confirmed client id");
 
 		generate_key();
 
 		// check snipping target list
-		shared_ptr<value> acceptable_snipping_targets
-			= make_shared<container::container_value>(L"snipping_targets");
+		std::shared_ptr<value> acceptable_snipping_targets
+			= std::make_shared<container::container_value>("snipping_targets");
 
-		_snipping_targets.clear();
-		vector<shared_ptr<value>> snipping_targets
-			= message->get_value(L"snipping_targets")->children();
+		snipping_targets_.clear();
+		std::vector<std::shared_ptr<value>> snipping_targets
+			= message->get_value("snipping_targets")->children();
 		for (auto& snipping_target : snipping_targets)
 		{
 			if (snipping_target == nullptr)
@@ -728,7 +735,7 @@ namespace network
 				continue;
 			}
 
-			if (snipping_target->name() != L"snipping_target")
+			if (snipping_target->name() != "snipping_target")
 			{
 				continue;
 			}
@@ -741,82 +748,87 @@ namespace network
 				continue;
 			}
 
-			_snipping_targets.push_back(snipping_target->to_string());
+			snipping_targets_.push_back(snipping_target->to_string());
 
 			acceptable_snipping_targets->add(
-				make_shared<container::string_value>(
-					L"snipping_target", snipping_target->to_string()));
+				std::make_shared<container::string_value>(
+					"snipping_target", snipping_target->to_string()));
 		}
 
-		vector<shared_ptr<container::value>> temp;
-		temp.push_back(make_shared<container::bool_value>(L"confirm", true));
+		std::vector<std::shared_ptr<container::value>> temp;
 		temp.push_back(
-			make_shared<container::bool_value>(L"encrypt_mode", _encrypt_mode));
+			std::make_shared<container::bool_value>("confirm", true));
+		temp.push_back(std::make_shared<container::bool_value>("encrypt_mode",
+															   encrypt_mode_));
 		temp.push_back(acceptable_snipping_targets);
-		if (_encrypt_mode)
+		if (encrypt_mode_)
 		{
-			temp.push_back(make_shared<container::string_value>(L"key", _key));
-			temp.push_back(make_shared<container::string_value>(L"iv", _iv));
+			temp.push_back(
+				std::make_shared<container::string_value>("key", key_));
+			temp.push_back(
+				std::make_shared<container::string_value>("iv", iv_));
 		}
 
-		shared_ptr<container::value_container> container
-			= make_shared<container::value_container>(
-				_source_id, _source_sub_id, _target_id, _target_sub_id,
-				L"confirm_connection", temp);
+		std::shared_ptr<container::value_container> container
+			= std::make_shared<container::value_container>(
+				source_id_, source_sub_id_, target_id_, target_sub_id_,
+				"confirm_connection", temp);
 
 		auto serialize = container->serialize();
 		auto serialize_array = converter::to_array(serialize);
 
 #ifdef _DEBUG
 		logger::handle().write(logging_level::packet,
-							   fmt::format(L"send: {}", serialize));
+							   fmt::format("send: {}", serialize));
 #endif
 
 		send_packet_job(serialize_array);
 
-		_confirm = connection_conditions::confirmed;
+		confirm_ = connection_conditions::confirmed;
 
-		if (_connection != nullptr)
+		if (connection_ != nullptr)
 		{
-			auto result = async(launch::async, _connection, get_ptr(), true);
+			auto result
+				= async(std::launch::async, connection_, get_ptr(), true);
 		}
 
 		if (_thread_pool != nullptr)
 		{
-			_thread_pool->push(make_shared<job>(
+			_thread_pool->push(std::make_shared<job>(
 				priorities::low,
-				bind(&messaging_session::send_auto_echo, this)));
+				std::bind(&messaging_session::send_auto_echo, this)));
 		}
 	}
 
 	void messaging_session::request_files(
-		shared_ptr<container::value_container> message)
+		std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
 			return;
 		}
 
-		if (_confirm != connection_conditions::confirmed)
+		if (confirm_ != connection_conditions::confirmed)
 		{
 			return;
 		}
 
-		shared_ptr<container::value_container> container = message->copy(false);
+		std::shared_ptr<container::value_container> container
+			= message->copy(false);
 		container->swap_header();
-		container->set_message_type(L"request_file");
+		container->set_message_type("request_file");
 
-		vector<shared_ptr<container::value>> files
-			= message->value_array(L"file");
+		std::vector<std::shared_ptr<container::value>> files
+			= message->value_array("file");
 		for (auto& file : files)
 		{
-			container << make_shared<container::string_value>(
-				L"indication_id",
-				message->get_value(L"indication_id")->to_string());
-			container << make_shared<container::string_value>(
-				L"source", (*file)[L"source"]->to_string());
-			container << make_shared<container::string_value>(
-				L"target", (*file)[L"target"]->to_string());
+			container << std::make_shared<container::string_value>(
+				"indication_id",
+				message->get_value("indication_id")->to_string());
+			container << std::make_shared<container::string_value>(
+				"source", (*file)["source"]->to_string());
+			container << std::make_shared<container::string_value>(
+				"target", (*file)["target"]->to_string());
 
 			send_file_job(container->serialize_array());
 			container->clear_value();
@@ -824,77 +836,79 @@ namespace network
 	}
 
 	void messaging_session::echo_message(
-		shared_ptr<container::value_container> message)
+		std::shared_ptr<container::value_container> message)
 	{
 		if (message == nullptr)
 		{
 			return;
 		}
 
-		if (_confirm != connection_conditions::confirmed)
+		if (confirm_ != connection_conditions::confirmed)
 		{
 			return;
 		}
 
-		vector<shared_ptr<value>> response = (*message)[L"response"];
+		std::vector<std::shared_ptr<value>> response = (*message)["response"];
 		if (!response.empty())
 		{
 			logger::handle().write(
 				logging_level::sequence,
-				fmt::format(L"received echo: {}", response[0]->to_boolean()));
+				fmt::format("received echo: {}", response[0]->to_boolean()));
 
 			return;
 		}
 
-		shared_ptr<container::value_container> container = message->copy(false);
+		std::shared_ptr<container::value_container> container
+			= message->copy(false);
 		container->swap_header();
 
-		container << make_shared<bool_value>(L"response", true);
+		container << std::make_shared<bool_value>("response", true);
 
 		send_packet_job(converter::to_array(container->serialize()));
 	}
 
 	void messaging_session::generate_key(void)
 	{
-		if (!_encrypt_mode)
+		if (!encrypt_mode_)
 		{
-			_key = L"";
-			_iv = L"";
+			key_ = "";
+			iv_ = "";
 
 			return;
 		}
 
 		logger::handle().write(logging_level::sequence,
-							   L"attempt to generate encrypt key");
+							   "attempt to generate encrypt key");
 
 		auto [key, iv] = cryptor::create_key();
-		_key = key;
-		_iv = iv;
+		key_ = key;
+		iv_ = iv;
 
 		logger::handle().write(logging_level::sequence,
-							   L"generated encrypt key");
+							   "generated encrypt key");
 	}
 
-	bool messaging_session::same_key_check(shared_ptr<container::value> key)
+	bool messaging_session::same_key_check(
+		std::shared_ptr<container::value> key)
 	{
-		if (key != nullptr && _connection_key == key->to_string())
+		if (key != nullptr && connection_key_ == key->to_string())
 		{
 			return true;
 		}
 
 		logger::handle().write(
 			logging_level::information,
-			L"ignored this line = \"unknown connection key\"");
+			"ignored this line = \"unknown connection key\"");
 
-		shared_ptr<container::value_container> container
-			= make_shared<container::value_container>(
-				_source_id, _source_sub_id, _target_id, _target_sub_id,
-				L"confirm_connection",
-				vector<shared_ptr<container::value>>{
-					make_shared<container::bool_value>(L"confirm", false),
-					make_shared<container::string_value>(
-						L"reason",
-						L"ignored this line = \"unknown connection key\"") });
+		std::shared_ptr<container::value_container> container
+			= std::make_shared<container::value_container>(
+				source_id_, source_sub_id_, target_id_, target_sub_id_,
+				"confirm_connection",
+				std::vector<std::shared_ptr<container::value>>{
+					std::make_shared<container::bool_value>("confirm", false),
+					std::make_shared<container::string_value>(
+						"reason",
+						"ignored this line = \"unknown connection key\"") });
 
 		send(container);
 
@@ -903,24 +917,24 @@ namespace network
 
 	bool messaging_session::same_id_check(void)
 	{
-		if (_target_id != _source_id)
+		if (target_id_ != source_id_)
 		{
 			return true;
 		}
 
 		logger::handle().write(
 			logging_level::information,
-			L"ignored this line = \"cannot use same id with server\"");
+			"ignored this line = \"cannot use same id with server\"");
 
-		shared_ptr<container::value_container> container
-			= make_shared<container::value_container>(
-				_source_id, _source_sub_id, _target_id, _target_sub_id,
-				L"confirm_connection",
-				vector<shared_ptr<container::value>>{
-					make_shared<container::bool_value>(L"confirm", false),
-					make_shared<container::string_value>(
-						L"reason", L"ignored this line = \"cannot use same id "
-								   L"with server\"") });
+		std::shared_ptr<container::value_container> container
+			= std::make_shared<container::value_container>(
+				source_id_, source_sub_id_, target_id_, target_sub_id_,
+				"confirm_connection",
+				std::vector<std::shared_ptr<container::value>>{
+					std::make_shared<container::bool_value>("confirm", false),
+					std::make_shared<container::string_value>(
+						"reason", "ignored this line = \"cannot use same id "
+								  "with server\"") });
 
 		send(container);
 
