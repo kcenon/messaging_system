@@ -58,27 +58,27 @@ namespace logging
 		, _locale(std::locale(""))
 		, _backup_notification(nullptr)
 	{
-		_log_datas.insert(
+		log_datas_.insert(
 			{ logging_level::exception,
 			  std::bind(&logger::exception_log, this, std::placeholders::_1,
 						std::placeholders::_2) });
-		_log_datas.insert(
+		log_datas_.insert(
 			{ logging_level::error,
 			  std::bind(&logger::error_log, this, std::placeholders::_1,
 						std::placeholders::_2) });
-		_log_datas.insert(
+		log_datas_.insert(
 			{ logging_level::information,
 			  std::bind(&logger::information_log, this, std::placeholders::_1,
 						std::placeholders::_2) });
-		_log_datas.insert(
+		log_datas_.insert(
 			{ logging_level::sequence,
 			  std::bind(&logger::sequence_log, this, std::placeholders::_1,
 						std::placeholders::_2) });
-		_log_datas.insert(
+		log_datas_.insert(
 			{ logging_level::parameter,
 			  std::bind(&logger::parameter_log, this, std::placeholders::_1,
 						std::placeholders::_2) });
-		_log_datas.insert(
+		log_datas_.insert(
 			{ logging_level::packet,
 			  std::bind(&logger::packet_log, this, std::placeholders::_1,
 						std::placeholders::_2) });
@@ -324,8 +324,8 @@ namespace logging
 			source = "";
 			for (auto& buffer : buffers)
 			{
-				auto iterator = _log_datas.find(std::get<0>(buffer));
-				if (iterator == _log_datas.end())
+				auto iterator = log_datas_.find(std::get<0>(buffer));
+				if (iterator == log_datas_.end())
 				{
 					continue;
 				}

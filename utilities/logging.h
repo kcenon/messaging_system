@@ -55,77 +55,72 @@ namespace logging
 	class logger
 	{
 	private:
-		logger(void);
+		logger();
 
 	public:
-		~logger(void);
+		~logger();
 
 	public:
-		bool start(const std::string& store_log_file_name = "log",
+		auto start(const std::string& store_log_file_name = "log",
 				   std::locale target_locale = std::locale(""),
 				   const std::string& store_log_extention = "log",
 				   const std::string& store_log_root_path = "",
-				   const bool& append_date_on_file_name = true);
-		bool stop(void);
+				   const bool& append_date_on_file_name = true) -> bool;
+		auto stop() -> bool;
 
 	public:
-		void set_target_level(const logging_level& target_level);
-		void set_target_level(
-			const std::vector<logging_level>& write_console_levels);
-		void set_write_console(const logging_styles& logging_style
-							   = logging_styles::file_only);
-		void set_write_date(const bool& write_date);
-		void set_limit_log_file_size(const size_t& limit_log_file_size);
-		void set_backup_notification(
-			const std::function<void(const std::string&)>& notification);
+		auto set_target_level(const logging_level& target_level) -> void;
+		auto set_target_level(
+			const std::vector<logging_level>& write_console_levels) -> void;
+		auto set_write_console(const logging_styles& logging_style
+							   = logging_styles::file_only) -> void;
+		auto set_write_date(const bool& write_date) -> void;
+		auto set_limit_log_file_size(const size_t& limit_log_file_size) -> void;
+		auto set_backup_notification(
+			const std::function<void(const std::string&)>& notification)
+			-> void;
 
 	public:
-		std::chrono::time_point<std::chrono::high_resolution_clock>
-		chrono_start(void);
-		void write(const logging_level& target_level,
+		auto chrono_start()
+			-> std::chrono::time_point<std::chrono::high_resolution_clock>;
+		auto write(const logging_level& target_level,
 				   const std::string& log_data,
 				   const std::optional<std::chrono::time_point<
 					   std::chrono::high_resolution_clock>>& time
-				   = std::nullopt);
-		void write(const logging_level& target_level,
+				   = std::nullopt) -> void;
+		auto write(const logging_level& target_level,
 				   const std::vector<uint8_t>& log_data,
 				   const std::optional<std::chrono::time_point<
 					   std::chrono::high_resolution_clock>>& time
-				   = std::nullopt);
+				   = std::nullopt) -> void;
 
 	protected:
-		void run(void);
+		auto run() -> void;
 
 	private:
-		void set_log_flag(const std::string& flag);
-		void backup_log(const std::string& target_path,
-						const std::string& backup_path);
+		auto set_log_flag(const std::string& flag) -> void;
+		auto backup_log(const std::string& target_path,
+						const std::string& backup_path) -> void;
 
 	private:
-		std::string exception_log(
-			const std::chrono::system_clock::time_point& time,
-			const std::string& data);
-		std::string error_log(const std::chrono::system_clock::time_point& time,
-							  const std::string& data);
-		std::string information_log(
-			const std::chrono::system_clock::time_point& time,
-			const std::string& data);
-		std::string sequence_log(
-			const std::chrono::system_clock::time_point& time,
-			const std::string& data);
-		std::string parameter_log(
-			const std::chrono::system_clock::time_point& time,
-			const std::string& data);
-		std::string packet_log(
-			const std::chrono::system_clock::time_point& time,
-			const std::string& data);
-		std::string make_log_string(
-			const logging_level& target_level,
-			const std::chrono::system_clock::time_point& time,
-			const std::string& data,
-			const std::string& type,
-			const std::string& time_color,
-			const std::string& type_color);
+		auto exception_log(const std::chrono::system_clock::time_point& time,
+						   const std::string& data) -> std::string;
+		auto error_log(const std::chrono::system_clock::time_point& time,
+					   const std::string& data) -> std::string;
+		auto information_log(const std::chrono::system_clock::time_point& time,
+							 const std::string& data) -> std::string;
+		auto sequence_log(const std::chrono::system_clock::time_point& time,
+						  const std::string& data) -> std::string;
+		auto parameter_log(const std::chrono::system_clock::time_point& time,
+						   const std::string& data) -> std::string;
+		auto packet_log(const std::chrono::system_clock::time_point& time,
+						const std::string& data) -> std::string;
+		auto make_log_string(const logging_level& target_level,
+							 const std::chrono::system_clock::time_point& time,
+							 const std::string& data,
+							 const std::string& type,
+							 const std::string& time_color,
+							 const std::string& type_color) -> std::string;
 
 	private:
 		std::vector<std::tuple<logging_level,
@@ -156,11 +151,11 @@ namespace logging
 				 std::function<std::string(
 					 const std::chrono::system_clock::time_point&,
 					 const std::string&)>>
-			_log_datas;
+			log_datas_;
 
 #pragma region singleton
 	public:
-		static logger& handle(void);
+		static auto handle() -> logger&;
 
 	private:
 		static std::unique_ptr<logger> handle_;
