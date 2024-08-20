@@ -13,6 +13,18 @@ IF(BUILD_SHARED_LIBS)
     SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY "../../lib")
 ENDIF()
 
+include(FetchContent)
+
+FetchContent_Declare(
+  vcpkg
+  GIT_REPOSITORY https://github.com/microsoft/vcpkg.git
+  GIT_TAG 2024.07.12
+)
+
+FetchContent_MakeAvailable(vcpkg)
+
+set(CMAKE_TOOLCHAIN_FILE "${vcpkg_SOURCE_DIR}/scripts/buildsystems/vcpkg.cmake")
+
 # set the project name
 PROJECT(${PROJECT_NAME} VERSION 1.0.0.0)
 
