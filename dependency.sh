@@ -11,7 +11,7 @@ elif [ "$(uname)" == "Linux" ]; then
     apt-get upgrade -y
 
     apt-get install curl zip unzip tar ninja-build -y
-    apt-get install swig pkg-config -y
+    apt-get install swig pkg-config bison flex -y
     apt-get install autoconf automake autoconf-archive -y
 
     if [ $(egrep "^(VERSION_ID)=" /etc/os-release) != "VERSION_ID=\"22.04\"" ]; then
