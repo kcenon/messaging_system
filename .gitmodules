@@ -1,4 +1,0 @@
-[submodule "thread_system"]
-	path = thread_system
-	url = https://github.com/kcenon/thread_system.git
-	branch = main

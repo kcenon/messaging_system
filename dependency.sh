@@ -1,41 +1,37 @@
 #!/bin/bash
-if [ "$(uname)" == "Darwin" ]; then
-    brew install pkg-config autoconf cmake automake autoconf-archive
-elif [ "$(uname)" == "Linux" ]; then
-    apt update
-    apt upgrade -y
 
-    apt install cmake build-essential gdb -y
+pushd .
 
-    apt-get update
-    apt-get upgrade -y
+if [ ! -d "./thread_system" ]; then
+    echo "thread_system directory not found. Initializing submodule..."
+    git submodule add https://your-repository-url/thread_system.git
+    git submodule update --init
+elif [ -z "$(ls -A ./thread_system)" ]; then
+    echo "thread_system directory is empty. Updating submodule..."
+    git submodule update --init
+fi
 
-    apt-get install curl zip unzip tar ninja-build -y
-    apt-get install swig pkg-config bison flex -y
-    apt-get install autoconf automake autoconf-archive -y
-
-    if [ $(egrep "^(VERSION_ID)=" /etc/os-release) != "VERSION_ID=\"22.04\"" ]; then
-        apt-get install python3-pip -y
-        pip3 install cmake
-    fi
-
-    if [ $(uname -m) == "aarch64" ]; then
-        export VCPKG_FORCE_SYSTEM_BINARIES=arm
+if [ ! -z "$1" ]; then
+    if [ "$1" == "--submodule" ]; then
+        echo "Updating submodules to latest remote version..."
+        git submodule update --remote
     fi
 fi
 
-cd ..
-
-if [ ! -d "./vcpkg/" ]; then
-    git clone https://github.com/microsoft/vcpkg.git
+if [ -f "./thread_system/dependency.sh" ]; then
+    /bin/bash ./thread_system/dependency.sh
+else
+    echo "Error: dependency.sh not found in thread_system"
+    exit 1
 fi
 
-cd vcpkg
-
-git pull
-./bootstrap-vcpkg.sh
-./vcpkg integrate install
-./vcpkg upgrade --no-dry-run
-./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest --recurse
-
 cd ..
+if [ -d "./vcpkg" ]; then
+    cd vcpkg
+    ./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest --recurse
+else
+    echo "Error: vcpkg directory not found"
+    exit 1
+fi
+
+popd
