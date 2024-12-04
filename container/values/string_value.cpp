@@ -32,11 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "string_value.h"
 
-#include "converting.h"
+#include "convert_string.h"
 
 namespace container
 {
-	using namespace converting;
+	using namespace utility_module;
 
 	string_value::string_value(void) : value()
 	{
@@ -57,7 +57,13 @@ namespace container
 	{
 		if (!original)
 		{
-			return converter::to_string(data_);
+			auto [data, convert_error] = convert_string::to_string(data_);
+			if (convert_error)
+			{
+				return "";
+			}
+
+			return data.value();
 		}
 
 		return convert_specific_string(data_);

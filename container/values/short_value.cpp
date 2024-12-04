@@ -32,11 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "short_value.h"
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
+#include "formatter.h"
+
+#include <cstring>
 
 namespace container
 {
+	using namespace utility_module;
+
 	short_value::short_value(void) : value()
 	{
 		type_ = value_types::short_value;
@@ -60,6 +63,6 @@ namespace container
 
 	std::string short_value::to_string(const bool&) const
 	{
-		return fmt::format("{}", to_short());
+		return formatter::format("{}", to_short());
 	}
 } // namespace container

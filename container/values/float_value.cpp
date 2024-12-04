@@ -32,11 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "float_value.h"
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
+#include "formatter.h"
+
+#include <cstring>
 
 namespace container
 {
+	using namespace utility_module;
+
 	float_value::float_value(void) : value()
 	{
 		type_ = value_types::float_value;
@@ -60,6 +63,6 @@ namespace container
 
 	std::string float_value::to_string(const bool&) const
 	{
-		return fmt::format("{}", to_float());
+		return formatter::format("{}", to_float());
 	}
 } // namespace container

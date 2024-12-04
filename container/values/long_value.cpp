@@ -32,11 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "long_value.h"
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
+#include "formatter.h"
+
+#include <cstring>
 
 namespace container
 {
+	using namespace utility_module;
+
 	long_value::long_value(void) : value() { type_ = value_types::long_value; }
 
 	long_value::long_value(const std::string& name, const long& value)
@@ -57,6 +60,6 @@ namespace container
 
 	std::string long_value::to_string(const bool&) const
 	{
-		return fmt::format("{}", to_long());
+		return formatter::format("{}", to_long());
 	}
 } // namespace container

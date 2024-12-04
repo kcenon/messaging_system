@@ -32,7 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "value.h"
 
-#include "converting.h"
+#include "formatter.h"
+#include "convert_string.h"
 
 #include "values/bool_value.h"
 #include "values/bytes_value.h"
@@ -51,12 +52,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <sstream>
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
-
 namespace container
 {
-	using namespace converting;
+	using namespace utility_module;
 
 	value::value(void) : name_(""), type_(value_types::null_value), size_(0)
 	{
@@ -298,18 +296,19 @@ namespace container
 
 		if (units_.size() == 0)
 		{
-			fmt::format_to(std::back_inserter(result), "<{0}>{1}</{0}>", name(),
-						   to_string(false));
+			formatter::format_to(std::back_inserter(result), "<{0}>{1}</{0}>",
+								 name(), to_string(false));
 
 			return result;
 		}
 
-		fmt::format_to(std::back_inserter(result), "<{}>", name());
+		formatter::format_to(std::back_inserter(result), "<{}>", name());
 		for (auto& unit : units_)
 		{
-			fmt::format_to(std::back_inserter(result), "{}", unit->to_xml());
+			formatter::format_to(std::back_inserter(result), "{}",
+								 unit->to_xml());
 		}
-		fmt::format_to(std::back_inserter(result), "</{}>", name());
+		formatter::format_to(std::back_inserter(result), "</{}>", name());
 
 		return result;
 	}
@@ -324,29 +323,30 @@ namespace container
 			{
 			case value_types::bytes_value:
 			case value_types::string_value:
-				fmt::format_to(std::back_inserter(result), "\"{}\":\"{}\"",
-							   name(), to_string(false));
+				formatter::format_to(std::back_inserter(result),
+									 "\"{}\":\"{}\"", name(), to_string(false));
 				break;
 			default:
-				fmt::format_to(std::back_inserter(result), "\"{}\":{}", name(),
-							   to_string(false));
+				formatter::format_to(std::back_inserter(result), "\"{}\":{}",
+									 name(), to_string(false));
 				break;
 			}
 
 			return result;
 		}
 
-		fmt::format_to(std::back_inserter(result), "\"{}\":{}", name(), "{");
+		formatter::format_to(std::back_inserter(result), "\"{}\":{}", name(),
+							 "{");
 
 		bool first = true;
 		for (auto& unit : units_)
 		{
-			fmt::format_to(std::back_inserter(result), first ? "{}" : ",{}",
-						   unit->to_json());
+			formatter::format_to(std::back_inserter(result),
+								 first ? "{}" : ",{}", unit->to_json());
 			first = false;
 		}
 
-		fmt::format_to(std::back_inserter(result), "{}", "}");
+		formatter::format_to(std::back_inserter(result), "{}", "}");
 
 		return result;
 	}
@@ -355,12 +355,13 @@ namespace container
 	{
 		std::string result;
 
-		fmt::format_to(std::back_inserter(result), "[{},{},{}];", name(),
-					   convert_value_type(type_), to_string(false));
+		formatter::format_to(std::back_inserter(result), "[{},{},{}];", name(),
+							 convert_value_type(type_), to_string(false));
 
 		for (auto& unit : units_)
 		{
-			fmt::format_to(std::back_inserter(result), "{}", unit->serialize());
+			formatter::format_to(std::back_inserter(result), "{}",
+								 unit->serialize());
 		}
 
 		return result;
@@ -403,23 +404,35 @@ namespace container
 	std::string value::convert_specific_string(
 		const std::vector<uint8_t>& data) const
 	{
-		std::string temp = converter::to_string(data);
-		converter::replace(temp, "</0x0A;>", "\r");
-		converter::replace(temp, "</0x0B;>", "\n");
-		converter::replace(temp, "</0x0C;>", " ");
-		converter::replace(temp, "</0x0D;>", "\t");
+		auto [value, value_error] = convert_string::to_string(data);
+		if (value_error.has_value())
+		{
+			return "";
+		}
+
+		std::string temp = value.value();
+		convert_string::replace(temp, "</0x0A;>", "\r");
+		convert_string::replace(temp, "</0x0B;>", "\n");
+		convert_string::replace(temp, "</0x0C;>", " ");
+		convert_string::replace(temp, "</0x0D;>", "\t");
 
 		return temp;
 	}
 
 	std::vector<uint8_t> value::convert_specific_string(std::string data) const
 	{
-		converter::replace(data, "\r", "</0x0A;>");
-		converter::replace(data, "\n", "</0x0B;>");
-		converter::replace(data, " ", "</0x0C;>");
-		converter::replace(data, "\t", "</0x0D;>");
+		convert_string::replace(data, "\r", "</0x0A;>");
+		convert_string::replace(data, "\n", "</0x0B;>");
+		convert_string::replace(data, " ", "</0x0C;>");
+		convert_string::replace(data, "\t", "</0x0D;>");
 
-		return converter::to_array(data);
+		auto [value, value_error] = convert_string::to_array(data);
+		if (value_error.has_value())
+		{
+			return std::vector<uint8_t>();
+		}
+
+		return value.value();
 	}
 
 	template <typename T> void value::set_data(T data)
@@ -432,14 +445,26 @@ namespace container
 
 	void value::set_byte_string(const std::string& data)
 	{
-		data_ = converter::from_base64(data);
+		auto [value, convert_error] = convert_string::from_base64(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		data_ = value;
 		size_ = data_.size();
 		type_ = value_types::bytes_value;
 	}
 
 	void value::set_string(const std::string& data)
 	{
-		data_ = converter::to_array(data);
+		auto [value, convert_error] = convert_string::to_array(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		data_ = value.value();
 		size_ = data_.size();
 		type_ = value_types::string_value;
 	}
@@ -452,51 +477,111 @@ namespace container
 
 	void value::set_short(const std::string& data)
 	{
-		set_data((short)atoi(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		set_data((short)atoi(utf8.value().c_str()));
 	}
 
 	void value::set_ushort(const std::string& data)
 	{
-		set_data((unsigned short)atoi(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		set_data((unsigned short)atoi(utf8.value().c_str()));
 	}
 
 	void value::set_int(const std::string& data)
 	{
-		set_data((int)atoi(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		set_data((int)atoi(utf8.value().c_str()));
 	}
 
 	void value::set_uint(const std::string& data)
 	{
-		set_data((unsigned int)atoi(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		set_data((unsigned int)atoi(utf8.value().c_str()));
 	}
 
 	void value::set_long(const std::string& data)
 	{
-		set_data((long)atol(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		set_data((long)atol(utf8.value().c_str()));
 	}
 
 	void value::set_ulong(const std::string& data)
 	{
-		set_data((unsigned long)atol(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		set_data((unsigned long)atol(utf8.value().c_str()));
 	}
 
 	void value::set_llong(const std::string& data)
 	{
-		set_data((long long)atoll(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		set_data((long long)atoll(utf8.value().c_str()));
 	}
 
 	void value::set_ullong(const std::string& data)
 	{
-		set_data((unsigned long long)atoll(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		set_data((unsigned long long)atoll(utf8.value().c_str()));
 	}
 
 	void value::set_float(const std::string& data)
 	{
-		set_data((float)atof(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		set_data((float)atof(utf8.value().c_str()));
 	}
 
 	void value::set_double(const std::string& data)
 	{
-		set_data((double)atof(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return;
+		}
+
+		set_data((double)atof(utf8.value().c_str()));
 	}
 } // namespace container

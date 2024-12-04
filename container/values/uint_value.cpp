@@ -32,11 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "uint_value.h"
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
+#include "formatter.h"
+
+#include <cstring>
 
 namespace container
 {
+	using namespace utility_module;
+
 	uint_value::uint_value(void) : value() { type_ = value_types::uint_value; }
 
 	uint_value::uint_value(const std::string& name, const unsigned int& value)
@@ -57,6 +60,6 @@ namespace container
 
 	std::string uint_value::to_string(const bool&) const
 	{
-		return fmt::format("{}", to_uint());
+		return formatter::format("{}", to_uint());
 	}
 } // namespace container

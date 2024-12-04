@@ -32,11 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "double_value.h"
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
+#include "formatter.h"
+
+#include <cstring>
 
 namespace container
 {
+	using namespace utility_module;
+
 	double_value::double_value(void) : value()
 	{
 		type_ = value_types::double_value;
@@ -60,6 +63,6 @@ namespace container
 
 	std::string double_value::to_string(const bool&) const
 	{
-		return fmt::format("{}", to_double());
+		return formatter::format("{}", to_double());
 	}
 } // namespace container

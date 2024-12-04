@@ -32,11 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "bytes_value.h"
 
-#include "converting.h"
+#include "convert_string.h"
 
 namespace container
 {
-	using namespace converting;
+	using namespace utility_module;
 
 	bytes_value::bytes_value(void) : value()
 	{
@@ -62,6 +62,12 @@ namespace container
 
 	std::string bytes_value::to_string(const bool&) const
 	{
-		return converter::to_base64(data_);
+		auto [base64, base64_error] = convert_string::to_base64(data_);
+		if (base64_error.has_value())
+		{
+			return "";
+		}
+
+		return base64.value();
 	}
 } // namespace container

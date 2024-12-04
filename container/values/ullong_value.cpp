@@ -32,11 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ullong_value.h"
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
+#include "formatter.h"
+
+#include <cstring>
 
 namespace container
 {
+	using namespace utility_module;
+
 	ullong_value::ullong_value(void) : value()
 	{
 		type_ = value_types::ullong_value;
@@ -61,6 +64,6 @@ namespace container
 
 	std::string ullong_value::to_string(const bool&) const
 	{
-		return fmt::format("{}", to_ullong());
+		return formatter::format("{}", to_ullong());
 	}
 } // namespace container

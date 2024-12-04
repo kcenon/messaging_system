@@ -32,11 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "int_value.h"
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
+#include "formatter.h"
+
+#include <cstring>
 
 namespace container
 {
+	using namespace utility_module;
+
 	int_value::int_value(void) : value() { type_ = value_types::int_value; }
 
 	int_value::int_value(const std::string& name, const int& value)
@@ -57,6 +60,6 @@ namespace container
 
 	std::string int_value::to_string(const bool&) const
 	{
-		return fmt::format("{}", to_int());
+		return formatter::format("{}", to_int());
 	}
 } // namespace container

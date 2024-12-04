@@ -32,10 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "container.h"
 
-#include "converting.h"
+#include "formatter.h"
 #include "file_handler.h"
-#include "value_types.h"
+#include "convert_string.h"
 
+#include "value_types.h"
 #include "values/bool_value.h"
 #include "values/bytes_value.h"
 #include "values/container_value.h"
@@ -57,9 +58,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <regex>
 #include <sstream>
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
-
 namespace container
 {
 	constexpr auto TARGET_ID = "1";
@@ -69,8 +67,7 @@ namespace container
 	constexpr auto MESSAGE_TYPE = "5";
 	constexpr auto MESSAGE_VERSION = "6";
 
-	using namespace converting;
-	using namespace file_handler;
+	using namespace utility_module;
 
 	value_container::value_container(void)
 		: source_id_("")
@@ -498,31 +495,37 @@ namespace container
 		std::string result;
 
 		// header
-		fmt::format_to(std::back_inserter(result), "@header={}", "{");
+		formatter::format_to(std::back_inserter(result), "@header={}", "{");
 		if (message_type_ != "data_container")
 		{
-			fmt::format_to(std::back_inserter(result), "[{},{}];", TARGET_ID,
-						   target_id_);
-			fmt::format_to(std::back_inserter(result), "[{},{}];",
-						   TARGET_SUB_ID, target_sub_id_);
-			fmt::format_to(std::back_inserter(result), "[{},{}];", SOURCE_ID,
-						   source_id_);
-			fmt::format_to(std::back_inserter(result), "[{},{}];",
-						   SOURCE_SUB_ID, source_sub_id_);
+			formatter::format_to(std::back_inserter(result), "[{},{}];",
+								 TARGET_ID, target_id_);
+			formatter::format_to(std::back_inserter(result), "[{},{}];",
+								 TARGET_SUB_ID, target_sub_id_);
+			formatter::format_to(std::back_inserter(result), "[{},{}];",
+								 SOURCE_ID, source_id_);
+			formatter::format_to(std::back_inserter(result), "[{},{}];",
+								 SOURCE_SUB_ID, source_sub_id_);
 		}
-		fmt::format_to(std::back_inserter(result), "[{},{}];", MESSAGE_TYPE,
-					   message_type_);
-		fmt::format_to(std::back_inserter(result), "[{},{}];", MESSAGE_VERSION,
-					   version_);
-		fmt::format_to(std::back_inserter(result), "{}", "};");
-		fmt::format_to(std::back_inserter(result), "{}", data_string);
+		formatter::format_to(std::back_inserter(result), "[{},{}];",
+							 MESSAGE_TYPE, message_type_);
+		formatter::format_to(std::back_inserter(result), "[{},{}];",
+							 MESSAGE_VERSION, version_);
+		formatter::format_to(std::back_inserter(result), "{}", "};");
+		formatter::format_to(std::back_inserter(result), "{}", data_string);
 
 		return result;
 	}
 
 	std::vector<uint8_t> value_container::serialize_array(void) const
 	{
-		return converter::to_array(serialize());
+		auto [value, value_error] = convert_string::to_array(serialize());
+		if (value_error.has_value())
+		{
+			return std::vector<uint8_t>();
+		}
+
+		return value.value();
 	}
 
 	bool value_container::deserialize(const std::string& data_string,
@@ -577,7 +580,13 @@ namespace container
 	bool value_container::deserialize(const std::vector<uint8_t>& data_array,
 									  const bool& parse_only_header)
 	{
-		return deserialize(converter::to_string(data_array), parse_only_header);
+		auto [utf8, convert_error] = convert_string::to_string(data_array);
+		if (convert_error.has_value())
+		{
+			return false;
+		}
+
+		return deserialize(utf8.value(), parse_only_header);
 	}
 
 	const std::string value_container::to_xml(void)
@@ -589,32 +598,35 @@ namespace container
 
 		std::string result;
 
-		fmt::format_to(std::back_inserter(result), "{}", "<container>");
-		fmt::format_to(std::back_inserter(result), "{}", "<header>");
+		formatter::format_to(std::back_inserter(result), "{}", "<container>");
+		formatter::format_to(std::back_inserter(result), "{}", "<header>");
 		if (message_type_ != "data_container")
 		{
-			fmt::format_to(std::back_inserter(result),
-						   "<target_id>{}</target_id>", target_id_);
-			fmt::format_to(std::back_inserter(result),
-						   "<target_sub_id>{}</target_sub_id>", target_sub_id_);
-			fmt::format_to(std::back_inserter(result),
-						   "<source_id>{}</source_id>", source_id_);
-			fmt::format_to(std::back_inserter(result),
-						   "<source_sub_id>{}</source_sub_id>", source_sub_id_);
+			formatter::format_to(std::back_inserter(result),
+								 "<target_id>{}</target_id>", target_id_);
+			formatter::format_to(std::back_inserter(result),
+								 "<target_sub_id>{}</target_sub_id>",
+								 target_sub_id_);
+			formatter::format_to(std::back_inserter(result),
+								 "<source_id>{}</source_id>", source_id_);
+			formatter::format_to(std::back_inserter(result),
+								 "<source_sub_id>{}</source_sub_id>",
+								 source_sub_id_);
 		}
-		fmt::format_to(std::back_inserter(result),
-					   "<message_type>{}</message_type>", message_type_);
-		fmt::format_to(std::back_inserter(result), "<version>{}</version>",
-					   version_);
-		fmt::format_to(std::back_inserter(result), "{}", "</header>");
+		formatter::format_to(std::back_inserter(result),
+							 "<message_type>{}</message_type>", message_type_);
+		formatter::format_to(std::back_inserter(result),
+							 "<version>{}</version>", version_);
+		formatter::format_to(std::back_inserter(result), "{}", "</header>");
 
-		fmt::format_to(std::back_inserter(result), "{}", "<values>");
+		formatter::format_to(std::back_inserter(result), "{}", "<values>");
 		for (auto& unit : units_)
 		{
-			fmt::format_to(std::back_inserter(result), "{}", unit->to_xml());
+			formatter::format_to(std::back_inserter(result), "{}",
+								 unit->to_xml());
 		}
-		fmt::format_to(std::back_inserter(result), "{}", "</values>");
-		fmt::format_to(std::back_inserter(result), "{}", "</container>");
+		formatter::format_to(std::back_inserter(result), "{}", "</values>");
+		formatter::format_to(std::back_inserter(result), "{}", "</container>");
 
 		return result;
 	}
@@ -628,37 +640,37 @@ namespace container
 
 		std::string result;
 
-		fmt::format_to(std::back_inserter(result), "{}", "{");
-		fmt::format_to(std::back_inserter(result), "{}", "\"header\":{");
+		formatter::format_to(std::back_inserter(result), "{}", "{");
+		formatter::format_to(std::back_inserter(result), "{}", "\"header\":{");
 		if (message_type_ != "data_container")
 		{
-			fmt::format_to(std::back_inserter(result), "\"target_id\":\"{}\",",
-						   target_id_);
-			fmt::format_to(std::back_inserter(result),
-						   "\"target_sub_id\":\"{}\",", target_sub_id_);
-			fmt::format_to(std::back_inserter(result), "\"source_id\":\"{}\",",
-						   source_id_);
-			fmt::format_to(std::back_inserter(result),
-						   "\"source_sub_id\":\"{}\",", source_sub_id_);
+			formatter::format_to(std::back_inserter(result),
+								 "\"target_id\":\"{}\",", target_id_);
+			formatter::format_to(std::back_inserter(result),
+								 "\"target_sub_id\":\"{}\",", target_sub_id_);
+			formatter::format_to(std::back_inserter(result),
+								 "\"source_id\":\"{}\",", source_id_);
+			formatter::format_to(std::back_inserter(result),
+								 "\"source_sub_id\":\"{}\",", source_sub_id_);
 		}
-		fmt::format_to(std::back_inserter(result), "\"message_type\":\"{}\"",
-					   message_type_);
-		fmt::format_to(std::back_inserter(result), ",\"version\":\"{}\"",
-					   version_);
-		fmt::format_to(std::back_inserter(result), "{}", "}");
+		formatter::format_to(std::back_inserter(result),
+							 "\"message_type\":\"{}\"", message_type_);
+		formatter::format_to(std::back_inserter(result), ",\"version\":\"{}\"",
+							 version_);
+		formatter::format_to(std::back_inserter(result), "{}", "}");
 
-		fmt::format_to(std::back_inserter(result), ",{}", "\"values\":{");
+		formatter::format_to(std::back_inserter(result), ",{}", "\"values\":{");
 
 		bool first = true;
 		for (auto& unit : units_)
 		{
-			fmt::format_to(std::back_inserter(result), first ? "{}" : ",{}",
-						   unit->to_json());
+			formatter::format_to(std::back_inserter(result),
+								 first ? "{}" : ",{}", unit->to_json());
 			first = false;
 		}
 
-		fmt::format_to(std::back_inserter(result), "{}", "}");
-		fmt::format_to(std::back_inserter(result), "{}", "}");
+		formatter::format_to(std::back_inserter(result), "{}", "}");
+		formatter::format_to(std::back_inserter(result), "{}", "}");
 
 		return result;
 		;
@@ -674,24 +686,37 @@ namespace container
 		std::string result;
 
 		// data
-		fmt::format_to(std::back_inserter(result), "@data={}", "{");
+		formatter::format_to(std::back_inserter(result), "@data={}", "{");
 		for (auto& unit : units_)
 		{
-			fmt::format_to(std::back_inserter(result), "{}", unit->serialize());
+			formatter::format_to(std::back_inserter(result), "{}",
+								 unit->serialize());
 		}
-		fmt::format_to(std::back_inserter(result), "{}", "};");
+		formatter::format_to(std::back_inserter(result), "{}", "};");
 
 		return result;
 	}
 
 	void value_container::load_packet(const std::string& file_path)
 	{
-		deserialize(file::load(file_path));
+		auto [data, load_error] = file::load(file_path);
+		if (load_error.has_value())
+		{
+			return;
+		}
+
+		deserialize(data);
 	}
 
 	void value_container::save_packet(const std::string& file_path)
 	{
-		file::save(file_path, converter::to_array(serialize()));
+		auto [value, value_error] = convert_string::to_array(serialize());
+		if (value_error.has_value())
+		{
+			return;
+		}
+
+		file::save(file_path, value.value());
 	}
 
 	std::vector<std::shared_ptr<value>> value_container::operator[](
@@ -735,7 +760,14 @@ namespace container
 	std::ostream& operator<<(std::ostream& out,
 							 value_container& other) // output
 	{
-		out << converter::to_string(other.serialize());
+		auto [utf8, convert_error]
+			= convert_string::system_to_utf8(other.serialize());
+		if (convert_error.has_value())
+		{
+			return out;
+		}
+
+		out << utf8.value();
 
 		return out;
 	}
@@ -743,7 +775,14 @@ namespace container
 	std::ostream& operator<<(std::ostream& out,
 							 std::shared_ptr<value_container> other) // output
 	{
-		out << converter::to_string(other->serialize());
+		auto [utf8, convert_error]
+			= convert_string::system_to_utf8(other->serialize());
+		if (convert_error.has_value())
+		{
+			return out;
+		}
+
+		out << utf8.value();
 
 		return out;
 	}
@@ -886,79 +925,143 @@ namespace container
 	std::shared_ptr<value> value_container::set_short(const std::string& name,
 													  const std::string& data)
 	{
-		return std::make_shared<short_value>(
-			name, (short)atoi(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
+		return std::make_shared<short_value>(name,
+											 (short)atoi(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> value_container::set_ushort(const std::string& name,
 													   const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<ushort_value>(
-			name, (unsigned short)atoi(converter::to_string(data).c_str()));
+			name, (unsigned short)atoi(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> value_container::set_int(const std::string& name,
 													const std::string& data)
 	{
-		return std::make_shared<int_value>(
-			name, (int)atoi(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
+		return std::make_shared<int_value>(name,
+										   (int)atoi(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> value_container::set_uint(const std::string& name,
 													 const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<uint_value>(
-			name, (unsigned int)atoi(converter::to_string(data).c_str()));
+			name, (unsigned int)atoi(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> value_container::set_long(const std::string& name,
 													 const std::string& data)
 	{
-		return std::make_shared<long_value>(
-			name, (long)atol(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
+		return std::make_shared<long_value>(name,
+											(long)atol(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> value_container::set_ulong(const std::string& name,
 													  const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<ulong_value>(
-			name, (unsigned long)atol(converter::to_string(data).c_str()));
+			name, (unsigned long)atol(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> value_container::set_llong(const std::string& name,
 													  const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<llong_value>(
-			name, (long long)atoll(converter::to_string(data).c_str()));
+			name, (long long)atoll(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> value_container::set_ullong(const std::string& name,
 													   const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<ullong_value>(
-			name,
-			(unsigned long long)atoll(converter::to_string(data).c_str()));
+			name, (unsigned long long)atoll(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> value_container::set_float(const std::string& name,
 													  const std::string& data)
 	{
-		return std::make_shared<float_value>(
-			name, (float)atof(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
+		return std::make_shared<float_value>(name,
+											 (float)atof(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> value_container::set_double(const std::string& name,
 													   const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<double_value>(
-			name, (double)atof(converter::to_string(data).c_str()));
+			name, (double)atof(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> value_container::set_bytes(const std::string& name,
 													  const std::string& data)
 	{
-		return std::make_shared<bytes_value>(
-			name, converter::from_base64(data.c_str()));
+		auto [value, convert_error] = convert_string::from_base64(data.c_str());
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
+		return std::make_shared<bytes_value>(name, value);
 	}
 
 	std::shared_ptr<value> value_container::set_string(const std::string& name,
@@ -970,7 +1073,13 @@ namespace container
 	std::shared_ptr<value> value_container::set_container(
 		const std::string& name, const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<container_value>(
-			name, (long)atol(converter::to_string(data).c_str()));
+			name, (long)atol(utf8.value().c_str()));
 	}
 } // namespace container

@@ -32,7 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "container_value.h"
 
-#include "converting.h"
+#include "formatter.h"
+#include "convert_string.h"
 
 #include "bool_value.h"
 #include "bytes_value.h"
@@ -48,14 +49,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ulong_value.h"
 #include "ushort_value.h"
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
-
+#include <cstring>
 #include <algorithm>
 
 namespace container
 {
-	using namespace converting;
+	using namespace utility_module;
 
 	container_value::container_value(void) : value()
 	{
@@ -301,7 +300,7 @@ namespace container
 
 	std::string container_value::to_string(const bool&) const
 	{
-		return fmt::format("{}", to_long());
+		return formatter::format("{}", to_long());
 	}
 
 	std::shared_ptr<value> container_value::set_boolean(const std::string& name,
@@ -313,79 +312,143 @@ namespace container
 	std::shared_ptr<value> container_value::set_short(const std::string& name,
 													  const std::string& data)
 	{
-		return std::make_shared<short_value>(
-			name, (short)atoi(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
+		return std::make_shared<short_value>(name,
+											 (short)atoi(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> container_value::set_ushort(const std::string& name,
 													   const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<ushort_value>(
-			name, (unsigned short)atoi(converter::to_string(data).c_str()));
+			name, (unsigned short)atoi(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> container_value::set_int(const std::string& name,
 													const std::string& data)
 	{
-		return std::make_shared<int_value>(
-			name, (int)atoi(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
+		return std::make_shared<int_value>(name,
+										   (int)atoi(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> container_value::set_uint(const std::string& name,
 													 const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<uint_value>(
-			name, (unsigned int)atoi(converter::to_string(data).c_str()));
+			name, (unsigned int)atoi(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> container_value::set_long(const std::string& name,
 													 const std::string& data)
 	{
-		return std::make_shared<long_value>(
-			name, (long)atol(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
+		return std::make_shared<long_value>(name,
+											(long)atol(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> container_value::set_ulong(const std::string& name,
 													  const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<ulong_value>(
-			name, (unsigned long)atol(converter::to_string(data).c_str()));
+			name, (unsigned long)atol(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> container_value::set_llong(const std::string& name,
 													  const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<llong_value>(
-			name, (long long)atoll(converter::to_string(data).c_str()));
+			name, (long long)atoll(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> container_value::set_ullong(const std::string& name,
 													   const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<ullong_value>(
-			name,
-			(unsigned long long)atoll(converter::to_string(data).c_str()));
+			name, (unsigned long long)atoll(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> container_value::set_float(const std::string& name,
 													  const std::string& data)
 	{
-		return std::make_shared<float_value>(
-			name, (float)atof(converter::to_string(data).c_str()));
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
+		return std::make_shared<float_value>(name,
+											 (float)atof(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> container_value::set_double(const std::string& name,
 													   const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<double_value>(
-			name, (double)atof(converter::to_string(data).c_str()));
+			name, (double)atof(utf8.value().c_str()));
 	}
 
 	std::shared_ptr<value> container_value::set_byte_string(
 		const std::string& name, const std::string& data)
 	{
-		return std::make_shared<bytes_value>(
-			name, converter::from_base64(data.c_str()));
+		auto [value, convert_error] = convert_string::from_base64(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
+		return std::make_shared<bytes_value>(name, value.data(), value.size());
 	}
 
 	std::shared_ptr<value> container_value::set_string(const std::string& name,
@@ -397,7 +460,13 @@ namespace container
 	std::shared_ptr<value> container_value::set_container(
 		const std::string& name, const std::string& data)
 	{
+		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
+		if (convert_error.has_value())
+		{
+			return std::make_shared<short_value>(name, 0);
+		}
+
 		return std::make_shared<container_value>(
-			name, (long)atol(converter::to_string(data).c_str()));
+			name, (long)atol(utf8.value().c_str()));
 	}
 } // namespace container

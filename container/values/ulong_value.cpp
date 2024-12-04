@@ -32,11 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ulong_value.h"
 
-#include "fmt/format.h"
-#include "fmt/xchar.h"
+#include "formatter.h"
+
+#include <cstring>
 
 namespace container
 {
+	using namespace utility_module;
+
 	ulong_value::ulong_value(void) : value()
 	{
 		type_ = value_types::ulong_value;
@@ -61,6 +64,6 @@ namespace container
 
 	std::string ulong_value::to_string(const bool&) const
 	{
-		return fmt::format("{}", to_ulong());
+		return formatter::format("{}", to_ulong());
 	}
 } // namespace container
