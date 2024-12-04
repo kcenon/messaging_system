@@ -1,7 +1,10 @@
 {
+  "name": "messagingsystem",
+  "version": "1.0.0",
   "dependencies": [
     "lz4",
     "fmt",
+    "libiconv",
     "cpprestsdk",
     "cryptopp",
     "asio",
