@@ -7,12 +7,7 @@
 #include "container.h"
 #include "values/bool_value.h"
 #include "values/container_value.h"
-#include "values/double_value.h"
-#include "values/float_value.h"
-#include "values/llong_value.h"
-#include "values/long_value.h"
-#include "values/ullong_value.h"
-#include "values/ulong_value.h"
+#include "values/numeric_value.h"
 
 using namespace container;
 using namespace converting;

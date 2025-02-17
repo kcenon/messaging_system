@@ -34,11 +34,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "libpq-fe.h"
 
-#include "converting.h"
+#include "convert_string.h"
 
 namespace database
 {
-	using namespace converting;
+	using namespace utility_module;
 
 	postgres_manager::postgres_manager(void) : connection_(nullptr) {}
 
@@ -51,7 +51,16 @@ namespace database
 
 	bool postgres_manager::connect(const std::string& connect_string)
 	{
-		connection_ = PQconnectdb(converter::to_string(connect_string).c_str());
+		auto [converted_string, error_message]
+			= convert_string::utf8_to_system(connect_string);
+		if (error_message.has_value())
+		{
+			return false;
+		}
+
+		auto converted_connect_string = converted_string.value();
+
+		connection_ = PQconnectdb(converted_connect_string.c_str());
 		if (PQstatus((PGconn*)connection_) != CONNECTION_OK)
 		{
 			PQfinish((PGconn*)connection_);
@@ -187,7 +196,15 @@ namespace database
 			return nullptr;
 		}
 
-		return PQexec((PGconn*)connection_,
-					  converter::to_string(query_string).c_str());
+		auto [converted_string, error_message]
+			= convert_string::utf8_to_system(query_string);
+		if (error_message.has_value())
+		{
+			return nullptr;
+		}
+
+		auto converted_query_string = converted_string.value();
+
+		return PQexec((PGconn*)connection_, converted_query_string.c_str());
 	}
 }; // namespace database
