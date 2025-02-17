@@ -38,36 +38,42 @@ namespace container
 {
 	using namespace utility_module;
 
-	bytes_value::bytes_value(void) : value()
+	bytes_value::bytes_value() : value()
 	{
 		type_ = value_types::bytes_value;
+		size_ = 0;
 	}
 
 	bytes_value::bytes_value(const std::string& name,
-							 const std::vector<uint8_t>& data)
+							 const std::vector<uint8_t>& dataVec)
 		: bytes_value()
 	{
 		name_ = name;
-		set_data(data.data(), data.size(), value_types::bytes_value);
+		data_ = dataVec;
+		size_ = data_.size();
 	}
 
 	bytes_value::bytes_value(const std::string& name,
-							 const unsigned char* data,
-							 const size_t& size)
+							 const unsigned char* dataPtr,
+							 size_t sz)
 		: bytes_value()
 	{
 		name_ = name;
-		set_data(data, size, value_types::bytes_value);
+		if (dataPtr && sz > 0)
+		{
+			data_.assign(dataPtr, dataPtr + sz);
+			size_ = data_.size();
+		}
 	}
 
 	std::string bytes_value::to_string(const bool&) const
 	{
-		auto [base64, base64_error] = convert_string::to_base64(data_);
-		if (base64_error.has_value())
+		// Convert the raw data to base64
+		auto [encoded, err] = convert_string::to_base64(data_);
+		if (err.has_value())
 		{
 			return "";
 		}
-
-		return base64.value();
+		return encoded.value();
 	}
 } // namespace container

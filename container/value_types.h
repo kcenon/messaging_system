@@ -36,6 +36,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace container
 {
+	/**
+	 * @brief Enumeration of available value types in the container system.
+	 */
 	enum class value_types {
 		null_value,
 		bool_value,
@@ -54,6 +57,19 @@ namespace container
 		container_value
 	};
 
-	const value_types convert_value_type(const std::string& target);
-	const std::string convert_value_type(const value_types& target);
+	/**
+	 * @brief Convert a string-based type indicator (e.g., "4") to a value_types
+	 * enum.
+	 * @param target The string indicator.
+	 * @return The corresponding value_types. Returns null_value if not found.
+	 */
+	value_types convert_value_type(const std::string& target);
+
+	/**
+	 * @brief Convert a value_types enum to its associated string indicator
+	 * (e.g., "4").
+	 * @param target The value_types enum.
+	 * @return The string. Returns "0" if not found.
+	 */
+	std::string convert_value_type(const value_types& target);
 } // namespace container

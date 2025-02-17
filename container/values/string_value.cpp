@@ -38,34 +38,36 @@ namespace container
 {
 	using namespace utility_module;
 
-	string_value::string_value(void) : value()
+	string_value::string_value() : value()
 	{
 		type_ = value_types::string_value;
+		size_ = 0;
 	}
 
-	string_value::string_value(const std::string& name,
-							   const std::string& value)
+	string_value::string_value(const std::string& name, const std::string& val)
 		: string_value()
 	{
-		std::vector<uint8_t> data = convert_specific_string(value);
-
 		name_ = name;
-		set_data(data.data(), data.size(), value_types::string_value);
+		// Store as internal raw data with placeholders replaced
+		std::vector<uint8_t> arr = convert_specific_string(val);
+		data_ = arr;
+		size_ = arr.size();
 	}
 
 	std::string string_value::to_string(const bool& original) const
 	{
 		if (!original)
 		{
-			auto [data, convert_error] = convert_string::to_string(data_);
-			if (convert_error)
+			// Return the raw data as-is, ignoring placeholder expansions
+			auto [plain, err]
+				= utility_module::convert_string::to_string(data_);
+			if (err.has_value())
 			{
 				return "";
 			}
-
-			return data.value();
+			return plain.value();
 		}
-
+		// Return the placeholder-free version
 		return convert_specific_string(data_);
 	}
 } // namespace container

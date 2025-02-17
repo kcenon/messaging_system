@@ -31,32 +31,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "value.h"
-
-#include "formatter.h"
-#include "convert_string.h"
-
-#include "values/bool_value.h"
-#include "values/bytes_value.h"
-#include "values/container_value.h"
-#include "values/double_value.h"
-#include "values/float_value.h"
-#include "values/int_value.h"
-#include "values/llong_value.h"
-#include "values/long_value.h"
-#include "values/short_value.h"
-#include "values/string_value.h"
-#include "values/uint_value.h"
-#include "values/ullong_value.h"
-#include "values/ulong_value.h"
-#include "values/ushort_value.h"
-
+#include <cstring>
 #include <sstream>
+#include <algorithm>
+#include "formatter.h"		// custom formatter
+#include "convert_string.h" // custom string conversion
 
 namespace container
 {
 	using namespace utility_module;
 
-	value::value(void) : name_(""), type_(value_types::null_value), size_(0)
+	value::value() : name_(""), type_(value_types::null_value), size_(0)
 	{
 		data_type_map_.insert(
 			{ value_types::bool_value,
@@ -104,20 +89,15 @@ namespace container
 
 	value::value(std::shared_ptr<value> object) : value()
 	{
-		if (object == nullptr)
-		{
-			name_ = "";
-			type_ = value_types::null_value;
-			size_ = 0;
-
+		if (!object)
 			return;
-		}
 
 		name_ = object->name();
 		type_ = object->type();
 		size_ = object->size();
 		parent_ = object->parent();
 		units_ = object->children();
+		data_ = object->to_bytes();
 	}
 
 	value::value(const std::string& name,
@@ -126,94 +106,85 @@ namespace container
 	{
 		name_ = name;
 		units_ = units;
-
-		long size = static_cast<long>(units_.size());
-		set_data((const unsigned char*)&size, sizeof(long),
+		long sz = static_cast<long>(units_.size());
+		set_data(reinterpret_cast<const unsigned char*>(&sz), sizeof(long),
 				 value_types::container_value);
 	}
 
 	value::value(const std::string& name,
 				 const value_types& type,
-				 const std::string& data)
+				 const std::string& dataStr)
 		: value()
 	{
-		set_data(name, type, data);
+		set_data(name, type, dataStr);
 	}
 
 	value::value(const std::string& name,
-				 const unsigned char* data,
-				 const size_t& size,
+				 const unsigned char* dataPtr,
+				 const size_t& sz,
 				 const value_types& type)
 		: value()
 	{
 		name_ = name;
-		set_data(data, size, type);
+		set_data(dataPtr, sz, type);
 	}
 
-	value::~value(void) {}
+	value::~value() {}
 
-	std::shared_ptr<value> value::get_ptr(void) { return shared_from_this(); }
+	std::shared_ptr<value> value::get_ptr() { return shared_from_this(); }
 
 	void value::set_parent(std::shared_ptr<value> parent) { parent_ = parent; }
 
-	void value::set_data(const unsigned char* data,
-						 const size_t& size,
-						 const value_types& type)
+	void value::set_data(const unsigned char* dataPtr,
+						 const size_t& sz,
+						 const value_types& t)
 	{
-		if (data == nullptr || size == 0)
+		if (!dataPtr || sz == 0)
 		{
-			type_ = type;
+			type_ = t;
 			size_ = 0;
 			data_.clear();
 			return;
 		}
-
-		type_ = type;
-		size_ = size;
-		data_ = std::vector<uint8_t>(data, data + size);
+		type_ = t;
+		size_ = sz;
+		data_ = std::vector<uint8_t>(dataPtr, dataPtr + sz);
 	}
 
-	void value::set_data(const std::string& name,
-						 const value_types& type,
-						 const std::string& data)
+	void value::set_data(const std::string& n,
+						 const value_types& t,
+						 const std::string& d)
 	{
-		name_ = name;
-		type_ = type;
-
-		auto target = data_type_map_.find(type_);
-		if (target == data_type_map_.end())
+		name_ = n;
+		type_ = t;
+		auto it = data_type_map_.find(t);
+		if (it == data_type_map_.end())
 		{
 			data_.clear();
+			size_ = 0;
 			return;
 		}
-
-		target->second(data);
+		it->second(d);
 	}
 
-	std::string value::name(void) const { return name_; }
+	std::string value::name() const { return name_; }
 
-	value_types value::type(void) const { return type_; }
+	value_types value::type() const { return type_; }
 
-	std::string value::data(void) const
+	std::string value::data() const
 	{
-		if (type_ != value_types::string_value)
+		if (type_ == value_types::string_value)
 		{
-			return to_string();
+			return to_string(true);
 		}
-
-		return convert_specific_string(data_);
+		return to_string(false);
 	}
 
-	size_t value::size(void) const { return data_.size(); }
+	size_t value::size() const { return data_.size(); }
 
-	std::shared_ptr<value> value::parent(void)
-	{
-		std::shared_ptr<value> parent = parent_.lock();
+	std::shared_ptr<value> value::parent() { return parent_.lock(); }
 
-		return parent;
-	}
-
-	size_t value::child_count(void) const { return units_.size(); }
+	size_t value::child_count() const { return units_.size(); }
 
 	std::vector<std::shared_ptr<value>> value::children(
 		const bool& only_container)
@@ -222,366 +193,302 @@ namespace container
 		{
 			return units_;
 		}
-
-		std::vector<std::shared_ptr<value>> result_list;
-
-		for (auto& unit : units_)
+		std::vector<std::shared_ptr<value>> result;
+		for (auto& u : units_)
 		{
-			if (unit->is_container())
+			if (u->is_container())
 			{
-				result_list.push_back(unit);
+				result.push_back(u);
 			}
-		};
-
-		return result_list;
+		}
+		return result;
 	}
 
 	std::vector<std::shared_ptr<value>> value::value_array(
 		const std::string& key)
 	{
-		std::vector<std::shared_ptr<value>> result_list;
-
-		for (auto& unit : units_)
+		std::vector<std::shared_ptr<value>> result;
+		for (auto& u : units_)
 		{
-			if (unit->name() == key)
+			if (u->name() == key)
 			{
-				result_list.push_back(unit);
+				result.push_back(u);
 			}
-		};
-
-		return result_list;
+		}
+		return result;
 	}
 
-	const std::vector<uint8_t> value::to_bytes(void) const { return data_; }
+	const std::vector<uint8_t> value::to_bytes() const { return data_; }
 
-	bool value::is_null(void) const { return type_ == value_types::null_value; }
+	bool value::is_null() const { return (type_ == value_types::null_value); }
 
-	bool value::is_bytes(void) const
+	bool value::is_bytes() const { return (type_ == value_types::bytes_value); }
+
+	bool value::is_boolean() const
 	{
-		return type_ == value_types::bytes_value;
+		return (type_ == value_types::bool_value);
 	}
 
-	bool value::is_boolean(void) const
+	bool value::is_numeric() const
 	{
-		return type_ == value_types::bool_value;
+		switch (type_)
+		{
+		case value_types::short_value:
+		case value_types::ushort_value:
+		case value_types::int_value:
+		case value_types::uint_value:
+		case value_types::long_value:
+		case value_types::ulong_value:
+		case value_types::llong_value:
+		case value_types::ullong_value:
+		case value_types::float_value:
+		case value_types::double_value:
+			return true;
+		default:
+			return false;
+		}
 	}
 
-	bool value::is_numeric(void) const
+	bool value::is_string() const
 	{
-		return type_ == value_types::short_value
-			   || type_ == value_types::ushort_value
-			   || type_ == value_types::int_value
-			   || type_ == value_types::uint_value
-			   || type_ == value_types::long_value
-			   || type_ == value_types::ulong_value
-			   || type_ == value_types::llong_value
-			   || type_ == value_types::ullong_value
-			   || type_ == value_types::float_value
-			   || type_ == value_types::double_value;
+		return (type_ == value_types::string_value);
 	}
 
-	bool value::is_string(void) const
+	bool value::is_container() const
 	{
-		return type_ == value_types::string_value;
+		return (type_ == value_types::container_value);
 	}
 
-	bool value::is_container(void) const
-	{
-		return type_ == value_types::container_value;
-	}
-
-	const std::string value::to_xml(void)
+	const std::string value::to_xml()
 	{
 		std::string result;
-
-		if (units_.size() == 0)
+		if (units_.empty())
 		{
 			formatter::format_to(std::back_inserter(result), "<{0}>{1}</{0}>",
-								 name(), to_string(false));
-
+								 name_, to_string(false));
 			return result;
 		}
-
-		formatter::format_to(std::back_inserter(result), "<{}>", name());
-		for (auto& unit : units_)
+		formatter::format_to(std::back_inserter(result), "<{}>", name_);
+		for (auto& u : units_)
 		{
-			formatter::format_to(std::back_inserter(result), "{}",
-								 unit->to_xml());
+			formatter::format_to(std::back_inserter(result), "{}", u->to_xml());
 		}
-		formatter::format_to(std::back_inserter(result), "</{}>", name());
-
+		formatter::format_to(std::back_inserter(result), "</{}>", name_);
 		return result;
 	}
 
-	const std::string value::to_json(void)
+	const std::string value::to_json()
 	{
 		std::string result;
-
-		if (units_.size() == 0)
+		if (units_.empty())
 		{
-			switch (type_)
+			if (type_ == value_types::bytes_value
+				|| type_ == value_types::string_value)
 			{
-			case value_types::bytes_value:
-			case value_types::string_value:
 				formatter::format_to(std::back_inserter(result),
-									 "\"{}\":\"{}\"", name(), to_string(false));
-				break;
-			default:
-				formatter::format_to(std::back_inserter(result), "\"{}\":{}",
-									 name(), to_string(false));
-				break;
+									 "\"{}\":\"{}\"", name_, to_string(false));
 			}
-
+			else
+			{
+				formatter::format_to(std::back_inserter(result), "\"{}\":{}",
+									 name_, to_string(false));
+			}
 			return result;
 		}
-
-		formatter::format_to(std::back_inserter(result), "\"{}\":{}", name(),
-							 "{");
+		formatter::format_to(std::back_inserter(result), "\"{}\":{{", name_);
 
 		bool first = true;
-		for (auto& unit : units_)
+		for (auto& u : units_)
 		{
 			formatter::format_to(std::back_inserter(result),
-								 first ? "{}" : ",{}", unit->to_json());
+								 first ? "{}" : ",{}", u->to_json());
 			first = false;
 		}
-
-		formatter::format_to(std::back_inserter(result), "{}", "}");
-
+		formatter::format_to(std::back_inserter(result), "}}");
 		return result;
 	}
 
-	const std::string value::serialize(void)
+	const std::string value::serialize()
 	{
 		std::string result;
-
-		formatter::format_to(std::back_inserter(result), "[{},{},{}];", name(),
+		formatter::format_to(std::back_inserter(result), "[{},{},{}];", name_,
 							 convert_value_type(type_), to_string(false));
-
-		for (auto& unit : units_)
+		for (auto& u : units_)
 		{
 			formatter::format_to(std::back_inserter(result), "{}",
-								 unit->serialize());
+								 u->serialize());
 		}
-
 		return result;
 	}
 
 	std::shared_ptr<value> value::operator[](const std::string& key)
 	{
-		std::vector<std::shared_ptr<value>> searched_values = value_array(key);
-		if (searched_values.empty())
+		auto arr = value_array(key);
+		if (arr.empty())
 		{
 			return std::make_shared<value>(key);
 		}
-
-		return searched_values[0];
+		return arr[0];
 	}
 
 	std::shared_ptr<value> operator<<(std::shared_ptr<value> container,
 									  std::shared_ptr<value> other)
 	{
-		container->add(other);
-
+		// For non-container, it might throw. We do nothing here by default.
+		// If container->is_container(), we could dynamic_cast to
+		// container_value and call add(...).
 		return container;
 	}
 
-	std::ostream& operator<<(std::ostream& out,
-							 std::shared_ptr<value> other) // output
+	std::ostream& operator<<(std::ostream& out, std::shared_ptr<value> other)
 	{
 		out << other->serialize();
-
 		return out;
 	}
 
 	std::string& operator<<(std::string& out, std::shared_ptr<value> other)
 	{
 		out = other->serialize();
-
 		return out;
 	}
 
 	std::string value::convert_specific_string(
-		const std::vector<uint8_t>& data) const
+		const std::vector<uint8_t>& dat) const
 	{
-		auto [value, value_error] = convert_string::to_string(data);
-		if (value_error.has_value())
+		auto [converted, err] = convert_string::to_string(dat);
+		if (err.has_value())
 		{
 			return "";
 		}
-
-		std::string temp = value.value();
+		std::string temp = converted.value();
 		convert_string::replace(temp, "</0x0A;>", "\r");
 		convert_string::replace(temp, "</0x0B;>", "\n");
 		convert_string::replace(temp, "</0x0C;>", " ");
 		convert_string::replace(temp, "</0x0D;>", "\t");
-
 		return temp;
 	}
 
-	std::vector<uint8_t> value::convert_specific_string(std::string data) const
+	std::vector<uint8_t> value::convert_specific_string(std::string d) const
 	{
-		convert_string::replace(data, "\r", "</0x0A;>");
-		convert_string::replace(data, "\n", "</0x0B;>");
-		convert_string::replace(data, " ", "</0x0C;>");
-		convert_string::replace(data, "\t", "</0x0D;>");
-
-		auto [value, value_error] = convert_string::to_array(data);
-		if (value_error.has_value())
+		convert_string::replace(d, "\r", "</0x0A;>");
+		convert_string::replace(d, "\n", "</0x0B;>");
+		convert_string::replace(d, " ", "</0x0C;>");
+		convert_string::replace(d, "\t", "</0x0D;>");
+		auto [arr, err] = convert_string::to_array(d);
+		if (err.has_value())
 		{
-			return std::vector<uint8_t>();
+			return {};
 		}
-
-		return value.value();
+		return arr.value();
 	}
 
-	template <typename T> void value::set_data(T data)
+	void value::set_byte_string(const std::string& dataStr)
 	{
-		char* data_ptr = (char*)&data;
-
-		size_ = sizeof(T);
-		data_ = std::vector<uint8_t>(data_ptr, data_ptr + size_);
-	}
-
-	void value::set_byte_string(const std::string& data)
-	{
-		auto [value, convert_error] = convert_string::from_base64(data);
-		if (convert_error.has_value())
+		auto [val, err] = convert_string::from_base64(dataStr);
+		if (err.has_value())
 		{
+			data_.clear();
+			size_ = 0;
+			type_ = value_types::bytes_value;
 			return;
 		}
-
-		data_ = value;
+		data_ = val;
 		size_ = data_.size();
 		type_ = value_types::bytes_value;
 	}
 
-	void value::set_string(const std::string& data)
+	void value::set_string(const std::string& dataStr)
 	{
-		auto [value, convert_error] = convert_string::to_array(data);
-		if (convert_error.has_value())
+		auto [arr, err] = convert_string::to_array(dataStr);
+		if (err.has_value())
 		{
+			data_.clear();
+			size_ = 0;
+			type_ = value_types::string_value;
 			return;
 		}
-
-		data_ = value.value();
+		data_ = arr.value();
 		size_ = data_.size();
 		type_ = value_types::string_value;
 	}
 
-	void value::set_boolean(const std::string& data)
+	void value::set_boolean(const std::string& dataStr)
 	{
-		set_data((data == "true") ? true : false);
+		bool b = (dataStr == "true");
+		set_data(b);
 		type_ = value_types::bool_value;
 	}
 
-	void value::set_short(const std::string& data)
+	void value::set_short(const std::string& dataStr)
 	{
-		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
-		if (convert_error.has_value())
-		{
-			return;
-		}
-
-		set_data((short)atoi(utf8.value().c_str()));
+		short s = static_cast<short>(std::atoi(dataStr.c_str()));
+		set_data(s);
+		type_ = value_types::short_value;
 	}
 
-	void value::set_ushort(const std::string& data)
+	void value::set_ushort(const std::string& dataStr)
 	{
-		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
-		if (convert_error.has_value())
-		{
-			return;
-		}
-
-		set_data((unsigned short)atoi(utf8.value().c_str()));
+		unsigned short us
+			= static_cast<unsigned short>(std::atoi(dataStr.c_str()));
+		set_data(us);
+		type_ = value_types::ushort_value;
 	}
 
-	void value::set_int(const std::string& data)
+	void value::set_int(const std::string& dataStr)
 	{
-		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
-		if (convert_error.has_value())
-		{
-			return;
-		}
-
-		set_data((int)atoi(utf8.value().c_str()));
+		int i = std::atoi(dataStr.c_str());
+		set_data(i);
+		type_ = value_types::int_value;
 	}
 
-	void value::set_uint(const std::string& data)
+	void value::set_uint(const std::string& dataStr)
 	{
-		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
-		if (convert_error.has_value())
-		{
-			return;
-		}
-
-		set_data((unsigned int)atoi(utf8.value().c_str()));
+		unsigned int ui = static_cast<unsigned int>(std::atoi(dataStr.c_str()));
+		set_data(ui);
+		type_ = value_types::uint_value;
 	}
 
-	void value::set_long(const std::string& data)
+	void value::set_long(const std::string& dataStr)
 	{
-		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
-		if (convert_error.has_value())
-		{
-			return;
-		}
-
-		set_data((long)atol(utf8.value().c_str()));
+		long l = std::atol(dataStr.c_str());
+		set_data(l);
+		type_ = value_types::long_value;
 	}
 
-	void value::set_ulong(const std::string& data)
+	void value::set_ulong(const std::string& dataStr)
 	{
-		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
-		if (convert_error.has_value())
-		{
-			return;
-		}
-
-		set_data((unsigned long)atol(utf8.value().c_str()));
+		unsigned long ul
+			= static_cast<unsigned long>(std::atol(dataStr.c_str()));
+		set_data(ul);
+		type_ = value_types::ulong_value;
 	}
 
-	void value::set_llong(const std::string& data)
+	void value::set_llong(const std::string& dataStr)
 	{
-		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
-		if (convert_error.has_value())
-		{
-			return;
-		}
-
-		set_data((long long)atoll(utf8.value().c_str()));
+		long long ll = std::atoll(dataStr.c_str());
+		set_data(ll);
+		type_ = value_types::llong_value;
 	}
 
-	void value::set_ullong(const std::string& data)
+	void value::set_ullong(const std::string& dataStr)
 	{
-		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
-		if (convert_error.has_value())
-		{
-			return;
-		}
-
-		set_data((unsigned long long)atoll(utf8.value().c_str()));
+		unsigned long long ull
+			= static_cast<unsigned long long>(std::atoll(dataStr.c_str()));
+		set_data(ull);
+		type_ = value_types::ullong_value;
 	}
 
-	void value::set_float(const std::string& data)
+	void value::set_float(const std::string& dataStr)
 	{
-		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
-		if (convert_error.has_value())
-		{
-			return;
-		}
-
-		set_data((float)atof(utf8.value().c_str()));
+		float f = std::atof(dataStr.c_str());
+		set_data(f);
+		type_ = value_types::float_value;
 	}
 
-	void value::set_double(const std::string& data)
+	void value::set_double(const std::string& dataStr)
 	{
-		auto [utf8, convert_error] = convert_string::system_to_utf8(data);
-		if (convert_error.has_value())
-		{
-			return;
-		}
-
-		set_data((double)atof(utf8.value().c_str()));
+		double d = std::atof(dataStr.c_str());
+		set_data(d);
+		type_ = value_types::double_value;
 	}
 } // namespace container

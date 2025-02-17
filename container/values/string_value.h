@@ -36,14 +36,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace container
 {
+	/**
+	 * @class string_value
+	 * @brief A specialized value for storing textual data.
+	 */
 	class string_value : public value
 	{
 	public:
-		string_value(void);
+		string_value();
 		string_value(const std::string& name, const std::string& value);
-		~string_value(void) = default;
+		~string_value() override = default;
 
-	public:
 		std::string to_string(const bool& original = true) const override;
 	};
 } // namespace container
