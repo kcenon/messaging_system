@@ -1,32 +1,12 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
+project(network)
 
-SET(LIBRARY_NAME network)
-SET(CMAKE_CXX_STANDARD 17)
-SET(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+file(GLOB HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
-SET(HEADER_FILES
-    session_types.h data_modes.h data_lengths.h
-    data_handling.h messaging_client.h 
-    messaging_session.h messaging_server.h)
-
-SET(SOURCE_FILES
-    data_handling.cpp messaging_client.cpp 
-    messaging_session.cpp messaging_server.cpp)
-
-PROJECT(${LIBRARY_NAME} VERSION 1.0.0.0)
-
-IF(BUILD_SHARED_LIBS)
-    ADD_LIBRARY(${LIBRARY_NAME} SHARED ${HEADER_FILES} ${SOURCE_FILES})
-ELSE()
-    ADD_LIBRARY(${LIBRARY_NAME} STATIC ${HEADER_FILES} ${SOURCE_FILES})
-ENDIF()
+add_library(${PROJECT_NAME} STATIC ${HEADER_FILES} ${SOURCE_FILES})
     
-FIND_PACKAGE(asio CONFIG REQUIRED)
-TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC asio asio::asio)
+find_package(asio CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PUBLIC asio asio::asio)
 
-TARGET_INCLUDE_DIRECTORIES(${LIBRARY_NAME} PUBLIC ../utilities)
-TARGET_INCLUDE_DIRECTORIES(${LIBRARY_NAME} PUBLIC ../container)
-TARGET_INCLUDE_DIRECTORIES(${LIBRARY_NAME} PUBLIC ../threads)
-
-ADD_DEPENDENCIES(${LIBRARY_NAME} threads)
-TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PUBLIC threads)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(${PROJECT_NAME} PUBLIC container priority_thread_pool)

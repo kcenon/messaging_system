@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2021, 🍀☀🌕🌥 🌊
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,11 +32,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include <cstdint>
+
 namespace network
 {
-	enum class connection_conditions : short {
-		waiting = 1,
-		expired = 2,
-		confirmed = 3
+	/*!
+	 * \enum data_mode
+	 * \brief Represents a simple enumeration for differentiating data
+	 * transmission modes.
+	 *
+	 * A higher-level code might use these to switch between packet-based,
+	 * file-based, or binary data logic. They are optional stubs and can be
+	 * extended as needed.
+	 */
+	enum class data_mode : std::uint8_t {
+		packet_mode = 1, /*!< Regular messaging/packet mode. */
+		file_mode = 2,	 /*!< File transfer mode. */
+		binary_mode = 3	 /*!< Raw binary data mode. */
 	};
-}
+
+} // namespace network

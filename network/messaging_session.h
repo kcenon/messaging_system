@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2021, 🍀☀🌕🌥 🌊
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,149 +32,116 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "container.h"
-#include "thread_pool.h"
-#include "data_handling.h"
-#include "session_types.h"
-#include "constexpr_string.h"
-#include "connection_conditions.h"
-
-#include <map>
 #include <memory>
 #include <string>
-#include <functional>
+#include <vector>
+#include <atomic>
 
-#include "asio.hpp"
+#include <asio.hpp>
+
+#include "tcp_socket.h"
+#include "pipeline.h"
 
 namespace network
 {
+
+	/*!
+	 * \class messaging_session
+	 * \brief Manages a single connected client session on the server side,
+	 *        providing asynchronous read/write operations and pipeline
+	 * transformations.
+	 *
+	 * ### Responsibilities
+	 * - Owns a \c tcp_socket for non-blocking I/O.
+	 * - Optionally applies compression/encryption via \c pipeline_ before
+	 * sending, and can do the reverse upon receiving data (if needed).
+	 * - Provides callbacks (\c on_receive, \c on_error) for data handling and
+	 * error detection.
+	 *
+	 * ### Lifecycle
+	 * - Constructed with an accepted \c asio::ip::tcp::socket.
+	 * - \c start_session() sets up callbacks and begins \c
+	 * socket_->start_read().
+	 * - \c stop_session() closes the underlying socket, stopping further I/O.
+	 */
 	class messaging_session
-		: public std::enable_shared_from_this<messaging_session>,
-		  data_handling
+		: public std::enable_shared_from_this<messaging_session>
 	{
 	public:
-		messaging_session(const std::string& source_id,
-						  const std::string& connection_key,
-						  asio::ip::tcp::socket& socket,
-						  const unsigned char& start_code_value,
-						  const unsigned char& end_code_value);
-		~messaging_session(void);
+		/*!
+		 * \brief Constructs a session with a given \p socket and \p server_id.
+		 * \param socket    The \c asio::ip::tcp::socket (already connected).
+		 * \param server_id An identifier for this server instance or context.
+		 */
+		messaging_session(asio::ip::tcp::socket socket,
+						  const std::string& server_id);
 
-	public:
-		std::shared_ptr<messaging_session> get_ptr(void);
+		/*!
+		 * \brief Destructor; calls \c stop_session() if not already stopped.
+		 */
+		~messaging_session();
 
-	public:
-		void set_kill_code(const bool& kill_code);
-		void set_acceptable_target_ids(
-			const std::vector<std::string>& acceptable_target_ids);
-		void set_ignore_target_ids(
-			const std::vector<std::string>& ignore_target_ids);
-		void set_ignore_snipping_targets(
-			const std::vector<std::string>& ignore_snipping_targets);
-		void set_connection_notification(
-			const std::function<void(std::shared_ptr<messaging_session>,
-									 const bool&)>& notification);
-		void set_message_notification(
-			const std::function<void(
-				std::shared_ptr<container::value_container>)>& notification);
-		void set_file_notification(
-			const std::function<void(const std::string&,
-									 const std::string&,
-									 const std::string&,
-									 const std::string&)>& notification);
-		void set_binary_notification(
-			const std::function<void(const std::string&,
-									 const std::string&,
-									 const std::string&,
-									 const std::string&,
-									 const std::vector<uint8_t>&)>&
-				notification);
-		void set_specific_compress_sequence(
-			const std::function<
-				std::vector<uint8_t>(const std::vector<uint8_t>&, const bool&)>&
-				specific_compress_sequence);
-		void set_specific_encrypt_sequence(
-			const std::function<
-				std::vector<uint8_t>(const std::vector<uint8_t>&, const bool&)>&
-				specific_encrypt_sequence);
+		/*!
+		 * \brief Starts the session: sets up read/error callbacks and begins
+		 * reading data.
+		 */
+		auto start_session() -> void;
 
-	public:
-		const connection_conditions get_confirm_status(void);
-		const session_types get_session_type(void);
-		const std::string target_id(void);
-		const std::string target_sub_id(void);
+		/*!
+		 * \brief Stops the session by closing the socket and marking the
+		 * session as inactive.
+		 */
+		auto stop_session() -> void;
 
-	public:
-		void start(const bool& encrypt_mode,
-				   const bool& compress_mode,
-				   const unsigned short& compress_block_size,
-				   const std::vector<session_types>& possible_session_types,
-				   const unsigned short& high_priority = 8,
-				   const unsigned short& normal_priority = 8,
-				   const unsigned short& low_priority = 8,
-				   const unsigned short& drop_connection_time = 1);
-		void stop(void);
-
-	public:
-		void echo(void);
-		bool send(std::shared_ptr<container::value_container> message);
-		void send_files(std::shared_ptr<container::value_container> message);
-		void send_binary(const std::string& target_id,
-						 const std::string& target_sub_id,
-						 const std::vector<uint8_t>& data);
-		void send_binary(const std::string& source_id,
-						 const std::string& source_sub_id,
-						 const std::string& target_id,
-						 const std::string& target_sub_id,
-						 const std::vector<uint8_t>& data);
-
-	protected:
-		void disconnected(void) override;
-
-	protected:
-		bool contained_snipping_target(const std::string& snipping_target);
-		void check_confirm_condition(void);
-		void send_auto_echo(void);
+		/*!
+		 * \brief Sends data to the connected client, optionally using
+		 * compression/encryption.
+		 * \param data The raw bytes to transmit.
+		 *
+		 * ### Notes
+		 * - If \c compress_mode_ or \c encrypt_mode_ is true, the data will be
+		 * processed by the pipeline's compress/encrypt functions before
+		 * writing.
+		 */
+		auto send_packet(std::vector<uint8_t> data) -> void;
 
 	private:
-		void send_packet(const std::vector<uint8_t>& data) override;
-		void send_file_packet(const std::vector<uint8_t>& data) override;
-		void send_binary_packet(const std::vector<uint8_t>& data) override;
+		/*!
+		 * \brief Callback for when data arrives from the client.
+		 * \param data A vector containing a chunk of received bytes.
+		 *
+		 * Override or extend the logic here to parse messages, handle commands,
+		 * etc. If decompression/decryption is needed, apply \c pipeline_
+		 * accordingly.
+		 */
+		auto on_receive(const std::vector<uint8_t>& data) -> void;
+
+		/*!
+		 * \brief Callback for handling socket errors from \c tcp_socket.
+		 * \param ec The \c std::error_code describing the error.
+		 *
+		 * By default, logs the error and calls \c stop_session().
+		 */
+		auto on_error(std::error_code ec) -> void;
 
 	private:
-		void normal_message(
-			std::shared_ptr<container::value_container> message) override;
-		void connection_message(
-			std::shared_ptr<container::value_container> message);
-		void request_files(std::shared_ptr<container::value_container> message);
-		void echo_message(std::shared_ptr<container::value_container> message);
+		std::string server_id_; /*!< Identifier for the server side. */
 
-	private:
-		void generate_key(void);
-		bool same_key_check(std::shared_ptr<container::value> key);
-		bool same_id_check(void);
+		std::shared_ptr<tcp_socket>
+			socket_;			/*!< The wrapped TCP socket for this session. */
+		pipeline
+			pipeline_; /*!< Pipeline for compress/encrypt transformations. */
 
-	private:
-		bool _kill_code;
-		bool auto_echo_;
-		bool bridge_line_;
-		session_types session_type_;
-		unsigned short _drop_connection_time;
-		std::string source_id_;
-		std::string source_sub_id_;
-		std::string target_id_;
-		std::string target_sub_id_;
-		std::string connection_key_;
-		std::vector<std::string> snipping_targets_;
-		std::vector<std::string> _acceptable_target_ids;
-		std::vector<std::string> _ignore_target_ids;
-		std::vector<std::string> _ignore_snipping_targets;
-		std::vector<session_types> _possible_session_types;
-		unsigned short auto_echo_interval_seconds_;
+		bool compress_mode_{
+			false
+		}; /*!< If true, compress data before sending. */
+		bool encrypt_mode_{
+			false
+		}; /*!< If true, encrypt data before sending. */
 
-	private:
-		std::shared_ptr<asio::ip::tcp::socket> socket_;
-		std::function<void(std::shared_ptr<messaging_session>, const bool&)>
-			connection_;
+		std::atomic<bool> is_stopped_{
+			false
+		}; /*!< Indicates whether this session is stopped. */
 	};
-}
+
+} // namespace network

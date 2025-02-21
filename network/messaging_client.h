@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2021, 🍀☀🌕🌥 🌊
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,146 +32,150 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "constexpr_string.h"
-#include "container.h"
-#include "data_handling.h"
-#include "session_types.h"
-#include "thread_pool.h"
-
-#include <functional>
-#include <map>
 #include <memory>
 #include <string>
-
-#include "asio.hpp"
+#include <atomic>
 #include <thread>
+#include <future>
+#include <optional>
+
+#include <asio.hpp>
+
+#include "tcp_socket.h"
+#include "pipeline.h"
 
 namespace network
 {
 
+	/*!
+	 * \class messaging_client
+	 * \brief A basic TCP client that connects to a remote host, sends/receives
+	 * data using asynchronous operations, and can apply a pipeline for
+	 * transformations.
+	 *
+	 * ### Key Features
+	 * - Uses \c asio::io_context in a dedicated thread to handle I/O events.
+	 * - Connects via \c async_connect, then wraps the socket in a \c tcp_socket
+	 * for asynchronous reads and writes.
+	 * - Optionally compresses/encrypts data before sending, and can similarly
+	 *   decompress/decrypt incoming data if extended.
+	 * - Provides \c start_client(), \c stop_client(), and \c wait_for_stop() to
+	 * control lifecycle.
+	 */
 	class messaging_client
-		: public std::enable_shared_from_this<messaging_client>,
-		  data_handling
+		: public std::enable_shared_from_this<messaging_client>
 	{
 	public:
-		messaging_client(const std::string& source_id,
-						 const unsigned char& start_code_value = 231,
-						 const unsigned char& end_code_value = 67);
-		~messaging_client(void);
+		/*!
+		 * \brief Constructs a client with a given \p client_id used for logging
+		 * or identification.
+		 * \param client_id A string identifier for this client instance.
+		 */
+		messaging_client(const std::string& client_id);
 
-	public:
-		std::shared_ptr<messaging_client> get_ptr(void);
+		/*!
+		 * \brief Destructor; automatically calls \c stop_client() if the client
+		 * is still running.
+		 */
+		~messaging_client();
 
-	public:
-		std::string source_id(void) const;
-		std::string source_sub_id(void) const;
+		/*!
+		 * \brief Starts the client by resolving \p host and \p port, connecting
+		 * asynchronously, and spawning a thread to run \c io_context_.
+		 * \param host The remote hostname or IP address.
+		 * \param port The remote port number to connect.
+		 *
+		 * ### Steps:
+		 * 1. Create \c io_context_.
+		 * 2. Launch \c client_thread_ running \c io_context_->run().
+		 * 3. Resolve & connect, on success calling \c on_connect().
+		 * 4. \c on_connect() sets up the \c tcp_socket and starts reading.
+		 */
+		auto start_client(const std::string& host, unsigned short port) -> void;
 
-	public:
-		void set_auto_echo(const bool& auto_echo,
-						   const unsigned short& echo_interval);
-		void set_bridge_line(const bool& bridge_line);
-		void set_encrypt_mode(const bool& encrypt_mode);
-		void set_compress_mode(const bool& compress_mode);
-		void set_compress_block_size(const unsigned short& compress_block_size);
-		void set_session_types(const session_types& session_type);
-		void set_connection_key(const std::string& connection_key);
-		void set_snipping_targets(
-			const std::vector<std::string>& snipping_targets);
+		/*!
+		 * \brief Stops the client: closes the socket, stops the \c io_context_,
+		 *        and joins the worker thread.
+		 */
+		auto stop_client() -> void;
 
-	public:
-		void set_connection_notification(
-			const std::function<void(const std::string&,
-									 const std::string&,
-									 const bool&)>& notification);
-		void set_message_notification(
-			const std::function<void(
-				std::shared_ptr<container::value_container>)>& notification);
-		void set_file_notification(
-			const std::function<void(const std::string&,
-									 const std::string&,
-									 const std::string&,
-									 const std::string&)>& notification);
-		void set_binary_notification(
-			const std::function<void(const std::string&,
-									 const std::string&,
-									 const std::string&,
-									 const std::string&,
-									 const std::vector<uint8_t>&)>&
-				notification);
-		void set_specific_compress_sequence(
-			const std::function<
-				std::vector<uint8_t>(const std::vector<uint8_t>&, const bool&)>&
-				specific_compress_sequence);
-		void set_specific_encrypt_sequence(
-			const std::function<
-				std::vector<uint8_t>(const std::vector<uint8_t>&, const bool&)>&
-				specific_encrypt_sequence);
+		/*!
+		 * \brief Blocks until \c stop_client() is invoked, i.e., a
+		 * synchronization mechanism.
+		 */
+		auto wait_for_stop() -> void;
 
-	public:
-		connection_conditions get_confirm_status(void) const;
-		void start(const std::string& ip,
-				   const unsigned short& port,
-				   const unsigned short& high_priority = 8,
-				   const unsigned short& normal_priority = 8,
-				   const unsigned short& low_priority = 8);
-		void stop(void);
-
-	public:
-		bool echo(void);
-		bool send(const container::value_container& message);
-		bool send(std::shared_ptr<container::value_container> message);
-		bool send_files(const container::value_container& message);
-		bool send_files(std::shared_ptr<container::value_container> message);
-		bool send_binary(const std::string& target_id,
-						 const std::string& target_sub_id,
-						 const std::vector<uint8_t>& data);
-
-	protected:
-		void send_connection(void);
-		void disconnected(void) override;
+		/*!
+		 * \brief Sends data over the connection, optionally
+		 * compressing/encrypting via the \c pipeline.
+		 * \param data The buffer to send.
+		 *
+		 * If not connected or not running, this call does nothing.
+		 * Otherwise, \c prepare_data_async() + \c tcp_socket::async_send is
+		 * used to deliver the bytes.
+		 */
+		auto send_packet(std::vector<uint8_t> data) -> void;
 
 	private:
-		void send_packet(const std::vector<uint8_t>& data) override;
-		void send_file_packet(const std::vector<uint8_t>& data) override;
-		void send_binary_packet(const std::vector<uint8_t>& data) override;
+		/*!
+		 * \brief Internally attempts to resolve and connect to the remote \p
+		 * host:\p port.
+		 */
+		auto do_connect(const std::string& host, unsigned short port) -> void;
+
+		/*!
+		 * \brief Callback invoked upon completion of an async connect.
+		 * \param ec The \c std::error_code indicating success/failure.
+		 */
+		auto on_connect(std::error_code ec) -> void;
+
+		/*!
+		 * \brief Callback for receiving data from the \c tcp_socket.
+		 * \param data A chunk of bytes that has arrived.
+		 *
+		 * By default, logs the size of received data. To fully handle incoming
+		 * messages, one could parse, decompress, decrypt, etc.
+		 */
+		auto on_receive(const std::vector<uint8_t>& data) -> void;
+
+		/*!
+		 * \brief Callback for handling socket errors from \c tcp_socket.
+		 * \param ec The \c std::error_code describing the error.
+		 *
+		 * By default, logs the error message and \c stop_client().
+		 */
+		auto on_error(std::error_code ec) -> void;
 
 	private:
-		void normal_message(
-			std::shared_ptr<container::value_container> message) override;
-		void confirm_message(
-			std::shared_ptr<container::value_container> message);
-		void request_files(std::shared_ptr<container::value_container> message);
-		void echo_message(std::shared_ptr<container::value_container> message);
+		std::string client_id_; /*!< Identifier or name for this client. */
 
-	private:
-		void connection_notification(const bool& condition);
+		std::atomic<bool> is_running_{
+			false
+		}; /*!< True if client is active. */
+		std::atomic<bool> is_connected_{
+			false
+		}; /*!< True if connected to remote. */
 
-	private:
-		bool create_socket(const std::string& ip, const unsigned short& port);
-		void run(void);
-		void create_thread_pool(const unsigned short& high_priority,
-								const unsigned short& normal_priority,
-								const unsigned short& low_priority);
+		std::shared_ptr<asio::io_context>
+			io_context_;	/*!< I/O context for async operations. */
+		std::shared_ptr<std::thread>
+			client_thread_; /*!< Thread running \c io_context->run(). */
 
-	private:
-		bool auto_echo_;
-		bool bridge_line_;
-		session_types session_type_;
-		std::string source_id_;
-		std::string source_sub_id_;
-		std::string target_id_;
-		std::string target_sub_id_;
-		std::string connection_key_;
-		unsigned short auto_echo_interval_seconds_;
-		std::vector<std::string> snipping_targets_;
+		std::optional<std::promise<void>>
+			stop_promise_;	/*!< Signals \c wait_for_stop() when stopping. */
+		std::future<void> stop_future_; /*!< Used by \c wait_for_stop(). */
 
-	private:
-		std::function<void(const std::string&, const std::string&, const bool&)>
-			connection_;
+		std::shared_ptr<tcp_socket>
+			socket_;   /*!< The \c tcp_socket wrapper once connected. */
 
-	private:
-		std::shared_ptr<std::thread> thread_;
-		std::shared_ptr<asio::ip::tcp::socket> socket_;
-		std::shared_ptr<asio::io_context> io_context_;
+		pipeline
+			pipeline_; /*!< Pipeline for optional compression/encryption. */
+		bool compress_mode_{
+			false
+		}; /*!< If true, compress data before sending. */
+		bool encrypt_mode_{
+			false
+		}; /*!< If true, encrypt data before sending. */
 	};
+
 } // namespace network

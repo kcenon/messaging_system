@@ -1,7 +1,7 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2021, 🍀☀🌕🌥 🌊
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,183 +32,163 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "container.h"
-
-#include "constexpr_string.h"
-#include "session_types.h"
-
-#include <future>
 #include <memory>
-#include <optional>
-#include <string>
-#include <thread>
 #include <vector>
+#include <optional>
+#include <future>
+#include <thread>
+#include <atomic>
+#include <string>
 
-#include "asio.hpp"
+#include <asio.hpp>
 
 namespace network
 {
 	class messaging_session;
+
+	/*!
+	 * \class messaging_server
+	 * \brief A server class that manages incoming TCP connections, creating
+	 *        \c messaging_session instances for each accepted socket.
+	 *
+	 * ### Key Responsibilities
+	 * - Maintains an \c asio::io_context and \c tcp::acceptor to listen on a
+	 * specified port.
+	 * - For each incoming connection, instantiates a \c messaging_session to
+	 * handle the communication logic (compression, encryption, message parsing,
+	 * etc.).
+	 * - Allows external control via \c start_server(), \c stop_server(), and \c
+	 * wait_for_stop().
+	 *
+	 * ### Thread Model
+	 * - A single background thread calls \c io_context.run() to process I/O
+	 * events.
+	 * - Each accepted connection runs asynchronously; thus multiple sessions
+	 * can be active concurrently without blocking each other.
+	 *
+	 * ### Usage Example
+	 * \code
+	 * // 1. Create a messaging_server:
+	 * auto server = std::make_shared<network::messaging_server>("ServerID");
+	 *
+	 * // 2. Start listening on a port:
+	 * server->start_server(5555);
+	 *
+	 * // 3. Wait for stop or run other tasks:
+	 * //    ...
+	 *
+	 * // 4. Eventually stop the server:
+	 * server->stop_server();
+	 *
+	 * // 5. (optional) If a separate thread is calling wait_for_stop():
+	 * server->wait_for_stop();
+	 * \endcode
+	 */
 	class messaging_server
 		: public std::enable_shared_from_this<messaging_server>
 	{
 	public:
-		messaging_server(const std::string& source_id,
-						 const unsigned char& start_code_value = 231,
-						 const unsigned char& end_code_value = 67);
-		~messaging_server(void);
+		/*!
+		 * \brief Constructs a \c messaging_server with an optional string \p
+		 * server_id.
+		 * \param server_id A descriptive identifier for this server instance
+		 * (e.g., "main_server").
+		 */
+		messaging_server(const std::string& server_id);
 
-	public:
-		std::shared_ptr<messaging_server> get_ptr(void);
+		/*!
+		 * \brief Destructor. If the server is still running, \c stop_server()
+		 * is invoked.
+		 */
+		~messaging_server();
 
-	public:
-		void set_encrypt_mode(const bool& encrypt_mode);
-		void set_compress_mode(const bool& compress_mode);
-		void set_compress_block_size(const unsigned short& compress_block_size);
-		void set_use_message_response(const bool& use_message_response);
-		void set_drop_connection_time(
-			const unsigned short& drop_connection_time);
-		void set_connection_key(const std::string& connection_key);
-		void set_acceptable_target_ids(
-			const std::vector<std::string>& acceptable_target_ids);
-		void set_ignore_target_ids(
-			const std::vector<std::string>& ignore_target_ids);
-		void set_ignore_snipping_targets(
-			const std::vector<std::string>& ignore_snipping_targets);
-		void set_possible_session_types(
-			const std::vector<session_types>& possible_session_types);
-		void set_session_limit_count(const size_t& session_limit_count);
+		/*!
+		 * \brief Begins listening on the specified TCP \p port, creates a
+		 * background thread to run I/O operations, and starts accepting
+		 * connections.
+		 *
+		 * \param port The TCP port to bind and listen on (e.g., 5555).
+		 *
+		 * #### Behavior
+		 * - If the server is already running (\c is_running_ is \c true), this
+		 * call does nothing.
+		 * - Otherwise, an \c io_context and \c acceptor are created, \c
+		 * do_accept() is invoked, and a new thread is spawned to run \c
+		 * io_context->run().
+		 */
+		auto start_server(unsigned short port) -> void;
 
-	public:
-		void set_connection_notification(
-			const std::function<void(const std::string&,
-									 const std::string&,
-									 const bool&)>& notification);
-		void set_message_notification(
-			const std::function<void(
-				std::shared_ptr<container::value_container>)>& notification);
-		void set_file_notification(
-			const std::function<void(const std::string&,
-									 const std::string&,
-									 const std::string&,
-									 const std::string&)>& notification);
-		void set_binary_notification(
-			const std::function<void(const std::string&,
-									 const std::string&,
-									 const std::string&,
-									 const std::string&,
-									 const std::vector<uint8_t>&)>&
-				notification);
-		void set_specific_compress_sequence(
-			const std::function<
-				std::vector<uint8_t>(const std::vector<uint8_t>&, const bool&)>&
-				specific_compress_sequence);
-		void set_specific_encrypt_sequence(
-			const std::function<
-				std::vector<uint8_t>(const std::vector<uint8_t>&, const bool&)>&
-				specific_encrypt_sequence);
+		/*!
+		 * \brief Stops the server, closing the acceptor and all active
+		 * sessions, then stops the \c io_context and joins the internal thread.
+		 *
+		 * #### Steps:
+		 * 1. Set \c is_running_ to \c false.
+		 * 2. Close the \c acceptor if open.
+		 * 3. Iterate through all active sessions, calling \c stop_session().
+		 * 4. \c io_context->stop() to halt asynchronous operations.
+		 * 5. Join the background thread if it's joinable.
+		 * 6. Fulfill the \c stop_promise_ so that \c wait_for_stop() can
+		 * return.
+		 *
+		 * \note If the server is not running, this function does nothing.
+		 */
+		auto stop_server() -> void;
 
-	public:
-		void start(const unsigned short& port,
-				   const unsigned short& high_priority = 8,
-				   const unsigned short& normal_priority = 8,
-				   const unsigned short& low_priority = 8);
-		void wait_stop(const unsigned int& seconds = 0);
-		void stop(void);
-
-	public:
-		void disconnect(const std::string& target_id,
-						const std::string& target_sub_id);
-
-	public:
-		void echo(void);
-		bool send(const container::value_container& message,
-				  std::optional<session_types> type
-				  = session_types::message_line);
-		bool send(std::shared_ptr<container::value_container> message,
-				  std::optional<session_types> type
-				  = session_types::message_line);
-		void send_files(const container::value_container& message);
-		void send_files(std::shared_ptr<container::value_container> message);
-		void send_binary(const std::string& target_id,
-						 const std::string& target_sub_id,
-						 const std::vector<uint8_t>& data);
-		void send_binary(const std::string& source_id,
-						 const std::string& source_sub_id,
-						 const std::string& target_id,
-						 const std::string& target_sub_id,
-						 const std::vector<uint8_t>& data);
-
-	protected:
-		void wait_connection(void);
-		void connect_condition(std::shared_ptr<messaging_session> target,
-							   const bool& condition);
+		/*!
+		 * \brief Blocks until \c stop_server() is called, allowing the caller
+		 *        to wait for a graceful shutdown in another context.
+		 */
+		auto wait_for_stop() -> void;
 
 	private:
-		std::vector<std::shared_ptr<messaging_session>> current_sessions(void);
-		void received_message(
-			std::shared_ptr<container::value_container> message);
-		void received_binary(const std::string& source_id,
-							 const std::string& source_sub_id,
-							 const std::string& target_id,
-							 const std::string& target_sub_id,
-							 const std::vector<uint8_t>& data);
+		/*!
+		 * \brief Initiates an asynchronous accept operation (\c async_accept).
+		 *
+		 * On success, \c on_accept() is invoked with a newly accepted \c
+		 * tcp::socket.
+		 */
+		auto do_accept() -> void;
+
+		/*!
+		 * \brief Handler called when an asynchronous accept finishes.
+		 *
+		 * \param ec     The \c std::error_code indicating success or error.
+		 * \param socket The newly accepted \c tcp::socket.
+		 *
+		 * If \c ec is successful and \c is_running_ is still \c true,
+		 * a \c messaging_session is created and stored, then \c do_accept() is
+		 * invoked again to accept the next connection.
+		 */
+		auto on_accept(std::error_code ec, asio::ip::tcp::socket socket)
+			-> void;
 
 	private:
-		bool encrypt_mode_;
-		bool compress_mode_;
-		bool _use_message_response;
-		unsigned short compress_block_size_;
-		unsigned short _drop_connection_time;
-		std::string source_id_;
-		std::string connection_key_;
-		unsigned short _high_priority;
-		unsigned short _normal_priority;
-		unsigned short _low_priority;
-		size_t _session_limit_count;
-		std::vector<std::string> _acceptable_target_ids;
-		std::vector<std::string> _ignore_target_ids;
-		std::vector<std::string> _ignore_snipping_targets;
-		std::vector<session_types> _possible_session_types;
+		std::string
+			server_id_;		/*!< Name or identifier for this server instance. */
 
-	private:
-		unsigned char _start_code_value;
-		unsigned char _end_code_value;
+		std::shared_ptr<asio::io_context>
+			io_context_;	/*!< The I/O context for async ops. */
+		std::shared_ptr<asio::ip::tcp::acceptor>
+			acceptor_;		/*!< Acceptor to listen for new connections. */
+		std::shared_ptr<std::thread>
+			server_thread_; /*!< Thread that runs \c io_context_->run(). */
 
-	private:
-		std::shared_ptr<std::thread> thread_;
-		std::shared_ptr<asio::io_context> io_context_;
-		std::shared_ptr<asio::ip::tcp::acceptor> _acceptor;
+		std::optional<std::promise<void>>
+			stop_promise_;	/*!< Used to signal \c wait_for_stop(). */
+		std::future<void>
+			stop_future_;	/*!< Future that \c wait_for_stop() waits on. */
 
-	private:
-		std::optional<std::promise<bool>> _promise_status;
-		std::future<bool> _future_status;
-		std::vector<std::shared_ptr<messaging_session>> _sessions;
+		std::atomic<bool> is_running_{
+			false
+		}; /*!< Indicates whether the server is active. */
 
-	private:
-		std::function<void(const std::string&, const std::string&, const bool&)>
-			connection_;
-		std::function<void(std::shared_ptr<container::value_container>)>
-			received_message_;
-
-		std::function<void(const std::string&,
-						   const std::string&,
-						   const std::string&,
-						   const std::string&)>
-			received_file_;
-		std::function<void(const std::string&,
-						   const std::string&,
-						   const std::string&,
-						   const std::string&,
-						   const std::vector<uint8_t>&)>
-			received_data_;
-
-	private:
-		std::function<std::vector<uint8_t>(const std::vector<uint8_t>&,
-										   const bool&)>
-			specific_compress_sequence_;
-		std::function<std::vector<uint8_t>(const std::vector<uint8_t>&,
-										   const bool&)>
-			specific_encrypt_sequence_;
+		/*!
+		 * \brief Holds all active sessions. When \c stop_server() is invoked,
+		 *        each session's \c stop_session() is called and they are
+		 * cleared.
+		 */
+		std::vector<std::shared_ptr<messaging_session>> sessions_;
 	};
+
 } // namespace network

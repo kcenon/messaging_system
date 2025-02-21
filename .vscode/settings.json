@@ -7,5 +7,9 @@
     ],
     "cmake.configureArgs": [
     "-DCMAKE_VERBOSE_MAKEFILE=ON"
-    ]
+    ],
+    "files.associations": {
+        "future": "cpp",
+        "list": "cpp"
+    }
 }
