@@ -346,3 +346,4 @@ healthchecksdb
 
 # OSX files
 .DS_Store
+build_xcode/

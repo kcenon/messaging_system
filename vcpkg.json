@@ -4,11 +4,8 @@
   "dependencies": [
     "lz4",
     "fmt",
-    "libiconv",
-    "cpprestsdk",
     "cryptopp",
     "asio",
-    "python3",
     "crossguid",
     "libpq",
     "gtest"
