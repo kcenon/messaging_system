@@ -50,12 +50,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace container
 {
-	constexpr auto TARGET_ID = "1";
-	constexpr auto TARGET_SUB_ID = "2";
-	constexpr auto SOURCE_ID = "3";
-	constexpr auto SOURCE_SUB_ID = "4";
-	constexpr auto MESSAGE_TYPE = "5";
-	constexpr auto MESSAGE_VERSION = "6";
+	inline constexpr std::string_view TARGET_ID = "1";
+	inline constexpr std::string_view TARGET_SUB_ID = "2";
+	inline constexpr std::string_view SOURCE_ID = "3";
+	inline constexpr std::string_view SOURCE_SUB_ID = "4";
+	inline constexpr std::string_view MESSAGE_TYPE = "5";
+	inline constexpr std::string_view MESSAGE_VERSION = "6";
 
 	using namespace utility_module;
 
@@ -446,12 +446,12 @@ namespace container
 		auto end = std::sregex_iterator();
 		for (; it != end; ++it)
 		{
-			parsing((*it)[1], TARGET_ID, (*it)[2], target_id_);
-			parsing((*it)[1], TARGET_SUB_ID, (*it)[2], target_sub_id_);
-			parsing((*it)[1], SOURCE_ID, (*it)[2], source_id_);
-			parsing((*it)[1], SOURCE_SUB_ID, (*it)[2], source_sub_id_);
-			parsing((*it)[1], MESSAGE_TYPE, (*it)[2], message_type_);
-			parsing((*it)[1], MESSAGE_VERSION, (*it)[2], version_);
+			parsing((*it)[1], std::string(TARGET_ID), (*it)[2], target_id_);
+			parsing((*it)[1], std::string(TARGET_SUB_ID), (*it)[2], target_sub_id_);
+			parsing((*it)[1], std::string(SOURCE_ID), (*it)[2], source_id_);
+			parsing((*it)[1], std::string(SOURCE_SUB_ID), (*it)[2], source_sub_id_);
+			parsing((*it)[1], std::string(MESSAGE_TYPE), (*it)[2], message_type_);
+			parsing((*it)[1], std::string(MESSAGE_VERSION), (*it)[2], version_);
 		}
 
 		return deserialize_values(clean, parse_only_header);

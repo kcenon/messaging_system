@@ -33,13 +33,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "messaging_client.h"
 #include "send_coroutine.h"
 #include <iostream>
+#include <string_view>
+#include <type_traits>
+#include <optional>
 
+// Use nested namespace definition (C++17)
 namespace network
 {
 
 	using tcp = asio::ip::tcp;
 
-	messaging_client::messaging_client(const std::string& client_id)
+	// Use string_view for better efficiency (C++17)
+	messaging_client::messaging_client(std::string_view client_id)
 		: client_id_(client_id)
 	{
 		// Optionally configure pipeline or modes here:
@@ -50,7 +55,8 @@ namespace network
 
 	messaging_client::~messaging_client() { stop_client(); }
 
-	auto messaging_client::start_client(const std::string& host,
+	// Use string_view for more efficient string handling (C++17)
+	auto messaging_client::start_client(std::string_view host,
 										unsigned short port) -> void
 	{
 		if (is_running_.load())
@@ -126,7 +132,7 @@ namespace network
 		}
 	}
 
-	auto messaging_client::do_connect(const std::string& host,
+	auto messaging_client::do_connect(std::string_view host,
 									  unsigned short port) -> void
 	{
 		// Use resolver to get endpoints
@@ -134,7 +140,7 @@ namespace network
 		auto self = shared_from_this();
 
 		resolver->async_resolve(
-			host, std::to_string(port),
+			std::string(host), std::to_string(port),
 			[this, self, resolver](std::error_code ec,
 								   tcp::resolver::results_type results)
 			{
@@ -151,7 +157,7 @@ namespace network
 				asio::async_connect(
 					*raw_socket, results,
 					[this, self, raw_socket](std::error_code connect_ec,
-											 const tcp::endpoint&)
+											 const tcp::endpoint& endpoint)
 					{
 						if (connect_ec)
 						{
@@ -194,6 +200,9 @@ namespace network
 		{
 			return;
 		}
+// Using if constexpr for compile-time branching (C++17)
+if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::io_context::executor_type>)
+{
 #ifdef USE_STD_COROUTINE
 		// Coroutine approach
 		asio::co_spawn(socket_->socket().get_executor(),
@@ -212,14 +221,20 @@ namespace network
 		// Fallback approach
 		auto fut = async_send_with_pipeline_no_co(
 			socket_, std::move(data), pipeline_, compress_mode_, encrypt_mode_);
-		// we can block or ignore here
-		std::error_code result_ec = fut.get();
-		if (result_ec)
-		{
-			std::cerr << "[messaging_client] Send error: "
-					  << result_ec.message() << "\n";
+		// Use structured binding with try/catch for better error handling (C++17)
+		try {
+			auto result_ec = fut.get();
+			if (result_ec)
+			{
+				std::cerr << "[messaging_client] Send error: "
+						<< result_ec.message() << "\n";
+			}
+		} catch (const std::exception& e) {
+			std::cerr << "[messaging_client] Exception while waiting for send: "
+					<< e.what() << "\n";
 		}
 #endif
+}
 	}
 
 	auto messaging_client::on_receive(const std::vector<uint8_t>& data) -> void

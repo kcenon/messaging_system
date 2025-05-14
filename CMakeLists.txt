@@ -22,7 +22,7 @@ endif()
 # Include necessary CMake modules
 include(CheckCXXSourceCompiles)
 
-option(SET_STD_FORMAT "Set use std::format if it can use" ON)
+option(SET_STD_FORMAT "Set use std::format if it can use" OFF)
 option(SET_STD_JTHREAD "Set use std::jthread if it can use" ON)
 option(SET_STD_CHRONO_CURRENT_ZONE "Set use std::chrono::current_zone if it can use" ON)
 
@@ -107,6 +107,8 @@ ADD_SUBDIRECTORY(thread_system)
 ADD_SUBDIRECTORY(container)
 ADD_SUBDIRECTORY(database)
 ADD_SUBDIRECTORY(network)
+
 #IF(USE_UNIT_TEST)
-    #ADD_SUBDIRECTORY(unittest)
+    # Temporarily disabled unit tests due to formatter compatibility issues
+    # ADD_SUBDIRECTORY(unittest)
 #ENDIF()

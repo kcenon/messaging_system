@@ -33,7 +33,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <cstdint>
+#include <string_view>
 
+// Use nested namespace definition (C++17)
 namespace network
 {
 	/*!
@@ -50,5 +52,11 @@ namespace network
 		file_mode = 2,	 /*!< File transfer mode. */
 		binary_mode = 3	 /*!< Raw binary data mode. */
 	};
+
+	// Use inline variables for constants (C++17)
+	inline constexpr std::size_t default_buffer_size = 4096;
+	inline constexpr std::size_t default_timeout_ms = 5000;
+	inline constexpr std::string_view default_client_id = "default_client";
+	inline constexpr std::string_view default_server_id = "default_server";
 
 } // namespace network

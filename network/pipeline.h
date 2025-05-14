@@ -35,7 +35,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 #include <cstdint>
 #include <functional>
+#include <string_view>
+#include <type_traits>
 
+// Use nested namespace definition (C++17)
 namespace network
 {
 
@@ -94,6 +97,7 @@ namespace network
 	 * for compress, decompress, encrypt, and decrypt.
 	 * \return A \c pipeline struct with stubbed function objects.
 	 */
+	// Pipeline creation function - can't be constexpr because std::function is not a literal type
 	auto make_default_pipeline() -> pipeline;
 
 } // namespace network

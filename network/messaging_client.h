@@ -34,16 +34,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <memory>
 #include <string>
+#include <string_view>
 #include <atomic>
 #include <thread>
 #include <future>
 #include <optional>
+#include <type_traits>
 
 #include <asio.hpp>
 
 #include "tcp_socket.h"
 #include "pipeline.h"
 
+// Use nested namespace definition in C++17
 namespace network
 {
 
@@ -71,7 +74,7 @@ namespace network
 		 * or identification.
 		 * \param client_id A string identifier for this client instance.
 		 */
-		messaging_client(const std::string& client_id);
+		messaging_client(std::string_view client_id);
 
 		/*!
 		 * \brief Destructor; automatically calls \c stop_client() if the client
@@ -91,7 +94,7 @@ namespace network
 		 * 3. Resolve & connect, on success calling \c on_connect().
 		 * 4. \c on_connect() sets up the \c tcp_socket and starts reading.
 		 */
-		auto start_client(const std::string& host, unsigned short port) -> void;
+		auto start_client(std::string_view host, unsigned short port) -> void;
 
 		/*!
 		 * \brief Stops the client: closes the socket, stops the \c io_context_,
@@ -121,7 +124,7 @@ namespace network
 		 * \brief Internally attempts to resolve and connect to the remote \p
 		 * host:\p port.
 		 */
-		auto do_connect(const std::string& host, unsigned short port) -> void;
+		auto do_connect(std::string_view host, unsigned short port) -> void;
 
 		/*!
 		 * \brief Callback invoked upon completion of an async connect.

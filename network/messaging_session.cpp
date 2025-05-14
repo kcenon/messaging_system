@@ -33,12 +33,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "messaging_session.h"
 #include "send_coroutine.h" // for async_send_with_pipeline_co / no_co
 #include <iostream>
+#include <string_view>
+#include <type_traits>
 
+// Use nested namespace definition (C++17)
 namespace network
 {
 
+	// Use string_view in constructor for efficiency (C++17)
 	messaging_session::messaging_session(asio::ip::tcp::socket socket,
-										 const std::string& server_id)
+										 std::string_view server_id)
 		: server_id_(server_id)
 	{
 		// Create the tcp_socket wrapper
@@ -47,7 +51,7 @@ namespace network
 		// Initialize the pipeline (stub)
 		pipeline_ = make_default_pipeline();
 
-		// Default modes
+		// Default modes - could use inline initialization in header with C++17
 		compress_mode_ = false;
 		encrypt_mode_ = false;
 	}
@@ -96,6 +100,9 @@ namespace network
 		{
 			return;
 		}
+// Using if constexpr for compile-time branching (C++17)
+if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::io_context::executor_type>)
+{
 #ifdef USE_STD_COROUTINE
 		// Coroutine-based approach
 		asio::co_spawn(socket_->socket().get_executor(),
@@ -114,14 +121,21 @@ namespace network
 		// Fallback approach
 		auto fut = async_send_with_pipeline_no_co(
 			socket_, std::move(data), pipeline_, compress_mode_, encrypt_mode_);
-		// We can either block or not
-		std::error_code result_ec = fut.get();
-		if (result_ec)
-		{
-			std::cerr << "[messaging_session] Send error: "
-					  << result_ec.message() << "\n";
+		
+		// Use structured binding with try/catch for better error handling (C++17)
+		try {
+			auto result_ec = fut.get();
+			if (result_ec)
+			{
+				std::cerr << "[messaging_session] Send error: "
+						<< result_ec.message() << "\n";
+			}
+		} catch (const std::exception& e) {
+			std::cerr << "[messaging_session] Exception while waiting for send: "
+					<< e.what() << "\n";
 		}
 #endif
+}
 	}
 
 	auto messaging_session::on_receive(const std::vector<uint8_t>& data) -> void

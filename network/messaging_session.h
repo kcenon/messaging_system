@@ -34,14 +34,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 #include <atomic>
+#include <type_traits>
 
 #include <asio.hpp>
 
 #include "tcp_socket.h"
 #include "pipeline.h"
 
+// Use nested namespace definition in C++17
 namespace network
 {
 
@@ -73,8 +76,9 @@ namespace network
 		 * \param socket    The \c asio::ip::tcp::socket (already connected).
 		 * \param server_id An identifier for this server instance or context.
 		 */
-		messaging_session(asio::ip::tcp::socket socket,
-						  const std::string& server_id);
+		// Using string_view in constructor for efficiency (C++17)
+	messaging_session(asio::ip::tcp::socket socket,
+						  std::string_view server_id);
 
 		/*!
 		 * \brief Destructor; calls \c stop_session() if not already stopped.

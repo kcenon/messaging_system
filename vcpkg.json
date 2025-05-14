@@ -8,6 +8,8 @@
     "asio",
     "crossguid",
     "libpq",
-    "gtest"
+    "gtest",
+    "cpp-httplib",
+    "nlohmann-json"
   ]
 }
