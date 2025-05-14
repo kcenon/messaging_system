@@ -70,7 +70,7 @@ namespace database
 
 	database_types database_manager::database_type(void)
 	{
-		if (database_ == nullptr)
+		if (!database_)
 		{
 			return database_types::none;
 		}
@@ -80,7 +80,7 @@ namespace database
 
 	bool database_manager::connect(const std::string& connect_string)
 	{
-		if (database_ == nullptr)
+		if (!database_)
 		{
 			return false;
 		}
@@ -90,7 +90,7 @@ namespace database
 
 	bool database_manager::create_query(const std::string& query_string)
 	{
-		if (database_ == nullptr)
+		if (!database_)
 		{
 			return false;
 		}
@@ -100,7 +100,7 @@ namespace database
 
 	unsigned int database_manager::insert_query(const std::string& query_string)
 	{
-		if (database_ == nullptr)
+		if (!database_)
 		{
 			return 0;
 		}
@@ -155,9 +155,9 @@ namespace database
 
 	database_manager& database_manager::handle(void)
 	{
-		std::call_once(once_, []() { handle_.reset(new database_manager); });
+		std::call_once(once_, []() { handle_ = std::make_unique<database_manager>(); });
 
-		return *handle_.get();
+		return *handle_;
 	}
 #pragma endregion
 }; // namespace database

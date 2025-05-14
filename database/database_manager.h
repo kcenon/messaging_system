@@ -61,7 +61,7 @@ namespace database
 		 * This constructor is private in many singleton implementations,
 		 * but can remain public if the design requires it.
 		 */
-		database_manager(void);
+		database_manager();
 
 		/**
 		 * @brief Destructor.
@@ -69,7 +69,7 @@ namespace database
 		 * Cleans up resources and disconnects from the database if an
 		 * active connection exists.
 		 */
-		virtual ~database_manager(void);
+		virtual ~database_manager();
 
 		/**
 		 * @brief Sets the database mode (type) for the manager.

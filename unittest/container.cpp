@@ -1,8 +1,9 @@
 #include "gtest/gtest.h"
 
 #include <limits.h>
+#include <string>
 
-#include "converting.h"
+// #include "converting.h" - Module not available yet
 
 #include "container.h"
 #include "values/bool_value.h"
@@ -10,7 +11,18 @@
 #include "values/numeric_value.h"
 
 using namespace container;
-using namespace converting;
+// using namespace converting; - Namespace not available yet
+
+// Temporary replacement for converter functions
+namespace test_utils {
+    std::string to_string(const std::string& str) {
+        return str;
+    }
+    
+    std::string to_string(const std::vector<uint8_t>& data) {
+        return std::string(data.begin(), data.end());
+    }
+}
 
 TEST(container, test)
 {
@@ -22,16 +34,16 @@ TEST(container, test)
 
 	value_container data2(data);
 
-	EXPECT_STREQ(converter::to_string(data.serialize()).c_str(),
-				 converter::to_string(data2.serialize()).c_str());
+	EXPECT_STREQ(test_utils::to_string(data.serialize()).c_str(),
+				 test_utils::to_string(data2.serialize()).c_str());
 
 	data2.add(std::make_shared<long_value>("long_value", LONG_MAX));
 	data2.add(std::make_shared<ulong_value>("ulong_value", ULONG_MAX));
 	data2.add(std::make_shared<llong_value>("llong_value", LLONG_MAX));
 	data2.add(std::make_shared<ullong_value>("ullong_value", ULLONG_MAX));
 
-	EXPECT_STRNE(converter::to_string(data.serialize()).c_str(),
-				 converter::to_string(data2.serialize()).c_str());
+	EXPECT_STRNE(test_utils::to_string(data.serialize()).c_str(),
+				 test_utils::to_string(data2.serialize()).c_str());
 
 	value_container data3(data2);
 	data3.remove("long_value");
@@ -39,6 +51,6 @@ TEST(container, test)
 	data3.remove("llong_value");
 	data3.remove("ullong_value");
 
-	EXPECT_STREQ(converter::to_string(data.serialize()).c_str(),
-				 converter::to_string(data3.serialize()).c_str());
+	EXPECT_STREQ(test_utils::to_string(data.serialize()).c_str(),
+				 test_utils::to_string(data3.serialize()).c_str());
 }
