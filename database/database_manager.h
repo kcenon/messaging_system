@@ -149,7 +149,7 @@ namespace database
 		 *         containing the query results. Returns an empty or null
 		 *         pointer if no results are returned or an error occurs.
 		 */
-		std::shared_ptr<container::value_container> select_query(
+		std::unique_ptr<container::value_container> select_query(
 			const std::string& query_string);
 
 		/**
@@ -162,7 +162,7 @@ namespace database
 
 	private:
 		bool connected_; ///< Indicates whether a database connection is active.
-		std::shared_ptr<database_base>
+		std::unique_ptr<database_base>
 			database_;	 ///< The underlying database interface.
 
 #pragma region singleton

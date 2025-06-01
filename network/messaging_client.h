@@ -159,9 +159,9 @@ namespace network
 			false
 		}; /*!< True if connected to remote. */
 
-		std::shared_ptr<asio::io_context>
+		std::unique_ptr<asio::io_context>
 			io_context_;	/*!< I/O context for async operations. */
-		std::shared_ptr<std::thread>
+		std::unique_ptr<std::thread>
 			client_thread_; /*!< Thread running \c io_context->run(). */
 
 		std::optional<std::promise<void>>

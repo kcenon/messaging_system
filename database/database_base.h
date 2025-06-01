@@ -135,7 +135,7 @@ namespace database
 		 *         container is implementation-specific (it may be empty
 		 *         or null).
 		 */
-		virtual std::shared_ptr<container::value_container> select_query(
+		virtual std::unique_ptr<container::value_container> select_query(
 			const std::string& query_string)
 			= 0;
 

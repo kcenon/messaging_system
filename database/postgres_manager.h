@@ -124,7 +124,7 @@ namespace database
 		 *         that contains the query results. May be null or empty if
 		 *         no results are returned or if an error occurs.
 		 */
-		std::shared_ptr<container::value_container> select_query(
+		std::unique_ptr<container::value_container> select_query(
 			const std::string& query_string) override;
 
 		/**

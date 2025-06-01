@@ -54,7 +54,7 @@ namespace database
 		switch (database_type)
 		{
 		case database_types::postgres:
-			database_ = std::make_shared<postgres_manager>();
+			database_ = std::make_unique<postgres_manager>();
 			break;
 		default:
 			break;
@@ -128,12 +128,12 @@ namespace database
 		return database_->update_query(query_string);
 	}
 
-	std::shared_ptr<container::value_container> database_manager::select_query(
+	std::unique_ptr<container::value_container> database_manager::select_query(
 		const std::string& query_string)
 	{
 		if (database_ == nullptr)
 		{
-			return 0;
+			return nullptr;
 		}
 
 		return database_->select_query(query_string);

@@ -1,4 +1,4 @@
-﻿/*****************************************************************************
+/*****************************************************************************
 BSD 3-Clause License
 
 Copyright (c) 2024, 🍀☀🌕🌥 🌊
@@ -66,13 +66,13 @@ namespace network
 		is_running_.store(true);
 		is_connected_.store(false);
 
-		io_context_ = std::make_shared<asio::io_context>();
+		io_context_ = std::make_unique<asio::io_context>();
 		// For wait_for_stop()
 		stop_promise_.emplace();
 		stop_future_ = stop_promise_->get_future();
 
 		// Launch the thread to run the io_context
-		client_thread_ = std::make_shared<std::thread>(
+		client_thread_ = std::make_unique<std::thread>(
 			[this]()
 			{
 				try
@@ -136,13 +136,13 @@ namespace network
 									  unsigned short port) -> void
 	{
 		// Use resolver to get endpoints
-		auto resolver = std::make_shared<tcp::resolver>(*io_context_);
+		tcp::resolver resolver(*io_context_);
 		auto self = shared_from_this();
 
-		resolver->async_resolve(
+		resolver.async_resolve(
 			std::string(host), std::to_string(port),
-			[this, self, resolver](std::error_code ec,
-								   tcp::resolver::results_type results)
+			[this, self](std::error_code ec,
+						   tcp::resolver::results_type results)
 			{
 				if (ec)
 				{
@@ -153,10 +153,10 @@ namespace network
 				}
 				// Attempt to connect to one of the resolved endpoints
 				// Create a raw ASIO socket
-				auto raw_socket = std::make_shared<tcp::socket>(*io_context_);
+				tcp::socket raw_socket(*io_context_);
 				asio::async_connect(
-					*raw_socket, results,
-					[this, self, raw_socket](std::error_code connect_ec,
+					raw_socket, results,
+					[this, self, &raw_socket](std::error_code connect_ec,
 											 const tcp::endpoint& endpoint)
 					{
 						if (connect_ec)
@@ -167,7 +167,7 @@ namespace network
 						}
 						// On success, wrap it in our tcp_socket
 						socket_ = std::make_shared<tcp_socket>(
-							std::move(*raw_socket));
+							std::move(raw_socket));
 						on_connect(connect_ec);
 					});
 			});

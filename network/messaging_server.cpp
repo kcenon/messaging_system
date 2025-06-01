@@ -57,8 +57,8 @@ namespace network
 		is_running_.store(true);
 
 		// Create io_context and acceptor
-		io_context_ = std::make_shared<asio::io_context>();
-		acceptor_ = std::make_shared<tcp::acceptor>(
+		io_context_ = std::make_unique<asio::io_context>();
+		acceptor_ = std::make_unique<tcp::acceptor>(
 			*io_context_, tcp::endpoint(tcp::v4(), port));
 
 		// Prepare promise/future for wait_for_stop()
@@ -69,7 +69,7 @@ namespace network
 		do_accept();
 
 		// Start thread to run the io_context
-		server_thread_ = std::make_shared<std::thread>(
+		server_thread_ = std::make_unique<std::thread>(
 			[this]()
 			{
 				try

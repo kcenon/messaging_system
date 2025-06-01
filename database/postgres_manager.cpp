@@ -158,11 +158,11 @@ namespace database
 		return result_count;
 	}
 
-	std::shared_ptr<container::value_container> postgres_manager::select_query(
+	std::unique_ptr<container::value_container> postgres_manager::select_query(
 		const std::string& query_string)
 	{
-		std::shared_ptr<container::value_container> container
-			= std::make_shared<container::value_container>(
+		std::unique_ptr<container::value_container> container
+			= std::make_unique<container::value_container>(
 				"query", std::vector<std::shared_ptr<container::value>>{});
 
 		return container;

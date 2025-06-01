@@ -167,11 +167,11 @@ namespace network
 		std::string
 			server_id_;		/*!< Name or identifier for this server instance. */
 
-		std::shared_ptr<asio::io_context>
+		std::unique_ptr<asio::io_context>
 			io_context_;	/*!< The I/O context for async ops. */
-		std::shared_ptr<asio::ip::tcp::acceptor>
+		std::unique_ptr<asio::ip::tcp::acceptor>
 			acceptor_;		/*!< Acceptor to listen for new connections. */
-		std::shared_ptr<std::thread>
+		std::unique_ptr<std::thread>
 			server_thread_; /*!< Thread that runs \c io_context_->run(). */
 
 		std::optional<std::promise<void>>
