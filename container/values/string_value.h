@@ -32,9 +32,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../value.h"
+#include "container/core/value.h"
 
-namespace container
+namespace container_module
 {
 	/**
 	 * @class string_value
@@ -49,4 +49,4 @@ namespace container
 
 		std::string to_string(const bool& original = true) const override;
 	};
-} // namespace container
+} // namespace container_module

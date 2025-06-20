@@ -30,17 +30,17 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "container_value.h"
+#include "container/values/container_value.h"
 #include <algorithm>
 #include <cstring>
-#include "formatter.h"
-#include "convert_string.h"
-#include "bool_value.h"
-#include "bytes_value.h"
-#include "numeric_value.h"
-#include "string_value.h"
+#include "utilities/core/formatter.h"
+#include "utilities/conversion/convert_string.h"
+#include "container/values/bool_value.h"
+#include "container/values/bytes_value.h"
+#include "container/values/numeric_value.h"
+#include "container/values/string_value.h"
 
-namespace container
+namespace container_module
 {
 	using namespace utility_module;
 
@@ -219,7 +219,7 @@ namespace container
 		}
 	}
 
-	void container_value::remove(const std::string& target_name,
+	void container_value::remove(std::string_view target_name,
 								 bool update_count)
 	{
 		bool found = true;
@@ -386,4 +386,4 @@ namespace container
 		long count = std::atol(dataStr.c_str());
 		return std::make_shared<container_value>(name, count);
 	}
-} // namespace container
+} // namespace container_module

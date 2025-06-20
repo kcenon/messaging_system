@@ -30,11 +30,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "string_value.h"
+#include "container/values/string_value.h"
 
-#include "convert_string.h"
+#include "utilities/conversion/convert_string.h"
 
-namespace container
+namespace container_module
 {
 	using namespace utility_module;
 
@@ -70,4 +70,4 @@ namespace container
 		// Return the placeholder-free version
 		return convert_specific_string(data_);
 	}
-} // namespace container
+} // namespace container_module

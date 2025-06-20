@@ -120,11 +120,11 @@ namespace database
 		 *        and returns the resulting data.
 		 *
 		 * @param query_string The SQL SELECT query to be executed.
-		 * @return A shared pointer to a @c container::value_container object
+		 * @return A shared pointer to a @c container_module::value_container object
 		 *         that contains the query results. May be null or empty if
 		 *         no results are returned or if an error occurs.
 		 */
-		std::unique_ptr<container::value_container> select_query(
+		std::unique_ptr<container_module::value_container> select_query(
 			const std::string& query_string) override;
 
 		/**

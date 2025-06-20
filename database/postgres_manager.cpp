@@ -30,11 +30,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "postgres_manager.h"
+#include "database/postgres_manager.h"
 
 #include "libpq-fe.h"
 
-#include "convert_string.h"
+#include "utilities/conversion/convert_string.h"
 
 namespace database
 {
@@ -158,12 +158,12 @@ namespace database
 		return result_count;
 	}
 
-	std::unique_ptr<container::value_container> postgres_manager::select_query(
+	std::unique_ptr<container_module::value_container> postgres_manager::select_query(
 		const std::string& query_string)
 	{
-		std::unique_ptr<container::value_container> container
-			= std::make_unique<container::value_container>(
-				"query", std::vector<std::shared_ptr<container::value>>{});
+		std::unique_ptr<container_module::value_container> container
+			= std::make_unique<container_module::value_container>(
+				"query", std::vector<std::shared_ptr<container_module::value>>{});
 
 		return container;
 	}

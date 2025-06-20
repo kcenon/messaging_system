@@ -30,11 +30,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "bool_value.h"
+#include "container/values/bool_value.h"
 
 #include <cstring>
 
-namespace container
+namespace container_module
 {
 	bool_value::bool_value() : value()
 	{
@@ -74,4 +74,4 @@ namespace container
 	{
 		return to_boolean() ? "true" : "false";
 	}
-} // namespace container
+} // namespace container_module

@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 
 #include "database_types.h"
-#include "container.h"
+#include "container/core/container.h"
 
 namespace database
 {
@@ -129,13 +129,13 @@ namespace database
 		 * results.
 		 *
 		 * @param query_string The SQL SELECT query string.
-		 * @return A shared pointer to a @c container::value_container object
+		 * @return A shared pointer to a @c container_module::value_container object
 		 *         that holds the result set of the query. If the query
 		 *         fails or returns no results, the behavior of this
 		 *         container is implementation-specific (it may be empty
 		 *         or null).
 		 */
-		virtual std::unique_ptr<container::value_container> select_query(
+		virtual std::unique_ptr<container_module::value_container> select_query(
 			const std::string& query_string)
 			= 0;
 

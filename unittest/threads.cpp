@@ -11,15 +11,7 @@
 
 // Commenting out thread-specific code due to std::format compatibility issues
 
-namespace test_utils {
-    std::string to_string(const std::vector<uint8_t>& data) {
-        return std::string(data.begin(), data.end());
-    }
-    
-    std::vector<uint8_t> to_array(const std::string& str) {
-        return std::vector<uint8_t>(str.begin(), str.end());
-    }
-}
+// Using test_utils from container.cpp to avoid duplicate symbols
 
 // Disabled due to std::format compatibility issues
 // TEST(threads, test)

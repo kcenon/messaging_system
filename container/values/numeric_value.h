@@ -32,14 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../value.h"
-#include "../value_types.h"
+#include "container/core/value.h"
+#include "container/core/value_types.h"
 
 #include <cstring>
 #include <type_traits>
 #include <string>
 
-namespace container
+namespace container_module
 {
 	/**
 	 * @class numeric_value
@@ -118,6 +118,6 @@ namespace container
 		= numeric_value<unsigned long long, value_types::ullong_value>;
 	using float_value = numeric_value<float, value_types::float_value>;
 	using double_value = numeric_value<double, value_types::double_value>;
-} // namespace container
+} // namespace container_module
 
-#include "numeric_value.tpp"
+#include "container/values/numeric_value.tpp"

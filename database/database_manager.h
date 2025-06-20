@@ -145,11 +145,11 @@ namespace database
 		 * @brief Executes an SQL SELECT statement and returns the results.
 		 *
 		 * @param query_string The SQL SELECT statement.
-		 * @return A shared pointer to a @c container::value_container
+		 * @return A shared pointer to a @c container_module::value_container
 		 *         containing the query results. Returns an empty or null
 		 *         pointer if no results are returned or an error occurs.
 		 */
-		std::unique_ptr<container::value_container> select_query(
+		std::unique_ptr<container_module::value_container> select_query(
 			const std::string& query_string);
 
 		/**

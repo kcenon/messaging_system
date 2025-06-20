@@ -30,9 +30,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "database_manager.h"
+#include "database/database_manager.h"
 
-#include "postgres_manager.h"
+#include "database/postgres_manager.h"
 
 namespace database
 {
@@ -128,7 +128,7 @@ namespace database
 		return database_->update_query(query_string);
 	}
 
-	std::unique_ptr<container::value_container> database_manager::select_query(
+	std::unique_ptr<container_module::value_container> database_manager::select_query(
 		const std::string& query_string)
 	{
 		if (database_ == nullptr)

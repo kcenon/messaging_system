@@ -30,62 +30,40 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-/**
- * @file numeric_value.tpp
- * @brief Template definitions for numeric_value.
- *
- * This file must be included at the end of numeric_value.h
- * so that all template definitions are visible to the compiler.
- */
-
 #pragma once
 
-#include <cstring>
-#include <type_traits>
-#include <string>
-
-namespace container
+namespace container_module
 {
 	template <typename T, value_types TypeTag>
 	numeric_value<T, TypeTag>::numeric_value(void) : value()
 	{
 		type_ = TypeTag;
-		size_ = sizeof(T);
-		data_.resize(size_, 0);
+		T zero_value = T{};
+		data_.resize(sizeof(T));
+		std::memcpy(data_.data(), &zero_value, sizeof(T));
 	}
 
 	template <typename T, value_types TypeTag>
-	numeric_value<T, TypeTag>::numeric_value(const std::string& name,
-											 const T& initial_value)
-		: numeric_value()
+	numeric_value<T, TypeTag>::numeric_value(const std::string& name, const T& initial_value) 
+		: value(name)
 	{
-		name_ = name;
+		type_ = TypeTag;
+		data_.resize(sizeof(T));
 		std::memcpy(data_.data(), &initial_value, sizeof(T));
 	}
 
 	template <typename T, value_types TypeTag>
 	T numeric_value<T, TypeTag>::get_value(void) const
 	{
-		T temp{};
-		if (data_.size() >= sizeof(T))
-		{
-			std::memcpy(&temp, data_.data(), sizeof(T));
-		}
-		return temp;
+		T result;
+		std::memcpy(&result, data_.data(), sizeof(T));
+		return result;
 	}
 
 	template <typename T, value_types TypeTag>
 	bool numeric_value<T, TypeTag>::to_boolean(void) const
 	{
-		T v = get_value();
-		if constexpr (std::is_floating_point<T>::value)
-		{
-			return (v != static_cast<T>(0.0));
-		}
-		else
-		{
-			return (v != 0);
-		}
+		return get_value() != T{};
 	}
 
 	template <typename T, value_types TypeTag>
@@ -149,21 +127,10 @@ namespace container
 	}
 
 	template <typename T, value_types TypeTag>
-	std::string numeric_value<T, TypeTag>::to_string(
-		const bool& /*original*/) const
+	std::string numeric_value<T, TypeTag>::to_string(const bool& original) const
 	{
-		T val = get_value();
-		if constexpr (std::is_floating_point<T>::value)
-		{
-			// For float/double => might show extra decimals, but it's fine
-			// as a default. Use e.g. <format> if you want custom format.
-			return std::to_string(val);
-		}
-		else
-		{
-			// For integers => cast to long long first, then use std::to_string.
-			long long casted = static_cast<long long>(val);
-			return std::to_string(casted);
-		}
+		(void)original; // unused parameter
+		return std::to_string(get_value());
 	}
-} // namespace container
+
+} // namespace container_module

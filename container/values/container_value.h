@@ -32,11 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../value.h"
+#include "container/core/value.h"
 #include <functional>
 #include <map>
 
-namespace container
+namespace container_module
 {
 	/**
 	 * @class container_value
@@ -63,7 +63,7 @@ namespace container
 				 bool update_count = true) override;
 		void add(const std::vector<std::shared_ptr<value>>& target_values,
 				 bool update_count = true) override;
-		void remove(const std::string& target_name,
+		void remove(std::string_view target_name,
 					bool update_count = true) override;
 		void remove(std::shared_ptr<value> item,
 					bool update_count = true) override;
@@ -107,4 +107,4 @@ namespace container
 		std::shared_ptr<value> set_container(const std::string& name,
 											 const std::string& dataStr);
 	};
-} // namespace container
+} // namespace container_module
