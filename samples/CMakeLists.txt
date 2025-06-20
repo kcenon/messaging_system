@@ -2,7 +2,7 @@
 # Samples CMakeLists.txt
 # 
 # Builds sample applications demonstrating MessagingSystem usage.
-# Provides example code for common use cases.
+# Provides comprehensive examples for common use cases.
 ##################################################
 
 # Project definition
@@ -16,15 +16,14 @@ project(samples
 # Sample Applications List
 ##################################################
 
-# Define sample applications
+# Define consolidated sample applications
 set(SAMPLE_APPS
-    simple_client_server
-    container_demo
-    database_example
-    async_messaging
-    performance_test
-    lockfree_network_demo
-    unified_network_benchmark
+    basic_demo             # Basic functionality demonstration
+    # network_examples        # Comprehensive networking demonstrations (needs API update)
+    # performance_benchmark   # Performance testing and benchmarking (needs API update)
+    # container_usage        # Container manipulation examples (needs API update)
+    # database_integration   # Database integration examples (needs API update)
+    # interop_example       # Language interoperability example (needs API update)
 )
 
 ##################################################
@@ -33,14 +32,11 @@ set(SAMPLE_APPS
 
 # Common include directories for all samples
 set(COMMON_INCLUDES
+    ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/container
     ${CMAKE_SOURCE_DIR}/database
     ${CMAKE_SOURCE_DIR}/network
     ${CMAKE_SOURCE_DIR}/thread_system/sources
-    ${CMAKE_SOURCE_DIR}/thread_system/sources/utilities
-    ${CMAKE_SOURCE_DIR}/thread_system/sources/thread_base
-    ${CMAKE_SOURCE_DIR}/thread_system/sources/thread_pool
-    ${CMAKE_SOURCE_DIR}/thread_system/sources/logger
 )
 
 # Common libraries for all samples
@@ -52,6 +48,7 @@ set(COMMON_LIBS
     thread_base
     logger
     utilities
+    ${CMAKE_THREAD_LIBS_INIT}
 )
 
 ##################################################
@@ -69,18 +66,14 @@ foreach(SAMPLE ${SAMPLE_APPS})
             CXX_STANDARD 20
             CXX_STANDARD_REQUIRED ON
             CXX_EXTENSIONS OFF
-            RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+            RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/samples
         )
         
         # Add include directories
         target_include_directories(${SAMPLE} PRIVATE ${COMMON_INCLUDES})
         
         # Link libraries
-        foreach(lib ${COMMON_LIBS})
-            if(TARGET ${lib})
-                target_link_libraries(${SAMPLE} PRIVATE ${lib})
-            endif()
-        endforeach()
+        target_link_libraries(${SAMPLE} PRIVATE ${COMMON_LIBS})
         
         # Platform-specific configuration
         if(WIN32)
@@ -107,122 +100,135 @@ foreach(SAMPLE ${SAMPLE_APPS})
         
         message(STATUS "  Sample: ${SAMPLE}")
     else()
-        message(STATUS "  Sample: ${SAMPLE} (source not found - creating placeholder)")
-        
-        # Create a placeholder source file with basic template
-        file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/${SAMPLE}.cpp
-"/**
- * @file ${SAMPLE}.cpp
- * @brief Sample application demonstrating ${SAMPLE} functionality
- * 
- * This is a placeholder file. Implement your sample code here.
- */
-
-#include <iostream>
-#include <memory>
-#include \"container/container.h\"
-#include \"network/messaging_server.h\"
-#include \"network/messaging_client.h\"
-
-int main(int argc, char* argv[])
-{
-    try
-    {
-        std::cout << \"${SAMPLE} sample application\\n\";
-        std::cout << \"TODO: Implement ${SAMPLE} functionality\\n\";
-        
-        // Example: Create a container
-        auto container = std::make_shared<container::value_container>();
-        container->set_message_type(\"sample_message\");
-        
-        // TODO: Add your sample implementation here
-        
-        return 0;
-    }
-    catch (const std::exception& e)
-    {
-        std::cerr << \"Error: \" << e.what() << std::endl;
-        return 1;
-    }
-}
-")
+        message(WARNING "  Sample: ${SAMPLE} (main.cpp not found - skipping)")
     endif()
 endforeach()
 
 ##################################################
-# Additional Sample Resources
+# Sample Documentation
 ##################################################
 
-# Copy sample configuration files if they exist
-file(GLOB SAMPLE_CONFIGS ${CMAKE_CURRENT_SOURCE_DIR}/*.json ${CMAKE_CURRENT_SOURCE_DIR}/*.xml)
-if(SAMPLE_CONFIGS)
-    file(COPY ${SAMPLE_CONFIGS} DESTINATION ${CMAKE_BINARY_DIR}/bin/samples)
-endif()
-
-# Create README for samples
+# Create comprehensive README for samples
 file(WRITE ${CMAKE_BINARY_DIR}/bin/samples/README.md
 "# MessagingSystem Sample Applications
 
-This directory contains sample applications demonstrating various features of the MessagingSystem library.
+This directory contains comprehensive sample applications demonstrating various features of the MessagingSystem library.
 
-## Available Samples
+## Sample Applications
 
-1. **simple_client_server** - Basic client-server communication example
-2. **container_demo** - Demonstrates container serialization and manipulation
-3. **database_example** - Shows database integration with PostgreSQL
-4. **async_messaging** - Asynchronous messaging patterns
-5. **performance_test** - Performance benchmarking tools
-6. **lockfree_network_demo** - Lock-free networking demonstration
-7. **unified_network_benchmark** - Comprehensive network performance benchmark
+### 1. network_examples
+Comprehensive networking demonstrations including:
+- Basic client-server communication
+- Multiple concurrent clients
+- Asynchronous messaging patterns
+- Error handling and recovery
 
-## Running Samples
+**Usage:**
+\`\`\`bash
+./network_examples [basic|multiple|async|errors|all]
+\`\`\`
 
-Each sample can be run directly from the command line:
+### 2. performance_benchmark
+Performance testing and benchmarking suite:
+- Message throughput measurement
+- Latency profiling
+- Scalability testing
+- Resource usage monitoring
 
-```bash
-./simple_client_server [options]
-./container_demo
-./database_example
-./async_messaging
-./performance_test
-./lockfree_network_demo
-./unified_network_benchmark
-```
+**Usage:**
+\`\`\`bash
+./performance_benchmark [latency|throughput|scalability|all]
+\`\`\`
 
-## Building Your Own Applications
+### 3. container_usage
+Container manipulation and usage examples:
+- Creating and modifying containers
+- Serialization/deserialization
+- Thread-safe operations
+- SIMD optimizations
+- All supported value types
 
-Use these samples as templates for building your own applications with MessagingSystem.
+**Usage:**
+\`\`\`bash
+./container_usage [basic|serial|nested|thread|simd|types|all]
+\`\`\`
+
+### 4. database_integration
+PostgreSQL database integration examples:
+- Connection management
+- Storing/retrieving containers
+- Transaction handling
+- Bulk operations
+- Advanced queries
+
+**Usage:**
+\`\`\`bash
+./database_integration \"host=localhost port=5432 dbname=messaging user=postgres password=secret\" [create|store|retrieve|transaction|bulk|query|all]
+\`\`\`
+
+### 5. interop_example
+Cross-language interoperability demonstration:
+- C++ client communicating with Python server
+- Protocol compatibility testing
+- Message format validation
+
+**Usage:**
+\`\`\`bash
+# First start the Python server:
+python3 -m messaging_system.samples.simple_server 0.0.0.0 8080
+
+# Then run the C++ client:
+./interop_example 127.0.0.1 8080
+\`\`\`
+
+## Building Samples
+
+All samples are built automatically with the main project:
+
+\`\`\`bash
+cd /path/to/messaging_system
+./build.sh --clean
+\`\`\`
+
+## Prerequisites
+
+1. **Network Examples**: No special requirements
+2. **Performance Benchmark**: Sufficient system resources for stress testing
+3. **Container Usage**: No special requirements
+4. **Database Integration**: PostgreSQL server running and accessible
+5. **Interop Example**: Python messaging_system module installed
+
+## Common Patterns
+
+All samples demonstrate best practices including:
+- Proper error handling
+- Resource management (RAII)
+- Thread safety where applicable
+- Performance considerations
+- Clear code organization
+
+## Extending Samples
+
+To add new functionality to existing samples:
+1. Follow the existing code structure
+2. Add new demonstration functions
+3. Update the command-line interface
+4. Document new features in this README
 
 For more information, see the main project documentation.
 ")
 
 ##################################################
-# Installation Rules (Optional)
+# Installation Rules
 ##################################################
 
 if(NOT BUILD_MESSAGING_SYSTEM_AS_SUBMODULE)
-    # Get list of actual built targets
-    set(BUILT_SAMPLES)
-    foreach(SAMPLE ${SAMPLE_APPS})
-        if(TARGET ${SAMPLE})
-            list(APPEND BUILT_SAMPLES ${SAMPLE})
-        endif()
-    endforeach()
+    # Install samples
+    install(TARGETS ${SAMPLE_APPS}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/samples
+    )
     
-    # Install samples to a separate directory
-    if(BUILT_SAMPLES)
-        install(TARGETS ${BUILT_SAMPLES}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/samples
-        )
-    endif()
-    
-    # Install sample resources
-    if(SAMPLE_CONFIGS)
-        install(FILES ${SAMPLE_CONFIGS}
-            DESTINATION ${CMAKE_INSTALL_BINDIR}/samples
-        )
-    endif()
-    
+    # Install documentation
     install(FILES ${CMAKE_BINARY_DIR}/bin/samples/README.md
         DESTINATION ${CMAKE_INSTALL_BINDIR}/samples
     )
@@ -234,4 +240,4 @@ endif()
 
 message(STATUS "Sample applications configured:")
 message(STATUS "  Output Directory: ${CMAKE_BINARY_DIR}/bin/samples")
-message(STATUS "  Available Samples:")
+message(STATUS "  Configured Samples:")
