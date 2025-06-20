@@ -1,67 +1,208 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/kcenon/messaging_system/badge)](https://www.codefactor.io/repository/github/kcenon/messaging_system)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cacfad55304e44c3af21d3a6b5bcb4dd)](https://www.codacy.com/gh/kcenon/messaging_system/dashboard?utm_source=github.com&utm_medium=referral&utm_content=kcenon/messaging_system&utm_campaign=Badge_Grade)
 
-## What is
+# Messaging System
 
-Normally, it is pretty hard to implement a TCP server and client with a proper thread system in the C++ language. To support newbie's desire to make their own TCP communication system, I planned its project.
+A high-performance, modern C++20 networking framework designed to simplify TCP-based communication systems. This project provides comprehensive threading, container serialization, and asynchronous networking capabilities.
 
-So, it will contain several systems like below,
+## Overview
 
-1.  File log system
-2.  Concurrency control by the thread pool system
-3.  Serializable data packet container
-4.  Asynchronous multi-session TCP server
-5.  Asynchronous TCP Client
+The Messaging System is a production-ready framework that empowers developers to build scalable client-server applications without the typical complexity of manual socket management and protocol implementation. Built with modern C++20 features and offering full Python compatibility.
 
-And, it will provide functions like below,
+## Features
 
-1.  Callback functions for each sequence such as connection, receiving data and receiving file
-2.  Send packet to specific target client
-3.  Send packet to all connected clients
-4.  Send files between main server and middle server
-5.  Packet compress and encrypt
+- **High-Performance Networking**: Asynchronous TCP client/server with non-blocking I/O
+- **Type-Safe Containers**: Serializable data containers with variant-based value storage
+- **Thread System**: Lock-free job queue and thread pool management
+- **Database Integration**: PostgreSQL support for persistent message storage
+- **Cross-Language Support**: Full Python implementation with protocol compatibility
+- **SIMD Optimizations**: Hardware-accelerated data processing
+- **Error Handling**: Comprehensive error reporting and recovery mechanisms
+- **Memory Safety**: RAII principles and smart pointers throughout
 
-## How to build
+## Project Structure
 
-Before building this project, you have to download and build [vcpkg](https://github.com/Microsoft/vcpkg).
-Secondly, should install libraries like below followed vcpkg install rule,
+```
+messaging_system/
+├── container/                    # Serializable data containers
+│   ├── core/                     # Core container and value classes
+│   ├── values/                   # Specialized value implementations
+│   └── internal/                 # Thread-safe and SIMD optimizations
+├── network/                      # Networking components
+│   ├── core/                     # Client and server implementations
+│   ├── session/                  # Session management
+│   └── internal/                 # Protocol and pipeline handling
+├── database/                     # Database integration
+│   ├── postgres_manager.h/cpp    # PostgreSQL support
+│   └── database_manager.h/cpp    # Generic database interface
+├── python/                       # Python implementation
+│   ├── messaging_system/         # Main Python package
+│   ├── pyproject.toml            # Python packaging
+│   └── setup.py                  # Installation script
+├── samples/                      # Example applications
+│   └── basic_demo/               # Basic functionality demonstration
+├── unittest/                     # Unit tests (Google Test)
+├── thread_system/                # Thread management (submodule)
+├── CMakeLists.txt               # Main build configuration
+├── vcpkg.json                   # C++ dependencies
+├── build.sh                     # Build script
+└── dependency.sh               # Dependency installation
+```
 
-1.  [asio library](https://github.com/chriskohlhoff/asio/): to support network implement
-2.  [fmt library](https://github.com/fmtlib/fmt): to support string formatting
-3.  [cryptopp library](https://www.cryptopp.com/): to support data encryption
-4.  [lz4 library](https://github.com/lz4/lz4): to support data compression
-5.  [crossguid library](https://github.com/graeme-hill/crossguid): to support creating guid
-6.  [cpprestsdk library](https://github.com/microsoft/cpprestsdk): to support REST-API server & client
+## Requirements
 
-After all installations, you can build this project on Both Linux and Windows
+- C++20 compatible compiler (GCC 10+, Clang 11+, MSVC 2019+)
+- CMake 3.16 or higher
+- vcpkg package manager
+- Python 3.7+ (for Python bindings)
+- PostgreSQL (for database features)
 
-## How to use
+## Building
 
-To understand how to use this library, it provided several sample programs on the samples folder.
+### Using Build Scripts
 
-1.  [logging_sample](https://github.com/kcenon/samples/tree/main/logging_sample): implemented how to use logging
-2.  [container_sample](https://github.com/kcenon/samples/tree/main/container_sample): implemented how to use data container
-3.  [threads_sample](https://github.com/kcenon/samples/tree/main/threads_sample): implemented how to use priority thread with job or callback function
-4.  [echo_server](https://github.com/kcenon/samples/tree/main/echo_server): implemented how to use network library for creating an echo server
-5.  [echo_client](https://github.com/kcenon/samples/tree/main/echo_client): implemented how to use network library for creating an echo client
-6.  [download_sample](https://github.com/kcenon/file_manager/tree/main/download_sample): implemented how to use file download via provided micro-server on the micro-services folder
-7.  [upload_sample](https://github.com/kcenon/file_manager/tree/main/upload_sample): implemented how to use file upload via provided micro-server on the micro-services folder
-8.  [restapi_client_sample](https://github.com/kcenon/file_manager/tree/main/restapi_client_sample): implemented how to use REST-API via provided micro-server on the micro-services folder
+```bash
+# Install dependencies
+./dependency.sh        # Linux/macOS
+./dependency.bat       # Windows
+
+# Build the project
+./build.sh             # Linux/macOS
+./build.bat            # Windows
+```
+
+### Manual Build
+
+```bash
+# Create build directory
+mkdir build && cd build
+
+# Configure with vcpkg
+cmake .. -DCMAKE_TOOLCHAIN_FILE="path/to/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+# Build
+cmake --build . --config Release
+```
+
+## Usage Examples
+
+### Basic Server Example
+
+```cpp
+#include "network/core/messaging_server.h"
+#include "container/core/container.h"
+
+// Create and configure server
+auto server = std::make_shared<network_module::messaging_server>("my_server");
+
+// Set up event handlers
+server->on_new_client([](const std::string& client_id) {
+    std::cout << "Client connected: " << client_id << std::endl;
+});
+
+server->on_message([&server](const std::string& client_id, const auto& message) {
+    // Echo response
+    server->send_to_client(client_id, message);
+});
+
+// Start server
+server->start_server(8080);
+```
+
+### Basic Client Example
+
+```cpp
+#include "network/core/messaging_client.h"
+#include "container/core/container.h"
+
+// Create client
+auto client = std::make_shared<network_module::messaging_client>("client_001");
+
+// Connect to server
+client->start_client("localhost", 8080);
+
+// Create and send message
+auto container = std::make_shared<container_module::value_container>();
+container->set_message_type("greeting");
+container->add(std::make_shared<container_module::value>(
+    "text", container_module::value_types::string_value, "Hello, World!"
+));
+
+client->send_packet(container->serialize());
+```
+
+### Python Example
+
+```python
+# Install Python package
+pip install -e python/
+
+# Server
+from messaging_system.network import MessagingServer
+
+def handle_message(client_id: str, message):
+    print(f"Received from {client_id}: {message}")
+
+server = MessagingServer(recv_callback=handle_message)
+server.start("0.0.0.0", 8080)
+
+# Client
+from messaging_system.network import MessagingClient
+from messaging_system.container import Container
+
+client = MessagingClient("client_001", "key")
+client.start("localhost", 8080)
+
+message = Container()
+message.create(message_type="test")
+client.send_packet(message)
+```
+
+## Testing
+
+### Running Tests
+
+```bash
+# C++ unit tests
+cd build
+ctest --verbose
+
+# Python tests
+cd python
+python -m pytest tests/
+
+# Run samples
+./build/bin/samples/basic_demo
+python -m messaging_system.samples.simple_server
+```
+
+## Key Components
+
+### Container System
+- **`value_container`**: High-level message container with routing
+- **`value`**: Type-safe polymorphic value storage  
+- **Supported types**: null, bool, integers, floats, strings, binary, nested containers
+- **Thread-safe operations**: Lock-free access patterns
+- **SIMD optimizations**: Hardware-accelerated processing
+
+### Network System  
+- **`messaging_server`**: Multi-client asynchronous TCP server
+- **`messaging_client`**: Robust TCP client with reconnection
+- **Frame-based protocol**: Reliable packet transmission
+- **Event-driven architecture**: Callback-based network events
+- **Session management**: Per-client state tracking
+
+### Database Integration
+- **`postgres_manager`**: PostgreSQL-specific implementation
+- **Container persistence**: Direct serialization support
+- **Transaction support**: ACID-compliant operations
+- **Connection pooling**: Efficient resource management
+
+### Thread System Integration
+- **Lock-free job queue**: High-performance task processing
+- **Type-based scheduling**: Priority-aware job execution
+- **Performance monitoring**: Real-time metrics collection
 
 ## License
 
-Note: This license has also been called the "New BSD License" or "Modified BSD License". See also the 2-clause BSD License.
-
-Copyright 2021 🍀☀🌕🌥 🌊
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-1.  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-2.  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-3.  Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-## Contact
-
-Please report issues or questions here: <https://github.com/kcenon/messaging_system/issues>
+This project is licensed under the BSD 3-Clause License - see the LICENSE file for details.
