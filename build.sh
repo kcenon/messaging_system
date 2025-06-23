@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Messaging System Build Script
-# Enhanced version with better error handling and more options
+# Based on Thread System build script with additional messaging-specific features
 
 # Color definitions for better readability
 RED='\033[0;31m'
@@ -14,7 +14,7 @@ NC='\033[0m' # No Color
 
 # Display banner
 echo -e "${BOLD}${BLUE}============================================${NC}"
-echo -e "${BOLD}${BLUE}    Messaging System Build Script          ${NC}"
+echo -e "${BOLD}${BLUE}      Messaging System Build Script         ${NC}"
 echo -e "${BOLD}${BLUE}============================================${NC}"
 
 # Display help information
@@ -24,13 +24,20 @@ show_help() {
     echo -e "${BOLD}Build Options:${NC}"
     echo "  --clean           Perform a clean rebuild by removing the build directory"
     echo "  --debug           Build in debug mode (default is release)"
-    echo "  --shared          Build shared libraries instead of static"
+    echo "  --benchmark       Build with benchmarks enabled"
     echo ""
     echo -e "${BOLD}Target Options:${NC}"
     echo "  --all             Build all targets (default)"
     echo "  --lib-only        Build only the core libraries"
     echo "  --samples         Build only the sample applications"
     echo "  --tests           Build and run the unit tests"
+    echo "  --thread-system   Build only the thread system components"
+    echo ""
+    echo -e "${BOLD}Module Options:${NC}"
+    echo "  --no-container    Disable container module"
+    echo "  --no-database     Disable database module"
+    echo "  --no-network      Disable network module"
+    echo "  --no-python       Disable Python bindings"
     echo ""
     echo -e "${BOLD}Documentation Options:${NC}"
     echo "  --docs            Generate Doxygen documentation"
@@ -40,10 +47,12 @@ show_help() {
     echo "  --no-format       Disable std::format even if supported"
     echo "  --no-jthread      Disable std::jthread even if supported"
     echo "  --no-span         Disable std::span even if supported"
+    echo "  --lockfree        Enable lock-free implementations by default"
     echo ""
     echo -e "${BOLD}General Options:${NC}"
     echo "  --cores N         Use N cores for compilation (default: auto-detect)"
     echo "  --verbose         Show detailed build output"
+    echo "  --vcpkg-root PATH Set custom vcpkg root directory"
     echo "  --help            Display this help and exit"
     echo ""
 }
@@ -91,6 +100,20 @@ check_dependencies() {
         missing_deps+=("make or ninja")
     fi
     
+    # Check for PostgreSQL development files if database module is enabled
+    if [ $BUILD_DATABASE -eq 1 ]; then
+        if ! pkg-config --exists libpq 2>/dev/null && ! [ -f "/usr/include/postgresql/libpq-fe.h" ]; then
+            print_warning "PostgreSQL development files not found. Database module may fail to build."
+        fi
+    fi
+    
+    # Check for Python development files if Python bindings are enabled
+    if [ $BUILD_PYTHON -eq 1 ]; then
+        if ! command_exists "python3"; then
+            missing_deps+=("python3")
+        fi
+    fi
+    
     if [ ${#missing_deps[@]} -ne 0 ]; then
         print_error "Missing required dependencies: ${missing_deps[*]}"
         print_warning "Please install missing dependencies before building."
@@ -99,8 +122,8 @@ check_dependencies() {
     fi
     
     # Check for vcpkg
-    if [ ! -d "../vcpkg" ]; then
-        print_warning "vcpkg not found in parent directory."
+    if [ ! -d "$VCPKG_ROOT" ]; then
+        print_warning "vcpkg not found at $VCPKG_ROOT"
         print_warning "Running dependency script to set up vcpkg..."
         
         if [ -f "./dependency.sh" ]; then
@@ -131,13 +154,19 @@ CLEAN_BUILD=0
 BUILD_DOCS=0
 CLEAN_DOCS=0
 BUILD_TYPE="Release"
-BUILD_SHARED=0
+BUILD_BENCHMARKS=0
 TARGET="all"
 DISABLE_STD_FORMAT=0
 DISABLE_STD_JTHREAD=0
 DISABLE_STD_SPAN=0
+USE_LOCKFREE=0
 BUILD_CORES=0
 VERBOSE=0
+BUILD_CONTAINER=1
+BUILD_DATABASE=1
+BUILD_NETWORK=1
+BUILD_PYTHON=1
+VCPKG_ROOT="${VCPKG_ROOT:-$HOME/vcpkg}"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -149,8 +178,8 @@ while [[ $# -gt 0 ]]; do
             BUILD_TYPE="Debug"
             shift
             ;;
-        --shared)
-            BUILD_SHARED=1
+        --benchmark)
+            BUILD_BENCHMARKS=1
             shift
             ;;
         --all)
@@ -167,6 +196,26 @@ while [[ $# -gt 0 ]]; do
             ;;
         --tests)
             TARGET="tests"
+            shift
+            ;;
+        --thread-system)
+            TARGET="thread-system"
+            shift
+            ;;
+        --no-container)
+            BUILD_CONTAINER=0
+            shift
+            ;;
+        --no-database)
+            BUILD_DATABASE=0
+            shift
+            ;;
+        --no-network)
+            BUILD_NETWORK=0
+            shift
+            ;;
+        --no-python)
+            BUILD_PYTHON=0
             shift
             ;;
         --docs)
@@ -190,6 +239,10 @@ while [[ $# -gt 0 ]]; do
             DISABLE_STD_SPAN=1
             shift
             ;;
+        --lockfree)
+            USE_LOCKFREE=1
+            shift
+            ;;
         --cores)
             if [[ $2 =~ ^[0-9]+$ ]]; then
                 BUILD_CORES=$2
@@ -198,6 +251,10 @@ while [[ $# -gt 0 ]]; do
                 print_error "Option --cores requires a numeric argument"
                 exit 1
             fi
+            ;;
+        --vcpkg-root)
+            VCPKG_ROOT="$2"
+            shift 2
             ;;
         --verbose)
             VERBOSE=1
@@ -232,10 +289,6 @@ print_status "Using $BUILD_CORES cores for compilation"
 # Store original directory
 ORIGINAL_DIR=$(pwd)
 
-# Set environment variables for build
-export LC_ALL=C
-unset LANGUAGE
-
 # Check for platform-specific settings
 if [ "$(uname)" == "Linux" ]; then
     if [ $(uname -m) == "aarch64" ]; then
@@ -254,24 +307,39 @@ fi
 # Clean build if requested
 if [ $CLEAN_BUILD -eq 1 ]; then
     print_status "Performing clean build..."
-    rm -rf build lib bin
+    rm -rf build build-debug
 fi
 
 # Create build directory if it doesn't exist
-if [ ! -d "build" ]; then
+BUILD_DIR="build"
+if [ "$BUILD_TYPE" == "Debug" ]; then
+    BUILD_DIR="build-debug"
+fi
+
+if [ ! -d "$BUILD_DIR" ]; then
     print_status "Creating build directory..."
-    mkdir -p build
+    mkdir -p "$BUILD_DIR"
 fi
 
 # Prepare CMake arguments
-CMAKE_ARGS="-DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake"
+CMAKE_ARGS="-DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
 CMAKE_ARGS+=" -DCMAKE_BUILD_TYPE=$BUILD_TYPE"
 
-# Add shared/static library option
-if [ $BUILD_SHARED -eq 1 ]; then
-    CMAKE_ARGS+=" -DBUILD_SHARED_LIBS=ON"
-else
-    CMAKE_ARGS+=" -DBUILD_SHARED_LIBS=OFF"
+# Add module flags
+if [ $BUILD_CONTAINER -eq 0 ]; then
+    CMAKE_ARGS+=" -DBUILD_CONTAINER=OFF"
+fi
+
+if [ $BUILD_DATABASE -eq 0 ]; then
+    CMAKE_ARGS+=" -DBUILD_DATABASE=OFF"
+fi
+
+if [ $BUILD_NETWORK -eq 0 ]; then
+    CMAKE_ARGS+=" -DBUILD_NETWORK=OFF"
+fi
+
+if [ $BUILD_PYTHON -eq 0 ]; then
+    CMAKE_ARGS+=" -DBUILD_PYTHON_BINDINGS=OFF"
 fi
 
 # Add feature flags based on options
@@ -287,41 +355,45 @@ if [ $DISABLE_STD_SPAN -eq 1 ]; then
     CMAKE_ARGS+=" -DSET_STD_SPAN=OFF"
 fi
 
-# Set submodule option if building library only
-if [ "$TARGET" == "lib-only" ]; then
-    CMAKE_ARGS+=" -DBUILD_MESSAGING_SYSTEM_AS_SUBMODULE=ON"
-    CMAKE_ARGS+=" -DBUILD_UNIT_TESTS=OFF"
-    CMAKE_ARGS+=" -DBUILD_SAMPLES=OFF"
-elif [ "$TARGET" == "samples" ]; then
-    CMAKE_ARGS+=" -DBUILD_UNIT_TESTS=OFF"
-    CMAKE_ARGS+=" -DBUILD_SAMPLES=ON"
-elif [ "$TARGET" == "tests" ]; then
-    CMAKE_ARGS+=" -DBUILD_UNIT_TESTS=ON"
-    CMAKE_ARGS+=" -DBUILD_SAMPLES=OFF"
+if [ $BUILD_BENCHMARKS -eq 1 ]; then
+    CMAKE_ARGS+=" -DBUILD_BENCHMARKS=ON"
+fi
+
+if [ $USE_LOCKFREE -eq 1 ]; then
+    CMAKE_ARGS+=" -DUSE_LOCKFREE_BY_DEFAULT=ON"
+fi
+
+# Set test option
+if [ "$TARGET" == "tests" ]; then
+    CMAKE_ARGS+=" -DUSE_UNIT_TEST=ON"
 else
-    CMAKE_ARGS+=" -DBUILD_UNIT_TESTS=ON"
-    CMAKE_ARGS+=" -DBUILD_SAMPLES=ON"
+    CMAKE_ARGS+=" -DUSE_UNIT_TEST=OFF"
+fi
+
+# Set samples option
+if [ "$TARGET" == "samples" ]; then
+    CMAKE_ARGS+=" -DBUILD_MESSAGING_SAMPLES=ON"
+else
+    CMAKE_ARGS+=" -DBUILD_MESSAGING_SAMPLES=OFF"
 fi
 
 # Enter build directory
-cd build || { print_error "Failed to enter build directory"; exit 1; }
-
-# Run vcpkg install first
-print_status "Running vcpkg install..."
-cmake .. -DCMAKE_TOOLCHAIN_FILE="../../vcpkg/scripts/buildsystems/vcpkg.cmake" -DONLY_CMAKE_FIND_ROOT_PATH=ON > /dev/null 2>&1
+cd "$BUILD_DIR" || { print_error "Failed to enter build directory"; exit 1; }
 
 # Run CMake configuration
 print_status "Configuring project with CMake..."
-cmake .. $CMAKE_ARGS 2>&1 | tee cmake_output.log
+print_status "CMake arguments: $CMAKE_ARGS"
 
-# Check if CMake configuration was successful by looking for key indicators
-if grep -q "Configuring done" cmake_output.log && grep -q "Generating done" cmake_output.log; then
-    print_success "CMake configuration completed"
-    # Remove the temporary log file
-    rm -f cmake_output.log
+if [ "$(uname)" == "Darwin" ]; then
+    # On macOS, use local modified GTest config
+    cmake .. $CMAKE_ARGS -DCMAKE_PREFIX_PATH="$(pwd)"
 else
+    cmake .. $CMAKE_ARGS
+fi
+
+# Check if CMake configuration was successful
+if [ $? -ne 0 ]; then
     print_error "CMake configuration failed. See the output above for details."
-    rm -f cmake_output.log
     cd "$ORIGINAL_DIR"
     exit 1
 fi
@@ -335,10 +407,12 @@ if [ "$TARGET" == "all" ]; then
     BUILD_TARGET="all"
 elif [ "$TARGET" == "lib-only" ]; then
     BUILD_TARGET="container database network"
+elif [ "$TARGET" == "thread-system" ]; then
+    BUILD_TARGET="thread_base thread_pool typed_thread_pool logger utilities monitoring"
 elif [ "$TARGET" == "samples" ]; then
-    BUILD_TARGET="simple_client_server container_demo database_example async_messaging performance_test lockfree_network_demo unified_network_benchmark"
+    BUILD_TARGET=""  # Let CMake build the samples target
 elif [ "$TARGET" == "tests" ]; then
-    BUILD_TARGET="unittest"
+    BUILD_TARGET=""  # Let CMake build the test targets
 fi
 
 # Detect build system (Ninja or Make)
@@ -386,22 +460,25 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Run tests if requested
+if [ "$TARGET" == "tests" ]; then
+    print_status "Running tests..."
+    
+    # Run CTest
+    ctest -C $BUILD_TYPE --output-on-failure
+    
+    if [ $? -eq 0 ]; then
+        print_success "All tests passed!"
+    else
+        print_error "Some tests failed. See the output above for details."
+    fi
+fi
+
 # Return to original directory
 cd "$ORIGINAL_DIR"
 
-# Run tests if requested
-if [ "$TARGET" == "tests" ] || [ "$TARGET" == "all" ]; then
-    if [ -f "./bin/unittest" ]; then
-        print_status "Running unit tests..."
-        ./bin/unittest
-        if [ $? -ne 0 ]; then
-            print_error "Unit tests failed"
-            exit 1
-        else
-            print_success "All unit tests passed!"
-        fi
-    fi
-fi
+# Show success message
+print_success "Build completed successfully!"
 
 # Generate documentation if requested
 if [ $BUILD_DOCS -eq 1 ]; then
@@ -420,46 +497,46 @@ if [ $BUILD_DOCS -eq 1 ]; then
     
     # Check if Doxyfile exists
     if [ ! -f "Doxyfile" ]; then
-        print_warning "Doxyfile not found. Skipping documentation generation."
+        print_warning "Doxyfile not found. Creating default configuration..."
+        doxygen -g
+    fi
+    
+    # Run doxygen
+    doxygen Doxyfile
+    
+    # Check if documentation generation was successful
+    if [ $? -ne 0 ]; then
+        print_error "Documentation generation failed. See the output above for details."
     else
-        # Run doxygen
-        doxygen Doxyfile
-        
-        # Check if documentation generation was successful
-        if [ $? -ne 0 ]; then
-            print_error "Documentation generation failed. See the output above for details."
-        else
-            print_success "Documentation generated successfully in the docs directory!"
-        fi
+        print_success "Documentation generated successfully in the docs directory!"
     fi
 fi
-
-# Show success message
-print_success "Build completed successfully!"
 
 # Final success message
 echo -e "${BOLD}${GREEN}============================================${NC}"
 echo -e "${BOLD}${GREEN}    Messaging System Build Complete        ${NC}"
 echo -e "${BOLD}${GREEN}============================================${NC}"
 
-# Show available executables
-if [ -d "bin" ]; then
+if [ -d "$BUILD_DIR/bin" ]; then
     echo -e "${CYAN}Available executables:${NC}"
-    ls -la bin/
+    ls -la $BUILD_DIR/bin/
 fi
 
-# Show build configuration
-echo -e "${CYAN}Build type:${NC} $BUILD_TYPE"
-echo -e "${CYAN}Target:${NC} $TARGET"
+echo -e "${CYAN}Build configuration:${NC}"
+echo -e "  Build type: $BUILD_TYPE"
+echo -e "  Target: $TARGET"
+echo -e "  Modules: $([ $BUILD_CONTAINER -eq 1 ] && echo -n "container ") $([ $BUILD_DATABASE -eq 1 ] && echo -n "database ") $([ $BUILD_NETWORK -eq 1 ] && echo -n "network ") $([ $BUILD_PYTHON -eq 1 ] && echo -n "python")"
 
-if [ $BUILD_SHARED -eq 1 ]; then
-    echo -e "${CYAN}Library type:${NC} Shared"
-else
-    echo -e "${CYAN}Library type:${NC} Static"
+if [ $BUILD_BENCHMARKS -eq 1 ]; then
+    echo -e "  Benchmarks: Enabled"
+fi
+
+if [ $USE_LOCKFREE -eq 1 ]; then
+    echo -e "  Lock-free: Enabled by default"
 fi
 
 if [ $BUILD_DOCS -eq 1 ]; then
-    echo -e "${CYAN}Documentation:${NC} Generated"
+    echo -e "  Documentation: Generated"
 fi
 
 exit 0

@@ -85,7 +85,7 @@ endif()
 
 # Utilities library dependency
 if(TARGET utilities)
-    target_link_libraries(${PROJECT_NAME} PUBLIC utilities)
+    target_link_libraries(${PROJECT_NAME} PRIVATE utilities)
 else()
     message(WARNING "utilities target not found - database may have missing dependencies")
 endif()

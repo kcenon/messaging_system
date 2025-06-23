@@ -103,7 +103,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 
 # ThreadSystem utilities dependency
 if(TARGET utilities)
-    target_link_libraries(${PROJECT_NAME} PUBLIC utilities)
+    target_link_libraries(${PROJECT_NAME} PRIVATE utilities)
     # Include ThreadSystem utilities headers
     target_include_directories(${PROJECT_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/thread_system/sources/utilities>

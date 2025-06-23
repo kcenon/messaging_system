@@ -1,15 +1,14 @@
 {
-  "name": "messagingsystem",
+  "name": "messaging-system",
   "version": "1.0.0",
+  "description": "Messaging system with container, database, and network modules",
   "dependencies": [
-    "lz4",
     "fmt",
-    "cryptopp",
-    "asio",
-    "crossguid",
-    "libpq",
     "gtest",
-    "cpp-httplib",
+    "benchmark",
+    "spdlog",
+    "libpqxx",
+    "asio",
     "nlohmann-json"
   ]
 }
