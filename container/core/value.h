@@ -114,73 +114,68 @@ namespace container_module
 		const std::string serialize();
 
 		/**
+		 * @brief Template method for safe type conversion with null checking.
+		 * 
+		 * @tparam T The target type for conversion
+		 * @param type_name Human-readable name of the target type for error messages
+		 * @param default_value Default value to return for base class implementation
+		 * @return Converted value or default_value if conversion is not supported
+		 * @throws std::logic_error if trying to convert from null_value
+		 */
+		template<typename T>
+		T safe_convert(const char* type_name, T default_value) const
+		{
+			if (type_ == value_types::null_value)
+				throw std::logic_error(std::string("Cannot convert null_value to ") + type_name + ".");
+			return default_value;
+		}
+
+		/**
 		 * @brief Virtual numeric/string conversion methods.
 		 */
 		virtual bool to_boolean() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to boolean.");
-			return false;
+			return safe_convert<bool>("boolean", false);
 		}
 		virtual short to_short() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to short.");
-			return 0;
+			return safe_convert<short>("short", 0);
 		}
 		virtual unsigned short to_ushort() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to ushort.");
-			return 0;
+			return safe_convert<unsigned short>("ushort", 0);
 		}
 		virtual int to_int() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to int.");
-			return 0;
+			return safe_convert<int>("int", 0);
 		}
 		virtual unsigned int to_uint() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to uint.");
-			return 0;
+			return safe_convert<unsigned int>("uint", 0);
 		}
 		virtual long to_long() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to long.");
-			return 0;
+			return safe_convert<long>("long", 0);
 		}
 		virtual unsigned long to_ulong() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to ulong.");
-			return 0;
+			return safe_convert<unsigned long>("ulong", 0);
 		}
 		virtual long long to_llong() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to llong.");
-			return 0;
+			return safe_convert<long long>("llong", 0);
 		}
 		virtual unsigned long long to_ullong() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to ullong.");
-			return 0;
+			return safe_convert<unsigned long long>("ullong", 0);
 		}
 		virtual float to_float() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to float.");
-			return 0.0f;
+			return safe_convert<float>("float", 0.0f);
 		}
 		virtual double to_double() const
 		{
-			if (type_ == value_types::null_value)
-				throw std::logic_error("Cannot convert null_value to double.");
-			return 0.0;
+			return safe_convert<double>("double", 0.0);
 		}
 		virtual std::string to_string(const bool& original = true) const
 		{

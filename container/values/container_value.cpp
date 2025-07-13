@@ -292,30 +292,45 @@ namespace container_module
 	std::shared_ptr<value> container_value::set_short(
 		const std::string& name, const std::string& dataStr)
 	{
-		short s = static_cast<short>(std::atoi(dataStr.c_str()));
-		return std::make_shared<short_value>(name, s);
+		try {
+			short s = static_cast<short>(std::stoi(dataStr));
+			return std::make_shared<short_value>(name, s);
+		} catch (const std::exception&) {
+			return std::make_shared<short_value>(name, 0);
+		}
 	}
 
 	std::shared_ptr<value> container_value::set_ushort(
 		const std::string& name, const std::string& dataStr)
 	{
-		unsigned short us
-			= static_cast<unsigned short>(std::atoi(dataStr.c_str()));
-		return std::make_shared<ushort_value>(name, us);
+		try {
+			unsigned short us = static_cast<unsigned short>(std::stoi(dataStr));
+			return std::make_shared<ushort_value>(name, us);
+		} catch (const std::exception&) {
+			return std::make_shared<ushort_value>(name, 0);
+		}
 	}
 
 	std::shared_ptr<value> container_value::set_int(const std::string& name,
 													const std::string& dataStr)
 	{
-		int i = std::atoi(dataStr.c_str());
-		return std::make_shared<int_value>(name, i);
+		try {
+			int i = std::stoi(dataStr);
+			return std::make_shared<int_value>(name, i);
+		} catch (const std::exception&) {
+			return std::make_shared<int_value>(name, 0);
+		}
 	}
 
 	std::shared_ptr<value> container_value::set_uint(const std::string& name,
 													 const std::string& dataStr)
 	{
-		unsigned int ui = static_cast<unsigned int>(std::atoi(dataStr.c_str()));
-		return std::make_shared<uint_value>(name, ui);
+		try {
+			unsigned int ui = static_cast<unsigned int>(std::stoi(dataStr));
+			return std::make_shared<uint_value>(name, ui);
+		} catch (const std::exception&) {
+			return std::make_shared<uint_value>(name, 0);
+		}
 	}
 
 	std::shared_ptr<value> container_value::set_long(const std::string& name,

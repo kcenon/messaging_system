@@ -92,7 +92,7 @@ namespace database
 		return true;
 	}
 
-	unsigned int postgres_manager::insert_query(const std::string& query_string)
+	unsigned int postgres_manager::execute_modification_query(const std::string& query_string)
 	{
 		PGresult* result = (PGresult*)query_result(query_string);
 		if (PQresultStatus(result) != PGRES_TUPLES_OK)
@@ -106,56 +106,32 @@ namespace database
 			return 0;
 		}
 
-		unsigned int result_count = atoi(PQcmdTuples(result));
+		unsigned int result_count;
+		try {
+			result_count = static_cast<unsigned int>(std::stoi(PQcmdTuples(result)));
+		} catch (const std::exception&) {
+			result_count = 0;
+		}
 
 		PQclear(result);
 		result = nullptr;
 
 		return result_count;
+	}
+
+	unsigned int postgres_manager::insert_query(const std::string& query_string)
+	{
+		return execute_modification_query(query_string);
 	}
 
 	unsigned int postgres_manager::update_query(const std::string& query_string)
 	{
-		PGresult* result = (PGresult*)query_result(query_string);
-		if (PQresultStatus(result) != PGRES_TUPLES_OK)
-		{
-			PQclear(result);
-			result = nullptr;
-
-			PQfinish((PGconn*)connection_);
-			connection_ = nullptr;
-
-			return 0;
-		}
-
-		unsigned int result_count = atoi(PQcmdTuples(result));
-
-		PQclear(result);
-		result = nullptr;
-
-		return result_count;
+		return execute_modification_query(query_string);
 	}
 
 	unsigned int postgres_manager::delete_query(const std::string& query_string)
 	{
-		PGresult* result = (PGresult*)query_result(query_string);
-		if (PQresultStatus(result) != PGRES_TUPLES_OK)
-		{
-			PQclear(result);
-			result = nullptr;
-
-			PQfinish((PGconn*)connection_);
-			connection_ = nullptr;
-
-			return 0;
-		}
-
-		unsigned int result_count = atoi(PQcmdTuples(result));
-
-		PQclear(result);
-		result = nullptr;
-
-		return result_count;
+		return execute_modification_query(query_string);
 	}
 
 	std::unique_ptr<container_module::value_container> postgres_manager::select_query(

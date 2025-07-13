@@ -146,6 +146,14 @@ namespace database
 		 */
 		void* query_result(const std::string& query_string);
 
+		/**
+		 * @brief Common implementation for INSERT, UPDATE, and DELETE queries.
+		 * 
+		 * @param query_string The SQL query to be executed.
+		 * @return The number of affected rows, or 0 if an error occurs.
+		 */
+		unsigned int execute_modification_query(const std::string& query_string);
+
 	private:
 		void* connection_; ///< Pointer to the underlying PostgreSQL connection
 						   ///< object.

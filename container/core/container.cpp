@@ -83,8 +83,12 @@ namespace container_module
 			{ value_types::short_value,
 			  [this](const std::string& n, const std::string& d)
 			  {
-				  short s = (short)std::atoi(d.c_str());
-				  return std::make_shared<short_value>(n, s);
+				  try {
+					  short s = static_cast<short>(std::stoi(d));
+					  return std::make_shared<short_value>(n, s);
+				  } catch (const std::exception&) {
+					  return std::make_shared<short_value>(n, 0);
+				  }
 			  } });
 		data_type_map_.insert(
 			{ value_types::ushort_value,
@@ -97,8 +101,12 @@ namespace container_module
 			{ value_types::int_value,
 			  [this](const std::string& n, const std::string& d)
 			  {
-				  int i = std::atoi(d.c_str());
-				  return std::make_shared<int_value>(n, i);
+				  try {
+					  int i = std::stoi(d);
+					  return std::make_shared<int_value>(n, i);
+				  } catch (const std::exception&) {
+					  return std::make_shared<int_value>(n, 0);
+				  }
 			  } });
 		data_type_map_.insert(
 			{ value_types::uint_value,

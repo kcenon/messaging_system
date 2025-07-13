@@ -454,31 +454,50 @@ namespace container_module
 
 	void value::set_short(const std::string& dataStr)
 	{
-		short s = static_cast<short>(std::atoi(dataStr.c_str()));
-		set_data(s);
-		type_ = value_types::short_value;
+		try {
+			short s = static_cast<short>(std::stoi(dataStr));
+			set_data(s);
+			type_ = value_types::short_value;
+		} catch (const std::exception&) {
+			set_data(static_cast<short>(0));
+			type_ = value_types::short_value;
+		}
 	}
 
 	void value::set_ushort(const std::string& dataStr)
 	{
-		unsigned short us
-			= static_cast<unsigned short>(std::atoi(dataStr.c_str()));
-		set_data(us);
-		type_ = value_types::ushort_value;
+		try {
+			unsigned short us = static_cast<unsigned short>(std::stoi(dataStr));
+			set_data(us);
+			type_ = value_types::ushort_value;
+		} catch (const std::exception&) {
+			set_data(static_cast<unsigned short>(0));
+			type_ = value_types::ushort_value;
+		}
 	}
 
 	void value::set_int(const std::string& dataStr)
 	{
-		int i = std::atoi(dataStr.c_str());
-		set_data(i);
-		type_ = value_types::int_value;
+		try {
+			int i = std::stoi(dataStr);
+			set_data(i);
+			type_ = value_types::int_value;
+		} catch (const std::exception&) {
+			set_data(0);
+			type_ = value_types::int_value;
+		}
 	}
 
 	void value::set_uint(const std::string& dataStr)
 	{
-		unsigned int ui = static_cast<unsigned int>(std::atoi(dataStr.c_str()));
-		set_data(ui);
-		type_ = value_types::uint_value;
+		try {
+			unsigned int ui = static_cast<unsigned int>(std::stoi(dataStr));
+			set_data(ui);
+			type_ = value_types::uint_value;
+		} catch (const std::exception&) {
+			set_data(static_cast<unsigned int>(0));
+			type_ = value_types::uint_value;
+		}
 	}
 
 	void value::set_long(const std::string& dataStr)
