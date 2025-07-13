@@ -840,16 +840,16 @@ database_manager& db = database_manager::handle();
 
 ### Migration Guide
 
-See [MIGRATION.md](MIGRATION.md) for detailed migration instructions between versions.
+Migration instructions will be provided in future releases when breaking changes are introduced.
 
 ## Examples and Samples
 
 Complete usage examples are available in the following locations:
 
-- **Container Examples**: [container/examples/](../container/examples/)
-- **Database Examples**: [database/examples/](../database/examples/)  
-- **Network Examples**: [network/examples/](../network/examples/)
-- **Integration Examples**: [examples/](../examples/)
+- **Container Examples**: See container module tests in [unittest/container_test.cpp](../unittest/container_test.cpp)
+- **Database Examples**: See database module tests in [unittest/database_test.cpp](../unittest/database_test.cpp)
+- **Network Examples**: See network module tests in [unittest/network_test.cpp](../unittest/network_test.cpp)
+- **Integration Examples**: See cross-module tests in [unittest/integration_test.cpp](../unittest/integration_test.cpp)
 - **Python Examples**: [python/messaging_system/samples/](../python/messaging_system/samples/)
 
 ## License

@@ -31,10 +31,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include <container/container.h>
+
 #include <memory>
-#include <vector>
 #include <string>
+#include <vector>
+
+#include <container/container.h>
 
 using namespace container_module;
 

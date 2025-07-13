@@ -31,10 +31,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include <network/network.h>
+
+#include <chrono>
 #include <memory>
 #include <thread>
-#include <chrono>
+
+#include <network/network.h>
 
 using namespace network_module;
 
@@ -130,7 +132,7 @@ TEST_F(NetworkTest, ClientDisconnectWithoutConnection) {
 TEST_F(NetworkTest, ServerClientIntegration) {
     server_->start_server(test_port_);
     
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     client_->start_client("127.0.0.1", test_port_);
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -142,7 +144,7 @@ TEST_F(NetworkTest, ServerClientIntegration) {
 TEST_F(NetworkTest, MultipleClients) {
     server_->start_server(test_port_);
     
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     auto client1 = std::make_shared<messaging_client>("client1");
     auto client2 = std::make_shared<messaging_client>("client2");
@@ -171,7 +173,7 @@ TEST_F(NetworkTest, ServerPortBinding) {
     server1->start_server(port1);
     server2->start_server(port2);
     
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     client_->start_client("127.0.0.1", port1);
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -196,7 +198,7 @@ TEST_F(NetworkTest, ServerQuickStartStop) {
 
 TEST_F(NetworkTest, ClientQuickConnectDisconnect) {
     server_->start_server(test_port_);
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     for (int i = 0; i < 5; ++i) {
         client_->start_client("127.0.0.1", test_port_);

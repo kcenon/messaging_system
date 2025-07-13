@@ -31,12 +31,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
+
+#include <chrono>
+#include <memory>
+#include <thread>
+
 #include <container/container.h>
 #include <database/database_manager.h>
 #include <network/network.h>
-#include <memory>
-#include <thread>
-#include <chrono>
 
 using namespace container_module;
 using namespace database;
@@ -98,7 +100,7 @@ TEST_F(IntegrationTest, ContainerAndNetworkIntegration) {
     container_->set_message_type("network_message");
     
     server_->start_server(test_port_);
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     client_->start_client("127.0.0.1", test_port_);
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -115,7 +117,7 @@ TEST_F(IntegrationTest, DatabaseAndNetworkIntegration) {
     database_mgr_->set_mode(database_types::postgres);
     
     server_->start_server(test_port_);
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     client_->start_client("127.0.0.1", test_port_);
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -132,7 +134,7 @@ TEST_F(IntegrationTest, AllModulesIntegration) {
     database_mgr_->set_mode(database_types::postgres);
     
     server_->start_server(test_port_);
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     client_->start_client("127.0.0.1", test_port_);
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -171,7 +173,7 @@ TEST_F(IntegrationTest, ContainerSerializationCycle) {
 
 TEST_F(IntegrationTest, MultipleClientSessions) {
     server_->start_server(test_port_);
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     auto client1 = std::make_shared<messaging_client>("client_1");
     auto client2 = std::make_shared<messaging_client>("client_2");
@@ -181,7 +183,7 @@ TEST_F(IntegrationTest, MultipleClientSessions) {
     client2->start_client("127.0.0.1", test_port_);
     client3->start_client("127.0.0.1", test_port_);
     
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     client1->stop_client();
     client2->stop_client();

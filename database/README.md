@@ -65,12 +65,18 @@ int main() {
     }
     
     // Connect to database
+    // Secure approach: Use environment variables for sensitive information
+    auto get_env_var = [](const char* name, const char* default_val = "") {
+        const char* value = std::getenv(name);
+        return value ? std::string(value) : std::string(default_val);
+    };
+    
     std::string connection_string = 
-        "host=localhost "
-        "port=5432 "
-        "dbname=messaging_system "
-        "user=app_user "
-        "password=secure_password "
+        "host=" + get_env_var("DB_HOST", "localhost") + " "
+        "port=" + get_env_var("DB_PORT", "5432") + " "
+        "dbname=" + get_env_var("DB_NAME", "messaging_system") + " "
+        "user=" + get_env_var("DB_USER", "app_user") + " "
+        "password=" + get_env_var("DB_PASSWORD", "your_password_here") + " "
         "connect_timeout=10";
         
     if (!db.connect(connection_string)) {
@@ -521,7 +527,7 @@ export DB_CONNECT_TIMEOUT=30
       "port": 5432,
       "database": "messaging_system",
       "username": "app_user",
-      "password": "secure_password",
+      "password": "${DB_PASSWORD}",  // Use environment variable
       "ssl_mode": "require",
       "connect_timeout": 30
     },

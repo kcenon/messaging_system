@@ -31,9 +31,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
+
+#include <memory>
+
 #include <database/database_manager.h>
 #include <database/database_types.h>
-#include <memory>
 
 using namespace database;
 
