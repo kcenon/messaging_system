@@ -30,374 +30,375 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "container_value.h"
-
-#include "converting.h"
-
-#include "bool_value.h"
-#include "bytes_value.h"
-#include "double_value.h"
-#include "float_value.h"
-#include "int_value.h"
-#include "llong_value.h"
-#include "long_value.h"
-#include "short_value.h"
-#include "string_value.h"
-#include "uint_value.h"
-#include "ullong_value.h"
-#include "ulong_value.h"
-#include "ushort_value.h"
-
-#include "fmt/format.h"
-#include "fmt/xchar.h"
-
+#include "container/values/container_value.h"
 #include <algorithm>
+#include <cstring>
+#include "utilities/core/formatter.h"
+#include "utilities/conversion/convert_string.h"
+#include "container/values/bool_value.h"
+#include "container/values/bytes_value.h"
+#include "container/values/numeric_value.h"
+#include "container/values/string_value.h"
 
-namespace container
+namespace container_module
 {
-	using namespace converting;
+	using namespace utility_module;
 
-	container_value::container_value(void) : value()
+	container_value::container_value() : value()
 	{
 		type_ = value_types::container_value;
+		long zeroCount = 0;
+		set_data(reinterpret_cast<const unsigned char*>(&zeroCount),
+				 sizeof(long), value_types::container_value);
 
+		// Fill data_type_map_ if you need parse from string -> child creation
 		data_type_map_.insert(
 			{ value_types::bool_value,
-			  std::bind(&container_value::set_boolean, this,
-						std::placeholders::_1, std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_boolean(n, d); } });
 		data_type_map_.insert(
 			{ value_types::short_value,
-			  std::bind(&container_value::set_short, this,
-						std::placeholders::_1, std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_short(n, d); } });
 		data_type_map_.insert(
 			{ value_types::ushort_value,
-			  std::bind(&container_value::set_ushort, this,
-						std::placeholders::_1, std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_ushort(n, d); } });
 		data_type_map_.insert(
 			{ value_types::int_value,
-			  std::bind(&container_value::set_int, this, std::placeholders::_1,
-						std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_int(n, d); } });
 		data_type_map_.insert(
 			{ value_types::uint_value,
-			  std::bind(&container_value::set_uint, this, std::placeholders::_1,
-						std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_uint(n, d); } });
 		data_type_map_.insert(
 			{ value_types::long_value,
-			  std::bind(&container_value::set_long, this, std::placeholders::_1,
-						std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_long(n, d); } });
 		data_type_map_.insert(
 			{ value_types::ulong_value,
-			  std::bind(&container_value::set_ulong, this,
-						std::placeholders::_1, std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_ulong(n, d); } });
 		data_type_map_.insert(
 			{ value_types::llong_value,
-			  std::bind(&container_value::set_llong, this,
-						std::placeholders::_1, std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_llong(n, d); } });
 		data_type_map_.insert(
 			{ value_types::ullong_value,
-			  std::bind(&container_value::set_ullong, this,
-						std::placeholders::_1, std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_ullong(n, d); } });
 		data_type_map_.insert(
 			{ value_types::float_value,
-			  std::bind(&container_value::set_float, this,
-						std::placeholders::_1, std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_float(n, d); } });
 		data_type_map_.insert(
 			{ value_types::double_value,
-			  std::bind(&container_value::set_double, this,
-						std::placeholders::_1, std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_double(n, d); } });
 		data_type_map_.insert(
 			{ value_types::bytes_value,
-			  std::bind(&container_value::set_byte_string, this,
-						std::placeholders::_1, std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_byte_string(n, d); } });
 		data_type_map_.insert(
 			{ value_types::string_value,
-			  std::bind(&container_value::set_string, this,
-						std::placeholders::_1, std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_string(n, d); } });
 		data_type_map_.insert(
 			{ value_types::container_value,
-			  std::bind(&container_value::set_long, this, std::placeholders::_1,
-						std::placeholders::_2) });
+			  [this](const std::string& n, const std::string& d)
+			  { return set_container(n, d); } });
 	}
 
 	container_value::container_value(const std::string& name,
-									 const long& reserved_count)
+									 long reserved_count)
 		: container_value()
 	{
 		name_ = name;
-		type_ = value_types::container_value;
-		size_ = sizeof(long);
-
-		char* data_ptr = (char*)&reserved_count;
-		data_ = std::vector<uint8_t>(data_ptr, data_ptr + size_);
+		set_data(reinterpret_cast<const unsigned char*>(&reserved_count),
+				 sizeof(long), value_types::container_value);
 	}
 
 	container_value::container_value(
 		const std::string& name,
 		const std::vector<std::shared_ptr<value>>& units)
-		: value(name, units)
+		: container_value()
 	{
+		name_ = name;
+		units_ = units;
+		long sz = static_cast<long>(units_.size());
+		set_data(reinterpret_cast<const unsigned char*>(&sz), sizeof(long),
+				 value_types::container_value);
+
+		for (auto& u : units_)
+		{
+			if (u)
+			{
+				u->set_parent(shared_from_this());
+			}
+		}
 	}
 
-	container_value::~container_value(void)
-	{
-		data_.clear();
-		units_.clear();
-	}
+	container_value::~container_value() { units_.clear(); }
 
 	std::shared_ptr<value> container_value::add(const value& item,
-												const bool& update_count)
+												bool update_count)
 	{
-		auto target = data_type_map_.find(item.type());
-		if (target == data_type_map_.end())
+		// Example: interpret item => create correct child type
+		value_types t = item.type();
+		std::shared_ptr<value> child;
+		switch (t)
 		{
-			return add(std::make_shared<value>(item.name(), nullptr, 0,
-											   value_types::null_value));
+		case value_types::bool_value: {
+			bool b = item.to_boolean();
+			child = std::make_shared<bool_value>(item.name(), b);
+			break;
 		}
-
-		return add(target->second(item.name(), item.to_string()));
+		case value_types::short_value: {
+			short s = item.to_short();
+			child = std::make_shared<short_value>(item.name(), s);
+			break;
+		}
+		// ... similarly for other numeric/bytes/string
+		default: {
+			child = std::make_shared<value>(item.name());
+			break;
+		}
+		}
+		return add(child, update_count);
 	}
 
 	std::shared_ptr<value> container_value::add(std::shared_ptr<value> item,
-												const bool& update_count)
+												bool update_count)
 	{
-		std::vector<std::shared_ptr<value>>::iterator target;
-		target = find_if(units_.begin(), units_.end(),
-						 [&item](std::shared_ptr<value> current)
-						 { return current == item; });
-
-		if (target != units_.end())
+		auto it = std::find(units_.begin(), units_.end(), item);
+		if (it != units_.end())
 		{
 			return nullptr;
 		}
-
 		units_.push_back(item);
-		item->set_parent(get_ptr());
+		item->set_parent(shared_from_this());
 
-		if (update_count == true)
+		if (update_count)
 		{
-			long size = static_cast<long>(units_.size());
-			set_data((const unsigned char*)&size, sizeof(long),
+			long sz = static_cast<long>(units_.size());
+			set_data(reinterpret_cast<const unsigned char*>(&sz), sizeof(long),
 					 value_types::container_value);
 		}
-
 		return item;
 	}
 
 	void container_value::add(const std::vector<value>& target_values,
-							  const bool& update_count)
+							  bool update_count)
 	{
-		std::vector<std::shared_ptr<value>> temp_values;
-		for (auto& target_value : target_values)
+		for (auto& tv : target_values)
 		{
-			auto target = data_type_map_.find(target_value.type());
-			if (target == data_type_map_.end())
-			{
-				temp_values.push_back(std::make_shared<value>(
-					target_value.name(), nullptr, 0, value_types::null_value));
-				continue;
-			}
-
-			temp_values.push_back(
-				target->second(target_value.name(), target_value.to_string()));
+			add(tv, false);
 		}
-
-		add(temp_values, update_count);
+		if (update_count)
+		{
+			long sz = static_cast<long>(units_.size());
+			set_data(reinterpret_cast<const unsigned char*>(&sz), sizeof(long),
+					 value_types::container_value);
+		}
 	}
 
 	void container_value::add(
 		const std::vector<std::shared_ptr<value>>& target_values,
-		const bool& update_count)
+		bool update_count)
 	{
-		std::vector<std::shared_ptr<value>>::iterator target;
-		for (auto& target_value : target_values)
+		for (auto& tv : target_values)
 		{
-			target = find_if(units_.begin(), units_.end(),
-							 [&target_value](std::shared_ptr<value> item)
-							 { return item == target_value; });
+			add(tv, false);
+		}
+		if (update_count)
+		{
+			long sz = static_cast<long>(units_.size());
+			set_data(reinterpret_cast<const unsigned char*>(&sz), sizeof(long),
+					 value_types::container_value);
+		}
+	}
 
-			if (target != units_.end())
+	void container_value::remove(std::string_view target_name,
+								 bool update_count)
+	{
+		bool found = true;
+		while (found)
+		{
+			found = false;
+			auto it = std::find_if(units_.begin(), units_.end(),
+								   [&target_name](std::shared_ptr<value> v)
+								   { return (v->name() == target_name); });
+			if (it != units_.end())
 			{
-				continue;
+				units_.erase(it);
+				found = true;
 			}
-
-			units_.push_back(target_value);
-			target_value->set_parent(get_ptr());
 		}
-
-		if (update_count == true)
+		if (update_count)
 		{
-			long size = static_cast<long>(units_.size());
-			set_data((const unsigned char*)&size, sizeof(long),
+			long sz = static_cast<long>(units_.size());
+			set_data(reinterpret_cast<const unsigned char*>(&sz), sizeof(long),
 					 value_types::container_value);
 		}
 	}
 
-	void container_value::remove(const std::string& target_name,
-								 const bool& update_count)
+	void container_value::remove(std::shared_ptr<value> item, bool update_count)
 	{
-		std::vector<std::shared_ptr<value>>::iterator target;
-
-		while (true)
+		auto it = std::find(units_.begin(), units_.end(), item);
+		if (it != units_.end())
 		{
-			target = find_if(units_.begin(), units_.end(),
-							 [&target_name](std::shared_ptr<value> current)
-							 { return current->name() == target_name; });
-
-			if (target == units_.end())
+			units_.erase(it);
+			if (update_count)
 			{
-				break;
+				long sz = static_cast<long>(units_.size());
+				set_data(reinterpret_cast<const unsigned char*>(&sz),
+						 sizeof(long), value_types::container_value);
 			}
-
-			units_.erase(target);
-		}
-
-		if (update_count == true)
-		{
-			long size = static_cast<long>(units_.size());
-			set_data((const unsigned char*)&size, sizeof(long),
-					 value_types::container_value);
 		}
 	}
 
-	void container_value::remove(std::shared_ptr<value> item,
-								 const bool& update_count)
-	{
-		std::vector<std::shared_ptr<value>>::iterator target;
-		target = find_if(units_.begin(), units_.end(),
-						 [&item](std::shared_ptr<value> current)
-						 { return current == item; });
-
-		if (target == units_.end())
-		{
-			return;
-		}
-
-		units_.erase(target);
-
-		if (update_count == true)
-		{
-			long size = static_cast<long>(units_.size());
-			set_data((const unsigned char*)&size, sizeof(long),
-					 value_types::container_value);
-		}
-	}
-
-	void container_value::remove_all(void)
+	void container_value::remove_all()
 	{
 		units_.clear();
-
-		long size = static_cast<long>(units_.size());
-		set_data((const unsigned char*)&size, sizeof(long),
+		long zero = 0;
+		set_data(reinterpret_cast<const unsigned char*>(&zero), sizeof(long),
 				 value_types::container_value);
 	}
 
-	long container_value::to_long(void) const
+	long container_value::to_long() const
 	{
 		long temp = 0;
-		memcpy(&temp, data_.data(), size_);
-
-		return static_cast<long>(temp);
+		if (data_.size() >= sizeof(long))
+		{
+			std::memcpy(&temp, data_.data(), sizeof(long));
+		}
+		return temp;
 	}
 
-	std::string container_value::to_string(const bool&) const
+	std::string container_value::to_string(const bool& /*original*/) const
 	{
-		return fmt::format("{}", to_long());
+		long cnt = to_long();
+		return formatter::format("{}", cnt);
 	}
 
-	std::shared_ptr<value> container_value::set_boolean(const std::string& name,
-														const std::string& data)
+	std::shared_ptr<value> container_value::set_boolean(
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<bool_value>(name, data);
+		bool b = (dataStr == "true");
+		return std::make_shared<bool_value>(name, b);
 	}
 
-	std::shared_ptr<value> container_value::set_short(const std::string& name,
-													  const std::string& data)
+	std::shared_ptr<value> container_value::set_short(
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<short_value>(
-			name, (short)atoi(converter::to_string(data).c_str()));
+		try {
+			short s = static_cast<short>(std::stoi(dataStr));
+			return std::make_shared<short_value>(name, s);
+		} catch (const std::exception&) {
+			return std::make_shared<short_value>(name, 0);
+		}
 	}
 
-	std::shared_ptr<value> container_value::set_ushort(const std::string& name,
-													   const std::string& data)
+	std::shared_ptr<value> container_value::set_ushort(
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<ushort_value>(
-			name, (unsigned short)atoi(converter::to_string(data).c_str()));
+		try {
+			unsigned short us = static_cast<unsigned short>(std::stoi(dataStr));
+			return std::make_shared<ushort_value>(name, us);
+		} catch (const std::exception&) {
+			return std::make_shared<ushort_value>(name, 0);
+		}
 	}
 
 	std::shared_ptr<value> container_value::set_int(const std::string& name,
-													const std::string& data)
+													const std::string& dataStr)
 	{
-		return std::make_shared<int_value>(
-			name, (int)atoi(converter::to_string(data).c_str()));
+		try {
+			int i = std::stoi(dataStr);
+			return std::make_shared<int_value>(name, i);
+		} catch (const std::exception&) {
+			return std::make_shared<int_value>(name, 0);
+		}
 	}
 
 	std::shared_ptr<value> container_value::set_uint(const std::string& name,
-													 const std::string& data)
+													 const std::string& dataStr)
 	{
-		return std::make_shared<uint_value>(
-			name, (unsigned int)atoi(converter::to_string(data).c_str()));
+		try {
+			unsigned int ui = static_cast<unsigned int>(std::stoi(dataStr));
+			return std::make_shared<uint_value>(name, ui);
+		} catch (const std::exception&) {
+			return std::make_shared<uint_value>(name, 0);
+		}
 	}
 
 	std::shared_ptr<value> container_value::set_long(const std::string& name,
-													 const std::string& data)
+													 const std::string& dataStr)
 	{
-		return std::make_shared<long_value>(
-			name, (long)atol(converter::to_string(data).c_str()));
+		long l = std::atol(dataStr.c_str());
+		return std::make_shared<long_value>(name, l);
 	}
 
-	std::shared_ptr<value> container_value::set_ulong(const std::string& name,
-													  const std::string& data)
+	std::shared_ptr<value> container_value::set_ulong(
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<ulong_value>(
-			name, (unsigned long)atol(converter::to_string(data).c_str()));
+		unsigned long ul
+			= static_cast<unsigned long>(std::atol(dataStr.c_str()));
+		return std::make_shared<ulong_value>(name, ul);
 	}
 
-	std::shared_ptr<value> container_value::set_llong(const std::string& name,
-													  const std::string& data)
+	std::shared_ptr<value> container_value::set_llong(
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<llong_value>(
-			name, (long long)atoll(converter::to_string(data).c_str()));
+		long long ll = std::atoll(dataStr.c_str());
+		return std::make_shared<llong_value>(name, ll);
 	}
 
-	std::shared_ptr<value> container_value::set_ullong(const std::string& name,
-													   const std::string& data)
+	std::shared_ptr<value> container_value::set_ullong(
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<ullong_value>(
-			name,
-			(unsigned long long)atoll(converter::to_string(data).c_str()));
+		unsigned long long ull
+			= static_cast<unsigned long long>(std::atoll(dataStr.c_str()));
+		return std::make_shared<ullong_value>(name, ull);
 	}
 
-	std::shared_ptr<value> container_value::set_float(const std::string& name,
-													  const std::string& data)
+	std::shared_ptr<value> container_value::set_float(
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<float_value>(
-			name, (float)atof(converter::to_string(data).c_str()));
+		float f = std::atof(dataStr.c_str());
+		return std::make_shared<float_value>(name, f);
 	}
 
-	std::shared_ptr<value> container_value::set_double(const std::string& name,
-													   const std::string& data)
+	std::shared_ptr<value> container_value::set_double(
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<double_value>(
-			name, (double)atof(converter::to_string(data).c_str()));
+		double d = std::atof(dataStr.c_str());
+		return std::make_shared<double_value>(name, d);
 	}
 
 	std::shared_ptr<value> container_value::set_byte_string(
-		const std::string& name, const std::string& data)
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<bytes_value>(
-			name, converter::from_base64(data.c_str()));
+		auto [val, err] = convert_string::from_base64(dataStr);
+		if (err.has_value())
+		{
+			std::vector<uint8_t> empty;
+			return std::make_shared<bytes_value>(name, empty);
+		}
+		return std::make_shared<bytes_value>(name, val.data(), val.size());
 	}
 
-	std::shared_ptr<value> container_value::set_string(const std::string& name,
-													   const std::string& data)
+	std::shared_ptr<value> container_value::set_string(
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<string_value>(name, data);
+		return std::make_shared<string_value>(name, dataStr);
 	}
 
 	std::shared_ptr<value> container_value::set_container(
-		const std::string& name, const std::string& data)
+		const std::string& name, const std::string& dataStr)
 	{
-		return std::make_shared<container_value>(
-			name, (long)atol(converter::to_string(data).c_str()));
+		long count = std::atol(dataStr.c_str());
+		return std::make_shared<container_value>(name, count);
 	}
-} // namespace container
+} // namespace container_module

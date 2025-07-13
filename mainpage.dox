@@ -1,0 +1,149 @@
+/**
+@mainpage Messaging System Documentation
+
+@section intro Introduction
+
+The Messaging System is a high-performance C++20 framework for building distributed messaging applications. 
+It combines type-safe containers, PostgreSQL database integration, and TCP networking with the power of 
+the lock-free thread_system for exceptional performance.
+
+@section features Key Features
+
+- **High-Performance Threading**: Integrated lock-free thread pools providing 2.14x throughput improvement
+- **Type-Safe Containers**: Thread-safe, SIMD-optimized data containers with variant value types
+- **Database Integration**: PostgreSQL support with connection pooling and prepared statements
+- **Network Module**: Asynchronous TCP client/server with coroutine support
+- **Python Bindings**: Complete Python API for all modules
+- **Lock-free Options**: Optional lock-free implementations for maximum performance
+
+@section modules System Modules
+
+@subsection container Container Module
+The container module provides thread-safe, type-safe data containers with:
+- Variant value types (bool, numeric, string, bytes, nested containers)
+- SIMD-optimized operations
+- Thread-safe access patterns
+- Memory-efficient storage
+
+@subsection database Database Module
+The database module offers PostgreSQL integration with:
+- Connection pooling
+- Prepared statement support
+- Asynchronous query execution
+- Transaction management
+- Error handling and recovery
+
+@subsection network Network Module
+The network module implements high-performance messaging with:
+- TCP client and server implementations
+- Coroutine-based asynchronous I/O
+- Pipeline processing for message handling
+- Session management
+- Binary and text protocol support
+
+@subsection thread_system Thread System
+The integrated thread_system provides:
+- Standard and lock-free thread pools
+- Type-based job prioritization (RealTime, Batch, Background)
+- Hazard pointer memory management
+- Lock-free queues and data structures
+- Comprehensive logging and monitoring
+
+@section performance Performance Characteristics
+
+With the lock-free thread_system integration:
+- **Throughput**: Up to 2.48M jobs/second (lock-free) vs 1.16M (mutex-based)
+- **Latency**: Sub-microsecond job scheduling
+- **Scalability**: Linear scaling up to 16+ threads
+- **Memory**: Efficient hazard pointer-based reclamation
+
+@section getting_started Getting Started
+
+@subsection building Building the System
+
+@code{.sh}
+# Install dependencies
+./dependency.sh
+
+# Build with default options
+./build.sh
+
+# Build with lock-free implementations
+./build.sh --lockfree
+
+# Build specific modules only
+./build.sh --no-database --no-python
+@endcode
+
+@subsection basic_usage Basic Usage Example
+
+@code{.cpp}
+#include <messaging_system/container/container.h>
+#include <messaging_system/network/messaging_server.h>
+#include <thread_pool/core/lockfree_thread_pool.h>
+
+int main() {
+    // Create a lock-free thread pool
+    auto pool = std::make_shared<thread_pool_module::lockfree_thread_pool>();
+    pool->start();
+    
+    // Create messaging server with the thread pool
+    network::messaging_server server(8080);
+    server.set_thread_pool(pool);
+    
+    // Set up message handler
+    server.on_message([](auto session, auto message) {
+        // Process message using container
+        container::container data;
+        data.deserialize(message);
+        
+        // Handle the message...
+    });
+    
+    server.start();
+    
+    // Run until shutdown
+    server.wait();
+    
+    return 0;
+}
+@endcode
+
+@section architecture System Architecture
+
+The messaging system is built on a layered architecture:
+
+1. **Foundation Layer**: Thread system with lock-free primitives
+2. **Core Layer**: Container, database, and network modules
+3. **Integration Layer**: Module interconnections and shared resources
+4. **API Layer**: C++ and Python interfaces
+
+@section thread_safety Thread Safety
+
+All public interfaces in the messaging system are thread-safe by design:
+- Containers use internal synchronization
+- Database connections are pooled and protected
+- Network operations are asynchronous and thread-safe
+- The thread system provides safe job scheduling
+
+@section configuration Configuration
+
+The system supports extensive configuration through:
+- CMake build options
+- Runtime configuration files
+- Environment variables
+- Programmatic configuration
+
+@section examples More Examples
+
+See the @ref samples directory for complete examples including:
+- Basic client/server communication
+- Database integration patterns
+- Container usage patterns
+- Thread pool configuration
+- Python binding examples
+
+@section license License
+
+BSD 3-Clause License - see LICENSE file for details.
+*/

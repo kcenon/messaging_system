@@ -1,0 +1,12 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/messaging_system_targets.cmake")
+
+# Find dependencies
+find_package(Threads REQUIRED)
+
+# Include thread_system
+set(thread_system_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../thread_system/lib/cmake/ThreadSystem")
+find_package(ThreadSystem REQUIRED)
+
+check_required_components(messaging_system)

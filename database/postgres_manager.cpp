@@ -30,15 +30,15 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "postgres_manager.h"
+#include "database/postgres_manager.h"
 
 #include "libpq-fe.h"
 
-#include "converting.h"
+#include "utilities/conversion/convert_string.h"
 
 namespace database
 {
-	using namespace converting;
+	using namespace utility_module;
 
 	postgres_manager::postgres_manager(void) : connection_(nullptr) {}
 
@@ -51,7 +51,16 @@ namespace database
 
 	bool postgres_manager::connect(const std::string& connect_string)
 	{
-		connection_ = PQconnectdb(converter::to_string(connect_string).c_str());
+		auto [converted_string, error_message]
+			= convert_string::utf8_to_system(connect_string);
+		if (error_message.has_value())
+		{
+			return false;
+		}
+
+		auto converted_connect_string = converted_string.value();
+
+		connection_ = PQconnectdb(converted_connect_string.c_str());
 		if (PQstatus((PGconn*)connection_) != CONNECTION_OK)
 		{
 			PQfinish((PGconn*)connection_);
@@ -83,7 +92,7 @@ namespace database
 		return true;
 	}
 
-	unsigned int postgres_manager::insert_query(const std::string& query_string)
+	unsigned int postgres_manager::execute_modification_query(const std::string& query_string)
 	{
 		PGresult* result = (PGresult*)query_result(query_string);
 		if (PQresultStatus(result) != PGRES_TUPLES_OK)
@@ -97,64 +106,40 @@ namespace database
 			return 0;
 		}
 
-		unsigned int result_count = atoi(PQcmdTuples(result));
+		unsigned int result_count;
+		try {
+			result_count = static_cast<unsigned int>(std::stoi(PQcmdTuples(result)));
+		} catch (const std::exception&) {
+			result_count = 0;
+		}
 
 		PQclear(result);
 		result = nullptr;
 
 		return result_count;
+	}
+
+	unsigned int postgres_manager::insert_query(const std::string& query_string)
+	{
+		return execute_modification_query(query_string);
 	}
 
 	unsigned int postgres_manager::update_query(const std::string& query_string)
 	{
-		PGresult* result = (PGresult*)query_result(query_string);
-		if (PQresultStatus(result) != PGRES_TUPLES_OK)
-		{
-			PQclear(result);
-			result = nullptr;
-
-			PQfinish((PGconn*)connection_);
-			connection_ = nullptr;
-
-			return 0;
-		}
-
-		unsigned int result_count = atoi(PQcmdTuples(result));
-
-		PQclear(result);
-		result = nullptr;
-
-		return result_count;
+		return execute_modification_query(query_string);
 	}
 
 	unsigned int postgres_manager::delete_query(const std::string& query_string)
 	{
-		PGresult* result = (PGresult*)query_result(query_string);
-		if (PQresultStatus(result) != PGRES_TUPLES_OK)
-		{
-			PQclear(result);
-			result = nullptr;
-
-			PQfinish((PGconn*)connection_);
-			connection_ = nullptr;
-
-			return 0;
-		}
-
-		unsigned int result_count = atoi(PQcmdTuples(result));
-
-		PQclear(result);
-		result = nullptr;
-
-		return result_count;
+		return execute_modification_query(query_string);
 	}
 
-	std::shared_ptr<container::value_container> postgres_manager::select_query(
+	std::unique_ptr<container_module::value_container> postgres_manager::select_query(
 		const std::string& query_string)
 	{
-		std::shared_ptr<container::value_container> container
-			= std::make_shared<container::value_container>(
-				"query", std::vector<std::shared_ptr<container::value>>{});
+		std::unique_ptr<container_module::value_container> container
+			= std::make_unique<container_module::value_container>(
+				"query", std::vector<std::shared_ptr<container_module::value>>{});
 
 		return container;
 	}
@@ -187,7 +172,15 @@ namespace database
 			return nullptr;
 		}
 
-		return PQexec((PGconn*)connection_,
-					  converter::to_string(query_string).c_str());
+		auto [converted_string, error_message]
+			= convert_string::utf8_to_system(query_string);
+		if (error_message.has_value())
+		{
+			return nullptr;
+		}
+
+		auto converted_query_string = converted_string.value();
+
+		return PQexec((PGconn*)connection_, converted_query_string.c_str());
 	}
 }; // namespace database

@@ -32,20 +32,35 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "../value.h"
+#include "container/core/value.h"
 
-namespace container
+namespace container_module
 {
+	/**
+	 * @class bool_value
+	 * @brief A specialized value for boolean data.
+	 */
 	class bool_value : public value
 	{
 	public:
-		bool_value(void);
-		bool_value(const std::string& name, const bool& value);
-		bool_value(const std::string& name, const std::string& value);
-		~bool_value(void) = default;
+		/**
+		 * @brief Default constructor. Initializes as a false boolean.
+		 */
+		bool_value();
 
-	public:
+		/**
+		 * @brief Construct a bool_value from a bool.
+		 */
+		bool_value(const std::string& name, bool value);
+
+		/**
+		 * @brief Construct a bool_value from a string ("true"/"false").
+		 */
+		bool_value(const std::string& name, const std::string& valueStr);
+
+		~bool_value() override = default;
+
 		bool to_boolean(void) const override;
 		std::string to_string(const bool& original = true) const override;
 	};
-} // namespace container
+} // namespace container_module

@@ -30,36 +30,48 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "bool_value.h"
+#include "container/values/bool_value.h"
 
 #include <cstring>
 
-namespace container
+namespace container_module
 {
-	bool_value::bool_value(void) : value() { type_ = value_types::bool_value; }
-
-	bool_value::bool_value(const std::string& name, const bool& value)
-		: bool_value()
+	bool_value::bool_value() : value()
 	{
-		set_data(name, value_types::bool_value, value ? "true" : "false");
+		type_ = value_types::bool_value;
+		// Default to false
+		bool b = false;
+		set_data(b);
 	}
 
-	bool_value::bool_value(const std::string& name, const std::string& value)
+	bool_value::bool_value(const std::string& name, bool value) : bool_value()
+	{
+		name_ = name;
+		set_data(value);
+		type_ = value_types::bool_value;
+	}
+
+	bool_value::bool_value(const std::string& name, const std::string& valueStr)
 		: bool_value()
 	{
-		set_data(name, value_types::bool_value, value);
+		name_ = name;
+		bool b = (valueStr == "true");
+		set_data(b);
+		type_ = value_types::bool_value;
 	}
 
 	bool bool_value::to_boolean(void) const
 	{
 		bool temp = false;
-		memcpy(&temp, data_.data(), size_);
-
+		if (data_.size() == sizeof(bool))
+		{
+			std::memcpy(&temp, data_.data(), sizeof(bool));
+		}
 		return temp;
 	}
 
 	std::string bool_value::to_string(const bool&) const
 	{
-		return (to_boolean() ? "true" : "false");
+		return to_boolean() ? "true" : "false";
 	}
-} // namespace container
+} // namespace container_module

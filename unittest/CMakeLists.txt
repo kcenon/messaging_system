@@ -1,22 +1,79 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
+project(messaging_system_tests)
 
-SET(PROJECT_NAME unittest)
-SET(CMAKE_CXX_STANDARD 17)
-SET(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+# Find required packages
+find_package(GTest REQUIRED)
 
-PROJECT(${PROJECT_NAME})
+# Enable testing
+enable_testing()
 
-ADD_EXECUTABLE(${PROJECT_NAME} utilities.cpp container.cpp threads.cpp network.cpp)
+# Common test settings
+set(TEST_COMMON_LIBS
+    GTest::gtest
+    GTest::gtest_main
+    Threads::Threads
+)
 
-TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC ../utilities)
-TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC ../container)
-TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC ../threads)
-TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC ../network)
+# Create tests list to track all test executables
+set(TESTS)
 
-ADD_DEPENDENCIES(${PROJECT_NAME} network)
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC network)
+# Container tests
+if(BUILD_CONTAINER AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/container_test.cpp)
+    add_executable(container_test container_test.cpp)
+    target_link_libraries(container_test
+        ${TEST_COMMON_LIBS}
+        container
+    )
+    add_test(NAME container_test COMMAND container_test)
+    list(APPEND TESTS container_test)
+endif()
 
-IF(USE_UNIT_TEST)
-    FIND_PACKAGE(GTest CONFIG REQUIRED)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} PRIVATE GTest::gtest GTest::gtest_main)
-ENDIF()
+# Database tests  
+if(BUILD_DATABASE AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/database_test.cpp)
+    add_executable(database_test database_test.cpp)
+    target_link_libraries(database_test
+        ${TEST_COMMON_LIBS}
+        database
+    )
+    add_test(NAME database_test COMMAND database_test)
+    list(APPEND TESTS database_test)
+endif()
+
+# Network tests
+if(BUILD_NETWORK AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/network_test.cpp)
+    add_executable(network_test network_test.cpp)
+    target_link_libraries(network_test
+        ${TEST_COMMON_LIBS}
+        network
+    )
+    add_test(NAME network_test COMMAND network_test)
+    list(APPEND TESTS network_test)
+endif()
+
+
+# Integration tests
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_test.cpp)
+    add_executable(integration_test integration_test.cpp)
+    target_link_libraries(integration_test
+        ${TEST_COMMON_LIBS}
+        container
+        database
+        network
+    )
+    add_test(NAME integration_test COMMAND integration_test)
+    list(APPEND TESTS integration_test)
+endif()
+
+# Set test properties
+set_tests_properties(${TESTS}
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tests
+)
+
+# Custom target to run all tests
+add_custom_target(run_tests
+    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+    DEPENDS ${TESTS}
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Running all tests..."
+)

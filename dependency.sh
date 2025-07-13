@@ -1,41 +1,49 @@
 #!/bin/bash
-if [ "$(uname)" == "Darwin" ]; then
-    brew install pkg-config autoconf cmake automake autoconf-archive
-elif [ "$(uname)" == "Linux" ]; then
-    apt update
-    apt upgrade -y
 
-    apt install cmake build-essential gdb -y
+# Dependency installation script for messaging_system
 
-    apt-get update
-    apt-get upgrade -y
+# Set script directory
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+cd "$SCRIPT_DIR"
 
-    apt-get install curl zip unzip tar ninja-build -y
-    apt-get install swig pkg-config -y
-    apt-get install autoconf automake autoconf-archive -y
+# Check if vcpkg is installed
+VCPKG_ROOT="${VCPKG_ROOT:-$HOME/vcpkg}"
 
-    if [ $(egrep "^(VERSION_ID)=" /etc/os-release) != "VERSION_ID=\"22.04\"" ]; then
-        apt-get install python3-pip -y
-        pip3 install cmake
+if [ ! -d "$VCPKG_ROOT" ]; then
+    echo "vcpkg not found at $VCPKG_ROOT"
+    echo "Installing vcpkg..."
+    
+    cd "$HOME"
+    git clone https://github.com/Microsoft/vcpkg.git
+    cd vcpkg
+    
+    if [[ "$OSTYPE" == "linux-gnu"* ]] || [[ "$OSTYPE" == "darwin"* ]]; then
+        ./bootstrap-vcpkg.sh
+    else
+        echo "Unsupported OS: $OSTYPE"
+        exit 1
     fi
-
-    if [ $(uname -m) == "aarch64" ]; then
-        export VCPKG_FORCE_SYSTEM_BINARIES=arm
-    fi
+    
+    cd "$SCRIPT_DIR"
 fi
 
-cd ..
+# Install dependencies
+echo "Installing dependencies via vcpkg..."
+"$VCPKG_ROOT/vcpkg" install \
+    fmt \
+    gtest \
+    benchmark \
+    spdlog \
+    libpqxx \
+    asio \
+    nlohmann-json
 
-if [ ! -d "./vcpkg/" ]; then
-    git clone https://github.com/microsoft/vcpkg.git
+# Install thread_system dependencies
+echo "Installing thread_system dependencies..."
+cd thread_system
+if [ -f "dependency.sh" ]; then
+    ./dependency.sh
 fi
-
-cd vcpkg
-
-git pull
-./bootstrap-vcpkg.sh
-./vcpkg integrate install
-./vcpkg upgrade --no-dry-run
-./vcpkg install lz4 fmt cpprestsdk cryptopp asio python3 crossguid libpq gtest --recurse
-
 cd ..
+
+echo "Dependencies installed successfully!"

@@ -1,13 +1,14 @@
 {
+  "name": "messaging-system",
+  "version": "1.0.0",
+  "description": "Messaging system with container, database, and network modules",
   "dependencies": [
-    "lz4",
     "fmt",
-    "cpprestsdk",
-    "cryptopp",
+    "gtest",
+    "benchmark",
+    "spdlog",
+    "libpqxx",
     "asio",
-    "python3",
-    "crossguid",
-    "libpq",
-    "gtest"
+    "nlohmann-json"
   ]
 }
