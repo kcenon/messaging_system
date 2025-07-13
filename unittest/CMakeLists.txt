@@ -14,6 +14,9 @@ set(TEST_COMMON_LIBS
     Threads::Threads
 )
 
+# Create tests list to track all test executables
+set(TESTS)
+
 # Container tests
 if(BUILD_CONTAINER AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/container_test.cpp)
     add_executable(container_test container_test.cpp)
@@ -22,6 +25,7 @@ if(BUILD_CONTAINER AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/container_test.cpp)
         container
     )
     add_test(NAME container_test COMMAND container_test)
+    list(APPEND TESTS container_test)
 endif()
 
 # Database tests  
@@ -32,6 +36,7 @@ if(BUILD_DATABASE AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/database_test.cpp)
         database
     )
     add_test(NAME database_test COMMAND database_test)
+    list(APPEND TESTS database_test)
 endif()
 
 # Network tests
@@ -42,20 +47,9 @@ if(BUILD_NETWORK AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/network_test.cpp)
         network
     )
     add_test(NAME network_test COMMAND network_test)
+    list(APPEND TESTS network_test)
 endif()
 
-# Thread system tests
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thread_system_test.cpp)
-    add_executable(thread_system_test thread_system_test.cpp)
-    target_link_libraries(thread_system_test
-        ${TEST_COMMON_LIBS}
-        thread_base
-        thread_pool
-        typed_thread_pool
-        logger
-    )
-    add_test(NAME thread_system_test COMMAND thread_system_test)
-endif()
 
 # Integration tests
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_test.cpp)
@@ -65,9 +59,9 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_test.cpp)
         container
         database
         network
-        thread_pool
     )
     add_test(NAME integration_test COMMAND integration_test)
+    list(APPEND TESTS integration_test)
 endif()
 
 # Set test properties

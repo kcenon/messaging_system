@@ -365,11 +365,33 @@ if %BUILD_FAILED%==1 (
 :: Run tests if requested
 if "%TARGET%"=="tests" (
     echo [STATUS] Running available tests...
-    ctest -C %BUILD_TYPE% --output-on-failure
+    
+    :: Check if any test executables were built
+    if not exist "bin\*test*.exe" (
+        echo [WARNING] No test executables found. Make sure tests were built correctly.
+    )
+    
+    :: Run CTest with detailed output
+    echo [STATUS] Executing CTest...
+    ctest -C %BUILD_TYPE% --output-on-failure --verbose
+    
     if errorlevel 1 (
-        echo [WARNING] Some tests failed. See the output above for details.
+        echo [ERROR] Some tests failed. See the output above for details.
+        
+        :: Show failed tests
+        echo [STATUS] Re-running failed tests with maximum detail...
+        ctest -C %BUILD_TYPE% --rerun-failed --output-on-failure --verbose
+        
+        popd
+        exit /b 1
     ) else (
         echo [SUCCESS] All tests passed!
+        
+        :: Display test summary if available
+        for /f %%i in ('ctest -C %BUILD_TYPE% -N 2^>nul ^| find /c "Test #"') do (
+            echo [STATUS] Test Summary:
+            echo   Total tests: %%i
+        )
     )
 )
 
@@ -463,7 +485,7 @@ echo Target Options:
 echo   --all             Build all targets (default)
 echo   --lib-only        Build only the core libraries
 echo   --samples         Build only the sample applications
-echo   --tests           Build and run the unit tests
+echo   --tests           Build and run the unit tests with detailed output
 echo   --thread-system   Build only the thread system components
 echo.
 echo Module Options:

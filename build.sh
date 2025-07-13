@@ -30,7 +30,7 @@ show_help() {
     echo "  --all             Build all targets (default)"
     echo "  --lib-only        Build only the core libraries"
     echo "  --samples         Build only the sample applications"
-    echo "  --tests           Build and run the unit tests"
+    echo "  --tests           Build and run the unit tests with detailed output"
     echo "  --thread-system   Build only the thread system components"
     echo ""
     echo -e "${BOLD}Module Options:${NC}"
@@ -464,13 +464,33 @@ fi
 if [ "$TARGET" == "tests" ]; then
     print_status "Running tests..."
     
-    # Run CTest
-    ctest -C $BUILD_TYPE --output-on-failure
+    # Check if any tests were built
+    if [ ! -d "tests" ] && [ ! -f "bin/*test*" ]; then
+        print_warning "No test executables found. Make sure tests were built correctly."
+    fi
     
-    if [ $? -eq 0 ]; then
+    # Run CTest with detailed output
+    print_status "Executing CTest..."
+    ctest -C $BUILD_TYPE --output-on-failure --verbose
+    TEST_EXIT_CODE=$?
+    
+    if [ $TEST_EXIT_CODE -eq 0 ]; then
         print_success "All tests passed!"
+        
+        # Display test summary if available
+        if command_exists "ctest"; then
+            print_status "Test Summary:"
+            ctest -C $BUILD_TYPE -N 2>/dev/null | grep "Test #" | wc -l | xargs -I {} echo "  Total tests: {}"
+        fi
     else
-        print_error "Some tests failed. See the output above for details."
+        print_error "Some tests failed (exit code: $TEST_EXIT_CODE). See the output above for details."
+        
+        # Show failed tests
+        print_status "Re-running failed tests with maximum detail..."
+        ctest -C $BUILD_TYPE --rerun-failed --output-on-failure --verbose
+        
+        cd "$ORIGINAL_DIR"
+        exit $TEST_EXIT_CODE
     fi
 fi
 
