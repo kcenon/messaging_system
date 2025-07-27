@@ -1,0 +1,43 @@
+@PACKAGE_INIT@
+
+# ThreadSystem CMake configuration file
+# This file helps other projects find and use ThreadSystem
+
+include(CMakeFindDependencyMacro)
+
+# Find required dependencies
+find_dependency(Threads)
+
+# Handle optional dependencies based on configuration
+# Check if std::format is used or if we need fmt library
+if(DEFINED USE_STD_FORMAT)
+    if(NOT USE_STD_FORMAT)
+        find_dependency(fmt CONFIG)
+    endif()
+else()
+    # Default case: try to find fmt if available
+    find_dependency(fmt CONFIG QUIET)
+endif()
+
+find_dependency(Iconv)
+
+# Include the targets file
+include("${CMAKE_CURRENT_LIST_DIR}/ThreadSystemTargets.cmake")
+
+# Set up convenience variables
+set(ThreadSystem_LIBRARIES 
+    ThreadSystem::utilities
+    ThreadSystem::thread_base
+    ThreadSystem::logger
+    ThreadSystem::thread_pool
+    ThreadSystem::typed_thread_pool
+)
+
+# Verify that all targets exist
+foreach(target ${ThreadSystem_LIBRARIES})
+    if(NOT TARGET ${target})
+        message(FATAL_ERROR "ThreadSystem target '${target}' not found")
+    endif()
+endforeach()
+
+check_required_components(ThreadSystem)

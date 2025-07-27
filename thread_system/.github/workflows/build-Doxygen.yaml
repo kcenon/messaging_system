@@ -1,0 +1,56 @@
+name: Generate-Documentation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  generate_docs:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          repository: kcenon/thread_system
+          ssh-strict: true
+          ssh-user: git
+          persist-credentials: true
+          clean: true
+          sparse-checkout-cone-mode: true
+          fetch-depth: 1
+          fetch-tags: false
+          show-progress: true
+          lfs: false
+          set-safe-directory: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Doxygen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen graphviz
+
+      - name: Cache Doxygen output
+        uses: actions/cache@v3
+        with:
+          path: ./documents/html
+          key: ${{ runner.os }}-doxygen-${{ hashFiles('**/*.h', '**/*.cpp', 'Doxyfile') }}
+          restore-keys: |
+            ${{ runner.os }}-doxygen-
+
+      - name: Generate Documentation
+        run: doxygen Doxyfile
+
+      - name: Deploy Documentation
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./documents/html
+          commit_message: "Update documentation via GitHub Actions"
+          enable_jekyll: false
