@@ -51,6 +51,12 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 # Option to use internal thread_system (for backward compatibility)
 option(USE_INTERNAL_THREAD_SYSTEM "Use internal thread_system subdirectory" OFF)
 
+# Option to use external logger system
+option(USE_EXTERNAL_LOGGER_SYSTEM "Use external logger system" OFF)
+
+# Option to use external monitoring system
+option(USE_EXTERNAL_MONITORING_SYSTEM "Use external monitoring system" OFF)
+
 if(USE_INTERNAL_THREAD_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thread_system)
     # Legacy mode: use internal thread_system
     message(STATUS "Using internal thread_system subdirectory")
@@ -81,6 +87,32 @@ else()
         add_library(utilities ALIAS ThreadSystem::Core)
         add_library(typed_thread_pool ALIAS ThreadSystem::Core)
     endif()
+endif()
+
+# Logger System Integration
+if(USE_EXTERNAL_LOGGER_SYSTEM)
+    message(STATUS "Using external LoggerSystem")
+    find_package(LoggerSystem REQUIRED)
+    
+    # Make logger available to all modules
+    if(TARGET LoggerSystem::logger)
+        add_library(logger ALIAS LoggerSystem::logger)
+    endif()
+else()
+    message(STATUS "Logger system integration disabled")
+endif()
+
+# Monitoring System Integration
+if(USE_EXTERNAL_MONITORING_SYSTEM)
+    message(STATUS "Using external MonitoringSystem")
+    find_package(MonitoringSystem REQUIRED)
+    
+    # Make monitoring available to all modules
+    if(TARGET MonitoringSystem::monitoring)
+        add_library(monitoring ALIAS MonitoringSystem::monitoring)
+    endif()
+else()
+    message(STATUS "Monitoring system integration disabled")
 endif()
 
 # Messaging system modules
