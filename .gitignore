@@ -347,3 +347,10 @@ healthchecksdb
 # OSX files
 .DS_Store
 build_xcode/
+
+# Backup directories
+thread_system.backup/
+*.backup/
+
+# Additional build directories
+build_*/

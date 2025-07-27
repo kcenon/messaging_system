@@ -45,24 +45,43 @@ endif()
 # Find required packages
 find_package(Threads REQUIRED)
 
-# Add the thread_system as a subdirectory
-# Set it to build as a submodule (no samples/tests)
-set(BUILD_THREADSYSTEM_AS_SUBMODULE ON CACHE BOOL "Build ThreadSystem as submodule" FORCE)
+# Find external ThreadSystemCore
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-# Pass lock-free option to thread_system
-if(USE_LOCKFREE_BY_DEFAULT)
-    set(USE_LOCKFREE_THREAD_POOL ON CACHE BOOL "Use lock-free thread pool by default" FORCE)
-    set(USE_LOCKFREE_LOGGER ON CACHE BOOL "Use lock-free logger by default" FORCE)
+# Option to use internal thread_system (for backward compatibility)
+option(USE_INTERNAL_THREAD_SYSTEM "Use internal thread_system subdirectory" OFF)
+
+if(USE_INTERNAL_THREAD_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thread_system)
+    # Legacy mode: use internal thread_system
+    message(STATUS "Using internal thread_system subdirectory")
+    set(BUILD_THREADSYSTEM_AS_SUBMODULE ON CACHE BOOL "Build ThreadSystem as submodule" FORCE)
+    
+    # Pass lock-free option to thread_system
+    if(USE_LOCKFREE_BY_DEFAULT)
+        set(USE_LOCKFREE_THREAD_POOL ON CACHE BOOL "Use lock-free thread pool by default" FORCE)
+        set(USE_LOCKFREE_LOGGER ON CACHE BOOL "Use lock-free logger by default" FORCE)
+    endif()
+    
+    add_subdirectory(thread_system)
+    
+    # Include directories for thread_system
+    include_directories(
+        ${CMAKE_CURRENT_SOURCE_DIR}/thread_system/sources
+    )
+else()
+    # Modern mode: use external ThreadSystemCore
+    message(STATUS "Using external ThreadSystemCore")
+    find_package(ThreadSystemCore REQUIRED)
+    
+    # Create compatibility aliases for internal targets
+    if(TARGET ThreadSystem::Core)
+        # Create aliases for backward compatibility
+        add_library(thread_pool ALIAS ThreadSystem::Core)
+        add_library(thread_base ALIAS ThreadSystem::Core)
+        add_library(utilities ALIAS ThreadSystem::Core)
+        add_library(typed_thread_pool ALIAS ThreadSystem::Core)
+    endif()
 endif()
-
-add_subdirectory(thread_system)
-
-# Include directories for thread_system
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/thread_system/sources
-)
-
-# Thread system is built as an internal dependency, not exported
 
 # Messaging system modules
 if(BUILD_CONTAINER)
