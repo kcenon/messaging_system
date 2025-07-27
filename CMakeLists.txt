@@ -169,6 +169,30 @@ if(BUILD_MESSAGING_SAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/samples)
     add_subdirectory(samples)
 endif()
 
+# Integration example
+if(BUILD_MESSAGING_SAMPLES)
+    add_executable(integration_example integration_example.cpp)
+    
+    # Define macros based on what's available
+    if(TARGET ThreadSystem::Core)
+        target_compile_definitions(integration_example PRIVATE HAS_THREAD_SYSTEM_CORE)
+        target_link_libraries(integration_example PRIVATE ThreadSystem::Core)
+    endif()
+    
+    if(TARGET LoggerSystem::logger)
+        target_compile_definitions(integration_example PRIVATE HAS_LOGGER_SYSTEM)
+        target_link_libraries(integration_example PRIVATE LoggerSystem::logger)
+    endif()
+    
+    if(TARGET MonitoringSystem::monitoring)
+        target_compile_definitions(integration_example PRIVATE HAS_MONITORING_SYSTEM)
+        target_link_libraries(integration_example PRIVATE MonitoringSystem::monitoring)
+    endif()
+    
+    # Link messaging system components
+    target_link_libraries(integration_example PRIVATE container network)
+endif()
+
 # Installation configuration
 include(GNUInstallDirs)
 

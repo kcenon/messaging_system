@@ -21,7 +21,7 @@ cmake .. \
     -DUSE_INTERNAL_THREAD_SYSTEM=OFF \
     -DUSE_EXTERNAL_LOGGER_SYSTEM=ON \
     -DUSE_EXTERNAL_MONITORING_SYSTEM=ON \
-    -DThreadSystemCore_ROOT="$THREAD_SYSTEM_ROOT/build/install" \
+    -DThreadSystemCore_ROOT="$THREAD_SYSTEM_ROOT/core/build/install" \
     -DLoggerSystem_ROOT="$LOGGER_SYSTEM_ROOT/build/install" \
     -DMonitoringSystem_ROOT="$MONITORING_SYSTEM_ROOT/build/install" \
     -DBUILD_MESSAGING_SAMPLES=OFF \

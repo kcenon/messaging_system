@@ -30,10 +30,17 @@ if [ ! -d "$MONITORING_SYSTEM_ROOT" ]; then
 fi
 
 # Build modular thread_system if not already built
-if [ ! -d "$THREAD_SYSTEM_ROOT/build" ]; then
+if [ ! -d "$THREAD_SYSTEM_ROOT/core/build" ]; then
     echo "Building modular thread_system..."
-    cd "$THREAD_SYSTEM_ROOT"
-    ./build.sh
+    cd "$THREAD_SYSTEM_ROOT/core"
+    
+    # Create and run build
+    mkdir -p build
+    cd build
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./install
+    make -j$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 2)
+    make install
+    
     cd "$SCRIPT_DIR"
 fi
 
@@ -66,17 +73,17 @@ if [ ! -d "$MONITORING_SYSTEM_ROOT/build" ]; then
 fi
 
 # Export CMAKE_PREFIX_PATH
-export CMAKE_PREFIX_PATH="$THREAD_SYSTEM_ROOT/build/install:$LOGGER_SYSTEM_ROOT/build/install:$MONITORING_SYSTEM_ROOT/build/install:$CMAKE_PREFIX_PATH"
+export CMAKE_PREFIX_PATH="$THREAD_SYSTEM_ROOT/core/build/install:$LOGGER_SYSTEM_ROOT/build/install:$MONITORING_SYSTEM_ROOT/build/install:$CMAKE_PREFIX_PATH"
 
 echo "External dependencies configured:"
-echo "  ThreadSystemCore: $THREAD_SYSTEM_ROOT/build/install"
+echo "  ThreadSystemCore: $THREAD_SYSTEM_ROOT/core/build/install"
 echo "  LoggerSystem: $LOGGER_SYSTEM_ROOT/build/install"
 echo "  MonitoringSystem: $MONITORING_SYSTEM_ROOT/build/install"
 echo ""
 echo "To build messaging_system with external modular dependencies:"
 echo "  mkdir -p build && cd build"
 echo "  cmake .. -DUSE_INTERNAL_THREAD_SYSTEM=OFF -DUSE_EXTERNAL_LOGGER_SYSTEM=ON -DUSE_EXTERNAL_MONITORING_SYSTEM=ON \\"
-echo "    -DThreadSystemCore_ROOT=$THREAD_SYSTEM_ROOT/build/install \\"
+echo "    -DThreadSystemCore_ROOT=$THREAD_SYSTEM_ROOT/core/build/install \\"
 echo "    -DLoggerSystem_ROOT=$LOGGER_SYSTEM_ROOT/build/install \\"
 echo "    -DMonitoringSystem_ROOT=$MONITORING_SYSTEM_ROOT/build/install"
 echo "  make"
