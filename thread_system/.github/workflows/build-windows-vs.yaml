@@ -1,0 +1,141 @@
+name: Build-Windows-Visual-Studio
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build_windows:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    env:
+      BUILD_TYPE: Debug
+    
+    steps:
+      - name: Clean workspace
+        shell: pwsh
+        run: |
+          if (Test-Path .git) {
+            Remove-Item -Recurse -Force .git
+          }
+          if (Test-Path .github) {
+            Remove-Item -Recurse -Force .github
+          }
+      
+      - name: Configure git
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+          git config --global core.longpaths true
+      
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          repository: kcenon/thread_system
+          persist-credentials: true
+          clean: true
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Visual Studio
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          vs-version: '17.0'
+          msbuild-architecture: x64
+
+      - name: Cache vcpkg
+        uses: actions/cache@v3
+        id: vcpkg-cache
+        with:
+          path: |
+            ${{ github.workspace }}/vcpkg
+            !${{ github.workspace }}/vcpkg/buildtrees
+            !${{ github.workspace }}/vcpkg/packages
+            !${{ github.workspace }}/vcpkg/downloads
+          key: ${{ runner.os }}-vcpkg-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-
+
+      - name: Cache vcpkg installed
+        uses: actions/cache@v3
+        id: vcpkg-installed
+        with:
+          path: ${{ github.workspace }}/vcpkg_installed
+          key: ${{ runner.os }}-vcpkg-installed-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-installed-
+
+      - name: Set up vcpkg
+        shell: pwsh
+        run: |
+          if (!(Test-Path -Path .\vcpkg)) {
+            Write-Host "Cloning vcpkg repository..."
+            git clone https://github.com/Microsoft/vcpkg.git
+          } else {
+            Write-Host "Updating existing vcpkg repository..."
+            Push-Location .\vcpkg
+            git pull
+            Pop-Location
+          }
+          
+          Write-Host "Bootstrapping vcpkg..."
+          .\vcpkg\bootstrap-vcpkg.bat
+          
+          Write-Host "Integrating vcpkg..."
+          .\vcpkg\vcpkg.exe integrate install
+
+      - name: Install dependencies with vcpkg
+        if: steps.vcpkg-installed.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          Write-Host "Installing dependencies..."
+          .\vcpkg\vcpkg.exe install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet x64-windows
+
+      - name: Cache CMake build
+        uses: actions/cache@v3
+        id: cmake-cache
+        with:
+          path: |
+            ${{ github.workspace }}/build
+          key: ${{ runner.os }}-cmake-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
+          restore-keys: |
+            ${{ runner.os }}-cmake-vs2022-
+
+      - name: Prepare build directory
+        shell: pwsh
+        run: |
+          if (Test-Path build) {
+            Remove-Item -Recurse -Force build
+          }
+          New-Item -ItemType Directory -Force -Path build | Out-Null
+
+      - name: Build application
+        shell: pwsh
+        run: |
+          Write-Host "Configuring CMake..."
+          Push-Location build
+
+          cmake .. -G "Visual Studio 17 2022" -A x64 `
+                  -DBUILD_TESTS=ON `
+                  -DCMAKE_INSTALL_PREFIX="..\target" `
+                  -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
+                  -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
+                  -DVCPKG_TARGET_TRIPLET=x64-windows
+          
+          Write-Host "Building project..."
+          cmake --build . --config $env:BUILD_TYPE --parallel $env:NUMBER_OF_PROCESSORS
+          Pop-Location
+
+      - name: Cache built libraries
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/build
+          key: ${{ runner.os }}-built-libs-vs2022-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
+          restore-keys: |
+            ${{ runner.os }}-built-libs-vs2022-

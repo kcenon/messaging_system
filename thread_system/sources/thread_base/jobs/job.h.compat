@@ -1,0 +1,2 @@
+#pragma once
+#include <thread_system_core/thread_base/jobs/job.h>

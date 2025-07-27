@@ -90,7 +90,19 @@ else()
 endif()
 
 # Logger System Integration
-if(USE_EXTERNAL_LOGGER_SYSTEM)
+option(USE_INTERNAL_LOGGER_SYSTEM "Use internal logger_system subdirectory" ON)
+
+if(USE_INTERNAL_LOGGER_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/logger_system)
+    # Use internal logger_system
+    message(STATUS "Using internal logger_system subdirectory")
+    set(BUILD_LOGGER_AS_SUBMODULE ON CACHE BOOL "Build Logger as submodule" FORCE)
+    add_subdirectory(logger_system)
+    
+    # Include directories for logger_system
+    include_directories(
+        ${CMAKE_CURRENT_SOURCE_DIR}/logger_system/sources
+    )
+elseif(USE_EXTERNAL_LOGGER_SYSTEM)
     message(STATUS "Using external LoggerSystem")
     find_package(LoggerSystem REQUIRED)
     
@@ -103,7 +115,19 @@ else()
 endif()
 
 # Monitoring System Integration
-if(USE_EXTERNAL_MONITORING_SYSTEM)
+option(USE_INTERNAL_MONITORING_SYSTEM "Use internal monitoring_system subdirectory" ON)
+
+if(USE_INTERNAL_MONITORING_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/monitoring_system)
+    # Use internal monitoring_system
+    message(STATUS "Using internal monitoring_system subdirectory")
+    set(BUILD_MONITORING_AS_SUBMODULE ON CACHE BOOL "Build Monitoring as submodule" FORCE)
+    add_subdirectory(monitoring_system)
+    
+    # Include directories for monitoring_system
+    include_directories(
+        ${CMAKE_CURRENT_SOURCE_DIR}/monitoring_system/sources
+    )
+elseif(USE_EXTERNAL_MONITORING_SYSTEM)
     message(STATUS "Using external MonitoringSystem")
     find_package(MonitoringSystem REQUIRED)
     
@@ -170,7 +194,7 @@ if(BUILD_MESSAGING_SAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/samples)
 endif()
 
 # Integration example
-if(BUILD_MESSAGING_SAMPLES)
+if(BUILD_MESSAGING_SAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_example.cpp)
     add_executable(integration_example integration_example.cpp)
     
     # Define macros based on what's available
