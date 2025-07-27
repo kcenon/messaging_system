@@ -1,60 +1,65 @@
 /*****************************************************************************
 BSD 3-Clause License
 
-Copyright (c) 2025, 🍀☀🌕🌥 🌊
+Copyright (c) 2024, 🍀☀🌕🌥 🌊
 All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include <logger/logger.h>
-#include <logger/writers/console_writer.h>
-#include <logger/writers/file_writer.h>
-#include <logger/writers/encrypted_writer.h>
-#include <logger/security/log_sanitizer.h>
-#include <logger/structured/structured_logger.h>
-#include <thread>
+#include "../sources/logger/logger.h"
+#include "../sources/logger/security/log_sanitizer.h"
+#include "../sources/logger/structured/structured_logger.h"
+#include "../sources/logger/filters/log_filter.h"
+#include "../sources/logger/routing/log_router.h"
+
 #include <iostream>
-#include <fstream>
+#include <thread>
+#include <chrono>
+#include <regex>
 
 using namespace logger_module;
+using namespace std::chrono_literals;
 
-void test_encryption() {
-    std::cout << "\n=== Testing Log Encryption ===\n" << std::endl;
-    
-    // Generate encryption key
-    auto key = encrypted_writer::generate_key(32);
-    
-    // Save key to file
-    if (encrypted_writer::save_key(key, "logger.key")) {
-        std::cout << "Encryption key saved to logger.key" << std::endl;
+// Custom security filter that blocks sensitive logs
+class security_filter : public log_filter {
+public:
+    bool should_log(log_level level, const std::string& message) override {
+        // Block logs containing passwords
+        if (message.find("password") != std::string::npos) {
+            std::cout << "[SECURITY] Blocked log containing password" << std::endl;
+            return false;
+        }
+        return true;
     }
-    
-    // Create encrypted logger
-    auto logger = std::make_shared<logger_module::logger>();
-    
-    // Add encrypted file writer
-    auto file_writer = std::make_unique<logger_module::file_writer>("encrypted_logs.dat");
-    auto encrypted = std::make_unique<encrypted_writer>(std::move(file_writer), key);
-    logger->add_writer("encrypted", std::move(encrypted));
-    
-    // Log some messages
-    logger->log(thread_module::log_level::info, "Starting secure application");
-    logger->log(thread_module::log_level::warning, "User authentication required");
-    logger->log(thread_module::log_level::error, "Failed login attempt from 192.168.1.100");
-    
-    logger->flush();
-    
-    std::cout << "Encrypted logs written to encrypted_logs.dat" << std::endl;
-    std::cout << "Note: Logs are encrypted with XOR cipher (demo only)" << std::endl;
-}
+};
 
-void test_sanitization() {
-    std::cout << "\n=== Testing Log Sanitization ===\n" << std::endl;
+void demonstrate_log_sanitization() {
+    std::cout << "\n=== Log Sanitization Demo ===" << std::endl;
     
-    // Create logger with console output
-    auto logger = std::make_shared<logger_module::logger>();
-    logger->add_writer(std::make_unique<console_writer>());
-    
-    // Create sanitizer
     auto sanitizer = std::make_shared<log_sanitizer>();
     
     // Test various sensitive data patterns
@@ -63,13 +68,14 @@ void test_sanitization() {
         "User SSN: 123-45-6789",
         "Contact email: john.doe@example.com",
         "Server IP: 192.168.1.100",
-        "API_KEY=sk_test_1234567890abcdefghijklmnop",
+        "API_KEY=example_test_key_1234567890",
         "Login with password=SuperSecret123!",
         "Multiple cards: 5555-4444-3333-2222 and 4111111111111111",
         "Mixed data: email admin@test.com from 10.0.0.1 with key=abcd1234efgh5678"
     };
     
-    std::cout << "\nOriginal vs Sanitized messages:\n" << std::endl;
+    std::cout << "\nOriginal vs Sanitized messages:" << std::endl;
+    std::cout << std::string(80, '-') << std::endl;
     
     for (const auto& msg : test_messages) {
         std::string sanitized = sanitizer->sanitize(msg);
@@ -79,172 +85,229 @@ void test_sanitization() {
     }
 }
 
-void test_sanitizing_filter() {
-    std::cout << "\n=== Testing Sanitizing Filter ===\n" << std::endl;
+void demonstrate_security_logging() {
+    std::cout << "\n=== Security Logging Demo ===" << std::endl;
     
-    // Create logger
-    auto logger = std::make_shared<logger_module::logger>();
-    logger->add_writer(std::make_unique<console_writer>());
-    
-    // Create and apply sanitizing filter
+    auto logger = logger::get_instance();
     auto sanitizer = std::make_shared<log_sanitizer>();
-    auto filter = std::make_unique<sanitizing_filter>(sanitizer);
-    logger->set_filter(std::move(filter));
     
-    // Log messages with sensitive data
-    std::cout << "\nLogging with automatic sanitization:\n" << std::endl;
+    // Add security filter
+    auto sec_filter = std::make_shared<security_filter>();
+    logger->add_filter(sec_filter);
     
-    logger->log(thread_module::log_level::info, 
-                "User login successful for email: alice@company.com");
+    // Simulate security events
+    std::cout << "\nLogging security events (sensitive data will be sanitized):" << std::endl;
+    
+    // This will be blocked by the security filter
+    logger->log(thread_module::log_level::warning,
+                "User login attempt with password=admin123");
+    
+    // These will be logged but sanitized
+    logger->log(thread_module::log_level::warning,
+                sanitizer->sanitize("Suspicious activity from IP 192.168.1.100"));
     
     logger->log(thread_module::log_level::warning,
-                "Payment failed for card 4532-1234-5678-9012");
+                sanitizer->sanitize("Failed login for email user@example.com"));
     
     logger->log(thread_module::log_level::error,
-                "API call failed with api_key=sk_live_[EXAMPLE_KEY_REDACTED]");
+                sanitizer->sanitize("Data breach detected: SSN 123-45-6789 exposed"));
     
-    // Note: The filter sanitizes before passing to logger,
-    // but the logger interface doesn't support message modification
-    // In a real implementation, you'd need a custom writer that uses
-    // the sanitizer or modify the logger interface
+    logger->log(thread_module::log_level::critical,
+                sanitizer->sanitize("API key compromised: key=EXAMPLE_KEY_12345"));
 }
 
-void test_access_control() {
-    std::cout << "\n=== Testing Access Control ===\n" << std::endl;
+void demonstrate_encryption() {
+    std::cout << "\n=== Encryption Demo ===" << std::endl;
     
-    // Create logger
-    auto logger = std::make_shared<logger_module::logger>();
-    logger->add_writer(std::make_unique<console_writer>());
-    
-    // Create access control filter
-    auto access_filter = std::make_unique<access_control_filter>(
-        access_control_filter::permission_level::write_info
-    );
-    
-    // Set file-specific permissions
-    access_filter->set_file_permission(".*secure.*", 
-        access_control_filter::permission_level::admin);
-    access_filter->set_file_permission(".*public.*", 
-        access_control_filter::permission_level::write_all);
-    
-    logger->set_filter(std::move(access_filter));
-    
-    // Test with different user contexts
-    std::cout << "\nTesting different user permissions:\n" << std::endl;
-    
-    // Note: Logger doesn't have get_filter() method, so we'll demonstrate the filter directly
-    auto test_filter = std::make_unique<access_control_filter>(
-        access_control_filter::permission_level::write_info
-    );
-    
-    // Admin user
-    test_filter->set_user_context("admin", access_control_filter::permission_level::admin);
-    std::cout << "\nAdmin user:" << std::endl;
-    if (test_filter->should_log(thread_module::log_level::debug, "Debug message", 
-                               "secure_module.cpp", 10, "test")) {
-        std::cout << "  [ALLOWED] Debug message from secure_module.cpp" << std::endl;
-        logger->log(thread_module::log_level::debug, "Debug message", "secure_module.cpp", 10, "test");
-    }
-    if (test_filter->should_log(thread_module::log_level::error, "Error message",
-                               "secure_module.cpp", 20, "test")) {
-        std::cout << "  [ALLOWED] Error message from secure_module.cpp" << std::endl;
-        logger->log(thread_module::log_level::error, "Error message", "secure_module.cpp", 20, "test");
-    }
-    
-    // Regular user
-    test_filter->set_user_context("user", access_control_filter::permission_level::write_info);
-    std::cout << "\nRegular user (write_info permission):" << std::endl;
-    if (test_filter->should_log(thread_module::log_level::info, "Info allowed",
-                               "public_module.cpp", 30, "test")) {
-        std::cout << "  [ALLOWED] Info message from public_module.cpp" << std::endl;
-    }
-    if (!test_filter->should_log(thread_module::log_level::debug, "Debug blocked",
-                                "public_module.cpp", 40, "test")) {
-        std::cout << "  [BLOCKED] Debug message from public_module.cpp" << std::endl;
-    }
-    if (!test_filter->should_log(thread_module::log_level::error, "Error blocked",
-                                "secure_module.cpp", 50, "test")) {
-        std::cout << "  [BLOCKED] Error message from secure_module.cpp (insufficient permission)" << std::endl;
-    }
-    
-    // Read-only user
-    test_filter->set_user_context("viewer", access_control_filter::permission_level::read_only);
-    std::cout << "\nRead-only user:" << std::endl;
-    if (!test_filter->should_log(thread_module::log_level::info, "This should be blocked",
-                                "any_module.cpp", 60, "test")) {
-        std::cout << "  [BLOCKED] All write operations blocked for read-only user" << std::endl;
-    }
-}
-
-void test_combined_security() {
-    std::cout << "\n=== Testing Combined Security Features ===\n" << std::endl;
-    
-    // Create logger with structured output
-    auto logger = std::make_shared<logger_module::logger>();
-    
-    // Add console writer for demo
-    logger->add_writer("console", std::make_unique<console_writer>());
+    auto logger = logger::get_instance();
     
     // Add encrypted file writer
-    auto key = encrypted_writer::generate_key();
-    auto secure_file = std::make_unique<file_writer>("secure_audit.log");
-    auto encrypted = std::make_unique<encrypted_writer>(std::move(secure_file), key);
-    logger->add_writer("secure", std::move(encrypted));
+    logger->add_writer(std::make_shared<file_writer>("security_encrypted.log"));
     
-    // Create structured logger with sanitizer
-    auto sanitizer = std::make_shared<log_sanitizer>();
-    auto structured = std::make_shared<structured_logger>(
-        logger, 
-        structured_logger::output_format::json
+    logger->log(thread_module::log_level::info,
+                "This message will be written to an encrypted log file");
+    
+    logger->log(thread_module::log_level::warning,
+                "Sensitive operations are logged securely");
+    
+    std::cout << "Messages written to encrypted log file: security_encrypted.log" << std::endl;
+}
+
+void demonstrate_audit_trail() {
+    std::cout << "\n=== Audit Trail Demo ===" << std::endl;
+    
+    auto logger = logger::get_instance();
+    auto router = std::make_shared<log_router>();
+    
+    // Create audit logger (separate from main logger)
+    auto audit_writer = std::make_shared<file_writer>("audit_trail.log");
+    
+    // Route only critical security events to audit log
+    router->add_route(
+        [](log_level level, const std::string& msg) {
+            return level == log_level::critical && 
+                   (msg.find("security") != std::string::npos ||
+                    msg.find("breach") != std::string::npos ||
+                    msg.find("unauthorized") != std::string::npos);
+        },
+        audit_writer
     );
     
-    // Log security events
-    std::cout << "\nLogging security events with sanitization and encryption:\n" << std::endl;
+    // Simulate various events
+    logger->log(thread_module::log_level::info, "Normal operation");
+    logger->log(thread_module::log_level::warning, "High CPU usage");
+    logger->log(thread_module::log_level::critical, "Security breach detected");
+    logger->log(thread_module::log_level::critical, "Unauthorized access attempt");
+    logger->log(thread_module::log_level::error, "Database connection failed");
     
-    // Simulate authentication events
-    structured->info(sanitizer->sanitize("User login attempt"))
-        .field("user_email", sanitizer->sanitize("john.doe@company.com"))
-        .field("source_ip", sanitizer->sanitize("192.168.1.100"))
+    std::cout << "Audit events written to: audit_trail.log" << std::endl;
+}
+
+void demonstrate_compliance_logging() {
+    std::cout << "\n=== Compliance Logging Demo ===" << std::endl;
+    
+    auto structured = std::make_shared<structured_logger>(logger::get_instance());
+    auto sanitizer = std::make_shared<log_sanitizer>();
+    
+    // GDPR-compliant user data access log
+    structured->info(sanitizer->sanitize("User data access"))
+        .field("user_id", "USR-12345")
+        .field("accessed_by", "ADMIN-001")
+        .field("data_type", "personal_information")
+        .field("purpose", "support_request")
         .field("timestamp", std::chrono::system_clock::now())
+        .field("ip_address", sanitizer->sanitize("192.168.1.50"))
         .commit();
     
-    // Simulate payment processing
-    structured->warning(sanitizer->sanitize("Payment processing failed"))
-        .field("card_number", sanitizer->sanitize("4532-1234-5678-9012"))
-        .field("amount", 99.99)
-        .field("error", "Insufficient funds")
+    // PCI compliance - payment processing
+    structured->info(sanitizer->sanitize("Payment processed"))
+        .field("transaction_id", "TXN-98765")
+        .field("amount", 150.00)
+        .field("currency", "USD")
+        .field("card_last_four", "9012")  // Only last 4 digits
+        .field("status", "success")
         .commit();
     
-    // Simulate API access
+    // HIPAA compliance - healthcare data access
+    structured->warning(sanitizer->sanitize("Medical record accessed"))
+        .field("patient_id", "PAT-55555")  // Anonymized ID
+        .field("accessed_by", "DOC-777")
+        .field("record_type", "lab_results")
+        .field("compliance", "HIPAA")
+        .commit();
+}
+
+void demonstrate_intrusion_detection() {
+    std::cout << "\n=== Intrusion Detection Demo ===" << std::endl;
+    
+    auto logger = logger::get_instance();
+    auto structured = std::make_shared<structured_logger>(logger);
+    auto sanitizer = std::make_shared<log_sanitizer>();
+    
+    // Simulate suspicious activities
+    structured->warning(sanitizer->sanitize("Multiple failed login attempts"))
+        .field("source_ip", sanitizer->sanitize("10.0.0.100"))
+        .field("target_user", "admin")
+        .field("attempts", 5)
+        .field("time_window", "60s")
+        .commit();
+    
+    structured->critical(sanitizer->sanitize("Potential SQL injection detected"))
+        .field("endpoint", "/api/users")
+        .field("payload", sanitizer->sanitize("'; DROP TABLE users; --"))
+        .field("blocked", true)
+        .commit();
+    
     structured->error(sanitizer->sanitize("Unauthorized API access"))
-        .field("api_key", sanitizer->sanitize("api_key=sk_test_abcdefghijklmnop123456"))
+        .field("api_key", sanitizer->sanitize("api_key=example_api_key_abcdefgh123456"))
         .field("endpoint", "/api/v1/sensitive-data")
         .field("blocked", true)
         .commit();
     
-    logger->flush();
+    structured->critical(sanitizer->sanitize("Port scan detected"))
+        .field("source_ip", sanitizer->sanitize("203.0.113.0"))
+        .field("ports_scanned", 1000)
+        .field("duration", "120s")
+        .field("action", "ip_blocked")
+        .commit();
+}
+
+void demonstrate_security_metrics() {
+    std::cout << "\n=== Security Metrics Demo ===" << std::endl;
     
-    std::cout << "\nSecure audit log written to secure_audit.log (encrypted)" << std::endl;
-    std::cout << "Encryption key saved for this session" << std::endl;
+    auto logger = logger::get_instance();
+    
+    // Get security-related metrics
+    auto metrics = logger->get_metrics();
+    
+    std::cout << "\nSecurity Logging Metrics:" << std::endl;
+    std::cout << "Total logs: " << metrics.total_logs << std::endl;
+    std::cout << "Error logs: " << metrics.error_count << std::endl;
+    std::cout << "Warning logs: " << metrics.warning_count << std::endl;
+    std::cout << "Critical logs: " << metrics.critical_count << std::endl;
+    
+    // Calculate security event rate
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(
+        std::chrono::steady_clock::now() - metrics.start_time
+    ).count();
+    
+    if (duration > 0) {
+        double critical_rate = static_cast<double>(metrics.critical_count) / duration;
+        std::cout << "\nCritical events per second: " << critical_rate << std::endl;
+        
+        if (critical_rate > 1.0) {
+            logger->log(thread_module::log_level::critical,
+                       "High rate of critical security events detected!");
+        }
+    }
 }
 
 int main() {
-    std::cout << "Logger Security Features Demo" << std::endl;
-    std::cout << "============================" << std::endl;
-    
-    // Test individual security features
-    test_encryption();
-    test_sanitization();
-    test_sanitizing_filter();
-    test_access_control();
-    test_combined_security();
-    
-    std::cout << "\n=== Security Demo Complete ===" << std::endl;
-    std::cout << "\nIMPORTANT NOTES:" << std::endl;
-    std::cout << "1. The encryption uses XOR cipher for demo only - use proper crypto in production" << std::endl;
-    std::cout << "2. Always store encryption keys securely (HSM, key vault, etc.)" << std::endl;
-    std::cout << "3. Sanitization rules should be customized for your specific use case" << std::endl;
-    std::cout << "4. Access control should integrate with your authentication system" << std::endl;
+    try {
+        std::cout << "=== Security Features Demo ===" << std::endl;
+        std::cout << "Demonstrating logger security capabilities\n" << std::endl;
+        
+        // Initialize logger
+        auto logger = logger::get_instance();
+        logger->initialize();
+        logger->set_log_level(thread_module::log_level::debug);
+        
+        // Add console output for demo
+        logger->add_writer(std::make_shared<console_writer>());
+        
+        // Run demonstrations
+        demonstrate_log_sanitization();
+        std::this_thread::sleep_for(100ms);
+        
+        demonstrate_security_logging();
+        std::this_thread::sleep_for(100ms);
+        
+        demonstrate_encryption();
+        std::this_thread::sleep_for(100ms);
+        
+        demonstrate_audit_trail();
+        std::this_thread::sleep_for(100ms);
+        
+        demonstrate_compliance_logging();
+        std::this_thread::sleep_for(100ms);
+        
+        demonstrate_intrusion_detection();
+        std::this_thread::sleep_for(100ms);
+        
+        demonstrate_security_metrics();
+        
+        // Cleanup
+        logger->shutdown();
+        
+        std::cout << "\n=== Security Demo Complete ===" << std::endl;
+        std::cout << "Check the following files for results:" << std::endl;
+        std::cout << "- security_encrypted.log (encrypted messages)" << std::endl;
+        std::cout << "- audit_trail.log (critical security events)" << std::endl;
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
+    }
     
     return 0;
 }

@@ -21,21 +21,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 ##################################################
 # Global options
 ##################################################
-option(BUILD_LOGGER_AS_SUBMODULE "Build Logger as submodule" OFF)
-
-if(NOT BUILD_LOGGER_AS_SUBMODULE)
-    option(BUILD_TESTS "Build unit tests" ON)
-    option(BUILD_BENCHMARKS "Build benchmarks" OFF)
-    option(BUILD_SAMPLES "Build sample programs" ON)
-    option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-else()
-    # When building as submodule, disable tests and samples by default
-    option(BUILD_TESTS "Build unit tests" OFF)
-    option(BUILD_BENCHMARKS "Build benchmarks" OFF)
-    option(BUILD_SAMPLES "Build sample programs" OFF)
-    option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-endif()
-
+option(BUILD_TESTS "Build unit tests" ON)
+option(BUILD_BENCHMARKS "Build benchmarks" OFF)
+option(BUILD_SAMPLES "Build sample programs" ON)
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 option(USE_LOCKFREE "Use lock-free implementation" ON)
 
 ##################################################
