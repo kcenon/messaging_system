@@ -54,12 +54,17 @@ endif()
 # Integration tests
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_test.cpp)
     add_executable(integration_test integration_test.cpp)
-    target_link_libraries(integration_test
-        ${TEST_COMMON_LIBS}
-        container
-        database
-        network
-    )
+    set(INTEGRATION_TEST_LIBS ${TEST_COMMON_LIBS})
+    if(BUILD_CONTAINER)
+        list(APPEND INTEGRATION_TEST_LIBS container)
+    endif()
+    if(BUILD_DATABASE AND TARGET database)
+        list(APPEND INTEGRATION_TEST_LIBS database)
+    endif()
+    if(BUILD_NETWORK)
+        list(APPEND INTEGRATION_TEST_LIBS network)
+    endif()
+    target_link_libraries(integration_test ${INTEGRATION_TEST_LIBS})
     add_test(NAME integration_test COMMAND integration_test)
     list(APPEND TESTS integration_test)
 endif()

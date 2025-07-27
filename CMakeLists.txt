@@ -49,7 +49,7 @@ find_package(Threads REQUIRED)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # Option to use internal thread_system (for backward compatibility)
-option(USE_INTERNAL_THREAD_SYSTEM "Use internal thread_system subdirectory" OFF)
+option(USE_INTERNAL_THREAD_SYSTEM "Use internal thread_system subdirectory" ON)
 
 # Option to use external logger system
 option(USE_EXTERNAL_LOGGER_SYSTEM "Use external logger system" OFF)

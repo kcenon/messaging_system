@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "container/core/container.h"
 
 #include "utilities/core/formatter.h"
-#include "utilities/io/file_handler.h"
+// #include "utilities/io/file_handler.h" // Not available in current thread_system
 #include "utilities/conversion/convert_string.h"
 
 #include "container/core/value_types.h"
@@ -742,17 +742,18 @@ namespace container_module
 
 	void value_container::load_packet(const std::string& file_path)
 	{
-		auto [fileData, err] = file::load(file_path);
-		if (!err.has_value())
-		{
-			deserialize(fileData, false);
-		}
+		// TODO: Implement file loading without file_handler
+		// For now, this functionality is disabled
+		(void)file_path;
+		throw std::runtime_error("File loading not implemented - file_handler not available");
 	}
 
 	void value_container::save_packet(const std::string& file_path)
 	{
-		auto dataArr = serialize_array();
-		file::save(file_path, dataArr);
+		// TODO: Implement file saving without file_handler
+		// For now, this functionality is disabled
+		(void)file_path;
+		throw std::runtime_error("File saving not implemented - file_handler not available");
 	}
 
 	std::vector<std::shared_ptr<value>> value_container::operator[](
