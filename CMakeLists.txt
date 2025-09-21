@@ -26,6 +26,7 @@ option(BUILD_PYTHON_BINDINGS "Build Python bindings" ON)
 
 # Feature options
 option(USE_LOCKFREE_BY_DEFAULT "Use lock-free implementations by default" OFF)
+option(USE_STD_FORMAT "Use std::format instead of fmt library" OFF)
 
 # Output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

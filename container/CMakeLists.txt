@@ -108,9 +108,14 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 message(STATUS "Using self-contained utilities compatibility layer")
 
-# fmt library for formatting
-find_package(fmt CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt)
+# fmt library for formatting (only if not using std::format)
+if(NOT USE_STD_FORMAT)
+    find_package(fmt CONFIG REQUIRED)
+    target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt)
+else()
+    message(STATUS "Container module using std::format instead of fmt library")
+    target_compile_definitions(${PROJECT_NAME} PUBLIC USE_STD_FORMAT)
+endif()
 
 ##################################################
 # Platform-Specific Configuration
