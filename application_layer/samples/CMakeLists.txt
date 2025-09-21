@@ -15,6 +15,16 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/libraries
 )
 
+# Basic Usage Example
+add_executable(basic_usage_example basic_usage_example.cpp)
+target_link_libraries(basic_usage_example PRIVATE
+    messaging_services
+    container
+    database
+    network
+    Threads::Threads
+)
+
 # Chat Server Sample
 add_executable(chat_server chat_server.cpp)
 target_link_libraries(chat_server PRIVATE
@@ -65,23 +75,37 @@ target_link_libraries(event_pipeline PRIVATE
     Threads::Threads
 )
 
+# Message Bus Benchmark
+add_executable(message_bus_benchmark message_bus_benchmark.cpp)
+target_link_libraries(message_bus_benchmark PRIVATE
+    messaging_services
+    container
+    database
+    network
+    Threads::Threads
+)
+
 # Set output directory for samples
 set_target_properties(
+    basic_usage_example
     chat_server
     distributed_worker
     iot_monitoring
     microservices_orchestrator
     event_pipeline
+    message_bus_benchmark
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/samples
 )
 
 # Add installation rules
 install(TARGETS
+    basic_usage_example
     chat_server
     distributed_worker
     iot_monitoring
     microservices_orchestrator
     event_pipeline
+    message_bus_benchmark
     RUNTIME DESTINATION bin/samples
 )

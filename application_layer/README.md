@@ -263,9 +263,21 @@ Typical performance characteristics (may vary based on hardware):
 
 ## Sample Programs
 
-The `samples/` directory contains comprehensive real-world examples demonstrating the power of the application layer:
+The `samples/` directory contains all example programs, from basic usage to comprehensive real-world implementations:
 
-### 1. Chat Server (`chat_server.cpp`)
+### 1. Basic Usage Example (`basic_usage_example.cpp`)
+A simple demonstration of the messaging system's core functionality:
+- System initialization and configuration
+- Message publishing and subscription
+- Service integration basics
+- Clean shutdown procedures
+
+**Usage:**
+```bash
+./build/bin/samples/basic_usage_example
+```
+
+### 2. Chat Server (`chat_server.cpp`)
 A complete real-time chat server implementation featuring:
 - User authentication and session management
 - Public and private messaging
@@ -279,7 +291,7 @@ A complete real-time chat server implementation featuring:
 ./build/bin/samples/chat_server [port]
 ```
 
-### 2. Distributed Worker System (`distributed_worker.cpp`)
+### 3. Distributed Worker System (`distributed_worker.cpp`)
 A scalable task processing system demonstrating:
 - Multiple task types (data processing, image analysis, reports, etc.)
 - Worker coordination and health checking
@@ -297,7 +309,7 @@ A scalable task processing system demonstrating:
 ./build/bin/samples/distributed_worker --workers 4
 ```
 
-### 3. IoT Monitoring System (`iot_monitoring.cpp`)
+### 4. IoT Monitoring System (`iot_monitoring.cpp`)
 A comprehensive IoT device management platform featuring:
 - Real-time telemetry collection from multiple device types
 - Threshold-based alerting with severity levels
@@ -312,7 +324,7 @@ A comprehensive IoT device management platform featuring:
 - Automatic alert generation and routing
 - Historical data analysis and trending
 
-### 4. Microservices Orchestrator (`microservices_orchestrator.cpp`)
+### 5. Microservices Orchestrator (`microservices_orchestrator.cpp`)
 A production-grade service mesh implementation with:
 - Service discovery and registration
 - Multiple load balancing strategies:
@@ -334,7 +346,7 @@ A production-grade service mesh implementation with:
 - Includes API gateway, auth, user, product, order services
 - Real-time metrics and service topology visualization
 
-### 5. Event-Driven Pipeline (`event_pipeline.cpp`)
+### 6. Event-Driven Pipeline (`event_pipeline.cpp`)
 A sophisticated data processing pipeline demonstrating:
 - Multi-stage event processing:
   - Validation
@@ -352,6 +364,19 @@ A sophisticated data processing pipeline demonstrating:
 2. **Enrichment**: Add metadata and external data
 3. **Transformation**: Apply business rules and normalization
 4. **Aggregation**: Time-based windowing and statistics
+
+### 7. Message Bus Benchmark (`message_bus_benchmark.cpp`)
+Performance testing suite for the messaging system:
+- Throughput measurements (messages/second)
+- Concurrent publisher testing
+- Priority queue performance
+- Message size impact analysis
+- Latency measurements
+
+**Usage:**
+```bash
+./build/bin/samples/message_bus_benchmark
+```
 
 ## Building the Samples
 
@@ -372,11 +397,13 @@ cmake --build build --target all
 
 | Sample | Messaging Patterns | Key Technologies | Use Case |
 |--------|-------------------|------------------|----------|
+| Basic Usage | Simple Pub/Sub | Configuration, Lifecycle | Getting started |
 | Chat Server | Pub/Sub, Request/Reply | Session management, Broadcasting | Real-time communication |
 | Distributed Worker | Work queues, Task routing | Load balancing, Retry logic | Batch processing |
 | IoT Monitoring | Telemetry, Alerting | Time-series, Anomaly detection | Device management |
 | Microservices | Service mesh, Discovery | Circuit breakers, Load balancing | Cloud-native apps |
 | Event Pipeline | Stream processing | Windowing, Aggregation | Data pipelines |
+| Benchmark | Performance testing | Throughput, Latency | System tuning |
 
 ## Performance Characteristics
 
@@ -388,12 +415,9 @@ Based on the sample implementations:
 - **Scalability**: Linear scaling with worker threads
 - **Memory Efficiency**: Optimized buffer management
 
-## Examples
+## Additional Resources
 
-For basic usage examples, see:
-
-- `examples/basic_usage_example.cpp`: Simple getting started example
-- `benchmarks/message_bus_benchmark.cpp`: Performance testing
+All example programs, demonstrations, and benchmarks are consolidated in the `samples/` directory for easy access and consistent organization.
 
 ## License
 

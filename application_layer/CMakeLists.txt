@@ -142,40 +142,6 @@ if(BUILD_TESTING)
     add_test(NAME PerformanceTests COMMAND messaging_services_tests --gtest_filter="Performance*")
 endif()
 
-# Benchmark executable
-add_executable(messaging_benchmark
-    benchmarks/message_bus_benchmark.cpp
-)
-
-target_link_libraries(messaging_benchmark
-    PRIVATE
-        messaging_services
-)
-
-target_include_directories(messaging_benchmark
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-target_compile_features(messaging_benchmark PRIVATE cxx_std_20)
-
-# Example executable
-add_executable(messaging_example
-    examples/basic_usage_example.cpp
-)
-
-target_link_libraries(messaging_example
-    PRIVATE
-        messaging_services
-)
-
-target_include_directories(messaging_example
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-target_compile_features(messaging_example PRIVATE cxx_std_20)
-
 # Build samples if enabled
 if(BUILD_MESSAGING_SAMPLES)
     add_subdirectory(samples)
