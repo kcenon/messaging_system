@@ -42,23 +42,26 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Platform-specific SIMD headers
 #if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
     #define HAS_X86_SIMD 1
-    #if defined(__AVX2__)
-        #define HAS_AVX2 1
-        #include <immintrin.h>
-    #elif defined(__SSE4_2__)
-        #define HAS_SSE42 1
+    // Always include immintrin.h on x86 when available - it includes all intrinsics
+    #if defined(__AVX2__) || defined(HAS_AVX2)
+        #ifndef HAS_AVX2
+            #define HAS_AVX2 1
+        #endif
+        #include <immintrin.h>  // Includes all: AVX2, AVX, SSE4.2, SSE2, SSE
+    #elif defined(__SSE4_2__) || defined(HAS_SSE42)
+        #ifndef HAS_SSE42
+            #define HAS_SSE42 1
+        #endif
         #include <nmmintrin.h>  // SSE4.2
-    #elif defined(__SSE2__)
-        #define HAS_SSE2 1
+        #include <smmintrin.h>  // SSE4.1
+        #include <tmmintrin.h>  // SSSE3
+        #include <pmmintrin.h>  // SSE3
         #include <emmintrin.h>  // SSE2
-    #endif
-    // Basic SSE headers for all x86
-    #if defined(HAS_SSE42) || defined(HAS_SSE2)
         #include <xmmintrin.h>  // SSE
-        #include <emmintrin.h>  // SSE2
     #elif defined(__SSE2__)
         #define HAS_SSE2 1
-        #include <emmintrin.h>
+        #include <emmintrin.h>  // SSE2
+        #include <xmmintrin.h>  // SSE
     #endif
 #elif defined(__ARM_NEON) || defined(__aarch64__)
     #define HAS_ARM_NEON 1

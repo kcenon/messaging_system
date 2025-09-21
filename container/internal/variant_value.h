@@ -304,18 +304,15 @@ namespace container_module
     template<>
     struct is_variant_type<uint64_t> : std::true_type {};
 
-    // Only define these if they're different from int64_t/uint64_t
-    // On Windows and some other platforms, long long == int64_t
+    // Only define these on platforms where long long is different from int64_t
+    // On most 64-bit platforms: long long == int64_t == long (8 bytes)
+    // But we can't check this at preprocessor time, so we exclude known problematic platforms
     #if !defined(_WIN32) && !defined(_WIN64) && !defined(__APPLE__)
-    #if !std::is_same_v<long long, int64_t>
-    template<>
-    struct is_variant_type<long long> : std::true_type {};
-    #endif
-
-    #if !std::is_same_v<unsigned long long, uint64_t>
-    template<>
-    struct is_variant_type<unsigned long long> : std::true_type {};
-    #endif
+    // On Linux x86_64, long long and int64_t are typically the same type
+    // So we skip these specializations to avoid redefinition errors
+    #else
+    // On other platforms, we might need these
+    // But since they often cause issues, we'll only enable them if explicitly needed
     #endif
     
     template<>
