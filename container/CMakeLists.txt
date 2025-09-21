@@ -128,7 +128,11 @@ include(CheckCXXCompilerFlag)
 if(NOT APPLE)
     check_cxx_compiler_flag("-mavx2" COMPILER_SUPPORTS_AVX2)
     if(COMPILER_SUPPORTS_AVX2)
-        target_compile_options(${PROJECT_NAME} PRIVATE $<$<CONFIG:Release>:-mavx2>)
+        # Add AVX2 flags for all build types when compiling SIMD files
+        set_source_files_properties(
+            ${CMAKE_CURRENT_SOURCE_DIR}/internal/simd_processor.cpp
+            PROPERTIES COMPILE_FLAGS "-mavx2 -msse4.2 -msse3"
+        )
         target_compile_definitions(${PROJECT_NAME} PRIVATE HAS_AVX2)
     endif()
 endif()
@@ -137,7 +141,7 @@ endif()
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|i[3-6]86")
     check_cxx_compiler_flag("-msse4.2" COMPILER_SUPPORTS_SSE42)
     if(COMPILER_SUPPORTS_SSE42)
-        target_compile_options(${PROJECT_NAME} PRIVATE $<$<CONFIG:Release>:-msse4.2>)
+        # SSE4.2 is already included with AVX2 above for simd_processor.cpp
         target_compile_definitions(${PROJECT_NAME} PRIVATE HAS_SSE42)
     endif()
 endif()
