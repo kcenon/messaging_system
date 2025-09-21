@@ -1,7 +1,5 @@
 # API Reference
 
-Complete API documentation for all Messaging System components and their integration.
-
 ## Table of Contents
 
 1. [Container System API](#container-system-api)
@@ -11,19 +9,7 @@ Complete API documentation for all Messaging System components and their integra
 5. [Service Container API](#service-container-api)
 6. [Thread System API](#thread-system-api)
 7. [Logger System API](#logger-system-api)
-8. [Monitoring System API](#monitoring-system-api)
-9. [Error Codes](#error-codes)
-
-## Component Documentation Links
-
-For detailed documentation on individual components:
-
-- **[Thread System API](../libraries/thread_system/docs/api-reference.md)** - Lock-free thread pools and concurrent processing
-- **[Logger System API](../libraries/logger_system/docs/api-reference.md)** - High-performance logging framework
-- **[Monitoring System API](../libraries/monitoring_system/docs/api-reference.md)** - Real-time system monitoring
-- **[Container System](../libraries/container_system/README.md#api-reference)** - Type-safe data containers
-- **[Database System](../libraries/database_system/README.md#api-reference)** - PostgreSQL integration
-- **[Network System](../libraries/network_system/README.md#api-reference)** - Asynchronous TCP messaging
+8. [Error Codes](#error-codes)
 
 ---
 

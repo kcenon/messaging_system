@@ -122,7 +122,6 @@ int main() {
 For detailed setup instructions, see the [Developer Guide](docs/DEVELOPER_GUIDE.md).
 
 ## 🎯 Sample Applications
-
 The `application_layer/samples/` directory contains 8 production-ready examples:
 
 1. **[Basic Usage](application_layer/samples/basic_usage_example.cpp)** - Simple pub/sub messaging
