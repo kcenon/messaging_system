@@ -75,3 +75,85 @@ install(DIRECTORY include/
     DESTINATION include
     FILES_MATCHING PATTERN "*.h"
 )
+
+# Testing configuration
+if(BUILD_TESTING)
+    enable_testing()
+
+    # Find GTest
+    find_package(GTest REQUIRED)
+
+    # Create test executable for messaging services
+    add_executable(messaging_services_tests
+        tests/unit/test_message_bus.cpp
+        tests/unit/test_service_container.cpp
+        tests/unit/test_system_integrator.cpp
+        tests/unit/test_container_service.cpp
+        tests/unit/test_network_service.cpp
+        tests/integration/test_messaging_integration.cpp
+        tests/performance/test_message_bus_performance.cpp
+    )
+
+    # Link test executable with messaging services and GTest
+    target_link_libraries(messaging_services_tests
+        PRIVATE
+            messaging_services
+            GTest::gtest
+            GTest::gtest_main
+    )
+
+    # Include directories for tests
+    target_include_directories(messaging_services_tests
+        PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/tests
+    )
+
+    # Compiler features for tests
+    target_compile_features(messaging_services_tests PRIVATE cxx_std_20)
+
+    # Register tests with CTest
+    include(GoogleTest)
+    gtest_discover_tests(messaging_services_tests)
+
+    # Individual test targets for fine-grained control
+    add_test(NAME MessageBusTests COMMAND messaging_services_tests --gtest_filter="MessageBus*")
+    add_test(NAME ServiceContainerTests COMMAND messaging_services_tests --gtest_filter="ServiceContainer*")
+    add_test(NAME SystemIntegratorTests COMMAND messaging_services_tests --gtest_filter="SystemIntegrator*")
+    add_test(NAME IntegrationTests COMMAND messaging_services_tests --gtest_filter="Integration*")
+    add_test(NAME PerformanceTests COMMAND messaging_services_tests --gtest_filter="Performance*")
+endif()
+
+# Benchmark executable
+add_executable(messaging_benchmark
+    benchmarks/message_bus_benchmark.cpp
+)
+
+target_link_libraries(messaging_benchmark
+    PRIVATE
+        messaging_services
+)
+
+target_include_directories(messaging_benchmark
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(messaging_benchmark PRIVATE cxx_std_20)
+
+# Example executable
+add_executable(messaging_example
+    examples/basic_usage_example.cpp
+)
+
+target_link_libraries(messaging_example
+    PRIVATE
+        messaging_services
+)
+
+target_include_directories(messaging_example
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_compile_features(messaging_example PRIVATE cxx_std_20)
