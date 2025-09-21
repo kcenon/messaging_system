@@ -178,11 +178,14 @@ jobs:
           echo "Building with MSYS2 system packages..."
           # Create a fake asio config file for CMake since MSYS2's asio is header-only
           mkdir -p /tmp/asio_cmake
-          cat > /tmp/asio_cmake/asio-config.cmake << 'EOF'
+          # Get the actual MSYS2 include path
+          MSYS_INCLUDE_PATH="$(cygpath -m /mingw64/include)"
+          echo "MSYS2 include path: $MSYS_INCLUDE_PATH"
+          cat > /tmp/asio_cmake/asio-config.cmake << EOF
           if(NOT TARGET asio::asio)
             add_library(asio::asio INTERFACE IMPORTED)
             set_target_properties(asio::asio PROPERTIES
-              INTERFACE_INCLUDE_DIRECTORIES "/mingw64/include"
+              INTERFACE_INCLUDE_DIRECTORIES "$MSYS_INCLUDE_PATH"
             )
           endif()
           EOF
