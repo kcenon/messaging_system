@@ -23,7 +23,7 @@ using namespace kcenon::messaging;
 using namespace std::chrono_literals;
 
 // Device types in the IoT ecosystem
-enum class DeviceType {
+enum class device_type {
     TEMPERATURE_SENSOR,
     HUMIDITY_SENSOR,
     PRESSURE_SENSOR,
@@ -35,9 +35,9 @@ enum class DeviceType {
 };
 
 // Device telemetry data
-struct DeviceTelemetry {
+struct device_telemetry {
     std::string device_id;
-    DeviceType type;
+    device_type type;
     double value;
     std::string unit;
     std::chrono::system_clock::time_point timestamp;
@@ -45,8 +45,8 @@ struct DeviceTelemetry {
 };
 
 // Alert definition
-struct Alert {
-    enum Severity {
+struct alert {
+    enum severity {
         INFO,
         WARNING,
         CRITICAL,
@@ -55,7 +55,7 @@ struct Alert {
 
     std::string alert_id;
     std::string device_id;
-    Severity severity;
+    severity sev;
     std::string message;
     double threshold_value;
     double actual_value;
@@ -63,9 +63,9 @@ struct Alert {
 };
 
 // Device configuration
-struct DeviceConfig {
+struct device_config {
     std::string device_id;
-    DeviceType type;
+    device_type type;
     std::string location;
     bool enabled;
     double min_threshold;
@@ -74,7 +74,7 @@ struct DeviceConfig {
     std::map<std::string, std::string> metadata;
 };
 
-class IoTMonitoringSystem {
+class iot_monitoring_system {
 private:
     std::unique_ptr<integrations::system_integrator> integrator;
     std::unique_ptr<services::container_service> container_svc;
@@ -82,12 +82,12 @@ private:
     std::unique_ptr<services::network_service> network_svc;
 
     // Device management
-    std::map<std::string, DeviceConfig> devices;
-    std::map<std::string, DeviceTelemetry> latest_telemetry;
+    std::map<std::string, device_config> devices;
+    std::map<std::string, device_telemetry> latest_telemetry;
     std::mutex devices_mutex;
 
     // Alert management
-    std::queue<Alert> alert_queue;
+    std::queue<alert> alert_queue;
     std::mutex alert_mutex;
     std::condition_variable alert_cv;
 
@@ -104,7 +104,7 @@ private:
     std::mt19937 gen;
 
 public:
-    IoTMonitoringSystem() : gen(rd()) {
+    iot_monitoring_system() : gen(rd()) {
         // Configure for IoT workload
         config::config_builder builder;
         auto config = builder
@@ -158,23 +158,23 @@ public:
 
     void initializeDevices() {
         // Register sample devices for simulation
-        registerDevice("temp-001", DeviceType::TEMPERATURE_SENSOR, "Living Room", 18.0, 26.0);
-        registerDevice("temp-002", DeviceType::TEMPERATURE_SENSOR, "Bedroom", 20.0, 24.0);
-        registerDevice("temp-003", DeviceType::TEMPERATURE_SENSOR, "Server Room", 15.0, 22.0);
+        registerDevice("temp-001", device_type::TEMPERATURE_SENSOR, "Living Room", 18.0, 26.0);
+        registerDevice("temp-002", device_type::TEMPERATURE_SENSOR, "Bedroom", 20.0, 24.0);
+        registerDevice("temp-003", device_type::TEMPERATURE_SENSOR, "Server Room", 15.0, 22.0);
 
-        registerDevice("hum-001", DeviceType::HUMIDITY_SENSOR, "Bathroom", 30.0, 70.0);
-        registerDevice("hum-002", DeviceType::HUMIDITY_SENSOR, "Kitchen", 35.0, 65.0);
+        registerDevice("hum-001", device_type::HUMIDITY_SENSOR, "Bathroom", 30.0, 70.0);
+        registerDevice("hum-002", device_type::HUMIDITY_SENSOR, "Kitchen", 35.0, 65.0);
 
-        registerDevice("motion-001", DeviceType::MOTION_DETECTOR, "Entrance", 0.0, 1.0);
-        registerDevice("motion-002", DeviceType::MOTION_DETECTOR, "Hallway", 0.0, 1.0);
+        registerDevice("motion-001", device_type::MOTION_DETECTOR, "Entrance", 0.0, 1.0);
+        registerDevice("motion-002", device_type::MOTION_DETECTOR, "Hallway", 0.0, 1.0);
 
-        registerDevice("energy-001", DeviceType::ENERGY_METER, "Main Panel", 0.0, 10000.0);
-        registerDevice("cam-001", DeviceType::CAMERA, "Front Door", 0.0, 1.0);
+        registerDevice("energy-001", device_type::ENERGY_METER, "Main Panel", 0.0, 10000.0);
+        registerDevice("cam-001", device_type::CAMERA, "Front Door", 0.0, 1.0);
 
-        registerDevice("light-001", DeviceType::SMART_LIGHT, "Living Room", 0.0, 100.0);
-        registerDevice("light-002", DeviceType::SMART_LIGHT, "Bedroom", 0.0, 100.0);
+        registerDevice("light-001", device_type::SMART_LIGHT, "Living Room", 0.0, 100.0);
+        registerDevice("light-002", device_type::SMART_LIGHT, "Bedroom", 0.0, 100.0);
 
-        registerDevice("lock-001", DeviceType::SMART_LOCK, "Front Door", 0.0, 1.0);
+        registerDevice("lock-001", device_type::SMART_LOCK, "Front Door", 0.0, 1.0);
 
         std::cout << "Initialized " << devices.size() << " IoT devices" << std::endl;
     }
@@ -710,7 +710,7 @@ public:
 
 int main(int argc, char* argv[]) {
     try {
-        IoTMonitoringSystem iot_system;
+        iot_monitoring_system iot_system;
         iot_system.start();
 
     } catch (const std::exception& e) {

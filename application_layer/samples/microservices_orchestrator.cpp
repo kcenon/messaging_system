@@ -25,7 +25,7 @@ using namespace kcenon::messaging;
 using namespace std::chrono_literals;
 
 // Service definition
-struct ServiceDefinition {
+struct service_definition {
     std::string service_name;
     std::string version;
     std::vector<std::string> dependencies;
@@ -37,20 +37,20 @@ struct ServiceDefinition {
 };
 
 // Service instance
-struct ServiceInstance {
+struct service_instance {
     std::string instance_id;
     std::string service_name;
     std::string host;
     int port;
     std::string version;
 
-    enum State {
+    enum state {
         STARTING,
         HEALTHY,
         UNHEALTHY,
         DRAINING,
         STOPPED
-    } state;
+    } m_state;
 
     std::chrono::steady_clock::time_point last_health_check;
     int consecutive_failures{0};
@@ -61,16 +61,16 @@ struct ServiceInstance {
 };
 
 // Circuit breaker for service calls
-class CircuitBreaker {
+class circuit_breaker {
 public:
-    enum State {
+    enum state {
         CLOSED,     // Normal operation
         OPEN,       // Failures exceeded threshold, blocking calls
         HALF_OPEN   // Testing if service recovered
     };
 
 private:
-    State state{CLOSED};
+    state m_state{CLOSED};
     int failure_count{0};
     int success_count{0};
     int failure_threshold{5};
@@ -83,14 +83,14 @@ public:
     bool canAttempt() {
         std::lock_guard<std::mutex> lock(mutex);
 
-        if (state == CLOSED) {
+        if (m_state == CLOSED) {
             return true;
         }
 
-        if (state == OPEN) {
+        if (m_state == OPEN) {
             auto now = std::chrono::steady_clock::now();
             if (now - last_failure_time > timeout) {
-                state = HALF_OPEN;
+                m_state = HALF_OPEN;
                 return true;
             }
             return false;
@@ -103,14 +103,14 @@ public:
     void recordSuccess() {
         std::lock_guard<std::mutex> lock(mutex);
 
-        if (state == HALF_OPEN) {
+        if (m_state == HALF_OPEN) {
             success_count++;
             if (success_count >= success_threshold) {
-                state = CLOSED;
+                m_state = CLOSED;
                 failure_count = 0;
                 success_count = 0;
             }
-        } else if (state == CLOSED) {
+        } else if (m_state == CLOSED) {
             failure_count = 0;
         }
     }
@@ -121,22 +121,22 @@ public:
         failure_count++;
         last_failure_time = std::chrono::steady_clock::now();
 
-        if (state == HALF_OPEN || failure_count >= failure_threshold) {
-            state = OPEN;
+        if (m_state == HALF_OPEN || failure_count >= failure_threshold) {
+            m_state = OPEN;
             success_count = 0;
         }
     }
 
-    State getState() const {
+    state getState() const {
         std::lock_guard<std::mutex> lock(mutex);
-        return state;
+        return m_state;
     }
 };
 
 // Load balancer strategies
-class LoadBalancer {
+class load_balancer {
 public:
-    enum Strategy {
+    enum strategy {
         ROUND_ROBIN,
         LEAST_CONNECTIONS,
         RANDOM,
@@ -145,21 +145,21 @@ public:
     };
 
 private:
-    Strategy strategy;
+    strategy m_strategy;
     std::atomic<size_t> round_robin_counter{0};
     std::mt19937 random_gen{std::random_device{}()};
 
 public:
-    LoadBalancer(Strategy s = ROUND_ROBIN) : strategy(s) {}
+    load_balancer(strategy s = ROUND_ROBIN) : m_strategy(s) {}
 
-    ServiceInstance* selectInstance(
-        std::vector<ServiceInstance>& instances,
+    service_instance* selectInstance(
+        std::vector<service_instance>& instances,
         const std::string& client_ip = ""
     ) {
         // Filter healthy instances
-        std::vector<ServiceInstance*> healthy;
+        std::vector<service_instance*> healthy;
         for (auto& instance : instances) {
-            if (instance.state == ServiceInstance::HEALTHY) {
+            if (instance.m_state == service_instance::HEALTHY) {
                 healthy.push_back(&instance);
             }
         }
@@ -168,13 +168,13 @@ public:
             return nullptr;
         }
 
-        switch (strategy) {
+        switch (m_strategy) {
             case ROUND_ROBIN:
                 return healthy[round_robin_counter++ % healthy.size()];
 
             case LEAST_CONNECTIONS:
                 return *std::min_element(healthy.begin(), healthy.end(),
-                    [](ServiceInstance* a, ServiceInstance* b) {
+                    [](service_instance* a, service_instance* b) {
                         return a->active_connections < b->active_connections;
                     });
 
@@ -185,7 +185,7 @@ public:
 
             case WEIGHTED_RESPONSE_TIME:
                 return *std::min_element(healthy.begin(), healthy.end(),
-                    [](ServiceInstance* a, ServiceInstance* b) {
+                    [](service_instance* a, service_instance* b) {
                         return a->response_time_ms < b->response_time_ms;
                     });
 
@@ -204,7 +204,7 @@ public:
     }
 };
 
-class MicroservicesOrchestrator {
+class microservices_orchestrator {
 private:
     std::unique_ptr<integrations::system_integrator> integrator;
     std::unique_ptr<services::container_service> container_svc;
@@ -212,10 +212,10 @@ private:
     std::unique_ptr<services::network_service> network_svc;
 
     // Service registry
-    std::map<std::string, ServiceDefinition> service_definitions;
-    std::map<std::string, std::vector<ServiceInstance>> service_instances;
-    std::map<std::string, CircuitBreaker> circuit_breakers;
-    std::map<std::string, LoadBalancer> load_balancers;
+    std::map<std::string, service_definition> service_definitions;
+    std::map<std::string, std::vector<service_instance>> service_instances;
+    std::map<std::string, circuit_breaker> circuit_breakers;
+    std::map<std::string, load_balancer> load_balancers;
     std::mutex registry_mutex;
 
     // Metrics
@@ -228,7 +228,7 @@ private:
     std::atomic<bool> running{true};
 
 public:
-    MicroservicesOrchestrator() {
+    microservices_orchestrator() {
         // Configure for microservices workload
         config::config_builder builder;
         auto config = builder
@@ -301,7 +301,7 @@ public:
         // Start initial instances
         for (const auto& [name, definition] : service_definitions) {
             for (int i = 0; i < definition.min_instances; i++) {
-                deployServiceInstance(name);
+                deploy_service_instance(name);
             }
         }
 
@@ -316,7 +316,7 @@ public:
         int min_instances,
         int max_instances
     ) {
-        ServiceDefinition def;
+        service_definition def;
         def.service_name = name;
         def.version = version;
         def.dependencies = dependencies;
@@ -324,20 +324,20 @@ public:
         def.max_instances = max_instances;
 
         service_definitions[name] = def;
-        circuit_breakers[name] = CircuitBreaker();
-        load_balancers[name] = LoadBalancer(LoadBalancer::LEAST_CONNECTIONS);
+        circuit_breakers[name] = circuit_breaker();
+        load_balancers[name] = load_balancer(load_balancer::LEAST_CONNECTIONS);
     }
 
-    void deployServiceInstance(const std::string& service_name) {
+    void deploy_service_instance(const std::string& service_name) {
         static int port_counter = 8000;
 
-        ServiceInstance instance;
+        service_instance instance;
         instance.instance_id = generateInstanceId(service_name);
         instance.service_name = service_name;
         instance.host = "10.0.0." + std::to_string(1 + (port_counter % 254));
         instance.port = port_counter++;
         instance.version = service_definitions[service_name].version;
-        instance.state = ServiceInstance::STARTING;
+        instance.m_state = service_instance::STARTING;
         instance.last_health_check = std::chrono::steady_clock::now();
 
         {
@@ -348,7 +348,7 @@ public:
         // Simulate startup
         std::thread([this, instance]() {
             std::this_thread::sleep_for(2s);
-            updateInstanceState(instance.instance_id, ServiceInstance::HEALTHY);
+            updateInstanceState(instance.instance_id, service_instance::HEALTHY);
 
             std::cout << "Started " << instance.service_name
                       << " instance " << instance.instance_id
@@ -362,12 +362,12 @@ public:
         auto host = msg.get_header("host");
         auto port = std::stoi(msg.get_header("port"));
 
-        ServiceInstance instance;
+        service_instance instance;
         instance.instance_id = instance_id;
         instance.service_name = service_name;
         instance.host = host;
         instance.port = port;
-        instance.state = ServiceInstance::HEALTHY;
+        instance.m_state = service_instance::HEALTHY;
         instance.last_health_check = std::chrono::steady_clock::now();
 
         {
@@ -434,12 +434,12 @@ public:
                     instance.response_time_ms = response_time;
 
                     if (status == "healthy") {
-                        instance.state = ServiceInstance::HEALTHY;
+                        instance.m_state = service_instance::HEALTHY;
                         instance.consecutive_failures = 0;
                     } else {
                         instance.consecutive_failures++;
                         if (instance.consecutive_failures >= 3) {
-                            instance.state = ServiceInstance::UNHEALTHY;
+                            instance.m_state = service_instance::UNHEALTHY;
                             handleUnhealthyInstance(instance);
                         }
                     }
@@ -460,7 +460,7 @@ public:
         // Check circuit breaker
         if (!circuit_breakers[service_name].canAttempt()) {
             circuit_breaker_trips++;
-            sendCircuitBreakerOpen(service_name, request_id);
+            send_circuit_breaker_open(service_name, request_id);
             failed_requests++;
             return;
         }
@@ -525,7 +525,7 @@ public:
         auto current_count = service_instances[service_name].size();
 
         for (int i = 0; i < count && current_count + i < definition.max_instances; i++) {
-            deployServiceInstance(service_name);
+            deploy_service_instance(service_name);
         }
 
         std::cout << "Scaling up " << service_name << " by " << count << " instances" << std::endl;
@@ -542,7 +542,7 @@ public:
 
         // Mark instances for draining
         for (int i = 0; i < to_remove; i++) {
-            instances[i].state = ServiceInstance::DRAINING;
+            instances[i].m_state = service_instance::DRAINING;
         }
 
         // Remove drained instances after grace period
@@ -553,8 +553,8 @@ public:
             auto& instances = service_instances[service_name];
             instances.erase(
                 std::remove_if(instances.begin(), instances.end(),
-                    [](const ServiceInstance& i) {
-                        return i.state == ServiceInstance::DRAINING;
+                    [](const service_instance& i) {
+                        return i.m_state == service_instance::DRAINING;
                     }),
                 instances.end()
             );
@@ -574,7 +574,7 @@ public:
         int healthy_count = 0;
 
         for (const auto& instance : instances) {
-            if (instance.state == ServiceInstance::HEALTHY) {
+            if (instance.m_state == service_instance::HEALTHY) {
                 avg_cpu += instance.cpu_usage;
                 avg_connections += instance.active_connections;
                 healthy_count++;
@@ -606,14 +606,14 @@ public:
 
             for (auto& instance : instances) {
                 // Update one instance at a time
-                instance.state = ServiceInstance::DRAINING;
+                instance.m_state = service_instance::DRAINING;
                 std::this_thread::sleep_for(10s);  // Drain connections
 
                 instance.version = new_version;
-                instance.state = ServiceInstance::STARTING;
+                instance.m_state = service_instance::STARTING;
                 std::this_thread::sleep_for(5s);  // Startup time
 
-                instance.state = ServiceInstance::HEALTHY;
+                instance.m_state = service_instance::HEALTHY;
                 std::cout << "Updated " << instance.instance_id
                           << " to version " << new_version << std::endl;
             }
@@ -629,7 +629,7 @@ public:
         // Deploy green environment
         int instance_count = service_instances[service_name].size();
         for (int i = 0; i < instance_count; i++) {
-            deployServiceInstance(service_name + "-green");
+            deploy_service_instance(service_name + "-green");
         }
 
         // Switch traffic after validation
@@ -649,7 +649,7 @@ public:
         std::cout << "Starting canary deployment for " << service_name << std::endl;
 
         // Deploy canary instance (10% of traffic)
-        deployServiceInstance(service_name);
+        deploy_service_instance(service_name);
 
         // Monitor canary metrics
         std::thread([this, service_name, new_version]() {
@@ -662,7 +662,7 @@ public:
         }).detach();
     }
 
-    bool forwardRequest(ServiceInstance* instance, const core::message& msg) {
+    bool forwardRequest(service_instance* instance, const core::message& msg) {
         // Simulate request forwarding
         core::message forward;
         forward.set_type("request.forward");
@@ -674,12 +674,12 @@ public:
         return network_svc->send_to_host(instance->host, instance->port, forward);
     }
 
-    void handleUnhealthyInstance(const ServiceInstance& instance) {
+    void handleUnhealthyInstance(const service_instance& instance) {
         std::cout << "Instance " << instance.instance_id
                   << " marked unhealthy" << std::endl;
 
         // Replace unhealthy instance
-        deployServiceInstance(instance.service_name);
+        deploy_service_instance(instance.service_name);
 
         // Alert operations team
         core::message alert;
@@ -728,7 +728,7 @@ public:
         integrator->get_message_bus().publish(response);
     }
 
-    void sendCircuitBreakerOpen(const std::string& service_name, const std::string& request_id) {
+    void send_circuit_breaker_open(const std::string& service_name, const std::string& request_id) {
         core::message response;
         response.set_type("circuit_breaker.open");
         response.set_header("service_name", service_name);
@@ -738,13 +738,13 @@ public:
         integrator->get_message_bus().publish(response);
     }
 
-    void updateInstanceState(const std::string& instance_id, ServiceInstance::State new_state) {
+    void updateInstanceState(const std::string& instance_id, service_instance::state new_state) {
         std::lock_guard<std::mutex> lock(registry_mutex);
 
         for (auto& [service_name, instances] : service_instances) {
             for (auto& instance : instances) {
                 if (instance.instance_id == instance_id) {
-                    instance.state = new_state;
+                    instance.m_state = new_state;
                     return;
                 }
             }
@@ -768,8 +768,8 @@ public:
                     for (auto& instance : instances) {
                         auto elapsed = now - instance.last_health_check;
 
-                        if (elapsed > 30s && instance.state == ServiceInstance::HEALTHY) {
-                            instance.state = ServiceInstance::UNHEALTHY;
+                        if (elapsed > 30s && instance.m_state == service_instance::HEALTHY) {
+                            instance.m_state = service_instance::UNHEALTHY;
                             handleUnhealthyInstance(instance);
                         }
                     }
@@ -800,8 +800,8 @@ public:
         for (const auto& [service_name, instances] : service_instances) {
             int healthy = 0, unhealthy = 0;
             for (const auto& instance : instances) {
-                if (instance.state == ServiceInstance::HEALTHY) healthy++;
-                else if (instance.state == ServiceInstance::UNHEALTHY) unhealthy++;
+                if (instance.m_state == service_instance::HEALTHY) healthy++;
+                else if (instance.m_state == service_instance::UNHEALTHY) unhealthy++;
             }
 
             std::cout << "║ " << std::left << std::setw(20) << service_name
@@ -902,7 +902,7 @@ public:
 
 int main(int argc, char* argv[]) {
     try {
-        MicroservicesOrchestrator orchestrator;
+        microservices_orchestrator orchestrator;
         orchestrator.start();
 
     } catch (const std::exception& e) {

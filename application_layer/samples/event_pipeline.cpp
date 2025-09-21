@@ -21,7 +21,7 @@ using namespace kcenon::messaging;
 using namespace std::chrono_literals;
 
 // Event types flowing through the pipeline
-struct RawEvent {
+struct raw_event {
     std::string id;
     std::string source;
     std::string type;
@@ -29,7 +29,7 @@ struct RawEvent {
     std::chrono::system_clock::time_point timestamp;
 };
 
-struct ProcessedEvent {
+struct processed_event {
     std::string id;
     std::string category;
     double score;
@@ -39,7 +39,7 @@ struct ProcessedEvent {
     std::string validation_error;
 };
 
-struct AggregatedData {
+struct aggregated_data {
     std::string window_id;
     std::chrono::system_clock::time_point window_start;
     std::chrono::system_clock::time_point window_end;
@@ -51,7 +51,7 @@ struct AggregatedData {
 
 // Pipeline stage definition
 template<typename TInput, typename TOutput>
-class PipelineStage {
+class pipeline_stage {
 public:
     using ProcessFunc = std::function<TOutput(const TInput&)>;
     using FilterFunc = std::function<bool(const TInput&)>;
@@ -67,7 +67,7 @@ private:
     std::atomic<uint64_t> filtered_count{0};
 
 public:
-    PipelineStage(
+    pipeline_stage(
         const std::string& name,
         ProcessFunc proc,
         FilterFunc filt = nullptr,
@@ -104,28 +104,28 @@ public:
     }
 };
 
-class EventPipeline {
+class event_pipeline {
 private:
     std::unique_ptr<integrations::system_integrator> integrator;
     std::unique_ptr<services::container_service> container_svc;
     std::unique_ptr<services::database_service> database_svc;
 
     // Pipeline stages
-    std::unique_ptr<PipelineStage<RawEvent, RawEvent>> validation_stage;
-    std::unique_ptr<PipelineStage<RawEvent, ProcessedEvent>> enrichment_stage;
-    std::unique_ptr<PipelineStage<ProcessedEvent, ProcessedEvent>> transformation_stage;
-    std::unique_ptr<PipelineStage<ProcessedEvent, AggregatedData>> aggregation_stage;
+    std::unique_ptr<pipeline_stage<raw_event, raw_event>> validation_stage;
+    std::unique_ptr<pipeline_stage<raw_event, processed_event>> enrichment_stage;
+    std::unique_ptr<pipeline_stage<processed_event, processed_event>> transformation_stage;
+    std::unique_ptr<pipeline_stage<processed_event, aggregated_data>> aggregation_stage;
 
     // Event queues
-    std::queue<RawEvent> raw_events;
-    std::queue<ProcessedEvent> processed_events;
-    std::queue<AggregatedData> aggregated_data;
+    std::queue<raw_event> raw_events;
+    std::queue<processed_event> processed_events;
+    std::queue<aggregated_data> aggregated_data;
     std::mutex queue_mutex;
     std::condition_variable queue_cv;
 
     // Windowing for aggregation
     std::chrono::seconds window_size{60};
-    std::map<std::string, std::vector<ProcessedEvent>> window_buffers;
+    std::map<std::string, std::vector<processed_event>> window_buffers;
     std::mutex window_mutex;
 
     // Metrics
@@ -134,11 +134,11 @@ private:
     std::atomic<bool> running{true};
 
     // Dead letter queue for failed events
-    std::queue<std::pair<std::string, RawEvent>> dead_letter_queue;
+    std::queue<std::pair<std::string, raw_event>> dead_letter_queue;
     std::mutex dlq_mutex;
 
 public:
-    EventPipeline() {
+    event_pipeline() {
         // Configure for event processing
         config::config_builder builder;
         auto config = builder
@@ -161,44 +161,44 @@ public:
 
     void setupPipeline() {
         // Stage 1: Validation
-        validation_stage = std::make_unique<PipelineStage<RawEvent, RawEvent>>(
+        validation_stage = std::make_unique<pipeline_stage<raw_event, raw_event>>(
             "Validation",
-            [this](const RawEvent& event) {
+            [this](const raw_event& event) {
                 return validateEvent(event);
             },
-            [](const RawEvent& event) {
+            [](const raw_event& event) {
                 // Filter out test events
                 return event.source != "test";
             },
-            [this](const RawEvent& event, const std::exception& e) {
+            [this](const raw_event& event, const std::exception& e) {
                 sendToDeadLetterQueue(event, e.what());
             }
         );
 
         // Stage 2: Enrichment
-        enrichment_stage = std::make_unique<PipelineStage<RawEvent, ProcessedEvent>>(
+        enrichment_stage = std::make_unique<pipeline_stage<raw_event, processed_event>>(
             "Enrichment",
-            [this](const RawEvent& event) {
+            [this](const raw_event& event) {
                 return enrichEvent(event);
             }
         );
 
         // Stage 3: Transformation
-        transformation_stage = std::make_unique<PipelineStage<ProcessedEvent, ProcessedEvent>>(
+        transformation_stage = std::make_unique<pipeline_stage<processed_event, processed_event>>(
             "Transformation",
-            [this](const ProcessedEvent& event) {
+            [this](const processed_event& event) {
                 return transformEvent(event);
             },
-            [](const ProcessedEvent& event) {
+            [](const processed_event& event) {
                 // Filter invalid events
                 return event.valid;
             }
         );
 
         // Stage 4: Aggregation
-        aggregation_stage = std::make_unique<PipelineStage<ProcessedEvent, AggregatedData>>(
+        aggregation_stage = std::make_unique<pipeline_stage<processed_event, aggregated_data>>(
             "Aggregation",
-            [this](const ProcessedEvent& event) {
+            [this](const processed_event& event) {
                 return aggregateEvent(event);
             }
         );
@@ -228,7 +228,7 @@ public:
         });
     }
 
-    RawEvent validateEvent(const RawEvent& event) {
+    raw_event validateEvent(const raw_event& event) {
         // Validation rules
         if (event.id.empty()) {
             throw std::runtime_error("Event ID is required");
@@ -257,8 +257,8 @@ public:
         return event;
     }
 
-    ProcessedEvent enrichEvent(const RawEvent& event) {
-        ProcessedEvent processed;
+    processed_event enrichEvent(const raw_event& event) {
+        processed_event processed;
         processed.id = event.id;
         processed.valid = true;
 
@@ -305,8 +305,8 @@ public:
         return processed;
     }
 
-    ProcessedEvent transformEvent(const ProcessedEvent& event) {
-        ProcessedEvent transformed = event;
+    processed_event transformEvent(const processed_event& event) {
+        processed_event transformed = event;
 
         // Apply transformations
         // Normalize score to 0-100 range
@@ -331,7 +331,7 @@ public:
         return transformed;
     }
 
-    AggregatedData aggregateEvent(const ProcessedEvent& event) {
+    aggregated_data aggregateEvent(const processed_event& event) {
         // Time-based windowing
         auto now = std::chrono::system_clock::now();
         auto window_start = std::chrono::floor<std::chrono::seconds>(now);
@@ -347,7 +347,7 @@ public:
             (now - window_start) > window_size) {
 
             // Aggregate the window
-            AggregatedData aggregated;
+            aggregated_data aggregated;
             aggregated.window_id = window_id;
             aggregated.window_start = window_start;
             aggregated.window_end = now;
@@ -378,12 +378,12 @@ public:
         }
 
         // Return empty aggregation if window not complete
-        return AggregatedData{};
+        return aggregated_data{};
     }
 
     void handleRawEvent(const core::message& msg) {
         try {
-            RawEvent event;
+            raw_event event;
             event.id = msg.get_header("event_id");
             event.source = msg.get_header("source");
             event.type = msg.get_header("type");
@@ -432,7 +432,7 @@ public:
         }
     }
 
-    void sendToDeadLetterQueue(const RawEvent& event, const std::string& reason) {
+    void sendToDeadLetterQueue(const raw_event& event, const std::string& reason) {
         std::lock_guard<std::mutex> lock(dlq_mutex);
         dead_letter_queue.push({reason, event});
 
@@ -476,7 +476,7 @@ public:
                 });
 
                 while (!raw_events.empty()) {
-                    RawEvent event = raw_events.front();
+                    raw_event event = raw_events.front();
                     raw_events.pop();
                     lock.unlock();
 
@@ -502,7 +502,7 @@ public:
                 std::lock_guard<std::mutex> lock(queue_mutex);
 
                 while (!processed_events.empty()) {
-                    ProcessedEvent event = processed_events.front();
+                    processed_event event = processed_events.front();
                     processed_events.pop();
 
                     // Process through transformation
@@ -520,7 +520,7 @@ public:
         }).detach();
     }
 
-    void publishAggregatedData(const AggregatedData& data) {
+    void publishAggregatedData(const aggregated_data& data) {
         core::message msg;
         msg.set_type("pipeline.aggregated");
         msg.set_header("window_id", data.window_id);
@@ -722,7 +722,7 @@ public:
 
 int main(int argc, char* argv[]) {
     try {
-        EventPipeline pipeline;
+        event_pipeline pipeline;
         pipeline.start();
 
     } catch (const std::exception& e) {
