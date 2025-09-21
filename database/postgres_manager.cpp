@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "libpq-fe.h"
 
-#include "utilities/conversion/convert_string.h"
+#include "container/utilities/conversion/convert_string.h"
 
 namespace database
 {
