@@ -15,6 +15,6 @@ var variant__value_8h =
     [ "container_module::is_variant_type< double >", "structcontainer__module_1_1is__variant__type_3_01double_01_4.html", null ],
     [ "container_module::is_variant_type< std::string >", "structcontainer__module_1_1is__variant__type_3_01std_1_1string_01_4.html", null ],
     [ "container_module::is_variant_type< std::shared_ptr< thread_safe_container > >", "structcontainer__module_1_1is__variant__type_3_01std_1_1shared__ptr_3_01thread__safe__container_01_4_01_4.html", null ],
-    [ "ValueVariant", "variant__value_8h.html#a7d76e8449b5c8269e3d163cfde219d61", null ],
+    [ "ValueVariant", "variant__value_8h.html#a626f8e8b0086274099d6dfc8a65359c9", null ],
     [ "is_variant_type_v", "variant__value_8h.html#ac0543182e2ed64e72eca84adeca7905c", null ]
 ];

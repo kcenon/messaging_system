@@ -141,7 +141,7 @@ $(document).ready(function(){initNavTree('messaging__client_8h_source.html','');
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include &lt;asio.hpp&gt;</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include &quot;<a class="code" href="asio__compat_8h.html">network/internal/asio_compat.h</a>&quot;</span></div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#include &quot;<a class="code" href="tcp__socket_8h.html">network/internal/tcp_socket.h</a>&quot;</span></div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#include &quot;<a class="code" href="pipeline_8h.html">network/internal/pipeline.h</a>&quot;</span></div>
@@ -213,6 +213,7 @@ $(document).ready(function(){initNavTree('messaging__client_8h_source.html','');
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>} <span class="comment">// namespace network_module</span></div>
 </div>
 </div>
+<div class="ttc" id="aasio__compat_8h_html"><div class="ttname"><a href="asio__compat_8h.html">asio_compat.h</a></div></div>
 <div class="ttc" id="aclassnetwork__module_1_1messaging__client_html"><div class="ttname"><a href="classnetwork__module_1_1messaging__client.html">network_module::messaging_client</a></div><div class="ttdoc">A basic TCP client that connects to a remote host, sends/receives data using asynchronous operations,...</div><div class="ttdef"><b>Definition</b> <a href="messaging__client_8h_source.html#l00068">messaging_client.h:70</a></div></div>
 <div class="ttc" id="aclassnetwork__module_1_1messaging__client_html_a0278a8ca96f4ad56692957fe09653a5e"><div class="ttname"><a href="classnetwork__module_1_1messaging__client.html#a0278a8ca96f4ad56692957fe09653a5e">network_module::messaging_client::wait_for_stop</a></div><div class="ttdeci">auto wait_for_stop() -&gt; void</div><div class="ttdoc">Blocks until stop_client() is invoked, i.e., a synchronization mechanism.</div><div class="ttdef"><b>Definition</b> <a href="messaging__client_8cpp_source.html#l00127">messaging_client.cpp:127</a></div></div>
 <div class="ttc" id="aclassnetwork__module_1_1messaging__client_html_a04c257d278d154e5bce0d6775260acc4"><div class="ttname"><a href="classnetwork__module_1_1messaging__client.html#a04c257d278d154e5bce0d6775260acc4">network_module::messaging_client::socket_</a></div><div class="ttdeci">std::shared_ptr&lt; tcp_socket &gt; socket_</div><div class="ttdef"><b>Definition</b> <a href="messaging__client_8h_source.html#l00172">messaging_client.h:172</a></div></div>

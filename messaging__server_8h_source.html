@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('messaging__server_8h_source.html','');
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &lt;atomic&gt;</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#include &lt;asio.hpp&gt;</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#include &quot;<a class="code" href="asio__compat_8h.html">network/internal/asio_compat.h</a>&quot;</span></div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacenetwork__module.html">network_module</a></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>{</div>
@@ -190,6 +190,7 @@ $(document).ready(function(){initNavTree('messaging__server_8h_source.html','');
 </div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>} <span class="comment">// namespace network_module</span></div>
+<div class="ttc" id="aasio__compat_8h_html"><div class="ttname"><a href="asio__compat_8h.html">asio_compat.h</a></div></div>
 <div class="ttc" id="aclassnetwork__module_1_1messaging__server_html"><div class="ttname"><a href="classnetwork__module_1_1messaging__server.html">network_module::messaging_server</a></div><div class="ttdoc">A server class that manages incoming TCP connections, creating messaging_session instances for each a...</div><div class="ttdef"><b>Definition</b> <a href="messaging__server_8h_source.html#l00087">messaging_server.h:89</a></div></div>
 <div class="ttc" id="aclassnetwork__module_1_1messaging__server_html_a076afc2b720a33bc3fbea7751d6631c2"><div class="ttname"><a href="classnetwork__module_1_1messaging__server.html#a076afc2b720a33bc3fbea7751d6631c2">network_module::messaging_server::server_id_</a></div><div class="ttdeci">std::string server_id_</div><div class="ttdef"><b>Definition</b> <a href="messaging__server_8h_source.html#l00168">messaging_server.h:168</a></div></div>
 <div class="ttc" id="aclassnetwork__module_1_1messaging__server_html_a1c8be222dae5af43ae2126ffb7db6a5e"><div class="ttname"><a href="classnetwork__module_1_1messaging__server.html#a1c8be222dae5af43ae2126ffb7db6a5e">network_module::messaging_server::sessions_</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; messaging_session &gt; &gt; sessions_</div><div class="ttdoc">Holds all active sessions. When stop_server() is invoked, each session's stop_session() is called and...</div><div class="ttdef"><b>Definition</b> <a href="messaging__server_8h_source.html#l00191">messaging_server.h:191</a></div></div>

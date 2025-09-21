@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('messaging__session_8h_source.html','')
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &lt;atomic&gt;</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;asio.hpp&gt;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &quot;<a class="code" href="asio__compat_8h.html">network/internal/asio_compat.h</a>&quot;</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include &quot;<a class="code" href="tcp__socket_8h.html">network/internal/tcp_socket.h</a>&quot;</span></div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#include &quot;<a class="code" href="pipeline_8h.html">network/internal/pipeline.h</a>&quot;</span></div>
@@ -195,6 +195,7 @@ $(document).ready(function(){initNavTree('messaging__session_8h_source.html','')
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>} <span class="comment">// namespace network_module</span></div>
 </div>
 </div>
+<div class="ttc" id="aasio__compat_8h_html"><div class="ttname"><a href="asio__compat_8h.html">asio_compat.h</a></div></div>
 <div class="ttc" id="aclassnetwork__module_1_1messaging__session_html"><div class="ttname"><a href="classnetwork__module_1_1messaging__session.html">network_module::messaging_session</a></div><div class="ttdoc">Manages a single connected client session on the server side, providing asynchronous read/write opera...</div><div class="ttdef"><b>Definition</b> <a href="messaging__session_8h_source.html#l00070">messaging_session.h:72</a></div></div>
 <div class="ttc" id="aclassnetwork__module_1_1messaging__session_html_a057e52d0a5d9070d46b189ab31366361"><div class="ttname"><a href="classnetwork__module_1_1messaging__session.html#a057e52d0a5d9070d46b189ab31366361">network_module::messaging_session::encrypt_mode_</a></div><div class="ttdeci">bool encrypt_mode_</div><div class="ttdef"><b>Definition</b> <a href="messaging__session_8h_source.html#l00142">messaging_session.h:142</a></div></div>
 <div class="ttc" id="aclassnetwork__module_1_1messaging__session_html_a12944798cd4b25f64dc858030b61d645"><div class="ttname"><a href="classnetwork__module_1_1messaging__session.html#a12944798cd4b25f64dc858030b61d645">network_module::messaging_session::start_session</a></div><div class="ttdeci">auto start_session() -&gt; void</div><div class="ttdoc">Starts the session: sets up read/error callbacks and begins reading data.</div><div class="ttdef"><b>Definition</b> <a href="messaging__session_8cpp_source.html#l00061">messaging_session.cpp:61</a></div></div>
