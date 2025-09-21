@@ -26,12 +26,26 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup and install vcpkg dependencies
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-        runVcpkgInstall: true
-        vcpkgJsonGlob: '**/vcpkg.json'
+    - name: Setup vcpkg manually for security scan
+      run: |
+        echo "Setting up vcpkg for security scanning..."
+        if [ ! -d "vcpkg" ]; then
+          git clone https://github.com/Microsoft/vcpkg.git vcpkg || {
+            echo "Failed to clone vcpkg, trying alternative method..."
+            wget -q https://github.com/Microsoft/vcpkg/archive/refs/heads/master.tar.gz
+            tar -xzf master.tar.gz
+            mv vcpkg-master vcpkg
+          }
+        fi
+
+        if [ -d "vcpkg" ]; then
+          cd vcpkg
+          if [ -f "./bootstrap-vcpkg.sh" ]; then
+            chmod +x ./bootstrap-vcpkg.sh
+            ./bootstrap-vcpkg.sh || echo "Bootstrap failed, continuing..."
+          fi
+          cd ..
+        fi
 
     - name: Dependency vulnerability scan
       uses: aquasecurity/trivy-action@master

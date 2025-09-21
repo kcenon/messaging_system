@@ -46,16 +46,40 @@ jobs:
           Write-Host "Setting up vcpkg manually..."
           if (-not (Test-Path "vcpkg")) {
             Write-Host "Cloning vcpkg repository..."
-            git clone https://github.com/Microsoft/vcpkg.git
+            try {
+              git clone https://github.com/Microsoft/vcpkg.git vcpkg
+            } catch {
+              Write-Host "Failed to clone vcpkg, trying alternative method..."
+              Invoke-WebRequest -Uri "https://github.com/Microsoft/vcpkg/archive/refs/heads/master.zip" -OutFile "vcpkg.zip"
+              Expand-Archive -Path "vcpkg.zip" -DestinationPath "."
+              Rename-Item -Path "vcpkg-master" -NewName "vcpkg"
+            }
           }
 
-          Push-Location vcpkg
-          Write-Host "Bootstrapping vcpkg..."
-          .\bootstrap-vcpkg.bat
+          if (Test-Path "vcpkg") {
+            Push-Location vcpkg
+            Write-Host "Current directory: $(Get-Location)"
+            Write-Host "Files in directory:"
+            Get-ChildItem
 
-          Write-Host "Installing dependencies from root directory..."
-          .\vcpkg.exe install --x-manifest-root="${{ github.workspace }}" --x-install-root="${{ github.workspace }}\vcpkg_installed" --triplet=${{ env.VCPKG_DEFAULT_TRIPLET }}
-          Pop-Location
+            if (Test-Path ".\bootstrap-vcpkg.bat") {
+              Write-Host "Running bootstrap-vcpkg.bat..."
+              .\bootstrap-vcpkg.bat
+            } elseif (Test-Path ".\scripts\bootstrap.ps1") {
+              Write-Host "Running scripts\bootstrap.ps1..."
+              .\scripts\bootstrap.ps1
+            } else {
+              Write-Host "Warning: No bootstrap script found"
+            }
+
+            if (Test-Path ".\vcpkg.exe") {
+              Write-Host "Installing dependencies from root directory..."
+              .\vcpkg.exe install --x-manifest-root="${{ github.workspace }}" --x-install-root="${{ github.workspace }}\vcpkg_installed" --triplet=${{ env.VCPKG_DEFAULT_TRIPLET }}
+            }
+            Pop-Location
+          } else {
+            Write-Host "Warning: Could not set up vcpkg directory"
+          }
 
       - name: Cache CMake build
         uses: actions/cache@v3

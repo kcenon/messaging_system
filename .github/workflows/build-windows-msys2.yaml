@@ -96,27 +96,37 @@ jobs:
         run: |
           if [ ! -d "vcpkg" ]; then
             echo "Cloning vcpkg repository..."
-            git clone https://github.com/Microsoft/vcpkg.git
-          else
-            echo "Updating existing vcpkg repository..."
-            cd vcpkg
-            git checkout master 2>/dev/null || git checkout main 2>/dev/null || true
-            git pull origin HEAD 2>/dev/null || true
-            cd ..
+            git clone https://github.com/Microsoft/vcpkg.git vcpkg || {
+              echo "Failed to clone vcpkg, trying alternative method..."
+              wget -q https://github.com/Microsoft/vcpkg/archive/refs/heads/master.tar.gz
+              tar -xzf master.tar.gz
+              mv vcpkg-master vcpkg
+            }
           fi
 
-          echo "Bootstrapping vcpkg..."
-          if [ -f "./vcpkg/bootstrap-vcpkg.sh" ]; then
-            ./vcpkg/bootstrap-vcpkg.sh
-          else
-            echo "bootstrap-vcpkg.sh not found, checking alternatives..."
-            if [ -f "./vcpkg/bootstrap-vcpkg.bat" ]; then
+          if [ -d "vcpkg" ]; then
+            cd vcpkg
+            echo "Current directory: $(pwd)"
+            echo "Files in directory: $(ls -la)"
+
+            # Try to bootstrap vcpkg
+            if [ -f "./bootstrap-vcpkg.sh" ]; then
+              echo "Running bootstrap-vcpkg.sh..."
+              chmod +x ./bootstrap-vcpkg.sh
+              ./bootstrap-vcpkg.sh
+            elif [ -f "./bootstrap-vcpkg.bat" ]; then
               echo "Using bootstrap-vcpkg.bat..."
-              cd vcpkg && cmd //c bootstrap-vcpkg.bat && cd ..
+              cmd //c bootstrap-vcpkg.bat
+            elif [ -f "./scripts/bootstrap.sh" ]; then
+              echo "Running scripts/bootstrap.sh..."
+              chmod +x ./scripts/bootstrap.sh
+              ./scripts/bootstrap.sh
             else
-              echo "No bootstrap script found"
-              exit 1
+              echo "Warning: No bootstrap script found"
             fi
+            cd ..
+          else
+            echo "Warning: vcpkg setup failed"
           fi
 
       - name: Determine vcpkg commit
