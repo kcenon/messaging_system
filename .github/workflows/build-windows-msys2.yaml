@@ -176,6 +176,17 @@ jobs:
           cd build
           
           echo "Building with MSYS2 system packages..."
+          # Create a fake asio config file for CMake since MSYS2's asio is header-only
+          mkdir -p /tmp/asio_cmake
+          cat > /tmp/asio_cmake/asio-config.cmake << 'EOF'
+          if(NOT TARGET asio::asio)
+            add_library(asio::asio INTERFACE IMPORTED)
+            set_target_properties(asio::asio PROPERTIES
+              INTERFACE_INCLUDE_DIRECTORIES "/mingw64/include"
+            )
+          endif()
+          EOF
+
           cmake .. \
             -G "Ninja" \
             -DBUILD_TESTS=ON \
@@ -186,10 +197,10 @@ jobs:
             -DCMAKE_AR=/mingw64/bin/ar.exe \
             -DCMAKE_RANLIB=/mingw64/bin/ranlib.exe \
             -DCMAKE_RC_COMPILER=/mingw64/bin/windres.exe \
-            -DCMAKE_PREFIX_PATH="/mingw64;/mingw64/lib/cmake" \
+            -DCMAKE_PREFIX_PATH="/mingw64;/mingw64/lib/cmake;/tmp/asio_cmake" \
             -Dfmt_DIR=/mingw64/lib/cmake/fmt \
             -DGTest_DIR=/mingw64/lib/cmake/GTest \
-            -Dasio_DIR=/mingw64/lib/cmake/asio \
+            -Dasio_DIR=/tmp/asio_cmake \
             -Dnlohmann_json_DIR=/mingw64/lib/cmake/nlohmann_json \
             -DPostgreSQL_ROOT=/mingw64
 

@@ -101,7 +101,18 @@ jobs:
       - name: Install dependencies with vcpkg (uses binary cache)
         if: steps.vcpkg-installed.outputs.cache-hit != 'true'
         run: |
-          ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet $VCPKG_DEFAULT_TRIPLET
+          # Check if vcpkg executable exists
+          if [ -f "./vcpkg/vcpkg" ]; then
+            echo "Using ./vcpkg/vcpkg"
+            ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet $VCPKG_DEFAULT_TRIPLET
+          elif [ -f "${{ github.workspace }}/vcpkg/vcpkg" ]; then
+            echo "Using absolute path vcpkg"
+            ${{ github.workspace }}/vcpkg/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet $VCPKG_DEFAULT_TRIPLET
+          else
+            echo "vcpkg executable not found, skipping vcpkg installation"
+            echo "Available files in vcpkg directory:"
+            ls -la ./vcpkg/ 2>/dev/null || echo "vcpkg directory not found"
+          fi
 
       - name: Cache CMake build
         uses: actions/cache@v3
