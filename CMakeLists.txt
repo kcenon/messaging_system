@@ -22,7 +22,7 @@ option(BUILD_MESSAGING_SAMPLES "Build messaging system samples" ON)
 option(BUILD_CONTAINER "Build container module" ON)
 option(BUILD_DATABASE "Build database module" ON)
 option(BUILD_NETWORK "Build network module" ON)
-option(BUILD_PYTHON_BINDINGS "Build Python bindings" ON)
+option(BUILD_PYTHON_BINDINGS "Build Python bindings" ON)  # Handled in services_system
 
 # Feature options
 option(USE_LOCKFREE_BY_DEFAULT "Use lock-free implementations by default" OFF)
@@ -58,7 +58,7 @@ option(USE_EXTERNAL_LOGGER_SYSTEM "Use external logger system" ON)
 # Option to use external monitoring system
 option(USE_EXTERNAL_MONITORING_SYSTEM "Use external monitoring system" ON)
 
-if(USE_INTERNAL_THREAD_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thread_system)
+if(USE_INTERNAL_THREAD_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system)
     # Legacy mode: use internal thread_system
     message(STATUS "Using internal thread_system subdirectory")
     set(BUILD_THREADSYSTEM_AS_SUBMODULE ON CACHE BOOL "Build ThreadSystem as submodule" FORCE)
@@ -69,11 +69,11 @@ if(USE_INTERNAL_THREAD_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thread_syst
         set(USE_LOCKFREE_LOGGER ON CACHE BOOL "Use lock-free logger by default" FORCE)
     endif()
     
-    add_subdirectory(thread_system)
+    add_subdirectory(libraries/thread_system)
     
     # Include directories for thread_system
     include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}/thread_system/sources
+        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system/sources
     )
 else()
     # Modern mode: use external ThreadSystemCore
@@ -93,15 +93,15 @@ endif()
 # Logger System Integration
 option(USE_INTERNAL_LOGGER_SYSTEM "Use internal logger_system subdirectory" OFF)
 
-if(USE_INTERNAL_LOGGER_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/logger_system)
+if(USE_INTERNAL_LOGGER_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/logger_system)
     # Use internal logger_system
     message(STATUS "Using internal logger_system subdirectory")
     set(BUILD_LOGGER_AS_SUBMODULE ON CACHE BOOL "Build Logger as submodule" FORCE)
-    add_subdirectory(logger_system)
+    add_subdirectory(libraries/logger_system)
 
     # Include directories for logger_system
     include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}/logger_system/sources
+        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/logger_system/sources
     )
 elseif(USE_EXTERNAL_LOGGER_SYSTEM)
     message(STATUS "Attempting to find external LoggerSystem")
@@ -118,15 +118,15 @@ endif()
 # Monitoring System Integration
 option(USE_INTERNAL_MONITORING_SYSTEM "Use internal monitoring_system subdirectory" OFF)
 
-if(USE_INTERNAL_MONITORING_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/monitoring_system)
+if(USE_INTERNAL_MONITORING_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/monitoring_system)
     # Use internal monitoring_system
     message(STATUS "Using internal monitoring_system subdirectory")
     set(BUILD_MONITORING_AS_SUBMODULE ON CACHE BOOL "Build Monitoring as submodule" FORCE)
-    add_subdirectory(monitoring_system)
+    add_subdirectory(libraries/monitoring_system)
 
     # Include directories for monitoring_system
     include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}/monitoring_system/sources
+        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/monitoring_system/sources
     )
 elseif(USE_EXTERNAL_MONITORING_SYSTEM)
     message(STATUS "Attempting to find external MonitoringSystem")
@@ -142,7 +142,7 @@ endif()
 
 # Messaging system modules
 if(BUILD_CONTAINER)
-    add_subdirectory(container)
+    add_subdirectory(container_system)
     # # Add container to the export set
     # install(TARGETS container
     #     EXPORT messaging_system_targets
@@ -153,7 +153,7 @@ if(BUILD_CONTAINER)
 endif()
 
 if(BUILD_DATABASE)
-    add_subdirectory(database)
+    add_subdirectory(database_system)
     # # Add database to the export set
     # if(TARGET database)
     #     install(TARGETS database
@@ -166,21 +166,19 @@ if(BUILD_DATABASE)
 endif()
 
 if(BUILD_NETWORK)
-    add_subdirectory(network)
+    add_subdirectory(network_system)
 endif()
 
 # Add services (new modular structure)
-add_subdirectory(services)
+add_subdirectory(services_system)
 
-# Python bindings
-if(BUILD_PYTHON_BINDINGS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/python)
-    add_subdirectory(python)
-endif()
+# Python bindings are now handled within services_system
+# The old python directory has been removed to avoid duplication
 
 # Unit tests
 if(USE_UNIT_TEST)
     enable_testing()
-    add_subdirectory(unittest)
+    add_subdirectory(test/unittest)
 endif()
 
 # Samples
@@ -217,7 +215,7 @@ include(GNUInstallDirs)
 
 # Install header files
 if(BUILD_CONTAINER)
-    install(DIRECTORY container/
+    install(DIRECTORY container_system/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/messaging_system/container
         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.tpp"
         PATTERN "tests" EXCLUDE
@@ -226,7 +224,7 @@ if(BUILD_CONTAINER)
 endif()
 
 if(BUILD_DATABASE)
-    install(DIRECTORY database/
+    install(DIRECTORY database_system/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/messaging_system/database
         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
         PATTERN "tests" EXCLUDE
@@ -234,7 +232,7 @@ if(BUILD_DATABASE)
 endif()
 
 if(BUILD_NETWORK)
-    install(DIRECTORY network/
+    install(DIRECTORY network_system/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/messaging_system/network
         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
         PATTERN "tests" EXCLUDE

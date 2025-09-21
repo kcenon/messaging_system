@@ -349,8 +349,22 @@ healthchecksdb
 build_xcode/
 
 # Backup directories
+backups/
 thread_system.backup/
 *.backup/
+backup*/
 
 # Additional build directories
+build/
 build_*/
+build-*/
+cmake-build-*/
+
+# Test output
+test_output/
+test_results/
+
+# Temporary files
+*.tmp
+temp/
+tmp/
