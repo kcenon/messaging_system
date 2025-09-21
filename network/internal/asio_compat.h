@@ -36,7 +36,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifdef NO_ASIO_AVAILABLE
     // Provide stub implementations when ASIO is not available
-    #warning "ASIO not available - network functionality will be limited"
+    #ifdef _MSC_VER
+        #pragma message("ASIO not available - network functionality will be limited")
+    #else
+        #warning "ASIO not available - network functionality will be limited"
+    #endif
 
     namespace asio {
         namespace ip {
