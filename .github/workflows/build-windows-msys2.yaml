@@ -52,6 +52,9 @@ jobs:
             mingw-w64-x86_64-gtest
             mingw-w64-x86_64-benchmark
             mingw-w64-x86_64-spdlog
+            mingw-w64-x86_64-asio
+            mingw-w64-x86_64-nlohmann-json
+            mingw-w64-x86_64-libpqxx
             git
 
       - name: Cache vcpkg
@@ -97,10 +100,11 @@ jobs:
           else
             echo "Updating existing vcpkg repository..."
             cd vcpkg
-            git pull
+            git checkout master 2>/dev/null || git checkout main 2>/dev/null || true
+            git pull origin HEAD 2>/dev/null || true
             cd ..
           fi
-          
+
           echo "Bootstrapping vcpkg..."
           ./vcpkg/bootstrap-vcpkg.sh
 
@@ -161,9 +165,12 @@ jobs:
             -DCMAKE_AR=/mingw64/bin/ar.exe \
             -DCMAKE_RANLIB=/mingw64/bin/ranlib.exe \
             -DCMAKE_RC_COMPILER=/mingw64/bin/windres.exe \
-            -DCMAKE_PREFIX_PATH=/mingw64 \
+            -DCMAKE_PREFIX_PATH="/mingw64;/mingw64/lib/cmake" \
             -Dfmt_DIR=/mingw64/lib/cmake/fmt \
-            -DGTest_DIR=/mingw64/lib/cmake/GTest
+            -DGTest_DIR=/mingw64/lib/cmake/GTest \
+            -Dasio_DIR=/mingw64/lib/cmake/asio \
+            -Dnlohmann_json_DIR=/mingw64/lib/cmake/nlohmann_json \
+            -DPostgreSQL_ROOT=/mingw64
 
           cmake --build . --parallel $(nproc)
 

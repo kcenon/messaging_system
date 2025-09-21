@@ -57,7 +57,8 @@ jobs:
             git clone https://github.com/Microsoft/vcpkg.git
           fi
           cd vcpkg
-          git pull
+          git checkout master 2>/dev/null || git checkout main 2>/dev/null || true
+          git pull origin HEAD 2>/dev/null || true
           ./bootstrap-vcpkg.sh
           cd ..
 
