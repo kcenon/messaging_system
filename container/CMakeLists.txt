@@ -101,17 +101,12 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 # Dependencies
 ##################################################
 
-# ThreadSystem utilities dependency
-if(TARGET utilities)
-    target_link_libraries(${PROJECT_NAME} PRIVATE utilities)
-    # Include ThreadSystem utilities headers
-    target_include_directories(${PROJECT_NAME} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/thread_system/sources/utilities>
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/thread_system/sources>
-    )
-else()
-    message(WARNING "utilities target not found - container may have missing dependencies")
-endif()
+# Local utilities compatibility layer - self-contained implementation
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+message(STATUS "Using self-contained utilities compatibility layer")
 
 # fmt library for formatting
 find_package(fmt CONFIG REQUIRED)
