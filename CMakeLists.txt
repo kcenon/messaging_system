@@ -97,7 +97,7 @@ if(USE_INTERNAL_LOGGER_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/logger_syst
     message(STATUS "Using internal logger_system subdirectory")
     set(BUILD_LOGGER_AS_SUBMODULE ON CACHE BOOL "Build Logger as submodule" FORCE)
     add_subdirectory(logger_system)
-    
+
     # Include directories for logger_system
     include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/logger_system/sources
@@ -105,7 +105,7 @@ if(USE_INTERNAL_LOGGER_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/logger_syst
 elseif(USE_EXTERNAL_LOGGER_SYSTEM)
     message(STATUS "Attempting to find external LoggerSystem")
     find_package(LoggerSystem QUIET)
-    
+
     # Make logger available to all modules
     if(TARGET LoggerSystem::logger)
         add_library(logger ALIAS LoggerSystem::logger)
@@ -122,7 +122,7 @@ if(USE_INTERNAL_MONITORING_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/monitor
     message(STATUS "Using internal monitoring_system subdirectory")
     set(BUILD_MONITORING_AS_SUBMODULE ON CACHE BOOL "Build Monitoring as submodule" FORCE)
     add_subdirectory(monitoring_system)
-    
+
     # Include directories for monitoring_system
     include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/monitoring_system/sources
@@ -130,7 +130,7 @@ if(USE_INTERNAL_MONITORING_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/monitor
 elseif(USE_EXTERNAL_MONITORING_SYSTEM)
     message(STATUS "Attempting to find external MonitoringSystem")
     find_package(MonitoringSystem QUIET)
-    
+
     # Make monitoring available to all modules
     if(TARGET MonitoringSystem::monitoring)
         add_library(monitoring ALIAS MonitoringSystem::monitoring)
