@@ -15,13 +15,11 @@ var searchData=
   ['is_5fvariant_5ftype_3c_20int16_5ft_20_3e_12',['is_variant_type&lt; int16_t &gt;',['../structcontainer__module_1_1is__variant__type_3_01int16__t_01_4.html',1,'container_module']]],
   ['is_5fvariant_5ftype_3c_20int32_5ft_20_3e_13',['is_variant_type&lt; int32_t &gt;',['../structcontainer__module_1_1is__variant__type_3_01int32__t_01_4.html',1,'container_module']]],
   ['is_5fvariant_5ftype_3c_20int64_5ft_20_3e_14',['is_variant_type&lt; int64_t &gt;',['../structcontainer__module_1_1is__variant__type_3_01int64__t_01_4.html',1,'container_module']]],
-  ['is_5fvariant_5ftype_3c_20long_20long_20_3e_15',['is_variant_type&lt; long long &gt;',['../structcontainer__module_1_1is__variant__type_3_01long_01long_01_4.html',1,'container_module']]],
-  ['is_5fvariant_5ftype_3c_20std_3a_3amonostate_20_3e_16',['is_variant_type&lt; std::monostate &gt;',['../structcontainer__module_1_1is__variant__type_3_01std_1_1monostate_01_4.html',1,'container_module']]],
-  ['is_5fvariant_5ftype_3c_20std_3a_3ashared_5fptr_3c_20thread_5fsafe_5fcontainer_20_3e_20_3e_17',['is_variant_type&lt; std::shared_ptr&lt; thread_safe_container &gt; &gt;',['../structcontainer__module_1_1is__variant__type_3_01std_1_1shared__ptr_3_01thread__safe__container_01_4_01_4.html',1,'container_module']]],
-  ['is_5fvariant_5ftype_3c_20std_3a_3astring_20_3e_18',['is_variant_type&lt; std::string &gt;',['../structcontainer__module_1_1is__variant__type_3_01std_1_1string_01_4.html',1,'container_module']]],
-  ['is_5fvariant_5ftype_3c_20std_3a_3avector_3c_20uint8_5ft_20_3e_20_3e_19',['is_variant_type&lt; std::vector&lt; uint8_t &gt; &gt;',['../structcontainer__module_1_1is__variant__type_3_01std_1_1vector_3_01uint8__t_01_4_01_4.html',1,'container_module']]],
-  ['is_5fvariant_5ftype_3c_20uint16_5ft_20_3e_20',['is_variant_type&lt; uint16_t &gt;',['../structcontainer__module_1_1is__variant__type_3_01uint16__t_01_4.html',1,'container_module']]],
-  ['is_5fvariant_5ftype_3c_20uint32_5ft_20_3e_21',['is_variant_type&lt; uint32_t &gt;',['../structcontainer__module_1_1is__variant__type_3_01uint32__t_01_4.html',1,'container_module']]],
-  ['is_5fvariant_5ftype_3c_20uint64_5ft_20_3e_22',['is_variant_type&lt; uint64_t &gt;',['../structcontainer__module_1_1is__variant__type_3_01uint64__t_01_4.html',1,'container_module']]],
-  ['is_5fvariant_5ftype_3c_20unsigned_20long_20long_20_3e_23',['is_variant_type&lt; unsigned long long &gt;',['../structcontainer__module_1_1is__variant__type_3_01unsigned_01long_01long_01_4.html',1,'container_module']]]
+  ['is_5fvariant_5ftype_3c_20std_3a_3amonostate_20_3e_15',['is_variant_type&lt; std::monostate &gt;',['../structcontainer__module_1_1is__variant__type_3_01std_1_1monostate_01_4.html',1,'container_module']]],
+  ['is_5fvariant_5ftype_3c_20std_3a_3ashared_5fptr_3c_20thread_5fsafe_5fcontainer_20_3e_20_3e_16',['is_variant_type&lt; std::shared_ptr&lt; thread_safe_container &gt; &gt;',['../structcontainer__module_1_1is__variant__type_3_01std_1_1shared__ptr_3_01thread__safe__container_01_4_01_4.html',1,'container_module']]],
+  ['is_5fvariant_5ftype_3c_20std_3a_3astring_20_3e_17',['is_variant_type&lt; std::string &gt;',['../structcontainer__module_1_1is__variant__type_3_01std_1_1string_01_4.html',1,'container_module']]],
+  ['is_5fvariant_5ftype_3c_20std_3a_3avector_3c_20uint8_5ft_20_3e_20_3e_18',['is_variant_type&lt; std::vector&lt; uint8_t &gt; &gt;',['../structcontainer__module_1_1is__variant__type_3_01std_1_1vector_3_01uint8__t_01_4_01_4.html',1,'container_module']]],
+  ['is_5fvariant_5ftype_3c_20uint16_5ft_20_3e_19',['is_variant_type&lt; uint16_t &gt;',['../structcontainer__module_1_1is__variant__type_3_01uint16__t_01_4.html',1,'container_module']]],
+  ['is_5fvariant_5ftype_3c_20uint32_5ft_20_3e_20',['is_variant_type&lt; uint32_t &gt;',['../structcontainer__module_1_1is__variant__type_3_01uint32__t_01_4.html',1,'container_module']]],
+  ['is_5fvariant_5ftype_3c_20uint64_5ft_20_3e_21',['is_variant_type&lt; uint64_t &gt;',['../structcontainer__module_1_1is__variant__type_3_01uint64__t_01_4.html',1,'container_module']]]
 ];

@@ -1,9 +1,5 @@
 var NAVTREEINDEX16 =
 {
-"thread__base_2jobs_2job__types_8h.html#aee9a7b3c53d29c84ac5dbb96077f2e54a53cced8d281a1a0ace3cb6594daaa4f7":[4,0,3,0,1,2,6,5,0],
-"thread__base_2jobs_2job__types_8h.html#aee9a7b3c53d29c84ac5dbb96077f2e54a8d966b2253a917086c8604959e152243":[4,0,3,0,1,2,6,5,2],
-"thread__base_2jobs_2job__types_8h.html#aee9a7b3c53d29c84ac5dbb96077f2e54afea087517c26fadd409bd4b9dc642555":[4,0,3,0,1,2,6,5,1],
-"thread__base_2jobs_2job__types_8h_source.html":[4,0,3,0,1,2,6],
 "thread__base_8cpp.html":[4,0,3,0,1,0,0],
 "thread__base_8cpp_source.html":[4,0,3,0,1,0,0],
 "thread__base_8h.html":[4,0,3,0,1,0,1],
@@ -168,8 +164,8 @@ var NAVTREEINDEX16 =
 "variant__value_8cpp.html":[4,0,0,1,4],
 "variant__value_8cpp_source.html":[4,0,0,1,4],
 "variant__value_8h.html":[4,0,0,1,5],
-"variant__value_8h.html#a7d76e8449b5c8269e3d163cfde219d61":[4,0,0,1,5,17],
-"variant__value_8h.html#ac0543182e2ed64e72eca84adeca7905c":[4,0,0,1,5,18],
+"variant__value_8h.html#a7d76e8449b5c8269e3d163cfde219d61":[4,0,0,1,5,15],
+"variant__value_8h.html#ac0543182e2ed64e72eca84adeca7905c":[4,0,0,1,5,16],
 "variant__value_8h_source.html":[4,0,0,1,5],
 "worker__policy_8h.html":[4,0,3,0,2,3,2],
 "worker__policy_8h.html#a01ba7496fee6a3d92c79f8becaa8850c":[4,0,3,0,2,3,2,4],

@@ -11,8 +11,6 @@ var variant__value_8h =
     [ "container_module::is_variant_type< uint32_t >", "structcontainer__module_1_1is__variant__type_3_01uint32__t_01_4.html", null ],
     [ "container_module::is_variant_type< int64_t >", "structcontainer__module_1_1is__variant__type_3_01int64__t_01_4.html", null ],
     [ "container_module::is_variant_type< uint64_t >", "structcontainer__module_1_1is__variant__type_3_01uint64__t_01_4.html", null ],
-    [ "container_module::is_variant_type< long long >", "structcontainer__module_1_1is__variant__type_3_01long_01long_01_4.html", null ],
-    [ "container_module::is_variant_type< unsigned long long >", "structcontainer__module_1_1is__variant__type_3_01unsigned_01long_01long_01_4.html", null ],
     [ "container_module::is_variant_type< float >", "structcontainer__module_1_1is__variant__type_3_01float_01_4.html", null ],
     [ "container_module::is_variant_type< double >", "structcontainer__module_1_1is__variant__type_3_01double_01_4.html", null ],
     [ "container_module::is_variant_type< std::string >", "structcontainer__module_1_1is__variant__type_3_01std_1_1string_01_4.html", null ],
