@@ -35,6 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "utilities/core/formatter.h"
 #include <sstream>
 #include <iomanip>
+#include <cstring>
 
 namespace container_module
 {

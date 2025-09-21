@@ -38,6 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vector>
 #include <memory>
 #include <optional>
+#include <mutex>
 #include <shared_mutex>
 #include <atomic>
 #include <type_traits>
@@ -299,17 +300,22 @@ namespace container_module
     
     template<>
     struct is_variant_type<int64_t> : std::true_type {};
-    
+
     template<>
     struct is_variant_type<uint64_t> : std::true_type {};
-    
-    // Only define these on non-Apple platforms where they're different types
-    #ifndef __APPLE__
+
+    // Only define these if they're different from int64_t/uint64_t
+    // On Windows and some other platforms, long long == int64_t
+    #if !defined(_WIN32) && !defined(_WIN64) && !defined(__APPLE__)
+    #if !std::is_same_v<long long, int64_t>
     template<>
     struct is_variant_type<long long> : std::true_type {};
-    
+    #endif
+
+    #if !std::is_same_v<unsigned long long, uint64_t>
     template<>
     struct is_variant_type<unsigned long long> : std::true_type {};
+    #endif
     #endif
     
     template<>

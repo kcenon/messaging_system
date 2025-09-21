@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "container/internal/variant_value.h"
 #include <unordered_map>
+#include <mutex>
 #include <shared_mutex>
 #include <atomic>
 #include <algorithm>
