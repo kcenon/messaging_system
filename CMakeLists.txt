@@ -91,7 +91,7 @@ else()
 endif()
 
 # Logger System Integration
-option(USE_INTERNAL_LOGGER_SYSTEM "Use internal logger_system subdirectory" OFF)
+option(USE_INTERNAL_LOGGER_SYSTEM "Use internal logger_system subdirectory" ON)
 
 if(USE_INTERNAL_LOGGER_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/logger_system)
     # Use internal logger_system

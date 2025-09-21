@@ -1,8 +1,8 @@
 #include <kcenon/messaging/integrations/system_integrator.h>
 #include <kcenon/messaging/core/config.h>
-#include <logger_system/sources/logger/logger.h>
-#include <logger_system/sources/logger/writers/console_writer.h>
-#include <logger_system/sources/logger/writers/rotating_file_writer.h>
+#include <logger/logger.h>
+#include <logger/writers/console_writer.h>
+#include <logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <chrono>

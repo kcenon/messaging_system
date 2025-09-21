@@ -9,17 +9,35 @@
 #include <kcenon/messaging/integrations/system_integrator.h>
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/services/network/network_service.h>
-#include <logger_system/sources/logger/logger.h>
-#include <logger_system/sources/logger/writers/console_writer.h>
-#include <logger_system/sources/logger/writers/rotating_file_writer.h>
+#include <logger/logger.h>
+#include <logger/writers/console_writer.h>
+#include <logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <atomic>
 #include <unordered_map>
 #include <mutex>
+#include <chrono>
+#include <csignal>
+#include <condition_variable>
+#include <queue>
+#include <functional>
 
 using namespace kcenon::messaging;
 using namespace std::chrono_literals;
+
+// Global shutdown handling
+std::atomic<bool> g_shutdown_requested{false};
+std::condition_variable g_shutdown_cv;
+std::mutex g_shutdown_mutex;
+
+void signal_handler(int signal) {
+    if (signal == SIGINT || signal == SIGTERM) {
+        std::cout << "\nReceived signal " << signal << ". Initiating graceful shutdown..." << std::endl;
+        g_shutdown_requested = true;
+        g_shutdown_cv.notify_all();
+    }
+}
 
 class chat_server {
 private:
@@ -32,23 +50,47 @@ private:
         std::string id;
         std::string nickname;
         std::chrono::steady_clock::time_point last_activity;
+        int retry_count = 0;
+        bool is_connected = true;
     };
 
     std::unordered_map<std::string, User> users;
     std::mutex users_mutex;
     std::atomic<bool> running{true};
 
+    // Connection recovery
+    std::queue<std::function<void()>> retry_queue;
+    std::mutex retry_mutex;
+    std::thread retry_thread;
+
+    // Metrics
+    struct ServerMetrics {
+        std::atomic<uint64_t> messages_processed{0};
+        std::atomic<uint64_t> failed_messages{0};
+        std::atomic<uint64_t> reconnections{0};
+        std::atomic<uint64_t> active_users{0};
+    } metrics;
+
 public:
     chat_server() {
-        // Initialize logger
-        m_logger = std::make_shared<logger_module::logger>(true, 8192);
+        // Initialize logger with enhanced configuration
+        logger_module::logger_config logger_config;
+        logger_config.min_level = logger_module::log_level::info;
+        logger_config.pattern = "[{timestamp}] [{level}] [ChatServer] {message}";
+        logger_config.enable_async = true;
+        logger_config.async_queue_size = 16384;
+
+        m_logger = std::make_shared<logger_module::logger>(logger_config);
         m_logger->add_writer(std::make_unique<logger_module::console_writer>());
         m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
             "chat_server.log", 10 * 1024 * 1024, 5)); // 10MB per file, 5 files
-        m_logger->set_min_level(logger_module::log_level::info);
         m_logger->start();
 
-        m_logger->log(logger_module::log_level::info, "Initializing chat server...");
+        m_logger->log(logger_module::log_level::info, "Initializing chat server with error recovery...");
+
+        // Setup signal handlers
+        std::signal(SIGINT, signal_handler);
+        std::signal(SIGTERM, signal_handler);
 
         // Initialize the messaging system with optimized configuration
         config::config_builder builder;
@@ -61,10 +103,29 @@ public:
             .enable_monitoring(true)
             .build();
 
-        system_integrator = std::make_unique<integrations::system_integrator>(config);
-        network_service = std::make_unique<services::network_service>();
+        try {
+            system_integrator = std::make_unique<integrations::system_integrator>(config);
 
-        setupMessageHandlers();
+            if (!system_integrator->initialize()) {
+                throw std::runtime_error("Failed to initialize system integrator");
+            }
+
+            network_service = std::make_unique<services::network_service>();
+
+            setupMessageHandlers();
+            startRetryWorker();
+            startHealthMonitor();
+
+            m_logger->log(logger_module::log_level::info, "Chat server initialized successfully");
+        } catch (const std::exception& e) {
+            m_logger->log(logger_module::log_level::critical,
+                         "Failed to initialize chat server: " + std::string(e.what()));
+            throw;
+        }
+    }
+
+    ~chat_server() {
+        shutdown();
     }
 
     void setupMessageHandlers() {
@@ -101,24 +162,48 @@ public:
     }
 
     void handleUserConnect(const core::message& connect_message) {
-        auto user_id = connect_message.get_header("user_id");
-        auto nickname = connect_message.get_payload_as<std::string>();
+        try {
+            auto user_id = connect_message.get_header("user_id");
+            auto nickname = connect_message.get_payload_as<std::string>();
 
-        {
-            std::lock_guard<std::mutex> lock(users_mutex);
-            users[user_id] = {user_id, nickname, std::chrono::steady_clock::now()};
+            // Check for reconnection
+            bool is_reconnection = false;
+            {
+                std::lock_guard<std::mutex> lock(users_mutex);
+                if (auto it = users.find(user_id); it != users.end()) {
+                    is_reconnection = true;
+                    it->second.is_connected = true;
+                    it->second.retry_count = 0;
+                    it->second.last_activity = std::chrono::steady_clock::now();
+                    metrics.reconnections++;
+                } else {
+                    users[user_id] = {user_id, nickname, std::chrono::steady_clock::now(), 0, true};
+                    metrics.active_users++;
+                }
+            }
+
+            // Broadcast appropriate message
+            core::message broadcast;
+            if (is_reconnection) {
+                broadcast.set_type("system.user_reconnected");
+                broadcast.set_payload(nickname + " has reconnected");
+                m_logger->log(logger_module::log_level::info,
+                    "User reconnected: " + nickname + " (" + user_id + ")");
+            } else {
+                broadcast.set_type("system.user_joined");
+                broadcast.set_payload(nickname + " has joined the chat");
+                m_logger->log(logger_module::log_level::info,
+                    "New user connected: " + nickname + " (" + user_id + ")");
+            }
+            broadcast.set_priority(core::priority::HIGH);
+
+            broadcastToAll(broadcast);
+
+        } catch (const std::exception& e) {
+            m_logger->log(logger_module::log_level::error,
+                "Error handling user connection: " + std::string(e.what()));
+            metrics.failed_messages++;
         }
-
-        // Broadcast user joined message
-        core::message broadcast;
-        broadcast.set_type("system.user_joined");
-        broadcast.set_payload(nickname + " has joined the chat");
-        broadcast.set_priority(core::priority::HIGH);
-
-        broadcastToAll(broadcast);
-
-        m_logger->log(logger_module::log_level::info,
-            "User connected: " + nickname + " (" + user_id + ")");
     }
 
     void handleUserDisconnect(const core::message& disconnect_message) {
@@ -146,39 +231,73 @@ public:
     }
 
     void handleChatMessage(const core::message& chat_message) {
-        auto sender_user_id = chat_message.get_header("user_id");
-        auto target_room_id = chat_message.get_header("room_id");
-        auto message_text = chat_message.get_payload_as<std::string>();
+        try {
+            auto sender_user_id = chat_message.get_header("user_id");
+            auto target_room_id = chat_message.get_header("room_id");
+            auto message_text = chat_message.get_payload_as<std::string>();
 
-        std::string nickname;
-        {
-            std::lock_guard<std::mutex> lock(users_mutex);
-            if (auto user_iter = users.find(sender_user_id); user_iter != users.end()) {
-                nickname = user_iter->second.nickname;
-                user_iter->second.last_activity = std::chrono::steady_clock::now();
-            }
-        }
-
-        if (!nickname.empty()) {
-            // Create formatted message
-            core::message chat_msg;
-            chat_msg.set_type("chat.broadcast");
-            chat_msg.set_header("sender", nickname);
-            chat_msg.set_header("room", target_room_id);
-            chat_msg.set_header("timestamp", std::to_string(
-                std::chrono::system_clock::now().time_since_epoch().count()
-            ));
-            chat_msg.set_payload(message_text);
-
-            // Broadcast to room or all users
-            if (!target_room_id.empty()) {
-                broadcastToRoom(target_room_id, chat_msg);
-            } else {
-                broadcastToAll(chat_msg);
+            std::string nickname;
+            bool user_connected = false;
+            {
+                std::lock_guard<std::mutex> lock(users_mutex);
+                if (auto user_iter = users.find(sender_user_id); user_iter != users.end()) {
+                    nickname = user_iter->second.nickname;
+                    user_connected = user_iter->second.is_connected;
+                    user_iter->second.last_activity = std::chrono::steady_clock::now();
+                }
             }
 
-            // Log message for persistence
-            logMessage(nickname, message_text, target_room_id);
+            if (!nickname.empty() && user_connected) {
+                // Create formatted message
+                core::message chat_msg;
+                chat_msg.set_type("chat.broadcast");
+                chat_msg.set_header("sender", nickname);
+                chat_msg.set_header("room", target_room_id);
+                chat_msg.set_header("timestamp", std::to_string(
+                    std::chrono::system_clock::now().time_since_epoch().count()
+                ));
+                chat_msg.set_payload(message_text);
+
+                // Try to broadcast with retry on failure
+                bool broadcast_success = false;
+                for (int attempt = 0; attempt < 3; ++attempt) {
+                    try {
+                        if (!target_room_id.empty()) {
+                            broadcastToRoom(target_room_id, chat_msg);
+                        } else {
+                            broadcastToAll(chat_msg);
+                        }
+                        broadcast_success = true;
+                        metrics.messages_processed++;
+                        break;
+                    } catch (const std::exception& e) {
+                        m_logger->log(logger_module::log_level::warning,
+                            "Broadcast attempt " + std::to_string(attempt + 1) +
+                            " failed: " + std::string(e.what()));
+                        if (attempt < 2) {
+                            std::this_thread::sleep_for(std::chrono::milliseconds(100 * (attempt + 1)));
+                        }
+                    }
+                }
+
+                if (!broadcast_success) {
+                    // Queue for retry
+                    queueForRetry([this, chat_msg]() {
+                        broadcastToAll(chat_msg);
+                    });
+                    metrics.failed_messages++;
+                }
+
+                // Log message for persistence
+                logMessage(nickname, message_text, target_room_id);
+            } else if (!user_connected) {
+                m_logger->log(logger_module::log_level::warning,
+                    "Message from disconnected user: " + sender_user_id);
+            }
+        } catch (const std::exception& e) {
+            m_logger->log(logger_module::log_level::error,
+                "Error handling chat message: " + std::string(e.what()));
+            metrics.failed_messages++;
         }
     }
 
@@ -279,46 +398,227 @@ public:
         std::lock_guard<std::mutex> lock(users_mutex);
         for (auto user_iter = users.begin(); user_iter != users.end(); ) {
             if (now - user_iter->second.last_activity > timeout) {
-                m_logger->log(logger_module::log_level::warning,
-                    "Removing inactive user: " + user_iter->second.nickname);
-                user_iter = users.erase(user_iter);
+                if (user_iter->second.is_connected) {
+                    // Mark as disconnected first, will be cleaned up later
+                    user_iter->second.is_connected = false;
+                    m_logger->log(logger_module::log_level::warning,
+                        "Marking user as disconnected: " + user_iter->second.nickname);
+                    ++user_iter;
+                } else if (user_iter->second.retry_count >= 3) {
+                    // Remove after max retries
+                    m_logger->log(logger_module::log_level::info,
+                        "Removing inactive user after retries: " + user_iter->second.nickname);
+                    metrics.active_users--;
+                    user_iter = users.erase(user_iter);
+                } else {
+                    ++user_iter;
+                }
             } else {
                 ++user_iter;
             }
         }
     }
 
+    // New helper methods for error recovery and resilience
+    void startRetryWorker() {
+        retry_thread = std::thread([this] {
+            while (running && !g_shutdown_requested) {
+                std::function<void()> task;
+                {
+                    std::lock_guard<std::mutex> lock(retry_mutex);
+                    if (!retry_queue.empty()) {
+                        task = retry_queue.front();
+                        retry_queue.pop();
+                    }
+                }
+
+                if (task) {
+                    try {
+                        task();
+                    } catch (const std::exception& e) {
+                        m_logger->log(logger_module::log_level::error,
+                            "Retry task failed: " + std::string(e.what()));
+                    }
+                } else {
+                    std::this_thread::sleep_for(100ms);
+                }
+            }
+        });
+    }
+
+    void queueForRetry(std::function<void()> task) {
+        std::lock_guard<std::mutex> lock(retry_mutex);
+        if (retry_queue.size() < 1000) { // Limit retry queue size
+            retry_queue.push(task);
+        } else {
+            m_logger->log(logger_module::log_level::warning,
+                "Retry queue full, dropping task");
+        }
+    }
+
+    void startHealthMonitor() {
+        std::thread([this] {
+            while (running && !g_shutdown_requested) {
+                std::unique_lock<std::mutex> lock(g_shutdown_mutex);
+                if (g_shutdown_cv.wait_for(lock, 30s,
+                    [] { return g_shutdown_requested.load(); })) {
+                    break;
+                }
+
+                // Check system health
+                try {
+                    auto health = system_integrator->check_system_health();
+                    if (!health.message_bus_healthy) {
+                        m_logger->log(logger_module::log_level::error,
+                            "Message bus unhealthy, attempting recovery");
+                        attemptRecovery();
+                    }
+
+                    // Report metrics
+                    reportMetrics();
+                } catch (const std::exception& e) {
+                    m_logger->log(logger_module::log_level::error,
+                        "Health monitor error: " + std::string(e.what()));
+                }
+            }
+        }).detach();
+    }
+
+    void attemptRecovery() {
+        m_logger->log(logger_module::log_level::info, "Attempting system recovery...");
+
+        try {
+            // Reinitialize message handlers
+            setupMessageHandlers();
+
+            // Reconnect disconnected users
+            std::lock_guard<std::mutex> lock(users_mutex);
+            for (auto& [user_id, user] : users) {
+                if (!user.is_connected && user.retry_count < 3) {
+                    user.retry_count++;
+                    queueForRetry([this, user_id] {
+                        attemptUserReconnection(user_id);
+                    });
+                }
+            }
+        } catch (const std::exception& e) {
+            m_logger->log(logger_module::log_level::error,
+                "Recovery failed: " + std::string(e.what()));
+        }
+    }
+
+    void attemptUserReconnection(const std::string& user_id) {
+        std::lock_guard<std::mutex> lock(users_mutex);
+        if (auto it = users.find(user_id); it != users.end()) {
+            m_logger->log(logger_module::log_level::info,
+                "Attempting to reconnect user: " + it->second.nickname);
+            // In production, would attempt actual network reconnection
+            it->second.is_connected = true;
+            metrics.reconnections++;
+        }
+    }
+
+    void reportMetrics() {
+        std::stringstream ss;
+        ss << "=== Chat Server Metrics ===\n"
+           << "Active Users: " << metrics.active_users.load() << "\n"
+           << "Messages Processed: " << metrics.messages_processed.load() << "\n"
+           << "Failed Messages: " << metrics.failed_messages.load() << "\n"
+           << "Reconnections: " << metrics.reconnections.load() << "\n"
+           << "==========================";
+        m_logger->log(logger_module::log_level::info, ss.str());
+    }
+
     void start(int port = 8080) {
         m_logger->log(logger_module::log_level::info,
             "Chat server starting on port " + std::to_string(port) + "...");
 
-        // Start network service
-        network_service->start_server(port);
-
-        // Start cleanup thread
-        std::thread cleanup_thread([this]() {
-            while (running) {
-                std::this_thread::sleep_for(30s);
-                cleanupInactiveUsers();
+        try {
+            // Start network service with retry
+            int retry_count = 0;
+            while (retry_count < 3) {
+                try {
+                    network_service->start_server(port);
+                    break;
+                } catch (const std::exception& e) {
+                    retry_count++;
+                    if (retry_count >= 3) {
+                        throw std::runtime_error("Failed to start network service after 3 attempts: " +
+                                                 std::string(e.what()));
+                    }
+                    m_logger->log(logger_module::log_level::warning,
+                        "Network service start attempt " + std::to_string(retry_count) +
+                        " failed, retrying...");
+                    std::this_thread::sleep_for(std::chrono::seconds(retry_count));
+                }
             }
-        });
 
-        // Start the message bus
-        system_integrator->start();
+            // Start cleanup thread
+            std::thread cleanup_thread([this]() {
+                while (running && !g_shutdown_requested) {
+                    std::this_thread::sleep_for(30s);
+                    if (!g_shutdown_requested) {
+                        cleanupInactiveUsers();
+                    }
+                }
+            });
 
-        m_logger->log(logger_module::log_level::info,
-            "Chat server is running. Press Enter to stop...");
-        std::cout << "Chat server is running. Press Enter to stop..." << std::endl;
-        std::cin.get();
+            // Start the message bus
+            system_integrator->start();
 
-        stop();
-        cleanup_thread.join();
+            m_logger->log(logger_module::log_level::info,
+                "Chat server is running. Press Ctrl+C to stop...");
+
+            // Wait for shutdown signal
+            std::unique_lock<std::mutex> lock(g_shutdown_mutex);
+            g_shutdown_cv.wait(lock, [] { return g_shutdown_requested.load(); });
+
+            stop();
+
+            if (cleanup_thread.joinable()) {
+                cleanup_thread.join();
+            }
+        } catch (const std::exception& e) {
+            m_logger->log(logger_module::log_level::critical,
+                "Failed to start chat server: " + std::string(e.what()));
+            throw;
+        }
     }
 
     void stop() {
-        running = false;
-        system_integrator->stop();
-        network_service->stop_server();
+        if (!running.exchange(false)) {
+            return;  // Already stopped
+        }
+
+        m_logger->log(logger_module::log_level::info, "Stopping chat server...");
+
+        // Stop retry worker
+        if (retry_thread.joinable()) {
+            retry_thread.join();
+        }
+
+        // Notify all connected users
+        core::message shutdown_msg;
+        shutdown_msg.set_type("system.shutdown");
+        shutdown_msg.set_payload("Server is shutting down for maintenance");
+        try {
+            broadcastToAll(shutdown_msg);
+        } catch (const std::exception& e) {
+            m_logger->log(logger_module::log_level::warning,
+                "Failed to broadcast shutdown message: " + std::string(e.what()));
+        }
+
+        // Stop services
+        if (system_integrator) {
+            system_integrator->stop();
+        }
+        if (network_service) {
+            network_service->stop_server();
+        }
+
+        // Final metrics report
+        reportMetrics();
+
         m_logger->log(logger_module::log_level::info, "Chat server stopped.");
         m_logger->flush();
         m_logger->stop();
@@ -343,24 +643,42 @@ int main(int argc, char* argv[]) {
             port = std::stoi(argv[1]);
         }
 
+        std::cout << "Starting enhanced chat server with error recovery..." << std::endl;
+        std::cout << "Features: " << std::endl;
+        std::cout << " - Automatic reconnection for disconnected users" << std::endl;
+        std::cout << " - Message retry on failure" << std::endl;
+        std::cout << " - Health monitoring and recovery" << std::endl;
+        std::cout << " - Graceful shutdown (Ctrl+C)" << std::endl << std::endl;
+
         chat_server server;
 
         // Start statistics thread
-        std::thread stats_thread([&server]() {
-            while (true) {
-                std::this_thread::sleep_for(60s);
-                server.printStats();
+        std::atomic<bool> stats_running{true};
+        std::thread stats_thread([&server, &stats_running]() {
+            while (stats_running && !g_shutdown_requested) {
+                std::unique_lock<std::mutex> lock(g_shutdown_mutex);
+                if (g_shutdown_cv.wait_for(lock, 60s,
+                    [] { return g_shutdown_requested.load(); })) {
+                    break;
+                }
+                if (!g_shutdown_requested) {
+                    server.printStats();
+                }
             }
         });
-        stats_thread.detach();
 
         server.start(port);
 
+        stats_running = false;
+        if (stats_thread.joinable()) {
+            stats_thread.join();
+        }
+
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        // Note: Logger might not be initialized yet, so we also use std::cerr
+        std::cerr << "Fatal error: " << e.what() << std::endl;
         return 1;
     }
 
+    std::cout << "Chat server shut down successfully." << std::endl;
     return 0;
 }

@@ -13,6 +13,7 @@ find_package(Threads REQUIRED)
 include_directories(
     ${CMAKE_SOURCE_DIR}/application_layer/include
     ${CMAKE_SOURCE_DIR}/libraries
+    ${CMAKE_SOURCE_DIR}/libraries/logger_system/sources
 )
 
 # Basic Usage Example
@@ -22,6 +23,7 @@ target_link_libraries(basic_usage_example PRIVATE
     container
     database
     network
+    logger
     Threads::Threads
 )
 
@@ -32,6 +34,7 @@ target_link_libraries(chat_server PRIVATE
     container
     database
     network
+    logger
     Threads::Threads
 )
 
@@ -42,6 +45,7 @@ target_link_libraries(distributed_worker PRIVATE
     container
     database
     network
+    logger
     Threads::Threads
 )
 
@@ -52,6 +56,7 @@ target_link_libraries(iot_monitoring PRIVATE
     container
     database
     network
+    logger
     Threads::Threads
 )
 
@@ -62,6 +67,7 @@ target_link_libraries(microservices_orchestrator PRIVATE
     container
     database
     network
+    logger
     Threads::Threads
 )
 
@@ -72,6 +78,7 @@ target_link_libraries(event_pipeline PRIVATE
     container
     database
     network
+    logger
     Threads::Threads
 )
 
@@ -82,6 +89,18 @@ target_link_libraries(message_bus_benchmark PRIVATE
     container
     database
     network
+    logger
+    Threads::Threads
+)
+
+# Production-Ready Example with advanced features
+add_executable(production_ready_example production_ready_example.cpp)
+target_link_libraries(production_ready_example PRIVATE
+    messaging_services
+    container
+    database
+    network
+    logger
     Threads::Threads
 )
 
@@ -94,6 +113,7 @@ set_target_properties(
     microservices_orchestrator
     event_pipeline
     message_bus_benchmark
+    production_ready_example
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/samples
 )
@@ -107,5 +127,6 @@ install(TARGETS
     microservices_orchestrator
     event_pipeline
     message_bus_benchmark
+    production_ready_example
     RUNTIME DESTINATION bin/samples
 )
