@@ -169,8 +169,8 @@ if(BUILD_NETWORK)
     add_subdirectory(libraries/network_system)
 endif()
 
-# Add services (new modular structure)
-add_subdirectory(services_system)
+# Add application layer
+add_subdirectory(application_layer)
 
 # Python bindings are now handled within services_system
 # The old python directory has been removed to avoid duplication

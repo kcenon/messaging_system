@@ -176,6 +176,11 @@ target_include_directories(messaging_example
 
 target_compile_features(messaging_example PRIVATE cxx_std_20)
 
+# Build samples if enabled
+if(BUILD_MESSAGING_SAMPLES)
+    add_subdirectory(samples)
+endif()
+
 # Python bindings (optional, enabled if pybind11 is available)
 find_package(pybind11 QUIET)
 if(pybind11_FOUND)
