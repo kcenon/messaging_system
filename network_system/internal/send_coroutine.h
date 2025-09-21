@@ -33,9 +33,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <future>
-#include "network/internal/asio_compat.h"
-#include "network/internal/pipeline.h"
-#include "network/internal/tcp_socket.h"
+#include "network_system/internal/asio_compat.h"
+#include "network_system/internal/pipeline.h"
+#include "network_system/internal/tcp_socket.h"
 
 namespace network_module
 {

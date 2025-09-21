@@ -36,9 +36,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <thread>
 
-#include <container/container.h>
-#include <database/database_manager.h>
-#include <network/network.h>
+#include <container_system/container.h>
+#include <database_system/database_manager.h>
+#include <network_system/network.h>
 
 using namespace container_module;
 using namespace database;

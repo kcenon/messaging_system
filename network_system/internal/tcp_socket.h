@@ -32,14 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "network/internal/asio_compat.h"
+#include "network_system/internal/asio_compat.h"
 #include <functional>
 #include <memory>
 #include <vector>
 #include <array>
 #include <system_error>
 
-#include "network/internal/common_defs.h"
+#include "network_system/internal/common_defs.h"
 
 namespace network_module
 {

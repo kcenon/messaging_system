@@ -30,8 +30,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "network/session/messaging_session.h"
-#include "network/internal/send_coroutine.h" // for async_send_with_pipeline_co / no_co
+#include "network_system/session/messaging_session.h"
+#include "network_system/internal/send_coroutine.h" // for async_send_with_pipeline_co / no_co
 #include <iostream>
 #include <string_view>
 #include <type_traits>

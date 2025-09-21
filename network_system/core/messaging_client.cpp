@@ -30,8 +30,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "network/core/messaging_client.h"
-#include "network/internal/send_coroutine.h"
+#include "network_system/core/messaging_client.h"
+#include "network_system/internal/send_coroutine.h"
 #include <iostream>
 #include <string_view>
 #include <type_traits>

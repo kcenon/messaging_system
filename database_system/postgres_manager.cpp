@@ -30,11 +30,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "database/postgres_manager.h"
+#include "database_system/postgres_manager.h"
 
 #include "libpq-fe.h"
 
-#include "container/utilities/conversion/convert_string.h"
+#include "container_system/utilities/conversion/convert_string.h"
 
 namespace database
 {

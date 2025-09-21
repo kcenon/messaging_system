@@ -350,9 +350,9 @@ build_xcode/
 
 # Backup directories
 backups/
-thread_system.backup/
-*.backup/
 backup*/
+*.backup/
+*.bak
 
 # Additional build directories
 build/

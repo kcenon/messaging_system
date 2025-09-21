@@ -34,8 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <memory>
 
-#include <database/database_manager.h>
-#include <database/database_types.h>
+#include <database_system/database_manager.h>
+#include <database_system/database_types.h>
 
 using namespace database;
 

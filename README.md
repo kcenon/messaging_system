@@ -2,13 +2,35 @@
 
 A high-performance C++20 messaging framework designed for distributed applications. Built on lock-free thread pools and featuring type-safe containers, PostgreSQL integration, and asynchronous TCP networking.
 
+## 📁 Project Structure
+
+```
+messaging_system/
+├── container_system/    # Type-safe, SIMD-optimized data containers
+├── database_system/     # PostgreSQL integration with connection pooling
+├── network_system/      # Asynchronous TCP client/server
+├── services_system/     # Service layer with Python bindings
+├── libraries/           # External dependencies
+│   ├── thread_system/   # Lock-free thread pools
+│   ├── logger_system/   # High-performance logging
+│   └── monitoring_system/ # System monitoring and metrics
+├── test/               # Unit and integration tests
+├── scripts/            # Build and setup scripts
+└── cmake/              # CMake configuration files
+```
+
 ## 🚀 Key Features
 
-### 🎯 Core Modules
-- **Container Module**: Type-safe, SIMD-optimized data containers with thread-safe operations
-- **Database Module**: PostgreSQL integration with connection pooling and prepared statements  
-- **Network Module**: Asynchronous TCP client/server with coroutine-based I/O
+### 🎯 Core Systems (Independent Modules)
+- **Container System**: Type-safe, SIMD-optimized data containers with thread-safe operations
+- **Database System**: PostgreSQL integration with connection pooling and prepared statements
+- **Network System**: Asynchronous TCP client/server with coroutine-based I/O
+- **Services System**: Modular service layer with message bus and Python bindings
+
+### 📚 External Libraries
 - **Thread System**: Lock-free thread pools with hazard pointer memory management
+- **Logger System**: High-performance asynchronous logging with multiple writers
+- **Monitoring System**: Real-time metrics collection and analysis
 
 ### 🌟 Advanced Capabilities
 - **Lock-free Performance**: Up to 2.48M jobs/second throughput with sub-microsecond latency
@@ -54,7 +76,7 @@ git submodule update --init --recursive
 ### 2. Install Dependencies
 ```bash
 # Automated dependency installation
-./dependency.sh
+./scripts/dependency.sh
 
 # On macOS with Homebrew
 brew install postgresql cmake
@@ -66,22 +88,22 @@ sudo apt update && sudo apt install postgresql-dev cmake build-essential
 ### 3. Build the Project
 ```bash
 # Quick build (Release mode)
-./build.sh
+./scripts/build.sh
 
 # Build with tests
-./build.sh --tests
+./scripts/build.sh --tests
 
 # Clean build
-./build.sh --clean
+./scripts/build.sh --clean
 
 # Build specific modules only
-./build.sh --no-database --no-python
+./scripts/build.sh --no-database --no-python
 ```
 
 ### 4. Run Tests
 ```bash
 # Run all tests
-./build.sh --tests
+./scripts/build.sh --tests
 
 # Or run individual test suites
 cd build/bin
