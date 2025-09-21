@@ -14,7 +14,7 @@ target_include_directories(messaging_services
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-# Source files will be added here as services are implemented
+# Source files for Phase 2
 target_sources(messaging_services
     PRIVATE
         # Core messaging infrastructure
@@ -22,28 +22,25 @@ target_sources(messaging_services
 
         # Service implementations
         src/services/container/container_service.cpp
-        src/services/database/database_service.cpp
-        src/services/discovery/discovery_service.cpp
-        src/services/gateway/gateway_service.cpp
         src/services/network/network_service.cpp
 
         # Integration layer
         src/kcenon/messaging/integrations/system_integrator.cpp
 
     PUBLIC
-        # Public headers
+        # Core headers
         include/kcenon/messaging/core/message_bus.h
+        include/kcenon/messaging/core/message_types.h
         include/kcenon/messaging/core/config.h
 
         # Service interfaces
+        include/kcenon/messaging/services/service_interface.h
         include/kcenon/messaging/services/container/container_service.h
-        include/kcenon/messaging/services/database/database_service.h
-        include/kcenon/messaging/services/discovery/discovery_service.h
-        include/kcenon/messaging/services/gateway/gateway_service.h
         include/kcenon/messaging/services/network/network_service.h
 
         # Integration interfaces
         include/kcenon/messaging/integrations/system_integrator.h
+        include/kcenon/messaging/integrations/service_container.h
 )
 
 # Link dependencies (conditionally based on availability)
