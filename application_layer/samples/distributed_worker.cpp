@@ -9,6 +9,9 @@
 #include <kcenon/messaging/integrations/system_integrator.h>
 #include <kcenon/messaging/services/container/container_service.h>
 #include <kcenon/messaging/services/database/database_service.h>
+#include <logger_system/sources/logger/logger.h>
+#include <logger_system/sources/logger/writers/console_writer.h>
+#include <logger_system/sources/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <random>
@@ -57,6 +60,7 @@ private:
     std::unique_ptr<integrations::system_integrator> system_integrator;
     std::unique_ptr<services::container_service> container_service;
     std::unique_ptr<services::database_service> database_service;
+    std::shared_ptr<logger_module::logger> m_logger;
 
     std::string worker_id;
     std::atomic<bool> running{true};
@@ -76,6 +80,21 @@ private:
 public:
     distributed_worker(const std::string& id = "")
         : worker_id(id.empty() ? generateWorkerId() : id) {
+
+        // Initialize logger
+        logger_module::logger_config logger_config;
+        logger_config.min_level = logger_module::log_level::debug;
+        logger_config.pattern = "[{timestamp}] [{level}] [Worker-{thread}] {message}";
+        logger_config.enable_async = true;
+        logger_config.async_queue_size = 8192;
+
+        m_logger = std::make_shared<logger_module::logger>(logger_config);
+        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+            "distributed_worker_" + worker_id + ".log", 10 * 1024 * 1024, 5));
+        m_logger->start();
+
+        m_logger->log(logger_module::log_level::info, "Initializing distributed worker: " + worker_id);
 
         // Configure for distributed processing
         config::config_builder builder;
@@ -175,28 +194,30 @@ public:
             }
 
         } catch (const std::exception& e) {
-            std::cerr << "Error handling task: " << e.what() << std::endl;
+            m_logger->log(logger_module::log_level::error, "Error handling task: " + std::string(e.what()));
             tasks_failed++;
         }
     }
 
     bool processTask(const task& t) {
-        std::cout << "Worker " << worker_id << " processing task "
-                  << t.id << " of type " << static_cast<int>(t.type) << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Worker " + worker_id + " processing task " + t.id +
+            " of type " + std::to_string(static_cast<int>(t.type)));
 
         // Find appropriate processor
         if (auto it = processors.find(t.type); it != processors.end()) {
             return it->second(t);
         }
 
-        std::cerr << "No processor found for task type" << std::endl;
+        m_logger->log(logger_module::log_level::error, "No processor found for task type");
         return false;
     }
 
     // Task processors implementation
     bool processData(const task& t) {
         // Simulate data processing
-        std::cout << "Processing data: " << t.payload.substr(0, 50) << "..." << std::endl;
+        m_logger->log(logger_module::log_level::debug,
+            "Processing data: " + t.payload.substr(0, 50) + "...");
 
         // Use container service for data transformation
         auto container = container_svc->create_container();
@@ -213,7 +234,7 @@ public:
     }
 
     bool analyzeImage(const task& t) {
-        std::cout << "Analyzing image: " << t.id << std::endl;
+        m_logger->log(logger_module::log_level::debug, "Analyzing image: " + t.id);
 
         // Simulate image analysis with random success rate
         std::this_thread::sleep_for(std::chrono::milliseconds(500 + rand() % 1500));
@@ -223,7 +244,7 @@ public:
     }
 
     bool generateReport(const task& t) {
-        std::cout << "Generating report: " << t.id << std::endl;
+        m_logger->log(logger_module::log_level::debug, "Generating report: " + t.id);
 
         // Fetch data from database
         auto data = database_svc->fetch("report_data", t.payload);
@@ -238,7 +259,7 @@ public:
     }
 
     bool sendEmail(const task& t) {
-        std::cout << "Sending email for task: " << t.id << std::endl;
+        m_logger->log(logger_module::log_level::debug, "Sending email for task: " + t.id);
 
         // Simulate email sending
         std::this_thread::sleep_for(std::chrono::milliseconds(50 + rand() % 200));
@@ -247,7 +268,7 @@ public:
     }
 
     bool warmCache(const task& t) {
-        std::cout << "Warming cache: " << t.payload << std::endl;
+        m_logger->log(logger_module::log_level::debug, "Warming cache: " + t.payload);
 
         // Fetch frequently accessed data
         auto data = database_svc->fetch_batch("cache_data", 100);
@@ -262,12 +283,12 @@ public:
 
     void handleTaskCancel(const core::message& cancel_message) {
         auto task_id_to_cancel = cancel_message.get_payload_as<std::string>();
-        std::cout << "Cancelling task: " << task_id_to_cancel << std::endl;
+        m_logger->log(logger_module::log_level::info, "Cancelling task: " + task_id_to_cancel);
         // In production, would need to track and cancel running tasks
     }
 
     void handleRebalance(const core::message& msg) {
-        std::cout << "Rebalancing work distribution..." << std::endl;
+        m_logger->log(logger_module::log_level::info, "Rebalancing work distribution...");
         // Implement load balancing logic
     }
 
@@ -321,8 +342,9 @@ public:
     }
 
     void logTaskReceived(const task& received_task) {
-        std::cout << "[" << worker_id << "] Received task " << received_task.id
-                  << " with priority " << received_task.priority << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "[" + worker_id + "] Received task " + received_task.id +
+            " with priority " + std::to_string(received_task.priority));
     }
 
     void updateMetrics(
@@ -353,7 +375,7 @@ public:
     }
 
     void start() {
-        std::cout << "Starting distributed worker: " << worker_id << std::endl;
+        m_logger->log(logger_module::log_level::info, "Starting distributed worker: " + worker_id);
 
         system_integrator->start();
 
@@ -386,18 +408,28 @@ public:
 
     void stop() {
         running = false;
+        if (m_logger) {
+            m_logger->log(logger_module::log_level::info, "Stopping distributed worker: " + worker_id);
+            m_logger->flush();
+            m_logger->stop();
+        }
     }
 
     void printStatus() const {
-        std::cout << "\n=== Worker Status ===" << std::endl;
-        std::cout << "Worker ID: " << worker_id << std::endl;
-        std::cout << "Tasks processed: " << tasks_processed << std::endl;
-        std::cout << "Tasks failed: " << tasks_failed << std::endl;
-        std::cout << "Success rate: "
-                  << (100.0 * tasks_processed / (tasks_processed + tasks_failed)) << "%" << std::endl;
-        std::cout << "Avg processing time: " << m_metrics.avg_processing_time << " ms" << std::endl;
-        std::cout << "Uptime: " << getUptime() << " seconds" << std::endl;
-        std::cout << "===================\n" << std::endl;
+        std::string status = "\n=== Worker Status ===\n";
+        status += "Worker ID: " + worker_id + "\n";
+        status += "Tasks processed: " + std::to_string(tasks_processed) + "\n";
+        status += "Tasks failed: " + std::to_string(tasks_failed) + "\n";
+        double success_rate = (tasks_processed + tasks_failed) > 0 ?
+            (100.0 * tasks_processed / (tasks_processed + tasks_failed)) : 0.0;
+        status += "Success rate: " + std::to_string(success_rate) + "%\n";
+        status += "Avg processing time: " + std::to_string(m_metrics.avg_processing_time.load()) + " ms\n";
+        status += "Uptime: " + std::to_string(getUptime()) + " seconds\n";
+        status += "===================";
+
+        if (m_logger) {
+            m_logger->log(logger_module::log_level::info, status);
+        }
     }
 };
 
@@ -405,12 +437,27 @@ public:
 class task_generator {
 private:
     std::unique_ptr<integrations::system_integrator> system_integrator;
+    std::shared_ptr<logger_module::logger> m_logger;
     std::atomic<int> generated_task_counter{0};
     std::random_device random_device;
     std::mt19937 random_generator;
 
 public:
     task_generator() : random_generator(random_device()) {
+        // Initialize logger
+        logger_module::logger_config logger_config;
+        logger_config.min_level = logger_module::log_level::debug;
+        logger_config.pattern = "[{timestamp}] [{level}] [TaskGen] {message}";
+        logger_config.enable_async = true;
+
+        m_logger = std::make_shared<logger_module::logger>(logger_config);
+        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+            "task_generator.log", 10 * 1024 * 1024, 5));
+        m_logger->start();
+
+        m_logger->log(logger_module::log_level::info, "Initializing task generator");
+
         config::config_builder builder;
         auto generator_config = builder
             .set_environment("generator")
@@ -440,7 +487,7 @@ public:
 
             system_integrator->get_message_bus().publish(task_message);
 
-            std::cout << "Generated task: " << generated_task.id << std::endl;
+            m_logger->log(logger_module::log_level::info, "Generated task: " + generated_task.id);
 
             if (delay_between_tasks_ms > 0) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(delay_between_tasks_ms));
@@ -450,6 +497,11 @@ public:
 
     ~task_generator() {
         system_integrator->stop();
+        if (m_logger) {
+            m_logger->log(logger_module::log_level::info, "Shutting down task generator");
+            m_logger->flush();
+            m_logger->stop();
+        }
     }
 };
 
@@ -470,7 +522,15 @@ int main(int argc, char* argv[]) {
 
         if (is_generator) {
             // Run as task generator
-            std::cout << "Running as task generator" << std::endl;
+            // Initialize logger for main
+            logger_module::logger_config main_logger_config;
+            main_logger_config.min_level = logger_module::log_level::info;
+            main_logger_config.pattern = "[{timestamp}] [{level}] [Main] {message}";
+            auto main_logger = std::make_shared<logger_module::logger>(main_logger_config);
+            main_logger->add_writer(std::make_unique<logger_module::console_writer>());
+            main_logger->start();
+
+            main_logger->log(logger_module::log_level::info, "Running as task generator");
             task_generator generator;
 
             // Generate tasks continuously
@@ -507,7 +567,14 @@ int main(int argc, char* argv[]) {
         }
 
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        // Create a minimal logger for error reporting
+        logger_module::logger_config error_logger_config;
+        error_logger_config.min_level = logger_module::log_level::error;
+        auto error_logger = std::make_shared<logger_module::logger>(error_logger_config);
+        error_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        error_logger->start();
+        error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
+        error_logger->stop();
         return 1;
     }
 

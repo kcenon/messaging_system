@@ -1,6 +1,9 @@
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/core/message_types.h>
 #include <kcenon/messaging/integrations/system_integrator.h>
+#include <logger_system/sources/logger/logger.h>
+#include <logger_system/sources/logger/writers/console_writer.h>
+#include <logger_system/sources/logger/writers/rotating_file_writer.h>
 #include <chrono>
 #include <thread>
 #include <atomic>
@@ -8,14 +11,40 @@
 #include <random>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 
 using namespace kcenon::messaging::core;
 using namespace kcenon::messaging::integrations;
 
 class BenchmarkRunner {
+private:
+    std::shared_ptr<logger_module::logger> m_logger;
+
 public:
+    BenchmarkRunner() {
+        // Initialize logger
+        logger_module::logger_config logger_config;
+        logger_config.min_level = logger_module::log_level::info;
+        logger_config.pattern = "[{timestamp}] [{level}] [Benchmark] {message}";
+        logger_config.enable_async = true;
+        logger_config.async_queue_size = 8192;
+
+        m_logger = std::make_shared<logger_module::logger>(logger_config);
+        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+            "message_bus_benchmark.log", 10 * 1024 * 1024, 3));
+        m_logger->start();
+    }
+
+    ~BenchmarkRunner() {
+        if (m_logger) {
+            m_logger->flush();
+            m_logger->stop();
+        }
+    }
+
     void run_all_benchmarks() {
-        std::cout << "=== Messaging System Performance Benchmarks ===\n\n";
+        m_logger->log(logger_module::log_level::info, "=== Messaging System Performance Benchmarks ===");
 
         run_throughput_benchmark();
         run_concurrent_benchmark();
@@ -23,13 +52,13 @@ public:
         run_message_size_benchmark();
         run_system_integrator_benchmark();
 
-        std::cout << "\n=== Benchmark Complete ===\n";
+        m_logger->log(logger_module::log_level::info, "\n=== Benchmark Complete ===");
     }
 
 private:
     void run_throughput_benchmark() {
-        std::cout << "1. Throughput Benchmark\n";
-        std::cout << "   Testing message processing throughput...\n";
+        m_logger->log(logger_module::log_level::info, "1. Throughput Benchmark");
+        m_logger->log(logger_module::log_level::info, "   Testing message processing throughput...");
 
         message_bus_config config;
         config.worker_threads = 8;
@@ -71,18 +100,20 @@ private:
         double publish_rate = (total_messages * 1000.0) / publish_duration.count();
         double process_rate = (total_messages * 1000.0) / total_duration.count();
 
-        std::cout << "   Results:\n";
-        std::cout << "   - Messages: " << total_messages << "\n";
-        std::cout << "   - Publish rate: " << std::fixed << std::setprecision(0) << publish_rate << " msg/sec\n";
-        std::cout << "   - Processing rate: " << std::fixed << std::setprecision(0) << process_rate << " msg/sec\n";
-        std::cout << "   - Total time: " << total_duration.count() << " ms\n\n";
+        std::stringstream results;
+        results << "   Results:\n";
+        results << "   - Messages: " << total_messages << "\n";
+        results << "   - Publish rate: " << std::fixed << std::setprecision(0) << publish_rate << " msg/sec\n";
+        results << "   - Processing rate: " << std::fixed << std::setprecision(0) << process_rate << " msg/sec\n";
+        results << "   - Total time: " << total_duration.count() << " ms";
+        m_logger->log(logger_module::log_level::info, results.str());
 
         bus->shutdown();
     }
 
     void run_concurrent_benchmark() {
-        std::cout << "2. Concurrent Publishers Benchmark\n";
-        std::cout << "   Testing concurrent publishing performance...\n";
+        m_logger->log(logger_module::log_level::info, "2. Concurrent Publishers Benchmark");
+        m_logger->log(logger_module::log_level::info, "   Testing concurrent publishing performance...");
 
         message_bus_config config;
         config.worker_threads = 8;
@@ -134,19 +165,21 @@ private:
 
         double concurrent_rate = (total_messages * 1000.0) / total_duration.count();
 
-        std::cout << "   Results:\n";
-        std::cout << "   - Publishers: " << num_publishers << "\n";
-        std::cout << "   - Messages per publisher: " << messages_per_publisher << "\n";
-        std::cout << "   - Total messages: " << total_messages << "\n";
-        std::cout << "   - Concurrent rate: " << std::fixed << std::setprecision(0) << concurrent_rate << " msg/sec\n";
-        std::cout << "   - Publish time: " << publish_duration.count() << " ms\n\n";
+        std::stringstream results;
+        results << "   Results:\n";
+        results << "   - Publishers: " << num_publishers << "\n";
+        results << "   - Messages per publisher: " << messages_per_publisher << "\n";
+        results << "   - Total messages: " << total_messages << "\n";
+        results << "   - Concurrent rate: " << std::fixed << std::setprecision(0) << concurrent_rate << " msg/sec\n";
+        results << "   - Publish time: " << publish_duration.count() << " ms";
+        m_logger->log(logger_module::log_level::info, results.str());
 
         bus->shutdown();
     }
 
     void run_priority_benchmark() {
-        std::cout << "3. Priority Queue Benchmark\n";
-        std::cout << "   Testing priority queue performance...\n";
+        m_logger->log(logger_module::log_level::info, "3. Priority Queue Benchmark");
+        m_logger->log(logger_module::log_level::info, "   Testing priority queue performance...");
 
         message_bus_config config;
         config.worker_threads = 4;
@@ -187,17 +220,19 @@ private:
 
         double rate = (total_messages * 1000.0) / duration.count();
 
-        std::cout << "   Results:\n";
-        std::cout << "   - Messages: " << total_messages << "\n";
-        std::cout << "   - Priority queue rate: " << std::fixed << std::setprecision(0) << rate << " msg/sec\n";
-        std::cout << "   - Total time: " << duration.count() << " ms\n\n";
+        std::stringstream results;
+        results << "   Results:\n";
+        results << "   - Messages: " << total_messages << "\n";
+        results << "   - Priority queue rate: " << std::fixed << std::setprecision(0) << rate << " msg/sec\n";
+        results << "   - Total time: " << duration.count() << " ms";
+        m_logger->log(logger_module::log_level::info, results.str());
 
         bus->shutdown();
     }
 
     void run_message_size_benchmark() {
-        std::cout << "4. Message Size Impact Benchmark\n";
-        std::cout << "   Testing performance with different message sizes...\n";
+        m_logger->log(logger_module::log_level::info, "4. Message Size Impact Benchmark");
+        m_logger->log(logger_module::log_level::info, "   Testing performance with different message sizes...");
 
         message_bus_config config;
         config.worker_threads = 4;
@@ -240,18 +275,19 @@ private:
             double rate = (messages_per_size * 1000.0) / duration.count();
             double throughput_mb = (messages_per_size * size * 1000.0) / (duration.count() * 1024 * 1024);
 
-            std::cout << "   Size " << std::setw(6) << size << " bytes: "
-                      << std::setw(6) << std::fixed << std::setprecision(0) << rate << " msg/sec, "
-                      << std::setw(6) << std::fixed << std::setprecision(2) << throughput_mb << " MB/sec\n";
+            std::stringstream size_result;
+            size_result << "   Size " << std::setw(6) << size << " bytes: "
+                       << std::setw(6) << std::fixed << std::setprecision(0) << rate << " msg/sec, "
+                       << std::setw(6) << std::fixed << std::setprecision(2) << throughput_mb << " MB/sec";
+            m_logger->log(logger_module::log_level::info, size_result.str());
         }
 
-        std::cout << "\n";
         bus->shutdown();
     }
 
     void run_system_integrator_benchmark() {
-        std::cout << "5. System Integrator Benchmark\n";
-        std::cout << "   Testing full system integration performance...\n";
+        m_logger->log(logger_module::log_level::info, "5. System Integrator Benchmark");
+        m_logger->log(logger_module::log_level::info, "   Testing full system integration performance...");
 
         auto integrator = system_integrator::create_default();
         integrator->initialize();
@@ -283,33 +319,46 @@ private:
 
         double rate = (total_messages * 1000.0) / duration.count();
 
-        std::cout << "   Results:\n";
-        std::cout << "   - Messages: " << total_messages << "\n";
-        std::cout << "   - System integration rate: " << std::fixed << std::setprecision(0) << rate << " msg/sec\n";
-        std::cout << "   - Total time: " << duration.count() << " ms\n\n";
+        std::stringstream results;
+        results << "   Results:\n";
+        results << "   - Messages: " << total_messages << "\n";
+        results << "   - System integration rate: " << std::fixed << std::setprecision(0) << rate << " msg/sec\n";
+        results << "   - Total time: " << duration.count() << " ms\n\n";
 
         // Check system health
         auto health = integrator->check_system_health();
-        std::cout << "   System Health:\n";
-        std::cout << "   - Message bus healthy: " << (health.message_bus_healthy ? "Yes" : "No") << "\n";
-        std::cout << "   - Active services: " << health.active_services << "\n";
-        std::cout << "   - Total messages processed: " << health.total_messages_processed << "\n\n";
+        results << "   System Health:\n";
+        results << "   - Message bus healthy: " << (health.message_bus_healthy ? "Yes" : "No") << "\n";
+        results << "   - Active services: " << health.active_services << "\n";
+        results << "   - Total messages processed: " << health.total_messages_processed;
+
+        m_logger->log(logger_module::log_level::info, results.str());
 
         integrator->shutdown();
     }
 };
 
 int main(int argc, char* argv[]) {
-    std::cout << "Messaging System Performance Benchmark\n";
-    std::cout << "=======================================\n\n";
+    // Create a simple console logger for the main function
+    logger_module::logger_config main_logger_config;
+    main_logger_config.min_level = logger_module::log_level::info;
+    main_logger_config.pattern = "[{timestamp}] [{level}] {message}";
+    auto main_logger = std::make_shared<logger_module::logger>(main_logger_config);
+    main_logger->add_writer(std::make_unique<logger_module::console_writer>());
+    main_logger->start();
+
+    main_logger->log(logger_module::log_level::info, "Messaging System Performance Benchmark");
+    main_logger->log(logger_module::log_level::info, "=======================================");
 
     try {
         BenchmarkRunner runner;
         runner.run_all_benchmarks();
     } catch (const std::exception& e) {
-        std::cerr << "Benchmark failed: " << e.what() << std::endl;
+        main_logger->log(logger_module::log_level::error, "Benchmark failed: " + std::string(e.what()));
+        main_logger->stop();
         return 1;
     }
 
+    main_logger->stop();
     return 0;
 }

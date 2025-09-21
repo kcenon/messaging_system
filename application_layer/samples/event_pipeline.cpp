@@ -9,6 +9,9 @@
 #include <kcenon/messaging/integrations/system_integrator.h>
 #include <kcenon/messaging/services/container/container_service.h>
 #include <kcenon/messaging/services/database/database_service.h>
+#include <logger_system/sources/logger/logger.h>
+#include <logger_system/sources/logger/writers/console_writer.h>
+#include <logger_system/sources/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <queue>
@@ -16,6 +19,9 @@
 #include <variant>
 #include <regex>
 #include <numeric>
+#include <iomanip>
+#include <sstream>
+#include <optional>
 
 using namespace kcenon::messaging;
 using namespace std::chrono_literals;
@@ -96,11 +102,16 @@ public:
         }
     }
 
-    void printStats() const {
-        std::cout << "Stage: " << stage_name
-                  << " | Processed: " << processed_count
-                  << " | Filtered: " << filtered_count
-                  << " | Errors: " << error_count << std::endl;
+    void printStats(std::shared_ptr<logger_module::logger> logger = nullptr) const {
+        std::stringstream stats;
+        stats << "Stage: " << stage_name
+              << " | Processed: " << processed_count
+              << " | Filtered: " << filtered_count
+              << " | Errors: " << error_count;
+
+        if (logger) {
+            logger->log(logger_module::log_level::info, stats.str());
+        }
     }
 };
 
@@ -109,6 +120,7 @@ private:
     std::unique_ptr<integrations::system_integrator> integrator;
     std::unique_ptr<services::container_service> container_svc;
     std::unique_ptr<services::database_service> database_svc;
+    std::shared_ptr<logger_module::logger> m_logger;
 
     // Pipeline stages
     std::unique_ptr<pipeline_stage<raw_event, raw_event>> validation_stage;
@@ -139,6 +151,21 @@ private:
 
 public:
     event_pipeline() {
+        // Initialize logger
+        logger_module::logger_config logger_config;
+        logger_config.min_level = logger_module::log_level::debug;
+        logger_config.pattern = "[{timestamp}] [{level}] [Pipeline] {message}";
+        logger_config.enable_async = true;
+        logger_config.async_queue_size = 8192;
+
+        m_logger = std::make_shared<logger_module::logger>(logger_config);
+        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+            "event_pipeline.log", 10 * 1024 * 1024, 5));
+        m_logger->start();
+
+        m_logger->log(logger_module::log_level::info, "Initializing Event Pipeline");
+
         // Configure for event processing
         config::config_builder builder;
         auto config = builder
@@ -402,7 +429,8 @@ public:
             queue_cv.notify_one();
 
         } catch (const std::exception& e) {
-            std::cerr << "Error handling raw event: " << e.what() << std::endl;
+            m_logger->log(logger_module::log_level::error,
+                "Error handling raw event: " + std::string(e.what()));
         }
     }
 
@@ -436,8 +464,8 @@ public:
         std::lock_guard<std::mutex> lock(dlq_mutex);
         dead_letter_queue.push({reason, event});
 
-        std::cout << "Event " << event.id
-                  << " sent to DLQ. Reason: " << reason << std::endl;
+        m_logger->log(logger_module::log_level::warning,
+            "Event " + event.id + " sent to DLQ. Reason: " + reason);
 
         // Persist to database
         auto container = container_svc->create_container();
@@ -451,8 +479,9 @@ public:
     void retryDeadLetterEvents() {
         std::lock_guard<std::mutex> lock(dlq_mutex);
 
-        std::cout << "Retrying " << dead_letter_queue.size()
-                  << " events from dead letter queue" << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Retrying " + std::to_string(dead_letter_queue.size()) +
+            " events from dead letter queue");
 
         while (!dead_letter_queue.empty()) {
             auto [reason, event] = dead_letter_queue.front();
@@ -605,50 +634,53 @@ public:
     }
 
     void pausePipeline() {
-        std::cout << "Pipeline paused" << std::endl;
+        m_logger->log(logger_module::log_level::info, "Pipeline paused");
         // Implementation would pause processing
     }
 
     void resumePipeline() {
-        std::cout << "Pipeline resumed" << std::endl;
+        m_logger->log(logger_module::log_level::info, "Pipeline resumed");
         // Implementation would resume processing
     }
 
     void flushPipeline() {
-        std::cout << "Flushing pipeline..." << std::endl;
+        m_logger->log(logger_module::log_level::info, "Flushing pipeline...");
 
         // Process all pending events
         while (!raw_events.empty() || !processed_events.empty()) {
             std::this_thread::sleep_for(100ms);
         }
 
-        std::cout << "Pipeline flushed" << std::endl;
+        m_logger->log(logger_module::log_level::info, "Pipeline flushed");
     }
 
     void printPipelineStats() {
-        std::cout << "\n╔══════════════════════════════════════════════════════════╗" << std::endl;
-        std::cout << "║              Event Processing Pipeline Stats             ║" << std::endl;
-        std::cout << "╠══════════════════════════════════════════════════════════╣" << std::endl;
+        std::stringstream stats;
+        stats << "\n╔══════════════════════════════════════════════════════════╗\n";
+        stats << "║              Event Processing Pipeline Stats             ║\n";
+        stats << "╠══════════════════════════════════════════════════════════╣\n";
 
-        validation_stage->printStats();
-        enrichment_stage->printStats();
-        transformation_stage->printStats();
-        aggregation_stage->printStats();
+        validation_stage->printStats(m_logger);
+        enrichment_stage->printStats(m_logger);
+        transformation_stage->printStats(m_logger);
+        aggregation_stage->printStats(m_logger);
 
-        std::cout << "╠══════════════════════════════════════════════════════════╣" << std::endl;
-        std::cout << "║ Queue Sizes:                                             ║" << std::endl;
-        std::cout << "║   Raw Events: " << std::setw(43)
-                  << raw_events.size() << " ║" << std::endl;
-        std::cout << "║   Processed Events: " << std::setw(37)
-                  << processed_events.size() << " ║" << std::endl;
-        std::cout << "║   Aggregated Data: " << std::setw(38)
-                  << aggregated_data.size() << " ║" << std::endl;
-        std::cout << "║   Dead Letter Queue: " << std::setw(36)
-                  << dead_letter_queue.size() << " ║" << std::endl;
-        std::cout << "╠══════════════════════════════════════════════════════════╣" << std::endl;
-        std::cout << "║ Total Events Processed: " << std::setw(33)
-                  << total_events.load() << " ║" << std::endl;
-        std::cout << "╚══════════════════════════════════════════════════════════╝" << std::endl;
+        stats << "╠══════════════════════════════════════════════════════════╣\n";
+        stats << "║ Queue Sizes:                                             ║\n";
+        stats << "║   Raw Events: " << std::setw(43)
+              << raw_events.size() << " ║\n";
+        stats << "║   Processed Events: " << std::setw(37)
+              << processed_events.size() << " ║\n";
+        stats << "║   Aggregated Data: " << std::setw(38)
+              << aggregated_data.size() << " ║\n";
+        stats << "║   Dead Letter Queue: " << std::setw(36)
+              << dead_letter_queue.size() << " ║\n";
+        stats << "╠══════════════════════════════════════════════════════════╣\n";
+        stats << "║ Total Events Processed: " << std::setw(33)
+              << total_events.load() << " ║\n";
+        stats << "╚══════════════════════════════════════════════════════════╝";
+
+        m_logger->log(logger_module::log_level::info, stats.str());
     }
 
     void sendAggregatedData() {
@@ -682,7 +714,8 @@ public:
 
 public:
     void start() {
-        std::cout << "\n=== Event Processing Pipeline Starting ===\n" << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "\n=== Event Processing Pipeline Starting ===");
 
         integrator->start();
 
@@ -714,9 +747,11 @@ public:
 
         integrator->stop();
 
-        std::cout << "\n=== Final Statistics ===" << std::endl;
+        m_logger->log(logger_module::log_level::info, "\n=== Final Statistics ===");
         printPipelineStats();
-        std::cout << "========================\n" << std::endl;
+        m_logger->log(logger_module::log_level::info, "========================");
+        m_logger->flush();
+        m_logger->stop();
     }
 };
 
@@ -726,7 +761,14 @@ int main(int argc, char* argv[]) {
         pipeline.start();
 
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        // Create a minimal logger for error reporting
+        logger_module::logger_config error_logger_config;
+        error_logger_config.min_level = logger_module::log_level::error;
+        auto error_logger = std::make_shared<logger_module::logger>(error_logger_config);
+        error_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        error_logger->start();
+        error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
+        error_logger->stop();
         return 1;
     }
 

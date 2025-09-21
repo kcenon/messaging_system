@@ -11,6 +11,9 @@
 #include <kcenon/messaging/services/container/container_service.h>
 #include <kcenon/messaging/services/database/database_service.h>
 #include <kcenon/messaging/services/network/network_service.h>
+#include <logger_system/sources/logger/logger.h>
+#include <logger_system/sources/logger/writers/console_writer.h>
+#include <logger_system/sources/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <random>
@@ -18,6 +21,8 @@
 #include <map>
 #include <atomic>
 #include <cmath>
+#include <iomanip>
+#include <sstream>
 
 using namespace kcenon::messaging;
 using namespace std::chrono_literals;
@@ -80,6 +85,7 @@ private:
     std::unique_ptr<services::container_service> container_svc;
     std::unique_ptr<services::database_service> database_svc;
     std::unique_ptr<services::network_service> network_svc;
+    std::shared_ptr<logger_module::logger> m_logger;
 
     // Device management
     std::map<std::string, device_config> devices;
@@ -105,6 +111,21 @@ private:
 
 public:
     iot_monitoring_system() : gen(rd()) {
+        // Initialize logger
+        logger_module::logger_config logger_config;
+        logger_config.min_level = logger_module::log_level::debug;
+        logger_config.pattern = "[{timestamp}] [{level}] [IoT] {message}";
+        logger_config.enable_async = true;
+        logger_config.async_queue_size = 8192;
+
+        m_logger = std::make_shared<logger_module::logger>(logger_config);
+        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+            "iot_monitoring.log", 10 * 1024 * 1024, 5));
+        m_logger->start();
+
+        m_logger->log(logger_module::log_level::info, "Initializing IoT Monitoring System");
+
         // Configure for IoT workload
         config::config_builder builder;
         auto config = builder
@@ -176,17 +197,18 @@ public:
 
         registerDevice("lock-001", device_type::SMART_LOCK, "Front Door", 0.0, 1.0);
 
-        std::cout << "Initialized " << devices.size() << " IoT devices" << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Initialized " + std::to_string(devices.size()) + " IoT devices");
     }
 
     void registerDevice(
         const std::string& device_id,
-        DeviceType type,
+        device_type type,
         const std::string& location,
         double min_threshold,
         double max_threshold
     ) {
-        DeviceConfig config;
+        device_config config;
         config.device_id = device_id;
         config.type = type;
         config.location = location;
@@ -215,7 +237,7 @@ public:
             auto value = std::stod(msg.get_header("value"));
             auto timestamp = std::chrono::system_clock::now();
 
-            DeviceTelemetry telemetry;
+            device_telemetry telemetry;
             telemetry.device_id = device_id;
             telemetry.value = value;
             telemetry.timestamp = timestamp;
@@ -243,16 +265,18 @@ public:
 
             // Log high-frequency updates less frequently
             if (total_messages % 100 == 0) {
-                std::cout << "Processed " << total_messages << " telemetry messages" << std::endl;
+                m_logger->log(logger_module::log_level::debug,
+                    "Processed " + std::to_string(total_messages.load()) + " telemetry messages");
             }
 
         } catch (const std::exception& e) {
-            std::cerr << "Error processing telemetry: " << e.what() << std::endl;
+            m_logger->log(logger_module::log_level::error,
+                "Error processing telemetry: " + std::string(e.what()));
         }
     }
 
-    void checkThresholds(const DeviceConfig& config, const DeviceTelemetry& telemetry) {
-        Alert::Severity severity = Alert::INFO;
+    void checkThresholds(const device_config& config, const device_telemetry& telemetry) {
+        alert::severity severity = alert::INFO;
         std::string message;
         bool create_alert = false;
 
@@ -261,10 +285,10 @@ public:
             double deviation_percent = (deviation / config.min_threshold) * 100;
 
             if (deviation_percent > 20) {
-                severity = Alert::CRITICAL;
+                severity = alert::CRITICAL;
                 message = "Value critically below minimum threshold";
             } else if (deviation_percent > 10) {
-                severity = Alert::WARNING;
+                severity = alert::WARNING;
                 message = "Value below minimum threshold";
             }
             create_alert = true;
@@ -274,18 +298,18 @@ public:
             double deviation_percent = (deviation / config.max_threshold) * 100;
 
             if (deviation_percent > 20) {
-                severity = Alert::CRITICAL;
+                severity = alert::CRITICAL;
                 message = "Value critically above maximum threshold";
             } else if (deviation_percent > 10) {
-                severity = Alert::WARNING;
+                severity = alert::WARNING;
                 message = "Value above maximum threshold";
             }
             create_alert = true;
         }
 
         // Special case for motion detectors - always alert on motion
-        if (config.type == DeviceType::MOTION_DETECTOR && telemetry.value > 0.5) {
-            severity = Alert::INFO;
+        if (config.type == device_type::MOTION_DETECTOR && telemetry.value > 0.5) {
+            severity = alert::INFO;
             message = "Motion detected at " + config.location;
             create_alert = true;
         }
@@ -298,52 +322,52 @@ public:
 
     void createAlert(
         const std::string& device_id,
-        Alert::Severity severity,
+        alert::severity severity,
         const std::string& message,
         double threshold,
         double actual
     ) {
-        Alert alert;
-        alert.alert_id = generateAlertId();
-        alert.device_id = device_id;
-        alert.severity = severity;
-        alert.message = message;
-        alert.threshold_value = threshold;
-        alert.actual_value = actual;
-        alert.triggered_at = std::chrono::system_clock::now();
+        alert alert_obj;
+        alert_obj.alert_id = generateAlertId();
+        alert_obj.device_id = device_id;
+        alert_obj.sev = severity;
+        alert_obj.message = message;
+        alert_obj.threshold_value = threshold;
+        alert_obj.actual_value = actual;
+        alert_obj.triggered_at = std::chrono::system_clock::now();
 
         {
             std::lock_guard<std::mutex> lock(alert_mutex);
-            alert_queue.push(alert);
+            alert_queue.push(alert_obj);
             total_alerts++;
         }
         alert_cv.notify_one();
 
         // Publish alert
-        publishAlert(alert);
+        publishAlert(alert_obj);
 
-        std::cout << "[ALERT] " << getSeverityString(severity)
-                  << ": " << message
-                  << " (Device: " << device_id << ")" << std::endl;
+        m_logger->log(logger_module::log_level::warning,
+            "[ALERT] " + getSeverityString(severity) + ": " + message +
+            " (Device: " + device_id + ")");
     }
 
-    void publishAlert(const Alert& alert) {
+    void publishAlert(const alert& alert_obj) {
         core::message alert_msg;
         alert_msg.set_type("alert.triggered");
-        alert_msg.set_header("alert_id", alert.alert_id);
-        alert_msg.set_header("device_id", alert.device_id);
-        alert_msg.set_header("severity", std::to_string(static_cast<int>(alert.severity)));
-        alert_msg.set_payload(alert.message);
+        alert_msg.set_header("alert_id", alert_obj.alert_id);
+        alert_msg.set_header("device_id", alert_obj.device_id);
+        alert_msg.set_header("severity", std::to_string(static_cast<int>(alert_obj.sev)));
+        alert_msg.set_payload(alert_obj.message);
 
         // Set priority based on severity
-        switch (alert.severity) {
-            case Alert::EMERGENCY:
+        switch (alert_obj.sev) {
+            case alert::EMERGENCY:
                 alert_msg.set_priority(core::priority::CRITICAL);
                 break;
-            case Alert::CRITICAL:
+            case alert::CRITICAL:
                 alert_msg.set_priority(core::priority::HIGH);
                 break;
-            case Alert::WARNING:
+            case alert::WARNING:
                 alert_msg.set_priority(core::priority::NORMAL);
                 break;
             default:
@@ -355,21 +379,21 @@ public:
 
     void handleDeviceRegistration(const core::message& msg) {
         auto device_id = msg.get_header("device_id");
-        auto type = static_cast<DeviceType>(std::stoi(msg.get_header("type")));
+        auto type = static_cast<device_type>(std::stoi(msg.get_header("type")));
         auto location = msg.get_header("location");
 
         registerDevice(device_id, type, location, 0.0, 100.0);
 
-        std::cout << "Registered new device: " << device_id
-                  << " at " << location << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Registered new device: " + device_id + " at " + location);
     }
 
     void handleDeviceCommand(const core::message& msg) {
         auto device_id = msg.get_header("device_id");
         auto command = msg.get_header("command");
 
-        std::cout << "Executing command '" << command
-                  << "' on device " << device_id << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Executing command '" + command + "' on device " + device_id);
 
         // Forward command to device
         core::message cmd_msg;
@@ -397,14 +421,14 @@ public:
         auto alert_id = msg.get_header("alert_id");
         auto user_id = msg.get_header("user_id");
 
-        std::cout << "Alert " << alert_id
-                  << " acknowledged by user " << user_id << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Alert " + alert_id + " acknowledged by user " + user_id);
 
         // Update alert status in database
         database_svc->update("alerts", alert_id, "status", "acknowledged");
     }
 
-    void storeTelemetry(const DeviceTelemetry& telemetry) {
+    void storeTelemetry(const device_telemetry& telemetry) {
         auto container = container_svc->create_container();
         container->set("device_id", telemetry.device_id);
         container->set("value", telemetry.value);
@@ -418,7 +442,7 @@ public:
         database_svc->store("telemetry", key, container->serialize());
     }
 
-    void processAnalytics(const DeviceTelemetry& telemetry) {
+    void processAnalytics(const device_telemetry& telemetry) {
         // Calculate running averages, detect anomalies, etc.
         // This would connect to a real analytics engine in production
 
@@ -445,7 +469,7 @@ public:
             if (stddev > 0) {
                 double z_score = std::abs((telemetry.value - mean) / stddev);
                 if (z_score > 3) {
-                    createAlert(telemetry.device_id, Alert::WARNING,
+                    createAlert(telemetry.device_id, alert::WARNING,
                                "Anomaly detected - unusual value pattern",
                                mean + 3 * stddev, telemetry.value);
                 }
@@ -520,19 +544,19 @@ public:
 
                     double value = 0.0;
                     switch (config.type) {
-                        case DeviceType::TEMPERATURE_SENSOR:
+                        case device_type::TEMPERATURE_SENSOR:
                             value = temp_dist(gen);
                             break;
-                        case DeviceType::HUMIDITY_SENSOR:
+                        case device_type::HUMIDITY_SENSOR:
                             value = humidity_dist(gen);
                             break;
-                        case DeviceType::ENERGY_METER:
+                        case device_type::ENERGY_METER:
                             value = energy_dist(gen);
                             break;
-                        case DeviceType::MOTION_DETECTOR:
+                        case device_type::MOTION_DETECTOR:
                             value = (motion_dist(gen) > 95) ? 1.0 : 0.0;
                             break;
-                        case DeviceType::SMART_LIGHT:
+                        case device_type::SMART_LIGHT:
                             value = light_dist(gen);
                             break;
                         default:
@@ -559,12 +583,12 @@ public:
                 });
 
                 while (!alert_queue.empty()) {
-                    Alert alert = alert_queue.front();
+                    alert alert_obj = alert_queue.front();
                     alert_queue.pop();
                     lock.unlock();
 
                     // Process alert (send notifications, trigger workflows, etc.)
-                    processAlert(alert);
+                    processAlert(alert_obj);
 
                     lock.lock();
                 }
@@ -573,7 +597,7 @@ public:
         alert_thread.detach();
     }
 
-    void processAlert(const Alert& alert) {
+    void processAlert(const alert& alert_obj) {
         // In production, this would:
         // - Send push notifications
         // - Trigger automated responses
@@ -582,16 +606,16 @@ public:
 
         // Store alert in database
         auto container = container_svc->create_container();
-        container->set("alert_id", alert.alert_id);
-        container->set("device_id", alert.device_id);
-        container->set("severity", static_cast<int>(alert.severity));
-        container->set("message", alert.message);
-        container->set("threshold", alert.threshold_value);
-        container->set("actual", alert.actual_value);
+        container->set("alert_id", alert_obj.alert_id);
+        container->set("device_id", alert_obj.device_id);
+        container->set("severity", static_cast<int>(alert_obj.sev));
+        container->set("message", alert_obj.message);
+        container->set("threshold", alert_obj.threshold_value);
+        container->set("actual", alert_obj.actual_value);
         container->set("timestamp",
-            std::chrono::system_clock::to_time_t(alert.triggered_at));
+            std::chrono::system_clock::to_time_t(alert_obj.triggered_at));
 
-        database_svc->store("alerts", alert.alert_id, container->serialize());
+        database_svc->store("alerts", alert_obj.alert_id, container->serialize());
     }
 
     std::string generateAlertId() const {
@@ -599,23 +623,23 @@ public:
         return "alert-" + std::to_string(counter.fetch_add(1));
     }
 
-    std::string getUnitForType(DeviceType type) const {
+    std::string getUnitForType(device_type type) const {
         switch (type) {
-            case DeviceType::TEMPERATURE_SENSOR: return "°C";
-            case DeviceType::HUMIDITY_SENSOR: return "%";
-            case DeviceType::PRESSURE_SENSOR: return "hPa";
-            case DeviceType::ENERGY_METER: return "W";
-            case DeviceType::SMART_LIGHT: return "%";
+            case device_type::TEMPERATURE_SENSOR: return "°C";
+            case device_type::HUMIDITY_SENSOR: return "%";
+            case device_type::PRESSURE_SENSOR: return "hPa";
+            case device_type::ENERGY_METER: return "W";
+            case device_type::SMART_LIGHT: return "%";
             default: return "";
         }
     }
 
-    std::string getSeverityString(Alert::Severity severity) const {
+    std::string getSeverityString(alert::severity severity) const {
         switch (severity) {
-            case Alert::INFO: return "INFO";
-            case Alert::WARNING: return "WARNING";
-            case Alert::CRITICAL: return "CRITICAL";
-            case Alert::EMERGENCY: return "EMERGENCY";
+            case alert::INFO: return "INFO";
+            case alert::WARNING: return "WARNING";
+            case alert::CRITICAL: return "CRITICAL";
+            case alert::EMERGENCY: return "EMERGENCY";
             default: return "UNKNOWN";
         }
     }
@@ -630,7 +654,7 @@ public:
 
 public:
     void start() {
-        std::cout << "\n=== IoT Monitoring System Starting ===\n" << std::endl;
+        m_logger->log(logger_module::log_level::info, "\n=== IoT Monitoring System Starting ===");
 
         integrator->start();
 
@@ -652,11 +676,15 @@ public:
         alert_cv.notify_all();
         integrator->stop();
 
-        std::cout << "\n=== Final Statistics ===" << std::endl;
-        std::cout << "Total devices monitored: " << total_devices << std::endl;
-        std::cout << "Total messages processed: " << total_messages << std::endl;
-        std::cout << "Total alerts generated: " << total_alerts << std::endl;
-        std::cout << "======================\n" << std::endl;
+        std::string stats = "\n=== Final Statistics ===\n";
+        stats += "Total devices monitored: " + std::to_string(total_devices) + "\n";
+        stats += "Total messages processed: " + std::to_string(total_messages) + "\n";
+        stats += "Total alerts generated: " + std::to_string(total_alerts) + "\n";
+        stats += "======================";
+
+        m_logger->log(logger_module::log_level::info, stats);
+        m_logger->flush();
+        m_logger->stop();
     }
 
     void startDashboard() {
@@ -670,24 +698,25 @@ public:
     }
 
     void printDashboard() {
-        std::cout << "\n╔═══════════════════════════════════════════════════════╗" << std::endl;
-        std::cout << "║           IoT Monitoring System Dashboard             ║" << std::endl;
-        std::cout << "╠═══════════════════════════════════════════════════════╣" << std::endl;
+        std::stringstream dashboard;
+        dashboard << "\n╔═══════════════════════════════════════════════════════╗\n";
+        dashboard << "║           IoT Monitoring System Dashboard             ║\n";
+        dashboard << "╠═══════════════════════════════════════════════════════╣\n";
 
-        std::cout << "║ Active Devices: " << std::setw(38)
-                  << total_devices.load() << " ║" << std::endl;
+        dashboard << "║ Active Devices: " << std::setw(38)
+                  << total_devices.load() << " ║\n";
 
-        std::cout << "║ Messages/sec: " << std::setw(40)
-                  << (total_messages.load() / std::max(1, getUptime())) << " ║" << std::endl;
+        dashboard << "║ Messages/sec: " << std::setw(40)
+                  << (total_messages.load() / std::max(1, getUptime())) << " ║\n";
 
-        std::cout << "║ Total Alerts: " << std::setw(40)
-                  << total_alerts.load() << " ║" << std::endl;
+        dashboard << "║ Total Alerts: " << std::setw(40)
+                  << total_alerts.load() << " ║\n";
 
-        std::cout << "║ Uptime: " << std::setw(43)
-                  << getUptime() << "s ║" << std::endl;
+        dashboard << "║ Uptime: " << std::setw(43)
+                  << getUptime() << "s ║\n";
 
-        std::cout << "╠═══════════════════════════════════════════════════════╣" << std::endl;
-        std::cout << "║ Latest Telemetry:                                     ║" << std::endl;
+        dashboard << "╠═══════════════════════════════════════════════════════╣\n";
+        dashboard << "║ Latest Telemetry:                                     ║\n";
 
         {
             std::lock_guard<std::mutex> lock(devices_mutex);
@@ -699,12 +728,14 @@ public:
                 ss << id << ": " << std::fixed << std::setprecision(2)
                    << telemetry.value << " " << telemetry.unit;
 
-                std::cout << "║   " << std::left << std::setw(52)
-                          << ss.str() << " ║" << std::endl;
+                dashboard << "║   " << std::left << std::setw(52)
+                          << ss.str() << " ║\n";
             }
         }
 
-        std::cout << "╚═══════════════════════════════════════════════════════╝" << std::endl;
+        dashboard << "╚═══════════════════════════════════════════════════════╝";
+
+        m_logger->log(logger_module::log_level::info, dashboard.str());
     }
 };
 
@@ -714,7 +745,14 @@ int main(int argc, char* argv[]) {
         iot_system.start();
 
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        // Create a minimal logger for error reporting
+        logger_module::logger_config error_logger_config;
+        error_logger_config.min_level = logger_module::log_level::error;
+        auto error_logger = std::make_shared<logger_module::logger>(error_logger_config);
+        error_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        error_logger->start();
+        error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
+        error_logger->stop();
         return 1;
     }
 

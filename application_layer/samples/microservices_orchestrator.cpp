@@ -11,6 +11,9 @@
 #include <kcenon/messaging/services/container/container_service.h>
 #include <kcenon/messaging/services/database/database_service.h>
 #include <kcenon/messaging/services/network/network_service.h>
+#include <logger_system/sources/logger/logger.h>
+#include <logger_system/sources/logger/writers/console_writer.h>
+#include <logger_system/sources/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -20,6 +23,9 @@
 #include <random>
 #include <atomic>
 #include <algorithm>
+#include <iomanip>
+#include <sstream>
+#include <cmath>
 
 using namespace kcenon::messaging;
 using namespace std::chrono_literals;
@@ -210,6 +216,7 @@ private:
     std::unique_ptr<services::container_service> container_svc;
     std::unique_ptr<services::database_service> database_svc;
     std::unique_ptr<services::network_service> network_svc;
+    std::shared_ptr<logger_module::logger> m_logger;
 
     // Service registry
     std::map<std::string, service_definition> service_definitions;
@@ -229,6 +236,21 @@ private:
 
 public:
     microservices_orchestrator() {
+        // Initialize logger
+        logger_module::logger_config logger_config;
+        logger_config.min_level = logger_module::log_level::debug;
+        logger_config.pattern = "[{timestamp}] [{level}] [Orchestrator] {message}";
+        logger_config.enable_async = true;
+        logger_config.async_queue_size = 16384;
+
+        m_logger = std::make_shared<logger_module::logger>(logger_config);
+        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+            "microservices_orchestrator.log", 20 * 1024 * 1024, 5));
+        m_logger->start();
+
+        m_logger->log(logger_module::log_level::info, "Initializing Microservices Orchestrator");
+
         // Configure for microservices workload
         config::config_builder builder;
         auto config = builder
@@ -305,8 +327,8 @@ public:
             }
         }
 
-        std::cout << "Initialized " << service_definitions.size()
-                  << " service definitions" << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Initialized " + std::to_string(service_definitions.size()) + " service definitions");
     }
 
     void defineService(
@@ -350,9 +372,9 @@ public:
             std::this_thread::sleep_for(2s);
             updateInstanceState(instance.instance_id, service_instance::HEALTHY);
 
-            std::cout << "Started " << instance.service_name
-                      << " instance " << instance.instance_id
-                      << " at " << instance.host << ":" << instance.port << std::endl;
+            m_logger->log(logger_module::log_level::info,
+                "Started " + instance.service_name + " instance " + instance.instance_id +
+                " at " + instance.host + ":" + std::to_string(instance.port));
         }).detach();
     }
 
@@ -375,8 +397,9 @@ public:
             service_instances[service_name].push_back(instance);
         }
 
-        std::cout << "Registered service instance: " << service_name
-                  << " (" << instance_id << ") at " << host << ":" << port << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Registered service instance: " + service_name + " (" + instance_id +
+            ") at " + host + ":" + std::to_string(port));
 
         // Notify dependent services
         notifyDependents(service_name);
@@ -403,8 +426,8 @@ public:
 
                 integrator->get_message_bus().publish(response);
 
-                std::cout << "Service discovery: " << client_id
-                          << " -> " << instance->instance_id << std::endl;
+                m_logger->log(logger_module::log_level::debug,
+                    "Service discovery: " + client_id + " -> " + instance->instance_id);
             } else {
                 // No healthy instances available
                 sendServiceUnavailable(service_name, client_id);
@@ -528,7 +551,8 @@ public:
             deploy_service_instance(service_name);
         }
 
-        std::cout << "Scaling up " << service_name << " by " << count << " instances" << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Scaling up " + service_name + " by " + std::to_string(count) + " instances");
     }
 
     void scaleDown(const std::string& service_name, int count) {
@@ -559,8 +583,8 @@ public:
                 instances.end()
             );
 
-            std::cout << "Scaled down " << service_name
-                      << " by " << to_remove << " instances" << std::endl;
+            m_logger->log(logger_module::log_level::info,
+                "Scaled down " + service_name + " by " + std::to_string(to_remove) + " instances");
         }).detach();
     }
 
@@ -597,8 +621,8 @@ public:
     }
 
     void performRollingUpdate(const std::string& service_name, const std::string& new_version) {
-        std::cout << "Starting rolling update for " << service_name
-                  << " to version " << new_version << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Starting rolling update for " + service_name + " to version " + new_version);
 
         std::thread([this, service_name, new_version]() {
             std::lock_guard<std::mutex> lock(registry_mutex);
@@ -614,17 +638,19 @@ public:
                 std::this_thread::sleep_for(5s);  // Startup time
 
                 instance.m_state = service_instance::HEALTHY;
-                std::cout << "Updated " << instance.instance_id
-                          << " to version " << new_version << std::endl;
+                m_logger->log(logger_module::log_level::info,
+                    "Updated " + instance.instance_id + " to version " + new_version);
             }
 
             service_definitions[service_name].version = new_version;
-            std::cout << "Rolling update complete for " << service_name << std::endl;
+            m_logger->log(logger_module::log_level::info,
+                "Rolling update complete for " + service_name);
         }).detach();
     }
 
     void performBlueGreenDeployment(const std::string& service_name, const std::string& new_version) {
-        std::cout << "Starting blue-green deployment for " << service_name << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Starting blue-green deployment for " + service_name);
 
         // Deploy green environment
         int instance_count = service_instances[service_name].size();
@@ -641,12 +667,14 @@ public:
             service_instances[service_name] = service_instances[service_name + "-green"];
             service_instances.erase(service_name + "-green");
 
-            std::cout << "Blue-green deployment complete for " << service_name << std::endl;
+            m_logger->log(logger_module::log_level::info,
+                "Blue-green deployment complete for " + service_name);
         }).detach();
     }
 
     void performCanaryDeployment(const std::string& service_name, const std::string& new_version) {
-        std::cout << "Starting canary deployment for " << service_name << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Starting canary deployment for " + service_name);
 
         // Deploy canary instance (10% of traffic)
         deploy_service_instance(service_name);
@@ -658,7 +686,8 @@ public:
             // If canary is healthy, continue rollout
             autoScale(service_name);  // This would check canary metrics
 
-            std::cout << "Canary deployment validated for " << service_name << std::endl;
+            m_logger->log(logger_module::log_level::info,
+                "Canary deployment validated for " + service_name);
         }).detach();
     }
 
@@ -675,8 +704,8 @@ public:
     }
 
     void handleUnhealthyInstance(const service_instance& instance) {
-        std::cout << "Instance " << instance.instance_id
-                  << " marked unhealthy" << std::endl;
+        m_logger->log(logger_module::log_level::warning,
+            "Instance " + instance.instance_id + " marked unhealthy");
 
         // Replace unhealthy instance
         deploy_service_instance(instance.service_name);
@@ -791,9 +820,10 @@ public:
     }
 
     void printServiceMap() {
-        std::cout << "\n╔══════════════════════════════════════════════════════════════╗" << std::endl;
-        std::cout << "║                    Service Mesh Topology                     ║" << std::endl;
-        std::cout << "╠══════════════════════════════════════════════════════════════╣" << std::endl;
+        std::stringstream map_output;
+        map_output << "\n╔══════════════════════════════════════════════════════════════╗\n";
+        map_output << "║                    Service Mesh Topology                     ║\n";
+        map_output << "╠══════════════════════════════════════════════════════════════╣\n";
 
         std::lock_guard<std::mutex> lock(registry_mutex);
 
@@ -804,38 +834,41 @@ public:
                 else if (instance.m_state == service_instance::UNHEALTHY) unhealthy++;
             }
 
-            std::cout << "║ " << std::left << std::setw(20) << service_name
+            map_output << "║ " << std::left << std::setw(20) << service_name
                       << " │ Instances: " << std::setw(2) << instances.size()
                       << " │ Healthy: " << std::setw(2) << healthy
                       << " │ Unhealthy: " << std::setw(2) << unhealthy
-                      << "    ║" << std::endl;
+                      << "    ║\n";
 
             // Show dependencies
             if (!service_definitions[service_name].dependencies.empty()) {
-                std::cout << "║   └─ Dependencies: ";
+                map_output << "║   └─ Dependencies: ";
                 for (const auto& dep : service_definitions[service_name].dependencies) {
-                    std::cout << dep << " ";
+                    map_output << dep << " ";
                 }
-                std::cout << std::endl;
+                map_output << "\n";
             }
         }
 
-        std::cout << "╠══════════════════════════════════════════════════════════════╣" << std::endl;
-        std::cout << "║ Metrics:                                                      ║" << std::endl;
-        std::cout << "║   Total Requests: " << std::setw(43)
-                  << total_requests.load() << " ║" << std::endl;
-        std::cout << "║   Success Rate: " << std::setw(44)
+        map_output << "╠══════════════════════════════════════════════════════════════╣\n";
+        map_output << "║ Metrics:                                                      ║\n";
+        map_output << "║   Total Requests: " << std::setw(43)
+                  << total_requests.load() << " ║\n";
+        map_output << "║   Success Rate: " << std::setw(44)
                   << std::fixed << std::setprecision(2)
                   << (100.0 * successful_requests / std::max(1UL, total_requests.load()))
-                  << "% ║" << std::endl;
-        std::cout << "║   Circuit Breaker Trips: " << std::setw(36)
-                  << circuit_breaker_trips.load() << " ║" << std::endl;
-        std::cout << "╚══════════════════════════════════════════════════════════════╝" << std::endl;
+                  << "% ║\n";
+        map_output << "║   Circuit Breaker Trips: " << std::setw(36)
+                  << circuit_breaker_trips.load() << " ║\n";
+        map_output << "╚══════════════════════════════════════════════════════════════╝";
+
+        m_logger->log(logger_module::log_level::info, map_output.str());
     }
 
 public:
     void start() {
-        std::cout << "\n=== Microservices Orchestrator Starting ===\n" << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "\n=== Microservices Orchestrator Starting ===");
 
         integrator->start();
 
@@ -886,17 +919,23 @@ public:
         running = false;
         integrator->stop();
 
-        std::cout << "\n=== Final Statistics ===" << std::endl;
-        std::cout << "Total services managed: " << service_definitions.size() << std::endl;
-        std::cout << "Total instances: " << std::endl;
+        std::stringstream stats;
+        stats << "\n=== Final Statistics ===\n";
+        stats << "Total services managed: " << service_definitions.size() << "\n";
+        stats << "Total instances:\n";
         for (const auto& [name, instances] : service_instances) {
-            std::cout << "  " << name << ": " << instances.size() << std::endl;
+            stats << "  " << name << ": " << instances.size() << "\n";
         }
-        std::cout << "Total requests processed: " << total_requests << std::endl;
-        std::cout << "Success rate: "
-                  << (100.0 * successful_requests / std::max(1UL, total_requests.load()))
-                  << "%" << std::endl;
-        std::cout << "========================\n" << std::endl;
+        stats << "Total requests processed: " << total_requests << "\n";
+        stats << "Success rate: "
+              << std::fixed << std::setprecision(2)
+              << (100.0 * successful_requests / std::max(1UL, total_requests.load()))
+              << "%\n";
+        stats << "========================";
+
+        m_logger->log(logger_module::log_level::info, stats.str());
+        m_logger->flush();
+        m_logger->stop();
     }
 };
 
@@ -906,7 +945,14 @@ int main(int argc, char* argv[]) {
         orchestrator.start();
 
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        // Create a minimal logger for error reporting
+        logger_module::logger_config error_logger_config;
+        error_logger_config.min_level = logger_module::log_level::error;
+        auto error_logger = std::make_shared<logger_module::logger>(error_logger_config);
+        error_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        error_logger->start();
+        error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
+        error_logger->stop();
         return 1;
     }
 

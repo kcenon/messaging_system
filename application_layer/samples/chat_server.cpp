@@ -9,6 +9,9 @@
 #include <kcenon/messaging/integrations/system_integrator.h>
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/services/network/network_service.h>
+#include <logger_system/sources/logger/logger.h>
+#include <logger_system/sources/logger/writers/console_writer.h>
+#include <logger_system/sources/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <atomic>
@@ -22,6 +25,7 @@ class chat_server {
 private:
     std::unique_ptr<integrations::system_integrator> system_integrator;
     std::unique_ptr<services::network_service> network_service;
+    std::shared_ptr<logger_module::logger> m_logger;
 
     // User management
     struct User {
@@ -36,6 +40,16 @@ private:
 
 public:
     chat_server() {
+        // Initialize logger
+        m_logger = std::make_shared<logger_module::logger>(true, 8192);
+        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
+        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+            "chat_server.log", 10 * 1024 * 1024, 5)); // 10MB per file, 5 files
+        m_logger->set_min_level(logger_module::log_level::info);
+        m_logger->start();
+
+        m_logger->log(logger_module::log_level::info, "Initializing chat server...");
+
         // Initialize the messaging system with optimized configuration
         config::config_builder builder;
         auto config = builder
@@ -103,7 +117,8 @@ public:
 
         broadcastToAll(broadcast);
 
-        std::cout << "User connected: " << nickname << " (" << user_id << ")" << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "User connected: " + nickname + " (" + user_id + ")");
     }
 
     void handleUserDisconnect(const core::message& disconnect_message) {
@@ -125,7 +140,8 @@ public:
 
             broadcastToAll(broadcast);
 
-            std::cout << "User disconnected: " << nickname << std::endl;
+            m_logger->log(logger_module::log_level::info,
+                "User disconnected: " + nickname);
         }
     }
 
@@ -207,7 +223,8 @@ public:
         auto target_room_id = join_message.get_payload_as<std::string>();
 
         // Add user to room (implementation would include room management)
-        std::cout << "User " << joining_user_id << " joined room " << target_room_id << std::endl;
+        m_logger->log(logger_module::log_level::debug,
+            "User " + joining_user_id + " joined room " + target_room_id);
 
         // Send room history to user
         sendRoomHistory(joining_user_id, target_room_id);
@@ -217,7 +234,8 @@ public:
         auto leaving_user_id = leave_message.get_header("user_id");
         auto leaving_room_id = leave_message.get_payload_as<std::string>();
 
-        std::cout << "User " << leaving_user_id << " left room " << leaving_room_id << std::endl;
+        m_logger->log(logger_module::log_level::debug,
+            "User " + leaving_user_id + " left room " + leaving_room_id);
     }
 
     void broadcastToAll(const core::message& broadcast_message) {
@@ -249,8 +267,9 @@ public:
 
     void logMessage(const std::string& sender_nickname, const std::string& message_text, const std::string& room_id) {
         // In production, write to database
-        std::cout << "[" << (room_id.empty() ? "global" : room_id) << "] "
-                  << sender_nickname << ": " << message_text << std::endl;
+        std::string log_msg = "[" + (room_id.empty() ? "global" : room_id) + "] " +
+                             sender_nickname + ": " + message_text;
+        m_logger->log(logger_module::log_level::info, log_msg);
     }
 
     void cleanupInactiveUsers() {
@@ -260,7 +279,8 @@ public:
         std::lock_guard<std::mutex> lock(users_mutex);
         for (auto user_iter = users.begin(); user_iter != users.end(); ) {
             if (now - user_iter->second.last_activity > timeout) {
-                std::cout << "Removing inactive user: " << user_iter->second.nickname << std::endl;
+                m_logger->log(logger_module::log_level::warning,
+                    "Removing inactive user: " + user_iter->second.nickname);
                 user_iter = users.erase(user_iter);
             } else {
                 ++user_iter;
@@ -269,7 +289,8 @@ public:
     }
 
     void start(int port = 8080) {
-        std::cout << "Chat server starting on port " << port << "..." << std::endl;
+        m_logger->log(logger_module::log_level::info,
+            "Chat server starting on port " + std::to_string(port) + "...");
 
         // Start network service
         network_service->start_server(port);
@@ -285,6 +306,8 @@ public:
         // Start the message bus
         system_integrator->start();
 
+        m_logger->log(logger_module::log_level::info,
+            "Chat server is running. Press Enter to stop...");
         std::cout << "Chat server is running. Press Enter to stop..." << std::endl;
         std::cin.get();
 
@@ -296,16 +319,20 @@ public:
         running = false;
         system_integrator->stop();
         network_service->stop_server();
-        std::cout << "Chat server stopped." << std::endl;
+        m_logger->log(logger_module::log_level::info, "Chat server stopped.");
+        m_logger->flush();
+        m_logger->stop();
     }
 
     // Statistics
-    void printStats() const {
+    void printStats() {
         std::lock_guard<std::mutex> lock(users_mutex);
-        std::cout << "\n=== Server Statistics ===" << std::endl;
-        std::cout << "Active users: " << users.size() << std::endl;
-        std::cout << "Message bus stats: " << system_integrator->get_statistics() << std::endl;
-        std::cout << "========================\n" << std::endl;
+        m_logger->log(logger_module::log_level::info, "\n=== Server Statistics ===");
+        m_logger->log(logger_module::log_level::info,
+            "Active users: " + std::to_string(users.size()));
+        m_logger->log(logger_module::log_level::info,
+            "Message bus stats: " + system_integrator->get_statistics());
+        m_logger->log(logger_module::log_level::info, "========================\n");
     }
 };
 
@@ -331,6 +358,7 @@ int main(int argc, char* argv[]) {
 
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
+        // Note: Logger might not be initialized yet, so we also use std::cerr
         return 1;
     }
 
