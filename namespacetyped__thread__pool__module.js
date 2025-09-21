@@ -1,0 +1,56 @@
+var namespacetyped__thread__pool__module =
+[
+    [ "config", "namespacetyped__thread__pool__module_1_1config.html", [
+      [ "default_job_type", "namespacetyped__thread__pool__module_1_1config.html#a65ca63b23af74423fc1ee9eb325cae54", null ],
+      [ "default_job_pool_size", "namespacetyped__thread__pool__module_1_1config.html#ad139098c183bdfccdd9e04e7f9fcb31a", null ],
+      [ "default_queue_size", "namespacetyped__thread__pool__module_1_1config.html#abb3f5232d119591492a42e223a552ee3", null ],
+      [ "default_shutdown_timeout_ms", "namespacetyped__thread__pool__module_1_1config.html#ad7b6b3515fa0f59bffa00e0f330058c1", null ],
+      [ "default_wait_timeout_ms", "namespacetyped__thread__pool__module_1_1config.html#ad5f0b08b29bb7d94a323acc846389fbd", null ],
+      [ "default_worker_count", "namespacetyped__thread__pool__module_1_1config.html#a1a5709f2c6b732df384d2fdf1253ce21", null ],
+      [ "enable_adaptive_sizing", "namespacetyped__thread__pool__module_1_1config.html#adb33adb67a562858ae330dc1cbaf9372", null ],
+      [ "enable_debug_logging", "namespacetyped__thread__pool__module_1_1config.html#afc91621a2d1a53e2b31c7a84766b2ac1", null ],
+      [ "enable_job_recycling", "namespacetyped__thread__pool__module_1_1config.html#a8e073988e5320281c596c5417715b624", null ],
+      [ "enable_performance_monitoring", "namespacetyped__thread__pool__module_1_1config.html#a280680dc3299ffedb8dca5c759514ba5", null ],
+      [ "enable_priority_boost", "namespacetyped__thread__pool__module_1_1config.html#abfdb778a6552dd31a955300cdde58730", null ],
+      [ "enable_statistics", "namespacetyped__thread__pool__module_1_1config.html#acd7431e0c2c9049c467f63420e4685aa", null ],
+      [ "enable_work_stealing", "namespacetyped__thread__pool__module_1_1config.html#a54044223156b1a4509cd3208e732dede", null ],
+      [ "max_workers", "namespacetyped__thread__pool__module_1_1config.html#a6ccb4cc5291433e6adde8e1d40355902", null ],
+      [ "min_workers", "namespacetyped__thread__pool__module_1_1config.html#adcf1ec70ff88bc68ca55119d0b8e4293", null ],
+      [ "monitoring_interval_ms", "namespacetyped__thread__pool__module_1_1config.html#aea6f53a122fa21ed8c3b0a6187cc1efc", null ]
+    ] ],
+    [ "detail", "namespacetyped__thread__pool__module_1_1detail.html", "namespacetyped__thread__pool__module_1_1detail" ],
+    [ "job_detail", "namespacetyped__thread__pool__module_1_1job__detail.html", [
+      [ "job_type_count", "namespacetyped__thread__pool__module_1_1job__detail.html#a39cd14864bb2bdb1604775ec49e8c0e5", null ],
+      [ "job_type_strings", "namespacetyped__thread__pool__module_1_1job__detail.html#a6c6a33d701e54d5822d12b7db85c487a", null ]
+    ] ],
+    [ "adaptive_typed_job_queue_t", "classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html", "classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t" ],
+    [ "callback_typed_job_t", "classtyped__thread__pool__module_1_1callback__typed__job__t.html", "classtyped__thread__pool__module_1_1callback__typed__job__t" ],
+    [ "typed_job_factory_interface", "classtyped__thread__pool__module_1_1typed__job__factory__interface.html", "classtyped__thread__pool__module_1_1typed__job__factory__interface" ],
+    [ "typed_job_interface", "classtyped__thread__pool__module_1_1typed__job__interface.html", "classtyped__thread__pool__module_1_1typed__job__interface" ],
+    [ "typed_job_queue_t", "classtyped__thread__pool__module_1_1typed__job__queue__t.html", "classtyped__thread__pool__module_1_1typed__job__queue__t" ],
+    [ "typed_job_t", "classtyped__thread__pool__module_1_1typed__job__t.html", "classtyped__thread__pool__module_1_1typed__job__t" ],
+    [ "typed_lockfree_job_queue_t", "classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html", "classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t" ],
+    [ "typed_queue_statistics_t", "structtyped__thread__pool__module_1_1typed__queue__statistics__t.html", "structtyped__thread__pool__module_1_1typed__queue__statistics__t" ],
+    [ "typed_thread_pool_builder", "classtyped__thread__pool__module_1_1typed__thread__pool__builder.html", "classtyped__thread__pool__module_1_1typed__thread__pool__builder" ],
+    [ "typed_thread_pool_t", "classtyped__thread__pool__module_1_1typed__thread__pool__t.html", "classtyped__thread__pool__module_1_1typed__thread__pool__t" ],
+    [ "typed_thread_worker_t", "classtyped__thread__pool__module_1_1typed__thread__worker__t.html", "classtyped__thread__pool__module_1_1typed__thread__worker__t" ],
+    [ "callback_typed_job", "namespacetyped__thread__pool__module.html#ab369d5fd77a97c5140881e4595d1670b", null ],
+    [ "typed_job", "namespacetyped__thread__pool__module.html#a9276d2960ba979c47fa6764c50111689", null ],
+    [ "typed_job_ptr", "namespacetyped__thread__pool__module.html#af7c43302be6cc4cd53bfbfcc7983d64a", null ],
+    [ "typed_job_queue", "namespacetyped__thread__pool__module.html#a3da39bb993d9f5053019dbe8bb2e1ffb", null ],
+    [ "typed_job_weak_ptr", "namespacetyped__thread__pool__module.html#aa2cfdcc3ba841430cc2bb241e77ef8ec", null ],
+    [ "typed_lockfree_job_queue", "namespacetyped__thread__pool__module.html#a846ec234b6670614d096a2c7493d44fc", null ],
+    [ "typed_queue_statistics", "namespacetyped__thread__pool__module.html#a5a2554a4eda94f60f1b752846213dd57", null ],
+    [ "typed_thread_pool", "namespacetyped__thread__pool__module.html#a970a3d65b2de11fe9eecd9c588159c63", null ],
+    [ "typed_thread_worker", "namespacetyped__thread__pool__module.html#ae29cbeff14562615cc9e00ad276fc61c", null ],
+    [ "job_types", "namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6", [
+      [ "RealTime", "namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6ad50ae798e3aa50c3a502118e759cc216", null ],
+      [ "Batch", "namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6a51ffe9dd1b1e143c1b9f1144d040e454", null ],
+      [ "Background", "namespacetyped__thread__pool__module.html#aeddf7d42d9fc60bebab25fba779ad0b6aa9ded1e5ce5d75814730bb4caaf49419", null ]
+    ] ],
+    [ "all_types", "namespacetyped__thread__pool__module.html#a2c8ae69464a38fdf60ba05576e0c85ad", null ],
+    [ "create_pool_builder", "namespacetyped__thread__pool__module.html#ac328b7b9124685e02d46f6dd13ac6e09", null ],
+    [ "create_typed_job_queue", "namespacetyped__thread__pool__module.html#ae6724193b1b67a70e4609fe4aad69332", null ],
+    [ "create_typed_job_queue< job_types >", "namespacetyped__thread__pool__module.html#a6471112cdc4e66bf0b675a1b93dcda00", null ],
+    [ "to_string", "namespacetyped__thread__pool__module.html#abd49ff02ea4da8eb45ed55b95511f043", null ]
+];

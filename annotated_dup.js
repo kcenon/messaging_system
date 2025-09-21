@@ -1,0 +1,186 @@
+var annotated_dup =
+[
+    [ "container_module", "namespacecontainer__module.html", [
+      [ "simd", "namespacecontainer__module_1_1simd.html", [
+        [ "simd_compressor", "classcontainer__module_1_1simd_1_1simd__compressor.html", "classcontainer__module_1_1simd_1_1simd__compressor" ],
+        [ "simd_processor", "classcontainer__module_1_1simd_1_1simd__processor.html", "classcontainer__module_1_1simd_1_1simd__processor" ],
+        [ "simd_support", "classcontainer__module_1_1simd_1_1simd__support.html", "classcontainer__module_1_1simd_1_1simd__support" ],
+        [ "simd_traits", "structcontainer__module_1_1simd_1_1simd__traits.html", "structcontainer__module_1_1simd_1_1simd__traits" ]
+      ] ],
+      [ "bool_value", "classcontainer__module_1_1bool__value.html", "classcontainer__module_1_1bool__value" ],
+      [ "bytes_value", "classcontainer__module_1_1bytes__value.html", "classcontainer__module_1_1bytes__value" ],
+      [ "container_value", "classcontainer__module_1_1container__value.html", "classcontainer__module_1_1container__value" ],
+      [ "is_variant_type", "structcontainer__module_1_1is__variant__type.html", null ],
+      [ "is_variant_type< bool >", "structcontainer__module_1_1is__variant__type_3_01bool_01_4.html", null ],
+      [ "is_variant_type< double >", "structcontainer__module_1_1is__variant__type_3_01double_01_4.html", null ],
+      [ "is_variant_type< float >", "structcontainer__module_1_1is__variant__type_3_01float_01_4.html", null ],
+      [ "is_variant_type< int16_t >", "structcontainer__module_1_1is__variant__type_3_01int16__t_01_4.html", null ],
+      [ "is_variant_type< int32_t >", "structcontainer__module_1_1is__variant__type_3_01int32__t_01_4.html", null ],
+      [ "is_variant_type< int64_t >", "structcontainer__module_1_1is__variant__type_3_01int64__t_01_4.html", null ],
+      [ "is_variant_type< long long >", "structcontainer__module_1_1is__variant__type_3_01long_01long_01_4.html", null ],
+      [ "is_variant_type< std::monostate >", "structcontainer__module_1_1is__variant__type_3_01std_1_1monostate_01_4.html", null ],
+      [ "is_variant_type< std::shared_ptr< thread_safe_container > >", "structcontainer__module_1_1is__variant__type_3_01std_1_1shared__ptr_3_01thread__safe__container_01_4_01_4.html", null ],
+      [ "is_variant_type< std::string >", "structcontainer__module_1_1is__variant__type_3_01std_1_1string_01_4.html", null ],
+      [ "is_variant_type< std::vector< uint8_t > >", "structcontainer__module_1_1is__variant__type_3_01std_1_1vector_3_01uint8__t_01_4_01_4.html", null ],
+      [ "is_variant_type< uint16_t >", "structcontainer__module_1_1is__variant__type_3_01uint16__t_01_4.html", null ],
+      [ "is_variant_type< uint32_t >", "structcontainer__module_1_1is__variant__type_3_01uint32__t_01_4.html", null ],
+      [ "is_variant_type< uint64_t >", "structcontainer__module_1_1is__variant__type_3_01uint64__t_01_4.html", null ],
+      [ "is_variant_type< unsigned long long >", "structcontainer__module_1_1is__variant__type_3_01unsigned_01long_01long_01_4.html", null ],
+      [ "lockfree_reader", "classcontainer__module_1_1lockfree__reader.html", "classcontainer__module_1_1lockfree__reader" ],
+      [ "numeric_value", "classcontainer__module_1_1numeric__value.html", "classcontainer__module_1_1numeric__value" ],
+      [ "string_value", "classcontainer__module_1_1string__value.html", "classcontainer__module_1_1string__value" ],
+      [ "thread_safe_container", "classcontainer__module_1_1thread__safe__container.html", "classcontainer__module_1_1thread__safe__container" ],
+      [ "value", "classcontainer__module_1_1value.html", "classcontainer__module_1_1value" ],
+      [ "value_container", "classcontainer__module_1_1value__container.html", "classcontainer__module_1_1value__container" ],
+      [ "variant_value", "classcontainer__module_1_1variant__value.html", "classcontainer__module_1_1variant__value" ]
+    ] ],
+    [ "database", "namespacedatabase.html", [
+      [ "database_base", "classdatabase_1_1database__base.html", "classdatabase_1_1database__base" ],
+      [ "database_manager", "classdatabase_1_1database__manager.html", "classdatabase_1_1database__manager" ],
+      [ "postgres_manager", "classdatabase_1_1postgres__manager.html", "classdatabase_1_1postgres__manager" ]
+    ] ],
+    [ "monitoring_interface", "namespacemonitoring__interface.html", [
+      [ "metrics_snapshot", "structmonitoring__interface_1_1metrics__snapshot.html", "structmonitoring__interface_1_1metrics__snapshot" ],
+      [ "monitoring_interface", "classmonitoring__interface_1_1monitoring__interface.html", "classmonitoring__interface_1_1monitoring__interface" ],
+      [ "null_monitoring", "classmonitoring__interface_1_1null__monitoring.html", "classmonitoring__interface_1_1null__monitoring" ],
+      [ "scoped_timer", "classmonitoring__interface_1_1scoped__timer.html", "classmonitoring__interface_1_1scoped__timer" ],
+      [ "system_metrics", "structmonitoring__interface_1_1system__metrics.html", "structmonitoring__interface_1_1system__metrics" ],
+      [ "thread_pool_metrics", "structmonitoring__interface_1_1thread__pool__metrics.html", "structmonitoring__interface_1_1thread__pool__metrics" ],
+      [ "worker_metrics", "structmonitoring__interface_1_1worker__metrics.html", "structmonitoring__interface_1_1worker__metrics" ]
+    ] ],
+    [ "network_module", "namespacenetwork__module.html", [
+      [ "messaging_client", "classnetwork__module_1_1messaging__client.html", "classnetwork__module_1_1messaging__client" ],
+      [ "messaging_server", "classnetwork__module_1_1messaging__server.html", "classnetwork__module_1_1messaging__server" ],
+      [ "messaging_session", "classnetwork__module_1_1messaging__session.html", "classnetwork__module_1_1messaging__session" ],
+      [ "pipeline", "structnetwork__module_1_1pipeline.html", "structnetwork__module_1_1pipeline" ],
+      [ "tcp_socket", "classnetwork__module_1_1tcp__socket.html", "classnetwork__module_1_1tcp__socket" ]
+    ] ],
+    [ "std", null, [
+      [ "formatter< thread_module::thread_conditions >", "structstd_1_1formatter_3_01thread__module_1_1thread__conditions_01_4.html", "structstd_1_1formatter_3_01thread__module_1_1thread__conditions_01_4" ],
+      [ "formatter< thread_module::thread_conditions, wchar_t >", "structstd_1_1formatter_3_01thread__module_1_1thread__conditions_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01thread__module_1_1thread__conditions_00_01wchar__t_01_4" ],
+      [ "formatter< thread_pool_module::thread_pool >", "structstd_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4.html", "structstd_1_1formatter_3_01thread__pool__module_1_1thread__pool_01_4" ],
+      [ "formatter< thread_pool_module::thread_pool, wchar_t >", "structstd_1_1formatter_3_01thread__pool__module_1_1thread__pool_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01thread__pool__module_1_1thread__pool_00_01wchar__t_01_4" ],
+      [ "formatter< thread_pool_module::thread_worker >", "structstd_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4.html", "structstd_1_1formatter_3_01thread__pool__module_1_1thread__worker_01_4" ],
+      [ "formatter< thread_pool_module::thread_worker, wchar_t >", "structstd_1_1formatter_3_01thread__pool__module_1_1thread__worker_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01thread__pool__module_1_1thread__worker_00_01wchar__t_01_4" ],
+      [ "formatter< typed_thread_pool_module::job_types >", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1job__types_01_4.html", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1job__types_01_4" ],
+      [ "formatter< typed_thread_pool_module::job_types, wchar_t >", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1job__types_00_01wchar__t_01_4" ],
+      [ "formatter< typed_thread_pool_module::typed_job_queue_t< job_type > >", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_01_4.html", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_01_4" ],
+      [ "formatter< typed_thread_pool_module::typed_job_queue_t< job_type >, wchar_t >", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_00_01wchar__t_01_4" ],
+      [ "formatter< typed_thread_pool_module::typed_thread_pool_t< job_type > >", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_01_4.html", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_01_4" ],
+      [ "formatter< typed_thread_pool_module::typed_thread_pool_t< job_type >, wchar_t >", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__pool__t_3_01job__type_01_4_00_01wchar__t_01_4" ],
+      [ "formatter< typed_thread_pool_module::typed_thread_worker_t< job_type > >", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__worker__t_3_01job__type_01_4_01_4" ],
+      [ "formatter< typed_thread_pool_module::typed_thread_worker_t< job_type >, wchar_t >", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__worker__t_3_01job__type_01_4_00_01wchar__t_01_4.html", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__thread__worker__t_3_01job__type_01_4_00_01wchar__t_01_4" ]
+    ] ],
+    [ "thread_module", "namespacethread__module.html", [
+      [ "detail", "namespacethread__module_1_1detail.html", [
+        [ "thread_impl", "classthread__module_1_1detail_1_1thread__impl.html", "classthread__module_1_1detail_1_1thread__impl" ]
+      ] ],
+      [ "jobs", "namespacethread__module_1_1jobs.html", [
+        [ "job_interface", "classthread__module_1_1jobs_1_1job__interface.html", "classthread__module_1_1jobs_1_1job__interface" ]
+      ] ],
+      [ "lockfree", "namespacethread__module_1_1lockfree.html", [
+        [ "adaptive_config", "structthread__module_1_1lockfree_1_1adaptive__config.html", "structthread__module_1_1lockfree_1_1adaptive__config" ],
+        [ "performance_stats", "structthread__module_1_1lockfree_1_1performance__stats.html", "structthread__module_1_1lockfree_1_1performance__stats" ]
+      ] ],
+      [ "sync", "namespacethread__module_1_1sync.html", [
+        [ "atomic_flag_wrapper", "classthread__module_1_1sync_1_1atomic__flag__wrapper.html", "classthread__module_1_1sync_1_1atomic__flag__wrapper" ],
+        [ "condition_variable_wrapper", "classthread__module_1_1sync_1_1condition__variable__wrapper.html", "classthread__module_1_1sync_1_1condition__variable__wrapper" ],
+        [ "scoped_lock_guard", "classthread__module_1_1sync_1_1scoped__lock__guard.html", "classthread__module_1_1sync_1_1scoped__lock__guard" ],
+        [ "shared_mutex_wrapper", "classthread__module_1_1sync_1_1shared__mutex__wrapper.html", "classthread__module_1_1sync_1_1shared__mutex__wrapper" ]
+      ] ],
+      [ "adaptive_job_queue", "classthread__module_1_1adaptive__job__queue.html", "classthread__module_1_1adaptive__job__queue" ],
+      [ "callback_job", "classthread__module_1_1callback__job.html", "classthread__module_1_1callback__job" ],
+      [ "cancellation_token", "classthread__module_1_1cancellation__token.html", "classthread__module_1_1cancellation__token" ],
+      [ "crash_context", "structthread__module_1_1crash__context.html", "structthread__module_1_1crash__context" ],
+      [ "crash_handler", "classthread__module_1_1crash__handler.html", "classthread__module_1_1crash__handler" ],
+      [ "default_error_handler", "classthread__module_1_1default__error__handler.html", "classthread__module_1_1default__error__handler" ],
+      [ "error", "classthread__module_1_1error.html", "classthread__module_1_1error" ],
+      [ "error_handler", "classthread__module_1_1error__handler.html", "classthread__module_1_1error__handler" ],
+      [ "hazard_pointer_manager", "classthread__module_1_1hazard__pointer__manager.html", "classthread__module_1_1hazard__pointer__manager" ],
+      [ "job", "classthread__module_1_1job.html", "classthread__module_1_1job" ],
+      [ "job_queue", "classthread__module_1_1job__queue.html", "classthread__module_1_1job__queue" ],
+      [ "lockfree_job_queue", "classthread__module_1_1lockfree__job__queue.html", "classthread__module_1_1lockfree__job__queue" ],
+      [ "logger_interface", "classthread__module_1_1logger__interface.html", "classthread__module_1_1logger__interface" ],
+      [ "logger_registry", "classthread__module_1_1logger__registry.html", "classthread__module_1_1logger__registry" ],
+      [ "node_pool", "classthread__module_1_1node__pool.html", "classthread__module_1_1node__pool" ],
+      [ "result", "classthread__module_1_1result.html", "classthread__module_1_1result" ],
+      [ "result< void >", "classthread__module_1_1result_3_01void_01_4.html", "classthread__module_1_1result_3_01void_01_4" ],
+      [ "result_void", "classthread__module_1_1result__void.html", "classthread__module_1_1result__void" ],
+      [ "scoped_crash_callback", "classthread__module_1_1scoped__crash__callback.html", "classthread__module_1_1scoped__crash__callback" ],
+      [ "scoped_service", "classthread__module_1_1scoped__service.html", "classthread__module_1_1scoped__service" ],
+      [ "service_container", "classthread__module_1_1service__container.html", "classthread__module_1_1service__container" ],
+      [ "thread_base", "classthread__module_1_1thread__base.html", "classthread__module_1_1thread__base" ],
+      [ "thread_context", "classthread__module_1_1thread__context.html", "classthread__module_1_1thread__context" ],
+      [ "thread_context_builder", "classthread__module_1_1thread__context__builder.html", "classthread__module_1_1thread__context__builder" ],
+      [ "thread_pool_crash_safety", "classthread__module_1_1thread__pool__crash__safety.html", "classthread__module_1_1thread__pool__crash__safety" ]
+    ] ],
+    [ "thread_pool_module", "namespacethread__pool__module.html", [
+      [ "detail", "namespacethread__pool__module_1_1detail.html", [
+        [ "callable_eraser", "classthread__pool__module_1_1detail_1_1callable__eraser.html", "classthread__pool__module_1_1detail_1_1callable__eraser" ],
+        [ "callable_return_type", "structthread__pool__module_1_1detail_1_1callable__return__type.html", "structthread__pool__module_1_1detail_1_1callable__return__type" ],
+        [ "compile_string", "structthread__pool__module_1_1detail_1_1compile__string.html", "structthread__pool__module_1_1detail_1_1compile__string" ],
+        [ "function_traits", "structthread__pool__module_1_1detail_1_1function__traits.html", null ],
+        [ "function_traits< R(*)(Args...) noexcept >", "structthread__pool__module_1_1detail_1_1function__traits_3_01_r_07_5_08_07_args_8_8_8_08_01noexcept_01_4.html", "structthread__pool__module_1_1detail_1_1function__traits_3_01_r_07_5_08_07_args_8_8_8_08_01noexcept_01_4" ],
+        [ "function_traits< R(*)(Args...)>", "structthread__pool__module_1_1detail_1_1function__traits_3_01_r_07_5_08_07_args_8_8_8_08_4.html", "structthread__pool__module_1_1detail_1_1function__traits_3_01_r_07_5_08_07_args_8_8_8_08_4" ],
+        [ "function_traits< R(C::*)(Args...) const >", "structthread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_01const_01_4.html", "structthread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_01const_01_4" ],
+        [ "function_traits< R(C::*)(Args...)>", "structthread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_4.html", "structthread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_4" ],
+        [ "has_get_method", "structthread__pool__module_1_1detail_1_1has__get__method.html", null ],
+        [ "has_get_method< T, std::void_t< decltype(std::declval< T >().get())> >", "structthread__pool__module_1_1detail_1_1has__get__method_3_01_t_00_01std_1_1void__t_3_01decltyped15719abeb75bab0e7f76d614dc15950.html", null ],
+        [ "is_duration", "structthread__pool__module_1_1detail_1_1is__duration.html", null ],
+        [ "is_duration< std::chrono::duration< Rep, Period > >", "structthread__pool__module_1_1detail_1_1is__duration_3_01std_1_1chrono_1_1duration_3_01_rep_00_01_period_01_4_01_4.html", null ],
+        [ "is_future_like", "structthread__pool__module_1_1detail_1_1is__future__like.html", null ],
+        [ "is_nothrow_callable", "structthread__pool__module_1_1detail_1_1is__nothrow__callable.html", null ],
+        [ "validate_thread_count", "structthread__pool__module_1_1detail_1_1validate__thread__count.html", "structthread__pool__module_1_1detail_1_1validate__thread__count" ]
+      ] ],
+      [ "pool_future", "classthread__pool__module_1_1pool__future.html", "classthread__pool__module_1_1pool__future" ],
+      [ "pool_promise", "classthread__pool__module_1_1pool__promise.html", "classthread__pool__module_1_1pool__promise" ],
+      [ "pool_promise< void >", "classthread__pool__module_1_1pool__promise_3_01void_01_4.html", "classthread__pool__module_1_1pool__promise_3_01void_01_4" ],
+      [ "thread_pool", "classthread__pool__module_1_1thread__pool.html", "classthread__pool__module_1_1thread__pool" ],
+      [ "thread_worker", "classthread__pool__module_1_1thread__worker.html", "classthread__pool__module_1_1thread__worker" ],
+      [ "worker_policy", "structthread__pool__module_1_1worker__policy.html", "structthread__pool__module_1_1worker__policy" ]
+    ] ],
+    [ "typed_thread_pool_module", "namespacetyped__thread__pool__module.html", [
+      [ "detail", "namespacetyped__thread__pool__module_1_1detail.html", [
+        [ "conditional_feature", "structtyped__thread__pool__module_1_1detail_1_1conditional__feature.html", "structtyped__thread__pool__module_1_1detail_1_1conditional__feature" ],
+        [ "constexpr_string", "structtyped__thread__pool__module_1_1detail_1_1constexpr__string.html", "structtyped__thread__pool__module_1_1detail_1_1constexpr__string" ],
+        [ "function_traits", "structtyped__thread__pool__module_1_1detail_1_1function__traits.html", null ],
+        [ "function_traits< R(*)(Args...)>", "structtyped__thread__pool__module_1_1detail_1_1function__traits_3_01_r_07_5_08_07_args_8_8_8_08_4.html", "structtyped__thread__pool__module_1_1detail_1_1function__traits_3_01_r_07_5_08_07_args_8_8_8_08_4" ],
+        [ "function_traits< R(C::*)(Args...) const >", "structtyped__thread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_01const_01_4.html", "structtyped__thread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_01const_01_4" ],
+        [ "function_traits< R(C::*)(Args...)>", "structtyped__thread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_4.html", "structtyped__thread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_4" ],
+        [ "has_do_work_method", "structtyped__thread__pool__module_1_1detail_1_1has__do__work__method.html", null ],
+        [ "has_do_work_method< T, std::void_t< decltype(std::declval< T >().do_work())> >", "structtyped__thread__pool__module_1_1detail_1_1has__do__work__method_3_01_t_00_01std_1_1void__t_8b61f0d08cbbac72013363436e4ca77b.html", null ],
+        [ "has_priority_method", "structtyped__thread__pool__module_1_1detail_1_1has__priority__method.html", null ],
+        [ "has_priority_method< T, std::void_t< decltype(std::declval< T >().priority())> >", "structtyped__thread__pool__module_1_1detail_1_1has__priority__method_3_01_t_00_01std_1_1void__t_726f3ee9022a4700c38c2263f682386d.html", null ],
+        [ "is_compatible_job", "structtyped__thread__pool__module_1_1detail_1_1is__compatible__job.html", null ],
+        [ "is_compatible_job< Job, ExpectedJobType >", "structtyped__thread__pool__module_1_1detail_1_1is__compatible__job_3_01_job_00_01_expected_job_type_01_4.html", "structtyped__thread__pool__module_1_1detail_1_1is__compatible__job_3_01_job_00_01_expected_job_type_01_4" ],
+        [ "is_valid_job_type", "structtyped__thread__pool__module_1_1detail_1_1is__valid__job__type.html", null ],
+        [ "is_valid_job_type< T, std::void_t< std::enable_if_t< JobType< T > > > >", "structtyped__thread__pool__module_1_1detail_1_1is__valid__job__type_3_01_t_00_01std_1_1void__t_36fe37be9eab67e017b37496c9908e8c9.html", null ],
+        [ "job_eraser", "classtyped__thread__pool__module_1_1detail_1_1job__eraser.html", "classtyped__thread__pool__module_1_1detail_1_1job__eraser" ],
+        [ "job_type_extractor", "structtyped__thread__pool__module_1_1detail_1_1job__type__extractor.html", "structtyped__thread__pool__module_1_1detail_1_1job__type__extractor" ],
+        [ "job_type_extractor< T >", "structtyped__thread__pool__module_1_1detail_1_1job__type__extractor_3_01_t_01_4.html", "structtyped__thread__pool__module_1_1detail_1_1job__type__extractor_3_01_t_01_4" ],
+        [ "job_type_list", "structtyped__thread__pool__module_1_1detail_1_1job__type__list.html", "structtyped__thread__pool__module_1_1detail_1_1job__type__list" ],
+        [ "job_type_traits", "structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html", "structtyped__thread__pool__module_1_1detail_1_1job__type__traits" ],
+        [ "job_validator", "structtyped__thread__pool__module_1_1detail_1_1job__validator.html", "structtyped__thread__pool__module_1_1detail_1_1job__validator" ],
+        [ "priority_comparator", "structtyped__thread__pool__module_1_1detail_1_1priority__comparator.html", "structtyped__thread__pool__module_1_1detail_1_1priority__comparator" ]
+      ] ],
+      [ "adaptive_typed_job_queue_t", "classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html", "classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t" ],
+      [ "callback_typed_job_t", "classtyped__thread__pool__module_1_1callback__typed__job__t.html", "classtyped__thread__pool__module_1_1callback__typed__job__t" ],
+      [ "typed_job_factory_interface", "classtyped__thread__pool__module_1_1typed__job__factory__interface.html", "classtyped__thread__pool__module_1_1typed__job__factory__interface" ],
+      [ "typed_job_interface", "classtyped__thread__pool__module_1_1typed__job__interface.html", "classtyped__thread__pool__module_1_1typed__job__interface" ],
+      [ "typed_job_queue_t", "classtyped__thread__pool__module_1_1typed__job__queue__t.html", "classtyped__thread__pool__module_1_1typed__job__queue__t" ],
+      [ "typed_job_t", "classtyped__thread__pool__module_1_1typed__job__t.html", "classtyped__thread__pool__module_1_1typed__job__t" ],
+      [ "typed_lockfree_job_queue_t", "classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html", "classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t" ],
+      [ "typed_queue_statistics_t", "structtyped__thread__pool__module_1_1typed__queue__statistics__t.html", "structtyped__thread__pool__module_1_1typed__queue__statistics__t" ],
+      [ "typed_thread_pool_builder", "classtyped__thread__pool__module_1_1typed__thread__pool__builder.html", "classtyped__thread__pool__module_1_1typed__thread__pool__builder" ],
+      [ "typed_thread_pool_t", "classtyped__thread__pool__module_1_1typed__thread__pool__t.html", "classtyped__thread__pool__module_1_1typed__thread__pool__t" ],
+      [ "typed_thread_worker_t", "classtyped__thread__pool__module_1_1typed__thread__worker__t.html", "classtyped__thread__pool__module_1_1typed__thread__worker__t" ]
+    ] ],
+    [ "utility_module", "namespaceutility__module.html", [
+      [ "convert_string", "classutility__module_1_1convert__string.html", "classutility__module_1_1convert__string" ],
+      [ "enum_formatter", "classutility__module_1_1enum__formatter.html", "classutility__module_1_1enum__formatter" ],
+      [ "formatter", "classutility__module_1_1formatter.html", "classutility__module_1_1formatter" ],
+      [ "result_wrapper", "classutility__module_1_1result__wrapper.html", "classutility__module_1_1result__wrapper" ]
+    ] ],
+    [ "monitoring_interface", "classmonitoring__interface.html", null ],
+    [ "typed_queue_statistics", "structtyped__queue__statistics.html", null ]
+];

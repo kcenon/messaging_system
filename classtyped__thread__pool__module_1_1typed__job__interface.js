@@ -1,0 +1,12 @@
+var classtyped__thread__pool__module_1_1typed__job__interface =
+[
+    [ "~typed_job_interface", "classtyped__thread__pool__module_1_1typed__job__interface.html#a95d4dbc12bbffd6f80a25892c54ae870", null ],
+    [ "cancel", "classtyped__thread__pool__module_1_1typed__job__interface.html#a596f8db04f68a8096248d14360dd25df", null ],
+    [ "description", "classtyped__thread__pool__module_1_1typed__job__interface.html#afe640b7902661fe34a910ea8d702d9fe", null ],
+    [ "estimated_execution_time_us", "classtyped__thread__pool__module_1_1typed__job__interface.html#add27715c941a7282732bdbc2309915fa", null ],
+    [ "execute", "classtyped__thread__pool__module_1_1typed__job__interface.html#a526b67590ae1ef6ec83668434b3162e3", null ],
+    [ "has_higher_priority", "classtyped__thread__pool__module_1_1typed__job__interface.html#a1faff9b367ddc2acdbff2329ac1b7041", null ],
+    [ "is_cancelled", "classtyped__thread__pool__module_1_1typed__job__interface.html#af69dd47366504c4d0cfe936e2be9dbef", null ],
+    [ "is_ready", "classtyped__thread__pool__module_1_1typed__job__interface.html#aed690feb206238bedfbadc566ca7eba6", null ],
+    [ "type", "classtyped__thread__pool__module_1_1typed__job__interface.html#a649866c1e78bb8c4442aa7c77653a50c", null ]
+];
