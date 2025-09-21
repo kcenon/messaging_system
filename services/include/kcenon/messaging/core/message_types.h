@@ -7,6 +7,7 @@
 #include <vector>
 #include <variant>
 #include <functional>
+#include <atomic>
 
 namespace kcenon::messaging::core {
 

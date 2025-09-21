@@ -48,6 +48,7 @@ namespace container_module
     }
 
     thread_safe_container::thread_safe_container(const thread_safe_container& other)
+        : std::enable_shared_from_this<thread_safe_container>()
     {
         std::shared_lock other_lock(other.mutex_);
         values_ = other.values_;
