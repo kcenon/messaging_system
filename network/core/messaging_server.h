@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <atomic>
 #include <string>
 
-#include <asio.hpp>
+#include "network/internal/asio_compat.h"
 
 namespace network_module
 {

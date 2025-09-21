@@ -50,49 +50,28 @@ namespace container_module
 
     /**
      * @brief Type-safe variant for all possible value types in the container system
-     * 
+     *
      * This replaces the runtime polymorphism with compile-time type safety using std::variant.
      * The order of types in the variant corresponds to the value_types enum for compatibility.
-     * 
-     * Note: On some platforms (like macOS), int64_t and long long are the same type,
-     * so we use conditional types to avoid duplication.
+     *
+     * Note: On Windows and macOS, int64_t and long long are the same type,
+     * so we use a unified variant definition that avoids duplication.
      */
-    #ifdef __APPLE__
-        // On macOS, int64_t is typedef'd to long long, so we skip the explicit long long types
-        using ValueVariant = std::variant<
-            std::monostate,                       // null_value (index 0)
-            bool,                                 // bool_value (index 1)
-            std::vector<uint8_t>,                 // bytes_value (index 2)
-            int16_t,                              // short_value (index 3)
-            uint16_t,                             // ushort_value (index 4)
-            int32_t,                              // int_value (index 5)
-            uint32_t,                             // uint_value (index 6)
-            int64_t,                              // long_value (index 7) - same as long long on macOS
-            uint64_t,                             // ulong_value (index 8) - same as unsigned long long on macOS
-            float,                                // float_value (index 9)
-            double,                               // double_value (index 10)
-            std::string,                          // string_value (index 11)
-            std::shared_ptr<thread_safe_container> // container_value (index 12)
-        >;
-    #else
-        using ValueVariant = std::variant<
-            std::monostate,                       // null_value (index 0)
-            bool,                                 // bool_value (index 1)
-            std::vector<uint8_t>,                 // bytes_value (index 2)
-            int16_t,                              // short_value (index 3)
-            uint16_t,                             // ushort_value (index 4)
-            int32_t,                              // int_value (index 5)
-            uint32_t,                             // uint_value (index 6)
-            int64_t,                              // long_value (index 7)
-            uint64_t,                             // ulong_value (index 8)
-            long long,                            // llong_value (index 9)
-            unsigned long long,                   // ullong_value (index 10)
-            float,                                // float_value (index 11)
-            double,                               // double_value (index 12)
-            std::string,                          // string_value (index 13)
-            std::shared_ptr<thread_safe_container> // container_value (index 14)
-        >;
-    #endif
+    using ValueVariant = std::variant<
+        std::monostate,                       // null_value (index 0)
+        bool,                                 // bool_value (index 1)
+        std::vector<uint8_t>,                 // bytes_value (index 2)
+        int16_t,                              // short_value (index 3)
+        uint16_t,                             // ushort_value (index 4)
+        int32_t,                              // int_value (index 5)
+        uint32_t,                             // uint_value (index 6)
+        int64_t,                              // long_value (index 7)
+        uint64_t,                             // ulong_value (index 8)
+        float,                                // float_value (index 9)
+        double,                               // double_value (index 10)
+        std::string,                          // string_value (index 11)
+        std::shared_ptr<thread_safe_container> // container_value (index 12)
+    >;
 
     /**
      * @brief Type-safe value wrapper with thread safety

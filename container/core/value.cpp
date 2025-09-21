@@ -272,8 +272,7 @@ namespace container_module
 		case value_types::uint_value:
 		case value_types::long_value:
 		case value_types::ulong_value:
-		case value_types::llong_value:
-		case value_types::ullong_value:
+		// llong_value and ullong_value are aliases for long_value and ulong_value
 		case value_types::float_value:
 		case value_types::double_value:
 			return true;
@@ -517,17 +516,18 @@ namespace container_module
 
 	void value::set_llong(const std::string& dataStr)
 	{
-		long long ll = std::atoll(dataStr.c_str());
+		// Redirect to int64_t since long long and int64_t are the same on most platforms
+		int64_t ll = std::atoll(dataStr.c_str());
 		set_data(ll);
-		type_ = value_types::llong_value;
+		type_ = value_types::long_value;  // Use long_value instead of deprecated llong_value
 	}
 
 	void value::set_ullong(const std::string& dataStr)
 	{
-		unsigned long long ull
-			= static_cast<unsigned long long>(std::atoll(dataStr.c_str()));
+		// Redirect to uint64_t since unsigned long long and uint64_t are the same on most platforms
+		uint64_t ull = static_cast<uint64_t>(std::atoll(dataStr.c_str()));
 		set_data(ull);
-		type_ = value_types::ullong_value;
+		type_ = value_types::ulong_value;  // Use ulong_value instead of deprecated ullong_value
 	}
 
 	void value::set_float(const std::string& dataStr)
