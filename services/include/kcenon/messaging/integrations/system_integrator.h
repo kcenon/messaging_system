@@ -44,6 +44,11 @@ namespace kcenon::messaging::integrations {
 
         void subscribe(const std::string& topic, core::message_handler handler);
 
+        // External system management
+        class external_system_manager& get_external_systems() {
+            return orchestrator_.get_external_systems();
+        }
+
         // Configuration management
         const config::messaging_config& get_config() const {
             return orchestrator_.get_config();

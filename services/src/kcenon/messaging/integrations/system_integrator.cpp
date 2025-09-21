@@ -1,6 +1,7 @@
 #include "kcenon/messaging/integrations/system_integrator.h"
 #include "kcenon/messaging/services/container/container_service.h"
 #include "kcenon/messaging/services/network/network_service.h"
+#include "kcenon/messaging/integrations/external_system_adapter.h"
 
 namespace kcenon::messaging::integrations {
 
@@ -10,6 +11,9 @@ namespace kcenon::messaging::integrations {
 
         // Create message bus with configuration
         message_bus_ = std::make_unique<core::message_bus>(config.message_bus);
+
+        // Create external system manager
+        external_systems_ = std::make_unique<external_system_manager>();
     }
 
     messaging_system_orchestrator::~messaging_system_orchestrator() {
@@ -139,8 +143,34 @@ namespace kcenon::messaging::integrations {
     }
 
     void messaging_system_orchestrator::setup_external_integrations() {
-        // External system integration would be implemented here
-        // For now, just placeholder
+        // Setup external system adapters
+
+        // Database system adapter
+        if (config_.enable_database_system) {
+            auto db_adapter = create_database_adapter("sqlite:///messaging.db");
+            external_systems_->register_adapter("database", std::move(db_adapter));
+        }
+
+        // Thread system adapter
+        if (config_.enable_thread_system) {
+            auto thread_adapter = create_thread_system_adapter();
+            external_systems_->register_adapter("thread_system", std::move(thread_adapter));
+        }
+
+        // Connect all registered adapters
+        external_systems_->connect_all();
+
+#ifdef HAS_LOGGER_SYSTEM
+        if (config_.enable_logger_system) {
+            // TODO: Integrate with external logging system
+        }
+#endif
+
+#ifdef HAS_MONITORING_SYSTEM
+        if (config_.enable_monitoring_system) {
+            // TODO: Integrate with external monitoring system
+        }
+#endif
     }
 
     void messaging_system_orchestrator::initialize_adapters() {

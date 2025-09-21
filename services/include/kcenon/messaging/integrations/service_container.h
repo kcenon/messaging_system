@@ -10,6 +10,11 @@
 #include <string>
 #include <vector>
 
+// Forward declaration
+namespace kcenon::messaging::integrations {
+    class external_system_manager;
+}
+
 namespace kcenon::messaging::integrations {
 
     // Service factory function type
@@ -161,6 +166,9 @@ namespace kcenon::messaging::integrations {
         // Configuration access
         const config::messaging_config& get_config() const { return config_; }
 
+        // External systems access
+        class external_system_manager& get_external_systems() { return *external_systems_; }
+
         // System status
         bool is_running() const { return initialized_ && message_bus_ && message_bus_->is_running(); }
 
@@ -181,6 +189,9 @@ namespace kcenon::messaging::integrations {
 
         // Service adapters
         std::unordered_map<std::string, std::shared_ptr<services::service_adapter>> adapters_;
+
+        // External system manager (forward declaration only, defined in implementation)
+        std::unique_ptr<class external_system_manager> external_systems_;
 
         bool initialized_ = false;
         mutable std::mutex mutex_;

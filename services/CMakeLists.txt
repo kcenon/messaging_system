@@ -32,6 +32,7 @@ target_sources(messaging_services
         include/kcenon/messaging/core/message_bus.h
         include/kcenon/messaging/core/message_types.h
         include/kcenon/messaging/core/config.h
+        include/kcenon/messaging/core/production_optimizations.h
 
         # Service interfaces
         include/kcenon/messaging/services/service_interface.h
@@ -41,6 +42,7 @@ target_sources(messaging_services
         # Integration interfaces
         include/kcenon/messaging/integrations/system_integrator.h
         include/kcenon/messaging/integrations/service_container.h
+        include/kcenon/messaging/integrations/external_system_adapter.h
 )
 
 # Link dependencies (conditionally based on availability)
@@ -157,3 +159,39 @@ target_include_directories(messaging_example
 )
 
 target_compile_features(messaging_example PRIVATE cxx_std_20)
+
+# Python bindings (optional, enabled if pybind11 is available)
+find_package(pybind11 QUIET)
+if(pybind11_FOUND)
+    message(STATUS "pybind11 found, building Python bindings")
+
+    pybind11_add_module(messaging_cpp python_bindings/messaging_python.cpp)
+
+    target_link_libraries(messaging_cpp
+        PRIVATE
+            messaging_services
+    )
+
+    target_include_directories(messaging_cpp
+        PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
+
+    target_compile_features(messaging_cpp PRIVATE cxx_std_20)
+
+    # Set properties for Python module
+    target_compile_definitions(messaging_cpp PRIVATE VERSION_INFO=${PROJECT_VERSION})
+
+    # Install Python bindings
+    install(TARGETS messaging_cpp
+        DESTINATION python_bindings
+    )
+
+    # Copy Python wrapper
+    install(FILES python_bindings/messaging_system_python.py
+        DESTINATION python_bindings
+        RENAME messaging_system.py
+    )
+else()
+    message(STATUS "pybind11 not found, skipping Python bindings")
+endif()
