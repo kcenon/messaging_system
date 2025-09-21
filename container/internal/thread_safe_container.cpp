@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "container/internal/thread_safe_container.h"
 #include "utilities/core/formatter.h"
 #include <algorithm>
+#include <cstring>
 
 namespace container_module
 {
@@ -47,6 +48,7 @@ namespace container_module
     }
 
     thread_safe_container::thread_safe_container(const thread_safe_container& other)
+        : std::enable_shared_from_this<thread_safe_container>()
     {
         std::shared_lock other_lock(other.mutex_);
         values_ = other.values_;

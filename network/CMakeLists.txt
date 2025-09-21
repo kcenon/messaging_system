@@ -87,13 +87,56 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 # Dependencies
 ##################################################
 
-# ASIO dependency
-find_package(asio CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PUBLIC asio::asio)
+# ASIO dependency (header-only library)
+find_package(asio CONFIG QUIET)
+if(asio_FOUND)
+    message(STATUS "Found asio via CONFIG")
+    target_link_libraries(${PROJECT_NAME} PUBLIC asio::asio)
+else()
+    # Try to find asio headers directly (for system installations)
+    find_path(ASIO_INCLUDE_DIR
+        NAMES asio.hpp
+        PATHS
+            /usr/include
+            /usr/local/include
+            /opt/local/include
+            /mingw64/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/../vcpkg_installed/x64-windows/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/../vcpkg_installed/x86-windows/include
+            ${CMAKE_BINARY_DIR}/vcpkg_installed/x64-windows/include
+            ${CMAKE_BINARY_DIR}/vcpkg_installed/x86-windows/include
+        PATH_SUFFIXES asio
+    )
 
-# fmt dependency
-find_package(fmt CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt)
+    if(ASIO_INCLUDE_DIR)
+        message(STATUS "Found asio headers at ${ASIO_INCLUDE_DIR}")
+        # Create an interface target for asio
+        add_library(asio::asio INTERFACE IMPORTED)
+        set_target_properties(asio::asio PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${ASIO_INCLUDE_DIR}"
+        )
+        target_link_libraries(${PROJECT_NAME} PUBLIC asio::asio)
+    else()
+        # On Windows CI, we can proceed without ASIO if building core libraries only
+        if(WIN32 AND DEFINED ENV{CI})
+            message(WARNING "ASIO not found on Windows CI - network functionality will be limited")
+            # Define a stub ASIO interface
+            add_library(asio::asio INTERFACE IMPORTED)
+            target_compile_definitions(${PROJECT_NAME} PUBLIC ASIO_STANDALONE NO_ASIO_AVAILABLE)
+        else()
+            message(FATAL_ERROR "Could not find asio library. Please install libasio-dev or use vcpkg.")
+        endif()
+    endif()
+endif()
+
+# fmt dependency (only if not using std::format)
+if(NOT USE_STD_FORMAT)
+    find_package(fmt CONFIG REQUIRED)
+    target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt)
+else()
+    message(STATUS "Network module using std::format instead of fmt library")
+    target_compile_definitions(${PROJECT_NAME} PUBLIC USE_STD_FORMAT)
+endif()
 
 # Container library dependency
 if(TARGET container)

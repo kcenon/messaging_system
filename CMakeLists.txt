@@ -26,6 +26,7 @@ option(BUILD_PYTHON_BINDINGS "Build Python bindings" ON)
 
 # Feature options
 option(USE_LOCKFREE_BY_DEFAULT "Use lock-free implementations by default" OFF)
+option(USE_STD_FORMAT "Use std::format instead of fmt library" OFF)
 
 # Output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -49,13 +50,13 @@ find_package(Threads REQUIRED)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # Option to use internal thread_system (for backward compatibility)
-option(USE_INTERNAL_THREAD_SYSTEM "Use internal thread_system subdirectory" ON)
+option(USE_INTERNAL_THREAD_SYSTEM "Use internal thread_system subdirectory" OFF)
 
 # Option to use external logger system
-option(USE_EXTERNAL_LOGGER_SYSTEM "Use external logger system" OFF)
+option(USE_EXTERNAL_LOGGER_SYSTEM "Use external logger system" ON)
 
 # Option to use external monitoring system
-option(USE_EXTERNAL_MONITORING_SYSTEM "Use external monitoring system" OFF)
+option(USE_EXTERNAL_MONITORING_SYSTEM "Use external monitoring system" ON)
 
 if(USE_INTERNAL_THREAD_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thread_system)
     # Legacy mode: use internal thread_system
@@ -76,8 +77,8 @@ if(USE_INTERNAL_THREAD_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thread_syst
     )
 else()
     # Modern mode: use external ThreadSystemCore
-    message(STATUS "Using external ThreadSystemCore")
-    find_package(ThreadSystemCore REQUIRED)
+    message(STATUS "Attempting to find external ThreadSystemCore")
+    find_package(ThreadSystemCore QUIET)
     
     # Create compatibility aliases for internal targets
     if(TARGET ThreadSystem::Core)
@@ -90,22 +91,22 @@ else()
 endif()
 
 # Logger System Integration
-option(USE_INTERNAL_LOGGER_SYSTEM "Use internal logger_system subdirectory" ON)
+option(USE_INTERNAL_LOGGER_SYSTEM "Use internal logger_system subdirectory" OFF)
 
 if(USE_INTERNAL_LOGGER_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/logger_system)
     # Use internal logger_system
     message(STATUS "Using internal logger_system subdirectory")
     set(BUILD_LOGGER_AS_SUBMODULE ON CACHE BOOL "Build Logger as submodule" FORCE)
     add_subdirectory(logger_system)
-    
+
     # Include directories for logger_system
     include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/logger_system/sources
     )
 elseif(USE_EXTERNAL_LOGGER_SYSTEM)
-    message(STATUS "Using external LoggerSystem")
-    find_package(LoggerSystem REQUIRED)
-    
+    message(STATUS "Attempting to find external LoggerSystem")
+    find_package(LoggerSystem QUIET)
+
     # Make logger available to all modules
     if(TARGET LoggerSystem::logger)
         add_library(logger ALIAS LoggerSystem::logger)
@@ -115,22 +116,22 @@ else()
 endif()
 
 # Monitoring System Integration
-option(USE_INTERNAL_MONITORING_SYSTEM "Use internal monitoring_system subdirectory" ON)
+option(USE_INTERNAL_MONITORING_SYSTEM "Use internal monitoring_system subdirectory" OFF)
 
 if(USE_INTERNAL_MONITORING_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/monitoring_system)
     # Use internal monitoring_system
     message(STATUS "Using internal monitoring_system subdirectory")
     set(BUILD_MONITORING_AS_SUBMODULE ON CACHE BOOL "Build Monitoring as submodule" FORCE)
     add_subdirectory(monitoring_system)
-    
+
     # Include directories for monitoring_system
     include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/monitoring_system/sources
     )
 elseif(USE_EXTERNAL_MONITORING_SYSTEM)
-    message(STATUS "Using external MonitoringSystem")
-    find_package(MonitoringSystem REQUIRED)
-    
+    message(STATUS "Attempting to find external MonitoringSystem")
+    find_package(MonitoringSystem QUIET)
+
     # Make monitoring available to all modules
     if(TARGET MonitoringSystem::monitoring)
         add_library(monitoring ALIAS MonitoringSystem::monitoring)
@@ -166,16 +167,10 @@ endif()
 
 if(BUILD_NETWORK)
     add_subdirectory(network)
-    # # Add network to the export set
-    # if(TARGET network)
-    #     install(TARGETS network
-    #         EXPORT messaging_system_targets
-    #         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    #         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    #         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    #     )
-    # endif()
 endif()
+
+# Add services (new modular structure)
+add_subdirectory(services)
 
 # Python bindings
 if(BUILD_PYTHON_BINDINGS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/python)

@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <atomic>
 #include <type_traits>
 
-#include <asio.hpp>
+#include "network/internal/asio_compat.h"
 
 #include "network/internal/tcp_socket.h"
 #include "network/internal/pipeline.h"

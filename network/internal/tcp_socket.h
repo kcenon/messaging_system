@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include <asio.hpp>
+#include "network/internal/asio_compat.h"
 #include <functional>
 #include <memory>
 #include <vector>
