@@ -18,10 +18,10 @@
 using namespace kcenon::messaging;
 using namespace std::chrono_literals;
 
-class ChatServer {
+class chat_server {
 private:
-    std::unique_ptr<integrations::system_integrator> integrator;
-    std::unique_ptr<services::network_service> network;
+    std::unique_ptr<integrations::system_integrator> system_integrator;
+    std::unique_ptr<services::network_service> network_service;
 
     // User management
     struct User {
@@ -35,7 +35,7 @@ private:
     std::atomic<bool> running{true};
 
 public:
-    ChatServer() {
+    chat_server() {
         // Initialize the messaging system with optimized configuration
         config::config_builder builder;
         auto config = builder
@@ -47,48 +47,48 @@ public:
             .enable_monitoring(true)
             .build();
 
-        integrator = std::make_unique<integrations::system_integrator>(config);
-        network = std::make_unique<services::network_service>();
+        system_integrator = std::make_unique<integrations::system_integrator>(config);
+        network_service = std::make_unique<services::network_service>();
 
         setupMessageHandlers();
     }
 
     void setupMessageHandlers() {
-        auto& bus = integrator->get_message_bus();
+        auto& message_bus = system_integrator->get_message_bus();
 
         // Handle user connections
-        bus.subscribe("user.connect", [this](const core::message& msg) {
-            handleUserConnect(msg);
+        message_bus.subscribe("user.connect", [this](const core::message& incoming_msg) {
+            handleUserConnect(incoming_msg);
         });
 
         // Handle user disconnections
-        bus.subscribe("user.disconnect", [this](const core::message& msg) {
-            handleUserDisconnect(msg);
+        message_bus.subscribe("user.disconnect", [this](const core::message& disconnect_msg) {
+            handleUserDisconnect(disconnect_msg);
         });
 
         // Handle chat messages
-        bus.subscribe("chat.message", [this](const core::message& msg) {
-            handleChatMessage(msg);
+        message_bus.subscribe("chat.message", [this](const core::message& chat_msg) {
+            handleChatMessage(chat_msg);
         });
 
         // Handle private messages
-        bus.subscribe("chat.private", [this](const core::message& msg) {
-            handlePrivateMessage(msg);
+        message_bus.subscribe("chat.private", [this](const core::message& private_msg) {
+            handlePrivateMessage(private_msg);
         });
 
         // Handle room operations
-        bus.subscribe("room.join", [this](const core::message& msg) {
-            handleRoomJoin(msg);
+        message_bus.subscribe("room.join", [this](const core::message& join_msg) {
+            handleRoomJoin(join_msg);
         });
 
-        bus.subscribe("room.leave", [this](const core::message& msg) {
-            handleRoomLeave(msg);
+        message_bus.subscribe("room.leave", [this](const core::message& leave_msg) {
+            handleRoomLeave(leave_msg);
         });
     }
 
-    void handleUserConnect(const core::message& msg) {
-        auto user_id = msg.get_header("user_id");
-        auto nickname = msg.get_payload_as<std::string>();
+    void handleUserConnect(const core::message& connect_message) {
+        auto user_id = connect_message.get_header("user_id");
+        auto nickname = connect_message.get_payload_as<std::string>();
 
         {
             std::lock_guard<std::mutex> lock(users_mutex);
@@ -106,8 +106,8 @@ public:
         std::cout << "User connected: " << nickname << " (" << user_id << ")" << std::endl;
     }
 
-    void handleUserDisconnect(const core::message& msg) {
-        auto user_id = msg.get_header("user_id");
+    void handleUserDisconnect(const core::message& disconnect_message) {
+        auto user_id = disconnect_message.get_header("user_id");
         std::string nickname;
 
         {
@@ -129,17 +129,17 @@ public:
         }
     }
 
-    void handleChatMessage(const core::message& msg) {
-        auto user_id = msg.get_header("user_id");
-        auto room_id = msg.get_header("room_id");
-        auto text = msg.get_payload_as<std::string>();
+    void handleChatMessage(const core::message& chat_message) {
+        auto sender_user_id = chat_message.get_header("user_id");
+        auto target_room_id = chat_message.get_header("room_id");
+        auto message_text = chat_message.get_payload_as<std::string>();
 
         std::string nickname;
         {
             std::lock_guard<std::mutex> lock(users_mutex);
-            if (auto it = users.find(user_id); it != users.end()) {
-                nickname = it->second.nickname;
-                it->second.last_activity = std::chrono::steady_clock::now();
+            if (auto user_iter = users.find(sender_user_id); user_iter != users.end()) {
+                nickname = user_iter->second.nickname;
+                user_iter->second.last_activity = std::chrono::steady_clock::now();
             }
         }
 
@@ -148,28 +148,28 @@ public:
             core::message chat_msg;
             chat_msg.set_type("chat.broadcast");
             chat_msg.set_header("sender", nickname);
-            chat_msg.set_header("room", room_id);
+            chat_msg.set_header("room", target_room_id);
             chat_msg.set_header("timestamp", std::to_string(
                 std::chrono::system_clock::now().time_since_epoch().count()
             ));
-            chat_msg.set_payload(text);
+            chat_msg.set_payload(message_text);
 
             // Broadcast to room or all users
-            if (!room_id.empty()) {
-                broadcastToRoom(room_id, chat_msg);
+            if (!target_room_id.empty()) {
+                broadcastToRoom(target_room_id, chat_msg);
             } else {
                 broadcastToAll(chat_msg);
             }
 
             // Log message for persistence
-            logMessage(nickname, text, room_id);
+            logMessage(nickname, message_text, target_room_id);
         }
     }
 
-    void handlePrivateMessage(const core::message& msg) {
-        auto sender_id = msg.get_header("sender_id");
-        auto recipient_id = msg.get_header("recipient_id");
-        auto text = msg.get_payload_as<std::string>();
+    void handlePrivateMessage(const core::message& private_message) {
+        auto sender_id = private_message.get_header("sender_id");
+        auto recipient_id = private_message.get_header("recipient_id");
+        auto message_content = private_message.get_payload_as<std::string>();
 
         // Find sender and recipient
         std::string sender_name, recipient_name;
@@ -188,7 +188,7 @@ public:
             pm.set_type("chat.private_message");
             pm.set_header("from", sender_name);
             pm.set_header("to", recipient_name);
-            pm.set_payload(text);
+            pm.set_payload(message_content);
 
             // Send to recipient
             sendToUser(recipient_id, pm);
@@ -202,39 +202,39 @@ public:
         }
     }
 
-    void handleRoomJoin(const core::message& msg) {
-        auto user_id = msg.get_header("user_id");
-        auto room_id = msg.get_payload_as<std::string>();
+    void handleRoomJoin(const core::message& join_message) {
+        auto joining_user_id = join_message.get_header("user_id");
+        auto target_room_id = join_message.get_payload_as<std::string>();
 
         // Add user to room (implementation would include room management)
-        std::cout << "User " << user_id << " joined room " << room_id << std::endl;
+        std::cout << "User " << joining_user_id << " joined room " << target_room_id << std::endl;
 
         // Send room history to user
-        sendRoomHistory(user_id, room_id);
+        sendRoomHistory(joining_user_id, target_room_id);
     }
 
-    void handleRoomLeave(const core::message& msg) {
-        auto user_id = msg.get_header("user_id");
-        auto room_id = msg.get_payload_as<std::string>();
+    void handleRoomLeave(const core::message& leave_message) {
+        auto leaving_user_id = leave_message.get_header("user_id");
+        auto leaving_room_id = leave_message.get_payload_as<std::string>();
 
-        std::cout << "User " << user_id << " left room " << room_id << std::endl;
+        std::cout << "User " << leaving_user_id << " left room " << leaving_room_id << std::endl;
     }
 
-    void broadcastToAll(const core::message& msg) {
+    void broadcastToAll(const core::message& broadcast_message) {
         std::lock_guard<std::mutex> lock(users_mutex);
-        for (const auto& [id, user] : users) {
-            network->send_message(id, msg);
+        for (const auto& [user_id, user_data] : users) {
+            network_service->send_message(user_id, broadcast_message);
         }
     }
 
-    void broadcastToRoom(const std::string& room_id, const core::message& msg) {
+    void broadcastToRoom(const std::string& room_id, const core::message& room_message) {
         // In a real implementation, maintain room membership
         // For now, broadcast to all
-        broadcastToAll(msg);
+        broadcastToAll(room_message);
     }
 
-    void sendToUser(const std::string& user_id, const core::message& msg) {
-        network->send_message(user_id, msg);
+    void sendToUser(const std::string& recipient_user_id, const core::message& user_message) {
+        network_service->send_message(recipient_user_id, user_message);
     }
 
     void sendRoomHistory(const std::string& user_id, const std::string& room_id) {
@@ -247,10 +247,10 @@ public:
         sendToUser(user_id, history);
     }
 
-    void logMessage(const std::string& user, const std::string& text, const std::string& room) {
+    void logMessage(const std::string& sender_nickname, const std::string& message_text, const std::string& room_id) {
         // In production, write to database
-        std::cout << "[" << (room.empty() ? "global" : room) << "] "
-                  << user << ": " << text << std::endl;
+        std::cout << "[" << (room_id.empty() ? "global" : room_id) << "] "
+                  << sender_nickname << ": " << message_text << std::endl;
     }
 
     void cleanupInactiveUsers() {
@@ -258,12 +258,12 @@ public:
         auto timeout = 5min;
 
         std::lock_guard<std::mutex> lock(users_mutex);
-        for (auto it = users.begin(); it != users.end(); ) {
-            if (now - it->second.last_activity > timeout) {
-                std::cout << "Removing inactive user: " << it->second.nickname << std::endl;
-                it = users.erase(it);
+        for (auto user_iter = users.begin(); user_iter != users.end(); ) {
+            if (now - user_iter->second.last_activity > timeout) {
+                std::cout << "Removing inactive user: " << user_iter->second.nickname << std::endl;
+                user_iter = users.erase(user_iter);
             } else {
-                ++it;
+                ++user_iter;
             }
         }
     }
@@ -272,7 +272,7 @@ public:
         std::cout << "Chat server starting on port " << port << "..." << std::endl;
 
         // Start network service
-        network->start_server(port);
+        network_service->start_server(port);
 
         // Start cleanup thread
         std::thread cleanup_thread([this]() {
@@ -283,7 +283,7 @@ public:
         });
 
         // Start the message bus
-        integrator->start();
+        system_integrator->start();
 
         std::cout << "Chat server is running. Press Enter to stop..." << std::endl;
         std::cin.get();
@@ -294,8 +294,8 @@ public:
 
     void stop() {
         running = false;
-        integrator->stop();
-        network->stop_server();
+        system_integrator->stop();
+        network_service->stop_server();
         std::cout << "Chat server stopped." << std::endl;
     }
 
@@ -304,7 +304,7 @@ public:
         std::lock_guard<std::mutex> lock(users_mutex);
         std::cout << "\n=== Server Statistics ===" << std::endl;
         std::cout << "Active users: " << users.size() << std::endl;
-        std::cout << "Message bus stats: " << integrator->get_statistics() << std::endl;
+        std::cout << "Message bus stats: " << system_integrator->get_statistics() << std::endl;
         std::cout << "========================\n" << std::endl;
     }
 };
@@ -316,7 +316,7 @@ int main(int argc, char* argv[]) {
             port = std::stoi(argv[1]);
         }
 
-        ChatServer server;
+        chat_server server;
 
         // Start statistics thread
         std::thread stats_thread([&server]() {
