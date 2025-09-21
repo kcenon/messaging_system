@@ -34,6 +34,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // ASIO compatibility header for handling cases where ASIO is not available
 
+#include <string>
+#include <memory>
+#include <functional>
+
 #ifdef NO_ASIO_AVAILABLE
     // Provide stub implementations when ASIO is not available
     #ifdef _MSC_VER
@@ -68,18 +72,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         };
     }
 
-    // Stub error_code
-    namespace std {
-        class error_code {
-        public:
-            error_code() : val_(0) {}
-            explicit operator bool() const { return val_ != 0; }
-            int value() const { return val_; }
-            std::string message() const { return "ASIO not available"; }
-        private:
-            int val_;
-        };
-    }
+    // Use standard error_code from system_error header
+    #include <system_error>
 #else
     // Include real ASIO headers
     #include <asio.hpp>
