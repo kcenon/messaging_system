@@ -142,7 +142,7 @@ endif()
 
 # Messaging system modules
 if(BUILD_CONTAINER)
-    add_subdirectory(container_system)
+    add_subdirectory(libraries/container_system)
     # # Add container to the export set
     # install(TARGETS container
     #     EXPORT messaging_system_targets
@@ -153,7 +153,7 @@ if(BUILD_CONTAINER)
 endif()
 
 if(BUILD_DATABASE)
-    add_subdirectory(database_system)
+    add_subdirectory(libraries/database_system)
     # # Add database to the export set
     # if(TARGET database)
     #     install(TARGETS database
@@ -166,7 +166,7 @@ if(BUILD_DATABASE)
 endif()
 
 if(BUILD_NETWORK)
-    add_subdirectory(network_system)
+    add_subdirectory(libraries/network_system)
 endif()
 
 # Add services (new modular structure)
@@ -215,7 +215,7 @@ include(GNUInstallDirs)
 
 # Install header files
 if(BUILD_CONTAINER)
-    install(DIRECTORY container_system/
+    install(DIRECTORY libraries/container_system/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/messaging_system/container
         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.tpp"
         PATTERN "tests" EXCLUDE
@@ -224,7 +224,7 @@ if(BUILD_CONTAINER)
 endif()
 
 if(BUILD_DATABASE)
-    install(DIRECTORY database_system/
+    install(DIRECTORY libraries/database_system/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/messaging_system/database
         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
         PATTERN "tests" EXCLUDE
@@ -232,7 +232,7 @@ if(BUILD_DATABASE)
 endif()
 
 if(BUILD_NETWORK)
-    install(DIRECTORY network_system/
+    install(DIRECTORY libraries/network_system/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/messaging_system/network
         FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
         PATTERN "tests" EXCLUDE

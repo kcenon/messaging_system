@@ -6,14 +6,14 @@ A high-performance C++20 messaging framework designed for distributed applicatio
 
 ```
 messaging_system/
-├── container_system/    # Type-safe, SIMD-optimized data containers
-├── database_system/     # PostgreSQL integration with connection pooling
-├── network_system/      # Asynchronous TCP client/server
-├── services_system/     # Service layer with Python bindings
-├── libraries/           # External dependencies
-│   ├── thread_system/   # Lock-free thread pools
-│   ├── logger_system/   # High-performance logging
-│   └── monitoring_system/ # System monitoring and metrics
+├── libraries/           # All system libraries
+│   ├── container_system/    # Type-safe, SIMD-optimized data containers
+│   ├── database_system/     # PostgreSQL integration with connection pooling
+│   ├── network_system/      # Asynchronous TCP client/server
+│   ├── thread_system/       # Lock-free thread pools
+│   ├── logger_system/       # High-performance logging
+│   └── monitoring_system/   # System monitoring and metrics
+├── services_system/     # Application service layer with Python bindings
 ├── test/               # Unit and integration tests
 ├── scripts/            # Build and setup scripts
 └── cmake/              # CMake configuration files
@@ -21,16 +21,17 @@ messaging_system/
 
 ## 🚀 Key Features
 
-### 🎯 Core Systems (Independent Modules)
+### 📚 System Libraries
+All libraries are located in the `libraries/` directory:
 - **Container System**: Type-safe, SIMD-optimized data containers with thread-safe operations
 - **Database System**: PostgreSQL integration with connection pooling and prepared statements
 - **Network System**: Asynchronous TCP client/server with coroutine-based I/O
-- **Services System**: Modular service layer with message bus and Python bindings
-
-### 📚 External Libraries
 - **Thread System**: Lock-free thread pools with hazard pointer memory management
 - **Logger System**: High-performance asynchronous logging with multiple writers
 - **Monitoring System**: Real-time metrics collection and analysis
+
+### 🎯 Application Layer
+- **Services System**: Modular service layer with message bus and Python bindings
 
 ### 🌟 Advanced Capabilities
 - **Lock-free Performance**: Up to 2.48M jobs/second throughput with sub-microsecond latency
