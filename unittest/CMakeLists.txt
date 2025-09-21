@@ -2,7 +2,13 @@ cmake_minimum_required(VERSION 3.16)
 project(messaging_system_tests)
 
 # Find required packages
-find_package(GTest REQUIRED)
+find_package(GTest)
+
+# Check if GTest is found
+if(NOT GTest_FOUND)
+    message(WARNING "GTest not found - unit tests will be disabled")
+    return()
+endif()
 
 # Enable testing
 enable_testing()
