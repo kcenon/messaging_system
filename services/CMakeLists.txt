@@ -34,6 +34,22 @@ target_sources(messaging_services
         include/kcenon/messaging/core/config.h
         include/kcenon/messaging/core/production_optimizations.h
 
+        # Routing headers
+        include/kcenon/messaging/routing/advanced_router.h
+        include/kcenon/messaging/routing/message_transformer.h
+
+        # Cluster headers
+        include/kcenon/messaging/cluster/distributed_messaging.h
+
+        # Persistence headers
+        include/kcenon/messaging/persistence/message_persistence.h
+
+        # Security headers
+        include/kcenon/messaging/security/message_security.h
+
+        # Management headers
+        include/kcenon/messaging/management/system_dashboard.h
+
         # Service interfaces
         include/kcenon/messaging/services/service_interface.h
         include/kcenon/messaging/services/container/container_service.h
