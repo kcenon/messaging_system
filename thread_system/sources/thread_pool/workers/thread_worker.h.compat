@@ -1,2 +1,0 @@
-#pragma once
-#include <thread_system_core/thread_pool/workers/thread_worker.h>
