@@ -40,12 +40,22 @@ jobs:
           vs-version: '17.0'
           msbuild-architecture: x64
 
-      - name: Setup and install vcpkg dependencies
-        uses: lukka/run-vcpkg@v11
-        with:
-          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-          runVcpkgInstall: true
-          vcpkgJsonGlob: '**/vcpkg.json'
+      - name: Setup vcpkg manually
+        shell: pwsh
+        run: |
+          Write-Host "Setting up vcpkg manually..."
+          if (-not (Test-Path "vcpkg")) {
+            Write-Host "Cloning vcpkg repository..."
+            git clone https://github.com/Microsoft/vcpkg.git
+          }
+
+          Push-Location vcpkg
+          Write-Host "Bootstrapping vcpkg..."
+          .\bootstrap-vcpkg.bat
+
+          Write-Host "Installing dependencies from root directory..."
+          .\vcpkg.exe install --x-manifest-root="${{ github.workspace }}" --x-install-root="${{ github.workspace }}\vcpkg_installed" --triplet=${{ env.VCPKG_DEFAULT_TRIPLET }}
+          Pop-Location
 
       - name: Cache CMake build
         uses: actions/cache@v3

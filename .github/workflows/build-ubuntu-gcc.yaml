@@ -59,7 +59,22 @@ jobs:
           cd vcpkg
           git checkout master 2>/dev/null || git checkout main 2>/dev/null || true
           git pull origin HEAD 2>/dev/null || true
-          ./bootstrap-vcpkg.sh
+          if [ -f "./bootstrap-vcpkg.sh" ]; then
+            ./bootstrap-vcpkg.sh
+          else
+            echo "bootstrap-vcpkg.sh not found, checking if vcpkg is already built..."
+            if [ ! -f "./vcpkg" ]; then
+              echo "Building vcpkg manually..."
+              if [ -f "./bootstrap-vcpkg.bat" ]; then
+                # For Windows-style setup on Linux
+                chmod +x ./bootstrap-vcpkg.bat
+                ./bootstrap-vcpkg.bat
+              else
+                echo "Error: No bootstrap script found"
+                exit 1
+              fi
+            fi
+          fi
           cd ..
 
       - name: Determine vcpkg commit

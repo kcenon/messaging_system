@@ -106,7 +106,18 @@ jobs:
           fi
 
           echo "Bootstrapping vcpkg..."
-          ./vcpkg/bootstrap-vcpkg.sh
+          if [ -f "./vcpkg/bootstrap-vcpkg.sh" ]; then
+            ./vcpkg/bootstrap-vcpkg.sh
+          else
+            echo "bootstrap-vcpkg.sh not found, checking alternatives..."
+            if [ -f "./vcpkg/bootstrap-vcpkg.bat" ]; then
+              echo "Using bootstrap-vcpkg.bat..."
+              cd vcpkg && cmd //c bootstrap-vcpkg.bat && cd ..
+            else
+              echo "No bootstrap script found"
+              exit 1
+            fi
+          fi
 
       - name: Determine vcpkg commit
         id: vcpkg-commit
