@@ -1,7 +1,7 @@
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/core/message_types.h>
 #include <kcenon/messaging/integrations/system_integrator.h>
-#include <logger/logger.h>
+#include <kcenon/logger/logger.h>
 #include <logger/writers/console_writer.h>
 #include <logger/writers/rotating_file_writer.h>
 #include <chrono>

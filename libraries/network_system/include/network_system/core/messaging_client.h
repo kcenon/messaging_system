@@ -41,7 +41,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <optional>
 #include <type_traits>
 
+#ifdef USE_BOOST_ASIO
+#include <boost/asio.hpp>
+namespace asio = boost::asio;
+#else
 #include <asio.hpp>
+#endif
 
 #include "network_system/internal/tcp_socket.h"
 #include "network_system/internal/pipeline.h"

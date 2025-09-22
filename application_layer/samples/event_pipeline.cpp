@@ -9,7 +9,7 @@
 #include <kcenon/messaging/integrations/system_integrator.h>
 #include <kcenon/messaging/services/container/container_service.h>
 #include <kcenon/messaging/services/database/database_service.h>
-#include <logger/logger.h>
+#include <kcenon/logger/logger.h>
 #include <logger/writers/console_writer.h>
 #include <logger/writers/rotating_file_writer.h>
 #include <iostream>
