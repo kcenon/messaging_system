@@ -20,7 +20,6 @@
 [Rr]elease/
 [Rr]eleases/
 [Ii]ntermediate/
-[Ll]ibraries/
 x64/
 x86/
 [Aa][Rr][Mm]/
@@ -349,8 +348,25 @@ healthchecksdb
 build_xcode/
 
 # Backup directories
-thread_system.backup/
+backups/
+backup*/
 *.backup/
+*.bak
 
 # Additional build directories
+build/
 build_*/
+build-*/
+cmake-build-*/
+
+# Test output
+test_output/
+test_results/
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# Documents
+documents/
