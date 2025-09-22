@@ -111,17 +111,17 @@ The project includes automated build scripts for all platforms:
 
 ```bash
 # Build with default configuration
-./scripts/build.sh
+./build.sh
 
 # On Windows (use PowerShell or Git Bash)
-./scripts/build.bat
+./build.bat
 ```
 
 #### Custom Build Options
 
 ```bash
 # Build with specific options
-./scripts/build.sh --release --tests --python-bindings
+./build.sh --release --tests --python-bindings
 
 # Available options:
 # --debug          : Debug build (default)

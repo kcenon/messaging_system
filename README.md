@@ -15,7 +15,6 @@ messaging_system/
 │   └── monitoring_system/   # System monitoring and metrics
 ├── services_system/     # Application service layer with Python bindings
 ├── test/               # Unit and integration tests
-├── scripts/            # Build and setup scripts
 └── cmake/              # CMake configuration files
 ```
 
@@ -87,13 +86,13 @@ git submodule update --init --recursive
 ### 2. Build and Run
 ```bash
 # Quick build with all features
-./scripts/build.sh
+./build.sh
 
 # Run sample application
 ./build/bin/production_ready_example
 
 # Run tests
-./scripts/build.sh --tests
+./build.sh --tests
 ```
 
 ### 3. Basic Usage
