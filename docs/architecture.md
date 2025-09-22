@@ -19,8 +19,8 @@ The Messaging System is a high-performance, distributed messaging framework buil
 - **[Network System](../libraries/network_system/README.md)** - Asynchronous TCP messaging infrastructure
 
 ### Integration Guides
-- **[Performance Guide](./performance.md)** - Performance characteristics and optimization
-- **[Design Patterns](./design-patterns.md)** - Architectural patterns and best practices
+- **[Performance Guide](./PERFORMANCE.md)** - Performance characteristics and optimization
+- **[Design Patterns](./DESIGN_PATTERNS.md)** - Architectural patterns and best practices
 - **[Sample Applications](../application_layer/samples/SAMPLES_README.md)** - Production examples and integration patterns
 
 ## Architectural Principles

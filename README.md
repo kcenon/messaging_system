@@ -365,18 +365,18 @@ cd build
 ## 📚 Documentation
 
 ### Quick Start
-- **[Getting Started](docs/getting-started.md)** - Installation and first steps
-- **[API Reference](docs/api-reference.md)** - Complete API documentation
-- **[Architecture](docs/architecture.md)** - System design and components
+- **[Getting Started](docs/GETTING_STARTED.md)** - Installation and first steps
+- **[API Reference](docs/API_REFERENCE.md)** - Complete API documentation
+- **[Architecture](docs/ARCHITECTURE.md)** - System design and components
 
 ### Development & Deployment
-- **[Developer Guide](docs/developer-guide.md)** - Development setup and best practices
-- **[Performance Guide](docs/performance.md)** - Benchmarks and optimization techniques
-- **[Deployment Guide](docs/deployment-guide.md)** - Production deployment strategies
+- **[Developer Guide](docs/DEVELOPER_GUIDE.md)** - Development setup and best practices
+- **[Performance Guide](docs/PERFORMANCE.md)** - Benchmarks and optimization techniques
+- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Production deployment strategies
 
 ### Advanced Topics
-- **[Design Patterns](docs/design-patterns.md)** - Architectural patterns and decisions
-- **[Troubleshooting](docs/troubleshooting.md)** - Debugging and problem resolution
+- **[Design Patterns](docs/DESIGN_PATTERNS.md)** - Architectural patterns and decisions
+- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Debugging and problem resolution
 - **[Sample Applications](application_layer/samples/SAMPLES_README.md)** - Production examples
 
 ### Component Documentation

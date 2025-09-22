@@ -6,31 +6,31 @@ Welcome to the Messaging System documentation! This guide provides comprehensive
 
 | Document | Description |
 |----------|-------------|
-| [Getting Started](./getting-started.md) | Installation guide and first steps with Messaging System |
-| [API Reference](./api-reference.md) | Complete API documentation for all components |
-| [Architecture](./architecture.md) | Technical architecture and system design |
-| [Performance](./performance.md) | Benchmarks, metrics, and optimization guide |
-| [Design Patterns](./design-patterns.md) | Best practices, patterns, and troubleshooting |
-| [Developer Guide](./developer-guide.md) | Development setup and contribution guidelines |
-| [Deployment Guide](./deployment-guide.md) | Production deployment strategies |
-| [Troubleshooting](./troubleshooting.md) | Debugging and problem resolution |
+| [Getting Started](./GETTING_STARTED.md) | Installation guide and first steps with Messaging System |
+| [API Reference](./API_REFERENCE.md) | Complete API documentation for all components |
+| [Architecture](./ARCHITECTURE.md) | Technical architecture and system design |
+| [Performance](./PERFORMANCE.md) | Benchmarks, metrics, and optimization guide |
+| [Design Patterns](./DESIGN_PATTERNS.md) | Best practices, patterns, and troubleshooting |
+| [Developer Guide](./DEVELOPER_GUIDE.md) | Development setup and contribution guidelines |
+| [Deployment Guide](./DEPLOYMENT_GUIDE.md) | Production deployment strategies |
+| [Troubleshooting](./TROUBLESHOOTING.md) | Debugging and problem resolution |
 
 ## 🚀 Quick Navigation
 
 ### For New Users
-1. Start with [Getting Started](./getting-started.md) for installation and basic usage
-2. Review [Architecture](./architecture.md) for system overview
-3. Check the [Developer Guide](./developer-guide.md) for development setup
+1. Start with [Getting Started](./GETTING_STARTED.md) for installation and basic usage
+2. Review [Architecture](./ARCHITECTURE.md) for system overview
+3. Check the [Developer Guide](./DEVELOPER_GUIDE.md) for development setup
 
 ### For Developers
-1. Study the [API Reference](./api-reference.md) for detailed component documentation
-2. Read [Design Patterns](./design-patterns.md) for best practices
-3. Follow [Developer Guide](./developer-guide.md) for contribution guidelines
+1. Study the [API Reference](./API_REFERENCE.md) for detailed component documentation
+2. Read [Design Patterns](./DESIGN_PATTERNS.md) for best practices
+3. Follow [Developer Guide](./DEVELOPER_GUIDE.md) for contribution guidelines
 
 ### For System Administrators
-1. Review [Deployment Guide](./deployment-guide.md) for production setup
-2. Study [Performance](./performance.md) for optimization strategies
-3. Check [Troubleshooting](./troubleshooting.md) for operational issues
+1. Review [Deployment Guide](./DEPLOYMENT_GUIDE.md) for production setup
+2. Study [Performance](./PERFORMANCE.md) for optimization strategies
+3. Check [Troubleshooting](./TROUBLESHOOTING.md) for operational issues
 
 ## 🧩 Component Documentation
 
