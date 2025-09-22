@@ -48,60 +48,60 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 ##################################################
 
 foreach(SAMPLE ${SAMPLE_PROGRAMS})
-    # Create executable for each sample
-    add_executable(${SAMPLE} ${SAMPLE}.cpp)
-    
+    # Create executable for each sample with prefixed names to avoid conflicts
+    add_executable(database_${SAMPLE} ${SAMPLE}.cpp)
+
     # Set target properties
-    set_target_properties(${SAMPLE} PROPERTIES
+    set_target_properties(database_${SAMPLE} PROPERTIES
         CXX_STANDARD 20
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS OFF
     )
-    
+
     # Include directories
-    target_include_directories(${SAMPLE} PRIVATE
+    target_include_directories(database_${SAMPLE} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/..
         ${CMAKE_CURRENT_SOURCE_DIR}/../..
     )
-    
+
     # Link libraries
-    target_link_libraries(${SAMPLE} PRIVATE
+    target_link_libraries(database_${SAMPLE} PRIVATE
         database
         Threads::Threads
     )
 
     # Link fmt only if available
     if(fmt_FOUND)
-        target_link_libraries(${SAMPLE} PRIVATE fmt::fmt)
+        target_link_libraries(database_${SAMPLE} PRIVATE fmt::fmt)
     else()
-        target_compile_definitions(${SAMPLE} PRIVATE USE_IOSTREAM)
+        target_compile_definitions(database_${SAMPLE} PRIVATE USE_IOSTREAM)
     endif()
     
     # Compiler-specific options
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        target_compile_options(${SAMPLE} PRIVATE
+        target_compile_options(database_${SAMPLE} PRIVATE
             -Wall
             -Wextra
             -Wpedantic
             -Wno-unused-parameter
         )
     elseif(MSVC)
-        target_compile_options(${SAMPLE} PRIVATE
+        target_compile_options(database_${SAMPLE} PRIVATE
             /W4
             /wd4100  # unreferenced formal parameter
         )
     endif()
-    
+
     # Platform-specific definitions
     if(WIN32)
-        target_compile_definitions(${SAMPLE} PRIVATE
+        target_compile_definitions(database_${SAMPLE} PRIVATE
             _WIN32_WINNT=0x0601
             WIN32_LEAN_AND_MEAN
             NOMINMAX
         )
     endif()
-    
-    message(STATUS "Database sample configured: ${SAMPLE}")
+
+    message(STATUS "Database sample configured: database_${SAMPLE}")
 endforeach()
 
 ##################################################
@@ -109,7 +109,13 @@ endforeach()
 ##################################################
 
 # Install sample binaries
-install(TARGETS ${SAMPLE_PROGRAMS}
+# Create a list of prefixed target names
+set(PREFIXED_SAMPLE_PROGRAMS)
+foreach(SAMPLE ${SAMPLE_PROGRAMS})
+    list(APPEND PREFIXED_SAMPLE_PROGRAMS database_${SAMPLE})
+endforeach()
+
+install(TARGETS ${PREFIXED_SAMPLE_PROGRAMS}
     RUNTIME DESTINATION bin/samples
     COMPONENT samples
 )

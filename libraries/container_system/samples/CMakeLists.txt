@@ -11,53 +11,53 @@ set(SAMPLE_PROGRAMS
     performance_benchmark
 )
 
-# Build each sample program
+# Build each sample program with prefixed names to avoid conflicts
 foreach(SAMPLE ${SAMPLE_PROGRAMS})
-    add_executable(${SAMPLE} ${SAMPLE}.cpp)
-    
+    add_executable(container_${SAMPLE} ${SAMPLE}.cpp)
+
     # Link with container library
-    target_link_libraries(${SAMPLE} 
-        PRIVATE 
+    target_link_libraries(container_${SAMPLE}
+        PRIVATE
             container_system
     )
-    
+
     # Set C++20 standard
-    set_target_properties(${SAMPLE} PROPERTIES
+    set_target_properties(container_${SAMPLE} PROPERTIES
         CXX_STANDARD 20
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS OFF
     )
-    
+
     # Add compile definitions
-    target_compile_definitions(${SAMPLE} PRIVATE
+    target_compile_definitions(container_${SAMPLE} PRIVATE
         $<$<CONFIG:Debug>:_DEBUG>
         $<$<CONFIG:Release>:NDEBUG>
     )
-    
+
     # Platform-specific settings
     if(WIN32)
-        target_compile_definitions(${SAMPLE} PRIVATE
+        target_compile_definitions(container_${SAMPLE} PRIVATE
             WIN32_LEAN_AND_MEAN
             NOMINMAX
         )
     endif()
-    
+
     # Install sample executables
-    install(TARGETS ${SAMPLE}
+    install(TARGETS container_${SAMPLE}
         RUNTIME DESTINATION bin/samples
     )
 endforeach()
 
 # Create a combined sample runner
-add_executable(run_all_samples run_all_samples.cpp)
-target_link_libraries(run_all_samples PRIVATE container_system)
-set_target_properties(run_all_samples PROPERTIES
+add_executable(container_run_all_samples run_all_samples.cpp)
+target_link_libraries(container_run_all_samples PRIVATE container_system)
+set_target_properties(container_run_all_samples PROPERTIES
     CXX_STANDARD 20
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS OFF
 )
 
-install(TARGETS run_all_samples
+install(TARGETS container_run_all_samples
     RUNTIME DESTINATION bin/samples
 )
 
