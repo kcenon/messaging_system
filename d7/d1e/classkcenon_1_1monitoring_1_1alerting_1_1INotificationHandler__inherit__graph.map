@@ -1,0 +1,9 @@
+<map id="kcenon::monitoring::alerting::INotificationHandler" name="kcenon::monitoring::alerting::INotificationHandler">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,69,224,109"/>
+<area shape="rect" id="Node000002" href="$d9/db3/classkcenon_1_1monitoring_1_1alerting_1_1EmailHandler.html" title=" " alt="" coords="283,5,459,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,63,290,43,291,48,209,69"/>
+<area shape="rect" id="Node000003" href="$d2/ddc/classkcenon_1_1monitoring_1_1alerting_1_1SlackHandler.html" title=" " alt="" coords="284,69,459,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="238,87,284,87,284,92,238,92"/>
+<area shape="rect" id="Node000004" href="$da/da2/classkcenon_1_1monitoring_1_1alerting_1_1WebhookHandler.html" title=" " alt="" coords="272,133,471,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="209,110,291,131,290,136,208,115"/>
+</map>

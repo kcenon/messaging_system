@@ -1,0 +1,29 @@
+<map id="libraries/logger_system/tests/unit/mocks/mock_di_container.hpp" name="libraries/logger_system/tests/unit/mocks/mock_di_container.hpp">
+<area shape="rect" id="Node000001" title="Mock DI container implementation for testing." alt="" coords="298,5,473,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="49,108,247,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="320,63,209,106,207,101,318,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,196,147,236"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="358,62,305,110,284,131,260,150,211,175,161,194,159,189,209,170,257,146,280,128,301,106,354,58"/>
+<area shape="rect" id="Node000004" href="$d1/d9d/mock__writer_8hpp.html" title="Mock writer implementation for testing." alt="" coords="372,115,503,141"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="402,59,426,102,422,104,398,62"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="171,203,237,229"/>
+<area shape="poly" id="edge14_Node000001_Node000007" title=" " alt="" coords="372,62,343,105,305,150,272,177,238,199,236,194,268,173,301,146,339,102,368,59"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="527,115,651,141"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="444,58,553,107,551,112,442,62"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="675,115,762,141"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="474,53,665,105,674,108,673,113,663,111,472,58"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="390,143,161,197,160,192,388,138"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="261,196,424,236"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="426,143,376,189,372,185,423,139"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="449,196,615,236"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="452,139,503,185,499,189,448,143"/>
+<area shape="poly" id="edge7_Node000004_Node000007" title=" " alt="" coords="404,143,250,198,245,201,243,196,248,194,403,138"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="639,203,702,229"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="473,138,629,194,634,195,632,200,627,198,472,143"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="727,203,791,229"/>
+<area shape="poly" id="edge9_Node000004_Node000009" title=" " alt="" coords="486,138,715,193,722,196,720,201,714,199,484,143"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="815,203,881,229"/>
+<area shape="poly" id="edge10_Node000004_Node000010" title=" " alt="" coords="484,138,517,145,597,159,661,166,724,175,803,193,811,196,810,201,802,199,723,180,660,171,596,164,515,151,482,143"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="905,203,969,229"/>
+<area shape="poly" id="edge11_Node000004_Node000011" title=" " alt="" coords="482,138,516,145,622,159,706,164,789,172,894,193,902,196,900,201,893,199,789,177,706,169,622,165,516,151,481,143"/>
+</map>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/thread_system/samples/minimal_thread_pool/minimal_thread_pool.cpp Source File</title>
+<title>Messaging System: libraries/thread_system/examples/minimal_thread_pool/minimal_thread_pool.cpp Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -135,100 +135,110 @@ $(document).ready(function(){initNavTree('d8/dae/minimal__thread__pool_8cpp_sour
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &quot;thread_pool/core/thread_pool.h&quot;</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &quot;thread_pool/workers/thread_worker.h&quot;</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &quot;thread_base/jobs/callback_job.h&quot;</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a>;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a>;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="foldopen" id="foldopen00045" data-start="{" data-end="}">
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="../../d8/dae/minimal__thread__pool_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">   45</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d8/dae/minimal__thread__pool_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;=== Minimal Thread Pool Sample (No Logger) ===&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="comment">// Create thread pool</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">auto</span> pool = std::make_shared&lt;thread_pool&gt;(<span class="stringliteral">&quot;MinimalPool&quot;</span>);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="comment">// Create workers</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> worker_count = 4;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    std::vector&lt;std::unique_ptr&lt;thread_worker&gt;&gt; workers;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; worker_count; ++i) {</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        workers.push_back(std::make_unique&lt;thread_worker&gt;(<span class="keyword">false</span>));</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    }</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="comment">// Add workers to pool</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keyword">auto</span> <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a> = pool-&gt;enqueue_batch(std::move(workers));</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">if</span> (<a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a">has_value</a>()) {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error adding workers: &quot;</span> &lt;&lt; <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f">value</a>() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    }</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="comment">// Start the pool</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a> = pool-&gt;start();</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordflow">if</span> (<a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a">has_value</a>()) {</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error starting pool: &quot;</span> &lt;&lt; <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f">value</a>() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    }</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Thread pool started with &quot;</span> &lt;&lt; worker_count &lt;&lt; <span class="stringliteral">&quot; workers&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &lt;<a class="code" href="../../d3/dec/thread__pool_8h.html">kcenon/thread/core/thread_pool.h</a>&gt;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &lt;<a class="code" href="../../d9/de2/thread__worker_8h.html">kcenon/thread/core/thread_worker.h</a>&gt;</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &lt;<a class="code" href="../../db/ddd/callback__job_8h.html">kcenon/thread/core/callback_job.h</a>&gt;</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &lt;<a class="code" href="../../d1/de3/thread__system_2include_2kcenon_2thread_2interfaces_2thread__context_8h.html">kcenon/thread/interfaces/thread_context.h</a>&gt;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="../../d8/dae/minimal__thread__pool_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">   46</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d8/dae/minimal__thread__pool_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;=== Minimal Thread Pool Sample (No Logger) ===&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="comment">// Create thread pool</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <a class="code hl_class" href="../../da/de0/classkcenon_1_1thread_1_1thread__context.html">thread_context</a> context;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keyword">auto</span> pool = std::make_shared&lt;thread_pool&gt;(<span class="stringliteral">&quot;MinimalPool&quot;</span>, context);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="comment">// Create workers</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span> worker_count = 4;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    std::vector&lt;std::unique_ptr&lt;thread_worker&gt;&gt; workers;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; worker_count; ++i) {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        workers.push_back(std::make_unique&lt;thread_worker&gt;(<span class="keyword">false</span>, context));</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    }</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="comment">// Add workers to pool</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">auto</span> <a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a> = pool-&gt;enqueue_batch(std::move(workers));</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordflow">if</span> (<a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a>.has_error()) {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error adding workers: &quot;</span> &lt;&lt; <a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a>.<a class="code hl_function" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a43f5b0903a5437ac3f5075e3b83cc7cd">get_error</a>().<a class="code hl_function" href="../../d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7">to_string</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="comment">// Start the pool</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a> = pool-&gt;start();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">if</span> (<a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a>.has_error()) {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error starting pool: &quot;</span> &lt;&lt; <a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a>.<a class="code hl_function" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a43f5b0903a5437ac3f5075e3b83cc7cd">get_error</a>().<a class="code hl_function" href="../../d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7">to_string</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    }</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="comment">// Submit some jobs</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    std::atomic&lt;int&gt; completed_jobs{0};</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> total_jobs = 20;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Submitting &quot;</span> &lt;&lt; total_jobs &lt;&lt; <span class="stringliteral">&quot; jobs...&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Thread pool started with &quot;</span> &lt;&lt; worker_count &lt;&lt; <span class="stringliteral">&quot; workers&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="comment">// Submit some jobs</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    std::atomic&lt;int&gt; completed_jobs{0};</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keyword">const</span> <span class="keywordtype">int</span> total_jobs = 20;</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; total_jobs; ++i) {</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keyword">auto</span> <a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a> = std::make_unique&lt;callback_job&gt;(</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            [i, &amp;completed_jobs]() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> {</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                <span class="comment">// Simulate some work</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                std::this_thread::sleep_for(std::chrono::milliseconds(100));</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                <span class="comment">// Print progress (thread-safe)</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                <span class="keywordtype">int</span> current = completed_jobs.fetch_add(1) + 1;</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;Job &quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot; completed. Total: &quot;</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                         &lt;&lt; current &lt;&lt; <span class="stringliteral">&quot;/&quot;</span> &lt;&lt; total_jobs &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a>{};</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            }</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        );</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a> = pool-&gt;enqueue(std::move(<a class="code hl_class" href="../../d8/d42/classthread__module_1_1job.html">job</a>));</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="keywordflow">if</span> (<a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a">has_value</a>()) {</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Error enqueuing job: &quot;</span> &lt;&lt; <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>.<a class="code hl_function" href="../../d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f">value</a>() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        }</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    }</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="comment">// Wait for all jobs to complete</span></div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Waiting for jobs to complete...&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordflow">while</span> (completed_jobs.load() &lt; total_jobs) {</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        std::this_thread::sleep_for(std::chrono::milliseconds(100));</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    }</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;All jobs completed!&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="comment">// Stop the pool</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    pool-&gt;stop();</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Thread pool stopped.&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Submitting &quot;</span> &lt;&lt; total_jobs &lt;&lt; <span class="stringliteral">&quot; jobs...&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; total_jobs; ++i) {</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keyword">auto</span> <a class="code hl_class" href="../../dc/df7/classkcenon_1_1thread_1_1job.html">job</a> = std::make_unique&lt;callback_job&gt;(</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            [i, &amp;completed_jobs]() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                <span class="comment">// Simulate some work</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                std::this_thread::sleep_for(std::chrono::milliseconds(100));</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                <span class="comment">// Print progress (thread-safe)</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                <span class="keywordtype">int</span> current = completed_jobs.fetch_add(1) + 1;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;Job &quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot; completed. Total: &quot;</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                         &lt;&lt; current &lt;&lt; <span class="stringliteral">&quot;/&quot;</span> &lt;&lt; total_jobs &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                <span class="keywordflow">return</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a>{};</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            },</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="stringliteral">&quot;job_&quot;</span> + std::to_string(i)</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        );</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a> = pool-&gt;enqueue(std::move(<a class="code hl_class" href="../../dc/df7/classkcenon_1_1thread_1_1job.html">job</a>));</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keywordflow">if</span> (<a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a>.has_error()) {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Error enqueuing job: &quot;</span> &lt;&lt; <a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a>.<a class="code hl_function" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a43f5b0903a5437ac3f5075e3b83cc7cd">get_error</a>().<a class="code hl_function" href="../../d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7">to_string</a>() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        }</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    }</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="comment">// Wait for all jobs to complete</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Waiting for jobs to complete...&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keywordflow">while</span> (completed_jobs.load() &lt; total_jobs) {</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        std::this_thread::sleep_for(std::chrono::milliseconds(100));</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    }</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;All jobs completed!&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="comment">// Stop the pool</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keyword">auto</span> stop_result = pool-&gt;stop();</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordflow">if</span> (stop_result.has_error()) {</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error stopping pool: &quot;</span> &lt;&lt; stop_result.get_error().to_string() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    }</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Thread pool stopped.&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>}</div>
 </div>
-<div class="ttc" id="aclassthread__module_1_1job_html"><div class="ttname"><a href="../../d8/d42/classthread__module_1_1job.html">thread_module::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d0e/modular__structure_2core_2include_2thread__system__core_2thread__base_2jobs_2job_8h_source.html#l00101">job.h:102</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1result_html"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html">thread_module::result</a></div><div class="ttdoc">A template class representing either a value or an error.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7d/sources_2thread__base_2sync_2error__handling_8h_source.html#l00241">error_handling.h:241</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1result_html_a1a7b4e27378501757f3ab928b8ec470a"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html#a1a7b4e27378501757f3ab928b8ec470a">thread_module::result::has_value</a></div><div class="ttdeci">bool has_value() const noexcept</div><div class="ttdoc">Checks if the result contains a value.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00270">error_handling.h:270</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1result_html_ab86c031aec44d755964eb64b93ab9d3f"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html#ab86c031aec44d755964eb64b93ab9d3f">thread_module::result::value</a></div><div class="ttdeci">T &amp; value() &amp;</div><div class="ttdoc">Gets the value.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00279">error_handling.h:279</a></div></div>
-<div class="ttc" id="aminimal__thread__pool_8cpp_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="../../d8/dae/minimal__thread__pool_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dae/minimal__thread__pool_8cpp_source.html#l00045">minimal_thread_pool.cpp:45</a></div></div>
-<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d44/logger__system_2sources_2logger_2logger__interface_8h_source.html#l00032">logger_interface.h:32</a></div></div>
-<div class="ttc" id="anamespacethread__pool__module_html"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html">thread_pool_module</a></div><div class="ttdoc">Thread pool implementation for managing worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d78/modular__structure_2core_2include_2thread__system__core_2thread__pool_2async_2future__extensions_8h_source.html#l00049">future_extensions.h:49</a></div></div>
+<div class="ttc" id="acallback__job_8h_html"><div class="ttname"><a href="../../db/ddd/callback__job_8h.html">callback_job.h</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1error_html_a6e4a9f5204c0146f631a8a54d54da4f7"><div class="ttname"><a href="../../d6/d10/classkcenon_1_1thread_1_1error.html#a6e4a9f5204c0146f631a8a54d54da4f7">kcenon::thread::error::to_string</a></div><div class="ttdeci">std::string to_string() const</div><div class="ttdoc">Converts the error to a string representation.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00165">error_handling.h:165</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1job_html"><div class="ttname"><a href="../../dc/df7/classkcenon_1_1thread_1_1job.html">kcenon::thread::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00101">job.h:102</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result__void_html"><div class="ttname"><a href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">kcenon::thread::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00194">error_handling.h:194</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">kcenon::thread::result</a></div><div class="ttdoc">A template class representing either a value or an error.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d01/include_2kcenon_2thread_2core_2error__handling_8h_source.html#l00238">error_handling.h:238</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html_a43f5b0903a5437ac3f5075e3b83cc7cd"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html#a43f5b0903a5437ac3f5075e3b83cc7cd">kcenon::thread::result::get_error</a></div><div class="ttdeci">error &amp; get_error() &amp;</div><div class="ttdoc">Gets the error.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00312">error_handling.h:312</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1thread__context_html"><div class="ttname"><a href="../../da/de0/classkcenon_1_1thread_1_1thread__context.html">kcenon::thread::thread_context</a></div><div class="ttdoc">Context object that provides access to optional services.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/de3/thread__system_2include_2kcenon_2thread_2interfaces_2thread__context_8h_source.html#l00049">thread_context.h:49</a></div></div>
+<div class="ttc" id="aminimal__thread__pool_8cpp_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="../../d8/dae/minimal__thread__pool_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dae/minimal__thread__pool_8cpp_source.html#l00046">minimal_thread_pool.cpp:46</a></div></div>
+<div class="ttc" id="anamespacekcenon_1_1thread_html"><div class="ttname"><a href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d70/core_2base_2include_2detail_2thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
+<div class="ttc" id="athread__pool_8h_html"><div class="ttname"><a href="../../d3/dec/thread__pool_8h.html">thread_pool.h</a></div></div>
+<div class="ttc" id="athread__system_2include_2kcenon_2thread_2interfaces_2thread__context_8h_html"><div class="ttname"><a href="../../d1/de3/thread__system_2include_2kcenon_2thread_2interfaces_2thread__context_8h.html">thread_context.h</a></div></div>
+<div class="ttc" id="athread__worker_8h_html"><div class="ttname"><a href="../../d9/de2/thread__worker_8h.html">thread_worker.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_d5639982d944765b2c04ab5f88dacbbf.html">samples</a></li><li class="navelem"><a class="el" href="../../dir_78a724fdc1348062808a15daba598ad8.html">minimal_thread_pool</a></li><li class="navelem"><a class="el" href="../../d8/dae/minimal__thread__pool_8cpp.html">minimal_thread_pool.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_62aa39980ad34ebd1eec6b25d2703f9b.html">examples</a></li><li class="navelem"><a class="el" href="../../dir_d8ea427332e6a4efd2189e3587078774.html">minimal_thread_pool</a></li><li class="navelem"><a class="el" href="../../d8/dae/minimal__thread__pool_8cpp.html">minimal_thread_pool.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/database_system/database_types.h File Reference</title>
+<title>Messaging System: libraries/database_system/database/database_types.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -92,30 +92,134 @@ $(document).ready(function(){initNavTree('d4/dac/database__types_8h.html','../..
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">database_types.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Defines the enumeration of supported database types.  
 <a href="#details">More...</a></p>
-<div class="textblock"><div class="dynheader">
+<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for database_types.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d6/d7c/database__types_8h__incl.png" border="0" usemap="#alibraries_2database__system_2database_2database__types_8h" alt=""/></div>
+<map name="alibraries_2database__system_2database_2database__types_8h" id="alibraries_2database__system_2database_2database__types_8h">
+<area shape="rect" title="Defines the enumeration of supported database types." alt="" coords="5,5,211,60"/>
+<area shape="rect" title=" " alt="" coords="75,108,141,133"/>
+<area shape="poly" title=" " alt="" coords="111,60,111,94,105,94,105,60"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d5/d54/database__types_8h__dep__incl.png" border="0" usemap="#alibraries_2database__system_2database__types_8hdep" alt=""/></div>
-<map name="alibraries_2database__system_2database__types_8hdep" id="alibraries_2database__system_2database__types_8hdep">
-<area shape="rect" title="Defines the enumeration of supported database types." alt="" coords="143,5,339,45"/>
-<area shape="rect" href="../../d9/d46/database__base_8h.html" title=" " alt="" coords="146,93,337,133"/>
-<area shape="poly" title=" " alt="" coords="244,59,244,93,239,93,239,59"/>
-<area shape="rect" href="../../d9/da9/database__manager_8h.html" title=" " alt="" coords="13,181,230,221"/>
-<area shape="poly" title=" " alt="" coords="205,144,149,183,146,179,202,139"/>
-<area shape="rect" href="../../d6/d94/postgres__manager_8h.html" title=" " alt="" coords="255,181,468,221"/>
-<area shape="poly" title=" " alt="" coords="281,139,336,179,333,183,278,144"/>
-<area shape="rect" href="../../d6/de0/database__manager_8cpp.html" title=" " alt="" coords="5,269,237,309"/>
-<area shape="poly" title=" " alt="" coords="124,235,124,269,119,269,119,235"/>
-<area shape="poly" title=" " alt="" coords="297,228,175,272,173,267,295,223"/>
-<area shape="rect" href="../../da/d57/postgres__manager_8cpp.html" title=" " alt="" coords="262,269,490,309"/>
-<area shape="poly" title=" " alt="" coords="370,234,375,269,370,270,364,235"/>
+<div class="center"><img src="../../d5/d54/database__types_8h__dep__incl.png" border="0" usemap="#alibraries_2database__system_2database_2database__types_8hdep" alt=""/></div>
+<map name="alibraries_2database__system_2database_2database__types_8hdep" id="alibraries_2database__system_2database_2database__types_8hdep">
+<area shape="rect" title="Defines the enumeration of supported database types." alt="" coords="964,5,1169,60"/>
+<area shape="rect" href="../../da/dc5/async__operations_8h.html" title=" " alt="" coords="905,313,1087,368"/>
+<area shape="poly" title=" " alt="" coords="1060,74,1005,314,1000,312,1055,73"/>
+<area shape="rect" href="../../d1/dc1/database__system_2tests_2benchmark__tests_8cpp.html" title=" " alt="" coords="246,416,437,471"/>
+<area shape="poly" title=" " alt="" coords="950,38,868,44,776,57,681,78,590,110,549,131,520,151,494,177,465,212,427,266,396,322,353,417,349,415,391,320,423,263,461,209,491,173,517,147,547,126,588,106,680,73,775,52,867,39,950,33"/>
+<area shape="rect" href="../../d4/dee/integration__tests_8cpp.html" title=" " alt="" coords="461,416,649,471"/>
+<area shape="poly" title=" " alt="" coords="951,49,822,75,750,96,677,123,606,158,539,201,481,253,455,283,433,315,426,328,424,340,433,367,456,394,485,414,482,418,452,398,428,369,419,341,421,327,428,312,451,279,477,249,536,197,603,154,675,119,748,91,821,70,950,44"/>
+<area shape="rect" href="../../de/d1c/database__system_2tests_2unit__tests_8cpp.html" title=" " alt="" coords="673,423,881,463"/>
+<area shape="poly" title=" " alt="" coords="1088,71,1113,134,1132,213,1136,254,1133,295,1122,334,1100,370,861,426,860,421,1097,366,1117,332,1127,294,1130,254,1127,213,1108,136,1083,73"/>
+<area shape="rect" href="../../d6/dbc/connection__pool_8h.html" title=" " alt="" coords="1656,211,1872,265"/>
+<area shape="poly" title=" " alt="" coords="1171,61,1323,105,1676,208,1674,213,1322,111,1169,66"/>
+<area shape="rect" href="../../d9/d46/database__base_8h.html" title=" " alt="" coords="1807,108,2012,163"/>
+<area shape="poly" title=" " alt="" coords="1184,45,1807,119,1806,124,1183,50"/>
+<area shape="rect" href="../../d8/d83/entity_8h.html" title=" " alt="" coords="1163,313,1333,368"/>
+<area shape="poly" title=" " alt="" coords="1111,67,1146,106,1179,161,1207,218,1242,312,1237,314,1202,220,1175,163,1142,110,1107,71"/>
+<area shape="rect" href="../../db/d0a/query__builder_8h.html" title=" " alt="" coords="1449,211,1631,265"/>
+<area shape="poly" title=" " alt="" coords="1141,63,1480,208,1478,213,1139,68"/>
+<area shape="rect" href="../../d4/db5/database__system_2database_2monitoring_2performance__monitor_8h.html" title=" " alt="" coords="443,313,659,368"/>
+<area shape="poly" title=" " alt="" coords="1012,69,596,315,594,311,1009,65"/>
+<area shape="rect" href="../../dd/d91/secure__connection_8h.html" title=" " alt="" coords="683,313,880,368"/>
+<area shape="poly" title=" " alt="" coords="1035,72,808,315,804,311,1031,68"/>
+<area shape="rect" href="../../d9/ddb/async__operations__demo_8cpp.html" title=" " alt="" coords="1564,416,1743,471"/>
+<area shape="poly" title=" " alt="" coords="1101,358,1151,365,1264,379,1352,387,1440,396,1552,413,1564,416,1563,421,1552,419,1439,401,1352,392,1263,384,1150,371,1100,363"/>
+<area shape="poly" title=" " alt="" coords="891,371,766,388,668,395,571,402,448,419,438,421,437,415,448,413,570,396,667,389,765,382,891,365"/>
+<area shape="poly" title=" " alt="" coords="891,371,662,419,649,421,648,416,661,413,890,366"/>
+<area shape="poly" title=" " alt="" coords="928,376,820,426,817,421,926,371"/>
+<area shape="rect" href="../../dc/d08/connection__pool_8cpp.html" title=" " alt="" coords="2857,416,3073,471"/>
+<area shape="poly" title=" " alt="" coords="1846,268,2002,319,2094,345,2186,365,2285,381,2370,390,2515,394,2660,396,2745,401,2846,413,2857,415,2856,420,2845,419,2745,407,2660,401,2515,399,2369,395,2284,386,2185,371,2092,350,2001,325,1845,273"/>
+<area shape="rect" href="../../d9/da9/database__manager_8h.html" title=" " alt="" coords="1659,313,1864,368"/>
+<area shape="poly" title=" " alt="" coords="1766,279,1765,313,1759,313,1760,279"/>
+<area shape="poly" title=" " alt="" coords="1725,380,1683,418,1680,414,1721,376"/>
+<area shape="poly" title=" " alt="" coords="1645,371,1644,371,1463,389,1309,397,1173,396,1046,393,919,389,783,390,629,398,448,419,438,420,437,415,448,413,629,393,783,384,919,384,1046,387,1173,391,1309,391,1463,384,1644,365,1645,365"/>
+<area shape="poly" title=" " alt="" coords="1645,371,1644,371,1495,387,1369,394,1152,393,1048,391,937,393,810,401,662,419,649,421,648,415,661,413,810,396,936,388,1048,386,1152,388,1368,389,1495,382,1644,365,1645,365"/>
+<area shape="poly" title=" " alt="" coords="1645,371,1644,371,1531,384,1434,391,1269,395,1104,398,1007,405,894,419,854,426,853,421,893,413,1007,400,1104,392,1269,389,1433,386,1530,379,1644,365,1645,365"/>
+<area shape="poly" title=" " alt="" coords="1878,353,2011,365,2246,378,2429,382,2612,389,2719,398,2846,413,2857,415,2856,420,2845,419,2719,403,2612,394,2429,387,2245,384,2010,371,1877,358"/>
+<area shape="rect" href="../../d6/de0/database__manager_8cpp.html" title=" " alt="" coords="3097,416,3303,471"/>
+<area shape="poly" title=" " alt="" coords="1878,347,2185,365,2439,375,2637,377,2834,386,2949,396,3086,413,3097,415,3097,420,3085,419,2949,402,2833,391,2636,383,2439,380,2185,371,1877,352"/>
+<area shape="rect" href="../../da/dd3/database__system_2samples_2basic__usage_8cpp.html" title=" " alt="" coords="2658,416,2833,471"/>
+<area shape="poly" title=" " alt="" coords="1878,352,2011,365,2190,377,2330,381,2469,390,2647,413,2658,415,2657,421,2646,419,2469,395,2330,387,2190,382,2010,371,1878,357"/>
+<area shape="rect" href="../../dd/d70/connection__pool__demo_8cpp.html" title=" " alt="" coords="1961,416,2172,471"/>
+<area shape="poly" title=" " alt="" coords="1855,370,1988,413,1986,418,1853,375"/>
+<area shape="rect" href="../../d3/de2/orm__framework__demo_8cpp.html" title=" " alt="" coords="1767,416,1937,471"/>
+<area shape="poly" title=" " alt="" coords="1796,377,1830,414,1826,418,1792,380"/>
+<area shape="rect" href="../../d1/ded/performance__monitoring__demo_8cpp.html" title=" " alt="" coords="906,416,1129,471"/>
+<area shape="poly" title=" " alt="" coords="1645,370,1644,371,1503,388,1393,395,1283,402,1142,419,1129,421,1128,415,1141,413,1282,397,1393,390,1503,383,1644,365,1644,365"/>
+<area shape="rect" href="../../dc/d52/security__framework__demo_8cpp.html" title=" " alt="" coords="1153,416,1345,471"/>
+<area shape="poly" title=" " alt="" coords="1645,370,1644,371,1501,394,1358,419,1346,421,1345,416,1357,413,1500,389,1644,365,1644,365"/>
+<area shape="poly" title=" " alt="" coords="1793,146,1578,168,1456,188,1335,213,1257,236,1181,263,1053,316,1051,311,1179,258,1256,231,1334,208,1455,182,1578,163,1792,141"/>
+<area shape="poly" title=" " alt="" coords="1862,173,1804,213,1801,208,1859,168"/>
+<area shape="poly" title=" " alt="" coords="1912,176,1906,222,1898,245,1886,267,1860,295,1828,315,1825,311,1856,290,1882,264,1893,243,1901,221,1907,176"/>
+<area shape="rect" href="../../df/dc0/mongodb__manager_8h.html" title=" " alt="" coords="3269,313,3497,368"/>
+<area shape="poly" title=" " alt="" coords="2026,144,2297,171,2619,208,2939,254,3258,311,3269,313,3268,318,3257,316,2938,259,2618,213,2296,176,2025,149"/>
+<area shape="rect" href="../../d5/d3d/mysql__manager_8h.html" title=" " alt="" coords="3038,313,3245,368"/>
+<area shape="poly" title=" " alt="" coords="2026,149,2467,213,2746,259,3027,311,3038,313,3037,318,3026,316,2745,264,2466,218,2026,155"/>
+<area shape="rect" href="../../d5/d51/redis__manager_8h.html" title=" " alt="" coords="2197,313,2403,368"/>
+<area shape="poly" title=" " alt="" coords="1973,167,2251,311,2248,315,1970,171"/>
+<area shape="rect" href="../../d4/d34/sqlite__manager_8h.html" title=" " alt="" coords="2479,313,2686,368"/>
+<area shape="poly" title=" " alt="" coords="2010,164,2497,311,2495,316,2008,169"/>
+<area shape="poly" title=" " alt="" coords="1793,143,1713,150,1622,163,1528,184,1437,213,1391,235,1348,262,1279,315,1276,311,1345,258,1389,230,1435,208,1526,179,1621,158,1712,145,1793,138"/>
+<area shape="rect" href="../../d6/d94/postgres__manager_8h.html" title=" " alt="" coords="2813,313,3014,368"/>
+<area shape="poly" title=" " alt="" coords="2026,157,2813,316,2812,322,2025,163"/>
+<area shape="poly" title=" " alt="" coords="1801,169,1632,214,1631,209,1800,164"/>
+<area shape="poly" title=" " alt="" coords="3261,374,3074,419,3073,414,3260,369"/>
+<area shape="poly" title=" " alt="" coords="3324,377,3249,418,3247,413,3322,372"/>
+<area shape="rect" href="../../de/d22/mongodb__manager_8cpp.html" title=" " alt="" coords="4004,416,4247,471"/>
+<area shape="poly" title=" " alt="" coords="3511,352,3736,378,3992,413,4004,415,4003,421,3992,419,3735,383,3510,357"/>
+<area shape="poly" title=" " alt="" coords="3085,377,3013,418,3010,413,3082,372"/>
+<area shape="poly" title=" " alt="" coords="3166,379,3187,415,3182,417,3161,381"/>
+<area shape="rect" href="../../d6/dce/mysql__manager_8cpp.html" title=" " alt="" coords="3773,416,3979,471"/>
+<area shape="poly" title=" " alt="" coords="3258,365,3401,382,3512,389,3622,396,3762,413,3773,415,3772,421,3761,419,3622,401,3512,394,3400,388,3258,371"/>
+<area shape="poly" title=" " alt="" coords="2417,358,2468,365,2657,387,2740,397,2846,413,2857,415,2856,421,2845,419,2739,402,2657,393,2468,371,2417,363"/>
+<area shape="poly" title=" " alt="" coords="2417,359,2468,365,2642,380,2777,386,2913,393,3086,413,3097,415,3097,421,3085,419,2912,398,2777,391,2641,386,2468,371,2417,364"/>
+<area shape="rect" href="../../d7/da3/redis__manager_8cpp.html" title=" " alt="" coords="2197,416,2403,471"/>
+<area shape="poly" title=" " alt="" coords="2303,382,2303,416,2297,416,2297,382"/>
+<area shape="poly" title=" " alt="" coords="2696,369,2866,413,2865,419,2695,374"/>
+<area shape="poly" title=" " alt="" coords="2700,354,2882,379,3086,413,3097,416,3096,421,3085,419,2881,385,2699,359"/>
+<area shape="rect" href="../../d3/d25/sqlite__manager_8cpp.html" title=" " alt="" coords="2427,416,2634,471"/>
+<area shape="poly" title=" " alt="" coords="2565,381,2547,417,2542,415,2560,379"/>
+<area shape="poly" title=" " alt="" coords="1150,363,1099,371,916,387,773,391,630,397,547,405,448,419,438,420,437,415,448,413,546,400,630,392,773,386,916,381,1098,365,1149,358"/>
+<area shape="poly" title=" " alt="" coords="1150,363,1099,371,976,385,880,392,784,401,662,419,649,421,648,416,661,413,783,395,879,387,975,380,1098,365,1149,357"/>
+<area shape="poly" title=" " alt="" coords="1150,369,1145,371,1019,395,894,419,860,426,859,421,893,413,1018,390,1143,365,1149,364"/>
+<area shape="poly" title=" " alt="" coords="1347,353,1755,413,1767,416,1766,421,1754,419,1346,358"/>
+<area shape="rect" href="../../d9/ddd/entity_8cpp.html" title=" " alt="" coords="1369,416,1540,471"/>
+<area shape="poly" title=" " alt="" coords="1315,371,1402,414,1400,418,1313,376"/>
+<area shape="poly" title=" " alt="" coords="2936,379,2954,415,2949,417,2931,381"/>
+<area shape="poly" title=" " alt="" coords="3001,370,3126,413,3124,418,3000,375"/>
+<area shape="poly" title=" " alt="" coords="2859,377,2791,418,2788,413,2856,373"/>
+<area shape="rect" href="../../da/d57/postgres__manager_8cpp.html" title=" " alt="" coords="3547,416,3749,471"/>
+<area shape="poly" title=" " alt="" coords="3028,365,3172,383,3284,389,3396,396,3536,413,3547,415,3546,420,3536,419,3395,401,3284,394,3171,388,3028,371"/>
+<area shape="rect" href="../../d4/d17/postgres__advanced_8cpp.html" title=" " alt="" coords="3327,416,3523,471"/>
+<area shape="poly" title=" " alt="" coords="3028,365,3174,390,3315,413,3328,416,3327,421,3314,419,3173,395,3027,371"/>
+<area shape="poly" title=" " alt="" coords="1611,268,1705,311,1703,316,1609,273"/>
+<area shape="rect" href="../../d1/d1d/query__builder_8cpp.html" title=" " alt="" coords="1449,313,1631,368"/>
+<area shape="poly" title=" " alt="" coords="1543,279,1543,313,1537,313,1537,279"/>
+<area shape="poly" title=" " alt="" coords="485,376,397,418,395,414,483,371"/>
+<area shape="poly" title=" " alt="" coords="555,382,556,416,551,416,550,382"/>
+<area shape="poly" title=" " alt="" coords="623,371,736,421,734,426,621,376"/>
+<area shape="poly" title=" " alt="" coords="673,366,906,416,905,421,672,371"/>
+<area shape="rect" href="../../de/dbd/database__system_2database_2monitoring_2performance__monitor_8cpp.html" title=" " alt="" coords="5,416,221,471"/>
+<area shape="poly" title=" " alt="" coords="430,372,222,420,221,415,429,367"/>
+<area shape="poly" title=" " alt="" coords="670,371,449,419,437,421,436,416,447,413,669,366"/>
+<area shape="poly" title=" " alt="" coords="711,376,615,418,613,414,709,371"/>
+<area shape="poly" title=" " alt="" coords="782,382,781,423,775,423,777,382"/>
+<area shape="poly" title=" " alt="" coords="894,366,1141,413,1153,416,1152,421,1139,419,893,371"/>
 </map>
 </div>
 </div>
@@ -128,11 +232,25 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ad983a92aeb2e850207432d806579489b" id="r_ad983a92aeb2e850207432d806579489b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/df2/namespacedatabase.html#ad983a92aeb2e850207432d806579489b">database::database_types</a> { <a class="el" href="../../da/df2/namespacedatabase.html#ad983a92aeb2e850207432d806579489ba334c4a4c42fdb79d7ebc3e73b517e6f8">database::none</a> = 0
-, <a class="el" href="../../da/df2/namespacedatabase.html#ad983a92aeb2e850207432d806579489bae8a48653851e28c69d0506508fb27fc5">database::postgres</a> = 1
+<tr class="memitem:a9b50450d1f477d5f2fea4e15975023e4" id="r_a9b50450d1f477d5f2fea4e15975023e4"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4">database::database_types</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4a334c4a4c42fdb79d7ebc3e73b517e6f8">database::none</a> = 0
+, <a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4ae8a48653851e28c69d0506508fb27fc5">database::postgres</a> = 1
+, <a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4a81c3b080dad537de7e10e0987a4bf52e">database::mysql</a> = 2
+, <a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4a786d348e95448121dc5b7387e22e4fff">database::sqlite</a> = 3
+, <br />
+&#160;&#160;<a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4aa189c633d9995e11bf8607170ec9a4b8">database::oracle</a> = 4
+, <a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4a685a5f7cc75b4796f6c6e00ccd384f01">database::mongodb</a> = 5
+, <a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4a86a1b907d54bf7010394bf316e183e67">database::redis</a> = 6
+<br />
  }</td></tr>
-<tr class="memdesc:ad983a92aeb2e850207432d806579489b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents various database backends or modes.  <a href="../../da/df2/namespacedatabase.html#ad983a92aeb2e850207432d806579489b">More...</a><br /></td></tr>
-<tr class="separator:ad983a92aeb2e850207432d806579489b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:a9b50450d1f477d5f2fea4e15975023e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents various database backends or modes.  <a href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4">More...</a><br /></td></tr>
+<tr class="separator:a9b50450d1f477d5f2fea4e15975023e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:acd6914696779ca160d35801485ffd346" id="r_acd6914696779ca160d35801485ffd346"><td class="memItemLeft" align="right" valign="top">constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/df2/namespacedatabase.html#acd6914696779ca160d35801485ffd346">database::to_string</a> (<a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4">database_types</a> type) noexcept</td></tr>
+<tr class="memdesc:acd6914696779ca160d35801485ffd346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts database_types enum to string representation.  <br /></td></tr>
+<tr class="separator:acd6914696779ca160d35801485ffd346"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Defines the enumeration of supported database types. </p>
@@ -143,7 +261,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_14eb35d79a4c81def485a5fe94559fe7.html">database_system</a></li><li class="navelem"><a class="el" href="../../d4/dac/database__types_8h.html">database_types.h</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_14eb35d79a4c81def485a5fe94559fe7.html">database_system</a></li><li class="navelem"><a class="el" href="../../dir_bade54d1dba01b42942d28c422d11b18.html">database</a></li><li class="navelem"><a class="el" href="../../d4/dac/database__types_8h.html">database_types.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

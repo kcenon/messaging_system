@@ -1,4 +1,4 @@
 var console__writer_8h =
 [
-    [ "logger_module::console_writer", "d2/d43/classlogger__module_1_1console__writer.html", "d2/d43/classlogger__module_1_1console__writer" ]
+    [ "kcenon::logger::console_writer", "d0/d48/classkcenon_1_1logger_1_1console__writer.html", "d0/d48/classkcenon_1_1logger_1_1console__writer" ]
 ];

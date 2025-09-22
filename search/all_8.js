@@ -1,8 +1,26 @@
 var searchData=
 [
-  ['8_20composite_20pattern_0',['8. Composite Pattern',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md1782',1,'']]],
-  ['8_20core_203_202ghz_2016gb_20macos_20sonoma_1',['Latest Performance Metrics (Apple M1, 8-core @ 3.2GHz, 16GB, macOS Sonoma)',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md807',1,'']]],
-  ['8_20cores_2',['Measured Performance (Apple M1, 8 cores)',['../d6/d31/md_libraries_2thread__system_2docs_2architecture.html#autotoc_md861',1,'']]],
-  ['8_20strong_20message_5fbus_5fbenchmark_20cpp_20strong_3',['8. &lt;strong&gt;message_bus_benchmark.cpp&lt;/strong&gt;',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md45',1,'']]],
-  ['8_20threads_4',['High Contention (8 Threads)',['../d4/d9e/md_libraries_2thread__system_2docs_2performance.html#autotoc_md1220',1,'']]]
+  ['8_0',['8',['../db/dc0/md_libraries_2network__system_2docs_2NETWORK__SYSTEM__SEPARATION__PLAN.html#autotoc_md2340',1,'Day 8'],['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md106',1,'Milestone 5: Production Ready (Week 8)']]],
+  ['8_200_20phase_205_20p3_20complete_20api_20documentation_202025_2009_2010_1',['[2.8.0] - Phase 5 P3 Complete API Documentation (2025-09-10)',['../d7/dee/md_libraries_2logger__system_2docs_2CHANGELOG.html#autotoc_md1057',1,'']]],
+  ['8_201_20alternative_3a_20apache_20thrift_2',['8.1 Alternative: Apache Thrift',['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md123',1,'']]],
+  ['8_201_20technical_20metrics_3',['8.1 Technical Metrics',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md242',1,'']]],
+  ['8_201_20zero_20risk_4',['8.1 Zero Risk',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md182',1,'']]],
+  ['8_2014_5',['Week 2: Proto Implementation (Feb 8-14)',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md215',1,'']]],
+  ['8_202_20alternative_3a_20messagepack_6',['8.2 Alternative: MessagePack',['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md124',1,'']]],
+  ['8_202_20fast_20implementation_7',['8.2 Fast Implementation',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md183',1,'']]],
+  ['8_202_20project_20metrics_8',['8.2 Project Metrics',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md243',1,'']]],
+  ['8_203_20alternative_3a_20cap_20n_20proto_9',['8.3 Alternative: Cap&apos;n Proto',['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md125',1,'']]],
+  ['8_203_20business_20metrics_10',['8.3 Business Metrics',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md244',1,'']]],
+  ['8_203_20easy_20maintenance_11',['8.3 Easy Maintenance',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md184',1,'']]],
+  ['8_204_20gradual_20adoption_12',['8.4 Gradual Adoption',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md185',1,'']]],
+  ['8_20advantages_20of_20minimal_20approach_13',['8. Advantages of Minimal Approach',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md181',1,'']]],
+  ['8_20alternative_20approaches_14',['8. Alternative Approaches',['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md122',1,'']]],
+  ['8_20composite_20pattern_15',['8. Composite Pattern',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3747',1,'']]],
+  ['8_20core_203_202ghz_2016gb_20macos_20sonoma_16',['Latest Performance Metrics (Apple M1, 8-core @ 3.2GHz, 16GB, macOS Sonoma)',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md2738',1,'']]],
+  ['8_20expected_20benefits_17',['8. Expected Benefits',['../d0/df8/md_libraries_2thread__system_2docs_2DESIGN__IMPROVEMENTS.html#autotoc_md2924',1,'']]],
+  ['8_20strong_20message_5fbus_5fbenchmark_20cpp_20strong_18',['8. &lt;strong&gt;message_bus_benchmark.cpp&lt;/strong&gt;',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md45',1,'']]],
+  ['8_20success_20criteria_19',['8. Success Criteria',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md241',1,'']]],
+  ['8_20threads_20',['High Contention (8 Threads)',['../d4/d9e/md_libraries_2thread__system_2docs_2performance.html#autotoc_md3262',1,'']]],
+  ['8_3a_20basic_20build_20system_20configuration_21',['Day 8: Basic Build System Configuration',['../d5/d00/md_libraries_2network__system_2docs_2MIGRATION__CHECKLIST.html#autotoc_md2225',1,'']]],
+  ['8_3a_20deployment_20mar_2021_2028_22',['Week 8: Deployment (Mar 21-28)',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md221',1,'']]]
 ];

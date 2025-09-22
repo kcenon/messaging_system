@@ -1,0 +1,7 @@
+<map id="monitoring_system::adapters::monitor_adapter" name="monitoring_system::adapters::monitor_adapter">
+<area shape="rect" id="Node000001" title="Adapter to make performance_monitor compatible with IMonitorable interface." alt="" coords="69,79,263,119"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,161,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,38,148,77,144,80,103,42"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="185,5,312,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="229,42,188,80,184,77,225,38"/>
+</map>

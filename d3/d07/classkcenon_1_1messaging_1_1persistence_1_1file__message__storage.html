@@ -123,9 +123,9 @@ Collaboration diagram for kcenon::messaging::persistence::file_message_storage:<
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab43849eedd8130b9f761508d3ef1a403" id="r_ab43849eedd8130b9f761508d3ef1a403"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d07/classkcenon_1_1messaging_1_1persistence_1_1file__message__storage.html#ab43849eedd8130b9f761508d3ef1a403">file_message_storage</a> (const std::filesystem::path &amp;path)</td></tr>
 <tr class="separator:ab43849eedd8130b9f761508d3ef1a403"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a004062e7460d87bb89f0abf7b3f4b9a3" id="r_a004062e7460d87bb89f0abf7b3f4b9a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d07/classkcenon_1_1messaging_1_1persistence_1_1file__message__storage.html#a004062e7460d87bb89f0abf7b3f4b9a3">store_message</a> (const std::string &amp;message_id, const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;msg) override</td></tr>
+<tr class="memitem:a004062e7460d87bb89f0abf7b3f4b9a3" id="r_a004062e7460d87bb89f0abf7b3f4b9a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d07/classkcenon_1_1messaging_1_1persistence_1_1file__message__storage.html#a004062e7460d87bb89f0abf7b3f4b9a3">store_message</a> (const std::string &amp;message_id, const core::message &amp;msg) override</td></tr>
 <tr class="separator:a004062e7460d87bb89f0abf7b3f4b9a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a78a8bc40fb1e17575e18d8b58fcfda" id="r_a6a78a8bc40fb1e17575e18d8b58fcfda"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d07/classkcenon_1_1messaging_1_1persistence_1_1file__message__storage.html#a6a78a8bc40fb1e17575e18d8b58fcfda">retrieve_message</a> (const std::string &amp;message_id) override</td></tr>
+<tr class="memitem:a6a78a8bc40fb1e17575e18d8b58fcfda" id="r_a6a78a8bc40fb1e17575e18d8b58fcfda"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; core::message &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d07/classkcenon_1_1messaging_1_1persistence_1_1file__message__storage.html#a6a78a8bc40fb1e17575e18d8b58fcfda">retrieve_message</a> (const std::string &amp;message_id) override</td></tr>
 <tr class="separator:a6a78a8bc40fb1e17575e18d8b58fcfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e103b789666a045ceb40f5a96529252" id="r_a2e103b789666a045ceb40f5a96529252"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d07/classkcenon_1_1messaging_1_1persistence_1_1file__message__storage.html#a2e103b789666a045ceb40f5a96529252">delete_message</a> (const std::string &amp;message_id) override</td></tr>
 <tr class="separator:a2e103b789666a045ceb40f5a96529252"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -336,7 +336,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &gt; kcenon::messaging::persistence::file_message_storage::retrieve_message </td>
+          <td class="memname">std::unique_ptr&lt; core::message &gt; kcenon::messaging::persistence::file_message_storage::retrieve_message </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>message_id</em></td><td>)</td>
@@ -353,8 +353,6 @@ Public Member Functions</h2></td></tr>
 <p>Implements <a class="el" href="../../dd/d33/classkcenon_1_1messaging_1_1persistence_1_1message__storage.html#a2e2eb4e2739db9e8692da7259e85c13a">kcenon::messaging::persistence::message_storage</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../d9/ddf/message__persistence_8h_source.html#l00115">115</a> of file <a class="el" href="../../d9/ddf/message__persistence_8h_source.html">message_persistence.h</a>.</p>
-
-<p class="reference">References <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00090">kcenon::messaging::core::message::metadata</a>, <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00091">kcenon::messaging::core::message::payload</a>, <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00051">kcenon::messaging::core::message_metadata::sender</a>, and <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00065">kcenon::messaging::core::message_payload::topic</a>.</p>
 
 </div>
 </div>
@@ -376,7 +374,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;&#160;</td>
+          <td class="paramtype">const core::message &amp;&#160;</td>
           <td class="paramname"><em>msg</em>&#160;</td>
         </tr>
         <tr>

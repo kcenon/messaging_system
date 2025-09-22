@@ -1,0 +1,11 @@
+<map id="kcenon::thread::typed_queue_statistics_t&lt; job_type &gt;" name="kcenon::thread::typed_queue_statistics_t&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="11,313,175,368"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,196,181,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,250,96,313,91,313,91,250"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="17,93,169,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="96,147,96,196,91,196,91,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="42,5,81,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="62,44,65,68,78,92,74,94,60,70,56,45"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="107,5,146,31"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="121,44,103,94,98,92,115,43"/>
+</map>

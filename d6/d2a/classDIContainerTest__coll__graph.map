@@ -1,0 +1,13 @@
+<map id="DIContainerTest" name="DIContainerTest">
+<area shape="rect" id="Node000001" title="Test fixture for DI container tests." alt="" coords="48,343,173,368"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,240,107,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,276,107,341,102,344,67,279"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="131,225,336,280"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="192,291,127,344,123,340,189,287"/>
+<area shape="rect" id="Node000004" href="$d3/dff/classmonitoring__system_1_1service__container__interface.html" title=" " alt="" coords="68,93,271,133"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="186,145,223,224,219,226,182,147"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="295,101,452,126"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="353,138,262,227,259,223,350,134"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="354,5,393,31"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="376,44,376,101,371,101,371,44"/>
+</map>

@@ -1,0 +1,21 @@
+<map id="libraries/network_system/include/network_system/session/messaging_session.h" name="libraries/network_system/include/network_system/session/messaging_session.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="323,5,541,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,83,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="323,57,212,80,95,111,86,113,85,108,94,105,211,75,322,51"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="107,115,165,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="331,63,178,111,173,112,171,107,176,105,329,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="190,115,287,141"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="379,62,276,112,274,107,376,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="311,115,374,141"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="409,62,365,107,361,103,405,58"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="399,115,465,141"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="435,60,435,101,429,101,429,60"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="490,115,582,141"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="463,58,515,104,511,108,460,62"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="607,115,684,141"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="493,58,608,108,606,112,491,63"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="708,108,892,148"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="536,57,713,102,712,107,535,63"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="916,108,1100,148"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="542,48,902,105,902,110,541,53"/>
+</map>

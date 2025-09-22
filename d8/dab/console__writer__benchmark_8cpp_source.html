@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/logger_system/benchmarks/writers_benchmarks/console_writer_benchmark.cpp Source File</title>
+<title>Messaging System: libraries/logger_system/tests/benchmarks/writers_benchmarks/console_writer_benchmark.cpp Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -111,7 +111,7 @@ $(document).ready(function(){initNavTree('d8/dab/console__writer__benchmark_8cpp
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../dc/d2b/namespacelogger__module.html">logger_module</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../da/d02/namespacekcenon_1_1logger.html">logger_module</a>;</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="foldopen" id="foldopen00016" data-start="{" data-end="}">
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="../../d8/dab/console__writer__benchmark_8cpp.html#a005cdcec1d96279f78a8b132685c76b8">   16</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="../../d8/dab/console__writer__benchmark_8cpp.html#a005cdcec1d96279f78a8b132685c76b8">BM_ConsoleWriter_Write</a>(benchmark::State&amp; state) {</div>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('d8/dab/console__writer__benchmark_8cpp
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">auto</span> timestamp = std::chrono::system_clock::now();</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> _ : state) {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        writer-&gt;write(<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acaf9b6b99962bf5c2264824231d7a40c">thread_module::log_level::info</a>, message, <span class="stringliteral">&quot;&quot;</span>, 0, <span class="stringliteral">&quot;&quot;</span>, timestamp);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        writer-&gt;write(thread_module::log_level::info, message, <span class="stringliteral">&quot;&quot;</span>, 0, <span class="stringliteral">&quot;&quot;</span>, timestamp);</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    }</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    writer-&gt;flush();</div>
@@ -138,7 +138,7 @@ $(document).ready(function(){initNavTree('d8/dab/console__writer__benchmark_8cpp
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">auto</span> timestamp = std::chrono::system_clock::now();</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    </div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> _ : state) {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        writer-&gt;write(<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">thread_module::log_level::error</a>, message, <span class="stringliteral">&quot;&quot;</span>, 0, <span class="stringliteral">&quot;&quot;</span>, timestamp);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        writer-&gt;write(thread_module::log_level::error, message, <span class="stringliteral">&quot;&quot;</span>, 0, <span class="stringliteral">&quot;&quot;</span>, timestamp);</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    }</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    writer-&gt;flush();</div>
@@ -154,7 +154,7 @@ $(document).ready(function(){initNavTree('d8/dab/console__writer__benchmark_8cpp
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">auto</span> timestamp = std::chrono::system_clock::now();</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> _ : state) {</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        writer-&gt;write(<a class="code hl_enumvalue" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288a7b83d3f08fa392b79e3f553b585971cd">thread_module::log_level::warning</a>, message, </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        writer-&gt;write(thread_module::log_level::warning, message, </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                     __FILE__, __LINE__, __func__, timestamp);</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    }</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    </div>
@@ -171,16 +171,13 @@ $(document).ready(function(){initNavTree('d8/dab/console__writer__benchmark_8cpp
 <div class="ttc" id="aconsole__writer__benchmark_8cpp_html_a20eadb4d02619000435c01be4fcb4421"><div class="ttname"><a href="../../d8/dab/console__writer__benchmark_8cpp.html#a20eadb4d02619000435c01be4fcb4421">BENCHMARK</a></div><div class="ttdeci">BENCHMARK(BM_ConsoleWriter_Write)</div></div>
 <div class="ttc" id="aconsole__writer__benchmark_8cpp_html_a5851750faa9cfec10f7cad1f3b89697e"><div class="ttname"><a href="../../d8/dab/console__writer__benchmark_8cpp.html#a5851750faa9cfec10f7cad1f3b89697e">BENCHMARK_MAIN</a></div><div class="ttdeci">BENCHMARK_MAIN()</div></div>
 <div class="ttc" id="aconsole__writer__benchmark_8cpp_html_ac10e3475c861c498dd05cb980c7e9831"><div class="ttname"><a href="../../d8/dab/console__writer__benchmark_8cpp.html#ac10e3475c861c498dd05cb980c7e9831">BM_ConsoleWriter_WithLocation</a></div><div class="ttdeci">static void BM_ConsoleWriter_WithLocation(benchmark::State &amp;state)</div><div class="ttdef"><b>Definition</b> <a href="../../d8/dab/console__writer__benchmark_8cpp_source.html#l00046">console_writer_benchmark.cpp:46</a></div></div>
-<div class="ttc" id="anamespacelogger__module_html"><div class="ttname"><a href="../../dc/d2b/namespacelogger__module.html">logger_module</a></div><div class="ttdef"><b>Definition</b> <a href="../../d0/d00/logger__crash__safety_8h_source.html#l00021">logger_crash_safety.h:21</a></div></div>
-<div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288a7b83d3f08fa392b79e3f553b585971cd"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288a7b83d3f08fa392b79e3f553b585971cd">thread_module::log_level::warning</a></div><div class="ttdeci">@ warning</div></div>
-<div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288acaf9b6b99962bf5c2264824231d7a40c"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acaf9b6b99962bf5c2264824231d7a40c">thread_module::log_level::info</a></div><div class="ttdeci">@ info</div></div>
-<div class="ttc" id="anamespacethread__module_html_a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282"><div class="ttname"><a href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acb5e100e5a9a3e7f6d1fd97512215282">thread_module::log_level::error</a></div><div class="ttdeci">@ error</div></div>
+<div class="ttc" id="anamespacekcenon_1_1logger_html"><div class="ttname"><a href="../../da/d02/namespacekcenon_1_1logger.html">kcenon::logger</a></div><div class="ttdef"><b>Definition</b> <a href="../../d1/d87/logger__adapter_8h_source.html#l00008">logger_adapter.h:8</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_fc96425a4d8632db8a49951208d7327c.html">benchmarks</a></li><li class="navelem"><a class="el" href="../../dir_ac5d5fe9e852c1f5775c0c4039b5eca3.html">writers_benchmarks</a></li><li class="navelem"><a class="el" href="../../d8/dab/console__writer__benchmark_8cpp.html">console_writer_benchmark.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_f55c931e23855b4a2daadc4e2bb6196a.html">tests</a></li><li class="navelem"><a class="el" href="../../dir_4369b71693d4883a3c60d098867d92da.html">benchmarks</a></li><li class="navelem"><a class="el" href="../../dir_d763384c2b11ad2922357ea285b48c06.html">writers_benchmarks</a></li><li class="navelem"><a class="el" href="../../d8/dab/console__writer__benchmark_8cpp.html">console_writer_benchmark.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

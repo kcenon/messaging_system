@@ -1,0 +1,9 @@
+<map id="monitoring_system::metric_exporter_interface" name="monitoring_system::metric_exporter_interface">
+<area shape="rect" id="Node000001" title="Abstract interface for metric exporters." alt="" coords="5,69,196,109"/>
+<area shape="rect" id="Node000002" href="$da/d22/classmonitoring__system_1_1otlp__metrics__exporter.html" title="OpenTelemetry Protocol (OTLP) metrics exporter implementation." alt="" coords="244,5,409,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,63,255,43,256,48,186,68"/>
+<area shape="rect" id="Node000003" href="$d6/d3d/classmonitoring__system_1_1prometheus__exporter.html" title="Prometheus metric exporter implementation." alt="" coords="245,69,408,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,87,245,87,245,92,210,92"/>
+<area shape="rect" id="Node000004" href="$d8/d07/classmonitoring__system_1_1statsd__exporter.html" title="StatsD metric exporter implementation." alt="" coords="249,133,405,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="186,111,256,131,255,136,185,116"/>
+</map>

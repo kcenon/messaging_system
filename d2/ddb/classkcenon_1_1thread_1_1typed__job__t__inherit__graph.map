@@ -1,0 +1,12 @@
+<map id="kcenon::thread::typed_job_t&lt; job_type &gt;" name="kcenon::thread::typed_job_t&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title="Represents a job that carries a specific priority level." alt="" coords="201,37,365,77"/>
+<area shape="rect" id="Node000003" href="$d5/dcf/classkcenon_1_1thread_1_1callback__typed__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="511,5,701,45"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="379,45,510,32,511,37,379,51"/>
+<area shape="rect" id="Node000004" href="$d6/df3/classkcenon_1_1thread_1_1typed__job__t.html" title=" " alt="" coords="524,69,688,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="379,64,524,79,524,84,379,69"/>
+<area shape="rect" id="Node000002" href="$dc/df7/classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="5,45,152,70"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,55,201,55,201,60,166,60"/>
+<area shape="rect" id="Node000005" href="$d7/d93/classsimple__test__job.html" title=" " alt="" coords="751,77,876,102"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="702,96,751,95,751,100,702,101"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="702,78,751,78,751,84,702,83"/>
+</map>

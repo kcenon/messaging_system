@@ -1,0 +1,7 @@
+<map id="monitoring_system::monitorable_interface" name="monitoring_system::monitorable_interface">
+<area shape="rect" id="Node000001" title="Interface for components that can be monitored." alt="" coords="29,5,195,45"/>
+<area shape="rect" id="Node000002" href="$df/de4/classmonitoring__system_1_1monitorable__component.html" title="Base class providing default monitorable implementation." alt="" coords="21,93,203,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,59,115,93,109,93,109,59"/>
+<area shape="rect" id="Node000003" href="$d9/db4/classtest__monitorable__component.html" title="Test implementation of monitorable_interface." alt="" coords="5,181,219,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="115,147,115,181,109,181,109,147"/>
+</map>

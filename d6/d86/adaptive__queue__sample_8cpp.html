@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/thread_system/samples/adaptive_queue_sample/adaptive_queue_sample.cpp File Reference</title>
+<title>Messaging System: libraries/thread_system/examples/adaptive_queue_sample/adaptive_queue_sample.cpp File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('d6/d86/adaptive__queue__sample_8cpp.ht
 <div class="contents">
 <div class="textblock"><code>#include &quot;thread_base/lockfree/queues/adaptive_job_queue.h&quot;</code><br />
 <code>#include &quot;thread_base/jobs/callback_job.h&quot;</code><br />
-<code>#include &quot;logger/core/logger.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d1/d8c/logger_8h_source.html">logger/core/logger.h</a>&quot;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;atomic&gt;</code><br />
@@ -106,25 +106,82 @@ $(document).ready(function(){initNavTree('d6/d86/adaptive__queue__sample_8cpp.ht
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for adaptive_queue_sample.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d0/ddd/adaptive__queue__sample_8cpp__incl.png" border="0" usemap="#alibraries_2thread__system_2samples_2adaptive__queue__sample_2adaptive__queue__sample_8cpp" alt=""/></div>
-<map name="alibraries_2thread__system_2samples_2adaptive__queue__sample_2adaptive__queue__sample_8cpp" id="alibraries_2thread__system_2samples_2adaptive__queue__sample_2adaptive__queue__sample_8cpp">
-<area shape="rect" title=" " alt="" coords="523,5,790,60"/>
+<div class="center"><img src="../../d0/ddd/adaptive__queue__sample_8cpp__incl.png" border="0" usemap="#alibraries_2thread__system_2examples_2adaptive__queue__sample_2adaptive__queue__sample_8cpp" alt=""/></div>
+<map name="alibraries_2thread__system_2examples_2adaptive__queue__sample_2adaptive__queue__sample_8cpp" id="alibraries_2thread__system_2examples_2adaptive__queue__sample_2adaptive__queue__sample_8cpp">
+<area shape="rect" title=" " alt="" coords="693,5,959,60"/>
 <area shape="rect" title=" " alt="" coords="5,108,167,163"/>
-<area shape="poly" title=" " alt="" coords="524,53,363,76,181,110,180,105,362,71,523,48"/>
+<area shape="poly" title=" " alt="" coords="692,46,457,68,320,87,181,110,180,105,319,81,457,63,692,40"/>
 <area shape="rect" title=" " alt="" coords="191,115,381,155"/>
-<area shape="poly" title=" " alt="" coords="561,63,369,114,368,109,560,57"/>
-<area shape="rect" title=" " alt="" coords="405,123,556,148"/>
-<area shape="poly" title=" " alt="" coords="612,62,514,118,511,114,610,58"/>
-<area shape="rect" title=" " alt="" coords="581,123,645,148"/>
-<area shape="poly" title=" " alt="" coords="648,61,626,111,621,109,643,59"/>
-<area shape="rect" title=" " alt="" coords="669,123,732,148"/>
-<area shape="poly" title=" " alt="" coords="671,59,693,109,688,111,666,61"/>
-<area shape="rect" title=" " alt="" coords="757,123,823,148"/>
-<area shape="poly" title=" " alt="" coords="693,58,765,112,762,116,690,62"/>
-<area shape="rect" title=" " alt="" coords="847,123,914,148"/>
-<area shape="poly" title=" " alt="" coords="727,58,836,106,852,113,849,118,834,110,724,63"/>
-<area shape="rect" title=" " alt="" coords="938,123,1010,148"/>
-<area shape="poly" title=" " alt="" coords="775,57,851,79,927,106,945,114,942,119,925,110,849,84,773,63"/>
+<area shape="poly" title=" " alt="" coords="693,58,401,111,380,115,379,110,400,105,692,53"/>
+<area shape="rect" href="../../d1/d8c/logger_8h.html" title="High&#45;performance, thread&#45;safe logging system with asynchronous capabilities." alt="" coords="1176,123,1327,148"/>
+<area shape="poly" title=" " alt="" coords="937,57,1190,117,1189,122,936,63"/>
+<area shape="rect" title=" " alt="" coords="643,218,705,243"/>
+<area shape="poly" title=" " alt="" coords="808,62,693,209,689,205,803,59"/>
+<area shape="rect" title=" " alt="" coords="895,306,962,331"/>
+<area shape="poly" title=" " alt="" coords="838,59,923,293,917,294,833,61"/>
+<area shape="rect" title=" " alt="" coords="1982,218,2046,243"/>
+<area shape="poly" title=" " alt="" coords="960,40,1065,50,1174,64,1272,83,1311,93,1341,106,1357,119,1367,134,1376,148,1391,160,1441,177,1506,187,1663,196,1821,199,1889,202,1944,208,1970,214,1968,219,1943,213,1889,207,1821,205,1663,202,1506,193,1440,182,1389,165,1372,152,1362,137,1353,123,1338,110,1309,99,1271,88,1174,70,1064,56,959,46"/>
+<area shape="rect" title=" " alt="" coords="1061,387,1127,412"/>
+<area shape="poly" title=" " alt="" coords="744,63,622,110,559,140,501,175,456,213,439,232,428,253,422,273,423,294,431,315,447,337,458,344,477,351,536,364,707,381,898,391,1047,395,1046,400,898,396,707,386,535,369,476,356,455,349,443,341,426,318,418,295,417,272,423,251,435,229,452,209,498,171,556,136,620,105,742,58"/>
+<area shape="rect" title=" " alt="" coords="1402,123,1474,148"/>
+<area shape="poly" title=" " alt="" coords="960,37,1055,45,1162,59,1274,78,1384,105,1407,114,1405,119,1383,111,1273,83,1161,64,1054,51,959,43"/>
+<area shape="rect" title=" " alt="" coords="1678,387,1755,412"/>
+<area shape="poly" title=" " alt="" coords="1284,145,1335,160,1408,168,1505,172,1599,182,1637,193,1665,209,1681,226,1694,247,1711,291,1718,336,1720,373,1715,373,1713,337,1706,293,1689,249,1677,230,1662,213,1635,198,1598,188,1505,177,1408,173,1333,165,1282,151"/>
+<area shape="poly" title=" " alt="" coords="1176,143,1082,151,967,164,841,184,717,213,711,215,709,210,716,208,840,179,966,159,1082,145,1175,138"/>
+<area shape="poly" title=" " alt="" coords="1176,149,1048,174,992,192,971,202,956,213,943,230,936,251,930,292,925,292,930,250,939,228,952,209,968,197,990,187,1047,169,1175,144"/>
+<area shape="poly" title=" " alt="" coords="1287,145,1347,160,1440,173,1519,179,1656,180,1792,182,1871,191,1964,208,1975,211,1974,216,1963,213,1870,196,1791,188,1655,185,1519,185,1439,179,1345,165,1286,151"/>
+<area shape="rect" href="../../d5/de3/logger__system_2include_2kcenon_2logger_2interfaces_2logger__interface_8h.html" title=" " alt="" coords="1225,211,1408,251"/>
+<area shape="poly" title=" " alt="" coords="1262,146,1298,198,1293,201,1257,150"/>
+<area shape="rect" href="../../da/d5e/logger__types_8h.html" title="Common types and enumerations for logger system." alt="" coords="1128,306,1247,331"/>
+<area shape="poly" title=" " alt="" coords="1247,150,1216,212,1203,254,1194,293,1189,292,1198,253,1212,210,1242,147"/>
+<area shape="rect" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h.html" title=" " alt="" coords="729,218,840,243"/>
+<area shape="poly" title=" " alt="" coords="1195,151,854,218,853,213,1194,145"/>
+<area shape="rect" href="../../db/dd9/logger__metrics_8h.html" title="Logger performance metrics and monitoring." alt="" coords="966,218,1150,243"/>
+<area shape="poly" title=" " alt="" coords="1229,150,1095,214,1093,210,1226,146"/>
+<area shape="rect" href="../../d9/db2/include_2kcenon_2logger_2core_2di_2di__container__interface_8h.html" title="Dependency injection container interface." alt="" coords="1805,306,1999,331"/>
+<area shape="poly" title=" " alt="" coords="1288,146,1346,160,1456,166,1640,171,1821,182,1885,193,1908,200,1921,209,1932,229,1932,252,1927,275,1918,295,1913,293,1922,273,1927,251,1927,230,1917,212,1905,205,1884,198,1820,188,1640,176,1456,171,1346,165,1286,151"/>
+<area shape="rect" href="../../da/d24/include_2kcenon_2logger_2core_2di_2di__container__factory_8h.html" title="Factory for creating DI container instances." alt="" coords="1726,218,1907,243"/>
+<area shape="poly" title=" " alt="" coords="1289,146,1347,160,1447,178,1526,187,1606,195,1708,208,1740,213,1739,218,1707,213,1605,200,1526,192,1447,183,1345,165,1288,151"/>
+<area shape="rect" href="../../d3/d61/logger__system_2include_2kcenon_2logger_2core_2monitoring_2monitoring__interface_8h.html" title="Interface for logger monitoring and health checks." alt="" coords="1410,299,1578,339"/>
+<area shape="poly" title=" " alt="" coords="1295,146,1358,170,1392,187,1422,209,1456,246,1481,285,1477,288,1452,249,1419,213,1389,192,1356,174,1293,151"/>
+<area shape="rect" href="../../db/d89/include_2kcenon_2logger_2core_2monitoring_2monitoring__factory_8h.html" title="Factory for creating monitoring instances." alt="" coords="1483,211,1651,251"/>
+<area shape="poly" title=" " alt="" coords="1291,145,1491,204,1490,209,1289,151"/>
+<area shape="poly" title=" " alt="" coords="1409,240,1499,260,1546,276,1591,296,1615,315,1636,337,1689,376,1686,381,1632,341,1611,319,1589,301,1545,281,1498,265,1408,245"/>
+<area shape="rect" title=" " alt="" coords="1322,306,1386,331"/>
+<area shape="poly" title=" " alt="" coords="1327,250,1346,292,1341,294,1323,252"/>
+<area shape="rect" title=" " alt="" coords="1255,387,1314,412"/>
+<area shape="poly" title=" " alt="" coords="1316,252,1292,374,1287,373,1310,251"/>
+<area shape="poly" title=" " alt="" coords="1289,253,1218,300,1215,296,1286,249"/>
+<area shape="poly" title=" " alt="" coords="1203,329,1261,376,1258,380,1200,334"/>
+<area shape="poly" title=" " alt="" coords="1175,334,1120,380,1117,376,1172,329"/>
+<area shape="poly" title=" " alt="" coords="794,242,828,289,854,315,884,336,939,350,1038,365,1242,391,1241,396,1037,371,938,355,882,341,851,319,824,293,789,245"/>
+<area shape="rect" title=" " alt="" coords="457,306,544,331"/>
+<area shape="poly" title=" " alt="" coords="744,246,556,301,547,304,546,299,555,296,743,241"/>
+<area shape="rect" title=" " alt="" coords="568,306,628,331"/>
+<area shape="poly" title=" " alt="" coords="761,246,637,303,634,298,758,241"/>
+<area shape="rect" title=" " alt="" coords="653,306,727,331"/>
+<area shape="poly" title=" " alt="" coords="774,245,715,298,711,294,770,242"/>
+<area shape="rect" title=" " alt="" coords="752,306,820,331"/>
+<area shape="poly" title=" " alt="" coords="788,243,788,292,783,292,782,244"/>
+<area shape="poly" title=" " alt="" coords="1042,246,959,301,956,296,1039,241"/>
+<area shape="poly" title=" " alt="" coords="1051,245,1039,263,1028,287,1023,313,1027,338,1043,360,1063,377,1059,381,1039,363,1022,340,1017,313,1023,285,1035,261,1047,242"/>
+<area shape="rect" title=" " alt="" coords="1037,306,1103,331"/>
+<area shape="poly" title=" " alt="" coords="1062,243,1069,292,1064,293,1057,244"/>
+<area shape="poly" title=" " alt="" coords="1876,334,1757,384,1755,379,1874,329"/>
+<area shape="poly" title=" " alt="" coords="1813,334,1328,395,1327,390,1812,329"/>
+<area shape="rect" title=" " alt="" coords="1929,387,2016,412"/>
+<area shape="poly" title=" " alt="" coords="1914,330,1955,375,1951,378,1910,333"/>
+<area shape="rect" title=" " alt="" coords="1819,387,1905,412"/>
+<area shape="poly" title=" " alt="" coords="1898,333,1876,376,1872,373,1894,330"/>
+<area shape="rect" title=" " alt="" coords="1480,387,1604,412"/>
+<area shape="poly" title=" " alt="" coords="1850,334,1608,386,1607,381,1849,329"/>
+<area shape="poly" title=" " alt="" coords="1812,245,1733,376,1728,373,1808,242"/>
+<area shape="poly" title=" " alt="" coords="1830,242,1883,294,1879,298,1826,245"/>
+<area shape="poly" title=" " alt="" coords="1445,341,1328,385,1326,380,1443,336"/>
+<area shape="poly" title=" " alt="" coords="1410,339,1141,391,1140,386,1409,334"/>
+<area shape="poly" title=" " alt="" coords="1508,337,1530,373,1525,376,1503,340"/>
+<area shape="poly" title=" " alt="" coords="1589,249,1636,297,1701,374,1697,377,1632,300,1585,253"/>
+<area shape="poly" title=" " alt="" coords="1553,253,1521,290,1517,286,1549,249"/>
 </map>
 </div>
 </div>
@@ -161,11 +218,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00134">134</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00139">139</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00157">thread_module::adaptive_job_queue::dequeue()</a>, <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00116">thread_module::adaptive_job_queue::enqueue()</a>, <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00254">thread_module::adaptive_job_queue::get_current_type()</a>, <a class="el" href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00270">thread_module::result&lt; T &gt;::has_value()</a>, <a class="el" href="../../d2/d72/advanced__analysis__example_8cpp_source.html#l00022">running</a>, and <a class="el" href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00279">thread_module::result&lt; T &gt;::value()</a>.</p>
+<p class="reference">References <a class="el" href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00267">kcenon::thread::result&lt; T &gt;::has_value()</a>, and <a class="el" href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00276">kcenon::thread::result&lt; T &gt;::value()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00433">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00443">main()</a>.</p>
 
 </div>
 </div>
@@ -184,11 +241,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00233">233</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00242">242</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00185">thread_module::adaptive_job_queue::dequeue_batch()</a>, <a class="el" href="../../d5/d52/modular__structure_2core_2src_2thread__base_2jobs_2job_8cpp_source.html#l00150">thread_module::job::do_work()</a>, <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00145">thread_module::adaptive_job_queue::enqueue_batch()</a>, <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00254">thread_module::adaptive_job_queue::get_current_type()</a>, <a class="el" href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00315">thread_module::result&lt; T &gt;::get_error()</a>, and <a class="el" href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00162">thread_module::error::message()</a>.</p>
+<p class="reference">References <a class="el" href="../../de/d83/job_8cpp_source.html#l00150">kcenon::thread::job::do_work()</a>, <a class="el" href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00312">kcenon::thread::result&lt; T &gt;::get_error()</a>, and <a class="el" href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00159">kcenon::thread::error::message()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00433">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00443">main()</a>.</p>
 
 </div>
 </div>
@@ -207,9 +264,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00433">433</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00443">443</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00134">adaptive_behavior_example()</a>, <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00233">different_strategies_example()</a>, <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00281">performance_monitoring_example()</a>, <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00048">strategy_comparison_example()</a>, and <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00346">web_server_simulation()</a>.</p>
+<p class="reference">References <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00139">adaptive_behavior_example()</a>, <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00242">different_strategies_example()</a>, <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00292">performance_monitoring_example()</a>, <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00048">strategy_comparison_example()</a>, and <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00357">web_server_simulation()</a>.</p>
 
 </div>
 </div>
@@ -228,11 +285,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00281">281</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00292">292</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00116">thread_module::adaptive_job_queue::enqueue()</a>, and <a class="el" href="../../d2/d72/advanced__analysis__example_8cpp_source.html#l00022">running</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00433">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00443">main()</a>.</p>
 
 </div>
 </div>
@@ -253,9 +308,9 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00048">48</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00157">thread_module::adaptive_job_queue::dequeue()</a>, <a class="el" href="../../d5/d52/modular__structure_2core_2src_2thread__base_2jobs_2job_8cpp_source.html#l00150">thread_module::job::do_work()</a>, <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00116">thread_module::adaptive_job_queue::enqueue()</a>, <a class="el" href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00270">thread_module::result&lt; T &gt;::has_value()</a>, and <a class="el" href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00279">thread_module::result&lt; T &gt;::value()</a>.</p>
+<p class="reference">References <a class="el" href="../../de/d83/job_8cpp_source.html#l00150">kcenon::thread::job::do_work()</a>, <a class="el" href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00267">kcenon::thread::result&lt; T &gt;::has_value()</a>, and <a class="el" href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00276">kcenon::thread::result&lt; T &gt;::value()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00433">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00443">main()</a>.</p>
 
 </div>
 </div>
@@ -274,11 +329,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00346">346</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00357">357</a> of file <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html">adaptive_queue_sample.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00157">thread_module::adaptive_job_queue::dequeue()</a>, <a class="el" href="../../df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp_source.html#l00116">thread_module::adaptive_job_queue::enqueue()</a>, <a class="el" href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00315">thread_module::result&lt; T &gt;::get_error()</a>, and <a class="el" href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00162">thread_module::error::message()</a>.</p>
+<p class="reference">References <a class="el" href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00312">kcenon::thread::result&lt; T &gt;::get_error()</a>, and <a class="el" href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00159">kcenon::thread::error::message()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00433">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp_source.html#l00443">main()</a>.</p>
 
 </div>
 </div>
@@ -287,7 +342,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_d5639982d944765b2c04ab5f88dacbbf.html">samples</a></li><li class="navelem"><a class="el" href="../../dir_fd7fe39196652de8a5b3c576c43d4959.html">adaptive_queue_sample</a></li><li class="navelem"><a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp.html">adaptive_queue_sample.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_62aa39980ad34ebd1eec6b25d2703f9b.html">examples</a></li><li class="navelem"><a class="el" href="../../dir_4166d55fc4ca86b5ffd7e379936a9d54.html">adaptive_queue_sample</a></li><li class="navelem"><a class="el" href="../../d6/d86/adaptive__queue__sample_8cpp.html">adaptive_queue_sample.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

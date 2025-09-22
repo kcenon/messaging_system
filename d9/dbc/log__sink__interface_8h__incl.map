@@ -1,0 +1,15 @@
+<map id="libraries/logger_system/include/kcenon/logger/interfaces/log_sink_interface.h" name="libraries/logger_system/include/kcenon/logger/interfaces/log_sink_interface.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="116,5,343,60"/>
+<area shape="rect" id="Node000002" href="$d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h.html" title=" " alt="" coords="156,108,303,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,60,232,94,227,94,227,60"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,196,64,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="184,150,77,193,75,188,182,146"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="89,196,175,221"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="207,150,159,189,155,185,204,146"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="199,196,259,221"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="232,148,232,182,227,182,227,148"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="284,196,359,221"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="253,146,299,185,295,189,250,150"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="383,196,451,221"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="275,146,378,188,376,193,273,150"/>
+</map>

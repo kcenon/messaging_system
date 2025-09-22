@@ -1,0 +1,5 @@
+<map id="database::redis_manager" name="database::redis_manager">
+<area shape="rect" id="Node000001" title="Manages Redis database operations." alt="" coords="6,79,193,104"/>
+<area shape="rect" id="Node000002" href="$d5/df0/classdatabase_1_1database__base.html" title="Abstract base class defining common database operations." alt="" coords="5,5,193,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,44,102,79,97,79,97,44"/>
+</map>

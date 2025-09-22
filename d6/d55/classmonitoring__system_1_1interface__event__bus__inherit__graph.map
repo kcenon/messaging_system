@@ -1,0 +1,5 @@
+<map id="monitoring_system::interface_event_bus" name="monitoring_system::interface_event_bus">
+<area shape="rect" id="Node000001" title="Pure virtual interface for event bus implementation." alt="" coords="5,5,161,45"/>
+<area shape="rect" id="Node000002" href="$dd/d62/classmonitoring__system_1_1event__bus.html" title="Thread&#45;safe event bus implementation." alt="" coords="5,93,161,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,59,86,93,81,93,81,59"/>
+</map>

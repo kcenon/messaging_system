@@ -1,0 +1,13 @@
+<map id="libraries/monitoring_system/tests/test_interfaces_compile.cpp" name="libraries/monitoring_system/tests/test_interfaces_compile.cpp">
+<area shape="rect" id="Node000001" title="Compilation test for new monitoring interfaces." alt="" coords="402,5,617,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,168,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="402,60,182,109,181,103,401,55"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="192,108,400,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="450,63,352,105,350,100,448,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="424,108,595,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="512,60,512,94,507,94,507,60"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="619,115,696,141"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="552,58,629,106,626,110,550,62"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="720,115,800,141"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="581,58,718,108,716,113,579,63"/>
+</map>

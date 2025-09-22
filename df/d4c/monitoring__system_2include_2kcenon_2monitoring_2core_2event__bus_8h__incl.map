@@ -1,0 +1,64 @@
+<map id="libraries/monitoring_system/include/kcenon/monitoring/core/event_bus.h" name="libraries/monitoring_system/include/kcenon/monitoring/core/event_bus.h">
+<area shape="rect" id="Node000001" title="Lightweight event bus implementation for monitoring system." alt="" coords="742,5,954,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,91,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="742,41,614,48,455,62,282,82,110,111,95,114,94,109,109,105,281,77,455,56,613,43,742,35"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="166,196,213,221"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="742,41,657,48,559,61,457,81,357,111,317,128,278,149,216,190,213,186,276,144,314,123,355,105,455,76,558,56,656,43,742,35"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="237,196,304,221"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="742,45,595,67,515,86,437,110,397,128,359,149,298,190,295,186,357,145,395,123,435,106,513,81,594,62,742,40"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="328,196,395,221"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="742,49,628,72,567,89,509,110,474,128,441,149,387,189,383,185,438,144,471,123,507,106,566,84,627,67,741,44"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="1353,115,1495,141"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="955,46,1132,72,1334,105,1358,110,1357,115,1333,111,1132,77,954,51"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="1235,343,1301,368"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="954,36,1011,44,1072,57,1134,77,1191,106,1235,138,1263,173,1280,215,1292,269,1291,302,1282,331,1277,329,1286,301,1287,270,1275,216,1258,176,1231,142,1188,110,1132,82,1071,62,1010,49,954,41"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="419,196,506,221"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="742,50,651,72,605,89,561,110,537,127,515,147,481,186,477,183,512,143,534,123,559,106,603,84,650,67,741,45"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="395,269,472,295"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="742,44,484,69,360,87,310,98,272,111,232,126,202,142,177,163,156,197,151,209,156,220,170,231,191,241,251,257,319,268,381,275,380,280,318,273,250,263,190,246,167,236,151,223,146,209,151,195,173,159,199,137,230,121,270,105,308,93,359,82,484,63,742,38"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="816,196,880,221"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="851,60,851,183,845,183,845,60"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1519,115,1582,141"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="955,33,1070,40,1209,52,1360,73,1509,105,1516,108,1515,113,1507,111,1359,79,1209,57,1070,45,954,39"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="1607,115,1671,141"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="954,32,1085,37,1246,48,1421,70,1510,86,1595,105,1603,108,1602,113,1594,111,1509,91,1421,76,1245,54,1085,42,954,37"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="905,196,991,221"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="865,59,937,183,932,186,861,62"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="1015,196,1139,221"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="884,58,1053,186,1050,190,881,62"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="1163,196,1226,221"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="901,58,1161,188,1159,192,899,63"/>
+<area shape="rect" id="Node000016" href="$d6/d72/kcenon_2monitoring_2interfaces_2event__bus__interface_8h.html" title="Event bus interface for decoupled component communication." alt="" coords="573,108,713,148"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="791,62,698,105,696,100,789,58"/>
+<area shape="rect" id="Node000018" href="$d9/d68/kcenon_2monitoring_2core_2result__types_8h.html" title="Result pattern type definitions for monitoring system." alt="" coords="633,196,791,221"/>
+<area shape="poly" id="edge37_Node000001_Node000018" title=" " alt="" coords="829,62,731,187,727,184,825,59"/>
+<area shape="rect" id="Node000019" href="$d9/d83/monitoring__system_2include_2kcenon_2monitoring_2core_2error__codes_8h.html" title="Monitoring system specific error codes." alt="" coords="1166,269,1277,295"/>
+<area shape="poly" id="edge38_Node000001_Node000019" title=" " alt="" coords="955,42,1030,59,1110,88,1148,108,1183,132,1215,161,1241,195,1247,210,1247,227,1237,258,1232,256,1242,226,1241,211,1236,197,1211,164,1180,136,1145,112,1108,93,1029,64,954,47"/>
+<area shape="poly" id="edge16_Node000016_Node000003" title=" " alt="" coords="573,140,418,162,227,199,226,194,417,157,572,135"/>
+<area shape="poly" id="edge17_Node000016_Node000004" title=" " alt="" coords="573,145,318,198,317,193,572,140"/>
+<area shape="poly" id="edge18_Node000016_Node000005" title=" " alt="" coords="576,151,409,197,408,192,575,145"/>
+<area shape="poly" id="edge19_Node000016_Node000008" title=" " alt="" coords="601,150,503,193,501,188,598,146"/>
+<area shape="poly" id="edge20_Node000016_Node000009" title=" " alt="" coords="619,150,519,223,463,263,460,259,516,219,616,146"/>
+<area shape="poly" id="edge21_Node000016_Node000010" title=" " alt="" coords="693,146,806,188,804,193,691,151"/>
+<area shape="poly" id="edge23_Node000016_Node000013" title=" " alt="" coords="713,145,892,190,891,195,712,150"/>
+<area shape="poly" id="edge24_Node000016_Node000014" title=" " alt="" coords="713,139,1002,191,1001,196,713,145"/>
+<area shape="poly" id="edge25_Node000016_Node000015" title=" " alt="" coords="713,133,906,155,1026,172,1150,194,1149,199,1025,178,906,160,713,138"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="983,343,1041,368"/>
+<area shape="poly" id="edge22_Node000016_Node000017" title=" " alt="" coords="626,150,594,185,560,228,537,267,533,283,537,293,558,304,599,314,721,330,969,349,969,355,720,336,598,319,556,309,533,296,528,283,532,266,555,225,590,182,622,146"/>
+<area shape="poly" id="edge26_Node000016_Node000018" title=" " alt="" coords="661,146,694,184,690,187,657,150"/>
+<area shape="poly" id="edge32_Node000018_Node000009" title=" " alt="" coords="668,224,486,270,484,265,667,219"/>
+<area shape="poly" id="edge33_Node000018_Node000017" title=" " alt="" coords="782,219,907,242,959,255,987,267,998,281,1006,297,1013,328,1008,329,1001,298,994,284,984,271,957,260,906,248,781,224"/>
+<area shape="poly" id="edge27_Node000018_Node000019" title=" " alt="" coords="792,217,1153,266,1152,272,791,222"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="658,269,726,295"/>
+<area shape="poly" id="edge30_Node000018_Node000020" title=" " alt="" coords="711,222,701,257,696,255,706,221"/>
+<area shape="rect" id="Node000021" title=" " alt="" coords="751,269,825,295"/>
+<area shape="poly" id="edge31_Node000018_Node000021" title=" " alt="" coords="726,219,767,258,764,262,722,223"/>
+<area shape="rect" id="Node000022" title=" " alt="" coords="850,269,974,295"/>
+<area shape="poly" id="edge34_Node000018_Node000022" title=" " alt="" coords="745,219,867,262,865,267,743,224"/>
+<area shape="rect" id="Node000023" title=" " alt="" coords="1050,269,1142,295"/>
+<area shape="poly" id="edge35_Node000018_Node000023" title=" " alt="" coords="774,219,1037,267,1036,272,773,224"/>
+<area shape="rect" id="Node000024" title=" " alt="" coords="547,269,634,295"/>
+<area shape="poly" id="edge36_Node000018_Node000024" title=" " alt="" coords="694,224,623,265,621,260,691,219"/>
+<area shape="poly" id="edge28_Node000019_Node000007" title=" " alt="" coords="1231,294,1255,330,1251,333,1227,296"/>
+<area shape="poly" id="edge29_Node000019_Node000017" title=" " alt="" coords="1189,297,1055,342,1054,337,1187,292"/>
+</map>

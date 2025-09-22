@@ -1,5 +1,6 @@
 <map id="platform_test::PlatformSpecificTest" name="platform_test::PlatformSpecificTest">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,79,256,104"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="80,5,181,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,44,133,79,128,79,128,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,44,126,78,121,79,119,45"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="142,45,140,79,135,78,137,44"/>
 </map>

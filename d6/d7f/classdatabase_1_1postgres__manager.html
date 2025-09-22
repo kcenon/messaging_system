@@ -91,7 +91,6 @@ $(document).ready(function(){initNavTree('d6/d7f/classdatabase_1_1postgres__mana
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="../../dc/d94/classdatabase_1_1postgres__manager-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">database::postgres_manager Class Reference</div></div>
@@ -123,12 +122,6 @@ Collaboration diagram for database::postgres_manager:</div>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/dbc/structdatabase_1_1postgres__manager_1_1connection__health.html">connection_health</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get connection health status.  <a href="../../db/dbc/structdatabase_1_1postgres__manager_1_1connection__health.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2fb6a01c21ad878bfdb0c87815ecbf09" id="r_a2fb6a01c21ad878bfdb0c87815ecbf09"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a2fb6a01c21ad878bfdb0c87815ecbf09">postgres_manager</a> (void)</td></tr>
@@ -137,7 +130,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7cd71674e518a36723c3f5760a2fc225" id="r_a7cd71674e518a36723c3f5760a2fc225"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a7cd71674e518a36723c3f5760a2fc225">~postgres_manager</a> (void)</td></tr>
 <tr class="memdesc:a7cd71674e518a36723c3f5760a2fc225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <br /></td></tr>
 <tr class="separator:a7cd71674e518a36723c3f5760a2fc225"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a174597da4a791e4899467892e7c6904e" id="r_a174597da4a791e4899467892e7c6904e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/df2/namespacedatabase.html#ad983a92aeb2e850207432d806579489b">database_types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a174597da4a791e4899467892e7c6904e">database_type</a> (void) override</td></tr>
+<tr class="memitem:a174597da4a791e4899467892e7c6904e" id="r_a174597da4a791e4899467892e7c6904e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4">database_types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a174597da4a791e4899467892e7c6904e">database_type</a> (void) override</td></tr>
 <tr class="memdesc:a174597da4a791e4899467892e7c6904e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the specific type of the database.  <br /></td></tr>
 <tr class="separator:a174597da4a791e4899467892e7c6904e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5afea6d413dbc295acc6a250ff470210" id="r_a5afea6d413dbc295acc6a250ff470210"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a5afea6d413dbc295acc6a250ff470210">connect</a> (const std::string &amp;connect_string) override</td></tr>
@@ -155,38 +148,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abd7010caac3b0b91c24081c026595063" id="r_abd7010caac3b0b91c24081c026595063"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#abd7010caac3b0b91c24081c026595063">delete_query</a> (const std::string &amp;query_string) override</td></tr>
 <tr class="memdesc:abd7010caac3b0b91c24081c026595063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a DELETE query on the connected PostgreSQL database.  <br /></td></tr>
 <tr class="separator:abd7010caac3b0b91c24081c026595063"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfbf903c64f29d0819e082dc652efcc0" id="r_abfbf903c64f29d0819e082dc652efcc0"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="../../d9/dad/classcontainer__module_1_1value__container.html">container_module::value_container</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#abfbf903c64f29d0819e082dc652efcc0">select_query</a> (const std::string &amp;query_string) override</td></tr>
-<tr class="memdesc:abfbf903c64f29d0819e082dc652efcc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a SELECT query on the connected PostgreSQL database and returns the resulting data.  <br /></td></tr>
-<tr class="separator:abfbf903c64f29d0819e082dc652efcc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3121587c7035addfa3c3d10765bdb758" id="r_a3121587c7035addfa3c3d10765bdb758"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/df2/namespacedatabase.html#aefd19fdc143c6142e8e67853b536103a">database_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a3121587c7035addfa3c3d10765bdb758">select_query</a> (const std::string &amp;query_string) override</td></tr>
+<tr class="memdesc:a3121587c7035addfa3c3d10765bdb758"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a SELECT query on the connected PostgreSQL database and returns the resulting data.  <br /></td></tr>
+<tr class="separator:a3121587c7035addfa3c3d10765bdb758"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfc754bc05abb26b3e89dcabeae5e323" id="r_acfc754bc05abb26b3e89dcabeae5e323"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#acfc754bc05abb26b3e89dcabeae5e323">execute_query</a> (const std::string &amp;query_string) override</td></tr>
+<tr class="memdesc:acfc754bc05abb26b3e89dcabeae5e323"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a general SQL query (DDL, DML) on PostgreSQL.  <br /></td></tr>
+<tr class="separator:acfc754bc05abb26b3e89dcabeae5e323"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55769bfa4bc67285afe675acedb285c5" id="r_a55769bfa4bc67285afe675acedb285c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a55769bfa4bc67285afe675acedb285c5">disconnect</a> (void) override</td></tr>
 <tr class="memdesc:a55769bfa4bc67285afe675acedb285c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the connection to the PostgreSQL database.  <br /></td></tr>
 <tr class="separator:a55769bfa4bc67285afe675acedb285c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd0a9ec47711e02359a89bfa4844cfa7" id="r_afd0a9ec47711e02359a89bfa4844cfa7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#afd0a9ec47711e02359a89bfa4844cfa7">begin_transaction</a> ()</td></tr>
-<tr class="memdesc:afd0a9ec47711e02359a89bfa4844cfa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begin a database transaction.  <br /></td></tr>
-<tr class="separator:afd0a9ec47711e02359a89bfa4844cfa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2d439bb56252e851e534e90f608252f" id="r_af2d439bb56252e851e534e90f608252f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#af2d439bb56252e851e534e90f608252f">commit_transaction</a> ()</td></tr>
-<tr class="memdesc:af2d439bb56252e851e534e90f608252f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commit the current transaction.  <br /></td></tr>
-<tr class="separator:af2d439bb56252e851e534e90f608252f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae632c60c87cc43005e57bbdb22d53abd" id="r_ae632c60c87cc43005e57bbdb22d53abd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#ae632c60c87cc43005e57bbdb22d53abd">rollback_transaction</a> ()</td></tr>
-<tr class="memdesc:ae632c60c87cc43005e57bbdb22d53abd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rollback the current transaction.  <br /></td></tr>
-<tr class="separator:ae632c60c87cc43005e57bbdb22d53abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9f2a08ce568aff2eb0c54a7383cb7f3" id="r_aa9f2a08ce568aff2eb0c54a7383cb7f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#aa9f2a08ce568aff2eb0c54a7383cb7f3">in_transaction</a> () const</td></tr>
-<tr class="memdesc:aa9f2a08ce568aff2eb0c54a7383cb7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if currently in a transaction.  <br /></td></tr>
-<tr class="separator:aa9f2a08ce568aff2eb0c54a7383cb7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0670e7764c51d72d0295b1feee88af00" id="r_a0670e7764c51d72d0295b1feee88af00"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a0670e7764c51d72d0295b1feee88af00">execute_batch</a> (const std::vector&lt; std::string &gt; &amp;queries)</td></tr>
-<tr class="memdesc:a0670e7764c51d72d0295b1feee88af00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute batch operations in a single transaction.  <br /></td></tr>
-<tr class="separator:a0670e7764c51d72d0295b1feee88af00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5791193a48c712af56870b90e207e43d" id="r_a5791193a48c712af56870b90e207e43d"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="../../d9/dad/classcontainer__module_1_1value__container.html">container_module::value_container</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a5791193a48c712af56870b90e207e43d">execute_prepared</a> (const std::string &amp;query_string, const std::vector&lt; std::string &gt; &amp;parameters)</td></tr>
-<tr class="memdesc:a5791193a48c712af56870b90e207e43d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute parameterized query with prepared statements.  <br /></td></tr>
-<tr class="separator:a5791193a48c712af56870b90e207e43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1154596decdb86451f62f4617a3d399c" id="r_a1154596decdb86451f62f4617a3d399c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../db/dbc/structdatabase_1_1postgres__manager_1_1connection__health.html">connection_health</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a1154596decdb86451f62f4617a3d399c">get_connection_health</a> () const</td></tr>
-<tr class="separator:a1154596decdb86451f62f4617a3d399c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abae23501361eebec8c7e3d4e43635d80" id="r_abae23501361eebec8c7e3d4e43635d80"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#abae23501361eebec8c7e3d4e43635d80">ping</a> ()</td></tr>
-<tr class="memdesc:abae23501361eebec8c7e3d4e43635d80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test database connection with ping.  <br /></td></tr>
-<tr class="separator:abae23501361eebec8c7e3d4e43635d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3a6eedefa002123b033cc4546bafe39" id="r_ac3a6eedefa002123b033cc4546bafe39"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#ac3a6eedefa002123b033cc4546bafe39">reset_connection</a> ()</td></tr>
-<tr class="memdesc:ac3a6eedefa002123b033cc4546bafe39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset connection if it's in a bad state.  <br /></td></tr>
-<tr class="separator:ac3a6eedefa002123b033cc4546bafe39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classdatabase_1_1database__base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classdatabase_1_1database__base')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html">database::database_base</a></td></tr>
 <tr class="memitem:a5e6da86fe2327a8ea071bbcff7227863 inherit pub_methods_classdatabase_1_1database__base" id="r_a5e6da86fe2327a8ea071bbcff7227863"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a5e6da86fe2327a8ea071bbcff7227863">database_base</a> (void)</td></tr>
 <tr class="memdesc:a5e6da86fe2327a8ea071bbcff7227863 inherit pub_methods_classdatabase_1_1database__base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
@@ -199,7 +169,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Manages PostgreSQL database operations. </p>
 <p>This class provides an implementation of the <code><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html" title="Abstract base class defining common database operations.">database_base</a></code> interface for PostgreSQL databases. It defines methods for connecting, querying, and disconnecting from a PostgreSQL database. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/d94/postgres__manager_8h_source.html#l00050">50</a> of file <a class="el" href="../../d6/d94/postgres__manager_8h_source.html">postgres_manager.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/d94/postgres__manager_8h_source.html#l00047">47</a> of file <a class="el" href="../../d6/d94/postgres__manager_8h_source.html">postgres_manager.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2fb6a01c21ad878bfdb0c87815ecbf09" name="a2fb6a01c21ad878bfdb0c87815ecbf09"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2fb6a01c21ad878bfdb0c87815ecbf09">&#9670;&#160;</a></span>postgres_manager()</h2>
@@ -219,7 +189,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Default constructor. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00043">43</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00047">47</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -249,51 +219,13 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00045">45</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00049">49</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00262">disconnect()</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="afd0a9ec47711e02359a89bfa4844cfa7" name="afd0a9ec47711e02359a89bfa4844cfa7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd0a9ec47711e02359a89bfa4844cfa7">&#9670;&#160;</a></span>begin_transaction()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool database::postgres_manager::begin_transaction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Begin a database transaction. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if transaction started successfully </dd></dl>
-
-</div>
-</div>
-<a id="af2d439bb56252e851e534e90f608252f" name="af2d439bb56252e851e534e90f608252f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2d439bb56252e851e534e90f608252f">&#9670;&#160;</a></span>commit_transaction()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool database::postgres_manager::commit_transaction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Commit the current transaction. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if transaction committed successfully </dd></dl>
-
-</div>
-</div>
 <a id="a5afea6d413dbc295acc6a250ff470210" name="a5afea6d413dbc295acc6a250ff470210"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5afea6d413dbc295acc6a250ff470210">&#9670;&#160;</a></span>connect()</h2>
 
@@ -329,9 +261,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#ac0bcd9f681b3ebad418972d1b2555876">database::database_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00052">52</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
-
-<p class="reference">References <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html#l00279">utility_module::convert_string::utf8_to_system()</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -371,7 +301,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a036f2347aa499e5546ce8aa5573da7c4">database::database_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00075">75</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00088">88</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -385,7 +315,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../da/df2/namespacedatabase.html#ad983a92aeb2e850207432d806579489b">database_types</a> database::postgres_manager::database_type </td>
+          <td class="memname"><a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4">database_types</a> database::postgres_manager::database_type </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -404,9 +334,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a432438602c7a844466f8970c99cb9521">database::database_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00047">47</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00054">54</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../da/df2/namespacedatabase.html#ad983a92aeb2e850207432d806579489bae8a48653851e28c69d0506508fb27fc5">database::postgres</a>.</p>
+<p class="reference">References <a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4ae8a48653851e28c69d0506508fb27fc5">database::postgres</a>.</p>
 
 </div>
 </div>
@@ -445,7 +375,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a87010caaf7873802e4e096f76ca76273">database::database_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00132">132</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00165">165</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -478,109 +408,48 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a3e351c68eefbbaa17e957319e44f2607">database::database_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00147">147</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00262">262</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00049">~postgres_manager()</a>.</p>
 
 </div>
 </div>
-<a id="a0670e7764c51d72d0295b1feee88af00" name="a0670e7764c51d72d0295b1feee88af00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0670e7764c51d72d0295b1feee88af00">&#9670;&#160;</a></span>execute_batch()</h2>
+<a id="acfc754bc05abb26b3e89dcabeae5e323" name="acfc754bc05abb26b3e89dcabeae5e323"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfc754bc05abb26b3e89dcabeae5e323">&#9670;&#160;</a></span>execute_query()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int database::postgres_manager::execute_batch </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>queries</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Execute batch operations in a single transaction. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">queries</td><td>Vector of SQL queries to execute </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Number of successfully executed queries </dd></dl>
-
-</div>
-</div>
-<a id="a5791193a48c712af56870b90e207e43d" name="a5791193a48c712af56870b90e207e43d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5791193a48c712af56870b90e207e43d">&#9670;&#160;</a></span>execute_prepared()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="../../d9/dad/classcontainer__module_1_1value__container.html">container_module::value_container</a> &gt; database::postgres_manager::execute_prepared </td>
+          <td class="memname">bool database::postgres_manager::execute_query </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>query_string</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>query_string</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>parameters</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Execute parameterized query with prepared statements. </p>
+<p>Executes a general SQL query (DDL, DML) on PostgreSQL. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">query_string</td><td>SQL query with parameter placeholders </td></tr>
-    <tr><td class="paramname">parameters</td><td>Vector of parameter values </td></tr>
+    <tr><td class="paramname">query_string</td><td>The SQL query string to execute. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Query result container </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the query executed successfully, <code>false</code> otherwise. </dd></dl>
 
-</div>
-</div>
-<a id="a1154596decdb86451f62f4617a3d399c" name="a1154596decdb86451f62f4617a3d399c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1154596decdb86451f62f4617a3d399c">&#9670;&#160;</a></span>get_connection_health()</h2>
+<p>Implements <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a507beb6d6428b7777facb42664afd860">database::database_base</a>.</p>
 
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="../../db/dbc/structdatabase_1_1postgres__manager_1_1connection__health.html">connection_health</a> database::postgres_manager::get_connection_health </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa9f2a08ce568aff2eb0c54a7383cb7f3" name="aa9f2a08ce568aff2eb0c54a7383cb7f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9f2a08ce568aff2eb0c54a7383cb7f3">&#9670;&#160;</a></span>in_transaction()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool database::postgres_manager::in_transaction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Check if currently in a transaction. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if in transaction </dd></dl>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00291">291</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -619,72 +488,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#af53f7189efabf29ca58fda1a2b15e132">database::database_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00122">122</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00155">155</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
 
 </div>
 </div>
-<a id="abae23501361eebec8c7e3d4e43635d80" name="abae23501361eebec8c7e3d4e43635d80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abae23501361eebec8c7e3d4e43635d80">&#9670;&#160;</a></span>ping()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool database::postgres_manager::ping </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Test database connection with ping. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if connection is alive </dd></dl>
-
-</div>
-</div>
-<a id="ac3a6eedefa002123b033cc4546bafe39" name="ac3a6eedefa002123b033cc4546bafe39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3a6eedefa002123b033cc4546bafe39">&#9670;&#160;</a></span>reset_connection()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool database::postgres_manager::reset_connection </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reset connection if it's in a bad state. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if reset was successful </dd></dl>
-
-</div>
-</div>
-<a id="ae632c60c87cc43005e57bbdb22d53abd" name="ae632c60c87cc43005e57bbdb22d53abd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae632c60c87cc43005e57bbdb22d53abd">&#9670;&#160;</a></span>rollback_transaction()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool database::postgres_manager::rollback_transaction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Rollback the current transaction. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if transaction rolled back successfully </dd></dl>
-
-</div>
-</div>
-<a id="abfbf903c64f29d0819e082dc652efcc0" name="abfbf903c64f29d0819e082dc652efcc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfbf903c64f29d0819e082dc652efcc0">&#9670;&#160;</a></span>select_query()</h2>
+<a id="a3121587c7035addfa3c3d10765bdb758" name="a3121587c7035addfa3c3d10765bdb758"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3121587c7035addfa3c3d10765bdb758">&#9670;&#160;</a></span>select_query()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -693,7 +502,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt; <a class="el" href="../../d9/dad/classcontainer__module_1_1value__container.html">container_module::value_container</a> &gt; database::postgres_manager::select_query </td>
+          <td class="memname"><a class="el" href="../../da/df2/namespacedatabase.html#aefd19fdc143c6142e8e67853b536103a">database_result</a> database::postgres_manager::select_query </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>query_string</em></td><td>)</td>
@@ -714,11 +523,11 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A shared pointer to a <code><a class="el" href="../../d9/dad/classcontainer__module_1_1value__container.html" title="A high-level container for messages, including source/target IDs, message type, and a list of values ...">container_module::value_container</a></code> object that contains the query results. May be null or empty if no results are returned or if an error occurs. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A database_result containing rows of data as key-value pairs. Returns empty vector if query fails or returns no results. </dd></dl>
 
-<p>Implements <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#ad92ad8ba5deebf1fca43d20d093bdc3a">database::database_base</a>.</p>
+<p>Implements <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a7f746539eac7ca8d1c438628e6cfe168">database::database_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00137">137</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00170">170</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
 
 </div>
 </div>
@@ -757,13 +566,13 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#ae95eef359a4bea2115a32c5d08c93699">database::database_base</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00160">160</a> of file <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>libraries/database_system/<a class="el" href="../../d6/d94/postgres__manager_8h_source.html">postgres_manager.h</a></li>
-<li>libraries/database_system/<a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a></li>
+<li>libraries/database_system/database/<a class="el" href="../../d6/d94/postgres__manager_8h_source.html">postgres_manager.h</a></li>
+<li>libraries/database_system/database/<a class="el" href="../../da/d57/postgres__manager_8cpp_source.html">postgres_manager.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

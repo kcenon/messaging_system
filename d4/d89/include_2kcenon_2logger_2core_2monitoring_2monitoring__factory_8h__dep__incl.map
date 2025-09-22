@@ -1,0 +1,41 @@
+<map id="libraries/logger_system/include/kcenon/logger/core/monitoring/monitoring_factory.h" name="libraries/logger_system/include/kcenon/logger/core/monitoring/monitoring_factory.h">
+<area shape="rect" id="Node000001" title="Factory for creating monitoring instances." alt="" coords="1966,5,2170,75"/>
+<area shape="rect" id="Node000002" href="$d1/d8c/logger_8h.html" title="High&#45;performance, thread&#45;safe logging system with asynchronous capabilities." alt="" coords="1981,123,2155,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="2071,88,2071,122,2065,122,2065,88"/>
+<area shape="rect" id="Node000003" href="$d9/d6e/advanced__features__demo_8cpp.html" title=" " alt="" coords="5,233,224,287"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1967,155,1604,161,1103,173,602,195,394,210,236,228,201,235,200,230,236,223,393,205,602,190,1103,168,1604,155,1967,150"/>
+<area shape="rect" id="Node000004" href="$d3/dee/logger__system_2examples_2basic__usage_8cpp.html" title=" " alt="" coords="249,240,450,280"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="1967,155,1644,162,1209,175,777,197,597,211,462,228,403,242,402,237,461,223,597,206,776,191,1209,170,1644,157,1967,150"/>
+<area shape="rect" id="Node000005" href="$de/d56/distributed__logging__demo_8cpp.html" title=" " alt="" coords="474,233,649,287"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="1967,156,1680,163,1303,176,931,197,777,211,661,228,631,235,630,230,659,223,776,206,931,192,1303,171,1680,157,1967,150"/>
+<area shape="rect" id="Node000006" href="$dd/d8a/metrics__demo_8cpp.html" title=" " alt="" coords="673,240,887,280"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="1967,153,1769,156,1504,166,1203,189,1050,206,901,228,839,243,837,237,899,223,1049,201,1203,183,1503,161,1769,151,1967,148"/>
+<area shape="rect" id="Node000007" href="$d3/d47/migration__example_8cpp.html" title="Example demonstrating migration from Logger System v1 to v2." alt="" coords="912,240,1160,280"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="1967,157,1813,164,1614,178,1394,198,1172,228,1104,243,1103,237,1172,223,1393,193,1614,172,1812,159,1967,152"/>
+<area shape="rect" id="Node000008" href="$d1/dcb/security__demo_8cpp.html" title=" " alt="" coords="1185,240,1402,280"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="1967,160,1715,184,1564,203,1414,228,1354,243,1353,237,1413,223,1563,198,1714,178,1967,155"/>
+<area shape="rect" id="Node000009" href="$d1/d87/logger__adapter_8h.html" title=" " alt="" coords="1426,233,1622,287"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="1967,167,1810,192,1634,228,1606,235,1605,230,1633,223,1809,187,1967,162"/>
+<area shape="rect" id="Node000010" href="$d3/d30/logger_8cpp.html" title=" " alt="" coords="1646,240,1821,280"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="1972,184,1834,228,1790,243,1788,237,1833,223,1971,179"/>
+<area shape="rect" id="Node000011" href="$d9/deb/integration__test_8cpp.html" title=" " alt="" coords="1845,240,2037,280"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="2028,189,1965,242,1962,238,2024,185"/>
+<area shape="rect" id="Node000012" href="$d6/d86/adaptive__queue__sample_8cpp.html" title=" " alt="" coords="2061,233,2328,287"/>
+<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="2112,185,2165,230,2162,234,2108,189"/>
+<area shape="rect" id="Node000013" href="$d1/ddb/hazard__pointer__sample_8cpp.html" title=" " alt="" coords="2353,233,2613,287"/>
+<area shape="poly" id="edge12_Node000002_Node000013" title=" " alt="" coords="2169,175,2383,230,2381,235,2168,180"/>
+<area shape="rect" id="Node000014" href="$d6/d01/logger__sample_8cpp.html" title=" " alt="" coords="2637,233,2827,287"/>
+<area shape="poly" id="edge13_Node000002_Node000014" title=" " alt="" coords="2169,157,2381,181,2504,199,2626,223,2654,230,2653,235,2625,228,2503,204,2380,186,2169,162"/>
+<area shape="rect" id="Node000015" href="$d4/ddd/mpmc__queue__sample_8cpp.html" title=" " alt="" coords="2852,233,3089,287"/>
+<area shape="poly" id="edge14_Node000002_Node000015" title=" " alt="" coords="2169,153,2471,175,2656,195,2840,223,2876,230,2875,235,2840,228,2655,201,2470,181,2169,159"/>
+<area shape="rect" id="Node000016" href="$df/d10/node__pool__sample_8cpp.html" title=" " alt="" coords="3113,233,3329,287"/>
+<area shape="poly" id="edge15_Node000002_Node000016" title=" " alt="" coords="2169,149,2346,154,2578,165,2839,187,2972,203,3102,223,3136,230,3135,235,3101,228,2971,208,2839,192,2578,170,2345,159,2169,155"/>
+<area shape="rect" id="Node000017" href="$d5/de9/thread__pool__sample_8cpp.html" title=" " alt="" coords="3353,233,3593,287"/>
+<area shape="poly" id="edge16_Node000002_Node000017" title=" " alt="" coords="2169,148,2383,150,2674,160,3006,183,3176,200,3342,223,3380,230,3379,235,3341,228,3175,206,3006,188,2674,166,2383,156,2169,153"/>
+<area shape="rect" id="Node000018" href="$d0/d68/typed__job__queue__sample_8cpp.html" title=" " alt="" coords="3617,233,3892,287"/>
+<area shape="poly" id="edge17_Node000002_Node000018" title=" " alt="" coords="2169,148,2422,149,2778,157,2980,167,3189,180,3400,199,3606,223,3649,230,3648,235,3605,228,3399,204,3189,186,2980,172,2778,163,2422,154,2169,153"/>
+<area shape="rect" id="Node000019" href="$d4/dd6/typed__thread__pool__sample_8cpp.html" title=" " alt="" coords="3916,225,4119,295"/>
+<area shape="poly" id="edge18_Node000002_Node000019" title=" " alt="" coords="2169,149,2534,154,3035,166,3537,188,3746,204,3904,223,3916,225,3915,230,3904,228,3746,209,3537,194,3035,172,2533,160,2169,155"/>
+<area shape="rect" id="Node000020" href="$dd/d32/typed__thread__pool__sample__2_8cpp.html" title=" " alt="" coords="4143,225,4361,295"/>
+<area shape="poly" id="edge19_Node000002_Node000020" title=" " alt="" coords="2169,149,2574,153,3141,165,3436,174,3713,187,3951,203,4131,223,4144,225,4143,230,4130,228,3950,208,3712,192,3436,179,3141,170,2573,159,2169,155"/>
+</map>

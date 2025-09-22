@@ -1,5 +1,6 @@
 <map id="MessagingIntegrationTest" name="MessagingIntegrationTest">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,79,195,104"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="49,5,151,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,44,103,79,97,79,97,44"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,44,96,78,90,79,89,45"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="111,45,110,79,104,78,106,44"/>
 </map>

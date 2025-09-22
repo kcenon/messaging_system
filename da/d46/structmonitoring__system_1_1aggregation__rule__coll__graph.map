@@ -1,0 +1,13 @@
+<map id="monitoring_system::aggregation_rule" name="monitoring_system::aggregation_rule">
+<area shape="rect" id="Node000001" title="Rule for metric aggregation." alt="" coords="78,299,234,339"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="31,196,118,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,235,72,255,78,273,89,286,103,296,100,301,86,290,74,276,67,256,67,235"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,93,144,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,147,77,196,72,196,72,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="156,196,321,221"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="233,236,211,276,187,300,183,296,207,273,228,233"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="174,101,303,126"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="241,140,241,196,236,196,236,140"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="219,5,258,31"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="241,44,241,101,236,101,236,44"/>
+</map>

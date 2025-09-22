@@ -1,0 +1,9 @@
+<map id="libraries/network_system/include/network_system/integration/logger_integration.h" name="libraries/network_system/include/network_system/integration/logger_integration.h">
+<area shape="rect" id="Node000001" title="Logger system integration interface for network_system." alt="" coords="20,5,252,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,83,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,62,68,100,65,96,106,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="107,108,165,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="139,60,139,94,133,94,133,60"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="190,108,287,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="169,58,216,97,213,101,166,62"/>
+</map>

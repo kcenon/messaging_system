@@ -1,0 +1,44 @@
+<map id="libraries/monitoring_system/include/kcenon/monitoring/interfaces/observer_interface.h" name="libraries/monitoring_system/include/kcenon/monitoring/interfaces/observer_interface.h">
+<area shape="rect" id="Node000001" title="Observer pattern interface for monitoring system event handling." alt="" coords="531,5,709,75"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,269,72,295"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="531,69,449,95,362,125,281,159,201,198,72,265,70,261,199,194,279,154,360,120,447,90,530,64"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="1105,343,1183,368"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="677,73,1114,333,1111,338,675,77"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="420,416,479,441"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="710,45,860,61,945,74,1028,91,1104,112,1165,138,1189,153,1207,169,1219,187,1223,207,1223,283,1221,332,1214,351,1196,370,1180,378,1156,386,1083,398,879,416,658,425,492,429,492,424,658,420,879,410,1083,393,1154,381,1178,373,1193,366,1209,348,1216,331,1217,283,1217,208,1214,189,1203,173,1186,157,1163,143,1102,117,1027,96,944,79,860,66,710,50"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="487,343,555,368"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="612,76,532,330,526,329,607,74"/>
+<area shape="rect" id="Node000006" href="$dc/d0b/metric__types__adapter_8h.html" title="Adapter for metric types to support interface definitions." alt="" coords="374,123,549,148"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="564,77,494,118,492,113,561,72"/>
+<area shape="rect" id="Node000008" href="$d9/d68/kcenon_2monitoring_2core_2result__types_8h.html" title="Result pattern type definitions for monitoring system." alt="" coords="650,269,809,295"/>
+<area shape="poly" id="edge27_Node000001_Node000008" title=" " alt="" coords="638,74,721,256,716,258,633,76"/>
+<area shape="poly" id="edge24_Node000006_Node000004" title=" " alt="" coords="464,148,453,402,448,402,458,148"/>
+<area shape="poly" id="edge26_Node000006_Node000005" title=" " alt="" coords="468,148,483,195,518,329,513,330,477,197,463,149"/>
+<area shape="rect" id="Node000007" href="$d6/df9/include_2kcenon_2monitoring_2utils_2metric__types_8h.html" title="Common metric type definitions for efficient storage." alt="" coords="245,196,408,221"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="441,150,362,192,360,187,438,146"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="97,269,221,295"/>
+<area shape="poly" id="edge25_Node000006_Node000015" title=" " alt="" coords="374,150,303,167,268,181,235,198,201,227,175,259,171,256,197,223,232,194,266,176,302,162,373,144"/>
+<area shape="poly" id="edge20_Node000007_Node000002" title=" " alt="" coords="280,224,86,272,85,266,279,219"/>
+<area shape="poly" id="edge19_Node000007_Node000004" title=" " alt="" coords="336,220,438,402,434,405,331,223"/>
+<area shape="poly" id="edge22_Node000007_Node000005" title=" " alt="" coords="344,219,496,332,493,336,341,224"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="392,219,652,264,651,270,391,224"/>
+<area shape="rect" id="Node000009" href="$d9/d83/monitoring__system_2include_2kcenon_2monitoring_2core_2error__codes_8h.html" title="Monitoring system specific error codes." alt="" coords="250,343,361,368"/>
+<area shape="poly" id="edge18_Node000007_Node000009" title=" " alt="" coords="328,222,312,329,306,329,322,221"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="225,416,292,441"/>
+<area shape="poly" id="edge23_Node000007_Node000010" title=" " alt="" coords="317,223,277,273,256,307,240,343,238,358,239,374,248,403,243,404,234,375,232,358,235,342,251,304,272,270,313,220"/>
+<area shape="poly" id="edge21_Node000007_Node000015" title=" " alt="" coords="301,224,200,266,198,261,299,219"/>
+<area shape="poly" id="edge13_Node000008_Node000003" title=" " alt="" coords="802,292,1087,340,1092,341,1091,346,1086,345,801,297"/>
+<area shape="poly" id="edge14_Node000008_Node000004" title=" " alt="" coords="809,285,877,291,946,301,1006,317,1029,328,1045,341,1051,355,1045,370,1015,385,960,396,803,414,628,424,493,429,492,424,628,419,802,408,959,391,1013,380,1041,366,1046,355,1041,344,1026,333,1005,322,945,307,876,296,809,290"/>
+<area shape="poly" id="edge11_Node000008_Node000005" title=" " alt="" coords="697,297,569,341,567,336,695,292"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="662,297,375,345,374,340,661,292"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="580,343,655,368"/>
+<area shape="poly" id="edge12_Node000008_Node000011" title=" " alt="" coords="713,297,649,337,646,333,710,292"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="679,343,803,368"/>
+<area shape="poly" id="edge15_Node000008_Node000012" title=" " alt="" coords="734,295,740,329,734,330,729,295"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="827,343,919,368"/>
+<area shape="poly" id="edge16_Node000008_Node000013" title=" " alt="" coords="754,292,839,334,836,339,751,297"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="943,343,1030,368"/>
+<area shape="poly" id="edge17_Node000008_Node000014" title=" " alt="" coords="771,292,933,336,931,342,770,297"/>
+<area shape="poly" id="edge10_Node000009_Node000004" title=" " alt="" coords="330,366,415,407,412,412,327,370"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="300,370,276,406,272,403,295,367"/>
+</map>

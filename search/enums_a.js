@@ -1,5 +1,11 @@
 var searchData=
 [
-  ['operation_0',['operation',['../da/d4d/classkcenon_1_1messaging_1_1routing_1_1composite__filter.html#a840cdd61aa88f6942e33e11066ab66dc',1,'kcenon::messaging::routing::composite_filter']]],
-  ['output_5fformat_1',['output_format',['../d4/d01/classlogger__module_1_1structured__logger.html#ad5caf63dd1c9c72e341abb4533c1aee6',1,'logger_module::structured_logger']]]
+  ['memorypattern_0',['memorypattern',['../d7/dff/benchmarks_2thread__pool__benchmarks_2throughput__detailed__benchmark_8cpp.html#ab7a5354c431dca18eb60fe762d7a997e',1,'MemoryPattern:&#160;throughput_detailed_benchmark.cpp'],['../d1/dbf/tests_2benchmarks_2thread__pool__benchmarks_2throughput__detailed__benchmark_8cpp.html#ab7a5354c431dca18eb60fe762d7a997e',1,'MemoryPattern:&#160;throughput_detailed_benchmark.cpp']]],
+  ['message_5fpriority_1',['message_priority',['../db/d06/namespacekcenon_1_1messaging_1_1core.html#a47838b266b3e051902c04795771bba5e',1,'kcenon::messaging::core']]],
+  ['message_5fstatus_2',['message_status',['../db/d06/namespacekcenon_1_1messaging_1_1core.html#a0ebc74b13acdfe5c2939ed4e5acaeab6',1,'kcenon::messaging::core']]],
+  ['message_5ftype_3',['message_type',['../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4',1,'kcenon::messaging::core']]],
+  ['metric_5fexport_5fformat_4',['metric_export_format',['../de/d3f/namespacemonitoring__system.html#a725c913fc1f656ae5127a1dcefbb2f78',1,'monitoring_system']]],
+  ['metric_5ftype_5',['metric_type',['../da/d02/namespacekcenon_1_1logger.html#a3d04613d2854b686866a52f7d8407423',1,'kcenon::logger::metric_type'],['../da/d02/namespacekcenon_1_1logger.html#a3d04613d2854b686866a52f7d8407423',1,'kcenon::logger::metric_type'],['../de/d3f/namespacemonitoring__system.html#af0289a7f100a6ae6a2507d37156cd416',1,'monitoring_system::metric_type'],['../de/d3f/namespacemonitoring__system.html#afdcbf1660781c411fd78a89d3f0c9488',1,'monitoring_system::metric_type'],['../de/d3f/namespacemonitoring__system.html#afdcbf1660781c411fd78a89d3f0c9488',1,'monitoring_system::metric_type']]],
+  ['monitor_5ftype_6',['monitor_type',['../d8/dcc/classkcenon_1_1logger_1_1monitoring_1_1monitoring__factory.html#ade664570f1a6f14f50be254ff461a39c',1,'kcenon::logger::monitoring::monitoring_factory::monitor_type'],['../dc/d70/classkcenon_1_1logger_1_1monitoring__factory.html#a723026de764153d9e321352c7759faf8',1,'kcenon::logger::monitoring_factory::monitor_type']]],
+  ['monitoring_5ferror_5fcode_7',['monitoring_error_code',['../de/d3f/namespacemonitoring__system.html#a22dca6fa0d74ff9143a6386fbd724ecc',1,'monitoring_system::monitoring_error_code'],['../de/d3f/namespacemonitoring__system.html#a64c01c1e7387d98c248b06f9dc66667f',1,'monitoring_system::monitoring_error_code']]]
 ];

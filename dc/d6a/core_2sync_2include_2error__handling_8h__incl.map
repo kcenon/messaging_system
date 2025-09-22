@@ -1,0 +1,17 @@
+<map id="libraries/thread_system/core/sync/include/error_handling.h" name="libraries/thread_system/core/sync/include/error_handling.h">
+<area shape="rect" id="Node000001" title="Modern error handling for the thread system." alt="" coords="264,5,440,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,64,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="264,60,78,110,76,105,263,55"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="88,108,163,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="284,63,169,106,167,101,282,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="187,108,279,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="317,62,262,102,259,98,314,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="303,108,401,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="355,60,355,94,349,94,349,60"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="425,108,501,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="387,58,438,97,435,102,384,62"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="525,108,611,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="419,58,527,100,525,105,417,63"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="635,108,722,133"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="441,55,622,102,621,107,440,60"/>
+</map>

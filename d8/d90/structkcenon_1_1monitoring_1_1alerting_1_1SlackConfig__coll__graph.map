@@ -1,0 +1,10 @@
+<map id="kcenon::monitoring::alerting::SlackConfig" name="kcenon::monitoring::alerting::SlackConfig">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,291,169,331"/>
+<area shape="rect" id="Node000002" href="$d4/d8a/structkcenon_1_1monitoring_1_1alerting_1_1ChannelConfig.html" title=" " alt="" coords="180,192,363,232"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,241,124,293,122,288,222,236"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="49,95,136,120"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="92,134,87,183,87,241,89,290,84,290,82,241,82,183,87,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="126,125,240,189,237,194,123,129"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="23,5,162,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="95,59,95,94,90,94,90,59"/>
+</map>

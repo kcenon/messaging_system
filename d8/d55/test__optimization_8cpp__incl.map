@@ -1,0 +1,21 @@
+<map id="libraries/monitoring_system/tests/test_optimization.cpp" name="libraries/monitoring_system/tests/test_optimization.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="645,5,904,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,101,109,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="645,36,401,56,261,73,122,96,106,100,105,94,121,91,260,68,400,50,645,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="133,93,312,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="646,47,326,96,325,90,645,42"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="336,93,515,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="699,48,516,93,514,87,697,43"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="539,93,717,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="744,48,674,89,671,84,741,43"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="741,101,808,126"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="777,46,777,87,772,87,772,46"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="832,101,896,126"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="796,44,844,89,840,93,793,48"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="921,101,983,126"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="815,43,917,92,915,97,812,48"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1008,101,1080,126"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="843,43,997,91,1004,93,1002,98,995,96,841,48"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1105,101,1191,126"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="879,43,983,64,1093,91,1103,94,1102,99,1091,96,982,69,878,48"/>
+</map>

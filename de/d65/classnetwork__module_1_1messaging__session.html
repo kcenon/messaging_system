@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('de/d65/classnetwork__module_1_1messagi
 <p>Manages a single connected client session on the server side, providing asynchronous read/write operations and pipeline transformations.  
  <a href="../../de/d65/classnetwork__module_1_1messaging__session.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../d0/dd1/messaging__session_8h_source.html">messaging_session.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../dc/d2f/session_2messaging__session_8h_source.html">messaging_session.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for network_module::messaging_session:</div>
 <div class="dyncontent">
@@ -142,14 +142,14 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manages a single connected client session on the server side, providing asynchronous read/write operations and pipeline transformations. </p>
-<h3><a class="anchor" id="autotoc_md704"></a>
+<h3><a class="anchor" id="autotoc_md2678"></a>
 Responsibilities</h3>
 <ul>
 <li>Owns a <code><a class="el" href="../../d3/d43/classnetwork__module_1_1tcp__socket.html" title="A lightweight wrapper around asio::ip::tcp::socket, enabling asynchronous read and write operations.">tcp_socket</a></code> for non-blocking I/O.</li>
 <li>Optionally applies compression/encryption via <code>pipeline_</code> before sending, and can do the reverse upon receiving data (if needed).</li>
 <li>Provides callbacks (<code>on_receive</code>, <code>on_error</code>) for data handling and error detection.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md705"></a>
+<h3><a class="anchor" id="autotoc_md2679"></a>
 Lifecycle</h3>
 <ul>
 <li>Constructed with an accepted <code>asio::ip::tcp::socket</code>.</li>
@@ -157,7 +157,7 @@ Lifecycle</h3>
 <li><code><a class="el" href="../../de/d65/classnetwork__module_1_1messaging__session.html#a80ecd3da0804a782552f64e7ec65960b" title="Stops the session by closing the socket and marking the session as inactive.">stop_session()</a></code> closes the underlying socket, stopping further I/O. </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/dd1/messaging__session_8h_source.html#l00070">70</a> of file <a class="el" href="../../d0/dd1/messaging__session_8h_source.html">messaging_session.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/d2f/session_2messaging__session_8h_source.html#l00070">70</a> of file <a class="el" href="../../dc/d2f/session_2messaging__session_8h_source.html">messaging_session.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="afc56499e0c988883480e6c75cfcfac2e" name="afc56499e0c988883480e6c75cfcfac2e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afc56499e0c988883480e6c75cfcfac2e">&#9670;&#160;</a></span>messaging_session()</h2>
@@ -194,9 +194,9 @@ Lifecycle</h3>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html#l00044">44</a> of file <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00044">44</a> of file <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d4/d71/pipeline_8cpp_source.html#l00084">network_module::make_default_pipeline()</a>.</p>
+<p class="reference">References <a class="el" href="../../da/d6c/internal_2pipeline_8cpp_source.html#l00084">network_module::make_default_pipeline()</a>.</p>
 
 </div>
 </div>
@@ -217,9 +217,9 @@ Lifecycle</h3>
 
 <p>Destructor; calls <code><a class="el" href="../../de/d65/classnetwork__module_1_1messaging__session.html#a80ecd3da0804a782552f64e7ec65960b" title="Stops the session by closing the socket and marking the session as inactive.">stop_session()</a></code> if not already stopped. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html#l00083">stop_session()</a>.</p>
+<p class="reference">References <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00082">stop_session()</a>.</p>
 
 </div>
 </div>
@@ -247,15 +247,15 @@ Lifecycle</h3>
   </table>
   </dd>
 </dl>
-<h3><a class="anchor" id="autotoc_md706"></a>
+<h3><a class="anchor" id="autotoc_md2680"></a>
 Notes</h3>
 <ul>
 <li>If <code>compress_mode_</code> or <code>encrypt_mode_</code> is true, the data will be processed by the pipeline's compress/encrypt functions before writing. </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html#l00097">97</a> of file <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00096">96</a> of file <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../dc/df1/send__coroutine_8cpp_source.html#l00097">network_module::async_send_with_pipeline_no_co()</a>.</p>
+<p class="reference">References <a class="el" href="../../d0/d4e/internal_2send__coroutine_8cpp_source.html#l00097">network_module::async_send_with_pipeline_no_co()</a>, and <a class="el" href="../../d4/d98/logger__integration_8h_source.html#l00263">NETWORK_LOG_ERROR</a>.</p>
 
 </div>
 </div>
@@ -276,7 +276,9 @@ Notes</h3>
 
 <p>Starts the session: sets up read/error callbacks and begins reading data. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html#l00061">61</a> of file <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00061">61</a> of file <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d4/d98/logger__integration_8h_source.html#l00255">NETWORK_LOG_INFO</a>.</p>
 
 </div>
 </div>
@@ -297,15 +299,17 @@ Notes</h3>
 
 <p>Stops the session by closing the socket and marking the session as inactive. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html#l00083">83</a> of file <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00082">82</a> of file <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../d6/df7/messaging__session_8cpp_source.html#l00059">~messaging_session()</a>.</p>
+<p class="reference">References <a class="el" href="../../d4/d98/logger__integration_8h_source.html#l00255">NETWORK_LOG_INFO</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00059">~messaging_session()</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>libraries/network_system/session/<a class="el" href="../../d0/dd1/messaging__session_8h_source.html">messaging_session.h</a></li>
-<li>libraries/network_system/session/<a class="el" href="../../d6/df7/messaging__session_8cpp_source.html">messaging_session.cpp</a></li>
+<li>libraries/network_system/session/<a class="el" href="../../dc/d2f/session_2messaging__session_8h_source.html">messaging_session.h</a></li>
+<li>libraries/network_system/session/<a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -1,0 +1,11 @@
+<map id="monitoring_system::aggregation_result" name="monitoring_system::aggregation_result">
+<area shape="rect" id="Node000001" title="Result of time series aggregation." alt="" coords="71,313,227,353"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="45,211,252,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,265,151,313,146,313,146,265"/>
+<area shape="rect" id="Node000003" href="$de/d7a/structmonitoring__system_1_1time__point__data.html" title="Single data point in time series." alt="" coords="5,93,161,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="100,144,122,185,137,209,133,212,117,188,95,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="185,101,315,126"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="233,138,167,212,163,209,229,134"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="231,5,269,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="253,44,253,101,247,101,247,44"/>
+</map>

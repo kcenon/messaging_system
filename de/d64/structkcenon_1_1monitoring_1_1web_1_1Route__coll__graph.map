@@ -1,0 +1,13 @@
+<map id="kcenon::monitoring::web::Route" name="kcenon::monitoring::web::Route">
+<area shape="rect" id="Node000001" title=" " alt="" coords="95,284,243,324"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="31,196,118,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,229,152,282,148,286,94,233"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,93,144,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,147,77,196,72,196,72,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="143,196,391,221"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="249,233,221,262,194,286,190,282,217,258,245,229"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="202,101,331,126"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="269,140,269,196,264,196,264,140"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="247,5,286,31"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="269,44,269,101,264,101,264,44"/>
+</map>

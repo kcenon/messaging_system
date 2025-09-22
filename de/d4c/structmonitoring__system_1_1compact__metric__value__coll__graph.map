@@ -1,0 +1,5 @@
+<map id="monitoring_system::compact_metric_value" name="monitoring_system::compact_metric_value">
+<area shape="rect" id="Node000001" title="Memory&#45;efficient metric value storage." alt="" coords="5,108,176,148"/>
+<area shape="rect" id="Node000002" href="$d4/dcc/structmonitoring__system_1_1metric__metadata.html" title="Compact metadata for metrics." alt="" coords="13,5,169,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,59,93,108,88,108,88,59"/>
+</map>

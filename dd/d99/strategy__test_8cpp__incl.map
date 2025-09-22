@@ -1,0 +1,15 @@
+<map id="libraries/logger_system/tests/unit/config_test/strategy_test.cpp" name="libraries/logger_system/tests/unit/config_test/strategy_test.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="427,5,602,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,123,109,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="428,48,283,72,202,90,122,111,96,120,94,115,121,105,201,84,282,67,427,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="134,108,303,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="439,63,310,106,308,101,437,57"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="328,115,501,155"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="490,62,445,107,442,103,487,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="525,115,707,155"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="543,58,589,103,585,107,539,62"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="731,123,797,148"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="597,58,720,106,735,113,733,118,718,110,595,63"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="822,123,887,148"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="603,47,704,71,810,106,827,113,824,118,808,110,702,76,602,52"/>
+</map>

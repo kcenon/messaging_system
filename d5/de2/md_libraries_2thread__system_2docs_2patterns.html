@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d5/de2/md_libraries_2thread__system_2d
   <div class="headertitle"><div class="title">Thread System: Patterns, Best Practices, and Troubleshooting Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1066"></a> This comprehensive guide covers patterns, best practices, antipatterns to avoid, and solutions to common concurrency issues when working with Thread System. Following these guidelines will help you write efficient, maintainable, and bug-free concurrent applications.</p>
-<h1><a class="anchor" id="autotoc_md1067"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md3108"></a> This comprehensive guide covers patterns, best practices, antipatterns to avoid, and solutions to common concurrency issues when working with Thread System. Following these guidelines will help you write efficient, maintainable, and bug-free concurrent applications.</p>
+<h1><a class="anchor" id="autotoc_md3109"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Best Practices</li>
@@ -106,11 +106,11 @@ Table of Contents</h1>
 <li>Performance Optimization</li>
 <li>Integrating External Modules</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1068"></a>
+<h1><a class="anchor" id="autotoc_md3110"></a>
 Best Practices</h1>
-<h2><a class="anchor" id="autotoc_md1069"></a>
+<h2><a class="anchor" id="autotoc_md3111"></a>
 1. Thread Base Usage</h2>
-<h3><a class="anchor" id="autotoc_md1070"></a>
+<h3><a class="anchor" id="autotoc_md3112"></a>
 ✅ DO:</h3>
 <ul>
 <li>Derive from <code>thread_base</code> when implementing custom worker threads</li>
@@ -119,7 +119,7 @@ Best Practices</h1>
 <li>Use the <code>set_wake_interval()</code> method for periodic operations</li>
 <li>Check <code>should_continue_work()</code> regularly in long-running operations</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1071"></a>
+<h3><a class="anchor" id="autotoc_md3113"></a>
 ❌ DON'T:</h3>
 <ul>
 <li>Call <code>start()</code> from within constructors</li>
@@ -128,9 +128,9 @@ Best Practices</h1>
 <li>Ignore return values from <code>start()</code> and <code>stop()</code></li>
 <li>Use thread-unsafe operations inside <code>do_work()</code> without proper synchronization</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1072"></a>
+<h2><a class="anchor" id="autotoc_md3114"></a>
 2. Thread Pool Usage</h2>
-<h3><a class="anchor" id="autotoc_md1073"></a>
+<h3><a class="anchor" id="autotoc_md3115"></a>
 ✅ DO:</h3>
 <ul>
 <li>Use <code>thread_pool</code> for CPU-bound tasks</li>
@@ -139,7 +139,7 @@ Best Practices</h1>
 <li>Use callback jobs for most operations</li>
 <li>Properly handle errors returned from job execution</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1074"></a>
+<h3><a class="anchor" id="autotoc_md3116"></a>
 ❌ DON'T:</h3>
 <ul>
 <li>Create too many thread pools (one per application is often sufficient)</li>
@@ -148,9 +148,9 @@ Best Practices</h1>
 <li>Submit individual jobs in a tight loop (use batch submission instead)</li>
 <li>Block worker threads with long-running synchronous operations</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1075"></a>
+<h2><a class="anchor" id="autotoc_md3117"></a>
 3. Type Thread Pool Usage</h2>
-<h3><a class="anchor" id="autotoc_md1076"></a>
+<h3><a class="anchor" id="autotoc_md3118"></a>
 ✅ DO:</h3>
 <ul>
 <li>Use distinct type levels for different types of tasks</li>
@@ -159,7 +159,7 @@ Best Practices</h1>
 <li>Consider custom type types for domain-specific scheduling</li>
 <li>Monitor queue sizes per type to ensure balanced execution</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1077"></a>
+<h3><a class="anchor" id="autotoc_md3119"></a>
 ❌ DON'T:</h3>
 <ul>
 <li>Assign high type to all tasks (defeats the purpose)</li>
@@ -168,9 +168,9 @@ Best Practices</h1>
 <li>Use types inconsistently across the application</li>
 <li>Create type workers without assigning appropriate jobs</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1078"></a>
+<h2><a class="anchor" id="autotoc_md3120"></a>
 4. Error Handling</h2>
-<h3><a class="anchor" id="autotoc_md1079"></a>
+<h3><a class="anchor" id="autotoc_md3121"></a>
 ✅ DO:</h3>
 <ul>
 <li>Always check return values from Thread System functions</li>
@@ -179,7 +179,7 @@ Best Practices</h1>
 <li>Provide meaningful error messages with context</li>
 <li>Handle errors appropriately at each layer</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1080"></a>
+<h3><a class="anchor" id="autotoc_md3122"></a>
 ❌ DON'T:</h3>
 <ul>
 <li>Ignore error return values</li>
@@ -188,28 +188,28 @@ Best Practices</h1>
 <li>Assume operations will always succeed</li>
 <li>Mix different error handling patterns inconsistently</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1081"></a>
+<h1><a class="anchor" id="autotoc_md3123"></a>
 Common Patterns</h1>
-<h2><a class="anchor" id="autotoc_md1082"></a>
+<h2><a class="anchor" id="autotoc_md3124"></a>
 1. Worker Thread Pattern</h2>
-<div class="fragment"><div class="line"><span class="keyword">class </span>MyWorker : <span class="keyword">public</span> <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a> {</div>
+<div class="fragment"><div class="line"><span class="keyword">class </span>MyWorker : <span class="keyword">public</span> thread_module::thread_base {</div>
 <div class="line"><span class="keyword">protected</span>:</div>
-<div class="line">    <span class="keyword">auto</span> <a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#a06050d3b8a3accc8d202123ab3b76229">before_start</a>() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> <span class="keyword">override</span> {</div>
+<div class="line">    <span class="keyword">auto</span> before_start() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> <span class="keyword">override</span> {</div>
 <div class="line">        <span class="comment">// Initialize resources</span></div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5">do_work</a>() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> <span class="keyword">override</span> {</div>
+<div class="line">    <span class="keyword">auto</span> do_work() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> <span class="keyword">override</span> {</div>
 <div class="line">        <span class="comment">// Perform work here</span></div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f">should_continue_work</a>() const -&gt; <span class="keywordtype">bool</span><span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keyword">auto</span> should_continue_work() const -&gt; <span class="keywordtype">bool</span><span class="keyword"> override </span>{</div>
 <div class="line">        <span class="comment">// Logic to determine if more work is needed</span></div>
 <div class="line">        <span class="keywordflow">return</span> !work_queue_.empty();</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#a8a5b2eb7b63e97711e7bd58da331fc15">after_stop</a>() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> <span class="keyword">override</span> {</div>
+<div class="line">    <span class="keyword">auto</span> after_stop() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> <span class="keyword">override</span> {</div>
 <div class="line">        <span class="comment">// Cleanup resources</span></div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
@@ -218,16 +218,11 @@ Common Patterns</h1>
 <div class="line">    <span class="comment">// Worker-specific members</span></div>
 <div class="line">    std::queue&lt;WorkItem&gt; work_queue_;</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a></div><div class="ttdoc">A foundational class for implementing custom worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d98/modular__structure_2core_2include_2thread__system__core_2thread__base_2core_2thread__base_8h_source.html#l00150">thread_base.h:151</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html_a06050d3b8a3accc8d202123ab3b76229"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#a06050d3b8a3accc8d202123ab3b76229">thread_module::thread_base::before_start</a></div><div class="ttdeci">virtual auto before_start(void) -&gt; result_void</div><div class="ttdoc">Called just before the worker thread starts running.</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d98/modular__structure_2core_2include_2thread__system__core_2thread__base_2core_2thread__base_8h_source.html#l00262">thread_base.h:262</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html_a8a5b2eb7b63e97711e7bd58da331fc15"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#a8a5b2eb7b63e97711e7bd58da331fc15">thread_module::thread_base::after_stop</a></div><div class="ttdeci">virtual auto after_stop(void) -&gt; result_void</div><div class="ttdoc">Called immediately after the worker thread has stopped.</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d98/modular__structure_2core_2include_2thread__system__core_2thread__base_2core_2thread__base_8h_source.html#l00281">thread_base.h:281</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html_aed49d6d3bcda2aa7a31b233269bc7f0f"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f">thread_module::thread_base::should_continue_work</a></div><div class="ttdeci">virtual auto should_continue_work(void) const -&gt; bool</div><div class="ttdoc">Determines whether the thread should continue doing work.</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d98/modular__structure_2core_2include_2thread__system__core_2thread__base_2core_2thread__base_8h_source.html#l00253">thread_base.h:253</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1thread__base_html_afeb2e53943516cf65354f9cd5930b2d5"><div class="ttname"><a href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5">thread_module::thread_base::do_work</a></div><div class="ttdeci">virtual auto do_work(void) -&gt; result_void</div><div class="ttdoc">The main work routine for the worker thread.</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d98/modular__structure_2core_2include_2thread__system__core_2thread__base_2core_2thread__base_8h_source.html#l00272">thread_base.h:272</a></div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1083"></a>
+<div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2benchmark__common_8h_html_a13fa946184c58584adc65e45561d6772"><div class="ttname"><a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a></div><div class="ttdeci">thread_module::result_void result_void</div><div class="ttdef"><b>Definition</b> <a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h_source.html#l00012">benchmark_common.h:12</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3125"></a>
 2. Thread Pool Task Processing Pattern</h2>
 <div class="fragment"><div class="line"><span class="comment">// Create a thread pool</span></div>
-<div class="line"><span class="keyword">auto</span> [pool, error] = <a class="code hl_function" href="../../d6/d0d/comparison__benchmark_8cpp.html#a85c1bc628eb54edb6a3c2f3e611ef6e2">create_default</a>(<a class="code hl_variable" href="../../d5/de9/thread__pool__sample_8cpp.html#a9a50567581c61a4eaf50dce126dadac6">thread_counts_</a>);</div>
+<div class="line"><span class="keyword">auto</span> [pool, error] = <a class="code hl_function" href="../../da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp.html#a75b6b3ce3590f7f29e3a71cc698bb69a">create_default</a>(<a class="code hl_variable" href="../../d5/de9/thread__pool__sample_8cpp.html#a9a50567581c61a4eaf50dce126dadac6">thread_counts_</a>);</div>
 <div class="line"><span class="keywordflow">if</span> (error.has_value()) {</div>
 <div class="line">    <span class="comment">// Handle error</span></div>
 <div class="line">    <span class="keywordflow">return</span>;</div>
@@ -262,10 +257,10 @@ Common Patterns</h1>
 <div class="line"> </div>
 <div class="line"><span class="comment">// When done, stop the pool</span></div>
 <div class="line">pool-&gt;stop();</div>
-<div class="ttc" id="acomparison__benchmark_8cpp_html_a85c1bc628eb54edb6a3c2f3e611ef6e2"><div class="ttname"><a href="../../d6/d0d/comparison__benchmark_8cpp.html#a85c1bc628eb54edb6a3c2f3e611ef6e2">create_default</a></div><div class="ttdeci">auto create_default(const uint16_t &amp;worker_counts) -&gt; std::tuple&lt; std::shared_ptr&lt; thread_pool_module::thread_pool &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d0d/comparison__benchmark_8cpp_source.html#l00068">comparison_benchmark.cpp:68</a></div></div>
+<div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp_html_a75b6b3ce3590f7f29e3a71cc698bb69a"><div class="ttname"><a href="../../da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp.html#a75b6b3ce3590f7f29e3a71cc698bb69a">create_default</a></div><div class="ttdeci">auto create_default(const uint16_t &amp;worker_counts) -&gt; std::tuple&lt; std::shared_ptr&lt; kcenon::thread::thread_pool &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdef"><b>Definition</b> <a href="../../da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp_source.html#l00068">comparison_benchmark.cpp:68</a></div></div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_1_1integrations_html_a9709b17de9726ec32bb398f5868ce728acb5e100e5a9a3e7f6d1fd97512215282"><div class="ttname"><a href="../../d9/dda/namespacekcenon_1_1messaging_1_1integrations.html#a9709b17de9726ec32bb398f5868ce728acb5e100e5a9a3e7f6d1fd97512215282">kcenon::messaging::integrations::external_system_status::error</a></div><div class="ttdeci">@ error</div></div>
-<div class="ttc" id="athread__pool__sample_8cpp_html_a9a50567581c61a4eaf50dce126dadac6"><div class="ttname"><a href="../../d5/de9/thread__pool__sample_8cpp.html#a9a50567581c61a4eaf50dce126dadac6">thread_counts_</a></div><div class="ttdeci">uint16_t thread_counts_</div><div class="ttdef"><b>Definition</b> <a href="../../d5/de9/thread__pool__sample_8cpp_source.html#l00050">thread_pool_sample.cpp:50</a></div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1084"></a>
+<div class="ttc" id="athread__pool__sample_8cpp_html_a9a50567581c61a4eaf50dce126dadac6"><div class="ttname"><a href="../../d5/de9/thread__pool__sample_8cpp.html#a9a50567581c61a4eaf50dce126dadac6">thread_counts_</a></div><div class="ttdeci">uint16_t thread_counts_</div><div class="ttdef"><b>Definition</b> <a href="../../d5/de9/thread__pool__sample_8cpp_source.html#l00052">thread_pool_sample.cpp:52</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3126"></a>
 3. Type-Based Job Execution Pattern</h2>
 <div class="fragment"><div class="line"><span class="comment">// Create a type thread pool with different type workers</span></div>
 <div class="line"><span class="keyword">auto</span> [pool, error] = create_type_pool(</div>
@@ -280,7 +275,7 @@ Common Patterns</h1>
 <div class="line"> </div>
 <div class="line"><span class="comment">// High type critical tasks</span></div>
 <div class="line">jobs.push_back(std::make_unique&lt;typed_thread_pool_module::callback_typed_job&gt;(</div>
-<div class="line">    []() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> {</div>
+<div class="line">    []() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
 <div class="line">        <span class="comment">// Critical operation</span></div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    },</div>
@@ -289,7 +284,7 @@ Common Patterns</h1>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Normal type regular tasks</span></div>
 <div class="line">jobs.push_back(std::make_unique&lt;typed_thread_pool_module::callback_typed_job&gt;(</div>
-<div class="line">    []() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> {</div>
+<div class="line">    []() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
 <div class="line">        <span class="comment">// Regular operation</span></div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    },</div>
@@ -298,18 +293,18 @@ Common Patterns</h1>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Low type background tasks</span></div>
 <div class="line">jobs.push_back(std::make_unique&lt;typed_thread_pool_module::callback_typed_job&gt;(</div>
-<div class="line">    []() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> {</div>
+<div class="line">    []() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
 <div class="line">        <span class="comment">// Background operation</span></div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    },</div>
 <div class="line">    typed_thread_pool_module::job_types::Low</div>
 <div class="line">));</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1085"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3127"></a>
 4. Error Handler Pattern</h2>
 <div class="fragment"><div class="line"><span class="comment">// Implement a custom error handler for thread operations</span></div>
-<div class="line"><span class="keyword">class </span>ApplicationErrorHandler : <span class="keyword">public</span> <a class="code hl_class" href="../../dd/d11/classthread__module_1_1error__handler.html">thread_module::error_handler</a> {</div>
+<div class="line"><span class="keyword">class </span>ApplicationErrorHandler : <span class="keyword">public</span> thread_module::error_handler {</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="../../dd/d11/classthread__module_1_1error__handler.html#ab81b999f44040678850d75650599b407">handle_error</a>(<span class="keyword">const</span> std::string&amp; error_message)<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">void</span> handle_error(<span class="keyword">const</span> std::string&amp; error_message)<span class="keyword"> override </span>{</div>
 <div class="line">        <span class="comment">// Handle errors according to your application needs</span></div>
 <div class="line">        <span class="comment">// Could write to a log file, send to monitoring system, etc.</span></div>
 <div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Thread error: &quot;</span> &lt;&lt; error_message &lt;&lt; std::endl;</div>
@@ -328,23 +323,21 @@ Common Patterns</h1>
 <div class="line"><span class="comment">// Use the error handler</span></div>
 <div class="line"><span class="keyword">auto</span> error_handler = std::make_shared&lt;ApplicationErrorHandler&gt;();</div>
 <div class="line">thread_pool-&gt;set_error_handler(error_handler);</div>
-<div class="ttc" id="aclassthread__module_1_1error__handler_html"><div class="ttname"><a href="../../dd/d11/classthread__module_1_1error__handler.html">thread_module::error_handler</a></div><div class="ttdoc">Error handler interface.</div><div class="ttdef"><b>Definition</b> <a href="../../d5/db4/modular__structure_2core_2include_2thread__system__core_2interfaces_2error__handler_8h_source.html#l00041">error_handler.h:41</a></div></div>
-<div class="ttc" id="aclassthread__module_1_1error__handler_html_ab81b999f44040678850d75650599b407"><div class="ttname"><a href="../../dd/d11/classthread__module_1_1error__handler.html#ab81b999f44040678850d75650599b407">thread_module::error_handler::handle_error</a></div><div class="ttdeci">virtual void handle_error(const std::string &amp;context, const std::string &amp;error)=0</div><div class="ttdoc">Handle an error.</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1086"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3128"></a>
 5. Producer-Consumer Pattern</h2>
 <div class="fragment"><div class="line"><span class="comment">// Consumer thread worker</span></div>
-<div class="line"><span class="keyword">class </span>ConsumerWorker : <span class="keyword">public</span> <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a> {</div>
+<div class="line"><span class="keyword">class </span>ConsumerWorker : <span class="keyword">public</span> thread_module::thread_base {</div>
 <div class="line"><span class="keyword">protected</span>:</div>
-<div class="line">    <span class="keyword">auto</span> <a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5">do_work</a>() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> <span class="keyword">override</span> {</div>
+<div class="line">    <span class="keyword">auto</span> do_work() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> <span class="keyword">override</span> {</div>
 <div class="line">        std::unique_lock&lt;std::mutex&gt; lock(queue_mutex_);</div>
 <div class="line">        </div>
 <div class="line">        <span class="comment">// Wait for data or stop signal</span></div>
 <div class="line">        data_condition_.wait(lock, [<span class="keyword">this</span>]() {</div>
-<div class="line">            <span class="keywordflow">return</span> !data_queue_.empty() || !<a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f">should_continue_work</a>();</div>
+<div class="line">            <span class="keywordflow">return</span> !data_queue_.empty() || !should_continue_work();</div>
 <div class="line">        });</div>
 <div class="line">        </div>
 <div class="line">        <span class="comment">// Check if should terminate</span></div>
-<div class="line">        <span class="keywordflow">if</span> (!<a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#aed49d6d3bcda2aa7a31b233269bc7f0f">should_continue_work</a>()) {</div>
+<div class="line">        <span class="keywordflow">if</span> (!should_continue_work()) {</div>
 <div class="line">            <span class="keywordflow">return</span> {};</div>
 <div class="line">        }</div>
 <div class="line">        </div>
@@ -367,14 +360,14 @@ Common Patterns</h1>
 <div class="line">        <span class="comment">// Process the data</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1087"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3129"></a>
 6. Task Partitioning Pattern</h2>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> process_large_dataset(<span class="keyword">const</span> std::vector&lt;Data&gt;&amp; dataset) {</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="../../df/de0/optimized__storage_8h.html#acbe3ff89760ba4e883cfef7df57f461c">thread_count</a> = std::thread::hardware_concurrency();</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">size_t</span> chunk_size = (dataset.size() + <a class="code hl_variable" href="../../df/de0/optimized__storage_8h.html#acbe3ff89760ba4e883cfef7df57f461c">thread_count</a> - 1) / <a class="code hl_variable" href="../../df/de0/optimized__storage_8h.html#acbe3ff89760ba4e883cfef7df57f461c">thread_count</a>;</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">size_t</span> thread_count = std::thread::hardware_concurrency();</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">size_t</span> chunk_size = (dataset.size() + thread_count - 1) / thread_count;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Create thread pool</span></div>
-<div class="line">    <span class="keyword">auto</span> [pool, error] = <a class="code hl_function" href="../../d6/d0d/comparison__benchmark_8cpp.html#a85c1bc628eb54edb6a3c2f3e611ef6e2">create_default</a>(<a class="code hl_variable" href="../../df/de0/optimized__storage_8h.html#acbe3ff89760ba4e883cfef7df57f461c">thread_count</a>);</div>
+<div class="line">    <span class="keyword">auto</span> [pool, error] = <a class="code hl_function" href="../../da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp.html#a75b6b3ce3590f7f29e3a71cc698bb69a">create_default</a>(thread_count);</div>
 <div class="line">    <span class="keywordflow">if</span> (error.has_value()) {</div>
 <div class="line">        <span class="comment">// Handle error appropriately - could use external logger if available</span></div>
 <div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to create thread pool: &quot;</span> &lt;&lt; error.value() &lt;&lt; std::endl;</div>
@@ -383,7 +376,7 @@ Common Patterns</h1>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Submit chunks as separate jobs</span></div>
 <div class="line">    std::vector&lt;std::unique_ptr&lt;thread_module::job&gt;&gt; jobs;</div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <a class="code hl_variable" href="../../df/de0/optimized__storage_8h.html#acbe3ff89760ba4e883cfef7df57f461c">thread_count</a>; ++i) {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; thread_count; ++i) {</div>
 <div class="line">        <span class="keywordtype">size_t</span> start_idx = i * chunk_size;</div>
 <div class="line">        <span class="keywordtype">size_t</span> end_idx = std::min(start_idx + chunk_size, dataset.size());</div>
 <div class="line">        </div>
@@ -401,10 +394,9 @@ Common Patterns</h1>
 <div class="line">    pool-&gt;start();</div>
 <div class="line">    pool-&gt;stop(); <span class="comment">// Wait for all jobs to complete</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aoptimized__storage_8h_html_acbe3ff89760ba4e883cfef7df57f461c"><div class="ttname"><a href="../../df/de0/optimized__storage_8h.html#acbe3ff89760ba4e883cfef7df57f461c">thread_count</a></div><div class="ttdeci">std::uint16_t thread_count</div><div class="ttdef"><b>Definition</b> <a href="../../df/de0/optimized__storage_8h_source.html#l00003">optimized_storage.h:3</a></div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1088"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3130"></a>
 Antipatterns to Avoid</h1>
-<h2><a class="anchor" id="autotoc_md1089"></a>
+<h2><a class="anchor" id="autotoc_md3131"></a>
 1. The Thread Explosion Antipattern</h2>
 <p>❌ <b>Problematic Approach</b>: </p><div class="fragment"><div class="line"><span class="comment">// Creating a new thread for each small task</span></div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; item : items) {</div>
@@ -429,9 +421,9 @@ Antipatterns to Avoid</h1>
 <div class="line"><span class="comment">// Process all items with the thread pool</span></div>
 <div class="line">thread_pool-&gt;enqueue_batch(std::move(jobs));</div>
 <div class="line">thread_pool-&gt;start();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1090"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3132"></a>
 2. The Busy Waiting Antipattern</h2>
-<p>❌ <b>Problematic Approach</b>: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> do_work() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> <span class="keyword">override</span> {</div>
+<p>❌ <b>Problematic Approach</b>: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> do_work() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> <span class="keyword">override</span> {</div>
 <div class="line">    <span class="comment">// Continuously check if work is available without yielding</span></div>
 <div class="line">    <span class="keywordflow">while</span> (!work_available()) {</div>
 <div class="line">        <span class="comment">// Tight loop consuming CPU</span></div>
@@ -439,7 +431,7 @@ Antipatterns to Avoid</h1>
 <div class="line">    process_work();</div>
 <div class="line">    <span class="keywordflow">return</span> {};</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>✅ <b>Better Approach</b>: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> do_work() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> <span class="keyword">override</span> {</div>
+</div><!-- fragment --><p>✅ <b>Better Approach</b>: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> do_work() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> <span class="keyword">override</span> {</div>
 <div class="line">    <span class="comment">// Use condition variables and wake intervals</span></div>
 <div class="line">    <span class="keywordflow">if</span> (!work_available()) {</div>
 <div class="line">        <span class="comment">// Return and let the thread sleep until next wake interval</span></div>
@@ -448,12 +440,12 @@ Antipatterns to Avoid</h1>
 <div class="line">    process_work();</div>
 <div class="line">    <span class="keywordflow">return</span> {};</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1091"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3133"></a>
 3. The Type Abuse Antipattern</h2>
 <p>❌ <b>Problematic Approach</b>: </p><div class="fragment"><div class="line"><span class="comment">// Marking all jobs as high type</span></div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> i = 0; i &lt; job_count; ++i) {</div>
 <div class="line">    jobs.push_back(std::make_unique&lt;callback_typed_job&gt;(</div>
-<div class="line">        [i]() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> {</div>
+<div class="line">        [i]() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
 <div class="line">            <span class="comment">// Regular task</span></div>
 <div class="line">            <span class="keywordflow">return</span> {};</div>
 <div class="line">        },</div>
@@ -466,14 +458,14 @@ Antipatterns to Avoid</h1>
 <div class="line">    <span class="keyword">auto</span> type = determine_appropriate_type(i);</div>
 <div class="line">    </div>
 <div class="line">    jobs.push_back(std::make_unique&lt;callback_typed_job&gt;(</div>
-<div class="line">        [i]() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> {</div>
+<div class="line">        [i]() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
 <div class="line">            <span class="comment">// Regular task</span></div>
 <div class="line">            <span class="keywordflow">return</span> {};</div>
 <div class="line">        },</div>
 <div class="line">        type</div>
 <div class="line">    ));</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1092"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3134"></a>
 4. The Blocking Thread Pool Antipattern</h2>
 <p>❌ <b>Problematic Approach</b>: </p><div class="fragment"><div class="line"><span class="comment">// Submitting I/O-bound or blocking operations to thread pool</span></div>
 <div class="line">pool-&gt;enqueue(std::make_unique&lt;thread_module::callback_job&gt;(</div>
@@ -495,7 +487,7 @@ Antipatterns to Avoid</h1>
 <div class="line">        <span class="keywordflow">return</span> std::nullopt;</div>
 <div class="line">    }</div>
 <div class="line">));</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1093"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3135"></a>
 5. The Performance Monitoring Antipattern</h2>
 <p>❌ <b>Problematic Approach</b>: </p><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 1000000; i++) {</div>
 <div class="line">    <span class="comment">// Recording metrics for every single operation</span></div>
@@ -522,11 +514,11 @@ Antipatterns to Avoid</h1>
 <div class="line">        batch_start = now;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1094"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3136"></a>
 Troubleshooting Common Issues</h1>
-<h2><a class="anchor" id="autotoc_md1095"></a>
+<h2><a class="anchor" id="autotoc_md3137"></a>
 1. Race Conditions</h2>
-<h3><a class="anchor" id="autotoc_md1096"></a>
+<h3><a class="anchor" id="autotoc_md3138"></a>
 Symptoms</h3>
 <ul>
 <li>Inconsistent or unexpected results</li>
@@ -534,7 +526,7 @@ Symptoms</h3>
 <li>Results depend on timing or system load</li>
 <li>Intermittent crashes or data corruption</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1097"></a>
+<h3><a class="anchor" id="autotoc_md3139"></a>
 Solution Approaches</h3>
 <ol type="1">
 <li><b>Use mutex protection:</b> <div class="fragment"><div class="line">std::mutex counter_mutex_;</div>
@@ -560,9 +552,9 @@ Solution Approaches</h3>
 <div class="line">thread_pool-&gt;enqueue(std::move(increment_job));</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1098"></a>
+<h2><a class="anchor" id="autotoc_md3140"></a>
 2. Deadlocks</h2>
-<h3><a class="anchor" id="autotoc_md1099"></a>
+<h3><a class="anchor" id="autotoc_md3141"></a>
 Symptoms</h3>
 <ul>
 <li>Program freezes or hangs</li>
@@ -570,7 +562,7 @@ Symptoms</h3>
 <li>No CPU usage despite program appearing to run</li>
 <li>Deadlock detection tools report lock cycles</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1100"></a>
+<h3><a class="anchor" id="autotoc_md3142"></a>
 Solution Approaches</h3>
 <ol type="1">
 <li><b>Consistent lock ordering:</b> <div class="fragment"><div class="line"><span class="comment">// Always acquire locks in the same order</span></div>
@@ -596,16 +588,16 @@ Solution Approaches</h3>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1101"></a>
+<h2><a class="anchor" id="autotoc_md3143"></a>
 3. Type Inversion</h2>
-<h3><a class="anchor" id="autotoc_md1102"></a>
+<h3><a class="anchor" id="autotoc_md3144"></a>
 Symptoms</h3>
 <ul>
 <li>High-type tasks experience unexpected delays</li>
 <li>System responsiveness is inconsistent</li>
 <li>Critical jobs take longer than lower-type ones</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1103"></a>
+<h3><a class="anchor" id="autotoc_md3145"></a>
 Solution Approaches</h3>
 <ol type="1">
 <li><b>Minimize resource sharing across type boundaries:</b> <div class="fragment"><div class="line"><span class="comment">// Design your system to minimize cases where high and low type</span></div>
@@ -628,16 +620,16 @@ Solution Approaches</h3>
 <div class="line">set_current_type(original_type);</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1104"></a>
+<h2><a class="anchor" id="autotoc_md3146"></a>
 4. Thread Starvation</h2>
-<h3><a class="anchor" id="autotoc_md1105"></a>
+<h3><a class="anchor" id="autotoc_md3147"></a>
 Symptoms</h3>
 <ul>
 <li>Certain tasks never complete or experience extreme delays</li>
 <li>Some threads never get CPU time</li>
 <li>System seems to focus on a subset of available work</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1106"></a>
+<h3><a class="anchor" id="autotoc_md3148"></a>
 Solution Approaches</h3>
 <ol type="1">
 <li><b>Dedicate workers to each type level:</b> <div class="fragment"><div class="line"><span class="comment">// Create workers specifically for low-type tasks</span></div>
@@ -650,9 +642,9 @@ Solution Approaches</h3>
 </div><!-- fragment --></li>
 <li><b>Implement aging for low-type tasks:</b> <div class="fragment"><div class="line"><span class="keyword">class </span>AgingJob : <span class="keyword">public</span> typed_job {</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    AgingJob(std::function&lt;<a class="code hl_typedef" href="../../d2/d41/benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>()&gt; func)</div>
-<div class="line">        : typed_job(job_types::<a class="code hl_enumvalue" href="../../d9/d03/stress__test__benchmark_8cpp.html#a1d1cfd8ffb84e947f82999c682b666a7a28d0edd045e05cf5af64e35ae0c4c6ef">Low</a>), func_(func), </div>
-<div class="line">          creation_time_(<a class="code hl_namespace" href="../../d8/dcc/namespacestd.html">std</a>::chrono::steady_clock::now()) {}</div>
+<div class="line">    AgingJob(std::function&lt;<a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>()&gt; func)</div>
+<div class="line">        : typed_job(job_types::<a class="code hl_enumvalue" href="../../d6/dbc/benchmarks_2thread__pool__benchmarks_2stress__test__benchmark_8cpp.html#a1d1cfd8ffb84e947f82999c682b666a7a28d0edd045e05cf5af64e35ae0c4c6ef">Low</a>), func_(func), </div>
+<div class="line">          creation_time_(std::chrono::steady_clock::now()) {}</div>
 <div class="line">    </div>
 <div class="line">    <span class="keyword">auto</span> get_type() const -&gt; job_types<span class="keyword"> override </span>{</div>
 <div class="line">        <span class="keyword">auto</span> age = std::chrono::steady_clock::now() - creation_time_;</div>
@@ -665,24 +657,22 @@ Solution Approaches</h3>
 <div class="line">    }</div>
 <div class="line">    </div>
 <div class="line"><span class="keyword">private</span>:</div>
-<div class="line">    std::function&lt;<a class="code hl_typedef" href="../../d2/d41/benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>()&gt; func_;</div>
+<div class="line">    std::function&lt;<a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>()&gt; func_;</div>
 <div class="line">    std::chrono::steady_clock::time_point creation_time_;</div>
 <div class="line">};</div>
-<div class="ttc" id="abenchmark__common_8h_html_a13fa946184c58584adc65e45561d6772"><div class="ttname"><a href="../../d2/d41/benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a></div><div class="ttdeci">thread_module::result_void result_void</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d41/benchmark__common_8h_source.html#l00012">benchmark_common.h:12</a></div></div>
-<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="../../d8/dcc/namespacestd.html">std</a></div><div class="ttdoc">STL namespace.</div></div>
-<div class="ttc" id="astress__test__benchmark_8cpp_html_a1d1cfd8ffb84e947f82999c682b666a7a28d0edd045e05cf5af64e35ae0c4c6ef"><div class="ttname"><a href="../../d9/d03/stress__test__benchmark_8cpp.html#a1d1cfd8ffb84e947f82999c682b666a7a28d0edd045e05cf5af64e35ae0c4c6ef">Type::Low</a></div><div class="ttdeci">@ Low</div></div>
+<div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2stress__test__benchmark_8cpp_html_a1d1cfd8ffb84e947f82999c682b666a7a28d0edd045e05cf5af64e35ae0c4c6ef"><div class="ttname"><a href="../../d6/dbc/benchmarks_2thread__pool__benchmarks_2stress__test__benchmark_8cpp.html#a1d1cfd8ffb84e947f82999c682b666a7a28d0edd045e05cf5af64e35ae0c4c6ef">Type::Low</a></div><div class="ttdeci">@ Low</div></div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1107"></a>
+<h2><a class="anchor" id="autotoc_md3149"></a>
 5. False Sharing</h2>
-<h3><a class="anchor" id="autotoc_md1108"></a>
+<h3><a class="anchor" id="autotoc_md3150"></a>
 Symptoms</h3>
 <ul>
 <li>Unexpectedly poor performance in multi-threaded code</li>
 <li>Performance degrades as more cores are used</li>
 <li>CPU cache profiling shows high cache coherence traffic</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1109"></a>
+<h3><a class="anchor" id="autotoc_md3151"></a>
 Solution Approaches</h3>
 <ol type="1">
 <li><b>Pad data structures to avoid false sharing:</b> <div class="fragment"><div class="line"><span class="keyword">struct </span><span class="keyword">alignas</span>(64) PaddedCounter {</div>
@@ -704,16 +694,16 @@ Solution Approaches</h3>
 <div class="line">);</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1110"></a>
+<h2><a class="anchor" id="autotoc_md3152"></a>
 6. Memory Visibility Issues</h2>
-<h3><a class="anchor" id="autotoc_md1111"></a>
+<h3><a class="anchor" id="autotoc_md3153"></a>
 Symptoms</h3>
 <ul>
 <li>Threads don't "see" updates made by other threads</li>
 <li>Stale data is used in calculations</li>
 <li>Non-atomic operations on shared variables cause corruption</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1112"></a>
+<h3><a class="anchor" id="autotoc_md3154"></a>
 Solution Approaches</h3>
 <ol type="1">
 <li><b>Use atomic variables for flags:</b> <div class="fragment"><div class="line">std::atomic&lt;bool&gt; done_{<span class="keyword">false</span>};</div>
@@ -744,9 +734,9 @@ Solution Approaches</h3>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1113"></a>
+<h1><a class="anchor" id="autotoc_md3155"></a>
 Advanced Concurrency Patterns</h1>
-<h2><a class="anchor" id="autotoc_md1114"></a>
+<h2><a class="anchor" id="autotoc_md3156"></a>
 1. Event-Based Communication</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>EventSystem {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -784,7 +774,7 @@ Advanced Concurrency Patterns</h1>
 <div class="line">    std::map&lt;EventType, std::vector&lt;EventHandler&gt;&gt; handlers_;</div>
 <div class="line">    std::shared_ptr&lt;thread_pool_module::thread_pool&gt; thread_pool_;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1115"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3157"></a>
 2. Work Stealing Pattern</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>WorkStealingPool {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -813,9 +803,9 @@ Advanced Concurrency Patterns</h1>
 <div class="line">    std::vector&lt;JobQueue&gt; queues_;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">class </span>WorkStealingWorker : <span class="keyword">public</span> <a class="code hl_class" href="../../da/d94/classthread__module_1_1thread__base.html">thread_module::thread_base</a> {</div>
+<div class="line"><span class="keyword">class </span>WorkStealingWorker : <span class="keyword">public</span> thread_module::thread_base {</div>
 <div class="line"><span class="keyword">protected</span>:</div>
-<div class="line">    <span class="keyword">auto</span> <a class="code hl_function" href="../../da/d94/classthread__module_1_1thread__base.html#afeb2e53943516cf65354f9cd5930b2d5">do_work</a>() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> <span class="keyword">override</span> {</div>
+<div class="line">    <span class="keyword">auto</span> do_work() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> <span class="keyword">override</span> {</div>
 <div class="line">        <span class="comment">// Try to get job from own queue</span></div>
 <div class="line">        <span class="keyword">auto</span> job = queues_[worker_id_].dequeue();</div>
 <div class="line">        </div>
@@ -843,7 +833,7 @@ Advanced Concurrency Patterns</h1>
 <div class="line">    <span class="keywordtype">size_t</span> worker_id_;</div>
 <div class="line">    std::vector&lt;JobQueue&gt;&amp; queues_;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1116"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3158"></a>
 3. Read-Write Lock Pattern</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>ReadWriteLock {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -891,9 +881,9 @@ Advanced Concurrency Patterns</h1>
 <div class="line">    <span class="keywordtype">int</span> write_count_ = 0;</div>
 <div class="line">    <span class="keywordtype">int</span> write_waiting_ = 0;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1117"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3159"></a>
 Debugging Concurrent Code</h1>
-<h2><a class="anchor" id="autotoc_md1118"></a>
+<h2><a class="anchor" id="autotoc_md3160"></a>
 Using Diagnostics Effectively</h2>
 <ol type="1">
 <li><b>Track thread IDs for debugging:</b> <div class="fragment"><div class="line"><span class="comment">// Custom diagnostic helper</span></div>
@@ -913,7 +903,7 @@ Using Diagnostics Effectively</h2>
 <div class="line">    }</div>
 <div class="line">};</div>
 </div><!-- fragment --></li>
-<li><b>Track state transitions:</b> <div class="fragment"><div class="line"><span class="keyword">auto</span> do_work() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> <span class="keyword">override</span> {</div>
+<li><b>Track state transitions:</b> <div class="fragment"><div class="line"><span class="keyword">auto</span> do_work() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> <span class="keyword">override</span> {</div>
 <div class="line">    ThreadDiagnostics::record_event(<span class="stringliteral">&quot;Worker state: entering critical section&quot;</span>);</div>
 <div class="line">    {</div>
 <div class="line">        std::lock_guard&lt;std::mutex&gt; lock(mutex_);</div>
@@ -936,7 +926,7 @@ Using Diagnostics Effectively</h2>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1119"></a>
+<h2><a class="anchor" id="autotoc_md3161"></a>
 Using Thread Sanitizers</h2>
 <ol type="1">
 <li><b>Enable ThreadSanitizer in your build:</b> <div class="fragment"><div class="line"># For GCC/Clang</div>
@@ -953,7 +943,7 @@ Using Thread Sanitizers</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1120"></a>
+<h2><a class="anchor" id="autotoc_md3162"></a>
 Common Thread System Debugging Steps</h2>
 <ol type="1">
 <li><b>Verify thread pool startup:</b> <div class="fragment"><div class="line"><span class="keyword">auto</span> error = pool-&gt;start();</div>
@@ -981,23 +971,23 @@ Common Thread System Debugging Steps</h2>
 <div class="line">);</div>
 </div><!-- fragment --></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1121"></a>
+<h1><a class="anchor" id="autotoc_md3163"></a>
 Performance Optimization</h1>
-<h2><a class="anchor" id="autotoc_md1122"></a>
+<h2><a class="anchor" id="autotoc_md3164"></a>
 Thread Pool Sizing Guidelines</h2>
 <ol type="1">
 <li><b>For CPU-bound tasks:</b> <div class="fragment"><div class="line"><span class="comment">// Use hardware concurrency as a baseline</span></div>
-<div class="line"><span class="keyword">auto</span> <a class="code hl_variable" href="../../df/de0/optimized__storage_8h.html#acbe3ff89760ba4e883cfef7df57f461c">thread_count</a> = std::thread::hardware_concurrency();</div>
+<div class="line"><span class="keyword">auto</span> thread_count = std::thread::hardware_concurrency();</div>
 </div><!-- fragment --></li>
 <li><b>For I/O-bound tasks:</b> <div class="fragment"><div class="line"><span class="comment">// Consider using more threads than cores</span></div>
-<div class="line"><span class="keyword">auto</span> <a class="code hl_variable" href="../../df/de0/optimized__storage_8h.html#acbe3ff89760ba4e883cfef7df57f461c">thread_count</a> = std::thread::hardware_concurrency() * 2;</div>
+<div class="line"><span class="keyword">auto</span> thread_count = std::thread::hardware_concurrency() * 2;</div>
 </div><!-- fragment --></li>
 <li><b>For mixed workloads:</b> <div class="fragment"><div class="line"><span class="comment">// Create separate pools for different workload types</span></div>
-<div class="line"><span class="keyword">auto</span> cpu_pool = <a class="code hl_function" href="../../d6/d0d/comparison__benchmark_8cpp.html#a85c1bc628eb54edb6a3c2f3e611ef6e2">create_default</a>(std::thread::hardware_concurrency());</div>
-<div class="line"><span class="keyword">auto</span> io_pool = <a class="code hl_function" href="../../d6/d0d/comparison__benchmark_8cpp.html#a85c1bc628eb54edb6a3c2f3e611ef6e2">create_default</a>(std::thread::hardware_concurrency() * 2);</div>
+<div class="line"><span class="keyword">auto</span> cpu_pool = <a class="code hl_function" href="../../da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp.html#a75b6b3ce3590f7f29e3a71cc698bb69a">create_default</a>(std::thread::hardware_concurrency());</div>
+<div class="line"><span class="keyword">auto</span> io_pool = <a class="code hl_function" href="../../da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp.html#a75b6b3ce3590f7f29e3a71cc698bb69a">create_default</a>(std::thread::hardware_concurrency() * 2);</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1123"></a>
+<h2><a class="anchor" id="autotoc_md3165"></a>
 Batch Job Submission</h2>
 <p>Always prefer batch submission over individual job enqueueing:</p>
 <div class="fragment"><div class="line"><span class="comment">// ❌ Inefficient</span></div>
@@ -1012,7 +1002,7 @@ Batch Job Submission</h2>
 <div class="line">}</div>
 <div class="line">pool-&gt;enqueue_batch(std::move(jobs));</div>
 <div class="ttc" id="astructtask_html"><div class="ttname"><a href="../../db/da2/structtask.html">task</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/daa/distributed__worker_8cpp_source.html#l00033">distributed_worker.cpp:33</a></div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1124"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3166"></a>
 Wake Interval Optimization</h2>
 <p>Configure wake intervals based on your workload:</p>
 <div class="fragment"><div class="line"><span class="comment">// For high-frequency tasks</span></div>
@@ -1023,18 +1013,18 @@ Wake Interval Optimization</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// For rare events</span></div>
 <div class="line">worker.set_wake_interval(std::chrono::minutes(1));</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1125"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3167"></a>
 Integrating External Modules</h1>
-<h2><a class="anchor" id="autotoc_md1126"></a>
+<h2><a class="anchor" id="autotoc_md3168"></a>
 Logger Integration Pattern</h2>
 <p>Thread System is designed to work with external logging libraries. Here's how to integrate them:</p>
 <div class="fragment"><div class="line"><span class="comment">// Example: Integrating an external logger</span></div>
-<div class="line"><span class="keyword">class </span>LoggerAdapter : <span class="keyword">public</span> <a class="code hl_class" href="../../dd/d11/classthread__module_1_1error__handler.html">thread_module::error_handler</a> {</div>
+<div class="line"><span class="keyword">class </span>LoggerAdapter : <span class="keyword">public</span> thread_module::error_handler {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    LoggerAdapter(std::shared_ptr&lt;external::Logger&gt; logger) </div>
 <div class="line">        : logger_(logger) {}</div>
 <div class="line">    </div>
-<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="../../dd/d11/classthread__module_1_1error__handler.html#ab81b999f44040678850d75650599b407">handle_error</a>(<span class="keyword">const</span> std::string&amp; error_message)<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">void</span> handle_error(<span class="keyword">const</span> std::string&amp; error_message)<span class="keyword"> override </span>{</div>
 <div class="line">        <span class="keywordflow">if</span> (logger_) {</div>
 <div class="line">            logger_-&gt;error(<span class="stringliteral">&quot;Thread System: {}&quot;</span>, error_message);</div>
 <div class="line">        }</div>
@@ -1048,7 +1038,7 @@ Logger Integration Pattern</h2>
 <div class="line"><span class="keyword">auto</span> external_logger = external::Logger::create(<span class="stringliteral">&quot;app.log&quot;</span>);</div>
 <div class="line"><span class="keyword">auto</span> logger_adapter = std::make_shared&lt;LoggerAdapter&gt;(external_logger);</div>
 <div class="line">thread_pool-&gt;set_error_handler(logger_adapter);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1127"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3169"></a>
 Monitoring Integration Pattern</h2>
 <p>For performance monitoring and metrics collection:</p>
 <div class="fragment"><div class="line"><span class="comment">// Example: Integrating external monitoring</span></div>
@@ -1078,7 +1068,7 @@ Monitoring Integration Pattern</h2>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">    std::shared_ptr&lt;external::MetricsCollector&gt; collector_;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1128"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3170"></a>
 Best Practices for Modular Architecture</h2>
 <ol type="1">
 <li><b>Use Dependency Injection</b>: <div class="fragment"><div class="line"><span class="keyword">class </span>Application {</div>
@@ -1086,7 +1076,7 @@ Best Practices for Modular Architecture</h2>
 <div class="line">    Application(std::shared_ptr&lt;thread_module::error_handler&gt; error_handler = <span class="keyword">nullptr</span>)</div>
 <div class="line">        : error_handler_(error_handler) {</div>
 <div class="line">        <span class="comment">// Create thread pool</span></div>
-<div class="line">        <span class="keyword">auto</span> [pool, error] = <a class="code hl_function" href="../../d6/d0d/comparison__benchmark_8cpp.html#a85c1bc628eb54edb6a3c2f3e611ef6e2">create_default</a>(4);</div>
+<div class="line">        <span class="keyword">auto</span> [pool, error] = <a class="code hl_function" href="../../da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp.html#a75b6b3ce3590f7f29e3a71cc698bb69a">create_default</a>(4);</div>
 <div class="line">        <span class="keywordflow">if</span> (!error.has_value() &amp;&amp; error_handler_) {</div>
 <div class="line">            pool-&gt;set_error_handler(error_handler_);</div>
 <div class="line">        }</div>
@@ -1122,7 +1112,7 @@ Best Practices for Modular Architecture</h2>
 <div class="line"><span class="keyword">auto</span> logger = external_logger ? external_logger : std::make_shared&lt;NullLogger&gt;();</div>
 </div><!-- fragment --></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1129"></a>
+<h1><a class="anchor" id="autotoc_md3171"></a>
 Conclusion</h1>
 <p>Following these patterns and avoiding the antipatterns will help you use Thread System effectively. The core principles to remember are:</p>
 <ol type="1">

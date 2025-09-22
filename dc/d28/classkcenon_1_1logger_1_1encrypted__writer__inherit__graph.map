@@ -1,0 +1,7 @@
+<map id="kcenon::logger::encrypted_writer" name="kcenon::logger::encrypted_writer">
+<area shape="rect" id="Node000001" title="Writer that encrypts log data before passing to another writer." alt="" coords="5,181,196,221"/>
+<area shape="rect" id="Node000002" href="$d0/dc9/classkcenon_1_1logger_1_1base__writer.html" title="Abstract base class for all log output writers." alt="" coords="22,93,179,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,147,103,181,98,181,98,147"/>
+<area shape="rect" id="Node000003" href="$dd/d95/classkcenon_1_1logger_1_1log__writer__interface.html" title="Interface for log writers." alt="" coords="27,5,174,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,59,103,93,98,93,98,59"/>
+</map>

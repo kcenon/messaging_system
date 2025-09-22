@@ -1,0 +1,6 @@
+<map id="NetworkTest" name="NetworkTest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,108,104"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="6,5,107,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="51,44,52,78,47,79,45,45"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="68,45,66,79,61,78,63,44"/>
+</map>

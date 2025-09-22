@@ -1,0 +1,11 @@
+<map id="libraries/network_system/src/internal/common_defs.h" name="libraries/network_system/src/internal/common_defs.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="131,5,338,45"/>
+<area shape="rect" id="Node000002" href="$df/d12/src_2internal_2tcp__socket_8h.html" title=" " alt="" coords="141,93,328,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,59,237,93,232,93,232,59"/>
+<area shape="rect" id="Node000003" href="$d0/dff/src_2internal_2send__coroutine_8h.html" title=" " alt="" coords="13,181,227,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="200,144,147,183,144,179,197,140"/>
+<area shape="rect" id="Node000005" href="$d8/d49/src_2internal_2tcp__socket_8cpp.html" title=" " alt="" coords="251,181,450,221"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="273,140,327,179,323,183,270,144"/>
+<area shape="rect" id="Node000004" href="$d0/d94/src_2internal_2send__coroutine_8cpp.html" title=" " alt="" coords="5,269,235,309"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="123,235,123,269,117,269,117,235"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="monitoring_system::otlp_metrics_exporter" name="monitoring_system::otlp_metrics_exporter">
+<area shape="rect" id="Node000001" title="OpenTelemetry Protocol (OTLP) metrics exporter implementation." alt="" coords="18,93,183,133"/>
+<area shape="rect" id="Node000002" href="$da/de3/classmonitoring__system_1_1metric__exporter__interface.html" title="Abstract interface for metric exporters." alt="" coords="5,5,196,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,59,103,93,98,93,98,59"/>
+</map>

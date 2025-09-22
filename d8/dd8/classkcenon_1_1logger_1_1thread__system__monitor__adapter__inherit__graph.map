@@ -1,0 +1,7 @@
+<map id="kcenon::logger::thread_system_monitor_adapter" name="kcenon::logger::thread_system_monitor_adapter">
+<area shape="rect" id="Node000001" title="Fallback when thread_system is not available." alt="" coords="8,181,200,221"/>
+<area shape="rect" id="Node000002" href="$d2/d15/classkcenon_1_1logger_1_1basic__monitor.html" title="Basic monitoring implementation." alt="" coords="24,93,184,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,147,107,181,101,181,101,147"/>
+<area shape="rect" id="Node000003" href="$d8/d25/classkcenon_1_1logger_1_1monitoring__interface.html" title="Abstract monitoring interface." alt="" coords="5,5,203,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,59,107,93,101,93,101,59"/>
+</map>

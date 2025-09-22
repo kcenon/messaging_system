@@ -1,0 +1,22 @@
+<map id="monitoring_system::metric_aggregation_result" name="monitoring_system::metric_aggregation_result">
+<area shape="rect" id="Node000001" title="Result of metric aggregation." alt="" coords="1080,41,1273,81"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="813,17,900,42"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="914,32,1080,49,1079,54,913,38"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="501,5,640,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="654,24,813,26,813,31,654,29"/>
+<area shape="rect" id="Node000004" href="$d3/d42/structmonitoring__system_1_1stream__statistics.html" title="Comprehensive streaming statistics." alt="" coords="779,69,935,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="948,84,1056,77,1079,75,1080,80,1056,83,949,90"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="495,69,647,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="660,87,779,87,779,92,660,92"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="157,69,309,109"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="323,87,494,87,494,92,323,92"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="5,43,44,69"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="58,58,157,75,157,80,57,64"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="5,113,44,138"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="57,117,157,100,158,105,58,122"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="169,134,298,159"/>
+<area shape="poly" id="edge10_Node000010_Node000008" title=" " alt="" coords="57,139,69,143,119,150,169,150,169,155,119,155,67,148,56,144"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="488,134,653,159"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="648,129,778,102,779,107,649,134"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="311,144,488,144,488,149,311,149"/>
+</map>

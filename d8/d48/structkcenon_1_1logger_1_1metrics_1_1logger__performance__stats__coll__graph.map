@@ -1,0 +1,9 @@
+<map id="kcenon::logger::metrics::logger_performance_stats" name="kcenon::logger::metrics::logger_performance_stats">
+<area shape="rect" id="Node000001" title="Performance statistics for logger operations." alt="" coords="5,357,205,397"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="16,181,195,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,221,108,357,103,357,103,221"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="39,93,172,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="108,133,108,181,103,181,103,133"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="86,5,125,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="108,45,108,93,103,93,103,45"/>
+</map>

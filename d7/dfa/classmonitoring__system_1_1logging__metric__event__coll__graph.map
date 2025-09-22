@@ -1,0 +1,5 @@
+<map id="monitoring_system::logging_metric_event" name="monitoring_system::logging_metric_event">
+<area shape="rect" id="Node000001" title="Event containing logging system metrics." alt="" coords="5,93,168,133"/>
+<area shape="rect" id="Node000002" href="$d6/d1e/classmonitoring__system_1_1event__base.html" title="Base class for all events in the system." alt="" coords="9,5,165,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,59,89,93,84,93,84,59"/>
+</map>

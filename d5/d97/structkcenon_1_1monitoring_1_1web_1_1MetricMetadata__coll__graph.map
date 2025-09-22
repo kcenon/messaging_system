@@ -1,0 +1,14 @@
+<map id="kcenon::monitoring::web::MetricMetadata" name="kcenon::monitoring::web::MetricMetadata">
+<area shape="rect" id="Node000001" title=" " alt="" coords="131,317,299,357"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="200,108,287,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="264,143,270,156,275,163,283,166,293,167,303,172,307,183,304,205,292,241,268,295,248,319,244,316,264,292,287,239,299,204,302,184,299,175,292,172,282,171,272,168,265,159,259,146"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="51,213,238,238"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="220,144,204,159,156,214,152,210,200,155,217,140"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="174,5,313,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="246,59,246,108,241,108,241,59"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="162,249,205,316,201,319,158,252"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,108,135,133"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="69,147,74,171,94,194,119,210,116,215,90,198,69,173,64,148"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="51,13,89,38"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="73,52,73,108,67,108,67,52"/>
+</map>

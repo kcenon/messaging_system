@@ -1,0 +1,47 @@
+<map id="libraries/network_system/samples/messaging_system_integration/legacy_compatibility.cpp" name="libraries/network_system/samples/messaging_system_integration/legacy_compatibility.cpp">
+<area shape="rect" id="Node000001" title="Example of using network_system with legacy messaging_system code." alt="" coords="115,5,381,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="43,108,123,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,62,118,104,116,99,196,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="147,108,211,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="229,62,199,99,195,95,225,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="799,357,865,383"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="381,50,562,82,663,103,763,129,857,158,940,191,1004,227,1029,247,1046,268,1055,291,1049,311,1031,327,1006,340,943,358,879,367,879,362,942,353,1004,335,1028,323,1044,308,1049,291,1042,271,1025,251,1001,232,937,195,855,163,762,134,661,109,561,87,380,55"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="219,277,277,302"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="251,60,251,263,245,263,245,60"/>
+<area shape="rect" id="Node000006" href="$dd/ddf/network__system_2include_2network__system_2compatibility_8h.html" title="Compatibility layer for messaging_system migration." alt="" coords="391,108,622,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="328,58,460,101,459,106,326,63"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="869,269,1032,309"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="599,131,690,149,784,179,857,217,918,259,915,263,855,222,782,184,688,154,598,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="301,269,464,309"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="509,134,502,175,495,200,482,223,461,246,436,264,433,260,457,242,478,220,490,198,497,174,503,133"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="286,181,469,221"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="489,136,421,177,419,172,486,131"/>
+<area shape="rect" id="Node000010" href="$d4/d64/messaging__bridge_8h.html" title="Bridge for messaging_system compatibility." alt="" coords="544,181,749,221"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="529,131,602,172,600,177,526,136"/>
+<area shape="rect" id="Node000011" href="$d8/d4b/thread__integration_8h.html" title="Thread system integration interface for network_system." alt="" coords="589,269,795,309"/>
+<area shape="poly" id="edge22_Node000006_Node000011" title=" " alt="" coords="613,131,703,149,740,163,763,180,771,201,765,223,750,244,731,262,728,259,746,241,760,221,766,201,759,183,737,167,702,154,612,136"/>
+<area shape="rect" id="Node000016" href="$dd/d45/container__integration_8h.html" title="Container system integration interface for network_system." alt="" coords="5,181,211,221"/>
+<area shape="poly" id="edge23_Node000006_Node000016" title=" " alt="" coords="449,136,217,181,216,176,448,131"/>
+<area shape="poly" id="edge21_Node000010_Node000004" title=" " alt="" coords="732,219,773,238,809,268,820,285,828,305,834,343,829,344,823,306,815,288,805,271,770,243,729,224"/>
+<area shape="poly" id="edge19_Node000010_Node000005" title=" " alt="" coords="544,218,421,239,290,272,284,274,283,269,289,267,420,234,543,213"/>
+<area shape="poly" id="edge11_Node000010_Node000007" title=" " alt="" coords="714,219,871,263,870,268,713,224"/>
+<area shape="poly" id="edge10_Node000010_Node000008" title=" " alt="" coords="590,224,454,268,452,263,588,219"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="659,220,678,256,673,258,654,223"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="425,357,511,383"/>
+<area shape="poly" id="edge20_Node000010_Node000012" title=" " alt="" coords="623,223,566,271,489,349,486,345,562,267,620,219"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="536,357,613,383"/>
+<area shape="poly" id="edge18_Node000010_Node000013" title=" " alt="" coords="620,223,597,244,580,270,572,308,573,344,568,344,566,307,575,268,593,241,617,219"/>
+<area shape="poly" id="edge16_Node000011_Node000004" title=" " alt="" coords="727,307,800,348,798,353,724,312"/>
+<area shape="poly" id="edge13_Node000011_Node000012" title=" " alt="" coords="639,312,515,355,513,350,637,307"/>
+<area shape="poly" id="edge14_Node000011_Node000013" title=" " alt="" coords="665,312,605,352,602,348,662,307"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="661,357,723,383"/>
+<area shape="poly" id="edge15_Node000011_Node000014" title=" " alt="" coords="695,310,695,343,689,343,689,310"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="169,357,231,383"/>
+<area shape="poly" id="edge17_Node000011_Node000015" title=" " alt="" coords="589,310,245,364,245,359,588,304"/>
+<area shape="poly" id="edge26_Node000016_Node000005" title=" " alt="" coords="140,219,219,267,216,272,137,224"/>
+<area shape="poly" id="edge27_Node000016_Node000012" title=" " alt="" coords="115,220,131,265,146,288,164,307,182,317,208,326,273,342,411,361,410,366,272,347,206,331,180,322,161,311,141,291,127,267,110,222"/>
+<area shape="poly" id="edge24_Node000016_Node000013" title=" " alt="" coords="125,220,167,270,190,293,208,307,250,326,288,338,323,344,357,346,430,347,523,355,522,360,430,352,357,352,322,349,287,343,248,331,205,312,186,297,164,274,121,223"/>
+<area shape="poly" id="edge25_Node000016_Node000015" title=" " alt="" coords="80,224,58,242,39,263,30,286,30,297,36,308,60,332,91,348,124,358,155,364,154,369,122,363,89,353,57,336,31,311,25,298,25,285,35,261,54,238,77,220"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="46,277,93,302"/>
+<area shape="poly" id="edge28_Node000016_Node000017" title=" " alt="" coords="102,223,83,265,78,263,97,221"/>
+</map>

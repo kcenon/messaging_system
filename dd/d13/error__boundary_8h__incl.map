@@ -1,0 +1,13 @@
+<map id="libraries/monitoring_system/include/monitoring/reliability/error_boundary.h" name="libraries/monitoring_system/include/monitoring/reliability/error_boundary.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="136,5,339,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,72,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,62,76,112,74,107,180,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="97,115,183,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,62,164,107,160,104,208,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="208,115,267,141"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="240,60,240,101,235,101,235,60"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="291,115,357,141"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="264,58,306,103,302,107,260,62"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="382,108,549,148"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="302,58,408,100,406,105,300,63"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="kcenon::monitoring::alerting::SilenceConfig" name="kcenon::monitoring::alerting::SilenceConfig">
+<area shape="rect" id="Node000001" title=" " alt="" coords="72,357,248,397"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="31,218,118,243"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,255,105,292,128,332,145,356,141,359,123,335,100,295,83,258"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,93,144,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,147,77,218,72,218,72,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="143,211,348,251"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="236,264,221,299,201,335,182,359,177,355,196,332,216,297,231,262"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="181,101,310,126"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="248,140,248,210,243,210,243,140"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="226,5,265,31"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="248,44,248,101,243,101,243,44"/>
+</map>

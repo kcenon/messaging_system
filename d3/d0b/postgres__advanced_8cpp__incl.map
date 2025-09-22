@@ -1,0 +1,29 @@
+<map id="libraries/database_system/samples/postgres_advanced.cpp" name="libraries/database_system/samples/postgres_advanced.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="101,5,297,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,85,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,62,79,104,76,99,151,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="52,255,111,280"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,61,96,243,91,241,183,59"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="135,255,212,280"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="198,60,179,241,173,240,193,60"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="237,255,299,280"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="209,59,263,241,258,242,204,61"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="631,255,699,280"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="297,44,395,66,445,84,493,106,542,137,586,175,650,242,646,246,582,178,539,142,491,110,443,89,393,71,296,49"/>
+<area shape="rect" id="Node000007" href="$d6/d94/postgres__manager_8h.html" title=" " alt="" coords="261,108,480,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="252,58,336,99,334,104,250,62"/>
+<area shape="rect" id="Node000008" href="$d9/d46/database__base_8h.html" title=" " alt="" coords="294,181,426,207"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="372,134,366,168,361,167,366,133"/>
+<area shape="poly" id="edge8_Node000008_Node000003" title=" " alt="" coords="314,209,125,257,124,252,312,204"/>
+<area shape="poly" id="edge9_Node000008_Node000004" title=" " alt="" coords="331,209,217,252,216,247,329,204"/>
+<area shape="poly" id="edge10_Node000008_Node000005" title=" " alt="" coords="347,209,295,248,292,244,344,205"/>
+<area shape="poly" id="edge12_Node000008_Node000006" title=" " alt="" coords="412,204,619,252,617,257,411,209"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="324,255,375,280"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="361,207,356,242,350,241,356,207"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="399,255,446,280"/>
+<area shape="poly" id="edge13_Node000008_Node000010" title=" " alt="" coords="372,205,405,242,401,246,368,209"/>
+<area shape="rect" id="Node000011" href="$d4/dac/database__types_8h.html" title="Defines the enumeration of supported database types." alt="" coords="470,255,607,280"/>
+<area shape="poly" id="edge14_Node000008_Node000011" title=" " alt="" coords="390,204,498,247,496,252,388,209"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="505,328,572,353"/>
+<area shape="poly" id="edge15_Node000011_Node000012" title=" " alt="" coords="541,280,541,314,536,314,536,280"/>
+</map>

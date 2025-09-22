@@ -1,0 +1,9 @@
+<map id="kcenon::monitoring::alerting::CompositeCondition" name="kcenon::monitoring::alerting::CompositeCondition">
+<area shape="rect" id="Node000001" title=" " alt="" coords="927,59,1147,99"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="560,37,807,121"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="820,76,926,76,926,81,820,81"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="157,66,287,91"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="301,76,560,76,560,81,301,81"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,66,44,91"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="58,76,157,76,157,81,58,81"/>
+</map>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/logger_system/sources/logger/server/log_server.h File Reference</title>
+<title>Messaging System: libraries/logger_system/include/kcenon/logger/server/log_server.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -96,50 +96,48 @@ $(document).ready(function(){initNavTree('d3/d00/log__server_8h.html','../../');
   <div class="headertitle"><div class="title">log_server.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;thread&gt;</code><br />
-<code>#include &lt;atomic&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
+
+<p>Log server for distributed logging.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;<a class="el" href="../../da/d5e/logger__types_8h_source.html">kcenon/logger/interfaces/logger_types.h</a>&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
-<code>#include &lt;functional&gt;</code><br />
-<code>#include &lt;unordered_map&gt;</code><br />
-<code>#include &lt;mutex&gt;</code><br />
-<code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;atomic&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for log_server.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../dd/d42/log__server_8h__incl.png" border="0" usemap="#alibraries_2logger__system_2sources_2logger_2server_2log__server_8h" alt=""/></div>
-<map name="alibraries_2logger__system_2sources_2logger_2server_2log__server_8h" id="alibraries_2logger__system_2sources_2logger_2server_2log__server_8h">
-<area shape="rect" title=" " alt="" coords="277,5,451,60"/>
-<area shape="rect" title=" " alt="" coords="5,108,69,133"/>
-<area shape="poly" title=" " alt="" coords="277,59,84,110,82,105,276,54"/>
-<area shape="rect" title=" " alt="" coords="93,108,160,133"/>
-<area shape="poly" title=" " alt="" coords="292,63,172,106,170,101,291,58"/>
-<area shape="rect" title=" " alt="" coords="185,108,247,133"/>
-<area shape="poly" title=" " alt="" coords="320,62,249,103,246,99,317,58"/>
-<area shape="rect" title=" " alt="" coords="272,108,349,133"/>
-<area shape="poly" title=" " alt="" coords="350,61,327,98,323,95,345,59"/>
-<area shape="rect" title=" " alt="" coords="374,108,461,133"/>
-<area shape="poly" title=" " alt="" coords="383,59,405,95,401,98,378,61"/>
-<area shape="rect" title=" " alt="" coords="485,108,609,133"/>
-<area shape="poly" title=" " alt="" coords="421,58,511,100,509,105,419,62"/>
-<area shape="rect" title=" " alt="" coords="633,108,697,133"/>
-<area shape="poly" title=" " alt="" coords="452,56,621,104,620,109,451,61"/>
-<area shape="rect" title=" " alt="" coords="721,108,788,133"/>
-<area shape="poly" title=" " alt="" coords="452,49,708,105,707,110,451,54"/>
+<div class="center"><img src="../../dd/d42/log__server_8h__incl.png" border="0" usemap="#alibraries_2logger__system_2include_2kcenon_2logger_2server_2log__server_8h" alt=""/></div>
+<map name="alibraries_2logger__system_2include_2kcenon_2logger_2server_2log__server_8h" id="alibraries_2logger__system_2include_2kcenon_2logger_2server_2log__server_8h">
+<area shape="rect" title="Log server for distributed logging." alt="" coords="261,5,436,60"/>
+<area shape="rect" href="../../da/d5e/logger__types_8h.html" title="Common types and enumerations for logger system." alt="" coords="5,108,188,148"/>
+<area shape="poly" title=" " alt="" coords="279,63,161,106,159,101,277,58"/>
+<area shape="rect" title=" " alt="" coords="175,196,234,221"/>
+<area shape="poly" title=" " alt="" coords="307,62,279,84,253,110,230,147,215,184,210,182,225,145,249,106,275,80,304,58"/>
+<area shape="rect" title=" " alt="" coords="263,115,341,141"/>
+<area shape="poly" title=" " alt="" coords="338,62,316,104,312,102,333,59"/>
+<area shape="rect" title=" " alt="" coords="365,115,428,141"/>
+<area shape="poly" title=" " alt="" coords="365,59,387,102,382,104,360,62"/>
+<area shape="rect" title=" " alt="" coords="453,115,519,141"/>
+<area shape="poly" title=" " alt="" coords="389,58,459,105,456,110,386,62"/>
+<area shape="rect" title=" " alt="" coords="543,115,607,141"/>
+<area shape="poly" title=" " alt="" coords="415,58,532,106,537,108,535,112,530,110,413,63"/>
+<area shape="rect" title=" " alt="" coords="63,196,130,221"/>
+<area shape="poly" title=" " alt="" coords="99,148,99,182,94,182,94,148"/>
+<area shape="poly" title=" " alt="" coords="124,146,179,185,176,190,121,150"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d9/d2d/log__server_8h__dep__incl.png" border="0" usemap="#alibraries_2logger__system_2sources_2logger_2server_2log__server_8hdep" alt=""/></div>
-<map name="alibraries_2logger__system_2sources_2logger_2server_2log__server_8hdep" id="alibraries_2logger__system_2sources_2logger_2server_2log__server_8hdep">
-<area shape="rect" title=" " alt="" coords="241,5,415,60"/>
-<area shape="rect" href="../../de/d56/distributed__logging__demo_8cpp.html" title=" " alt="" coords="5,108,216,163"/>
-<area shape="poly" title=" " alt="" coords="260,68,168,110,166,106,258,63"/>
-<area shape="rect" href="../../da/dcd/log__server_8cpp.html" title=" " alt="" coords="241,108,415,163"/>
-<area shape="poly" title=" " alt="" coords="331,74,331,108,325,108,325,74"/>
-<area shape="rect" href="../../d9/deb/integration__test_8cpp.html" title=" " alt="" coords="440,115,632,155"/>
-<area shape="poly" title=" " alt="" coords="395,63,498,113,495,117,393,68"/>
+<div class="center"><img src="../../d9/d2d/log__server_8h__dep__incl.png" border="0" usemap="#alibraries_2logger__system_2include_2kcenon_2logger_2server_2log__server_8hdep" alt=""/></div>
+<map name="alibraries_2logger__system_2include_2kcenon_2logger_2server_2log__server_8hdep" id="alibraries_2logger__system_2include_2kcenon_2logger_2server_2log__server_8hdep">
+<area shape="rect" title="Log server for distributed logging." alt="" coords="109,5,284,60"/>
+<area shape="rect" href="../../de/d56/distributed__logging__demo_8cpp.html" title=" " alt="" coords="5,108,180,163"/>
+<area shape="poly" title=" " alt="" coords="161,72,122,110,118,106,158,68"/>
+<area shape="rect" href="../../d9/deb/integration__test_8cpp.html" title=" " alt="" coords="205,115,397,155"/>
+<area shape="poly" title=" " alt="" coords="236,68,283,113,279,117,232,72"/>
 </map>
 </div>
 </div>
@@ -147,27 +145,35 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/d21/classlogger__module_1_1log__server.html">logger_module::log_server</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Server that receives logs from network writers.  <a href="../../df/d21/classlogger__module_1_1log__server.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/daf/structkcenon_1_1logger_1_1server_1_1server__config.html">kcenon::logger::server::server_config</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for log server.  <a href="../../d4/daf/structkcenon_1_1logger_1_1server_1_1server__config.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd7/structlogger__module_1_1log__server_1_1network__log__entry.html">logger_module::log_server::network_log_entry</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log entry received from network.  <a href="../../d1/dd7/structlogger__module_1_1log__server_1_1network__log__entry.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d0c/classkcenon_1_1logger_1_1server_1_1log__server.html">kcenon::logger::server::log_server</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log server for receiving distributed log messages.  <a href="../../d8/d0c/classkcenon_1_1logger_1_1server_1_1log__server.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d01/structlogger__module_1_1log__server_1_1server__stats.html">logger_module::log_server::server_stats</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get server statistics.  <a href="../../d7/d01/structlogger__module_1_1log__server_1_1server__stats.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d0d/classkcenon_1_1logger_1_1server_1_1log__server__factory.html">kcenon::logger::server::log_server_factory</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory for creating log servers.  <a href="../../d9/d0d/classkcenon_1_1logger_1_1server_1_1log__server__factory.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:dc/d2b/namespacelogger__module" id="r_dc/d2b/namespacelogger__module"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d2b/namespacelogger__module.html">logger_module</a></td></tr>
+<tr class="memitem:d9/d03/namespacekcenon" id="r_d9/d03/namespacekcenon"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d03/namespacekcenon.html">kcenon</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:da/d02/namespacekcenon_1_1logger" id="r_da/d02/namespacekcenon_1_1logger"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html">kcenon::logger</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:d0/d23/namespacekcenon_1_1logger_1_1server" id="r_d0/d23/namespacekcenon_1_1logger_1_1server"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d23/namespacekcenon_1_1logger_1_1server.html">kcenon::logger::server</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Log server for distributed logging. </p>
+
+<p class="definition">Definition in file <a class="el" href="../../d3/d00/log__server_8h_source.html">log_server.h</a>.</p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_159ca4044b70767904d058f73f132e19.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_401468f6de0b7ebb423d61aa28df8bb9.html">logger</a></li><li class="navelem"><a class="el" href="../../dir_904fbe50c74adfd55ca1cd3ef968089f.html">server</a></li><li class="navelem"><a class="el" href="../../d3/d00/log__server_8h.html">log_server.h</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_485cf39311ea0bca9a7e4e1d44f82346.html">include</a></li><li class="navelem"><a class="el" href="../../dir_d3549f3861a755c5be8e37f56f0b863f.html">kcenon</a></li><li class="navelem"><a class="el" href="../../dir_8f70cce443a447233fd6a17485a2ebf9.html">logger</a></li><li class="navelem"><a class="el" href="../../dir_83bf8b8f9e9e492df6526e69532c5cff.html">server</a></li><li class="navelem"><a class="el" href="../../d3/d00/log__server_8h.html">log_server.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

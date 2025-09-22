@@ -1,3 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$db/d54/classlogger__module_1_1log__sanitizer.html" title="Sanitizes sensitive information from log messages." alt="" coords="5,5,152,45"/>
+<area shape="rect" id="Node000000" href="$d8/d25/classkcenon_1_1logger_1_1monitoring__interface.html" title="Abstract monitoring interface." alt="" coords="5,37,203,77"/>
+<area shape="rect" id="Node000001" href="$d2/d15/classkcenon_1_1logger_1_1basic__monitor.html" title="Basic monitoring implementation." alt="" coords="256,5,416,45"/>
+<area shape="poly" id="edge59_Node000000_Node000001" title=" " alt="" coords="216,39,255,34,256,39,217,44"/>
+<area shape="rect" id="Node000003" href="$da/df9/classlogger__system_1_1testing_1_1mock__monitor.html" title="Mock monitor for unit testing." alt="" coords="251,69,421,109"/>
+<area shape="poly" id="edge61_Node000000_Node000003" title=" " alt="" coords="217,70,251,75,250,80,216,75"/>
+<area shape="rect" id="Node000002" href="$d2/d14/classkcenon_1_1logger_1_1thread__system__monitor__adapter.html" title="Fallback when thread_system is not available." alt="" coords="469,5,661,45"/>
+<area shape="poly" id="edge60_Node000001_Node000002" title=" " alt="" coords="430,23,469,23,469,28,430,28"/>
 </map>

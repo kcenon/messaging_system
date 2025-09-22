@@ -1,0 +1,9 @@
+<map id="kcenon::logger::async::high_performance_async_writer::config" name="kcenon::logger::async::high_performance_async_writer::config">
+<area shape="rect" id="Node000001" title="Configuration for the high&#45;performance async writer." alt="" coords="751,37,944,91"/>
+<area shape="rect" id="Node000002" href="$d1/dc2/structkcenon_1_1logger_1_1async_1_1batch__processor_1_1config.html" title="Configuration for batch processor." alt="" coords="423,5,606,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="620,35,750,50,750,55,619,40"/>
+<area shape="rect" id="Node000003" href="$dc/de1/classkcenon_1_1logger_1_1memory_1_1object__pool.html" title=" " alt="" coords="413,69,616,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="630,88,750,73,751,78,630,93"/>
+<area shape="rect" id="Node000004" href="$dc/de1/classkcenon_1_1logger_1_1memory_1_1object__pool.html" title="Thread&#45;safe object pool for high&#45;performance memory management." alt="" coords="5,84,187,124"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="201,101,413,101,413,107,201,107"/>
+</map>

@@ -1,0 +1,22 @@
+<map id="libraries/monitoring_system/include/kcenon/monitoring/interfaces/event_bus_interface.h" name="libraries/monitoring_system/include/kcenon/monitoring/interfaces/event_bus_interface.h">
+<area shape="rect" id="Node000001" title="Event bus interface for decoupled component communication." alt="" coords="461,5,640,75"/>
+<area shape="rect" id="Node000002" href="$d8/d85/monitoring__system_2include_2kcenon_2monitoring_2core_2event__bus_8h.html" title="Lightweight event bus implementation for monitoring system." alt="" coords="445,130,657,185"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="553,89,553,130,548,130,548,89"/>
+<area shape="rect" id="Node000007" href="$d2/dec/kcenon_2monitoring_2core_2event__types_8h.html" title="Common event type definitions for monitoring system." alt="" coords="241,123,420,192"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="476,83,396,125,394,120,473,79"/>
+<area shape="rect" id="Node000009" href="$da/d59/monitoring_2interfaces_2event__bus__interface_8h.html" title=" " alt="" coords="681,130,919,185"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="637,78,744,128,742,132,635,83"/>
+<area shape="rect" id="Node000003" href="$df/dc0/logger__system__collector_8h.html" title=" " alt="" coords="233,240,429,309"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="490,193,396,242,394,237,487,189"/>
+<area shape="rect" id="Node000005" href="$d0/d2d/thread__system__collector_8h.html" title=" " alt="" coords="453,240,651,309"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="554,198,554,240,549,240,548,198"/>
+<area shape="rect" id="Node000006" href="$d2/db4/monitoring__system_2include_2monitoring_2core_2event__bus_8h.html" title=" " alt="" coords="675,247,877,302"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="615,188,726,245,723,250,613,193"/>
+<area shape="rect" id="Node000004" href="$dc/d7a/plugin__collector__example_8cpp.html" title=" " alt="" coords="347,357,536,412"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="377,317,416,355,412,359,373,321"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="510,321,470,359,466,355,506,317"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="333,206,333,240,328,240,328,206"/>
+<area shape="poly" id="edge9_Node000007_Node000005" title=" " alt="" coords="409,196,489,237,486,242,406,201"/>
+<area shape="rect" id="Node000008" href="$de/d26/monitoring_2core_2event__types_8h.html" title=" " alt="" coords="5,247,208,302"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="255,201,159,250,156,245,252,196"/>
+</map>

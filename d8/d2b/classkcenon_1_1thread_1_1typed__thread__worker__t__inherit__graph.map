@@ -1,0 +1,7 @@
+<map id="kcenon::thread::typed_thread_worker_t&lt; job_type &gt;" name="kcenon::thread::typed_thread_worker_t&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title="A template&#45;based worker thread class that processes jobs from a priority job queue." alt="" coords="24,80,193,135"/>
+<area shape="rect" id="Node000003" href="$d8/d8e/classkcenon_1_1thread_1_1typed__thread__worker__t.html" title=" " alt="" coords="24,197,193,252"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="111,148,111,197,106,197,106,148"/>
+<area shape="rect" id="Node000002" href="$de/da3/classkcenon_1_1thread_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,5,212,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,45,111,80,106,80,106,45"/>
+</map>

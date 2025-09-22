@@ -1,0 +1,5 @@
+<map id="database::mysql_manager" name="database::mysql_manager">
+<area shape="rect" id="Node000001" title="Manages MySQL database operations." alt="" coords="5,79,200,104"/>
+<area shape="rect" id="Node000002" href="$d5/df0/classdatabase_1_1database__base.html" title="Abstract base class defining common database operations." alt="" coords="9,5,197,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,44,105,79,100,79,100,44"/>
+</map>

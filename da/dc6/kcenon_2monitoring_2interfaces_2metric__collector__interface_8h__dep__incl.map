@@ -1,0 +1,18 @@
+<map id="libraries/monitoring_system/include/kcenon/monitoring/interfaces/metric_collector_interface.h" name="libraries/monitoring_system/include/kcenon/monitoring/interfaces/metric_collector_interface.h">
+<area shape="rect" id="Node000001" title="Abstract interface for metric collection components." alt="" coords="248,5,456,75"/>
+<area shape="rect" id="Node000002" href="$d6/da5/plugin__metric__collector_8h.html" title=" " alt="" coords="148,123,337,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="313,87,277,124,273,121,309,83"/>
+<area shape="rect" id="Node000007" href="$d0/d73/monitoring_2interfaces_2metric__collector__interface_8h.html" title=" " alt="" coords="361,123,564,192"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="396,83,432,121,428,124,392,87"/>
+<area shape="rect" id="Node000003" href="$dc/d7a/plugin__collector__example_8cpp.html" title=" " alt="" coords="148,357,337,412"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="135,174,103,184,72,198,44,217,21,242,11,259,8,275,11,291,21,308,46,334,78,353,113,366,148,375,147,380,111,371,75,358,43,338,17,311,6,292,3,275,6,257,17,238,40,213,69,193,101,179,134,169"/>
+<area shape="rect" id="Node000004" href="$df/dc0/logger__system__collector_8h.html" title=" " alt="" coords="31,240,227,309"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="202,204,164,242,161,238,198,200"/>
+<area shape="rect" id="Node000005" href="$d7/d9f/system__resource__collector_8h.html" title=" " alt="" coords="252,240,463,309"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="288,200,326,238,322,242,284,204"/>
+<area shape="rect" id="Node000006" href="$d0/d2d/thread__system__collector_8h.html" title=" " alt="" coords="487,240,684,309"/>
+<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="351,192,488,238,486,243,350,197"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="176,317,217,355,213,359,173,321"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="314,321,273,359,269,355,310,317"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="474,314,327,360,325,355,472,309"/>
+</map>

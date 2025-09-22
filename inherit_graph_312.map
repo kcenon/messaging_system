@@ -1,3 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$dc/d03/structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html" title="Type traits for job types." alt="" coords="5,5,216,45"/>
+<area shape="rect" id="Node000000" href="$de/df4/classkcenon_1_1thread_1_1event__base.html" title="Event base class for type safety." alt="" coords="5,109,208,134"/>
+<area shape="rect" id="Node000001" href="$d9/dc4/structkcenon_1_1thread_1_1config__changed__event.html" title="Configuration changed event." alt="" coords="278,5,445,45"/>
+<area shape="poly" id="edge102_Node000000_Node000001" title=" " alt="" coords="146,101,255,55,290,43,292,48,257,60,148,105"/>
+<area shape="rect" id="Node000002" href="$d2/d94/structkcenon_1_1thread_1_1performance__alert__event.html" title="Performance alert event." alt="" coords="256,69,467,109"/>
+<area shape="poly" id="edge103_Node000000_Node000002" title=" " alt="" coords="221,104,255,100,256,105,222,110"/>
+<area shape="rect" id="Node000003" href="$da/deb/structkcenon_1_1thread_1_1system__shutdown__event.html" title="System shutdown event." alt="" coords="274,133,449,173"/>
+<area shape="poly" id="edge104_Node000000_Node000003" title=" " alt="" coords="222,133,274,140,274,145,221,138"/>
+<area shape="rect" id="Node000004" href="$d8/dec/structkcenon_1_1thread_1_1system__startup__event.html" title="System startup event." alt="" coords="274,197,449,237"/>
+<area shape="poly" id="edge105_Node000000_Node000004" title=" " alt="" coords="148,137,257,183,292,195,290,200,255,188,146,142"/>
 </map>

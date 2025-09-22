@@ -1,0 +1,76 @@
+var namespacekcenon_1_1monitoring_1_1web =
+[
+    [ "AggregationResult", "d7/de7/structkcenon_1_1monitoring_1_1web_1_1AggregationResult.html", "d7/de7/structkcenon_1_1monitoring_1_1web_1_1AggregationResult" ],
+    [ "AlertSummary", "d8/df5/structkcenon_1_1monitoring_1_1web_1_1AlertSummary.html", "d8/df5/structkcenon_1_1monitoring_1_1web_1_1AlertSummary" ],
+    [ "AuthConfig", "d1/d11/structkcenon_1_1monitoring_1_1web_1_1AuthConfig.html", "d1/d11/structkcenon_1_1monitoring_1_1web_1_1AuthConfig" ],
+    [ "CorsConfig", "d5/d74/structkcenon_1_1monitoring_1_1web_1_1CorsConfig.html", "d5/d74/structkcenon_1_1monitoring_1_1web_1_1CorsConfig" ],
+    [ "DashboardConfig", "db/d35/structkcenon_1_1monitoring_1_1web_1_1DashboardConfig.html", "db/d35/structkcenon_1_1monitoring_1_1web_1_1DashboardConfig" ],
+    [ "DashboardServer", "db/d79/classkcenon_1_1monitoring_1_1web_1_1DashboardServer.html", "db/d79/classkcenon_1_1monitoring_1_1web_1_1DashboardServer" ],
+    [ "HttpRequest", "d2/dd4/structkcenon_1_1monitoring_1_1web_1_1HttpRequest.html", "d2/dd4/structkcenon_1_1monitoring_1_1web_1_1HttpRequest" ],
+    [ "HttpResponse", "d2/d86/structkcenon_1_1monitoring_1_1web_1_1HttpResponse.html", "d2/d86/structkcenon_1_1monitoring_1_1web_1_1HttpResponse" ],
+    [ "JsonBuilder", "d4/d98/classkcenon_1_1monitoring_1_1web_1_1JsonBuilder.html", "d4/d98/classkcenon_1_1monitoring_1_1web_1_1JsonBuilder" ],
+    [ "MetricAPI", "db/db4/classkcenon_1_1monitoring_1_1web_1_1MetricAPI.html", "db/db4/classkcenon_1_1monitoring_1_1web_1_1MetricAPI" ],
+    [ "MetricMetadata", "dd/d29/structkcenon_1_1monitoring_1_1web_1_1MetricMetadata.html", "dd/d29/structkcenon_1_1monitoring_1_1web_1_1MetricMetadata" ],
+    [ "MetricQueryBuilder", "d6/dac/classkcenon_1_1monitoring_1_1web_1_1MetricQueryBuilder.html", "d6/dac/classkcenon_1_1monitoring_1_1web_1_1MetricQueryBuilder" ],
+    [ "MetricQueryParams", "db/d59/structkcenon_1_1monitoring_1_1web_1_1MetricQueryParams.html", "db/d59/structkcenon_1_1monitoring_1_1web_1_1MetricQueryParams" ],
+    [ "PanelConfig", "d6/d82/structkcenon_1_1monitoring_1_1web_1_1PanelConfig.html", "d6/d82/structkcenon_1_1monitoring_1_1web_1_1PanelConfig" ],
+    [ "RateLimitConfig", "df/dc1/structkcenon_1_1monitoring_1_1web_1_1RateLimitConfig.html", "df/dc1/structkcenon_1_1monitoring_1_1web_1_1RateLimitConfig" ],
+    [ "ResponseBuilder", "dc/d61/classkcenon_1_1monitoring_1_1web_1_1ResponseBuilder.html", "dc/d61/classkcenon_1_1monitoring_1_1web_1_1ResponseBuilder" ],
+    [ "Route", "df/da0/structkcenon_1_1monitoring_1_1web_1_1Route.html", "df/da0/structkcenon_1_1monitoring_1_1web_1_1Route" ],
+    [ "Router", "d2/db8/classkcenon_1_1monitoring_1_1web_1_1Router.html", "d2/db8/classkcenon_1_1monitoring_1_1web_1_1Router" ],
+    [ "SessionInfo", "df/d19/structkcenon_1_1monitoring_1_1web_1_1SessionInfo.html", "df/d19/structkcenon_1_1monitoring_1_1web_1_1SessionInfo" ],
+    [ "SystemHealth", "d5/d07/structkcenon_1_1monitoring_1_1web_1_1SystemHealth.html", "d5/d07/structkcenon_1_1monitoring_1_1web_1_1SystemHealth" ],
+    [ "TimeSeriesPoint", "d6/d21/structkcenon_1_1monitoring_1_1web_1_1TimeSeriesPoint.html", "d6/d21/structkcenon_1_1monitoring_1_1web_1_1TimeSeriesPoint" ],
+    [ "WebSocketConnection", "d7/d65/classkcenon_1_1monitoring_1_1web_1_1WebSocketConnection.html", "d7/d65/classkcenon_1_1monitoring_1_1web_1_1WebSocketConnection" ],
+    [ "WebSocketFrame", "da/d27/structkcenon_1_1monitoring_1_1web_1_1WebSocketFrame.html", "da/d27/structkcenon_1_1monitoring_1_1web_1_1WebSocketFrame" ],
+    [ "WebSocketMessage", "d8/d8e/structkcenon_1_1monitoring_1_1web_1_1WebSocketMessage.html", "d8/d8e/structkcenon_1_1monitoring_1_1web_1_1WebSocketMessage" ],
+    [ "HttpHandler", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a52a00b24675b868872ddc44db1bc9e35", null ],
+    [ "MiddlewareHandler", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a9da1de11239aa0acf1c0c7f7e9a323b5", null ],
+    [ "WebSocketHandler", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#afb3ee05a72dbcd983bf667bca74038b6", null ],
+    [ "ApiVersion", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a6d9a238db9950ef052fa303432248851", [
+      [ "V1", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a6d9a238db9950ef052fa303432248851ab4daca084ad9eabfc8de231929477ed6", null ],
+      [ "V2", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a6d9a238db9950ef052fa303432248851aec765f1adc3b4253f2d3b131a4a8618f", null ]
+    ] ],
+    [ "HttpMethod", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#ae6ede777fd61757c5f809c2fc4a2c3cf", [
+      [ "GET", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#ae6ede777fd61757c5f809c2fc4a2c3cfa7528035a93ee69cedb1dbddb2f0bfcc8", null ],
+      [ "POST", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#ae6ede777fd61757c5f809c2fc4a2c3cfaa02439ec229d8be0e74b0c1602392310", null ],
+      [ "PUT", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#ae6ede777fd61757c5f809c2fc4a2c3cfa3e75383a5992a6d15fb81e872e46e256", null ],
+      [ "DELETE", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#ae6ede777fd61757c5f809c2fc4a2c3cfa32f68a60cef40faedbc6af20298c1a1e", null ],
+      [ "PATCH", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#ae6ede777fd61757c5f809c2fc4a2c3cfa63bc9a3997d66d835d9f3ec29451407d", null ],
+      [ "HEAD", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#ae6ede777fd61757c5f809c2fc4a2c3cfae15e216fc1c639f787b1231ecdfa1bf8", null ],
+      [ "OPTIONS", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#ae6ede777fd61757c5f809c2fc4a2c3cfa164dd62adb30ca051b5289672a572f9b", null ]
+    ] ],
+    [ "HttpStatus", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3", [
+      [ "OK", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3ae0aa021e21dddbd6d8cecec71e9cf564", null ],
+      [ "CREATED", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3a98690bf632c29c17c9e4c5a64069903c", null ],
+      [ "ACCEPTED", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3aa806f1d2c42338ef5fa6497b66153e79", null ],
+      [ "NO_CONTENT", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3af84f5b7a440bd2021a9049dd8cf8d13e", null ],
+      [ "BAD_REQUEST", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3a0bbffe9eb8bbfc49246e867fccaefb73", null ],
+      [ "UNAUTHORIZED", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3a0ab06e7c28266cc1ed601325013a874c", null ],
+      [ "FORBIDDEN", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3a4a76a6ecac6e4077588fd966db329fa3", null ],
+      [ "NOT_FOUND", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3a8c02547a8a3b02382bac3557bcb2280d", null ],
+      [ "METHOD_NOT_ALLOWED", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3a109f8ca7d4aeb39feec752e24fac4098", null ],
+      [ "CONFLICT", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3addbe277f267f119df2ef18a8fe3364ae", null ],
+      [ "TOO_MANY_REQUESTS", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3a48217406fa20a472560abdf9b6ec8c17", null ],
+      [ "INTERNAL_SERVER_ERROR", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3a45d9cc15c3d3229e11b4c33387598850", null ],
+      [ "SERVICE_UNAVAILABLE", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a79e04eec0060f3bcd45d88a7086affa3a321504743197244f08c01a4fd2df88b5", null ]
+    ] ],
+    [ "WebSocketCloseCode", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a5ac9a67530d66beedf66aa8f19446438", [
+      [ "NORMAL", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a5ac9a67530d66beedf66aa8f19446438a1e23852820b9154316c7c06e2b7ba051", null ],
+      [ "GOING_AWAY", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a5ac9a67530d66beedf66aa8f19446438aa6e1cb42459297295699e44752d45c14", null ],
+      [ "PROTOCOL_ERROR", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a5ac9a67530d66beedf66aa8f19446438a23f149f0f9ae9ed9e0119e7209178a5d", null ],
+      [ "UNSUPPORTED_DATA", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a5ac9a67530d66beedf66aa8f19446438a4a3d41a6e9890daf45664a52886157af", null ],
+      [ "INVALID_PAYLOAD", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a5ac9a67530d66beedf66aa8f19446438aadfbe53dd8ca1c96cc7dc2e8ca408ff0", null ],
+      [ "POLICY_VIOLATION", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a5ac9a67530d66beedf66aa8f19446438a169cb04bda558347b02294770e4b9e0c", null ],
+      [ "MESSAGE_TOO_BIG", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a5ac9a67530d66beedf66aa8f19446438ab21fb07b059fe138857da9afbe0d752d", null ],
+      [ "INTERNAL_ERROR", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a5ac9a67530d66beedf66aa8f19446438ae8c0c70879b5895c615677261d64a1ee", null ]
+    ] ],
+    [ "WebSocketOpcode", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a35a4ae17a02e188df60e9a09eb56c918", [
+      [ "CONTINUATION", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a35a4ae17a02e188df60e9a09eb56c918aa912ad8cd8aeb3f2762b4359d4c36583", null ],
+      [ "TEXT", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a35a4ae17a02e188df60e9a09eb56c918a61a96ffcb251bb9bf0abf8fec19d0ea8", null ],
+      [ "BINARY", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a35a4ae17a02e188df60e9a09eb56c918a98ad0e8750ae10ad556ed7a62affb452", null ],
+      [ "CLOSE", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a35a4ae17a02e188df60e9a09eb56c918a7286293c9125ac7d7bace94c190bc16d", null ],
+      [ "PING", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a35a4ae17a02e188df60e9a09eb56c918ae07ff41a486c27c095a15898dcca34d1", null ],
+      [ "PONG", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a35a4ae17a02e188df60e9a09eb56c918a15c94917c8795679ecb650ed760c27f0", null ]
+    ] ]
+];

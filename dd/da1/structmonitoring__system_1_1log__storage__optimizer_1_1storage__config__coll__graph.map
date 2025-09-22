@@ -1,0 +1,15 @@
+<map id="monitoring_system::log_storage_optimizer::storage_config" name="monitoring_system::log_storage_optimizer::storage_config">
+<area shape="rect" id="Node000001" title=" " alt="" coords="87,343,254,397"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,211,181,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,279,93,299,100,317,121,341,117,344,95,320,88,300,86,279"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="7,93,159,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="88,147,94,210,88,211,83,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="31,5,70,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="51,44,55,68,68,92,63,94,49,70,46,45"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="97,5,135,31"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="110,44,92,94,87,92,105,43"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="211,225,298,251"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="250,265,240,292,225,320,204,344,200,341,220,317,235,290,245,263"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="192,93,331,133"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="262,147,258,225,253,225,257,147"/>
+</map>

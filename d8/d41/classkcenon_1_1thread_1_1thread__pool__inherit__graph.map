@@ -1,0 +1,7 @@
+<map id="kcenon::thread::thread_pool" name="kcenon::thread::thread_pool">
+<area shape="rect" id="Node000001" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="109,93,313,119"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,204,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,51,197,91,194,95,140,56"/>
+<area shape="rect" id="Node000003" href="$d1/df5/classkcenon_1_1thread_1_1executor__interface.html" title="Executor interface for submitting work and coordinating shutdown." alt="" coords="228,5,411,45"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="284,56,229,95,226,91,281,51"/>
+</map>

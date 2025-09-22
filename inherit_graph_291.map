@@ -1,3 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$de/dc4/structthread__pool__module_1_1detail_1_1function__traits_3_01R_07_5_08_07Args_8_8_8_08_4.html" title=" " alt="" coords="5,5,175,60"/>
+<area shape="rect" id="Node000000" href="$dc/d8e/classkcenon_1_1shared_1_1IExecutor.html" title="Common task executor interface." alt="" coords="5,5,195,31"/>
+<area shape="rect" id="Node000001" href="$d4/da5/classkcenon_1_1thread_1_1adapters_1_1thread__pool__executor.html" title="Adapter to make thread_pool compatible with IExecutor interface." alt="" coords="243,7,427,47"/>
+<area shape="poly" id="edge97_Node000000_Node000001" title=" " alt="" coords="208,20,243,21,242,26,208,25"/>
+<area shape="rect" id="Node000004" href="$d8/d48/classkcenon_1_1shared_1_1ILogger.html" title="Common logging interface." alt="" coords="11,104,189,129"/>
+<area shape="rect" id="Node000003" href="$d2/d7f/classkcenon_1_1logger_1_1adapters_1_1logger__adapter.html" title="Adapter to make logger compatible with ILogger interface." alt="" coords="243,79,426,119"/>
+<area shape="poly" id="edge98_Node000004_Node000003" title=" " alt="" coords="202,106,243,103,243,109,203,112"/>
+<area shape="rect" id="Node000002" href="$d9/d4d/classkcenon_1_1shared_1_1IService.html" title="Service lifecycle interface." alt="" coords="9,55,191,80"/>
+<area shape="poly" id="edge100_Node000002_Node000001" title=" " alt="" coords="188,50,242,40,243,46,189,55"/>
+<area shape="poly" id="edge99_Node000002_Node000003" title=" " alt="" coords="205,79,243,84,243,90,204,84"/>
 </map>

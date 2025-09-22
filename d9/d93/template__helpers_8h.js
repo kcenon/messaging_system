@@ -1,0 +1,27 @@
+var template__helpers_8h =
+[
+    [ "typed_kcenon::thread::detail::has_priority_method< T, typename >", "d8/db7/structtyped__kcenon_1_1thread_1_1detail_1_1has__priority__method.html", null ],
+    [ "typed_kcenon::thread::detail::has_priority_method< T, std::void_t< decltype(std::declval< T >().priority())> >", "db/d1a/structtyped__kcenon_1_1thread_1_1detail_1_1has__priority__method_3_01T_00_01std_1_1void__t_3_01d827fcb25e3125762cadbfaa23b8aacb0.html", null ],
+    [ "typed_kcenon::thread::detail::has_do_work_method< T, typename >", "df/df1/structtyped__kcenon_1_1thread_1_1detail_1_1has__do__work__method.html", null ],
+    [ "typed_kcenon::thread::detail::has_do_work_method< T, std::void_t< decltype(std::declval< T >().do_work())> >", "d3/d1f/structtyped__kcenon_1_1thread_1_1detail_1_1has__do__work__method_3_01T_00_01std_1_1void__t_3_01d83e2f3c64c81c13a6c6b10f91f6a4adb.html", null ],
+    [ "typed_kcenon::thread::detail::job_type_extractor< Job >", "de/d7b/structtyped__kcenon_1_1thread_1_1detail_1_1job__type__extractor.html", "de/d7b/structtyped__kcenon_1_1thread_1_1detail_1_1job__type__extractor" ],
+    [ "typed_kcenon::thread::detail::job_type_extractor< T >", "da/dc8/structtyped__kcenon_1_1thread_1_1detail_1_1job__type__extractor_3_01T_01_4.html", "da/dc8/structtyped__kcenon_1_1thread_1_1detail_1_1job__type__extractor_3_01T_01_4" ],
+    [ "typed_kcenon::thread::detail::is_compatible_job< Job, ExpectedJobType >", "d0/dde/structtyped__kcenon_1_1thread_1_1detail_1_1is__compatible__job.html", null ],
+    [ "typed_kcenon::thread::detail::is_compatible_job< Job, ExpectedJobType >", "d2/d4e/structtyped__kcenon_1_1thread_1_1detail_1_1is__compatible__job_3_01Job_00_01ExpectedJobType_01_4.html", "d2/d4e/structtyped__kcenon_1_1thread_1_1detail_1_1is__compatible__job_3_01Job_00_01ExpectedJobType_01_4" ],
+    [ "typed_kcenon::thread::detail::function_traits< R(*)(Args...)>", "d6/d07/structtyped__kcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07_5_08_07Args_8_8_8_08_4.html", "d6/d07/structtyped__kcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07_5_08_07Args_8_8_8_08_4" ],
+    [ "typed_kcenon::thread::detail::function_traits< R(C::*)(Args...)>", "de/d94/structtyped__kcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_4.html", "de/d94/structtyped__kcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_4" ],
+    [ "typed_kcenon::thread::detail::function_traits< R(C::*)(Args...) const >", "d6/d32/structtyped__kcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_01const_01_4.html", "d6/d32/structtyped__kcenon_1_1thread_1_1detail_1_1function__traits_3_01R_07C_1_1_5_08_07Args_8_8_8_08_01const_01_4" ],
+    [ "typed_kcenon::thread::detail::function_traits< F >", "d0/da1/structtyped__kcenon_1_1thread_1_1detail_1_1function__traits.html", null ],
+    [ "typed_kcenon::thread::detail::constexpr_string< N >", "df/d2d/structtyped__kcenon_1_1thread_1_1detail_1_1constexpr__string.html", "df/d2d/structtyped__kcenon_1_1thread_1_1detail_1_1constexpr__string" ],
+    [ "typed_kcenon::thread::detail::priority_comparator< T, Comparator >", "d3/dbf/structtyped__kcenon_1_1thread_1_1detail_1_1priority__comparator.html", "d3/dbf/structtyped__kcenon_1_1thread_1_1detail_1_1priority__comparator" ],
+    [ "typed_kcenon::thread::detail::conditional_feature< Condition >", "dd/dcf/structtyped__kcenon_1_1thread_1_1detail_1_1conditional__feature.html", "dd/dcf/structtyped__kcenon_1_1thread_1_1detail_1_1conditional__feature" ],
+    [ "typed_kcenon::thread::detail::job_type_list< Types >", "d2/d84/structtyped__kcenon_1_1thread_1_1detail_1_1job__type__list.html", "d2/d84/structtyped__kcenon_1_1thread_1_1detail_1_1job__type__list" ],
+    [ "typed_kcenon::thread::detail::job_eraser", "d5/d27/classtyped__kcenon_1_1thread_1_1detail_1_1job__eraser.html", "d5/d27/classtyped__kcenon_1_1thread_1_1detail_1_1job__eraser" ],
+    [ "typed_kcenon::thread::detail::job_validator< Job, ExpectedType >", "da/d9e/structtyped__kcenon_1_1thread_1_1detail_1_1job__validator.html", "da/d9e/structtyped__kcenon_1_1thread_1_1detail_1_1job__validator" ],
+    [ "job_type_t", "d9/d93/template__helpers_8h.html#ab133436252f3a9ebb80b9db97529b65c", null ],
+    [ "generate_job_name", "d9/d93/template__helpers_8h.html#acb75cc41b8edf773c39c8993ac069a38", null ],
+    [ "make_job_args", "d9/d93/template__helpers_8h.html#a44761983e54cab9a5431919ab7f45bc8", null ],
+    [ "has_do_work_method_v", "d9/d93/template__helpers_8h.html#a0b2e58727ee703d2c04880cc934c601d", null ],
+    [ "has_priority_method_v", "d9/d93/template__helpers_8h.html#a62143f4793b8bb809a6f5a1e0e666634", null ],
+    [ "is_compatible_job_v", "d9/d93/template__helpers_8h.html#aa246fcdba7ed629576efa54307179794", null ]
+];

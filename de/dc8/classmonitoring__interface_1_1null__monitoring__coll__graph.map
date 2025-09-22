@@ -1,7 +1,5 @@
 <map id="monitoring_interface::null_monitoring" name="monitoring_interface::null_monitoring">
 <area shape="rect" id="Node000001" title="No&#45;op implementation of monitoring interface." alt="" coords="9,93,168,133"/>
 <area shape="rect" id="Node000002" href="$d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="5,5,172,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,59,76,93,71,93,68,59"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="91,59,91,93,86,93,86,59"/>
-<area shape="poly" id="edge3_Node000001_Node000002" title=" " alt="" coords="109,59,107,93,101,93,104,59"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,59,91,93,86,93,86,59"/>
 </map>

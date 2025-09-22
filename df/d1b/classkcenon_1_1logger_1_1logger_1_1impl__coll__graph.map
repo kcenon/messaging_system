@@ -1,0 +1,18 @@
+<map id="kcenon::logger::logger::impl" name="kcenon::logger::logger::impl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="163,449,330,489"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="148,332,345,387"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="249,401,249,449,244,449,244,401"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="64,227,245,267"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="181,276,227,330,223,334,177,280"/>
+<area shape="rect" id="Node000004" href="$d0/dc9/classkcenon_1_1logger_1_1base__writer.html" title="Abstract base class for all log output writers." alt="" coords="5,108,163,148"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="91,161,96,181,105,200,129,225,125,229,100,203,91,183,85,162"/>
+<area shape="rect" id="Node000005" href="$dd/d95/classkcenon_1_1logger_1_1log__writer__interface.html" title="Interface for log writers." alt="" coords="11,5,157,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="87,59,87,108,81,108,81,59"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="187,115,344,141"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="184,148,167,159,153,173,147,186,146,200,150,227,145,228,141,200,142,184,148,171,163,155,181,144"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="319,13,358,38"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="324,51,276,117,271,114,320,47"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="317,174,446,199"/>
+<area shape="poly" id="edge8_Node000008_Node000007" title=" " alt="" coords="348,50,381,173,376,174,343,52"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="366,212,270,333,266,330,362,209"/>
+</map>

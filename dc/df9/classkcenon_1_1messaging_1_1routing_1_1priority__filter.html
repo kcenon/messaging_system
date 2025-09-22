@@ -121,9 +121,9 @@ Collaboration diagram for kcenon::messaging::routing::priority_filter:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7fdb2171842ebaa26df104e6f49737fb" id="r_a7fdb2171842ebaa26df104e6f49737fb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/df9/classkcenon_1_1messaging_1_1routing_1_1priority__filter.html#a7fdb2171842ebaa26df104e6f49737fb">priority_filter</a> (<a class="el" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a47838b266b3e051902c04795771bba5e">core::message_priority</a> min_prio, <a class="el" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a47838b266b3e051902c04795771bba5e">core::message_priority</a> max_prio)</td></tr>
+<tr class="memitem:a7fdb2171842ebaa26df104e6f49737fb" id="r_a7fdb2171842ebaa26df104e6f49737fb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/df9/classkcenon_1_1messaging_1_1routing_1_1priority__filter.html#a7fdb2171842ebaa26df104e6f49737fb">priority_filter</a> (core::message_priority min_prio, core::message_priority max_prio)</td></tr>
 <tr class="separator:a7fdb2171842ebaa26df104e6f49737fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e6a00d1a1cb957a7baa53c6bd556220" id="r_a4e6a00d1a1cb957a7baa53c6bd556220"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/df9/classkcenon_1_1messaging_1_1routing_1_1priority__filter.html#a4e6a00d1a1cb957a7baa53c6bd556220">matches</a> (const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;msg) const override</td></tr>
+<tr class="memitem:a4e6a00d1a1cb957a7baa53c6bd556220" id="r_a4e6a00d1a1cb957a7baa53c6bd556220"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/df9/classkcenon_1_1messaging_1_1routing_1_1priority__filter.html#a4e6a00d1a1cb957a7baa53c6bd556220">matches</a> (const core::message &amp;msg) const override</td></tr>
 <tr class="separator:a4e6a00d1a1cb957a7baa53c6bd556220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a907c54f7aaaed289e1ebf99deacd0aa6" id="r_a907c54f7aaaed289e1ebf99deacd0aa6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/df9/classkcenon_1_1messaging_1_1routing_1_1priority__filter.html#a907c54f7aaaed289e1ebf99deacd0aa6">describe</a> () const override</td></tr>
 <tr class="separator:a907c54f7aaaed289e1ebf99deacd0aa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,13 +149,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">kcenon::messaging::routing::priority_filter::priority_filter </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a47838b266b3e051902c04795771bba5e">core::message_priority</a>&#160;</td>
+          <td class="paramtype">core::message_priority&#160;</td>
           <td class="paramname"><em>min_prio</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a47838b266b3e051902c04795771bba5e">core::message_priority</a>&#160;</td>
+          <td class="paramtype">core::message_priority&#160;</td>
           <td class="paramname"><em>max_prio</em>&#160;</td>
         </tr>
         <tr>
@@ -246,7 +246,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool kcenon::messaging::routing::priority_filter::matches </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;&#160;</td>
+          <td class="paramtype">const core::message &amp;&#160;</td>
           <td class="paramname"><em>msg</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -261,8 +261,6 @@ Public Member Functions</h2></td></tr>
 <p>Implements <a class="el" href="../../d4/d4d/classkcenon_1_1messaging_1_1routing_1_1message__filter.html#a4c365e1cef09fb54c4be7abd7480cdc7">kcenon::messaging::routing::message_filter</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../d4/d0b/advanced__router_8h_source.html#l00057">57</a> of file <a class="el" href="../../d4/d0b/advanced__router_8h_source.html">advanced_router.h</a>.</p>
-
-<p class="reference">References <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00090">kcenon::messaging::core::message::metadata</a>, and <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00054">kcenon::messaging::core::message_metadata::priority</a>.</p>
 
 </div>
 </div>

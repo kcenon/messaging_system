@@ -1,0 +1,38 @@
+<map id="libraries/logger_system/src/impl/monitoring/basic_monitor.h" name="libraries/logger_system/src/impl/monitoring/basic_monitor.h">
+<area shape="rect" id="Node000001" title="Basic monitoring implementation with no external dependencies." alt="" coords="428,5,619,60"/>
+<area shape="rect" id="Node000002" href="$dd/d0c/logger__system_2src_2impl_2monitoring_2monitoring__interface_8h.html" title="Abstract interface for monitoring and metrics collection." alt="" coords="265,108,435,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="472,62,387,104,384,99,469,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,189,129,214"/>
+<area shape="poly" id="edge17_Node000001_Node000004" title=" " alt="" coords="429,52,327,76,222,110,152,146,96,183,93,178,149,141,220,106,326,70,427,47"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="153,189,216,214"/>
+<area shape="poly" id="edge16_Node000001_Node000005" title=" " alt="" coords="429,47,340,69,295,87,254,110,237,125,221,142,199,178,194,175,217,139,233,121,251,106,293,82,338,64,427,42"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="462,189,529,214"/>
+<area shape="poly" id="edge18_Node000001_Node000006" title=" " alt="" coords="518,61,507,108,500,175,494,175,502,108,513,60"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="553,189,619,214"/>
+<area shape="poly" id="edge15_Node000001_Node000007" title=" " alt="" coords="531,60,539,95,551,132,574,176,569,178,546,134,534,96,525,61"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="561,108,625,133"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="547,58,577,95,572,99,542,62"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="649,108,726,133"/>
+<area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="575,58,655,99,652,104,572,62"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="750,108,835,133"/>
+<area shape="poly" id="edge19_Node000001_Node000015" title=" " alt="" coords="606,58,745,101,743,106,605,63"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="859,108,926,133"/>
+<area shape="poly" id="edge20_Node000001_Node000016" title=" " alt="" coords="619,53,846,105,845,110,618,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="185,269,243,295"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="335,136,309,157,281,183,252,222,229,259,225,256,247,219,277,180,305,153,332,131"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="310,136,122,188,121,183,308,131"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="327,136,222,185,220,180,325,131"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="373,131,463,180,461,184,370,136"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="391,131,542,179,547,181,546,186,540,184,389,136"/>
+<area shape="rect" id="Node000008" href="$d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h.html" title=" " alt="" coords="291,181,438,221"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="355,133,361,168,356,169,350,134"/>
+<area shape="poly" id="edge8_Node000008_Node000003" title=" " alt="" coords="330,224,250,265,247,260,327,219"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="360,269,447,295"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="376,220,394,256,389,258,372,223"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="471,269,531,295"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="399,219,470,260,467,265,396,224"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="555,269,630,295"/>
+<area shape="poly" id="edge11_Node000008_Node000011" title=" " alt="" coords="420,219,547,262,545,267,418,224"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="268,269,336,295"/>
+<area shape="poly" id="edge12_Node000008_Node000012" title=" " alt="" coords="352,223,322,260,318,257,347,220"/>
+</map>

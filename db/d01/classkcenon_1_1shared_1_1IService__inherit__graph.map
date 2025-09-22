@@ -1,0 +1,7 @@
+<map id="kcenon::shared::IService" name="kcenon::shared::IService">
+<area shape="rect" id="Node000001" title="Service lifecycle interface." alt="" coords="5,45,187,70"/>
+<area shape="rect" id="Node000002" href="$d2/d7f/classkcenon_1_1logger_1_1adapters_1_1logger__adapter.html" title="Adapter to make logger compatible with ILogger interface." alt="" coords="235,5,418,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,40,235,35,235,41,201,46"/>
+<area shape="rect" id="Node000003" href="$d4/da5/classkcenon_1_1thread_1_1adapters_1_1thread__pool__executor.html" title="Adapter to make thread_pool compatible with IExecutor interface." alt="" coords="235,69,419,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="201,69,235,74,234,79,200,74"/>
+</map>

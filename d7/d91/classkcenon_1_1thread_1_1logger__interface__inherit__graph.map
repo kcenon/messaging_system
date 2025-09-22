@@ -1,0 +1,7 @@
+<map id="kcenon::thread::logger_interface" name="kcenon::thread::logger_interface">
+<area shape="rect" id="Node000001" title="Logger interface for thread system." alt="" coords="49,5,217,45"/>
+<area shape="rect" id="Node000002" href="$d4/d06/classconsole__logger.html" title="Simple console logger implementation." alt="" coords="5,93,125,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,58,78,95,74,91,106,54"/>
+<area shape="rect" id="Node000003" href="$dd/d02/classmock__logger.html" title="Mock logger implementation for demonstration." alt="" coords="149,93,256,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="161,54,194,91,190,95,157,58"/>
+</map>

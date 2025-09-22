@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/monitoring_system/unittest/monitoring_test/monitoring_test.cpp File Reference</title>
+<title>Messaging System: libraries/logger_system/tests/unit/monitoring_test/monitoring_test.cpp File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -96,40 +96,30 @@ $(document).ready(function(){initNavTree('d3/d9b/monitoring__test_8cpp.html','..
   <div class="headertitle"><div class="title">monitoring_test.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Unit tests for monitoring implementations.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;gtest/gtest.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="../../d8/d54/monitoring_8h_source.html">monitoring/monitoring.h</a>&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
+<code>#include &quot;../../sources/logger/monitoring/basic_monitor.h&quot;</code><br />
+<code>#include &quot;../../sources/logger/monitoring/monitoring_factory.h&quot;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for monitoring_test.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d3/d35/monitoring__test_8cpp__incl.png" border="0" usemap="#alibraries_2monitoring__system_2unittest_2monitoring__test_2monitoring__test_8cpp" alt=""/></div>
-<map name="alibraries_2monitoring__system_2unittest_2monitoring__test_2monitoring__test_8cpp" id="alibraries_2monitoring__system_2unittest_2monitoring__test_2monitoring__test_8cpp">
-<area shape="rect" title=" " alt="" coords="219,5,426,60"/>
-<area shape="rect" title=" " alt="" coords="5,108,109,133"/>
-<area shape="poly" title=" " alt="" coords="242,63,106,106,105,101,241,58"/>
-<area shape="rect" href="../../d8/d54/monitoring_8h.html" title=" " alt="" coords="233,108,413,133"/>
-<area shape="poly" title=" " alt="" coords="325,60,325,94,320,94,320,60"/>
-<area shape="rect" title=" " alt="" coords="145,255,223,280"/>
-<area shape="poly" title=" " alt="" coords="274,62,246,83,222,109,206,142,195,178,187,241,182,241,190,177,201,140,218,107,242,79,270,58"/>
-<area shape="rect" title=" " alt="" coords="480,181,544,207"/>
-<area shape="poly" title=" " alt="" coords="363,58,426,106,493,169,490,173,422,110,360,62"/>
-<area shape="rect" title=" " alt="" coords="532,255,599,280"/>
-<area shape="poly" title=" " alt="" coords="400,58,443,78,487,105,527,139,558,180,568,210,570,240,565,241,563,211,554,183,523,142,483,109,440,83,398,62"/>
-<area shape="poly" title=" " alt="" coords="313,136,266,183,206,246,202,242,262,179,309,132"/>
-<area shape="rect" title=" " alt="" coords="247,255,313,280"/>
-<area shape="poly" title=" " alt="" coords="311,135,291,156,276,182,272,212,275,241,270,242,266,212,271,180,287,153,307,132"/>
-<area shape="poly" title=" " alt="" coords="354,131,469,174,467,179,352,136"/>
-<area shape="rect" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h.html" title=" " alt="" coords="285,181,456,207"/>
-<area shape="poly" title=" " alt="" coords="333,132,358,169,353,172,328,135"/>
-<area shape="poly" title=" " alt="" coords="342,209,228,252,226,247,340,204"/>
-<area shape="poly" title=" " alt="" coords="358,209,307,248,304,244,354,205"/>
-<area shape="poly" title=" " alt="" coords="403,204,522,247,520,252,401,209"/>
-<area shape="rect" title=" " alt="" coords="429,255,491,280"/>
-<area shape="poly" title=" " alt="" coords="387,205,436,244,433,248,383,209"/>
-<area shape="rect" title=" " alt="" coords="337,255,404,280"/>
-<area shape="poly" title=" " alt="" coords="373,207,373,241,368,241,368,207"/>
+<div class="center"><img src="../../d3/d35/monitoring__test_8cpp__incl.png" border="0" usemap="#alibraries_2logger__system_2tests_2unit_2monitoring__test_2monitoring__test_8cpp" alt=""/></div>
+<map name="alibraries_2logger__system_2tests_2unit_2monitoring__test_2monitoring__test_8cpp" id="alibraries_2logger__system_2tests_2unit_2monitoring__test_2monitoring__test_8cpp">
+<area shape="rect" title="Unit tests for monitoring implementations." alt="" coords="354,5,542,60"/>
+<area shape="rect" title=" " alt="" coords="5,123,109,148"/>
+<area shape="poly" title=" " alt="" coords="355,54,243,78,122,111,96,120,94,115,121,105,241,73,353,48"/>
+<area shape="rect" title=" " alt="" coords="134,115,338,155"/>
+<area shape="poly" title=" " alt="" coords="394,62,289,112,287,107,392,58"/>
+<area shape="rect" title=" " alt="" coords="362,108,534,163"/>
+<area shape="poly" title=" " alt="" coords="451,60,451,94,445,94,445,60"/>
+<area shape="rect" title=" " alt="" coords="559,123,623,148"/>
+<area shape="poly" title=" " alt="" coords="487,58,565,112,562,117,484,62"/>
+<area shape="rect" title=" " alt="" coords="647,123,713,148"/>
+<area shape="poly" title=" " alt="" coords="522,58,636,106,651,113,648,118,634,110,520,63"/>
 </map>
 </div>
 </div>
@@ -137,55 +127,75 @@ Include dependency graph for monitoring_test.cpp:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a173697d266509276d1249c9a95f5d768" id="r_a173697d266509276d1249c9a95f5d768"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a173697d266509276d1249c9a95f5d768">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, ConstructorTest)</td></tr>
-<tr class="separator:a173697d266509276d1249c9a95f5d768"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77aeb464ae8991e836ce13a2f97ff259" id="r_a77aeb464ae8991e836ce13a2f97ff259"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a77aeb464ae8991e836ce13a2f97ff259">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, StateManagement)</td></tr>
-<tr class="separator:a77aeb464ae8991e836ce13a2f97ff259"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28edd615b56ae5c6012d737dcd299a9b" id="r_a28edd615b56ae5c6012d737dcd299a9b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a28edd615b56ae5c6012d737dcd299a9b">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, SystemMetricsUpdate)</td></tr>
-<tr class="separator:a28edd615b56ae5c6012d737dcd299a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33e232bfdfb4924bae1820bb596c409f" id="r_a33e232bfdfb4924bae1820bb596c409f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a33e232bfdfb4924bae1820bb596c409f">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, ThreadPoolMetricsUpdate)</td></tr>
-<tr class="separator:a33e232bfdfb4924bae1820bb596c409f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38d33edf28942d371207ae75240ce32b" id="r_a38d33edf28942d371207ae75240ce32b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a38d33edf28942d371207ae75240ce32b">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, WorkerMetricsUpdate)</td></tr>
-<tr class="separator:a38d33edf28942d371207ae75240ce32b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a187783c449ab3080521295a50db8e72b" id="r_a187783c449ab3080521295a50db8e72b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a187783c449ab3080521295a50db8e72b">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, CurrentSnapshotRetrieval)</td></tr>
-<tr class="separator:a187783c449ab3080521295a50db8e72b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c5f93b0fa89e3932eac1251cc026378" id="r_a9c5f93b0fa89e3932eac1251cc026378"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a9c5f93b0fa89e3932eac1251cc026378">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, RecentSnapshotsRetrieval)</td></tr>
-<tr class="separator:a9c5f93b0fa89e3932eac1251cc026378"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab814b92823cc2b15094deea33090946" id="r_aab814b92823cc2b15094deea33090946"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#aab814b92823cc2b15094deea33090946">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, CollectionIntervalManagement)</td></tr>
-<tr class="separator:aab814b92823cc2b15094deea33090946"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a728aa61c276cefc2f03fa53088ef1ac9" id="r_a728aa61c276cefc2f03fa53088ef1ac9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a728aa61c276cefc2f03fa53088ef1ac9">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, ManualCollectionTrigger)</td></tr>
-<tr class="separator:a728aa61c276cefc2f03fa53088ef1ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a514beb195580072e7a37c802397dc70b" id="r_a514beb195580072e7a37c802397dc70b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a514beb195580072e7a37c802397dc70b">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, HistoryClearing)</td></tr>
-<tr class="separator:a514beb195580072e7a37c802397dc70b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa0f1e309d38fa988c064d1e6ab26518" id="r_aaa0f1e309d38fa988c064d1e6ab26518"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#aaa0f1e309d38fa988c064d1e6ab26518">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, StatisticsRetrieval)</td></tr>
-<tr class="separator:aaa0f1e309d38fa988c064d1e6ab26518"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e9f2b13a24917534210c92348b5a756" id="r_a5e9f2b13a24917534210c92348b5a756"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a5e9f2b13a24917534210c92348b5a756">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, MultithreadedAccess)</td></tr>
-<tr class="separator:a5e9f2b13a24917534210c92348b5a756"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca5a25071c8aabf09d047d6fc39076e3" id="r_aca5a25071c8aabf09d047d6fc39076e3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#aca5a25071c8aabf09d047d6fc39076e3">TEST_F</a> (<a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>, EdgeCases)</td></tr>
-<tr class="separator:aca5a25071c8aabf09d047d6fc39076e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c0980e04cbc48bfdfb9b137bf70ba10" id="r_a9c0980e04cbc48bfdfb9b137bf70ba10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a9c0980e04cbc48bfdfb9b137bf70ba10">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_initial_state)</td></tr>
+<tr class="separator:a9c0980e04cbc48bfdfb9b137bf70ba10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae1c523dbc71646f35910370ebb3f543" id="r_aae1c523dbc71646f35910370ebb3f543"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#aae1c523dbc71646f35910370ebb3f543">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_enable_disable)</td></tr>
+<tr class="separator:aae1c523dbc71646f35910370ebb3f543"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac20d2cd6ee030b63b9727f85bdb8040f" id="r_ac20d2cd6ee030b63b9727f85bdb8040f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#ac20d2cd6ee030b63b9727f85bdb8040f">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_counter_increment)</td></tr>
+<tr class="separator:ac20d2cd6ee030b63b9727f85bdb8040f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affd68152d72b9cc94472f99b8dd4d05e" id="r_affd68152d72b9cc94472f99b8dd4d05e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#affd68152d72b9cc94472f99b8dd4d05e">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_gauge_update)</td></tr>
+<tr class="separator:affd68152d72b9cc94472f99b8dd4d05e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0da4f1d9978d531a1a32e430e133f8f7" id="r_a0da4f1d9978d531a1a32e430e133f8f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a0da4f1d9978d531a1a32e430e133f8f7">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_histogram_recording)</td></tr>
+<tr class="separator:a0da4f1d9978d531a1a32e430e133f8f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dbc59a6a027c98d66f0a0e0076071f8" id="r_a6dbc59a6a027c98d66f0a0e0076071f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a6dbc59a6a027c98d66f0a0e0076071f8">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_health_check_healthy)</td></tr>
+<tr class="separator:a6dbc59a6a027c98d66f0a0e0076071f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0318407ad6532a05824ca9f9b3f2543" id="r_ad0318407ad6532a05824ca9f9b3f2543"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#ad0318407ad6532a05824ca9f9b3f2543">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_health_check_with_errors)</td></tr>
+<tr class="separator:ad0318407ad6532a05824ca9f9b3f2543"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5da21471f7807ac617200250b96e243" id="r_ae5da21471f7807ac617200250b96e243"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#ae5da21471f7807ac617200250b96e243">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_health_check_degraded)</td></tr>
+<tr class="separator:ae5da21471f7807ac617200250b96e243"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6251fd4b86f39e534965eea94a4e938f" id="r_a6251fd4b86f39e534965eea94a4e938f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a6251fd4b86f39e534965eea94a4e938f">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_reset_metrics)</td></tr>
+<tr class="separator:a6251fd4b86f39e534965eea94a4e938f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6998ccce2a8f83697a8a2d31e7fcf583" id="r_a6998ccce2a8f83697a8a2d31e7fcf583"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a6998ccce2a8f83697a8a2d31e7fcf583">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_disabled_metrics)</td></tr>
+<tr class="separator:a6998ccce2a8f83697a8a2d31e7fcf583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a308e801567bcab6d90c195b7f29737c1" id="r_a308e801567bcab6d90c195b7f29737c1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a308e801567bcab6d90c195b7f29737c1">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_core_metrics)</td></tr>
+<tr class="separator:a308e801567bcab6d90c195b7f29737c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a73a0a92e5310c8db806e8a17f20a82" id="r_a1a73a0a92e5310c8db806e8a17f20a82"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a1a73a0a92e5310c8db806e8a17f20a82">TEST</a> (monitoring_factory_test, create_basic_monitor)</td></tr>
+<tr class="separator:a1a73a0a92e5310c8db806e8a17f20a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58a762f016b50b8dee443d56550579b9" id="r_a58a762f016b50b8dee443d56550579b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a58a762f016b50b8dee443d56550579b9">TEST</a> (monitoring_factory_test, create_automatic_monitor)</td></tr>
+<tr class="separator:a58a762f016b50b8dee443d56550579b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d85b9bbffe1e48ea9723f5ec1d9203e" id="r_a2d85b9bbffe1e48ea9723f5ec1d9203e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a2d85b9bbffe1e48ea9723f5ec1d9203e">TEST</a> (monitoring_factory_test, create_best_available)</td></tr>
+<tr class="separator:a2d85b9bbffe1e48ea9723f5ec1d9203e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e219b85b446759d892e1bf98f914493" id="r_a8e219b85b446759d892e1bf98f914493"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a8e219b85b446759d892e1bf98f914493">TEST</a> (monitoring_factory_test, get_monitor_type_name)</td></tr>
+<tr class="separator:a8e219b85b446759d892e1bf98f914493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab057c977f469dd6d7f13df57350199c3" id="r_ab057c977f469dd6d7f13df57350199c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#ab057c977f469dd6d7f13df57350199c3">TEST</a> (monitoring_factory_test, get_available_type)</td></tr>
+<tr class="separator:ab057c977f469dd6d7f13df57350199c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a998eec94ffa3700cd0736083502e9669" id="r_a998eec94ffa3700cd0736083502e9669"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a998eec94ffa3700cd0736083502e9669">TEST</a> (health_status_test, string_conversion)</td></tr>
+<tr class="separator:a998eec94ffa3700cd0736083502e9669"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a132d1c74531a57a083fba31c8c9f1673" id="r_a132d1c74531a57a083fba31c8c9f1673"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a132d1c74531a57a083fba31c8c9f1673">TEST</a> (metric_type_test, string_conversion)</td></tr>
+<tr class="separator:a132d1c74531a57a083fba31c8c9f1673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac63bfbd077eea3c368e540c5cd8a11ee" id="r_ac63bfbd077eea3c368e540c5cd8a11ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#ac63bfbd077eea3c368e540c5cd8a11ee">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_thread_safety)</td></tr>
+<tr class="separator:ac63bfbd077eea3c368e540c5cd8a11ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50230da4b810a287c8eb0e5fd51f9b2c" id="r_a50230da4b810a287c8eb0e5fd51f9b2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#a50230da4b810a287c8eb0e5fd51f9b2c">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_performance_metrics)</td></tr>
+<tr class="separator:a50230da4b810a287c8eb0e5fd51f9b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeec66e959db047a11ee18e20e7fe1c14" id="r_aeec66e959db047a11ee18e20e7fe1c14"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html#aeec66e959db047a11ee18e20e7fe1c14">TEST_F</a> (<a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>, basic_monitor_uptime)</td></tr>
+<tr class="separator:aeec66e959db047a11ee18e20e7fe1c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="aab814b92823cc2b15094deea33090946" name="aab814b92823cc2b15094deea33090946"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab814b92823cc2b15094deea33090946">&#9670;&#160;</a></span>TEST_F() <span class="overload">[1/13]</span></h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Unit tests for monitoring implementations. </p>
+
+<p class="definition">Definition in file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a998eec94ffa3700cd0736083502e9669" name="a998eec94ffa3700cd0736083502e9669"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a998eec94ffa3700cd0736083502e9669">&#9670;&#160;</a></span>TEST() <span class="overload">[1/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">TEST_F </td>
+          <td class="memname">TEST </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype">health_status_test&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CollectionIntervalManagement&#160;</td>
+          <td class="paramtype">string_conversion&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -196,12 +206,204 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00187">187</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00310">310</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../dd/d0c/logger__system_2src_2impl_2monitoring_2monitoring__interface_8h_source.html#l00287">kcenon::logger::health_status_to_string()</a>.</p>
 
 </div>
 </div>
-<a id="a173697d266509276d1249c9a95f5d768" name="a173697d266509276d1249c9a95f5d768"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a173697d266509276d1249c9a95f5d768">&#9670;&#160;</a></span>TEST_F() <span class="overload">[2/13]</span></h2>
+<a id="a132d1c74531a57a083fba31c8c9f1673" name="a132d1c74531a57a083fba31c8c9f1673"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a132d1c74531a57a083fba31c8c9f1673">&#9670;&#160;</a></span>TEST() <span class="overload">[2/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">metric_type_test&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string_conversion&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00317">317</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../dd/d0c/logger__system_2src_2impl_2monitoring_2monitoring__interface_8h_source.html#l00307">kcenon::logger::metric_type_to_string()</a>.</p>
+
+</div>
+</div>
+<a id="a58a762f016b50b8dee443d56550579b9" name="a58a762f016b50b8dee443d56550579b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58a762f016b50b8dee443d56550579b9">&#9670;&#160;</a></span>TEST() <span class="overload">[3/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">monitoring_factory_test&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">create_automatic_monitor&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00278">278</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d8/dcc/classkcenon_1_1logger_1_1monitoring_1_1monitoring__factory.html#ade664570f1a6f14f50be254ff461a39ca2bd9c0ed00116be1258e0cc66617d7c8">kcenon::logger::monitoring::monitoring_factory::automatic</a>.</p>
+
+</div>
+</div>
+<a id="a1a73a0a92e5310c8db806e8a17f20a82" name="a1a73a0a92e5310c8db806e8a17f20a82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a73a0a92e5310c8db806e8a17f20a82">&#9670;&#160;</a></span>TEST() <span class="overload">[4/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">monitoring_factory_test&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">create_basic_monitor&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00269">269</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d8/dcc/classkcenon_1_1logger_1_1monitoring_1_1monitoring__factory.html#ade664570f1a6f14f50be254ff461a39caf17aaabc20bfe045075927934fed52d2">kcenon::logger::monitoring::monitoring_factory::basic</a>.</p>
+
+</div>
+</div>
+<a id="a2d85b9bbffe1e48ea9723f5ec1d9203e" name="a2d85b9bbffe1e48ea9723f5ec1d9203e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d85b9bbffe1e48ea9723f5ec1d9203e">&#9670;&#160;</a></span>TEST() <span class="overload">[5/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">monitoring_factory_test&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">create_best_available&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00287">287</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab057c977f469dd6d7f13df57350199c3" name="ab057c977f469dd6d7f13df57350199c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab057c977f469dd6d7f13df57350199c3">&#9670;&#160;</a></span>TEST() <span class="overload">[6/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">monitoring_factory_test&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">get_available_type&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00301">301</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d8/dcc/classkcenon_1_1logger_1_1monitoring_1_1monitoring__factory.html#ade664570f1a6f14f50be254ff461a39caf17aaabc20bfe045075927934fed52d2">kcenon::logger::monitoring::monitoring_factory::basic</a>.</p>
+
+</div>
+</div>
+<a id="a8e219b85b446759d892e1bf98f914493" name="a8e219b85b446759d892e1bf98f914493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e219b85b446759d892e1bf98f914493">&#9670;&#160;</a></span>TEST() <span class="overload">[7/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">monitoring_factory_test&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">get_monitor_type_name&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00294">294</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d8/dcc/classkcenon_1_1logger_1_1monitoring_1_1monitoring__factory.html#ade664570f1a6f14f50be254ff461a39ca2bd9c0ed00116be1258e0cc66617d7c8">kcenon::logger::monitoring::monitoring_factory::automatic</a>, and <a class="el" href="../../d8/dcc/classkcenon_1_1logger_1_1monitoring_1_1monitoring__factory.html#ade664570f1a6f14f50be254ff461a39caf17aaabc20bfe045075927934fed52d2">kcenon::logger::monitoring::monitoring_factory::basic</a>.</p>
+
+</div>
+</div>
+<a id="a308e801567bcab6d90c195b7f29737c1" name="a308e801567bcab6d90c195b7f29737c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a308e801567bcab6d90c195b7f29737c1">&#9670;&#160;</a></span>TEST_F() <span class="overload">[1/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -209,13 +411,45 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ConstructorTest&#160;</td>
+          <td class="paramtype">basic_monitor_core_metrics&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00235">235</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00230">kcenon::logger::result&lt; T &gt;::value()</a>.</p>
+
+</div>
+</div>
+<a id="ac20d2cd6ee030b63b9727f85bdb8040f" name="ac20d2cd6ee030b63b9727f85bdb8040f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac20d2cd6ee030b63b9727f85bdb8040f">&#9670;&#160;</a></span>TEST_F() <span class="overload">[2/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">basic_monitor_counter_increment&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -228,10 +462,12 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00057">57</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00230">kcenon::logger::result&lt; T &gt;::value()</a>.</p>
+
 </div>
 </div>
-<a id="a187783c449ab3080521295a50db8e72b" name="a187783c449ab3080521295a50db8e72b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a187783c449ab3080521295a50db8e72b">&#9670;&#160;</a></span>TEST_F() <span class="overload">[3/13]</span></h2>
+<a id="a6998ccce2a8f83697a8a2d31e7fcf583" name="a6998ccce2a8f83697a8a2d31e7fcf583"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6998ccce2a8f83697a8a2d31e7fcf583">&#9670;&#160;</a></span>TEST_F() <span class="overload">[3/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -239,13 +475,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CurrentSnapshotRetrieval&#160;</td>
+          <td class="paramtype">basic_monitor_disabled_metrics&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -256,14 +492,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00137">137</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00225">225</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00048">monitoring_interface::system_metrics::cpu_usage_percent</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00063">monitoring_interface::thread_pool_metrics::jobs_pending</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00049">monitoring_interface::system_metrics::memory_usage_bytes</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00052">monitoring_interface::system_metrics::timestamp</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00069">monitoring_interface::thread_pool_metrics::timestamp</a>, and <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00067">monitoring_interface::thread_pool_metrics::worker_threads</a>.</p>
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00239">kcenon::logger::result&lt; T &gt;::error_code()</a>.</p>
 
 </div>
 </div>
-<a id="aca5a25071c8aabf09d047d6fc39076e3" name="aca5a25071c8aabf09d047d6fc39076e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca5a25071c8aabf09d047d6fc39076e3">&#9670;&#160;</a></span>TEST_F() <span class="overload">[4/13]</span></h2>
+<a id="aae1c523dbc71646f35910370ebb3f543" name="aae1c523dbc71646f35910370ebb3f543"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae1c523dbc71646f35910370ebb3f543">&#9670;&#160;</a></span>TEST_F() <span class="overload">[4/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -271,13 +507,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">EdgeCases&#160;</td>
+          <td class="paramtype">basic_monitor_enable_disable&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -288,14 +524,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00299">299</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
-
-<p class="reference">References <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00079">monitoring_interface::worker_metrics::jobs_processed</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00052">monitoring_interface::system_metrics::timestamp</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00069">monitoring_interface::thread_pool_metrics::timestamp</a>, and <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00083">monitoring_interface::worker_metrics::timestamp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00042">42</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a514beb195580072e7a37c802397dc70b" name="a514beb195580072e7a37c802397dc70b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a514beb195580072e7a37c802397dc70b">&#9670;&#160;</a></span>TEST_F() <span class="overload">[5/13]</span></h2>
+<a id="affd68152d72b9cc94472f99b8dd4d05e" name="affd68152d72b9cc94472f99b8dd4d05e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affd68152d72b9cc94472f99b8dd4d05e">&#9670;&#160;</a></span>TEST_F() <span class="overload">[5/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -303,13 +537,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">HistoryClearing&#160;</td>
+          <td class="paramtype">basic_monitor_gauge_update&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -320,14 +554,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00212">212</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00083">83</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00048">monitoring_interface::system_metrics::cpu_usage_percent</a>, and <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00052">monitoring_interface::system_metrics::timestamp</a>.</p>
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00230">kcenon::logger::result&lt; T &gt;::value()</a>.</p>
 
 </div>
 </div>
-<a id="a728aa61c276cefc2f03fa53088ef1ac9" name="a728aa61c276cefc2f03fa53088ef1ac9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a728aa61c276cefc2f03fa53088ef1ac9">&#9670;&#160;</a></span>TEST_F() <span class="overload">[6/13]</span></h2>
+<a id="ae5da21471f7807ac617200250b96e243" name="ae5da21471f7807ac617200250b96e243"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5da21471f7807ac617200250b96e243">&#9670;&#160;</a></span>TEST_F() <span class="overload">[6/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -335,13 +569,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ManualCollectionTrigger&#160;</td>
+          <td class="paramtype">basic_monitor_health_check_degraded&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -352,14 +586,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00198">198</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00182">182</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00048">monitoring_interface::system_metrics::cpu_usage_percent</a>, and <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00052">monitoring_interface::system_metrics::timestamp</a>.</p>
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00230">kcenon::logger::result&lt; T &gt;::value()</a>.</p>
 
 </div>
 </div>
-<a id="a5e9f2b13a24917534210c92348b5a756" name="a5e9f2b13a24917534210c92348b5a756"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e9f2b13a24917534210c92348b5a756">&#9670;&#160;</a></span>TEST_F() <span class="overload">[7/13]</span></h2>
+<a id="a6dbc59a6a027c98d66f0a0e0076071f8" name="a6dbc59a6a027c98d66f0a0e0076071f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dbc59a6a027c98d66f0a0e0076071f8">&#9670;&#160;</a></span>TEST_F() <span class="overload">[7/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -367,13 +601,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MultithreadedAccess&#160;</td>
+          <td class="paramtype">basic_monitor_health_check_healthy&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -384,14 +618,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00257">257</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00153">153</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00048">monitoring_interface::system_metrics::cpu_usage_percent</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00063">monitoring_interface::thread_pool_metrics::jobs_pending</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00079">monitoring_interface::worker_metrics::jobs_processed</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00049">monitoring_interface::system_metrics::memory_usage_bytes</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00052">monitoring_interface::system_metrics::timestamp</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00069">monitoring_interface::thread_pool_metrics::timestamp</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00083">monitoring_interface::worker_metrics::timestamp</a>, and <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00067">monitoring_interface::thread_pool_metrics::worker_threads</a>.</p>
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00230">kcenon::logger::result&lt; T &gt;::value()</a>.</p>
 
 </div>
 </div>
-<a id="a9c5f93b0fa89e3932eac1251cc026378" name="a9c5f93b0fa89e3932eac1251cc026378"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c5f93b0fa89e3932eac1251cc026378">&#9670;&#160;</a></span>TEST_F() <span class="overload">[8/13]</span></h2>
+<a id="ad0318407ad6532a05824ca9f9b3f2543" name="ad0318407ad6532a05824ca9f9b3f2543"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0318407ad6532a05824ca9f9b3f2543">&#9670;&#160;</a></span>TEST_F() <span class="overload">[8/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -399,13 +633,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">RecentSnapshotsRetrieval&#160;</td>
+          <td class="paramtype">basic_monitor_health_check_with_errors&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -416,14 +650,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00160">160</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00164">164</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00048">monitoring_interface::system_metrics::cpu_usage_percent</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00049">monitoring_interface::system_metrics::memory_usage_bytes</a>, and <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00052">monitoring_interface::system_metrics::timestamp</a>.</p>
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00230">kcenon::logger::result&lt; T &gt;::value()</a>.</p>
 
 </div>
 </div>
-<a id="a77aeb464ae8991e836ce13a2f97ff259" name="a77aeb464ae8991e836ce13a2f97ff259"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77aeb464ae8991e836ce13a2f97ff259">&#9670;&#160;</a></span>TEST_F() <span class="overload">[9/13]</span></h2>
+<a id="a0da4f1d9978d531a1a32e430e133f8f7" name="a0da4f1d9978d531a1a32e430e133f8f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0da4f1d9978d531a1a32e430e133f8f7">&#9670;&#160;</a></span>TEST_F() <span class="overload">[9/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -431,13 +665,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">StateManagement&#160;</td>
+          <td class="paramtype">basic_monitor_histogram_recording&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -448,12 +682,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00066">66</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00109">109</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00230">kcenon::logger::result&lt; T &gt;::value()</a>.</p>
 
 </div>
 </div>
-<a id="aaa0f1e309d38fa988c064d1e6ab26518" name="aaa0f1e309d38fa988c064d1e6ab26518"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa0f1e309d38fa988c064d1e6ab26518">&#9670;&#160;</a></span>TEST_F() <span class="overload">[10/13]</span></h2>
+<a id="a9c0980e04cbc48bfdfb9b137bf70ba10" name="a9c0980e04cbc48bfdfb9b137bf70ba10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c0980e04cbc48bfdfb9b137bf70ba10">&#9670;&#160;</a></span>TEST_F() <span class="overload">[10/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -461,13 +697,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">StatisticsRetrieval&#160;</td>
+          <td class="paramtype">basic_monitor_initial_state&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -478,14 +714,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00238">238</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
-
-<p class="reference">References <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00048">monitoring_interface::system_metrics::cpu_usage_percent</a>, and <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00052">monitoring_interface::system_metrics::timestamp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00037">37</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a28edd615b56ae5c6012d737dcd299a9b" name="a28edd615b56ae5c6012d737dcd299a9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28edd615b56ae5c6012d737dcd299a9b">&#9670;&#160;</a></span>TEST_F() <span class="overload">[11/13]</span></h2>
+<a id="a50230da4b810a287c8eb0e5fd51f9b2c" name="a50230da4b810a287c8eb0e5fd51f9b2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50230da4b810a287c8eb0e5fd51f9b2c">&#9670;&#160;</a></span>TEST_F() <span class="overload">[11/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -493,13 +727,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">SystemMetricsUpdate&#160;</td>
+          <td class="paramtype">basic_monitor_performance_metrics&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -510,14 +744,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00077">77</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00371">371</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00050">monitoring_interface::system_metrics::active_threads</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00048">monitoring_interface::system_metrics::cpu_usage_percent</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00049">monitoring_interface::system_metrics::memory_usage_bytes</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00052">monitoring_interface::system_metrics::timestamp</a>, and <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00051">monitoring_interface::system_metrics::total_allocations</a>.</p>
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00230">kcenon::logger::result&lt; T &gt;::value()</a>.</p>
 
 </div>
 </div>
-<a id="a33e232bfdfb4924bae1820bb596c409f" name="a33e232bfdfb4924bae1820bb596c409f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33e232bfdfb4924bae1820bb596c409f">&#9670;&#160;</a></span>TEST_F() <span class="overload">[12/13]</span></h2>
+<a id="a6251fd4b86f39e534965eea94a4e938f" name="a6251fd4b86f39e534965eea94a4e938f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6251fd4b86f39e534965eea94a4e938f">&#9670;&#160;</a></span>TEST_F() <span class="overload">[12/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -525,13 +759,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ThreadPoolMetricsUpdate&#160;</td>
+          <td class="paramtype">basic_monitor_reset_metrics&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -542,14 +776,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00095">95</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
-
-<p class="reference">References <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00066">monitoring_interface::thread_pool_metrics::average_latency_ns</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00068">monitoring_interface::thread_pool_metrics::idle_threads</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00062">monitoring_interface::thread_pool_metrics::jobs_completed</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00063">monitoring_interface::thread_pool_metrics::jobs_pending</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00069">monitoring_interface::thread_pool_metrics::timestamp</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00065">monitoring_interface::thread_pool_metrics::total_execution_time_ns</a>, and <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00067">monitoring_interface::thread_pool_metrics::worker_threads</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00199">199</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a38d33edf28942d371207ae75240ce32b" name="a38d33edf28942d371207ae75240ce32b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38d33edf28942d371207ae75240ce32b">&#9670;&#160;</a></span>TEST_F() <span class="overload">[13/13]</span></h2>
+<a id="ac63bfbd077eea3c368e540c5cd8a11ee" name="ac63bfbd077eea3c368e540c5cd8a11ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac63bfbd077eea3c368e540c5cd8a11ee">&#9670;&#160;</a></span>TEST_F() <span class="overload">[13/14]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -557,13 +789,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">TEST_F </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d1/da1/classMonitoringTest.html">MonitoringTest</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">WorkerMetricsUpdate&#160;</td>
+          <td class="paramtype">basic_monitor_thread_safety&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -574,9 +806,41 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00116">116</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00325">325</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00082">monitoring_interface::worker_metrics::context_switches</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00081">monitoring_interface::worker_metrics::idle_time_ns</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00079">monitoring_interface::worker_metrics::jobs_processed</a>, <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00083">monitoring_interface::worker_metrics::timestamp</a>, and <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00080">monitoring_interface::worker_metrics::total_processing_time_ns</a>.</p>
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00230">kcenon::logger::result&lt; T &gt;::value()</a>.</p>
+
+</div>
+</div>
+<a id="aeec66e959db047a11ee18e20e7fe1c14" name="aeec66e959db047a11ee18e20e7fe1c14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeec66e959db047a11ee18e20e7fe1c14">&#9670;&#160;</a></span>TEST_F() <span class="overload">[14/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../db/d76/classmonitoring__test.html">monitoring_test</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">basic_monitor_uptime&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html#l00414">414</a> of file <a class="el" href="../../d3/d9b/monitoring__test_8cpp_source.html">monitoring_test.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html#l00230">kcenon::logger::result&lt; T &gt;::value()</a>.</p>
 
 </div>
 </div>
@@ -585,7 +849,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_f3b91af6f94109d994ac208a6e6128ce.html">monitoring_system</a></li><li class="navelem"><a class="el" href="../../dir_e8df55c51816be70604f5f2c1309a3e6.html">unittest</a></li><li class="navelem"><a class="el" href="../../dir_6a9cd8420517ebcb0f76c67627466eeb.html">monitoring_test</a></li><li class="navelem"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html">monitoring_test.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_f55c931e23855b4a2daadc4e2bb6196a.html">tests</a></li><li class="navelem"><a class="el" href="../../dir_3aac84d0bebe363b968e542d0e22e7a0.html">unit</a></li><li class="navelem"><a class="el" href="../../dir_83ccd139c5709a396874a1bc00f83512.html">monitoring_test</a></li><li class="navelem"><a class="el" href="../../d3/d9b/monitoring__test_8cpp.html">monitoring_test.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

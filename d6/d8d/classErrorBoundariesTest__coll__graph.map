@@ -1,0 +1,11 @@
+<map id="ErrorBoundariesTest" name="ErrorBoundariesTest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,284,157,309"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="9,181,111,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,219,82,283,76,285,63,221"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="135,181,278,207"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="183,217,97,286,94,282,180,213"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="140,93,273,119"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="209,133,209,181,204,181,204,133"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="187,5,226,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="209,45,209,93,204,93,204,45"/>
+</map>

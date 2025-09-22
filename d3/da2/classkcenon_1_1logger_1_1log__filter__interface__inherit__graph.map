@@ -1,0 +1,23 @@
+<map id="kcenon::logger::log_filter_interface" name="kcenon::logger::log_filter_interface">
+<area shape="rect" id="Node000001" title="Interface for log filters." alt="" coords="5,165,152,205"/>
+<area shape="rect" id="Node000002" href="$d7/d76/classkcenon_1_1logger_1_1filters_1_1composite__filter.html" title="Composite filter with AND/OR logic." alt="" coords="200,5,363,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,152,143,103,170,78,199,55,220,43,223,48,201,60,173,82,147,107,105,156"/>
+<area shape="rect" id="Node000003" href="$d1/d79/classkcenon_1_1logger_1_1filters_1_1function__filter.html" title="Function&#45;based filter." alt="" coords="200,69,363,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="126,156,199,119,227,107,229,112,201,124,129,161"/>
+<area shape="rect" id="Node000004" href="$de/d0b/classkcenon_1_1logger_1_1filters_1_1level__filter.html" title="Level&#45;based log filter." alt="" coords="200,133,363,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="165,169,199,164,200,169,166,174"/>
+<area shape="rect" id="Node000005" href="$d2/d8a/classkcenon_1_1logger_1_1filters_1_1regex__filter.html" title="Regex&#45;based log filter." alt="" coords="200,197,363,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="166,196,200,202,199,207,165,202"/>
+<area shape="rect" id="Node000006" href="$db/d76/classkcenon_1_1logger_1_1log__filter.html" title="Base class for log filtering." alt="" coords="208,261,355,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="129,210,201,247,229,259,227,264,199,252,126,215"/>
+<area shape="rect" id="Node000011" href="$d4/d8d/classsecurity__filter.html" title=" " alt="" coords="226,326,337,351"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="104,215,146,264,172,289,201,311,228,324,226,328,199,316,169,294,142,268,100,218"/>
+<area shape="rect" id="Node000007" href="$d4/dda/classkcenon_1_1logger_1_1composite__filter.html" title="Combine multiple filters with AND/OR logic." alt="" coords="411,165,605,205"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="349,253,361,247,385,231,409,215,438,203,440,208,412,220,388,235,364,252,351,258"/>
+<area shape="rect" id="Node000008" href="$df/d7f/classkcenon_1_1logger_1_1function__filter.html" title="Filter logs by custom function." alt="" coords="419,229,597,269"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="368,266,418,259,419,265,369,272"/>
+<area shape="rect" id="Node000009" href="$df/dcc/classkcenon_1_1logger_1_1level__filter.html" title="Filter logs by minimum level." alt="" coords="429,293,587,333"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="369,291,429,300,428,305,368,296"/>
+<area shape="rect" id="Node000010" href="$d8/db8/classkcenon_1_1logger_1_1regex__filter.html" title="Filter logs by regex pattern." alt="" coords="427,357,589,397"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="351,305,364,311,388,327,412,343,440,355,438,360,409,348,385,332,361,316,349,309"/>
+</map>

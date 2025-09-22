@@ -1,0 +1,26 @@
+<map id="libraries/thread_system/src/impl/typed_pool/typed_job_interface.h" name="libraries/thread_system/src/impl/typed_pool/typed_job_interface.h">
+<area shape="rect" id="Node000001" title="Interface definitions for typed jobs." alt="" coords="351,5,545,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,229,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="356,63,172,114,170,109,354,57"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="253,115,411,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="417,62,359,108,356,104,413,58"/>
+<area shape="rect" id="Node000004" href="$de/d01/include_2kcenon_2thread_2core_2error__handling_8h.html" title="Modern error handling for the thread system." alt="" coords="485,108,632,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="481,58,527,97,524,101,478,62"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="272,196,331,221"/>
+<area shape="poly" id="edge11_Node000001_Node000005" title=" " alt="" coords="451,61,445,105,437,128,425,150,392,172,344,194,342,189,389,168,421,146,432,126,440,103,446,60"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="656,115,733,141"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="518,58,653,108,651,113,516,63"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="498,151,345,197,343,192,496,145"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="355,196,429,221"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="520,150,430,192,428,188,518,146"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="454,196,546,221"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="547,150,519,186,515,183,542,147"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="570,196,667,221"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="575,147,604,183,599,187,571,150"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="691,196,767,221"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="601,146,693,188,691,193,598,150"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="791,196,878,221"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="626,145,782,190,780,195,624,151"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="902,196,989,221"/>
+<area shape="poly" id="edge10_Node000004_Node000011" title=" " alt="" coords="633,143,645,145,889,193,888,198,643,151,632,148"/>
+</map>

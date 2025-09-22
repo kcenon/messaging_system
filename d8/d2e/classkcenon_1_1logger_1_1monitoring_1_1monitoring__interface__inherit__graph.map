@@ -1,0 +1,5 @@
+<map id="kcenon::logger::monitoring::monitoring_interface" name="kcenon::logger::monitoring::monitoring_interface">
+<area shape="rect" id="Node000001" title="Interface for logger monitoring." alt="" coords="5,5,203,45"/>
+<area shape="rect" id="Node000002" href="$d0/d98/classkcenon_1_1logger_1_1monitoring_1_1basic__monitoring.html" title="Basic monitoring implementation." alt="" coords="5,93,203,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,59,107,93,101,93,101,59"/>
+</map>

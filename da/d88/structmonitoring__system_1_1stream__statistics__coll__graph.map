@@ -1,0 +1,16 @@
+<map id="monitoring_system::stream_statistics" name="monitoring_system::stream_statistics">
+<area shape="rect" id="Node000001" title="Comprehensive streaming statistics." alt="" coords="94,299,250,339"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,196,157,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,244,157,297,153,300,105,248"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="17,93,169,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="92,147,86,196,81,196,87,146"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="74,5,113,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="96,44,96,93,91,93,91,44"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="189,5,227,31"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="182,41,162,57,116,95,113,91,158,53,179,37"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="197,101,326,126"/>
+<area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="224,41,257,99,252,102,219,44"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="181,203,347,229"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="248,241,218,276,194,301,190,297,214,273,244,238"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="265,140,266,203,261,203,259,140"/>
+</map>

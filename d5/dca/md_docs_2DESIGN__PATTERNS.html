@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d5/dca/md_docs_2DESIGN__PATTERNS.html'
   <div class="headertitle"><div class="title">Design Patterns and Architectural Decisions</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1771"></a> </p>
-<h1><a class="anchor" id="autotoc_md1772"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md3736"></a> </p>
+<h1><a class="anchor" id="autotoc_md3737"></a>
 Overview</h1>
 <p>This document catalogs the design patterns implemented throughout the Messaging System, explaining why each pattern was chosen and providing implementation examples. These patterns ensure scalability, maintainability, and performance in a distributed messaging environment.</p>
-<h1><a class="anchor" id="autotoc_md1773"></a>
+<h1><a class="anchor" id="autotoc_md3738"></a>
 Creational Patterns</h1>
-<h2><a class="anchor" id="autotoc_md1774"></a>
+<h2><a class="anchor" id="autotoc_md3739"></a>
 1. Singleton Pattern</h2>
 <p><b>Purpose</b>: Ensure single instances of critical system components like loggers and configuration managers.</p>
 <p><b>Why Chosen</b>: Prevents resource conflicts and ensures consistent state across the application.</p>
@@ -135,7 +135,7 @@ Creational Patterns</h1>
 <li>System configuration</li>
 <li>Metrics collector</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1775"></a>
+<h2><a class="anchor" id="autotoc_md3740"></a>
 2. Factory Pattern</h2>
 <p><b>Purpose</b>: Create objects without specifying exact classes, enabling runtime polymorphism.</p>
 <p><b>Why Chosen</b>: Allows flexible service creation based on configuration and supports plugin architecture.</p>
@@ -169,14 +169,15 @@ Creational Patterns</h1>
 <div class="line">});</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Usage</span></div>
-<div class="line"><span class="keyword">auto</span> service = factory.create_service(config.service_type);</div>
+<div class="line"><span class="keyword">auto</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8aaaabf0d39951f3e6c3e8a7911df524c2">service</a> = factory.create_service(config.service_type);</div>
+<div class="ttc" id="anamespacemonitoring__system_html_a8e692c8ceac634f141c23c45c3491aa8aaaabf0d39951f3e6c3e8a7911df524c2"><div class="ttname"><a href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8aaaabf0d39951f3e6c3e8a7911df524c2">monitoring_system::otel_resource_type::service</a></div><div class="ttdeci">@ service</div></div>
 </div><!-- fragment --><p><b>Usage in System</b>:</p><ul>
 <li>Message handler creation</li>
 <li>Protocol adapter instantiation</li>
 <li>Storage backend selection</li>
 <li>Serializer selection</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1776"></a>
+<h2><a class="anchor" id="autotoc_md3741"></a>
 3. Builder Pattern</h2>
 <p><b>Purpose</b>: Construct complex objects step by step with fluent interface.</p>
 <p><b>Why Chosen</b>: Simplifies creation of messages and configurations with many optional parameters.</p>
@@ -185,7 +186,7 @@ Creational Patterns</h1>
 <div class="line">    std::unique_ptr&lt;Message&gt; message_;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    MessageBuilder() : message_(<a class="code hl_namespace" href="../../d8/dcc/namespacestd.html">std</a>::make_unique&lt;Message&gt;()) {}</div>
+<div class="line">    MessageBuilder() : message_(std::make_unique&lt;Message&gt;()) {}</div>
 <div class="line"> </div>
 <div class="line">    MessageBuilder&amp; with_topic(<span class="keyword">const</span> std::string&amp; topic) {</div>
 <div class="line">        message_-&gt;set_topic(topic);</div>
@@ -228,14 +229,13 @@ Creational Patterns</h1>
 <div class="line">    .with_timeout(5s)</div>
 <div class="line">    .build();</div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_1_1services_1_1container_html_a221266e349efd48a805f4d942db56320af9ab05454998236921a6b0e281fae632"><div class="ttname"><a href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320af9ab05454998236921a6b0e281fae632">kcenon::messaging::services::container::container_operation::validate</a></div><div class="ttdeci">@ validate</div></div>
-<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="../../d8/dcc/namespacestd.html">std</a></div><div class="ttdoc">STL namespace.</div></div>
 </div><!-- fragment --><p><b>Usage in System</b>:</p><ul>
 <li>Complex message construction</li>
 <li>Database query builders</li>
 <li>Configuration builders</li>
 <li>Network request builders</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1777"></a>
+<h2><a class="anchor" id="autotoc_md3742"></a>
 4. Object Pool Pattern</h2>
 <p><b>Purpose</b>: Reuse expensive objects to reduce allocation overhead.</p>
 <p><b>Why Chosen</b>: Minimizes memory allocation in hot paths, crucial for high-performance messaging.</p>
@@ -254,7 +254,7 @@ Creational Patterns</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">public</span>:</div>
 <div class="line">        PooledObject(ObjectPool* pool, std::unique_ptr&lt;T&gt; obj)</div>
-<div class="line">            : pool_(pool), object_(<a class="code hl_namespace" href="../../d8/dcc/namespacestd.html">std</a>::move(obj)) {}</div>
+<div class="line">            : pool_(pool), object_(std::move(obj)) {}</div>
 <div class="line"> </div>
 <div class="line">        ~PooledObject() {</div>
 <div class="line">            <span class="keywordflow">if</span> (object_ &amp;&amp; pool_) {</div>
@@ -274,7 +274,7 @@ Creational Patterns</h1>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    PooledObject <a class="code hl_enumvalue" href="../../de/d41/namespacethread__module_1_1lockfree.html#a07cdd7466a09a6c46b1f7a1121ab9037a86a4fa105ff51b8c3be84734797d8144">acquire</a>() {</div>
+<div class="line">    PooledObject acquire() {</div>
 <div class="line">        std::lock_guard&lt;std::mutex&gt; lock(mutex_);</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">if</span> (pool_.empty()) {</div>
@@ -305,16 +305,15 @@ Creational Patterns</h1>
 <div class="line"><span class="keyword">auto</span> buffer = buffer_pool.acquire();</div>
 <div class="line">buffer-&gt;write(data);</div>
 <div class="line"><span class="comment">// Buffer automatically returned to pool when destroyed</span></div>
-<div class="ttc" id="anamespacethread__module_1_1lockfree_html_a07cdd7466a09a6c46b1f7a1121ab9037a86a4fa105ff51b8c3be84734797d8144"><div class="ttname"><a href="../../de/d41/namespacethread__module_1_1lockfree.html#a07cdd7466a09a6c46b1f7a1121ab9037a86a4fa105ff51b8c3be84734797d8144">thread_module::lockfree::memory_ordering_policy::acquire</a></div><div class="ttdeci">@ acquire</div><div class="ttdoc">Use acquire-release semantics for correctness.</div></div>
 </div><!-- fragment --><p><b>Usage in System</b>:</p><ul>
 <li>Message object pooling</li>
 <li>Buffer management</li>
 <li>Database connection pooling</li>
 <li>Thread-local storage pools</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1778"></a>
+<h1><a class="anchor" id="autotoc_md3743"></a>
 Structural Patterns</h1>
-<h2><a class="anchor" id="autotoc_md1779"></a>
+<h2><a class="anchor" id="autotoc_md3744"></a>
 5. Adapter Pattern</h2>
 <p><b>Purpose</b>: Allow incompatible interfaces to work together.</p>
 <p><b>Why Chosen</b>: Enables integration with various external systems and protocols.</p>
@@ -342,7 +341,7 @@ Structural Patterns</h1>
 <div class="line"> </div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    RabbitMQAdapter(<span class="keyword">const</span> std::string&amp; exchange, <span class="keyword">const</span> std::string&amp; queue)</div>
-<div class="line">        : client_(<a class="code hl_namespace" href="../../d8/dcc/namespacestd.html">std</a>::make_unique&lt;RabbitMQClient&gt;())</div>
+<div class="line">        : client_(std::make_unique&lt;RabbitMQClient&gt;())</div>
 <div class="line">        , exchange_(exchange)</div>
 <div class="line">        , queue_(queue) {}</div>
 <div class="line"> </div>
@@ -366,7 +365,7 @@ Structural Patterns</h1>
 <li>Protocol adapters (HTTP, WebSocket)</li>
 <li>Logging adapters (syslog, file, console)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1780"></a>
+<h2><a class="anchor" id="autotoc_md3745"></a>
 6. Decorator Pattern</h2>
 <p><b>Purpose</b>: Add responsibilities to objects dynamically without altering structure.</p>
 <p><b>Why Chosen</b>: Allows flexible message processing pipelines with composable middleware.</p>
@@ -390,9 +389,9 @@ Structural Patterns</h1>
 <div class="line"> </div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    ProcessorDecorator(std::unique_ptr&lt;IMessageProcessor&gt; processor)</div>
-<div class="line">        : processor_(<a class="code hl_namespace" href="../../d8/dcc/namespacestd.html">std</a>::move(processor)) {}</div>
+<div class="line">        : processor_(std::move(processor)) {}</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> process(Message&amp; msg)<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">process</a>(Message&amp; msg)<span class="keyword"> override </span>{</div>
 <div class="line">        processor_-&gt;process(msg);</div>
 <div class="line">    }</div>
 <div class="line">};</div>
@@ -402,7 +401,7 @@ Structural Patterns</h1>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <span class="keyword">using </span>ProcessorDecorator::ProcessorDecorator;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> process(Message&amp; msg)<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">process</a>(Message&amp; msg)<span class="keyword"> override </span>{</div>
 <div class="line">        logger_.info(<span class="stringliteral">&quot;Processing message: {}&quot;</span>, msg.id());</div>
 <div class="line">        processor_-&gt;process(msg);</div>
 <div class="line">        logger_.info(<span class="stringliteral">&quot;Processed message: {}&quot;</span>, msg.id());</div>
@@ -413,7 +412,7 @@ Structural Patterns</h1>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <span class="keyword">using </span>ProcessorDecorator::ProcessorDecorator;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> process(Message&amp; msg)<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">process</a>(Message&amp; msg)<span class="keyword"> override </span>{</div>
 <div class="line">        <a class="code hl_enumvalue" href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320a13efe76945dcdb1111672f358c230ab4">decompress</a>(msg);</div>
 <div class="line">        processor_-&gt;process(msg);</div>
 <div class="line">        <a class="code hl_enumvalue" href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320a390626c545194d0f20a704589b190994">compress</a>(msg);</div>
@@ -424,7 +423,7 @@ Structural Patterns</h1>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <span class="keyword">using </span>ProcessorDecorator::ProcessorDecorator;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> process(Message&amp; msg)<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">process</a>(Message&amp; msg)<span class="keyword"> override </span>{</div>
 <div class="line">        decrypt(msg);</div>
 <div class="line">        processor_-&gt;process(msg);</div>
 <div class="line">        encrypt(msg);</div>
@@ -440,13 +439,14 @@ Structural Patterns</h1>
 <div class="line">processor-&gt;process(message);</div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_1_1services_1_1container_html_a221266e349efd48a805f4d942db56320a13efe76945dcdb1111672f358c230ab4"><div class="ttname"><a href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320a13efe76945dcdb1111672f358c230ab4">kcenon::messaging::services::container::container_operation::decompress</a></div><div class="ttdeci">@ decompress</div></div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_1_1services_1_1container_html_a221266e349efd48a805f4d942db56320a390626c545194d0f20a704589b190994"><div class="ttname"><a href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320a390626c545194d0f20a704589b190994">kcenon::messaging::services::container::container_operation::compress</a></div><div class="ttdeci">@ compress</div></div>
+<div class="ttc" id="anamespacemonitoring__system_html_a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b"><div class="ttname"><a href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">monitoring_system::otel_resource_type::process</a></div><div class="ttdeci">@ process</div></div>
 </div><!-- fragment --><p><b>Usage in System</b>:</p><ul>
 <li>Message processing pipelines</li>
 <li>Request/response interceptors</li>
 <li>Metrics collection</li>
 <li>Security layers</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1781"></a>
+<h2><a class="anchor" id="autotoc_md3746"></a>
 7. Proxy Pattern</h2>
 <p><b>Purpose</b>: Provide placeholder or surrogate for another object to control access.</p>
 <p><b>Why Chosen</b>: Implements lazy loading, caching, and access control for remote services.</p>
@@ -478,7 +478,7 @@ Structural Patterns</h1>
 <div class="line"> </div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    CachingProxy(std::unique_ptr&lt;IRemoteService&gt; service)</div>
-<div class="line">        : service_(<a class="code hl_namespace" href="../../d8/dcc/namespacestd.html">std</a>::move(service)) {}</div>
+<div class="line">        : service_(std::move(<a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8aaaabf0d39951f3e6c3e8a7911df524c2">service</a>)) {}</div>
 <div class="line"> </div>
 <div class="line">    Response execute(<span class="keyword">const</span> Request&amp; req)<span class="keyword"> override </span>{</div>
 <div class="line">        <span class="comment">// Check cache</span></div>
@@ -508,7 +508,7 @@ Structural Patterns</h1>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Usage</span></div>
-<div class="line"><span class="keyword">auto</span> service = std::make_unique&lt;RemoteService&gt;();</div>
+<div class="line"><span class="keyword">auto</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8aaaabf0d39951f3e6c3e8a7911df524c2">service</a> = std::make_unique&lt;RemoteService&gt;();</div>
 <div class="line"><span class="keyword">auto</span> proxy = std::make_unique&lt;CachingProxy&gt;(std::move(service));</div>
 <div class="line"><span class="keyword">auto</span> <a class="code hl_enumvalue" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ad1fc8eaf36937be0c3ba8cfe0a2c1bfe">response</a> = proxy-&gt;execute(request);  <span class="comment">// Cached for subsequent calls</span></div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_1_1core_html_accdec513cff0fa75c42e41e381b490a4ad1fc8eaf36937be0c3ba8cfe0a2c1bfe"><div class="ttname"><a href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ad1fc8eaf36937be0c3ba8cfe0a2c1bfe">kcenon::messaging::core::message_type::response</a></div><div class="ttdeci">@ response</div></div>
@@ -518,7 +518,7 @@ Structural Patterns</h1>
 <li>Authentication proxies</li>
 <li>Rate limiting proxies</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1782"></a>
+<h2><a class="anchor" id="autotoc_md3747"></a>
 8. Composite Pattern</h2>
 <p><b>Purpose</b>: Compose objects into tree structures to represent part-whole hierarchies.</p>
 <p><b>Why Chosen</b>: Enables hierarchical message routing and complex filter compositions.</p>
@@ -544,7 +544,7 @@ Structural Patterns</h1>
 <div class="line">    Priority min_priority_;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    PriorityFilter(Priority min) : min_priority_(min) {}</div>
+<div class="line">    PriorityFilter(Priority min) : min_priority_(<a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8fc760c5856552114ee579eb6040f4eaad8bd79cc131920d5de426f914d17405a">min</a>) {}</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordtype">bool</span> matches(<span class="keyword">const</span> Message&amp; msg)<span class="keyword"> override </span>{</div>
 <div class="line">        <span class="keywordflow">return</span> msg.priority() &gt;= min_priority_;</div>
@@ -594,6 +594,7 @@ Structural Patterns</h1>
 <div class="line"><span class="keywordflow">if</span> (or_filter-&gt;matches(message)) {</div>
 <div class="line">    <span class="comment">// Process message</span></div>
 <div class="line">}</div>
+<div class="ttc" id="anamespacemonitoring__system_html_a8fc760c5856552114ee579eb6040f4eaad8bd79cc131920d5de426f914d17405a"><div class="ttname"><a href="../../de/d3f/namespacemonitoring__system.html#a8fc760c5856552114ee579eb6040f4eaad8bd79cc131920d5de426f914d17405a">monitoring_system::aggregation_function::min</a></div><div class="ttdeci">@ min</div></div>
 <div class="ttc" id="atest__std__concepts_8cpp_html_acb807bc597e1fc5883bc91a306d44f03"><div class="ttname"><a href="../../d2/d11/test__std__concepts_8cpp.html#acb807bc597e1fc5883bc91a306d44f03">add</a></div><div class="ttdeci">T add(T a, T b)</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d11/test__std__concepts_8cpp_source.html#l00043">test_std_concepts.cpp:43</a></div></div>
 </div><!-- fragment --><p><b>Usage in System</b>:</p><ul>
 <li>Message routing rules</li>
@@ -601,9 +602,9 @@ Structural Patterns</h1>
 <li>Permission hierarchies</li>
 <li>Configuration trees</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1783"></a>
+<h1><a class="anchor" id="autotoc_md3748"></a>
 Behavioral Patterns</h1>
-<h2><a class="anchor" id="autotoc_md1784"></a>
+<h2><a class="anchor" id="autotoc_md3749"></a>
 9. Observer Pattern</h2>
 <p><b>Purpose</b>: Define one-to-many dependency between objects for event notification.</p>
 <p><b>Why Chosen</b>: Core to pub/sub messaging system, enables loose coupling between components.</p>
@@ -693,7 +694,7 @@ Behavioral Patterns</h1>
 <li>Configuration updates</li>
 <li>System event notifications</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1785"></a>
+<h2><a class="anchor" id="autotoc_md3750"></a>
 10. Strategy Pattern</h2>
 <p><b>Purpose</b>: Define family of algorithms and make them interchangeable.</p>
 <p><b>Why Chosen</b>: Allows runtime selection of serialization formats, compression algorithms, and routing strategies.</p>
@@ -797,7 +798,7 @@ Behavioral Patterns</h1>
 <li>Load balancing strategies</li>
 <li>Retry strategies</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1786"></a>
+<h2><a class="anchor" id="autotoc_md3751"></a>
 11. Chain of Responsibility Pattern</h2>
 <p><b>Purpose</b>: Pass requests along a chain of handlers until one handles it.</p>
 <p><b>Why Chosen</b>: Perfect for message processing pipelines with middleware.</p>
@@ -815,18 +816,18 @@ Behavioral Patterns</h1>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle(Message&amp; msg) {</div>
-<div class="line">        <span class="keywordflow">if</span> (!process(msg) &amp;&amp; next_) {</div>
+<div class="line">        <span class="keywordflow">if</span> (!<a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">process</a>(msg) &amp;&amp; next_) {</div>
 <div class="line">            next_-&gt;handle(msg);</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">protected</span>:</div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> process(Message&amp; msg) = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">process</a>(Message&amp; msg) = 0;</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>AuthenticationHandler : <span class="keyword">public</span> MessageHandler {</div>
 <div class="line"><span class="keyword">protected</span>:</div>
-<div class="line">    <span class="keywordtype">bool</span> process(Message&amp; msg)<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">bool</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">process</a>(Message&amp; msg)<span class="keyword"> override </span>{</div>
 <div class="line">        <span class="keywordflow">if</span> (!msg.has_auth_token()) {</div>
 <div class="line">            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Authentication required&quot;</span>);</div>
 <div class="line">        }</div>
@@ -843,7 +844,7 @@ Behavioral Patterns</h1>
 <div class="line">    RateLimiter limiter_;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">protected</span>:</div>
-<div class="line">    <span class="keywordtype">bool</span> process(Message&amp; msg)<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">bool</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">process</a>(Message&amp; msg)<span class="keyword"> override </span>{</div>
 <div class="line">        <span class="keywordflow">if</span> (!limiter_.allow_request(msg.sender_id())) {</div>
 <div class="line">            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Rate limit exceeded&quot;</span>);</div>
 <div class="line">        }</div>
@@ -853,8 +854,8 @@ Behavioral Patterns</h1>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>ValidationHandler : <span class="keyword">public</span> MessageHandler {</div>
 <div class="line"><span class="keyword">protected</span>:</div>
-<div class="line">    <span class="keywordtype">bool</span> process(Message&amp; msg)<span class="keyword"> override </span>{</div>
-<div class="line">        <span class="keywordflow">if</span> (msg.size() &gt; MAX_MESSAGE_SIZE) {</div>
+<div class="line">    <span class="keywordtype">bool</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">process</a>(Message&amp; msg)<span class="keyword"> override </span>{</div>
+<div class="line">        <span class="keywordflow">if</span> (msg.size() &gt; <a class="code hl_variable" href="../../d9/d8b/test__e2e_8cpp.html#a9b8235d5ea635d907617f48db26e05d7">MAX_MESSAGE_SIZE</a>) {</div>
 <div class="line">            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Message too large&quot;</span>);</div>
 <div class="line">        }</div>
 <div class="line"> </div>
@@ -870,7 +871,7 @@ Behavioral Patterns</h1>
 <div class="line">    MessageRouter router_;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">protected</span>:</div>
-<div class="line">    <span class="keywordtype">bool</span> process(Message&amp; msg)<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">bool</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5075140835d0bc504791c76b04c33d2b">process</a>(Message&amp; msg)<span class="keyword"> override </span>{</div>
 <div class="line">        router_.route(msg);</div>
 <div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;  <span class="comment">// Message handled, stop chain</span></div>
 <div class="line">    }</div>
@@ -888,13 +889,14 @@ Behavioral Patterns</h1>
 <div class="line">} <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
 <div class="line">    logger_.error(<span class="stringliteral">&quot;Message processing failed: {}&quot;</span>, e.what());</div>
 <div class="line">}</div>
+<div class="ttc" id="atest__e2e_8cpp_html_a9b8235d5ea635d907617f48db26e05d7"><div class="ttname"><a href="../../d9/d8b/test__e2e_8cpp.html#a9b8235d5ea635d907617f48db26e05d7">MAX_MESSAGE_SIZE</a></div><div class="ttdeci">constexpr size_t MAX_MESSAGE_SIZE</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d8b/test__e2e_8cpp_source.html#l00031">test_e2e.cpp:31</a></div></div>
 </div><!-- fragment --><p><b>Usage in System</b>:</p><ul>
 <li>Request processing pipeline</li>
 <li>Error handling chain</li>
 <li>Message transformation pipeline</li>
 <li>Security filter chain</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1787"></a>
+<h2><a class="anchor" id="autotoc_md3752"></a>
 12. Command Pattern</h2>
 <p><b>Purpose</b>: Encapsulate requests as objects for parameterization and queuing.</p>
 <p><b>Why Chosen</b>: Enables undo operations, request queuing, and transaction support.</p>
@@ -1012,7 +1014,7 @@ Behavioral Patterns</h1>
 <li>Configuration changes</li>
 <li>Batch processing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1788"></a>
+<h2><a class="anchor" id="autotoc_md3753"></a>
 13. Template Method Pattern</h2>
 <p><b>Purpose</b>: Define skeleton of algorithm in base class, subclasses override specific steps.</p>
 <p><b>Why Chosen</b>: Standardizes service lifecycle and message processing flow.</p>
@@ -1030,7 +1032,7 @@ Behavioral Patterns</h1>
 <div class="line">            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Connection failed&quot;</span>);</div>
 <div class="line">        }</div>
 <div class="line"> </div>
-<div class="line">        run();</div>
+<div class="line">        <a class="code hl_function" href="../../df/d0d/namespacebench__framework.html#aedf0d900a5e2264a2111f2108fc4191a">run</a>();</div>
 <div class="line"> </div>
 <div class="line">        logger_.info(<span class="stringliteral">&quot;Service started: {}&quot;</span>, name());</div>
 <div class="line">    }</div>
@@ -1038,7 +1040,7 @@ Behavioral Patterns</h1>
 <div class="line">    <span class="keywordtype">void</span> stop() {</div>
 <div class="line">        logger_.info(<span class="stringliteral">&quot;Stopping service: {}&quot;</span>, name());</div>
 <div class="line"> </div>
-<div class="line">        <a class="code hl_define" href="../../da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a>();</div>
+<div class="line">        <a class="code hl_function" href="../../d5/d61/namespacenetwork__system_1_1compat.html#a0fe0715fe4254ad45fca04d53d2ad574">shutdown</a>();</div>
 <div class="line">        disconnect();</div>
 <div class="line">        cleanup();</div>
 <div class="line"> </div>
@@ -1048,10 +1050,10 @@ Behavioral Patterns</h1>
 <div class="line"><span class="keyword">protected</span>:</div>
 <div class="line">    <span class="comment">// Template methods to be overridden</span></div>
 <div class="line">    <span class="keyword">virtual</span> std::string name() <span class="keyword">const</span> = 0;</div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> initialize() = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="../../d5/d61/namespacenetwork__system_1_1compat.html#aa32c397f3c423cea39b8accc6bf954c9">initialize</a>() = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> connect() = 0;</div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> run() = 0;</div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_define" href="../../da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a>() = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="../../df/d0d/namespacebench__framework.html#aedf0d900a5e2264a2111f2108fc4191a">run</a>() = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/d61/namespacenetwork__system_1_1compat.html#a0fe0715fe4254ad45fca04d53d2ad574">shutdown</a>() = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> disconnect() = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> cleanup() = 0;</div>
 <div class="line">};</div>
@@ -1065,7 +1067,7 @@ Behavioral Patterns</h1>
 <div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;NetworkService&quot;</span>;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">bool</span> initialize()<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">bool</span> <a class="code hl_function" href="../../d5/d61/namespacenetwork__system_1_1compat.html#aa32c397f3c423cea39b8accc6bf954c9">initialize</a>()<span class="keyword"> override </span>{</div>
 <div class="line">        <span class="comment">// Initialize networking resources</span></div>
 <div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line">    }</div>
@@ -1076,11 +1078,11 @@ Behavioral Patterns</h1>
 <div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> run()<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="../../df/d0d/namespacebench__framework.html#aedf0d900a5e2264a2111f2108fc4191a">run</a>()<span class="keyword"> override </span>{</div>
 <div class="line">        accept_connections();</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> <a class="code hl_define" href="../../da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a>()<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/d61/namespacenetwork__system_1_1compat.html#a0fe0715fe4254ad45fca04d53d2ad574">shutdown</a>()<span class="keyword"> override </span>{</div>
 <div class="line">        io_context_.stop();</div>
 <div class="line">    }</div>
 <div class="line"> </div>
@@ -1094,20 +1096,22 @@ Behavioral Patterns</h1>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Usage</span></div>
-<div class="line"><span class="keyword">auto</span> service = std::make_unique&lt;NetworkService&gt;();</div>
-<div class="line">service-&gt;start();  <span class="comment">// Follows template method pattern</span></div>
+<div class="line"><span class="keyword">auto</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8aaaabf0d39951f3e6c3e8a7911df524c2">service</a> = std::make_unique&lt;NetworkService&gt;();</div>
+<div class="line"><a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8aaaabf0d39951f3e6c3e8a7911df524c2">service</a>-&gt;start();  <span class="comment">// Follows template method pattern</span></div>
 <div class="line"><span class="comment">// ...</span></div>
-<div class="line">service-&gt;stop();</div>
-<div class="ttc" id="alog__server_8cpp_html_aaefada63b967623c915b6b3ae59c43c8"><div class="ttname"><a href="../../da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a></div><div class="ttdeci">#define shutdown(fd, how)</div><div class="ttdef"><b>Definition</b> <a href="../../da/dcd/log__server_8cpp_source.html#l00015">log_server.cpp:15</a></div></div>
+<div class="line"><a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8aaaabf0d39951f3e6c3e8a7911df524c2">service</a>-&gt;stop();</div>
+<div class="ttc" id="anamespacebench__framework_html_aedf0d900a5e2264a2111f2108fc4191a"><div class="ttname"><a href="../../df/d0d/namespacebench__framework.html#aedf0d900a5e2264a2111f2108fc4191a">bench_framework::run</a></div><div class="ttdeci">void run(Fn &amp;&amp;)</div><div class="ttdef"><b>Definition</b> <a href="../../df/db6/benchmarks_2framework_8h_source.html#l00013">framework.h:13</a></div></div>
+<div class="ttc" id="anamespacenetwork__system_1_1compat_html_a0fe0715fe4254ad45fca04d53d2ad574"><div class="ttname"><a href="../../d5/d61/namespacenetwork__system_1_1compat.html#a0fe0715fe4254ad45fca04d53d2ad574">network_system::compat::shutdown</a></div><div class="ttdeci">void shutdown()</div><div class="ttdoc">Shutdown network system cleanly.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/ddf/network__system_2include_2network__system_2compatibility_8h_source.html#l00149">compatibility.h:149</a></div></div>
+<div class="ttc" id="anamespacenetwork__system_1_1compat_html_aa32c397f3c423cea39b8accc6bf954c9"><div class="ttname"><a href="../../d5/d61/namespacenetwork__system_1_1compat.html#aa32c397f3c423cea39b8accc6bf954c9">network_system::compat::initialize</a></div><div class="ttdeci">void initialize()</div><div class="ttdoc">Initialize network system with default settings.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/ddf/network__system_2include_2network__system_2compatibility_8h_source.html#l00128">compatibility.h:128</a></div></div>
 </div><!-- fragment --><p><b>Usage in System</b>:</p><ul>
 <li>Service lifecycle management</li>
 <li>Connection establishment</li>
 <li>Request processing flow</li>
 <li>Resource initialization</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1789"></a>
+<h1><a class="anchor" id="autotoc_md3754"></a>
 Concurrency Patterns</h1>
-<h2><a class="anchor" id="autotoc_md1790"></a>
+<h2><a class="anchor" id="autotoc_md3755"></a>
 14. Producer-Consumer Pattern</h2>
 <p><b>Purpose</b>: Decouple production and consumption of data with buffering.</p>
 <p><b>Why Chosen</b>: Essential for async message processing and work distribution.</p>
@@ -1157,7 +1161,7 @@ Concurrency Patterns</h1>
 <div class="line">        <span class="keywordflow">return</span> item;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> <a class="code hl_define" href="../../da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a>() {</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/d61/namespacenetwork__system_1_1compat.html#a0fe0715fe4254ad45fca04d53d2ad574">shutdown</a>() {</div>
 <div class="line">        shutdown_ = <span class="keyword">true</span>;</div>
 <div class="line">        not_empty_.notify_all();</div>
 <div class="line">        not_full_.notify_all();</div>
@@ -1165,14 +1169,14 @@ Concurrency Patterns</h1>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Producer</span></div>
-<div class="line"><span class="keywordtype">void</span> producer(ProducerConsumerQueue&lt;Message&gt;&amp; queue) {</div>
+<div class="line"><span class="keywordtype">void</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a85c35f5354bb46fdd8f4e39a0aa37c9eaf18122ddebc4341b4ed758b3f0817da8">producer</a>(ProducerConsumerQueue&lt;Message&gt;&amp; queue) {</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 1000; ++i) {</div>
 <div class="line">        queue.produce(create_message(i));</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Consumer</span></div>
-<div class="line"><span class="keywordtype">void</span> consumer(ProducerConsumerQueue&lt;Message&gt;&amp; queue) {</div>
+<div class="line"><span class="keywordtype">void</span> <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a85c35f5354bb46fdd8f4e39a0aa37c9ea1005b14bd29466723ace30d26f602f5b">consumer</a>(ProducerConsumerQueue&lt;Message&gt;&amp; queue) {</div>
 <div class="line">    <span class="keywordflow">while</span> (<span class="keyword">auto</span> msg = queue.consume()) {</div>
 <div class="line">        process_message(*msg);</div>
 <div class="line">    }</div>
@@ -1190,13 +1194,15 @@ Concurrency Patterns</h1>
 <div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 4; ++i) {</div>
 <div class="line">    consumers.emplace_back(consumer, std::ref(queue));</div>
 <div class="line">}</div>
+<div class="ttc" id="anamespacemonitoring__system_html_a85c35f5354bb46fdd8f4e39a0aa37c9ea1005b14bd29466723ace30d26f602f5b"><div class="ttname"><a href="../../de/d3f/namespacemonitoring__system.html#a85c35f5354bb46fdd8f4e39a0aa37c9ea1005b14bd29466723ace30d26f602f5b">monitoring_system::otel_span_kind::consumer</a></div><div class="ttdeci">@ consumer</div></div>
+<div class="ttc" id="anamespacemonitoring__system_html_a85c35f5354bb46fdd8f4e39a0aa37c9eaf18122ddebc4341b4ed758b3f0817da8"><div class="ttname"><a href="../../de/d3f/namespacemonitoring__system.html#a85c35f5354bb46fdd8f4e39a0aa37c9eaf18122ddebc4341b4ed758b3f0817da8">monitoring_system::otel_span_kind::producer</a></div><div class="ttdeci">@ producer</div></div>
 </div><!-- fragment --><p><b>Usage in System</b>:</p><ul>
 <li>Message queue implementation</li>
 <li>Work distribution</li>
 <li>Async I/O buffering</li>
 <li>Log message processing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1791"></a>
+<h2><a class="anchor" id="autotoc_md3756"></a>
 15. Thread Pool Pattern</h2>
 <p><b>Purpose</b>: Reuse fixed number of threads for executing tasks.</p>
 <p><b>Why Chosen</b>: Reduces thread creation overhead and controls resource usage.</p>
@@ -1218,11 +1224,11 @@ Concurrency Patterns</h1>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    ~ThreadPool() {</div>
-<div class="line">        <a class="code hl_define" href="../../da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a>();</div>
+<div class="line">        <a class="code hl_function" href="../../d5/d61/namespacenetwork__system_1_1compat.html#a0fe0715fe4254ad45fca04d53d2ad574">shutdown</a>();</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... <a class="code hl_function" href="../../d7/d0d/mpmc__performance__test_8cpp.html#a05bf0dd7b05fdf8364c327c819f7914c">Args</a>&gt;</div>
-<div class="line">    <span class="keyword">auto</span> submit(F&amp;&amp; f, <a class="code hl_function" href="../../d7/d0d/mpmc__performance__test_8cpp.html#a05bf0dd7b05fdf8364c327c819f7914c">Args</a>&amp;&amp;... args) {</div>
+<div class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... <a class="code hl_function" href="../../db/da4/batch__processing__benchmark_8cpp.html#a7fa8f8493d40b59edcf1a65c72de4c03">Args</a>&gt;</div>
+<div class="line">    <span class="keyword">auto</span> submit(F&amp;&amp; f, <a class="code hl_function" href="../../db/da4/batch__processing__benchmark_8cpp.html#a7fa8f8493d40b59edcf1a65c72de4c03">Args</a>&amp;&amp;... args) {</div>
 <div class="line">        <span class="keyword">using </span>ReturnType = <span class="keyword">decltype</span>(f(args...));</div>
 <div class="line"> </div>
 <div class="line">        <span class="keyword">auto</span> <a class="code hl_struct" href="../../db/da2/structtask.html">task</a> = std::make_shared&lt;std::packaged_task&lt;ReturnType()&gt;&gt;(</div>
@@ -1284,7 +1290,7 @@ Concurrency Patterns</h1>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> <a class="code hl_define" href="../../da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a>() {</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/d61/namespacenetwork__system_1_1compat.html#a0fe0715fe4254ad45fca04d53d2ad574">shutdown</a>() {</div>
 <div class="line">        stop_ = <span class="keyword">true</span>;</div>
 <div class="line">        condition_.notify_all();</div>
 <div class="line"> </div>
@@ -1295,7 +1301,7 @@ Concurrency Patterns</h1>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-<div class="ttc" id="ampmc__performance__test_8cpp_html_a05bf0dd7b05fdf8364c327c819f7914c"><div class="ttname"><a href="../../d7/d0d/mpmc__performance__test_8cpp.html#a05bf0dd7b05fdf8364c327c819f7914c">Args</a></div><div class="ttdeci">Args({2, 2, 5000}) -&gt; Args({4, 4, 2500}) -&gt;Args({8, 8, 1250})</div></div>
+<div class="ttc" id="abatch__processing__benchmark_8cpp_html_a7fa8f8493d40b59edcf1a65c72de4c03"><div class="ttname"><a href="../../db/da4/batch__processing__benchmark_8cpp.html#a7fa8f8493d40b59edcf1a65c72de4c03">Args</a></div><div class="ttdeci">Args({0, 0}) -&gt; Args({1, 10}) -&gt;Args({1, 50}) -&gt;Args({1, 100}) -&gt;Args({1, 500})</div></div>
 <div class="ttc" id="astructtask_html"><div class="ttname"><a href="../../db/da2/structtask.html">task</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/daa/distributed__worker_8cpp_source.html#l00033">distributed_worker.cpp:33</a></div></div>
 </div><!-- fragment --><p><b>Usage in System</b>:</p><ul>
 <li>Message processing workers</li>
@@ -1303,9 +1309,9 @@ Concurrency Patterns</h1>
 <li>Network I/O handling</li>
 <li>Background tasks</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1792"></a>
+<h1><a class="anchor" id="autotoc_md3757"></a>
 Architectural Patterns</h1>
-<h2><a class="anchor" id="autotoc_md1793"></a>
+<h2><a class="anchor" id="autotoc_md3758"></a>
 16. Microkernel Pattern</h2>
 <p><b>Purpose</b>: Separate minimal core functionality from extended features via plugins.</p>
 <p><b>Why Chosen</b>: Allows extensible system with pluggable components.</p>
@@ -1342,7 +1348,7 @@ Architectural Patterns</h1>
 <div class="line"><span class="keyword">class </span>IPlugin {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <span class="keyword">virtual</span> std::string name() <span class="keyword">const</span> = 0;</div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> initialize(MessageKernel* kernel) = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/d61/namespacenetwork__system_1_1compat.html#aa32c397f3c423cea39b8accc6bf954c9">initialize</a>(MessageKernel* kernel) = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> can_handle(<span class="keyword">const</span> Message&amp; msg) = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle(Message&amp; msg) = 0;</div>
 <div class="line">};</div>
@@ -1353,7 +1359,7 @@ Architectural Patterns</h1>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    std::string name()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;logging&quot;</span>; }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> initialize(MessageKernel* kernel)<span class="keyword"> override </span>{</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/d61/namespacenetwork__system_1_1compat.html#aa32c397f3c423cea39b8accc6bf954c9">initialize</a>(MessageKernel* kernel)<span class="keyword"> override </span>{</div>
 <div class="line">        kernel_ = kernel;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
@@ -1371,7 +1377,7 @@ Architectural Patterns</h1>
 <li>Protocol handlers</li>
 <li>Custom processors</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1794"></a>
+<h2><a class="anchor" id="autotoc_md3759"></a>
 17. Event-Driven Architecture</h2>
 <p><b>Purpose</b>: System components communicate through events rather than direct calls.</p>
 <p><b>Why Chosen</b>: Enables loose coupling and scalable distributed systems.</p>
@@ -1394,7 +1400,7 @@ Architectural Patterns</h1>
 <div class="line">                         std::function&lt;<span class="keywordtype">void</span>(<span class="keyword">const</span> Event&amp;)&gt; handler,</div>
 <div class="line">                         Priority priority = Priority::NORMAL) {</div>
 <div class="line">        std::lock_guard&lt;std::mutex&gt; lock(mutex_);</div>
-<div class="line">        handlers_.emplace(event_type, EventHandler{event_type, handler, <a class="code hl_enumvalue" href="../../d8/d98/namespacethread__pool__module.html#add8b8e5f5fd0f12965fb6fdda6b22355ab988295c268025b49dfb3df26171ddc3">priority</a>});</div>
+<div class="line">        handlers_.emplace(event_type, EventHandler{event_type, handler, <a class="code hl_enumvalue" href="../../da/dcc/namespacekcenon_1_1thread.html#a87ddb0b6e2c53f951d7bab5a0eab923aab988295c268025b49dfb3df26171ddc3">priority</a>});</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordtype">void</span> emit(<span class="keyword">const</span> Event&amp; event) {</div>
@@ -1439,14 +1445,14 @@ Architectural Patterns</h1>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-<div class="ttc" id="anamespacethread__pool__module_html_add8b8e5f5fd0f12965fb6fdda6b22355ab988295c268025b49dfb3df26171ddc3"><div class="ttname"><a href="../../d8/d98/namespacethread__pool__module.html#add8b8e5f5fd0f12965fb6fdda6b22355ab988295c268025b49dfb3df26171ddc3">thread_pool_module::scheduling_policy::priority</a></div><div class="ttdeci">@ priority</div><div class="ttdoc">Priority-based scheduling.</div></div>
+<div class="ttc" id="anamespacekcenon_1_1thread_html_a87ddb0b6e2c53f951d7bab5a0eab923aab988295c268025b49dfb3df26171ddc3"><div class="ttname"><a href="../../da/dcc/namespacekcenon_1_1thread.html#a87ddb0b6e2c53f951d7bab5a0eab923aab988295c268025b49dfb3df26171ddc3">kcenon::thread::scheduling_policy::priority</a></div><div class="ttdeci">@ priority</div><div class="ttdoc">Priority-based scheduling.</div></div>
 </div><!-- fragment --><p><b>Usage in System</b>:</p><ul>
 <li>Core messaging infrastructure</li>
 <li>System event handling</li>
 <li>Async processing</li>
 <li>Service communication</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1795"></a>
+<h1><a class="anchor" id="autotoc_md3760"></a>
 Summary</h1>
 <p>The Messaging System leverages these design patterns to achieve:</p>
 <ol type="1">

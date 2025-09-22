@@ -1,0 +1,17 @@
+<map id="IntegrationTestBase" name="IntegrationTestBase">
+<area shape="rect" id="Node000001" title=" " alt="" coords="155,129,305,155"/>
+<area shape="rect" id="Node000003" href="$d5/dba/classConcurrentOperationsIntegrationTest.html" title=" " alt="" coords="353,5,615,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="250,117,294,77,322,57,352,40,384,28,386,33,354,44,325,61,298,81,254,121"/>
+<area shape="rect" id="Node000004" href="$d7/d8a/classErrorHandlingIntegrationTest.html" title=" " alt="" coords="380,55,588,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="269,121,353,89,399,77,401,83,354,94,271,126"/>
+<area shape="rect" id="Node000005" href="$db/db0/classFullSystemIntegrationTest.html" title=" " alt="" coords="389,104,579,129"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="319,130,388,123,389,129,319,136"/>
+<area shape="rect" id="Node000006" href="$de/d81/classORMSecurityIntegrationTest.html" title=" " alt="" coords="383,153,585,179"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="319,148,383,154,382,159,318,153"/>
+<area shape="rect" id="Node000007" href="$dd/d6e/classPerformanceAsyncIntegrationTest.html" title=" " alt="" coords="363,203,605,228"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="272,158,354,189,401,200,400,205,353,194,270,163"/>
+<area shape="rect" id="Node000008" href="$d3/d9d/classSecurityMonitoringIntegrationTest.html" title=" " alt="" coords="363,252,605,277"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="254,163,298,202,325,222,354,238,386,249,384,254,352,243,322,226,295,206,251,167"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,129,107,155"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,139,154,139,154,145,120,145"/>
+</map>

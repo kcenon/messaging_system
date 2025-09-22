@@ -1,0 +1,25 @@
+<map id="libraries/thread_system/unittest/typed_thread_pool_test/typed_thread_pool_error_test.cpp" name="libraries/thread_system/unittest/typed_thread_pool_test/typed_thread_pool_error_test.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="219,5,397,75"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,130,109,155"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="225,77,100,127,98,122,223,72"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="134,123,293,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="278,77,243,114,239,110,274,73"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="317,123,491,163"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="342,73,378,111,374,114,339,77"/>
+<area shape="rect" id="Node000005" href="$de/d01/include_2kcenon_2thread_2core_2error__handling_8h.html" title="Modern error handling for the thread system." alt="" coords="516,123,663,163"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="398,71,525,116,523,121,397,76"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="243,211,301,236"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="517,164,316,213,314,208,515,158"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="325,211,400,236"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="536,165,410,209,408,204,534,160"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="425,211,517,236"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="562,165,501,205,498,201,559,161"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="541,211,638,236"/>
+<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="592,163,592,197,587,197,587,163"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="662,211,738,236"/>
+<area shape="poly" id="edge9_Node000005_Node000010" title=" " alt="" coords="618,161,674,200,671,205,615,165"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="762,211,849,236"/>
+<area shape="poly" id="edge10_Node000005_Node000011" title=" " alt="" coords="642,160,762,203,760,208,640,165"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="873,211,959,236"/>
+<area shape="poly" id="edge11_Node000005_Node000012" title=" " alt="" coords="664,159,860,206,859,211,662,164"/>
+</map>

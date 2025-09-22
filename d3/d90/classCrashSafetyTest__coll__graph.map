@@ -1,0 +1,9 @@
+<map id="CrashSafetyTest" name="CrashSafetyTest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="14,183,141,208"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,95,107,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,133,77,181,72,183,60,134"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="131,95,218,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,131,93,184,89,180,150,127"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="105,5,244,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="177,59,177,94,172,94,172,59"/>
+</map>

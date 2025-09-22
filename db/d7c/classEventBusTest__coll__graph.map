@@ -1,0 +1,15 @@
+<map id="EventBusTest" name="EventBusTest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="23,328,132,353"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,233,107,258"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="64,271,77,327,72,328,59,272"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="131,225,336,265"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="191,275,98,330,95,326,189,270"/>
+<area shape="rect" id="Node000004" href="$dd/d62/classmonitoring__system_1_1event__bus.html" title="Thread&#45;safe event bus implementation." alt="" coords="49,108,205,148"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="156,157,218,223,214,227,152,160"/>
+<area shape="rect" id="Node000005" href="$d5/d1d/classmonitoring__system_1_1interface__event__bus.html" title="Pure virtual interface for event bus implementation." alt="" coords="49,5,205,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="129,59,129,108,124,108,124,59"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="229,115,387,141"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="295,153,248,227,243,224,291,151"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="289,13,327,38"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="311,52,311,115,305,115,305,52"/>
+</map>

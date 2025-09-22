@@ -1,3 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d0/d8f/classLockFreeStack.html" title=" " alt="" coords="5,5,121,31"/>
+<area shape="rect" id="Node000000" href="$d7/dfc/classkcenon_1_1logger_1_1log__formatter__interface.html" title="Interface for log formatters." alt="" coords="5,69,161,109"/>
+<area shape="rect" id="Node000001" href="$d4/dab/classkcenon_1_1logger_1_1base__formatter.html" title="Base implementation for log formatters." alt="" coords="209,69,367,109"/>
+<area shape="poly" id="edge39_Node000000_Node000001" title=" " alt="" coords="175,87,209,87,209,92,175,92"/>
+<area shape="rect" id="Node000002" href="$d2/d4b/classkcenon_1_1logger_1_1compact__formatter.html" title="Compact formatter for minimal output." alt="" coords="415,5,597,45"/>
+<area shape="poly" id="edge40_Node000001_Node000002" title=" " alt="" coords="369,63,437,43,438,48,371,68"/>
+<area shape="rect" id="Node000003" href="$d5/d14/classkcenon_1_1logger_1_1json__formatter.html" title="JSON formatter for structured logging." alt="" coords="429,69,583,109"/>
+<area shape="poly" id="edge41_Node000001_Node000003" title=" " alt="" coords="381,87,429,87,429,92,381,92"/>
+<area shape="rect" id="Node000004" href="$dd/dfb/classkcenon_1_1logger_1_1plain__formatter.html" title="Simple plain text formatter." alt="" coords="427,133,585,173"/>
+<area shape="poly" id="edge42_Node000001_Node000004" title=" " alt="" coords="371,111,438,131,437,136,369,116"/>
 </map>

@@ -1,0 +1,9 @@
+<map id="monitoring_system::metric_query_engine::query_stats" name="monitoring_system::metric_query_engine::query_stats">
+<area shape="rect" id="Node000001" title="Get query statistics." alt="" coords="15,299,174,353"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,196,184,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,249,97,299,92,299,92,249"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="30,93,159,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,133,97,196,92,196,92,133"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="75,5,114,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="97,45,97,93,92,93,92,45"/>
+</map>

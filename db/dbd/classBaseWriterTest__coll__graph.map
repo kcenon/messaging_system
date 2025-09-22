@@ -1,21 +1,21 @@
 <map id="BaseWriterTest" name="BaseWriterTest">
-<area shape="rect" id="Node000001" title=" " alt="" coords="123,373,243,399"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="111,285,213,311"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,323,183,372,178,373,166,325"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="237,285,461,311"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="316,319,207,375,205,371,313,315"/>
-<area shape="rect" id="Node000004" href="$d0/df9/classMockWriter.html" title=" " alt="" coords="212,197,309,223"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="284,230,338,283,335,287,280,234"/>
-<area shape="rect" id="Node000005" href="$d0/d97/classlogger__module_1_1base__writer.html" title="Base class for all log writers." alt="" coords="5,95,164,135"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="133,139,240,195,238,200,131,143"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="188,102,275,127"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="221,140,217,157,219,172,228,185,241,195,237,199,224,189,214,174,211,156,216,139"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="162,5,301,45"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="234,59,234,102,229,102,229,59"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="313,102,395,127"/>
-<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="348,141,339,159,327,175,310,189,291,199,289,195,307,185,323,171,334,156,343,139"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="357,197,514,223"/>
-<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="416,234,363,287,359,283,412,230"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="440,102,479,127"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="456,141,441,198,436,197,450,140"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="63,373,183,399"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="51,285,152,311"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,323,122,372,117,373,105,325"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="176,285,400,311"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="255,319,146,375,144,371,252,315"/>
+<area shape="rect" id="Node000004" href="$d0/df9/classMockWriter.html" title=" " alt="" coords="151,197,249,223"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="223,230,278,283,274,287,220,234"/>
+<area shape="rect" id="Node000005" href="$d0/dc9/classkcenon_1_1logger_1_1base__writer.html" title="Abstract base class for all log output writers." alt="" coords="5,95,163,135"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="120,141,187,195,184,199,116,145"/>
+<area shape="rect" id="Node000006" href="$dd/d95/classkcenon_1_1logger_1_1log__writer__interface.html" title="Interface for log writers." alt="" coords="5,5,152,45"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="83,59,86,94,80,95,78,59"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="197,102,283,127"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="232,141,207,198,202,196,227,139"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="176,5,315,45"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="246,59,243,102,238,102,241,59"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="273,197,431,223"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="337,235,299,286,295,283,333,232"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="333,102,371,127"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="355,141,355,197,349,197,349,141"/>
 </map>

@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['layer_20messaging_20system_0',['Application Layer - Messaging System',['../index.html',1,'']]],
-  ['logger_20system_1',['logger system',['../d3/da5/md_libraries_2logger__system_2CONTRIBUTING.html',1,'Contributing to Logger System'],['../d7/de1/md_libraries_2logger__system_2docs_2getting-started.html',1,'Getting Started with Logger System']]],
-  ['logger_20system_20api_20reference_2',['Logger System API Reference',['../da/dc7/md_libraries_2logger__system_2docs_2api-reference.html',1,'']]],
-  ['logger_20system_20architecture_3',['Logger System Architecture',['../d5/d03/md_libraries_2logger__system_2docs_2architecture.html',1,'']]],
-  ['logger_20system_20performance_20guide_4',['Logger System Performance Guide',['../de/d4f/md_libraries_2logger__system_2docs_2performance.html',1,'']]]
+  ['history_0',['📜 Database System - Development History',['../df/df7/md_libraries_2database__system_2CHANGELOG.html',1,'']]]
 ];

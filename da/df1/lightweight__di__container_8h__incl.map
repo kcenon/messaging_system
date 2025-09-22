@@ -1,0 +1,26 @@
+<map id="libraries/logger_system/src/impl/di/lightweight_di_container.h" name="libraries/logger_system/src/impl/di/lightweight_di_container.h">
+<area shape="rect" id="Node000001" title="Lightweight dependency injection container implementation." alt="" coords="279,5,454,60"/>
+<area shape="rect" id="Node000002" href="$d1/d6a/src_2impl_2di_2di__container__interface_8h.html" title="Abstract interface for dependency injection container." alt="" coords="101,108,280,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="314,62,228,104,225,100,312,58"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="305,108,429,133"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="369,60,369,94,364,94,364,60"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="453,108,517,133"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="404,58,460,98,457,102,401,62"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,189,83,214"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="170,136,79,184,77,180,168,131"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="107,189,194,214"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="187,135,165,178,160,175,182,132"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="181,269,240,295"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="197,133,208,181,213,255,208,256,203,182,192,134"/>
+<area shape="rect" id="Node000006" href="$d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h.html" title=" " alt="" coords="311,181,457,221"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="220,131,326,174,324,179,218,136"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="344,224,250,266,248,261,341,219"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="265,269,351,295"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="368,223,331,261,327,257,364,220"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="375,269,435,295"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="392,221,401,255,396,256,387,222"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="460,269,535,295"/>
+<area shape="poly" id="edge9_Node000006_Node000009" title=" " alt="" coords="413,219,471,259,468,263,410,224"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="559,269,627,295"/>
+<area shape="poly" id="edge10_Node000006_Node000010" title=" " alt="" coords="435,219,551,262,549,267,433,224"/>
+</map>

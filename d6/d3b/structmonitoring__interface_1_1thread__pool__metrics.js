@@ -1,12 +1,9 @@
 var structmonitoring__interface_1_1thread__pool__metrics =
 [
     [ "~thread_pool_metrics", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#a303c441cc66a7ebbf1562853230ba9ae", null ],
-    [ "~thread_pool_metrics", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#a303c441cc66a7ebbf1562853230ba9ae", null ],
-    [ "~thread_pool_metrics", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#a303c441cc66a7ebbf1562853230ba9ae", null ],
     [ "average_latency_ns", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#a771c59e62fa4edc7a83973461a32bce9", null ],
     [ "idle_threads", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#a658c8655b491367af07d78d475ab4989", null ],
     [ "jobs_completed", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#a217e5aa6aa3a89d329f4e074e17af75f", null ],
-    [ "jobs_failed", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#ab6d1e83391a0302b7ca52f99ebc04380", null ],
     [ "jobs_pending", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#aeafd7b1f23ea5884d37e90b396c5d47c", null ],
     [ "pool_instance_id", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#a7a59a41e22694c2a9b0dd051a7d62b73", null ],
     [ "pool_name", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html#a90b9b324a58a82ec57c16c02e40dd23a", null ],

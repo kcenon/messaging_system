@@ -1,0 +1,7 @@
+<map id="kcenon::logger::batch_writer" name="kcenon::logger::batch_writer">
+<area shape="rect" id="Node000001" title="Batch writer that accumulates log entries and writes them in batches." alt="" coords="5,181,168,221"/>
+<area shape="rect" id="Node000002" href="$d0/dc9/classkcenon_1_1logger_1_1base__writer.html" title="Abstract base class for all log output writers." alt="" coords="8,93,165,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,147,89,181,84,181,84,147"/>
+<area shape="rect" id="Node000003" href="$dd/d95/classkcenon_1_1logger_1_1log__writer__interface.html" title="Interface for log writers." alt="" coords="13,5,160,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,59,89,93,84,93,84,59"/>
+</map>

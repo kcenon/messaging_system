@@ -1,0 +1,11 @@
+<map id="monitoring_system::logging_stats" name="monitoring_system::logging_stats">
+<area shape="rect" id="Node000001" title="Logging system statistics." alt="" coords="6,299,162,339"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,196,163,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,250,87,299,81,299,81,250"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="8,93,160,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="87,147,87,196,81,196,81,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="33,5,71,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="52,44,56,68,69,92,64,94,51,70,47,45"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="98,5,137,31"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="111,44,93,94,88,92,106,43"/>
+</map>

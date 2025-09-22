@@ -1,0 +1,5 @@
+<map id="monitoring_system::health_check_event" name="monitoring_system::health_check_event">
+<area shape="rect" id="Node000001" title="Event for health check results." alt="" coords="5,93,161,133"/>
+<area shape="rect" id="Node000002" href="$d6/d1e/classmonitoring__system_1_1event__base.html" title="Base class for all events in the system." alt="" coords="5,5,161,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,59,86,93,81,93,81,59"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="libraries/container_system/integration/messaging_integration.h" name="libraries/container_system/integration/messaging_integration.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="610,5,797,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,196,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="610,50,209,111,179,116,178,110,208,105,609,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="221,108,383,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="610,58,397,107,396,102,609,53"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="407,108,594,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="647,62,555,105,553,100,645,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="618,108,789,148"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="706,60,706,94,701,94,701,60"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="813,115,900,141"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="748,58,828,106,825,111,745,62"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="925,115,1002,141"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="779,58,914,105,920,108,918,113,912,111,777,63"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="1026,115,1093,141"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="797,50,902,74,1015,105,1022,108,1020,113,1013,111,901,79,796,55"/>
+</map>

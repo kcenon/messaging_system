@@ -1,0 +1,25 @@
+<map id="libraries/network_system/include/network_system/integration/container_integration.h" name="libraries/network_system/include/network_system/integration/container_integration.h">
+<area shape="rect" id="Node000001" title="Container system integration interface for network_system." alt="" coords="722,5,974,60"/>
+<area shape="rect" id="Node000002" href="$dd/ddf/network__system_2include_2network__system_2compatibility_8h.html" title="Compatibility layer for messaging_system migration." alt="" coords="755,108,941,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="851,74,851,108,845,108,845,74"/>
+<area shape="rect" id="Node000003" href="$d1/d6b/network__system_8h.html" title="Main header for the Network System." alt="" coords="624,211,811,265"/>
+<area shape="poly" id="edge11_Node000001_Node000003" title=" " alt="" coords="785,70,763,88,745,109,733,134,725,161,720,211,714,210,720,160,728,132,740,107,759,84,782,66"/>
+<area shape="rect" id="Node000011" href="$de/d0a/container__integration_8cpp.html" title="Implementation of container system integration." alt="" coords="965,108,1152,163"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="916,63,1005,106,1003,110,914,68"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="805,173,753,213,750,208,802,169"/>
+<area shape="rect" id="Node000006" href="$da/dad/test__integration_8cpp.html" title="Integration tests for network_system." alt="" coords="968,313,1155,368"/>
+<area shape="poly" id="edge10_Node000002_Node000006" title=" " alt="" coords="849,176,856,222,864,244,877,264,891,276,915,288,974,311,972,316,912,293,889,280,873,267,859,246,851,223,844,177"/>
+<area shape="rect" id="Node000009" href="$de/d01/legacy__compatibility_8cpp.html" title="Example of using network_system with legacy messaging_system code." alt="" coords="886,211,1151,265"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="905,167,975,208,973,213,903,172"/>
+<area shape="rect" id="Node000010" href="$d8/d82/test__compatibility_8cpp.html" title="Enhanced compatibility tests for network_system." alt="" coords="1176,211,1363,265"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="955,160,1165,208,1176,211,1175,216,1163,213,954,166"/>
+<area shape="rect" id="Node000004" href="$df/d35/modern__usage_8cpp.html" title="Example of using network_system with modern API." alt="" coords="5,313,232,368"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="611,257,244,316,233,318,232,313,244,311,610,252"/>
+<area shape="rect" id="Node000005" href="$d9/d8b/test__e2e_8cpp.html" title="End&#45;to&#45;end tests for network_system." alt="" coords="256,313,443,368"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="612,271,444,316,443,311,610,266"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="821,267,972,311,971,316,819,272"/>
+<area shape="rect" id="Node000007" href="$d9/d8a/benchmark_8cpp.html" title="Performance benchmarks for network_system." alt="" coords="467,321,717,361"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="676,276,617,323,614,318,672,272"/>
+<area shape="rect" id="Node000008" href="$da/d7f/network__system_2tests_2stress_2stress__test_8cpp.html" title="Stress testing for network_system." alt="" coords="741,321,944,361"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="762,272,821,318,817,323,759,276"/>
+</map>

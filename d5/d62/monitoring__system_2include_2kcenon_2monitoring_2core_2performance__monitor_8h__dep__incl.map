@@ -1,0 +1,21 @@
+<map id="libraries/monitoring_system/include/kcenon/monitoring/core/performance_monitor.h" name="libraries/monitoring_system/include/kcenon/monitoring/core/performance_monitor.h">
+<area shape="rect" id="Node000001" title="Performance monitoring and profiling implementation." alt="" coords="471,5,687,75"/>
+<area shape="rect" id="Node000002" href="$df/d39/monitor__adapter_8h.html" title=" " alt="" coords="5,123,219,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="458,71,231,125,219,128,218,123,230,120,457,66"/>
+<area shape="rect" id="Node000003" href="$de/df8/monitoring__system_2include_2monitoring_2performance_2performance__monitor_8h.html" title=" " alt="" coords="243,123,445,192"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="499,83,414,125,411,120,497,78"/>
+<area shape="rect" id="Node000007" href="$d9/d77/monitoring__system_2src_2core_2performance__monitor_8cpp.html" title="Performance monitoring implementation." alt="" coords="469,130,688,185"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="581,89,581,130,576,130,576,89"/>
+<area shape="rect" id="Node000008" href="$d1/d4f/src_2impl_2adaptive__monitor_8h.html" title="Adaptive monitoring implementation that adjusts behavior based on system load." alt="" coords="712,130,907,185"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="659,79,758,128,756,132,657,83"/>
+<area shape="rect" id="Node000010" href="$dd/dd2/test__performance__monitoring_8cpp.html" title="Unit tests for performance monitoring functionality." alt="" coords="931,130,1163,185"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="701,67,919,120,948,127,947,133,918,125,699,72"/>
+<area shape="rect" id="Node000004" href="$d0/d97/basic__monitoring__example_8cpp.html" title="Basic example demonstrating simple monitoring setup." alt="" coords="19,240,210,295"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="262,200,171,242,169,238,259,195"/>
+<area shape="rect" id="Node000005" href="$d1/d9b/test__integration__e2e_8cpp.html" title="End&#45;to&#45;end integration tests for the monitoring system." alt="" coords="234,240,454,295"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="347,206,347,240,341,240,341,206"/>
+<area shape="rect" id="Node000006" href="$de/da5/test__stress__performance_8cpp.html" title="Stress testing for the monitoring system." alt="" coords="478,240,666,295"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="428,195,518,238,516,242,426,200"/>
+<area shape="rect" id="Node000009" href="$da/d4a/adaptive__monitor_8cpp.html" title="Adaptive monitoring implementation." alt="" coords="712,240,907,295"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="812,199,812,240,807,240,807,199"/>
+</map>

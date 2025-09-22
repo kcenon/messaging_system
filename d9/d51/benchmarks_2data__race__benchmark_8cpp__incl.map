@@ -1,0 +1,25 @@
+<map id="libraries/thread_system/benchmarks/data_race_benchmark.cpp" name="libraries/thread_system/benchmarks/data_race_benchmark.cpp">
+<area shape="rect" id="Node000001" title="Performance benchmark to measure the impact of data race fixes." alt="" coords="964,5,1140,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,173,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="964,41,627,64,410,84,187,111,187,105,409,79,626,59,964,36"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="197,108,365,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="964,44,706,69,380,110,379,105,705,64,964,39"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="389,108,584,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="964,51,598,110,597,105,963,45"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="608,108,773,148"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="964,59,777,107,776,102,963,54"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="798,108,935,148"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1001,62,918,104,915,99,999,58"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="960,115,1144,141"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1055,60,1055,101,1049,101,1049,60"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="1168,115,1232,141"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1095,58,1171,106,1169,110,1092,62"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1257,115,1319,141"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1123,58,1245,106,1250,108,1248,112,1243,110,1121,63"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1344,115,1411,141"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="1141,52,1234,76,1333,105,1339,108,1338,113,1331,111,1233,81,1140,57"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1435,115,1501,141"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="1141,44,1275,68,1423,105,1431,108,1429,113,1422,111,1274,74,1140,49"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="1525,115,1597,141"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="1141,40,1315,64,1415,82,1514,105,1523,108,1521,113,1513,111,1414,87,1314,69,1140,45"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="libraries/logger_system/src/impl/monitoring/basic_monitor.h" name="libraries/logger_system/src/impl/monitoring/basic_monitor.h">
+<area shape="rect" id="Node000001" title="Basic monitoring implementation with no external dependencies." alt="" coords="24,5,215,60"/>
+<area shape="rect" id="Node000002" href="$d0/d50/src_2impl_2monitoring_2monitoring__factory_8h.html" title="Factory for creating appropriate monitoring implementations." alt="" coords="5,211,233,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,73,78,109,73,135,78,162,88,187,101,209,97,212,83,189,73,163,68,135,73,107,89,71"/>
+<area shape="rect" id="Node000003" href="$d3/d9b/thread__system__monitor__adapter_8h.html" title="Adapter for thread_system&#39;s monitoring capabilities." alt="" coords="87,108,290,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="148,70,173,106,168,109,143,73"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="165,176,140,212,135,209,160,173"/>
+</map>

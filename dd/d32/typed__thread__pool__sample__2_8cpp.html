@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/thread_system/samples/typed_thread_pool_sample_2/typed_thread_pool_sample_2.cpp File Reference</title>
+<title>Messaging System: libraries/thread_system/examples/typed_thread_pool_sample_2/typed_thread_pool_sample_2.cpp File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -97,40 +97,115 @@ $(document).ready(function(){initNavTree('dd/d32/typed__thread__pool__sample__2_
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
-<code>#include &quot;logger/core/logger.h&quot;</code><br />
-<code>#include &quot;utilities/core/formatter.h&quot;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
+<code>#include &quot;<a class="el" href="../../d1/d8c/logger_8h_source.html">logger/core/logger.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../da/d4a/container__system_2utilities_2core_2formatter_8h_source.html">utilities/core/formatter.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../df/dfe/test__type_8h_source.html">test_type.h</a>&quot;</code><br />
 <code>#include &quot;typed_thread_pool/pool/typed_thread_pool.h&quot;</code><br />
 <code>#include &lt;fmt/format.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for typed_thread_pool_sample_2.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d2/d09/typed__thread__pool__sample__2_8cpp__incl.png" border="0" usemap="#alibraries_2thread__system_2samples_2typed__thread__pool__sample__2_2typed__thread__pool__sample__2_8cpp" alt=""/></div>
-<map name="alibraries_2thread__system_2samples_2typed__thread__pool__sample__2_2typed__thread__pool__sample__2_8cpp" id="alibraries_2thread__system_2samples_2typed__thread__pool__sample__2_2typed__thread__pool__sample__2_8cpp">
-<area shape="rect" title=" " alt="" coords="259,5,476,75"/>
-<area shape="rect" title=" " alt="" coords="31,130,111,155"/>
-<area shape="poly" title=" " alt="" coords="266,77,124,125,117,128,115,123,122,120,264,72"/>
-<area shape="rect" title=" " alt="" coords="136,130,287,155"/>
-<area shape="poly" title=" " alt="" coords="316,77,242,125,239,120,314,73"/>
-<area shape="rect" title=" " alt="" coords="5,218,185,243"/>
-<area shape="poly" title=" " alt="" coords="358,76,336,122,319,145,300,165,275,179,239,193,157,217,155,212,237,188,273,174,296,161,315,141,331,119,354,73"/>
-<area shape="rect" href="../../df/dfe/test__type_8h.html" title=" " alt="" coords="363,130,457,155"/>
-<area shape="poly" title=" " alt="" coords="384,74,402,116,397,118,379,76"/>
-<area shape="rect" title=" " alt="" coords="481,123,656,163"/>
-<area shape="poly" title=" " alt="" coords="436,73,520,114,517,119,434,77"/>
-<area shape="rect" title=" " alt="" coords="680,130,785,155"/>
-<area shape="poly" title=" " alt="" coords="477,68,669,120,682,124,680,129,668,125,476,73"/>
-<area shape="poly" title=" " alt="" coords="370,158,344,165,153,217,151,212,343,160,369,153"/>
-<area shape="rect" title=" " alt="" coords="210,211,357,251"/>
-<area shape="poly" title=" " alt="" coords="394,158,324,205,321,201,391,153"/>
-<area shape="rect" title=" " alt="" coords="381,218,439,243"/>
-<area shape="poly" title=" " alt="" coords="413,156,413,204,407,204,407,156"/>
-<area shape="rect" title=" " alt="" coords="463,218,519,243"/>
-<area shape="poly" title=" " alt="" coords="423,154,472,206,469,209,419,157"/>
-<area shape="rect" title=" " alt="" coords="543,218,610,243"/>
-<area shape="poly" title=" " alt="" coords="434,153,543,209,541,214,431,158"/>
-<area shape="rect" title=" " alt="" coords="635,218,732,243"/>
-<area shape="poly" title=" " alt="" coords="448,153,634,211,633,216,446,158"/>
+<div class="center"><img src="../../d2/d09/typed__thread__pool__sample__2_8cpp__incl.png" border="0" usemap="#alibraries_2thread__system_2examples_2typed__thread__pool__sample__2_2typed__thread__pool__sample__2_8cpp" alt=""/></div>
+<map name="alibraries_2thread__system_2examples_2typed__thread__pool__sample__2_2typed__thread__pool__sample__2_8cpp" id="alibraries_2thread__system_2examples_2typed__thread__pool__sample__2_2typed__thread__pool__sample__2_8cpp">
+<area shape="rect" title=" " alt="" coords="1802,5,2019,75"/>
+<area shape="rect" title=" " alt="" coords="5,130,85,155"/>
+<area shape="poly" title=" " alt="" coords="1802,45,1440,51,949,65,696,75,461,89,258,105,104,125,90,129,88,123,104,120,257,100,460,83,696,70,949,59,1440,46,1802,40"/>
+<area shape="rect" title=" " alt="" coords="220,387,297,412"/>
+<area shape="poly" title=" " alt="" coords="1802,45,1402,56,1143,66,874,82,618,104,397,132,307,149,233,168,180,189,162,201,150,212,140,233,139,256,146,278,159,301,195,343,233,376,229,380,191,347,154,304,141,280,134,256,135,232,146,209,159,196,178,185,232,163,306,144,396,127,618,98,874,77,1143,61,1402,50,1802,40"/>
+<area shape="rect" title=" " alt="" coords="1375,387,1441,412"/>
+<area shape="poly" title=" " alt="" coords="2020,44,2082,53,2149,67,2217,89,2280,120,2343,167,2368,193,2388,221,2400,251,2403,281,2395,311,2374,341,2359,347,2332,353,2242,364,1973,381,1455,400,1455,394,1973,376,2242,359,2331,348,2358,342,2370,337,2390,309,2398,280,2395,252,2383,224,2364,197,2339,171,2277,125,2215,94,2148,72,2081,58,2019,49"/>
+<area shape="rect" title=" " alt="" coords="160,218,224,243"/>
+<area shape="poly" title=" " alt="" coords="1802,49,1364,75,1084,97,802,125,520,156,398,177,243,213,233,216,232,211,242,208,397,172,519,151,801,120,1084,92,1364,70,1802,44"/>
+<area shape="rect" href="../../d1/d8c/logger_8h.html" title="High&#45;performance, thread&#45;safe logging system with asynchronous capabilities." alt="" coords="814,130,965,155"/>
+<area shape="poly" title=" " alt="" coords="1802,55,979,135,978,130,1802,49"/>
+<area shape="rect" href="../../da/d4a/container__system_2utilities_2core_2formatter_8h.html" title=" " alt="" coords="2138,218,2318,243"/>
+<area shape="poly" title=" " alt="" coords="1968,72,2198,209,2196,213,1966,77"/>
+<area shape="rect" title=" " alt="" coords="2254,306,2359,331"/>
+<area shape="poly" title=" " alt="" coords="2020,49,2101,66,2188,96,2230,117,2269,143,2303,173,2333,209,2341,231,2340,253,2324,295,2319,293,2335,252,2336,231,2328,212,2300,177,2265,147,2227,122,2186,101,2100,72,2019,54"/>
+<area shape="rect" href="../../df/dfe/test__type_8h.html" title=" " alt="" coords="1863,130,1958,155"/>
+<area shape="poly" title=" " alt="" coords="1913,75,1913,116,1908,116,1908,75"/>
+<area shape="rect" title=" " alt="" coords="2445,123,2619,163"/>
+<area shape="poly" title=" " alt="" coords="2020,55,2426,120,2431,121,2430,126,2425,125,2019,61"/>
+<area shape="poly" title=" " alt="" coords="814,153,500,182,356,199,310,207,288,213,261,239,249,266,246,299,249,338,255,373,250,373,244,339,241,299,244,265,257,236,285,208,308,202,355,194,499,177,814,148"/>
+<area shape="poly" title=" " alt="" coords="814,148,702,154,559,165,401,184,243,213,233,216,231,211,242,208,400,179,558,159,701,148,814,143"/>
+<area shape="rect" title=" " alt="" coords="1785,306,1847,331"/>
+<area shape="poly" title=" " alt="" coords="965,143,1125,150,1323,161,1514,180,1593,193,1652,208,1693,226,1733,249,1794,295,1791,299,1730,254,1691,231,1650,213,1591,198,1514,186,1323,167,1124,155,965,149"/>
+<area shape="rect" title=" " alt="" coords="1552,306,1619,331"/>
+<area shape="poly" title=" " alt="" coords="964,153,1095,176,1245,208,1409,255,1541,299,1539,304,1407,260,1243,213,1094,181,963,158"/>
+<area shape="rect" href="../../d5/de3/logger__system_2include_2kcenon_2logger_2interfaces_2logger__interface_8h.html" title=" " alt="" coords="798,211,981,251"/>
+<area shape="poly" title=" " alt="" coords="892,156,892,197,887,197,887,156"/>
+<area shape="rect" href="../../da/d5e/logger__types_8h.html" title="Common types and enumerations for logger system." alt="" coords="919,306,1038,331"/>
+<area shape="poly" title=" " alt="" coords="924,153,962,175,980,190,994,209,1001,231,1002,254,992,294,987,293,996,253,996,232,990,212,976,194,959,179,921,158"/>
+<area shape="rect" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h.html" title=" " alt="" coords="1121,218,1231,243"/>
+<area shape="poly" title=" " alt="" coords="929,153,1125,211,1124,217,927,158"/>
+<area shape="rect" href="../../db/dd9/logger__metrics_8h.html" title="Logger performance metrics and monitoring." alt="" coords="1455,218,1639,243"/>
+<area shape="poly" title=" " alt="" coords="965,151,1446,214,1445,219,964,156"/>
+<area shape="rect" href="../../d9/db2/include_2kcenon_2logger_2core_2di_2di__container__interface_8h.html" title="Dependency injection container interface." alt="" coords="369,306,564,331"/>
+<area shape="poly" title=" " alt="" coords="857,158,799,181,736,213,711,233,685,253,610,284,538,305,536,300,609,279,683,248,708,229,733,208,797,176,855,153"/>
+<area shape="rect" href="../../da/d24/include_2kcenon_2logger_2core_2di_2di__container__factory_8h.html" title="Factory for creating DI container instances." alt="" coords="299,218,480,243"/>
+<area shape="poly" title=" " alt="" coords="820,158,492,213,465,218,464,213,492,208,820,153"/>
+<area shape="rect" href="../../d3/d61/logger__system_2include_2kcenon_2logger_2core_2monitoring_2monitoring__interface_8h.html" title="Interface for logger monitoring and health checks." alt="" coords="588,299,756,339"/>
+<area shape="poly" title=" " alt="" coords="870,158,831,182,787,213,741,252,701,291,697,287,737,249,784,209,828,177,868,153"/>
+<area shape="rect" href="../../db/d89/include_2kcenon_2logger_2core_2monitoring_2monitoring__factory_8h.html" title="Factory for creating monitoring instances." alt="" coords="504,211,672,251"/>
+<area shape="poly" title=" " alt="" coords="849,158,668,209,667,204,848,153"/>
+<area shape="poly" title=" " alt="" coords="798,243,539,270,423,286,359,301,326,331,280,378,277,375,322,327,356,296,422,281,538,265,797,238"/>
+<area shape="rect" title=" " alt="" coords="780,306,844,331"/>
+<area shape="poly" title=" " alt="" coords="874,253,834,297,830,294,870,249"/>
+<area shape="rect" title=" " alt="" coords="997,387,1056,412"/>
+<area shape="poly" title=" " alt="" coords="890,251,892,293,898,316,909,337,925,354,944,367,985,385,983,390,941,372,921,358,904,340,893,318,887,294,885,251"/>
+<area shape="poly" title=" " alt="" coords="911,249,958,294,955,298,907,253"/>
+<area shape="poly" title=" " alt="" coords="1039,328,1361,387,1361,392,1038,333"/>
+<area shape="poly" title=" " alt="" coords="988,330,1015,374,1010,376,983,333"/>
+<area shape="poly" title=" " alt="" coords="1163,245,1103,301,1071,340,1044,376,1040,373,1067,337,1099,297,1160,242"/>
+<area shape="rect" title=" " alt="" coords="1390,306,1477,331"/>
+<area shape="poly" title=" " alt="" coords="1212,241,1380,296,1388,299,1386,304,1378,301,1210,246"/>
+<area shape="rect" title=" " alt="" coords="1114,306,1174,331"/>
+<area shape="poly" title=" " alt="" coords="1174,244,1156,294,1151,292,1169,243"/>
+<area shape="rect" title=" " alt="" coords="1199,306,1273,331"/>
+<area shape="poly" title=" " alt="" coords="1186,242,1222,293,1217,296,1182,245"/>
+<area shape="rect" title=" " alt="" coords="1298,306,1366,331"/>
+<area shape="poly" title=" " alt="" coords="1198,241,1300,297,1298,302,1196,246"/>
+<area shape="poly" title=" " alt="" coords="1569,241,1597,260,1623,283,1633,297,1639,311,1640,326,1633,340,1621,351,1604,360,1558,375,1455,395,1454,390,1556,370,1601,355,1618,346,1629,337,1634,325,1634,312,1629,300,1619,287,1593,264,1566,246"/>
+<area shape="poly" title=" " alt="" coords="1554,242,1577,292,1572,294,1549,245"/>
+<area shape="rect" title=" " alt="" coords="1693,306,1760,331"/>
+<area shape="poly" title=" " alt="" coords="1572,241,1691,298,1689,302,1570,246"/>
+<area shape="poly" title=" " alt="" coords="437,334,303,384,301,379,435,329"/>
+<area shape="poly" title=" " alt="" coords="531,329,576,336,806,368,984,390,983,396,805,373,576,341,530,334"/>
+<area shape="rect" title=" " alt="" coords="442,387,529,412"/>
+<area shape="poly" title=" " alt="" coords="472,331,482,373,477,374,467,332"/>
+<area shape="rect" title=" " alt="" coords="331,387,418,412"/>
+<area shape="poly" title=" " alt="" coords="455,334,400,380,397,376,451,329"/>
+<area shape="rect" title=" " alt="" coords="573,387,697,412"/>
+<area shape="poly" title=" " alt="" coords="492,329,599,379,597,383,490,334"/>
+<area shape="poly" title=" " alt="" coords="345,246,301,266,281,281,265,300,257,317,254,336,256,373,250,373,249,336,252,316,260,297,277,277,298,262,343,241"/>
+<area shape="poly" title=" " alt="" coords="402,242,449,294,445,297,398,245"/>
+<area shape="poly" title=" " alt="" coords="757,334,768,336,939,357,1107,374,1361,393,1360,398,1107,379,938,363,768,341,756,340"/>
+<area shape="poly" title=" " alt="" coords="757,336,984,386,983,391,755,341"/>
+<area shape="poly" title=" " alt="" coords="665,340,648,375,644,373,661,338"/>
+<area shape="poly" title=" " alt="" coords="504,251,387,278,340,291,315,301,299,317,286,336,268,374,263,372,281,333,295,313,312,296,338,286,386,273,503,246"/>
+<area shape="poly" title=" " alt="" coords="609,249,646,287,642,291,605,253"/>
+<area shape="poly" title=" " alt="" coords="2225,245,2193,293,2168,320,2137,341,2085,350,1977,360,1659,377,1070,399,1070,394,1659,372,1977,354,2084,345,2135,336,2164,316,2189,290,2220,242"/>
+<area shape="rect" title=" " alt="" coords="2049,306,2124,331"/>
+<area shape="poly" title=" " alt="" coords="2210,246,2119,301,2116,297,2208,241"/>
+<area shape="poly" title=" " alt="" coords="2241,242,2289,294,2285,297,2237,245"/>
+<area shape="poly" title=" " alt="" coords="1863,146,1760,147,1633,156,1571,164,1517,176,1473,192,1445,212,1439,221,1438,229,1445,249,1455,264,1467,272,1481,282,1492,297,1499,320,1498,330,1491,341,1469,352,1428,363,1310,379,1070,398,1069,393,1310,374,1427,357,1467,347,1488,337,1493,328,1494,320,1487,300,1477,285,1465,277,1451,268,1440,252,1433,230,1434,219,1441,209,1471,187,1515,171,1571,159,1632,151,1759,142,1863,141"/>
+<area shape="poly" title=" " alt="" coords="1864,155,1806,175,1778,191,1754,212,1742,231,1735,252,1729,293,1724,292,1730,251,1738,229,1750,209,1775,187,1804,170,1862,149"/>
+<area shape="poly" title=" " alt="" coords="1954,153,2173,212,2172,217,1953,158"/>
+<area shape="rect" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h.html" title=" " alt="" coords="1764,211,1911,251"/>
+<area shape="poly" title=" " alt="" coords="1903,157,1865,201,1861,198,1899,154"/>
+<area shape="rect" title=" " alt="" coords="2057,218,2113,243"/>
+<area shape="poly" title=" " alt="" coords="1935,153,2050,209,2048,214,1933,158"/>
+<area shape="rect" title=" " alt="" coords="1935,218,2033,243"/>
+<area shape="poly" title=" " alt="" coords="1923,154,1967,205,1963,209,1919,157"/>
+<area shape="poly" title=" " alt="" coords="1835,252,1825,293,1820,292,1830,250"/>
+<area shape="poly" title=" " alt="" coords="1852,250,1863,270,1871,294,1872,319,1862,341,1826,352,1749,362,1517,379,1070,399,1070,394,1517,374,1748,357,1825,347,1858,337,1867,318,1866,295,1858,272,1848,252"/>
+<area shape="poly" title=" " alt="" coords="1814,253,1755,299,1751,295,1811,249"/>
+<area shape="poly" title=" " alt="" coords="1893,248,2041,299,2040,304,1891,253"/>
+<area shape="rect" title=" " alt="" coords="1923,306,2015,331"/>
+<area shape="poly" title=" " alt="" coords="1868,249,1942,296,1939,301,1865,253"/>
 </map>
 </div>
 </div>
@@ -140,9 +215,9 @@ Include dependency graph for typed_thread_pool_sample_2.cpp:</div>
 Functions</h2></td></tr>
 <tr class="memitem:a8d986ee76ac0cece6635815924ac089f" id="r_a8d986ee76ac0cece6635815924ac089f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a8d986ee76ac0cece6635815924ac089f">initialize_logger</a> () -&gt; std::optional&lt; std::string &gt;</td></tr>
 <tr class="separator:a8d986ee76ac0cece6635815924ac089f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3f0b7249bf28fd9f1be6a9094be08bf" id="r_aa3f0b7249bf28fd9f1be6a9094be08bf"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aa3f0b7249bf28fd9f1be6a9094be08bf">create_default</a> (const uint16_t &amp;top_priority_workers, const uint16_t &amp;middle_priority_workers, const uint16_t &amp;bottom_priority_workers) -&gt; std::tuple&lt; std::shared_ptr&lt; <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html">typed_thread_pool_t</a>&lt; <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a> &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memitem:aa3f0b7249bf28fd9f1be6a9094be08bf" id="r_aa3f0b7249bf28fd9f1be6a9094be08bf"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aa3f0b7249bf28fd9f1be6a9094be08bf">create_default</a> (const uint16_t &amp;top_priority_workers, const uint16_t &amp;middle_priority_workers, const uint16_t &amp;bottom_priority_workers) -&gt; std::tuple&lt; std::shared_ptr&lt; <a class="el" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html">typed_thread_pool_t</a>&lt; <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a> &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
 <tr class="separator:aa3f0b7249bf28fd9f1be6a9094be08bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a053c6e0a280d23520270f183587cb036" id="r_a053c6e0a280d23520270f183587cb036"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a053c6e0a280d23520270f183587cb036">store_job</a> (std::shared_ptr&lt; <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html">typed_thread_pool_t</a>&lt; <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a> &gt; &gt; thread_pool) -&gt; std::optional&lt; std::string &gt;</td></tr>
+<tr class="memitem:a053c6e0a280d23520270f183587cb036" id="r_a053c6e0a280d23520270f183587cb036"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a053c6e0a280d23520270f183587cb036">store_job</a> (std::shared_ptr&lt; <a class="el" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html">typed_thread_pool_t</a>&lt; <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a> &gt; &gt; <a class="el" href="../../d8/dbe/classkcenon_1_1thread_1_1thread__pool.html">thread_pool</a>) -&gt; std::optional&lt; std::string &gt;</td></tr>
 <tr class="separator:a053c6e0a280d23520270f183587cb036"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8216c1645620cdb2f629cde3ac02ffef" id="r_a8216c1645620cdb2f629cde3ac02ffef"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a8216c1645620cdb2f629cde3ac02ffef">main</a> () -&gt; int</td></tr>
 <tr class="separator:a8216c1645620cdb2f629cde3ac02ffef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -157,11 +232,11 @@ Variables</h2></td></tr>
 <tr class="separator:ac003efd196c1f1f82baa1d9503b53fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d17fd03266a6ab45927c964749b1cc1" id="r_a9d17fd03266a6ab45927c964749b1cc1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a9d17fd03266a6ab45927c964749b1cc1">test_line_count_</a> = 1000000</td></tr>
 <tr class="separator:a9d17fd03266a6ab45927c964749b1cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3abdd48d223391d05ed86e83324cfff0" id="r_a3abdd48d223391d05ed86e83324cfff0"><td class="memItemLeft" align="right" valign="top">log_module::log_types&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a3abdd48d223391d05ed86e83324cfff0">file_target_</a> = <a class="el" href="../../d9/d53/throughput__detailed__benchmark_8cpp.html#ab7a5354c431dca18eb60fe762d7a997ea6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></td></tr>
+<tr class="memitem:a3abdd48d223391d05ed86e83324cfff0" id="r_a3abdd48d223391d05ed86e83324cfff0"><td class="memItemLeft" align="right" valign="top">log_module::log_types&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a3abdd48d223391d05ed86e83324cfff0">file_target_</a> = <a class="el" href="../../d7/dff/benchmarks_2thread__pool__benchmarks_2throughput__detailed__benchmark_8cpp.html#ab7a5354c431dca18eb60fe762d7a997ea6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></td></tr>
 <tr class="separator:a3abdd48d223391d05ed86e83324cfff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac3d4a1520fb7a63f35125d262273453" id="r_aac3d4a1520fb7a63f35125d262273453"><td class="memItemLeft" align="right" valign="top">log_module::log_types&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#aac3d4a1520fb7a63f35125d262273453">console_target_</a> = log_module::log_types::Information</td></tr>
 <tr class="separator:aac3d4a1520fb7a63f35125d262273453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a6c383c6cd8baa8bae05e63a42848a4" id="r_a4a6c383c6cd8baa8bae05e63a42848a4"><td class="memItemLeft" align="right" valign="top">log_module::log_types&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a4a6c383c6cd8baa8bae05e63a42848a4">callback_target_</a> = <a class="el" href="../../d9/d53/throughput__detailed__benchmark_8cpp.html#ab7a5354c431dca18eb60fe762d7a997ea6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></td></tr>
+<tr class="memitem:a4a6c383c6cd8baa8bae05e63a42848a4" id="r_a4a6c383c6cd8baa8bae05e63a42848a4"><td class="memItemLeft" align="right" valign="top">log_module::log_types&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a4a6c383c6cd8baa8bae05e63a42848a4">callback_target_</a> = <a class="el" href="../../d7/dff/benchmarks_2thread__pool__benchmarks_2throughput__detailed__benchmark_8cpp.html#ab7a5354c431dca18eb60fe762d7a997ea6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></td></tr>
 <tr class="separator:a4a6c383c6cd8baa8bae05e63a42848a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e58bd36acdfc2a9700e5d820abc3d61" id="r_a6e58bd36acdfc2a9700e5d820abc3d61"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html#a6e58bd36acdfc2a9700e5d820abc3d61">top_priority_workers_</a> = 3</td></tr>
 <tr class="separator:a6e58bd36acdfc2a9700e5d820abc3d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,18 +273,18 @@ Variables</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt; std::tuple&lt;std::shared_ptr&lt;<a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html">typed_thread_pool_t</a>&lt;<a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a>&gt;&gt;,
+          <td></td><td> -&gt; std::tuple&lt;std::shared_ptr&lt;<a class="el" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html">typed_thread_pool_t</a>&lt;<a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a>&gt;&gt;,
 				  std::optional&lt;std::string&gt;&gt;
 </td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00083">83</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00086">86</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddea2ad9d63b69c4a10a5cc9cad923133bc4">Bottom</a>, <a class="el" href="../../da/d4a/container__system_2utilities_2core_2formatter_8h_source.html#l00023">utility_module::formatter::format()</a>, <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddeab1ca34f82e83c52b010f86955f264e05">Middle</a>, and <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddeaa4ffdcf0dc1f31b9acaf295d75b51d00">Top</a>.</p>
+<p class="reference">References <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddea2ad9d63b69c4a10a5cc9cad923133bc4">Bottom</a>, <a class="el" href="../../dd/da9/thread__system_2utilities_2include_2formatter_8h_source.html#l00176">kcenon::thread::utils::formatter::format()</a>, <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddeab1ca34f82e83c52b010f86955f264e05">Middle</a>, and <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddeaa4ffdcf0dc1f31b9acaf295d75b51d00">Top</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00163">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00166">main()</a>.</p>
 
 </div>
 </div>
@@ -229,11 +304,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00065">65</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00056">callback_target_</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00055">console_target_</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00054">file_target_</a>, <a class="el" href="../../da/d4a/container__system_2utilities_2core_2formatter_8h_source.html#l00023">utility_module::formatter::format()</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00051">max_lines_</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00050">use_backup_</a>, and <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00052">wait_interval_</a>.</p>
+<p class="reference">References <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00059">callback_target_</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00058">console_target_</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00057">file_target_</a>, <a class="el" href="../../dd/da9/thread__system_2utilities_2include_2formatter_8h_source.html#l00176">kcenon::thread::utils::formatter::format()</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00054">max_lines_</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00053">use_backup_</a>, and <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00055">wait_interval_</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00163">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00166">main()</a>.</p>
 
 </div>
 </div>
@@ -253,9 +328,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00163">163</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00166">166</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00060">bottom_priority_workers_</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00083">create_default()</a>, <a class="el" href="../../da/d4a/container__system_2utilities_2core_2formatter_8h_source.html#l00023">utility_module::formatter::format()</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">initialize_logger()</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00059">middle_priority_workers_</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00131">store_job()</a>, and <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00058">top_priority_workers_</a>.</p>
+<p class="reference">References <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00063">bottom_priority_workers_</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00086">create_default()</a>, <a class="el" href="../../dd/da9/thread__system_2utilities_2include_2formatter_8h_source.html#l00176">kcenon::thread::utils::formatter::format()</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00065">initialize_logger()</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">middle_priority_workers_</a>, <a class="el" href="../../df/d17/thread__pool_8cpp_source.html#l00139">kcenon::thread::thread_pool::start()</a>, <a class="el" href="../../df/d17/thread__pool_8cpp_source.html#l00315">kcenon::thread::thread_pool::stop()</a>, <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00134">store_job()</a>, <a class="el" href="../../df/d17/thread__pool_8cpp_source.html#l00347">kcenon::thread::thread_pool::to_string()</a>, and <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00061">top_priority_workers_</a>.</p>
 
 </div>
 </div>
@@ -268,7 +343,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">auto store_job </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="../../dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html">typed_thread_pool_t</a>&lt; <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a> &gt; &gt;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html">typed_thread_pool_t</a>&lt; <a class="el" href="../../df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17dde">test_priority</a> &gt; &gt;&#160;</td>
           <td class="paramname"><em>thread_pool</em></td><td>)</td>
           <td> -&gt; std::optional&lt;std::string&gt;
 </td>
@@ -276,11 +351,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00131">131</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00134">134</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../da/d4a/container__system_2utilities_2core_2formatter_8h_source.html#l00023">utility_module::formatter::format()</a>, and <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00053">test_line_count_</a>.</p>
+<p class="reference">References <a class="el" href="../../df/d17/thread__pool_8cpp_source.html#l00229">kcenon::thread::thread_pool::enqueue_batch()</a>, <a class="el" href="../../dd/da9/thread__system_2utilities_2include_2formatter_8h_source.html#l00176">kcenon::thread::utils::formatter::format()</a>, and <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00056">test_line_count_</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00163">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00166">main()</a>.</p>
 
 </div>
 </div>
@@ -297,9 +372,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00060">60</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00063">63</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00163">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00166">main()</a>.</p>
 
 </div>
 </div>
@@ -310,14 +385,14 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">log_module::log_types callback_target_ = <a class="el" href="../../d9/d53/throughput__detailed__benchmark_8cpp.html#ab7a5354c431dca18eb60fe762d7a997ea6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></td>
+          <td class="memname">log_module::log_types callback_target_ = <a class="el" href="../../d7/dff/benchmarks_2thread__pool__benchmarks_2throughput__detailed__benchmark_8cpp.html#ab7a5354c431dca18eb60fe762d7a997ea6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">initialize_logger()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00065">initialize_logger()</a>.</p>
 
 </div>
 </div>
@@ -333,9 +408,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00055">55</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00058">58</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">initialize_logger()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00065">initialize_logger()</a>.</p>
 
 </div>
 </div>
@@ -346,14 +421,14 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">log_module::log_types file_target_ = <a class="el" href="../../d9/d53/throughput__detailed__benchmark_8cpp.html#ab7a5354c431dca18eb60fe762d7a997ea6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></td>
+          <td class="memname">log_module::log_types file_target_ = <a class="el" href="../../d7/dff/benchmarks_2thread__pool__benchmarks_2throughput__detailed__benchmark_8cpp.html#ab7a5354c431dca18eb60fe762d7a997ea6adf97f83acf6453d4a6a4b1070f3754">log_module::log_types::None</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00054">54</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00057">57</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">initialize_logger()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00065">initialize_logger()</a>.</p>
 
 </div>
 </div>
@@ -369,9 +444,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00051">51</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00054">54</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">initialize_logger()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00065">initialize_logger()</a>.</p>
 
 </div>
 </div>
@@ -387,9 +462,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00163">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00166">main()</a>.</p>
 
 </div>
 </div>
@@ -405,9 +480,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00053">53</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00131">store_job()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00134">store_job()</a>.</p>
 
 </div>
 </div>
@@ -423,9 +498,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00058">58</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00061">61</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00163">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00166">main()</a>.</p>
 
 </div>
 </div>
@@ -441,9 +516,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00050">50</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00053">53</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">initialize_logger()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00065">initialize_logger()</a>.</p>
 
 </div>
 </div>
@@ -459,9 +534,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00052">52</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00055">55</a> of file <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html">typed_thread_pool_sample_2.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00062">initialize_logger()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp_source.html#l00065">initialize_logger()</a>.</p>
 
 </div>
 </div>
@@ -470,7 +545,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_d5639982d944765b2c04ab5f88dacbbf.html">samples</a></li><li class="navelem"><a class="el" href="../../dir_c52c8388aed8d02e57569e98bf7c9dbc.html">typed_thread_pool_sample_2</a></li><li class="navelem"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html">typed_thread_pool_sample_2.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_62aa39980ad34ebd1eec6b25d2703f9b.html">examples</a></li><li class="navelem"><a class="el" href="../../dir_fdcd26248f7d9847bd20466ed2f8ba14.html">typed_thread_pool_sample_2</a></li><li class="navelem"><a class="el" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html">typed_thread_pool_sample_2.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

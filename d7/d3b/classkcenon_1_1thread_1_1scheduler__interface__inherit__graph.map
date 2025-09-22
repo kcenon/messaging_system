@@ -1,0 +1,15 @@
+<map id="kcenon::thread::scheduler_interface" name="kcenon::thread::scheduler_interface">
+<area shape="rect" id="Node000001" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,76,196,116"/>
+<area shape="rect" id="Node000002" href="$d9/da2/classkcenon_1_1thread_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="245,76,392,116"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,93,245,93,245,99,210,99"/>
+<area shape="rect" id="Node000003" href="$d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title=" " alt="" coords="800,5,1001,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="402,70,441,61,535,46,631,36,800,25,800,30,632,41,536,51,442,67,403,75"/>
+<area shape="rect" id="Node000004" href="$d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title=" " alt="" coords="803,147,998,187"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="401,117,442,125,537,139,634,149,803,161,803,166,634,155,537,145,441,131,400,122"/>
+<area shape="rect" id="Node000005" href="$d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="441,76,636,116"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="406,93,441,93,441,99,406,99"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="649,72,799,42,800,48,650,77"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="650,115,803,145,802,150,649,120"/>
+<area shape="rect" id="Node000006" href="$d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html" title="Adaptive priority queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="781,76,1020,116"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="650,93,781,93,781,99,650,99"/>
+</map>

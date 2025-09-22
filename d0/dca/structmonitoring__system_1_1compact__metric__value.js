@@ -1,0 +1,28 @@
+var structmonitoring__system_1_1compact__metric__value =
+[
+    [ "value_type", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a6cf73328a459a7bb9eeff93299437354", null ],
+    [ "value_type", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a6cf73328a459a7bb9eeff93299437354", null ],
+    [ "compact_metric_value", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a7bcc99296701fcc53698f2c00f51da24", null ],
+    [ "compact_metric_value", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#aaa22c96ca928294a99005a58b4427f08", null ],
+    [ "compact_metric_value", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#aa3da861a73b75ecb0f2061694a3446a6", null ],
+    [ "compact_metric_value", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a401243de506bd1dd12a1818af9054fef", null ],
+    [ "compact_metric_value", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a7bcc99296701fcc53698f2c00f51da24", null ],
+    [ "compact_metric_value", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#aaa22c96ca928294a99005a58b4427f08", null ],
+    [ "compact_metric_value", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#aa3da861a73b75ecb0f2061694a3446a6", null ],
+    [ "compact_metric_value", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a401243de506bd1dd12a1818af9054fef", null ],
+    [ "as_double", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#ad1178de4f173d561d011621ac718344b", null ],
+    [ "as_double", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#ad1178de4f173d561d011621ac718344b", null ],
+    [ "as_int64", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a1f4df93df419a3ac3e64e53b1cef7232", null ],
+    [ "as_int64", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a1f4df93df419a3ac3e64e53b1cef7232", null ],
+    [ "as_string", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a8c34313b772ef6905e69a30bf8b74088", null ],
+    [ "as_string", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a8c34313b772ef6905e69a30bf8b74088", null ],
+    [ "get_timestamp", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a74ea31c4d2f3f31191a1cb8807b9c254", null ],
+    [ "get_timestamp", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a74ea31c4d2f3f31191a1cb8807b9c254", null ],
+    [ "is_numeric", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a2a84a0781fff5c34fc7094727cdda158", null ],
+    [ "is_numeric", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a2a84a0781fff5c34fc7094727cdda158", null ],
+    [ "memory_footprint", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#aa2d3a3f80e3d21ef5bc0e3c9bf406414", null ],
+    [ "memory_footprint", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#aa2d3a3f80e3d21ef5bc0e3c9bf406414", null ],
+    [ "metadata", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#ac6fda760e682ad69d1e6898958bcda9b", null ],
+    [ "timestamp_us", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#aad08ad0f9e4b61c8f7304e8b09101293", null ],
+    [ "value", "d0/dca/structmonitoring__system_1_1compact__metric__value.html#a5b4470ae455c3e936d11ece207f190b1", null ]
+];

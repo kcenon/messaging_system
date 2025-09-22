@@ -1,0 +1,9 @@
+<map id="LogFileRecoveryTest" name="LogFileRecoveryTest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,227,160,252"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="11,95,112,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,133,83,226,78,227,63,134"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="137,95,223,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="165,133,94,228,89,225,161,129"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="111,5,249,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="183,59,183,94,177,94,177,59"/>
+</map>

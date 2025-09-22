@@ -1,0 +1,17 @@
+<map id="OverflowPolicyTest" name="OverflowPolicyTest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,431,151,456"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="6,335,107,361"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,373,78,430,73,431,60,374"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="131,328,286,368"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="173,378,96,433,93,428,170,374"/>
+<area shape="rect" id="Node000004" href="$d4/d83/structkcenon_1_1logger_1_1log__entry.html" title="Represents a single log entry with all associated metadata." alt="" coords="47,211,194,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="140,261,168,302,190,326,186,330,164,306,136,264"/>
+<area shape="rect" id="Node000005" href="$dc/d37/classkcenon_1_1logger_1_1small__string.html" title=" " alt="" coords="39,108,202,148"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="123,162,123,211,118,211,118,162"/>
+<area shape="rect" id="Node000006" href="$dc/d37/classkcenon_1_1logger_1_1small__string.html" title="Small String Optimization (SSO) implementation." alt="" coords="39,5,202,45"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="123,59,123,108,118,108,118,59"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="218,218,346,243"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="269,257,223,329,219,326,265,254"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="263,115,301,141"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="285,155,285,218,279,218,279,155"/>
+</map>

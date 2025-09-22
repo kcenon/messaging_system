@@ -1,0 +1,7 @@
+<map id="logger_system::testing::mock_di_container" name="logger_system::testing::mock_di_container">
+<area shape="rect" id="Node000001" title="Mock DI container for unit testing." alt="" coords="17,212,187,252"/>
+<area shape="rect" id="Node000002" href="$d3/d8c/classkcenon_1_1logger_1_1di__container__interface.html" title=" " alt="" coords="25,108,179,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,177,105,211,99,211,99,177"/>
+<area shape="rect" id="Node000003" href="$d3/d8c/classkcenon_1_1logger_1_1di__container__interface.html" title="Abstract interface for dependency injection container." alt="" coords="5,5,199,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,59,105,108,99,108,99,59"/>
+</map>

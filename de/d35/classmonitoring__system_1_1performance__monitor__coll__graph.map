@@ -1,0 +1,5 @@
+<map id="monitoring_system::performance_monitor" name="monitoring_system::performance_monitor">
+<area shape="rect" id="Node000001" title="Performance monitor combining profiling and system monitoring." alt="" coords="5,93,168,133"/>
+<area shape="rect" id="Node000002" href="$da/d9b/classmonitoring__system_1_1metrics__collector.html" title="Abstract base class for metric collectors." alt="" coords="9,5,165,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,59,89,93,84,93,84,59"/>
+</map>

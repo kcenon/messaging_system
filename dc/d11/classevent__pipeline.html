@@ -113,11 +113,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adffb589a023829794b546e5276765552"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2251e209d134ec0108f4b6aa67a323b1" id="r_a2251e209d134ec0108f4b6aa67a323b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/da0/structaggregated__data.html">aggregated_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d11/classevent__pipeline.html#a2251e209d134ec0108f4b6aa67a323b1">aggregateEvent</a> (const <a class="el" href="../../d0/d16/structprocessed__event.html">processed_event</a> &amp;event)</td></tr>
 <tr class="separator:a2251e209d134ec0108f4b6aa67a323b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29c43ee14673c8976800162545945617" id="r_a29c43ee14673c8976800162545945617"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d11/classevent__pipeline.html#a29c43ee14673c8976800162545945617">handleRawEvent</a> (const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;msg)</td></tr>
+<tr class="memitem:a29c43ee14673c8976800162545945617" id="r_a29c43ee14673c8976800162545945617"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d11/classevent__pipeline.html#a29c43ee14673c8976800162545945617">handleRawEvent</a> (const core::message &amp;msg)</td></tr>
 <tr class="separator:a29c43ee14673c8976800162545945617"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cb424b7722b1661bd1d2492bec9b1a1" id="r_a6cb424b7722b1661bd1d2492bec9b1a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d11/classevent__pipeline.html#a6cb424b7722b1661bd1d2492bec9b1a1">handlePipelineControl</a> (const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;msg)</td></tr>
+<tr class="memitem:a6cb424b7722b1661bd1d2492bec9b1a1" id="r_a6cb424b7722b1661bd1d2492bec9b1a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d11/classevent__pipeline.html#a6cb424b7722b1661bd1d2492bec9b1a1">handlePipelineControl</a> (const core::message &amp;msg)</td></tr>
 <tr class="separator:a6cb424b7722b1661bd1d2492bec9b1a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86633ef6d19b0a22083de107129a9a1f" id="r_a86633ef6d19b0a22083de107129a9a1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d11/classevent__pipeline.html#a86633ef6d19b0a22083de107129a9a1f">handleDataQuery</a> (const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;msg)</td></tr>
+<tr class="memitem:a86633ef6d19b0a22083de107129a9a1f" id="r_a86633ef6d19b0a22083de107129a9a1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d11/classevent__pipeline.html#a86633ef6d19b0a22083de107129a9a1f">handleDataQuery</a> (const core::message &amp;msg)</td></tr>
 <tr class="separator:a86633ef6d19b0a22083de107129a9a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cbf914eab43b97bde8fcebcf0ae6d5f" id="r_a7cbf914eab43b97bde8fcebcf0ae6d5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d11/classevent__pipeline.html#a7cbf914eab43b97bde8fcebcf0ae6d5f">sendToDeadLetterQueue</a> (const <a class="el" href="../../d2/da5/structraw__event.html">raw_event</a> &amp;event, const std::string &amp;reason)</td></tr>
 <tr class="separator:a7cbf914eab43b97bde8fcebcf0ae6d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -289,7 +289,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void event_pipeline::handleDataQuery </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;&#160;</td>
+          <td class="paramtype">const core::message &amp;&#160;</td>
           <td class="paramname"><em>msg</em></td><td>)</td>
           <td></td>
         </tr>
@@ -303,7 +303,7 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00445">445</a> of file <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html">event_pipeline.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00058">kcenon::messaging::core::message_metadata::headers</a>, <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00090">kcenon::messaging::core::message::metadata</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00665">sendAggregatedData()</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00683">sendPipelineMetrics()</a>, and <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00675">sendProcessedEvents()</a>.</p>
+<p class="reference">References <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00665">sendAggregatedData()</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00683">sendPipelineMetrics()</a>, and <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00675">sendProcessedEvents()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00228">setupMessageHandlers()</a>.</p>
 
@@ -321,7 +321,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void event_pipeline::handlePipelineControl </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;&#160;</td>
+          <td class="paramtype">const core::message &amp;&#160;</td>
           <td class="paramname"><em>msg</em></td><td>)</td>
           <td></td>
         </tr>
@@ -335,7 +335,7 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00431">431</a> of file <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html">event_pipeline.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00625">flushPipeline()</a>, <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00058">kcenon::messaging::core::message_metadata::headers</a>, <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00090">kcenon::messaging::core::message::metadata</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00615">pausePipeline()</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00636">printPipelineStats()</a>, and <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00620">resumePipeline()</a>.</p>
+<p class="reference">References <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00625">flushPipeline()</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00615">pausePipeline()</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00636">printPipelineStats()</a>, and <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00620">resumePipeline()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00228">setupMessageHandlers()</a>.</p>
 
@@ -353,7 +353,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void event_pipeline::handleRawEvent </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;&#160;</td>
+          <td class="paramtype">const core::message &amp;&#160;</td>
           <td class="paramname"><em>msg</em></td><td>)</td>
           <td></td>
         </tr>
@@ -367,7 +367,7 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00405">405</a> of file <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html">event_pipeline.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00076">kcenon::messaging::core::message_payload::get()</a>, <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00058">kcenon::messaging::core::message_metadata::headers</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00033">raw_event::id</a>, <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00090">kcenon::messaging::core::message::metadata</a>, and <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00091">kcenon::messaging::core::message::payload</a>.</p>
+<p class="reference">References <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00033">raw_event::id</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00228">setupMessageHandlers()</a>.</p>
 
@@ -457,7 +457,7 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00541">541</a> of file <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html">event_pipeline.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00055">aggregated_data::avg_score</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00054">aggregated_data::event_count</a>, <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00058">kcenon::messaging::core::message_metadata::headers</a>, <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00090">kcenon::messaging::core::message::metadata</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00056">aggregated_data::tag_frequency</a>, and <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00051">aggregated_data::window_id</a>.</p>
+<p class="reference">References <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00055">aggregated_data::avg_score</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00054">aggregated_data::event_count</a>, <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00056">aggregated_data::tag_frequency</a>, and <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00051">aggregated_data::window_id</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00665">sendAggregatedData()</a>, and <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00487">startProcessingThreads()</a>.</p>
 
@@ -576,8 +576,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00683">683</a> of file <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html">event_pipeline.cpp</a>.</p>
-
-<p class="reference">References <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00058">kcenon::messaging::core::message_metadata::headers</a>, and <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00090">kcenon::messaging::core::message::metadata</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00445">handleDataQuery()</a>.</p>
 
@@ -800,8 +798,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00589">589</a> of file <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html">event_pipeline.cpp</a>.</p>
-
-<p class="reference">References <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00058">kcenon::messaging::core::message_metadata::headers</a>, and <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00090">kcenon::messaging::core::message::metadata</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../db/dad/event__pipeline_8cpp_source.html#l00693">start()</a>.</p>
 

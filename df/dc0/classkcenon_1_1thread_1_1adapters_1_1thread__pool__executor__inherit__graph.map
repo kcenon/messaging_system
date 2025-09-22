@@ -1,0 +1,7 @@
+<map id="kcenon::thread::adapters::thread_pool_executor" name="kcenon::thread::adapters::thread_pool_executor">
+<area shape="rect" id="Node000001" title="Adapter to make thread_pool compatible with IExecutor interface." alt="" coords="112,79,296,119"/>
+<area shape="rect" id="Node000002" href="$dc/d8e/classkcenon_1_1shared_1_1IExecutor.html" title="Common task executor interface." alt="" coords="5,5,195,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,37,181,76,177,81,125,41"/>
+<area shape="rect" id="Node000003" href="$d9/d4d/classkcenon_1_1shared_1_1IService.html" title="Service lifecycle interface." alt="" coords="219,5,400,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="284,41,231,81,228,76,281,37"/>
+</map>
