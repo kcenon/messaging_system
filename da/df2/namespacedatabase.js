@@ -45,5 +45,9 @@ var namespacedatabase =
       [ "asc", "da/df2/namespacedatabase.html#abd03ff7ff96381e479fb0a5add52a92da375a52cb87b22005816fe7a418ec6660", null ],
       [ "desc", "da/df2/namespacedatabase.html#abd03ff7ff96381e479fb0a5add52a92da1dee80c7d5ab2c1c90aa8d2f7dd47256", null ]
     ] ],
-    [ "to_string", "da/df2/namespacedatabase.html#acd6914696779ca160d35801485ffd346", null ]
+    [ "to_string", "da/df2/namespacedatabase.html#acd6914696779ca160d35801485ffd346", null ],
+    [ "VERSION", "da/df2/namespacedatabase.html#af562f96adeeb23f7dd6a3ed00e78e133", null ],
+    [ "VERSION_MAJOR", "da/df2/namespacedatabase.html#a325a4cd761b74a86fc9d058737ff6e40", null ],
+    [ "VERSION_MINOR", "da/df2/namespacedatabase.html#a1faf0f3c3d38e7d95a83cff242d4c350", null ],
+    [ "VERSION_PATCH", "da/df2/namespacedatabase.html#ae454d5a6ff0199592fa942c124e8ceaa", null ]
 ];

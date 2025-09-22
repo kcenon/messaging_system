@@ -20,7 +20,6 @@ var namespaces_dup =
       [ "test_priority_count", "d1/d0d/namespacetest__detail.html#a675400e9c960a16348b108de85588c37", null ],
       [ "test_priority_strings", "d1/d0d/namespacetest__detail.html#a5ac066cfcbb62d5eb04ea197ad46f706", null ]
     ] ],
-    [ "typed_kcenon", "db/d58/namespacetyped__kcenon.html", "db/d58/namespacetyped__kcenon" ],
     [ "utilities", "d2/d96/namespaceutilities.html", "d2/d96/namespaceutilities" ],
     [ "utility_module", "dd/d2a/namespaceutility__module.html", "dd/d2a/namespaceutility__module" ]
 ];

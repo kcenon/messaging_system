@@ -15,15 +15,9 @@ var concepts =
           [ "CallableWith", "d6/d56/conceptkcenon_1_1thread_1_1detail_1_1CallableWith.html", null ],
           [ "Duration", "d7/d62/conceptkcenon_1_1thread_1_1detail_1_1Duration.html", null ],
           [ "FutureLike", "dd/dde/conceptkcenon_1_1thread_1_1detail_1_1FutureLike.html", null ],
-          [ "PoolJob", "d7/d76/conceptkcenon_1_1thread_1_1detail_1_1PoolJob.html", null ]
-        ] ]
-      ] ]
-    ] ],
-    [ "typed_kcenon", "db/d58/namespacetyped__kcenon.html", [
-      [ "thread", "df/d4e/namespacetyped__kcenon_1_1thread.html", [
-        [ "detail", "dd/dfc/namespacetyped__kcenon_1_1thread_1_1detail.html", [
-          [ "JobType", "d9/de5/concepttyped__kcenon_1_1thread_1_1detail_1_1JobType.html", null ],
-          [ "JobCallable", "de/df1/concepttyped__kcenon_1_1thread_1_1detail_1_1JobCallable.html", null ]
+          [ "PoolJob", "d7/d76/conceptkcenon_1_1thread_1_1detail_1_1PoolJob.html", null ],
+          [ "JobType", "d0/dda/conceptkcenon_1_1thread_1_1detail_1_1JobType.html", null ],
+          [ "JobCallable", "d5/d49/conceptkcenon_1_1thread_1_1detail_1_1JobCallable.html", null ]
         ] ]
       ] ]
     ] ],

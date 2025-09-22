@@ -1,0 +1,19 @@
+<map id="monitoring_system::alerting::WebhookConfig" name="monitoring_system::alerting::WebhookConfig">
+<area shape="rect" id="Node000001" title=" " alt="" coords="851,134,1032,174"/>
+<area shape="rect" id="Node000002" href="$d7/d02/structmonitoring__system_1_1alerting_1_1ChannelConfig.html" title=" " alt="" coords="571,202,745,242"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="754,196,857,171,858,177,756,201"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="290,141,377,167"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="390,151,850,151,850,157,390,157"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="381,169,434,185,504,199,571,210,570,215,503,204,433,190,379,174"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="582,16,734,71"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="383,134,581,67,583,72,385,139"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,134,144,174"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="158,151,290,151,290,157,158,157"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="742,73,890,131,888,136,740,78"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="257,23,409,63"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="423,41,582,41,582,46,423,46"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="55,5,94,31"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="108,18,257,33,257,39,107,24"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="55,55,94,80"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="108,65,166,64,233,59,257,56,258,61,234,65,167,69,108,70"/>
+</map>

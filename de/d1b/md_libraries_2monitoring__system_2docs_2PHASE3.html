@@ -357,19 +357,19 @@ Complete Setup Example</h2>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="../../db/d5d/basic__usage__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {</div>
 <div class="line">    <span class="comment">// 1. Initialize alert deduplication</span></div>
-<div class="line">    alerting::AlertDeduplicationSystem dedup_system;</div>
-<div class="line">    dedup_system.get_deduplication().set_deduplication_strategy(</div>
+<div class="line">    <a class="code hl_class" href="../../d5/dc0/classmonitoring__system_1_1alerting_1_1AlertDeduplicationSystem.html">alerting::AlertDeduplicationSystem</a> dedup_system;</div>
+<div class="line">    dedup_system.<a class="code hl_function" href="../../d5/dc0/classmonitoring__system_1_1alerting_1_1AlertDeduplicationSystem.html#a22ddc0997286b75e0fa58966674b59c3">get_deduplication</a>().<a class="code hl_function" href="../../d2/da4/classmonitoring__system_1_1alerting_1_1AlertDeduplication.html#a9ed042c1c820fa6c8a5c866df8332588">set_deduplication_strategy</a>(</div>
 <div class="line">        alerting::DeduplicationStrategy::FUZZY_MATCH);</div>
-<div class="line">    dedup_system.get_deduplication().set_similarity_threshold(0.85);</div>
+<div class="line">    dedup_system.<a class="code hl_function" href="../../d5/dc0/classmonitoring__system_1_1alerting_1_1AlertDeduplicationSystem.html#a22ddc0997286b75e0fa58966674b59c3">get_deduplication</a>().<a class="code hl_function" href="../../d2/da4/classmonitoring__system_1_1alerting_1_1AlertDeduplication.html#a67df3a62ffa12bfc28dba3d70e359298">set_similarity_threshold</a>(0.85);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// 2. Set up rule engine</span></div>
-<div class="line">    alerting::RuleEngine rule_engine;</div>
+<div class="line">    <a class="code hl_class" href="../../d6/d7d/classmonitoring__system_1_1alerting_1_1RuleEngine.html">alerting::RuleEngine</a> rule_engine;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// CPU usage rule</span></div>
-<div class="line">    <span class="keyword">auto</span> cpu_rule = alerting::RuleBuilder(<span class="stringliteral">&quot;cpu_critical&quot;</span>)</div>
-<div class="line">        .with_name(<span class="stringliteral">&quot;Critical CPU Usage&quot;</span>)</div>
-<div class="line">        .with_severity(alerting::AlertSeverity::CRITICAL)</div>
-<div class="line">        .with_condition({</div>
+<div class="line">    <span class="keyword">auto</span> cpu_rule = <a class="code hl_class" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html">alerting::RuleBuilder</a>(<span class="stringliteral">&quot;cpu_critical&quot;</span>)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#ab892905220e5aebc8ecd6811ab283498">with_name</a>(<span class="stringliteral">&quot;Critical CPU Usage&quot;</span>)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#a25894fe7108d6ac59e765556c561098d">with_severity</a>(alerting::AlertSeverity::CRITICAL)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#aec4c063dfdd895143201fd431d7b683e">with_condition</a>({</div>
 <div class="line">            .metric_name = <span class="stringliteral">&quot;system.cpu.usage&quot;</span>,</div>
 <div class="line">            .op = alerting::ConditionOperator::GREATER_THAN,</div>
 <div class="line">            .threshold = 95.0,</div>
@@ -378,54 +378,54 @@ Complete Setup Example</h2>
 <div class="line">        })</div>
 <div class="line">        .with_cooldown_period(std::chrono::minutes(15))</div>
 <div class="line">        .add_label(<span class="stringliteral">&quot;team&quot;</span>, <span class="stringliteral">&quot;infrastructure&quot;</span>)</div>
-<div class="line">        .add_annotation(<span class="stringliteral">&quot;runbook&quot;</span>, <span class="stringliteral">&quot;https://wiki/runbooks/high-cpu&quot;</span>)</div>
-<div class="line">        .build();</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#ae31842c889a76de3d84f1897ea6608d0">add_annotation</a>(<span class="stringliteral">&quot;runbook&quot;</span>, <span class="stringliteral">&quot;https://wiki/runbooks/high-cpu&quot;</span>)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#a0c5c87264c4e552f38e930e53b75113c">build</a>();</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Memory usage rule</span></div>
-<div class="line">    <span class="keyword">auto</span> memory_rule = alerting::RuleBuilder(<span class="stringliteral">&quot;memory_high&quot;</span>)</div>
-<div class="line">        .with_name(<span class="stringliteral">&quot;High Memory Usage&quot;</span>)</div>
-<div class="line">        .with_severity(alerting::AlertSeverity::WARNING)</div>
-<div class="line">        .with_condition({</div>
+<div class="line">    <span class="keyword">auto</span> memory_rule = <a class="code hl_class" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html">alerting::RuleBuilder</a>(<span class="stringliteral">&quot;memory_high&quot;</span>)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#ab892905220e5aebc8ecd6811ab283498">with_name</a>(<span class="stringliteral">&quot;High Memory Usage&quot;</span>)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#a25894fe7108d6ac59e765556c561098d">with_severity</a>(alerting::AlertSeverity::WARNING)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#aec4c063dfdd895143201fd431d7b683e">with_condition</a>({</div>
 <div class="line">            .metric_name = <span class="stringliteral">&quot;system.memory.usage&quot;</span>,</div>
 <div class="line">            .op = alerting::ConditionOperator::GREATER_THAN,</div>
 <div class="line">            .threshold = 85.0</div>
 <div class="line">        })</div>
 <div class="line">        .with_evaluation_interval(std::chrono::seconds(30))</div>
-<div class="line">        .build();</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#a0c5c87264c4e552f38e930e53b75113c">build</a>();</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Disk space rule with composite condition</span></div>
-<div class="line">    alerting::CompositeCondition disk_condition;</div>
-<div class="line">    disk_condition.op = alerting::CompositeCondition::OR;</div>
-<div class="line">    disk_condition.conditions.push_back(alerting::RuleCondition{</div>
-<div class="line">        .metric_name = <span class="stringliteral">&quot;system.disk.usage&quot;</span>,</div>
+<div class="line">    <a class="code hl_struct" href="../../d8/d4a/structmonitoring__system_1_1alerting_1_1CompositeCondition.html">alerting::CompositeCondition</a> disk_condition;</div>
+<div class="line">    disk_condition.<a class="code hl_variable" href="../../d8/d4a/structmonitoring__system_1_1alerting_1_1CompositeCondition.html#a563c1391170fe1e57df6b2557102d96f">op</a> = alerting::CompositeCondition::OR;</div>
+<div class="line">    disk_condition.<a class="code hl_variable" href="../../d8/d4a/structmonitoring__system_1_1alerting_1_1CompositeCondition.html#af25549380525aeed397bcf00f9d2cc38">conditions</a>.push_back(<a class="code hl_struct" href="../../d1/d1a/structmonitoring__system_1_1alerting_1_1RuleCondition.html">alerting::RuleCondition</a>{</div>
+<div class="line">        .<a class="code hl_variable" href="../../d1/d1a/structmonitoring__system_1_1alerting_1_1RuleCondition.html#a3066562df6108626e31c3b49e74afa63">metric_name</a> = <span class="stringliteral">&quot;system.disk.usage&quot;</span>,</div>
 <div class="line">        .op = alerting::ConditionOperator::GREATER_THAN,</div>
 <div class="line">        .threshold = 90.0</div>
 <div class="line">    });</div>
-<div class="line">    disk_condition.conditions.push_back(alerting::RuleCondition{</div>
-<div class="line">        .metric_name = <span class="stringliteral">&quot;system.disk.available&quot;</span>,</div>
+<div class="line">    disk_condition.<a class="code hl_variable" href="../../d8/d4a/structmonitoring__system_1_1alerting_1_1CompositeCondition.html#af25549380525aeed397bcf00f9d2cc38">conditions</a>.push_back(<a class="code hl_struct" href="../../d1/d1a/structmonitoring__system_1_1alerting_1_1RuleCondition.html">alerting::RuleCondition</a>{</div>
+<div class="line">        .<a class="code hl_variable" href="../../d1/d1a/structmonitoring__system_1_1alerting_1_1RuleCondition.html#a3066562df6108626e31c3b49e74afa63">metric_name</a> = <span class="stringliteral">&quot;system.disk.available&quot;</span>,</div>
 <div class="line">        .op = alerting::ConditionOperator::LESS_THAN,</div>
 <div class="line">        .threshold = 1000000000.0  <span class="comment">// 1GB</span></div>
 <div class="line">    });</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> disk_rule = alerting::RuleBuilder(<span class="stringliteral">&quot;disk_space&quot;</span>)</div>
-<div class="line">        .with_name(<span class="stringliteral">&quot;Low Disk Space&quot;</span>)</div>
-<div class="line">        .with_severity(alerting::AlertSeverity::WARNING)</div>
-<div class="line">        .with_composite_condition(disk_condition)</div>
-<div class="line">        .build();</div>
+<div class="line">    <span class="keyword">auto</span> disk_rule = <a class="code hl_class" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html">alerting::RuleBuilder</a>(<span class="stringliteral">&quot;disk_space&quot;</span>)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#ab892905220e5aebc8ecd6811ab283498">with_name</a>(<span class="stringliteral">&quot;Low Disk Space&quot;</span>)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#a25894fe7108d6ac59e765556c561098d">with_severity</a>(alerting::AlertSeverity::WARNING)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#a9c889830a354bdd58ccfb1dfe9a04593">with_composite_condition</a>(disk_condition)</div>
+<div class="line">        .<a class="code hl_function" href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#a0c5c87264c4e552f38e930e53b75113c">build</a>();</div>
 <div class="line"> </div>
-<div class="line">    rule_engine.add_rule(cpu_rule);</div>
-<div class="line">    rule_engine.add_rule(memory_rule);</div>
-<div class="line">    rule_engine.add_rule(disk_rule);</div>
+<div class="line">    rule_engine.<a class="code hl_function" href="../../d6/d7d/classmonitoring__system_1_1alerting_1_1RuleEngine.html#aa2c5edef6a3640cf3b392cb6143fe25b">add_rule</a>(cpu_rule);</div>
+<div class="line">    rule_engine.<a class="code hl_function" href="../../d6/d7d/classmonitoring__system_1_1alerting_1_1RuleEngine.html#aa2c5edef6a3640cf3b392cb6143fe25b">add_rule</a>(memory_rule);</div>
+<div class="line">    rule_engine.<a class="code hl_function" href="../../d6/d7d/classmonitoring__system_1_1alerting_1_1RuleEngine.html#aa2c5edef6a3640cf3b392cb6143fe25b">add_rule</a>(disk_rule);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// 3. Configure notifications</span></div>
-<div class="line">    alerting::NotificationManager notifier;</div>
+<div class="line">    <a class="code hl_class" href="../../d6/d06/classmonitoring__system_1_1alerting_1_1NotificationManager.html">alerting::NotificationManager</a> notifier;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Slack for all alerts</span></div>
 <div class="line">    <span class="keyword">auto</span> slack_config = std::make_shared&lt;alerting::SlackConfig&gt;();</div>
 <div class="line">    slack_config-&gt;webhook_url = std::getenv(<span class="stringliteral">&quot;SLACK_WEBHOOK_URL&quot;</span>);</div>
 <div class="line">    slack_config-&gt;channel = <span class="stringliteral">&quot;#monitoring-alerts&quot;</span>;</div>
 <div class="line">    slack_config-&gt;use_attachments = <span class="keyword">true</span>;</div>
-<div class="line">    notifier.add_channel_config(<span class="stringliteral">&quot;slack_all&quot;</span>, slack_config);</div>
+<div class="line">    notifier.<a class="code hl_function" href="../../d6/d06/classmonitoring__system_1_1alerting_1_1NotificationManager.html#ae2ccd59022a84a0c93ecdab750174a0e">add_channel_config</a>(<span class="stringliteral">&quot;slack_all&quot;</span>, slack_config);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Email for critical alerts</span></div>
 <div class="line">    <span class="keyword">auto</span> email_config = std::make_shared&lt;alerting::EmailConfig&gt;();</div>
@@ -436,13 +436,13 @@ Complete Setup Example</h2>
 <div class="line">    email_config-&gt;password = std::getenv(<span class="stringliteral">&quot;SMTP_PASSWORD&quot;</span>);</div>
 <div class="line">    email_config-&gt;from_address = <span class="stringliteral">&quot;monitoring@company.com&quot;</span>;</div>
 <div class="line">    email_config-&gt;to_addresses = {<span class="stringliteral">&quot;oncall@company.com&quot;</span>};</div>
-<div class="line">    notifier.add_channel_config(<span class="stringliteral">&quot;email_critical&quot;</span>, email_config);</div>
+<div class="line">    notifier.<a class="code hl_function" href="../../d6/d06/classmonitoring__system_1_1alerting_1_1NotificationManager.html#ae2ccd59022a84a0c93ecdab750174a0e">add_channel_config</a>(<span class="stringliteral">&quot;email_critical&quot;</span>, email_config);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// PagerDuty for emergencies</span></div>
 <div class="line">    <span class="keyword">auto</span> pagerduty_config = std::make_shared&lt;alerting::WebhookConfig&gt;();</div>
 <div class="line">    pagerduty_config-&gt;url = <span class="stringliteral">&quot;https://events.pagerduty.com/v2/enqueue&quot;</span>;</div>
 <div class="line">    pagerduty_config-&gt;headers[<span class="stringliteral">&quot;Authorization&quot;</span>] = std::getenv(<span class="stringliteral">&quot;PAGERDUTY_KEY&quot;</span>);</div>
-<div class="line">    notifier.add_channel_config(<span class="stringliteral">&quot;pagerduty&quot;</span>, pagerduty_config);</div>
+<div class="line">    notifier.<a class="code hl_function" href="../../d6/d06/classmonitoring__system_1_1alerting_1_1NotificationManager.html#ae2ccd59022a84a0c93ecdab750174a0e">add_channel_config</a>(<span class="stringliteral">&quot;pagerduty&quot;</span>, pagerduty_config);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// 4. Set up web dashboard</span></div>
 <div class="line">    web::DashboardServer <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a85c35f5354bb46fdd8f4e39a0aa37c9eacf1e8c14e54505f60aa10ceb8d5d8ab3">server</a>(8080);</div>
@@ -464,8 +464,8 @@ Complete Setup Example</h2>
 <div class="line">    api.register_routes(server);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// 6. Start all services</span></div>
-<div class="line">    notifier.start();</div>
-<div class="line">    rule_engine.start_background_evaluation();</div>
+<div class="line">    notifier.<a class="code hl_function" href="../../d6/d06/classmonitoring__system_1_1alerting_1_1NotificationManager.html#aac01770668520e35b2b2a41fdca3fba6">start</a>();</div>
+<div class="line">    rule_engine.<a class="code hl_function" href="../../d6/d7d/classmonitoring__system_1_1alerting_1_1RuleEngine.html#aa5cd190f4f3dee3d9ef4f2767da706fe">start_background_evaluation</a>();</div>
 <div class="line">    <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a85c35f5354bb46fdd8f4e39a0aa37c9eacf1e8c14e54505f60aa10ceb8d5d8ab3">server</a>.start();</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Monitoring system started:\n&quot;</span>;</div>
@@ -477,13 +477,37 @@ Complete Setup Example</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// 7. Cleanup</span></div>
 <div class="line">    <a class="code hl_enumvalue" href="../../de/d3f/namespacemonitoring__system.html#a85c35f5354bb46fdd8f4e39a0aa37c9eacf1e8c14e54505f60aa10ceb8d5d8ab3">server</a>.stop();</div>
-<div class="line">    rule_engine.stop_background_evaluation();</div>
-<div class="line">    notifier.stop();</div>
+<div class="line">    rule_engine.<a class="code hl_function" href="../../d6/d7d/classmonitoring__system_1_1alerting_1_1RuleEngine.html#af55176ac6aa5b2e29cdee7269b6e0a6b">stop_background_evaluation</a>();</div>
+<div class="line">    notifier.<a class="code hl_function" href="../../d6/d06/classmonitoring__system_1_1alerting_1_1NotificationManager.html#af254ad849eaf62b5487811736d8922cf">stop</a>();</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="abasic__usage__example_8cpp_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="../../db/d5d/basic__usage__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5d/basic__usage__example_8cpp_source.html#l00015">basic_usage_example.cpp:15</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1AlertDeduplicationSystem_html"><div class="ttname"><a href="../../d5/dc0/classmonitoring__system_1_1alerting_1_1AlertDeduplicationSystem.html">monitoring_system::alerting::AlertDeduplicationSystem</a></div><div class="ttdef"><b>Definition</b> <a href="../../d4/d96/alert__deduplication_8h_source.html#l00240">alert_deduplication.h:240</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1AlertDeduplicationSystem_html_a22ddc0997286b75e0fa58966674b59c3"><div class="ttname"><a href="../../d5/dc0/classmonitoring__system_1_1alerting_1_1AlertDeduplicationSystem.html#a22ddc0997286b75e0fa58966674b59c3">monitoring_system::alerting::AlertDeduplicationSystem::get_deduplication</a></div><div class="ttdeci">AlertDeduplication &amp; get_deduplication()</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d96/alert__deduplication_8h_source.html#l00257">alert_deduplication.h:257</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1AlertDeduplication_html_a67df3a62ffa12bfc28dba3d70e359298"><div class="ttname"><a href="../../d2/da4/classmonitoring__system_1_1alerting_1_1AlertDeduplication.html#a67df3a62ffa12bfc28dba3d70e359298">monitoring_system::alerting::AlertDeduplication::set_similarity_threshold</a></div><div class="ttdeci">void set_similarity_threshold(double threshold)</div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1AlertDeduplication_html_a9ed042c1c820fa6c8a5c866df8332588"><div class="ttname"><a href="../../d2/da4/classmonitoring__system_1_1alerting_1_1AlertDeduplication.html#a9ed042c1c820fa6c8a5c866df8332588">monitoring_system::alerting::AlertDeduplication::set_deduplication_strategy</a></div><div class="ttdeci">void set_deduplication_strategy(DeduplicationStrategy strategy)</div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1NotificationManager_html"><div class="ttname"><a href="../../d6/d06/classmonitoring__system_1_1alerting_1_1NotificationManager.html">monitoring_system::alerting::NotificationManager</a></div><div class="ttdef"><b>Definition</b> <a href="../../dd/d15/notification__manager_8h_source.html#l00199">notification_manager.h:199</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1NotificationManager_html_aac01770668520e35b2b2a41fdca3fba6"><div class="ttname"><a href="../../d6/d06/classmonitoring__system_1_1alerting_1_1NotificationManager.html#aac01770668520e35b2b2a41fdca3fba6">monitoring_system::alerting::NotificationManager::start</a></div><div class="ttdeci">void start()</div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1NotificationManager_html_ae2ccd59022a84a0c93ecdab750174a0e"><div class="ttname"><a href="../../d6/d06/classmonitoring__system_1_1alerting_1_1NotificationManager.html#ae2ccd59022a84a0c93ecdab750174a0e">monitoring_system::alerting::NotificationManager::add_channel_config</a></div><div class="ttdeci">void add_channel_config(const std::string &amp;id, std::shared_ptr&lt; ChannelConfig &gt; config)</div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1NotificationManager_html_af254ad849eaf62b5487811736d8922cf"><div class="ttname"><a href="../../d6/d06/classmonitoring__system_1_1alerting_1_1NotificationManager.html#af254ad849eaf62b5487811736d8922cf">monitoring_system::alerting::NotificationManager::stop</a></div><div class="ttdeci">void stop()</div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleBuilder_html"><div class="ttname"><a href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html">monitoring_system::alerting::RuleBuilder</a></div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00253">rule_engine.h:253</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleBuilder_html_a0c5c87264c4e552f38e930e53b75113c"><div class="ttname"><a href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#a0c5c87264c4e552f38e930e53b75113c">monitoring_system::alerting::RuleBuilder::build</a></div><div class="ttdeci">AlertRule build() const</div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00304">rule_engine.h:304</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleBuilder_html_a25894fe7108d6ac59e765556c561098d"><div class="ttname"><a href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#a25894fe7108d6ac59e765556c561098d">monitoring_system::alerting::RuleBuilder::with_severity</a></div><div class="ttdeci">RuleBuilder &amp; with_severity(AlertSeverity severity)</div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00269">rule_engine.h:269</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleBuilder_html_a9c889830a354bdd58ccfb1dfe9a04593"><div class="ttname"><a href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#a9c889830a354bdd58ccfb1dfe9a04593">monitoring_system::alerting::RuleBuilder::with_composite_condition</a></div><div class="ttdeci">RuleBuilder &amp; with_composite_condition(const CompositeCondition &amp;condition)</div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00279">rule_engine.h:279</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleBuilder_html_ab892905220e5aebc8ecd6811ab283498"><div class="ttname"><a href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#ab892905220e5aebc8ecd6811ab283498">monitoring_system::alerting::RuleBuilder::with_name</a></div><div class="ttdeci">RuleBuilder &amp; with_name(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00259">rule_engine.h:259</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleBuilder_html_ae31842c889a76de3d84f1897ea6608d0"><div class="ttname"><a href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#ae31842c889a76de3d84f1897ea6608d0">monitoring_system::alerting::RuleBuilder::add_annotation</a></div><div class="ttdeci">RuleBuilder &amp; add_annotation(const std::string &amp;key, const std::string &amp;value)</div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00299">rule_engine.h:299</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleBuilder_html_aec4c063dfdd895143201fd431d7b683e"><div class="ttname"><a href="../../d5/d85/classmonitoring__system_1_1alerting_1_1RuleBuilder.html#aec4c063dfdd895143201fd431d7b683e">monitoring_system::alerting::RuleBuilder::with_condition</a></div><div class="ttdeci">RuleBuilder &amp; with_condition(const RuleCondition &amp;condition)</div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00274">rule_engine.h:274</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleEngine_html"><div class="ttname"><a href="../../d6/d7d/classmonitoring__system_1_1alerting_1_1RuleEngine.html">monitoring_system::alerting::RuleEngine</a></div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00166">rule_engine.h:166</a></div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleEngine_html_aa2c5edef6a3640cf3b392cb6143fe25b"><div class="ttname"><a href="../../d6/d7d/classmonitoring__system_1_1alerting_1_1RuleEngine.html#aa2c5edef6a3640cf3b392cb6143fe25b">monitoring_system::alerting::RuleEngine::add_rule</a></div><div class="ttdeci">void add_rule(const AlertRule &amp;rule)</div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleEngine_html_aa5cd190f4f3dee3d9ef4f2767da706fe"><div class="ttname"><a href="../../d6/d7d/classmonitoring__system_1_1alerting_1_1RuleEngine.html#aa5cd190f4f3dee3d9ef4f2767da706fe">monitoring_system::alerting::RuleEngine::start_background_evaluation</a></div><div class="ttdeci">void start_background_evaluation()</div></div>
+<div class="ttc" id="aclassmonitoring__system_1_1alerting_1_1RuleEngine_html_af55176ac6aa5b2e29cdee7269b6e0a6b"><div class="ttname"><a href="../../d6/d7d/classmonitoring__system_1_1alerting_1_1RuleEngine.html#af55176ac6aa5b2e29cdee7269b6e0a6b">monitoring_system::alerting::RuleEngine::stop_background_evaluation</a></div><div class="ttdeci">void stop_background_evaluation()</div></div>
 <div class="ttc" id="anamespacemonitoring__system_html"><div class="ttname"><a href="../../de/d3f/namespacemonitoring__system.html">monitoring_system</a></div><div class="ttdef"><b>Definition</b> <a href="../../df/d39/monitor__adapter_8h_source.html#l00008">monitor_adapter.h:8</a></div></div>
+<div class="ttc" id="astructmonitoring__system_1_1alerting_1_1CompositeCondition_html"><div class="ttname"><a href="../../d8/d4a/structmonitoring__system_1_1alerting_1_1CompositeCondition.html">monitoring_system::alerting::CompositeCondition</a></div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00074">rule_engine.h:74</a></div></div>
+<div class="ttc" id="astructmonitoring__system_1_1alerting_1_1CompositeCondition_html_a563c1391170fe1e57df6b2557102d96f"><div class="ttname"><a href="../../d8/d4a/structmonitoring__system_1_1alerting_1_1CompositeCondition.html#a563c1391170fe1e57df6b2557102d96f">monitoring_system::alerting::CompositeCondition::op</a></div><div class="ttdeci">LogicalOperator op</div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00076">rule_engine.h:76</a></div></div>
+<div class="ttc" id="astructmonitoring__system_1_1alerting_1_1CompositeCondition_html_af25549380525aeed397bcf00f9d2cc38"><div class="ttname"><a href="../../d8/d4a/structmonitoring__system_1_1alerting_1_1CompositeCondition.html#af25549380525aeed397bcf00f9d2cc38">monitoring_system::alerting::CompositeCondition::conditions</a></div><div class="ttdeci">std::vector&lt; std::variant&lt; RuleCondition, std::shared_ptr&lt; CompositeCondition &gt; &gt; &gt; conditions</div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00077">rule_engine.h:77</a></div></div>
+<div class="ttc" id="astructmonitoring__system_1_1alerting_1_1RuleCondition_html"><div class="ttname"><a href="../../d1/d1a/structmonitoring__system_1_1alerting_1_1RuleCondition.html">monitoring_system::alerting::RuleCondition</a></div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00064">rule_engine.h:64</a></div></div>
+<div class="ttc" id="astructmonitoring__system_1_1alerting_1_1RuleCondition_html_a3066562df6108626e31c3b49e74afa63"><div class="ttname"><a href="../../d1/d1a/structmonitoring__system_1_1alerting_1_1RuleCondition.html#a3066562df6108626e31c3b49e74afa63">monitoring_system::alerting::RuleCondition::metric_name</a></div><div class="ttdeci">std::string metric_name</div><div class="ttdef"><b>Definition</b> <a href="../../d9/da4/rule__engine_8h_source.html#l00065">rule_engine.h:65</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md1822"></a>
 Performance Considerations</h1>
 <h2><a class="anchor" id="autotoc_md1823"></a>

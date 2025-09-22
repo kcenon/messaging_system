@@ -1,11 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d4/d8a/structkcenon_1_1monitoring_1_1alerting_1_1ChannelConfig.html" title=" " alt="" coords="5,101,188,141"/>
-<area shape="rect" id="Node000001" href="$d4/d60/structkcenon_1_1monitoring_1_1alerting_1_1EmailConfig.html" title=" " alt="" coords="247,5,414,45"/>
-<area shape="poly" id="edge90_Node000000_Node000001" title=" " alt="" coords="150,93,235,55,267,43,269,48,237,60,152,98"/>
-<area shape="rect" id="Node000002" href="$dd/dff/structkcenon_1_1monitoring_1_1alerting_1_1SMSConfig.html" title=" " alt="" coords="252,69,409,109"/>
-<area shape="poly" id="edge91_Node000000_Node000002" title=" " alt="" coords="201,104,252,97,252,103,202,110"/>
-<area shape="rect" id="Node000003" href="$dd/de0/structkcenon_1_1monitoring_1_1alerting_1_1SlackConfig.html" title=" " alt="" coords="249,133,413,173"/>
-<area shape="poly" id="edge92_Node000000_Node000003" title=" " alt="" coords="202,133,249,140,248,145,201,138"/>
-<area shape="rect" id="Node000004" href="$d5/deb/structkcenon_1_1monitoring_1_1alerting_1_1WebhookConfig.html" title=" " alt="" coords="236,197,425,237"/>
-<area shape="poly" id="edge93_Node000000_Node000004" title=" " alt="" coords="152,145,237,183,269,195,267,200,235,188,150,150"/>
+<area shape="rect" id="Node000000" href="$d2/d86/structkcenon_1_1monitoring_1_1web_1_1HttpResponse.html" title=" " alt="" coords="5,5,161,45"/>
 </map>

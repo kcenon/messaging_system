@@ -1,6 +1,7 @@
 var namespacemonitoring__system =
 [
     [ "adapters", "d9/d34/namespacemonitoring__system_1_1adapters.html", "d9/d34/namespacemonitoring__system_1_1adapters" ],
+    [ "alerting", "d2/dd3/namespacemonitoring__system_1_1alerting.html", "d2/dd3/namespacemonitoring__system_1_1alerting" ],
     [ "adaptation_stats", "d8/dc5/structmonitoring__system_1_1adaptation__stats.html", "d8/dc5/structmonitoring__system_1_1adaptation__stats" ],
     [ "adaptive_collector", "d7/dca/classmonitoring__system_1_1adaptive__collector.html", "d7/dca/classmonitoring__system_1_1adaptive__collector" ],
     [ "adaptive_config", "d1/d5a/structmonitoring__system_1_1adaptive__config.html", "d1/d5a/structmonitoring__system_1_1adaptive__config" ],

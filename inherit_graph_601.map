@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$db/df0/classtcp__demo__client.html" title=" " alt="" coords="5,5,135,31"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,45,147,70"/>
+<area shape="rect" id="Node000001" href="$dd/dd6/structkcenon_1_1thread_1_1detail_1_1is__future__like.html" title="SFINAE helper to detect future&#45;like types." alt="" coords="211,5,375,45"/>
+<area shape="poly" id="edge161_Node000000_Node000001" title=" " alt="" coords="160,42,211,35,211,40,161,48"/>
+<area shape="rect" id="Node000002" href="$d0/d63/structkcenon_1_1thread_1_1detail_1_1is__nothrow__callable.html" title="Type trait to check if a callable is noexcept." alt="" coords="195,69,392,109"/>
+<area shape="poly" id="edge162_Node000000_Node000002" title=" " alt="" coords="161,67,195,72,194,77,160,72"/>
 </map>

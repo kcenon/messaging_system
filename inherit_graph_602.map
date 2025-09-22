@@ -1,3 +1,54 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d5/dda/classtcp__demo__server.html" title=" " alt="" coords="5,5,140,31"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="28,472,173,512"/>
+<area shape="rect" id="Node000001" href="$db/de5/classcontainer__module_1_1thread__safe__container.html" title="Thread&#45;safe container with lock optimization." alt="" coords="255,632,444,672"/>
+<area shape="poly" id="edge163_Node000000_Node000001" title=" " alt="" coords="130,520,181,570,212,596,245,618,270,629,268,634,243,622,209,600,177,574,126,524"/>
+<area shape="rect" id="Node000002" href="$d5/df9/classcontainer__module_1_1value.html" title="The base class for all values stored in the container system." alt="" coords="258,697,441,722"/>
+<area shape="poly" id="edge164_Node000000_Node000002" title=" " alt="" coords="120,524,140,561,168,604,204,646,245,682,271,694,268,699,243,686,200,650,164,607,135,564,115,526"/>
+<area shape="rect" id="Node000008" href="$d9/dad/classcontainer__module_1_1value__container.html" title="A high&#45;level container for messages, including source/target IDs, message type, and a list of values ..." alt="" coords="258,248,441,288"/>
+<area shape="poly" id="edge170_Node000000_Node000008" title=" " alt="" coords="115,458,136,421,165,378,200,335,242,298,264,286,266,290,246,302,204,339,169,381,141,424,120,461"/>
+<area shape="rect" id="Node000009" href="$d9/da2/classkcenon_1_1thread_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="276,69,423,109"/>
+<area shape="poly" id="edge171_Node000000_Node000009" title=" " alt="" coords="110,458,177,267,214,172,230,139,242,121,274,101,277,105,246,125,234,142,219,174,182,268,115,460"/>
+<area shape="rect" id="Node000015" href="$d8/dbe/classkcenon_1_1thread_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="247,134,451,159"/>
+<area shape="poly" id="edge176_Node000000_Node000015" title=" " alt="" coords="104,458,118,396,143,318,161,277,184,238,211,202,242,170,263,157,266,162,246,174,215,205,188,241,166,280,148,320,123,397,110,459"/>
+<area shape="rect" id="Node000017" href="$d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="247,184,451,224"/>
+<area shape="poly" id="edge177_Node000000_Node000017" title=" " alt="" coords="109,458,127,409,154,348,192,287,216,259,242,234,261,222,264,227,246,238,220,262,197,290,159,351,131,411,114,460"/>
+<area shape="rect" id="Node000018" href="$dc/d94/classnetwork__module_1_1messaging__client.html" title="A basic TCP client that connects to a remote host, sends/receives data using asynchronous operations,..." alt="" coords="244,312,455,352"/>
+<area shape="poly" id="edge178_Node000000_Node000018" title=" " alt="" coords="126,460,177,410,209,384,243,362,268,350,270,355,245,366,212,388,181,414,130,464"/>
+<area shape="rect" id="Node000019" href="$de/d13/classnetwork__module_1_1messaging__server.html" title="A server class that manages incoming TCP connections, creating messaging_session instances for each a..." alt="" coords="244,376,455,416"/>
+<area shape="poly" id="edge179_Node000000_Node000019" title=" " alt="" coords="154,464,243,426,277,414,279,419,245,430,157,468"/>
+<area shape="rect" id="Node000020" href="$de/d65/classnetwork__module_1_1messaging__session.html" title="Manages a single connected client session on the server side, providing asynchronous read/write opera..." alt="" coords="244,440,455,480"/>
+<area shape="poly" id="edge180_Node000000_Node000020" title=" " alt="" coords="187,478,243,471,244,476,188,484"/>
+<area shape="rect" id="Node000021" href="$d3/d43/classnetwork__module_1_1tcp__socket.html" title="A lightweight wrapper around asio::ip::tcp::socket, enabling asynchronous read and write operations." alt="" coords="270,504,429,544"/>
+<area shape="poly" id="edge181_Node000000_Node000021" title=" " alt="" coords="187,500,270,511,269,516,187,506"/>
+<area shape="rect" id="Node000022" href="$de/d3d/classnetwork__system_1_1core_1_1messaging__client.html" title="A basic TCP client that connects to a remote host, sends/receives data using asynchronous operations,..." alt="" coords="266,568,433,608"/>
+<area shape="poly" id="edge182_Node000000_Node000022" title=" " alt="" coords="157,516,245,554,279,565,277,570,243,558,154,520"/>
+<area shape="rect" id="Node000023" href="$df/d9d/classnetwork__system_1_1core_1_1messaging__server.html" title="A server class that manages incoming TCP connections, creating messaging_session instances for each a..." alt="" coords="266,747,433,787"/>
+<area shape="poly" id="edge183_Node000000_Node000023" title=" " alt="" coords="115,524,133,571,161,627,198,684,221,710,246,733,267,746,264,750,242,737,217,714,194,687,156,630,128,573,110,526"/>
+<area shape="rect" id="Node000024" href="$d1/d19/classnetwork__system_1_1internal_1_1tcp__socket.html" title="A lightweight wrapper around asio::ip::tcp::socket, enabling asynchronous read and write operations." alt="" coords="255,811,443,851"/>
+<area shape="poly" id="edge184_Node000000_Node000024" title=" " alt="" coords="111,525,126,584,152,657,170,695,191,732,216,766,246,797,263,808,260,813,242,801,212,770,187,735,165,697,147,659,121,585,106,526"/>
+<area shape="rect" id="Node000025" href="$d1/de6/classnetwork__system_1_1session_1_1messaging__session.html" title="Manages a single connected client session on the server side, providing asynchronous read/write opera..." alt="" coords="256,875,443,915"/>
+<area shape="poly" id="edge185_Node000000_Node000025" title=" " alt="" coords="108,525,119,595,143,686,161,733,184,780,212,823,246,861,262,872,259,877,242,865,208,826,179,782,156,735,138,687,114,596,103,526"/>
+<area shape="rect" id="Node000003" href="$d7/d22/classcontainer__module_1_1bool__value.html" title="A specialized value for boolean data." alt="" coords="519,625,694,665"/>
+<area shape="poly" id="edge165_Node000002_Node000003" title=" " alt="" coords="416,691,454,681,527,663,529,668,455,687,417,696"/>
+<area shape="rect" id="Node000004" href="$df/df7/classcontainer__module_1_1bytes__value.html" title="A specialized value that stores an arbitrary byte array (Base64&#45;encoded in string form)." alt="" coords="515,689,698,729"/>
+<area shape="poly" id="edge166_Node000002_Node000004" title=" " alt="" coords="455,707,515,707,515,712,455,712"/>
+<area shape="rect" id="Node000005" href="$da/d1c/classcontainer__module_1_1container__value.html" title="A specialized value that can hold child values, i.e." alt="" coords="503,753,711,793"/>
+<area shape="poly" id="edge167_Node000002_Node000005" title=" " alt="" coords="417,723,455,732,529,751,527,756,454,737,416,728"/>
+<area shape="rect" id="Node000006" href="$de/dc4/classcontainer__module_1_1numeric__value.html" title="A template class for storing and converting numeric types (integral or floating)." alt="" coords="507,817,707,857"/>
+<area shape="poly" id="edge168_Node000002_Node000006" title=" " alt="" coords="444,725,456,733,473,750,481,769,489,786,504,803,524,815,521,819,501,807,484,789,476,771,469,753,453,737,441,730"/>
+<area shape="rect" id="Node000007" href="$d5/d22/classcontainer__module_1_1string__value.html" title="A specialized value for storing textual data." alt="" coords="515,561,699,601"/>
+<area shape="poly" id="edge169_Node000002_Node000007" title=" " alt="" coords="441,689,453,682,469,666,476,648,484,629,501,611,521,599,524,604,504,615,489,632,481,650,473,668,456,686,444,694"/>
+<area shape="rect" id="Node000010" href="$d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title=" " alt="" coords="506,5,707,45"/>
+<area shape="poly" id="edge172_Node000009_Node000010" title=" " alt="" coords="435,65,525,43,526,48,437,70"/>
+<area shape="rect" id="Node000011" href="$d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title=" " alt="" coords="509,69,704,109"/>
+<area shape="poly" id="edge173_Node000009_Node000011" title=" " alt="" coords="436,87,509,87,509,92,436,92"/>
+<area shape="rect" id="Node000012" href="$d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="509,133,704,173"/>
+<area shape="poly" id="edge174_Node000009_Node000012" title=" " alt="" coords="437,108,526,131,525,136,435,113"/>
+<area shape="rect" id="Node000013" href="$d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html" title="Adaptive priority queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="759,133,997,173"/>
+<area shape="poly" id="edge175_Node000012_Node000013" title=" " alt="" coords="718,151,759,151,759,156,718,156"/>
+<area shape="rect" id="Node000016" href="$d1/df5/classkcenon_1_1thread_1_1executor__interface.html" title="Executor interface for submitting work and coordinating shutdown." alt="" coords="9,159,192,199"/>
+<area shape="poly" id="edge186_Node000016_Node000015" title=" " alt="" coords="205,163,250,157,251,162,206,168"/>
+<area shape="poly" id="edge187_Node000016_Node000017" title=" " alt="" coords="206,187,247,191,247,196,205,192"/>
+<area shape="rect" id="Node000014" href="$dd/dc3/classkcenon_1_1thread_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,69,196,109"/>
+<area shape="poly" id="edge188_Node000014_Node000009" title=" " alt="" coords="210,87,276,87,276,92,210,92"/>
 </map>

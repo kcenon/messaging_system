@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['groupingstrategy_0',['GroupingStrategy',['../d9/dbe/namespacekcenon_1_1monitoring_1_1alerting.html#aba1625bbb8bb4e95914adb502c5e0524',1,'kcenon::monitoring::alerting']]]
+  ['groupingstrategy_0',['GroupingStrategy',['../d2/dd3/namespacemonitoring__system_1_1alerting.html#a94ba970b7f4482abbc0957b52c8100bc',1,'monitoring_system::alerting']]]
 ];

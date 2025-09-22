@@ -1,19 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d6/d1e/classmonitoring__system_1_1event__base.html" title="Base class for all events in the system." alt="" coords="5,229,161,269"/>
-<area shape="rect" id="Node000001" href="$d0/deb/classmonitoring__system_1_1component__lifecycle__event.html" title="Event for component lifecycle changes." alt="" coords="211,5,413,45"/>
-<area shape="poly" id="edge127_Node000000_Node000001" title=" " alt="" coords="95,215,113,178,137,135,169,92,208,55,228,43,230,48,211,59,173,96,142,138,117,181,100,218"/>
-<area shape="rect" id="Node000002" href="$d1/daa/classmonitoring__system_1_1configuration__change__event.html" title="Event fired when configuration changes." alt="" coords="209,69,415,109"/>
-<area shape="poly" id="edge128_Node000000_Node000002" title=" " alt="" coords="106,216,150,167,177,141,208,119,232,107,234,112,211,124,181,145,153,170,110,220"/>
-<area shape="rect" id="Node000003" href="$d5/db8/classmonitoring__system_1_1health__check__event.html" title="Event for health check results." alt="" coords="234,133,390,173"/>
-<area shape="poly" id="edge129_Node000000_Node000003" title=" " alt="" coords="131,220,208,183,241,171,242,176,210,188,133,225"/>
-<area shape="rect" id="Node000004" href="$dc/d5a/classmonitoring__system_1_1logging__metric__event.html" title="Event containing logging system metrics." alt="" coords="231,197,393,237"/>
-<area shape="poly" id="edge130_Node000000_Node000004" title=" " alt="" coords="175,234,230,226,231,231,176,239"/>
-<area shape="rect" id="Node000005" href="$de/d97/classmonitoring__system_1_1metric__collection__event.html" title="Event containing collected metrics batch." alt="" coords="223,261,401,301"/>
-<area shape="poly" id="edge131_Node000000_Node000005" title=" " alt="" coords="176,260,223,266,222,272,175,265"/>
-<area shape="rect" id="Node000006" href="$d7/da4/classmonitoring__system_1_1performance__alert__event.html" title="Event for performance&#45;related alerts." alt="" coords="219,325,405,365"/>
-<area shape="poly" id="edge132_Node000000_Node000006" title=" " alt="" coords="133,274,210,311,242,323,241,328,208,316,131,278"/>
-<area shape="rect" id="Node000007" href="$d9/dfe/classmonitoring__system_1_1system__resource__event.html" title="Event containing system resource metrics." alt="" coords="223,389,401,429"/>
-<area shape="poly" id="edge133_Node000000_Node000007" title=" " alt="" coords="110,279,153,328,181,353,211,375,234,387,232,392,208,380,177,358,150,332,106,282"/>
-<area shape="rect" id="Node000008" href="$d5/d25/classmonitoring__system_1_1thread__pool__metric__event.html" title="Event containing thread pool metrics." alt="" coords="216,453,408,493"/>
-<area shape="poly" id="edge134_Node000000_Node000008" title=" " alt="" coords="100,281,117,318,142,361,173,403,211,439,230,451,228,456,208,443,169,406,137,363,113,320,95,283"/>
+<area shape="rect" id="Node000000" href="$df/d03/structmonitoring__system_1_1circuit__breaker__metrics.html" title="Circuit breaker metrics." alt="" coords="5,5,180,45"/>
 </map>

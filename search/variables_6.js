@@ -15,6 +15,6 @@ var searchData=
   ['global_5fstrategy_12',['global_strategy',['../d7/df6/structmonitoring__system_1_1adaptive__monitor_1_1monitor__impl.html#ab3601c91a83a1cf58556d82f1515a8d0',1,'monitoring_system::adaptive_monitor::monitor_impl']]],
   ['group_5fby_5ftags_13',['group_by_tags',['../d3/d1e/structmonitoring__system_1_1query__parser_1_1parsed__query.html#a2ebc2011c48576c1d5bdb1c53dbcc59d',1,'monitoring_system::query_parser::parsed_query']]],
   ['group_5fby_5ftime_14',['group_by_time',['../d3/d1e/structmonitoring__system_1_1query__parser_1_1parsed__query.html#a3f30e8d5fbcc069f4e78e433de0f7af0',1,'monitoring_system::query_parser::parsed_query']]],
-  ['group_5fid_15',['group_id',['../d4/df9/structkcenon_1_1monitoring_1_1alerting_1_1AlertDeduplicationSystem_1_1ProcessResult.html#af7ea8726171fb51f3ea42810829460ac',1,'kcenon::monitoring::alerting::AlertDeduplicationSystem::ProcessResult']]],
-  ['groups_5fcreated_16',['groups_created',['../d4/d9f/structkcenon_1_1monitoring_1_1alerting_1_1AlertDeduplicationSystem_1_1Statistics.html#a045bb044af9dfa470e11a585aa3ec02a',1,'kcenon::monitoring::alerting::AlertDeduplicationSystem::Statistics']]]
+  ['group_5fid_15',['group_id',['../d0/da0/structmonitoring__system_1_1alerting_1_1AlertDeduplicationSystem_1_1ProcessResult.html#a7d617b2f7e85f7d1908faba6da9fa249',1,'monitoring_system::alerting::AlertDeduplicationSystem::ProcessResult']]],
+  ['groups_5fcreated_16',['groups_created',['../de/d99/structmonitoring__system_1_1alerting_1_1AlertDeduplicationSystem_1_1Statistics.html#ab8f58c4f30a8dec125cc88e4d0df8796',1,'monitoring_system::alerting::AlertDeduplicationSystem::Statistics']]]
 ];

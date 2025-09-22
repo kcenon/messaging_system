@@ -113,9 +113,9 @@ Inheritance diagram for kcenon::messaging::persistence::message_storage:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a02730e9ff87552fbdea9a8641134217c" id="r_a02730e9ff87552fbdea9a8641134217c"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d33/classkcenon_1_1messaging_1_1persistence_1_1message__storage.html#a02730e9ff87552fbdea9a8641134217c">~message_storage</a> ()=default</td></tr>
 <tr class="separator:a02730e9ff87552fbdea9a8641134217c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45ddecdce84a750fdeb3dc2441072ccd" id="r_a45ddecdce84a750fdeb3dc2441072ccd"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d33/classkcenon_1_1messaging_1_1persistence_1_1message__storage.html#a45ddecdce84a750fdeb3dc2441072ccd">store_message</a> (const std::string &amp;message_id, const core::message &amp;msg)=0</td></tr>
+<tr class="memitem:a45ddecdce84a750fdeb3dc2441072ccd" id="r_a45ddecdce84a750fdeb3dc2441072ccd"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d33/classkcenon_1_1messaging_1_1persistence_1_1message__storage.html#a45ddecdce84a750fdeb3dc2441072ccd">store_message</a> (const std::string &amp;message_id, const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;msg)=0</td></tr>
 <tr class="separator:a45ddecdce84a750fdeb3dc2441072ccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e2eb4e2739db9e8692da7259e85c13a" id="r_a2e2eb4e2739db9e8692da7259e85c13a"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; core::message &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d33/classkcenon_1_1messaging_1_1persistence_1_1message__storage.html#a2e2eb4e2739db9e8692da7259e85c13a">retrieve_message</a> (const std::string &amp;message_id)=0</td></tr>
+<tr class="memitem:a2e2eb4e2739db9e8692da7259e85c13a" id="r_a2e2eb4e2739db9e8692da7259e85c13a"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d33/classkcenon_1_1messaging_1_1persistence_1_1message__storage.html#a2e2eb4e2739db9e8692da7259e85c13a">retrieve_message</a> (const std::string &amp;message_id)=0</td></tr>
 <tr class="separator:a2e2eb4e2739db9e8692da7259e85c13a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a906a93081036622231348833f7cfb2f9" id="r_a906a93081036622231348833f7cfb2f9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d33/classkcenon_1_1messaging_1_1persistence_1_1message__storage.html#a906a93081036622231348833f7cfb2f9">delete_message</a> (const std::string &amp;message_id)=0</td></tr>
 <tr class="separator:a906a93081036622231348833f7cfb2f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -306,7 +306,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::unique_ptr&lt; core::message &gt; kcenon::messaging::persistence::message_storage::retrieve_message </td>
+          <td class="memname">virtual std::unique_ptr&lt; <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &gt; kcenon::messaging::persistence::message_storage::retrieve_message </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>message_id</em></td><td>)</td>
@@ -342,7 +342,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const core::message &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a> &amp;&#160;</td>
           <td class="paramname"><em>msg</em>&#160;</td>
         </tr>
         <tr>
