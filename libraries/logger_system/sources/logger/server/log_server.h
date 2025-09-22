@@ -14,6 +14,7 @@ All rights reserved.
 #include <functional>
 #include <unordered_map>
 #include <mutex>
+#include <chrono>
 
 namespace logger_module {
 

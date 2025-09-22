@@ -6,10 +6,21 @@ All rights reserved.
 *****************************************************************************/
 
 #include "log_server.h"
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
+
+// Platform-specific includes
+#ifdef _WIN32
+    #include <WinSock2.h>
+    #include <WS2tcpip.h>
+    #pragma comment(lib, "ws2_32.lib")
+    #define close closesocket
+    #define shutdown(fd, how) shutdown(fd, SD_BOTH)
+#else
+    #include <sys/socket.h>
+    #include <netinet/in.h>
+    #include <arpa/inet.h>
+    #include <unistd.h>
+#endif
+
 #include <cstring>
 #include <iostream>
 #include <sstream>
@@ -22,6 +33,18 @@ log_server::log_server(uint16_t port, bool use_tcp, size_t max_connections)
     , use_tcp_(use_tcp)
     , max_connections_(max_connections)
     , server_socket_(-1) {
+
+#ifdef _WIN32
+    // Initialize Winsock
+    static bool winsock_initialized = false;
+    if (!winsock_initialized) {
+        WSADATA wsa_data;
+        if (WSAStartup(MAKEWORD(2, 2), &wsa_data) != 0) {
+            std::cerr << "Failed to initialize Winsock" << std::endl;
+        }
+        winsock_initialized = true;
+    }
+#endif
 }
 
 log_server::~log_server() {
@@ -35,18 +58,34 @@ bool log_server::start() {
     
     // Create socket
     server_socket_ = socket(AF_INET, use_tcp_ ? SOCK_STREAM : SOCK_DGRAM, 0);
+#ifdef _WIN32
+    if (server_socket_ == INVALID_SOCKET) {
+        std::cerr << "Failed to create server socket: " << WSAGetLastError() << std::endl;
+        return false;
+    }
+#else
     if (server_socket_ < 0) {
         std::cerr << "Failed to create server socket: " << strerror(errno) << std::endl;
         return false;
     }
+#endif
     
     // Allow socket reuse
     int reuse = 1;
+#ifdef _WIN32
+    if (setsockopt(server_socket_, SOL_SOCKET, SO_REUSEADDR,
+                  (const char*)&reuse, sizeof(reuse)) < 0) {
+        std::cerr << "Failed to set socket options: " << WSAGetLastError() << std::endl;
+        closesocket(server_socket_);
+        return false;
+    }
+#else
     if (setsockopt(server_socket_, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse)) < 0) {
         std::cerr << "Failed to set socket options: " << strerror(errno) << std::endl;
         close(server_socket_);
         return false;
     }
+#endif
     
     // Bind to port
     struct sockaddr_in server_addr{};
@@ -55,16 +94,26 @@ bool log_server::start() {
     server_addr.sin_port = htons(port_);
     
     if (bind(server_socket_, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
+#ifdef _WIN32
+        std::cerr << "Failed to bind to port " << port_ << ": " << WSAGetLastError() << std::endl;
+        closesocket(server_socket_);
+#else
         std::cerr << "Failed to bind to port " << port_ << ": " << strerror(errno) << std::endl;
         close(server_socket_);
+#endif
         return false;
     }
     
     // Listen for TCP
     if (use_tcp_) {
-        if (listen(server_socket_, max_connections_) < 0) {
+        if (listen(server_socket_, static_cast<int>(max_connections_)) < 0) {
+#ifdef _WIN32
+            std::cerr << "Failed to listen: " << WSAGetLastError() << std::endl;
+            closesocket(server_socket_);
+#else
             std::cerr << "Failed to listen: " << strerror(errno) << std::endl;
             close(server_socket_);
+#endif
             return false;
         }
     }
@@ -93,11 +142,19 @@ void log_server::stop() {
     running_ = false;
     
     // Close server socket to interrupt accept()
+#ifdef _WIN32
+    if (server_socket_ != INVALID_SOCKET) {
+        shutdown(server_socket_, SD_BOTH);
+        closesocket(server_socket_);
+        server_socket_ = INVALID_SOCKET;
+    }
+#else
     if (server_socket_ >= 0) {
         shutdown(server_socket_, SHUT_RDWR);
         close(server_socket_);
         server_socket_ = -1;
     }
+#endif
     
     // Wait for accept thread
     if (accept_thread_.joinable()) {
@@ -134,12 +191,21 @@ void log_server::tcp_accept_thread() {
         socklen_t client_len = sizeof(client_addr);
         
         int client_fd = accept(server_socket_, (struct sockaddr*)&client_addr, &client_len);
+#ifdef _WIN32
+        if (client_fd == INVALID_SOCKET) {
+            if (running_) {
+                std::cerr << "Accept error: " << WSAGetLastError() << std::endl;
+            }
+            continue;
+        }
+#else
         if (client_fd < 0) {
             if (running_) {
                 std::cerr << "Accept error: " << strerror(errno) << std::endl;
             }
             continue;
         }
+#endif
         
         // Get client address
         char client_ip[INET_ADDRSTRLEN];
@@ -173,16 +239,27 @@ void log_server::tcp_accept_thread() {
 void log_server::tcp_client_thread(int client_fd, const std::string& client_addr) {
     char buffer[4096];
     std::string incomplete_data;
-    
+
     while (running_) {
+#ifdef _WIN32
+        int received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
+        if (received <= 0) {
+            if (received < 0) {
+                std::cerr << "Receive error from " << client_addr
+                         << ": " << WSAGetLastError() << std::endl;
+            }
+            break;
+        }
+#else
         ssize_t received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
         if (received <= 0) {
             if (received < 0) {
-                std::cerr << "Receive error from " << client_addr 
+                std::cerr << "Receive error from " << client_addr
                          << ": " << strerror(errno) << std::endl;
             }
             break;
         }
+#endif
         
         buffer[received] = '\0';
         incomplete_data += buffer;
@@ -206,8 +283,12 @@ void log_server::tcp_client_thread(int client_fd, const std::string& client_addr
             }
         }
     }
-    
+
+#ifdef _WIN32
+    closesocket(client_fd);
+#else
     close(client_fd);
+#endif
     std::cout << "Connection closed: " << client_addr << std::endl;
     
     {
@@ -223,6 +304,16 @@ void log_server::udp_receive_thread() {
         struct sockaddr_in client_addr{};
         socklen_t client_len = sizeof(client_addr);
         
+#ifdef _WIN32
+        int received = recvfrom(server_socket_, buffer, sizeof(buffer) - 1, 0,
+                               (struct sockaddr*)&client_addr, &client_len);
+        if (received == SOCKET_ERROR) {
+            if (running_) {
+                std::cerr << "UDP receive error: " << WSAGetLastError() << std::endl;
+            }
+            continue;
+        }
+#else
         ssize_t received = recvfrom(server_socket_, buffer, sizeof(buffer) - 1, 0,
                                    (struct sockaddr*)&client_addr, &client_len);
         if (received < 0) {
@@ -231,6 +322,7 @@ void log_server::udp_receive_thread() {
             }
             continue;
         }
+#endif
         
         buffer[received] = '\0';
         
