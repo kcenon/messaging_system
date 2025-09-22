@@ -1,0 +1,7 @@
+<map id="libraries/thread_system/sources/thread_base/lockfree/queues/adaptive_job_queue.h" name="libraries/thread_system/sources/thread_base/lockfree/queues/adaptive_job_queue.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="130,5,350,60"/>
+<area shape="rect" id="Node000002" href="$d3/d5c/sources_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp.html" title="Implementation of the adaptive job queue with automatic strategy selection." alt="" coords="5,108,240,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,71,155,110,152,106,197,67"/>
+<area shape="rect" id="Node000003" href="$d4/d89/sources_2thread__pool_2core_2thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="264,108,453,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="283,67,329,106,326,110,280,71"/>
+</map>

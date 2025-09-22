@@ -1,0 +1,13 @@
+<map id="typed_thread_pool_module::typed_lockfree_job_queue_t&lt; job_type &gt;" name="typed_thread_pool_module::typed_lockfree_job_queue_t&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title="High&#45;performance lock&#45;free priority&#45;based job queue." alt="" coords="5,197,207,252"/>
+<area shape="rect" id="Node000002" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="32,108,180,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,162,92,197,87,197,86,162"/>
+<area shape="poly" id="edge6_Node000001_Node000002" title=" " alt="" coords="109,162,109,197,103,197,103,162"/>
+<area shape="poly" id="edge7_Node000001_Node000002" title=" " alt="" coords="126,162,125,197,120,197,121,162"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="12,5,200,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="92,59,91,84,94,108,89,108,86,84,86,59"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="109,59,109,108,103,108,103,59"/>
+<area shape="poly" id="edge4_Node000002_Node000003" title=" " alt="" coords="126,59,126,84,123,108,118,108,121,84,120,59"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="224,13,316,38"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="241,47,138,110,135,106,238,43"/>
+</map>

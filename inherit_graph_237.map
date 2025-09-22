@@ -1,0 +1,53 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,364,151,404"/>
+<area shape="rect" id="Node000001" href="$dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html" title=" " alt="" coords="205,42,403,97"/>
+<area shape="poly" id="edge68_Node000000_Node000001" title=" " alt="" coords="83,350,95,298,117,233,150,166,172,135,197,107,213,95,217,99,200,111,176,138,155,169,122,235,100,299,88,351"/>
+<area shape="rect" id="Node000002" href="$db/de5/classcontainer__module_1_1thread__safe__container.html" title="Thread&#45;safe container with lock optimization." alt="" coords="209,121,399,161"/>
+<area shape="poly" id="edge69_Node000000_Node000002" title=" " alt="" coords="87,350,102,309,126,261,157,213,197,171,216,159,219,164,200,175,161,216,130,264,107,311,92,352"/>
+<area shape="rect" id="Node000003" href="$d5/df9/classcontainer__module_1_1value.html" title="The base class for all values stored in the container system." alt="" coords="213,186,395,211"/>
+<area shape="poly" id="edge70_Node000000_Node000003" title=" " alt="" coords="92,350,133,285,163,250,197,222,223,209,225,214,200,226,166,254,138,288,97,353"/>
+<area shape="rect" id="Node000009" href="$d9/dad/classcontainer__module_1_1value__container.html" title="A high&#45;level container for messages, including source/target IDs, message type, and a list of values ..." alt="" coords="213,236,395,276"/>
+<area shape="poly" id="edge76_Node000000_Node000009" title=" " alt="" coords="108,352,148,318,197,286,225,274,227,278,200,290,152,322,111,357"/>
+<area shape="rect" id="Node000010" href="$dc/d94/classnetwork__module_1_1messaging__client.html" title="A basic TCP client that connects to a remote host, sends/receives data using asynchronous operations,..." alt="" coords="199,300,409,340"/>
+<area shape="poly" id="edge77_Node000000_Node000010" title=" " alt="" coords="162,358,232,337,234,343,163,363"/>
+<area shape="rect" id="Node000011" href="$de/d13/classnetwork__module_1_1messaging__server.html" title="A server class that manages incoming TCP connections, creating messaging_session instances for each a..." alt="" coords="199,364,409,404"/>
+<area shape="poly" id="edge78_Node000000_Node000011" title=" " alt="" coords="165,381,198,381,198,387,165,387"/>
+<area shape="rect" id="Node000012" href="$de/d65/classnetwork__module_1_1messaging__session.html" title="Manages a single connected client session on the server side, providing asynchronous read/write opera..." alt="" coords="199,428,409,468"/>
+<area shape="poly" id="edge79_Node000000_Node000012" title=" " alt="" coords="163,405,234,425,232,431,162,410"/>
+<area shape="rect" id="Node000013" href="$d3/d43/classnetwork__module_1_1tcp__socket.html" title="A lightweight wrapper around asio::ip::tcp::socket, enabling asynchronous read and write operations." alt="" coords="225,492,383,532"/>
+<area shape="poly" id="edge80_Node000000_Node000013" title=" " alt="" coords="111,411,152,446,200,478,227,490,225,494,197,482,148,450,108,416"/>
+<area shape="rect" id="Node000014" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="230,556,378,596"/>
+<area shape="poly" id="edge81_Node000000_Node000014" title=" " alt="" coords="98,415,139,480,167,513,200,542,231,558,229,563,197,546,163,517,134,483,93,418"/>
+<area shape="rect" id="Node000024" href="$d9/da1/classthread__pool__module_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="227,620,381,660"/>
+<area shape="poly" id="edge91_Node000000_Node000024" title=" " alt="" coords="91,416,105,460,128,511,160,562,200,606,228,622,225,627,197,610,155,565,124,513,101,462,86,418"/>
+<area shape="rect" id="Node000025" href="$dc/dd1/classtyped__thread__pool__module_1_1typed__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="205,685,403,739"/>
+<area shape="poly" id="edge92_Node000000_Node000025" title=" " alt="" coords="87,417,99,471,120,539,154,609,175,641,200,670,216,683,213,687,197,674,171,645,149,612,115,541,94,473,82,418"/>
+<area shape="rect" id="Node000004" href="$d7/d22/classcontainer__module_1_1bool__value.html" title="A specialized value for boolean data." alt="" coords="489,5,664,45"/>
+<area shape="poly" id="edge71_Node000003_Node000004" title=" " alt="" coords="400,177,408,171,420,158,426,144,431,115,436,85,443,70,456,55,487,36,490,41,459,59,447,73,441,87,436,116,431,146,424,161,411,175,403,181"/>
+<area shape="rect" id="Node000005" href="$df/df7/classcontainer__module_1_1bytes__value.html" title="A specialized value that stores an arbitrary byte array (Base64&#45;encoded in string form)." alt="" coords="485,69,668,109"/>
+<area shape="poly" id="edge72_Node000003_Node000005" title=" " alt="" coords="392,179,408,171,423,159,431,146,440,132,456,119,484,106,486,111,459,124,444,136,436,149,426,163,411,176,395,184"/>
+<area shape="rect" id="Node000006" href="$da/d1c/classcontainer__module_1_1container__value.html" title="A specialized value that can hold child values, i.e." alt="" coords="473,133,681,173"/>
+<area shape="poly" id="edge73_Node000003_Node000006" title=" " alt="" coords="394,181,472,168,473,173,395,186"/>
+<area shape="rect" id="Node000007" href="$de/dc4/classcontainer__module_1_1numeric__value.html" title="A template class for storing and converting numeric types (integral or floating)." alt="" coords="477,197,677,237"/>
+<area shape="poly" id="edge74_Node000003_Node000007" title=" " alt="" coords="409,203,476,208,476,213,409,209"/>
+<area shape="rect" id="Node000008" href="$d5/d22/classcontainer__module_1_1string__value.html" title="A specialized value for storing textual data." alt="" coords="485,261,669,301"/>
+<area shape="poly" id="edge75_Node000003_Node000008" title=" " alt="" coords="382,212,410,222,435,234,458,247,493,259,491,264,456,252,432,239,408,226,380,217"/>
+<area shape="rect" id="Node000015" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title=" " alt="" coords="477,326,676,381"/>
+<area shape="poly" id="edge82_Node000014_Node000015" title=" " alt="" coords="389,556,407,542,421,524,428,506,431,468,433,429,441,410,455,390,475,375,479,379,459,394,445,412,438,431,436,468,434,507,426,527,411,546,392,560"/>
+<area shape="rect" id="Node000016" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title=" " alt="" coords="469,405,684,459"/>
+<area shape="poly" id="edge83_Node000014_Node000016" title=" " alt="" coords="390,553,408,542,423,525,431,507,439,488,456,470,476,457,479,462,459,474,444,491,436,509,428,528,411,546,392,557"/>
+<area shape="rect" id="Node000017" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title=" " alt="" coords="457,484,696,524"/>
+<area shape="poly" id="edge84_Node000014_Node000017" title=" " alt="" coords="390,551,499,521,501,527,392,556"/>
+<area shape="rect" id="Node000018" href="$d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html" title=" " alt="" coords="476,549,677,603"/>
+<area shape="poly" id="edge85_Node000014_Node000018" title=" " alt="" coords="392,573,476,573,476,579,392,579"/>
+<area shape="rect" id="Node000019" href="$d9/d67/classthread__module_1_1adaptive__job__queue.html" title="Adaptive queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="484,628,669,668"/>
+<area shape="poly" id="edge86_Node000014_Node000019" title=" " alt="" coords="392,596,501,625,499,631,390,601"/>
+<area shape="rect" id="Node000020" href="$d1/de8/classthread__module_1_1lockfree__job__queue.html" title="High&#45;performance lock&#45;free Multiple Producer Multiple Consumer job queue." alt="" coords="486,692,667,732"/>
+<area shape="poly" id="edge87_Node000014_Node000020" title=" " alt="" coords="392,595,411,606,428,624,436,643,443,661,459,678,487,693,485,698,456,682,439,664,431,645,423,627,408,610,390,599"/>
+<area shape="rect" id="Node000021" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="457,756,696,796"/>
+<area shape="poly" id="edge88_Node000014_Node000021" title=" " alt="" coords="392,593,411,606,425,623,432,641,436,676,439,710,446,726,459,742,475,754,472,758,456,746,441,729,434,711,430,677,427,642,420,626,407,610,389,597"/>
+<area shape="rect" id="Node000023" href="$d3/d35/classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html" title="High&#45;performance lock&#45;free priority&#45;based job queue." alt="" coords="476,821,677,875"/>
+<area shape="poly" id="edge90_Node000014_Node000023" title=" " alt="" coords="392,591,411,606,429,632,437,657,438,683,436,708,434,733,435,757,443,782,459,806,478,821,474,825,455,810,438,784,430,758,429,733,431,707,433,683,432,658,424,634,407,610,389,596"/>
+<area shape="rect" id="Node000022" href="$d2/d9e/classtyped__thread__pool__module_1_1adaptive__typed__job__queue__t.html" title="Adaptive priority queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="744,749,949,803"/>
+<area shape="poly" id="edge89_Node000021_Node000022" title=" " alt="" coords="710,773,744,773,744,779,710,779"/>
+</map>

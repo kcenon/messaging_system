@@ -1,0 +1,23 @@
+<map id="libraries/thread_system/sources/thread_base/lockfree/memory/hazard_pointer.cpp" name="libraries/thread_system/sources/thread_base/lockfree/memory/hazard_pointer.cpp">
+<area shape="rect" id="Node000001" title="Implementation of lock&#45;free memory management using hazard pointers." alt="" coords="323,5,541,60"/>
+<area shape="rect" id="Node000002" href="$d8/d01/sources_2thread__base_2lockfree_2memory_2hazard__pointer_8h.html" title=" " alt="" coords="235,108,365,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="393,62,331,103,328,98,390,58"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="389,108,475,133"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="435,60,435,94,429,94,429,60"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="499,108,613,133"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="471,58,529,98,526,102,468,62"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,181,72,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="259,136,86,183,85,177,257,131"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="96,181,160,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="273,136,170,178,168,174,271,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="185,181,247,207"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="288,135,242,174,239,170,285,131"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="272,181,328,207"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="303,134,303,168,297,168,297,134"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="353,181,439,207"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="317,131,371,171,368,175,314,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="464,181,531,207"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="333,131,453,174,451,179,331,136"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="555,181,632,207"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="348,131,542,177,540,183,347,136"/>
+</map>

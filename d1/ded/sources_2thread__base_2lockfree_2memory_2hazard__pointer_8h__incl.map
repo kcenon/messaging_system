@@ -1,0 +1,17 @@
+<map id="libraries/thread_system/sources/thread_base/lockfree/memory/hazard_pointer.h" name="libraries/thread_system/sources/thread_base/lockfree/memory/hazard_pointer.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="191,5,409,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,72,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,63,86,107,84,102,219,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="96,108,160,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="249,62,165,104,162,99,246,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="185,108,247,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="276,62,239,100,235,96,272,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="272,108,328,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="303,60,303,94,297,94,297,60"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="353,108,439,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="331,58,375,97,371,101,328,62"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="464,108,531,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="361,58,459,100,457,105,359,63"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="555,108,632,133"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="390,58,542,102,541,107,389,63"/>
+</map>

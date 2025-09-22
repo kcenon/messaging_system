@@ -1,0 +1,14 @@
+<map id="kcenon::messaging::security::auth_token" name="kcenon::messaging::security::auth_token">
+<area shape="rect" id="Node000001" title=" " alt="" coords="144,299,300,339"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="225,108,312,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="272,147,269,207,264,242,254,276,240,300,236,297,249,274,258,240,264,206,267,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="91,196,233,236"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="247,144,185,198,182,194,243,140"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="199,5,338,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="271,59,271,108,266,108,266,59"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="183,247,213,297,208,300,178,249"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,108,188,133"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="95,147,100,171,110,183,123,194,119,198,106,187,96,173,90,148"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="77,13,116,38"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="99,52,99,108,94,108,94,52"/>
+</map>

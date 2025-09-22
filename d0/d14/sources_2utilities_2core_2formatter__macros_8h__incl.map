@@ -1,0 +1,35 @@
+<map id="libraries/thread_system/sources/utilities/core/formatter_macros.h" name="libraries/thread_system/sources/utilities/core/formatter_macros.h">
+<area shape="rect" id="Node000001" title="Provides macros for generating formatter specializations." alt="" coords="569,5,745,60"/>
+<area shape="rect" id="Node000002" href="$de/d36/thread__system_2sources_2utilities_2core_2formatter_8h.html" title=" " alt="" coords="849,115,944,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="725,58,856,108,854,113,723,63"/>
+<area shape="rect" id="Node000009" href="$df/d2d/thread__system_2sources_2utilities_2conversion_2convert__string_8h.html" title=" " alt="" coords="383,108,541,148"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="603,62,515,104,513,100,601,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="777,196,835,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="885,143,831,189,828,185,882,139"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="655,196,752,221"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="870,143,745,193,743,188,868,138"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="959,196,1051,221"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="914,139,979,186,976,190,911,143"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="1075,196,1180,221"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="931,138,1082,189,1080,194,929,143"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="1203,196,1278,221"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="945,137,1190,193,1189,198,944,143"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="859,196,934,221"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="899,141,899,182,894,182,894,141"/>
+<area shape="poly" id="edge11_Node000009_Node000003" title=" " alt="" coords="543,143,764,193,762,198,541,148"/>
+<area shape="poly" id="edge17_Node000009_Node000004" title=" " alt="" coords="521,145,656,189,654,194,519,151"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="307,196,361,221"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="432,150,366,191,363,187,430,146"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="385,196,448,221"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="453,150,433,185,428,183,449,147"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="473,196,539,221"/>
+<area shape="poly" id="edge12_Node000009_Node000012" title=" " alt="" coords="475,147,495,183,490,185,470,150"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="563,196,630,221"/>
+<area shape="poly" id="edge13_Node000009_Node000013" title=" " alt="" coords="496,146,566,187,564,191,493,150"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="5,196,73,221"/>
+<area shape="poly" id="edge14_Node000009_Node000014" title=" " alt="" coords="383,145,249,168,87,199,86,193,248,162,382,139"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="98,196,173,221"/>
+<area shape="poly" id="edge15_Node000009_Node000015" title=" " alt="" coords="384,151,187,198,186,193,383,145"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="197,196,282,221"/>
+<area shape="poly" id="edge16_Node000009_Node000016" title=" " alt="" coords="410,151,286,194,284,189,408,145"/>
+</map>

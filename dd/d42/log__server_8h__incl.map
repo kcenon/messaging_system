@@ -1,0 +1,19 @@
+<map id="libraries/logger_system/sources/logger/server/log_server.h" name="libraries/logger_system/sources/logger/server/log_server.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="277,5,451,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,69,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="277,59,84,110,82,105,276,54"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="93,108,160,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="292,63,172,106,170,101,291,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="185,108,247,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="320,62,249,103,246,99,317,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="272,108,349,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="350,61,327,98,323,95,345,59"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="374,108,461,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="383,59,405,95,401,98,378,61"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="485,108,609,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="421,58,511,100,509,105,419,62"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="633,108,697,133"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="452,56,621,104,620,109,451,61"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="721,108,788,133"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="452,49,708,105,707,110,451,54"/>
+</map>

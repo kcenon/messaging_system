@@ -1,0 +1,14 @@
+<map id="libraries/thread_system/modular_structure/core/include/thread_system_core/thread_pool/workers/worker_policy.h" name="libraries/thread_system/modular_structure/core/include/thread_system_core/thread_pool/workers/worker_policy.h">
+<area shape="rect" id="Node000001" title="Worker behavior policies and configuration." alt="" coords="261,5,471,89"/>
+<area shape="rect" id="Node000002" href="$d0/d4e/modular__structure_2core_2include_2thread__system__core_2thread__pool_2detail_2forward__declarations_8h.html" title="Forward declarations for thread_pool module." alt="" coords="5,137,180,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="270,92,169,134,167,129,268,87"/>
+<area shape="rect" id="Node000003" href="$d9/dfd/libraries_2thread__system_2modular__structure_2core_2include_2thread__system__core_2thread__pool_2core_2config_8h.html" title="Central configuration for thread_pool module." alt="" coords="204,145,395,185"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="345,91,319,134,315,131,340,88"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="379,240,446,265"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="392,88,410,137,417,184,417,226,412,226,411,185,405,138,387,90"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="470,152,529,177"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="415,87,477,141,474,145,412,91"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="264,240,335,265"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="302,185,302,226,297,226,297,185"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="326,183,388,229,385,234,323,187"/>
+</map>

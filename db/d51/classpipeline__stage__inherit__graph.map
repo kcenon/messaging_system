@@ -1,0 +1,11 @@
+<map id="pipeline_stage&lt; TInput, TOutput &gt;" name="pipeline_stage&lt; TInput, TOutput &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,101,183,141"/>
+<area shape="rect" id="Node000002" href="$df/d30/classpipeline__stage.html" title=" " alt="" coords="430,5,587,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,92,171,76,206,63,263,48,322,37,430,26,430,31,323,43,265,53,207,68,173,81,141,97"/>
+<area shape="rect" id="Node000003" href="$df/d30/classpipeline__stage.html" title=" " alt="" coords="409,69,608,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,111,409,94,409,100,196,116"/>
+<area shape="rect" id="Node000004" href="$df/d30/classpipeline__stage.html" title=" " alt="" coords="409,133,608,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="189,141,207,144,311,152,409,153,409,159,311,157,206,149,188,147"/>
+<area shape="rect" id="Node000005" href="$df/d30/classpipeline__stage.html" title=" " alt="" coords="409,197,608,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="132,147,167,171,208,189,258,203,310,212,409,218,409,223,310,217,257,208,206,195,164,175,129,152"/>
+</map>

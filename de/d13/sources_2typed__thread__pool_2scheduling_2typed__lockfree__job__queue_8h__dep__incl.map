@@ -1,0 +1,9 @@
+<map id="libraries/thread_system/sources/typed_thread_pool/scheduling/typed_lockfree_job_queue.h" name="libraries/thread_system/sources/typed_thread_pool/scheduling/typed_lockfree_job_queue.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="119,5,295,75"/>
+<area shape="rect" id="Node000002" href="$d7/d62/sources_2typed__thread__pool_2scheduling_2adaptive__typed__job__queue_8h.html" title=" " alt="" coords="5,123,197,192"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,87,134,124,130,121,164,83"/>
+<area shape="rect" id="Node000004" href="$d4/d54/sources_2typed__thread__pool_2scheduling_2typed__lockfree__job__queue_8cpp.html" title="Explicit template instantiation for typed lock&#45;free job queue." alt="" coords="222,123,405,192"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="249,83,284,121,280,124,246,87"/>
+<area shape="rect" id="Node000003" href="$d3/d62/sources_2typed__thread__pool_2scheduling_2adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="5,240,197,309"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="104,206,104,240,99,240,99,206"/>
+</map>

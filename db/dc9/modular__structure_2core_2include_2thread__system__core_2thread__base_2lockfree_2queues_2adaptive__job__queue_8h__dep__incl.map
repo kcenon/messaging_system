@@ -1,0 +1,9 @@
+<map id="libraries/thread_system/modular_structure/core/include/thread_system_core/thread_base/lockfree/queues/adaptive_job_queue.h" name="libraries/thread_system/modular_structure/core/include/thread_system_core/thread_base/lockfree/queues/adaptive_job_queue.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="259,5,474,89"/>
+<area shape="rect" id="Node000002" href="$df/d43/modular__structure_2core_2src_2thread__base_2lockfree_2queues_2adaptive__job__queue_8cpp.html" title="Implementation of the adaptive job queue with automatic strategy selection." alt="" coords="5,137,240,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="274,98,191,140,188,135,272,93"/>
+<area shape="rect" id="Node000003" href="$d7/d53/modular__structure_2core_2src_2thread__pool_2core_2thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="265,137,469,207"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="369,103,369,137,364,137,364,103"/>
+<area shape="rect" id="Node000004" href="$d1/d39/minimal__test_8cpp.html" title=" " alt="" coords="493,145,713,199"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="459,94,553,142,551,147,457,98"/>
+</map>

@@ -1,5 +1,18 @@
 var searchData=
 [
-  ['07_2009_0',['Core Performance Metrics (Latest Benchmarks - 2025-07-09)',['..//home/runner/work/messaging_system/messaging_system/thread_system/README.md#autotoc_md213',1,'']]],
-  ['09_1',['Core Performance Metrics (Latest Benchmarks - 2025-07-09)',['..//home/runner/work/messaging_system/messaging_system/thread_system/README.md#autotoc_md213',1,'']]]
+  ['0_0',['Memory Optimization Impact (v2.0)',['../d4/d9e/md_libraries_2thread__system_2docs_2performance.html#autotoc_md1186',1,'']]],
+  ['0_200_201_200_200_20a_202025_2001_2012_1',['0 0 1 0 0 a 2025 01 12',['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md178',1,'&lt;a href=&quot;https://github.com/kcenon/logger_system/releases/tag/v1.0.0&quot; &gt;1.0.0&lt;/a&gt; - 2025-01-12'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md432',1,'&lt;a href=&quot;https://github.com/kcenon/monitoring_system/releases/tag/v1.0.0&quot; &gt;1.0.0&lt;/a&gt; - 2025-01-12']]],
+  ['0_200_202024_2001_2015_2',['[1.0.0] - 2024-01-15',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md802',1,'']]],
+  ['0_200_202025_2007_2022_3',['[2.0.0] - 2025-07-22',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md786',1,'']]],
+  ['0_200_20future_4',['0 0 future',['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md184',1,'[2.0.0] - Future'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md438',1,'[2.0.0] - Future']]],
+  ['0_200_20head_5',['0 0 head',['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md171',1,'&lt;a href=&quot;https://github.com/kcenon/logger_system/compare/v1.0.0...HEAD&quot;'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md425',1,'&lt;a href=&quot;https://github.com/kcenon/monitoring_system/compare/v1.0.0...HEAD&quot;']]],
+  ['0_20planned_6',['0 planned',['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md182',1,'[1.1.0] - Planned'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md436',1,'[1.1.0] - Planned'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md437',1,'[1.2.0] - Planned'],['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md183',1,'[1.2.0] - Planned']]],
+  ['01_2012_7',['01 12',['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md178',1,'&lt;a href=&quot;https://github.com/kcenon/logger_system/releases/tag/v1.0.0&quot; &gt;1.0.0&lt;/a&gt; - 2025-01-12'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md432',1,'&lt;a href=&quot;https://github.com/kcenon/monitoring_system/releases/tag/v1.0.0&quot; &gt;1.0.0&lt;/a&gt; - 2025-01-12']]],
+  ['01_2015_8',['[1.0.0] - 2024-01-15',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md802',1,'']]],
+  ['06_2029_9',['[Previous Release] - 2025-06-29',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md798',1,'']]],
+  ['06_2030_10',['[Previous Release] - 2025-06-30',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md793',1,'']]],
+  ['07_2009_11',['07 09',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md789',1,'[Previous] - 2025-07-09'],['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1423',1,'Core Performance Metrics (Latest Benchmarks - 2025-07-09)']]],
+  ['07_2022_12',['[2.0.0] - 2025-07-22',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md786',1,'']]],
+  ['07_2025_13',['07 25',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md781',1,'[Unreleased] - 2025-07-25'],['../d4/d9e/md_libraries_2thread__system_2docs_2performance.html#autotoc_md1206',1,'Recent Benchmark Results (2025-07-25)']]],
+  ['09_14',['09',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md789',1,'[Previous] - 2025-07-09'],['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1423',1,'Core Performance Metrics (Latest Benchmarks - 2025-07-09)']]]
 ];

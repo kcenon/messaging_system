@@ -1,0 +1,49 @@
+<map id="libraries/logger_system/sources/logger/logger.h" name="libraries/logger_system/sources/logger/logger.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="2705,5,2882,45"/>
+<area shape="rect" id="Node000002" href="$db/d5d/basic__usage__example_8cpp.html" title=" " alt="" coords="5,101,203,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="2691,29,2197,31,1481,39,1104,47,750,59,445,75,215,96,174,103,173,98,214,91,445,70,750,53,1104,42,1481,33,2197,25,2691,24"/>
+<area shape="rect" id="Node000003" href="$d3/d95/chat__server_8cpp.html" title="Real&#45;time chat server using the messaging system." alt="" coords="227,101,421,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="2691,29,2235,32,1581,41,1239,49,918,61,641,76,432,96,393,103,392,98,432,91,641,71,918,55,1239,44,1581,35,2235,26,2691,24"/>
+<area shape="rect" id="Node000004" href="$d4/daa/distributed__worker_8cpp.html" title="Distributed task processing system using messaging." alt="" coords="445,101,638,141"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="2691,30,2272,33,1682,43,1086,63,837,78,650,96,611,103,610,98,649,91,837,72,1086,58,1682,38,2272,28,2691,24"/>
+<area shape="rect" id="Node000005" href="$db/dad/event__pipeline_8cpp.html" title="Event&#45;driven data processing pipeline." alt="" coords="662,101,855,141"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="2691,30,2310,35,1783,46,1254,66,1034,79,867,96,828,103,827,98,866,91,1033,74,1254,60,1783,41,2310,30,2691,25"/>
+<area shape="rect" id="Node000006" href="$d4/d8b/iot__monitoring_8cpp.html" title="IoT device monitoring and management system." alt="" coords="879,101,1073,141"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="2691,31,2349,37,1885,49,1423,68,1230,81,1084,96,1045,103,1044,98,1084,91,1230,76,1422,63,1885,43,2349,31,2691,25"/>
+<area shape="rect" id="Node000007" href="$d7/d5c/message__bus__benchmark_8cpp.html" title=" " alt="" coords="1097,101,1319,141"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="2691,28,2449,29,2112,38,1725,58,1526,75,1332,96,1288,103,1287,98,1332,91,1526,69,1724,53,2112,32,2449,24,2691,23"/>
+<area shape="rect" id="Node000008" href="$d4/dd5/microservices__orchestrator_8cpp.html" title="Microservices orchestration and service mesh implementation." alt="" coords="1344,101,1573,141"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="2691,30,2487,34,2212,44,1901,64,1741,78,1586,96,1541,103,1540,98,1585,91,1741,73,1900,58,2212,39,2487,28,2691,25"/>
+<area shape="rect" id="Node000009" href="$d9/dd9/production__ready__example_8cpp.html" title="Production&#45;ready messaging system with signal handling, config, metrics, and error recovery." alt="" coords="1598,101,1829,141"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="2691,32,2315,50,2078,69,1840,96,1797,103,1796,98,1840,91,2078,64,2315,45,2690,27"/>
+<area shape="rect" id="Node000010" href="$dd/df2/log__level__benchmark_8cpp.html" title=" " alt="" coords="1853,93,2091,148"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="2691,36,2424,58,2263,75,2103,96,2092,98,2091,92,2102,91,2263,70,2424,53,2690,31"/>
+<area shape="rect" id="Node000011" href="$d1/df7/logger__memory__benchmark_8cpp.html" title=" " alt="" coords="2115,93,2354,148"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="2691,44,2367,96,2355,98,2354,93,2366,91,2691,39"/>
+<area shape="rect" id="Node000012" href="$d9/d71/logger__performance__benchmark_8cpp.html" title=" " alt="" coords="2379,93,2643,148"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="2724,52,2591,96,2589,91,2723,47"/>
+<area shape="rect" id="Node000013" href="$df/d5d/logger__throughput__benchmark_8cpp.html" title=" " alt="" coords="2667,93,2919,148"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="2796,59,2796,93,2791,93,2791,59"/>
+<area shape="rect" id="Node000014" href="$d2/db1/multithreaded__logging__benchmark_8cpp.html" title=" " alt="" coords="2944,93,3224,148"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="2866,47,3003,91,3001,96,2864,52"/>
+<area shape="rect" id="Node000015" href="$d7/d4c/sync__vs__async__benchmark_8cpp.html" title=" " alt="" coords="3249,93,3487,148"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="2896,38,3236,91,3249,93,3248,98,3236,96,2895,43"/>
+<area shape="rect" id="Node000016" href="$d9/d6e/advanced__features__demo_8cpp.html" title=" " alt="" coords="3511,93,3721,148"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="2896,30,3170,51,3335,68,3500,91,3512,93,3511,98,3500,96,3335,73,3169,56,2896,35"/>
+<area shape="rect" id="Node000017" href="$d6/d15/basic__usage_8cpp.html" title=" " alt="" coords="3745,101,3937,141"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="2896,26,3057,31,3266,42,3500,61,3734,91,3771,98,3770,103,3733,96,3499,67,3266,48,3057,36,2896,31"/>
+<area shape="rect" id="Node000018" href="$d9/d11/logger__system_2samples_2crash__protection_2main_8cpp.html" title="Logger crash protection demonstration." alt="" coords="3962,93,4155,148"/>
+<area shape="poly" id="edge17_Node000001_Node000018" title=" " alt="" coords="2896,24,3092,27,3354,36,3651,57,3802,72,3950,91,3962,93,3961,98,3949,96,3801,77,3650,62,3354,42,3092,32,2896,29"/>
+<area shape="rect" id="Node000019" href="$de/d56/distributed__logging__demo_8cpp.html" title=" " alt="" coords="4180,93,4391,148"/>
+<area shape="poly" id="edge18_Node000001_Node000019" title=" " alt="" coords="2896,23,3125,24,3441,33,3802,53,3987,70,4168,91,4180,92,4180,98,4168,96,3987,75,3802,59,3441,38,3125,30,2896,28"/>
+<area shape="rect" id="Node000020" href="$dd/d8a/metrics__demo_8cpp.html" title=" " alt="" coords="4415,101,4620,141"/>
+<area shape="poly" id="edge19_Node000001_Node000020" title=" " alt="" coords="2896,26,3654,46,4087,65,4267,77,4403,91,4444,98,4443,103,4402,96,4266,82,4087,70,3654,51,2896,31"/>
+<area shape="rect" id="Node000021" href="$d1/dcb/security__demo_8cpp.html" title=" " alt="" coords="4644,101,4852,141"/>
+<area shape="poly" id="edge20_Node000001_Node000021" title=" " alt="" coords="2896,25,3261,31,3762,43,4265,63,4474,75,4632,91,4675,98,4674,103,4632,96,4473,81,4264,68,3762,48,3261,36,2896,31"/>
+<area shape="rect" id="Node000022" href="$d3/d30/logger_8cpp.html" title=" " alt="" coords="4876,101,5068,141"/>
+<area shape="poly" id="edge21_Node000001_Node000022" title=" " alt="" coords="2896,25,3302,29,3871,39,4445,59,4684,73,4864,91,4904,98,4903,103,4864,96,4683,78,4444,64,3871,44,3302,34,2896,30"/>
+<area shape="rect" id="Node000023" href="$d9/deb/integration__test_8cpp.html" title=" " alt="" coords="5092,101,5284,141"/>
+<area shape="poly" id="edge22_Node000001_Node000023" title=" " alt="" coords="2896,24,3340,27,3972,36,4302,45,4612,56,4879,71,5080,91,5120,98,5119,103,5080,96,4878,77,4611,61,4302,50,3971,42,3340,32,2896,30"/>
+<area shape="rect" id="Node000024" href="$d4/d83/logger__test_8cpp.html" title=" " alt="" coords="5309,93,5483,148"/>
+<area shape="poly" id="edge23_Node000001_Node000024" title=" " alt="" coords="2896,24,3376,24,4071,32,4436,40,4778,52,5073,68,5296,91,5309,93,5308,98,5296,96,5073,74,4778,57,4435,45,4071,37,3376,30,2896,29"/>
+</map>

@@ -1,0 +1,16 @@
+<map id="typed_thread_pool_module::typed_lockfree_job_queue_t&lt; job_type &gt;::typed_queue_statistics" name="typed_thread_pool_module::typed_lockfree_job_queue_t&lt; job_type &gt;::typed_queue_statistics">
+<area shape="rect" id="Node000001" title="Extended statistics for typed queues." alt="" coords="948,5,1160,75"/>
+<area shape="rect" id="Node000002" href="$d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html" title="Performance statistics structure (non&#45;atomic version for returning)" alt="" coords="157,20,368,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="382,51,667,55,947,50,947,55,667,61,382,56"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="382,37,947,37,947,43,382,43"/>
+<area shape="poly" id="edge3_Node000001_Node000002" title=" " alt="" coords="382,24,667,19,947,25,947,30,667,25,382,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="593,101,799,171"/>
+<area shape="poly" id="edge5_Node000003_Node000002" title=" " alt="" coords="314,64,352,81,393,95,479,110,593,124,593,129,479,115,391,100,350,86,312,69"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="812,119,868,109,923,95,982,72,984,77,925,100,869,114,813,125"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="187,153,339,193"/>
+<area shape="poly" id="edge6_Node000003_Node000004" title=" " alt="" coords="353,177,457,178,569,169,593,165,594,170,570,175,457,183,353,182"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,135,44,161"/>
+<area shape="poly" id="edge7_Node000004_Node000005" title=" " alt="" coords="58,149,187,163,186,168,57,154"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,185,44,210"/>
+<area shape="poly" id="edge8_Node000004_Node000006" title=" " alt="" coords="58,194,133,189,186,183,187,188,134,195,58,199"/>
+</map>

@@ -1,0 +1,22 @@
+<map id="processed_event" name="processed_event">
+<area shape="rect" id="Node000001" title=" " alt="" coords="221,303,353,328"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="244,108,331,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="290,147,290,302,285,302,285,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="415,205,602,231"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="327,136,483,203,481,208,325,141"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="77,198,239,238"/>
+<area shape="poly" id="edge8_Node000007_Node000002" title=" " alt="" coords="259,143,236,159,183,200,180,196,232,155,256,139"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="218,5,357,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="290,59,290,108,285,108,285,59"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="471,238,315,305,313,300,469,234"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="399,108,528,133"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="477,145,505,204,501,206,472,147"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="391,13,429,38"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="426,49,459,107,454,109,421,51"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="5,108,140,133"/>
+<area shape="poly" id="edge11_Node000008_Node000006" title=" " alt="" coords="379,44,370,48,243,85,132,110,131,105,242,80,368,43,377,39"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="184,246,217,277,260,300,257,305,214,281,180,250"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="56,146,51,159,54,171,67,185,83,196,80,200,63,189,49,173,46,158,51,144"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="53,13,92,38"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="75,52,75,108,70,108,70,52"/>
+</map>

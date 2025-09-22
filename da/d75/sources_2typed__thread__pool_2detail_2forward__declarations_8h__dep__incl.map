@@ -1,0 +1,7 @@
+<map id="libraries/thread_system/sources/typed_thread_pool/detail/forward_declarations.h" name="libraries/thread_system/sources/typed_thread_pool/detail/forward_declarations.h">
+<area shape="rect" id="Node000001" title="Forward declarations for typed_thread_pool module." alt="" coords="113,5,364,60"/>
+<area shape="rect" id="Node000002" href="$da/da0/sources_2typed__thread__pool_2core_2typed__job__interface_8h.html" title="Interface definitions for typed jobs." alt="" coords="5,108,240,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,71,155,110,151,106,196,67"/>
+<area shape="rect" id="Node000003" href="$da/dcb/sources_2typed__thread__pool_2pool_2pool__builder_8h.html" title="Builder pattern implementation for typed_thread_pool construction." alt="" coords="264,108,448,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="282,67,327,106,324,110,278,71"/>
+</map>

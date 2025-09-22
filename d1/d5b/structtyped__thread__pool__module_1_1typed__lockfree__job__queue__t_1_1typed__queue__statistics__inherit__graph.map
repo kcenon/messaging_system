@@ -1,0 +1,7 @@
+<map id="typed_thread_pool_module::typed_lockfree_job_queue_t&lt; job_type &gt;::typed_queue_statistics" name="typed_thread_pool_module::typed_lockfree_job_queue_t&lt; job_type &gt;::typed_queue_statistics">
+<area shape="rect" id="Node000001" title="Extended statistics for typed queues." alt="" coords="5,93,217,163"/>
+<area shape="rect" id="Node000002" href="$d9/d22/structthread__module_1_1lockfree__job__queue_1_1queue__statistics.html" title="Performance statistics structure (non&#45;atomic version for returning)" alt="" coords="6,5,217,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,59,97,93,92,93,92,59"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="114,59,114,93,109,93,109,59"/>
+<area shape="poly" id="edge3_Node000001_Node000002" title=" " alt="" coords="131,59,131,93,126,93,126,59"/>
+</map>

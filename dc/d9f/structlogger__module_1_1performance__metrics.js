@@ -1,0 +1,27 @@
+var structlogger__module_1_1performance__metrics =
+[
+    [ "performance_metrics", "dc/d9f/structlogger__module_1_1performance__metrics.html#a9fe90cb70ec8ce76c6bf068608826a17", null ],
+    [ "performance_metrics", "dc/d9f/structlogger__module_1_1performance__metrics.html#a9fed486f65fb1eebfbffbba8c3b0d4a0", null ],
+    [ "performance_metrics", "dc/d9f/structlogger__module_1_1performance__metrics.html#a241c7f3fbfffcab9d070002d85415a54", null ],
+    [ "get_avg_enqueue_time_ns", "dc/d9f/structlogger__module_1_1performance__metrics.html#aa9c319dc83dff677b5e62104fa7fbf69", null ],
+    [ "get_bytes_per_second", "dc/d9f/structlogger__module_1_1performance__metrics.html#a34d1d74975d2c5e6aeba575975d55f9d", null ],
+    [ "get_drop_rate_percent", "dc/d9f/structlogger__module_1_1performance__metrics.html#a8341c42d41040ea778d156033a33c711", null ],
+    [ "get_messages_per_second", "dc/d9f/structlogger__module_1_1performance__metrics.html#a4d2f02240ef72307dbb9285b6d0408f3", null ],
+    [ "get_queue_utilization_percent", "dc/d9f/structlogger__module_1_1performance__metrics.html#aa8d021f134829814c016fb0f29dfd03b", null ],
+    [ "operator=", "dc/d9f/structlogger__module_1_1performance__metrics.html#a6b2e4bb0c02e7be271fb1e8d3982bab4", null ],
+    [ "operator=", "dc/d9f/structlogger__module_1_1performance__metrics.html#ad3490d2d47709c4435c72cb57e783853", null ],
+    [ "bytes_enqueued", "dc/d9f/structlogger__module_1_1performance__metrics.html#a4f6aa01b9d065332b52665668cf2fd27", null ],
+    [ "bytes_processed", "dc/d9f/structlogger__module_1_1performance__metrics.html#ad0c57f5da8e2ddea827d588ff588c519", null ],
+    [ "current_queue_size", "dc/d9f/structlogger__module_1_1performance__metrics.html#add95eecd052f81665d05da6db39562cc", null ],
+    [ "last_reset", "dc/d9f/structlogger__module_1_1performance__metrics.html#a1e23384ace00b746fba3db451c1f4a91", null ],
+    [ "max_enqueue_time_ns", "dc/d9f/structlogger__module_1_1performance__metrics.html#a7126179a1ee266e9473096552bcd7d95", null ],
+    [ "max_queue_size", "dc/d9f/structlogger__module_1_1performance__metrics.html#acf5a9b717d91e914821966e300cd29e9", null ],
+    [ "messages_dropped", "dc/d9f/structlogger__module_1_1performance__metrics.html#acc46377d9a88962faedf02ffdde01b0b", null ],
+    [ "messages_enqueued", "dc/d9f/structlogger__module_1_1performance__metrics.html#a5955d3407eefc188c68aa568bcd0dace", null ],
+    [ "messages_processed", "dc/d9f/structlogger__module_1_1performance__metrics.html#ac615679d4f46012b0521c66b2f5f2217", null ],
+    [ "min_enqueue_time_ns", "dc/d9f/structlogger__module_1_1performance__metrics.html#a52d80a8f39a367e91d2ddf466e3db6bd", null ],
+    [ "start_time", "dc/d9f/structlogger__module_1_1performance__metrics.html#ab54104ab2d16583406abed59c0c46401", null ],
+    [ "total_enqueue_time_ns", "dc/d9f/structlogger__module_1_1performance__metrics.html#a57bbdeba292eb26a2be29ff56b3247eb", null ],
+    [ "writer_metrics_mutex", "dc/d9f/structlogger__module_1_1performance__metrics.html#a09f00ae5574d9bc214f565a516637e89", null ],
+    [ "writer_stats", "dc/d9f/structlogger__module_1_1performance__metrics.html#ab86d1395f3cec32af67c20f3a4c71275", null ]
+];

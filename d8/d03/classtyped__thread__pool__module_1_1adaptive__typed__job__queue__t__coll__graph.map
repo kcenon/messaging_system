@@ -1,0 +1,23 @@
+<map id="typed_thread_pool_module::adaptive_typed_job_queue_t&lt; job_type &gt;" name="typed_thread_pool_module::adaptive_typed_job_queue_t&lt; job_type &gt;">
+<area shape="rect" id="Node000001" title="Adaptive priority queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="22,357,227,412"/>
+<area shape="rect" id="Node000002" href="$db/de8/classtyped__thread__pool__module_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="5,211,244,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,265,109,312,113,357,108,357,104,312,107,264"/>
+<area shape="poly" id="edge9_Node000001_Node000002" title=" " alt="" coords="127,265,127,357,122,357,122,265"/>
+<area shape="poly" id="edge10_Node000001_Node000002" title=" " alt="" coords="142,264,145,312,141,357,136,357,140,312,137,265"/>
+<area shape="rect" id="Node000003" href="$df/d6d/classthread__module_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="51,108,199,148"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="110,162,110,187,113,210,108,211,104,187,105,161"/>
+<area shape="poly" id="edge7_Node000002_Node000003" title=" " alt="" coords="127,162,127,211,122,211,122,162"/>
+<area shape="poly" id="edge8_Node000002_Node000003" title=" " alt="" coords="144,161,145,187,142,211,136,210,140,187,139,162"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="31,5,219,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="110,59,110,84,113,108,108,108,104,84,105,59"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="127,59,127,108,122,108,122,59"/>
+<area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="144,59,145,84,142,108,136,108,140,84,139,59"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="243,13,335,38"/>
+<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="260,47,157,110,154,106,257,43"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="278,218,457,243"/>
+<area shape="poly" id="edge11_Node000001_Node000006" title=" " alt="" coords="339,253,168,359,165,355,336,248"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="309,115,442,141"/>
+<area shape="poly" id="edge12_Node000006_Node000007" title=" " alt="" coords="376,155,371,218,366,218,371,154"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="359,13,397,38"/>
+<area shape="poly" id="edge13_Node000007_Node000008" title=" " alt="" coords="380,52,378,115,373,115,375,52"/>
+</map>

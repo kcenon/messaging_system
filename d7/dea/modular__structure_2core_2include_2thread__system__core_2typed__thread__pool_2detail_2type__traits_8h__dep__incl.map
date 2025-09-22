@@ -1,0 +1,9 @@
+<map id="libraries/thread_system/modular_structure/core/include/thread_system_core/typed_thread_pool/detail/type_traits.h" name="libraries/thread_system/modular_structure/core/include/thread_system_core/typed_thread_pool/detail/type_traits.h">
+<area shape="rect" id="Node000001" title="Type traits and concepts for typed_thread_pool module." alt="" coords="265,5,486,89"/>
+<area shape="rect" id="Node000002" href="$d8/d9f/modular__structure_2core_2include_2thread__system__core_2typed__thread__pool_2core_2typed__job__interface_8h.html" title="Interface definitions for typed jobs." alt="" coords="5,137,225,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="283,98,198,140,196,135,280,93"/>
+<area shape="rect" id="Node000003" href="$d3/d78/modular__structure_2core_2include_2thread__system__core_2typed__thread__pool_2detail_2template__helpers_8h.html" title="Template metaprogramming utilities for typed_thread_pool module." alt="" coords="250,137,501,221"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="378,103,378,137,373,137,373,103"/>
+<area shape="rect" id="Node000004" href="$d7/d7a/modular__structure_2core_2src_2typed__thread__pool_2core_2typed__job__interface_8h.html" title="Interface definitions for typed jobs." alt="" coords="525,145,727,214"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="467,93,562,142,560,147,465,98"/>
+</map>

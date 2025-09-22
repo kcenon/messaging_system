@@ -1,9 +1,4 @@
 var searchData=
 [
-  ['callable_5freturn_5ftype_5ft_0',['callable_return_type_t',['../namespacethread__pool__module_1_1detail.html#a48097017dc75225a20d268857902b8e4',1,'thread_pool_module::detail']]],
-  ['callback_5ftyped_5fjob_1',['callback_typed_job',['../namespacetyped__thread__pool__module.html#ab369d5fd77a97c5140881e4595d1670b',1,'typed_thread_pool_module']]],
-  ['cancellable_5fjob_5ffunction_2',['cancellable_job_function',['../namespacethread__module_1_1jobs.html#a9ef6a344a091fb3ccdcd4f958295820b',1,'thread_module::jobs']]],
-  ['class_5ftype_3',['class_type',['../structthread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_4.html#a672b84983d075a7889977eb5b473cb22',1,'thread_pool_module::detail::function_traits&lt; R(C::*)(Args...)&gt;::class_type'],['../structthread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_01const_01_4.html#a8f2c00fc9c40ec4cd758600702fb1c76',1,'thread_pool_module::detail::function_traits&lt; R(C::*)(Args...) const &gt;::class_type'],['../structtyped__thread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_4.html#a02812f634e006efcb6a542b313a8c1c4',1,'typed_thread_pool_module::detail::function_traits&lt; R(C::*)(Args...)&gt;::class_type'],['../structtyped__thread__pool__module_1_1detail_1_1function__traits_3_01_r_07_c_1_1_5_08_07_args_8_8_8_08_01const_01_4.html#ab561d6886cf3d0b687a8dc7c735a651d',1,'typed_thread_pool_module::detail::function_traits&lt; R(C::*)(Args...) const &gt;::class_type']]],
-  ['const_5fiterator_4',['const_iterator',['../classcontainer__module_1_1thread__safe__container.html#a46b27923d26442add3e28bc8147f51c1',1,'container_module::thread_safe_container']]],
-  ['crash_5fcallback_5',['crash_callback',['../namespacethread__module.html#aa98b39d862ad185bf8b7ee9c67f9121c',1,'thread_module']]]
+  ['batch_5fcallback_0',['batch_callback',['../db/d67/classmonitoring__module_1_1batch__metrics__processor.html#a64da9c6ba53aed0b56fbead45b8d2bb2',1,'monitoring_module::batch_metrics_processor']]]
 ];

@@ -1,0 +1,9 @@
+<map id="thread_module::adaptive_job_queue::atomic_performance_metrics" name="thread_module::adaptive_job_queue::atomic_performance_metrics">
+<area shape="rect" id="Node000001" title="Internal atomic performance metrics." alt="" coords="5,313,244,368"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="35,181,214,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,220,127,313,122,313,122,220"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="58,93,191,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="127,133,127,181,122,181,122,133"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="105,5,144,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="127,45,127,93,122,93,122,45"/>
+</map>

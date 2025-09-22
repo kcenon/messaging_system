@@ -1,0 +1,21 @@
+<map id="monitoring_interface::process_thread_pool_metrics" name="monitoring_interface::process_thread_pool_metrics">
+<area shape="rect" id="Node000001" title="프로세스별 thread pool 메트릭" alt="" coords="1212,69,1376,123"/>
+<area shape="rect" id="Node000002" href="$d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html" title="Thread pool performance metrics interface." alt="" coords="609,5,772,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="786,30,972,47,1188,73,1212,77,1211,82,1188,79,972,52,786,35"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="193,58,280,83"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="290,52,304,49,384,38,466,30,609,23,609,29,466,36,385,43,304,55,291,57"/>
+<area shape="rect" id="Node000005" href="$da/d1f/structmonitoring__interface_1_1thread__pool__identifier.html" title="Thread pool 식별자" alt="" coords="811,76,983,116"/>
+<area shape="poly" id="edge7_Node000005_Node000003" title=" " alt="" coords="294,70,772,88,811,90,811,95,772,93,294,75"/>
+<area shape="rect" id="Node000006" href="$d5/da6/structmonitoring__interface_1_1process__identifier.html" title="프로세스 식별자" alt="" coords="427,119,585,159"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="272,87,305,101,367,118,427,128,426,133,365,123,303,107,270,92"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,51,144,91"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="157,68,193,68,193,73,157,73"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="997,93,1212,93,1212,99,997,99"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="599,126,811,103,811,108,599,131"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="796,150,999,175"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="995,145,1188,113,1211,109,1212,114,1188,119,995,150"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="441,183,571,209"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="584,187,772,172,796,170,796,175,772,177,585,193"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="217,183,256,209"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="270,193,441,193,441,199,270,199"/>
+</map>

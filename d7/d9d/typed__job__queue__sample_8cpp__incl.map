@@ -1,0 +1,23 @@
+<map id="libraries/thread_system/samples/typed_job_queue_sample/typed_job_queue_sample.cpp" name="libraries/thread_system/samples/typed_job_queue_sample/typed_job_queue_sample.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="797,5,993,75"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,123,223,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="797,55,547,85,237,125,236,120,547,79,797,50"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="247,123,421,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="797,61,435,125,434,120,796,56"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="445,123,620,163"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="798,71,614,122,613,116,796,66"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="644,130,795,155"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="838,77,753,125,750,121,835,73"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="819,130,883,155"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="883,76,864,118,859,116,878,74"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="908,130,971,155"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="913,74,931,116,926,118,908,76"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="995,130,1062,155"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="942,73,1004,120,1001,124,939,77"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1086,130,1153,155"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="972,72,1082,122,1080,127,969,77"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="1177,130,1249,155"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="995,67,1166,120,1172,123,1171,128,1164,125,993,72"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1273,130,1323,155"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="994,54,1123,80,1193,98,1262,120,1266,122,1264,127,1260,125,1192,104,1122,85,993,59"/>
+</map>

@@ -1,7 +1,6 @@
 var files_dup =
 [
-    [ "container", "dir_32d7f900dfedca4f8c20cbc93b9303f2.html", "dir_32d7f900dfedca4f8c20cbc93b9303f2" ],
-    [ "database", "dir_f32c53f2c0f0ccaeb11076e30674d5f4.html", "dir_f32c53f2c0f0ccaeb11076e30674d5f4" ],
-    [ "network", "dir_c901c14b65aa229498a52b725b3d4a2c.html", "dir_c901c14b65aa229498a52b725b3d4a2c" ],
-    [ "thread_system", "dir_bb28cd4b69e24c282ec4b64762c69f3e.html", "dir_bb28cd4b69e24c282ec4b64762c69f3e" ]
+    [ "application_layer", "dir_0baac03fa69015442a7606f2c0617b75.html", "dir_0baac03fa69015442a7606f2c0617b75" ],
+    [ "docs", "dir_49e56c817e5e54854c35e136979f97ca.html", null ],
+    [ "libraries", "dir_bc0718b08fb2015b8e59c47b2805f60c.html", "dir_bc0718b08fb2015b8e59c47b2805f60c" ]
 ];

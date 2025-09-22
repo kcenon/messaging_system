@@ -1,0 +1,9 @@
+<map id="kcenon::messaging::services::container::container_service::statistics" name="kcenon::messaging::services::container::container_service::statistics">
+<area shape="rect" id="Node000001" title=" " alt="" coords="17,328,173,397"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,181,184,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,220,97,328,92,328,92,220"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="28,93,161,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,133,97,181,92,181,92,133"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="75,5,114,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="97,45,97,93,92,93,92,45"/>
+</map>

@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['llong_5fvalue_0',['llong_value',['../namespacecontainer__module.html#a775c32a324aabcd1afea2d8955e45886',1,'container_module']]],
-  ['lockfree_5fqueue_5fptr_1',['lockfree_queue_ptr',['../classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html#a597e81723a388c497e0c182f187f971a',1,'typed_thread_pool_module::typed_lockfree_job_queue_t']]],
-  ['long_5fvalue_2',['long_value',['../namespacecontainer__module.html#a7931dd05b3d7f781592ee651e32a5564',1,'container_module']]]
+  ['job_5ffunction_0',['job_function',['../d2/dca/namespacethread__module_1_1jobs.html#a643825c954ab04093aa06fad96e5a863',1,'thread_module::jobs']]],
+  ['job_5fptr_1',['job_ptr',['../d2/dca/namespacethread__module_1_1jobs.html#a6f3d1da60dd23ecc3962cddf0762dd16',1,'thread_module::jobs']]],
+  ['job_5ftype_5ft_2',['job_type_t',['../d9/d03/namespacetyped__thread__pool__module_1_1detail.html#a18977324b3f05e2b7dc7e90aa416f7e4',1,'typed_thread_pool_module::detail']]],
+  ['job_5funderlying_5ft_3',['job_underlying_t',['../d9/d03/namespacetyped__thread__pool__module_1_1detail.html#a813555dd453c15914df762ed6a3274dc',1,'typed_thread_pool_module::detail']]],
+  ['job_5fweak_5fptr_4',['job_weak_ptr',['../d2/dca/namespacethread__module_1_1jobs.html#aca4dca17443bc8ea7dba48abf19ecba5',1,'thread_module::jobs']]]
 ];

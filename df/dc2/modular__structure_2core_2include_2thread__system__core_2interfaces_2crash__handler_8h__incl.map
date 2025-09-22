@@ -1,0 +1,17 @@
+<map id="libraries/thread_system/modular_structure/core/include/thread_system_core/interfaces/crash_handler.h" name="libraries/thread_system/modular_structure/core/include/thread_system_core/interfaces/crash_handler.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="220,5,429,75"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,123,92,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="226,77,97,121,95,116,224,72"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="116,123,179,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="262,77,183,118,180,114,259,72"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="203,123,267,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="294,77,258,114,254,111,290,73"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="291,123,358,148"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="327,75,327,109,322,109,322,75"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="382,123,441,148"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="358,73,393,111,389,114,354,77"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="465,123,533,148"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="389,72,467,114,464,118,386,77"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="558,123,635,148"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="424,72,551,116,549,121,422,77"/>
+</map>

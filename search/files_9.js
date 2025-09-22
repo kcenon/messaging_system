@@ -1,11 +1,8 @@
 var searchData=
 [
-  ['mainpage_2edox_0',['mainpage.dox',['../mainpage_8dox.html',1,'']]],
-  ['messaging_5fclient_2ecpp_1',['messaging_client.cpp',['../messaging__client_8cpp.html',1,'']]],
-  ['messaging_5fclient_2eh_2',['messaging_client.h',['../messaging__client_8h.html',1,'']]],
-  ['messaging_5fserver_2ecpp_3',['messaging_server.cpp',['../messaging__server_8cpp.html',1,'']]],
-  ['messaging_5fserver_2eh_4',['messaging_server.h',['../messaging__server_8h.html',1,'']]],
-  ['messaging_5fsession_2ecpp_5',['messaging_session.cpp',['../messaging__session_8cpp.html',1,'']]],
-  ['messaging_5fsession_2eh_6',['messaging_session.h',['../messaging__session_8h.html',1,'']]],
-  ['monitoring_5finterface_2eh_7',['monitoring_interface.h',['../monitoring__interface_8h.html',1,'']]]
+  ['job_2ecpp_0',['job.cpp',['../d5/d52/modular__structure_2core_2src_2thread__base_2jobs_2job_8cpp.html',1,'(Global Namespace)'],['../df/dbb/sources_2thread__base_2jobs_2job_8cpp.html',1,'(Global Namespace)']]],
+  ['job_2eh_1',['job.h',['../d0/d0e/modular__structure_2core_2include_2thread__system__core_2thread__base_2jobs_2job_8h.html',1,'(Global Namespace)'],['../d7/db1/modular__structure_2core_2src_2thread__base_2jobs_2job_8h.html',1,'(Global Namespace)'],['../d6/d93/sources_2thread__base_2jobs_2job_8h.html',1,'(Global Namespace)']]],
+  ['job_5fqueue_2ecpp_2',['job_queue.cpp',['../dc/d1f/modular__structure_2core_2src_2thread__base_2jobs_2job__queue_8cpp.html',1,'(Global Namespace)'],['../da/d37/sources_2thread__base_2jobs_2job__queue_8cpp.html',1,'(Global Namespace)']]],
+  ['job_5fqueue_2eh_3',['job_queue.h',['../de/d1d/modular__structure_2core_2include_2thread__system__core_2thread__base_2jobs_2job__queue_8h.html',1,'(Global Namespace)'],['../d4/d2a/modular__structure_2core_2src_2thread__base_2jobs_2job__queue_8h.html',1,'(Global Namespace)'],['../db/d33/sources_2thread__base_2jobs_2job__queue_8h.html',1,'(Global Namespace)']]],
+  ['job_5ftypes_2eh_4',['job_types.h',['../d9/de3/modular__structure_2core_2include_2thread__system__core_2thread__base_2jobs_2job__types_8h.html',1,'(Global Namespace)'],['../d4/d2e/modular__structure_2core_2include_2thread__system__core_2typed__thread__pool_2core_2job__types_8h.html',1,'(Global Namespace)'],['../dd/d52/modular__structure_2core_2src_2thread__base_2jobs_2job__types_8h.html',1,'(Global Namespace)'],['../d0/de3/modular__structure_2core_2src_2typed__thread__pool_2core_2job__types_8h.html',1,'(Global Namespace)'],['../d5/d0c/sources_2thread__base_2jobs_2job__types_8h.html',1,'(Global Namespace)'],['../d7/d36/sources_2typed__thread__pool_2core_2job__types_8h.html',1,'(Global Namespace)']]]
 ];

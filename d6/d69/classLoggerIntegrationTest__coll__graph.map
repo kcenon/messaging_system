@@ -1,0 +1,17 @@
+<map id="LoggerIntegrationTest" name="LoggerIntegrationTest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="159,299,321,324"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,203,107,229"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,232,218,296,216,301,90,237"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="131,203,349,229"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="243,242,243,299,237,299,237,242"/>
+<area shape="rect" id="Node000004" href="$de/d3f/classTestLogger.html" title=" " alt="" coords="107,108,199,133"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="175,141,231,201,227,205,171,145"/>
+<area shape="rect" id="Node000005" href="$d1/dcb/classthread__module_1_1logger__interface.html" title="Logger interface for thread system." alt="" coords="69,5,238,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="156,59,156,108,151,108,151,59"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="224,108,381,133"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="289,146,250,205,246,202,285,143"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="283,13,322,38"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="305,52,305,108,300,108,300,52"/>
+<area shape="rect" id="Node000008" href="$d5/d07/classthread__module_1_1thread__context.html" title="Context object that provides access to optional services." alt="" coords="373,196,544,236"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="403,244,268,301,266,296,401,239"/>
+</map>

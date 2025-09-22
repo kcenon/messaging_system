@@ -1,0 +1,5 @@
+<map id="monitoring_interface::thread_pool_metrics" name="monitoring_interface::thread_pool_metrics">
+<area shape="rect" id="Node000001" title="Thread pool performance metrics interface." alt="" coords="6,5,169,45"/>
+<area shape="rect" id="Node000002" href="$d5/d7d/structmonitoring__interface_1_1process__thread__pool__metrics.html" title="프로세스별 thread pool 메트릭" alt="" coords="5,93,169,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,59,90,93,85,93,85,59"/>
+</map>

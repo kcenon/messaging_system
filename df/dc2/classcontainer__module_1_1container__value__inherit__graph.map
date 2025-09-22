@@ -1,0 +1,7 @@
+<map id="container_module::container_value" name="container_module::container_value">
+<area shape="rect" id="Node000001" title="A specialized value that can hold child values, i.e." alt="" coords="5,167,213,207"/>
+<area shape="rect" id="Node000002" href="$d5/df9/classcontainer__module_1_1value.html" title="The base class for all values stored in the container system." alt="" coords="18,93,201,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,132,112,167,107,167,107,132"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="31,5,188,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,59,112,93,107,93,107,59"/>
+</map>

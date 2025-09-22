@@ -1,0 +1,18 @@
+<map id="libraries/thread_system/sources/typed_thread_pool/detail/template_helpers.h" name="libraries/thread_system/sources/typed_thread_pool/detail/template_helpers.h">
+<area shape="rect" id="Node000001" title="Template metaprogramming utilities for typed_thread_pool module." alt="" coords="149,5,377,60"/>
+<area shape="rect" id="Node000002" href="$dd/d62/sources_2typed__thread__pool_2detail_2type__traits_8h.html" title="Type traits and concepts for typed_thread_pool module." alt="" coords="105,108,209,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="232,62,184,101,180,97,229,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,181,97,207"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="173,62,131,83,95,110,74,139,61,169,56,167,69,136,91,106,129,78,170,58"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="233,108,293,133"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="266,60,266,94,261,94,261,60"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="317,108,372,133"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="290,58,326,96,322,100,286,62"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="396,108,483,133"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="318,58,405,100,402,104,316,62"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="141,136,81,176,78,171,138,131"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="122,181,202,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="160,133,163,168,157,168,155,134"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="226,181,285,207"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="174,131,230,171,227,175,171,136"/>
+</map>

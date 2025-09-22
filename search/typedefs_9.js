@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['queue_5fmap_0',['queue_map',['../classtyped__thread__pool__module_1_1typed__lockfree__job__queue__t.html#ae23a8c2efde5da7b699e39a15a90adda',1,'typed_thread_pool_module::typed_lockfree_job_queue_t']]]
+  ['message_5fhandler_0',['message_handler',['../db/d06/namespacekcenon_1_1messaging_1_1core.html#a8c22dfb7d7aa1f22cdb4121e81c8de78',1,'kcenon::messaging::core']]],
+  ['message_5fvalue_1',['message_value',['../db/d06/namespacekcenon_1_1messaging_1_1core.html#a8bc15653f36ac28942ec528d3db99eb4',1,'kcenon::messaging::core']]]
 ];

@@ -1,0 +1,5 @@
+<map id="system_metrics_collector" name="system_metrics_collector">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,93,195,119"/>
+<area shape="rect" id="Node000002" href="$d0/d98/classmonitoring__module_1_1metrics__collector.html" title="Base class for custom metrics collectors." alt="" coords="21,5,179,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,59,103,93,97,93,97,59"/>
+</map>

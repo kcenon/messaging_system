@@ -1,0 +1,14 @@
+<map id="libraries/thread_system/sources/interfaces/error_handler.h" name="libraries/thread_system/sources/interfaces/error_handler.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="40,5,220,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,92,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,62,71,100,67,96,103,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="109,181,167,207"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="134,60,139,168,134,168,129,60"/>
+<area shape="rect" id="Node000004" href="$de/d49/thread__system_2sources_2interfaces_2logger__interface_8h.html" title=" " alt="" coords="168,108,308,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="165,58,214,97,211,101,161,62"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="223,136,167,175,164,171,220,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="195,181,273,207"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="240,134,238,168,233,168,235,134"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="297,181,361,207"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="254,131,305,170,301,175,251,135"/>
+</map>

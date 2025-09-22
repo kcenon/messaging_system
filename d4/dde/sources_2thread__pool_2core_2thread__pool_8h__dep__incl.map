@@ -1,0 +1,31 @@
+<map id="libraries/thread_system/sources/thread_pool/core/thread_pool.h" name="libraries/thread_system/sources/thread_pool/core/thread_pool.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1840,5,2029,60"/>
+<area shape="rect" id="Node000002" href="$d4/dd4/data__race__benchmark_8cpp.html" title="Performance benchmark to measure the impact of data race fixes." alt="" coords="5,115,181,170"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1826,37,1476,42,1004,53,761,63,535,75,341,91,194,111,164,118,163,113,193,105,340,86,535,70,761,57,1004,48,1476,36,1826,32"/>
+<area shape="rect" id="Node000003" href="$d2/d41/benchmark__common_8h.html" title=" " alt="" coords="206,115,469,170"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1826,36,1584,37,1250,47,868,69,673,87,482,111,440,118,440,113,481,105,672,82,868,64,1250,41,1584,32,1826,30"/>
+<area shape="rect" id="Node000004" href="$d6/d0d/comparison__benchmark_8cpp.html" title="Comparative benchmarks against standard library and common patterns." alt="" coords="493,115,789,170"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="1826,39,1633,45,1378,57,1091,79,802,111,757,118,756,113,801,105,1091,73,1378,52,1633,40,1826,33"/>
+<area shape="rect" id="Node000005" href="$db/db7/contention__benchmark_8cpp.html" title="Google Benchmark tests for thread pool behavior under high contention scenarios." alt="" coords="814,115,1103,170"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="1826,42,1507,65,1311,85,1115,111,1073,118,1073,113,1114,105,1310,80,1506,60,1826,37"/>
+<area shape="rect" id="Node000006" href="$dc/d6a/gbench__thread__pool_8cpp.html" title="Google Benchmark tests for thread pool." alt="" coords="1127,108,1337,177"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1827,45,1606,69,1477,88,1350,111,1337,113,1336,108,1349,105,1476,82,1605,64,1826,40"/>
+<area shape="rect" id="Node000007" href="$dd/d7d/memory__benchmark_8cpp.html" title="Memory usage benchmarks for Thread System." alt="" coords="1361,115,1636,170"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1827,63,1605,118,1604,113,1826,58"/>
+<area shape="rect" id="Node000008" href="$d6/d0f/real__world__benchmark_8cpp.html" title="Real&#45;world scenario benchmarks for Thread System." alt="" coords="1660,115,1948,170"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1894,71,1838,117,1834,113,1891,67"/>
+<area shape="rect" id="Node000009" href="$d4/d09/scalability__benchmark_8cpp.html" title="Google Benchmark&#45;based scalability tests for thread pools." alt="" coords="1972,108,2159,177"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1979,67,2026,106,2023,110,1976,71"/>
+<area shape="rect" id="Node000010" href="$d9/d03/stress__test__benchmark_8cpp.html" title="Stress tests and edge case benchmarks for Thread System." alt="" coords="2183,108,2369,177"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="2032,62,2171,105,2183,109,2182,114,2170,111,2030,67"/>
+<area shape="rect" id="Node000011" href="$db/dfe/thread__pool__benchmark_8cpp.html" title="Google Benchmark&#45;based performance tests for Thread System." alt="" coords="2394,108,2585,177"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="2044,45,2204,70,2382,105,2394,108,2393,114,2381,111,2203,75,2043,50"/>
+<area shape="rect" id="Node000012" href="$d9/d53/throughput__detailed__benchmark_8cpp.html" title=" " alt="" coords="2609,108,2853,177"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="2043,39,2297,63,2448,82,2598,105,2609,107,2608,113,2597,111,2447,87,2297,68,2043,44"/>
+<area shape="rect" id="Node000013" href="$db/df9/composition__example_8cpp.html" title=" " alt="" coords="2877,115,3107,170"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="2043,34,2204,40,2409,53,2637,74,2866,105,2901,113,2900,118,2865,111,2637,79,2409,58,2204,45,2043,39"/>
+<area shape="rect" id="Node000014" href="$d7/d51/integration__example_8cpp.html" title="Demonstrates integration of thread_system with external logger and monitoring." alt="" coords="3131,115,3351,170"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="2043,31,2244,34,2512,44,2815,66,2969,84,3119,105,3155,113,3153,118,3118,111,2968,89,2814,72,2512,49,2244,39,2043,36"/>
+<area shape="rect" id="Node000015" href="$d4/d89/sources_2thread__pool_2core_2thread__pool_8cpp.html" title="Implementation of the thread pool class for managing multiple worker threads." alt="" coords="3376,115,3565,170"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="2043,33,2335,41,2717,55,3091,76,3247,89,3364,105,3396,113,3395,118,3364,111,3246,95,3091,81,2716,60,2335,46,2043,39"/>
+</map>

@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['job_2ecpp_0',['job.cpp',['../job_8cpp.html',1,'']]],
-  ['job_2eh_1',['job.h',['../job_8h.html',1,'']]],
-  ['job_5fqueue_2ecpp_2',['job_queue.cpp',['../job__queue_8cpp.html',1,'']]],
-  ['job_5fqueue_2eh_3',['job_queue.h',['../job__queue_8h.html',1,'']]],
-  ['job_5ftypes_2eh_4',['job_types.h',['../thread__base_2jobs_2job__types_8h.html',1,'(Global Namespace)'],['../typed__thread__pool_2core_2job__types_8h.html',1,'(Global Namespace)']]]
+  ['hazard_5fpointer_2ecpp_0',['hazard_pointer.cpp',['../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp.html',1,'(Global Namespace)'],['../d6/d4a/sources_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp.html',1,'(Global Namespace)']]],
+  ['hazard_5fpointer_2eh_1',['hazard_pointer.h',['../d0/dd7/modular__structure_2core_2include_2thread__system__core_2thread__base_2lockfree_2memory_2hazard__pointer_8h.html',1,'(Global Namespace)'],['../d4/d1a/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8h.html',1,'(Global Namespace)'],['../d8/d01/sources_2thread__base_2lockfree_2memory_2hazard__pointer_8h.html',1,'(Global Namespace)']]],
+  ['hazard_5fpointer_5fsample_2ecpp_2',['hazard_pointer_sample.cpp',['../d1/ddb/hazard__pointer__sample_8cpp.html',1,'']]]
 ];

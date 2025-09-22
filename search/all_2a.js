@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['📊_20performance_20characteristics_0',['📊 Performance Characteristics',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md25',1,'']]],
-  ['📊_20strong_20performance_20benchmarks_20strong_1',['📊 &lt;strong&gt;Performance Benchmarks&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/thread_system/README.md#autotoc_md212',1,'']]],
-  ['📊_20strong_20production_20monitoring_20diagnostics_20strong_2',['📊 &lt;strong&gt;Production Monitoring &amp; Diagnostics&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/thread_system/README.md#autotoc_md244',1,'']]]
+  ['❌_20don_20t_3a_0',['❌ don t:',['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1071',1,'❌ DON&apos;T:'],['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1074',1,'❌ DON&apos;T:'],['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1077',1,'❌ DON&apos;T:'],['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1080',1,'❌ DON&apos;T:']]]
 ];

@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['value_2ecpp_0',['value.cpp',['../value_8cpp.html',1,'']]],
-  ['value_2eh_1',['value.h',['../value_8h.html',1,'']]],
-  ['value_5ftypes_2ecpp_2',['value_types.cpp',['../value__types_8cpp.html',1,'']]],
-  ['value_5ftypes_2eh_3',['value_types.h',['../value__types_8h.html',1,'']]],
-  ['variant_5fvalue_2ecpp_4',['variant_value.cpp',['../variant__value_8cpp.html',1,'']]],
-  ['variant_5fvalue_2eh_5',['variant_value.h',['../variant__value_8h.html',1,'']]]
+  ['queue_5fcomparison_5fbenchmark_2ecpp_0',['queue_comparison_benchmark.cpp',['../de/dc7/queue__comparison__benchmark_8cpp.html',1,'']]],
+  ['quick_5fmpmc_5ftest_2ecpp_1',['quick_mpmc_test.cpp',['../d4/d5b/quick__mpmc__test_8cpp.html',1,'']]],
+  ['quick_5fmpmc_5ftest_5fgoogle_2ecpp_2',['quick_mpmc_test_google.cpp',['../d1/d69/quick__mpmc__test__google_8cpp.html',1,'']]]
 ];

@@ -1,0 +1,25 @@
+var classlogger__module_1_1logger_1_1impl =
+[
+    [ "impl", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a452a58c3000d0177cf0121147fce54a4", null ],
+    [ "~impl", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a425fe1b899569e09c1f15860f1a13955", null ],
+    [ "add_writer", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a59e07695aaa783384e0c38b07af64ba4", null ],
+    [ "add_writer", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a627380a535d1a8d21f49d4503c71a896", null ],
+    [ "clear_writers", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a515d12b409ea2f5d4f2ce09e70effec2", null ],
+    [ "enable_metrics_collection", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a17afc09940116f404adfdf28021c2a3e", null ],
+    [ "flush", "d9/d96/classlogger__module_1_1logger_1_1impl.html#af2f6ff3b8d139f4c6bf87785afa64f59", null ],
+    [ "get_current_metrics", "d9/d96/classlogger__module_1_1logger_1_1impl.html#aebf4888b721b53223cf8883c8cc92b03", null ],
+    [ "get_metrics_collector", "d9/d96/classlogger__module_1_1logger_1_1impl.html#ab4d55fe990256feeec8b87b8c1cf98a2", null ],
+    [ "get_metrics_history", "d9/d96/classlogger__module_1_1logger_1_1impl.html#ab977561816eedc73660964128eee8690", null ],
+    [ "get_min_level", "d9/d96/classlogger__module_1_1logger_1_1impl.html#ac62cce0543720661d086023abbd860d0", null ],
+    [ "get_router", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a1952f9f90db3a136a41bdf1ac52c9c0c", null ],
+    [ "get_writer", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a933a4509679e2681c4714f17f62ef039", null ],
+    [ "is_metrics_collection_enabled", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a6036bfff543de909bead31266d4ba2a4", null ],
+    [ "is_running", "d9/d96/classlogger__module_1_1logger_1_1impl.html#aa8a42e9d094411af281e87edb10fc2b9", null ],
+    [ "log", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a4b3b406032eb39b8ad10f246595d21ff", null ],
+    [ "remove_writer", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a691c8ee7a796c97da695b3f164a89959", null ],
+    [ "reset_metrics", "d9/d96/classlogger__module_1_1logger_1_1impl.html#af0b1a204c171c0b2874c088f16782763", null ],
+    [ "set_filter", "d9/d96/classlogger__module_1_1logger_1_1impl.html#afb11b81252c4b87ffb40ba539370b58b", null ],
+    [ "set_min_level", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a01f7a6882c8000d7e2586227f647566c", null ],
+    [ "start", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a42446fe6b1509f27ba412ab414f2c7d0", null ],
+    [ "stop", "d9/d96/classlogger__module_1_1logger_1_1impl.html#a77934ec328c30be6bd24c3c91022947d", null ]
+];

@@ -1,0 +1,29 @@
+<map id="libraries/thread_system/sources/typed_thread_pool/scheduling/typed_thread_worker.h" name="libraries/thread_system/sources/typed_thread_pool/scheduling/typed_thread_worker.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="610,5,786,75"/>
+<area shape="rect" id="Node000002" href="$d2/d41/benchmark__common_8h.html" title=" " alt="" coords="5,233,268,287"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="600,82,205,235,203,230,598,77"/>
+<area shape="rect" id="Node000003" href="$d6/d0f/real__world__benchmark_8cpp.html" title="Real&#45;world scenario benchmarks for Thread System." alt="" coords="293,233,581,287"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="649,86,470,235,466,231,645,82"/>
+<area shape="rect" id="Node000004" href="$d9/d03/stress__test__benchmark_8cpp.html" title="Stress tests and edge case benchmarks for Thread System." alt="" coords="605,225,791,295"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="701,89,701,225,695,225,695,89"/>
+<area shape="rect" id="Node000005" href="$d9/d53/throughput__detailed__benchmark_8cpp.html" title=" " alt="" coords="816,225,1060,295"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="747,82,903,223,899,227,743,86"/>
+<area shape="rect" id="Node000006" href="$d6/ddc/sources_2typed__thread__pool_2pool_2typed__thread__pool_8h.html" title=" " alt="" coords="1119,123,1346,177"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="800,59,1120,123,1119,128,799,64"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="1106,158,941,165,735,179,508,199,281,228,241,235,240,230,280,223,507,194,734,173,941,160,1106,152"/>
+<area shape="poly" id="edge9_Node000006_Node000003" title=" " alt="" coords="1106,165,867,190,593,228,553,235,552,230,592,223,867,185,1105,160"/>
+<area shape="poly" id="edge10_Node000006_Node000004" title=" " alt="" coords="1106,171,961,195,805,228,792,231,791,226,804,223,960,190,1105,166"/>
+<area shape="poly" id="edge12_Node000006_Node000005" title=" " alt="" coords="1149,185,1031,228,1029,223,1147,180"/>
+<area shape="rect" id="Node000007" href="$d6/d0d/comparison__benchmark_8cpp.html" title="Comparative benchmarks against standard library and common patterns." alt="" coords="1085,233,1381,287"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="1235,192,1235,232,1230,232,1230,192"/>
+<area shape="rect" id="Node000008" href="$dd/d7d/memory__benchmark_8cpp.html" title="Memory usage benchmarks for Thread System." alt="" coords="1405,233,1679,287"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="1322,179,1468,230,1466,235,1320,184"/>
+<area shape="rect" id="Node000009" href="$db/dfe/thread__pool__benchmark_8cpp.html" title="Google Benchmark&#45;based performance tests for Thread System." alt="" coords="1704,225,1895,295"/>
+<area shape="poly" id="edge11_Node000006_Node000009" title=" " alt="" coords="1360,164,1519,189,1692,223,1704,226,1703,231,1691,228,1518,194,1359,170"/>
+<area shape="rect" id="Node000010" href="$d1/de6/typed__scheduling__benchmark_8cpp.html" title=" " alt="" coords="1919,225,2181,295"/>
+<area shape="poly" id="edge13_Node000006_Node000010" title=" " alt="" coords="1360,158,1614,182,1761,200,1908,223,1919,225,1918,230,1907,228,1760,206,1613,188,1359,163"/>
+<area shape="rect" id="Node000011" href="$d5/de2/typed__scheduling__benchmark__google_8cpp.html" title="Priority&#45;based thread pool scheduling benchmark using Google Benchmark." alt="" coords="2205,225,2468,295"/>
+<area shape="poly" id="edge14_Node000006_Node000011" title=" " alt="" coords="1360,152,1526,160,1735,173,1965,193,2194,223,2205,225,2205,230,2194,228,1964,199,1735,178,1526,165,1360,158"/>
+<area shape="rect" id="Node000012" href="$db/df9/composition__example_8cpp.html" title=" " alt="" coords="2493,233,2722,287"/>
+<area shape="poly" id="edge15_Node000006_Node000012" title=" " alt="" coords="1360,148,1574,151,1853,161,2166,184,2326,201,2481,223,2518,230,2517,235,2480,228,2325,206,2166,189,1853,167,1573,156,1360,153"/>
+</map>

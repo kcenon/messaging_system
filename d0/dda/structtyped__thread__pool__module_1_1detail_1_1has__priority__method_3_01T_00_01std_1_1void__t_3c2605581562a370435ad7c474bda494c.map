@@ -1,0 +1,7 @@
+<map id="typed_thread_pool_module::detail::has_priority_method&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().priority())&gt; &gt;" name="typed_thread_pool_module::detail::has_priority_method&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().priority())&gt; &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,204,163"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="49,5,161,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,44,90,79,84,78,86,44"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="107,44,107,79,102,79,102,44"/>
+<area shape="poly" id="edge3_Node000001_Node000002" title=" " alt="" coords="123,44,125,78,120,79,118,44"/>
+</map>

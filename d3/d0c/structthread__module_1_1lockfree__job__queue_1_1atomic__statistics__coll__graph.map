@@ -1,0 +1,9 @@
+<map id="thread_module::lockfree_job_queue::atomic_statistics" name="thread_module::lockfree_job_queue::atomic_statistics">
+<area shape="rect" id="Node000001" title="Internal atomic statistics structure." alt="" coords="5,372,220,412"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="23,181,202,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,221,115,372,110,372,110,221"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="46,93,179,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="115,133,115,181,110,181,110,133"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="93,5,132,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="115,45,115,93,110,93,110,45"/>
+</map>

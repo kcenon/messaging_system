@@ -1,0 +1,25 @@
+<map id="libraries/logger_system/benchmarks/writers_benchmarks/writer_comparison_benchmark.cpp" name="libraries/logger_system/benchmarks/writers_benchmarks/writer_comparison_benchmark.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="185,5,439,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,189,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="253,63,137,112,135,108,251,58"/>
+<area shape="rect" id="Node000003" href="$dc/d9a/console__writer_8h.html" title=" " alt="" coords="375,108,542,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="355,58,419,98,416,103,352,62"/>
+<area shape="rect" id="Node000004" href="$d2/d49/base__writer_8h.html" title=" " alt="" coords="324,196,433,221"/>
+<area shape="poly" id="edge11_Node000001_Node000004" title=" " alt="" coords="325,59,372,183,367,184,320,61"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="339,343,397,368"/>
+<area shape="poly" id="edge13_Node000001_Node000005" title=" " alt="" coords="296,61,270,108,246,168,239,200,237,233,242,264,254,293,268,310,286,324,326,342,324,347,283,328,265,314,250,296,237,265,232,233,234,200,241,167,265,106,292,59"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="264,269,331,295"/>
+<area shape="poly" id="edge14_Node000001_Node000006" title=" " alt="" coords="313,61,301,256,296,255,308,60"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="589,343,667,368"/>
+<area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="441,46,502,68,531,85,557,106,577,132,594,160,616,222,627,281,631,328,625,329,622,282,611,223,589,162,573,135,553,110,528,89,500,73,439,51"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="441,150,402,188,399,184,437,146"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="467,343,531,368"/>
+<area shape="poly" id="edge10_Node000003_Node000009" title=" " alt="" coords="483,147,531,198,554,231,572,268,575,282,572,296,555,319,534,337,531,333,551,316,567,294,570,282,567,270,550,234,527,201,479,150"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="380,222,373,329,367,329,375,222"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="367,223,323,262,319,258,364,219"/>
+<area shape="rect" id="Node000007" href="$d7/d44/logger__system_2sources_2logger_2logger__interface_8h.html" title=" " alt="" coords="405,269,557,295"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="397,219,455,259,452,263,394,224"/>
+<area shape="poly" id="edge9_Node000007_Node000005" title=" " alt="" coords="465,297,399,338,396,333,462,292"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="506,292,593,334,591,339,504,297"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="487,294,495,329,490,330,482,296"/>
+</map>

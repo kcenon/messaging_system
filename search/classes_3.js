@@ -1,6 +1,21 @@
 var searchData=
 [
-  ['database_5fbase_0',['database_base',['../classdatabase_1_1database__base.html',1,'database']]],
-  ['database_5fmanager_1',['database_manager',['../classdatabase_1_1database__manager.html',1,'database']]],
-  ['default_5ferror_5fhandler_2',['default_error_handler',['../classthread__module_1_1default__error__handler.html',1,'thread_module']]]
+  ['dashboard_5fconfig_0',['dashboard_config',['../df/d4a/structmonitoring__module_1_1analysis__dashboard_1_1dashboard__config.html',1,'monitoring_module::analysis_dashboard']]],
+  ['dashboard_5ffactory_1',['dashboard_factory',['../d9/daa/classkcenon_1_1messaging_1_1management_1_1dashboard__factory.html',1,'kcenon::messaging::management']]],
+  ['dashboard_5fmanager_2',['dashboard_manager',['../d1/d50/classkcenon_1_1messaging_1_1management_1_1dashboard__manager.html',1,'kcenon::messaging::management']]],
+  ['dashboard_5frenderer_3',['dashboard_renderer',['../d7/d5d/classdashboard__renderer.html',1,'']]],
+  ['dashboard_5fsnapshot_4',['dashboard_snapshot',['../d1/d88/structkcenon_1_1messaging_1_1management_1_1dashboard__snapshot.html',1,'kcenon::messaging::management']]],
+  ['data_5fenricher_5',['data_enricher',['../da/d2e/classkcenon_1_1messaging_1_1routing_1_1data__enricher.html',1,'kcenon::messaging::routing']]],
+  ['database_5fadapter_6',['database_adapter',['../d1/d2a/classkcenon_1_1messaging_1_1integrations_1_1database__adapter.html',1,'kcenon::messaging::integrations']]],
+  ['database_5fbase_7',['database_base',['../d5/df0/classdatabase_1_1database__base.html',1,'database']]],
+  ['database_5fmanager_8',['database_manager',['../df/d8d/classdatabase_1_1database__manager.html',1,'database']]],
+  ['database_5fservice_9',['database_service',['../d2/d07/classkcenon_1_1messaging_1_1services_1_1database_1_1database__service.html',1,'kcenon::messaging::services::database']]],
+  ['default_5ferror_5fhandler_10',['default_error_handler',['../d1/d4a/classthread__module_1_1default__error__handler.html',1,'thread_module']]],
+  ['device_5fconfig_11',['device_config',['../d2/dd8/structdevice__config.html',1,'']]],
+  ['device_5ftelemetry_12',['device_telemetry',['../d7/d16/structdevice__telemetry.html',1,'']]],
+  ['discovery_5fservice_13',['discovery_service',['../dc/de7/classkcenon_1_1messaging_1_1services_1_1discovery_1_1discovery__service.html',1,'kcenon::messaging::services::discovery']]],
+  ['distributed_5faggregator_14',['distributed_aggregator',['../d6/dab/classmonitoring__module_1_1distributed__aggregator.html',1,'monitoring_module']]],
+  ['distributed_5fbroker_15',['distributed_broker',['../d1/d28/classkcenon_1_1messaging_1_1cluster_1_1distributed__broker.html',1,'kcenon::messaging::cluster']]],
+  ['distributed_5fbroker_5fbuilder_16',['distributed_broker_builder',['../d7/d1b/classkcenon_1_1messaging_1_1cluster_1_1distributed__broker__builder.html',1,'kcenon::messaging::cluster']]],
+  ['distributed_5fworker_17',['distributed_worker',['../d8/dfa/classdistributed__worker.html',1,'']]]
 ];

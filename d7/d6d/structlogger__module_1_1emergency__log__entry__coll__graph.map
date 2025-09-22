@@ -1,0 +1,7 @@
+<map id="logger_module::emergency_log_entry" name="logger_module::emergency_log_entry">
+<area shape="rect" id="Node000001" title="Emergency log entry for crash scenarios." alt="" coords="5,212,205,252"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="62,95,149,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,134,108,212,103,212,103,134"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="36,5,175,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="108,59,108,94,103,94,103,59"/>
+</map>

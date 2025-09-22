@@ -1,0 +1,19 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="5,161,172,201"/>
+<area shape="rect" id="Node000001" href="$d3/dce/classTestMonitoring.html" title=" " alt="" coords="260,5,379,31"/>
+<area shape="poly" id="edge56_Node000000_Node000001" title=" " alt="" coords="109,148,155,92,185,64,219,40,259,24,261,29,221,44,188,68,159,96,113,151"/>
+<area shape="rect" id="Node000002" href="$d7/dde/classconsole__monitoring.html" title="Simple monitoring implementation." alt="" coords="244,55,395,80"/>
+<area shape="poly" id="edge57_Node000000_Node000002" title=" " alt="" coords="123,150,167,118,219,89,251,78,252,83,221,94,170,122,126,154"/>
+<area shape="rect" id="Node000003" href="$d2/db4/classmock__monitoring.html" title="Mock monitoring implementation for demonstration." alt="" coords="251,104,387,129"/>
+<area shape="poly" id="edge58_Node000000_Node000003" title=" " alt="" coords="165,154,219,138,263,127,264,132,221,143,166,159"/>
+<area shape="rect" id="Node000004" href="$dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html" title="다중 프로세스 모니터링 인터페이스" alt="" coords="220,153,419,208"/>
+<area shape="poly" id="edge59_Node000000_Node000004" title=" " alt="" coords="186,178,220,178,220,183,186,183"/>
+<area shape="rect" id="Node000006" href="$dc/d6a/classmonitoring__interface_1_1null__monitoring.html" title="No&#45;op implementation of monitoring interface." alt="" coords="240,233,399,273"/>
+<area shape="poly" id="edge61_Node000000_Node000006" title=" " alt="" coords="167,202,255,230,254,235,166,207"/>
+<area shape="rect" id="Node000007" href="$d8/d4c/classmonitoring__module_1_1monitoring.html" title="Main monitoring implementation that implements thread_system&#39;s monitoring_interface." alt="" coords="241,297,398,337"/>
+<area shape="poly" id="edge62_Node000000_Node000007" title=" " alt="" coords="122,208,167,246,221,282,247,294,245,299,219,287,164,251,119,212"/>
+<area shape="rect" id="Node000008" href="$d3/d20/classsample__monitoring.html" title=" " alt="" coords="245,361,393,387"/>
+<area shape="poly" id="edge63_Node000000_Node000008" title=" " alt="" coords="108,211,153,280,185,316,221,346,247,359,245,364,219,351,181,320,149,284,104,214"/>
+<area shape="rect" id="Node000005" href="$d3/d11/classmonitoring__module_1_1multi__process__monitoring.html" title="다중 프로세스 모니터링 구현 클래스" alt="" coords="467,161,657,201"/>
+<area shape="poly" id="edge60_Node000004_Node000005" title=" " alt="" coords="433,178,466,178,466,183,433,183"/>
+</map>

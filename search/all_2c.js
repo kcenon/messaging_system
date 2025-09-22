@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📖_20strong_20key_20files_20and_20their_20purpose_20strong_0',['📖 &lt;strong&gt;Key Files and Their Purpose&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/thread_system/README.md#autotoc_md221',1,'']]]
+  ['🆕_0',['🆕',['../d8/d53/md_libraries_2thread__system_2docs_2getting-started.html#autotoc_md997',1,'High-Performance Adaptive Example 🆕'],['../d8/d53/md_libraries_2thread__system_2docs_2getting-started.html#autotoc_md1002',1,'High-Performance Adaptive Type Scheduling 🆕'],['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1435',1,'Typed Thread Pool Files (Adaptive) 🆕']]]
 ];

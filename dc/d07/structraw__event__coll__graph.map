@@ -1,0 +1,16 @@
+<map id="raw_event" name="raw_event">
+<area shape="rect" id="Node000001" title=" " alt="" coords="182,343,273,368"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="217,108,304,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="277,145,281,157,283,179,281,202,275,242,263,281,236,343,231,341,258,279,270,241,275,201,278,179,275,158,272,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="65,225,249,280"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="251,147,215,203,192,227,188,223,211,200,246,144"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="191,5,330,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="263,59,263,108,258,108,258,59"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="185,290,221,341,217,344,181,293"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,108,140,133"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="70,147,69,174,76,200,98,223,94,227,72,203,64,175,64,147"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="35,13,73,38"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="55,51,58,83,68,106,63,108,53,85,50,52"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="100,13,139,38"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="110,51,81,109,76,107,105,49"/>
+</map>

@@ -1,0 +1,21 @@
+<map id="kcenon::messaging::core::message_payload" name="kcenon::messaging::core::message_payload">
+<area shape="rect" id="Node000001" title=" " alt="" coords="908,71,1084,111"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="290,155,377,180"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="390,166,564,162,671,156,778,143,857,128,929,109,930,114,858,133,779,149,672,161,564,168,391,171"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="609,64,779,119"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="390,153,609,106,610,112,391,158"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,147,144,187"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="158,165,290,165,290,170,158,170"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="792,89,908,89,908,94,792,94"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="257,58,409,98"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="423,79,609,86,609,91,423,84"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="55,96,94,121"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="108,108,166,110,233,105,274,96,275,101,234,110,166,115,108,114"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="55,27,94,52"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="108,41,257,64,257,69,107,47"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="269,5,398,31"/>
+<area shape="poly" id="edge10_Node000009_Node000007" title=" " alt="" coords="108,34,268,21,268,26,108,39"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="611,11,777,36"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="765,36,908,69,907,74,764,42"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="412,16,610,19,610,25,412,22"/>
+</map>

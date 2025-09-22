@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['crash_5fsafety_5flevel_0',['crash_safety_level',['../namespacethread__module.html#a8e2e4ef65ebb4f41dfd38f28ae7a0899',1,'thread_module']]]
+  ['backoff_5fstrategy_0',['backoff_strategy',['../de/d41/namespacethread__module_1_1lockfree.html#afbb4ac18565298efb3a6fd22636b5fff',1,'thread_module::lockfree::backoff_strategy'],['../de/d41/namespacethread__module_1_1lockfree.html#afbb4ac18565298efb3a6fd22636b5fff',1,'thread_module::lockfree::backoff_strategy'],['../de/d41/namespacethread__module_1_1lockfree.html#afbb4ac18565298efb3a6fd22636b5fff',1,'thread_module::lockfree::backoff_strategy']]]
 ];

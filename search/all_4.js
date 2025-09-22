@@ -1,5 +1,31 @@
 var searchData=
 [
-  ['4_20a_20href_20https_3a_20github_20com_20kcenon_20monitoring_20real_20time_20monitoring_20system_20separate_20project_20a_0',['4. &lt;a href=&quot;https://github.com/kcenon/monitoring&quot; &gt;Real-time Monitoring System (Separate Project)&lt;/a&gt;',['..//home/runner/work/messaging_system/messaging_system/thread_system/README.md#autotoc_md236',1,'']]],
-  ['4_20run_20tests_1',['4. Run Tests',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md13',1,'']]]
+  ['4_20a_20href_20https_3a_20github_20com_20kcenon_20monitoring_20real_20time_20monitoring_20system_20separate_20project_20a_0',['4. &lt;a href=&quot;https://github.com/kcenon/monitoring&quot; &gt;Real-time Monitoring System (Separate Project)&lt;/a&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1446',1,'']]],
+  ['4_20community_1',['4. Community',['../d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md1884',1,'']]],
+  ['4_20conditional_20updates_2',['4. Conditional Updates',['../da/dbb/md_libraries_2monitoring__system_2docs_2performance.html#autotoc_md607',1,'']]],
+  ['4_20database_20writer_3',['4. Database Writer',['../dd/dc8/md_libraries_2logger__system_2docs_2custom-writers.html#autotoc_md282',1,'']]],
+  ['4_20error_20handler_20pattern_4',['4. Error Handler Pattern',['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1085',1,'']]],
+  ['4_20error_20handling_5',['4. Error Handling',['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1078',1,'']]],
+  ['4_20integrated_5fthread_5fsystem_20integration_20hub_6',['4 integrated_thread_system integration hub',['../d9/d9b/md_libraries_2logger__system_2ARCHITECTURE.html#autotoc_md137',1,'4. integrated_thread_system (Integration Hub)'],['../dc/d4e/md_libraries_2monitoring__system_2ARCHITECTURE.html#autotoc_md391',1,'4. integrated_thread_system (Integration Hub)'],['../df/d5b/md_libraries_2thread__system_2ARCHITECTURE.html#autotoc_md725',1,'4. integrated_thread_system (Integration Hub)']]],
+  ['4_20iot_20monitoring_20system_20tt_20iot_5fmonitoring_20cpp_20tt_7',['4. IoT Monitoring System (&lt;tt&gt;iot_monitoring.cpp&lt;/tt&gt;)',['../index.html#autotoc_md26',1,'']]],
+  ['4_20message_20construction_8',['4. Message Construction',['../de/d4f/md_libraries_2logger__system_2docs_2performance.html#autotoc_md322',1,'']]],
+  ['4_20object_20pool_20pattern_9',['4. Object Pool Pattern',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md1777',1,'']]],
+  ['4_20optional_20module_20integration_10',['4. Optional Module Integration',['../d8/d53/md_libraries_2thread__system_2docs_2getting-started.html#autotoc_md1003',1,'']]],
+  ['4_20ring_20buffer_20storage_11',['4. Ring Buffer Storage',['../d3/dd8/md_libraries_2monitoring__system_2docs_2architecture.html#autotoc_md518',1,'']]],
+  ['4_20strong_20distributed_5fworker_20cpp_20strong_12',['4. &lt;strong&gt;distributed_worker.cpp&lt;/strong&gt;',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md41',1,'']]],
+  ['4_20strong_20real_5fworld_5fbenchmark_20cpp_20strong_13',['4. &lt;strong&gt;real_world_benchmark.cpp&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/benchmarks/README.md#autotoc_md765',1,'']]],
+  ['4_20submit_20pull_20request_14',['4. Submit Pull Request',['../da/dae/md_libraries_2thread__system_2docs_2contributing.html#autotoc_md902',1,'']]],
+  ['4_20the_20blocking_20thread_20pool_20antipattern_15',['4. The Blocking Thread Pool Antipattern',['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1092',1,'']]],
+  ['4_20thread_20starvation_16',['4. Thread Starvation',['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1104',1,'']]],
+  ['4_20thread_20system_17',['4. Thread System',['../d2/d64/md_docs_2architecture.html#autotoc_md1646',1,'']]],
+  ['4_20threads_18',['Multi-Threaded Performance (4 Threads)',['../d4/d9e/md_libraries_2thread__system_2docs_2performance.html#autotoc_md1219',1,'']]],
+  ['4_20type_20pool_20configuration_19',['4. Type Pool Configuration',['../d4/d9e/md_libraries_2thread__system_2docs_2performance.html#autotoc_md1231',1,'']]],
+  ['4_20verify_20installation_20',['4. Verify Installation',['../d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md1867',1,'']]],
+  ['4_20writers_21',['4. Writers',['../d5/d03/md_libraries_2logger__system_2docs_2architecture.html#autotoc_md250',1,'']]],
+  ['4_3a_20advanced_20refactoring_22',['Step 4: Advanced Refactoring',['../d9/dae/md_libraries_2thread__system_2docs_2migration__guide.html#autotoc_md1046',1,'']]],
+  ['4_3a_20deadlock_20in_20message_20processing_23',['Issue 4: Deadlock in Message Processing',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md1993',1,'']]],
+  ['4_3a_20integrating_20with_20existing_20libraries_24',['Challenge 4: Integrating with Existing Libraries',['../d9/dae/md_libraries_2thread__system_2docs_2migration__guide.html#autotoc_md1058',1,'']]],
+  ['4_3a_20integration_20testing_20✅_20complete_25',['Phase 4: Integration Testing ✅ COMPLETE',['../d9/dea/md_libraries_2thread__system_2MIGRATION.html#autotoc_md1282',1,'']]],
+  ['4_3a_20platform_20specific_20tests_20✅_26',['Phase 4: Platform-Specific Tests ✅',['../dd/da6/md_libraries_2thread__system_2TEST__COVERAGE__IMPROVEMENT__REPORT.html#autotoc_md1538',1,'']]],
+  ['4b_20adaptive_20queue_20configuration_27',['4b. Adaptive Queue Configuration',['../d4/d9e/md_libraries_2thread__system_2docs_2performance.html#autotoc_md1232',1,'']]]
 ];

@@ -1,0 +1,13 @@
+<map id="kcenon::messaging::cluster::distributed_broker::cluster_statistics" name="kcenon::messaging::cluster::distributed_broker::cluster_statistics">
+<area shape="rect" id="Node000001" title=" " alt="" coords="74,313,262,368"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="31,218,118,243"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,257,73,273,78,288,102,311,98,315,74,291,68,274,67,257"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,93,144,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,147,77,218,72,218,72,147"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="166,211,359,251"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="252,265,235,291,210,315,206,311,231,288,248,262"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="198,101,327,126"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="265,140,265,210,260,210,260,140"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="243,5,282,31"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="265,44,265,101,260,101,260,44"/>
+</map>

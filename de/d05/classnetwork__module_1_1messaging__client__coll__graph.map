@@ -1,0 +1,5 @@
+<map id="network_module::messaging_client" name="network_module::messaging_client">
+<area shape="rect" id="Node000001" title="A basic TCP client that connects to a remote host, sends/receives data using asynchronous operations,..." alt="" coords="5,108,216,148"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="22,5,199,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,74,113,108,108,108,108,74"/>
+</map>

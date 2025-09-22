@@ -1,9 +1,23 @@
 var searchData=
 [
-  ['backoff_0',['backoff',['../structthread__module_1_1lockfree_1_1adaptive__config.html#a06775e9ffafe2cf6c3c7821a71296fb1',1,'thread_module::lockfree::adaptive_config']]],
-  ['backoff_5ftime_5fns_1',['backoff_time_ns',['../structthread__module_1_1lockfree_1_1performance__stats.html#a4d1d143b316e83d79ff379f032ee464e',1,'thread_module::lockfree::performance_stats']]],
-  ['bulk_5fread_5fcount_2',['bulk_read_count',['../structcontainer__module_1_1thread__safe__container_1_1_statistics.html#afda99bb29db6c44633213a45d24f74eb',1,'container_module::thread_safe_container::Statistics']]],
-  ['bulk_5fread_5fcount_5f_3',['bulk_read_count_',['../classcontainer__module_1_1thread__safe__container.html#a606c0148bd480134ffa8ba8cab923791',1,'container_module::thread_safe_container']]],
-  ['bulk_5fwrite_5fcount_4',['bulk_write_count',['../structcontainer__module_1_1thread__safe__container_1_1_statistics.html#aa45e176b9c53a19056f9913cd40f9019',1,'container_module::thread_safe_container::Statistics']]],
-  ['bulk_5fwrite_5fcount_5f_5',['bulk_write_count_',['../classcontainer__module_1_1thread__safe__container.html#a02a06ca5bca9b83a0dafd9abfa77dde4',1,'container_module::thread_safe_container']]]
+  ['backoff_0',['backoff',['../de/d2d/structthread__module_1_1lockfree_1_1adaptive__config.html#a06775e9ffafe2cf6c3c7821a71296fb1',1,'thread_module::lockfree::adaptive_config']]],
+  ['backoff_5ftime_5fns_1',['backoff_time_ns',['../d6/d6f/structthread__module_1_1lockfree_1_1performance__stats.html#ac7d87b7ce3069bc3291dbbcad19bdf43',1,'thread_module::lockfree::performance_stats']]],
+  ['backup_5fcount_2',['backup_count',['../df/d10/structlogger__module_1_1logger__crash__safety_1_1emergency__log__stats.html#ae742d2781c4a8396c874ee6b3bae40e9',1,'logger_module::logger_crash_safety::emergency_log_stats']]],
+  ['batch_5finterval_3',['batch_interval',['../d6/d9d/structmonitoring__module_1_1performance__optimizer_1_1optimization__config.html#a0ac4d9ab49784ba5299aadff3dcb63e8',1,'monitoring_module::performance_optimizer::optimization_config']]],
+  ['batch_5fsize_4',['batch_size',['../d6/d9d/structmonitoring__module_1_1performance__optimizer_1_1optimization__config.html#a5b7a14eb15269446eb5585bb54ab75fa',1,'monitoring_module::performance_optimizer::optimization_config::batch_size'],['../d7/d0d/mpmc__performance__test_8cpp.html#af182bc9822b8d2beb66c8ee495a6d61f',1,'BATCH_SIZE:&#160;mpmc_performance_test.cpp']]],
+  ['batches_5fprocessed_5',['batches_processed',['../d4/d66/structmonitoring__module_1_1batch__metrics__processor_1_1stats.html#a1a04ceb7a297f084bb86649fd8ea474a',1,'monitoring_module::batch_metrics_processor::stats::batches_processed'],['../d9/d62/structmonitoring__module_1_1performance__optimizer_1_1optimization__stats.html#a3de2922b8167e953ba2ebb69989a15bc',1,'monitoring_module::performance_optimizer::optimization_stats::batches_processed']]],
+  ['binary_5fdata_6',['binary_data',['../d9/d87/structkcenon_1_1messaging_1_1core_1_1message__payload.html#a7d74a8bc1c6d764f73e97e4465ed3a6b',1,'kcenon::messaging::core::message_payload']]],
+  ['blue_7',['blue',['../dc/d04/namespacecolors.html#a820360096aacfeca590849b53f15128c',1,'colors']]],
+  ['bold_8',['bold',['../dc/d04/namespacecolors.html#aaf7d7a98e3ee9a4da42d41146e39b57b',1,'colors']]],
+  ['bottom_5fpriority_5fworkers_5f_9',['bottom_priority_workers_',['../dd/d32/typed__thread__pool__sample__2_8cpp.html#a77bf62c88607230eb7d09c3533421c80',1,'typed_thread_pool_sample_2.cpp']]],
+  ['buffer_5f_10',['buffer_',['../d5/d7b/classRingBufferTest.html#a8835e114fe93688ce2fe7051deb83e88',1,'RingBufferTest::buffer_'],['../d0/d8d/classlogger__module_1_1file__writer.html#a8690be70d550d6938599fbfef00ae3b7',1,'logger_module::file_writer::buffer_']]],
+  ['buffer_5fsize_5f_11',['buffer_size_',['../d0/d8d/classlogger__module_1_1file__writer.html#acb77a217076ff5815a814158ad842212',1,'logger_module::file_writer']]],
+  ['bulk_5fread_5fcount_12',['bulk_read_count',['../d5/df7/structcontainer__module_1_1thread__safe__container_1_1Statistics.html#afda99bb29db6c44633213a45d24f74eb',1,'container_module::thread_safe_container::Statistics']]],
+  ['bulk_5fwrite_5fcount_13',['bulk_write_count',['../d5/df7/structcontainer__module_1_1thread__safe__container_1_1Statistics.html#aa45e176b9c53a19056f9913cd40f9019',1,'container_module::thread_safe_container::Statistics']]],
+  ['bytes_5fenqueued_14',['bytes_enqueued',['../dc/d9f/structlogger__module_1_1performance__metrics.html#a4f6aa01b9d065332b52665668cf2fd27',1,'logger_module::performance_metrics']]],
+  ['bytes_5fper_5fsecond_15',['bytes_per_second',['../d4/db8/structlogger__module_1_1log__analyzer_1_1time__window__stats.html#a9bf3b6bc4dae0cebeb1b20177d217fa0',1,'logger_module::log_analyzer::time_window_stats']]],
+  ['bytes_5fprocessed_16',['bytes_processed',['../dc/d9f/structlogger__module_1_1performance__metrics.html#ad0c57f5da8e2ddea827d588ff588c519',1,'logger_module::performance_metrics']]],
+  ['bytes_5fsent_17',['bytes_sent',['../d5/dfd/structlogger__module_1_1network__writer_1_1connection__stats.html#ad8c2a22839a4cd159bb501f28f7d5b6c',1,'logger_module::network_writer::connection_stats']]],
+  ['bytes_5fwritten_18',['bytes_written',['../d4/db6/structlogger__module_1_1writer__metrics.html#a0e5843b685d892041ded58acc4aafc4d',1,'logger_module::writer_metrics']]],
+  ['bytes_5fwritten_5f_19',['bytes_written_',['../d0/d8d/classlogger__module_1_1file__writer.html#aec36265184eee3c787b6c216795232a7',1,'logger_module::file_writer']]]
 ];

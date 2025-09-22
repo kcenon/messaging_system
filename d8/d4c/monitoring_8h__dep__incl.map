@@ -1,0 +1,19 @@
+<map id="libraries/monitoring_system/sources/monitoring/monitoring.h" name="libraries/monitoring_system/sources/monitoring/monitoring.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1001,5,1207,60"/>
+<area shape="rect" id="Node000002" href="$dc/dea/collection__benchmark_8cpp.html" title=" " alt="" coords="5,115,288,170"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="987,43,675,66,487,85,299,111,258,118,258,113,298,105,486,80,675,61,987,38"/>
+<area shape="rect" id="Node000003" href="$dd/d92/metrics__update__benchmark_8cpp.html" title=" " alt="" coords="311,108,547,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="987,49,787,74,560,111,548,113,547,108,560,105,787,68,987,43"/>
+<area shape="rect" id="Node000004" href="$d7/d4f/monitoring__performance__benchmark_8cpp.html" title=" " alt="" coords="572,108,847,177"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="995,66,833,111,831,105,994,61"/>
+<area shape="rect" id="Node000005" href="$d6/d19/multithreaded__monitoring__benchmark_8cpp.html" title=" " alt="" coords="871,108,1107,177"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="1067,72,1027,110,1023,106,1064,68"/>
+<area shape="rect" id="Node000006" href="$db/d2d/basic__monitoring_8cpp.html" title=" " alt="" coords="1131,115,1306,170"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1144,68,1192,113,1189,117,1141,72"/>
+<area shape="rect" id="Node000007" href="$de/d42/monitoring__system_2samples_2crash__protection_2main_8cpp.html" title="Monitoring system crash protection demonstration." alt="" coords="1330,115,1505,170"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1194,62,1342,113,1340,118,1192,67"/>
+<area shape="rect" id="Node000008" href="$dd/dfb/monitoring_8cpp.html" title=" " alt="" coords="1529,115,1735,170"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1221,49,1364,73,1518,105,1547,113,1545,118,1517,111,1363,79,1221,54"/>
+<area shape="rect" id="Node000009" href="$d3/d9b/monitoring__test_8cpp.html" title=" " alt="" coords="1759,115,1966,170"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1221,39,1465,62,1607,81,1749,105,1780,113,1779,118,1747,111,1607,86,1464,67,1221,44"/>
+</map>

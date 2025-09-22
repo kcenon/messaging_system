@@ -1,0 +1,27 @@
+var logger__performance__benchmark_8cpp =
+[
+    [ "null_writer", "d6/d8c/classnull__writer.html", "d6/d8c/classnull__writer" ],
+    [ "BENCHMARK", "d9/d71/logger__performance__benchmark_8cpp.html#a7374bf29d2747a48db20269bfbfc215e", null ],
+    [ "BENCHMARK", "d9/d71/logger__performance__benchmark_8cpp.html#a26265db0e4bf971f261e7ff8391e63f1", null ],
+    [ "BENCHMARK", "d9/d71/logger__performance__benchmark_8cpp.html#a7806022e4c059660f20063410a184029", null ],
+    [ "BENCHMARK", "d9/d71/logger__performance__benchmark_8cpp.html#af6569bbd66edb0e5c35088ceb5182f0b", null ],
+    [ "BENCHMARK", "d9/d71/logger__performance__benchmark_8cpp.html#a2f3a62fa829a35dea7ad61fa9dd0bcb9", null ],
+    [ "BENCHMARK", "d9/d71/logger__performance__benchmark_8cpp.html#a18133083c5726d5f8749a3cd43b7d366", null ],
+    [ "BENCHMARK", "d9/d71/logger__performance__benchmark_8cpp.html#ae34f912cdeeabaf91ba7e893cafee366", null ],
+    [ "BENCHMARK", "d9/d71/logger__performance__benchmark_8cpp.html#a85a5aa7e6ea0e8f8c6f1171be5223a0a", null ],
+    [ "BENCHMARK", "d9/d71/logger__performance__benchmark_8cpp.html#a2a34e42c578c793e9b2c5901eb193646", null ],
+    [ "BM_AsyncLoggerConstruction", "d9/d71/logger__performance__benchmark_8cpp.html#aca9ef9dd764a4896b0f84d8348aab398", null ],
+    [ "BM_AsyncLogging", "d9/d71/logger__performance__benchmark_8cpp.html#aef32de6ec4be5301f270d849a422cbae", null ],
+    [ "BM_FlushOperation", "d9/d71/logger__performance__benchmark_8cpp.html#a7092f070a4b67b5f24d729f940388052", null ],
+    [ "BM_LoggerConstruction", "d9/d71/logger__performance__benchmark_8cpp.html#aca8d2eec0828d2781cf8a21d1ebc75a2", null ],
+    [ "BM_LoggingLevels", "d9/d71/logger__performance__benchmark_8cpp.html#ae3eafc2f307560e407919e7715fce2de", null ],
+    [ "BM_LoggingMessageSize", "d9/d71/logger__performance__benchmark_8cpp.html#a1ded87395d1f81d172e1b6617fd76bd2", null ],
+    [ "BM_LoggingWithSourceLocation", "d9/d71/logger__performance__benchmark_8cpp.html#a9311fcc37724d2897619830fdd321a76", null ],
+    [ "BM_LogLevelCheck", "d9/d71/logger__performance__benchmark_8cpp.html#a9884c1939bf9320dd292d9991f19a8b2", null ],
+    [ "BM_SyncLogging", "d9/d71/logger__performance__benchmark_8cpp.html#a33ab9714024ae7cf1219198fcc1d09aa", null ],
+    [ "cleanup_loggers", "d9/d71/logger__performance__benchmark_8cpp.html#a366ab5b723be7072acc148c34eba329b", null ],
+    [ "main", "d9/d71/logger__performance__benchmark_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627", null ],
+    [ "setup_loggers", "d9/d71/logger__performance__benchmark_8cpp.html#abd90036e516bb966c5795b93ab018c8e", null ],
+    [ "async_logger", "d9/d71/logger__performance__benchmark_8cpp.html#a915aa603431588879c0d37ddd854d206", null ],
+    [ "sync_logger", "d9/d71/logger__performance__benchmark_8cpp.html#aa7967b02d9eabe1d0e1f94f31e6d5c23", null ]
+];

@@ -1,0 +1,11 @@
+<map id="WakeIntervalTestWorker" name="WakeIntervalTestWorker">
+<area shape="rect" id="Node000001" title=" " alt="" coords="83,269,261,295"/>
+<area shape="rect" id="Node000002" href="$da/d94/classthread__module_1_1thread__base.html" title="A foundational class for implementing custom worker threads." alt="" coords="5,181,213,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,216,165,267,161,270,124,219"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="237,181,400,207"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="288,216,193,271,191,267,286,211"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="252,93,385,119"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="321,133,321,181,316,181,316,133"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="299,5,338,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="321,45,321,93,316,93,316,45"/>
+</map>

@@ -1,0 +1,18 @@
+<map id="libraries/monitoring_system/benchmarks/storage_benchmarks/ring_buffer_benchmark.cpp" name="libraries/monitoring_system/benchmarks/storage_benchmarks/ring_buffer_benchmark.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="136,5,427,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,189,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="231,62,133,112,131,107,228,58"/>
+<area shape="rect" id="Node000003" href="$d7/d7b/ring__buffer_8h.html" title=" " alt="" coords="264,108,411,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="300,59,321,95,317,98,295,62"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="195,196,258,221"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="273,61,255,109,235,183,230,181,249,107,268,59"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="435,115,499,141"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="335,58,433,107,431,112,332,62"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="312,150,256,190,253,186,309,146"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="283,196,347,221"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="334,149,324,184,319,182,329,147"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="371,196,437,221"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="355,146,387,184,383,187,351,150"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="461,196,547,221"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="378,146,468,188,466,192,376,150"/>
+</map>

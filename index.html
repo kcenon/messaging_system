@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: Messaging System Documentation</title>
+<title>Messaging System: Application Layer - Messaging System</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">Messaging System<span id="projectnumber">&#160;1.0.0</span>
    </div>
-   <div id="projectbrief">High-performance messaging system with lock-free thread pools</div>
+   <div id="projectbrief">High-Performance Cross-Platform Messaging Framework</div>
   </td>
  </tr>
  </tbody>
@@ -90,151 +90,429 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Messaging System Documentation </div></div>
+  <div class="headertitle"><div class="title">Application Layer - Messaging System </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="intro"></a>
-Introduction</h1>
-<p>The Messaging System is a high-performance C++20 framework for building distributed messaging applications. It combines type-safe containers, PostgreSQL database integration, and TCP networking with the power of the lock-free thread_system for exceptional performance.</p>
-<h1><a class="anchor" id="features"></a>
-Key Features</h1>
+<div class="textblock"><p><a class="anchor" id="md_application__layer_2README"></a> The application layer provides high-level messaging services and orchestration for the entire messaging system. It integrates all underlying libraries (container, database, network) into a cohesive application framework.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Features</h1>
 <ul>
-<li><b>High-Performance Threading</b>: Integrated lock-free thread pools providing 2.14x throughput improvement</li>
-<li><b>Type-Safe Containers</b>: Thread-safe, SIMD-optimized data containers with variant value types</li>
-<li><b>Database Integration</b>: PostgreSQL support with connection pooling and prepared statements</li>
-<li><b>Network Module</b>: Asynchronous TCP client/server with coroutine support</li>
-<li><b>Python Bindings</b>: Complete Python API for all modules</li>
-<li><b>Lock-free Options</b>: Optional lock-free implementations for maximum performance</li>
+<li><b>High-Performance Message Bus</b>: Thread-safe message routing with priority queues</li>
+<li><b>Service Integration</b>: Adapter pattern for seamless service integration</li>
+<li><b>Dependency Injection</b>: Template-based service container with singleton support</li>
+<li><b>Configuration Management</b>: Builder pattern for flexible system configuration</li>
+<li><b>Comprehensive Testing</b>: Unit tests, integration tests, and performance benchmarks</li>
+<li><b>Modern C++20</b>: Utilizes latest C++ features including concepts, ranges, and std::jthread</li>
 </ul>
-<h1><a class="anchor" id="modules"></a>
-System Modules</h1>
-<h2><a class="anchor" id="container"></a>
-Container Module</h2>
-<p>The container module provides thread-safe, type-safe data containers with:</p><ul>
-<li>Variant value types (bool, numeric, string, bytes, nested containers)</li>
-<li>SIMD-optimized operations</li>
-<li>Thread-safe access patterns</li>
-<li>Memory-efficient storage</li>
+<h1><a class="anchor" id="autotoc_md2"></a>
+Architecture</h1>
+<h2><a class="anchor" id="autotoc_md3"></a>
+Core Components</h2>
+<ul>
+<li><b>Message Bus</b> (<code>message_bus</code>): Central message routing with worker threads</li>
+<li><b>Message Types</b> (<code>message_types</code>): Comprehensive message structures with metadata</li>
+<li><b>Configuration</b> (<code>config</code>): Unified configuration system with builder pattern</li>
 </ul>
-<h2><a class="anchor" id="database"></a>
-Database Module</h2>
-<p>The database module offers PostgreSQL integration with:</p><ul>
-<li>Connection pooling</li>
-<li>Prepared statement support</li>
-<li>Asynchronous query execution</li>
-<li>Transaction management</li>
-<li>Error handling and recovery</li>
+<h2><a class="anchor" id="autotoc_md4"></a>
+Service Architecture</h2>
+<ul>
+<li><b>Service Interface</b> (<code>service_interface</code>): Base interface with lifecycle management</li>
+<li><b>Service Adapter</b> (<code>service_adapter</code>): Adapter pattern for message bus integration</li>
+<li><b><a class="el" href="d0/d7b/classContainer.html">Container</a> Service</b>: Message serialization and compression services</li>
+<li><b>Network Service</b>: Network messaging and broadcasting capabilities</li>
 </ul>
-<h2><a class="anchor" id="network"></a>
-Network Module</h2>
-<p>The network module implements high-performance messaging with:</p><ul>
-<li>TCP client and server implementations</li>
-<li>Coroutine-based asynchronous I/O</li>
-<li>Pipeline processing for message handling</li>
-<li>Session management</li>
-<li>Binary and text protocol support</li>
+<h2><a class="anchor" id="autotoc_md5"></a>
+Integration Layer</h2>
+<ul>
+<li><b>Service <a class="el" href="d0/d7b/classContainer.html">Container</a></b> (<code>service_container</code>): Dependency injection with factory pattern</li>
+<li><b>System Integrator</b> (<code>system_integrator</code>): Main orchestrator and entry point</li>
+<li><b>Messaging System Orchestrator</b>: Service lifecycle coordinator</li>
 </ul>
-<h2><a class="anchor" id="thread_system"></a>
-Thread System</h2>
-<p>The integrated thread_system provides:</p><ul>
-<li>Standard and lock-free thread pools</li>
-<li>Type-based job prioritization (RealTime, Batch, Background)</li>
-<li>Hazard pointer memory management</li>
-<li>Lock-free queues and data structures</li>
-<li>Comprehensive logging and monitoring</li>
-</ul>
-<h1><a class="anchor" id="performance"></a>
-Performance Characteristics</h1>
-<p>With the lock-free thread_system integration:</p><ul>
-<li><b>Throughput</b>: Up to 2.48M jobs/second (lock-free) vs 1.16M (mutex-based)</li>
-<li><b>Latency</b>: Sub-microsecond job scheduling</li>
-<li><b>Scalability</b>: Linear scaling up to 16+ threads</li>
-<li><b>Memory</b>: Efficient hazard pointer-based reclamation</li>
-</ul>
-<h1><a class="anchor" id="getting_started"></a>
-Getting Started</h1>
-<h2><a class="anchor" id="building"></a>
-Building the System</h2>
-<div class="fragment"><div class="line"># Install dependencies</div>
-<div class="line">./dependency.sh</div>
+<h1><a class="anchor" id="autotoc_md6"></a>
+Quick Start</h1>
+<h2><a class="anchor" id="autotoc_md7"></a>
+Basic Usage</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="d6/deb/system__integrator_8h.html">kcenon/messaging/integrations/system_integrator.h</a>&gt;</span></div>
 <div class="line"> </div>
-<div class="line"># Build with default options</div>
-<div class="line">./build.sh</div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="d9/dda/namespacekcenon_1_1messaging_1_1integrations.html">kcenon::messaging::integrations</a>;</div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="d4/d18/namespacekcenon_1_1messaging_1_1config.html">kcenon::messaging::config</a>;</div>
 <div class="line"> </div>
-<div class="line"># Build with lock-free implementations</div>
-<div class="line">./build.sh --lockfree</div>
+<div class="line"><span class="comment">// Create and configure the system</span></div>
+<div class="line"><a class="code hl_class" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config_builder</a> builder;</div>
+<div class="line"><span class="keyword">auto</span> config = builder</div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#aaee60aaba60719b8796da4f1f7ef4b15">set_environment</a>(<span class="stringliteral">&quot;development&quot;</span>)</div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#adacd771a6ae2ad86de26e68ec694a339">set_worker_threads</a>(4)</div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a1228dc8c20c62051ed2c202f2c252222">set_queue_size</a>(10000)</div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a0855c73a43545a7962061cf76d428b78">enable_compression</a>(<span class="keyword">true</span>)</div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#aabd8c12c6de7413868bc31f06f6e935f">build</a>();</div>
 <div class="line"> </div>
-<div class="line"># Build specific modules only</div>
-<div class="line">./build.sh --no-database --no-python</div>
-</div><!-- fragment --><h2><a class="anchor" id="basic_usage"></a>
-Basic Usage Example</h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="container_8h.html">messaging_system/container/container.h</a>&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;messaging_system/network/messaging_server.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;thread_pool/core/lockfree_thread_pool.h&gt;</span></div>
+<div class="line"><span class="keyword">auto</span> integrator = std::make_unique&lt;system_integrator&gt;(config);</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    <span class="comment">// Create a lock-free thread pool</span></div>
-<div class="line">    <span class="keyword">auto</span> pool = std::make_shared&lt;thread_pool_module::lockfree_thread_pool&gt;();</div>
-<div class="line">    pool-&gt;start();</div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// Create messaging server with the thread pool</span></div>
-<div class="line">    network::messaging_server server(8080);</div>
-<div class="line">    server.set_thread_pool(pool);</div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// Set up message handler</span></div>
-<div class="line">    server.on_message([](<span class="keyword">auto</span> session, <span class="keyword">auto</span> message) {</div>
-<div class="line">        <span class="comment">// Process message using container</span></div>
-<div class="line">        container::container data;</div>
-<div class="line">        data.deserialize(message);</div>
-<div class="line">        </div>
-<div class="line">        <span class="comment">// Handle the message...</span></div>
-<div class="line">    });</div>
-<div class="line">    </div>
-<div class="line">    server.start();</div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// Run until shutdown</span></div>
-<div class="line">    server.wait();</div>
-<div class="line">    </div>
-<div class="line">    <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="acontainer_8h_html"><div class="ttname"><a href="container_8h.html">container.h</a></div><div class="ttdoc">Main include file for the container module.</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="architecture"></a>
-System Architecture</h1>
-<p>The messaging system is built on a layered architecture:</p>
-<ol type="1">
-<li><b>Foundation Layer</b>: Thread system with lock-free primitives</li>
-<li><b>Core Layer</b>: Container, database, and network modules</li>
-<li><b>Integration Layer</b>: Module interconnections and shared resources</li>
-<li><b>API Layer</b>: C++ and Python interfaces</li>
+<div class="line"><span class="comment">// Initialize</span></div>
+<div class="line">integrator-&gt;initialize();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Subscribe to messages</span></div>
+<div class="line">integrator-&gt;subscribe(<span class="stringliteral">&quot;user.login&quot;</span>, [](<span class="keyword">const</span> message&amp; msg) {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;User logged in!&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">});</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Publish messages</span></div>
+<div class="line">message_payload payload;</div>
+<div class="line">payload.topic = <span class="stringliteral">&quot;user.login&quot;</span>;</div>
+<div class="line">payload.data[<span class="stringliteral">&quot;username&quot;</span>] = std::string(<span class="stringliteral">&quot;john_doe&quot;</span>);</div>
+<div class="line">integrator-&gt;publish(<span class="stringliteral">&quot;user.login&quot;</span>, payload, <span class="stringliteral">&quot;auth_service&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Shutdown</span></div>
+<div class="line">integrator-&gt;shutdown();</div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1config_1_1config__builder_html"><div class="ttname"><a href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">kcenon::messaging::config::config_builder</a></div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00058">config.h:58</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1config_1_1config__builder_html_a0855c73a43545a7962061cf76d428b78"><div class="ttname"><a href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a0855c73a43545a7962061cf76d428b78">kcenon::messaging::config::config_builder::enable_compression</a></div><div class="ttdeci">config_builder &amp; enable_compression(bool enable=true)</div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00085">config.h:85</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1config_1_1config__builder_html_a1228dc8c20c62051ed2c202f2c252222"><div class="ttname"><a href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a1228dc8c20c62051ed2c202f2c252222">kcenon::messaging::config::config_builder::set_queue_size</a></div><div class="ttdeci">config_builder &amp; set_queue_size(size_t size)</div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00069">config.h:69</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1config_1_1config__builder_html_aabd8c12c6de7413868bc31f06f6e935f"><div class="ttname"><a href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#aabd8c12c6de7413868bc31f06f6e935f">kcenon::messaging::config::config_builder::build</a></div><div class="ttdeci">messaging_config build()</div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00139">config.h:139</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1config_1_1config__builder_html_aaee60aaba60719b8796da4f1f7ef4b15"><div class="ttname"><a href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#aaee60aaba60719b8796da4f1f7ef4b15">kcenon::messaging::config::config_builder::set_environment</a></div><div class="ttdeci">config_builder &amp; set_environment(const std::string &amp;env)</div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00117">config.h:117</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1config_1_1config__builder_html_adacd771a6ae2ad86de26e68ec694a339"><div class="ttname"><a href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#adacd771a6ae2ad86de26e68ec694a339">kcenon::messaging::config::config_builder::set_worker_threads</a></div><div class="ttdeci">config_builder &amp; set_worker_threads(size_t threads)</div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00063">config.h:63</a></div></div>
+<div class="ttc" id="anamespacekcenon_1_1messaging_1_1config_html"><div class="ttname"><a href="d4/d18/namespacekcenon_1_1messaging_1_1config.html">kcenon::messaging::config</a></div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00010">config.h:10</a></div></div>
+<div class="ttc" id="anamespacekcenon_1_1messaging_1_1integrations_html"><div class="ttname"><a href="d9/dda/namespacekcenon_1_1messaging_1_1integrations.html">kcenon::messaging::integrations</a></div><div class="ttdef"><b>Definition</b> <a href="dd/d8d/external__system__adapter_8h_source.html#l00010">external_system_adapter.h:10</a></div></div>
+<div class="ttc" id="asystem__integrator_8h_html"><div class="ttname"><a href="d6/deb/system__integrator_8h.html">system_integrator.h</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+Configuration</h2>
+<p>The system supports flexible configuration through the builder pattern:</p>
+<div class="fragment"><div class="line"><a class="code hl_class" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config_builder</a> builder;</div>
+<div class="line"><span class="keyword">auto</span> config = builder</div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#aaee60aaba60719b8796da4f1f7ef4b15">set_environment</a>(<span class="stringliteral">&quot;production&quot;</span>)        <span class="comment">// Environment: development, staging, production</span></div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#adacd771a6ae2ad86de26e68ec694a339">set_worker_threads</a>(8)               <span class="comment">// Number of worker threads</span></div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a1228dc8c20c62051ed2c202f2c252222">set_queue_size</a>(50000)               <span class="comment">// Maximum queue size</span></div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a4488c3c2a79b2e4284743a5e119de50f">enable_priority_queue</a>(<span class="keyword">true</span>)         <span class="comment">// Enable priority-based message processing</span></div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a0855c73a43545a7962061cf76d428b78">enable_compression</a>(<span class="keyword">true</span>)            <span class="comment">// Enable message compression</span></div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a7057c4b16f02e70a4af640ba89f5d7d6">enable_external_logger</a>(<span class="keyword">true</span>)       <span class="comment">// Use external logger system</span></div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a11966768a2a64d1ac2c3acbcc3fbcbd9">enable_external_monitoring</a>(<span class="keyword">true</span>)   <span class="comment">// Use external monitoring system</span></div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#af1e94229cfb6af5868c5e7c153e6e502">set_system_name</a>(<span class="stringliteral">&quot;my_messaging_system&quot;</span>)</div>
+<div class="line">    .<a class="code hl_function" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#aabd8c12c6de7413868bc31f06f6e935f">build</a>();</div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1config_1_1config__builder_html_a11966768a2a64d1ac2c3acbcc3fbcbd9"><div class="ttname"><a href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a11966768a2a64d1ac2c3acbcc3fbcbd9">kcenon::messaging::config::config_builder::enable_external_monitoring</a></div><div class="ttdeci">config_builder &amp; enable_external_monitoring(bool enable=true)</div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00106">config.h:106</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1config_1_1config__builder_html_a4488c3c2a79b2e4284743a5e119de50f"><div class="ttname"><a href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a4488c3c2a79b2e4284743a5e119de50f">kcenon::messaging::config::config_builder::enable_priority_queue</a></div><div class="ttdeci">config_builder &amp; enable_priority_queue(bool enable=true)</div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00074">config.h:74</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1config_1_1config__builder_html_a7057c4b16f02e70a4af640ba89f5d7d6"><div class="ttname"><a href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a7057c4b16f02e70a4af640ba89f5d7d6">kcenon::messaging::config::config_builder::enable_external_logger</a></div><div class="ttdeci">config_builder &amp; enable_external_logger(bool enable=true)</div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00101">config.h:101</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1config_1_1config__builder_html_af1e94229cfb6af5868c5e7c153e6e502"><div class="ttname"><a href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#af1e94229cfb6af5868c5e7c153e6e502">kcenon::messaging::config::config_builder::set_system_name</a></div><div class="ttdeci">config_builder &amp; set_system_name(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00133">config.h:133</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
+Service Integration</h2>
+<p>Services can be easily integrated using the adapter pattern:</p>
+<div class="fragment"><div class="line"><span class="comment">// Create a custom service</span></div>
+<div class="line"><span class="keyword">class </span>MyService : <span class="keyword">public</span> service_interface {</div>
+<div class="line">    <span class="comment">// Implement service interface methods</span></div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Create adapter</span></div>
+<div class="line"><span class="keyword">auto</span> service = std::make_shared&lt;MyService&gt;();</div>
+<div class="line"><span class="keyword">auto</span> adapter = std::make_shared&lt;MyServiceAdapter&gt;(service);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Register with system</span></div>
+<div class="line">integrator-&gt;get_orchestrator().register_service_adapter(<span class="stringliteral">&quot;my_service&quot;</span>, adapter);</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md10"></a>
+Building</h1>
+<h2><a class="anchor" id="autotoc_md11"></a>
+Prerequisites</h2>
+<ul>
+<li>C++20 compatible compiler</li>
+<li>CMake 3.16 or higher</li>
+<li>GTest (for testing)</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md12"></a>
+Build Instructions</h2>
+<div class="fragment"><div class="line"># Configure</div>
+<div class="line">cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON</div>
+<div class="line"> </div>
+<div class="line"># Build</div>
+<div class="line">cmake --build build</div>
+<div class="line"> </div>
+<div class="line"># Run tests</div>
+<div class="line">cd build &amp;&amp; ctest</div>
+<div class="line"> </div>
+<div class="line"># Run benchmarks</div>
+<div class="line">./build/bin/messaging_benchmark</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md13"></a>
+Build Options</h2>
+<ul>
+<li><code>BUILD_TESTING=ON/OFF</code>: Enable/disable test building (default: OFF)</li>
+<li><code>BUILD_NETWORK=ON/OFF</code>: Enable/disable network module (default: ON)</li>
+<li><code>BUILD_CONTAINER=ON/OFF</code>: Enable/disable container module (default: ON)</li>
+<li><code>BUILD_DATABASE=ON/OFF</code>: Enable/disable database module (default: ON)</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md14"></a>
+Testing</h1>
+<p>The system includes comprehensive testing:</p>
+<h2><a class="anchor" id="autotoc_md15"></a>
+Unit Tests</h2>
+<div class="fragment"><div class="line"># Run all tests</div>
+<div class="line">./build/bin/messaging_services_tests</div>
+<div class="line"> </div>
+<div class="line"># Run specific test groups</div>
+<div class="line">./build/bin/messaging_services_tests --gtest_filter=&quot;MessageBus*&quot;</div>
+<div class="line">./build/bin/messaging_services_tests --gtest_filter=&quot;ServiceContainer*&quot;</div>
+<div class="line">./build/bin/messaging_services_tests --gtest_filter=&quot;Integration*&quot;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md16"></a>
+Performance Benchmarks</h2>
+<div class="fragment"><div class="line"># Run performance benchmarks</div>
+<div class="line">./build/bin/messaging_benchmark</div>
+</div><!-- fragment --><p>Benchmark results include:</p><ul>
+<li>Message throughput (messages/second)</li>
+<li>Concurrent publishing performance</li>
+<li>Priority queue performance</li>
+<li>Message size impact analysis</li>
+<li>System integration performance</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md17"></a>
+API Reference</h1>
+<h2><a class="anchor" id="autotoc_md18"></a>
+System Integrator</h2>
+<p>Main entry point for the messaging system:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="d7/d69/classkcenon_1_1messaging_1_1integrations_1_1system__integrator.html">system_integrator</a> {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    <span class="comment">// System lifecycle</span></div>
+<div class="line">    <span class="keywordtype">bool</span> initialize();</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_define" href="da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a>();</div>
+<div class="line">    <span class="keywordtype">bool</span> is_running() <span class="keyword">const</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Message operations</span></div>
+<div class="line">    <span class="keywordtype">bool</span> publish(<span class="keyword">const</span> std::string&amp; topic, <span class="keyword">const</span> message_payload&amp; payload, <span class="keyword">const</span> std::string&amp; sender = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line">    <span class="keywordtype">void</span> subscribe(<span class="keyword">const</span> std::string&amp; topic, message_handler handler);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Service access</span></div>
+<div class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; std::shared_ptr&lt;T&gt; get_service(<span class="keyword">const</span> std::string&amp; name);</div>
+<div class="line">    <a class="code hl_class" href="d5/d8f/classkcenon_1_1messaging_1_1integrations_1_1service__container.html">service_container</a>&amp; get_container();</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// System monitoring</span></div>
+<div class="line">    system_health check_system_health() <span class="keyword">const</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Factory methods</span></div>
+<div class="line">    <span class="keyword">static</span> std::unique_ptr&lt;system_integrator&gt; <a class="code hl_function" href="d6/d0d/comparison__benchmark_8cpp.html#a85c1bc628eb54edb6a3c2f3e611ef6e2">create_default</a>();</div>
+<div class="line">    <span class="keyword">static</span> std::unique_ptr&lt;system_integrator&gt; create_for_environment(<span class="keyword">const</span> std::string&amp; environment);</div>
+<div class="line">};</div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1integrations_1_1service__container_html"><div class="ttname"><a href="d5/d8f/classkcenon_1_1messaging_1_1integrations_1_1service__container.html">kcenon::messaging::integrations::service_container</a></div><div class="ttdef"><b>Definition</b> <a href="d9/dc3/application__layer_2include_2kcenon_2messaging_2integrations_2service__container_8h_source.html#l00044">service_container.h:44</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1messaging_1_1integrations_1_1system__integrator_html"><div class="ttname"><a href="d7/d69/classkcenon_1_1messaging_1_1integrations_1_1system__integrator.html">kcenon::messaging::integrations::system_integrator</a></div><div class="ttdef"><b>Definition</b> <a href="d6/deb/system__integrator_8h_source.html#l00009">system_integrator.h:9</a></div></div>
+<div class="ttc" id="acomparison__benchmark_8cpp_html_a85c1bc628eb54edb6a3c2f3e611ef6e2"><div class="ttname"><a href="d6/d0d/comparison__benchmark_8cpp.html#a85c1bc628eb54edb6a3c2f3e611ef6e2">create_default</a></div><div class="ttdeci">auto create_default(const uint16_t &amp;worker_counts) -&gt; std::tuple&lt; std::shared_ptr&lt; thread_pool_module::thread_pool &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdef"><b>Definition</b> <a href="d6/d0d/comparison__benchmark_8cpp_source.html#l00068">comparison_benchmark.cpp:68</a></div></div>
+<div class="ttc" id="alog__server_8cpp_html_aaefada63b967623c915b6b3ae59c43c8"><div class="ttname"><a href="da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a></div><div class="ttdeci">#define shutdown(fd, how)</div><div class="ttdef"><b>Definition</b> <a href="da/dcd/log__server_8cpp_source.html#l00016">log_server.cpp:16</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
+Message Types</h2>
+<p>Core message structures:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>message_payload {</div>
+<div class="line">    std::string topic;</div>
+<div class="line">    std::unordered_map&lt;std::string, message_value&gt; data;</div>
+<div class="line">    std::vector&lt;uint8_t&gt; binary_data;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>message_metadata {</div>
+<div class="line">    std::chrono::system_clock::time_point timestamp;</div>
+<div class="line">    message_priority priority = message_priority::normal;</div>
+<div class="line">    std::chrono::milliseconds timeout{30000};</div>
+<div class="line">    std::unordered_map&lt;std::string, std::string&gt; headers;</div>
+<div class="line">    std::string correlation_id;</div>
+<div class="line">    std::string reply_to;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>message {</div>
+<div class="line">    message_metadata metadata;</div>
+<div class="line">    message_payload payload;</div>
+<div class="line">    std::string sender;</div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md20"></a>
+Configuration</h2>
+<p>Configuration structures and builder:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="d3/d91/structkcenon_1_1messaging_1_1config_1_1messaging__config.html">messaging_config</a> {</div>
+<div class="line">    message_bus_config message_bus;</div>
+<div class="line">    container_config container;</div>
+<div class="line">    network_config network;</div>
+<div class="line">    std::string environment;</div>
+<div class="line">    std::string system_name;</div>
+<div class="line">    <span class="comment">// ... other configuration options</span></div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span><a class="code hl_class" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config_builder</a> {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    <a class="code hl_class" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config_builder</a>&amp; set_worker_threads(<span class="keywordtype">size_t</span> threads);</div>
+<div class="line">    <a class="code hl_class" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config_builder</a>&amp; set_queue_size(<span class="keywordtype">size_t</span> size);</div>
+<div class="line">    <a class="code hl_class" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config_builder</a>&amp; enable_priority_queue(<span class="keywordtype">bool</span> enable = <span class="keyword">true</span>);</div>
+<div class="line">    <a class="code hl_class" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config_builder</a>&amp; enable_compression(<span class="keywordtype">bool</span> enable = <span class="keyword">true</span>);</div>
+<div class="line">    <a class="code hl_class" href="d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config_builder</a>&amp; set_environment(<span class="keyword">const</span> std::string&amp; env);</div>
+<div class="line">    <a class="code hl_struct" href="d3/d91/structkcenon_1_1messaging_1_1config_1_1messaging__config.html">messaging_config</a> build();</div>
+<div class="line">};</div>
+<div class="ttc" id="astructkcenon_1_1messaging_1_1config_1_1messaging__config_html"><div class="ttname"><a href="d3/d91/structkcenon_1_1messaging_1_1config_1_1messaging__config.html">kcenon::messaging::config::messaging_config</a></div><div class="ttdef"><b>Definition</b> <a href="d8/d27/application__layer_2include_2kcenon_2messaging_2core_2config_8h_source.html#l00013">config.h:13</a></div></div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md21"></a>
+Performance</h1>
+<p>Typical performance characteristics (may vary based on hardware):</p>
+<ul>
+<li><b>Message Throughput</b>: 10,000+ messages/second (single publisher)</li>
+<li><b>Concurrent Publishing</b>: 8,000+ messages/second (8 concurrent publishers)</li>
+<li><b>Priority Queue</b>: 5,000+ messages/second with priority ordering</li>
+<li><b>Memory Usage</b>: Efficient memory management with configurable limits</li>
+<li><b>Latency</b>: Sub-millisecond message routing</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md22"></a>
+Sample Programs</h1>
+<p>The <code>samples/</code> directory contains all example programs, from basic usage to comprehensive real-world implementations:</p>
+<h2><a class="anchor" id="autotoc_md23"></a>
+1. Basic Usage Example (&lt;tt&gt;basic_usage_example.cpp&lt;/tt&gt;)</h2>
+<p>A simple demonstration of the messaging system's core functionality:</p><ul>
+<li>System initialization and configuration</li>
+<li>Message publishing and subscription</li>
+<li>Service integration basics</li>
+<li>Clean shutdown procedures</li>
+</ul>
+<p><b>Usage:</b> </p><div class="fragment"><div class="line">./build/bin/samples/basic_usage_example</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md24"></a>
+2. Chat Server (&lt;tt&gt;chat_server.cpp&lt;/tt&gt;)</h2>
+<p>A complete real-time chat server implementation featuring:</p><ul>
+<li>User authentication and session management</li>
+<li>Public and private messaging</li>
+<li>Room-based chat with history</li>
+<li>Automatic cleanup of inactive users</li>
+<li>Real-time statistics and monitoring</li>
+<li>Production-ready error handling</li>
+</ul>
+<p><b>Usage:</b> </p><div class="fragment"><div class="line">./build/bin/samples/chat_server [port]</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md25"></a>
+3. Distributed Worker System (&lt;tt&gt;distributed_worker.cpp&lt;/tt&gt;)</h2>
+<p>A scalable task processing system demonstrating:</p><ul>
+<li>Multiple task types (data processing, image analysis, reports, etc.)</li>
+<li>Worker coordination and health checking</li>
+<li>Task retry with exponential backoff</li>
+<li>Priority-based task scheduling</li>
+<li>Real-time performance metrics</li>
+<li>Automatic load distribution</li>
+</ul>
+<p><b>Usage:</b> </p><div class="fragment"><div class="line"># Start as task generator</div>
+<div class="line">./build/bin/samples/distributed_worker --generator</div>
+<div class="line"> </div>
+<div class="line"># Start workers (in separate terminals)</div>
+<div class="line">./build/bin/samples/distributed_worker --workers 4</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md26"></a>
+4. IoT Monitoring System (&lt;tt&gt;iot_monitoring.cpp&lt;/tt&gt;)</h2>
+<p>A comprehensive IoT device management platform featuring:</p><ul>
+<li>Real-time telemetry collection from multiple device types</li>
+<li>Threshold-based alerting with severity levels</li>
+<li>Anomaly detection using statistical analysis</li>
+<li>Device registration and lifecycle management</li>
+<li>Time-series data storage and querying</li>
+<li>Interactive dashboard with live metrics</li>
+</ul>
+<p><b>Key Features:</b></p><ul>
+<li>Supports temperature, humidity, motion, energy sensors</li>
+<li>Smart device control (lights, locks, cameras)</li>
+<li>Automatic alert generation and routing</li>
+<li>Historical data analysis and trending</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md27"></a>
+5. Microservices Orchestrator (&lt;tt&gt;microservices_orchestrator.cpp&lt;/tt&gt;)</h2>
+<p>A production-grade service mesh implementation with:</p><ul>
+<li>Service discovery and registration</li>
+<li>Multiple load balancing strategies:<ul>
+<li>Round-robin</li>
+<li>Least connections</li>
+<li>Weighted response time</li>
+<li>IP hash-based routing</li>
+</ul>
+</li>
+<li>Circuit breaker pattern for fault tolerance</li>
+<li>Health checking and automatic recovery</li>
+<li>Deployment strategies:<ul>
+<li>Rolling updates</li>
+<li>Blue-green deployments</li>
+<li>Canary deployments</li>
+</ul>
+</li>
+<li>Auto-scaling based on metrics</li>
+<li>Dependency management and resolution</li>
+</ul>
+<p><b>Architecture:</b></p><ul>
+<li>Simulates a complete microservices ecosystem</li>
+<li>Includes API gateway, auth, user, product, order services</li>
+<li>Real-time metrics and service topology visualization</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md28"></a>
+6. Event-Driven Pipeline (&lt;tt&gt;event_pipeline.cpp&lt;/tt&gt;)</h2>
+<p>A sophisticated data processing pipeline demonstrating:</p><ul>
+<li>Multi-stage event processing:<ul>
+<li>Validation</li>
+<li>Enrichment</li>
+<li>Transformation</li>
+<li>Aggregation</li>
+</ul>
+</li>
+<li>Time-windowed aggregations</li>
+<li>Dead letter queue for failed events</li>
+<li>Pipeline control (pause, resume, flush)</li>
+<li>Real-time metrics and monitoring</li>
+<li>Configurable filtering and routing</li>
+</ul>
+<p><b>Pipeline Stages:</b></p><ol type="1">
+<li><b>Validation</b>: Schema validation and timestamp checks</li>
+<li><b>Enrichment</b>: Add metadata and external data</li>
+<li><b>Transformation</b>: Apply business rules and normalization</li>
+<li><b>Aggregation</b>: Time-based windowing and statistics</li>
 </ol>
-<h1><a class="anchor" id="thread_safety"></a>
-Thread Safety</h1>
-<p>All public interfaces in the messaging system are thread-safe by design:</p><ul>
-<li>Containers use internal synchronization</li>
-<li>Database connections are pooled and protected</li>
-<li>Network operations are asynchronous and thread-safe</li>
-<li>The thread system provides safe job scheduling</li>
+<h2><a class="anchor" id="autotoc_md29"></a>
+7. Message Bus Benchmark (&lt;tt&gt;message_bus_benchmark.cpp&lt;/tt&gt;)</h2>
+<p>Performance testing suite for the messaging system:</p><ul>
+<li>Throughput measurements (messages/second)</li>
+<li>Concurrent publisher testing</li>
+<li>Priority queue performance</li>
+<li>Message size impact analysis</li>
+<li>Latency measurements</li>
 </ul>
-<h1><a class="anchor" id="configuration"></a>
-Configuration</h1>
-<p>The system supports extensive configuration through:</p><ul>
-<li>CMake build options</li>
-<li>Runtime configuration files</li>
-<li>Environment variables</li>
-<li>Programmatic configuration</li>
+<p><b>Usage:</b> </p><div class="fragment"><div class="line">./build/bin/samples/message_bus_benchmark</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md30"></a>
+Building the Samples</h1>
+<div class="fragment"><div class="line"># Configure with samples enabled</div>
+<div class="line">cmake -B build -S . -DBUILD_MESSAGING_SAMPLES=ON</div>
+<div class="line"> </div>
+<div class="line"># Build all samples</div>
+<div class="line">cmake --build build --target all</div>
+<div class="line"> </div>
+<div class="line"># Run a specific sample</div>
+<div class="line">./build/bin/samples/chat_server</div>
+<div class="line">./build/bin/samples/iot_monitoring</div>
+<div class="line">./build/bin/samples/microservices_orchestrator</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md31"></a>
+Sample Features Comparison</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Sample   </th><th class="markdownTableHeadNone">Messaging Patterns   </th><th class="markdownTableHeadNone">Key Technologies   </th><th class="markdownTableHeadNone">Use Case    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Basic Usage   </td><td class="markdownTableBodyNone">Simple Pub/Sub   </td><td class="markdownTableBodyNone">Configuration, Lifecycle   </td><td class="markdownTableBodyNone">Getting started    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Chat Server   </td><td class="markdownTableBodyNone">Pub/Sub, Request/Reply   </td><td class="markdownTableBodyNone">Session management, Broadcasting   </td><td class="markdownTableBodyNone">Real-time communication    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Distributed Worker   </td><td class="markdownTableBodyNone">Work queues, Task routing   </td><td class="markdownTableBodyNone">Load balancing, Retry logic   </td><td class="markdownTableBodyNone">Batch processing    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">IoT Monitoring   </td><td class="markdownTableBodyNone">Telemetry, Alerting   </td><td class="markdownTableBodyNone">Time-series, Anomaly detection   </td><td class="markdownTableBodyNone">Device management    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Microservices   </td><td class="markdownTableBodyNone">Service mesh, Discovery   </td><td class="markdownTableBodyNone">Circuit breakers, Load balancing   </td><td class="markdownTableBodyNone">Cloud-native apps    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Event Pipeline   </td><td class="markdownTableBodyNone">Stream processing   </td><td class="markdownTableBodyNone">Windowing, Aggregation   </td><td class="markdownTableBodyNone">Data pipelines    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Benchmark   </td><td class="markdownTableBodyNone">Performance testing   </td><td class="markdownTableBodyNone">Throughput, Latency   </td><td class="markdownTableBodyNone">System tuning   </td></tr>
+</table>
+<h1><a class="anchor" id="autotoc_md32"></a>
+Performance Characteristics</h1>
+<p>Based on the sample implementations:</p>
+<ul>
+<li><b>Message Throughput</b>: 10,000-100,000 messages/second</li>
+<li><b>Concurrent Connections</b>: 1,000-10,000 clients</li>
+<li><b>Processing Latency</b>: &lt; 10ms for most operations</li>
+<li><b>Scalability</b>: Linear scaling with worker threads</li>
+<li><b>Memory Efficiency</b>: Optimized buffer management</li>
 </ul>
-<h1><a class="anchor" id="examples"></a>
-More Examples</h1>
-<p>See the samples directory for complete examples including:</p><ul>
-<li>Basic client/server communication</li>
-<li>Database integration patterns</li>
-<li>Container usage patterns</li>
-<li>Thread pool configuration</li>
-<li>Python binding examples</li>
-</ul>
-<h1><a class="anchor" id="license"></a>
+<h1><a class="anchor" id="autotoc_md33"></a>
+Additional Resources</h1>
+<p>All example programs, demonstrations, and benchmarks are consolidated in the <code>samples/</code> directory for easy access and consistent organization.</p>
+<h1><a class="anchor" id="autotoc_md34"></a>
 License</h1>
-<p>BSD 3-Clause License - see LICENSE file for details. </p>
+<p>This project is part of the KCENON messaging system framework.</p>
+<h1><a class="anchor" id="autotoc_md35"></a>
+Contributing</h1>
+<ol type="1">
+<li>Follow the coding standards defined in CLAUDE.md</li>
+<li>Add comprehensive tests for new features</li>
+<li>Update documentation for API changes</li>
+<li>Run performance benchmarks for performance-critical changes </li>
+</ol>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

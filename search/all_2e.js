@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['📦_20container_20module_20tt_20container_20tt_0',['📦 Container Module (&lt;tt&gt;container/&lt;/tt&gt;)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md16',1,'']]],
-  ['📦_20value_20types_1',['📦 Value Types',['..//home/runner/work/messaging_system/messaging_system/container/README.md#autotoc_md40',1,'']]]
+  ['🎛️_20strong_20intelligent_20task_20scheduling_20strong_0',['🎛️ &lt;strong&gt;Intelligent Task Scheduling&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1452',1,'']]]
 ];

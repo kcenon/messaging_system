@@ -1,17 +1,13 @@
 var searchData=
 [
-  ['handle_5f_0',['handle_',['../classdatabase_1_1database__manager.html#a2bd99fe216f4b9e74cefbe14ed339de5',1,'database::database_manager']]],
-  ['handling_5fcrash_5f_1',['handling_crash_',['../classthread__module_1_1crash__handler.html#a1e2166483c914e94fdcd08f48c547721',1,'thread_module::crash_handler']]],
-  ['has_5fdo_5fwork_5fmethod_5fv_2',['has_do_work_method_v',['../namespacetyped__thread__pool__module_1_1detail.html#a1a4c9693026f34291a9d44b1bea6470b',1,'typed_thread_pool_module::detail']]],
-  ['has_5ferror_5f_3',['has_error_',['../classutility__module_1_1result__wrapper.html#a0fae70c51e10ffc0580da85b6b9c31ea',1,'utility_module::result_wrapper::has_error_'],['../classthread__module_1_1result__void.html#a74b9c48b69fbeda06a319de9931b2663',1,'thread_module::result_void::has_error_']]],
-  ['has_5fget_5fmethod_5fv_4',['has_get_method_v',['../namespacethread__pool__module_1_1detail.html#a814789e67c7855456aeef0377925c355',1,'thread_pool_module::detail']]],
-  ['has_5fordering_5',['has_ordering',['../structtyped__thread__pool__module_1_1detail_1_1job__type__traits.html#aac9632a64d39a6b2ea2ffa08c53b7ecb',1,'typed_thread_pool_module::detail::job_type_traits']]],
-  ['has_5fpriority_5fmethod_5fv_6',['has_priority_method_v',['../namespacetyped__thread__pool__module_1_1detail.html#abdb90a518d2ad12c86cdaefc2a00ad37',1,'typed_thread_pool_module::detail']]],
-  ['has_5fvalue_5f_7',['has_value_',['../classthread__module_1_1result.html#ac4a8added152cb6b99157d966d21871c',1,'thread_module::result']]],
-  ['hazards_8',['hazards',['../structthread__module_1_1hazard__pointer__manager_1_1_hazard_record.html#afc8a93caec9f6911c60001a0d910690f',1,'thread_module::hazard_pointer_manager::HazardRecord']]],
-  ['head_5f_9',['head_',['../classthread__module_1_1lockfree__job__queue.html#abe8280272f994c978e50c6146771a552',1,'thread_module::lockfree_job_queue']]],
-  ['head_5frecord_5f_10',['head_record_',['../classthread__module_1_1hazard__pointer__manager.html#a4fda36f69a01d3e7cbb028e68451eaf6',1,'thread_module::hazard_pointer_manager']]],
-  ['high_5fcontention_5fthreshold_11',['HIGH_CONTENTION_THRESHOLD',['../namespacethread__module_1_1lockfree.html#a5858fe29d50e89f6883009687c160c29',1,'thread_module::lockfree']]],
-  ['hp_5fmanager_5f_12',['hp_manager_',['../classthread__module_1_1lockfree__job__queue.html#a41536bb8449f7deb0e7a659346853548',1,'thread_module::lockfree_job_queue']]],
-  ['hp_5fslot_5f_13',['hp_slot_',['../classthread__module_1_1hazard__pointer__manager_1_1hazard__pointer.html#aec4c9c2fc1fb5bd0d0090f938bb87339',1,'thread_module::hazard_pointer_manager::hazard_pointer']]]
+  ['g_5fbaseline_5ftimes_0',['g_baseline_times',['../d6/d0d/comparison__benchmark_8cpp.html#ab84440a92de265fc037252aea6aa6de2',1,'comparison_benchmark.cpp']]],
+  ['g_5fexecution_5frecords_1',['g_execution_records',['../d5/de2/typed__scheduling__benchmark__google_8cpp.html#af9c40db6fc8731cca02047c52be55535',1,'typed_scheduling_benchmark_google.cpp']]],
+  ['g_5frecords_5fmutex_2',['g_records_mutex',['../d5/de2/typed__scheduling__benchmark__google_8cpp.html#aca1c68b5c965c4e8bfb3ec7e948ec649',1,'typed_scheduling_benchmark_google.cpp']]],
+  ['g_5frequest_5ftypes_3',['g_request_types',['../d6/d0f/real__world__benchmark_8cpp.html#a6eb558c82c64aaa0a82fcc9824dbafd8',1,'real_world_benchmark.cpp']]],
+  ['g_5fshutdown_5fcv_4',['g_shutdown_cv',['../d3/d95/chat__server_8cpp.html#adaa7c3dd3de8ff7ddf02ffeb27aa753b',1,'g_shutdown_cv:&#160;chat_server.cpp'],['../d9/dd9/production__ready__example_8cpp.html#adaa7c3dd3de8ff7ddf02ffeb27aa753b',1,'g_shutdown_cv:&#160;production_ready_example.cpp']]],
+  ['g_5fshutdown_5fmutex_5',['g_shutdown_mutex',['../d3/d95/chat__server_8cpp.html#ae62b13acfb786c265fba3bc95637f1e1',1,'g_shutdown_mutex:&#160;chat_server.cpp'],['../d9/dd9/production__ready__example_8cpp.html#ae62b13acfb786c265fba3bc95637f1e1',1,'g_shutdown_mutex:&#160;production_ready_example.cpp']]],
+  ['g_5fshutdown_5frequested_6',['g_shutdown_requested',['../d3/d95/chat__server_8cpp.html#ad9223bbbed1d71323a789daf88911c4a',1,'g_shutdown_requested:&#160;chat_server.cpp'],['../d9/dd9/production__ready__example_8cpp.html#ad9223bbbed1d71323a789daf88911c4a',1,'g_shutdown_requested:&#160;production_ready_example.cpp']]],
+  ['global_5fresources_7',['global_resources',['../d9/d6b/thread__system_2samples_2crash__protection_2main_8cpp.html#a56463d0ca01cdb597f7cbce161ab4cc5',1,'main.cpp']]],
+  ['global_5fsystem_8',['global_system',['../d8/d51/structmonitoring__interface_1_1multi__process__metrics__snapshot.html#a38262885680121964fa1a2ce7994918f',1,'monitoring_interface::multi_process_metrics_snapshot']]],
+  ['green_9',['green',['../dc/d04/namespacecolors.html#a1bb0e3eb24aa570a7a0972bcd6f11501',1,'colors']]]
 ];

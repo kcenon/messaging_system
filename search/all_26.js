@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['💡_20usage_20examples_0',['💡 Usage Examples',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md20',1,'']]]
+  ['→_20modular_0',['→ modular',['../d9/d9b/md_libraries_2logger__system_2ARCHITECTURE.html#autotoc_md152',1,'🔄 Evolution: Monolithic → Modular'],['../dc/d4e/md_libraries_2monitoring__system_2ARCHITECTURE.html#autotoc_md406',1,'🔄 Evolution: Monolithic → Modular'],['../df/d5b/md_libraries_2thread__system_2ARCHITECTURE.html#autotoc_md740',1,'🔄 Evolution: Monolithic → Modular']]]
 ];

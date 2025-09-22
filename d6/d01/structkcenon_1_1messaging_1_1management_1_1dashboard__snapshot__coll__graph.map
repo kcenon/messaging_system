@@ -1,0 +1,36 @@
+<map id="kcenon::messaging::management::dashboard_snapshot" name="kcenon::messaging::management::dashboard_snapshot">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1503,315,1688,370"/>
+<area shape="rect" id="Node000002" href="$d6/da7/structkcenon_1_1messaging_1_1routing_1_1advanced__router_1_1routing__statistics.html" title=" " alt="" coords="1110,391,1295,446"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1309,403,1478,373,1502,368,1504,373,1479,379,1309,408"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="677,393,871,433"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="885,412,1110,415,1110,420,885,417"/>
+<area shape="rect" id="Node000006" href="$d0/d87/structkcenon_1_1messaging_1_1cluster_1_1distributed__broker_1_1cluster__statistics.html" title=" " alt="" coords="1109,249,1297,303"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="862,387,894,377,1123,301,1125,306,895,383,863,392"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="288,397,417,422"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="431,407,677,410,677,415,431,413"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="55,133,94,158"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="100,166,146,218,177,266,197,307,219,344,236,362,259,380,289,395,287,400,256,385,232,366,215,347,192,309,172,269,142,222,96,170"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="277,52,429,92"/>
+<area shape="poly" id="edge18_Node000013_Node000005" title=" " alt="" coords="106,134,276,89,277,95,108,140"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1311,292,1503,324,1502,330,1310,297"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="309,239,396,265"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="410,251,1109,271,1108,276,409,256"/>
+<area shape="rect" id="Node000009" href="$d2/d52/structkcenon_1_1messaging_1_1security_1_1security__manager_1_1security__statistics.html" title=" " alt="" coords="675,314,873,369"/>
+<area shape="poly" id="edge11_Node000009_Node000007" title=" " alt="" coords="395,268,473,295,576,316,675,330,674,335,575,322,471,300,394,273"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1103,110,1302,194"/>
+<area shape="poly" id="edge13_Node000011_Node000007" title=" " alt="" coords="389,231,471,195,555,171,641,154,729,142,815,136,975,133,1103,140,1103,145,975,139,815,141,729,148,642,159,556,176,473,200,391,235"/>
+<area shape="rect" id="Node000012" href="$da/d51/structkcenon_1_1messaging_1_1management_1_1system__health__monitor_1_1component__health__info.html" title=" " alt="" coords="653,170,895,225"/>
+<area shape="poly" id="edge15_Node000012_Node000007" title=" " alt="" coords="409,242,653,210,654,216,410,247"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="5,232,144,272"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="158,249,309,249,309,255,158,255"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="887,339,1502,340,1502,345,887,344"/>
+<area shape="rect" id="Node000010" href="$da/d69/structkcenon_1_1messaging_1_1security_1_1authentication__manager_1_1auth__statistics.html" title=" " alt="" coords="257,317,448,371"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="462,341,629,340,674,340,674,345,629,345,462,346"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="1312,198,1480,278,1546,313,1544,318,1477,282,1310,202"/>
+<area shape="poly" id="edge14_Node000011_Node000012" title=" " alt="" coords="908,181,1103,160,1104,165,909,186"/>
+<area shape="poly" id="edge16_Node000011_Node000013" title=" " alt="" coords="442,64,567,61,725,62,899,74,987,85,1073,100,1104,108,1102,113,1071,105,986,90,899,79,725,68,567,66,443,69"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="55,59,94,85"/>
+<area shape="poly" id="edge17_Node000013_Node000014" title=" " alt="" coords="108,69,276,69,276,75,108,75"/>
+<area shape="rect" id="Node000015" href="$da/d39/structkcenon_1_1messaging_1_1management_1_1metrics__aggregator_1_1histogram__stats.html" title=" " alt="" coords="1096,470,1309,525"/>
+<area shape="poly" id="edge19_Node000001_Node000015" title=" " alt="" coords="1322,481,1401,464,1477,435,1527,403,1566,368,1570,372,1530,408,1480,440,1402,469,1323,487"/>
+</map>

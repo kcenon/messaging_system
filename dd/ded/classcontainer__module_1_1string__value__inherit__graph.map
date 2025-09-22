@@ -1,0 +1,7 @@
+<map id="container_module::string_value" name="container_module::string_value">
+<area shape="rect" id="Node000001" title="A specialized value for storing textual data." alt="" coords="5,167,189,207"/>
+<area shape="rect" id="Node000002" href="$d5/df9/classcontainer__module_1_1value.html" title="The base class for all values stored in the container system." alt="" coords="6,93,189,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,132,100,167,95,167,95,132"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="19,5,176,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="100,59,100,93,95,93,95,59"/>
+</map>

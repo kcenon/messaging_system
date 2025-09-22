@@ -1,0 +1,37 @@
+<map id="libraries/network_system/internal/asio_compat.h" name="libraries/network_system/internal/asio_compat.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="646,5,833,45"/>
+<area shape="rect" id="Node000002" href="$d6/dc0/messaging__client_8h.html" title=" " alt="" coords="455,181,642,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="693,55,636,95,594,140,563,183,559,180,590,137,632,91,690,50"/>
+<area shape="rect" id="Node000006" href="$df/d2d/messaging__server_8h.html" title=" " alt="" coords="1120,181,1308,221"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="804,48,1164,179,1162,184,803,53"/>
+<area shape="rect" id="Node000008" href="$db/d60/send__coroutine_8h.html" title=" " alt="" coords="240,181,431,221"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="684,53,380,184,378,179,682,48"/>
+<area shape="rect" id="Node000011" href="$df/d68/tcp__socket_8h.html" title=" " alt="" coords="646,93,833,133"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="742,59,742,93,737,93,737,59"/>
+<area shape="rect" id="Node000013" href="$d0/dd1/messaging__session_8h.html" title=" " alt="" coords="877,181,1095,221"/>
+<area shape="poly" id="edge22_Node000001_Node000013" title=" " alt="" coords="784,50,846,91,964,179,961,183,843,96,781,55"/>
+<area shape="rect" id="Node000003" href="$de/dcc/messaging__client_8cpp.html" title=" " alt="" coords="236,269,435,309"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="490,229,383,272,381,267,488,224"/>
+<area shape="rect" id="Node000004" href="$d9/d94/network_8h.html" title="Main include file for the network module." alt="" coords="717,269,903,309"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="620,223,754,267,752,272,618,228"/>
+<area shape="rect" id="Node000005" href="$dc/d03/network_2network_8h.html" title="Network module public API." alt="" coords="927,269,1114,309"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="656,219,928,268,927,274,655,225"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="1113,227,899,272,898,267,1111,222"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="1160,229,1064,272,1062,267,1158,225"/>
+<area shape="rect" id="Node000007" href="$d8/dbb/messaging__server_8cpp.html" title=" " alt="" coords="1138,269,1341,309"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="1226,234,1236,268,1231,270,1221,235"/>
+<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="338,235,338,269,333,269,333,235"/>
+<area shape="rect" id="Node000009" href="$dc/df1/send__coroutine_8cpp.html" title=" " alt="" coords="5,269,212,309"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="274,229,159,272,157,267,272,224"/>
+<area shape="rect" id="Node000010" href="$d6/df7/messaging__session_8cpp.html" title=" " alt="" coords="459,269,692,309"/>
+<area shape="poly" id="edge12_Node000008_Node000010" title=" " alt="" coords="402,223,524,267,522,272,400,228"/>
+<area shape="poly" id="edge14_Node000011_Node000002" title=" " alt="" coords="686,141,592,184,589,179,684,137"/>
+<area shape="poly" id="edge15_Node000011_Node000008" title=" " alt="" coords="638,139,424,184,423,179,637,134"/>
+<area shape="rect" id="Node000012" href="$d4/dfe/tcp__socket_8cpp.html" title=" " alt="" coords="666,181,853,221"/>
+<area shape="poly" id="edge16_Node000011_Node000012" title=" " alt="" coords="749,146,758,181,752,182,744,148"/>
+<area shape="poly" id="edge17_Node000011_Node000013" title=" " alt="" coords="807,135,933,179,931,184,806,140"/>
+<area shape="poly" id="edge19_Node000013_Node000004" title=" " alt="" coords="936,230,850,272,847,267,934,225"/>
+<area shape="poly" id="edge20_Node000013_Node000005" title=" " alt="" coords="1001,233,1015,268,1011,270,996,235"/>
+<area shape="poly" id="edge18_Node000013_Node000007" title=" " alt="" coords="1055,223,1185,267,1183,272,1054,228"/>
+<area shape="poly" id="edge21_Node000013_Node000010" title=" " alt="" coords="883,227,666,272,665,267,882,222"/>
+</map>

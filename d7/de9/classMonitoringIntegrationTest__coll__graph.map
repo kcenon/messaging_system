@@ -1,0 +1,17 @@
+<map id="MonitoringIntegrationTest" name="MonitoringIntegrationTest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="159,299,348,324"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,203,107,229"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,232,230,296,228,301,92,237"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="131,203,376,229"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="256,242,256,299,251,299,251,242"/>
+<area shape="rect" id="Node000004" href="$d3/dce/classTestMonitoring.html" title=" " alt="" coords="99,108,218,133"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="182,141,243,201,240,205,178,145"/>
+<area shape="rect" id="Node000005" href="$d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="75,5,242,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="161,59,161,108,156,108,156,59"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="243,108,400,133"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="307,146,264,205,260,202,303,143"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="302,13,341,38"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="324,52,324,108,319,108,319,52"/>
+<area shape="rect" id="Node000008" href="$d5/d07/classthread__module_1_1thread__context.html" title="Context object that provides access to optional services." alt="" coords="400,196,571,236"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="427,244,283,301,281,296,425,239"/>
+</map>
