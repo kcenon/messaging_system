@@ -10,7 +10,11 @@
 #include <iomanip>
 #include <thread>
 #include "container.h"
-#include "../internal/thread_safe_container.h"
+#include "values/string_value.h"
+#include "values/bool_value.h"
+#include "values/bytes_value.h"
+#include "values/container_value.h"
+#include "values/numeric_value.h"
 
 using namespace container_module;
 
@@ -42,7 +46,7 @@ private:
         for (int i = 0; i < iterations; ++i) {
             std::string key = "key_" + std::to_string(i);
             std::string value = "value_" + std::to_string(i);
-            container->set_value(key, std::make_shared<string_value>(value));
+            container->add(std::make_shared<string_value>(key, value));
         }
         auto end = std::chrono::high_resolution_clock::now();
         
@@ -72,7 +76,14 @@ private:
         std::cout << "  " << std::fixed << std::setprecision(2) << get_ops_per_sec << " ops/sec" << std::endl;
         std::cout << "  " << std::fixed << std::setprecision(3) << (double)get_duration.count() / iterations << " μs/op" << std::endl;
         
-        std::cout << "Container final size: " << container->size() << " entries" << std::endl;
+        // Count entries manually since size() is not available
+        size_t container_size = 0;
+        for (int i = 0; i < iterations; ++i) {
+            std::string key = "key_" + std::to_string(i);
+            auto values = container->value_array(key);
+            container_size += values.size();
+        }
+        std::cout << "Container final size: " << container_size << " entries" << std::endl;
     }
     
     void benchmark_serialization() {
@@ -126,35 +137,51 @@ private:
                     // String values
                     std::string key = "str_key_" + std::to_string(i);
                     std::string value = "string_value_" + std::to_string(i) + "_with_some_extra_data";
-                    container->set_value(key, std::make_shared<string_value>(value));
+                    container->add(std::make_shared<string_value>(key, value));
                     estimated_memory += key.length() + value.length() + 64; // Overhead estimate
                 } else if (i % 4 == 1) {
                     // Boolean values
                     std::string key = "bool_key_" + std::to_string(i);
-                    container->set_value(key, std::make_shared<bool_value>(i % 2 == 0));
+                    container->add(std::make_shared<bool_value>(key, i % 2 == 0));
                     estimated_memory += key.length() + 1 + 32;
                 } else if (i % 4 == 2) {
                     // Binary data
                     std::string key = "bytes_key_" + std::to_string(i);
                     std::vector<uint8_t> data(100 + (i % 900)); // Variable size binary data
                     std::fill(data.begin(), data.end(), static_cast<uint8_t>(i % 256));
-                    container->set_value(key, std::make_shared<bytes_value>(data));
+                    container->add(std::make_shared<bytes_value>(key, data));
                     estimated_memory += key.length() + data.size() + 32;
                 } else {
                     // Nested containers
                     std::string key = "nested_key_" + std::to_string(i);
-                    auto nested = std::make_shared<value_container>();
-                    nested->set_message_type("nested_" + std::to_string(i));
-                    nested->set_value("nested_data", std::make_shared<string_value>("nested_value_" + std::to_string(i)));
-                    container->set_value(key, std::make_shared<container_value>(nested));
+                    auto nested = std::make_shared<container_value>(key);
+                    nested->add(std::make_shared<string_value>("nested_data", "nested_value_" + std::to_string(i)));
+                    container->add(nested);
                     estimated_memory += key.length() + 200; // Rough estimate for nested container
                 }
             }
             
+            // Count entries manually
+            size_t actual_size = 0;
+            for (int i = 0; i < size; ++i) {
+                if (i % 4 == 0) {
+                    auto values = container->value_array("str_key_" + std::to_string(i));
+                    actual_size += values.size();
+                } else if (i % 4 == 1) {
+                    auto values = container->value_array("bool_key_" + std::to_string(i));
+                    actual_size += values.size();
+                } else if (i % 4 == 2) {
+                    auto values = container->value_array("bytes_key_" + std::to_string(i));
+                    actual_size += values.size();
+                } else {
+                    auto values = container->value_array("nested_key_" + std::to_string(i));
+                    actual_size += values.size();
+                }
+            }
             std::cout << "Container with " << size << " mixed entries:" << std::endl;
-            std::cout << "  Actual container size: " << container->size() << " entries" << std::endl;
+            std::cout << "  Actual container size: " << actual_size << " entries" << std::endl;
             std::cout << "  Estimated memory usage: " << estimated_memory / 1024 << " KB" << std::endl;
-            std::cout << "  Average bytes per entry: " << estimated_memory / container->size() << " bytes" << std::endl;
+            std::cout << "  Average bytes per entry: " << estimated_memory / actual_size << " bytes" << std::endl;
             
             // Test serialization size as a proxy for memory efficiency
             std::string serialized = container->serialize();
@@ -174,8 +201,8 @@ private:
         std::cout << "Testing with " << num_threads << " threads, " 
                   << ops_per_thread << " operations per thread" << std::endl;
         
-        // Test thread-safe container
-        auto safe_container = std::make_shared<thread_safe_container>();
+        // Test thread-safe value_container (has built-in thread safety)
+        auto safe_container = std::make_shared<value_container>();
         safe_container->set_message_type("concurrent_test");
         
         auto start = std::chrono::high_resolution_clock::now();
@@ -194,7 +221,7 @@ private:
                     if (operation == 0) {
                         // Write operation
                         std::string value = "value_from_thread_" + std::to_string(t) + "_op_" + std::to_string(i);
-                        safe_container->set_value(key, std::make_shared<string_value>(value));
+                        safe_container->add(std::make_shared<string_value>(key, value));
                     } else if (operation == 1) {
                         // Read operation
                         auto value = safe_container->get_value(key);
@@ -203,11 +230,12 @@ private:
                     } else {
                         // Mixed operation (read-modify-write)
                         auto existing = safe_container->get_value(key);
-                        if (existing) {
+                        if (existing && !existing->is_null()) {
                             std::string new_value = existing->to_string() + "_modified";
-                            safe_container->set_value(key, std::make_shared<string_value>(new_value));
+                            safe_container->remove(key);
+                            safe_container->add(std::make_shared<string_value>(key, new_value));
                         } else {
-                            safe_container->set_value(key, std::make_shared<string_value>("new_value"));
+                            safe_container->add(std::make_shared<string_value>(key, "new_value"));
                         }
                     }
                 }
@@ -228,7 +256,16 @@ private:
         std::cout << "  Total operations: " << total_operations << std::endl;
         std::cout << "  Total time: " << duration.count() / 1000 << " ms" << std::endl;
         std::cout << "  Operations per second: " << std::fixed << std::setprecision(2) << ops_per_sec << std::endl;
-        std::cout << "  Final container size: " << safe_container->size() << " entries" << std::endl;
+        // Count entries by iterating through all thread keys
+        size_t safe_container_size = 0;
+        for (int t = 0; t < num_threads; ++t) {
+            for (int i = 0; i < ops_per_thread; ++i) {
+                std::string key = "thread_" + std::to_string(t) + "_key_" + std::to_string(i);
+                auto values = safe_container->value_array(key);
+                safe_container_size += values.size();
+            }
+        }
+        std::cout << "  Final container size: approximately " << safe_container_size << " entries" << std::endl;
     }
     
     void benchmark_simd_operations() {
@@ -248,7 +285,7 @@ private:
         
         // Benchmark: Large binary data operations
         auto start = std::chrono::high_resolution_clock::now();
-        container->set_value("large_data", std::make_shared<bytes_value>(large_binary_data));
+        container->add(std::make_shared<bytes_value>("large_data", large_binary_data));
         auto end = std::chrono::high_resolution_clock::now();
         
         auto set_duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
@@ -263,9 +300,8 @@ private:
         std::cout << "  Set operation: " << set_duration.count() << " μs" << std::endl;
         std::cout << "  Get operation: " << get_duration.count() << " μs" << std::endl;
         
-        if (retrieved && retrieved->get_type() == value_types::bytes) {
-            auto bytes_val = std::static_pointer_cast<bytes_value>(retrieved);
-            auto retrieved_data = bytes_val->get_bytes();
+        if (retrieved && retrieved->type() == value_types::bytes_value) {
+            auto retrieved_data = retrieved->to_bytes();
             
             std::cout << "  Data integrity: " 
                       << (retrieved_data == large_binary_data ? "PASSED" : "FAILED") << std::endl;
@@ -292,7 +328,7 @@ private:
         for (int i = 0; i < size; ++i) {
             std::string key = "test_key_" + std::to_string(i);
             std::string value = "test_value_" + std::to_string(i) + "_with_additional_data_for_realistic_size";
-            container->set_value(key, std::make_shared<string_value>(value));
+            container->add(std::make_shared<string_value>(key, value));
         }
         
         return container;

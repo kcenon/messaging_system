@@ -10,23 +10,27 @@
 #include <atomic>
 #include <random>
 #include "container.h"
-#include "../internal/thread_safe_container.h"
+#include "values/string_value.h"
+#include "values/bool_value.h"
+#include "values/bytes_value.h"
+#include "values/container_value.h"
+#include "values/numeric_value.h"
 
 using namespace container_module;
 
 int main() {
     std::cout << "=== Container System - Thread Safety Example ===" << std::endl;
     
-    // 1. Thread-safe container creation
+    // 1. Thread-safe container creation (value_container has built-in thread safety)
     std::cout << "\n1. Thread-Safe Container Creation:" << std::endl;
-    
-    auto safe_container = std::make_shared<thread_safe_container>();
+
+    auto safe_container = std::make_shared<value_container>();
     safe_container->set_message_type("shared_data");
     
     // Initialize some shared data
-    safe_container->set_value("counter", std::make_shared<string_value>("0"));
-    safe_container->set_value("total_operations", std::make_shared<string_value>("0"));
-    safe_container->set_value("thread_count", std::make_shared<string_value>("0"));
+    safe_container->add(std::make_shared<string_value>("counter", "0"));
+    safe_container->add(std::make_shared<string_value>("total_operations", "0"));
+    safe_container->add(std::make_shared<string_value>("thread_count", "0"));
     
     std::cout << "Thread-safe container initialized" << std::endl;
     std::cout << "Initial counter value: " << safe_container->get_value("counter")->to_string() << std::endl;
@@ -66,10 +70,10 @@ int main() {
                     }
                     case 1: { // Write operation (increment counter)
                         auto current = safe_container->get_value("counter");
-                        if (current) {
+                        if (current && !current->is_null()) {
                             int val = std::stoi(current->to_string());
-                            safe_container->set_value("counter", 
-                                std::make_shared<string_value>(std::to_string(val + 1)));
+                            safe_container->remove("counter");
+                            safe_container->add(std::make_shared<string_value>("counter", std::to_string(val + 1)));
                             global_counter.fetch_add(1, std::memory_order_relaxed);
                         }
                         break;
@@ -77,16 +81,15 @@ int main() {
                     case 2: { // Add thread-specific data
                         std::string thread_key = "thread_" + std::to_string(i) + "_op_" + std::to_string(op);
                         std::string thread_data = "data_from_thread_" + std::to_string(i);
-                        safe_container->set_value(thread_key, 
-                            std::make_shared<string_value>(thread_data));
+                        safe_container->add(std::make_shared<string_value>(thread_key, thread_data));
                         break;
                     }
                     case 3: { // Update total operations
                         auto total_ops = safe_container->get_value("total_operations");
-                        if (total_ops) {
+                        if (total_ops && !total_ops->is_null()) {
                             int current_total = std::stoi(total_ops->to_string());
-                            safe_container->set_value("total_operations", 
-                                std::make_shared<string_value>(std::to_string(current_total + 1)));
+                            safe_container->remove("total_operations");
+                            safe_container->add(std::make_shared<string_value>("total_operations", std::to_string(current_total + 1)));
                         }
                         break;
                     }
@@ -116,11 +119,25 @@ int main() {
     auto final_counter = safe_container->get_value("counter");
     auto total_ops = safe_container->get_value("total_operations");
     
-    if (final_counter && total_ops) {
+    if (final_counter && total_ops && !final_counter->is_null() && !total_ops->is_null()) {
         std::cout << "Final counter value: " << final_counter->to_string() << std::endl;
         std::cout << "Total operations recorded: " << total_ops->to_string() << std::endl;
         std::cout << "Global counter (atomic): " << global_counter.load() << std::endl;
-        std::cout << "Container size: " << safe_container->size() << " entries" << std::endl;
+
+        // Count entries manually
+        size_t container_size = 0;
+        container_size += safe_container->value_array("counter").size();
+        container_size += safe_container->value_array("total_operations").size();
+        container_size += safe_container->value_array("thread_count").size();
+
+        // Count thread-specific entries
+        for (int t = 0; t < num_threads; ++t) {
+            for (int i = 0; i < operations_per_thread; ++i) {
+                std::string key = "thread_" + std::to_string(t) + "_op_" + std::to_string(i);
+                container_size += safe_container->value_array(key).size();
+            }
+        }
+        std::cout << "Container size: approximately " << container_size << " entries" << std::endl;
     }
     
     // 4. Performance test
@@ -136,7 +153,7 @@ int main() {
     for (int i = 0; i < perf_iterations; ++i) {
         std::string key = "perf_key_" + std::to_string(i);
         std::string value = "perf_value_" + std::to_string(i);
-        baseline_container->set_value(key, std::make_shared<string_value>(value));
+        baseline_container->add(std::make_shared<string_value>(key, value));
     }
     
     auto baseline_time = std::chrono::high_resolution_clock::now();
@@ -145,7 +162,7 @@ int main() {
     for (int i = 0; i < perf_iterations; ++i) {
         std::string key = "safe_key_" + std::to_string(i);
         std::string value = "safe_value_" + std::to_string(i);
-        safe_container->set_value(key, std::make_shared<string_value>(value));
+        safe_container->add(std::make_shared<string_value>(key, value));
     }
     
     auto safe_time = std::chrono::high_resolution_clock::now();
@@ -168,13 +185,25 @@ int main() {
     std::cout << "Thread-safe container serialized successfully" << std::endl;
     std::cout << "Serialized size: " << safe_serialized.length() << " characters" << std::endl;
     
-    auto restored_safe_container = std::make_shared<thread_safe_container>(safe_serialized);
+    auto restored_safe_container = std::make_shared<value_container>(safe_serialized);
     std::cout << "Thread-safe container restored successfully" << std::endl;
-    std::cout << "Restored container size: " << restored_safe_container->size() << " entries" << std::endl;
+
+    // Count restored entries manually
+    size_t restored_size = 0;
+    restored_size += restored_safe_container->value_array("counter").size();
+    restored_size += restored_safe_container->value_array("total_operations").size();
+    restored_size += restored_safe_container->value_array("thread_count").size();
+
+    // Count performance test entries
+    for (int i = 0; i < perf_iterations; ++i) {
+        restored_size += restored_safe_container->value_array("safe_key_" + std::to_string(i)).size();
+    }
+
+    std::cout << "Restored container size: approximately " << restored_size << " entries" << std::endl;
     
     // Verify some restored data
     auto restored_counter = restored_safe_container->get_value("counter");
-    if (restored_counter) {
+    if (restored_counter && !restored_counter->is_null()) {
         std::cout << "Restored counter value: " << restored_counter->to_string() << std::endl;
     }
     
