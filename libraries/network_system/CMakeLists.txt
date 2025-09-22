@@ -758,6 +758,15 @@ install(TARGETS NetworkSystem
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
+# Export container_system if it's linked
+if(BUILD_WITH_CONTAINER_SYSTEM AND TARGET container_system)
+    install(TARGETS container_system
+        EXPORT NetworkSystemTargets
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+endif()
+
 # Install headers
 install(DIRECTORY include/
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
