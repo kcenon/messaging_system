@@ -34,11 +34,12 @@ The Thread System framework delivers exceptional performance across various work
 - **Scaling Efficiency**: 96% at 8 cores (theoretical), 55-56% real-world
 - **Memory Efficient**: <1MB baseline memory usage
 - **Cross-Platform**: Consistent performance across Windows, Linux, and macOS
-- **Modularized Architecture**: 
+- **Streamlined Architecture**: 
   - Adaptive queue strategy for automatic optimization
-  - Reduced code complexity by ~8,700+ lines
+  - Reduced code complexity from ~8,700 to ~2,700 lines
   - Separated logger and monitoring into independent projects
-  - Maintains high performance with cleaner design
+  - Enhanced synchronization primitives and cancellation support
+  - Service registry for dependency injection
 
 ## Benchmark Environment
 
@@ -55,14 +56,15 @@ The Thread System framework delivers exceptional performance across various work
 - **Features**: std::format enabled, std::thread fallback (std::jthread not available)
 
 ### Thread System Version
-- **Version**: Latest development build with modularized architecture
-- **Build Date**: 2025-07-25 (latest update - logger and monitoring modules removed)
+- **Version**: Latest development build with streamlined architecture
+- **Build Date**: 2025-09-07 (latest update - modularized architecture)
 - **Configuration**: Release build with adaptive queue support
 - **Benchmark Tool**: Google Benchmark
 - **Architecture Changes**: 
-  - Removed ~8,700+ lines including logger and monitoring modules
+  - Streamlined from ~8,700 to ~2,700 lines of code
   - Logger and monitoring moved to separate projects
   - Clean interface-based architecture
+  - Added sync_primitives, cancellation_token, service_registry
 - **Performance**: Maintained with automatic optimization via adaptive queues
 
 ## Core Performance Metrics
@@ -77,14 +79,13 @@ The Thread System framework delivers exceptional performance across various work
 | Thread Pool | Pool creation (1 worker) | ~162 ns | Measured with Google Benchmark |
 | Thread Pool | Pool creation (8 workers) | ~578 ns | Linear scaling |
 | Thread Pool | Pool creation (16 workers) | ~1041 ns | Consistent overhead |
-| Adaptive Queue | Lock-free enqueue | ~320 ns | Available when needed |
-| Adaptive Queue | Lock-free dequeue | ~580 ns | Fallback to mutex |
+| Adaptive Queue | Mutex mode enqueue | ~96 ns | Default strategy |
+| Adaptive Queue | Lock-free mode enqueue | ~320 ns | High contention mode |
 | Adaptive Queue | Batch operations | ~212 ns/job | Optimized processing |
-| Lock-free Components | Memory overhead | ~188 KB | Job queues only |
-| Cancellation Token | Registration | +3% | Double-check pattern fixed |
-| Job Queue | Operations | -4% | Redundant atomic removed |
-| Logger | Async log call | <1 μs | Single log entry |
-| Logger | Throughput | ~450K logs/s | Sustained logging rate |
+| Sync Primitives | Scoped lock with timeout | ~15 ns | RAII wrapper overhead |
+| Cancellation Token | Registration | +3% | Thread-safe callbacks |
+| Service Registry | Service lookup | ~25 ns | Type-safe retrieval |
+| Job Queue | Operations | -4% | Optimized atomics |
 
 ### Thread Pool Creation Performance
 

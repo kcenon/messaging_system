@@ -9,9 +9,14 @@
 #pragma once
 
 // Core components
-#include "container_system/core/container.h"
-#include "container_system/core/value.h"
-#include "container_system/core/value_types.h"
+#include "container/core/container.h"
+#include "container/core/value.h"
+#include "container/core/value_types.h"
+
+// Integration features (conditional)
+#if defined(HAS_MESSAGING_FEATURES) || defined(HAS_EXTERNAL_INTEGRATION) || defined(HAS_PERFORMANCE_METRICS)
+#include "container/integration/messaging_integration.h"
+#endif
 
 // Note: Internal components like variant_value, thread_safe_container, and simd_processor
 // are not exposed in the public API

@@ -7,12 +7,13 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
+CYAN='\033[0;36m'
 BOLD='\033[1m'
 NC='\033[0m' # No Color
 
 # Display banner
 echo -e "${BOLD}${BLUE}============================================${NC}"
-echo -e "${BOLD}${BLUE}  Monitoring System Dependency Installer   ${NC}"
+echo -e "${BOLD}${BLUE}   Monitoring System Dependency Installer  ${NC}"
 echo -e "${BOLD}${BLUE}============================================${NC}"
 
 # Function to print messages
@@ -30,6 +31,10 @@ print_error() {
 
 print_warning() {
     echo -e "${BOLD}${YELLOW}[WARNING]${NC} $1"
+}
+
+print_info() {
+    echo -e "${CYAN}[INFO]${NC} $1"
 }
 
 # Store original directory
@@ -56,6 +61,10 @@ if [ "$(uname)" == "Darwin" ]; then
     print_status "Installing build tools..."
     brew install pkg-config cmake doxygen ninja
     brew install autoconf automake autoconf-archive python3
+    
+    # Install monitoring-specific tools
+    print_status "Installing monitoring-specific tools..."
+    brew install htop proctools
     
     print_success "macOS dependencies installed successfully"
     
@@ -86,6 +95,10 @@ elif [ "$(uname)" == "Linux" ]; then
     apt-get install -y curl zip unzip tar
     apt-get install -y pkg-config ninja-build python3
     apt-get install -y autoconf automake autoconf-archive
+    
+    # Install monitoring-specific system tools
+    print_status "Installing monitoring system tools..."
+    apt-get install -y htop procps sysstat
     
     # Check for ARM64 architecture
     if [ $(uname -m) == "aarch64" ]; then
@@ -160,16 +173,27 @@ print_status "Installing vcpkg packages for Monitoring System..."
 
 # Create vcpkg response file if it doesn't exist
 if [ ! -f "vcpkg.json" ]; then
-    print_status "Creating vcpkg.json..."
+    print_status "Creating vcpkg.json for monitoring system..."
     cat > vcpkg.json << 'EOF'
 {
   "name": "monitoring-system",
   "version": "1.0.0",
-  "description": "Real-time performance monitoring system",
+  "description": "High-performance system monitoring and metrics collection framework",
   "dependencies": [
+    "fmt",
     "gtest",
     "benchmark"
-  ]
+  ],
+  "features": {
+    "logger-integration": {
+      "description": "Enable logger_system integration",
+      "dependencies": []
+    },
+    "thread-integration": {
+      "description": "Enable thread_system integration", 
+      "dependencies": []
+    }
+  }
 }
 EOF
 fi
@@ -185,6 +209,27 @@ else
     exit 1
 fi
 
+# Check for sister systems availability
+print_status "Checking for sister systems availability..."
+
+# Check for logger_system
+if [ -d "../logger_system" ]; then
+    print_success "logger_system found - integration will be available"
+    LOGGER_AVAILABLE=1
+else
+    print_info "logger_system not found - integration will be disabled"
+    LOGGER_AVAILABLE=0
+fi
+
+# Check for thread_system  
+if [ -d "../thread_system" ]; then
+    print_success "thread_system found - integration will be available"
+    THREAD_AVAILABLE=1
+else
+    print_info "thread_system not found - integration will be disabled"
+    THREAD_AVAILABLE=0
+fi
+
 # Display summary
 echo -e "\n${BOLD}${GREEN}============================================${NC}"
 echo -e "${BOLD}${GREEN}     Dependency Installation Complete      ${NC}"
@@ -195,11 +240,37 @@ echo -e "  ${CYAN}Build Tools:${NC} cmake, ninja/make, pkg-config"
 echo -e "  ${CYAN}Compilers:${NC} g++/clang++ (system default)"
 echo -e "  ${CYAN}Documentation:${NC} doxygen"
 echo -e "  ${CYAN}Package Manager:${NC} vcpkg"
-echo -e "  ${CYAN}C++ Libraries:${NC} gtest, benchmark"
+echo -e "  ${CYAN}C++ Libraries:${NC} fmt, gtest, benchmark"
+echo -e "  ${CYAN}System Tools:${NC} htop, proctools/procps"
+
+print_status "Integration availability:"
+if [ $LOGGER_AVAILABLE -eq 1 ]; then
+    echo -e "  ${GREEN}✓${NC} logger_system integration available"
+else
+    echo -e "  ${YELLOW}✗${NC} logger_system integration not available"
+fi
+
+if [ $THREAD_AVAILABLE -eq 1 ]; then
+    echo -e "  ${GREEN}✓${NC} thread_system integration available"  
+else
+    echo -e "  ${YELLOW}✗${NC} thread_system integration not available"
+fi
 
 print_status "Next steps:"
 echo "  1. Run './build.sh' to build the Monitoring System"
 echo "  2. Run './build.sh --help' to see all build options"
 echo "  3. Run './build.sh --tests' to build and run tests"
+echo "  4. Run './build.sh --benchmark' to build with benchmarks"
+
+# Advanced build options
+echo -e "\n${BOLD}Advanced build options:${NC}"
+if [ $LOGGER_AVAILABLE -eq 1 ]; then
+    echo "  5. Run './build.sh --with-logger' to enable logger_system integration"
+fi
+if [ $THREAD_AVAILABLE -eq 1 ]; then
+    echo "  6. Run './build.sh --with-thread' to enable thread_system integration"
+fi
+echo "  7. Run './build.sh --cpp17' to force C++17 compatibility mode"
+echo "  8. Run './build.sh --asan' to build with AddressSanitizer for debugging"
 
 exit 0

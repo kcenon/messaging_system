@@ -32,16 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "container_system/core/value.h"
+#include "container/core/value.h"
 
 #include <memory>
 #include <vector>
 #include <string_view>
-#include <mutex>
 #include <shared_mutex>
+#include <mutex>
 #include <atomic>
-#include <unordered_map>
-#include <map>
 
 namespace container_module
 {
@@ -246,72 +244,6 @@ namespace container_module
 		 */
 		void save_packet(const std::string& file_path);
 
-		// Performance optimization methods
-
-		/**
-		 * @brief Enable/disable thread-safe mode
-		 * @param enabled Whether to enable thread safety
-		 */
-		void set_thread_safe_mode(bool enabled);
-
-		/**
-		 * @brief Enable/disable memory pooling
-		 * @param enabled Whether to enable memory pooling
-		 */
-		void set_memory_pooling(bool enabled);
-
-		/**
-		 * @brief Enable/disable SIMD acceleration
-		 * @param enabled Whether to enable SIMD acceleration
-		 */
-		void set_simd_acceleration(bool enabled);
-
-		/**
-		 * @brief Enable/disable lazy serialization
-		 * @param enabled Whether to enable lazy serialization
-		 */
-		void set_lazy_serialization(bool enabled);
-
-		/**
-		 * @brief Enable/disable data compression
-		 * @param enabled Whether to enable compression
-		 */
-		void set_compression(bool enabled);
-
-		/**
-		 * @brief Get performance statistics
-		 * @return Structure containing performance metrics
-		 */
-		struct performance_stats {
-			size_t read_count;
-			size_t write_count;
-			size_t serialization_count;
-			size_t cache_hits;
-			size_t cache_misses;
-			double cache_hit_ratio() const {
-				auto total = cache_hits + cache_misses;
-				return total > 0 ? static_cast<double>(cache_hits) / total : 0.0;
-			}
-		};
-		performance_stats get_performance_stats() const;
-
-		/**
-		 * @brief Clear performance statistics
-		 */
-		void clear_performance_stats();
-
-		/**
-		 * @brief Optimize container for specific use case
-		 * @param use_case The optimization target ("memory", "speed", "balanced")
-		 */
-		void optimize_for(const std::string& use_case);
-
-		/**
-		 * @brief Prefetch value into cache for faster access
-		 * @param target_name The name of the value to prefetch
-		 */
-		void prefetch_value(std::string_view target_name);
-
 		// Operator to get multiple child values by key
 		std::vector<std::shared_ptr<value>> operator[](std::string_view key);
 
@@ -394,23 +326,10 @@ namespace container_module
 		// Thread safety members
 		mutable std::shared_mutex mutex_;  ///< Mutex for thread-safe access
 		std::atomic<bool> thread_safe_enabled_{false}; ///< Thread-safe mode flag
-
-		// Statistics and performance metrics
+		
+		// Statistics
 		mutable std::atomic<size_t> read_count_{0};
 		mutable std::atomic<size_t> write_count_{0};
 		mutable std::atomic<size_t> serialization_count_{0};
-		mutable std::atomic<size_t> cache_hits_{0};
-		mutable std::atomic<size_t> cache_misses_{0};
-
-		// Advanced features
-		std::atomic<bool> memory_pooling_enabled_{true}; ///< Memory pooling flag
-		std::atomic<bool> simd_acceleration_enabled_{true}; ///< SIMD acceleration flag
-
-		// Caching for frequently accessed values
-		mutable std::unordered_map<std::string, std::weak_ptr<value>> value_cache_;
-
-		// Performance optimization flags
-		std::atomic<bool> lazy_serialization_{true}; ///< Defer serialization until needed
-		std::atomic<bool> compression_enabled_{false}; ///< Enable data compression
 	};
 } // namespace container_module

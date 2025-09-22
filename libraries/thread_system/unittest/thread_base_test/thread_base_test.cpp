@@ -32,14 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include "jobs/job_queue.h"
-#include "jobs/callback_job.h"
-#include "core/thread_base.h"
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/core/thread_base.h>
 #include <thread>
 #include <chrono>
 #include <atomic>
 
-using namespace thread_module;
+using namespace kcenon::thread;
 
 class ThreadBaseTest : public ::testing::Test
 {

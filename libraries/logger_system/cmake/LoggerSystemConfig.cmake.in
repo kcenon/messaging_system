@@ -1,11 +1,70 @@
+##################################################
+# LoggerSystem Package Configuration
+#
+# This file is used by CMake's find_package() command
+##################################################
+
 @PACKAGE_INIT@
 
+include(CMakeFindDependencyMacro)
+
+# Find required dependencies
+find_dependency(Threads REQUIRED)
+
+# Optionally find thread_system if it was used in the build
+set(LoggerSystem_USE_THREAD_SYSTEM @USE_THREAD_SYSTEM@)
+if(LoggerSystem_USE_THREAD_SYSTEM AND NOT @LOGGER_STANDALONE@)
+    # Try to find thread_system, but don't fail if not found
+    find_package(ThreadSystem QUIET)
+    if(ThreadSystem_FOUND)
+        message(STATUS "Found ThreadSystem: ${ThreadSystem_DIR}")
+    else()
+        message(STATUS "ThreadSystem not found, using standalone mode")
+    endif()
+endif()
+
+# Include the exported targets
 include("${CMAKE_CURRENT_LIST_DIR}/LoggerSystemTargets.cmake")
 
+# Provide the features that were enabled during build
+set(LoggerSystem_USE_DI @LOGGER_USE_DI@)
+set(LoggerSystem_USE_MONITORING @LOGGER_USE_MONITORING@)
+set(LoggerSystem_USE_EXTERNAL_DI @LOGGER_USE_EXTERNAL_DI@)
+set(LoggerSystem_FORCE_LIGHTWEIGHT @LOGGER_FORCE_LIGHTWEIGHT@)
+set(LoggerSystem_ENABLE_CRASH_HANDLER @LOGGER_ENABLE_CRASH_HANDLER@)
+set(LoggerSystem_ENABLE_STRUCTURED_LOGGING @LOGGER_ENABLE_STRUCTURED_LOGGING@)
+set(LoggerSystem_USE_LOCK_FREE_QUEUE @LOGGER_USE_LOCK_FREE_QUEUE@)
+set(LoggerSystem_ENABLE_NETWORK_WRITER @LOGGER_ENABLE_NETWORK_WRITER@)
+set(LoggerSystem_ENABLE_FILE_ROTATION @LOGGER_ENABLE_FILE_ROTATION@)
+set(LoggerSystem_ENABLE_ASYNC @LOGGER_ENABLE_ASYNC@)
+set(LoggerSystem_USE_COMPRESSION @LOGGER_USE_COMPRESSION@)
+set(LoggerSystem_USE_ENCRYPTION @LOGGER_USE_ENCRYPTION@)
+
+# Performance settings
+set(LoggerSystem_DEFAULT_BUFFER_SIZE @LOGGER_DEFAULT_BUFFER_SIZE@)
+set(LoggerSystem_DEFAULT_BATCH_SIZE @LOGGER_DEFAULT_BATCH_SIZE@)
+set(LoggerSystem_DEFAULT_QUEUE_SIZE @LOGGER_DEFAULT_QUEUE_SIZE@)
+set(LoggerSystem_MAX_WRITERS @LOGGER_MAX_WRITERS@)
+
+# Version information
+set(LoggerSystem_VERSION @PROJECT_VERSION@)
+set(LoggerSystem_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(LoggerSystem_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(LoggerSystem_VERSION_PATCH @PROJECT_VERSION_PATCH@)
+
+# Check if all required components are available
 check_required_components(LoggerSystem)
 
-# Find dependencies
-find_package(Threads REQUIRED)
-
-# Optional: Provide version information
-set(LoggerSystem_VERSION @PROJECT_VERSION@)
+# Print configuration summary if requested
+function(LoggerSystem_print_configuration)
+    message(STATUS "LoggerSystem ${LoggerSystem_VERSION} Configuration:")
+    message(STATUS "  Features:")
+    message(STATUS "    DI Support: ${LoggerSystem_USE_DI}")
+    message(STATUS "    Monitoring: ${LoggerSystem_USE_MONITORING}")
+    message(STATUS "    Async: ${LoggerSystem_ENABLE_ASYNC}")
+    message(STATUS "    Lock-free Queue: ${LoggerSystem_USE_LOCK_FREE_QUEUE}")
+    message(STATUS "    Thread System: ${LoggerSystem_USE_THREAD_SYSTEM}")
+    message(STATUS "  Performance:")
+    message(STATUS "    Buffer Size: ${LoggerSystem_DEFAULT_BUFFER_SIZE}")
+    message(STATUS "    Batch Size: ${LoggerSystem_DEFAULT_BATCH_SIZE}")
+endfunction()

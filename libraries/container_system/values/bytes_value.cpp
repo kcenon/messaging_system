@@ -30,9 +30,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "container_system/values/bytes_value.h"
+#include "container/values/bytes_value.h"
 
-#include "utilities/conversion/convert_string.h"
+#include "utilities/core/convert_string.h"
 
 namespace container_module
 {
@@ -70,10 +70,10 @@ namespace container_module
 	{
 		// Convert the raw data to base64
 		auto [encoded, err] = convert_string::to_base64(data_);
-		if (err.has_value())
+		if (!err.empty())
 		{
 			return "";
 		}
-		return encoded.value();
+		return encoded;
 	}
 } // namespace container_module

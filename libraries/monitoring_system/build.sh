@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Monitoring System Build Script
-# Based on Thread System build script
+# Enhanced version with C++17/C++20 compatibility and threading features
 
 # Color definitions for better readability
 RED='\033[0;31m'
@@ -28,9 +28,26 @@ show_help() {
     echo ""
     echo -e "${BOLD}Target Options:${NC}"
     echo "  --all             Build all targets (default)"
-    echo "  --lib-only        Build only the core libraries"
-    echo "  --samples         Build only the sample applications"
+    echo "  --lib-only        Build only the core monitoring library"
+    echo "  --examples        Build only the example applications"
     echo "  --tests           Build and run the unit tests"
+    echo ""
+    echo -e "${BOLD}Monitoring-Specific Options:${NC}"
+    echo "  --with-thread     Enable thread_system integration"
+    echo "  --with-logger     Enable logger_system integration"
+    echo "  --no-examples     Disable example programs"
+    echo ""
+    echo -e "${BOLD}C++ Compatibility Options:${NC}"
+    echo "  --cpp17           Force C++17 mode (disable C++20 features)"
+    echo "  --force-fmt       Force fmt library usage even if std::format available"
+    echo "  --no-vcpkg        Skip vcpkg and use system libraries only"
+    echo "  --no-jthread      Disable std::jthread even if supported"
+    echo "  --no-concepts     Disable concepts even if supported"
+    echo ""
+    echo -e "${BOLD}Sanitizer Options:${NC}"
+    echo "  --asan            Enable AddressSanitizer"
+    echo "  --tsan            Enable ThreadSanitizer"
+    echo "  --ubsan           Enable UndefinedBehaviorSanitizer"
     echo ""
     echo -e "${BOLD}Documentation Options:${NC}"
     echo "  --docs            Generate Doxygen documentation"
@@ -42,222 +59,52 @@ show_help() {
     echo "  --help            Display this help and exit"
     echo ""
     echo -e "${BOLD}Compiler Options:${NC}"
-    echo "  --compiler NAME   Use specific compiler (e.g., g++, clang++, g++-12)"
-    echo "  --list-compilers  List all available compilers and exit"
-    echo "  --select-compiler Interactively select compiler"
+    echo "  --compiler NAME   Select specific compiler (gcc, clang)"
+    echo "  --list-compilers  List available compilers and exit"
     echo ""
+    echo -e "${BOLD}Examples:${NC}"
+    echo "  $0 --clean --debug --tests"
+    echo "  $0 --cpp17 --force-fmt --asan"
+    echo "  $0 --lib-only --cores 8 --verbose"
 }
 
-# Function to print status messages
-print_status() {
-    echo -e "${BOLD}${BLUE}[STATUS]${NC} $1"
-}
-
-# Function to print success messages
-print_success() {
-    echo -e "${BOLD}${GREEN}[SUCCESS]${NC} $1"
-}
-
-# Function to print error messages
-print_error() {
-    echo -e "${BOLD}${RED}[ERROR]${NC} $1"
-}
-
-# Function to print warning messages
-print_warning() {
-    echo -e "${BOLD}${YELLOW}[WARNING]${NC} $1"
-}
-
-# Function to check if a command exists
-command_exists() {
-    command -v "$1" &> /dev/null
-}
-
-# Function to detect available compilers
-detect_compilers() {
-    print_status "Detecting available compilers..."
-    
-    local available_compilers=()
-    local compiler_details=()
-    
-    # Check for various C++ compilers
-    if command_exists g++; then
-        local gcc_version=$(g++ --version 2>/dev/null | head -n1)
-        available_compilers+=("g++")
-        compiler_details+=("GCC: $gcc_version")
-    fi
-    
-    if command_exists clang++; then
-        local clang_version=$(clang++ --version 2>/dev/null | head -n1)
-        available_compilers+=("clang++")
-        compiler_details+=("Clang: $clang_version")
-    fi
-    
-    # Check for additional GCC versions
-    for version in 13 12 11 10 9; do
-        if command_exists "g++-$version"; then
-            local gcc_ver=$(g++-$version --version 2>/dev/null | head -n1)
-            available_compilers+=("g++-$version")
-            compiler_details+=("GCC-$version: $gcc_ver")
-        fi
-    done
-    
-    # Check for additional Clang versions
-    for version in 17 16 15 14 13 12 11 10; do
-        if command_exists "clang++-$version"; then
-            local clang_ver=$(clang++-$version --version 2>/dev/null | head -n1)
-            available_compilers+=("clang++-$version")
-            compiler_details+=("Clang-$version: $clang_ver")
-        fi
-    done
-    
-    # Check for platform-specific compilers
-    if [ "$(uname)" == "Darwin" ]; then
-        # macOS specific compilers
-        if command_exists /usr/bin/clang++; then
-            local apple_clang_version=$(/usr/bin/clang++ --version 2>/dev/null | head -n1)
-            available_compilers+=("/usr/bin/clang++")
-            compiler_details+=("Apple Clang: $apple_clang_version")
-        fi
-    fi
-    
-    if [ ${#available_compilers[@]} -eq 0 ]; then
-        print_error "No C++ compilers found!"
-        print_warning "Please install a C++ compiler (GCC or Clang)"
-        return 1
-    fi
-    
-    # Export arrays for use in other functions
-    AVAILABLE_COMPILERS=("${available_compilers[@]}")
-    COMPILER_DETAILS=("${compiler_details[@]}")
-    
-    return 0
-}
-
-# Function to display available compilers
-show_compilers() {
-    echo -e "${BOLD}${CYAN}Available Compilers:${NC}"
-    for i in "${!AVAILABLE_COMPILERS[@]}"; do
-        printf "  %d) %s\n" $((i + 1)) "${COMPILER_DETAILS[i]}"
-    done
-    echo ""
-}
-
-# Function to select compiler interactively
-select_compiler_interactive() {
-    show_compilers
-    
-    while true; do
-        echo -e "${BOLD}Select compiler (1-${#AVAILABLE_COMPILERS[@]}) or 'q' to quit:${NC}"
-        read -r -p "> " choice
-        
-        if [ "$choice" = "q" ] || [ "$choice" = "Q" ]; then
-            print_warning "Build cancelled by user"
-            exit 0
-        fi
-        
-        if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "${#AVAILABLE_COMPILERS[@]}" ]; then
-            SELECTED_COMPILER="${AVAILABLE_COMPILERS[$((choice - 1))]}"
-            SELECTED_COMPILER_DETAIL="${COMPILER_DETAILS[$((choice - 1))]}"
-            print_success "Selected: $SELECTED_COMPILER_DETAIL"
-            return 0
-        else
-            print_error "Invalid choice. Please enter a number between 1 and ${#AVAILABLE_COMPILERS[@]}"
-        fi
-    done
-}
-
-# Function to select compiler by name
-select_compiler_by_name() {
-    local compiler_name="$1"
-    
-    for i in "${!AVAILABLE_COMPILERS[@]}"; do
-        if [ "${AVAILABLE_COMPILERS[i]}" = "$compiler_name" ]; then
-            SELECTED_COMPILER="$compiler_name"
-            SELECTED_COMPILER_DETAIL="${COMPILER_DETAILS[i]}"
-            print_success "Selected: $SELECTED_COMPILER_DETAIL"
-            return 0
-        fi
-    done
-    
-    print_error "Compiler '$compiler_name' not found in available compilers"
-    show_compilers
-    return 1
-}
-
-# Function to check and install dependencies
-check_dependencies() {
-    print_status "Checking build dependencies..."
-    
-    local missing_deps=()
-    
-    # Check for essential build tools
-    for cmd in cmake git; do
-        if ! command_exists "$cmd"; then
-            missing_deps+=("$cmd")
-        fi
-    done
-    
-    # Check for at least one build system (make or ninja)
-    if ! command_exists "make" && ! command_exists "ninja"; then
-        missing_deps+=("make or ninja")
-    fi
-    
-    if [ ${#missing_deps[@]} -ne 0 ]; then
-        print_error "Missing required dependencies: ${missing_deps[*]}"
-        print_warning "Please install missing dependencies before building."
-        print_warning "You can use './dependency.sh' to install all required dependencies."
-        return 1
-    fi
-    
-    # Check for vcpkg
-    if [ ! -d "../vcpkg" ]; then
-        print_warning "vcpkg not found in parent directory."
-        print_warning "Running dependency script to set up vcpkg..."
-        
-        if [ -f "./dependency.sh" ]; then
-            if ! bash ./dependency.sh; then
-                print_error "Failed to run dependency.sh"
-                return 1
-            fi
-        else
-            print_error "dependency.sh script not found"
-            return 1
-        fi
-    fi
-    
-    # Check for doxygen if building docs
-    if [ $BUILD_DOCS -eq 1 ] && ! command_exists doxygen; then
-        print_warning "Doxygen not found but documentation was requested."
-        print_warning "Documentation will not be generated."
-        BUILD_DOCS=0
-    fi
-    
-    print_success "All dependencies are satisfied"
-    return 0
-}
-
-# Process command line arguments
+# Initialize variables with default values
 CLEAN_BUILD=0
 BUILD_DOCS=0
 CLEAN_DOCS=0
-BUILD_TYPE="Release"
+BUILD_TYPE=Release
 BUILD_BENCHMARKS=0
-TARGET="all"
-BUILD_CORES=0
+TARGET=all
+BUILD_CORES=$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
 VERBOSE=0
-SELECTED_COMPILER=""
-LIST_COMPILERS_ONLY=0
-INTERACTIVE_COMPILER_SELECTION=0
+SELECTED_COMPILER=
+# Monitoring-specific options
+FORCE_CPP17=0
+FORCE_FMT=0
+NO_VCPKG=0
+WITH_THREAD_SYSTEM=0
+WITH_LOGGER_SYSTEM=0
+NO_EXAMPLES=0
+NO_JTHREAD=0
+NO_CONCEPTS=0
+# Sanitizer options
+ENABLE_ASAN=0
+ENABLE_TSAN=0
+ENABLE_UBSAN=0
 
+# Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
+        --help)
+            show_help
+            exit 0
+            ;;
         --clean)
             CLEAN_BUILD=1
             shift
             ;;
         --debug)
-            BUILD_TYPE="Debug"
+            BUILD_TYPE=Debug
             shift
             ;;
         --benchmark)
@@ -265,19 +112,63 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         --all)
-            TARGET="all"
+            TARGET=all
             shift
             ;;
         --lib-only)
-            TARGET="lib-only"
+            TARGET=lib-only
             shift
             ;;
-        --samples)
-            TARGET="samples"
+        --examples)
+            TARGET=examples
             shift
             ;;
         --tests)
-            TARGET="tests"
+            TARGET=tests
+            shift
+            ;;
+        --with-thread)
+            WITH_THREAD_SYSTEM=1
+            shift
+            ;;
+        --with-logger)
+            WITH_LOGGER_SYSTEM=1
+            shift
+            ;;
+        --no-examples)
+            NO_EXAMPLES=1
+            shift
+            ;;
+        --cpp17)
+            FORCE_CPP17=1
+            shift
+            ;;
+        --force-fmt)
+            FORCE_FMT=1
+            shift
+            ;;
+        --no-vcpkg)
+            NO_VCPKG=1
+            shift
+            ;;
+        --no-jthread)
+            NO_JTHREAD=1
+            shift
+            ;;
+        --no-concepts)
+            NO_CONCEPTS=1
+            shift
+            ;;
+        --asan)
+            ENABLE_ASAN=1
+            shift
+            ;;
+        --tsan)
+            ENABLE_TSAN=1
+            shift
+            ;;
+        --ubsan)
+            ENABLE_UBSAN=1
             shift
             ;;
         --docs)
@@ -285,268 +176,251 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         --clean-docs)
-            BUILD_DOCS=1
             CLEAN_DOCS=1
+            BUILD_DOCS=1
             shift
             ;;
         --cores)
-            if [[ $2 =~ ^[0-9]+$ ]]; then
-                BUILD_CORES=$2
-                shift 2
-            else
-                print_error "Option --cores requires a numeric argument"
-                exit 1
-            fi
+            BUILD_CORES="$2"
+            shift 2
             ;;
         --verbose)
             VERBOSE=1
             shift
             ;;
         --compiler)
-            if [ -n "$2" ]; then
-                SELECTED_COMPILER="$2"
-                shift 2
-            else
-                print_error "Option --compiler requires a compiler name"
-                exit 1
-            fi
+            SELECTED_COMPILER="$2"
+            shift 2
             ;;
         --list-compilers)
-            LIST_COMPILERS_ONLY=1
-            shift
-            ;;
-        --select-compiler)
-            INTERACTIVE_COMPILER_SELECTION=1
-            shift
-            ;;
-        --help)
-            show_help
+            echo -e "${BOLD}Available compilers:${NC}"
+            echo "  gcc    - GNU Compiler Collection"
+            echo "  clang  - LLVM Clang Compiler"
             exit 0
             ;;
         *)
-            print_error "Unknown option: $1"
-            show_help
+            echo -e "${RED}Unknown option: $1${NC}"
+            echo "Use --help for usage information"
             exit 1
             ;;
     esac
 done
 
-# Set number of cores to use for building
-if [ $BUILD_CORES -eq 0 ]; then
-    if command_exists nproc; then
-        BUILD_CORES=$(nproc)
-    elif [ "$(uname)" == "Darwin" ]; then
-        BUILD_CORES=$(sysctl -n hw.ncpu)
+# Function to print colored messages
+print_info() {
+    echo -e "${CYAN}[INFO]${NC} $1"
+}
+
+print_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+print_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+print_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Function to check if command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Function to set compiler
+set_compiler() {
+    if [[ -n "$SELECTED_COMPILER" ]]; then
+        case "$SELECTED_COMPILER" in
+            gcc)
+                if command_exists gcc; then
+                    export CC=gcc
+                    export CXX=g++
+                    print_info "Using GCC compiler"
+                else
+                    print_error "GCC not found"
+                    exit 1
+                fi
+                ;;
+            clang)
+                if command_exists clang; then
+                    export CC=clang
+                    export CXX=clang++
+                    print_info "Using Clang compiler"
+                else
+                    print_error "Clang not found"
+                    exit 1
+                fi
+                ;;
+            *)
+                print_error "Unsupported compiler: $SELECTED_COMPILER"
+                exit 1
+                ;;
+        esac
+    fi
+}
+
+# Function to build documentation
+build_documentation() {
+    print_info "Building documentation..."
+    
+    if [[ $CLEAN_DOCS -eq 1 ]] && [[ -d "docs/html" ]]; then
+        print_info "Cleaning existing documentation..."
+        rm -rf docs/html
+    fi
+    
+    if command_exists doxygen; then
+        doxygen Doxyfile
+        print_success "Documentation generated in docs/html/"
     else
-        # Default to 2 if we can't detect
-        BUILD_CORES=2
+        print_warning "Doxygen not found. Please install doxygen to generate documentation."
     fi
-fi
+}
 
-# macOS specific: Force single thread to avoid jobserver issues
-if [ "$(uname)" == "Darwin" ]; then
-    print_warning "macOS detected: Using single-threaded build to avoid jobserver issues"
-    BUILD_CORES=1
-fi
-
-print_status "Using $BUILD_CORES cores for compilation"
-
-# Store original directory
-ORIGINAL_DIR=$(pwd)
-
-# Check for platform-specific settings
-if [ "$(uname)" == "Linux" ]; then
-    if [ $(uname -m) == "aarch64" ]; then
-        export VCPKG_FORCE_SYSTEM_BINARIES=arm
-        print_status "Detected ARM64 platform, setting VCPKG_FORCE_SYSTEM_BINARIES=arm"
+# Main build function
+build_monitoring_system() {
+    print_info "Starting Monitoring System build..."
+    
+    # Set compiler
+    set_compiler
+    
+    # Clean build if requested
+    if [[ $CLEAN_BUILD -eq 1 ]] && [[ -d "build" ]]; then
+        print_info "Cleaning build directory..."
+        rm -rf build
     fi
-fi
-
-# Detect available compilers
-detect_compilers
-if [ $? -ne 0 ]; then
-    exit 1
-fi
-
-# Handle compiler-related options
-if [ $LIST_COMPILERS_ONLY -eq 1 ]; then
-    show_compilers
-    exit 0
-fi
-
-if [ $INTERACTIVE_COMPILER_SELECTION -eq 1 ]; then
-    select_compiler_interactive
-elif [ -n "$SELECTED_COMPILER" ]; then
-    select_compiler_by_name "$SELECTED_COMPILER"
-    if [ $? -ne 0 ]; then
+    
+    # Create build directory
+    mkdir -p build
+    cd build
+    
+    # Prepare CMake arguments
+    CMAKE_ARGS="-DCMAKE_BUILD_TYPE=$BUILD_TYPE"
+    
+    # Monitoring-specific options
+    if [[ $FORCE_CPP17 -eq 1 ]]; then
+        CMAKE_ARGS="$CMAKE_ARGS -DFORCE_CPP17=ON"
+        print_info "Forcing C++17 mode - C++20 features will be disabled"
+    fi
+    
+    if [[ $FORCE_FMT -eq 1 ]]; then
+        CMAKE_ARGS="$CMAKE_ARGS -DMONITORING_FORCE_CPP17_FORMAT=ON"
+        print_info "Forcing fmt library usage over std::format"
+    fi
+    
+    if [[ $WITH_THREAD_SYSTEM -eq 1 ]]; then
+        CMAKE_ARGS="$CMAKE_ARGS -DMONITORING_USE_THREAD_SYSTEM=ON"
+        print_info "Enabling thread_system integration"
+    fi
+    
+    if [[ $WITH_LOGGER_SYSTEM -eq 1 ]]; then
+        CMAKE_ARGS="$CMAKE_ARGS -DMONITORING_USE_LOGGER_SYSTEM=ON"
+        print_info "Enabling logger_system integration"
+    fi
+    
+    if [[ $BUILD_BENCHMARKS -eq 1 ]]; then
+        CMAKE_ARGS="$CMAKE_ARGS -DMONITORING_BUILD_BENCHMARKS=ON"
+    fi
+    
+    # Target-specific options
+    case $TARGET in
+        lib-only)
+            CMAKE_ARGS="$CMAKE_ARGS -DMONITORING_BUILD_EXAMPLES=OFF -DMONITORING_BUILD_TESTS=OFF"
+            ;;
+        examples)
+            CMAKE_ARGS="$CMAKE_ARGS -DMONITORING_BUILD_EXAMPLES=ON -DMONITORING_BUILD_TESTS=OFF"
+            ;;
+        tests)
+            CMAKE_ARGS="$CMAKE_ARGS -DMONITORING_BUILD_TESTS=ON"
+            ;;
+    esac
+    
+    if [[ $NO_EXAMPLES -eq 1 ]]; then
+        CMAKE_ARGS="$CMAKE_ARGS -DMONITORING_BUILD_EXAMPLES=OFF"
+    fi
+    
+    # Sanitizer options
+    if [[ $ENABLE_ASAN -eq 1 ]]; then
+        CMAKE_ARGS="$CMAKE_ARGS -DENABLE_ASAN=ON"
+        print_info "Enabling AddressSanitizer"
+    fi
+    
+    if [[ $ENABLE_TSAN -eq 1 ]]; then
+        CMAKE_ARGS="$CMAKE_ARGS -DENABLE_TSAN=ON"
+        print_info "Enabling ThreadSanitizer"
+    fi
+    
+    if [[ $ENABLE_UBSAN -eq 1 ]]; then
+        CMAKE_ARGS="$CMAKE_ARGS -DENABLE_UBSAN=ON"
+        print_info "Enabling UndefinedBehaviorSanitizer"
+    fi
+    
+    # Configure
+    print_info "Configuring build with: $CMAKE_ARGS"
+    if [[ $VERBOSE -eq 1 ]]; then
+        cmake $CMAKE_ARGS ..
+    else
+        cmake $CMAKE_ARGS .. > /dev/null
+    fi
+    
+    if [[ $? -ne 0 ]]; then
+        print_error "Configuration failed"
         exit 1
     fi
-else
-    # Use the first available compiler as default
-    SELECTED_COMPILER="${AVAILABLE_COMPILERS[0]}"
-    SELECTED_COMPILER_DETAIL="${COMPILER_DETAILS[0]}"
-    print_status "Using default compiler: $SELECTED_COMPILER_DETAIL"
-fi
+    
+    print_success "Configuration completed"
+    
+    # Build
+    print_info "Building with $BUILD_CORES cores..."
+    if [[ $VERBOSE -eq 1 ]]; then
+        make -j$BUILD_CORES
+    else
+        make -j$BUILD_CORES > /dev/null
+    fi
+    
+    if [[ $? -ne 0 ]]; then
+        print_error "Build failed"
+        exit 1
+    fi
+    
+    print_success "Build completed successfully!"
+    
+    # Run tests if requested
+    if [[ $TARGET == "tests" ]]; then
+        print_info "Running tests..."
+        ctest --verbose
+        
+        if [[ $? -eq 0 ]]; then
+            print_success "All tests passed!"
+        else
+            print_warning "Some tests failed. Check the output above."
+        fi
+    fi
+    
+    cd ..
+}
 
-# Check dependencies before proceeding
-check_dependencies
-if [ $? -ne 0 ]; then
-    print_error "Failed dependency check. Exiting."
-    exit 1
-fi
+# Main execution
+print_info "Monitoring System Build Configuration:"
+print_info "  Build Type: $BUILD_TYPE"
+print_info "  Target: $TARGET"
+print_info "  Cores: $BUILD_CORES"
+print_info "  Force C++17: $([ $FORCE_CPP17 -eq 1 ] && echo 'Yes' || echo 'No')"
+print_info "  Force fmt: $([ $FORCE_FMT -eq 1 ] && echo 'Yes' || echo 'No')"
+print_info "  Thread System: $([ $WITH_THREAD_SYSTEM -eq 1 ] && echo 'Yes' || echo 'No')"
+print_info "  Logger System: $([ $WITH_LOGGER_SYSTEM -eq 1 ] && echo 'Yes' || echo 'No')"
+print_info "  AddressSanitizer: $([ $ENABLE_ASAN -eq 1 ] && echo 'Yes' || echo 'No')"
+print_info "  ThreadSanitizer: $([ $ENABLE_TSAN -eq 1 ] && echo 'Yes' || echo 'No')"
 
-# Clean build if requested
-if [ $CLEAN_BUILD -eq 1 ]; then
-    print_status "Performing clean build..."
-    rm -rf build
-fi
+echo ""
 
-# Create build directory if it doesn't exist
-if [ ! -d "build" ]; then
-    print_status "Creating build directory..."
-    mkdir -p build
-fi
-
-# Prepare CMake arguments
-CMAKE_ARGS="-DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake"
-CMAKE_ARGS+=" -DCMAKE_BUILD_TYPE=$BUILD_TYPE"
-CMAKE_ARGS+=" -DCMAKE_CXX_COMPILER=$SELECTED_COMPILER"
-
-# Add feature flags based on options
-if [ $BUILD_BENCHMARKS -eq 1 ]; then
-    CMAKE_ARGS+=" -DBUILD_BENCHMARKS=ON"
-fi
-
-# Set build targets based on option
-if [ "$TARGET" == "lib-only" ]; then
-    CMAKE_ARGS+=" -DBUILD_SAMPLES=OFF -DBUILD_TESTS=OFF"
-elif [ "$TARGET" == "samples" ]; then
-    CMAKE_ARGS+=" -DBUILD_SAMPLES=ON -DBUILD_TESTS=OFF"
-elif [ "$TARGET" == "tests" ]; then
-    CMAKE_ARGS+=" -DBUILD_SAMPLES=OFF -DBUILD_TESTS=ON"
-fi
-
-# Enter build directory
-cd build || { print_error "Failed to enter build directory"; exit 1; }
-
-# Run CMake configuration
-print_status "Configuring project with CMake..."
-cmake .. $CMAKE_ARGS
-
-# Check if CMake configuration was successful
-if [ $? -ne 0 ]; then
-    print_error "CMake configuration failed. See the output above for details."
-    cd "$ORIGINAL_DIR"
-    exit 1
+# Build documentation if requested
+if [[ $BUILD_DOCS -eq 1 ]]; then
+    build_documentation
+    echo ""
 fi
 
 # Build the project
-print_status "Building project in $BUILD_TYPE mode..."
+build_monitoring_system
 
-# Detect build system (Ninja or Make)
-if [ -f "build.ninja" ]; then
-    BUILD_COMMAND="ninja"
-    if [ $VERBOSE -eq 1 ]; then
-        BUILD_ARGS="-v"
-    else
-        BUILD_ARGS=""
-    fi
-elif [ -f "Makefile" ]; then
-    BUILD_COMMAND="make"
-    if [ $VERBOSE -eq 1 ]; then
-        BUILD_ARGS="VERBOSE=1"
-    else
-        BUILD_ARGS=""
-    fi
-else
-    print_error "No build system files found (neither build.ninja nor Makefile)"
-    cd "$ORIGINAL_DIR"
-    exit 1
-fi
-
-print_status "Using build system: $BUILD_COMMAND"
-
-# Run build with appropriate cores
-$BUILD_COMMAND -j$BUILD_CORES $BUILD_ARGS
-
-# Check if build was successful
-if [ $? -ne 0 ]; then
-    print_error "Build failed. See the output above for details."
-    cd "$ORIGINAL_DIR"
-    exit 1
-fi
-
-# Run tests if requested
-if [ "$TARGET" == "tests" ]; then
-    print_status "Running tests..."
-    
-    # Run tests with CTest
-    if command_exists ctest; then
-        ctest --output-on-failure
-        if [ $? -eq 0 ]; then
-            print_success "All tests passed!"
-        else
-            print_error "Some tests failed. See the output above for details."
-        fi
-    else
-        print_error "CTest not found. Cannot run tests."
-    fi
-fi
-
-# Return to original directory
-cd "$ORIGINAL_DIR"
-
-# Show success message
-print_success "Build completed successfully!"
-
-# Generate documentation if requested
-if [ $BUILD_DOCS -eq 1 ]; then
-    print_status "Generating Doxygen documentation..."
-    
-    # Create docs directory if it doesn't exist
-    if [ ! -d "docs" ]; then
-        mkdir -p docs
-    fi
-    
-    # Clean docs if requested
-    if [ $CLEAN_DOCS -eq 1 ]; then
-        print_status "Cleaning documentation directory..."
-        rm -rf docs/*
-    fi
-    
-    # Check if doxygen is installed
-    if ! command_exists doxygen; then
-        print_error "Doxygen is not installed. Please install it to generate documentation."
-        exit 1
-    fi
-    
-    # Run doxygen and check if documentation generation was successful
-    if ! doxygen Doxyfile; then
-        print_error "Documentation generation failed. See the output above for details."
-    else
-        print_success "Documentation generated successfully in the docs directory!"
-    fi
-fi
-
-# Final success message
-echo -e "${BOLD}${GREEN}============================================${NC}"
-echo -e "${BOLD}${GREEN}    Monitoring System Build Complete       ${NC}"
-echo -e "${BOLD}${GREEN}============================================${NC}"
-
-if [ -d "build/bin" ]; then
-    echo -e "${CYAN}Available executables:${NC}"
-    ls -la build/bin/
-fi
-
-echo -e "${CYAN}Build type:${NC} $BUILD_TYPE"
-echo -e "${CYAN}Target:${NC} $TARGET"
-
-if [ $BUILD_BENCHMARKS -eq 1 ]; then
-    echo -e "${CYAN}Benchmarks:${NC} Enabled"
-fi
-
-if [ $BUILD_DOCS -eq 1 ]; then
-    echo -e "${CYAN}Documentation:${NC} Generated"
-fi
-
-exit 0
+print_success "Monitoring System build script completed!"

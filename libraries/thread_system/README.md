@@ -2,7 +2,6 @@
 
 [![Ubuntu-Clang](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-clang.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-clang.yaml)
 [![Ubuntu-GCC](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-gcc.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-ubuntu-gcc.yaml)
-[![Windows-MinGW](https://github.com/kcenon/thread_system/actions/workflows/build-windows-mingw.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-mingw.yaml)
 [![Windows-MSYS2](https://github.com/kcenon/thread_system/actions/workflows/build-windows-msys2.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-msys2.yaml)
 [![Windows-VisualStudio](https://github.com/kcenon/thread_system/actions/workflows/build-windows-vs.yaml/badge.svg)](https://github.com/kcenon/thread_system/actions/workflows/build-windows-vs.yaml)
 
@@ -12,9 +11,9 @@
 
 The Thread System Project is a comprehensive, production-ready C++20 multithreading framework designed to democratize concurrent programming. Built with a modular, interface-based architecture, it provides intuitive abstractions and robust implementations that empower developers of all skill levels to build high-performance, thread-safe applications without the typical complexity and pitfalls of manual thread management.
 
-> **🏗️ Modular Architecture**: Recently refactored to a clean, modular design with ~8,700+ lines of code removed. Logger and monitoring systems are now available as separate, optional projects for maximum flexibility.
+> **🏗️ Modular Architecture**: Streamlined to ~2,700 lines of highly optimized code through aggressive refactoring and coroutine removal. Logger and monitoring systems are available as separate, optional projects for maximum flexibility.
 
-> **🔄 Migration Status**: Currently migrating to a fully modular architecture. Phase 1 (Interface extraction) is complete. See [MIGRATION.md](MIGRATION.md) for details.
+> **✅ Latest Updates**: Enhanced synchronization primitives, improved cancellation tokens, service registry pattern, and comprehensive header inclusion fixes. All CI/CD pipelines green across platforms.
 
 ## 🔗 Project Ecosystem & Inter-Dependencies
 
@@ -22,18 +21,18 @@ This project is part of a modular ecosystem designed for high-performance concur
 
 ### Core Threading Framework
 - **[thread_system](https://github.com/kcenon/thread_system)** (This project): Core threading framework with worker pools, job queues, and thread management
-  - Provides: `logger_interface`, `monitoring_interface` for integration
+  - Provides: `kcenon::thread::interfaces::logger_interface`, `kcenon::thread::interfaces::monitoring_interface` for integration
   - Dependencies: None (standalone)
   - Usage: Core threading functionality, interfaces for other systems
 
 ### Optional Integration Components
 - **[logger_system](https://github.com/kcenon/logger_system)**: High-performance asynchronous logging
-  - Implements: `thread_module::logger_interface`
+  - Implements: `kcenon::thread::interfaces::logger_interface`
   - Dependencies: `thread_system` (for interfaces)
   - Integration: Seamless logging for thread operations and debugging
 
 - **[monitoring_system](https://github.com/kcenon/monitoring_system)**: Real-time metrics collection and performance monitoring
-  - Implements: `monitoring_interface::monitoring_interface`
+  - Implements: `kcenon::thread::interfaces::monitoring_interface`
   - Dependencies: `thread_system` (for interfaces)
   - Integration: Thread pool metrics, system performance tracking
 
@@ -57,7 +56,7 @@ logger_system    monitoring_system
 - **Performance-optimized**: Each system optimized for its domain
 - **Unified ecosystem**: Consistent API design across all projects
 
-> 📖 **[Complete Architecture Guide](../ARCHITECTURE.md)**: Comprehensive documentation of the entire ecosystem architecture, dependency relationships, and integration patterns.
+> 📖 **[Complete Architecture Guide](docs/ARCHITECTURE.md)**: Comprehensive documentation of the entire ecosystem architecture, dependency relationships, and integration patterns.
 
 ## Project Purpose & Mission
 
@@ -113,11 +112,11 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 
 ### 📊 **Performance Benchmarks**
 
-*Benchmarked on Apple M1 (8-core) @ 3.2GHz, 16GB, macOS Sonoma, Apple Clang 17.0.0*
+*Benchmarked on Apple M1 (8-core) @ 3.2GHz, 16GB, macOS Sonoma*
 
-> **🚀 Architecture Update**: Latest modular architecture (2025-07-25) removed ~8,700+ lines of code through clean interface-based design. Logger and monitoring systems are now separate optional projects. Adaptive queues continue to provide automatic optimization for all workload scenarios.
+> **🚀 Architecture Update**: Latest modular architecture removed ~8,700+ lines of code through clean interface-based design. Logger and monitoring systems are now separate optional projects. Adaptive queues continue to provide automatic optimization for all workload scenarios.
 
-#### Core Performance Metrics (Latest Benchmarks - 2025-07-09)
+#### Core Performance Metrics (Latest Benchmarks)
 - **Peak Throughput**: Up to 13.0M jobs/second (1 worker, empty jobs - theoretical)
 - **Real-world Throughput**: 
   - Standard thread pool: 1.16M jobs/s (10 workers, proven in production)
@@ -157,6 +156,25 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 | Medium (4 threads) | Adaptive | 142 ns | +8.2% faster | Balanced performance |
 | High (8+ threads) | Lock-free | 320 ns | +37% faster | Scales under contention |
 | Variable Load | **Auto-switching** | **Dynamic** | **Optimized** | **Automatic** |
+
+## Documentation
+
+- Module READMEs:
+  - core/README.md
+  - implementations/README.md
+  - interfaces/README.md
+- Guides:
+  - docs/USER_GUIDE.md (build, quick starts, DI)
+  - docs/API_REFERENCE.md (complete API documentation with interfaces)
+  - docs/ARCHITECTURE.md (ecosystem and modules)
+
+Build API docs with Doxygen (optional):
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --target docs
+# Open documents/html/index.html
+```
 
 *Real Workload Performance (8-worker configuration):*
 | Job Complexity | Throughput | Use Case | Scaling Efficiency |
@@ -236,7 +254,7 @@ This project addresses the fundamental challenge faced by developers worldwide: 
 | 16      | 🟡 **1.0 μs** | 🟡 **4.2 MB** | 💛 **94%** | 🔋 Moderate |
 | 32      | 🟠 **2.0 μs** | 🟠 **7.4 MB** | 🟡 **88%** | 📊 Heavy |
 
-For comprehensive performance analysis and optimization techniques, see the [Performance Guide](docs/performance.md).
+For comprehensive performance analysis and optimization techniques, see the [Performance Guide](docs/PERFORMANCE.md).
 
 ## Technology Stack & Architecture
 
@@ -263,80 +281,65 @@ For comprehensive performance analysis and optimization techniques, see the [Per
 
 ```
 thread_system/
-├── 📁 sources/                     # Core source code
-│   ├── 📁 thread_base/             # Base threading functionality
-│   │   ├── core/                   # Core classes (thread_base, thread_conditions)
-│   │   ├── jobs/                   # Job system (job, callback_job, job_queue)
-│   │   ├── lockfree/               # Lock-free queue implementations (for adaptive mode)
-│   │   │   ├── memory/             # Hazard pointers, node pools, memory reclamation
-│   │   │   └── queues/             # MPMC queue, adaptive queue, strategy selection
-│   │   └── sync/                   # Synchronization primitives, atomic operations
-│   ├── 📁 thread_pool/             # Thread pool implementations
-│   │   ├── core/                   # Pool classes
-│   │   │   ├── thread_pool.h/cpp   # Standard pool with adaptive queue support
-│   │   ├── workers/                # Worker implementations
-│   │   │   ├── thread_worker.h/cpp # Standard worker
-│   │   └── async/                  # Future-based tasks
-│   ├── 📁 typed_thread_pool/       # Type-based thread pool with adaptive queues
-│   │   ├── core/                   # Job types and interfaces (job_types.h, typed_job_interface.h)
-│   │   ├── jobs/                   # Typed job implementations
-│   │   │   ├── typed_job.h/tpp    # Base typed job template
-│   │   │   └── callback_typed_job.h/tpp # Lambda-based typed jobs
-│   │   ├── pool/                   # Thread pool implementations
-│   │   │   └── typed_thread_pool.h/tpp # Adaptive pool with automatic optimization
-│   │   └── scheduling/             # Job queues and workers
-│   │       ├── adaptive_typed_job_queue.h/tpp/cpp # Adaptive priority queue
-│   │       ├── typed_lockfree_job_queue.h/tpp/cpp # Lock-free queue (for adaptive mode)
-│   │       └── typed_thread_worker.h/tpp # Adaptive worker
-│   ├── 📁 logger/                  # Asynchronous logging system
-│   │   ├── core/                   # Logger implementation
-│   │   │   ├── logger_implementation.h/cpp # Standard mutex-based logger
-│   │   │   └── log_collector.h/cpp # Adaptive log collector
-│   │   ├── types/                  # Log types and formatters
-│   │   ├── writers/                # Console, file, callback writers
-│   │   └── jobs/                   # Log job processing
-│   └── 📁 utilities/               # Utility functions
-│       ├── core/                   # formatter, span
-│       ├── conversion/             # String conversions
-│       ├── time/                   # Date/time utilities
-│       └── io/                     # File handling
-├── 📁 samples/                     # Example applications
+├── 📁 include/kcenon/thread/       # Public headers
+│   ├── 📁 core/                    # Core components
+│   │   ├── thread_base.h           # Abstract thread class
+│   │   ├── thread_pool.h           # Thread pool interface
+│   │   ├── thread_worker.h         # Worker thread
+│   │   ├── job.h                   # Job interface
+│   │   ├── callback_job.h          # Function-based jobs
+│   │   ├── job_queue.h             # Thread-safe queue
+│   │   ├── service_registry.h      # Dependency injection
+│   │   ├── cancellation_token.h    # Cancellation support
+│   │   ├── sync_primitives.h       # Synchronization wrappers
+│   │   └── error_handling.h        # Result<T> pattern
+│   ├── 📁 interfaces/              # Integration interfaces
+│   │   ├── logger_interface.h      # Logger abstraction
+│   │   ├── monitoring_interface.h  # Monitoring abstraction
+│   │   ├── thread_context.h        # Thread context
+│   │   └── service_container.h     # Service management
+│   ├── 📁 utils/                   # Utilities
+│   │   ├── formatter.h             # String formatting
+│   │   ├── convert_string.h        # String conversions
+│   │   └── span.h                  # Span utilities
+│   └── compatibility.h             # Backward compatibility
+├── 📁 src/                         # Implementation files
+│   ├── 📁 core/                    # Core implementations
+│   │   ├── thread_base.cpp         # Thread base implementation
+│   │   ├── job.cpp                 # Job implementation
+│   │   ├── callback_job.cpp        # Callback job implementation
+│   │   └── job_queue.cpp           # Queue implementation
+│   ├── 📁 impl/                    # Concrete implementations
+│   │   ├── 📁 thread_pool/         # Thread pool implementation
+│   │   │   ├── thread_pool.cpp     # Pool implementation
+│   │   │   └── thread_worker.cpp   # Worker implementation
+│   │   └── 📁 typed_pool/          # Typed thread pool
+│   │       ├── typed_thread_pool.h # Typed pool header
+│   │       ├── typed_job_queue.h   # Typed queue
+│   │       └── adaptive_typed_job_queue.cpp # Adaptive queue
+│   └── 📁 utils/                   # Utility implementations
+│       └── convert_string.cpp      # String conversion impl
+├── 📁 examples/                    # Example applications
 │   ├── thread_pool_sample/         # Basic thread pool usage
-│   ├── typed_thread_pool_sample/   # Mutex-based priority scheduling
-│   ├── typed_thread_pool_sample_2/        # Advanced typed pool usage
-│   ├── logger_sample/              # Logging examples (requires separate logger project)
-│   ├── monitoring_sample/          # Real-time metrics collection (requires separate monitoring project)
-│   ├── mpmc_queue_sample/          # Adaptive MPMC queue usage
-│   ├── hazard_pointer_sample/      # Memory reclamation demo
-│   ├── node_pool_sample/           # Memory pool operations
-│   ├── adaptive_queue_sample/      # Adaptive queue selection
-│   └── typed_thread_pool_sample_2/ # Custom job types
-├── 📁 unittest/                    # Unit tests (Google Test)
-│   ├── thread_base_test/           # Base thread functionality tests
-│   ├── thread_pool_test/           # Thread pool tests
-│   ├── typed_thread_pool_test/     # Typed pool tests
-│   └── utilities_test/             # Utility function tests
-├── 📁 benchmarks/                  # Performance benchmarks
-│   ├── thread_base_benchmarks/     # Core threading benchmarks
-│   ├── thread_pool_benchmarks/     # Pool performance tests
-│   │   ├── thread_pool_benchmark.cpp      # Core pool metrics
-│   │   ├── adaptive_comparison_benchmark.cpp # 🆕 Standard vs adaptive
-│   │   ├── memory_benchmark.cpp           # Memory usage patterns
-│   │   ├── real_world_benchmark.cpp       # Realistic workloads
-│   │   ├── stress_test_benchmark.cpp      # Extreme load testing
-│   │   ├── scalability_benchmark.cpp      # Multi-core scaling
-│   │   └── contention_benchmark.cpp       # Contention scenarios
-│   ├── typed_thread_pool_benchmarks/ # Typed pool benchmarks
-│   │   ├── typed_scheduling_benchmark.cpp # Priority scheduling
-│   │   ├── typed_lockfree_benchmark.cpp   # 🆕 Lock-free vs mutex
-│   │   └── queue_comparison_benchmark.cpp # 🆕 Queue performance
-│   ├── logger_benchmarks/          # Logging performance (requires separate logger project)
-│   └── monitoring_benchmarks/      # Monitoring overhead (requires separate monitoring project)
+│   ├── typed_thread_pool_sample/   # Priority scheduling
+│   ├── adaptive_queue_sample/      # Adaptive queue usage
+│   ├── hazard_pointer_sample/      # Memory reclamation
+│   └── integration_example/        # Integration examples
+├── 📁 tests/                       # All tests
+│   ├── 📁 unit/                    # Unit tests
+│   │   ├── thread_base_test/       # Base functionality
+│   │   ├── thread_pool_test/       # Pool tests
+│   │   ├── interfaces_test/        # Interface tests
+│   │   └── utilities_test/         # Utility tests
+│   └── 📁 benchmarks/              # Performance tests
+│       ├── thread_base_benchmarks/ # Core benchmarks
+│       ├── thread_pool_benchmarks/ # Pool benchmarks
+│       └── typed_thread_pool_benchmarks/ # Typed pool benchmarks
 ├── 📁 docs/                        # Documentation
 ├── 📁 cmake/                       # CMake modules
-├── 📄 CMakeLists.txt               # Main build configuration
-├── 📄 vcpkg.json                  # Dependencies
-└── 🔧 build.sh/.bat               # Build scripts
+├── 📄 CMakeLists.txt               # Build configuration
+├── 📄 STRUCTURE.md                 # Project structure guide
+└── 📄 vcpkg.json                   # Dependencies
 ```
 
 ### 📖 **Key Files and Their Purpose**
@@ -411,19 +414,41 @@ build/
 
 ## Key Components
 
-### 1. [Thread Base (thread_module)](https://github.com/kcenon/thread_system/tree/main/sources/thread_base)
+### 1. [Core Threading Foundation (thread_module)](https://github.com/kcenon/thread_system/tree/main/core)
 
+#### Base Components
 - **`thread_base` class**: The foundational abstract class for all thread operations
   - Supports both `std::jthread` (C++20) and `std::thread` through conditional compilation
   - Provides lifecycle management (start/stop) and customizable hooks
-- **`job` class**: Abstract base class for units of work
+  - Thread condition monitoring and state management
+
+#### Job System
+- **`job` class**: Abstract base class for units of work with cancellation support
 - **`callback_job` class**: Concrete job implementation using `std::function`
 - **`job_queue` class**: Thread-safe queue for job management
-- **Adaptive components**:
-  - `adaptive_job_queue`: Dual-mode queue supporting both mutex and lock-free strategies
-  - `lockfree_job_queue`: Lock-free MPMC queue (utilized by adaptive mode)
-  - `hazard_pointer`: Safe memory reclamation for lock-free data structures
-  - `node_pool`: Memory pool for queue operations
+- **`cancellation_token`** 🆕: Enhanced cooperative cancellation mechanism
+  - Linked token creation for hierarchical cancellation
+  - Thread-safe callback registration
+  - Automatic propagation of cancellation signals
+
+#### Synchronization Primitives 🆕
+- **`sync_primitives.h`**: Enhanced synchronization wrappers
+  - `scoped_lock_guard`: RAII lock with timeout support
+  - `condition_variable_wrapper`: Enhanced condition variable with predicates
+  - `atomic_flag_wrapper`: Extended atomic operations with wait/notify
+  - `shared_mutex_wrapper`: Reader-writer lock implementation
+
+#### Service Infrastructure 🆕
+- **`service_registry`**: Lightweight dependency injection container
+  - Type-safe service registration and retrieval
+  - Thread-safe access with shared_mutex
+  - Automatic lifetime management via shared_ptr
+
+#### Adaptive Components
+- **`adaptive_job_queue`**: Dual-mode queue supporting both mutex and lock-free strategies
+- **`lockfree_job_queue`**: Lock-free MPMC queue (utilized by adaptive mode)
+- **`hazard_pointer`**: Safe memory reclamation for lock-free data structures
+- **`node_pool`**: Memory pool for efficient node allocation
 
 ### 2. [Logging System (Separate Project)](https://github.com/kcenon/logger)
 
@@ -919,11 +944,11 @@ FetchContent_MakeAvailable(thread_system)
 
 ### Core API Reference
 
-- **[API Reference](./docs/api-reference.md)**: Complete API documentation
-- **[Architecture Guide](./docs/architecture.md)**: System design and internals
-- **[Performance Guide](./docs/performance.md)**: Optimization tips and benchmarks
-- **[Examples](./docs/examples.md)**: Comprehensive code examples
-- **[FAQ](./docs/faq.md)**: Frequently asked questions
+- **[API Reference](./docs/API_REFERENCE.md)**: Complete API documentation with interfaces
+- **[Architecture Guide](./docs/ARCHITECTURE.md)**: System design and internals
+- **[Performance Guide](./docs/PERFORMANCE.md)**: Optimization tips and benchmarks
+- **[User Guide](./docs/USER_GUIDE.md)**: Usage guide and examples
+- **[FAQ](./docs/FAQ.md)**: Frequently asked questions
 
 ### Quick API Overview
 
@@ -932,10 +957,10 @@ FetchContent_MakeAvailable(thread_system)
 namespace thread_pool_module {
     // Thread pool with adaptive queue support
     class thread_pool {
-        auto start() -> std::optional<std::string>;
-        auto stop(bool immediately = false) -> void;
-        auto enqueue(std::unique_ptr<job>&& job) -> std::optional<std::string>;
-        auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> std::optional<std::string>;
+        auto start() -> result_void;
+        auto stop(bool immediately = false) -> result_void;
+        auto enqueue(std::unique_ptr<job>&& job) -> result_void;
+        auto enqueue_batch(std::vector<std::unique_ptr<job>>&& jobs) -> result_void;
         auto get_workers() const -> const std::vector<std::shared_ptr<thread_worker>>&;
         auto get_queue_statistics() const -> queue_statistics;
     };
@@ -994,7 +1019,7 @@ namespace typed_thread_pool_module {
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./docs/contributing.md) for details.
+We welcome contributions! Please see our [Contributing Guide](./docs/CONTRIBUTING.md) for details.
 
 ### Development Setup
 

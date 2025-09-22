@@ -1,0 +1,84 @@
+# Doxyfile for logger_system
+
+PROJECT_NAME           = "Logger System"
+PROJECT_NUMBER         = "1.0.0"
+PROJECT_BRIEF          = "High-performance C++20 thread-safe logging system with asynchronous capabilities"
+OUTPUT_DIRECTORY       = documents
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+QUIET                  = NO
+RECURSIVE              = YES
+CASE_SENSE_NAMES       = YES
+FULL_PATH_NAMES        = YES
+STRIP_FROM_PATH        = /Users/dongcheolshin/Sources/logger_system/
+JAVADOC_AUTOBRIEF      = YES
+TAB_SIZE               = 4
+OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_JAVA   = NO
+OPTIMIZE_FOR_FORTRAN   = NO
+OPTIMIZE_OUTPUT_VHDL   = NO
+MARKDOWN_SUPPORT       = YES
+USE_MDFILE_AS_MAINPAGE = README.md
+INLINE_SOURCES         = NO
+SOURCE_BROWSER         = YES
+GENERATE_TREEVIEW      = YES
+HAVE_DOT               = YES
+DOT_IMAGE_FORMAT       = svg
+CLASS_DIAGRAMS         = YES
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+
+# Enhanced documentation settings
+ALWAYS_DETAILED_SEC    = YES
+INLINE_INHERITED_MEMB  = YES
+INHERIT_DOCS           = YES
+SEPARATE_MEMBER_PAGES  = NO
+BUILTIN_STL_SUPPORT    = YES
+AUTOLINK_SUPPORT       = YES
+
+# Preprocessor settings
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = NO
+SEARCH_INCLUDES        = YES
+INCLUDE_PATH           = sources
+PREDEFINED             = USE_THREAD_SYSTEM
+
+# Warning settings
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = YES
+WARN_FORMAT            = "$file:$line: $text"
+
+# Example settings
+EXAMPLE_PATH           = examples
+EXAMPLE_PATTERNS       = *.cpp *.h
+EXAMPLE_RECURSIVE      = YES
+
+# Source browsing
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+REFERENCES_LINK_SOURCE = YES
+SOURCE_TOOLTIPS        = YES
+VERBATIM_HEADERS       = YES
+
+# Alphabetical index
+ALPHABETICAL_INDEX     = YES
+COLS_IN_ALPHA_INDEX    = 5
+
+INPUT                  = README.md ARCHITECTURE.md SECURITY.md \
+                         sources/logger \
+                         sources/logger/config \
+                         sources/logger/interfaces \
+                         sources/logger/writers \
+                         docs
+FILE_PATTERNS          = *.h *.hpp *.cpp *.md
+EXCLUDE_PATTERNS       = */tests/* */unittest/* */benchmarks/*
+HTML_OUTPUT            = html
+HTML_COLORSTYLE_HUE    = 200
+HTML_TIMESTAMP         = YES
+

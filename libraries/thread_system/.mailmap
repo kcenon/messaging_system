@@ -1,0 +1,11 @@
+# Consolidate historical authors to unify Contributors graph
+# Format: Correct Name <correct@email> Commit Name <commit@email>
+
+# Map Claude noreply to kcenon
+kcenon <kcenon@naver.com> Claude <noreply@anthropic.com>
+
+# Map by name only (in case email varied)
+kcenon <kcenon@naver.com> Claude
+
+# Map by email only (name may be missing/varied)
+kcenon <kcenon@naver.com> <noreply@anthropic.com>

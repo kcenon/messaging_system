@@ -28,18 +28,18 @@
 - Better manageability through state tracking
 
 ### Q: How do I create a custom worker thread?
-**A:** Inherit from `thread_base` and override the virtual methods as needed. For detailed patterns and examples, see the [patterns documentation](patterns.md#worker-thread-pattern).
+**A:** Inherit from `thread_base` and override the virtual methods as needed. For detailed patterns and examples, see the [patterns documentation](PATTERNS.md#worker-thread-pattern).
 
 ### Q: How do I make a worker thread wake up periodically?
-**A:** Use the `set_wake_interval` method. See the [patterns documentation](patterns.md#wake-interval-optimization) for optimization guidelines.
+**A:** Use the `set_wake_interval` method. See the [patterns documentation](PATTERNS.md#wake-interval-optimization) for optimization guidelines.
 
 ### Q: How do I handle errors in worker thread methods?
-**A:** Return the error using the `result_void` type. For comprehensive error handling patterns, see the [patterns documentation](patterns.md#best-practices).
+**A:** Return the error using the `result_void` type. For comprehensive error handling patterns, see the [patterns documentation](PATTERNS.md#best-practices).
 
 ## Thread Pool Questions
 
 ### Q: How many worker threads should I create in my thread pool?
-**A:** A good rule of thumb is to use the number of hardware threads available on the system. For detailed sizing guidelines for different workload types, see the [patterns documentation](patterns.md#thread-pool-sizing-guidelines).
+**A:** A good rule of thumb is to use the number of hardware threads available on the system. For detailed sizing guidelines for different workload types, see the [patterns documentation](PATTERNS.md#thread-pool-sizing-guidelines).
 
 ### Q: Can I reuse a thread pool for multiple tasks?
 **A:** Yes, thread pools are designed to be reused. You can keep submitting jobs to the pool, and the worker threads will process them as they become available.
@@ -68,34 +68,39 @@
 **A:** Yes, `typed_thread_pool` is a template class that can work with any type that provides comparison operators. You can define a custom enum or class that represents your application's type system.
 
 ### Q: How do I assign workers to specific type levels?
-**A:** When creating a worker, specify which type levels it should process. For complete type-based execution patterns, see the [patterns documentation](patterns.md#type-based-job-execution-pattern).
+**A:** When creating a worker, specify which type levels it should process. For complete type-based execution patterns, see the [patterns documentation](PATTERNS.md#type-based-job-execution-pattern).
 
 ### Q: What happens if there are no workers for a specific type level?
 **A:** Jobs with that type level will remain in the queue until a worker that can process them becomes available, or until the thread pool is stopped.
 
 ## Logging Questions
 
+### Q: Where is logging implemented now?
+**A:** Thread System provides a logging interface (`logger_interface`) only. The concrete implementation lives in the separate project [logger_system](https://github.com/kcenon/logger_system). Integrate it by registering your logger implementation via `service_container` or `logger_registry`.
+
 ### Q: Is logging thread-safe?
-**A:** Yes, all logging operations in `log_module` are thread-safe and can be called from multiple threads simultaneously.
+**A:** Yes for the recommended `logger_system` implementation (thread-safe by design). If you provide your own logger, ensure it is thread-safe because logging may occur from multiple worker threads.
 
 ### Q: How do I configure where logs are written?
-**A:** Use the target methods to specify which log levels go to which outputs. For a complete logger initialization pattern, see the [patterns documentation](patterns.md#logger-initialization-pattern).
+**A:** Configuration is provided by your logger implementation (e.g., `logger_system`). In Thread System you inject the logger, e.g.:
+```cpp
+// Register global logger
+thread_module::service_container::global()
+  .register_singleton<thread_module::logger_interface>(my_logger);
+
+// or
+thread_module::logger_registry::set_logger(my_logger);
+```
+See the logger's own documentation for sinks/targets and levels.
 
 ### Q: How do I customize log formatting?
-**A:** Register a custom callback for log processing. For advanced logging patterns including thread ID tracking, see the [patterns documentation](patterns.md#using-logs-effectively).
+**A:** Use the facilities of your logger implementation (format strings, structured logging). Thread System forwards messages through `logger_interface` unchanged.
 
 ### Q: Does logging affect application performance?
-**A:** The logging system is designed to minimize performance impact by processing logs asynchronously. However, excessive logging in tight loops can still affect performance. Use appropriate log levels and consider reducing log volume in performance-critical sections.
+**A:** Use an asynchronous logger (like `logger_system`) and avoid heavy logging in tight loops. Choose appropriate log levels and consider sampling or aggregation for high-frequency events.
 
 ### Q: How do I handle log rotation?
-**A:** Use the `set_max_lines` and `set_use_backup` methods to configure log rotation:
-```cpp
-// Rotate logs after 10,000 lines
-log_module::set_max_lines(10000);
-
-// Keep backups of old log files
-log_module::set_use_backup(true);
-```
+**A:** Log rotation/retention is handled by the logger implementation. Refer to the `logger_system` documentation (or your chosen logger) for rotation policies and configuration.
 
 ## Performance Questions
 
@@ -119,7 +124,7 @@ For comprehensive troubleshooting guidance, including solutions to common concur
 - Performance issues
 - Debugging strategies
 
-Please refer to the [patterns documentation](patterns.md#troubleshooting-common-issues).
+Please refer to the [patterns documentation](PATTERNS.md#troubleshooting-common-issues).
 
 ## Build and Integration
 

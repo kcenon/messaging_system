@@ -156,7 +156,7 @@ find "$DOCS_DIR" -name "*.md" -type f | while read -r file; do
         if echo "$code_block" | grep -q -E "(#include|int main|class|struct|namespace)"; then
             valid_examples=$((valid_examples + 1))
         fi
-    done < <(grep -Pzo '(?s)```cpp\n\K.*?(?=\n```)' "$file" 2>/dev/null || true)
+    done < <(awk '/```cpp/{flag=1;next}/```/{flag=0}flag' "$file" 2>/dev/null | tr '\0' '\n' || true)
 done
 
 if [ $example_count -gt 0 ]; then

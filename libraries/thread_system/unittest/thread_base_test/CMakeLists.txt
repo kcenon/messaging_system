@@ -16,11 +16,13 @@ if(DEFINED CMAKE_TOOLCHAIN_FILE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../bu
     endif()
 endif()
 
-# Include thread_base headers
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_base)
-
-# Include lockfree headers
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../sources/thread_base/lockfree)
+# Include new core headers
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/base/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/jobs/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/sync/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/lockfree/include
+)
 
 # Try to find GTest (vcpkg first, then system)
 find_package(GTest CONFIG)
@@ -30,7 +32,7 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE 
+target_link_libraries(${PROJECT_NAME} PRIVATE
     thread_base
     utilities
     interfaces
@@ -47,3 +49,8 @@ add_custom_target(${PROJECT_NAME}_test ALL
     COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -C $<CONFIG>
     DEPENDS ${PROJECT_NAME}
 )
+
+# Apply sanitizers if enabled
+if(COMMAND apply_sanitizers)
+    apply_sanitizers(${PROJECT_NAME})
+endif()

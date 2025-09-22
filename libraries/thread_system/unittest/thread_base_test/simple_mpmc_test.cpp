@@ -33,22 +33,22 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "gtest/gtest.h"
-#include "lockfree/queues/lockfree_job_queue.h"
-#include "jobs/callback_job.h"
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
 #include <thread>
 
-using namespace thread_module;
+using namespace kcenon::thread;
 
 // Test 1: Just create and destroy queue
 TEST(SimpleMPMCTest, CreateDestroy)
 {
-	lockfree_job_queue queue;
+	job_queue queue;
 }
 
 // Test 2: Create, enqueue one item, destroy
 TEST(SimpleMPMCTest, SingleEnqueue)
 {
-	lockfree_job_queue queue;
+	job_queue queue;
 	
 	auto job = std::make_unique<callback_job>([]() -> result_void {
 		return result_void();
@@ -61,7 +61,7 @@ TEST(SimpleMPMCTest, SingleEnqueue)
 // Test 3: Create, enqueue and dequeue one item, destroy
 TEST(SimpleMPMCTest, SingleEnqueueDequeue)
 {
-	lockfree_job_queue queue;
+	job_queue queue;
 	
 	auto job = std::make_unique<callback_job>([]() -> result_void {
 		return result_void();
@@ -78,7 +78,7 @@ TEST(SimpleMPMCTest, SingleEnqueueDequeue)
 TEST(SimpleMPMCTest, MultipleQueues)
 {
 	for (int i = 0; i < 3; ++i) {
-		lockfree_job_queue queue;
+		job_queue queue;
 		
 		auto job = std::make_unique<callback_job>([]() -> result_void {
 			return result_void();
@@ -95,7 +95,7 @@ TEST(SimpleMPMCTest, MultipleQueues)
 // Test 5: Thread with queue access
 TEST(SimpleMPMCTest, ThreadAccess)
 {
-	lockfree_job_queue queue;
+	job_queue queue;
 	
 	std::thread t([&queue]() {
 		auto job = std::make_unique<callback_job>([]() -> result_void {

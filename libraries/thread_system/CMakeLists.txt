@@ -19,7 +19,15 @@ project(ThreadSystem
 # Option to control whether ThreadSystem is built as a standalone project or as a submodule
 # - OFF (default): Builds as standalone project with samples and tests
 # - ON: Builds only the core libraries for integration into other projects
-option(BUILD_THREADSYSTEM_AS_SUBMODULE "Build ThreadSystem as submodule" OFF)
+# Automatically detect if we're being built as a submodule
+if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    # We're being built as a subdirectory, so default to submodule mode
+    set(BUILD_THREADSYSTEM_AS_SUBMODULE ON CACHE BOOL "Build ThreadSystem as submodule" FORCE)
+else()
+    # We're the top-level project, so default to standalone mode
+    option(BUILD_THREADSYSTEM_AS_SUBMODULE "Build ThreadSystem as submodule" OFF)
+endif()
+option(BUILD_DOCUMENTATION "Build Doxygen documentation" ON)
 
 ##################################################
 # C++ Standard Configuration
@@ -74,6 +82,9 @@ include(CompilerChecks)
 # Include coverage configuration
 include(Coverage)
 
+# Phase 3 T3.2: Include dependency conflict checker
+include(dependency_checker)
+
 # Perform compiler version check
 check_compiler_version()
 
@@ -88,6 +99,40 @@ check_required_headers()
 
 # Check C++ standard library features
 check_cpp_stdlib_features()
+
+##################################################
+# Sanitizers and Static Analysis
+##################################################
+
+option(ENABLE_ASAN "Enable AddressSanitizer" OFF)
+option(ENABLE_UBSAN "Enable UndefinedBehaviorSanitizer" OFF)
+option(ENABLE_TSAN "Enable ThreadSanitizer" OFF)
+option(ENABLE_CLANG_TIDY "Enable clang-tidy static analysis" OFF)
+
+if(ENABLE_CLANG_TIDY)
+  find_program(CLANG_TIDY_EXE NAMES clang-tidy)
+  if(CLANG_TIDY_EXE)
+    message(STATUS "Enabling clang-tidy: ${CLANG_TIDY_EXE}")
+    set(CMAKE_CXX_CLANG_TIDY ${CLANG_TIDY_EXE})
+  else()
+    message(WARNING "clang-tidy not found; ENABLE_CLANG_TIDY ignored")
+  endif()
+endif()
+
+function(apply_sanitizers target)
+  if(ENABLE_ASAN)
+    target_compile_options(${target} PRIVATE -fsanitize=address)
+    target_link_libraries(${target} PRIVATE -fsanitize=address)
+  endif()
+  if(ENABLE_UBSAN)
+    target_compile_options(${target} PRIVATE -fsanitize=undefined)
+    target_link_libraries(${target} PRIVATE -fsanitize=undefined)
+  endif()
+  if(ENABLE_TSAN)
+    target_compile_options(${target} PRIVATE -fsanitize=thread)
+    target_link_libraries(${target} PRIVATE -fsanitize=thread)
+  endif()
+endfunction()
 
 ##################################################
 # Platform-Specific Threading Configuration
@@ -201,7 +246,7 @@ if(WIN32)
   message(STATUS "🛡️  Windows Policy: Force using fmt::format for maximum compatibility")
   message(STATUS "   Rationale:")
   message(STATUS "   - Avoids std::format inconsistencies across different Windows compilers")
-  message(STATUS "   - Ensures consistent behavior between MSVC, MinGW, MSYS2, and Clang")
+  message(STATUS "   - Ensures consistent behavior between MSVC, MSYS2, and Clang")
   message(STATUS "   - Eliminates runtime compatibility issues with different Windows versions")
   message(STATUS "   - Provides stable, well-tested formatting across all Windows environments")
   
@@ -213,8 +258,6 @@ if(WIN32)
     # Identify specific Windows GCC environments
     if(CMAKE_CXX_COMPILER MATCHES "msys2" OR CMAKE_CXX_COMPILER MATCHES "MSYS2")
       message(STATUS "🔧 MSYS2 environment confirmed")
-    elseif(CMAKE_CXX_COMPILER MATCHES "mingw" OR CMAKE_CXX_COMPILER MATCHES "MinGW")
-      message(STATUS "🔧 MinGW environment confirmed")
     else()
       message(STATUS "🔧 Windows GCC environment detected")
     endif()
@@ -551,20 +594,120 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     message(STATUS "Using vcpkg toolchain: ${CMAKE_TOOLCHAIN_FILE}")
   endif()
 
-  # Add subdirectories for source code, samples, and unit tests
-  add_subdirectory(sources)  # Core library code
-  add_subdirectory(samples)  # Example applications
-  add_subdirectory(unittest)  # Unit tests
-  
+  # Phase 3 T3.2: Run dependency conflict checks if requested
+  if(CHECK_DEPENDENCIES)
+    check_dependency_conflicts()
+  endif()
+
+  # Set up include directories for new structure
+  set(THREAD_SYSTEM_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+  set(THREAD_SYSTEM_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+  # Add include directories for both new and old structures
+  include_directories(${THREAD_SYSTEM_INCLUDE_DIR})
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR})  # For legacy structure
+
+  # Check if we have the new structure or old structure
+  if(EXISTS ${THREAD_SYSTEM_INCLUDE_DIR}/kcenon/thread AND EXISTS ${THREAD_SYSTEM_SOURCE_DIR})
+    message(STATUS "Using new directory structure")
+
+    # Collect source files from new structure
+    file(GLOB_RECURSE THREAD_SYSTEM_HEADERS
+      ${THREAD_SYSTEM_INCLUDE_DIR}/kcenon/thread/*.h
+    )
+
+    file(GLOB_RECURSE THREAD_SYSTEM_SOURCES
+      ${THREAD_SYSTEM_SOURCE_DIR}/*.cpp
+    )
+
+    # If no sources found in new structure, this is a partial migration
+    list(LENGTH THREAD_SYSTEM_SOURCES SOURCE_COUNT)
+    if(SOURCE_COUNT LESS 10)
+      message(STATUS "New structure has limited sources, using hybrid approach")
+      set(USE_LEGACY_BUILD TRUE)
+    else()
+      # Create the main library with new structure
+      add_library(ThreadSystem STATIC
+        ${THREAD_SYSTEM_SOURCES}
+        ${THREAD_SYSTEM_HEADERS}
+      )
+
+      # Set target properties
+      target_include_directories(ThreadSystem
+        PUBLIC
+          $<BUILD_INTERFACE:${THREAD_SYSTEM_INCLUDE_DIR}>
+          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+          $<INSTALL_INTERFACE:include>
+      )
+      set(USE_LEGACY_BUILD FALSE)
+    endif()
+  else()
+    message(STATUS "New structure not complete, using legacy build")
+    set(USE_LEGACY_BUILD TRUE)
+  endif()
+
+  # Add legacy subdirectories if using legacy build
+  if(USE_LEGACY_BUILD)
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/utilities)
+      add_subdirectory(utilities)        # Utilities library
+    endif()
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/interfaces)
+      add_subdirectory(interfaces)       # Public interfaces
+    endif()
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/core)
+      add_subdirectory(core)             # Core (thread_base, jobs, sync)
+    endif()
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/implementations)
+      add_subdirectory(implementations)  # Implementations (thread_pool, typed_thread_pool, lockfree)
+    endif()
+  endif()
+
+  # Examples and tests
+  if(NOT DEFINED BUILD_SAMPLES OR BUILD_SAMPLES)
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples)
+      add_subdirectory(examples)          # Example applications
+    elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/samples)
+      add_subdirectory(samples)          # Legacy sample applications
+    endif()
+  endif()
+
+  # Tests
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt)
+    add_subdirectory(tests)             # New test structure
+  elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unittest)
+    add_subdirectory(unittest)         # Legacy unit tests
+  endif()
+
   # Add benchmarks directory if requested
   option(BUILD_BENCHMARKS "Build performance benchmarks" OFF)
   if(BUILD_BENCHMARKS)
-    add_subdirectory(benchmarks)  # Performance benchmarks
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/benchmarks)
+      add_subdirectory(tests/benchmarks)  # New benchmark location
+    elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/benchmarks)
+      add_subdirectory(benchmarks)  # Legacy benchmarks
+    endif()
+  endif()
+
+  # Documentation (Doxygen)
+  if(BUILD_DOCUMENTATION)
+    find_package(Doxygen)
+    if(DOXYGEN_FOUND)
+      add_custom_target(docs
+        COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM)
+    else()
+      message(WARNING "Doxygen not found; 'docs' target will not be available")
+    endif()
   endif()
 else()
   # When building as a submodule of another project:
   # Only build the core library (no samples or tests)
-  add_subdirectory(sources)
+  # Build core components with new structure
+  add_subdirectory(interfaces)
+  add_subdirectory(utilities)
+  add_subdirectory(core)
 endif()
 
 ##################################################
@@ -575,40 +718,99 @@ endif()
 if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   include(GNUInstallDirs)
   
-  # Install header files with proper directory structure
-  install(DIRECTORY sources/utilities/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/utilities
+  # Phase 2 T2.2: Install header files with priority to interface headers
+  
+  # Phase 2 T2.2: Priority installation of interface headers
+  
+  # Install headers from new structure
+  install(DIRECTORY include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+          COMPONENT Development
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/interfaces/
+
+  # Install legacy interfaces for backward compatibility
+  install(DIRECTORY interfaces/
           DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/interfaces
+          COMPONENT Development
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/thread_base/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_base
+  
+  # Utility headers (commonly used)
+  install(DIRECTORY utilities/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/utilities
+          COMPONENT Development
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/thread_pool/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/thread_pool
+
+  # Core implementation headers are now in include/kcenon/thread/core/
+
+  # Implementation headers (optional, for advanced customization)
+  install(DIRECTORY implementations/thread_pool/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/thread_pool
+          COMPONENT Implementation
           FILES_MATCHING PATTERN "*.h")
-          
-  install(DIRECTORY sources/typed_thread_pool/
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/typed_thread_pool
+
+  install(DIRECTORY implementations/typed_thread_pool/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/typed_thread_pool
+          COMPONENT Implementation
           FILES_MATCHING PATTERN "*.h" PATTERN "*.tpp")
+
+  install(DIRECTORY implementations/lockfree/include/
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/implementations/lockfree
+          COMPONENT Implementation
+          FILES_MATCHING PATTERN "*.h")
   
   # Monitoring headers disabled - moved to separate project
   # install(DIRECTORY sources/monitoring/
   #         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/thread_system/monitoring
   #         FILES_MATCHING PATTERN "*.h")
   
-  # Install libraries
-  install(TARGETS utilities interfaces thread_base thread_pool typed_thread_pool
-          EXPORT ThreadSystemTargets
-          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-          RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  # Install libraries based on what was built
+  if(USE_LEGACY_BUILD)
+    # Legacy targets
+    set(INSTALL_TARGETS "")
+    if(TARGET utilities)
+      list(APPEND INSTALL_TARGETS utilities)
+    endif()
+    if(TARGET interfaces)
+      list(APPEND INSTALL_TARGETS interfaces)
+    endif()
+    if(TARGET thread_base)
+      list(APPEND INSTALL_TARGETS thread_base)
+    endif()
+    if(TARGET thread_pool)
+      list(APPEND INSTALL_TARGETS thread_pool)
+    endif()
+    if(TARGET typed_thread_pool)
+      list(APPEND INSTALL_TARGETS typed_thread_pool)
+    endif()
+    if(TARGET lockfree)
+      list(APPEND INSTALL_TARGETS lockfree)
+    endif()
+
+    if(INSTALL_TARGETS)
+      install(TARGETS ${INSTALL_TARGETS}
+              EXPORT ThreadSystemTargets
+              ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+              LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+              RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    endif()
+  else()
+    # New structure - install ThreadSystem library
+    if(TARGET ThreadSystem)
+      install(TARGETS ThreadSystem
+              EXPORT ThreadSystemTargets
+              ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+              LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+              RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    endif()
+  endif()
   
-  # Install export targets
+  # Phase 2 T2.2: Install targets with standardized namespace thread_system::
+  install(EXPORT ThreadSystemTargets
+          FILE thread_system-targets.cmake
+          NAMESPACE thread_system::
+          DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system)
+          
+  # Legacy compatibility: also install with old naming and namespace
   install(EXPORT ThreadSystemTargets
           FILE ThreadSystemTargets.cmake
           NAMESPACE ThreadSystem::
@@ -617,6 +819,20 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
   # Create and install config file
   include(CMakePackageConfigHelpers)
   
+  # Phase 2 T2.1: Standardized CMake config files with hyphenated names
+  configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/thread_system-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system
+  )
+  
+  configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/thread_system-config-version.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config-version.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system
+  )
+  
+  # Legacy compatibility: also generate old-style config files
   configure_package_config_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/ThreadSystemConfig.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
@@ -629,10 +845,69 @@ if(NOT BUILD_THREADSYSTEM_AS_SUBMODULE)
     COMPATIBILITY SameMajorVersion
   )
   
+  # Install new standardized config files (Phase 2 T2.1)
+  install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system-config-version.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/thread_system
+  )
+  
+  # Install legacy config files for backward compatibility
   install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/ThreadSystemConfigVersion.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ThreadSystem
+  )
+  
+  # Phase 2 T2.2: Create and install pkg-config file
+  set(PKG_CONFIG_FEATURE_FLAGS "")
+  if(USE_STD_FORMAT)
+    set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_FORMAT")
+  endif()
+  if(USE_STD_JTHREAD)
+    set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_JTHREAD")
+  endif()
+  if(USE_STD_CHRONO_CURRENT_ZONE)
+    set(PKG_CONFIG_FEATURE_FLAGS "${PKG_CONFIG_FEATURE_FLAGS} -DUSE_STD_CHRONO_CURRENT_ZONE")
+  endif()
+  
+  # Get Iconv libraries for pkg-config
+  if(TARGET Iconv::Iconv)
+    get_target_property(ICONV_LIBRARIES Iconv::Iconv INTERFACE_LINK_LIBRARIES)
+    if(NOT ICONV_LIBRARIES)
+      set(ICONV_LIBRARIES "")
+    endif()
+  else()
+    set(ICONV_LIBRARIES "")
+  endif()
+  
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/thread_system.pc.in
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system.pc
+    @ONLY
+  )
+  
+  install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/thread_system.pc
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+  )
+  
+  # Phase 3 T3.1: Install dependency documentation
+  install(FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/docs/dependency_compatibility_matrix.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/docs/license_compatibility.md
+    DESTINATION ${CMAKE_INSTALL_DOCDIR}/dependencies
+    COMPONENT Documentation
+  )
+  
+  # Install main documentation
+  install(FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/README.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/CHANGELOG.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/DEPENDENCY_IMPROVEMENT_SRD.md
+    ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE
+    DESTINATION ${CMAKE_INSTALL_DOCDIR}
+    COMPONENT Documentation
   )
 endif()
 

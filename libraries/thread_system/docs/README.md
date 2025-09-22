@@ -1,60 +1,121 @@
 # Thread System Documentation
 
-Welcome to the Thread System documentation! This guide provides comprehensive information for using and understanding the Thread System framework.
+Welcome to the comprehensive documentation for the Thread System framework. This guide helps you navigate to the right documentation based on your role and needs.
 
-## 📚 Documentation Overview
+## 📖 Quick Start
 
-| Document | Description |
-|----------|-------------|
-| [Getting Started](./getting-started.md) | Installation guide and first steps with Thread System |
-| [API Reference](./api-reference.md) | Complete API documentation for all components |
-| [Architecture](./architecture.md) | Technical architecture and design decisions |
-| [Performance](./performance.md) | Benchmarks, metrics, and optimization guide |
-| [Patterns](./patterns.md) | Best practices, common patterns, and troubleshooting |
-| [Examples](./examples.md) | Practical code examples for various use cases |
-| [FAQ](./FAQ.md) | Frequently asked questions and quick answers |
-| [Migration Guide](./migration_guide.md) | Guide for migrating from other threading libraries |
-| [Contributing](./contributing.md) | Guidelines for contributing to the project |
+| I want to... | Go to |
+|---|---|
+| Get started quickly | [User Guide](USER_GUIDE.md) |
+| Build on different platforms | [Build Guide](BUILD_GUIDE.md) |
+| Understand the system architecture | [Architecture](ARCHITECTURE.md) |
+| Learn about performance | [Performance Guide](PERFORMANCE.md) |
+| See coding patterns and best practices | [Patterns Guide](PATTERNS.md) |
+| Find specific API documentation | [API Reference](API_REFERENCE.md) |
+| Get help with common issues | [FAQ](FAQ.md) |
 
-## 🚀 Quick Navigation
+## 👥 Documentation by Role
 
-### For New Users
-1. Start with [Getting Started](./getting-started.md) for installation and basic usage
-2. Review [Examples](./examples.md) for practical demonstrations
-3. Check the [FAQ](./FAQ.md) for common questions
+### For Users
+- **[User Guide](USER_GUIDE.md)** - How to use Thread System in your projects
+- **[Build Guide](BUILD_GUIDE.md)** - Platform-specific build instructions  
+- **[FAQ](FAQ.md)** - Common questions and solutions
+- **[Migration Guide](MIGRATION.md)** - Upgrading from previous versions
 
 ### For Developers
-1. Study the [API Reference](./api-reference.md) for detailed component documentation
-2. Read [Architecture](./architecture.md) for internal design understanding
-3. Follow [Patterns](./patterns.md) for best practices
+- **[API Reference](API_REFERENCE.md)** - Complete API documentation with interfaces
+- **[Architecture](ARCHITECTURE.md)** - System design and component relationships
+- **[Patterns Guide](PATTERNS.md)** - Best practices, patterns, and troubleshooting
+- **[Performance Guide](PERFORMANCE.md)** - Benchmarks and optimization strategies
+- **[Quality Guide](QUALITY.md)** - Testing, coverage, and static analysis
 
-### For Performance Optimization
-1. Review [Performance](./performance.md) for benchmarks and tuning
-2. See [Patterns](./patterns.md) for optimization techniques
-3. Check [Examples](./examples.md) for performance-oriented code
+### For Contributors
+- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute to the project
+- **[Design Improvements](DESIGN_IMPROVEMENTS.md)** - Recent architectural enhancements
+- **[Quality Guide](QUALITY.md)** - Code quality standards and testing
 
-## 📖 Documentation Standards
+### For System Integrators
+- **[Architecture](ARCHITECTURE.md)** - Ecosystem overview and inter-project relationships
+- **[Dependency Guides](guides/)** - Dependency management and compatibility
+- **[Migration Guide](MIGRATION.md)** - Integration and upgrade strategies
 
-All documentation follows these principles:
-- **Clear and Concise**: Direct explanations without unnecessary complexity
-- **Example-Driven**: Code examples for every major concept
-- **Performance-Focused**: Optimization tips throughout
-- **Platform-Aware**: Notes for platform-specific considerations
+## 📚 Documentation Categories
 
-## 🔄 Documentation Updates
+### Core Documentation
+- [User Guide](USER_GUIDE.md) - Getting started and basic usage
+- [Build Guide](BUILD_GUIDE.md) - Cross-platform build instructions
+- [API Reference](API_REFERENCE.md) - Complete API documentation
+- [Architecture](ARCHITECTURE.md) - System design and modular architecture
 
-- Documentation is updated with each release
-- API changes are reflected immediately
-- Performance metrics are re-measured quarterly
-- Examples are tested with each build
+### Advanced Topics
+- [Performance Guide](PERFORMANCE.md) - Benchmarks, tuning, and optimization
+- [Patterns Guide](PATTERNS.md) - Best practices and troubleshooting
+- [Design Improvements](DESIGN_IMPROVEMENTS.md) - Recent architectural enhancements
+- [Migration Guide](MIGRATION.md) - Upgrading and migration strategies
 
-## 💬 Feedback
+### Project Information
+- [Quality Guide](QUALITY.md) - Testing, coverage, sanitizers, and benchmarks
+- [Contributing Guide](CONTRIBUTING.md) - Development workflow and standards
+- [FAQ](FAQ.md) - Frequently asked questions
 
-Help us improve the documentation:
-- Report issues on [GitHub](https://github.com/kcenon/thread_system/issues)
-- Submit improvements via pull requests
-- Ask questions in GitHub Discussions
+### Reference Guides
+- [Dependency Compatibility Matrix](guides/DEPENDENCY_COMPATIBILITY_MATRIX.md)
+- [Dependency Conflict Resolution](guides/DEPENDENCY_CONFLICT_RESOLUTION_GUIDE.md)
+- [License Compatibility](guides/LICENSE_COMPATIBILITY.md)
+
+## 🔍 Finding What You Need
+
+**New to Thread System?**
+Start with the [User Guide](USER_GUIDE.md) for basic concepts and examples.
+
+**Having build issues?**
+Check the [Build Guide](BUILD_GUIDE.md) for platform-specific instructions and troubleshooting.
+
+**Looking for specific functions?**
+Use the [API Reference](API_REFERENCE.md) for detailed class and interface documentation.
+
+**Need to understand how it works?**
+The [Architecture](ARCHITECTURE.md) document explains the modular design and component relationships.
+
+**Want to optimize performance?**
+Read the [Performance Guide](PERFORMANCE.md) for benchmarks and optimization strategies.
+
+**Encountering problems?**
+Check the [FAQ](FAQ.md) first, then refer to the troubleshooting sections in [Patterns Guide](PATTERNS.md).
+
+**Contributing to the project?**
+Start with [Contributing Guide](CONTRIBUTING.md) for development setup and workflow.
+
+## 📋 Documentation Status
+
+| Document | Status | Last Updated | Lines |
+|---|---|---|---|
+| User Guide | ✅ Current | 2025-09-14 | 163 |
+| Build Guide | ✅ Current | 2025-09-14 | 427 |
+| API Reference | ✅ Enhanced | 2025-09-14 | ~800 |
+| Architecture | ✅ Current | 2025-09-14 | 247 |
+| Performance | ✅ Current | 2025-09-14 | 1299 |
+| Patterns | ✅ Current | 2025-09-14 | 1134 |
+| Quality | ✅ Current | 2025-09-14 | 62 |
+| Contributing | ✅ Current | 2025-09-14 | ~200 |
+| FAQ | ✅ Current | 2025-09-14 | ~150 |
+
+## 🏗️ Thread System Ecosystem
+
+This documentation covers the core `thread_system` project. For related projects:
+
+- **[logger_system](https://github.com/kcenon/logger_system)** - High-performance asynchronous logging
+- **[monitoring_system](https://github.com/kcenon/monitoring_system)** - Real-time performance monitoring
+- **[integrated_thread_system](https://github.com/kcenon/integrated_thread_system)** - Complete integration examples
+
+## 📝 Documentation Conventions
+
+- **Code examples** are tested and working
+- **Cross-references** link to specific sections
+- **Platform differences** are clearly marked
+- **Version compatibility** is noted where relevant
+- **Performance data** is based on real benchmarks
 
 ---
 
-*Last updated: January 2025*
+*This documentation is maintained by the Thread System team. For updates or corrections, please see the [Contributing Guide](CONTRIBUTING.md).*

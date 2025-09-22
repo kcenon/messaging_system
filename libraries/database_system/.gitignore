@@ -1,0 +1,82 @@
+# Build directories
+build/
+build*/
+out/
+install/
+
+# IDE files
+.vscode/
+.vs/
+*.vcxproj*
+*.sln
+*.user
+*.suo
+*.cache
+.idea/
+*.iml
+
+# Compiler outputs
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+
+# Debug files
+*.pdb
+*.ilk
+*.log
+
+# Package managers
+vcpkg_installed/
+conan*/
+.conan/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+*.cmake
+!CMakeLists.txt
+!cmake/*.cmake
+!cmake/*.cmake.in
+
+# Test results
+Testing/
+CTestTestfile.cmake
+*.gcov
+*.gcda
+*.gcno
+
+# Documentation
+docs/html/
+docs/latex/
+*.pdf
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Database credentials and configs
+database.conf
+.env
+.env.local
+*.credentials
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.orig

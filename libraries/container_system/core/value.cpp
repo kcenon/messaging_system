@@ -30,12 +30,12 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "container_system/core/value.h"
+#include "container/core/value.h"
 #include <cstring>
 #include <sstream>
 #include <algorithm>
 #include "utilities/core/formatter.h"		// custom formatter
-#include "utilities/conversion/convert_string.h" // custom string conversion
+#include "utilities/core/convert_string.h" // custom string conversion
 
 namespace container_module
 {
@@ -272,7 +272,8 @@ namespace container_module
 		case value_types::uint_value:
 		case value_types::long_value:
 		case value_types::ulong_value:
-		// llong_value and ullong_value are aliases for long_value and ulong_value
+		case value_types::llong_value:
+		case value_types::ullong_value:
 		case value_types::float_value:
 		case value_types::double_value:
 			return true;
@@ -388,11 +389,11 @@ namespace container_module
 		const std::vector<uint8_t>& dat) const
 	{
 		auto [converted, err] = convert_string::to_string(dat);
-		if (err.has_value())
+		if (!err.empty())
 		{
 			return "";
 		}
-		std::string temp = converted.value();
+		std::string temp = converted;
 		convert_string::replace(temp, "</0x0A;>", "\r");
 		convert_string::replace(temp, "</0x0B;>", "\n");
 		convert_string::replace(temp, "</0x0C;>", " ");
@@ -407,17 +408,17 @@ namespace container_module
 		convert_string::replace(d, " ", "</0x0C;>");
 		convert_string::replace(d, "\t", "</0x0D;>");
 		auto [arr, err] = convert_string::to_array(d);
-		if (err.has_value())
+		if (!err.empty())
 		{
 			return {};
 		}
-		return arr.value();
+		return arr;
 	}
 
 	void value::set_byte_string(const std::string& dataStr)
 	{
 		auto [val, err] = convert_string::from_base64(dataStr);
-		if (err.has_value())
+		if (!err.empty())
 		{
 			data_.clear();
 			size_ = 0;
@@ -432,14 +433,14 @@ namespace container_module
 	void value::set_string(const std::string& dataStr)
 	{
 		auto [arr, err] = convert_string::to_array(dataStr);
-		if (err.has_value())
+		if (!err.empty())
 		{
 			data_.clear();
 			size_ = 0;
 			type_ = value_types::string_value;
 			return;
 		}
-		data_ = arr.value();
+		data_ = arr;
 		size_ = data_.size();
 		type_ = value_types::string_value;
 	}
@@ -516,18 +517,17 @@ namespace container_module
 
 	void value::set_llong(const std::string& dataStr)
 	{
-		// Redirect to int64_t since long long and int64_t are the same on most platforms
-		int64_t ll = std::atoll(dataStr.c_str());
+		long long ll = std::atoll(dataStr.c_str());
 		set_data(ll);
-		type_ = value_types::long_value;  // Use long_value instead of deprecated llong_value
+		type_ = value_types::llong_value;
 	}
 
 	void value::set_ullong(const std::string& dataStr)
 	{
-		// Redirect to uint64_t since unsigned long long and uint64_t are the same on most platforms
-		uint64_t ull = static_cast<uint64_t>(std::atoll(dataStr.c_str()));
+		unsigned long long ull
+			= static_cast<unsigned long long>(std::atoll(dataStr.c_str()));
 		set_data(ull);
-		type_ = value_types::ulong_value;  // Use ulong_value instead of deprecated ullong_value
+		type_ = value_types::ullong_value;
 	}
 
 	void value::set_float(const std::string& dataStr)

@@ -1,0 +1,41 @@
+@PACKAGE_INIT@
+
+##################################################
+# NetworkSystem Package Configuration
+##################################################
+
+include(CMakeFindDependencyMacro)
+
+# Find required dependencies
+find_dependency(Threads REQUIRED)
+find_dependency(asio CONFIG REQUIRED)
+find_dependency(fmt CONFIG REQUIRED)
+
+# Find container system dependency
+find_dependency(ContainerSystem QUIET)
+if(NOT ContainerSystem_FOUND)
+    # Container system is required
+    message(FATAL_ERROR "NetworkSystem requires ContainerSystem")
+endif()
+
+# Include targets
+include("${CMAKE_CURRENT_LIST_DIR}/NetworkSystemTargets.cmake")
+
+# Verify targets exist
+check_required_components(NetworkSystem)
+
+# Set variables for compatibility
+set(NetworkSystem_FOUND TRUE)
+set(NETWORKSYSTEM_FOUND TRUE)
+
+# Provide information about the package
+set(NetworkSystem_VERSION @PROJECT_VERSION@)
+set(NetworkSystem_INCLUDE_DIRS "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@/network_system")
+set(NetworkSystem_LIBRARIES NetworkSystem::network)
+
+# Legacy variables for backward compatibility
+set(NETWORKSYSTEM_VERSION ${NetworkSystem_VERSION})
+set(NETWORKSYSTEM_INCLUDE_DIRS ${NetworkSystem_INCLUDE_DIRS})
+set(NETWORKSYSTEM_LIBRARIES ${NetworkSystem_LIBRARIES})
+
+message(STATUS "Found NetworkSystem: ${NetworkSystem_VERSION}")

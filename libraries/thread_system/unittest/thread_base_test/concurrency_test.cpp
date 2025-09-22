@@ -31,10 +31,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include "../../sources/thread_base/jobs/job_queue.h"
-#include "../../sources/thread_base/jobs/callback_job.h"
-#include "../../sources/thread_base/core/thread_base.h"
-#include "../../sources/thread_base/lockfree/queues/lockfree_job_queue.h"
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/core/thread_base.h>
 #include <thread>
 #include <chrono>
 #include <atomic>
@@ -43,7 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <latch>
 #include <random>
 
-namespace thread_module {
+namespace kcenon::thread {
 namespace test {
 
 class ConcurrencyTest : public ::testing::Test {
@@ -177,9 +176,9 @@ TEST_F(ConcurrencyTest, JobQueueExtremeConcurrency) {
     EXPECT_LE(dequeued.load(), enqueued.load());
 }
 
-// Test lockfree queue boundary conditions
-TEST_F(ConcurrencyTest, LockfreeQueueBoundaryConditions) {
-    auto queue = std::make_shared<lockfree_job_queue>();
+// Test job queue boundary conditions
+TEST_F(ConcurrencyTest, JobQueueBoundaryConditions) {
+    auto queue = std::make_shared<job_queue>();
     
     const int num_jobs = 100;
     std::atomic<int> enqueued{0};
@@ -498,4 +497,4 @@ TEST_F(ConcurrencyTest, SpuriousWakeupHandling) {
 }
 
 } // namespace test
-} // namespace thread_module
+} // namespace kcenon::thread

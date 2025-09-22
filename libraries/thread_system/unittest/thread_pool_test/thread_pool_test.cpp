@@ -32,17 +32,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gtest/gtest.h"
 
-#include "core/thread_pool.h"
+#include <kcenon/thread/core/thread_pool.h>
 
-using namespace thread_pool_module;
+using namespace kcenon::thread;
 
 TEST(thread_pool_test, enqueue)
 {
 	auto pool = std::make_shared<thread_pool>();
 
 	auto worker = std::make_unique<thread_worker>();
-	auto error = pool->enqueue(std::move(worker));
-	EXPECT_EQ(error, std::nullopt);
+	auto result = pool->enqueue(std::move(worker));
+	EXPECT_FALSE(result.has_error());
 }
 
 TEST(thread_pool_test, stop)
@@ -50,10 +50,11 @@ TEST(thread_pool_test, stop)
 	auto pool = std::make_shared<thread_pool>();
 
 	auto worker = std::make_unique<thread_worker>();
-	auto error = pool->enqueue(std::move(worker));
-	EXPECT_EQ(error, std::nullopt);
+	auto result = pool->enqueue(std::move(worker));
+	EXPECT_FALSE(result.has_error());
 
-	pool->stop(false);
+	auto stop_result = pool->stop(false);
+	EXPECT_FALSE(stop_result.has_error());
 }
 
 TEST(thread_pool_test, stop_immediately)
@@ -61,17 +62,19 @@ TEST(thread_pool_test, stop_immediately)
 	auto pool = std::make_shared<thread_pool>();
 
 	auto worker = std::make_unique<thread_worker>();
-	auto error = pool->enqueue(std::move(worker));
-	EXPECT_EQ(error, std::nullopt);
+	auto result = pool->enqueue(std::move(worker));
+	EXPECT_FALSE(result.has_error());
 
-	pool->stop(true);
+	auto stop_result = pool->stop(true);
+	EXPECT_FALSE(stop_result.has_error());
 }
 
 TEST(thread_pool_test, stop_no_workers)
 {
 	auto pool = std::make_shared<thread_pool>();
 
-	pool->stop(false);
+	auto stop_result = pool->stop(false);
+	EXPECT_FALSE(stop_result.has_error());
 }
 
 TEST(thread_pool_test, start_and_stop)
@@ -79,23 +82,26 @@ TEST(thread_pool_test, start_and_stop)
 	auto pool = std::make_shared<thread_pool>();
 
 	auto worker = std::make_unique<thread_worker>();
-	auto error = pool->enqueue(std::move(worker));
-	EXPECT_EQ(error, std::nullopt);
+	auto result = pool->enqueue(std::move(worker));
+	EXPECT_FALSE(result.has_error());
 
-	auto start_error = pool->start();
-	EXPECT_EQ(start_error, std::nullopt);
+	auto start_result = pool->start();
+	EXPECT_FALSE(start_result.has_error());
 
-	pool->stop(false);
+	auto stop_result = pool->stop(false);
+	EXPECT_FALSE(stop_result.has_error());
 }
 
 TEST(thread_pool_test, start_and_stop_no_worker)
 {
 	auto pool = std::make_shared<thread_pool>();
 
-	auto start_error = pool->start();
-	EXPECT_EQ(start_error, "No workers to start");
+	auto start_result = pool->start();
+	EXPECT_TRUE(start_result.has_error());
+	EXPECT_EQ(start_result.get_error().message(), "no workers to start");
 
-	pool->stop(false);
+	auto stop_result = pool->stop(false);
+	EXPECT_FALSE(stop_result.has_error());
 }
 
 TEST(thread_pool_test, start_and_stop_immediately)
@@ -103,23 +109,26 @@ TEST(thread_pool_test, start_and_stop_immediately)
 	auto pool = std::make_shared<thread_pool>();
 
 	auto worker = std::make_unique<thread_worker>();
-	auto error = pool->enqueue(std::move(worker));
-	EXPECT_EQ(error, std::nullopt);
+	auto result = pool->enqueue(std::move(worker));
+	EXPECT_FALSE(result.has_error());
 
-	auto start_error = pool->start();
-	EXPECT_EQ(start_error, std::nullopt);
+	auto start_result = pool->start();
+	EXPECT_FALSE(start_result.has_error());
 
-	pool->stop(true);
+	auto stop_result = pool->stop(true);
+	EXPECT_FALSE(stop_result.has_error());
 }
 
 TEST(thread_pool_test, start_and_stop_immediately_no_worker)
 {
 	auto pool = std::make_shared<thread_pool>();
 
-	auto start_error = pool->start();
-	EXPECT_EQ(start_error, "No workers to start");
+	auto start_result = pool->start();
+	EXPECT_TRUE(start_result.has_error());
+	EXPECT_EQ(start_result.get_error().message(), "no workers to start");
 
-	pool->stop(true);
+	auto stop_result = pool->stop(true);
+	EXPECT_FALSE(stop_result.has_error());
 }
 
 TEST(thread_pool_test, start_and_one_sec_job_and_stop)
@@ -127,13 +136,13 @@ TEST(thread_pool_test, start_and_one_sec_job_and_stop)
 	auto pool = std::make_shared<thread_pool>();
 
 	auto worker = std::make_unique<thread_worker>();
-	auto error = pool->enqueue(std::move(worker));
-	EXPECT_EQ(error, std::nullopt);
+	auto result = pool->enqueue(std::move(worker));
+	EXPECT_FALSE(result.has_error());
 
-	auto start_error = pool->start();
-	EXPECT_EQ(start_error, std::nullopt);
+	auto start_result = pool->start();
+	EXPECT_FALSE(start_result.has_error());
 
-	error = pool->enqueue(std::make_unique<callback_job>(
+	result = pool->enqueue(std::make_unique<callback_job>(
 		[](void) -> result_void
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -141,7 +150,8 @@ TEST(thread_pool_test, start_and_one_sec_job_and_stop)
 			return result_void();
 		},
 		"10sec job"));
-	EXPECT_EQ(error, std::nullopt);
+	EXPECT_FALSE(result.has_error());
 
-	pool->stop(false);
+	auto stop_result = pool->stop(false);
+	EXPECT_FALSE(stop_result.has_error());
 }

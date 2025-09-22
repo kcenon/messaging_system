@@ -31,14 +31,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include <gtest/gtest.h>
-#include "../../sources/thread_base/sync/error_handling.h"
-#include "../../sources/thread_base/jobs/job_queue.h"
-#include "../../sources/thread_base/jobs/callback_job.h"
-#include "../../sources/thread_base/core/thread_base.h"
+#include <kcenon/thread/core/error_handling.h>
+#include <kcenon/thread/core/job_queue.h>
+#include <kcenon/thread/core/callback_job.h>
+#include <kcenon/thread/core/thread_base.h>
 #include <thread>
 #include <chrono>
 
-namespace thread_module {
+namespace kcenon::thread {
 namespace test {
 
 class ErrorHandlingTest : public ::testing::Test {
@@ -335,4 +335,4 @@ TEST_F(ErrorHandlingTest, ResourceAllocationErrors) {
 }
 
 } // namespace test
-} // namespace thread_module
+} // namespace kcenon::thread

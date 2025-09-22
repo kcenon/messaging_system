@@ -1,0 +1,100 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "database-system",
+  "version": "1.0.0",
+  "description": "Advanced C++20 Database System with Multi-Backend Support",
+  "homepage": "https://github.com/kcenon/database_system",
+  "license": "BSD-3-Clause",
+  "builtin-baseline": "c4af3593e1f1aa9e14a560a09e45ea2cb0dfd74d",
+  "dependencies": [
+    {
+      "name": "fmt",
+      "version>=": "10.2.1"
+    }
+  ],
+  "features": {
+    "postgresql": {
+      "description": "Enable PostgreSQL database support",
+      "dependencies": [
+        {
+          "name": "libpq"
+        },
+        {
+          "name": "libpqxx",
+          "default-features": false
+        },
+        {
+          "name": "openssl"
+        }
+      ]
+    },
+    "mysql": {
+      "description": "Enable MySQL database support",
+      "dependencies": [
+        {
+          "name": "libmysql"
+        }
+      ]
+    },
+    "sqlite": {
+      "description": "Enable SQLite database support",
+      "dependencies": [
+        {
+          "name": "sqlite3"
+        }
+      ]
+    },
+    "testing": {
+      "description": "Enable unit testing and benchmarking",
+      "dependencies": [
+        {
+          "name": "gtest",
+          "features": ["gmock"]
+        },
+        {
+          "name": "benchmark"
+        }
+      ]
+    },
+    "samples": {
+      "description": "Enable sample applications",
+      "dependencies": [
+        {
+          "name": "fmt",
+          "version>=": "10.2.1"
+        }
+      ]
+    },
+    "logging": {
+      "description": "Enable advanced logging capabilities",
+      "dependencies": [
+        {
+          "name": "spdlog",
+          "features": ["fmt-external"]
+        }
+      ]
+    },
+    "development": {
+      "description": "Enable all development tools and database backends",
+      "dependencies": [
+        {
+          "name": "gtest",
+          "features": ["gmock"]
+        },
+        {
+          "name": "benchmark"
+        },
+        {
+          "name": "spdlog",
+          "features": ["fmt-external"]
+        }
+      ]
+    }
+  },
+  "overrides": [
+    {
+      "name": "fmt",
+      "version": "10.2.1"
+    }
+  ]
+}

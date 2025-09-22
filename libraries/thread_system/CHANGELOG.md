@@ -5,12 +5,14 @@ All notable changes to the Thread System project will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2025-07-25
+## [Unreleased] - 2025-09-13
+
+Note: No official releases have been published yet. All entries below are pre-release milestones under Unreleased.
 
 ### Changed
 - **Major Modularization** 🏗️
-  - Moved logger module to separate project (https://github.com/kcenon/logger)
-  - Moved monitoring module to separate project (https://github.com/kcenon/monitoring)
+  - Moved logger module to separate project (https://github.com/kcenon/logger_system)
+  - Moved monitoring module to separate project (https://github.com/kcenon/monitoring_system)
   - Removed ~8,700+ lines of code from core thread system
   - Core thread system now ~2,700 lines focused purely on threading
   - Created interface-based architecture for external module integration
@@ -46,11 +48,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - README.md reflects modular architecture
   - api-reference.md focuses on core APIs
   - architecture.md describes new modular design
-  - getting-started.md shows usage without external dependencies
-  - examples.md demonstrates both core-only and with-modules usage
-  - performance.md updated with latest benchmarks
+  - USER_GUIDE.md enhanced with detailed build instructions and complete sample listing
+  - **NEW: PLATFORM_BUILD_GUIDE.md** - Comprehensive platform-specific build instructions
+  - dependency_compatibility_matrix.md updated with latest dependency versions
+  - MIGRATION.md updated with current status (2025-09-13)
+  - INTERFACES.md verified for consistency with current implementation
+  - Performance benchmarks updated to 2025-09-13
+  - samples/ demonstrate both core-only and with-modules usage
+  - All documentation synchronized with current codebase structure
 
-## [2.0.0] - 2025-07-22
+## [Unreleased: Milestone 2.1.0] - 2025-09-06
+
+### Added
+- Interfaces: `executor_interface`, `scheduler_interface`, `monitorable_interface`
+- `service_registry` (header-only) for lightweight DI
+- Interface tests and service registry sample
+- Docs: `docs/INTERFACES.md`, `docs/USER_GUIDE.md`, `docs/QUALITY.md`, `docs/COVERAGE.md`, module READMEs
+- CMake: docs target (Doxygen), sanitizer and clang-tidy options
+
+### Changed
+- `thread_pool`, `typed_thread_pool` implement `executor_interface`
+- `job_queue` implements `scheduler_interface`
+- CMake modular structure and install rules updated for new layout
+
+### Testing
+- Added error-path tests for job_queue, thread_pool, typed_thread_pool
+- Wired sanitizers to unit test targets
+
+## [Unreleased: Milestone 2.0.0] - 2025-07-22
 
 ### Added
 - **Memory Optimization Improvements** 💾
@@ -69,7 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - node_pool now uses more conservative initial allocation strategy
   - Memory is allocated on-demand rather than upfront
 
-## [Previous] - 2025-07-09
+## [Unreleased: 2025-07-09]
 
 ### Changed
 - **Major Code Cleanup** 🧹
@@ -92,11 +117,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated README.md to reflect removed components
   - Rewrote api-reference.md to match current codebase
   - Updated architecture.md with cleaner structure
-  - Updated getting-started.md examples
+  - Updated USER_GUIDE.md examples
   - Updated performance.md to focus on adaptive queues
   - All references to removed components cleaned up
 
-## [Previous Release] - 2025-06-30
+## [Unreleased: 2025-06-30]
 
 ### Fixed
 - **Test Stability Improvements** 🔧
@@ -130,7 +155,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removed all lock-free samples and benchmarks
   - Updated documentation to reflect simplified architecture
 
-## [Previous Release] - 2025-06-29
+## [Unreleased: 2025-06-29]
 
 ### Added
 - **Complete Lock-Free Thread Pool System** 🆕
@@ -217,7 +242,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Thread-local storage cleanup segmentation faults
 - All disabled tests now enabled and passing
 
-## [1.0.0] - 2024-01-15
+## [Unreleased: Initial] - 2024-01-15
 
 ### Added
 - Initial release of Thread System framework
@@ -235,7 +260,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Priority Thread Pool System**: Advanced priority-based scheduling (renamed to Typed Thread Pool in later versions)
 
 ### Supported Platforms
-- Windows (MSVC 2019+, MinGW, MSYS2)
+- Windows (MSVC 2019+, MSYS2)
 - Linux (GCC 9+, Clang 10+)
 - macOS (Clang 10+)
 

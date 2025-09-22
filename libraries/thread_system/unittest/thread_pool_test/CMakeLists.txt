@@ -24,11 +24,19 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    thread_pool
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    thread_base
     GTest::gtest
     GTest::gtest_main
     Threads::Threads
+)
+
+# Include new headers for thread_pool and core
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../implementations/thread_pool/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/base/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/jobs/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../core/sync/include
 )
 
 enable_testing()
@@ -39,3 +47,8 @@ add_custom_target(${PROJECT_NAME}_test ALL
     COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -C $<CONFIG>
     DEPENDS ${PROJECT_NAME}
 )
+
+# Apply sanitizers if enabled
+if(COMMAND apply_sanitizers)
+    apply_sanitizers(${PROJECT_NAME})
+endif()

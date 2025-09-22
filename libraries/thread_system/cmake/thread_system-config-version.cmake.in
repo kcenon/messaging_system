@@ -1,0 +1,69 @@
+# thread_system version compatibility configuration
+# Implements SameMajorVersion compatibility policy as required by T2.1
+
+set(PACKAGE_VERSION "@PROJECT_VERSION@")
+
+# SameMajorVersion compatibility policy
+# - Exact version match is always compatible
+# - Same major version with newer minor/patch is compatible  
+# - Different major version is incompatible
+# - Older minor version is incompatible (may lack features)
+
+if("${PACKAGE_VERSION}" VERSION_EQUAL "${PACKAGE_FIND_VERSION}")
+    # Exact version match
+    set(PACKAGE_VERSION_EXACT TRUE)
+    set(PACKAGE_VERSION_COMPATIBLE TRUE)
+elseif("${PACKAGE_VERSION}" VERSION_GREATER "${PACKAGE_FIND_VERSION}")
+    # We have a newer version than requested
+    if("${PACKAGE_VERSION}" VERSION_GREATER_EQUAL "${PACKAGE_FIND_VERSION}" AND
+       "${PACKAGE_VERSION}" VERSION_LESS "@PROJECT_VERSION_MAJOR@.999.999")
+        # Same major version, newer minor/patch - compatible
+        set(PACKAGE_VERSION_COMPATIBLE TRUE)
+        set(PACKAGE_VERSION_EXACT FALSE)
+    else()
+        # Different major version - incompatible
+        set(PACKAGE_VERSION_COMPATIBLE FALSE)
+        set(PACKAGE_VERSION_EXACT FALSE)
+    endif()
+else()
+    # We have an older version than requested - incompatible
+    set(PACKAGE_VERSION_COMPATIBLE FALSE)
+    set(PACKAGE_VERSION_EXACT FALSE)
+endif()
+
+# Minimum required version check (1.0.0 as specified in T2.1)
+set(MINIMUM_SUPPORTED_VERSION "1.0.0")
+if("${PACKAGE_VERSION}" VERSION_LESS "${MINIMUM_SUPPORTED_VERSION}")
+    set(PACKAGE_VERSION_COMPATIBLE FALSE)
+    message(WARNING "thread_system version ${PACKAGE_VERSION} is below minimum supported version ${MINIMUM_SUPPORTED_VERSION}")
+endif()
+
+# Check if the requested version is reasonable
+if(PACKAGE_FIND_VERSION VERSION_LESS "${MINIMUM_SUPPORTED_VERSION}")
+    message(WARNING "Requested thread_system version ${PACKAGE_FIND_VERSION} is below minimum supported version ${MINIMUM_SUPPORTED_VERSION}")
+endif()
+
+# Additional compatibility checks for development versions
+string(REGEX MATCH "^([0-9]+)\.([0-9]+)\.([0-9]+)" PACKAGE_VERSION_PARTS "${PACKAGE_VERSION}")
+if(CMAKE_MATCH_1)
+    set(PACKAGE_VERSION_MAJOR ${CMAKE_MATCH_1})
+    set(PACKAGE_VERSION_MINOR ${CMAKE_MATCH_2})
+    set(PACKAGE_VERSION_PATCH ${CMAKE_MATCH_3})
+endif()
+
+string(REGEX MATCH "^([0-9]+)\.([0-9]+)\.([0-9]+)" FIND_VERSION_PARTS "${PACKAGE_FIND_VERSION}")
+if(CMAKE_MATCH_1)
+    set(FIND_VERSION_MAJOR ${CMAKE_MATCH_1})
+    set(FIND_VERSION_MINOR ${CMAKE_MATCH_2})
+    set(FIND_VERSION_PATCH ${CMAKE_MATCH_3})
+endif()
+
+# Implement SameMajorVersion policy more precisely
+if(DEFINED PACKAGE_VERSION_MAJOR AND DEFINED FIND_VERSION_MAJOR)
+    if(NOT PACKAGE_VERSION_MAJOR EQUAL FIND_VERSION_MAJOR)
+        set(PACKAGE_VERSION_COMPATIBLE FALSE)
+        if(PACKAGE_FIND_VERSION_EXACT)
+            message(WARNING "Requested exact version ${PACKAGE_FIND_VERSION} but found ${PACKAGE_VERSION} (different major version)")
+        endif()
+    endif()
+endif()

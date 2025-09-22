@@ -30,10 +30,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "container_system/internal/simd_processor.h"
+#include "container/internal/simd_processor.h"
 #include <algorithm>
 #include <cmath>
-#include <cstring>
 #include <limits>
 
 #if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
@@ -83,10 +82,7 @@ namespace simd
     }
 
 #if defined(HAS_AVX2)
-    // Add target attribute to ensure AVX2 is enabled for this function
-    #ifdef __GNUC__
-        __attribute__((target("avx2,sse4.2,sse3")))
-    #endif
+    __attribute__((target("avx2")))
     float simd_processor::sum_floats_avx2(const float* data, size_t count)
     {
         __m256 sum_vec = _mm256_setzero_ps();
@@ -115,9 +111,7 @@ namespace simd
         return sum;
     }
 
-    #ifdef __GNUC__
-        __attribute__((target("avx2,sse4.2,sse3")))
-    #endif
+    __attribute__((target("avx2")))
     float simd_processor::min_float_avx2(const float* data, size_t count)
     {
         if (count == 0) return std::numeric_limits<float>::max();
@@ -146,9 +140,7 @@ namespace simd
         return min_val;
     }
 
-    #ifdef __GNUC__
-        __attribute__((target("avx2,sse4.2,sse3")))
-    #endif
+    __attribute__((target("avx2")))
     float simd_processor::max_float_avx2(const float* data, size_t count)
     {
         if (count == 0) return std::numeric_limits<float>::lowest();
@@ -179,6 +171,7 @@ namespace simd
 #endif
 
 #if defined(HAS_X86_SIMD) && (defined(HAS_SSE2) || defined(HAS_SSE42))
+    __attribute__((target("sse3")))
     float simd_processor::sum_floats_sse(const float* data, size_t count)
     {
         __m128 sum_vec = _mm_setzero_ps();
@@ -204,6 +197,7 @@ namespace simd
         return sum;
     }
 
+    __attribute__((target("sse2")))
     float simd_processor::min_float_sse(const float* data, size_t count)
     {
         if (count == 0) return std::numeric_limits<float>::max();
@@ -232,6 +226,7 @@ namespace simd
         return min_val;
     }
 
+    __attribute__((target("sse2")))
     float simd_processor::max_float_sse(const float* data, size_t count)
     {
         if (count == 0) return std::numeric_limits<float>::lowest();

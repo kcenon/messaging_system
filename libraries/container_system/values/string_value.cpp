@@ -30,9 +30,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "container_system/values/string_value.h"
+#include "container/values/string_value.h"
 
-#include "utilities/conversion/convert_string.h"
+#include "utilities/core/convert_string.h"
 
 namespace container_module
 {
@@ -61,11 +61,11 @@ namespace container_module
 			// Return the raw data as-is, ignoring placeholder expansions
 			auto [plain, err]
 				= utility_module::convert_string::to_string(data_);
-			if (err.has_value())
+			if (!err.empty())
 			{
 				return "";
 			}
-			return plain.value();
+			return plain;
 		}
 		// Return the placeholder-free version
 		return convert_specific_string(data_);

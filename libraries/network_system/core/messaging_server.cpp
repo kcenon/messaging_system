@@ -32,8 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "network_system/core/messaging_server.h"
 #include "network_system/session/messaging_session.h"
-
-#include <iostream>
+#include "network_system/integration/logger_integration.h"
 
 namespace network_module
 {
@@ -82,8 +81,7 @@ namespace network_module
 				}
 			});
 
-		std::cout << "[messaging_server] Started listening on port " << port
-				  << "\n";
+		NETWORK_LOG_INFO("[messaging_server] Started listening on port " + std::to_string(port));
 	}
 
 	auto messaging_server::stop_server() -> void
@@ -130,7 +128,7 @@ namespace network_module
 			stop_promise_.reset();
 		}
 
-		std::cout << "[messaging_server] Stopped.\n";
+		NETWORK_LOG_INFO("[messaging_server] Stopped.");
 	}
 
 	auto messaging_server::wait_for_stop() -> void
@@ -158,8 +156,7 @@ namespace network_module
 		}
 		if (ec)
 		{
-			std::cerr << "[messaging_server] Accept error: " << ec.message()
-					  << "\n";
+			NETWORK_LOG_ERROR("[messaging_server] Accept error: " + ec.message());
 			return;
 		}
 

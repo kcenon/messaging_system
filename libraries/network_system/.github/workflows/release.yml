@@ -1,0 +1,206 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v1.0.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-artifacts:
+    name: Build Release Artifacts
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            artifact_name: network_system-linux-x64
+            archive_ext: tar.gz
+          - os: macos-latest
+            artifact_name: network_system-macos-x64
+            archive_ext: tar.gz
+          - os: windows-latest
+            artifact_name: network_system-windows-x64
+            archive_ext: zip
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Setup Build Environment (Ubuntu)
+      if: startsWith(matrix.os, 'ubuntu')
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build libasio-dev libfmt-dev
+
+    - name: Setup Build Environment (macOS)
+      if: startsWith(matrix.os, 'macos')
+      run: |
+        brew install cmake ninja asio fmt
+
+    - name: Setup Build Environment (Windows)
+      if: startsWith(matrix.os, 'windows')
+      uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >-
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-ninja
+          mingw-w64-x86_64-asio
+          mingw-w64-x86_64-fmt
+          mingw-w64-x86_64-gcc
+
+    - name: Configure CMake
+      run: |
+        cmake -B build -G Ninja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DBUILD_SHARED_LIBS=OFF \
+          -DCMAKE_INSTALL_PREFIX=install
+
+    - name: Build
+      run: |
+        cmake --build build --config Release
+        cmake --install build
+
+    - name: Run Tests
+      run: |
+        cd build
+        ctest --output-on-failure --timeout 60
+
+    - name: Package (Linux/macOS)
+      if: matrix.os != 'windows-latest'
+      run: |
+        cd install
+        tar czf ../${{ matrix.artifact_name }}.${{ matrix.archive_ext }} *
+        cd ..
+        sha256sum ${{ matrix.artifact_name }}.${{ matrix.archive_ext }} > ${{ matrix.artifact_name }}.sha256
+
+    - name: Package (Windows)
+      if: matrix.os == 'windows-latest'
+      run: |
+        Compress-Archive -Path install/* -DestinationPath ${{ matrix.artifact_name }}.zip
+        Get-FileHash ${{ matrix.artifact_name }}.zip -Algorithm SHA256 | Select-Object -ExpandProperty Hash > ${{ matrix.artifact_name }}.sha256
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.artifact_name }}
+        path: |
+          ${{ matrix.artifact_name }}.${{ matrix.archive_ext }}
+          ${{ matrix.artifact_name }}.sha256
+        retention-days: 7
+
+  create-release:
+    name: Create GitHub Release
+    needs: build-artifacts
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Download All Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+
+    - name: Generate Release Notes
+      run: |
+        VERSION=${{ github.event.inputs.version || github.ref_name }}
+        echo "# Network System Release $VERSION" > release-notes.md
+        echo "" >> release-notes.md
+        echo "## 🎉 Release Highlights" >> release-notes.md
+        echo "" >> release-notes.md
+
+        # Extract recent changes from CHANGELOG
+        if [ -f "CHANGELOG.md" ]; then
+          echo "### Changes" >> release-notes.md
+          head -n 50 CHANGELOG.md | tail -n 40 >> release-notes.md
+        fi
+
+        echo "" >> release-notes.md
+        echo "## 📊 Performance Metrics" >> release-notes.md
+        echo "- Average throughput: 305K+ msg/s" >> release-notes.md
+        echo "- Concurrent connections: 500+" >> release-notes.md
+        echo "- Latency: < 600μs average" >> release-notes.md
+        echo "" >> release-notes.md
+
+        echo "## 📦 Installation" >> release-notes.md
+        echo '```bash' >> release-notes.md
+        echo "# Download and extract the archive for your platform" >> release-notes.md
+        echo "tar xzf network_system-<platform>-x64.tar.gz" >> release-notes.md
+        echo "" >> release-notes.md
+        echo "# Include in your CMake project" >> release-notes.md
+        echo "find_package(NetworkSystem REQUIRED)" >> release-notes.md
+        echo "target_link_libraries(your_app NetworkSystem::NetworkSystem)" >> release-notes.md
+        echo '```' >> release-notes.md
+        echo "" >> release-notes.md
+
+        echo "## 🔧 Requirements" >> release-notes.md
+        echo "- C++20 compatible compiler" >> release-notes.md
+        echo "- CMake 3.16+" >> release-notes.md
+        echo "- ASIO or Boost.ASIO 1.28+" >> release-notes.md
+        echo "" >> release-notes.md
+
+        echo "## 📄 Checksums" >> release-notes.md
+        echo '```' >> release-notes.md
+        find artifacts -name "*.sha256" -exec cat {} \;
+        echo '```' >> release-notes.md
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ github.event.inputs.version || github.ref_name }}
+        name: Network System ${{ github.event.inputs.version || github.ref_name }}
+        body_path: release-notes.md
+        draft: false
+        prerelease: ${{ contains(github.event.inputs.version || github.ref_name, 'rc') || contains(github.event.inputs.version || github.ref_name, 'beta') }}
+        files: |
+          artifacts/**/*.tar.gz
+          artifacts/**/*.zip
+          artifacts/**/*.sha256
+
+  publish-documentation:
+    name: Publish Documentation
+    needs: create-release
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Doxygen
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y doxygen graphviz
+
+    - name: Generate Documentation
+      run: |
+        doxygen Doxyfile
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+
+    - name: Upload Documentation
+      uses: actions/upload-pages-artifact@v2
+      with:
+        path: docs/html
+
+    - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v2

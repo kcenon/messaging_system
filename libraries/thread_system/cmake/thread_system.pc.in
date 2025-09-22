@@ -1,0 +1,28 @@
+# thread_system pkg-config template
+# Phase 2 T2.2: pkg-config file for system integration
+
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=@CMAKE_INSTALL_PREFIX@
+libdir=@CMAKE_INSTALL_FULL_LIBDIR@
+includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
+
+Name: thread_system
+Description: High-performance C++20 multithreading framework
+Version: @PROJECT_VERSION@
+URL: @PROJECT_HOMEPAGE_URL@
+
+# Required dependencies as specified in T2.2
+Requires: fmt
+# Note: pthread is handled via Libs.private as it's not a standard pkg-config package
+
+# Libraries provided by thread_system as specified in T2.2
+Libs: -L${libdir} -lthread_pool -lthread_base -lutilities -llockfree -ltyped_thread_pool -linterfaces
+# Additional system libraries required
+Libs.private: -pthread @ICONV_LIBRARIES@
+
+# Include paths
+Cflags: -I${includedir} -I${includedir}/thread_system
+
+# Feature flags that may be needed by client projects
+# These are set based on the build configuration
+@PKG_CONFIG_FEATURE_FLAGS@

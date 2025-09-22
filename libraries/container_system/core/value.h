@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdexcept>
 #include <ostream>
 
-#include "container_system/core/value_types.h"
+#include "container/core/value_types.h"
 
 namespace container_module
 {

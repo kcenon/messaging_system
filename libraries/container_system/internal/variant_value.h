@@ -50,28 +50,29 @@ namespace container_module
 
     /**
      * @brief Type-safe variant for all possible value types in the container system
-     *
+     * 
      * This replaces the runtime polymorphism with compile-time type safety using std::variant.
      * The order of types in the variant corresponds to the value_types enum for compatibility.
-     *
-     * Note: On Windows and macOS, int64_t and long long are the same type,
-     * so we use a unified variant definition that avoids duplication.
+     * 
+     * Note: On some platforms (like macOS), int64_t and long long are the same type,
+     * so we use conditional types to avoid duplication.
      */
-    using ValueVariant = std::variant<
-        std::monostate,                       // null_value (index 0)
-        bool,                                 // bool_value (index 1)
-        std::vector<uint8_t>,                 // bytes_value (index 2)
-        int16_t,                              // short_value (index 3)
-        uint16_t,                             // ushort_value (index 4)
-        int32_t,                              // int_value (index 5)
-        uint32_t,                             // uint_value (index 6)
-        int64_t,                              // long_value (index 7)
-        uint64_t,                             // ulong_value (index 8)
-        float,                                // float_value (index 9)
-        double,                               // double_value (index 10)
-        std::string,                          // string_value (index 11)
-        std::shared_ptr<thread_safe_container> // container_value (index 12)
-    >;
+        // Use a unified variant definition that avoids type duplication
+        using ValueVariant = std::variant<
+            std::monostate,                       // null_value (index 0)
+            bool,                                 // bool_value (index 1)
+            std::vector<uint8_t>,                 // bytes_value (index 2)
+            int16_t,                              // short_value (index 3)
+            uint16_t,                             // ushort_value (index 4)
+            int32_t,                              // int_value (index 5)
+            uint32_t,                             // uint_value (index 6)
+            int64_t,                              // long_value (index 7)
+            uint64_t,                             // ulong_value (index 8)
+            float,                                // float_value (index 9)
+            double,                               // double_value (index 10)
+            std::string,                          // string_value (index 11)
+            std::shared_ptr<thread_safe_container> // container_value (index 12)
+        >;
 
     /**
      * @brief Type-safe value wrapper with thread safety
@@ -279,20 +280,11 @@ namespace container_module
     
     template<>
     struct is_variant_type<int64_t> : std::true_type {};
-
+    
     template<>
     struct is_variant_type<uint64_t> : std::true_type {};
-
-    // Only define these on platforms where long long is different from int64_t
-    // On most 64-bit platforms: long long == int64_t == long (8 bytes)
-    // But we can't check this at preprocessor time, so we exclude known problematic platforms
-    #if !defined(_WIN32) && !defined(_WIN64) && !defined(__APPLE__)
-    // On Linux x86_64, long long and int64_t are typically the same type
-    // So we skip these specializations to avoid redefinition errors
-    #else
-    // On other platforms, we might need these
-    // But since they often cause issues, we'll only enable them if explicitly needed
-    #endif
+    
+    // Note: long long and unsigned long long removed from variant to avoid type duplication
     
     template<>
     struct is_variant_type<float> : std::true_type {};

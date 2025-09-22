@@ -1,162 +1,114 @@
+cmake_minimum_required(VERSION 3.16)
+
 ##################################################
-# Database Module CMakeLists.txt
-# 
-# Builds the database library for the messaging system.
+# Database System CMakeLists.txt
+#
+# Independent database system with multi-backend support
 # Provides database abstraction and PostgreSQL implementation.
 ##################################################
 
 # Project definition
-project(database 
+project(database_system
     VERSION 1.0.0
-    DESCRIPTION "Database abstraction layer with PostgreSQL support"
+    DESCRIPTION "Advanced C++20 Database System with Multi-Backend Support"
     LANGUAGES CXX
 )
 
-##################################################
-# Source Files Configuration
-##################################################
+# C++ Standard
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Collect all header files
-set(HEADER_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/database_base.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/database_manager.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/database_types.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/postgres_manager.h
-)
+# Options
+option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
+option(USE_UNIT_TEST "Use unit test" ON)
+option(BUILD_DATABASE_SAMPLES "Build database system samples" ON)
+option(USE_POSTGRESQL "Enable PostgreSQL support" ON)
+option(USE_MYSQL "Enable MySQL support" OFF)
+option(USE_SQLITE "Enable SQLite support" OFF)
+option(BUILD_DATABASE "Build database module" ON)
 
-# Collect all source files
-set(SOURCE_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/database_manager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/postgres_manager.cpp
-)
+# Output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-##################################################
-# Library Target Configuration
-##################################################
+# Debug flags
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
 
-# Create static library
-add_library(${PROJECT_NAME} STATIC 
-    ${HEADER_FILES} 
-    ${SOURCE_FILES}
-)
-
-# Set target properties
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    VERSION ${PROJECT_VERSION}
-    POSITION_INDEPENDENT_CODE ON
-    CXX_STANDARD 20
-    CXX_STANDARD_REQUIRED ON
-    CXX_EXTENSIONS OFF
-)
-
-##################################################
-# Include Directories
-##################################################
-
-# Public include directories (for consumers of this library)
-target_include_directories(${PROJECT_NAME} PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/libraries>
-    $<INSTALL_INTERFACE:include/messaging_system>
-)
-
-# Include ThreadSystem utilities headers if available
-if(TARGET utilities)
-    target_include_directories(${PROJECT_NAME} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/thread_system/sources/utilities>
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/thread_system/sources/utilities/conversion>
-    )
-endif()
-
-##################################################
-# Dependencies
-##################################################
-
-# PostgreSQL dependency
-find_package(PostgreSQL REQUIRED)
-target_link_libraries(${PROJECT_NAME} PUBLIC PostgreSQL::PostgreSQL)
-
-# Container library dependency
-if(TARGET container)
-    target_link_libraries(${PROJECT_NAME} PUBLIC container)
-else()
-    message(FATAL_ERROR "Container library is required for database module")
-endif()
-
-# Utilities library dependency
-if(TARGET utilities)
-    target_link_libraries(${PROJECT_NAME} PRIVATE utilities)
-else()
-    message(WARNING "utilities target not found - database may have missing dependencies")
-endif()
-
-##################################################
-# Compiler Options
-##################################################
-
-# Add compiler warnings
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    target_compile_options(${PROJECT_NAME} PRIVATE
-        -Wall
-        -Wextra
-        -Wpedantic
-        -Wno-unused-parameter
-        -Wno-unused-variable
-    )
-elseif(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE
-        /W4
-        /WX-
-    )
-endif()
-
-# Platform-specific definitions
+# Platform-specific settings
 if(WIN32)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE
-        _WIN32_WINNT=0x0601  # Windows 7 or later
-        WIN32_LEAN_AND_MEAN
-        NOMINMAX
+    add_definitions(-D_WIN32_WINNT=0x0A00) # Windows 10
+elseif(APPLE)
+    add_definitions(-DAPPLE_PLATFORM)
+endif()
+
+# Find required packages
+find_package(Threads REQUIRED)
+
+##################################################
+# Modular Architecture
+##################################################
+
+# Database module
+if(BUILD_DATABASE)
+    add_subdirectory(database)
+    message(STATUS "Database module will be built")
+else()
+    message(STATUS "Database module disabled")
+endif()
+
+##################################################
+# Samples
+##################################################
+
+if(BUILD_DATABASE_SAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/samples)
+    add_subdirectory(samples)
+    message(STATUS "Database samples will be built")
+endif()
+
+##################################################
+# Testing
+##################################################
+
+# Unit tests
+if(USE_UNIT_TEST AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+    enable_testing()
+    add_subdirectory(tests)
+    message(STATUS "Database tests will be built")
+endif()
+
+##################################################
+# Installation Rules
+##################################################
+
+include(GNUInstallDirs)
+
+# Install header files
+if(BUILD_DATABASE)
+    install(DIRECTORY database/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/database_system/database
+        FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
+        PATTERN "tests" EXCLUDE
+        PATTERN "samples" EXCLUDE
     )
-endif()
-
-##################################################
-# PostgreSQL Configuration
-##################################################
-
-# Display PostgreSQL configuration
-message(STATUS "PostgreSQL Configuration:")
-message(STATUS "  Version: ${PostgreSQL_VERSION_STRING}")
-message(STATUS "  Include: ${PostgreSQL_INCLUDE_DIRS}")
-message(STATUS "  Libraries: ${PostgreSQL_LIBRARIES}")
-
-# Add PostgreSQL-specific definitions if needed
-if(PostgreSQL_VERSION_STRING VERSION_GREATER_EQUAL "14.0")
-    target_compile_definitions(${PROJECT_NAME} PRIVATE POSTGRESQL_14_OR_NEWER)
-endif()
-
-##################################################
-# Installation Rules (when not building as submodule)
-##################################################
-
-# Installation is handled by parent CMakeLists.txt
-
-# Export configuration is handled by parent CMakeLists.txt
-
-##################################################
-# Testing Support
-##################################################
-
-# Enable testing features if building tests
-if(BUILD_UNIT_TESTS AND NOT BUILD_MESSAGING_SYSTEM_AS_SUBMODULE)
-    # Add any database-specific test configurations here
-    set_property(TARGET ${PROJECT_NAME} PROPERTY ENABLE_EXPORTS ON)
 endif()
 
 ##################################################
 # Summary
 ##################################################
 
-message(STATUS "Database library configured:")
+message(STATUS "Database System configured:")
 message(STATUS "  Version: ${PROJECT_VERSION}")
-message(STATUS "  Headers: ${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "  Dependencies: PostgreSQL, container, utilities")
+message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")
+message(STATUS "  Features:")
+message(STATUS "    - PostgreSQL support: ${USE_POSTGRESQL}")
+message(STATUS "    - MySQL support: ${USE_MYSQL}")
+message(STATUS "    - SQLite support: ${USE_SQLITE}")
+message(STATUS "    - Build samples: ${BUILD_DATABASE_SAMPLES}")
+message(STATUS "    - Build tests: ${USE_UNIT_TEST}")
+message(STATUS "  Output directories:")
+message(STATUS "    - Runtime: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+message(STATUS "    - Library: ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+message(STATUS "    - Archive: ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")

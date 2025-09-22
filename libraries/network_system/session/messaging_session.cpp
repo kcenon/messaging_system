@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "network_system/session/messaging_session.h"
 #include "network_system/internal/send_coroutine.h" // for async_send_with_pipeline_co / no_co
-#include <iostream>
+#include "network_system/integration/logger_integration.h"
 #include <string_view>
 #include <type_traits>
 
@@ -76,8 +76,7 @@ namespace network_module
 		// Begin reading
 		socket_->start_read();
 
-		std::cout << "[messaging_session] Started session on server: "
-				  << server_id_ << "\n";
+		NETWORK_LOG_INFO("[messaging_session] Started session on server: " + server_id_);
 	}
 
 	auto messaging_session::stop_session() -> void
@@ -91,7 +90,7 @@ namespace network_module
 		{
 			socket_->socket().close();
 		}
-		std::cout << "[messaging_session] Stopped.\n";
+		NETWORK_LOG_INFO("[messaging_session] Stopped.");
 	}
 
 	auto messaging_session::send_packet(std::vector<uint8_t> data) -> void
@@ -113,8 +112,7 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 					   {
 						   if (ec)
 						   {
-							   std::cerr << "[messaging_session] Send error: "
-										 << ec.message() << "\n";
+							   NETWORK_LOG_ERROR("[messaging_session] Send error: " + ec.message());
 						   }
 					   });
 #else
@@ -127,12 +125,10 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 			auto result_ec = fut.get();
 			if (result_ec)
 			{
-				std::cerr << "[messaging_session] Send error: "
-						<< result_ec.message() << "\n";
+			NETWORK_LOG_ERROR("[messaging_session] Send error: " + result_ec.message());
 			}
 		} catch (const std::exception& e) {
-			std::cerr << "[messaging_session] Exception while waiting for send: "
-					<< e.what() << "\n";
+			NETWORK_LOG_ERROR("[messaging_session] Exception while waiting for send: " + std::string(e.what()));
 		}
 #endif
 }
@@ -145,8 +141,8 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 			return;
 		}
 
-		std::cout << "[messaging_session] Received " << data.size()
-				  << " bytes.\n";
+		NETWORK_LOG_DEBUG("[messaging_session] Received " + std::to_string(data.size())
+				+ " bytes.");
 
 		// Potentially decompress + decrypt
 		// e.g. auto uncompressed = pipeline_.decompress(data);
@@ -156,8 +152,7 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 
 	auto messaging_session::on_error(std::error_code ec) -> void
 	{
-		std::cerr << "[messaging_session] Socket error: " << ec.message()
-				  << "\n";
+		NETWORK_LOG_ERROR("[messaging_session] Socket error: " + ec.message());
 		stop_session();
 	}
 

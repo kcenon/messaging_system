@@ -89,7 +89,11 @@ WARN_NO_PARAMDOC       = NO
 WARN_AS_ERROR          = NO
 WARN_FORMAT            = "$file:$line: $text"
 WARN_LOGFILE           =
-INPUT                  = ./sources \
+INPUT                  = ./core \
+                         ./interfaces \
+                         ./implementations \
+                         ./utilities \
+                         ./samples \
                          ./mainpage.dox
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \

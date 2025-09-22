@@ -1,0 +1,82 @@
+# Build directories
+build/
+build*/
+out/
+install/
+
+# IDE files
+.vscode/
+.vs/
+*.vcxproj*
+*.sln
+*.user
+*.suo
+*.cache
+.idea/
+*.iml
+
+# Compiler outputs
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+
+# Test executables (Unix/macOS)
+test_integration
+test_compatibility
+test_e2e
+stress_test
+benchmark
+verify_build
+
+# Debug files
+*.pdb
+*.ilk
+*.log
+
+# Package managers
+vcpkg_installed/
+conan*/
+.conan/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+*.cmake
+!CMakeLists.txt
+!cmake/*.cmake
+!cmake/*.cmake.in
+
+# Test results
+Testing/
+CTestTestfile.cmake
+*.gcov
+*.gcda
+*.gcno
+
+# Documentation
+docs/html/
+docs/latex/
+*.pdf
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.orig
+
+# Documentation
+documents/

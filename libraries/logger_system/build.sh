@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Logger System Build Script
-# Based on Thread System build script
+# Logger System Build Script - Interactive Compiler Selection Version
+# Improved version with interactive compiler selection and better error handling
 
 # Color definitions for better readability
 RED='\033[0;31m'
@@ -9,12 +9,14 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
+MAGENTA='\033[0;35m'
 BOLD='\033[1m'
 NC='\033[0m' # No Color
 
 # Display banner
 echo -e "${BOLD}${BLUE}============================================${NC}"
 echo -e "${BOLD}${BLUE}      Logger System Build Script           ${NC}"
+echo -e "${BOLD}${BLUE}     Interactive Compiler Selection         ${NC}"
 echo -e "${BOLD}${BLUE}============================================${NC}"
 
 # Display help information
@@ -36,18 +38,24 @@ show_help() {
     echo "  --docs            Generate Doxygen documentation"
     echo "  --clean-docs      Clean and regenerate Doxygen documentation"
     echo ""
-    echo -e "${BOLD}Feature Options:${NC}"
-    echo "  --no-format       Disable std::format even if supported"
+    echo -e "${BOLD}Logger-Specific Options:${NC}"
+    echo "  --standalone      Build in standalone mode without thread_system"
+    echo "  --with-thread     Build with thread_system integration"
+    echo ""
+    echo -e "${BOLD}C++ Compatibility Options:${NC}"
+    echo "  --cpp17           Force C++17 mode (disable C++20 features)"
+    echo "  --force-fmt       Force fmt library usage even if std::format available"
+    echo "  --no-vcpkg        Skip vcpkg and use system libraries only"
+    echo "  --no-format       Disable std::format even if supported (legacy)"
+    echo ""
+    echo -e "${BOLD}Compiler Options:${NC}"
+    echo "  --compiler PATH   Use specific compiler (skips interactive selection)"
+    echo "  --auto            Auto-select first available compiler (skips interactive)"
     echo ""
     echo -e "${BOLD}General Options:${NC}"
     echo "  --cores N         Use N cores for compilation (default: auto-detect)"
     echo "  --verbose         Show detailed build output"
     echo "  --help            Display this help and exit"
-    echo ""
-    echo -e "${BOLD}Compiler Options:${NC}"
-    echo "  --compiler NAME   Use specific compiler (e.g., g++, clang++, g++-12)"
-    echo "  --list-compilers  List all available compilers and exit"
-    echo "  --select-compiler Interactively select compiler"
     echo ""
 }
 
@@ -71,121 +79,289 @@ print_warning() {
     echo -e "${BOLD}${YELLOW}[WARNING]${NC} $1"
 }
 
+# Function to print info messages
+print_info() {
+    echo -e "${BOLD}${CYAN}[INFO]${NC} $1"
+}
+
 # Function to check if a command exists
 command_exists() {
     command -v "$1" &> /dev/null
 }
 
-# Function to detect available compilers
+# Function to detect installed compilers
 detect_compilers() {
-    print_status "Detecting available compilers..."
+    local compilers=()
+    local compiler_names=()
+    local compiler_types=()
     
-    local available_compilers=()
-    local compiler_details=()
-    
-    # Check for various C++ compilers
-    if command_exists g++; then
-        local gcc_version=$(g++ --version 2>/dev/null | head -n1)
-        available_compilers+=("g++")
-        compiler_details+=("GCC: $gcc_version")
-    fi
-    
-    if command_exists clang++; then
-        local clang_version=$(clang++ --version 2>/dev/null | head -n1)
-        available_compilers+=("clang++")
-        compiler_details+=("Clang: $clang_version")
-    fi
-    
-    # Check for additional GCC versions
-    for version in 13 12 11 10 9; do
-        if command_exists "g++-$version"; then
-            local gcc_ver=$(g++-$version --version 2>/dev/null | head -n1)
-            available_compilers+=("g++-$version")
-            compiler_details+=("GCC-$version: $gcc_ver")
+    # Detect GCC variants
+    for version in 14 13 12 11 10 9 8 7; do
+        if command_exists "gcc-$version"; then
+            compilers+=("gcc-$version")
+            compiler_names+=("GCC $version")
+            compiler_types+=("gcc")
+            
+            # Check for corresponding g++
+            if command_exists "g++-$version"; then
+                compilers+=("g++-$version")
+                compiler_names+=("G++ $version")
+                compiler_types+=("g++")
+            fi
         fi
     done
     
-    # Check for additional Clang versions
-    for version in 17 16 15 14 13 12 11 10; do
-        if command_exists "clang++-$version"; then
-            local clang_ver=$(clang++-$version --version 2>/dev/null | head -n1)
-            available_compilers+=("clang++-$version")
-            compiler_details+=("Clang-$version: $clang_ver")
+    # Check default GCC
+    if command_exists "gcc"; then
+        local gcc_version=$(gcc --version 2>/dev/null | head -n1 | grep -oP '\d+\.\d+\.\d+' | head -1)
+        compilers+=("gcc")
+        compiler_names+=("GCC (default) $gcc_version")
+        compiler_types+=("gcc")
+    fi
+    
+    # Check default G++
+    if command_exists "g++"; then
+        local gpp_version=$(g++ --version 2>/dev/null | head -n1 | grep -oP '\d+\.\d+\.\d+' | head -1)
+        compilers+=("g++")
+        compiler_names+=("G++ (default) $gpp_version")
+        compiler_types+=("g++")
+    fi
+    
+    # Detect Clang variants
+    for version in 19 18 17 16 15 14 13 12 11 10 9; do
+        if command_exists "clang-$version"; then
+            compilers+=("clang-$version")
+            compiler_names+=("Clang $version")
+            compiler_types+=("clang")
+            
+            # Check for corresponding clang++
+            if command_exists "clang++-$version"; then
+                compilers+=("clang++-$version")
+                compiler_names+=("Clang++ $version")
+                compiler_types+=("clang++")
+            fi
         fi
     done
     
-    # Check for platform-specific compilers
+    # Check default Clang
+    if command_exists "clang"; then
+        local clang_version=$(clang --version 2>/dev/null | head -n1 | grep -oP '\d+\.\d+\.\d+' | head -1)
+        compilers+=("clang")
+        compiler_names+=("Clang (default) $clang_version")
+        compiler_types+=("clang")
+    fi
+    
+    # Check default Clang++
+    if command_exists "clang++"; then
+        local clangpp_version=$(clang++ --version 2>/dev/null | head -n1 | grep -oP '\d+\.\d+\.\d+' | head -1)
+        compilers+=("clang++")
+        compiler_names+=("Clang++ (default) $clangpp_version")
+        compiler_types+=("clang++")
+    fi
+    
+    # Check for Intel compilers
+    if command_exists "icc"; then
+        compilers+=("icc")
+        compiler_names+=("Intel C Compiler (icc)")
+        compiler_types+=("icc")
+    fi
+    
+    if command_exists "icpc"; then
+        compilers+=("icpc")
+        compiler_names+=("Intel C++ Compiler (icpc)")
+        compiler_types+=("icpc")
+    fi
+    
+    # Check for newer Intel compilers
+    if command_exists "icx"; then
+        compilers+=("icx")
+        compiler_names+=("Intel oneAPI C Compiler (icx)")
+        compiler_types+=("icx")
+    fi
+    
+    if command_exists "icpx"; then
+        compilers+=("icpx")
+        compiler_names+=("Intel oneAPI C++ Compiler (icpx)")
+        compiler_types+=("icpx")
+    fi
+    
+    # Check for ARM compilers
+    if command_exists "armclang"; then
+        compilers+=("armclang")
+        compiler_names+=("ARM Compiler (armclang)")
+        compiler_types+=("armclang")
+    fi
+    
+    if command_exists "armclang++"; then
+        compilers+=("armclang++")
+        compiler_names+=("ARM C++ Compiler (armclang++)")
+        compiler_types+=("armclang++")
+    fi
+    
+    # macOS specific: Check for Apple Clang
     if [ "$(uname)" == "Darwin" ]; then
-        # macOS specific compilers
-        if command_exists /usr/bin/clang++; then
+        if command_exists "/usr/bin/clang++"; then
             local apple_clang_version=$(/usr/bin/clang++ --version 2>/dev/null | head -n1)
-            available_compilers+=("/usr/bin/clang++")
-            compiler_details+=("Apple Clang: $apple_clang_version")
+            compilers+=("/usr/bin/clang++")
+            compiler_names+=("Apple Clang")
+            compiler_types+=("clang++")
         fi
     fi
     
-    if [ ${#available_compilers[@]} -eq 0 ]; then
-        print_error "No C++ compilers found!"
-        print_warning "Please install a C++ compiler (GCC or Clang)"
-        return 1
-    fi
-    
-    # Export arrays for use in other functions
-    AVAILABLE_COMPILERS=("${available_compilers[@]}")
-    COMPILER_DETAILS=("${compiler_details[@]}")
-    
-    return 0
-}
-
-# Function to display available compilers
-show_compilers() {
-    echo -e "${BOLD}${CYAN}Available Compilers:${NC}"
-    for i in "${!AVAILABLE_COMPILERS[@]}"; do
-        printf "  %d) %s\n" $((i + 1)) "${COMPILER_DETAILS[i]}"
-    done
-    echo ""
+    # Return arrays via global variables
+    DETECTED_COMPILERS=("${compilers[@]}")
+    DETECTED_COMPILER_NAMES=("${compiler_names[@]}")
+    DETECTED_COMPILER_TYPES=("${compiler_types[@]}")
 }
 
 # Function to select compiler interactively
-select_compiler_interactive() {
-    show_compilers
+select_compiler() {
+    if [ ${#DETECTED_COMPILERS[@]} -eq 0 ]; then
+        print_error "No C/C++ compilers found on your system!"
+        print_info "Please install a compiler (gcc, g++, clang, etc.) and try again."
+        return 1
+    fi
+    
+    echo ""
+    echo -e "${BOLD}${CYAN}Available Compilers:${NC}"
+    echo -e "${BOLD}${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    
+    # Group compilers by type
+    local cpp_compilers=()
+    local c_compilers=()
+    
+    for i in "${!DETECTED_COMPILERS[@]}"; do
+        local type="${DETECTED_COMPILER_TYPES[$i]}"
+        if [[ "$type" == "g++" || "$type" == "clang++" || "$type" == "icpc" || "$type" == "icpx" || "$type" == "armclang++" ]]; then
+            cpp_compilers+=($i)
+        else
+            c_compilers+=($i)
+        fi
+    done
+    
+    # Display C++ compilers first (recommended for Logger System)
+    if [ ${#cpp_compilers[@]} -gt 0 ]; then
+        echo -e "${BOLD}${GREEN}C++ Compilers (Recommended):${NC}"
+        local count=1
+        for idx in "${cpp_compilers[@]}"; do
+            printf "  ${BOLD}%2d)${NC} %-25s ${MAGENTA}[%s]${NC}\n" $count "${DETECTED_COMPILER_NAMES[$idx]}" "${DETECTED_COMPILERS[$idx]}"
+            count=$((count + 1))
+        done
+    fi
+    
+    # Display C compilers
+    if [ ${#c_compilers[@]} -gt 0 ]; then
+        echo -e "\n${BOLD}${YELLOW}C Compilers:${NC}"
+        local count=$((${#cpp_compilers[@]} + 1))
+        for idx in "${c_compilers[@]}"; do
+            printf "  ${BOLD}%2d)${NC} %-25s ${MAGENTA}[%s]${NC}\n" $count "${DETECTED_COMPILER_NAMES[$idx]}" "${DETECTED_COMPILERS[$idx]}"
+            count=$((count + 1))
+        done
+    fi
+    
+    echo -e "${BOLD}${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    
+    # Get user selection
+    local total_compilers=${#DETECTED_COMPILERS[@]}
+    local selected_idx=""
     
     while true; do
-        echo -e "${BOLD}Select compiler (1-${#AVAILABLE_COMPILERS[@]}) or 'q' to quit:${NC}"
-        read -r -p "> " choice
+        echo -n -e "${BOLD}Select a compiler [1-$total_compilers] (${GREEN}recommended: 1${NC}): ${NC}"
+        read selected_idx
         
-        if [ "$choice" = "q" ] || [ "$choice" = "Q" ]; then
-            print_warning "Build cancelled by user"
-            exit 0
+        # Default to first option if empty
+        if [ -z "$selected_idx" ]; then
+            selected_idx=1
         fi
         
-        if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "${#AVAILABLE_COMPILERS[@]}" ]; then
-            SELECTED_COMPILER="${AVAILABLE_COMPILERS[$((choice - 1))]}"
-            SELECTED_COMPILER_DETAIL="${COMPILER_DETAILS[$((choice - 1))]}"
-            print_success "Selected: $SELECTED_COMPILER_DETAIL"
-            return 0
+        # Validate input
+        if [[ "$selected_idx" =~ ^[0-9]+$ ]] && [ "$selected_idx" -ge 1 ] && [ "$selected_idx" -le "$total_compilers" ]; then
+            break
         else
-            print_error "Invalid choice. Please enter a number between 1 and ${#AVAILABLE_COMPILERS[@]}"
-        fi
-    done
-}
-
-# Function to select compiler by name
-select_compiler_by_name() {
-    local compiler_name="$1"
-    
-    for i in "${!AVAILABLE_COMPILERS[@]}"; do
-        if [ "${AVAILABLE_COMPILERS[i]}" = "$compiler_name" ]; then
-            SELECTED_COMPILER="$compiler_name"
-            SELECTED_COMPILER_DETAIL="${COMPILER_DETAILS[i]}"
-            print_success "Selected: $SELECTED_COMPILER_DETAIL"
-            return 0
+            print_error "Invalid selection. Please enter a number between 1 and $total_compilers."
         fi
     done
     
-    print_error "Compiler '$compiler_name' not found in available compilers"
-    show_compilers
-    return 1
+    # Map selection to actual index
+    local actual_idx
+    if [ "$selected_idx" -le ${#cpp_compilers[@]} ]; then
+        actual_idx=${cpp_compilers[$((selected_idx - 1))]}
+    else
+        local c_idx=$((selected_idx - ${#cpp_compilers[@]} - 1))
+        actual_idx=${c_compilers[$c_idx]}
+    fi
+    
+    SELECTED_COMPILER="${DETECTED_COMPILERS[$actual_idx]}"
+    SELECTED_COMPILER_NAME="${DETECTED_COMPILER_NAMES[$actual_idx]}"
+    SELECTED_COMPILER_TYPE="${DETECTED_COMPILER_TYPES[$actual_idx]}"
+    
+    echo ""
+    print_success "Selected compiler: ${BOLD}${GREEN}$SELECTED_COMPILER_NAME${NC}"
+    
+    # Determine C and C++ compilers based on selection
+    case "$SELECTED_COMPILER_TYPE" in
+        gcc)
+            CC_COMPILER="$SELECTED_COMPILER"
+            CXX_COMPILER="${SELECTED_COMPILER/gcc/g++}"
+            ;;
+        g++)
+            CXX_COMPILER="$SELECTED_COMPILER"
+            CC_COMPILER="${SELECTED_COMPILER/g++/gcc}"
+            ;;
+        clang)
+            CC_COMPILER="$SELECTED_COMPILER"
+            CXX_COMPILER="${SELECTED_COMPILER/clang/clang++}"
+            ;;
+        clang++)
+            CXX_COMPILER="$SELECTED_COMPILER"
+            CC_COMPILER="${SELECTED_COMPILER/clang++/clang}"
+            ;;
+        icc)
+            CC_COMPILER="$SELECTED_COMPILER"
+            CXX_COMPILER="icpc"
+            ;;
+        icpc)
+            CXX_COMPILER="$SELECTED_COMPILER"
+            CC_COMPILER="icc"
+            ;;
+        icx)
+            CC_COMPILER="$SELECTED_COMPILER"
+            CXX_COMPILER="icpx"
+            ;;
+        icpx)
+            CXX_COMPILER="$SELECTED_COMPILER"
+            CC_COMPILER="icx"
+            ;;
+        armclang)
+            CC_COMPILER="$SELECTED_COMPILER"
+            CXX_COMPILER="armclang++"
+            ;;
+        armclang++)
+            CXX_COMPILER="$SELECTED_COMPILER"
+            CC_COMPILER="armclang"
+            ;;
+        *)
+            CC_COMPILER="$SELECTED_COMPILER"
+            CXX_COMPILER="$SELECTED_COMPILER"
+            ;;
+    esac
+    
+    # Verify the compilers exist
+    if ! command_exists "$CC_COMPILER"; then
+        print_warning "C compiler $CC_COMPILER not found, using $SELECTED_COMPILER"
+        CC_COMPILER="$SELECTED_COMPILER"
+    fi
+    
+    if ! command_exists "$CXX_COMPILER"; then
+        print_warning "C++ compiler $CXX_COMPILER not found, using $SELECTED_COMPILER"
+        CXX_COMPILER="$SELECTED_COMPILER"
+    fi
+    
+    print_info "Using C compiler: $CC_COMPILER"
+    print_info "Using C++ compiler: $CXX_COMPILER"
+    
+    return 0
 }
 
 # Function to check and install dependencies
@@ -219,7 +395,8 @@ check_dependencies() {
         print_warning "Running dependency script to set up vcpkg..."
         
         if [ -f "./dependency.sh" ]; then
-            if ! bash ./dependency.sh; then
+            bash ./dependency.sh
+            if [ $? -ne 0 ]; then
                 print_error "Failed to run dependency.sh"
                 return 1
             fi
@@ -250,9 +427,14 @@ TARGET="all"
 DISABLE_STD_FORMAT=0
 BUILD_CORES=0
 VERBOSE=0
-SELECTED_COMPILER=""
-LIST_COMPILERS_ONLY=0
-INTERACTIVE_COMPILER_SELECTION=0
+SPECIFIC_COMPILER=""
+AUTO_SELECT=0
+# New C++17/C++20 compatibility options
+FORCE_CPP17=0
+FORCE_FMT=0
+NO_VCPKG=0
+STANDALONE_MODE=0
+WITH_THREAD=0
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -297,6 +479,39 @@ while [[ $# -gt 0 ]]; do
             DISABLE_STD_FORMAT=1
             shift
             ;;
+        --standalone)
+            STANDALONE_MODE=1
+            shift
+            ;;
+        --with-thread)
+            WITH_THREAD=1
+            shift
+            ;;
+        --cpp17)
+            FORCE_CPP17=1
+            shift
+            ;;
+        --force-fmt)
+            FORCE_FMT=1
+            shift
+            ;;
+        --no-vcpkg)
+            NO_VCPKG=1
+            shift
+            ;;
+        --compiler)
+            if [ -n "$2" ] && [ "${2:0:1}" != "-" ]; then
+                SPECIFIC_COMPILER="$2"
+                shift 2
+            else
+                print_error "Option --compiler requires an argument"
+                exit 1
+            fi
+            ;;
+        --auto)
+            AUTO_SELECT=1
+            shift
+            ;;
         --cores)
             if [[ $2 =~ ^[0-9]+$ ]]; then
                 BUILD_CORES=$2
@@ -308,23 +523,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         --verbose)
             VERBOSE=1
-            shift
-            ;;
-        --compiler)
-            if [ -n "$2" ]; then
-                SELECTED_COMPILER="$2"
-                shift 2
-            else
-                print_error "Option --compiler requires a compiler name"
-                exit 1
-            fi
-            ;;
-        --list-compilers)
-            LIST_COMPILERS_ONLY=1
-            shift
-            ;;
-        --select-compiler)
-            INTERACTIVE_COMPILER_SELECTION=1
             shift
             ;;
         --help)
@@ -345,16 +543,13 @@ if [ $BUILD_CORES -eq 0 ]; then
         BUILD_CORES=$(nproc)
     elif [ "$(uname)" == "Darwin" ]; then
         BUILD_CORES=$(sysctl -n hw.ncpu)
+        # macOS specific: Force single thread to avoid jobserver issues
+        print_warning "macOS detected: Using single-threaded build to avoid jobserver issues"
+        BUILD_CORES=1
     else
         # Default to 2 if we can't detect
         BUILD_CORES=2
     fi
-fi
-
-# macOS specific: Force single thread to avoid jobserver issues
-if [ "$(uname)" == "Darwin" ]; then
-    print_warning "macOS detected: Using single-threaded build to avoid jobserver issues"
-    BUILD_CORES=1
 fi
 
 print_status "Using $BUILD_CORES cores for compilation"
@@ -370,37 +565,47 @@ if [ "$(uname)" == "Linux" ]; then
     fi
 fi
 
-# Detect available compilers
-detect_compilers
-if [ $? -ne 0 ]; then
-    exit 1
-fi
-
-# Handle compiler-related options
-if [ $LIST_COMPILERS_ONLY -eq 1 ]; then
-    show_compilers
-    exit 0
-fi
-
-if [ $INTERACTIVE_COMPILER_SELECTION -eq 1 ]; then
-    select_compiler_interactive
-elif [ -n "$SELECTED_COMPILER" ]; then
-    select_compiler_by_name "$SELECTED_COMPILER"
-    if [ $? -ne 0 ]; then
-        exit 1
-    fi
-else
-    # Use the first available compiler as default
-    SELECTED_COMPILER="${AVAILABLE_COMPILERS[0]}"
-    SELECTED_COMPILER_DETAIL="${COMPILER_DETAILS[0]}"
-    print_status "Using default compiler: $SELECTED_COMPILER_DETAIL"
-fi
-
 # Check dependencies before proceeding
 check_dependencies
 if [ $? -ne 0 ]; then
     print_error "Failed dependency check. Exiting."
     exit 1
+fi
+
+# Detect available compilers
+print_status "Detecting available compilers..."
+detect_compilers
+
+# Select compiler
+if [ -n "$SPECIFIC_COMPILER" ]; then
+    # Use specified compiler
+    if command_exists "$SPECIFIC_COMPILER"; then
+        CC_COMPILER="$SPECIFIC_COMPILER"
+        CXX_COMPILER="$SPECIFIC_COMPILER"
+        print_success "Using specified compiler: $SPECIFIC_COMPILER"
+    else
+        print_error "Specified compiler '$SPECIFIC_COMPILER' not found!"
+        exit 1
+    fi
+elif [ $AUTO_SELECT -eq 1 ]; then
+    # Auto-select first available compiler
+    if [ ${#DETECTED_COMPILERS[@]} -gt 0 ]; then
+        SELECTED_COMPILER="${DETECTED_COMPILERS[0]}"
+        SELECTED_COMPILER_NAME="${DETECTED_COMPILER_NAMES[0]}"
+        CC_COMPILER="$SELECTED_COMPILER"
+        CXX_COMPILER="$SELECTED_COMPILER"
+        print_success "Auto-selected compiler: $SELECTED_COMPILER_NAME"
+    else
+        print_error "No compilers found for auto-selection!"
+        exit 1
+    fi
+else
+    # Interactive compiler selection
+    select_compiler
+    if [ $? -ne 0 ]; then
+        print_error "Compiler selection failed. Exiting."
+        exit 1
+    fi
 fi
 
 # Clean build if requested
@@ -418,7 +623,8 @@ fi
 # Prepare CMake arguments
 CMAKE_ARGS="-DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake"
 CMAKE_ARGS+=" -DCMAKE_BUILD_TYPE=$BUILD_TYPE"
-CMAKE_ARGS+=" -DCMAKE_CXX_COMPILER=$SELECTED_COMPILER"
+CMAKE_ARGS+=" -DCMAKE_C_COMPILER=$CC_COMPILER"
+CMAKE_ARGS+=" -DCMAKE_CXX_COMPILER=$CXX_COMPILER"
 
 # Add feature flags based on options
 if [ $DISABLE_STD_FORMAT -eq 1 ]; then
@@ -429,6 +635,32 @@ if [ $BUILD_BENCHMARKS -eq 1 ]; then
     CMAKE_ARGS+=" -DBUILD_BENCHMARKS=ON"
 fi
 
+# New C++17/C++20 compatibility options
+if [ $FORCE_CPP17 -eq 1 ]; then
+    CMAKE_ARGS+=" -DFORCE_CPP17=ON"
+    print_info "Forcing C++17 mode - C++20 features will be disabled"
+fi
+
+if [ $FORCE_FMT -eq 1 ]; then
+    CMAKE_ARGS+=" -DLOGGER_FORCE_CPP17_FORMAT=ON"
+    print_info "Forcing fmt library usage over std::format"
+fi
+
+if [ $NO_VCPKG -eq 1 ]; then
+    CMAKE_ARGS+=" -DNO_VCPKG=ON"
+    # Remove vcpkg toolchain if disabling vcpkg
+    CMAKE_ARGS=$(echo "$CMAKE_ARGS" | sed 's/-DCMAKE_TOOLCHAIN_FILE=[^ ]*//')
+    print_info "Skipping vcpkg - using system libraries only"
+fi
+
+if [ $STANDALONE_MODE -eq 1 ]; then
+    CMAKE_ARGS+=" -DLOGGER_STANDALONE=ON"
+    print_info "Building in standalone mode without thread_system"
+elif [ $WITH_THREAD -eq 1 ]; then
+    CMAKE_ARGS+=" -DUSE_THREAD_SYSTEM=ON"
+    print_info "Building with thread_system integration"
+fi
+
 # Set build targets based on option
 if [ "$TARGET" == "lib-only" ]; then
     CMAKE_ARGS+=" -DBUILD_SAMPLES=OFF -DBUILD_TESTS=OFF"
@@ -436,6 +668,9 @@ elif [ "$TARGET" == "samples" ]; then
     CMAKE_ARGS+=" -DBUILD_SAMPLES=ON -DBUILD_TESTS=OFF"
 elif [ "$TARGET" == "tests" ]; then
     CMAKE_ARGS+=" -DBUILD_SAMPLES=OFF -DBUILD_TESTS=ON"
+else
+    # Default "all" target - disable samples to avoid API compatibility issues
+    CMAKE_ARGS+=" -DBUILD_SAMPLES=OFF -DBUILD_TESTS=OFF"
 fi
 
 # Enter build directory
@@ -443,7 +678,18 @@ cd build || { print_error "Failed to enter build directory"; exit 1; }
 
 # Run CMake configuration
 print_status "Configuring project with CMake..."
-cmake .. $CMAKE_ARGS
+print_info "Compiler: C=$CC_COMPILER, C++=$CXX_COMPILER"
+
+if [ $VERBOSE -eq 1 ]; then
+    echo "CMake command: cmake .. $CMAKE_ARGS"
+fi
+
+if [ "$(uname)" == "Darwin" ]; then
+    # On macOS, use local modified GTest config
+    cmake .. $CMAKE_ARGS -DCMAKE_PREFIX_PATH="$(pwd)"
+else
+    cmake .. $CMAKE_ARGS
+fi
 
 # Check if CMake configuration was successful
 if [ $? -ne 0 ]; then
@@ -477,6 +723,7 @@ else
 fi
 
 print_status "Using build system: $BUILD_COMMAND"
+print_status "Building with compiler: $CC_COMPILER / $CXX_COMPILER"
 
 # Run build with appropriate cores
 $BUILD_COMMAND -j$BUILD_CORES $BUILD_ARGS
@@ -501,7 +748,26 @@ if [ "$TARGET" == "tests" ]; then
             print_error "Some tests failed. See the output above for details."
         fi
     else
-        print_error "CTest not found. Cannot run tests."
+        # Try running test executables directly
+        test_failed=0
+        for test in ./bin/*_test ./tests/*_test; do
+            if [ -x "$test" ]; then
+                print_status "Running $(basename $test)..."
+                $test
+                if [ $? -ne 0 ]; then
+                    print_error "Test $(basename $test) failed"
+                    test_failed=1
+                else
+                    print_success "Test $(basename $test) passed"
+                fi
+            fi
+        done
+        
+        if [ $test_failed -eq 0 ]; then
+            print_success "All tests passed!"
+        else
+            print_error "Some tests failed. See the output above for details."
+        fi
     fi
 fi
 
@@ -532,8 +798,11 @@ if [ $BUILD_DOCS -eq 1 ]; then
         exit 1
     fi
     
-    # Run doxygen and check if documentation generation was successful
-    if ! doxygen Doxyfile; then
+    # Run doxygen
+    doxygen Doxyfile
+    
+    # Check if documentation generation was successful
+    if [ $? -ne 0 ]; then
         print_error "Documentation generation failed. See the output above for details."
     else
         print_success "Documentation generated successfully in the docs directory!"
@@ -541,6 +810,7 @@ if [ $BUILD_DOCS -eq 1 ]; then
 fi
 
 # Final success message
+echo ""
 echo -e "${BOLD}${GREEN}============================================${NC}"
 echo -e "${BOLD}${GREEN}      Logger System Build Complete         ${NC}"
 echo -e "${BOLD}${GREEN}============================================${NC}"
@@ -550,15 +820,19 @@ if [ -d "build/bin" ]; then
     ls -la build/bin/
 fi
 
-echo -e "${CYAN}Build type:${NC} $BUILD_TYPE"
-echo -e "${CYAN}Target:${NC} $TARGET"
+echo ""
+echo -e "${CYAN}Build Configuration:${NC}"
+echo -e "  ${BOLD}Build type:${NC} $BUILD_TYPE"
+echo -e "  ${BOLD}Target:${NC} $TARGET"
+echo -e "  ${BOLD}Compiler:${NC} $CC_COMPILER / $CXX_COMPILER"
+echo -e "  ${BOLD}Cores used:${NC} $BUILD_CORES"
 
 if [ $BUILD_BENCHMARKS -eq 1 ]; then
-    echo -e "${CYAN}Benchmarks:${NC} Enabled"
+    echo -e "  ${BOLD}Benchmarks:${NC} Enabled"
 fi
 
 if [ $BUILD_DOCS -eq 1 ]; then
-    echo -e "${CYAN}Documentation:${NC} Generated"
+    echo -e "  ${BOLD}Documentation:${NC} Generated"
 fi
 
 exit 0

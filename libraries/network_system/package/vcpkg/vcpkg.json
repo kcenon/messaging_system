@@ -1,0 +1,27 @@
+{
+  "name": "network-system",
+  "version": "development",
+  "description": "High-performance asynchronous network communication library",
+  "homepage": "https://github.com/your-org/network_system",
+  "license": "MIT",
+  "dependencies": [
+    {
+      "name": "asio",
+      "version>=": "1.28.0"
+    },
+    {
+      "name": "fmt",
+      "version>=": "9.0.0"
+    }
+  ],
+  "features": {
+    "tests": {
+      "description": "Build test suite",
+      "dependencies": []
+    },
+    "samples": {
+      "description": "Build sample applications",
+      "dependencies": []
+    }
+  }
+}

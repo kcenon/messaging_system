@@ -1,0 +1,232 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [ main, develop, 'phase*' ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM UTC
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  checks: write
+
+jobs:
+  integration-tests:
+    name: Run Integration Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        build_type: [Debug, Release]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Setup Build Environment (Ubuntu)
+      if: startsWith(matrix.os, 'ubuntu')
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build libasio-dev libfmt-dev lcov
+
+    - name: Setup Build Environment (macOS)
+      if: startsWith(matrix.os, 'macos')
+      run: |
+        brew install cmake ninja asio fmt lcov
+
+    - name: Setup Build Environment (Windows)
+      if: startsWith(matrix.os, 'windows')
+      uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        msystem: MINGW64
+        install: >-
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-ninja
+          mingw-w64-x86_64-asio
+          mingw-w64-x86_64-fmt
+          mingw-w64-x86_64-gcc
+
+    - name: Configure CMake (Windows)
+      if: startsWith(matrix.os, 'windows')
+      shell: msys2 {0}
+      run: |
+        # Ensure all tools are in PATH
+        export PATH="/mingw64/bin:$PATH"
+
+        # Verify tools are available
+        which gcc
+        which g++
+        which ninja || echo "Ninja not found"
+
+        # Configure with compilers in PATH (avoid path translation issues)
+        cmake -B build -G "Ninja" \
+              -DCMAKE_C_COMPILER=gcc \
+              -DCMAKE_CXX_COMPILER=g++ \
+              -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+              -DBUILD_TESTS=ON \
+              -DBUILD_SAMPLES=ON \
+              -DENABLE_COVERAGE=OFF
+
+    - name: Configure CMake (Unix)
+      if: "!startsWith(matrix.os, 'windows')"
+      run: cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_TESTS=ON -DBUILD_SAMPLES=ON -DENABLE_COVERAGE=${{ matrix.build_type == 'Debug' && 'ON' || 'OFF' }}
+
+    - name: Build (Windows)
+      if: startsWith(matrix.os, 'windows')
+      shell: msys2 {0}
+      run: cmake --build build --config ${{ matrix.build_type }}
+
+    - name: Build (Unix)
+      if: "!startsWith(matrix.os, 'windows')"
+      run: cmake --build build --config ${{ matrix.build_type }}
+
+    - name: Run Unit Tests
+      run: |
+        cd build
+        ctest --output-on-failure --timeout 60
+      continue-on-error: true
+
+    - name: Run E2E Tests
+      if: "!startsWith(matrix.os, 'windows')"
+      run: |
+        cd build
+        ./test_e2e || true
+      continue-on-error: true
+
+    - name: Run Stress Tests (Release only)
+      if: matrix.build_type == 'Release' && !startsWith(matrix.os, 'windows')
+      run: |
+        cd build
+        ./stress_test 20 100 10 || true
+      continue-on-error: true
+
+    - name: Run Performance Benchmark (Release only)
+      if: matrix.build_type == 'Release' && !startsWith(matrix.os, 'windows')
+      run: |
+        cd build
+        ./benchmark || true
+      continue-on-error: true
+
+    - name: Generate Coverage Report (Debug only)
+      if: matrix.build_type == 'Debug' && startsWith(matrix.os, 'ubuntu')
+      run: |
+        cd build
+        # Use geninfo directly with error ignoring for known GCC issues
+        geninfo . --output-filename coverage.info --ignore-errors negative --ignore-errors mismatch || \
+        lcov --capture --directory . --output-file coverage.info --ignore-errors negative,unused || \
+        echo "Coverage generation failed, continuing..."
+
+        # Try to clean coverage data if it exists
+        if [ -f coverage.info ]; then
+          lcov --remove coverage.info '/usr/*' --output-file coverage.info --ignore-errors unused || true
+          lcov --list coverage.info || true
+        fi
+
+    - name: Upload Coverage to Codecov
+      if: matrix.build_type == 'Debug' && startsWith(matrix.os, 'ubuntu')
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./build/coverage.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-${{ matrix.os }}-${{ matrix.build_type }}
+        path: |
+          build/Testing/
+          build/*.log
+        retention-days: 7
+
+  performance-regression:
+    name: Performance Regression Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Checkout Base Branch
+      run: |
+        git checkout ${{ github.base_ref }}
+
+    - name: Setup Environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build libasio-dev libfmt-dev
+
+    - name: Build Base Branch
+      run: |
+        cmake -B build-base -G Ninja -DCMAKE_BUILD_TYPE=Release
+        cmake --build build-base
+
+    - name: Run Base Benchmark
+      run: |
+        cd build-base
+        ./benchmark > ../benchmark-base.txt || true
+        cd ..
+
+    - name: Checkout PR Branch
+      run: |
+        git checkout ${{ github.head_ref }}
+
+    - name: Build PR Branch
+      run: |
+        cmake -B build-pr -G Ninja -DCMAKE_BUILD_TYPE=Release
+        cmake --build build-pr
+
+    - name: Run PR Benchmark
+      run: |
+        cd build-pr
+        ./benchmark > ../benchmark-pr.txt || true
+        cd ..
+
+    - name: Compare Performance
+      run: |
+        echo "## Performance Comparison" > performance-report.md
+        echo "### Base Branch Results" >> performance-report.md
+        grep -E "Throughput:|Latency:" benchmark-base.txt >> performance-report.md || echo "No base results" >> performance-report.md
+        echo "" >> performance-report.md
+        echo "### PR Branch Results" >> performance-report.md
+        grep -E "Throughput:|Latency:" benchmark-pr.txt >> performance-report.md || echo "No PR results" >> performance-report.md
+
+        # Simple regression check
+        base_throughput=$(grep "Average throughput:" benchmark-base.txt | grep -oE '[0-9]+' | head -1)
+        pr_throughput=$(grep "Average throughput:" benchmark-pr.txt | grep -oE '[0-9]+' | head -1)
+
+        if [ ! -z "$base_throughput" ] && [ ! -z "$pr_throughput" ]; then
+          regression_threshold=90
+          threshold=$((base_throughput * regression_threshold / 100))
+          if [ "$pr_throughput" -lt "$threshold" ]; then
+            echo "⚠️ Performance regression detected: PR throughput ($pr_throughput) is less than 90% of base ($base_throughput)" >> performance-report.md
+            exit 1
+          else
+            echo "✅ No performance regression detected" >> performance-report.md
+          fi
+        fi
+
+    - name: Comment PR with Performance Report
+      if: always()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('performance-report.md', 'utf8');
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: report
+          });

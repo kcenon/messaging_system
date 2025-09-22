@@ -1,0 +1,69 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "dev-debug",
+            "displayName": "Development Debug (Core Libraries Only)",
+            "description": "Debug configuration for development, builds core libraries without external dependencies",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/dev-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "BUILD_THREADSYSTEM_AS_SUBMODULE": "ON",
+                "USE_STD_FORMAT": "ON",
+                "CMAKE_TOOLCHAIN_FILE": ""
+            },
+            "environment": {
+                "USE_STD_FORMAT": "1"
+            }
+        },
+        {
+            "name": "dev-release",
+            "displayName": "Development Release (Core Libraries Only)",
+            "description": "Release configuration for development, builds core libraries without external dependencies",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/dev-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "BUILD_THREADSYSTEM_AS_SUBMODULE": "ON",
+                "USE_STD_FORMAT": "ON",
+                "CMAKE_TOOLCHAIN_FILE": ""
+            },
+            "environment": {
+                "USE_STD_FORMAT": "1"
+            }
+        },
+        {
+            "name": "full-vcpkg-debug",
+            "displayName": "Full Build with vcpkg (Debug)",
+            "description": "Complete build including tests and samples using vcpkg dependencies",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/full-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/../vcpkg/scripts/buildsystems/vcpkg.cmake",
+                "BUILD_THREADSYSTEM_AS_SUBMODULE": "OFF"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "dev-debug",
+            "configurePreset": "dev-debug",
+            "displayName": "Build Development Debug"
+        },
+        {
+            "name": "dev-release",
+            "configurePreset": "dev-release",
+            "displayName": "Build Development Release"
+        }
+    ]
+}

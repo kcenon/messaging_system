@@ -1,0 +1,26 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# Find required dependencies
+find_dependency(Threads REQUIRED)
+
+# Optional dependencies
+set(MONITORING_USE_THREAD_SYSTEM @MONITORING_USE_THREAD_SYSTEM@)
+set(MONITORING_USE_LOGGER_SYSTEM @MONITORING_USE_LOGGER_SYSTEM@)
+
+if(MONITORING_USE_THREAD_SYSTEM)
+    find_dependency(thread_system CONFIG)
+endif()
+
+if(MONITORING_USE_LOGGER_SYSTEM)
+    find_dependency(logger_system CONFIG)
+endif()
+
+# Include targets
+include("${CMAKE_CURRENT_LIST_DIR}/monitoring_system-targets.cmake")
+
+# Set version information
+set(monitoring_system_VERSION @PROJECT_VERSION@)
+
+check_required_components(monitoring_system)

@@ -1,0 +1,47 @@
+name: Generate-Documentation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  generate_docs:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+          clean: true
+          fetch-depth: 1
+
+      - name: Install Doxygen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen graphviz
+
+      - name: Cache Doxygen output
+        uses: actions/cache@v4
+        with:
+          path: ./documents/html
+          key: ${{ runner.os }}-doxygen-${{ hashFiles('**/*.h', '**/*.hpp', '**/*.cpp', 'Doxyfile') }}
+          restore-keys: |
+            ${{ runner.os }}-doxygen-
+
+      - name: Generate Documentation
+        run: doxygen Doxyfile
+
+      - name: Deploy Documentation
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./documents/html
+          commit_message: "docs(gh-pages): update API docs via CI"
+          enable_jekyll: false
+

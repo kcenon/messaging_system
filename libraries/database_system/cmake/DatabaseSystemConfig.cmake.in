@@ -1,0 +1,40 @@
+@PACKAGE_INIT@
+
+##################################################
+# DatabaseSystem Package Configuration
+##################################################
+
+include(CMakeFindDependencyMacro)
+
+# Find required dependencies
+find_dependency(Threads REQUIRED)
+find_dependency(PostgreSQL REQUIRED)
+
+# Find container system dependency
+find_dependency(ContainerSystem QUIET)
+if(NOT ContainerSystem_FOUND)
+    # Container system is required
+    message(FATAL_ERROR "DatabaseSystem requires ContainerSystem")
+endif()
+
+# Include targets
+include("${CMAKE_CURRENT_LIST_DIR}/DatabaseSystemTargets.cmake")
+
+# Verify targets exist
+check_required_components(DatabaseSystem)
+
+# Set variables for compatibility
+set(DatabaseSystem_FOUND TRUE)
+set(DATABASESYSTEM_FOUND TRUE)
+
+# Provide information about the package
+set(DatabaseSystem_VERSION @PROJECT_VERSION@)
+set(DatabaseSystem_INCLUDE_DIRS "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@/database_system")
+set(DatabaseSystem_LIBRARIES DatabaseSystem::database)
+
+# Legacy variables for backward compatibility
+set(DATABASESYSTEM_VERSION ${DatabaseSystem_VERSION})
+set(DATABASESYSTEM_INCLUDE_DIRS ${DatabaseSystem_INCLUDE_DIRS})
+set(DATABASESYSTEM_LIBRARIES ${DatabaseSystem_LIBRARIES})
+
+message(STATUS "Found DatabaseSystem: ${DatabaseSystem_VERSION}")

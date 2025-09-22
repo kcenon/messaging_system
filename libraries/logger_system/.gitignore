@@ -54,7 +54,6 @@ docs/latex/
 
 # Benchmark results
 benchmark_results/
-*.json
 
 # Coverage
 *.gcda
@@ -73,3 +72,7 @@ __pycache__/
 vcpkg_installed/
 conan/
 .conan/
+NEED_TO_IMPROVEMENT.md
+
+# Documentation
+documents/

@@ -1,0 +1,112 @@
+@PACKAGE_INIT@
+
+# thread_system CMake configuration file
+# This file helps other projects find and use thread_system components
+# Standardized naming following Phase 2 T2.1 requirements
+
+include(CMakeFindDependencyMacro)
+
+# Find required dependencies as specified in T2.1
+find_dependency(Threads REQUIRED)
+
+# Handle optional dependencies based on configuration
+# Check if std::format is used or if we need fmt library
+if(DEFINED USE_STD_FORMAT)
+    if(NOT USE_STD_FORMAT)
+        find_dependency(fmt CONFIG REQUIRED)
+    endif()
+else()
+    # Default case: require fmt for compatibility
+    find_dependency(fmt REQUIRED)
+endif()
+
+# Additional dependencies for full functionality
+find_dependency(Iconv QUIET)
+
+# Include the targets file with standardized naming
+include("${CMAKE_CURRENT_LIST_DIR}/thread_system-targets.cmake")
+
+# Component-wise target exports as required by T2.1
+set(thread_system_COMPONENT_TARGETS
+    thread_system::thread_pool
+    thread_system::service_container
+    thread_system::utilities
+    thread_system::thread_base
+    thread_system::lockfree
+)
+
+# Phase 2 T2.2: Direct target mapping with thread_system:: namespace
+# The targets are now directly available with thread_system:: namespace from targets file
+
+# Legacy compatibility - create ThreadSystem:: aliases for backward compatibility  
+if(TARGET thread_system::thread_pool AND NOT TARGET ThreadSystem::thread_pool)
+    add_library(ThreadSystem::thread_pool ALIAS thread_system::thread_pool)
+endif()
+
+if(TARGET thread_system::utilities AND NOT TARGET ThreadSystem::utilities)
+    add_library(ThreadSystem::utilities ALIAS thread_system::utilities)
+endif()
+
+if(TARGET thread_system::thread_base AND NOT TARGET ThreadSystem::thread_base)
+    add_library(ThreadSystem::thread_base ALIAS thread_system::thread_base)
+endif()
+
+if(TARGET thread_system::lockfree AND NOT TARGET ThreadSystem::lockfree)
+    add_library(ThreadSystem::lockfree ALIAS thread_system::lockfree)
+endif()
+
+# Service container is an alias to thread_base (contains service_registry)
+if(TARGET thread_system::thread_base AND NOT TARGET thread_system::service_container)
+    add_library(thread_system::service_container ALIAS thread_system::thread_base)
+endif()
+
+# Set up convenience variables for all components
+set(thread_system_LIBRARIES ${thread_system_COMPONENT_TARGETS})
+
+# Verify that all required targets exist
+foreach(target ${thread_system_COMPONENT_TARGETS})
+    if(NOT TARGET ${target})
+        # Check if legacy target exists
+        string(REPLACE "thread_system::" "ThreadSystem::" legacy_target ${target})
+        if(NOT TARGET ${legacy_target})
+            message(WARNING "thread_system target '${target}' not found. Some functionality may be limited.")
+        endif()
+    endif()
+endforeach()
+
+# Component handling for find_package with COMPONENTS
+set(thread_system_FOUND TRUE)
+
+# Handle specific components if requested
+if(thread_system_FIND_COMPONENTS)
+    foreach(component ${thread_system_FIND_COMPONENTS})
+        if(component STREQUAL "thread_pool")
+            if(TARGET thread_system::thread_pool OR TARGET ThreadSystem::thread_pool)
+                set(thread_system_${component}_FOUND TRUE)
+            else()
+                set(thread_system_${component}_FOUND FALSE)
+                set(thread_system_FOUND FALSE)
+            endif()
+        elseif(component STREQUAL "service_container")
+            # Service container is part of thread_base module
+            if(TARGET thread_system::service_container OR TARGET ThreadSystem::thread_base)
+                set(thread_system_${component}_FOUND TRUE)
+            else()
+                set(thread_system_${component}_FOUND FALSE)
+                set(thread_system_FOUND FALSE)
+            endif()
+        elseif(component STREQUAL "thread_utilities" OR component STREQUAL "utilities")
+            if(TARGET thread_system::utilities OR TARGET ThreadSystem::utilities)
+                set(thread_system_${component}_FOUND TRUE)
+            else()
+                set(thread_system_${component}_FOUND FALSE)
+                set(thread_system_FOUND FALSE)
+            endif()
+        else()
+            message(WARNING "Unknown thread_system component: ${component}")
+            set(thread_system_${component}_FOUND FALSE)
+        endif()
+    endforeach()
+endif()
+
+check_required_components(thread_system)

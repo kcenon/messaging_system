@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "network_system/core/messaging_client.h"
 #include "network_system/internal/send_coroutine.h"
-#include <iostream>
+#include "network_system/integration/logger_integration.h"
 #include <string_view>
 #include <type_traits>
 #include <optional>
@@ -87,8 +87,8 @@ namespace network_module
 
 		do_connect(host, port);
 
-		std::cout << "[messaging_client] started. ID=" << client_id_
-				  << " target=" << host << ":" << port << "\n";
+		NETWORK_LOG_INFO("[messaging_client] started. ID=" + client_id_
+				+ " target=" + std::string(host) + ":" + std::to_string(port));
 	}
 
 	auto messaging_client::stop_client() -> void
@@ -121,7 +121,7 @@ namespace network_module
 			stop_promise_.reset();
 		}
 
-		std::cout << "[messaging_client] stopped.\n";
+		NETWORK_LOG_INFO("[messaging_client] stopped.");
 	}
 
 	auto messaging_client::wait_for_stop() -> void
@@ -146,9 +146,7 @@ namespace network_module
 			{
 				if (ec)
 				{
-					std::cerr
-						<< "[messaging_client] Resolve error: " << ec.message()
-						<< "\n";
+					NETWORK_LOG_ERROR("[messaging_client] Resolve error: " + ec.message());
 					return;
 				}
 				// Attempt to connect to one of the resolved endpoints
@@ -161,8 +159,7 @@ namespace network_module
 					{
 						if (connect_ec)
 						{
-							std::cerr << "[messaging_client] Connect error: "
-									  << connect_ec.message() << "\n";
+							NETWORK_LOG_ERROR("[messaging_client] Connect error: " + connect_ec.message());
 							return;
 						}
 						// On success, wrap it in our tcp_socket
@@ -177,11 +174,10 @@ namespace network_module
 	{
 		if (ec)
 		{
-			std::cerr << "[messaging_client] on_connect error: " << ec.message()
-					  << "\n";
+			NETWORK_LOG_ERROR("[messaging_client] on_connect error: " + ec.message());
 			return;
 		}
-		std::cout << "[messaging_client] Connected successfully.\n";
+		NETWORK_LOG_INFO("[messaging_client] Connected successfully.");
 		is_connected_.store(true);
 
 		// set callbacks and start read loop
@@ -213,8 +209,7 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 					   {
 						   if (ec)
 						   {
-							   std::cerr << "[messaging_client] Send error: "
-										 << ec.message() << "\n";
+							   NETWORK_LOG_ERROR("[messaging_client] Send error: " + ec.message());
 						   }
 					   });
 #else
@@ -226,12 +221,10 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 			auto result_ec = fut.get();
 			if (result_ec)
 			{
-				std::cerr << "[messaging_client] Send error: "
-						<< result_ec.message() << "\n";
+			NETWORK_LOG_ERROR("[messaging_client] Send error: " + result_ec.message());
 			}
 		} catch (const std::exception& e) {
-			std::cerr << "[messaging_client] Exception while waiting for send: "
-					<< e.what() << "\n";
+			NETWORK_LOG_ERROR("[messaging_client] Exception while waiting for send: " + std::string(e.what()));
 		}
 #endif
 }
@@ -243,8 +236,8 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 		{
 			return;
 		}
-		std::cout << "[messaging_client] Received " << data.size()
-				  << " bytes\n";
+		NETWORK_LOG_DEBUG("[messaging_client] Received " + std::to_string(data.size())
+				+ " bytes");
 
 		// Decompress/Decrypt if needed?
 		// For demonstration, ignoring. In real usage:
@@ -255,8 +248,7 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 
 	auto messaging_client::on_error(std::error_code ec) -> void
 	{
-		std::cerr << "[messaging_client] Socket error: " << ec.message()
-				  << "\n";
+		NETWORK_LOG_ERROR("[messaging_client] Socket error: " + ec.message());
 		// Perhaps reconnect or just stop
 		stop_client();
 	}

@@ -31,10 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "network_system/internal/send_coroutine.h"
+#include "network_system/integration/logger_integration.h"
 
 #include <future>
 #include <thread>
-#include <iostream>
 #include <functional>
 #include <type_traits>
 
@@ -86,7 +86,7 @@ namespace network_module
             asio::experimental::as_tuple(asio::use_awaitable));
         
         if (ec) {
-            std::cerr << "[send_coroutine] Error sending data: " << ec.message() << "\n";
+            NETWORK_LOG_ERROR("[send_coroutine] Error sending data: " + ec.message());
         }
         
         co_return ec;
@@ -120,8 +120,8 @@ namespace network_module
                     });
             }
             catch (const std::exception& e) {
-                std::cerr << "[send_coroutine] Exception processing data: " 
-                          << e.what() << "\n";
+                NETWORK_LOG_ERROR("[send_coroutine] Exception processing data: "
+                          + std::string(e.what()));
                 promise->set_value(std::make_error_code(std::errc::io_error));
             }
         }).detach();

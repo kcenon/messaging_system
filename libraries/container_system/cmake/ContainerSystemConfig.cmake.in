@@ -1,0 +1,33 @@
+@PACKAGE_INIT@
+
+##################################################
+# ContainerSystem Package Configuration
+##################################################
+
+include(CMakeFindDependencyMacro)
+
+# Find required dependencies
+find_dependency(Threads REQUIRED)
+find_dependency(fmt CONFIG REQUIRED)
+
+# Include targets
+include("${CMAKE_CURRENT_LIST_DIR}/ContainerSystemTargets.cmake")
+
+# Verify targets exist
+check_required_components(ContainerSystem)
+
+# Set variables for compatibility
+set(ContainerSystem_FOUND TRUE)
+set(CONTAINERSYSTEM_FOUND TRUE)
+
+# Provide information about the package
+set(ContainerSystem_VERSION @PROJECT_VERSION@)
+set(ContainerSystem_INCLUDE_DIRS "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@/container_system")
+set(ContainerSystem_LIBRARIES ContainerSystem::container)
+
+# Legacy variables for backward compatibility
+set(CONTAINERSYSTEM_VERSION ${ContainerSystem_VERSION})
+set(CONTAINERSYSTEM_INCLUDE_DIRS ${ContainerSystem_INCLUDE_DIRS})
+set(CONTAINERSYSTEM_LIBRARIES ${ContainerSystem_LIBRARIES})
+
+message(STATUS "Found ContainerSystem: ${ContainerSystem_VERSION}")

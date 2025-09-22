@@ -1,35 +1,80 @@
 # Logger System Documentation
 
-Welcome to the Logger System documentation. This guide provides comprehensive information about the high-performance C++20 logging system.
+Welcome to the comprehensive documentation for the Logger System - a high-performance, thread-safe C++20 logging framework.
 
-## Table of Contents
+## 📚 Documentation Structure
 
-### Getting Started
-- [Quick Start Guide](getting-started.md) - Get up and running quickly
-- [Installation](getting-started.md#installation) - Detailed installation instructions
-- [Basic Usage](getting-started.md#basic-usage) - Simple examples to begin with
+### Core Documentation
+- **[README.md](../README.md)** - Project overview, features, and quick start
+- **[API_REFERENCE.md](API_REFERENCE.md)** - Complete API documentation with examples  
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Threading ecosystem architecture
+- **[LOGGER_SYSTEM_ARCHITECTURE.md](LOGGER_SYSTEM_ARCHITECTURE.md)** - Detailed system architecture
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
+- **[SECURITY.md](SECURITY.md)** - Security considerations and reporting
 
-### Core Concepts
-- [Architecture Overview](architecture.md) - System design and components
-- [API Reference](api-reference.md) - Complete API documentation
-- [Performance Guide](performance.md) - Performance characteristics and benchmarks
+### Guides (`docs/guides/`)
+Essential guides for getting started and following best practices:
 
-### Advanced Topics
-- [Custom Writers](custom-writers.md) - Creating custom output destinations
-- [Lock-free Implementation](lock-free.md) - Understanding the lock-free design
-- [Integration Guide](integration.md) - Integrating with other systems
+- **[GETTING_STARTED.md](guides/GETTING_STARTED.md)** - Step-by-step setup and basic usage
+- **[BEST_PRACTICES.md](guides/BEST_PRACTICES.md)** - Production-ready patterns and recommendations
+- **[MIGRATION_GUIDE.md](guides/MIGRATION_GUIDE.md)** - Migrating from older versions  
+- **[PERFORMANCE.md](guides/PERFORMANCE.md)** - Performance analysis and optimization
 
-### Development
-- [Building from Source](building.md) - Build instructions for all platforms
-- [Contributing](../CONTRIBUTING.md) - Guidelines for contributors
-- [Testing](testing.md) - Running tests and benchmarks
+### Advanced Topics (`docs/advanced/`)
+Deep-dive documentation for advanced users and contributors:
 
-### Examples
-- [Basic Examples](../samples/) - Sample code demonstrations
-- [Thread System Integration](integration.md#thread-system) - Using with thread_system
+- **[CUSTOM_WRITERS.md](advanced/CUSTOM_WRITERS.md)** - Creating custom log writers
+- **[CI_CD_DASHBOARD.md](advanced/CI_CD_DASHBOARD.md)** - Build and continuous integration
 
-## Quick Links
+## 🚀 Quick Navigation
 
-- [GitHub Repository](https://github.com/kcenon/logger_system)
-- [Issue Tracker](https://github.com/kcenon/logger_system/issues)
-- [Thread System](https://github.com/kcenon/thread_system) - Parent project
+### New Users
+1. Start with **[README.md](../README.md)** for project overview
+2. Follow **[GETTING_STARTED.md](guides/GETTING_STARTED.md)** for setup
+3. Reference **[API_REFERENCE.md](API_REFERENCE.md)** for detailed API usage
+
+### Existing Users  
+1. Check **[CHANGELOG.md](CHANGELOG.md)** for recent changes
+2. Use **[MIGRATION_GUIDE.md](guides/MIGRATION_GUIDE.md)** when upgrading
+3. Consult **[BEST_PRACTICES.md](guides/BEST_PRACTICES.md)** for optimal usage
+
+### Contributors
+1. Read **[CONTRIBUTING.md](CONTRIBUTING.md)** for guidelines  
+2. Study **[LOGGER_SYSTEM_ARCHITECTURE.md](LOGGER_SYSTEM_ARCHITECTURE.md)** for implementation details
+3. Explore **[CUSTOM_WRITERS.md](advanced/CUSTOM_WRITERS.md)** for extension patterns
+
+### Performance Engineers
+1. Review **[PERFORMANCE.md](guides/PERFORMANCE.md)** for benchmarks
+2. Check **[LOGGER_SYSTEM_ARCHITECTURE.md](LOGGER_SYSTEM_ARCHITECTURE.md)** for design decisions
+3. Reference **[BEST_PRACTICES.md](guides/BEST_PRACTICES.md)** for optimization tips
+
+## 🔧 Documentation Maintenance
+
+This documentation structure was reorganized to:
+- **Eliminate Duplication**: Single source of truth for each topic
+- **Improve Navigation**: Clear categorization and logical flow
+- **Enhance Usability**: Role-based entry points and cross-references
+
+### Recent Changes
+- Consolidated multiple API references into single authoritative document
+- Split architecture documentation (ecosystem vs. system-specific)
+- Reorganized guides into logical categories
+- Improved cross-referencing and navigation
+
+## 📖 External Resources
+
+- **[GitHub Repository](https://github.com/kcenon/logger_system)** - Source code and issues
+- **[Thread System](https://github.com/kcenon/thread_system)** - Foundation interfaces
+- **[Integration Examples](https://github.com/kcenon/integrated_thread_system)** - Complete usage patterns
+- **[Generated Documentation](https://kcenon.github.io/logger_system/)** - Doxygen API docs (GitHub Pages)
+
+## 🤝 Help & Support
+
+- **Issues**: Report bugs and request features on [GitHub Issues](https://github.com/kcenon/logger_system/issues)
+- **Discussions**: Community support and questions on [GitHub Discussions](https://github.com/kcenon/logger_system/discussions)
+- **Security**: Report security issues per [SECURITY.md](SECURITY.md) guidelines
+
+---
+
+*Documentation last updated: [Current Date] - Logger System v2.x*
