@@ -247,7 +247,7 @@ public:
         m_logger->add_writer(std::make_unique<logger_module::console_writer>());
         m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
             "microservices_orchestrator.log", 20 * 1024 * 1024, 5));
-        m_logger->start();
+        // Logger is automatically ready after creation
 
         m_logger->log(logger_module::log_level::info, "Initializing Microservices Orchestrator");
 
@@ -274,30 +274,30 @@ public:
     }
 
     void setupMessageHandlers() {
-        auto& bus = integrator->get_message_bus();
+        auto* bus = integrator->get_message_bus();
 
         // Service registration
-        bus.subscribe("service.register", [this](const core::message& msg) {
+        bus->subscribe("service.register", [this](const core::message& msg) {
             handleServiceRegistration(msg);
         });
 
         // Service discovery
-        bus.subscribe("service.discover", [this](const core::message& msg) {
+        bus->subscribe("service.discover", [this](const core::message& msg) {
             handleServiceDiscovery(msg);
         });
 
         // Service health check
-        bus.subscribe("service.health", [this](const core::message& msg) {
+        bus->subscribe("service.health", [this](const core::message& msg) {
             handleHealthCheck(msg);
         });
 
         // Service request routing
-        bus.subscribe("service.request", [this](const core::message& msg) {
+        bus->subscribe("service.request", [this](const core::message& msg) {
             handleServiceRequest(msg);
         });
 
         // Service scaling
-        bus.subscribe("service.scale", [this](const core::message& msg) {
+        bus->subscribe("service.scale", [this](const core::message& msg) {
             handleServiceScaling(msg);
         });
 
@@ -379,10 +379,11 @@ public:
     }
 
     void handleServiceRegistration(const core::message& msg) {
-        auto service_name = msg.get_header("service_name");
-        auto instance_id = msg.get_header("instance_id");
-        auto host = msg.get_header("host");
-        auto port = std::stoi(msg.get_header("port"));
+        auto service_name = msg.metadata.headers.count("service_name") ? msg.metadata.headers.at("service_name") : "";
+        auto instance_id = msg.metadata.headers.count("instance_id") ? msg.metadata.headers.at("instance_id") : "";
+        auto host = msg.metadata.headers.count("host") ? msg.metadata.headers.at("host") : "";
+        auto port_str = msg.metadata.headers.count("port") ? msg.metadata.headers.at("port") : "8080";
+        auto port = std::stoi(port_str);
 
         service_instance instance;
         instance.instance_id = instance_id;
@@ -406,8 +407,8 @@ public:
     }
 
     void handleServiceDiscovery(const core::message& msg) {
-        auto service_name = msg.get_header("service_name");
-        auto client_id = msg.get_header("client_id");
+        auto service_name = msg.metadata.headers.count("service_name") ? msg.metadata.headers.at("service_name") : "";
+        auto client_id = msg.metadata.headers.count("client_id") ? msg.metadata.headers.at("client_id") : "";
 
         std::lock_guard<std::mutex> lock(registry_mutex);
 
@@ -416,15 +417,15 @@ public:
             auto* instance = load_balancers[service_name].selectInstance(it->second);
 
             if (instance) {
-                core::message response;
-                response.set_type("service.discovered");
-                response.set_header("service_name", service_name);
-                response.set_header("instance_id", instance->instance_id);
-                response.set_header("host", instance->host);
-                response.set_header("port", std::to_string(instance->port));
-                response.set_header("version", instance->version);
+                core::message response("service.discovered");
+                response.metadata.type = core::message_type::response;
+                response.metadata.headers["service_name"] = service_name;
+                response.metadata.headers["instance_id"] = instance->instance_id;
+                response.metadata.headers["host"] = instance->host;
+                response.metadata.headers["port"] = std::to_string(instance->port);
+                response.metadata.headers["version"] = instance->version;
 
-                integrator->get_message_bus().publish(response);
+                integrator->get_message_bus()->publish(response);
 
                 m_logger->log(logger_module::log_level::debug,
                     "Service discovery: " + client_id + " -> " + instance->instance_id);
@@ -438,12 +439,16 @@ public:
     }
 
     void handleHealthCheck(const core::message& msg) {
-        auto instance_id = msg.get_header("instance_id");
-        auto status = msg.get_header("status");
-        auto cpu = std::stod(msg.get_header("cpu_usage"));
-        auto memory = std::stod(msg.get_header("memory_usage"));
-        auto connections = std::stoi(msg.get_header("active_connections"));
-        auto response_time = std::stod(msg.get_header("response_time_ms"));
+        auto instance_id = msg.metadata.headers.count("instance_id") ? msg.metadata.headers.at("instance_id") : "";
+        auto status = msg.metadata.headers.count("status") ? msg.metadata.headers.at("status") : "unknown";
+        auto cpu_str = msg.metadata.headers.count("cpu_usage") ? msg.metadata.headers.at("cpu_usage") : "0.0";
+        auto memory_str = msg.metadata.headers.count("memory_usage") ? msg.metadata.headers.at("memory_usage") : "0.0";
+        auto connections_str = msg.metadata.headers.count("active_connections") ? msg.metadata.headers.at("active_connections") : "0";
+        auto response_time_str = msg.metadata.headers.count("response_time_ms") ? msg.metadata.headers.at("response_time_ms") : "0.0";
+        auto cpu = std::stod(cpu_str);
+        auto memory = std::stod(memory_str);
+        auto connections = std::stoi(connections_str);
+        auto response_time = std::stod(response_time_str);
 
         std::lock_guard<std::mutex> lock(registry_mutex);
 
@@ -476,9 +481,9 @@ public:
     void handleServiceRequest(const core::message& msg) {
         total_requests++;
 
-        auto service_name = msg.get_header("service_name");
-        auto client_ip = msg.get_header("client_ip");
-        auto request_id = msg.get_header("request_id");
+        auto service_name = msg.metadata.headers.count("service_name") ? msg.metadata.headers.at("service_name") : "";
+        auto client_ip = msg.metadata.headers.count("client_ip") ? msg.metadata.headers.at("client_ip") : "";
+        auto request_id = msg.metadata.headers.count("request_id") ? msg.metadata.headers.at("request_id") : "";
 
         // Check circuit breaker
         if (!circuit_breakers[service_name].canAttempt()) {
@@ -514,9 +519,10 @@ public:
     }
 
     void handleServiceScaling(const core::message& msg) {
-        auto service_name = msg.get_header("service_name");
-        auto action = msg.get_header("action");
-        auto count = std::stoi(msg.get_header("count"));
+        auto service_name = msg.metadata.headers.count("service_name") ? msg.metadata.headers.at("service_name") : "";
+        auto action = msg.metadata.headers.count("action") ? msg.metadata.headers.at("action") : "";
+        auto count_str = msg.metadata.headers.count("count") ? msg.metadata.headers.at("count") : "1";
+        auto count = std::stoi(count_str);
 
         if (action == "scale_up") {
             scaleUp(service_name, count);
@@ -528,9 +534,9 @@ public:
     }
 
     void handleServiceDeployment(const core::message& msg) {
-        auto service_name = msg.get_header("service_name");
-        auto version = msg.get_header("version");
-        auto strategy = msg.get_header("strategy");  // rolling, blue_green, canary
+        auto service_name = msg.metadata.headers.count("service_name") ? msg.metadata.headers.at("service_name") : "";
+        auto version = msg.metadata.headers.count("version") ? msg.metadata.headers.at("version") : "";
+        auto strategy = msg.metadata.headers.count("strategy") ? msg.metadata.headers.at("strategy") : "rolling";  // rolling, blue_green, canary
 
         if (strategy == "rolling") {
             performRollingUpdate(service_name, version);
@@ -693,12 +699,12 @@ public:
 
     bool forwardRequest(service_instance* instance, const core::message& msg) {
         // Simulate request forwarding
-        core::message forward;
-        forward.set_type("request.forward");
-        forward.set_header("instance_id", instance->instance_id);
-        forward.set_header("host", instance->host);
-        forward.set_header("port", std::to_string(instance->port));
-        forward.set_payload(msg.get_payload());
+        core::message forward("request.forward");
+        forward.metadata.type = core::message_type::request;
+        forward.metadata.headers["instance_id"] = instance->instance_id;
+        forward.metadata.headers["host"] = instance->host;
+        forward.metadata.headers["port"] = std::to_string(instance->port);
+        forward.payload = msg.payload;
 
         return network_svc->send_to_host(instance->host, instance->port, forward);
     }
@@ -711,14 +717,14 @@ public:
         deploy_service_instance(instance.service_name);
 
         // Alert operations team
-        core::message alert;
-        alert.set_type("ops.alert");
-        alert.set_header("severity", "warning");
-        alert.set_header("service", instance.service_name);
-        alert.set_header("instance", instance.instance_id);
-        alert.set_payload("Service instance unhealthy - replacement initiated");
+        core::message alert("ops.alert");
+        alert.metadata.type = core::message_type::notification;
+        alert.metadata.headers["severity"] = "warning";
+        alert.metadata.headers["service"] = instance.service_name;
+        alert.metadata.headers["instance"] = instance.instance_id;
+        alert.payload.set("message", std::string("Service instance unhealthy - replacement initiated"));
 
-        integrator->get_message_bus().publish(alert);
+        integrator->get_message_bus()->publish(alert);
     }
 
     void notifyDependents(const std::string& service_name) {
@@ -727,44 +733,44 @@ public:
                          definition.dependencies.end(),
                          service_name) != definition.dependencies.end()) {
 
-                core::message notify;
-                notify.set_type("dependency.updated");
-                notify.set_header("service", name);
-                notify.set_header("dependency", service_name);
+                core::message notify("dependency.updated");
+                notify.metadata.type = core::message_type::notification;
+                notify.metadata.headers["service"] = name;
+                notify.metadata.headers["dependency"] = service_name;
 
-                integrator->get_message_bus().publish(notify);
+                integrator->get_message_bus()->publish(notify);
             }
         }
     }
 
     void sendServiceUnavailable(const std::string& service_name, const std::string& request_id) {
-        core::message response;
-        response.set_type("service.unavailable");
-        response.set_header("service_name", service_name);
-        response.set_header("request_id", request_id);
-        response.set_header("error", "No healthy instances available");
+        core::message response("service.unavailable");
+        response.metadata.type = core::message_type::response;
+        response.metadata.headers["service_name"] = service_name;
+        response.metadata.headers["request_id"] = request_id;
+        response.metadata.headers["error"] = "No healthy instances available";
 
-        integrator->get_message_bus().publish(response);
+        integrator->get_message_bus()->publish(response);
     }
 
     void sendServiceNotFound(const std::string& service_name, const std::string& client_id) {
-        core::message response;
-        response.set_type("service.not_found");
-        response.set_header("service_name", service_name);
-        response.set_header("client_id", client_id);
-        response.set_header("error", "Service not registered");
+        core::message response("service.not_found");
+        response.metadata.type = core::message_type::response;
+        response.metadata.headers["service_name"] = service_name;
+        response.metadata.headers["client_id"] = client_id;
+        response.metadata.headers["error"] = "Service not registered";
 
-        integrator->get_message_bus().publish(response);
+        integrator->get_message_bus()->publish(response);
     }
 
     void send_circuit_breaker_open(const std::string& service_name, const std::string& request_id) {
-        core::message response;
-        response.set_type("circuit_breaker.open");
-        response.set_header("service_name", service_name);
-        response.set_header("request_id", request_id);
-        response.set_header("error", "Circuit breaker is open");
+        core::message response("circuit_breaker.open");
+        response.metadata.type = core::message_type::response;
+        response.metadata.headers["service_name"] = service_name;
+        response.metadata.headers["request_id"] = request_id;
+        response.metadata.headers["error"] = "Circuit breaker is open";
 
-        integrator->get_message_bus().publish(response);
+        integrator->get_message_bus()->publish(response);
     }
 
     void updateInstanceState(const std::string& instance_id, service_instance::state new_state) {
@@ -895,14 +901,14 @@ public:
             }
 
             while (running) {
-                core::message request;
-                request.set_type("service.request");
-                request.set_header("service_name", services[service_dist(gen)]);
-                request.set_header("request_id", "req-" + std::to_string(total_requests.load()));
-                request.set_header("client_ip", "192.168.1." + std::to_string(gen() % 255));
-                request.set_payload("Sample request payload");
+                core::message request("service.request");
+                request.metadata.type = core::message_type::request;
+                request.metadata.headers["service_name"] = services[service_dist(gen)];
+                request.metadata.headers["request_id"] = "req-" + std::to_string(total_requests.load());
+                request.metadata.headers["client_ip"] = "192.168.1." + std::to_string(gen() % 255);
+                request.payload.set("message", std::string("Sample request payload"));
 
-                integrator->get_message_bus().publish(request);
+                integrator->get_message_bus()->publish(request);
 
                 std::this_thread::sleep_for(std::chrono::milliseconds(10 + gen() % 100));
             }
@@ -950,9 +956,9 @@ int main(int argc, char* argv[]) {
         error_logger_config.min_level = logger_module::log_level::error;
         auto error_logger = std::make_shared<logger_module::logger>(error_logger_config);
         error_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        error_logger->start();
+        // Error logger is automatically ready after creation
         error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
-        error_logger->stop();
+        // Logger cleanup handled automatically
         return 1;
     }
 

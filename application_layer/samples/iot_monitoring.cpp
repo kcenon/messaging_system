@@ -122,7 +122,7 @@ public:
         m_logger->add_writer(std::make_unique<logger_module::console_writer>());
         m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
             "iot_monitoring.log", 10 * 1024 * 1024, 5));
-        m_logger->start();
+        // Logger is automatically ready after creation
 
         m_logger->log(logger_module::log_level::info, "Initializing IoT Monitoring System");
 
@@ -149,20 +149,20 @@ public:
     }
 
     void setupMessageHandlers() {
-        auto& bus = integrator->get_message_bus();
+        auto* bus = integrator->get_message_bus();
 
         // Device telemetry
-        bus.subscribe("device.telemetry", [this](const core::message& msg) {
+        bus->subscribe("device.telemetry", [this](const core::message& msg) {
             handleDeviceTelemetry(msg);
         });
 
         // Device registration
-        bus.subscribe("device.register", [this](const core::message& msg) {
+        bus->subscribe("device.register", [this](const core::message& msg) {
             handleDeviceRegistration(msg);
         });
 
         // Device commands
-        bus.subscribe("device.command", [this](const core::message& msg) {
+        bus->subscribe("device.command", [this](const core::message& msg) {
             handleDeviceCommand(msg);
         });
 
@@ -172,7 +172,7 @@ public:
         });
 
         // Alert acknowledgment
-        bus.subscribe("alert.acknowledge", [this](const core::message& msg) {
+        bus->subscribe("alert.acknowledge", [this](const core::message& msg) {
             handleAlertAcknowledgment(msg);
         });
     }
@@ -233,8 +233,9 @@ public:
 
     void handleDeviceTelemetry(const core::message& msg) {
         try {
-            auto device_id = msg.get_header("device_id");
-            auto value = std::stod(msg.get_header("value"));
+            auto device_id = msg.metadata.headers.count("device_id") ? msg.metadata.headers.at("device_id") : "";
+            auto value_str = msg.metadata.headers.count("value") ? msg.metadata.headers.at("value") : "0.0";
+            auto value = std::stod(value_str);
             auto timestamp = std::chrono::system_clock::now();
 
             device_telemetry telemetry;
@@ -353,11 +354,12 @@ public:
 
     void publishAlert(const alert& alert_obj) {
         core::message alert_msg;
-        alert_msg.set_type("alert.triggered");
-        alert_msg.set_header("alert_id", alert_obj.alert_id);
-        alert_msg.set_header("device_id", alert_obj.device_id);
-        alert_msg.set_header("severity", std::to_string(static_cast<int>(alert_obj.sev)));
-        alert_msg.set_payload(alert_obj.message);
+        alert_msg.payload.topic = "alert.triggered";
+        alert_msg.metadata.type = core::message_type::notification;
+        alert_msg.metadata.headers["alert_id"] = alert_obj.alert_id;
+        alert_msg.metadata.headers["device_id"] = alert_obj.device_id;
+        alert_msg.metadata.headers["severity"] = std::to_string(static_cast<int>(alert_obj.sev));
+        alert_msg.payload.set("message", alert_obj.message);
 
         // Set priority based on severity
         switch (alert_obj.sev) {
@@ -374,7 +376,7 @@ public:
                 alert_msg.set_priority(core::priority::LOW);
         }
 
-        integrator->get_message_bus().publish(alert_msg);
+        integrator->get_message_bus()->publish(alert_msg);
     }
 
     void handleDeviceRegistration(const core::message& msg) {
