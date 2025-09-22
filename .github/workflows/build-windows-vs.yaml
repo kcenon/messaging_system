@@ -111,7 +111,7 @@ jobs:
                   -DBUILD_TESTS=ON `
                   -DCMAKE_INSTALL_PREFIX="..\target" `
                   -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
-                  -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake" `
+                  -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake" `
                   -DVCPKG_TARGET_TRIPLET=$env:VCPKG_DEFAULT_TRIPLET
           
           Write-Host "Building project..."
