@@ -364,17 +364,28 @@ cd build
 
 ## 📚 Documentation
 
-### Core Documentation
-- **[System Architecture](docs/SYSTEM_ARCHITECTURE.md)** - Complete system design and components
-- **[API Reference](docs/API_REFERENCE.md)** - Comprehensive API documentation
-- **[Developer Guide](docs/DEVELOPER_GUIDE.md)** - Getting started and best practices
-- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Production deployment strategies
+### Quick Start
+- **[Getting Started](docs/getting-started.md)** - Installation and first steps
+- **[API Reference](docs/api-reference.md)** - Complete API documentation
+- **[Architecture](docs/architecture.md)** - System design and components
+
+### Development & Deployment
+- **[Developer Guide](docs/developer-guide.md)** - Development setup and best practices
+- **[Performance Guide](docs/performance.md)** - Benchmarks and optimization techniques
+- **[Deployment Guide](docs/deployment-guide.md)** - Production deployment strategies
 
 ### Advanced Topics
-- **[Design Patterns](docs/DESIGN_PATTERNS.md)** - Architectural patterns and decisions
-- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Debugging and optimization guide
-- **[Performance Tuning](docs/TROUBLESHOOTING.md#performance-optimization)** - Optimization techniques
+- **[Design Patterns](docs/design-patterns.md)** - Architectural patterns and decisions
+- **[Troubleshooting](docs/troubleshooting.md)** - Debugging and problem resolution
 - **[Sample Applications](application_layer/samples/SAMPLES_README.md)** - Production examples
+
+### Component Documentation
+- **[Thread System](libraries/thread_system/docs/)** - Lock-free concurrent processing
+- **[Logger System](libraries/logger_system/docs/)** - High-performance logging
+- **[Monitoring System](libraries/monitoring_system/docs/)** - Real-time monitoring
+- **[Container System](libraries/container_system/README.md)** - Type-safe data containers
+- **[Database System](libraries/database_system/README.md)** - PostgreSQL integration
+- **[Network System](libraries/network_system/README.md)** - Asynchronous TCP messaging
 
 ## 📄 License
 

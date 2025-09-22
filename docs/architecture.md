@@ -1,8 +1,27 @@
-# System Architecture
+# Architecture
+
+Technical architecture and system design of the high-performance C++20 distributed messaging framework.
 
 ## Overview
 
 The Messaging System is a high-performance, distributed messaging framework built on C++20 with a focus on production readiness, scalability, and real-time performance. The system employs a layered architecture with lock-free components, SIMD optimizations, and comprehensive service integration.
+
+## Related Documentation
+
+### Component-Specific Architecture
+- **[Thread System Architecture](../libraries/thread_system/docs/architecture.md)** - Lock-free thread pools and memory management
+- **[Logger System Architecture](../libraries/logger_system/docs/architecture.md)** - Asynchronous logging pipeline design
+- **[Monitoring System Architecture](../libraries/monitoring_system/docs/architecture.md)** - Real-time metrics collection
+
+### Module Documentation
+- **[Container System](../libraries/container_system/README.md)** - Type-safe data containers with SIMD optimization
+- **[Database System](../libraries/database_system/README.md)** - PostgreSQL integration with connection pooling
+- **[Network System](../libraries/network_system/README.md)** - Asynchronous TCP messaging infrastructure
+
+### Integration Guides
+- **[Performance Guide](./performance.md)** - Performance characteristics and optimization
+- **[Design Patterns](./design-patterns.md)** - Architectural patterns and best practices
+- **[Sample Applications](../application_layer/samples/SAMPLES_README.md)** - Production examples and integration patterns
 
 ## Architectural Principles
 
