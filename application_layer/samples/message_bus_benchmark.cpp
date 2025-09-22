@@ -23,17 +23,10 @@ private:
 public:
     BenchmarkRunner() {
         // Initialize logger
-        logger_module::logger_config logger_config;
-        logger_config.min_level = logger_module::log_level::info;
-        logger_config.pattern = "[{timestamp}] [{level}] [Benchmark] {message}";
-        logger_config.enable_async = true;
-        logger_config.async_queue_size = 8192;
-
-        m_logger = std::make_shared<logger_module::logger>(logger_config);
+        m_logger = std::make_shared<logger_module::logger>(true, 8192);
         m_logger->add_writer(std::make_unique<logger_module::console_writer>());
         m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
             "message_bus_benchmark.log", 10 * 1024 * 1024, 3));
-        m_logger->start();
     }
 
     ~BenchmarkRunner() {
@@ -340,12 +333,8 @@ private:
 
 int main(int argc, char* argv[]) {
     // Create a simple console logger for the main function
-    logger_module::logger_config main_logger_config;
-    main_logger_config.min_level = logger_module::log_level::info;
-    main_logger_config.pattern = "[{timestamp}] [{level}] {message}";
-    auto main_logger = std::make_shared<logger_module::logger>(main_logger_config);
+    auto main_logger = std::make_shared<logger_module::logger>(true, 8192);
     main_logger->add_writer(std::make_unique<logger_module::console_writer>());
-    main_logger->start();
 
     main_logger->log(logger_module::log_level::info, "Messaging System Performance Benchmark");
     main_logger->log(logger_module::log_level::info, "=======================================");

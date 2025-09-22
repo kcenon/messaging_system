@@ -13,17 +13,11 @@ using namespace kcenon::messaging::config;
 using namespace kcenon::messaging::core;
 
 int main() {
-    // Initialize logger
-    logger_module::logger_config logger_config;
-    logger_config.min_level = logger_module::log_level::info;
-    logger_config.pattern = "[{timestamp}] [{level}] {message}";
-    logger_config.enable_async = true;
-
-    auto logger = std::make_shared<logger_module::logger>(logger_config);
+    // Initialize logger with async mode and buffer size
+    auto logger = std::make_shared<logger_module::logger>(true, 8192);
     logger->add_writer(std::make_unique<logger_module::console_writer>());
     logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
         "basic_usage_example.log", 5 * 1024 * 1024, 3));
-    logger->start();
 
     logger->log(logger_module::log_level::info, "Messaging System Basic Usage Example");
     logger->log(logger_module::log_level::info, "=====================================");

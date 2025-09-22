@@ -83,7 +83,7 @@ private:
     int success_threshold{3};
     std::chrono::steady_clock::time_point last_failure_time;
     std::chrono::seconds timeout{30s};
-    std::mutex mutex;
+    mutable std::mutex mutex;
 
 public:
     bool canAttempt() {
@@ -213,9 +213,9 @@ public:
 class microservices_orchestrator {
 private:
     std::unique_ptr<integrations::system_integrator> integrator;
-    std::unique_ptr<services::container_service> container_svc;
-    std::unique_ptr<services::database_service> database_svc;
-    std::unique_ptr<services::network_service> network_svc;
+    std::unique_ptr<services::container::container_service> container_svc;
+    std::unique_ptr<services::database::database_service> database_svc;
+    std::unique_ptr<services::network::network_service> network_svc;
     std::shared_ptr<logger_module::logger> m_logger;
 
     // Service registry
@@ -237,17 +237,10 @@ private:
 public:
     microservices_orchestrator() {
         // Initialize logger
-        logger_module::logger_config logger_config;
-        logger_config.min_level = logger_module::log_level::debug;
-        logger_config.pattern = "[{timestamp}] [{level}] [Orchestrator] {message}";
-        logger_config.enable_async = true;
-        logger_config.async_queue_size = 16384;
-
-        m_logger = std::make_shared<logger_module::logger>(logger_config);
+        m_logger = std::make_shared<logger_module::logger>(true, 16384);
         m_logger->add_writer(std::make_unique<logger_module::console_writer>());
         m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
             "microservices_orchestrator.log", 20 * 1024 * 1024, 5));
-        // Logger is automatically ready after creation
 
         m_logger->log(logger_module::log_level::info, "Initializing Microservices Orchestrator");
 
@@ -257,17 +250,15 @@ public:
             .set_environment("microservices")
             .set_worker_threads(std::thread::hardware_concurrency() * 2)
             .set_queue_size(500000)
-            .set_max_message_size(1024 * 1024)  // 1MB for service payloads
-            .enable_persistence(true)
-            .enable_monitoring(true)
+            .set_container_max_size(1024 * 1024)  // 1MB for service payloads
+            .enable_external_monitoring(true)
             .enable_compression(true)
-            .set_timeout(10000)  // 10 second timeout
             .build();
 
         integrator = std::make_unique<integrations::system_integrator>(config);
-        container_svc = std::make_unique<services::container_service>();
-        database_svc = std::make_unique<services::database_service>();
-        network_svc = std::make_unique<services::network_service>();
+        container_svc = std::make_unique<services::container::container_service>();
+        database_svc = std::make_unique<services::database::database_service>();
+        network_svc = std::make_unique<services::network::network_service>();
 
         setupMessageHandlers();
         initializeServices();
@@ -302,7 +293,7 @@ public:
         });
 
         // Service deployment
-        bus.subscribe("service.deploy", [this](const core::message& msg) {
+        bus->subscribe("service.deploy", [this](const core::message& msg) {
             handleServiceDeployment(msg);
         });
     }
@@ -346,8 +337,8 @@ public:
         def.max_instances = max_instances;
 
         service_definitions[name] = def;
-        circuit_breakers[name] = circuit_breaker();
-        load_balancers[name] = load_balancer(load_balancer::LEAST_CONNECTIONS);
+        circuit_breakers.try_emplace(name);
+        load_balancers.try_emplace(name, load_balancer::LEAST_CONNECTIONS);
     }
 
     void deploy_service_instance(const std::string& service_name) {
@@ -706,7 +697,9 @@ public:
         forward.metadata.headers["port"] = std::to_string(instance->port);
         forward.payload = msg.payload;
 
-        return network_svc->send_to_host(instance->host, instance->port, forward);
+        // Send to the instance via network service
+        std::string destination = instance->host + ":" + std::to_string(instance->port);
+        return network_svc->send_message(destination, forward);
     }
 
     void handleUnhealthyInstance(const service_instance& instance) {
@@ -862,7 +855,7 @@ public:
                   << total_requests.load() << " ║\n";
         map_output << "║   Success Rate: " << std::setw(44)
                   << std::fixed << std::setprecision(2)
-                  << (100.0 * successful_requests / std::max(1UL, total_requests.load()))
+                  << (100.0 * successful_requests / std::max(static_cast<uint64_t>(1), total_requests.load()))
                   << "% ║\n";
         map_output << "║   Circuit Breaker Trips: " << std::setw(36)
                   << circuit_breaker_trips.load() << " ║\n";
@@ -876,7 +869,7 @@ public:
         m_logger->log(logger_module::log_level::info,
             "\n=== Microservices Orchestrator Starting ===");
 
-        integrator->start();
+        // The integrator is automatically started upon initialization
 
         // Start monitoring threads
         startHealthCheckMonitor();
@@ -923,7 +916,7 @@ public:
 
     void stop() {
         running = false;
-        integrator->stop();
+        integrator->shutdown();
 
         std::stringstream stats;
         stats << "\n=== Final Statistics ===\n";
@@ -935,7 +928,7 @@ public:
         stats << "Total requests processed: " << total_requests << "\n";
         stats << "Success rate: "
               << std::fixed << std::setprecision(2)
-              << (100.0 * successful_requests / std::max(1UL, total_requests.load()))
+              << (100.0 * successful_requests / std::max(static_cast<uint64_t>(1), total_requests.load()))
               << "%\n";
         stats << "========================";
 
@@ -952,13 +945,9 @@ int main(int argc, char* argv[]) {
 
     } catch (const std::exception& e) {
         // Create a minimal logger for error reporting
-        logger_module::logger_config error_logger_config;
-        error_logger_config.min_level = logger_module::log_level::error;
-        auto error_logger = std::make_shared<logger_module::logger>(error_logger_config);
+        auto error_logger = std::make_shared<logger_module::logger>(true, 8192);
         error_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        // Error logger is automatically ready after creation
         error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
-        // Logger cleanup handled automatically
         return 1;
     }
 

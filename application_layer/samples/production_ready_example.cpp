@@ -25,6 +25,7 @@
 #include <map>
 #include <mutex>
 #include <condition_variable>
+#include <random>
 
 using namespace kcenon::messaging::integrations;
 using namespace kcenon::messaging::config;
@@ -380,14 +381,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Initialize logger early for startup messages
-    logger_module::logger_config logger_config;
-    logger_config.min_level = logger_module::log_level::debug; // Start with debug
-    logger_config.pattern = "[{timestamp}] [{level}] [{thread}] {message}";
-    logger_config.enable_async = true;
-    logger_config.async_queue_size = 8192;
-    logger_config.enable_file_line = true;
-
-    auto logger = std::make_shared<logger_module::logger>(logger_config);
+    auto logger = std::make_shared<logger_module::logger>(true, 8192);
     logger->add_writer(std::make_unique<logger_module::console_writer>());
 
     try {
@@ -403,12 +397,10 @@ int main(int argc, char* argv[]) {
         }
 
         // Update logger based on config
-        logger_config.min_level = app_config.log_level;
-        logger = std::make_shared<logger_module::logger>(logger_config);
+        logger = std::make_shared<logger_module::logger>(true, 8192);
         logger->add_writer(std::make_unique<logger_module::console_writer>());
         logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
             app_config.log_file, 10 * 1024 * 1024, 5));
-        logger->start();
 
         logger->log(logger_module::log_level::info, "Production-Ready Messaging System");
         logger->log(logger_module::log_level::info, "=====================================");

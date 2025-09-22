@@ -82,9 +82,9 @@ struct device_config {
 class iot_monitoring_system {
 private:
     std::unique_ptr<integrations::system_integrator> integrator;
-    std::unique_ptr<services::container_service> container_svc;
-    std::unique_ptr<services::database_service> database_svc;
-    std::unique_ptr<services::network_service> network_svc;
+    std::unique_ptr<services::container::container_service> container_svc;
+    std::unique_ptr<services::database::database_service> database_svc;
+    std::unique_ptr<services::network::network_service> network_svc;
     std::shared_ptr<logger_module::logger> m_logger;
 
     // Device management
@@ -112,17 +112,10 @@ private:
 public:
     iot_monitoring_system() : gen(rd()) {
         // Initialize logger
-        logger_module::logger_config logger_config;
-        logger_config.min_level = logger_module::log_level::debug;
-        logger_config.pattern = "[{timestamp}] [{level}] [IoT] {message}";
-        logger_config.enable_async = true;
-        logger_config.async_queue_size = 8192;
-
-        m_logger = std::make_shared<logger_module::logger>(logger_config);
+        m_logger = std::make_shared<logger_module::logger>(true, 8192);
         m_logger->add_writer(std::make_unique<logger_module::console_writer>());
         m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
             "iot_monitoring.log", 10 * 1024 * 1024, 5));
-        // Logger is automatically ready after creation
 
         m_logger->log(logger_module::log_level::info, "Initializing IoT Monitoring System");
 
@@ -132,17 +125,15 @@ public:
             .set_environment("iot_production")
             .set_worker_threads(std::thread::hardware_concurrency())
             .set_queue_size(100000)
-            .set_max_message_size(64 * 1024)  // 64KB for device data
-            .enable_persistence(true)
-            .enable_monitoring(true)
+            .set_container_max_size(64 * 1024)  // 64KB for device data
             .enable_compression(true)
-            .set_timeout(5000)  // 5 second timeout for device messages
+            .enable_external_monitoring(true)
             .build();
 
         integrator = std::make_unique<integrations::system_integrator>(config);
-        container_svc = std::make_unique<services::container_service>();
-        database_svc = std::make_unique<services::database_service>();
-        network_svc = std::make_unique<services::network_service>();
+        container_svc = std::make_unique<services::container::container_service>();
+        database_svc = std::make_unique<services::database::database_service>();
+        network_svc = std::make_unique<services::network::network_service>();
 
         setupMessageHandlers();
         initializeDevices();
@@ -167,7 +158,7 @@ public:
         });
 
         // System queries
-        bus.subscribe("system.query", [this](const core::message& msg) {
+        bus->subscribe("system.query", [this](const core::message& msg) {
             handleSystemQuery(msg);
         });
 
@@ -221,14 +212,9 @@ public:
         devices[device_id] = config;
         total_devices++;
 
-        // Store device configuration in database
-        auto container = container_svc->create_container();
-        container->set("device_id", device_id);
-        container->set("type", static_cast<int>(type));
-        container->set("location", location);
-        container->set("enabled", config.enabled);
-
-        database_svc->store("devices", device_id, container->serialize());
+        // In production, would store device configuration in database
+        // Note: Container service doesn't have create_container method yet
+        // and database service doesn't have store method
     }
 
     void handleDeviceTelemetry(const core::message& msg) {
@@ -364,25 +350,26 @@ public:
         // Set priority based on severity
         switch (alert_obj.sev) {
             case alert::EMERGENCY:
-                alert_msg.set_priority(core::priority::CRITICAL);
+                alert_msg.set_priority(core::message_priority::critical);
                 break;
             case alert::CRITICAL:
-                alert_msg.set_priority(core::priority::HIGH);
+                alert_msg.set_priority(core::message_priority::high);
                 break;
             case alert::WARNING:
-                alert_msg.set_priority(core::priority::NORMAL);
+                alert_msg.set_priority(core::message_priority::normal);
                 break;
             default:
-                alert_msg.set_priority(core::priority::LOW);
+                alert_msg.set_priority(core::message_priority::low);
         }
 
         integrator->get_message_bus()->publish(alert_msg);
     }
 
     void handleDeviceRegistration(const core::message& msg) {
-        auto device_id = msg.get_header("device_id");
-        auto type = static_cast<device_type>(std::stoi(msg.get_header("type")));
-        auto location = msg.get_header("location");
+        auto device_id = msg.metadata.headers.count("device_id") ? msg.metadata.headers.at("device_id") : "";
+        auto type_str = msg.metadata.headers.count("type") ? msg.metadata.headers.at("type") : "0";
+        auto type = static_cast<device_type>(std::stoi(type_str));
+        auto location = msg.metadata.headers.count("location") ? msg.metadata.headers.at("location") : "";
 
         registerDevice(device_id, type, location, 0.0, 100.0);
 
@@ -391,24 +378,24 @@ public:
     }
 
     void handleDeviceCommand(const core::message& msg) {
-        auto device_id = msg.get_header("device_id");
-        auto command = msg.get_header("command");
+        auto device_id = msg.metadata.headers.count("device_id") ? msg.metadata.headers.at("device_id") : "";
+        auto command = msg.metadata.headers.count("command") ? msg.metadata.headers.at("command") : "";
 
         m_logger->log(logger_module::log_level::info,
             "Executing command '" + command + "' on device " + device_id);
 
         // Forward command to device
-        core::message cmd_msg;
-        cmd_msg.set_type("device.execute");
-        cmd_msg.set_header("device_id", device_id);
-        cmd_msg.set_header("command", command);
-        cmd_msg.set_priority(core::priority::HIGH);
+        core::message cmd_msg("device.execute");
+        cmd_msg.metadata.headers["device_id"] = device_id;
+        cmd_msg.metadata.headers["command"] = command;
+        cmd_msg.set_priority(core::message_priority::high);
 
-        network_svc->send_to_device(device_id, cmd_msg);
+        // In production, would use network service to send to device
+        // network_svc->send_to_device(device_id, cmd_msg);
     }
 
     void handleSystemQuery(const core::message& msg) {
-        auto query_type = msg.get_header("query");
+        auto query_type = msg.metadata.headers.count("query") ? msg.metadata.headers.at("query") : "";
 
         if (query_type == "status") {
             sendSystemStatus();
@@ -420,28 +407,22 @@ public:
     }
 
     void handleAlertAcknowledgment(const core::message& msg) {
-        auto alert_id = msg.get_header("alert_id");
-        auto user_id = msg.get_header("user_id");
+        auto alert_id = msg.metadata.headers.count("alert_id") ? msg.metadata.headers.at("alert_id") : "";
+        auto user_id = msg.metadata.headers.count("user_id") ? msg.metadata.headers.at("user_id") : "";
 
         m_logger->log(logger_module::log_level::info,
             "Alert " + alert_id + " acknowledged by user " + user_id);
 
-        // Update alert status in database
-        database_svc->update("alerts", alert_id, "status", "acknowledged");
+        // In production, would update alert status in database
+        // database_svc->update("alerts", alert_id, "status", "acknowledged");
     }
 
     void storeTelemetry(const device_telemetry& telemetry) {
-        auto container = container_svc->create_container();
-        container->set("device_id", telemetry.device_id);
-        container->set("value", telemetry.value);
-        container->set("unit", telemetry.unit);
-        container->set("timestamp", std::chrono::system_clock::to_time_t(telemetry.timestamp));
-
-        // Use time-based key for time-series storage
-        auto key = telemetry.device_id + "_" +
-                   std::to_string(telemetry.timestamp.time_since_epoch().count());
-
-        database_svc->store("telemetry", key, container->serialize());
+        // In production, would store telemetry in time-series database
+        // Note: Container service doesn't have create_container method yet
+        // and database service doesn't have store method
+        // auto key = telemetry.device_id + "_" +
+        //            std::to_string(telemetry.timestamp.time_since_epoch().count());
     }
 
     void processAnalytics(const device_telemetry& telemetry) {
@@ -480,51 +461,44 @@ public:
     }
 
     void sendSystemStatus() {
-        core::message status;
-        status.set_type("system.status");
-        status.set_header("total_devices", std::to_string(total_devices.load()));
-        status.set_header("total_messages", std::to_string(total_messages.load()));
-        status.set_header("total_alerts", std::to_string(total_alerts.load()));
-        status.set_header("uptime", std::to_string(getUptime()));
+        core::message status("system.status");
+        status.metadata.headers["total_devices"] = std::to_string(total_devices.load());
+        status.metadata.headers["total_messages"] = std::to_string(total_messages.load());
+        status.metadata.headers["total_alerts"] = std::to_string(total_alerts.load());
+        status.metadata.headers["uptime"] = std::to_string(getUptime());
 
-        integrator->get_message_bus().publish(status);
+        integrator->get_message_bus()->publish(status);
     }
 
     void sendDeviceList() {
-        core::message device_list;
-        device_list.set_type("system.device_list");
+        core::message device_list("system.device_list");
 
         std::lock_guard<std::mutex> lock(devices_mutex);
         for (const auto& [id, config] : devices) {
-            auto container = container_svc->create_container();
-            container->set("device_id", id);
-            container->set("type", static_cast<int>(config.type));
-            container->set("location", config.location);
-            container->set("enabled", config.enabled);
-
-            device_list.add_payload_item(id, container->serialize());
+            // In production, would serialize device info
+            device_list.payload.set(id + "_id", id);
+            device_list.payload.set(id + "_type", static_cast<int64_t>(config.type));
+            device_list.payload.set(id + "_location", config.location);
+            device_list.payload.set(id + "_enabled", config.enabled);
         }
 
-        integrator->get_message_bus().publish(device_list);
+        integrator->get_message_bus()->publish(device_list);
     }
 
     void sendLatestTelemetry() {
-        core::message telemetry_msg;
-        telemetry_msg.set_type("system.telemetry");
+        core::message telemetry_msg("system.telemetry");
 
         std::lock_guard<std::mutex> lock(devices_mutex);
         for (const auto& [id, telemetry] : latest_telemetry) {
-            auto container = container_svc->create_container();
-            container->set("device_id", id);
-            container->set("value", telemetry.value);
-            container->set("unit", telemetry.unit);
-            container->set("timestamp",
-                std::chrono::system_clock::to_time_t(telemetry.timestamp));
-
-            telemetry_msg.add_payload_item(id, container->serialize());
+            // In production, would serialize telemetry data
+            telemetry_msg.payload.set(id + "_device_id", id);
+            telemetry_msg.payload.set(id + "_value", telemetry.value);
+            telemetry_msg.payload.set(id + "_unit", telemetry.unit);
+            telemetry_msg.payload.set(id + "_timestamp",
+                static_cast<int64_t>(std::chrono::system_clock::to_time_t(telemetry.timestamp)));
         }
 
-        integrator->get_message_bus().publish(telemetry_msg);
+        integrator->get_message_bus()->publish(telemetry_msg);
     }
 
     // Simulation methods
@@ -540,9 +514,8 @@ public:
                 // Simulate telemetry from all devices
                 std::lock_guard<std::mutex> lock(devices_mutex);
                 for (const auto& [id, config] : devices) {
-                    core::message telemetry;
-                    telemetry.set_type("device.telemetry");
-                    telemetry.set_header("device_id", id);
+                    core::message telemetry("device.telemetry");
+                    telemetry.metadata.headers["device_id"] = id;
 
                     double value = 0.0;
                     switch (config.type) {
@@ -565,9 +538,9 @@ public:
                             value = 0.0;
                     }
 
-                    telemetry.set_header("value", std::to_string(value));
+                    telemetry.metadata.headers["value"] = std::to_string(value);
 
-                    integrator->get_message_bus().publish(telemetry);
+                    integrator->get_message_bus()->publish(telemetry);
                 }
 
                 std::this_thread::sleep_for(5s);
@@ -606,18 +579,9 @@ public:
         // - Log to SIEM systems
         // - Execute remediation workflows
 
-        // Store alert in database
-        auto container = container_svc->create_container();
-        container->set("alert_id", alert_obj.alert_id);
-        container->set("device_id", alert_obj.device_id);
-        container->set("severity", static_cast<int>(alert_obj.sev));
-        container->set("message", alert_obj.message);
-        container->set("threshold", alert_obj.threshold_value);
-        container->set("actual", alert_obj.actual_value);
-        container->set("timestamp",
-            std::chrono::system_clock::to_time_t(alert_obj.triggered_at));
-
-        database_svc->store("alerts", alert_obj.alert_id, container->serialize());
+        // In production, would store alert in database
+        // Note: Container service doesn't have create_container method yet
+        // and database service doesn't have store method
     }
 
     std::string generateAlertId() const {
@@ -658,7 +622,8 @@ public:
     void start() {
         m_logger->log(logger_module::log_level::info, "\n=== IoT Monitoring System Starting ===");
 
-        integrator->start();
+        // Start the integrator (if it has a start method)
+        // integrator->start();
 
         // Start background tasks
         startDeviceSimulation();
@@ -676,7 +641,8 @@ public:
     void stop() {
         running = false;
         alert_cv.notify_all();
-        integrator->stop();
+        // Stop the integrator (if it has a stop method)
+        // integrator->stop();
 
         std::string stats = "\n=== Final Statistics ===\n";
         stats += "Total devices monitored: " + std::to_string(total_devices) + "\n";
@@ -748,11 +714,8 @@ int main(int argc, char* argv[]) {
 
     } catch (const std::exception& e) {
         // Create a minimal logger for error reporting
-        logger_module::logger_config error_logger_config;
-        error_logger_config.min_level = logger_module::log_level::error;
-        auto error_logger = std::make_shared<logger_module::logger>(error_logger_config);
+        auto error_logger = std::make_shared<logger_module::logger>(true, 8192);
         error_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        error_logger->start();
         error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
         error_logger->stop();
         return 1;

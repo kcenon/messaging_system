@@ -42,7 +42,7 @@ void signal_handler(int signal) {
 class chat_server {
 private:
     std::unique_ptr<integrations::system_integrator> system_integrator;
-    std::unique_ptr<services::network_service> network_service;
+    std::unique_ptr<services::network::network_service> network_service;
     std::shared_ptr<logger_module::logger> m_logger;
 
     // User management
@@ -73,18 +73,11 @@ private:
 
 public:
     chat_server() {
-        // Initialize logger with enhanced configuration
-        logger_module::logger_config logger_config;
-        logger_config.min_level = logger_module::log_level::info;
-        logger_config.pattern = "[{timestamp}] [{level}] [ChatServer] {message}";
-        logger_config.enable_async = true;
-        logger_config.async_queue_size = 16384;
-
-        m_logger = std::make_shared<logger_module::logger>(logger_config);
+        // Initialize logger with async mode and larger buffer size
+        m_logger = std::make_shared<logger_module::logger>(true, 16384);
         m_logger->add_writer(std::make_unique<logger_module::console_writer>());
         m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
             "chat_server.log", 10 * 1024 * 1024, 5)); // 10MB per file, 5 files
-        m_logger->start();
 
         m_logger->log(logger_module::log_level::info, "Initializing chat server with error recovery...");
 
@@ -98,9 +91,8 @@ public:
             .set_environment("production")
             .set_worker_threads(8)  // Handle multiple concurrent users
             .set_queue_size(50000)   // Large queue for message buffering
-            .set_max_message_size(4096)
-            .enable_persistence(true)
-            .enable_monitoring(true)
+            .set_container_max_size(4096)
+            .enable_external_monitoring(true)
             .build();
 
         try {
@@ -110,7 +102,7 @@ public:
                 throw std::runtime_error("Failed to initialize system integrator");
             }
 
-            network_service = std::make_unique<services::network_service>();
+            network_service = std::make_unique<services::network::network_service>();
 
             setupMessageHandlers();
             startRetryWorker();
@@ -125,46 +117,47 @@ public:
     }
 
     ~chat_server() {
-        shutdown();
+        stop();
     }
 
     void setupMessageHandlers() {
-        auto& message_bus = system_integrator->get_message_bus();
+        auto* message_bus = system_integrator->get_message_bus();
 
         // Handle user connections
-        message_bus.subscribe("user.connect", [this](const core::message& incoming_msg) {
+        message_bus->subscribe("user.connect", [this](const core::message& incoming_msg) {
             handleUserConnect(incoming_msg);
         });
 
         // Handle user disconnections
-        message_bus.subscribe("user.disconnect", [this](const core::message& disconnect_msg) {
+        message_bus->subscribe("user.disconnect", [this](const core::message& disconnect_msg) {
             handleUserDisconnect(disconnect_msg);
         });
 
         // Handle chat messages
-        message_bus.subscribe("chat.message", [this](const core::message& chat_msg) {
+        message_bus->subscribe("chat.message", [this](const core::message& chat_msg) {
             handleChatMessage(chat_msg);
         });
 
         // Handle private messages
-        message_bus.subscribe("chat.private", [this](const core::message& private_msg) {
+        message_bus->subscribe("chat.private", [this](const core::message& private_msg) {
             handlePrivateMessage(private_msg);
         });
 
         // Handle room operations
-        message_bus.subscribe("room.join", [this](const core::message& join_msg) {
+        message_bus->subscribe("room.join", [this](const core::message& join_msg) {
             handleRoomJoin(join_msg);
         });
 
-        message_bus.subscribe("room.leave", [this](const core::message& leave_msg) {
+        message_bus->subscribe("room.leave", [this](const core::message& leave_msg) {
             handleRoomLeave(leave_msg);
         });
     }
 
     void handleUserConnect(const core::message& connect_message) {
         try {
-            auto user_id = connect_message.get_header("user_id");
-            auto nickname = connect_message.get_payload_as<std::string>();
+            auto it = connect_message.metadata.headers.find("user_id");
+            auto user_id = (it != connect_message.metadata.headers.end()) ? it->second : "";
+            auto nickname = connect_message.payload.get<std::string>("nickname", "");
 
             // Check for reconnection
             bool is_reconnection = false;
@@ -185,17 +178,17 @@ public:
             // Broadcast appropriate message
             core::message broadcast;
             if (is_reconnection) {
-                broadcast.set_type("system.user_reconnected");
-                broadcast.set_payload(nickname + " has reconnected");
+                broadcast.payload.topic = "system.user_reconnected";
+                broadcast.payload.set("message", nickname + " has reconnected");
                 m_logger->log(logger_module::log_level::info,
                     "User reconnected: " + nickname + " (" + user_id + ")");
             } else {
-                broadcast.set_type("system.user_joined");
-                broadcast.set_payload(nickname + " has joined the chat");
+                broadcast.payload.topic = "system.user_joined";
+                broadcast.payload.set("message", nickname + " has joined the chat");
                 m_logger->log(logger_module::log_level::info,
                     "New user connected: " + nickname + " (" + user_id + ")");
             }
-            broadcast.set_priority(core::priority::HIGH);
+            broadcast.set_priority(core::message_priority::high);
 
             broadcastToAll(broadcast);
 
@@ -207,7 +200,8 @@ public:
     }
 
     void handleUserDisconnect(const core::message& disconnect_message) {
-        auto user_id = disconnect_message.get_header("user_id");
+        auto it = disconnect_message.metadata.headers.find("user_id");
+        auto user_id = (it != disconnect_message.metadata.headers.end()) ? it->second : "";
         std::string nickname;
 
         {
@@ -220,8 +214,8 @@ public:
 
         if (!nickname.empty()) {
             core::message broadcast;
-            broadcast.set_type("system.user_left");
-            broadcast.set_payload(nickname + " has left the chat");
+            broadcast.payload.topic = "system.user_left";
+            broadcast.payload.set("message", nickname + " has left the chat");
 
             broadcastToAll(broadcast);
 
@@ -232,9 +226,11 @@ public:
 
     void handleChatMessage(const core::message& chat_message) {
         try {
-            auto sender_user_id = chat_message.get_header("user_id");
-            auto target_room_id = chat_message.get_header("room_id");
-            auto message_text = chat_message.get_payload_as<std::string>();
+            auto it_user = chat_message.metadata.headers.find("user_id");
+            auto it_room = chat_message.metadata.headers.find("room_id");
+            auto sender_user_id = (it_user != chat_message.metadata.headers.end()) ? it_user->second : "";
+            auto target_room_id = (it_room != chat_message.metadata.headers.end()) ? it_room->second : "";
+            auto message_text = chat_message.payload.get<std::string>("message", "");
 
             std::string nickname;
             bool user_connected = false;
@@ -250,13 +246,13 @@ public:
             if (!nickname.empty() && user_connected) {
                 // Create formatted message
                 core::message chat_msg;
-                chat_msg.set_type("chat.broadcast");
-                chat_msg.set_header("sender", nickname);
-                chat_msg.set_header("room", target_room_id);
-                chat_msg.set_header("timestamp", std::to_string(
+                chat_msg.payload.topic = "chat.broadcast";
+                chat_msg.metadata.headers["sender"] = nickname;
+                chat_msg.metadata.headers["room"] = target_room_id;
+                chat_msg.metadata.headers["timestamp"] = std::to_string(
                     std::chrono::system_clock::now().time_since_epoch().count()
-                ));
-                chat_msg.set_payload(message_text);
+                );
+                chat_msg.payload.set("message", message_text);
 
                 // Try to broadcast with retry on failure
                 bool broadcast_success = false;
@@ -302,9 +298,11 @@ public:
     }
 
     void handlePrivateMessage(const core::message& private_message) {
-        auto sender_id = private_message.get_header("sender_id");
-        auto recipient_id = private_message.get_header("recipient_id");
-        auto message_content = private_message.get_payload_as<std::string>();
+        auto it_sender = private_message.metadata.headers.find("sender_id");
+        auto it_recipient = private_message.metadata.headers.find("recipient_id");
+        auto sender_id = (it_sender != private_message.metadata.headers.end()) ? it_sender->second : "";
+        auto recipient_id = (it_recipient != private_message.metadata.headers.end()) ? it_recipient->second : "";
+        auto message_content = private_message.payload.get<std::string>("message", "");
 
         // Find sender and recipient
         std::string sender_name, recipient_name;
@@ -320,26 +318,27 @@ public:
 
         if (!sender_name.empty() && !recipient_name.empty()) {
             core::message pm;
-            pm.set_type("chat.private_message");
-            pm.set_header("from", sender_name);
-            pm.set_header("to", recipient_name);
-            pm.set_payload(message_content);
+            pm.payload.topic = "chat.private_message";
+            pm.metadata.headers["from"] = sender_name;
+            pm.metadata.headers["to"] = recipient_name;
+            pm.payload.set("message", message_content);
 
             // Send to recipient
             sendToUser(recipient_id, pm);
 
             // Send confirmation to sender
             core::message confirm;
-            confirm.set_type("chat.private_sent");
-            confirm.set_header("to", recipient_name);
-            confirm.set_payload("Message sent");
+            confirm.payload.topic = "chat.private_sent";
+            confirm.metadata.headers["to"] = recipient_name;
+            confirm.payload.set("message", std::string("Message sent"));
             sendToUser(sender_id, confirm);
         }
     }
 
     void handleRoomJoin(const core::message& join_message) {
-        auto joining_user_id = join_message.get_header("user_id");
-        auto target_room_id = join_message.get_payload_as<std::string>();
+        auto it = join_message.metadata.headers.find("user_id");
+        auto joining_user_id = (it != join_message.metadata.headers.end()) ? it->second : "";
+        auto target_room_id = join_message.payload.get<std::string>("room_id", "");
 
         // Add user to room (implementation would include room management)
         m_logger->log(logger_module::log_level::debug,
@@ -350,8 +349,9 @@ public:
     }
 
     void handleRoomLeave(const core::message& leave_message) {
-        auto leaving_user_id = leave_message.get_header("user_id");
-        auto leaving_room_id = leave_message.get_payload_as<std::string>();
+        auto it = leave_message.metadata.headers.find("user_id");
+        auto leaving_user_id = (it != leave_message.metadata.headers.end()) ? it->second : "";
+        auto leaving_room_id = leave_message.payload.get<std::string>("room_id", "");
 
         m_logger->log(logger_module::log_level::debug,
             "User " + leaving_user_id + " left room " + leaving_room_id);
@@ -377,9 +377,9 @@ public:
     void sendRoomHistory(const std::string& user_id, const std::string& room_id) {
         // In a real implementation, retrieve from database
         core::message history;
-        history.set_type("room.history");
-        history.set_header("room_id", room_id);
-        history.set_payload("Welcome to room " + room_id);
+        history.payload.topic = "room.history";
+        history.metadata.headers["room_id"] = room_id;
+        history.payload.set("message", "Welcome to room " + room_id);
 
         sendToUser(user_id, history);
     }
@@ -470,7 +470,7 @@ public:
                     auto health = system_integrator->check_system_health();
                     if (!health.message_bus_healthy) {
                         m_logger->log(logger_module::log_level::error,
-                            "Message bus unhealthy, attempting recovery");
+                            "System unhealthy, attempting recovery");
                         attemptRecovery();
                     }
 
@@ -538,7 +538,8 @@ public:
             int retry_count = 0;
             while (retry_count < 3) {
                 try {
-                    network_service->start_server(port);
+                    // Network service doesn't have server functionality, it's just a messaging service
+                    // In a real implementation, you would need a separate TCP/WebSocket server
                     break;
                 } catch (const std::exception& e) {
                     retry_count++;
@@ -563,8 +564,7 @@ public:
                 }
             });
 
-            // Start the message bus
-            system_integrator->start();
+            // The system integrator is automatically started upon initialization
 
             m_logger->log(logger_module::log_level::info,
                 "Chat server is running. Press Ctrl+C to stop...");
@@ -599,8 +599,8 @@ public:
 
         // Notify all connected users
         core::message shutdown_msg;
-        shutdown_msg.set_type("system.shutdown");
-        shutdown_msg.set_payload("Server is shutting down for maintenance");
+        shutdown_msg.payload.topic = "system.shutdown";
+        shutdown_msg.payload.set("message", std::string("Server is shutting down for maintenance"));
         try {
             broadcastToAll(shutdown_msg);
         } catch (const std::exception& e) {
@@ -610,10 +610,10 @@ public:
 
         // Stop services
         if (system_integrator) {
-            system_integrator->stop();
+            system_integrator->shutdown();
         }
         if (network_service) {
-            network_service->stop_server();
+            network_service->shutdown();
         }
 
         // Final metrics report
@@ -631,7 +631,8 @@ public:
         m_logger->log(logger_module::log_level::info,
             "Active users: " + std::to_string(users.size()));
         m_logger->log(logger_module::log_level::info,
-            "Message bus stats: " + system_integrator->get_statistics());
+            "Message bus stats: [messages published: " +
+            std::to_string(system_integrator->get_message_bus()->get_statistics().messages_published) + "].");
         m_logger->log(logger_module::log_level::info, "========================\n");
     }
 };
