@@ -20,7 +20,7 @@
 
 #include <kcenon/monitoring/alerting/rule_engine.h>
 
-namespace kcenon::monitoring::alerting {
+namespace monitoring_system::alerting {
 
 // Notification channel types
 enum class NotificationChannel {

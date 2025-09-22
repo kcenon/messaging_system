@@ -18,7 +18,7 @@
 #include <sstream>
 #include <cmath>
 
-namespace kcenon::monitoring::alerting {
+namespace monitoring_system::alerting {
 
 // Rule evaluation result
 enum class RuleEvaluationResult {

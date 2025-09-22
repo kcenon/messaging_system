@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "job_types.h"
 #include <cstddef>
 
-namespace typed_kcenon::thread::config {
+namespace kcenon::thread::config {
     
     // Default type settings
     using default_job_type = job_types;
@@ -82,4 +82,4 @@ namespace typed_kcenon::thread::config {
     static_assert(default_wait_timeout_ms > 0, "Wait timeout must be positive");
     static_assert(default_shutdown_timeout_ms > 0, "Shutdown timeout must be positive");
     
-} // namespace typed_kcenon::thread::config
+} // namespace kcenon::thread::config

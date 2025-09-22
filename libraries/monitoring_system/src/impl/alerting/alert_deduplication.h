@@ -18,7 +18,7 @@
 
 #include <kcenon/monitoring/alerting/rule_engine.h>
 
-namespace kcenon::monitoring::alerting {
+namespace monitoring_system::alerting {
 
 // Alert grouping strategy
 enum class GroupingStrategy {

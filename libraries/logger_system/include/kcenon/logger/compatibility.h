@@ -14,10 +14,8 @@ namespace kcenon::logger {
 }
 
 // Old namespace aliases (deprecated)
-namespace kcenon::logger = kcenon::logger;
-namespace kcenon::logger {
-    namespace interfaces = kcenon::logger::interfaces;
-    namespace core = kcenon::logger::core;
-}
+// Note: Direct aliasing removed - use kcenon::logger directly
+namespace logger_interfaces = kcenon::logger::interfaces;
+namespace logger_core = kcenon::logger::core;
 
 #endif // KCENON_LOGGER_COMPATIBILITY_H
