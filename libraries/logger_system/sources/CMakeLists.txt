@@ -44,6 +44,11 @@ target_link_libraries(logger
         Threads::Threads
 )
 
+# Link Windows socket library
+if(WIN32)
+    target_link_libraries(logger PUBLIC ws2_32)
+endif()
+
 # Link filesystem library if needed
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "9.0")
     target_link_libraries(logger PUBLIC stdc++fs)

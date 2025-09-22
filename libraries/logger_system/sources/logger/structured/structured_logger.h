@@ -18,8 +18,8 @@ All rights reserved.
 
 // Platform-specific includes for hostname and process ID
 #ifdef _WIN32
-    #include <Windows.h>
     #include <WinSock2.h>
+    #include <Windows.h>
     #pragma comment(lib, "ws2_32.lib")
 #else
     #include <unistd.h>
