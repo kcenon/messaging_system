@@ -38,12 +38,4 @@ echo "Installing dependencies via vcpkg..."
     asio \
     nlohmann-json
 
-# Install thread_system dependencies
-echo "Installing thread_system dependencies..."
-cd thread_system
-if [ -f "dependency.sh" ]; then
-    ./dependency.sh
-fi
-cd ..
-
 echo "Dependencies installed successfully!"
