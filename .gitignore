@@ -367,3 +367,6 @@ test_results/
 *.tmp
 temp/
 tmp/
+
+# Documents
+documents/
