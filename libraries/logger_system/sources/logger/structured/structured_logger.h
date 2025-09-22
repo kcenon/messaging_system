@@ -15,7 +15,16 @@ All rights reserved.
 #include <unordered_map>
 #include <iomanip>
 // #include <nlohmann/json.hpp> // TODO: Add nlohmann/json dependency
-#include <unistd.h>
+
+// Platform-specific includes for hostname and process ID
+#ifdef _WIN32
+    #include <Windows.h>
+    #include <WinSock2.h>
+    #pragma comment(lib, "ws2_32.lib")
+#else
+    #include <unistd.h>
+#endif
+
 #include <thread>
 #include <cstdlib>
 
@@ -180,13 +189,29 @@ private:
     
     void initialize_defaults() {
         // Add default fields
-        global_context_[standard_fields::PROCESS_ID] = std::to_string(getpid());
-        
+#ifdef _WIN32
+        global_context_[standard_fields::PROCESS_ID] = std::to_string(GetCurrentProcessId());
+
+        // Initialize Winsock for hostname
+        WSADATA wsa_data;
+        WSAStartup(MAKEWORD(2, 2), &wsa_data);
+
         // Get hostname
         char hostname[256];
         if (gethostname(hostname, sizeof(hostname)) == 0) {
             global_context_[standard_fields::HOST] = std::string(hostname);
         }
+
+        WSACleanup();
+#else
+        global_context_[standard_fields::PROCESS_ID] = std::to_string(getpid());
+
+        // Get hostname
+        char hostname[256];
+        if (gethostname(hostname, sizeof(hostname)) == 0) {
+            global_context_[standard_fields::HOST] = std::string(hostname);
+        }
+#endif
     }
     
     // Format log entry based on output format
