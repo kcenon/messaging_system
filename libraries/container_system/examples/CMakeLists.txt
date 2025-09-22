@@ -12,62 +12,62 @@ set(EXAMPLE_PROGRAMS
     real_world_scenarios
 )
 
-# Build each example program
+# Build each example program with prefixed names to avoid conflicts
 foreach(EXAMPLE ${EXAMPLE_PROGRAMS})
-    add_executable(${EXAMPLE} ${EXAMPLE}.cpp)
+    add_executable(container_${EXAMPLE} ${EXAMPLE}.cpp)
 
     # Link with container library
-    target_link_libraries(${EXAMPLE}
+    target_link_libraries(container_${EXAMPLE}
         PRIVATE
             container_system
             Threads::Threads
     )
 
     # Set C++20 standard
-    set_target_properties(${EXAMPLE} PROPERTIES
+    set_target_properties(container_${EXAMPLE} PROPERTIES
         CXX_STANDARD 20
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS OFF
     )
 
     # Include directories
-    target_include_directories(${EXAMPLE} PRIVATE
+    target_include_directories(container_${EXAMPLE} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/..
     )
 
     # Add compile definitions based on enabled features
     if(ENABLE_MESSAGING_FEATURES)
-        target_compile_definitions(${EXAMPLE} PRIVATE HAS_MESSAGING_FEATURES)
+        target_compile_definitions(container_${EXAMPLE} PRIVATE HAS_MESSAGING_FEATURES)
     endif()
 
     if(ENABLE_PERFORMANCE_METRICS)
-        target_compile_definitions(${EXAMPLE} PRIVATE HAS_PERFORMANCE_METRICS)
+        target_compile_definitions(container_${EXAMPLE} PRIVATE HAS_PERFORMANCE_METRICS)
     endif()
 
     if(ENABLE_EXTERNAL_INTEGRATION)
-        target_compile_definitions(${EXAMPLE} PRIVATE HAS_EXTERNAL_INTEGRATION)
+        target_compile_definitions(container_${EXAMPLE} PRIVATE HAS_EXTERNAL_INTEGRATION)
     endif()
 
     # Debug/Release configurations
-    target_compile_definitions(${EXAMPLE} PRIVATE
+    target_compile_definitions(container_${EXAMPLE} PRIVATE
         $<$<CONFIG:Debug>:_DEBUG>
         $<$<CONFIG:Release>:NDEBUG>
     )
 
     # Platform-specific settings
     if(WIN32)
-        target_compile_definitions(${EXAMPLE} PRIVATE
+        target_compile_definitions(container_${EXAMPLE} PRIVATE
             WIN32_LEAN_AND_MEAN
             NOMINMAX
         )
     endif()
 
     # Install example executables
-    install(TARGETS ${EXAMPLE}
+    install(TARGETS container_${EXAMPLE}
         RUNTIME DESTINATION bin/examples
     )
 
-    message(STATUS "Container Example: ${EXAMPLE} configured")
+    message(STATUS "Container Example: container_${EXAMPLE} configured")
 endforeach()
 
 # Create example README

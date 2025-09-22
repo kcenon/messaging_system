@@ -43,23 +43,23 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 ##################################################
 
 foreach(SAMPLE ${SAMPLE_PROGRAMS})
-    # Create executable for each sample
-    add_executable(${SAMPLE} ${SAMPLE}.cpp)
+    # Create executable for each sample with prefixed names to avoid conflicts
+    add_executable(network_${SAMPLE} ${SAMPLE}.cpp)
     
     # Set target properties
-    set_target_properties(${SAMPLE} PROPERTIES
+    set_target_properties(network_${SAMPLE} PROPERTIES
         CXX_STANDARD 20
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS OFF
     )
     
     # Include directories (link to NetworkSystem target provides proper includes)
-    target_include_directories(${SAMPLE} PRIVATE
+    target_include_directories(network_${SAMPLE} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/..
     )
 
     # Link libraries
-    target_link_libraries(${SAMPLE} PRIVATE
+    target_link_libraries(network_${SAMPLE} PRIVATE
         NetworkSystem
         fmt::fmt
         Threads::Threads
@@ -67,26 +67,26 @@ foreach(SAMPLE ${SAMPLE_PROGRAMS})
     
     # Platform-specific libraries
     if(WIN32)
-        target_link_libraries(${SAMPLE} PRIVATE
+        target_link_libraries(network_${SAMPLE} PRIVATE
             ws2_32
             wsock32
         )
     elseif(UNIX AND NOT APPLE)
-        target_link_libraries(${SAMPLE} PRIVATE
+        target_link_libraries(network_${SAMPLE} PRIVATE
             pthread
         )
     endif()
     
     # Compiler-specific options
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        target_compile_options(${SAMPLE} PRIVATE
+        target_compile_options(network_${SAMPLE} PRIVATE
             -Wall
             -Wextra
             -Wpedantic
             -Wno-unused-parameter
         )
     elseif(MSVC)
-        target_compile_options(${SAMPLE} PRIVATE
+        target_compile_options(network_${SAMPLE} PRIVATE
             /W4
             /wd4100  # unreferenced formal parameter
         )
@@ -94,14 +94,14 @@ foreach(SAMPLE ${SAMPLE_PROGRAMS})
     
     # Platform-specific definitions
     if(WIN32)
-        target_compile_definitions(${SAMPLE} PRIVATE
+        target_compile_definitions(network_${SAMPLE} PRIVATE
             _WIN32_WINNT=0x0601
             WIN32_LEAN_AND_MEAN
             NOMINMAX
         )
     endif()
     
-    message(STATUS "Network sample configured: ${SAMPLE}")
+    message(STATUS "Network sample configured: network_${SAMPLE}")
 endforeach()
 
 ##################################################
@@ -111,9 +111,9 @@ endforeach()
 # If HTTP functionality requires additional libraries (e.g., curl)
 find_package(CURL QUIET)
 if(CURL_FOUND)
-    target_link_libraries(http_client_demo PRIVATE ${CURL_LIBRARIES})
-    target_include_directories(http_client_demo PRIVATE ${CURL_INCLUDE_DIRS})
-    target_compile_definitions(http_client_demo PRIVATE HAVE_CURL)
+    target_link_libraries(network_http_client_demo PRIVATE ${CURL_LIBRARIES})
+    target_include_directories(network_http_client_demo PRIVATE ${CURL_INCLUDE_DIRS})
+    target_compile_definitions(network_http_client_demo PRIVATE HAVE_CURL)
     message(STATUS "HTTP client demo will use libcurl")
 else()
     message(STATUS "HTTP client demo will use built-in HTTP implementation")
