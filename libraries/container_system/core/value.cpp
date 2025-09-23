@@ -84,7 +84,7 @@ namespace container_module
 			  std::bind(&value::set_string, this, std::placeholders::_1) });
 		data_type_map_.insert(
 			{ value_types::container_value,
-			  std::bind(&value::set_long, this, std::placeholders::_1) });
+			  std::bind(&value::set_container, this, std::placeholders::_1) });
 	}
 
 	value::value(std::shared_ptr<value> object) : value()
@@ -210,10 +210,20 @@ namespace container_module
 		{
 			return to_string(true);
 		}
+		else if (type_ == value_types::container_value)
+		{
+			// For container values, return the raw data as string
+			auto [str, err] = utility_module::convert_string::to_string(data_);
+			if (!err.empty())
+			{
+				return "";
+			}
+			return str;
+		}
 		return to_string(false);
 	}
 
-	size_t value::size() const { return data_.size(); }
+	size_t value::size() const { return size_; }
 
 	std::shared_ptr<value> value::parent() { return parent_.lock(); }
 
@@ -542,5 +552,21 @@ namespace container_module
 		double d = std::atof(dataStr.c_str());
 		set_data(d);
 		type_ = value_types::double_value;
+	}
+
+	void value::set_container(const std::string& dataStr)
+	{
+		// For container values, store the serialized container data as-is
+		auto [arr, err] = convert_string::to_array(dataStr);
+		if (!err.empty())
+		{
+			data_.clear();
+			size_ = 0;
+			type_ = value_types::container_value;
+			return;
+		}
+		data_ = arr;
+		size_ = data_.size();
+		type_ = value_types::container_value;
 	}
 } // namespace container_module

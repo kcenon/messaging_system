@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../internal/common_defs.h"
 
-namespace network_module
+namespace network_system::internal
 {
 	/*!
 	 * \class tcp_socket
@@ -170,4 +170,4 @@ namespace network_module
 		std::function<void(std::error_code)>
 			error_callback_;   /*!< Error callback. */
 	};
-} // namespace network_module
+} // namespace network_system::internal

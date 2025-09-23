@@ -42,7 +42,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../network.h"
 #include <container.h>
 
-using namespace network_module;
+using namespace network_system::core;
+using namespace network_system::session;
 using namespace container_module;
 using namespace std::chrono_literals;
 

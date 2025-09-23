@@ -44,7 +44,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <values/string_value.h>
 #include <values/numeric_value.h>
 
-using namespace network_module;
+using namespace network_system::core;
+using namespace network_system::session;
 using namespace container_module;
 using namespace std::chrono_literals;
 

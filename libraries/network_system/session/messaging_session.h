@@ -45,7 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../internal/pipeline.h"
 
 // Use nested namespace definition in C++17
-namespace network_module
+namespace network_system::session
 {
 
 	/*!
@@ -131,9 +131,9 @@ namespace network_module
 	private:
 		std::string server_id_; /*!< Identifier for the server side. */
 
-		std::shared_ptr<tcp_socket>
+		std::shared_ptr<network_system::internal::tcp_socket>
 			socket_;			/*!< The wrapped TCP socket for this session. */
-		pipeline
+		network_system::internal::pipeline
 			pipeline_; /*!< Pipeline for compress/encrypt transformations. */
 
 		bool compress_mode_{
@@ -148,4 +148,4 @@ namespace network_module
 		}; /*!< Indicates whether this session is stopped. */
 	};
 
-} // namespace network_module
+} // namespace network_system::session

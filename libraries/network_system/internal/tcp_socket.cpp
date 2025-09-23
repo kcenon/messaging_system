@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <type_traits>
 
 // Use nested namespace definition (C++17)
-namespace network_module
+namespace network_system::internal
 {
 
 	tcp_socket::tcp_socket(asio::ip::tcp::socket socket)
@@ -118,4 +118,4 @@ namespace network_module
 			});
 	}
 
-} // namespace network_module
+} // namespace network_system::internal

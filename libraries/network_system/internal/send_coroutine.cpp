@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <type_traits>
 
 // Use nested namespace definition (C++17)
-namespace network_module
+namespace network_system::internal
 {
     auto prepare_data_async(const std::vector<uint8_t>& input_data,
                             const pipeline& pl,
@@ -131,4 +131,4 @@ namespace network_module
 
 #endif
 
-} // namespace network_module
+} // namespace network_system::internal

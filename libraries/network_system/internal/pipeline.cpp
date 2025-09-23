@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string_view>
 
 // Using nested namespace definition for implementation details (C++17)
-namespace network_module::detail
+namespace network_system::internal::detail
 {
 	// Using inline variables for debugging messages (C++17)
 	inline constexpr std::string_view compress_debug_msg = "[debug] default_compress_stub";
@@ -78,7 +78,7 @@ namespace network_module::detail
 	}
 }
 
-namespace network_module
+namespace network_system::internal
 {
 	// Using aggregate initialization with designated initializers (C++17)
 	auto make_default_pipeline() -> pipeline
@@ -91,4 +91,4 @@ namespace network_module
 		};
 	}
 
-} // namespace network_module
+} // namespace network_system::internal

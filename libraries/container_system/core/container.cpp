@@ -190,14 +190,18 @@ namespace container_module
 									 bool parse_only_header)
 		: value_container()
 	{
-		deserialize(data_str, parse_only_header);
+		if (!deserialize(data_str, parse_only_header)) {
+			throw std::runtime_error("Failed to deserialize container data");
+		}
 	}
 
 	value_container::value_container(const std::vector<uint8_t>& data_array,
 									 bool parse_only_header)
 		: value_container()
 	{
-		deserialize(data_array, parse_only_header);
+		if (!deserialize(data_array, parse_only_header)) {
+			throw std::runtime_error("Failed to deserialize container data");
+		}
 	}
 
 	value_container::value_container(const value_container& other,
@@ -532,7 +536,9 @@ namespace container_module
 		auto arr = value_array(target_name);
 		if (arr.empty() || index >= arr.size())
 		{
-			return std::make_shared<value>(std::string(target_name));
+			// Return a proper null value
+			return std::make_shared<value>(std::string(target_name),
+											value_types::null_value, "");
 		}
 		return arr[index];
 	}
@@ -597,6 +603,13 @@ namespace container_module
 		initialize();
 		if (data_str.empty())
 			return false;
+
+		// Basic validation - check for valid container format
+		if (data_str.find("@header=") == std::string::npos &&
+			data_str.find("@data=") == std::string::npos) {
+			// Invalid format - not a serialized container
+			return false;
+		}
 
 		// Remove newlines
 		std::regex newlineRe("\\r\\n?|\\n");

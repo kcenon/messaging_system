@@ -51,7 +51,8 @@ namespace container_module
 		// Store as internal raw data with placeholders replaced
 		std::vector<uint8_t> arr = convert_specific_string(val);
 		data_ = arr;
-		size_ = arr.size();
+		// Store original string length, not converted length
+		size_ = val.size();
 	}
 
 	std::string string_value::to_string(const bool& original) const

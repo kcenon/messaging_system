@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <type_traits>
 #include <optional>
 
-// Use nested namespace definition (C++17)
+// Use the same namespace as the header
 namespace network_system::core
 {
 
@@ -48,7 +48,7 @@ namespace network_system::core
 		: client_id_(client_id)
 	{
 		// Optionally configure pipeline or modes here:
-		pipeline_ = internal::make_default_pipeline();
+		pipeline_ = network_system::internal::make_default_pipeline();
 		compress_mode_ = false; // set true if you want to compress
 		encrypt_mode_ = false;	// set true if you want to encrypt
 	}
@@ -163,7 +163,7 @@ namespace network_system::core
 							return;
 						}
 						// On success, wrap it in our tcp_socket
-						socket_ = std::make_shared<internal::tcp_socket>(
+						socket_ = std::make_shared<network_system::internal::tcp_socket>(
 							std::move(raw_socket));
 						on_connect(connect_ec);
 					});

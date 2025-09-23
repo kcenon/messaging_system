@@ -180,7 +180,7 @@ namespace container_module
 		virtual std::string to_string(const bool& original = true) const
 		{
 			if (type_ == value_types::null_value)
-				return "";
+				throw std::logic_error("Cannot convert null_value to string.");
 			return "";
 		}
 
@@ -261,6 +261,7 @@ namespace container_module
 		void set_ullong(const std::string& data);
 		void set_float(const std::string& data);
 		void set_double(const std::string& data);
+		void set_container(const std::string& data);
 
 	protected:
 		size_t size_;

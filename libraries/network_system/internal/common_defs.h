@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string_view>
 
 // Use nested namespace definition (C++17)
-namespace network_module
+namespace network_system::internal
 {
 	/*!
 	 * \enum data_mode
@@ -59,4 +59,4 @@ namespace network_module
 	inline constexpr std::string_view default_client_id = "default_client";
 	inline constexpr std::string_view default_server_id = "default_server";
 
-} // namespace network_module
+} // namespace network_system::internal

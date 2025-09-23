@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <type_traits>
 
 // Use nested namespace definition (C++17)
-namespace network_module
+namespace network_system::session
 {
 
 	// Use string_view in constructor for efficiency (C++17)
@@ -156,4 +156,4 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 		stop_session();
 	}
 
-} // namespace network_module
+} // namespace network_system::session

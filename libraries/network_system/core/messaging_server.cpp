@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "network_system/session/messaging_session.h"
 #include "network_system/integration/logger_integration.h"
 
-namespace network_module
+namespace network_system::core
 {
 
 	using tcp = asio::ip::tcp;
@@ -174,4 +174,4 @@ namespace network_module
 		do_accept();
 	}
 
-} // namespace network_module
+} // namespace network_system::core

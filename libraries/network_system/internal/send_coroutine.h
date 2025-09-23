@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../internal/pipeline.h"
 #include "../internal/tcp_socket.h"
 
-namespace network_module
+namespace network_system::internal
 {
 	/*!
 	 * \brief Launches a separate thread (via std::async) to apply
@@ -117,4 +117,4 @@ namespace network_module
 
 #endif
 
-} // namespace network_module
+} // namespace network_system::internal

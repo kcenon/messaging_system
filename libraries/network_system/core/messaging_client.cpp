@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <optional>
 
 // Use nested namespace definition (C++17)
-namespace network_module
+namespace network_system::core
 {
 
 	using tcp = asio::ip::tcp;
@@ -253,4 +253,4 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 		stop_client();
 	}
 
-} // namespace network_module
+} // namespace network_system::core

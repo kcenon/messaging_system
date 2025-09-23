@@ -55,9 +55,16 @@ namespace container_module
 		: bool_value()
 	{
 		name_ = name;
-		bool b = (valueStr == "true");
+		// Check for both "true" and "false" explicitly
+		bool b = (valueStr == "true" || valueStr == "1");
 		set_data(b);
 		type_ = value_types::bool_value;
+	}
+
+	bool_value::bool_value(const std::string& name, const char* valueStr)
+		: bool_value(name, std::string(valueStr))
+	{
+		// Delegate to string constructor
 	}
 
 	bool bool_value::to_boolean(void) const

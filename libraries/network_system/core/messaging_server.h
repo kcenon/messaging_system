@@ -42,9 +42,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <asio.hpp>
 
-namespace network_module
-{
+namespace network_system::session {
 	class messaging_session;
+}
+
+namespace network_system::core
+{
+	using network_system::session::messaging_session;
 
 	/*!
 	 * \class messaging_server
@@ -191,4 +195,4 @@ namespace network_module
 		std::vector<std::shared_ptr<messaging_session>> sessions_;
 	};
 
-} // namespace network_module
+} // namespace network_system::core

@@ -47,7 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../internal/pipeline.h"
 
 // Use nested namespace definition in C++17
-namespace network_module
+namespace network_system::core
 {
 
 	/*!
@@ -168,10 +168,10 @@ namespace network_module
 			stop_promise_;	/*!< Signals \c wait_for_stop() when stopping. */
 		std::future<void> stop_future_; /*!< Used by \c wait_for_stop(). */
 
-		std::shared_ptr<tcp_socket>
+		std::shared_ptr<network_system::internal::tcp_socket>
 			socket_;   /*!< The \c tcp_socket wrapper once connected. */
 
-		pipeline
+		network_system::internal::pipeline
 			pipeline_; /*!< Pipeline for optional compression/encryption. */
 		bool compress_mode_{
 			false
@@ -181,4 +181,4 @@ namespace network_module
 		}; /*!< If true, encrypt data before sending. */
 	};
 
-} // namespace network_module
+} // namespace network_system::core

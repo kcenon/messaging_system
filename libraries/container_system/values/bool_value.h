@@ -58,6 +58,11 @@ namespace container_module
 		 */
 		bool_value(const std::string& name, const std::string& valueStr);
 
+		/**
+		 * @brief Construct a bool_value from a const char* ("true"/"false").
+		 */
+		bool_value(const std::string& name, const char* valueStr);
+
 		~bool_value() override = default;
 
 		bool to_boolean(void) const override;

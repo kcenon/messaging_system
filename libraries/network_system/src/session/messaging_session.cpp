@@ -46,10 +46,10 @@ namespace network_system::session
 		: server_id_(server_id)
 	{
 		// Create the tcp_socket wrapper
-		socket_ = std::make_shared<internal::tcp_socket>(std::move(socket));
+		socket_ = std::make_shared<network_system::internal::tcp_socket>(std::move(socket));
 
 		// Initialize the pipeline (stub)
-		pipeline_ = internal::make_default_pipeline();
+		pipeline_ = network_system::internal::make_default_pipeline();
 
 		// Default modes - could use inline initialization in header with C++17
 		compress_mode_ = false;
@@ -105,7 +105,7 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 #ifdef USE_STD_COROUTINE
 		// Coroutine-based approach
 		asio::co_spawn(socket_->socket().get_executor(),
-					   internal::async_send_with_pipeline_co(socket_, std::move(data),
+					   network_system::internal::async_send_with_pipeline_co(socket_, std::move(data),
 												   pipeline_, compress_mode_,
 												   encrypt_mode_),
 					   [](std::error_code ec)
@@ -117,7 +117,7 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 					   });
 #else
 		// Fallback approach
-		auto fut = internal::async_send_with_pipeline_no_co(
+		auto fut = network_system::internal::async_send_with_pipeline_no_co(
 			socket_, std::move(data), pipeline_, compress_mode_, encrypt_mode_);
 		
 		// Use structured binding with try/catch for better error handling (C++17)
