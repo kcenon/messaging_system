@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <thread>
 
-#include <network/network.h>
+#include "../../libraries/network_system/network.h"
 
 using namespace network_module;
 

@@ -19,7 +19,7 @@ All rights reserved.
 #include "basic_monitor.h"
 
 #ifdef USE_THREAD_SYSTEM
-#include <interfaces/monitorable_interface.h>
+#include <kcenon/thread/interfaces/monitorable_interface.h>
 
 namespace kcenon::logger {
 

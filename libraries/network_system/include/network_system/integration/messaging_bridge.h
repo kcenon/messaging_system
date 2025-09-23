@@ -47,7 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "network_system/core/messaging_server.h"
 
 #ifdef BUILD_WITH_CONTAINER_SYSTEM
-#include "container.h"
+#include <container_system/container.h>
 #endif
 
 #ifdef BUILD_WITH_THREAD_SYSTEM

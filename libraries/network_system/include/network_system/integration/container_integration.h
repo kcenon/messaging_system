@@ -18,7 +18,7 @@
 #include <any>
 
 #ifdef BUILD_WITH_CONTAINER_SYSTEM
-#include "container.h"
+#include <container_system/container.h>
 #endif
 
 namespace network_system::integration {

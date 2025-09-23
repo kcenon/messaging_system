@@ -19,7 +19,7 @@ All rights reserved.
 #include "di_container_interface.h"
 
 #ifdef USE_THREAD_SYSTEM
-#include <interfaces/service_container.h>
+#include <kcenon/thread/interfaces/service_container.h>
 
 namespace kcenon::logger {
 
