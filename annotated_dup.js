@@ -337,6 +337,13 @@ var annotated_dup =
         ] ]
       ] ],
       [ "monitoring", "db/d50/namespacekcenon_1_1monitoring.html", [
+        [ "core", "dc/d0e/namespacekcenon_1_1monitoring_1_1core.html", [
+          [ "counter", "d2/d81/classkcenon_1_1monitoring_1_1core_1_1counter.html", "d2/d81/classkcenon_1_1monitoring_1_1core_1_1counter" ],
+          [ "gauge", "db/db4/classkcenon_1_1monitoring_1_1core_1_1gauge.html", "db/db4/classkcenon_1_1monitoring_1_1core_1_1gauge" ],
+          [ "metric", "db/d7c/classkcenon_1_1monitoring_1_1core_1_1metric.html", "db/d7c/classkcenon_1_1monitoring_1_1core_1_1metric" ],
+          [ "monitor", "d6/d93/classkcenon_1_1monitoring_1_1core_1_1monitor.html", "d6/d93/classkcenon_1_1monitoring_1_1core_1_1monitor" ],
+          [ "timer", "df/d47/classkcenon_1_1monitoring_1_1core_1_1timer.html", "df/d47/classkcenon_1_1monitoring_1_1core_1_1timer" ]
+        ] ],
         [ "web", "d7/d44/namespacekcenon_1_1monitoring_1_1web.html", [
           [ "AggregationResult", "d7/de7/structkcenon_1_1monitoring_1_1web_1_1AggregationResult.html", "d7/de7/structkcenon_1_1monitoring_1_1web_1_1AggregationResult" ],
           [ "AlertSummary", "d8/df5/structkcenon_1_1monitoring_1_1web_1_1AlertSummary.html", "d8/df5/structkcenon_1_1monitoring_1_1web_1_1AlertSummary" ],
@@ -494,6 +501,9 @@ var annotated_dup =
       ] ],
       [ "logger_interface", "d7/d38/classlogger__system_1_1logger__interface.html", "d7/d38/classlogger__system_1_1logger__interface" ],
       [ "logger_registry", "d0/d4d/classlogger__system_1_1logger__registry.html", "d0/d4d/classlogger__system_1_1logger__registry" ]
+    ] ],
+    [ "monitoring", "d8/d51/namespacemonitoring.html", [
+      [ "monitoring_system", "dd/dbc/classmonitoring_1_1monitoring__system.html", "dd/dbc/classmonitoring_1_1monitoring__system" ]
     ] ],
     [ "monitoring_interface", "d3/d7a/namespacemonitoring__interface.html", [
       [ "metrics_snapshot", "dc/d59/structmonitoring__interface_1_1metrics__snapshot.html", "dc/d59/structmonitoring__interface_1_1metrics__snapshot" ],

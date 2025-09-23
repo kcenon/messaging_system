@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d6/dc5/classkcenon_1_1thread_1_1event__bus.html" title="Event Bus for publish&#45;subscribe pattern." alt="" coords="5,5,200,31"/>
+<area shape="rect" id="Node000000" href="$db/d47/classkcenon_1_1thread_1_1error__handler.html" title="Error handler interface." alt="" coords="5,5,164,45"/>
+<area shape="rect" id="Node000001" href="$d2/dc6/classkcenon_1_1thread_1_1default__error__handler.html" title="Default error handler implementation." alt="" coords="212,5,385,45"/>
+<area shape="poly" id="edge97_Node000000_Node000001" title=" " alt="" coords="178,23,212,23,212,28,178,28"/>
 </map>

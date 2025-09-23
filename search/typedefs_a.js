@@ -7,7 +7,7 @@ var searchData=
   ['messaging_5fserver_4',['messaging_server',['../d1/df3/namespacenetwork__module.html#a180d89ec18c1a3e3d6c12f313ac5e301',1,'network_module']]],
   ['messaging_5fsession_5',['messaging_session',['../d1/df3/namespacenetwork__module.html#a2076467d062f17a3339d62db7e953254',1,'network_module']]],
   ['metric_5fmap_6',['metric_map',['../d0/d0a/structmonitoring__system_1_1monitoring__data.html#a41f91acaf30368e91a4e0c7ae70e1137',1,'monitoring_system::monitoring_data']]],
-  ['metric_5fvalue_7',['metric_value',['../de/d3f/namespacemonitoring__system.html#aacb21aa9c0f7eb2dd9aa1fd59b57ca20',1,'monitoring_system']]],
+  ['metric_5fvalue_7',['metric_value',['../de/d3f/namespacemonitoring__system.html#aacb21aa9c0f7eb2dd9aa1fd59b57ca20',1,'monitoring_system::metric_value'],['../dc/d0e/namespacekcenon_1_1monitoring_1_1core.html#a18722fc8f871fd1bd45e15da207b67b8',1,'kcenon::monitoring::core::metric_value']]],
   ['middlewarehandler_8',['MiddlewareHandler',['../d7/d44/namespacekcenon_1_1monitoring_1_1web.html#a9da1de11239aa0acf1c0c7f7e9a323b5',1,'kcenon::monitoring::web']]],
   ['monitoring_5ffactory_9',['monitoring_factory',['../da/d02/namespacekcenon_1_1logger.html#a71d0f0ea943fa829fab714a3b1053666',1,'kcenon::logger']]],
   ['monitoring_5finterface_10',['monitoring_interface',['../da/d02/namespacekcenon_1_1logger.html#aa1f148089d3294b336f5928b91793045',1,'kcenon::logger']]],

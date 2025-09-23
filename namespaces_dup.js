@@ -10,6 +10,7 @@ var namespaces_dup =
     [ "logger_module", "dc/d2b/namespacelogger__module.html", "dc/d2b/namespacelogger__module" ],
     [ "logger_system", "da/d11/namespacelogger__system.html", "da/d11/namespacelogger__system" ],
     [ "messaging", "d4/d11/namespacemessaging.html", null ],
+    [ "monitoring", "d8/d51/namespacemonitoring.html", "d8/d51/namespacemonitoring" ],
     [ "monitoring_interface", "d3/d7a/namespacemonitoring__interface.html", "d3/d7a/namespacemonitoring__interface" ],
     [ "monitoring_system", "de/d3f/namespacemonitoring__system.html", "de/d3f/namespacemonitoring__system" ],
     [ "network_module", "d1/df3/namespacenetwork__module.html", "d1/df3/namespacenetwork__module" ],

@@ -534,6 +534,11 @@ var hierarchy =
     [ "container_module::integration::messaging_integration", "d2/d81/classcontainer__module_1_1integration_1_1messaging__integration.html", null ],
     [ "kcenon::messaging::services::monitoring::messaging_metrics", "d7/d9a/structkcenon_1_1messaging_1_1services_1_1monitoring_1_1messaging__metrics.html", null ],
     [ "kcenon::messaging::integrations::messaging_system_orchestrator", "d5/d8f/classkcenon_1_1messaging_1_1integrations_1_1messaging__system__orchestrator.html", null ],
+    [ "kcenon::monitoring::core::metric", "db/d7c/classkcenon_1_1monitoring_1_1core_1_1metric.html", [
+      [ "kcenon::monitoring::core::counter", "d2/d81/classkcenon_1_1monitoring_1_1core_1_1counter.html", null ],
+      [ "kcenon::monitoring::core::gauge", "db/db4/classkcenon_1_1monitoring_1_1core_1_1gauge.html", null ],
+      [ "kcenon::monitoring::core::timer", "df/d47/classkcenon_1_1monitoring_1_1core_1_1timer.html", null ]
+    ] ],
     [ "MockMonitoringSystem::Metric", "db/dc5/structMockMonitoringSystem_1_1Metric.html", null ],
     [ "monitoring_system::metric", "dd/d06/structmonitoring__system_1_1metric.html", null ],
     [ "monitoring_system::metric_aggregation_result", "de/dfd/structmonitoring__system_1_1metric__aggregation__result.html", null ],
@@ -590,6 +595,7 @@ var hierarchy =
     [ "ModernClient", "d0/d0a/classModernClient.html", null ],
     [ "ModernServer", "de/df7/classModernServer.html", null ],
     [ "database::mongodb_query_builder", "dd/dab/classdatabase_1_1mongodb__query__builder.html", null ],
+    [ "kcenon::monitoring::core::monitor", "d6/d93/classkcenon_1_1monitoring_1_1core_1_1monitor.html", null ],
     [ "monitoring_system::adaptive_monitor::monitor_impl", "d7/df6/structmonitoring__system_1_1adaptive__monitor_1_1monitor__impl.html", null ],
     [ "monitoring_system::system_monitor::monitor_impl", "d6/de0/structmonitoring__system_1_1system__monitor_1_1monitor__impl.html", null ],
     [ "kcenon::thread::monitorable_interface", "d0/d9c/classkcenon_1_1thread_1_1monitorable__interface.html", null ],
@@ -623,6 +629,7 @@ var hierarchy =
     ] ],
     [ "monitoring_system::monitoring_interface", "d3/dd9/classmonitoring__system_1_1monitoring__interface.html", null ],
     [ "mock_monitoring::monitoring_stats", "d2/d4a/structmock__monitoring_1_1monitoring__stats.html", null ],
+    [ "monitoring::monitoring_system", "dd/dbc/classmonitoring_1_1monitoring__system.html", null ],
     [ "monitoring_system::moving_window_aggregator< T >", "d7/d3a/classmonitoring__system_1_1moving__window__aggregator.html", null ],
     [ "monitoring_system::moving_window_aggregator< double >", "d7/d3a/classmonitoring__system_1_1moving__window__aggregator.html", null ],
     [ "kcenon::messaging::services::network::network_config", "df/d1b/structkcenon_1_1messaging_1_1services_1_1network_1_1network__config.html", null ],

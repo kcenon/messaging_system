@@ -1,0 +1,9 @@
+<map id="kcenon::monitoring::core::metric" name="kcenon::monitoring::core::metric">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,69,153,109"/>
+<area shape="rect" id="Node000002" href="$d2/d81/classkcenon_1_1monitoring_1_1core_1_1counter.html" title=" " alt="" coords="201,5,349,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="153,63,213,43,214,48,155,68"/>
+<area shape="rect" id="Node000003" href="$db/db4/classkcenon_1_1monitoring_1_1core_1_1gauge.html" title=" " alt="" coords="201,69,349,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="167,87,201,87,201,92,167,92"/>
+<area shape="rect" id="Node000004" href="$df/d47/classkcenon_1_1monitoring_1_1core_1_1timer.html" title=" " alt="" coords="201,133,349,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="155,111,214,131,213,136,153,116"/>
+</map>

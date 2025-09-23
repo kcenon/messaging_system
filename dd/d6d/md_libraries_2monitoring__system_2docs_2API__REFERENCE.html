@@ -707,7 +707,7 @@ Usage Examples</h1>
 Basic Monitoring Setup</h2>
 <div class="fragment"><div class="line"><span class="comment">// Create monitoring instance</span></div>
 <div class="line">monitoring_builder builder;</div>
-<div class="line"><span class="keyword">auto</span> monitoring = builder</div>
+<div class="line"><span class="keyword">auto</span> <a class="code hl_namespace" href="../../d8/d51/namespacemonitoring.html">monitoring</a> = builder</div>
 <div class="line">    .with_history_size(1000)</div>
 <div class="line">    .with_collection_interval(1s)</div>
 <div class="line">    .add_collector(std::make_unique&lt;performance_monitor&gt;())</div>
@@ -716,7 +716,8 @@ Basic Monitoring Setup</h2>
 <div class="line">    .build();</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Start monitoring</span></div>
-<div class="line">monitoring.value()-&gt;start();</div>
+<div class="line"><a class="code hl_namespace" href="../../d8/d51/namespacemonitoring.html">monitoring</a>.value()-&gt;start();</div>
+<div class="ttc" id="anamespacemonitoring_html"><div class="ttname"><a href="../../d8/d51/namespacemonitoring.html">monitoring</a></div><div class="ttdef"><b>Definition</b> <a href="../../d2/dd9/monitoring__system_8h_source.html#l00013">monitoring_system.h:13</a></div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md1475"></a>
 Health Check Setup</h2>
 <div class="fragment"><div class="line"><span class="comment">// Create health monitor</span></div>

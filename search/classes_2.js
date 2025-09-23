@@ -69,14 +69,15 @@ var searchData=
   ['content_5fvalidator_66',['content_validator',['../d0/d3d/classkcenon_1_1messaging_1_1routing_1_1content__validator.html',1,'kcenon::messaging::routing']]],
   ['contentmanagementsystem_67',['ContentManagementSystem',['../d9/d1c/classscenarios_1_1ContentManagementSystem.html',1,'scenarios']]],
   ['context_5fmetadata_68',['context_metadata',['../d7/d98/structmonitoring__system_1_1context__metadata.html',1,'monitoring_system']]],
-  ['convert_5fstring_69',['convert_string',['../d8/dfe/classutilities_1_1conversion_1_1convert__string.html',1,'utilities::conversion::convert_string'],['../d1/d53/classutility__module_1_1convert__string.html',1,'utility_module::convert_string']]],
+  ['convert_5fstring_69',['convert_string',['../d1/d53/classutility__module_1_1convert__string.html',1,'utility_module::convert_string'],['../d8/dfe/classutilities_1_1conversion_1_1convert__string.html',1,'utilities::conversion::convert_string']]],
   ['convertstringtest_70',['ConvertStringTest',['../d4/de6/classConvertStringTest.html',1,'']]],
   ['coroutine_5fsupport_71',['coroutine_support',['../d2/d9a/classcoroutine__support.html',1,'']]],
   ['corsconfig_72',['CorsConfig',['../d5/d74/structkcenon_1_1monitoring_1_1web_1_1CorsConfig.html',1,'kcenon::monitoring::web']]],
-  ['crash_5fcontext_73',['crash_context',['../d9/dbb/structkcenon_1_1thread_1_1crash__context.html',1,'kcenon::thread']]],
-  ['crash_5fhandler_74',['crash_handler',['../dd/d3f/classkcenon_1_1thread_1_1crash__handler.html',1,'kcenon::thread']]],
-  ['crash_5fstats_75',['crash_stats',['../d9/da6/structkcenon_1_1thread_1_1crash__handler_1_1crash__stats.html',1,'kcenon::thread::crash_handler']]],
-  ['crashsafetytest_76',['CrashSafetyTest',['../db/d83/classCrashSafetyTest.html',1,'']]],
-  ['credential_5fmanager_77',['credential_manager',['../d1/d0b/classdatabase_1_1security_1_1credential__manager.html',1,'database::security']]],
-  ['critical_5fresource_78',['critical_resource',['../d3/d9c/classcritical__resource.html',1,'']]]
+  ['counter_73',['counter',['../d2/d81/classkcenon_1_1monitoring_1_1core_1_1counter.html',1,'kcenon::monitoring::core']]],
+  ['crash_5fcontext_74',['crash_context',['../d9/dbb/structkcenon_1_1thread_1_1crash__context.html',1,'kcenon::thread']]],
+  ['crash_5fhandler_75',['crash_handler',['../dd/d3f/classkcenon_1_1thread_1_1crash__handler.html',1,'kcenon::thread']]],
+  ['crash_5fstats_76',['crash_stats',['../d9/da6/structkcenon_1_1thread_1_1crash__handler_1_1crash__stats.html',1,'kcenon::thread::crash_handler']]],
+  ['crashsafetytest_77',['CrashSafetyTest',['../db/d83/classCrashSafetyTest.html',1,'']]],
+  ['credential_5fmanager_78',['credential_manager',['../d1/d0b/classdatabase_1_1security_1_1credential__manager.html',1,'database::security']]],
+  ['critical_5fresource_79',['critical_resource',['../d3/d9c/classcritical__resource.html',1,'']]]
 ];
