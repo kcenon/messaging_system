@@ -1,11 +1,9 @@
 <map id="libraries/network_system/include/network_system/internal/send_coroutine.h" name="libraries/network_system/include/network_system/internal/send_coroutine.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="111,5,302,60"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="87,5,278,60"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,115,67,141"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,62,70,111,68,106,157,58"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="91,115,168,141"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="187,62,150,106,146,103,183,59"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="192,108,376,148"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="231,59,262,96,258,99,227,62"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="400,108,584,148"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="288,58,422,101,421,106,286,63"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,62,67,110,64,106,140,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="91,108,275,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="185,60,185,94,180,94,180,60"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="299,108,483,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="242,58,337,100,335,105,240,62"/>
 </map>
