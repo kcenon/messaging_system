@@ -50,7 +50,10 @@ if(BUILD_NETWORK AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/network_test.cpp)
     add_executable(network_test network_test.cpp)
     target_link_libraries(network_test
         ${TEST_COMMON_LIBS}
-        network
+        NetworkSystem
+    )
+    target_include_directories(network_test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../libraries/network_system/include
     )
     add_test(NAME network_test COMMAND network_test)
     list(APPEND TESTS network_test)
@@ -62,13 +65,13 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_test.cpp)
     add_executable(integration_test integration_test.cpp)
     set(INTEGRATION_TEST_LIBS ${TEST_COMMON_LIBS})
     if(BUILD_CONTAINER)
-        list(APPEND INTEGRATION_TEST_LIBS container)
+        list(APPEND INTEGRATION_TEST_LIBS container_system)
     endif()
     if(BUILD_DATABASE AND TARGET database)
         list(APPEND INTEGRATION_TEST_LIBS database)
     endif()
     if(BUILD_NETWORK)
-        list(APPEND INTEGRATION_TEST_LIBS network)
+        list(APPEND INTEGRATION_TEST_LIBS NetworkSystem)
     endif()
     target_link_libraries(integration_test ${INTEGRATION_TEST_LIBS})
     add_test(NAME integration_test COMMAND integration_test)
