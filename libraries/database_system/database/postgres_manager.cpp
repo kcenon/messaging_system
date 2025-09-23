@@ -187,13 +187,17 @@ namespace database
 						db_row[column_name] = nullptr;
 					} else {
 						// Try to convert to appropriate type
-						if (row[i].type() == pqxx::oid::int8_oid ||
-							row[i].type() == pqxx::oid::int4_oid) {
+						// Using numeric OID values for compatibility across libpqxx versions
+						// These are standard PostgreSQL OID constants:
+						// 20 = int8, 21 = int2, 23 = int4
+						// 700 = float4, 701 = float8
+						// 16 = bool
+						pqxx::oid type = row[i].type();
+						if (type == 20 || type == 21 || type == 23) { // int8, int2, int4
 							db_row[column_name] = row[i].as<int64_t>();
-						} else if (row[i].type() == pqxx::oid::float8_oid ||
-								   row[i].type() == pqxx::oid::float4_oid) {
+						} else if (type == 700 || type == 701) { // float4, float8
 							db_row[column_name] = row[i].as<double>();
-						} else if (row[i].type() == pqxx::oid::bool_oid) {
+						} else if (type == 16) { // bool
 							db_row[column_name] = row[i].as<bool>();
 						} else {
 							db_row[column_name] = row[i].as<std::string>();

@@ -14,6 +14,7 @@
 #include <fstream>
 
 #include "container.h"
+#include "values/container_value.h"
 
 #ifdef HAS_MESSAGING_FEATURES
 #include "integration/messaging_integration.h"
@@ -170,8 +171,8 @@ private:
         container->set_source("iot_aggregator", "batch_processor");
         container->set_target("iot_analytics_service", "data_processor");
         container->set_message_type("sensor_data_batch");
-        container->add_value(std::make_shared<int_value>("batch_size", static_cast<int>(batch.size())));
-        container->add_value(std::make_shared<long_value>("batch_timestamp",
+        container->add(std::make_shared<int_value>("batch_size", static_cast<int>(batch.size())));
+        container->add(std::make_shared<long_value>("batch_timestamp",
             std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::system_clock::now().time_since_epoch()).count()));
 #endif
@@ -181,16 +182,15 @@ private:
             const auto& reading = batch[i];
 
             // Create nested container for each reading
-            auto reading_container = std::make_shared<value_container>();
-            reading_container->set_message_type("sensor_reading");
-            reading_container->add_value(std::make_shared<string_value>("device_id", reading.device_id));
-            reading_container->add_value(std::make_shared<string_value>("sensor_type", reading.sensor_type));
-            reading_container->add_value(std::make_shared<double_value>("value", reading.value));
-            reading_container->add_value(std::make_shared<long_value>("timestamp",
+            std::string key = "reading_" + std::to_string(i);
+            auto reading_container = std::make_shared<container_value>(key);
+            reading_container->add(std::make_shared<string_value>("device_id", reading.device_id));
+            reading_container->add(std::make_shared<string_value>("sensor_type", reading.sensor_type));
+            reading_container->add(std::make_shared<double_value>("value", reading.value));
+            reading_container->add(std::make_shared<long_value>("timestamp",
                 std::chrono::duration_cast<std::chrono::milliseconds>(reading.timestamp.time_since_epoch()).count()));
 
-            std::string key = "reading_" + std::to_string(i);
-            container->add_value(std::make_shared<container_value>(key, reading_container));
+            container->add(reading_container);
         }
 
         // Simulate sending to analytics service
@@ -321,24 +321,24 @@ private:
         container->set_source("transaction_processor", "fraud_detection");
         container->set_target("compliance_service", "transaction_monitor");
         container->set_message_type(is_suspicious ? "suspicious_transaction" : "normal_transaction");
-        container->add_value(std::make_shared<string_value>("transaction_id", transaction.transaction_id));
-        container->add_value(std::make_shared<string_value>("account_from", transaction.account_from));
-        container->add_value(std::make_shared<string_value>("account_to", transaction.account_to));
-        container->add_value(std::make_shared<double_value>("amount", transaction.amount));
-        container->add_value(std::make_shared<string_value>("currency", transaction.currency));
-        container->add_value(std::make_shared<string_value>("transaction_type", transaction.transaction_type));
-        container->add_value(std::make_shared<long_value>("timestamp",
+        container->add(std::make_shared<string_value>("transaction_id", transaction.transaction_id));
+        container->add(std::make_shared<string_value>("account_from", transaction.account_from));
+        container->add(std::make_shared<string_value>("account_to", transaction.account_to));
+        container->add(std::make_shared<double_value>("amount", transaction.amount));
+        container->add(std::make_shared<string_value>("currency", transaction.currency));
+        container->add(std::make_shared<string_value>("transaction_type", transaction.transaction_type));
+        container->add(std::make_shared<long_value>("timestamp",
             std::chrono::duration_cast<std::chrono::milliseconds>(transaction.timestamp.time_since_epoch()).count()));
-        container->add_value(std::make_shared<double_value>("risk_score", is_suspicious ? 85.0 : 15.0));
+        container->add(std::make_shared<double_value>("risk_score", is_suspicious ? 85.0 : 15.0));
 #endif
 
         if (is_suspicious) {
             fraud_alerts_++;
 
             // Add additional fraud-related data
-            container->add_value(std::make_shared<string_value>("alert_reason",
+            container->add(std::make_shared<string_value>("alert_reason",
                 transaction.amount > 5000.0 ? "high_amount" : "same_account"));
-            container->add_value(std::make_shared<bool_value>("requires_manual_review", true));
+            container->add(std::make_shared<bool_value>("requires_manual_review", true));
 
             std::cout << "  FRAUD ALERT: " << transaction.transaction_id
                       << " Amount: $" << transaction.amount << std::endl;
@@ -478,15 +478,15 @@ private:
         container->set_source("game_client", event.player_id);
         container->set_target("game_server", "event_processor");
         container->set_message_type("game_event");
-        container->add_value(std::make_shared<string_value>("player_id", event.player_id));
-        container->add_value(std::make_shared<string_value>("event_type", event.event_type));
-        container->add_value(std::make_shared<long_value>("timestamp",
+        container->add(std::make_shared<string_value>("player_id", event.player_id));
+        container->add(std::make_shared<string_value>("event_type", event.event_type));
+        container->add(std::make_shared<long_value>("timestamp",
             std::chrono::duration_cast<std::chrono::milliseconds>(event.timestamp.time_since_epoch()).count()));
 #endif
 
         // Add event-specific data
         for (const auto& data_pair : event.event_data) {
-            container->add_value(std::make_shared<string_value>(data_pair.first, data_pair.second));
+            container->add(std::make_shared<string_value>(data_pair.first, data_pair.second));
         }
 
         // Update player scores
@@ -527,9 +527,9 @@ private:
         notification->set_source("achievement_system", "unlock_processor");
         notification->set_target("notification_service", "player_notifier");
         notification->set_message_type("achievement_unlocked");
-        notification->add_value(std::make_shared<string_value>("player_id", player_id));
-        notification->add_value(std::make_shared<string_value>("achievement_name", achievement));
-        notification->add_value(std::make_shared<long_value>("timestamp",
+        notification->add(std::make_shared<string_value>("player_id", player_id));
+        notification->add(std::make_shared<string_value>("achievement_name", achievement));
+        notification->add(std::make_shared<long_value>("timestamp",
             std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::system_clock::now().time_since_epoch()).count()));
 #endif
@@ -680,30 +680,30 @@ private:
             .add_value("upload_timestamp", std::chrono::duration_cast<std::chrono::milliseconds>(
                 document.upload_time.time_since_epoch()).count())
             .add_value("tag_count", static_cast<int>(document.tags.size()))
-            .optimize_for_memory()
+            .optimize_for_size()
             .build();
 #else
         auto container = std::make_shared<value_container>();
         container->set_source("cms_upload_service", "document_processor");
         container->set_target("search_indexer", "text_analyzer");
         container->set_message_type("document_processing");
-        container->add_value(std::make_shared<string_value>("document_id", document.document_id));
-        container->add_value(std::make_shared<string_value>("title", document.title));
-        container->add_value(std::make_shared<string_value>("author", document.author));
-        container->add_value(std::make_shared<string_value>("category", document.category));
-        container->add_value(std::make_shared<int_value>("content_length", static_cast<int>(document.content.length())));
-        container->add_value(std::make_shared<long_value>("upload_timestamp",
+        container->add(std::make_shared<string_value>("document_id", document.document_id));
+        container->add(std::make_shared<string_value>("title", document.title));
+        container->add(std::make_shared<string_value>("author", document.author));
+        container->add(std::make_shared<string_value>("category", document.category));
+        container->add(std::make_shared<int_value>("content_length", static_cast<int>(document.content.length())));
+        container->add(std::make_shared<long_value>("upload_timestamp",
             std::chrono::duration_cast<std::chrono::milliseconds>(document.upload_time.time_since_epoch()).count()));
-        container->add_value(std::make_shared<int_value>("tag_count", static_cast<int>(document.tags.size())));
+        container->add(std::make_shared<int_value>("tag_count", static_cast<int>(document.tags.size())));
 #endif
 
         // Add content (potentially large)
-        container->add_value(std::make_shared<string_value>("content", document.content));
+        container->add(std::make_shared<string_value>("content", document.content));
 
         // Add tags as separate values
         for (size_t i = 0; i < document.tags.size(); ++i) {
             std::string tag_key = "tag_" + std::to_string(i);
-            container->add_value(std::make_shared<string_value>(tag_key, document.tags[i]));
+            container->add(std::make_shared<string_value>(tag_key, document.tags[i]));
         }
 
         // Simulate text analysis and indexing
@@ -737,11 +737,11 @@ private:
         index_container->set_source("text_analyzer", "indexing_service");
         index_container->set_target("search_service", "index_updater");
         index_container->set_message_type("search_index_update");
-        index_container->add_value(std::make_shared<string_value>("document_id", document.document_id));
-        index_container->add_value(std::make_shared<string_value>("indexed_title", document.title));
-        index_container->add_value(std::make_shared<string_value>("indexed_category", document.category));
-        index_container->add_value(std::make_shared<int_value>("word_count", static_cast<int>(count_words(document.content))));
-        index_container->add_value(std::make_shared<long_value>("index_timestamp",
+        index_container->add(std::make_shared<string_value>("document_id", document.document_id));
+        index_container->add(std::make_shared<string_value>("indexed_title", document.title));
+        index_container->add(std::make_shared<string_value>("indexed_category", document.category));
+        index_container->add(std::make_shared<int_value>("word_count", static_cast<int>(count_words(document.content))));
+        index_container->add(std::make_shared<long_value>("index_timestamp",
             std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::system_clock::now().time_since_epoch()).count()));
 #endif
