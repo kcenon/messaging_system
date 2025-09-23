@@ -73,7 +73,7 @@ if(USE_INTERNAL_THREAD_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/t
     
     # Include directories for thread_system
     include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system/sources
+        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system/include
     )
 else()
     # Modern mode: use external ThreadSystemCore
@@ -101,7 +101,7 @@ if(USE_INTERNAL_LOGGER_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/l
 
     # Include directories for logger_system
     include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/logger_system/sources
+        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/logger_system/include
     )
 elseif(USE_EXTERNAL_LOGGER_SYSTEM)
     message(STATUS "Attempting to find external LoggerSystem")
@@ -126,6 +126,7 @@ if(USE_INTERNAL_MONITORING_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/librari
 
     # Include directories for monitoring_system
     include_directories(
+        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/monitoring_system/include
         ${CMAKE_CURRENT_SOURCE_DIR}/libraries/monitoring_system/sources
     )
 elseif(USE_EXTERNAL_MONITORING_SYSTEM)

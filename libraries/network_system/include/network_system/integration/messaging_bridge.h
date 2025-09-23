@@ -51,7 +51,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #ifdef BUILD_WITH_THREAD_SYSTEM
-#include <kcenon/thread/core/thread_pool.h>
+#include "kcenon/thread/core/thread_pool.h"
 #endif
 
 #include "network_system/integration/thread_integration.h"

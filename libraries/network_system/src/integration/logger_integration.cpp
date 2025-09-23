@@ -47,8 +47,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <sstream>
 
 #ifdef BUILD_WITH_LOGGER_SYSTEM
-#include <kcenon/logger/core/logger.h>
-#include <kcenon/logger/writers/console_writer.h>
+#include "kcenon/logger/core/logger.h"
+#include "kcenon/logger/writers/console_writer.h"
 #endif
 
 namespace network_system::integration {

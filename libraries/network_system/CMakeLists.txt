@@ -261,6 +261,7 @@ if(BUILD_WITH_THREAD_SYSTEM)
     find_library(THREAD_SYSTEM_LIBRARY
         NAMES thread_base
         PATHS
+            ${CMAKE_BINARY_DIR}/lib
             ../thread_system/build/lib
             ../thread_system/build
             ../thread_system/lib
@@ -284,12 +285,15 @@ endif()
 if(BUILD_WITH_LOGGER_SYSTEM)
     find_path(LOGGER_SYSTEM_INCLUDE_DIR
         NAMES kcenon/logger/core/logger.h
-        PATHS ../logger_system/include
+        PATHS
+            ../logger_system/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/../logger_system/include
         NO_DEFAULT_PATH
     )
     find_library(LOGGER_SYSTEM_LIBRARY
         NAMES LoggerSystem logger_system logger
         PATHS
+            ${CMAKE_BINARY_DIR}/lib
             ../logger_system/build/lib
             ../logger_system/build_test/lib
             ../logger_system/build

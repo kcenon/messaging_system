@@ -8,6 +8,8 @@
 #include <map>
 #include <sstream>
 #include <iomanip>
+#include <condition_variable>
+#include <mutex>
 
 #include "container.h"
 #include "values/bytes_value.h"
