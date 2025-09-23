@@ -143,18 +143,22 @@ Core Components</h1>
 <h2><a class="anchor" id="autotoc_md1250"></a>
 1. Logger Interface Implementation</h2>
 <p>The system implements <code>thread_module::logger_interface</code> with enhanced error handling:</p>
-<div class="fragment"><div class="line"><span class="keyword">class </span>logger : <span class="keyword">public</span> thread_module::logger_interface {</div>
+<div class="fragment"><div class="line"><span class="keyword">class </span>logger : <span class="keyword">public</span> <a class="code hl_class" href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html">thread_module::logger_interface</a> {</div>
 <div class="line">    <span class="comment">// Result pattern for comprehensive error handling</span></div>
-<div class="line">    <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> log(<a class="code hl_typedef" href="../../dc/d03/unit_2integration__test_2integration__test_8cpp.html#a219126f4ab8b7524735cadb04bf45f80">log_level</a> level, <span class="keyword">const</span> std::string&amp; message) <span class="keyword">override</span>;</div>
-<div class="line">    <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> log(<a class="code hl_typedef" href="../../dc/d03/unit_2integration__test_2integration__test_8cpp.html#a219126f4ab8b7524735cadb04bf45f80">log_level</a> level, <span class="keyword">const</span> std::string&amp; message,</div>
+<div class="line">    <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> <a class="code hl_function" href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html#aaf106dcc0e0144d4ef5013c2fd7c0292">log</a>(<a class="code hl_enumeration" href="../../da/dcc/namespacekcenon_1_1thread.html#a6215eac0c720de40677c39d154a1801f">log_level</a> level, <span class="keyword">const</span> std::string&amp; message) <span class="keyword">override</span>;</div>
+<div class="line">    <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> <a class="code hl_function" href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html#aaf106dcc0e0144d4ef5013c2fd7c0292">log</a>(<a class="code hl_enumeration" href="../../da/dcc/namespacekcenon_1_1thread.html#a6215eac0c720de40677c39d154a1801f">log_level</a> level, <span class="keyword">const</span> std::string&amp; message,</div>
 <div class="line">                    <span class="keyword">const</span> std::string&amp; file, <span class="keywordtype">int</span> line, </div>
 <div class="line">                    <span class="keyword">const</span> std::string&amp; function) <span class="keyword">override</span>;</div>
 <div class="line">    </div>
-<div class="line">    <span class="keywordtype">bool</span> is_enabled(<a class="code hl_typedef" href="../../dc/d03/unit_2integration__test_2integration__test_8cpp.html#a219126f4ab8b7524735cadb04bf45f80">log_level</a> level) <span class="keyword">const override</span>;</div>
-<div class="line">    <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> flush() <span class="keyword">override</span>;</div>
+<div class="line">    <span class="keywordtype">bool</span> <a class="code hl_function" href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html#a6d58d8a0c1eb1ec7021046c6fe22336c">is_enabled</a>(<a class="code hl_enumeration" href="../../da/dcc/namespacekcenon_1_1thread.html#a6215eac0c720de40677c39d154a1801f">log_level</a> level) <span class="keyword">const override</span>;</div>
+<div class="line">    <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> <a class="code hl_function" href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html#ac0b15a904690df2d07ce09fbbdc49e6a">flush</a>() <span class="keyword">override</span>;</div>
 <div class="line">};</div>
-<div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2benchmark__common_8h_html_a13fa946184c58584adc65e45561d6772"><div class="ttname"><a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a></div><div class="ttdeci">thread_module::result_void result_void</div><div class="ttdef"><b>Definition</b> <a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h_source.html#l00012">benchmark_common.h:12</a></div></div>
-<div class="ttc" id="aunit_2integration__test_2integration__test_8cpp_html_a219126f4ab8b7524735cadb04bf45f80"><div class="ttname"><a href="../../dc/d03/unit_2integration__test_2integration__test_8cpp.html#a219126f4ab8b7524735cadb04bf45f80">log_level</a></div><div class="ttdeci">thread_module::log_level log_level</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d03/unit_2integration__test_2integration__test_8cpp_source.html#l00032">integration_test.cpp:32</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1logger__interface_html"><div class="ttname"><a href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html">kcenon::thread::logger_interface</a></div><div class="ttdoc">Logger interface for thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d05/thread__system_2include_2kcenon_2thread_2interfaces_2logger__interface_8h_source.html#l00052">logger_interface.h:52</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1logger__interface_html_a6d58d8a0c1eb1ec7021046c6fe22336c"><div class="ttname"><a href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html#a6d58d8a0c1eb1ec7021046c6fe22336c">kcenon::thread::logger_interface::is_enabled</a></div><div class="ttdeci">virtual bool is_enabled(log_level level) const =0</div><div class="ttdoc">Check if logging is enabled for the specified level.</div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1logger__interface_html_aaf106dcc0e0144d4ef5013c2fd7c0292"><div class="ttname"><a href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html#aaf106dcc0e0144d4ef5013c2fd7c0292">kcenon::thread::logger_interface::log</a></div><div class="ttdeci">virtual void log(log_level level, const std::string &amp;message)=0</div><div class="ttdoc">Log a message with specified level.</div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1logger__interface_html_ac0b15a904690df2d07ce09fbbdc49e6a"><div class="ttname"><a href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html#ac0b15a904690df2d07ce09fbbdc49e6a">kcenon::thread::logger_interface::flush</a></div><div class="ttdeci">virtual void flush()=0</div><div class="ttdoc">Flush any buffered log messages.</div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result__void_html"><div class="ttname"><a href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">kcenon::thread::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00194">error_handling.h:194</a></div></div>
+<div class="ttc" id="anamespacekcenon_1_1thread_html_a6215eac0c720de40677c39d154a1801f"><div class="ttname"><a href="../../da/dcc/namespacekcenon_1_1thread.html#a6215eac0c720de40677c39d154a1801f">kcenon::thread::log_level</a></div><div class="ttdeci">log_level</div><div class="ttdoc">Log level enumeration.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d05/thread__system_2include_2kcenon_2thread_2interfaces_2logger__interface_8h_source.html#l00037">logger_interface.h:37</a></div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md1251"></a>
 2. Configuration Management</h2>
 <h3><a class="anchor" id="autotoc_md1252"></a>
@@ -163,7 +167,7 @@ Logger Configuration with Validation</h3>
 <div class="line">    <span class="comment">// Core settings</span></div>
 <div class="line">    <span class="keywordtype">bool</span> async = <span class="keyword">true</span>;</div>
 <div class="line">    std::size_t buffer_size = 8192;</div>
-<div class="line">    thread_module::log_level min_level = thread_module::log_level::info;</div>
+<div class="line">    <a class="code hl_enumeration" href="../../da/dcc/namespacekcenon_1_1thread.html#a6215eac0c720de40677c39d154a1801f">thread_module::log_level</a> min_level = thread_module::log_level::info;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Performance tuning</span></div>
 <div class="line">    std::size_t batch_size = 100;</div>
@@ -176,7 +180,7 @@ Logger Configuration with Validation</h3>
 <div class="line">    <span class="keywordtype">bool</span> enable_structured_logging = <span class="keyword">false</span>;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Comprehensive validation</span></div>
-<div class="line">    <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> validate() <span class="keyword">const</span>;</div>
+<div class="line">    <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> validate() <span class="keyword">const</span>;</div>
 <div class="line">};</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md1253"></a>
 Configuration Templates</h3>
@@ -199,7 +203,7 @@ Configuration Templates</h3>
 <div class="line">                              std::unique_ptr&lt;log_writer_interface&gt; writer);</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Validation before building</span></div>
-<div class="line">    <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> validate() <span class="keyword">const</span>;</div>
+<div class="line">    <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> validate() <span class="keyword">const</span>;</div>
 <div class="line">    result&lt;std::unique_ptr&lt;logger&gt;&gt; build();</div>
 <div class="line">};</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md1255"></a>
@@ -209,8 +213,8 @@ Configuration Templates</h3>
 Writer Interface</h3>
 <div class="fragment"><div class="line"><span class="keyword">class </span>log_writer_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    <span class="keyword">virtual</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> write(<span class="keyword">const</span> log_entry&amp; entry) = 0;</div>
-<div class="line">    <span class="keyword">virtual</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> flush() = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> write(<span class="keyword">const</span> log_entry&amp; entry) = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> flush() = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> is_healthy()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
 <div class="line">};</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md1257"></a>
@@ -229,7 +233,7 @@ Formatter Interface</h3>
 5. Log Entry Structure</h2>
 <p>Unified data structure for all logging operations:</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>log_entry {</div>
-<div class="line">    thread_module::log_level level;</div>
+<div class="line">    <a class="code hl_enumeration" href="../../da/dcc/namespacekcenon_1_1thread.html#a6215eac0c720de40677c39d154a1801f">thread_module::log_level</a> level;</div>
 <div class="line">    std::string message;</div>
 <div class="line">    std::string file;</div>
 <div class="line">    <span class="keywordtype">int</span> line;</div>
@@ -378,9 +382,9 @@ Extension Points</h1>
 Custom Writers</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>custom_writer : <span class="keyword">public</span> log_writer_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> write(<span class="keyword">const</span> log_entry&amp; entry)<span class="keyword"> override </span>{</div>
+<div class="line">    <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> write(<span class="keyword">const</span> log_entry&amp; entry)<span class="keyword"> override </span>{</div>
 <div class="line">        <span class="comment">// Custom implementation (database, network, etc.)</span></div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>{};</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a>{};</div>
 <div class="line">    }</div>
 <div class="line">};</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md1280"></a>

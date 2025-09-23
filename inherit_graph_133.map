@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d8/da6/classkcenon_1_1logger_1_1monitoring__data.html" title="Collection of metrics." alt="" coords="5,5,239,31"/>
+<area shape="rect" id="Node000000" href="$d0/d66/classkcenon_1_1logger_1_1monitoring_1_1monitoring__interface.html" title="Interface for logger monitoring." alt="" coords="5,5,203,45"/>
+<area shape="rect" id="Node000001" href="$d0/d98/classkcenon_1_1logger_1_1monitoring_1_1basic__monitoring.html" title="Basic monitoring implementation." alt="" coords="251,5,448,45"/>
+<area shape="poly" id="edge58_Node000000_Node000001" title=" " alt="" coords="217,23,251,23,251,28,217,28"/>
 </map>

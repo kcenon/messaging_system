@@ -337,6 +337,9 @@ var annotated_dup =
         ] ]
       ] ],
       [ "monitoring", "db/d50/namespacekcenon_1_1monitoring.html", [
+        [ "adapters", "d3/d54/namespacekcenon_1_1monitoring_1_1adapters.html", [
+          [ "thread_system_adapter", "dd/d68/classkcenon_1_1monitoring_1_1adapters_1_1thread__system__adapter.html", "dd/d68/classkcenon_1_1monitoring_1_1adapters_1_1thread__system__adapter" ]
+        ] ],
         [ "core", "dc/d0e/namespacekcenon_1_1monitoring_1_1core.html", [
           [ "counter", "d2/d81/classkcenon_1_1monitoring_1_1core_1_1counter.html", "d2/d81/classkcenon_1_1monitoring_1_1core_1_1counter" ],
           [ "gauge", "db/db4/classkcenon_1_1monitoring_1_1core_1_1gauge.html", "db/db4/classkcenon_1_1monitoring_1_1core_1_1gauge" ],
@@ -824,6 +827,7 @@ var annotated_dup =
     [ "di_container_test", "da/d3b/classdi__container__test.html", "da/d3b/classdi__container__test" ],
     [ "DIContainerTest", "d9/da4/classDIContainerTest.html", "d9/da4/classDIContainerTest" ],
     [ "distributed_worker", "d8/dfa/classdistributed__worker.html", "d8/dfa/classdistributed__worker" ],
+    [ "DistributedComponent", "d5/daa/classDistributedComponent.html", "d5/daa/classDistributedComponent" ],
     [ "DistributedTracingTest", "d9/d51/classDistributedTracingTest.html", "d9/d51/classDistributedTracingTest" ],
     [ "ErrorBoundariesTest", "db/d11/classErrorBoundariesTest.html", "db/d11/classErrorBoundariesTest" ],
     [ "ErrorHandlingIntegrationTest", "d7/d8a/classErrorHandlingIntegrationTest.html", null ],

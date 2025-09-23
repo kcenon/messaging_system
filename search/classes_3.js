@@ -33,5 +33,6 @@ var searchData=
   ['distributed_5ftracer_30',['distributed_tracer',['../dc/d53/classmonitoring__system_1_1distributed__tracer.html',1,'monitoring_system']]],
   ['distributed_5ftransaction_31',['distributed_transaction',['../db/dfb/structdatabase_1_1async_1_1transaction__coordinator_1_1distributed__transaction.html',1,'database::async::transaction_coordinator']]],
   ['distributed_5fworker_32',['distributed_worker',['../d8/dfa/classdistributed__worker.html',1,'']]],
-  ['distributedtracingtest_33',['DistributedTracingTest',['../d9/d51/classDistributedTracingTest.html',1,'']]]
+  ['distributedcomponent_33',['DistributedComponent',['../d5/daa/classDistributedComponent.html',1,'']]],
+  ['distributedtracingtest_34',['DistributedTracingTest',['../d9/d51/classDistributedTracingTest.html',1,'']]]
 ];

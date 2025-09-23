@@ -238,7 +238,7 @@ Usage Example</h3>
 <div class="line">        <span class="keywordflow">if</span> (!success)</div>
 <div class="line">            <span class="keywordflow">return</span> <a class="code hl_class" href="../../d6/d10/classkcenon_1_1thread_1_1error.html">error</a>{error_code::job_execution_failed, <span class="stringliteral">&quot;Operation failed in my_custom_job&quot;</span>};</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>{}; <span class="comment">// success</span></div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a>{}; <span class="comment">// success</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
 <div class="line"> </div>
@@ -246,7 +246,6 @@ Usage Example</h3>
 <div class="line"><span class="keyword">auto</span> q = std::make_shared&lt;kcenon::thread::job_queue&gt;();</div>
 <div class="line"><span class="keyword">auto</span> <a class="code hl_typedef" href="../../de/dfa/namespacekcenon_1_1thread_1_1jobs.html#ab5ecf0ed0063dac36e1755b7102b0d3f">job_ptr</a> = std::make_shared&lt;my_job&gt;();</div>
 <div class="line">q-&gt;enqueue(job_ptr);</div>
-<div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2benchmark__common_8h_html_a13fa946184c58584adc65e45561d6772"><div class="ttname"><a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a></div><div class="ttdeci">thread_module::result_void result_void</div><div class="ttdef"><b>Definition</b> <a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h_source.html#l00012">benchmark_common.h:12</a></div></div>
 <div class="ttc" id="aclasskcenon_1_1thread_1_1error_html"><div class="ttname"><a href="../../d6/d10/classkcenon_1_1thread_1_1error.html">kcenon::thread::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00139">error_handling.h:139</a></div></div>
 <div class="ttc" id="aclasskcenon_1_1thread_1_1job_html"><div class="ttname"><a href="../../dc/df7/classkcenon_1_1thread_1_1job.html">kcenon::thread::job</a></div><div class="ttdoc">Represents a unit of work (task) to be executed, typically by a job queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d3/d6a/job_8h_source.html#l00101">job.h:102</a></div></div>
 <div class="ttc" id="aclasskcenon_1_1thread_1_1result__void_html"><div class="ttname"><a href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">kcenon::thread::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00194">error_handling.h:194</a></div></div>

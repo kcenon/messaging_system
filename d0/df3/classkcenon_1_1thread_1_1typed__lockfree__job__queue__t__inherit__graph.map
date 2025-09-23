@@ -1,7 +1,11 @@
 <map id="kcenon::thread::typed_lockfree_job_queue_t&lt; job_type &gt;" name="kcenon::thread::typed_lockfree_job_queue_t&lt; job_type &gt;">
-<area shape="rect" id="Node000001" title="High&#45;performance lock&#45;free priority&#45;based job queue." alt="" coords="5,95,173,149"/>
-<area shape="rect" id="Node000003" href="$d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html" title=" " alt="" coords="5,212,173,267"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="92,163,92,212,87,212,87,163"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="15,5,163,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,59,92,95,87,95,87,59"/>
+<area shape="rect" id="Node000001" title="High&#45;performance lock&#45;free priority&#45;based job queue." alt="" coords="122,184,290,239"/>
+<area shape="rect" id="Node000005" href="$d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html" title=" " alt="" coords="122,301,290,356"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="209,252,209,301,203,301,203,252"/>
+<area shape="rect" id="Node000002" href="$d9/da2/classkcenon_1_1thread_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="133,95,279,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,149,209,184,203,184,203,149"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,5,193,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="135,52,185,92,181,97,131,56"/>
+<area shape="rect" id="Node000004" href="$dd/dc3/classkcenon_1_1thread_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="217,5,408,45"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="281,56,231,97,227,92,277,52"/>
 </map>

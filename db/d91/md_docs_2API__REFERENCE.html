@@ -776,7 +776,7 @@ Class: &lt;tt&gt;logger_manager&lt;/tt&gt;</h2>
 <h3><a class="anchor" id="autotoc_md3587"></a>
 Configuration</h3>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>logger_config {</div>
-<div class="line">    <a class="code hl_typedef" href="../../dc/d03/unit_2integration__test_2integration__test_8cpp.html#a219126f4ab8b7524735cadb04bf45f80">log_level</a> min_level = log_level::info;</div>
+<div class="line">    <a class="code hl_enumeration" href="../../da/dcc/namespacekcenon_1_1thread.html#a6215eac0c720de40677c39d154a1801f">log_level</a> min_level = log_level::info;</div>
 <div class="line">    <span class="keywordtype">bool</span> enable_console = <span class="keyword">true</span>;</div>
 <div class="line">    <span class="keywordtype">bool</span> enable_file = <span class="keyword">true</span>;</div>
 <div class="line">    std::string log_directory = <span class="stringliteral">&quot;./logs&quot;</span>;</div>
@@ -785,10 +785,10 @@ Configuration</h3>
 <div class="line">    <span class="keywordtype">bool</span> async_logging = <span class="keyword">true</span>;</div>
 <div class="line">    <span class="keywordtype">size_t</span> buffer_size = 8192;</div>
 <div class="line">};</div>
-<div class="ttc" id="aunit_2integration__test_2integration__test_8cpp_html_a219126f4ab8b7524735cadb04bf45f80"><div class="ttname"><a href="../../dc/d03/unit_2integration__test_2integration__test_8cpp.html#a219126f4ab8b7524735cadb04bf45f80">log_level</a></div><div class="ttdeci">thread_module::log_level log_level</div><div class="ttdef"><b>Definition</b> <a href="../../dc/d03/unit_2integration__test_2integration__test_8cpp_source.html#l00032">integration_test.cpp:32</a></div></div>
+<div class="ttc" id="anamespacekcenon_1_1thread_html_a6215eac0c720de40677c39d154a1801f"><div class="ttname"><a href="../../da/dcc/namespacekcenon_1_1thread.html#a6215eac0c720de40677c39d154a1801f">kcenon::thread::log_level</a></div><div class="ttdeci">log_level</div><div class="ttdoc">Log level enumeration.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d05/thread__system_2include_2kcenon_2thread_2interfaces_2logger__interface_8h_source.html#l00037">logger_interface.h:37</a></div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md3588"></a>
 Log Levels</h3>
-<div class="fragment"><div class="line"><span class="keyword">enum class</span> <a class="code hl_typedef" href="../../dc/d03/unit_2integration__test_2integration__test_8cpp.html#a219126f4ab8b7524735cadb04bf45f80">log_level</a> {</div>
+<div class="fragment"><div class="line"><span class="keyword">enum class</span> <a class="code hl_enumeration" href="../../da/dcc/namespacekcenon_1_1thread.html#a6215eac0c720de40677c39d154a1801f">log_level</a> {</div>
 <div class="line">    trace = 0,</div>
 <div class="line">    debug = 1,</div>
 <div class="line">    info = 2,</div>
@@ -809,7 +809,7 @@ Methods</h3>
 <div class="line"><span class="keywordtype">void</span> critical(<span class="keyword">const</span> std::string&amp; <a class="code hl_class" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">message</a>);</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... <a class="code hl_function" href="../../db/da4/batch__processing__benchmark_8cpp.html#a7fa8f8493d40b59edcf1a65c72de4c03">Args</a>&gt;</div>
-<div class="line"><span class="keywordtype">void</span> log(<a class="code hl_typedef" href="../../dc/d03/unit_2integration__test_2integration__test_8cpp.html#a219126f4ab8b7524735cadb04bf45f80">log_level</a> level, <span class="keyword">const</span> std::string&amp; format, <a class="code hl_function" href="../../db/da4/batch__processing__benchmark_8cpp.html#a7fa8f8493d40b59edcf1a65c72de4c03">Args</a>&amp;&amp;... args);</div>
+<div class="line"><span class="keywordtype">void</span> log(<a class="code hl_enumeration" href="../../da/dcc/namespacekcenon_1_1thread.html#a6215eac0c720de40677c39d154a1801f">log_level</a> level, <span class="keyword">const</span> std::string&amp; format, <a class="code hl_function" href="../../db/da4/batch__processing__benchmark_8cpp.html#a7fa8f8493d40b59edcf1a65c72de4c03">Args</a>&amp;&amp;... args);</div>
 <div class="ttc" id="abatch__processing__benchmark_8cpp_html_a7fa8f8493d40b59edcf1a65c72de4c03"><div class="ttname"><a href="../../db/da4/batch__processing__benchmark_8cpp.html#a7fa8f8493d40b59edcf1a65c72de4c03">Args</a></div><div class="ttdeci">Args({0, 0}) -&gt; Args({1, 10}) -&gt;Args({1, 50}) -&gt;Args({1, 100}) -&gt;Args({1, 500})</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md3590"></a>
 Usage Example</h3>

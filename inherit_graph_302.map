@@ -1,7 +1,13 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$dd/dad/classkcenon_1_1thread_1_1logger__interface.html" title="Logger interface for thread system." alt="" coords="5,23,173,63"/>
-<area shape="rect" id="Node000001" href="$d4/d06/classconsole__logger.html" title="Simple console logger implementation." alt="" coords="221,5,341,31"/>
-<area shape="poly" id="edge107_Node000000_Node000001" title=" " alt="" coords="187,28,221,23,221,29,188,33"/>
-<area shape="rect" id="Node000002" href="$dd/d02/classmock__logger.html" title="Mock logger implementation for demonstration." alt="" coords="228,55,335,80"/>
-<area shape="poly" id="edge108_Node000000_Node000002" title=" " alt="" coords="187,53,228,58,227,63,187,58"/>
+<area shape="rect" id="Node000000" href="$dc/df7/classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="5,70,152,95"/>
+<area shape="rect" id="Node000001" href="$d6/df3/classkcenon_1_1thread_1_1typed__job__t.html" title=" " alt="" coords="222,5,386,45"/>
+<area shape="poly" id="edge102_Node000000_Node000001" title=" " alt="" coords="142,64,224,43,226,48,143,69"/>
+<area shape="rect" id="Node000003" href="$d1/db3/classkcenon_1_1thread_1_1callback__job.html" title="A specialized job class that encapsulates user&#45;defined callbacks." alt="" coords="200,70,408,95"/>
+<area shape="poly" id="edge104_Node000000_Node000003" title=" " alt="" coords="166,80,200,80,200,85,166,85"/>
+<area shape="rect" id="Node000004" href="$d6/df3/classkcenon_1_1thread_1_1typed__job__t.html" title="Represents a job that carries a specific priority level." alt="" coords="222,120,386,160"/>
+<area shape="poly" id="edge105_Node000000_Node000004" title=" " alt="" coords="143,96,226,117,224,123,142,101"/>
+<area shape="rect" id="Node000002" href="$d7/d93/classsimple__test__job.html" title=" " alt="" coords="489,13,614,38"/>
+<area shape="poly" id="edge103_Node000001_Node000002" title=" " alt="" coords="400,23,488,23,488,28,400,28"/>
+<area shape="rect" id="Node000005" href="$d5/dcf/classkcenon_1_1thread_1_1callback__typed__job__t.html" title="A template for creating priority&#45;based jobs that execute a user&#45;defined callback." alt="" coords="456,120,647,160"/>
+<area shape="poly" id="edge106_Node000004_Node000005" title=" " alt="" coords="400,137,456,137,456,143,400,143"/>
 </map>

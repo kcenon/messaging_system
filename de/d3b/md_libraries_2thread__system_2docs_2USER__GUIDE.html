@@ -138,7 +138,7 @@ Modules</h1>
 <h1><a class="anchor" id="autotoc_md3336"></a>
 Quick Start: Thread Pool</h1>
 <div class="fragment"><div class="line"><span class="keyword">using namespace </span>thread_pool_module;</div>
-<div class="line"><span class="keyword">using </span>thread_module::result_void;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">thread_module::result_void</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> pool = std::make_shared&lt;thread_pool&gt;(<span class="stringliteral">&quot;pool&quot;</span>);</div>
 <div class="line">std::vector&lt;std::unique_ptr&lt;thread_worker&gt;&gt; workers;</div>
@@ -146,13 +146,14 @@ Quick Start: Thread Pool</h1>
 <div class="line">pool-&gt;enqueue_batch(std::move(workers));</div>
 <div class="line">pool-&gt;start();</div>
 <div class="line"> </div>
-<div class="line">pool-&gt;execute(std::make_unique&lt;thread_module::callback_job&gt;([]() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
+<div class="line">pool-&gt;execute(std::make_unique&lt;thread_module::callback_job&gt;([]() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> {</div>
 <div class="line">  <span class="comment">// do work</span></div>
 <div class="line">  <span class="keywordflow">return</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>();</div>
 <div class="line">}));</div>
 <div class="line"> </div>
 <div class="line">pool-&gt;shutdown(); <span class="comment">// or pool-&gt;stop(false)</span></div>
 <div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2benchmark__common_8h_html_a13fa946184c58584adc65e45561d6772"><div class="ttname"><a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a></div><div class="ttdeci">thread_module::result_void result_void</div><div class="ttdef"><b>Definition</b> <a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h_source.html#l00012">benchmark_common.h:12</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result__void_html"><div class="ttname"><a href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">kcenon::thread::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00194">error_handling.h:194</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md3337"></a>
 Quick Start: Typed Thread Pool (priority/type routing)</h1>
 <div class="fragment"><div class="line"><span class="keyword">using namespace </span>typed_thread_pool_module;</div>
@@ -167,19 +168,21 @@ Adaptive Job Queue (automatic strategy)</h1>
 <div class="line">  thread_module::adaptive_job_queue::queue_strategy::ADAPTIVE</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line">q.enqueue(std::make_unique&lt;thread_module::callback_job&gt;([](){ <span class="keywordflow">return</span> thread_module::result_void(); }));</div>
+<div class="line">q.enqueue(std::make_unique&lt;thread_module::callback_job&gt;([](){ <span class="keywordflow">return</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">thread_module::result_void</a>(); }));</div>
 <div class="line"><span class="keyword">auto</span> job = q.dequeue();</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md3339"></a>
 Dependency Injection and Context</h1>
 <p>Use <code>service_container</code> to register optional services (logger, monitoring), then <code>thread_context</code> retrieves them automatically for pools/workers.</p>
 <div class="fragment"><div class="line"><span class="comment">// Register services</span></div>
 <div class="line">thread_module::service_container::global()</div>
-<div class="line">  .register_singleton&lt;thread_module::logger_interface&gt;(my_logger);</div>
+<div class="line">  .register_singleton&lt;<a class="code hl_class" href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html">thread_module::logger_interface</a>&gt;(my_logger);</div>
 <div class="line">thread_module::service_container::global()</div>
 <div class="line">  .register_singleton&lt;<a class="code hl_class" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html">monitoring_interface::monitoring_interface</a>&gt;(my_monitoring);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Context-aware pool/worker will log and report metrics when services exist</span></div>
-<div class="line">thread_pool_module::thread_worker w{<span class="keyword">true</span>, thread_module::thread_context{}};</div>
+<div class="line">thread_pool_module::thread_worker w{<span class="keyword">true</span>, <a class="code hl_class" href="../../da/de0/classkcenon_1_1thread_1_1thread__context.html">thread_module::thread_context</a>{}};</div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1logger__interface_html"><div class="ttname"><a href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html">kcenon::thread::logger_interface</a></div><div class="ttdoc">Logger interface for thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d05/thread__system_2include_2kcenon_2thread_2interfaces_2logger__interface_8h_source.html#l00052">logger_interface.h:52</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1thread__context_html"><div class="ttname"><a href="../../da/de0/classkcenon_1_1thread_1_1thread__context.html">kcenon::thread::thread_context</a></div><div class="ttdoc">Context object that provides access to optional services.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/de3/thread__system_2include_2kcenon_2thread_2interfaces_2thread__context_8h_source.html#l00049">thread_context.h:49</a></div></div>
 <div class="ttc" id="aclassmonitoring__interface_1_1monitoring__interface_html"><div class="ttname"><a href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html">monitoring_interface::monitoring_interface</a></div><div class="ttdef"><b>Definition</b> <a href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00119">monitoring_interface.h:119</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md3340"></a>
 Monitoring and Metrics</h1>

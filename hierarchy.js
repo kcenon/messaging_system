@@ -169,6 +169,7 @@ var hierarchy =
     [ "monitoring_system::distributed_tracer", "dc/d53/classmonitoring__system_1_1distributed__tracer.html", null ],
     [ "database::async::transaction_coordinator::distributed_transaction", "db/dfb/structdatabase_1_1async_1_1transaction__coordinator_1_1distributed__transaction.html", null ],
     [ "distributed_worker", "d8/dfa/classdistributed__worker.html", null ],
+    [ "DistributedComponent", "d5/daa/classDistributedComponent.html", null ],
     [ "std::enable_shared_from_this", null, [
       [ "container_module::thread_safe_container", "db/de5/classcontainer__module_1_1thread__safe__container.html", null ],
       [ "container_module::value", "d5/df9/classcontainer__module_1_1value.html", [
@@ -182,9 +183,11 @@ var hierarchy =
       [ "kcenon::thread::job_queue", "d9/da2/classkcenon_1_1thread_1_1job__queue.html", [
         [ "kcenon::thread::typed_job_queue_t< job_types >", "d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html", null ],
         [ "kcenon::thread::typed_job_queue_t< job_type >", "d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html", null ],
+        [ "kcenon::thread::typed_lockfree_job_queue_t< job_types >", "d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html", null ],
         [ "kcenon::thread::typed_job_queue_t< job_type >", "d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html", [
           [ "kcenon::thread::adaptive_typed_job_queue_t< job_type >", "d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html", null ]
-        ] ]
+        ] ],
+        [ "kcenon::thread::typed_lockfree_job_queue_t< job_type >", "d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html", null ]
       ] ],
       [ "kcenon::thread::thread_pool", "d8/dbe/classkcenon_1_1thread_1_1thread__pool.html", null ],
       [ "kcenon::thread::typed_thread_pool_t< job_type >", "d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html", null ],
@@ -384,10 +387,6 @@ var hierarchy =
     ] ],
     [ "kcenon::thread::detail::job_eraser", "d2/de2/classkcenon_1_1thread_1_1detail_1_1job__eraser.html", null ],
     [ "kcenon::thread::jobs::job_interface", "db/da8/classkcenon_1_1thread_1_1jobs_1_1job__interface.html", null ],
-    [ "thread_module::job_queue", null, [
-      [ "kcenon::thread::typed_lockfree_job_queue_t< job_types >", "d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html", null ],
-      [ "kcenon::thread::typed_lockfree_job_queue_t< job_type >", "d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html", null ]
-    ] ],
     [ "kcenon::thread::detail::job_type_extractor< Job >", "d1/d3c/structkcenon_1_1thread_1_1detail_1_1job__type__extractor.html", null ],
     [ "kcenon::thread::detail::job_type_extractor< T >", "d1/df0/structkcenon_1_1thread_1_1detail_1_1job__type__extractor_3_01T_01_4.html", null ],
     [ "kcenon::thread::detail::job_type_list< Types >", "d1/d5b/structkcenon_1_1thread_1_1detail_1_1job__type__list.html", null ],
@@ -976,6 +975,7 @@ var hierarchy =
     [ "monitoring_interface::thread_pool_metrics", "d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html", null ],
     [ "monitoring_system::thread_pool_metric_event::thread_pool_stats", "dc/d1d/structmonitoring__system_1_1thread__pool__metric__event_1_1thread__pool__stats.html", null ],
     [ "monitoring_system::thread_pool_stats", "d3/d27/structmonitoring__system_1_1thread__pool__stats.html", null ],
+    [ "kcenon::monitoring::adapters::thread_system_adapter", "dd/d68/classkcenon_1_1monitoring_1_1adapters_1_1thread__system__adapter.html", null ],
     [ "monitoring_system::resource_threshold_monitor::thresholds", "dc/d10/structmonitoring__system_1_1resource__threshold__monitor_1_1thresholds.html", null ],
     [ "monitoring_system::time_point_data", "de/d7a/structmonitoring__system_1_1time__point__data.html", null ],
     [ "monitoring_system::time_series", "df/dd6/classmonitoring__system_1_1time__series.html", null ],

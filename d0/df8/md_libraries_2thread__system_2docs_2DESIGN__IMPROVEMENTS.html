@@ -169,15 +169,15 @@ Core Interfaces</h3>
 <div class="line">    <span class="keyword">class </span>executor_interface {</div>
 <div class="line">    <span class="keyword">public</span>:</div>
 <div class="line">        <span class="keyword">virtual</span> ~executor_interface() = <span class="keywordflow">default</span>;</div>
-<div class="line">        <span class="keyword">virtual</span> <span class="keyword">auto</span> execute(std::unique_ptr&lt;job&gt; work) -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> = 0;</div>
-<div class="line">        <span class="keyword">virtual</span> <span class="keyword">auto</span> shutdown() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> = 0;</div>
+<div class="line">        <span class="keyword">virtual</span> <span class="keyword">auto</span> execute(std::unique_ptr&lt;job&gt; work) -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> = 0;</div>
+<div class="line">        <span class="keyword">virtual</span> <span class="keyword">auto</span> shutdown() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> = 0;</div>
 <div class="line">    };</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Scheduler interface</span></div>
 <div class="line">    <span class="keyword">class </span>scheduler_interface {</div>
 <div class="line">    <span class="keyword">public</span>:</div>
 <div class="line">        <span class="keyword">virtual</span> ~scheduler_interface() = <span class="keywordflow">default</span>;</div>
-<div class="line">        <span class="keyword">virtual</span> <span class="keyword">auto</span> schedule(std::unique_ptr&lt;job&gt; work) -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> = 0;</div>
+<div class="line">        <span class="keyword">virtual</span> <span class="keyword">auto</span> schedule(std::unique_ptr&lt;job&gt; work) -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> = 0;</div>
 <div class="line">        <span class="keyword">virtual</span> <span class="keyword">auto</span> get_next_job() -&gt; std::unique_ptr&lt;job&gt; = 0;</div>
 <div class="line">    };</div>
 <div class="line"> </div>
@@ -189,7 +189,7 @@ Core Interfaces</h3>
 <div class="line">        <span class="keyword">virtual</span> <span class="keyword">auto</span> reset_metrics() -&gt; <span class="keywordtype">void</span> = 0;</div>
 <div class="line">    };</div>
 <div class="line">}</div>
-<div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2benchmark__common_8h_html_a13fa946184c58584adc65e45561d6772"><div class="ttname"><a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a></div><div class="ttdeci">thread_module::result_void result_void</div><div class="ttdef"><b>Definition</b> <a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h_source.html#l00012">benchmark_common.h:12</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result__void_html"><div class="ttname"><a href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">kcenon::thread::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00194">error_handling.h:194</a></div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md2895"></a>
 2.2 Service Registry Pattern</h2>
 <h3><a class="anchor" id="autotoc_md2896"></a>

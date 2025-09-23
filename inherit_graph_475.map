@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$df/dc1/structmonitoring__system_1_1monitoring__config.html" title="Configuration for the monitoring system." alt="" coords="5,5,161,45"/>
+<area shape="rect" id="Node000000" href="$df/db6/classmonitoring__system_1_1monitorable__interface.html" title="Interface for components that can be monitored." alt="" coords="5,5,172,45"/>
+<area shape="rect" id="Node000001" href="$df/de4/classmonitoring__system_1_1monitorable__component.html" title="Base class providing default monitorable implementation." alt="" coords="220,5,401,45"/>
+<area shape="poly" id="edge154_Node000000_Node000001" title=" " alt="" coords="186,23,220,23,220,28,186,28"/>
+<area shape="rect" id="Node000002" href="$d9/db4/classtest__monitorable__component.html" title="Test implementation of monitorable_interface." alt="" coords="449,13,663,38"/>
+<area shape="poly" id="edge155_Node000001_Node000002" title=" " alt="" coords="415,23,449,23,449,28,415,28"/>
 </map>

@@ -107,21 +107,26 @@ Inheritance diagram for kcenon::thread::job_queue:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d9/df8/classkcenon_1_1thread_1_1job__queue__inherit__graph.png" border="0" usemap="#akcenon_1_1thread_1_1job__queue_inherit__map" alt="Inheritance graph"/></div>
 <map name="akcenon_1_1thread_1_1job__queue_inherit__map" id="akcenon_1_1thread_1_1job__queue_inherit__map">
-<area shape="rect" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="245,76,392,116"/>
+<area shape="rect" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="245,155,392,195"/>
 <area shape="rect" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title=" " alt="" coords="800,5,1001,45"/>
-<area shape="poly" title=" " alt="" coords="402,70,441,61,535,46,631,36,800,25,800,30,632,41,536,51,442,67,403,75"/>
+<area shape="poly" title=" " alt="" coords="346,142,388,105,413,87,440,72,485,55,532,41,627,24,719,16,800,16,800,21,719,22,628,29,533,46,487,60,442,77,416,92,391,109,349,146"/>
 <area shape="rect" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title=" " alt="" coords="803,147,998,187"/>
-<area shape="poly" title=" " alt="" coords="401,117,442,125,537,139,634,149,803,161,803,166,634,155,537,145,441,131,400,122"/>
-<area shape="rect" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="441,76,636,116"/>
-<area shape="poly" title=" " alt="" coords="406,93,441,93,441,99,406,99"/>
-<area shape="rect" title=" " alt="" coords="7,44,195,84"/>
-<area shape="poly" title=" " alt="" coords="209,77,245,83,244,88,208,82"/>
-<area shape="rect" href="../../dd/dc3/classkcenon_1_1thread_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,108,196,148"/>
-<area shape="poly" title=" " alt="" coords="209,109,245,104,245,109,210,115"/>
-<area shape="poly" title=" " alt="" coords="649,72,799,42,800,48,650,77"/>
-<area shape="poly" title=" " alt="" coords="650,115,803,145,802,150,649,120"/>
+<area shape="poly" title=" " alt="" coords="406,171,803,165,803,171,406,176"/>
+<area shape="rect" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html" title=" " alt="" coords="817,225,985,279"/>
+<area shape="poly" title=" " alt="" coords="406,183,817,238,816,244,405,189"/>
+<area shape="rect" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="441,87,636,127"/>
+<area shape="poly" title=" " alt="" coords="396,148,473,124,474,129,398,153"/>
+<area shape="rect" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html" title="High&#45;performance lock&#45;free priority&#45;based job queue." alt="" coords="455,263,623,318"/>
+<area shape="poly" title=" " alt="" coords="356,201,417,242,458,261,456,266,415,246,353,205"/>
+<area shape="rect" title=" " alt="" coords="7,123,195,163"/>
+<area shape="poly" title=" " alt="" coords="209,156,245,161,244,167,208,161"/>
+<area shape="rect" href="../../dd/dc3/classkcenon_1_1thread_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,187,196,227"/>
+<area shape="poly" title=" " alt="" coords="209,188,245,183,245,188,210,193"/>
+<area shape="poly" title=" " alt="" coords="641,81,810,43,811,48,642,86"/>
+<area shape="poly" title=" " alt="" coords="650,122,803,148,802,153,649,128"/>
 <area shape="rect" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html" title="Adaptive priority queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="781,76,1020,116"/>
-<area shape="poly" title=" " alt="" coords="650,93,781,93,781,99,650,99"/>
+<area shape="poly" title=" " alt="" coords="650,101,781,97,781,102,650,106"/>
+<area shape="poly" title=" " alt="" coords="636,278,816,258,817,264,637,283"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -334,7 +339,7 @@ Typical Usage</h3>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Jobs are destroyed immediately, so any cleanup logic in job destructors will run </dd></dl>
 
-<p>Reimplemented in <a class="el" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html#a5a0b7ef3862589961e443cc4d35cd03b">kcenon::thread::adaptive_typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#aa49b1302c73dfdb7e5a17daa189d18af">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#aa49b1302c73dfdb7e5a17daa189d18af">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#aa49b1302c73dfdb7e5a17daa189d18af">kcenon::thread::typed_job_queue_t&lt; job_types &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html#a5a0b7ef3862589961e443cc4d35cd03b">kcenon::thread::adaptive_typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#aa49b1302c73dfdb7e5a17daa189d18af">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#aa49b1302c73dfdb7e5a17daa189d18af">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#aa49b1302c73dfdb7e5a17daa189d18af">kcenon::thread::typed_job_queue_t&lt; job_types &gt;</a>, <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#affabb719aa079e24a680082041a19f51">kcenon::thread::typed_lockfree_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#affabb719aa079e24a680082041a19f51">kcenon::thread::typed_lockfree_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00370">370</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 
@@ -390,7 +395,7 @@ Typical Usage</h3>
 </ul>
 <dl class="section return"><dt>Returns</dt><dd>Unique pointer to job on success, error if queue empty/stopped </dd></dl>
 
-<p>Reimplemented in <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#acd7defa9e360fa9cbfdd984d21cfdef1">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#acd7defa9e360fa9cbfdd984d21cfdef1">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#acd7defa9e360fa9cbfdd984d21cfdef1">kcenon::thread::typed_job_queue_t&lt; job_types &gt;</a>, and <a class="el" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html#abfb712a88f12e8d1a94f482c9cabcece">kcenon::thread::adaptive_typed_job_queue_t&lt; job_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#acd7defa9e360fa9cbfdd984d21cfdef1">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#acd7defa9e360fa9cbfdd984d21cfdef1">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#acd7defa9e360fa9cbfdd984d21cfdef1">kcenon::thread::typed_job_queue_t&lt; job_types &gt;</a>, <a class="el" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html#abfb712a88f12e8d1a94f482c9cabcece">kcenon::thread::adaptive_typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#af9c10d11da09b84345e93b7f028cfe4d">kcenon::thread::typed_lockfree_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#af9c10d11da09b84345e93b7f028cfe4d">kcenon::thread::typed_lockfree_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00245">245</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 
@@ -451,7 +456,7 @@ Typical Usage</h3>
 </ul>
 <dl class="section return"><dt>Returns</dt><dd>Deque containing all jobs that were in the queue </dd></dl>
 
-<p>Reimplemented in <a class="el" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html#a16928295bf28da1c84be0f9a15cef708">kcenon::thread::adaptive_typed_job_queue_t&lt; job_type &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html#a16928295bf28da1c84be0f9a15cef708">kcenon::thread::adaptive_typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#a72e81e541ff77a418bbc4ee5f9617556">kcenon::thread::typed_lockfree_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#a72e81e541ff77a418bbc4ee5f9617556">kcenon::thread::typed_lockfree_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00337">337</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 
@@ -551,7 +556,7 @@ Typical Usage</h3>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Empty result on success, error on failure </dd></dl>
 
-<p>Reimplemented in <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#a2e458b15400ab95ffc0f203993d1603e">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#a2e458b15400ab95ffc0f203993d1603e">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#a2e458b15400ab95ffc0f203993d1603e">kcenon::thread::typed_job_queue_t&lt; job_types &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#a2e458b15400ab95ffc0f203993d1603e">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#a2e458b15400ab95ffc0f203993d1603e">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#a2e458b15400ab95ffc0f203993d1603e">kcenon::thread::typed_job_queue_t&lt; job_types &gt;</a>, <a class="el" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html#ab4d4e922f3c7b94ce1ed9ec734be3c27">kcenon::thread::adaptive_typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#aff854062c43e209038e7b2c0d7ffb442">kcenon::thread::typed_lockfree_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#aff854062c43e209038e7b2c0d7ffb442">kcenon::thread::typed_lockfree_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00128">128</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 
@@ -618,7 +623,7 @@ Typical Usage</h3>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Empty result on success, error on failure </dd></dl>
 
-<p>Reimplemented in <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#ad8d1537851528c56f4831c13a3466e09">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#ad8d1537851528c56f4831c13a3466e09">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#ad8d1537851528c56f4831c13a3466e09">kcenon::thread::typed_job_queue_t&lt; job_types &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#ad8d1537851528c56f4831c13a3466e09">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#ad8d1537851528c56f4831c13a3466e09">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#ad8d1537851528c56f4831c13a3466e09">kcenon::thread::typed_job_queue_t&lt; job_types &gt;</a>, <a class="el" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html#a7aed6ce8e56128084a249cfe61381de5">kcenon::thread::adaptive_typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#a088a58892dd672041ddd88811879f4c9">kcenon::thread::typed_lockfree_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#a088a58892dd672041ddd88811879f4c9">kcenon::thread::typed_lockfree_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00179">179</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 
@@ -913,7 +918,7 @@ Typical Usage</h3>
 </ul>
 <dl class="section return"><dt>Returns</dt><dd>Formatted string showing current job count </dd></dl>
 
-<p>Reimplemented in <a class="el" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html#af12da752a82314bb762aeaf9f9c86c37">kcenon::thread::adaptive_typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#afca471de5e961c29869020955e1027f7">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#afca471de5e961c29869020955e1027f7">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#afca471de5e961c29869020955e1027f7">kcenon::thread::typed_job_queue_t&lt; job_types &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="../../d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html#af12da752a82314bb762aeaf9f9c86c37">kcenon::thread::adaptive_typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#afca471de5e961c29869020955e1027f7">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#afca471de5e961c29869020955e1027f7">kcenon::thread::typed_job_queue_t&lt; job_type &gt;</a>, <a class="el" href="../../d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html#afca471de5e961c29869020955e1027f7">kcenon::thread::typed_job_queue_t&lt; job_types &gt;</a>, <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#a9800dfe912764760c76f02eaa3913348">kcenon::thread::typed_lockfree_job_queue_t&lt; job_type &gt;</a>, and <a class="el" href="../../d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html#a9800dfe912764760c76f02eaa3913348">kcenon::thread::typed_lockfree_job_queue_t&lt; job_types &gt;</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html#l00460">460</a> of file <a class="el" href="../../dd/d4c/job__queue_8cpp_source.html">job_queue.cpp</a>.</p>
 

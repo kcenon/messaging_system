@@ -50,7 +50,7 @@ var searchData=
   ['primary_5fkey_47',['primary_key',['../d1/d62/namespacedatabase_1_1orm.html#a7d653b0ef39699785eab3257815e7e97',1,'database::orm']]],
   ['print_48',['print',['../da/ddd/structTestResults.html#aabaf8f898c639f897d2cf7c5157d1dd1',1,'TestResults::print()'],['../d2/dd5/structBenchmarkResult.html#abfde94a16332c4ce1245049b43d634c1',1,'BenchmarkResult::print()'],['../d0/d98/structStressMetrics.html#aaa88a01e5ac8c4aeee7b387c3506361c',1,'StressMetrics::print()']]],
   ['print_5ffinal_5fstatistics_49',['print_final_statistics',['../d6/d71/classAdvancedContainerExample.html#a8a9c65f85e970a35210bfb7d8932246d',1,'AdvancedContainerExample']]],
-  ['print_5fmetrics_50',['print_metrics',['../dd/d8a/metrics__demo_8cpp.html#af2b4424caab3d146f906dd3ec597645d',1,'metrics_demo.cpp']]],
+  ['print_5fmetrics_50',['print_metrics',['../dd/d8a/metrics__demo_8cpp.html#a1a324b6a019b806084c81344dc42b932',1,'metrics_demo.cpp']]],
   ['print_5fperformance_5freport_51',['print_performance_report',['../da/d80/classPerformanceTest.html#a7804b3a3d9390cde2ce55710f6f0cd9b',1,'PerformanceTest']]],
   ['print_5fsummary_52',['print_summary',['../da/ddd/structTestResults.html#ae009c45a57c0db33704b4c6256e85238',1,'TestResults']]],
   ['print_5fusage_53',['print_usage',['../dc/dfe/database__system_2samples_2run__all__samples_8cpp.html#ac7608332d002ef2745359f4cada4afc8',1,'print_usage(const char *program_name):&#160;run_all_samples.cpp'],['../d0/d0e/network__system_2samples_2run__all__samples_8cpp.html#ac7608332d002ef2745359f4cada4afc8',1,'print_usage(const char *program_name):&#160;run_all_samples.cpp']]],

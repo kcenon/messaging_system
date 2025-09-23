@@ -220,12 +220,13 @@ thread_base Class</h2>
 <div class="line">    </div>
 <div class="line">protected:</div>
 <div class="line">    <span class="comment">// Override in derived classes</span></div>
-<div class="line">    virtual auto before_start() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> { <span class="keywordflow">return</span> {}; }</div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> do_work() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> = 0;</div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> after_stop() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> { <span class="keywordflow">return</span> {}; }</div>
+<div class="line">    virtual auto before_start() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> { <span class="keywordflow">return</span> {}; }</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> do_work() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> after_stop() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> { <span class="keywordflow">return</span> {}; }</div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> should_continue_work() const -&gt; <span class="keywordtype">bool</span> { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
 <div class="line">};</div>
 <div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2benchmark__common_8h_html_a13fa946184c58584adc65e45561d6772"><div class="ttname"><a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a></div><div class="ttdeci">thread_module::result_void result_void</div><div class="ttdef"><b>Definition</b> <a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h_source.html#l00012">benchmark_common.h:12</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result__void_html"><div class="ttname"><a href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">kcenon::thread::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00194">error_handling.h:194</a></div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md2752"></a>
 job Class</h2>
 <p>Base class for all work units.</p>
@@ -283,7 +284,7 @@ result&lt;T&gt; Template</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">using </span>result = std::expected&lt;T, error&gt;;</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> = result&lt;void&gt;;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> = result&lt;void&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">struct </span>error {</div>
 <div class="line">    error_code code;</div>
@@ -405,11 +406,13 @@ service_container</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Register services globally</span></div>
 <div class="line"><span class="keyword">auto</span>&amp; container = thread_module::service_container::global();</div>
-<div class="line">container.register_singleton&lt;thread_module::logger_interface&gt;(my_logger);</div>
+<div class="line">container.register_singleton&lt;<a class="code hl_class" href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html">thread_module::logger_interface</a>&gt;(my_logger);</div>
 <div class="line">container.register_singleton&lt;<a class="code hl_class" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html">monitoring_interface::monitoring_interface</a>&gt;(my_monitoring);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Resolve via thread_context (pools/workers use this context)</span></div>
-<div class="line">thread_module::thread_context ctx; <span class="comment">// resolves from global container</span></div>
+<div class="line"><a class="code hl_class" href="../../da/de0/classkcenon_1_1thread_1_1thread__context.html">thread_module::thread_context</a> ctx; <span class="comment">// resolves from global container</span></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1logger__interface_html"><div class="ttname"><a href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html">kcenon::thread::logger_interface</a></div><div class="ttdoc">Logger interface for thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d05/thread__system_2include_2kcenon_2thread_2interfaces_2logger__interface_8h_source.html#l00052">logger_interface.h:52</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1thread__context_html"><div class="ttname"><a href="../../da/de0/classkcenon_1_1thread_1_1thread__context.html">kcenon::thread::thread_context</a></div><div class="ttdoc">Context object that provides access to optional services.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/de3/thread__system_2include_2kcenon_2thread_2interfaces_2thread__context_8h_source.html#l00049">thread_context.h:49</a></div></div>
 <div class="ttc" id="aclassmonitoring__interface_1_1monitoring__interface_html"><div class="ttname"><a href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html">monitoring_interface::monitoring_interface</a></div><div class="ttdef"><b>Definition</b> <a href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00119">monitoring_interface.h:119</a></div></div>
 <div class="ttc" id="alibraries_2thread__system_2include_2kcenon_2thread_2interfaces_2service__container_8h_html"><div class="ttname"><a href="../../da/dc4/libraries_2thread__system_2include_2kcenon_2thread_2interfaces_2service__container_8h.html">service_container.h</a></div></div>
 <div class="ttc" id="athread__system_2include_2kcenon_2thread_2interfaces_2thread__context_8h_html"><div class="ttname"><a href="../../d1/de3/thread__system_2include_2kcenon_2thread_2interfaces_2thread__context_8h.html">thread_context.h</a></div></div>
@@ -471,7 +474,7 @@ thread_worker Class</h2>
 <div class="line">    auto set_job_queue(const std::shared_ptr&lt;job_queue&gt;&amp; queue) -&gt; <span class="keywordtype">void</span>;</div>
 <div class="line">    </div>
 <div class="line">protected:</div>
-<div class="line">    auto do_work() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> override;</div>
+<div class="line">    auto do_work() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> override;</div>
 <div class="line">};</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md2764"></a>
 Typed Thread Pool Module (typed_thread_pool_module)</h1>
@@ -538,13 +541,13 @@ Executor Interface</h2>
 <div class="line">    <span class="keyword">virtual</span> ~executor_interface() = <span class="keywordflow">default</span>;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Execute a job</span></div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> execute(std::unique_ptr&lt;thread_module::job&gt;&amp;&amp; work) -&gt; thread_module::result_void = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> execute(std::unique_ptr&lt;thread_module::job&gt;&amp;&amp; work) -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">thread_module::result_void</a> = 0;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Execute multiple jobs</span></div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> execute_batch(std::vector&lt;std::unique_ptr&lt;job&gt;&gt; jobs) -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> execute_batch(std::vector&lt;std::unique_ptr&lt;job&gt;&gt; jobs) -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> = 0;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Shutdown the executor</span></div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> shutdown() -&gt; thread_module::result_void = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> shutdown() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">thread_module::result_void</a> = 0;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Check if executor is running</span></div>
 <div class="line">    [[nodiscard]] <span class="keyword">virtual</span> <span class="keyword">auto</span> is_running() const -&gt; <span class="keywordtype">bool</span> = 0;</div>
@@ -554,7 +557,7 @@ Executor Interface</h2>
 <p>Example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> pool = std::make_shared&lt;thread_pool_module::thread_pool&gt;(<span class="stringliteral">&quot;pool&quot;</span>);</div>
 <div class="line">pool-&gt;enqueue_batch({std::make_unique&lt;thread_pool_module::thread_worker&gt;(<span class="keyword">false</span>)});</div>
 <div class="line">pool-&gt;start();</div>
-<div class="line">pool-&gt;execute(std::make_unique&lt;thread_module::callback_job&gt;([](){ <span class="keywordflow">return</span> thread_module::result_void(); }));</div>
+<div class="line">pool-&gt;execute(std::make_unique&lt;thread_module::callback_job&gt;([](){ <span class="keywordflow">return</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">thread_module::result_void</a>(); }));</div>
 <div class="line">pool-&gt;shutdown();</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md2771"></a>
 Scheduler Interface</h2>
@@ -567,14 +570,15 @@ Scheduler Interface</h2>
 <div class="line">    <span class="keyword">virtual</span> ~scheduler_interface() = <span class="keywordflow">default</span>;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Schedule a job</span></div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> schedule(std::unique_ptr&lt;thread_module::job&gt;&amp;&amp; work) -&gt; thread_module::result_void = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> schedule(std::unique_ptr&lt;thread_module::job&gt;&amp;&amp; work) -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">thread_module::result_void</a> = 0;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Get next job to execute</span></div>
-<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> get_next_job() -&gt; thread_module::result&lt;std::unique_ptr&lt;thread_module::job&gt;&gt; = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> get_next_job() -&gt; <a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">thread_module::result&lt;std::unique_ptr&lt;thread_module::job&gt;</a>&gt; = 0;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Check if there are pending jobs</span></div>
 <div class="line">    [[nodiscard]] <span class="keyword">virtual</span> <span class="keyword">auto</span> has_pending() const -&gt; <span class="keywordtype">bool</span> = 0;</div>
 <div class="line">};</div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">kcenon::thread::result</a></div><div class="ttdoc">A template class representing either a value or an error.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d01/include_2kcenon_2thread_2core_2error__handling_8h_source.html#l00238">error_handling.h:238</a></div></div>
 <div class="ttc" id="ascheduler__interface_8h_html"><div class="ttname"><a href="../../d1/d40/scheduler__interface_8h.html">scheduler_interface.h</a></div></div>
 </div><!-- fragment --><p>Implemented by: <code>core/jobs/job_queue</code> and its derivatives (<code>lockfree_job_queue</code>, <code>adaptive_job_queue</code>).</p>
 <h2><a class="anchor" id="autotoc_md2772"></a>
@@ -682,7 +686,7 @@ Integration with Thread System</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Register logger with the global container</span></div>
 <div class="line">thread_module::service_container::global()</div>
-<div class="line">  .register_singleton&lt;thread_module::logger_interface&gt;(</div>
+<div class="line">  .register_singleton&lt;<a class="code hl_class" href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html">thread_module::logger_interface</a>&gt;(</div>
 <div class="line">      std::make_shared&lt;logger_module::logger&gt;());</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Create a pool (thread_context resolves logger automatically)</span></div>
@@ -729,7 +733,7 @@ Creating a Basic Thread Pool</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Submit jobs with cancellation support</span></div>
 <div class="line"><span class="keyword">auto</span> token = cancellation_token::create();</div>
-<div class="line"><span class="keyword">auto</span> job = std::make_unique&lt;callback_job&gt;([]() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
+<div class="line"><span class="keyword">auto</span> job = std::make_unique&lt;callback_job&gt;([]() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> {</div>
 <div class="line">    <span class="comment">// Do work</span></div>
 <div class="line">    <span class="keywordflow">return</span> {};</div>
 <div class="line">});</div>
@@ -757,7 +761,7 @@ Using Typed Thread Pool</h2>
 <div class="line"><span class="comment">// Submit priority job</span></div>
 <div class="line"><span class="keyword">auto</span> priority_job = std::make_unique&lt;callback_typed_job&lt;job_types&gt;&gt;(</div>
 <div class="line">    job_types::RealTime,</div>
-<div class="line">    []() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
+<div class="line">    []() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> {</div>
 <div class="line">        <span class="comment">// High priority work</span></div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }</div>
@@ -766,22 +770,22 @@ Using Typed Thread Pool</h2>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md2789"></a>
 Error Handling Example</h2>
 <div class="fragment"><div class="line"><span class="comment">// Using result type for error handling</span></div>
-<div class="line"><span class="keyword">auto</span> process_with_result() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
+<div class="line"><span class="keyword">auto</span> process_with_result() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> {</div>
 <div class="line">    <span class="keyword">auto</span> pool = std::make_shared&lt;thread_pool&gt;();</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Start pool with error checking</span></div>
 <div class="line">    <span class="keywordflow">if</span> (<span class="keyword">auto</span> error = pool-&gt;start(); error.has_value()) {</div>
-<div class="line">        <span class="keywordflow">return</span> thread_module::error{</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code hl_class" href="../../d6/d10/classkcenon_1_1thread_1_1error.html">thread_module::error</a>{</div>
 <div class="line">            thread_module::error_code::thread_start_failure,</div>
 <div class="line">            *error</div>
 <div class="line">        };</div>
 <div class="line">    }</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Submit job with error handling</span></div>
-<div class="line">    <span class="keyword">auto</span> job = std::make_unique&lt;callback_job&gt;([]() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
+<div class="line">    <span class="keyword">auto</span> job = std::make_unique&lt;callback_job&gt;([]() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> {</div>
 <div class="line">        <span class="comment">// Simulate potential failure</span></div>
 <div class="line">        <span class="keywordflow">if</span> (some_condition_fails()) {</div>
-<div class="line">            <span class="keywordflow">return</span> thread_module::error{</div>
+<div class="line">            <span class="keywordflow">return</span> <a class="code hl_class" href="../../d6/d10/classkcenon_1_1thread_1_1error.html">thread_module::error</a>{</div>
 <div class="line">                thread_module::error_code::job_execution_failed,</div>
 <div class="line">                <span class="stringliteral">&quot;Operation failed due to invalid state&quot;</span></div>
 <div class="line">            };</div>
@@ -790,7 +794,7 @@ Error Handling Example</h2>
 <div class="line">    });</div>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">if</span> (<span class="keyword">auto</span> error = pool-&gt;enqueue(std::move(job)); <a class="code hl_enumvalue" href="../../d9/dda/namespacekcenon_1_1messaging_1_1integrations.html#a9709b17de9726ec32bb398f5868ce728acb5e100e5a9a3e7f6d1fd97512215282">error</a>.has_value()) {</div>
-<div class="line">        <span class="keywordflow">return</span> thread_module::error{</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code hl_class" href="../../d6/d10/classkcenon_1_1thread_1_1error.html">thread_module::error</a>{</div>
 <div class="line">            thread_module::error_code::queue_full,</div>
 <div class="line">            *<a class="code hl_enumvalue" href="../../d9/dda/namespacekcenon_1_1messaging_1_1integrations.html#a9709b17de9726ec32bb398f5868ce728acb5e100e5a9a3e7f6d1fd97512215282">error</a></div>
 <div class="line">        };</div>
@@ -798,6 +802,7 @@ Error Handling Example</h2>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">return</span> {}; <span class="comment">// Success</span></div>
 <div class="line">}</div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1error_html"><div class="ttname"><a href="../../d6/d10/classkcenon_1_1thread_1_1error.html">kcenon::thread::error</a></div><div class="ttdoc">Represents an error in the thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00139">error_handling.h:139</a></div></div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_1_1integrations_html_a9709b17de9726ec32bb398f5868ce728acb5e100e5a9a3e7f6d1fd97512215282"><div class="ttname"><a href="../../d9/dda/namespacekcenon_1_1messaging_1_1integrations.html#a9709b17de9726ec32bb398f5868ce728acb5e100e5a9a3e7f6d1fd97512215282">kcenon::messaging::integrations::external_system_status::error</a></div><div class="ttdeci">@ error</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md2790"></a>
 Batch Processing Example</h2>
@@ -808,7 +813,7 @@ Batch Processing Example</h2>
 <div class="line"><span class="comment">// Submit multiple jobs for efficient batch processing</span></div>
 <div class="line">std::vector&lt;std::unique_ptr&lt;job&gt;&gt; batch;</div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 1000; ++i) {</div>
-<div class="line">    batch.push_back(std::make_unique&lt;callback_job&gt;([i]() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
+<div class="line">    batch.push_back(std::make_unique&lt;callback_job&gt;([i]() -&gt; <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> {</div>
 <div class="line">        <span class="comment">// Process item i</span></div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">    }));</div>
@@ -824,7 +829,7 @@ Using Service Container</h2>
 <div class="line"><span class="comment">// Register thread pool as executor service</span></div>
 <div class="line"><span class="keyword">auto</span> pool = std::make_shared&lt;thread_pool_module::thread_pool&gt;(<span class="stringliteral">&quot;AppPool&quot;</span>);</div>
 <div class="line">thread_module::service_container::global()</div>
-<div class="line">  .register_singleton&lt;thread_module::executor_interface&gt;(pool);</div>
+<div class="line">  .register_singleton&lt;<a class="code hl_class" href="../../d1/df5/classkcenon_1_1thread_1_1executor__interface.html">thread_module::executor_interface</a>&gt;(pool);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Optional: register external logger implementation</span></div>
 <div class="line"><span class="comment">// thread_module::service_container::global()</span></div>
@@ -832,6 +837,7 @@ Using Service Container</h2>
 <div class="line"><span class="comment">//       std::make_shared&lt;external_logger&gt;());</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Use services later via thread_context or resolve&lt;&gt;()</span></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1executor__interface_html"><div class="ttname"><a href="../../d1/df5/classkcenon_1_1thread_1_1executor__interface.html">kcenon::thread::executor_interface</a></div><div class="ttdoc">Executor interface for submitting work and coordinating shutdown.</div><div class="ttdef"><b>Definition</b> <a href="../../d6/d99/executor__interface_8h_source.html#l00019">executor_interface.h:19</a></div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md2792"></a>
 Advanced Synchronization Example</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="../../d0/dd7/core_2sync_2include_2sync__primitives_8h.html">core/sync/include/sync_primitives.h</a>&quot;</span></div>

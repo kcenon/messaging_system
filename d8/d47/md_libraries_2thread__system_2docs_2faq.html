@@ -181,10 +181,11 @@ Q: Is logging thread-safe?</h2>
 Q: How do I configure where logs are written?</h2>
 <p><b>A:</b> Configuration is provided by your logger implementation (e.g., <code><a class="el" href="../../da/d11/namespacelogger__system.html">logger_system</a></code>). In Thread System you inject the logger, e.g.: </p><div class="fragment"><div class="line"><span class="comment">// Register global logger</span></div>
 <div class="line">thread_module::service_container::global()</div>
-<div class="line">  .register_singleton&lt;thread_module::logger_interface&gt;(my_logger);</div>
+<div class="line">  .register_singleton&lt;<a class="code hl_class" href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html">thread_module::logger_interface</a>&gt;(my_logger);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// or</span></div>
 <div class="line">thread_module::logger_registry::set_logger(my_logger);</div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1logger__interface_html"><div class="ttname"><a href="../../dd/dad/classkcenon_1_1thread_1_1logger__interface.html">kcenon::thread::logger_interface</a></div><div class="ttdoc">Logger interface for thread system.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d05/thread__system_2include_2kcenon_2thread_2interfaces_2logger__interface_8h_source.html#l00052">logger_interface.h:52</a></div></div>
 </div><!-- fragment --><p> See the logger's own documentation for sinks/targets and levels.</p>
 <h2><a class="anchor" id="autotoc_md2956"></a>
 Q: How do I customize log formatting?</h2>

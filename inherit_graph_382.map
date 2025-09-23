@@ -1,11 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d7/d02/structmonitoring__system_1_1alerting_1_1ChannelConfig.html" title=" " alt="" coords="5,101,180,141"/>
-<area shape="rect" id="Node000001" href="$d1/d8e/structmonitoring__system_1_1alerting_1_1EmailConfig.html" title=" " alt="" coords="239,5,398,45"/>
-<area shape="poly" id="edge118_Node000000_Node000001" title=" " alt="" coords="144,93,227,55,257,43,259,48,229,60,147,98"/>
-<area shape="rect" id="Node000002" href="$df/dae/structmonitoring__system_1_1alerting_1_1SMSConfig.html" title=" " alt="" coords="241,69,397,109"/>
-<area shape="poly" id="edge119_Node000000_Node000002" title=" " alt="" coords="194,104,240,98,241,103,194,110"/>
-<area shape="rect" id="Node000003" href="$dc/d53/structmonitoring__system_1_1alerting_1_1SlackConfig.html" title=" " alt="" coords="241,133,397,173"/>
-<area shape="poly" id="edge120_Node000000_Node000003" title=" " alt="" coords="194,133,241,140,240,145,194,138"/>
-<area shape="rect" id="Node000004" href="$d7/d8c/structmonitoring__system_1_1alerting_1_1WebhookConfig.html" title=" " alt="" coords="228,197,409,237"/>
-<area shape="poly" id="edge121_Node000000_Node000004" title=" " alt="" coords="147,145,229,183,259,195,257,200,227,188,144,150"/>
+<area shape="rect" id="Node000000" href="$d5/d6d/classmonitoring__system_1_1alerting_1_1AlertGrouping.html" title=" " alt="" coords="5,5,176,45"/>
 </map>

@@ -1,23 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,305,120,330"/>
-<area shape="rect" id="Node000001" href="$da/d65/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_01_4.html" title="Specialization of fmt::formatter for kcenon::thread::thread_conditions." alt="" coords="180,5,391,45"/>
-<area shape="poly" id="edge13_Node000000_Node000001" title=" " alt="" coords="64,291,73,241,91,177,121,112,142,82,166,55,183,43,187,48,170,59,146,85,126,114,96,179,78,242,69,291"/>
-<area shape="rect" id="Node000002" href="$d2/deb/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_01_4.html" title="Specialization of fmt::formatter for kcenon::thread::thread_pool." alt="" coords="197,69,374,109"/>
-<area shape="poly" id="edge14_Node000000_Node000002" title=" " alt="" coords="68,291,80,252,100,206,129,159,166,119,195,103,198,107,170,123,133,163,105,209,85,254,73,292"/>
-<area shape="rect" id="Node000003" href="$de/d99/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_01_4.html" title="Specialization of fmt::formatter for kcenon::thread::thread_worker." alt="" coords="191,133,379,173"/>
-<area shape="poly" id="edge15_Node000000_Node000003" title=" " alt="" coords="75,291,111,237,137,208,167,183,190,171,192,175,169,188,140,212,115,240,79,294"/>
-<area shape="rect" id="Node000004" href="$d0/d48/structfmt_1_1formatter_3_01test__priority_01_4.html" title="Specialization of fmt::formatter for test_priority." alt="" coords="208,197,363,237"/>
-<area shape="poly" id="edge16_Node000000_Node000004" title=" " alt="" coords="89,294,125,270,167,247,207,232,209,237,169,252,128,274,92,299"/>
-<area shape="rect" id="Node000005" href="$d4/d08/structfmt_1_1formatter_3_01test__priority_00_01wchar__t_01_4.html" title="Specialization of fmt::formatter for wide&#45;character test_priority." alt="" coords="208,261,363,301"/>
-<area shape="poly" id="edge17_Node000000_Node000005" title=" " alt="" coords="133,303,207,291,208,296,134,309"/>
-<area shape="rect" id="Node000006" href="$da/d05/structfmt_1_1formatter_3_01typed__kcenon_1_1thread_1_1job__types_01_4.html" title="Specialization of fmt::formatter for job_types using narrow strings." alt="" coords="202,326,369,381"/>
-<area shape="poly" id="edge18_Node000000_Node000006" title=" " alt="" coords="134,326,202,337,201,343,133,331"/>
-<area shape="rect" id="Node000007" href="$dd/d33/structfmt_1_1formatter_3_01typed__kcenon_1_1thread_1_1job__types_00_01wchar__t_01_4.html" title="Specialization of fmt::formatter for job_types using wide strings." alt="" coords="202,405,369,459"/>
-<area shape="poly" id="edge19_Node000000_Node000007" title=" " alt="" coords="91,337,127,364,169,390,203,405,201,409,167,394,124,368,88,341"/>
-<area shape="rect" id="Node000008" href="$da/d84/structfmt_1_1formatter_3_01typed__kcenon_1_1thread_1_1typed__job__queue__t_3_01job__type_01_4_01_4.html" title="Specialization of fmt::formatter for typed_job_queue_t&lt;job_type&gt; when using the {fmt} library." alt="" coords="181,483,390,538"/>
-<area shape="poly" id="edge20_Node000000_Node000008" title=" " alt="" coords="77,341,113,405,139,439,170,469,189,481,186,485,166,473,135,443,108,408,72,344"/>
-<area shape="rect" id="Node000009" href="$d3/dc4/structfmt_1_1formatter_3_01typed__kcenon_1_1thread_1_1typed__thread__pool__t_3_01job__type_01_4_01_4.html" title="Specialization of fmt::formatter for typed_thread_pool_t&lt;job_type&gt;." alt="" coords="176,562,395,617"/>
-<area shape="poly" id="edge21_Node000000_Node000009" title=" " alt="" coords="71,343,82,388,101,442,130,499,148,525,170,547,187,560,184,564,166,551,144,528,125,501,96,444,77,389,66,345"/>
-<area shape="rect" id="Node000010" href="$d2/da9/structfmt_1_1formatter_3_01typed__kcenon_1_1thread_1_1typed__thread__worker__t_3_01job__type_01_4_01_4.html" title="Specialization of fmt::formatter for typed_thread_worker_t&lt;job_type&gt;." alt="" coords="168,641,403,695"/>
-<area shape="poly" id="edge22_Node000000_Node000010" title=" " alt="" coords="68,343,74,401,91,477,104,517,121,556,143,593,170,626,185,638,182,643,166,630,139,596,116,559,99,519,85,478,69,402,63,344"/>
+<area shape="rect" id="Node000000" href="$d6/d98/classExternalApiClient.html" title=" " alt="" coords="5,5,140,31"/>
 </map>

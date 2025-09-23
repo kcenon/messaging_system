@@ -147,16 +147,16 @@ Result Types ✅ &lt;strong&gt;Fully Implemented&lt;/strong&gt;</h2>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md1409"></a>
 &lt;tt&gt;result_void&lt;/tt&gt;</h3>
 <p>Specialized result type for operations that don't return values.</p>
-<div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> {</div>
+<div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> {</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    <span class="keyword">static</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> success();</div>
-<div class="line">    <span class="keyword">static</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> error(<span class="keyword">const</span> error_info&amp; error);</div>
+<div class="line">    <span class="keyword">static</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> success();</div>
+<div class="line">    <span class="keyword">static</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> error(<span class="keyword">const</span> error_info&amp; error);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordtype">bool</span> is_ok() <span class="keyword">const</span>;</div>
 <div class="line">    <span class="keywordtype">bool</span> is_error() <span class="keyword">const</span>;</div>
 <div class="line">    error_info get_error() <span class="keyword">const</span>;</div>
 <div class="line">};</div>
-<div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2benchmark__common_8h_html_a13fa946184c58584adc65e45561d6772"><div class="ttname"><a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a></div><div class="ttdeci">thread_module::result_void result_void</div><div class="ttdef"><b>Definition</b> <a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h_source.html#l00012">benchmark_common.h:12</a></div></div>
+<div class="ttc" id="aclasskcenon_1_1thread_1_1result__void_html"><div class="ttname"><a href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">kcenon::thread::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d9a/core_2sync_2include_2error__handling_8h_source.html#l00194">error_handling.h:194</a></div></div>
 </div><!-- fragment --><p><b>Usage Example:</b> </p><div class="fragment"><div class="line">result&lt;int&gt; <a class="code hl_function" href="../../de/dfb/result__pattern__example_8cpp.html#a9da2de03a893c5c66e063754edc6353c">divide</a>(<span class="keywordtype">int</span> a, <span class="keywordtype">int</span> b) {</div>
 <div class="line">    <span class="keywordflow">if</span> (b == 0) {</div>
 <div class="line">        <span class="keywordflow">return</span> result&lt;int&gt;(error_info{</div>
@@ -270,9 +270,9 @@ Monitoring Interface</h2>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <span class="keyword">virtual</span> std::string get_name() <span class="keyword">const</span> = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> is_enabled() <span class="keyword">const</span> = 0;</div>
-<div class="line">    <span class="keyword">virtual</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> set_enabled(<span class="keywordtype">bool</span> enable) = 0;</div>
-<div class="line">    <span class="keyword">virtual</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> initialize() = 0;</div>
-<div class="line">    <span class="keyword">virtual</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> cleanup() = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> set_enabled(<span class="keywordtype">bool</span> enable) = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> initialize() = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> cleanup() = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> result&lt;metrics_snapshot&gt; collect() = 0;</div>
 <div class="line">};</div>
 <div class="ttc" id="aclassmetrics__collector_html"><div class="ttname"><a href="../../d7/db0/classmetrics__collector.html">metrics_collector</a></div><div class="ttdef"><b>Definition</b> <a href="../../d9/dd9/production__ready__example_8cpp_source.html#l00041">production_ready_example.cpp:41</a></div></div>
@@ -283,7 +283,7 @@ Monitoring Interface</h2>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <span class="keyword">virtual</span> std::string get_name() <span class="keyword">const</span> = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> result&lt;metrics_snapshot&gt; get_metrics() <span class="keyword">const</span> = 0;</div>
-<div class="line">    <span class="keyword">virtual</span> <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a> reset_metrics() = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="code hl_class" href="../../de/dff/classkcenon_1_1thread_1_1result__void.html">result_void</a> reset_metrics() = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> result&lt;std::string&gt; get_status() <span class="keyword">const</span> = 0;</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
