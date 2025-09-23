@@ -138,60 +138,18 @@ endif()
 
 # Check for ASIO availability
 if(NOT ASIO_INCLUDE_DIR)
-    message(STATUS "Standalone ASIO not found. Checking for Boost.ASIO...")
-
-    # Try to find Boost.ASIO as fallback
-    # First try modern CMake config mode
-    find_package(Boost QUIET CONFIG COMPONENTS system)
-    if(NOT Boost_FOUND)
-        # Fallback to module mode for older installations
-        find_package(Boost QUIET MODULE COMPONENTS system)
-    endif()
-
-    if(Boost_FOUND)
-        message(STATUS "Using Boost.ASIO as fallback (version: ${Boost_VERSION})")
-        set(USE_BOOST_ASIO ON)
-    else()
-        # Try to find boost headers manually for header-only usage
-        find_path(BOOST_INCLUDE_DIR
-            NAMES boost/asio.hpp
-            PATHS
-                # Windows common paths
-                ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg_installed/${VCPKG_TARGET_TRIPLET}/include
-                ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg_installed/x64-windows/include
-                C:/vcpkg/installed/x64-windows/include
-                C:/tools/vcpkg/installed/x64-windows/include
-                C:/local/boost_1_82_0
-                C:/boost/include
-                # MSYS2/MinGW paths
-                /mingw64/include
-                /mingw32/include
-                # macOS Homebrew
-                /opt/homebrew/include
-                /usr/local/include
-                # Ubuntu/Debian system paths
-                /usr/include
-        )
-
-        if(BOOST_INCLUDE_DIR)
-            message(STATUS "Using Boost.ASIO headers-only fallback at: ${BOOST_INCLUDE_DIR}")
-            set(USE_BOOST_ASIO ON)
-            set(Boost_INCLUDE_DIRS ${BOOST_INCLUDE_DIR})
-        else()
-            message(WARNING "ASIO not found. Network functionality may be limited.")
-            message(STATUS "Please install one of:")
-            message(STATUS "  - libasio-dev (Ubuntu/Debian): sudo apt install libasio-dev")
-            message(STATUS "  - Boost libraries: sudo apt install libboost-all-dev")
-            message(STATUS "  - vcpkg: vcpkg install asio boost")
-            message(STATUS "  - macOS Homebrew: brew install asio boost")
-            # Set a fallback to allow build to continue
-            set(USE_BOOST_ASIO ON)
-            set(BOOST_INCLUDE_DIR "")
-        endif()
-    endif()
+    message(WARNING "Standalone ASIO not found. Network functionality will be disabled.")
+    message(STATUS "Please install ASIO:")
+    message(STATUS "  - libasio-dev (Ubuntu/Debian): sudo apt install libasio-dev")
+    message(STATUS "  - vcpkg: vcpkg install asio")
+    message(STATUS "  - macOS Homebrew: brew install asio")
+    message(STATUS "  - Windows: Download from https://think-async.com/Asio/")
+    set(USE_BOOST_ASIO OFF)
+    set(NO_ASIO ON)
 else()
     message(STATUS "Found ASIO at: ${ASIO_INCLUDE_DIR}")
     set(USE_BOOST_ASIO OFF)
+    set(NO_ASIO OFF)
 endif()
 
 # FMT library check
@@ -433,26 +391,18 @@ if(BUILD_WITH_LOGGER_SYSTEM)
 endif()
 
 # Configure ASIO
-if(USE_BOOST_ASIO)
-    target_include_directories(NetworkSystem PRIVATE ${Boost_INCLUDE_DIRS})
-    if(Boost_LIBRARIES)
-        target_link_libraries(NetworkSystem PRIVATE ${Boost_LIBRARIES})
-        message(STATUS "Configured to use Boost.ASIO with libraries")
-    else()
-        message(STATUS "Configured to use Boost.ASIO header-only")
-    endif()
-    target_compile_definitions(NetworkSystem PRIVATE USE_BOOST_ASIO)
-    target_compile_definitions(NetworkSystem PRIVATE BOOST_ASIO_STANDALONE)
-    target_compile_definitions(NetworkSystem PRIVATE HAS_ASIO)
-elseif(ASIO_INCLUDE_DIR)
+if(ASIO_INCLUDE_DIR)
     target_include_directories(NetworkSystem PRIVATE ${ASIO_INCLUDE_DIR})
     target_compile_definitions(NetworkSystem PRIVATE ASIO_STANDALONE)
     target_compile_definitions(NetworkSystem PRIVATE ASIO_NO_DEPRECATED)
     target_compile_definitions(NetworkSystem PRIVATE HAS_ASIO)
     message(STATUS "Configured to use standalone ASIO")
-else()
+elseif(NO_ASIO)
     message(WARNING "ASIO not found - network functionality will be disabled")
     target_compile_definitions(NetworkSystem PRIVATE NO_ASIO)
+else()
+    # This should not happen given our new logic above
+    message(FATAL_ERROR "ASIO configuration error: neither ASIO_INCLUDE_DIR nor NO_ASIO is set")
 endif()
 
 # Define Windows version for ASIO
@@ -526,19 +476,13 @@ if(LOGGER_SYSTEM_INCLUDE_DIR)
 endif()
 
 # Configure ASIO same as main library
-if(USE_BOOST_ASIO)
-    target_include_directories(verify_build PRIVATE ${Boost_INCLUDE_DIRS})
-    if(Boost_LIBRARIES)
-        target_link_libraries(verify_build PRIVATE ${Boost_LIBRARIES})
-    endif()
-    target_compile_definitions(verify_build PRIVATE USE_BOOST_ASIO)
-    target_compile_definitions(verify_build PRIVATE HAS_ASIO)
-    target_compile_definitions(verify_build PRIVATE BOOST_ASIO_STANDALONE)
-elseif(ASIO_INCLUDE_DIR)
+if(ASIO_INCLUDE_DIR)
     target_include_directories(verify_build PRIVATE ${ASIO_INCLUDE_DIR})
     target_compile_definitions(verify_build PRIVATE HAS_ASIO)
     target_compile_definitions(verify_build PRIVATE ASIO_STANDALONE)
     target_compile_definitions(verify_build PRIVATE ASIO_NO_DEPRECATED)
+elseif(NO_ASIO)
+    target_compile_definitions(verify_build PRIVATE NO_ASIO)
 endif()
 
 if(WIN32)
@@ -569,19 +513,13 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/test_integration.cpp)
     endif()
 
     # Configure ASIO same as main library
-    if(USE_BOOST_ASIO)
-        target_include_directories(test_integration PRIVATE ${Boost_INCLUDE_DIRS})
-        if(Boost_LIBRARIES)
-            target_link_libraries(test_integration PRIVATE ${Boost_LIBRARIES})
-        endif()
-        target_compile_definitions(test_integration PRIVATE USE_BOOST_ASIO)
-        target_compile_definitions(test_integration PRIVATE HAS_ASIO)
-        target_compile_definitions(test_integration PRIVATE BOOST_ASIO_STANDALONE)
-    elseif(ASIO_INCLUDE_DIR)
+    if(ASIO_INCLUDE_DIR)
         target_include_directories(test_integration PRIVATE ${ASIO_INCLUDE_DIR})
         target_compile_definitions(test_integration PRIVATE HAS_ASIO)
         target_compile_definitions(test_integration PRIVATE ASIO_STANDALONE)
         target_compile_definitions(test_integration PRIVATE ASIO_NO_DEPRECATED)
+    elseif(NO_ASIO)
+        target_compile_definitions(test_integration PRIVATE NO_ASIO)
     endif()
 
     if(WIN32)
@@ -613,19 +551,13 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/test_compatibility.cpp)
     endif()
 
     # Configure same as main library
-    if(USE_BOOST_ASIO)
-        target_include_directories(test_compatibility PRIVATE ${Boost_INCLUDE_DIRS})
-        if(Boost_LIBRARIES)
-            target_link_libraries(test_compatibility PRIVATE ${Boost_LIBRARIES})
-        endif()
-        target_compile_definitions(test_compatibility PRIVATE USE_BOOST_ASIO)
-        target_compile_definitions(test_compatibility PRIVATE HAS_ASIO)
-        target_compile_definitions(test_compatibility PRIVATE BOOST_ASIO_STANDALONE)
-    elseif(ASIO_INCLUDE_DIR)
+    if(ASIO_INCLUDE_DIR)
         target_include_directories(test_compatibility PRIVATE ${ASIO_INCLUDE_DIR})
         target_compile_definitions(test_compatibility PRIVATE HAS_ASIO)
         target_compile_definitions(test_compatibility PRIVATE ASIO_STANDALONE)
         target_compile_definitions(test_compatibility PRIVATE ASIO_NO_DEPRECATED)
+    elseif(NO_ASIO)
+        target_compile_definitions(test_compatibility PRIVATE NO_ASIO)
     endif()
 
     if(WIN32)
@@ -657,19 +589,13 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/test_e2e.cpp)
     endif()
 
     # Configure same as main library
-    if(USE_BOOST_ASIO)
-        target_include_directories(test_e2e PRIVATE ${Boost_INCLUDE_DIRS})
-        if(Boost_LIBRARIES)
-            target_link_libraries(test_e2e PRIVATE ${Boost_LIBRARIES})
-        endif()
-        target_compile_definitions(test_e2e PRIVATE USE_BOOST_ASIO)
-        target_compile_definitions(test_e2e PRIVATE HAS_ASIO)
-        target_compile_definitions(test_e2e PRIVATE BOOST_ASIO_STANDALONE)
-    elseif(ASIO_INCLUDE_DIR)
+    if(ASIO_INCLUDE_DIR)
         target_include_directories(test_e2e PRIVATE ${ASIO_INCLUDE_DIR})
         target_compile_definitions(test_e2e PRIVATE HAS_ASIO)
         target_compile_definitions(test_e2e PRIVATE ASIO_STANDALONE)
         target_compile_definitions(test_e2e PRIVATE ASIO_NO_DEPRECATED)
+    elseif(NO_ASIO)
+        target_compile_definitions(test_e2e PRIVATE NO_ASIO)
     endif()
 
     if(WIN32)
@@ -701,19 +627,13 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/stress/stress_test.cpp)
     endif()
 
     # Configure same as main library
-    if(USE_BOOST_ASIO)
-        target_include_directories(stress_test PRIVATE ${Boost_INCLUDE_DIRS})
-        if(Boost_LIBRARIES)
-            target_link_libraries(stress_test PRIVATE ${Boost_LIBRARIES})
-        endif()
-        target_compile_definitions(stress_test PRIVATE USE_BOOST_ASIO)
-        target_compile_definitions(stress_test PRIVATE HAS_ASIO)
-        target_compile_definitions(stress_test PRIVATE BOOST_ASIO_STANDALONE)
-    elseif(ASIO_INCLUDE_DIR)
+    if(ASIO_INCLUDE_DIR)
         target_include_directories(stress_test PRIVATE ${ASIO_INCLUDE_DIR})
         target_compile_definitions(stress_test PRIVATE HAS_ASIO)
         target_compile_definitions(stress_test PRIVATE ASIO_STANDALONE)
         target_compile_definitions(stress_test PRIVATE ASIO_NO_DEPRECATED)
+    elseif(NO_ASIO)
+        target_compile_definitions(stress_test PRIVATE NO_ASIO)
     endif()
 
     if(WIN32)
@@ -745,19 +665,13 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/performance/benchmark.cpp)
     endif()
 
     # Configure same as main library
-    if(USE_BOOST_ASIO)
-        target_include_directories(benchmark PRIVATE ${Boost_INCLUDE_DIRS})
-        if(Boost_LIBRARIES)
-            target_link_libraries(benchmark PRIVATE ${Boost_LIBRARIES})
-        endif()
-        target_compile_definitions(benchmark PRIVATE USE_BOOST_ASIO)
-        target_compile_definitions(benchmark PRIVATE HAS_ASIO)
-        target_compile_definitions(benchmark PRIVATE BOOST_ASIO_STANDALONE)
-    elseif(ASIO_INCLUDE_DIR)
+    if(ASIO_INCLUDE_DIR)
         target_include_directories(benchmark PRIVATE ${ASIO_INCLUDE_DIR})
         target_compile_definitions(benchmark PRIVATE HAS_ASIO)
         target_compile_definitions(benchmark PRIVATE ASIO_STANDALONE)
         target_compile_definitions(benchmark PRIVATE ASIO_NO_DEPRECATED)
+    elseif(NO_ASIO)
+        target_compile_definitions(benchmark PRIVATE NO_ASIO)
     endif()
 
     if(WIN32)
@@ -774,19 +688,13 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/test_integration.cpp)
     endif()
 
     # Configure same as main library
-    if(USE_BOOST_ASIO)
-        target_include_directories(test_integration PRIVATE ${Boost_INCLUDE_DIRS})
-        if(Boost_LIBRARIES)
-            target_link_libraries(test_integration PRIVATE ${Boost_LIBRARIES})
-        endif()
-        target_compile_definitions(test_integration PRIVATE USE_BOOST_ASIO)
-        target_compile_definitions(test_integration PRIVATE HAS_ASIO)
-        target_compile_definitions(test_integration PRIVATE BOOST_ASIO_STANDALONE)
-    elseif(ASIO_INCLUDE_DIR)
+    if(ASIO_INCLUDE_DIR)
         target_include_directories(test_integration PRIVATE ${ASIO_INCLUDE_DIR})
         target_compile_definitions(test_integration PRIVATE HAS_ASIO)
         target_compile_definitions(test_integration PRIVATE ASIO_STANDALONE)
         target_compile_definitions(test_integration PRIVATE ASIO_NO_DEPRECATED)
+    elseif(NO_ASIO)
+        target_compile_definitions(test_integration PRIVATE NO_ASIO)
     endif()
 
     if(WIN32)
@@ -795,19 +703,13 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/test_integration.cpp)
 endif()
 
 # Configure ASIO for verification test (same as main library)
-if(USE_BOOST_ASIO)
-    target_include_directories(verify_build PRIVATE ${Boost_INCLUDE_DIRS})
-    if(Boost_LIBRARIES)
-        target_link_libraries(verify_build PRIVATE ${Boost_LIBRARIES})
-    endif()
-    target_compile_definitions(verify_build PRIVATE USE_BOOST_ASIO)
-    target_compile_definitions(verify_build PRIVATE HAS_ASIO)
-    target_compile_definitions(verify_build PRIVATE BOOST_ASIO_STANDALONE)
-elseif(ASIO_INCLUDE_DIR)
+if(ASIO_INCLUDE_DIR)
     target_include_directories(verify_build PRIVATE ${ASIO_INCLUDE_DIR})
     target_compile_definitions(verify_build PRIVATE HAS_ASIO)
     target_compile_definitions(verify_build PRIVATE ASIO_STANDALONE)
     target_compile_definitions(verify_build PRIVATE ASIO_NO_DEPRECATED)
+elseif(NO_ASIO)
+    target_compile_definitions(verify_build PRIVATE NO_ASIO)
 endif()
 
 # Define Windows version for ASIO
