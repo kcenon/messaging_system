@@ -253,24 +253,46 @@ if(BUILD_WITH_CONTAINER_SYSTEM)
 endif()
 
 if(BUILD_WITH_THREAD_SYSTEM)
-    find_path(THREAD_SYSTEM_INCLUDE_DIR
-        NAMES kcenon/thread/core/thread_pool.h
-        PATHS
-            ../thread_system/include
-            ${CMAKE_CURRENT_SOURCE_DIR}/../thread_system/include
-            /Users/dongcheolshin/Sources/messaging_system/libraries/thread_system/include
-            /Users/dongcheolshin/Sources/thread_system/include
-        NO_DEFAULT_PATH
-    )
-    find_library(THREAD_SYSTEM_LIBRARY
-        NAMES thread_base
-        PATHS
-            ${CMAKE_BINARY_DIR}/lib
-            ${CMAKE_BINARY_DIR}/thread_system/core
-            ../thread_system/build/lib
-            ../thread_system/build
-            ../thread_system/lib
-    )
+    # First check if thread_system is already built as part of logger_system
+    if(TARGET thread_base)
+        # thread_system is already available as a target
+        set(THREAD_SYSTEM_LIBRARY thread_base)
+        # Get the source directory for thread_system
+        if(EXISTS "${CMAKE_SOURCE_DIR}/../thread_system/include")
+            set(THREAD_SYSTEM_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../thread_system/include")
+        elseif(EXISTS "${CMAKE_SOURCE_DIR}/libraries/thread_system/include")
+            set(THREAD_SYSTEM_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/libraries/thread_system/include")
+        endif()
+        if(THREAD_SYSTEM_INCLUDE_DIR)
+            message(STATUS "Using thread_system from existing target with include dir: ${THREAD_SYSTEM_INCLUDE_DIR}")
+        endif()
+    endif()
+
+    # If not found as target, search for it
+    if(NOT THREAD_SYSTEM_INCLUDE_DIR)
+        find_path(THREAD_SYSTEM_INCLUDE_DIR
+            NAMES kcenon/thread/core/thread_pool.h
+            PATHS
+                ${CMAKE_SOURCE_DIR}/libraries/thread_system/include
+                ${CMAKE_CURRENT_SOURCE_DIR}/../thread_system/include
+                ../thread_system/include
+                ${CMAKE_BINARY_DIR}/thread_system_build/include
+            NO_DEFAULT_PATH
+        )
+    endif()
+    # Only search for library if we didn't already find it as a target
+    if(NOT THREAD_SYSTEM_LIBRARY)
+        find_library(THREAD_SYSTEM_LIBRARY
+            NAMES thread_base
+            PATHS
+                ${CMAKE_BINARY_DIR}/lib
+                ${CMAKE_BINARY_DIR}/thread_system/core
+                ${CMAKE_BINARY_DIR}/thread_system_build/core
+                ../thread_system/build/lib
+                ../thread_system/build
+                ../thread_system/lib
+        )
+    endif()
     if(THREAD_SYSTEM_INCLUDE_DIR)
         message(STATUS "Found thread_system at: ${THREAD_SYSTEM_INCLUDE_DIR}")
         if(THREAD_SYSTEM_LIBRARY)
@@ -287,23 +309,31 @@ if(BUILD_WITH_THREAD_SYSTEM)
 endif()
 
 if(BUILD_WITH_LOGGER_SYSTEM)
-    find_path(LOGGER_SYSTEM_INCLUDE_DIR
-        NAMES kcenon/logger/core/logger.h
-        PATHS
-            ../logger_system/include
-            ${CMAKE_CURRENT_SOURCE_DIR}/../logger_system/include
-        NO_DEFAULT_PATH
-    )
-    find_library(LOGGER_SYSTEM_LIBRARY
-        NAMES LoggerSystem logger_system logger
-        PATHS
-            ${CMAKE_BINARY_DIR}/lib
-            ${CMAKE_BINARY_DIR}/libraries/logger_system
-            ../logger_system/build/lib
-            ../logger_system/build_test/lib
-            ../logger_system/build
-            ../logger_system/lib
-    )
+    # First check if LoggerSystem is already built
+    if(TARGET LoggerSystem)
+        set(LOGGER_SYSTEM_LIBRARY LoggerSystem)
+        set(LOGGER_SYSTEM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/libraries/logger_system/include)
+        message(STATUS "Using LoggerSystem from existing target")
+    else()
+        find_path(LOGGER_SYSTEM_INCLUDE_DIR
+            NAMES kcenon/logger/core/logger.h
+            PATHS
+                ${CMAKE_SOURCE_DIR}/libraries/logger_system/include
+                ../logger_system/include
+                ${CMAKE_CURRENT_SOURCE_DIR}/../logger_system/include
+            NO_DEFAULT_PATH
+        )
+        find_library(LOGGER_SYSTEM_LIBRARY
+            NAMES LoggerSystem logger_system logger
+            PATHS
+                ${CMAKE_BINARY_DIR}/lib
+                ${CMAKE_BINARY_DIR}/libraries/logger_system
+                ../logger_system/build/lib
+                ../logger_system/build_test/lib
+                ../logger_system/build
+                ../logger_system/lib
+        )
+    endif()
     if(LOGGER_SYSTEM_INCLUDE_DIR)
         message(STATUS "Found logger_system at: ${LOGGER_SYSTEM_INCLUDE_DIR}")
         if(LOGGER_SYSTEM_LIBRARY)
@@ -374,17 +404,31 @@ if(BUILD_WITH_CONTAINER_SYSTEM)
     endif()
 endif()
 
-if(BUILD_WITH_THREAD_SYSTEM AND THREAD_SYSTEM_INCLUDE_DIR)
-    target_include_directories(NetworkSystem PUBLIC ${THREAD_SYSTEM_INCLUDE_DIR})
+if(BUILD_WITH_THREAD_SYSTEM)
+    if(THREAD_SYSTEM_INCLUDE_DIR)
+        target_include_directories(NetworkSystem PUBLIC ${THREAD_SYSTEM_INCLUDE_DIR})
+    endif()
     if(THREAD_SYSTEM_LIBRARY)
-        target_link_libraries(NetworkSystem PUBLIC ${THREAD_SYSTEM_LIBRARY})
+        # If it's a target name, link directly; otherwise link as library path
+        if(TARGET ${THREAD_SYSTEM_LIBRARY})
+            target_link_libraries(NetworkSystem PUBLIC ${THREAD_SYSTEM_LIBRARY})
+        else()
+            target_link_libraries(NetworkSystem PUBLIC ${THREAD_SYSTEM_LIBRARY})
+        endif()
     endif()
 endif()
 
-if(BUILD_WITH_LOGGER_SYSTEM AND LOGGER_SYSTEM_INCLUDE_DIR)
-    target_include_directories(NetworkSystem PRIVATE ${LOGGER_SYSTEM_INCLUDE_DIR})
+if(BUILD_WITH_LOGGER_SYSTEM)
+    if(LOGGER_SYSTEM_INCLUDE_DIR)
+        target_include_directories(NetworkSystem PRIVATE ${LOGGER_SYSTEM_INCLUDE_DIR})
+    endif()
     if(LOGGER_SYSTEM_LIBRARY)
-        target_link_libraries(NetworkSystem PUBLIC ${LOGGER_SYSTEM_LIBRARY})
+        # If it's a target name, link directly; otherwise link as library path
+        if(TARGET ${LOGGER_SYSTEM_LIBRARY})
+            target_link_libraries(NetworkSystem PUBLIC ${LOGGER_SYSTEM_LIBRARY})
+        else()
+            target_link_libraries(NetworkSystem PUBLIC ${LOGGER_SYSTEM_LIBRARY})
+        endif()
     endif()
 endif()
 
@@ -808,12 +852,17 @@ install(FILES
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/NetworkSystem
 )
 
-# Install export targets
-install(EXPORT NetworkSystemTargets
-    FILE NetworkSystemTargets.cmake
-    NAMESPACE NetworkSystem::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/NetworkSystem
-)
+# Install export targets only if building standalone or all dependencies are exportable
+# For now, skip export installation when using internal dependencies to avoid CMake errors
+if(NOT BUILD_WITH_THREAD_SYSTEM OR NOT TARGET thread_base)
+    install(EXPORT NetworkSystemTargets
+        FILE NetworkSystemTargets.cmake
+        NAMESPACE NetworkSystem::
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/NetworkSystem
+    )
+else()
+    message(STATUS "NetworkSystem export installation skipped due to internal dependencies")
+endif()
 
 # Print configuration summary
 message(STATUS "NetworkSystem Configuration Summary:")

@@ -176,15 +176,15 @@ log_level basic_logger::get_min_level() const {
 #ifdef BUILD_WITH_LOGGER_SYSTEM
 
 // Helper function to convert our log_level to logger_system's log_level
-static logger_system::log_level convert_level(log_level level) {
+static kcenon::thread::log_level convert_level(log_level level) {
     switch (level) {
-        case log_level::trace: return logger_system::log_level::trace;
-        case log_level::debug: return logger_system::log_level::debug;
-        case log_level::info:  return logger_system::log_level::info;
-        case log_level::warn:  return logger_system::log_level::warn;
-        case log_level::error: return logger_system::log_level::error;
-        case log_level::fatal: return logger_system::log_level::fatal;
-        default: return logger_system::log_level::info;
+        case log_level::trace: return kcenon::thread::log_level::trace;
+        case log_level::debug: return kcenon::thread::log_level::debug;
+        case log_level::info:  return kcenon::thread::log_level::info;
+        case log_level::warn:  return kcenon::thread::log_level::warning;
+        case log_level::error: return kcenon::thread::log_level::error;
+        case log_level::fatal: return kcenon::thread::log_level::critical;
+        default: return kcenon::thread::log_level::info;
     }
 }
 
