@@ -19,7 +19,7 @@ var searchData=
   ['performancetest_16',['PerformanceTest',['../da/d80/classPerformanceTest.html',1,'']]],
   ['persistence_5fmanager_5ffactory_17',['persistence_manager_factory',['../d5/d20/classkcenon_1_1messaging_1_1persistence_1_1persistence__manager__factory.html',1,'kcenon::messaging::persistence']]],
   ['persistent_5fmessage_5fqueue_18',['persistent_message_queue',['../df/d8c/classkcenon_1_1messaging_1_1persistence_1_1persistent__message__queue.html',1,'kcenon::messaging::persistence']]],
-  ['pipeline_19',['pipeline',['../d2/dc7/structnetwork__module_1_1pipeline.html',1,'network_module::pipeline'],['../db/d3e/structnetwork__system_1_1internal_1_1pipeline.html',1,'network_system::internal::pipeline']]],
+  ['pipeline_19',['pipeline',['../db/d3e/structnetwork__system_1_1internal_1_1pipeline.html',1,'network_system::internal']]],
   ['pipeline_5fbuilder_20',['pipeline_builder',['../d2/ddb/classkcenon_1_1messaging_1_1routing_1_1pipeline__builder.html',1,'kcenon::messaging::routing']]],
   ['pipeline_5fstage_21',['pipeline_stage',['../df/d30/classpipeline__stage.html',1,'']]],
   ['pipeline_5fstage_3c_20processed_5fevent_2c_20aggregated_5fdata_20_3e_22',['pipeline_stage&lt; processed_event, aggregated_data &gt;',['../df/d30/classpipeline__stage.html',1,'']]],

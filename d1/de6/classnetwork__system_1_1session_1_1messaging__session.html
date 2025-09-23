@@ -108,7 +108,8 @@ Inheritance diagram for network_system::session::messaging_session:</div>
 <map name="anetwork__system_1_1session_1_1messaging__session_inherit__map" id="anetwork__system_1_1session_1_1messaging__session_inherit__map">
 <area shape="rect" title="Manages a single connected client session on the server side, providing asynchronous read/write opera..." alt="" coords="5,108,192,148"/>
 <area shape="rect" title=" " alt="" coords="10,5,187,60"/>
-<area shape="poly" title=" " alt="" coords="101,74,101,108,96,108,96,74"/>
+<area shape="poly" title=" " alt="" coords="92,74,94,108,89,108,87,74"/>
+<area shape="poly" title=" " alt="" coords="110,74,109,108,103,108,105,74"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -118,12 +119,28 @@ Collaboration diagram for network_system::session::messaging_session:</div>
 <map name="anetwork__system_1_1session_1_1messaging__session_coll__map" id="anetwork__system_1_1session_1_1messaging__session_coll__map">
 <area shape="rect" title="Manages a single connected client session on the server side, providing asynchronous read/write opera..." alt="" coords="5,108,192,148"/>
 <area shape="rect" title=" " alt="" coords="10,5,187,60"/>
-<area shape="poly" title=" " alt="" coords="101,74,101,108,96,108,96,74"/>
+<area shape="poly" title=" " alt="" coords="92,74,94,108,89,108,87,74"/>
+<area shape="poly" title=" " alt="" coords="110,74,109,108,103,108,105,74"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aa4cd94687ded0439560a22d65ce17833" id="r_aa4cd94687ded0439560a22d65ce17833"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#aa4cd94687ded0439560a22d65ce17833">messaging_session</a> (asio::ip::tcp::socket socket, std::string_view server_id)</td></tr>
+<tr class="memdesc:aa4cd94687ded0439560a22d65ce17833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a session with a given <code>socket</code> and <code>server_id</code>.  <br /></td></tr>
+<tr class="separator:aa4cd94687ded0439560a22d65ce17833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f6d53762e47ca084aaca35892fdad79" id="r_a3f6d53762e47ca084aaca35892fdad79"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#a3f6d53762e47ca084aaca35892fdad79">~messaging_session</a> ()</td></tr>
+<tr class="memdesc:a3f6d53762e47ca084aaca35892fdad79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor; calls <code><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#a48eaf72c3ed76fb40c8f5c67132af8ea" title="Stops the session by closing the socket and marking the session as inactive.">stop_session()</a></code> if not already stopped.  <br /></td></tr>
+<tr class="separator:a3f6d53762e47ca084aaca35892fdad79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7b5c2dc9ec77718802f76a4fa9e0282" id="r_ac7b5c2dc9ec77718802f76a4fa9e0282"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#ac7b5c2dc9ec77718802f76a4fa9e0282">start_session</a> () -&gt; void</td></tr>
+<tr class="memdesc:ac7b5c2dc9ec77718802f76a4fa9e0282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the session: sets up read/error callbacks and begins reading data.  <br /></td></tr>
+<tr class="separator:ac7b5c2dc9ec77718802f76a4fa9e0282"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48eaf72c3ed76fb40c8f5c67132af8ea" id="r_a48eaf72c3ed76fb40c8f5c67132af8ea"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#a48eaf72c3ed76fb40c8f5c67132af8ea">stop_session</a> () -&gt; void</td></tr>
+<tr class="memdesc:a48eaf72c3ed76fb40c8f5c67132af8ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the session by closing the socket and marking the session as inactive.  <br /></td></tr>
+<tr class="separator:a48eaf72c3ed76fb40c8f5c67132af8ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03964883053681e1da59545b246ee9ef" id="r_a03964883053681e1da59545b246ee9ef"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#a03964883053681e1da59545b246ee9ef">send_packet</a> (std::vector&lt; uint8_t &gt; data) -&gt; void</td></tr>
+<tr class="memdesc:a03964883053681e1da59545b246ee9ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the connected client, optionally using compression/encryption.  <br /></td></tr>
+<tr class="separator:a03964883053681e1da59545b246ee9ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4cd94687ded0439560a22d65ce17833" id="r_aa4cd94687ded0439560a22d65ce17833"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#aa4cd94687ded0439560a22d65ce17833">messaging_session</a> (asio::ip::tcp::socket socket, std::string_view server_id)</td></tr>
 <tr class="memdesc:aa4cd94687ded0439560a22d65ce17833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a session with a given <code>socket</code> and <code>server_id</code>.  <br /></td></tr>
 <tr class="separator:aa4cd94687ded0439560a22d65ce17833"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,13 +171,27 @@ Lifecycle</h3>
 <ul>
 <li>Constructed with an accepted <code>asio::ip::tcp::socket</code>.</li>
 <li><code><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#ac7b5c2dc9ec77718802f76a4fa9e0282" title="Starts the session: sets up read/error callbacks and begins reading data.">start_session()</a></code> sets up callbacks and begins <code>socket_-&gt;start_read()</code>.</li>
+<li><code><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#a48eaf72c3ed76fb40c8f5c67132af8ea" title="Stops the session by closing the socket and marking the session as inactive.">stop_session()</a></code> closes the underlying socket, stopping further I/O.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md2678"></a>
+Responsibilities</h3>
+<ul>
+<li>Owns a <code>tcp_socket</code> for non-blocking I/O.</li>
+<li>Optionally applies compression/encryption via <code>pipeline_</code> before sending, and can do the reverse upon receiving data (if needed).</li>
+<li>Provides callbacks (<code>on_receive</code>, <code>on_error</code>) for data handling and error detection.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md2679"></a>
+Lifecycle</h3>
+<ul>
+<li>Constructed with an accepted <code>asio::ip::tcp::socket</code>.</li>
+<li><code><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#ac7b5c2dc9ec77718802f76a4fa9e0282" title="Starts the session: sets up read/error callbacks and begins reading data.">start_session()</a></code> sets up callbacks and begins <code>socket_-&gt;start_read()</code>.</li>
 <li><code><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#a48eaf72c3ed76fb40c8f5c67132af8ea" title="Stops the session by closing the socket and marking the session as inactive.">stop_session()</a></code> closes the underlying socket, stopping further I/O. </li>
 </ul>
 
 <p class="definition">Definition at line <a class="el" href="../../d6/d0e/include_2network__system_2session_2messaging__session_8h_source.html#l00070">70</a> of file <a class="el" href="../../d6/d0e/include_2network__system_2session_2messaging__session_8h_source.html">messaging_session.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa4cd94687ded0439560a22d65ce17833" name="aa4cd94687ded0439560a22d65ce17833"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4cd94687ded0439560a22d65ce17833">&#9670;&#160;</a></span>messaging_session()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4cd94687ded0439560a22d65ce17833">&#9670;&#160;</a></span>messaging_session() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -194,14 +225,12 @@ Lifecycle</h3>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html#l00044">44</a> of file <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
-
-<p class="reference">References <a class="el" href="../../d1/de9/src_2internal_2pipeline_8cpp_source.html#l00083">network_system::internal::make_default_pipeline()</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00044">44</a> of file <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
 
 </div>
 </div>
 <a id="a3f6d53762e47ca084aaca35892fdad79" name="a3f6d53762e47ca084aaca35892fdad79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f6d53762e47ca084aaca35892fdad79">&#9670;&#160;</a></span>~messaging_session()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f6d53762e47ca084aaca35892fdad79">&#9670;&#160;</a></span>~messaging_session() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -217,15 +246,71 @@ Lifecycle</h3>
 
 <p>Destructor; calls <code><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#a48eaf72c3ed76fb40c8f5c67132af8ea" title="Stops the session by closing the socket and marking the session as inactive.">stop_session()</a></code> if not already stopped. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html#l00082">stop_session()</a>.</p>
+<p class="reference">References <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00082">stop_session()</a>.</p>
+
+</div>
+</div>
+<a id="aa4cd94687ded0439560a22d65ce17833" name="aa4cd94687ded0439560a22d65ce17833"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4cd94687ded0439560a22d65ce17833">&#9670;&#160;</a></span>messaging_session() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">network_system::session::messaging_session::messaging_session </td>
+          <td>(</td>
+          <td class="paramtype">asio::ip::tcp::socket&#160;</td>
+          <td class="paramname"><em>socket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>server_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a session with a given <code>socket</code> and <code>server_id</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">socket</td><td>The <code>asio::ip::tcp::socket</code> (already connected). </td></tr>
+    <tr><td class="paramname">server_id</td><td>An identifier for this server instance or context. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3f6d53762e47ca084aaca35892fdad79" name="a3f6d53762e47ca084aaca35892fdad79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f6d53762e47ca084aaca35892fdad79">&#9670;&#160;</a></span>~messaging_session() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">network_system::session::messaging_session::~messaging_session </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destructor; calls <code><a class="el" href="../../d1/de6/classnetwork__system_1_1session_1_1messaging__session.html#a48eaf72c3ed76fb40c8f5c67132af8ea" title="Stops the session by closing the socket and marking the session as inactive.">stop_session()</a></code> if not already stopped. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a03964883053681e1da59545b246ee9ef" name="a03964883053681e1da59545b246ee9ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03964883053681e1da59545b246ee9ef">&#9670;&#160;</a></span>send_packet()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a03964883053681e1da59545b246ee9ef">&#9670;&#160;</a></span>send_packet() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,14 +338,45 @@ Notes</h3>
 <li>If <code>compress_mode_</code> or <code>encrypt_mode_</code> is true, the data will be processed by the pipeline's compress/encrypt functions before writing. </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html#l00096">96</a> of file <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00096">96</a> of file <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d0/d94/src_2internal_2send__coroutine_8cpp_source.html#l00097">network_system::internal::async_send_with_pipeline_no_co()</a>, and <a class="el" href="../../d4/d98/logger__integration_8h_source.html#l00263">NETWORK_LOG_ERROR</a>.</p>
+<p class="reference">References <a class="el" href="../../d4/d98/logger__integration_8h_source.html#l00263">NETWORK_LOG_ERROR</a>.</p>
+
+</div>
+</div>
+<a id="a03964883053681e1da59545b246ee9ef" name="a03964883053681e1da59545b246ee9ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03964883053681e1da59545b246ee9ef">&#9670;&#160;</a></span>send_packet() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto network_system::session::messaging_session::send_packet </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; uint8_t &gt;&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td> -&gt;  void</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends data to the connected client, optionally using compression/encryption. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>The raw bytes to transmit.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h3><a class="anchor" id="autotoc_md2680"></a>
+Notes</h3>
+<ul>
+<li>If <code>compress_mode_</code> or <code>encrypt_mode_</code> is true, the data will be processed by the pipeline's compress/encrypt functions before writing. </li>
+</ul>
 
 </div>
 </div>
 <a id="ac7b5c2dc9ec77718802f76a4fa9e0282" name="ac7b5c2dc9ec77718802f76a4fa9e0282"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7b5c2dc9ec77718802f76a4fa9e0282">&#9670;&#160;</a></span>start_session()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7b5c2dc9ec77718802f76a4fa9e0282">&#9670;&#160;</a></span>start_session() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -276,14 +392,33 @@ Notes</h3>
 
 <p>Starts the session: sets up read/error callbacks and begins reading data. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html#l00061">61</a> of file <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00061">61</a> of file <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="../../d4/d98/logger__integration_8h_source.html#l00255">NETWORK_LOG_INFO</a>.</p>
 
 </div>
 </div>
+<a id="ac7b5c2dc9ec77718802f76a4fa9e0282" name="ac7b5c2dc9ec77718802f76a4fa9e0282"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7b5c2dc9ec77718802f76a4fa9e0282">&#9670;&#160;</a></span>start_session() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto network_system::session::messaging_session::start_session </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> -&gt;  void</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starts the session: sets up read/error callbacks and begins reading data. </p>
+
+</div>
+</div>
 <a id="a48eaf72c3ed76fb40c8f5c67132af8ea" name="a48eaf72c3ed76fb40c8f5c67132af8ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48eaf72c3ed76fb40c8f5c67132af8ea">&#9670;&#160;</a></span>stop_session()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a48eaf72c3ed76fb40c8f5c67132af8ea">&#9670;&#160;</a></span>stop_session() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -299,16 +434,37 @@ Notes</h3>
 
 <p>Stops the session by closing the socket and marking the session as inactive. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html#l00082">82</a> of file <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00082">82</a> of file <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a>.</p>
 
 <p class="reference">References <a class="el" href="../../d4/d98/logger__integration_8h_source.html#l00255">NETWORK_LOG_INFO</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html#l00059">~messaging_session()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html#l00059">~messaging_session()</a>.</p>
+
+</div>
+</div>
+<a id="a48eaf72c3ed76fb40c8f5c67132af8ea" name="a48eaf72c3ed76fb40c8f5c67132af8ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48eaf72c3ed76fb40c8f5c67132af8ea">&#9670;&#160;</a></span>stop_session() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto network_system::session::messaging_session::stop_session </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> -&gt;  void</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stops the session by closing the socket and marking the session as inactive. </p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>libraries/network_system/include/network_system/session/<a class="el" href="../../d6/d0e/include_2network__system_2session_2messaging__session_8h_source.html">messaging_session.h</a></li>
+<li>libraries/network_system/session/<a class="el" href="../../dc/d2f/session_2messaging__session_8h_source.html">messaging_session.h</a></li>
+<li>libraries/network_system/session/<a class="el" href="../../d4/d02/session_2messaging__session_8cpp_source.html">messaging_session.cpp</a></li>
 <li>libraries/network_system/src/session/<a class="el" href="../../da/de3/src_2session_2messaging__session_8cpp_source.html">messaging_session.cpp</a></li>
 </ul>
 </div><!-- contents -->

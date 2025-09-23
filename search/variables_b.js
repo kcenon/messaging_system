@@ -53,7 +53,7 @@ var searchData=
   ['log_5fdirectory_50',['log_directory',['../d7/d0f/structkcenon_1_1logger_1_1logger__config.html#a6fa3d0f0160bd20f091535f1755b114f',1,'kcenon::logger::logger_config']]],
   ['log_5ffile_51',['log_file',['../d1/d73/structconfig__loader_1_1app__config.html#a2ef7e91f3621050556a796d980a9eb16',1,'config_loader::app_config']]],
   ['log_5ffile_5fprefix_52',['log_file_prefix',['../d7/d0f/structkcenon_1_1logger_1_1logger__config.html#aed6c43be5c081812e6f3542c126be34a',1,'kcenon::logger::logger_config']]],
-  ['log_5flevel_53',['log_level',['../d1/d73/structconfig__loader_1_1app__config.html#ae66cb0d97285d9812f4fbe7987d4cf8f',1,'config_loader::app_config']]],
+  ['log_5flevel_53',['log_level',['../d1/d73/structconfig__loader_1_1app__config.html#ab088b9d414774ba71a00753469244655',1,'config_loader::app_config']]],
   ['log_5ftimestamp_54',['log_timestamp',['../d8/d35/structlogger__system_1_1testing_1_1mock__writer_1_1write__record.html#adb8483ecf4b5c8dcd45ce9dd8b1171c3',1,'logger_system::testing::mock_writer::write_record']]],
   ['logging_55',['logging',['../d3/d91/structkcenon_1_1messaging_1_1config_1_1messaging__config.html#a857b462910545ae079b68703444fd494',1,'kcenon::messaging::config::messaging_config']]],
   ['logging_5factive_56',['logging_active',['../dc/d84/logger__system_2examples_2crash__protection_2main_8cpp.html#a287c9d574a7aeba3aacd3b3276f7a501',1,'main.cpp']]],

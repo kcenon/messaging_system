@@ -92,12 +92,11 @@ $(document).ready(function(){initNavTree('d1/de9/src_2internal_2pipeline_8cpp.ht
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">pipeline.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="../../d0/d53/src_2internal_2pipeline_8h_source.html">pipeline.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;network_system/internal/pipeline.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../d4/d98/logger__integration_8h_source.html">network_system/integration/logger_integration.h</a>&quot;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -105,27 +104,18 @@ Include dependency graph for pipeline.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../df/df7/src_2internal_2pipeline_8cpp__incl.png" border="0" usemap="#alibraries_2network__system_2src_2internal_2pipeline_8cpp" alt=""/></div>
 <map name="alibraries_2network__system_2src_2internal_2pipeline_8cpp" id="alibraries_2network__system_2src_2internal_2pipeline_8cpp">
-<area shape="rect" title=" " alt="" coords="338,5,525,45"/>
-<area shape="rect" href="../../d0/d53/src_2internal_2pipeline_8h.html" title=" " alt="" coords="241,101,328,126"/>
-<area shape="poly" title=" " alt="" coords="400,48,317,96,315,91,398,43"/>
-<area shape="rect" title=" " alt="" coords="411,181,508,207"/>
-<area shape="poly" title=" " alt="" coords="437,45,458,167,453,168,432,46"/>
-<area shape="rect" href="../../d4/d98/logger__integration_8h.html" title="Logger system integration interface for network_system." alt="" coords="469,93,674,133"/>
-<area shape="poly" title=" " alt="" coords="463,43,531,84,528,89,461,48"/>
-<area shape="rect" title=" " alt="" coords="5,181,68,207"/>
-<area shape="poly" title=" " alt="" coords="249,129,82,181,81,176,248,123"/>
-<area shape="rect" title=" " alt="" coords="93,181,159,207"/>
-<area shape="poly" title=" " alt="" coords="263,128,163,178,160,173,260,124"/>
-<area shape="rect" title=" " alt="" coords="184,181,271,207"/>
-<area shape="poly" title=" " alt="" coords="278,128,246,172,242,169,274,125"/>
-<area shape="poly" title=" " alt="" coords="311,124,422,173,420,178,309,128"/>
-<area shape="rect" title=" " alt="" coords="295,181,387,207"/>
-<area shape="poly" title=" " alt="" coords="295,125,327,169,322,172,291,128"/>
-<area shape="poly" title=" " alt="" coords="546,136,489,175,486,171,543,131"/>
-<area shape="rect" title=" " alt="" coords="533,181,610,207"/>
-<area shape="poly" title=" " alt="" coords="574,134,574,167,569,167,569,134"/>
-<area shape="rect" title=" " alt="" coords="634,181,693,207"/>
-<area shape="poly" title=" " alt="" coords="595,132,641,170,637,174,592,136"/>
+<area shape="rect" title=" " alt="" coords="223,5,409,45"/>
+<area shape="rect" title=" " alt="" coords="5,93,189,133"/>
+<area shape="poly" title=" " alt="" coords="269,48,159,91,157,86,267,43"/>
+<area shape="rect" href="../../d4/d98/logger__integration_8h.html" title="Logger system integration interface for network_system." alt="" coords="213,93,419,133"/>
+<area shape="poly" title=" " alt="" coords="319,46,319,79,313,79,313,46"/>
+<area shape="rect" title=" " alt="" coords="398,181,495,207"/>
+<area shape="poly" title=" " alt="" coords="370,43,404,63,433,92,442,110,448,130,451,167,446,168,443,131,437,112,429,95,401,67,368,48"/>
+<area shape="rect" title=" " alt="" coords="195,181,272,207"/>
+<area shape="poly" title=" " alt="" coords="298,135,257,174,254,170,294,132"/>
+<area shape="rect" title=" " alt="" coords="296,181,355,207"/>
+<area shape="poly" title=" " alt="" coords="321,133,325,167,320,168,316,134"/>
+<area shape="poly" title=" " alt="" coords="349,131,417,172,414,176,346,136"/>
 </map>
 </div>
 </div>
@@ -154,17 +144,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a8b33b9ba892250a7c358ac319b05d3d9" id="r_a8b33b9ba892250a7c358ac319b05d3d9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dc6/namespacenetwork__system_1_1internal.html#a8b33b9ba892250a7c358ac319b05d3d9">network_system::internal::make_default_pipeline</a> () -&gt; <a class="el" href="../../db/d3e/structnetwork__system_1_1internal_1_1pipeline.html">pipeline</a></td></tr>
 <tr class="memdesc:a8b33b9ba892250a7c358ac319b05d3d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a default pipeline with trivial (no-op) implementations for compress, decompress, encrypt, and decrypt.  <br /></td></tr>
 <tr class="separator:a8b33b9ba892250a7c358ac319b05d3d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a9badc3b77da3410d3f4cd6e9b53d8812" id="r_a9badc3b77da3410d3f4cd6e9b53d8812"><td class="memItemLeft" align="right" valign="top">constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de5/namespacenetwork__system_1_1internal_1_1detail.html#a9badc3b77da3410d3f4cd6e9b53d8812">network_system::internal::detail::compress_debug_msg</a> = &quot;[debug] default_compress_stub&quot;</td></tr>
-<tr class="separator:a9badc3b77da3410d3f4cd6e9b53d8812"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a339cb37e737dfb8942ae25c4a1d80031" id="r_a339cb37e737dfb8942ae25c4a1d80031"><td class="memItemLeft" align="right" valign="top">constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de5/namespacenetwork__system_1_1internal_1_1detail.html#a339cb37e737dfb8942ae25c4a1d80031">network_system::internal::detail::decompress_debug_msg</a> = &quot;[debug] default_decompress_stub&quot;</td></tr>
-<tr class="separator:a339cb37e737dfb8942ae25c4a1d80031"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2dc33a7914bc17479b19fc10d4d75c2b" id="r_a2dc33a7914bc17479b19fc10d4d75c2b"><td class="memItemLeft" align="right" valign="top">constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de5/namespacenetwork__system_1_1internal_1_1detail.html#a2dc33a7914bc17479b19fc10d4d75c2b">network_system::internal::detail::encrypt_debug_msg</a> = &quot;[debug] default_encrypt_stub&quot;</td></tr>
-<tr class="separator:a2dc33a7914bc17479b19fc10d4d75c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2f6a2fe221a4f23ee59ab204e492e09" id="r_ab2f6a2fe221a4f23ee59ab204e492e09"><td class="memItemLeft" align="right" valign="top">constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/de5/namespacenetwork__system_1_1internal_1_1detail.html#ab2f6a2fe221a4f23ee59ab204e492e09">network_system::internal::detail::decrypt_debug_msg</a> = &quot;[debug] default_decrypt_stub&quot;</td></tr>
-<tr class="separator:ab2f6a2fe221a4f23ee59ab204e492e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

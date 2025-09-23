@@ -1,7 +1,7 @@
 var classmetrics__collector =
 [
     [ "metrics", "d0/d93/structmetrics__collector_1_1metrics.html", "d0/d93/structmetrics__collector_1_1metrics" ],
-    [ "metrics_collector", "d7/db0/classmetrics__collector.html#aaa3ff98eb99d5f1a77ce57fc1518512b", null ],
+    [ "metrics_collector", "d7/db0/classmetrics__collector.html#a234456798abe4409c79d8f7bfe83b097", null ],
     [ "~metrics_collector", "d7/db0/classmetrics__collector.html#a66f854341c231aa33327e20a26f56ff0", null ],
     [ "increment_errors", "d7/db0/classmetrics__collector.html#a952fbb06c51fa934c4f912b921f66bad", null ],
     [ "increment_received", "d7/db0/classmetrics__collector.html#a368a2d9def3baefd7247767c405d7915", null ],

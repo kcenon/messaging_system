@@ -1,12 +1,14 @@
 var internal_2common__defs_8h =
 [
-    [ "data_mode", "d5/d49/internal_2common__defs_8h.html#aee4e9adbf9f803ff81009170a8ae65b7", [
-      [ "packet_mode", "d5/d49/internal_2common__defs_8h.html#aee4e9adbf9f803ff81009170a8ae65b7a8d01e9bd18390ad98ebf15da69a53420", null ],
-      [ "file_mode", "d5/d49/internal_2common__defs_8h.html#aee4e9adbf9f803ff81009170a8ae65b7acdf0915797c3318ce1844f93364014e1", null ],
-      [ "binary_mode", "d5/d49/internal_2common__defs_8h.html#aee4e9adbf9f803ff81009170a8ae65b7a32540fe09f9446edf2e126a8f115fa59", null ]
-    ] ],
-    [ "default_buffer_size", "d5/d49/internal_2common__defs_8h.html#a97d464770905ed44b5207c049a439160", null ],
-    [ "default_client_id", "d5/d49/internal_2common__defs_8h.html#a92e072a9ddde522388a57539faa6b9ff", null ],
-    [ "default_server_id", "d5/d49/internal_2common__defs_8h.html#a8bf137ab0d967b9b644db6601baa3307", null ],
-    [ "default_timeout_ms", "d5/d49/internal_2common__defs_8h.html#afa56a979bd9b25227e01b8c863ca39ca", null ]
+    [ "data_mode", "d5/d49/internal_2common__defs_8h.html#a77ebed082db23257d5b85dc6764133bd", [
+      [ "packet_mode", "d5/d49/internal_2common__defs_8h.html#a77ebed082db23257d5b85dc6764133bda8d01e9bd18390ad98ebf15da69a53420", null ],
+      [ "file_mode", "d5/d49/internal_2common__defs_8h.html#a77ebed082db23257d5b85dc6764133bdacdf0915797c3318ce1844f93364014e1", null ],
+      [ "binary_mode", "d5/d49/internal_2common__defs_8h.html#a77ebed082db23257d5b85dc6764133bda32540fe09f9446edf2e126a8f115fa59", null ],
+      [ "packet_mode", "d5/d49/internal_2common__defs_8h.html#a77ebed082db23257d5b85dc6764133bda8d01e9bd18390ad98ebf15da69a53420", null ],
+      [ "file_mode", "d5/d49/internal_2common__defs_8h.html#a77ebed082db23257d5b85dc6764133bdacdf0915797c3318ce1844f93364014e1", null ],
+      [ "binary_mode", "d5/d49/internal_2common__defs_8h.html#a77ebed082db23257d5b85dc6764133bda32540fe09f9446edf2e126a8f115fa59", null ],
+      [ "packet_mode", "d5/d49/internal_2common__defs_8h.html#a77ebed082db23257d5b85dc6764133bda8d01e9bd18390ad98ebf15da69a53420", null ],
+      [ "file_mode", "d5/d49/internal_2common__defs_8h.html#a77ebed082db23257d5b85dc6764133bdacdf0915797c3318ce1844f93364014e1", null ],
+      [ "binary_mode", "d5/d49/internal_2common__defs_8h.html#a77ebed082db23257d5b85dc6764133bda32540fe09f9446edf2e126a8f115fa59", null ]
+    ] ]
 ];

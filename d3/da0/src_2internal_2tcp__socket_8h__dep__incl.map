@@ -1,9 +1,5 @@
 <map id="libraries/network_system/src/internal/tcp_socket.h" name="libraries/network_system/src/internal/tcp_socket.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="141,5,328,45"/>
-<area shape="rect" id="Node000002" href="$d0/dff/src_2internal_2send__coroutine_8h.html" title=" " alt="" coords="13,93,227,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,56,147,95,144,91,197,52"/>
-<area shape="rect" id="Node000004" href="$d8/d49/src_2internal_2tcp__socket_8cpp.html" title=" " alt="" coords="251,93,450,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="273,52,327,91,323,95,270,56"/>
-<area shape="rect" id="Node000003" href="$d0/d94/src_2internal_2send__coroutine_8cpp.html" title=" " alt="" coords="5,181,235,221"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,147,123,181,117,181,117,147"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="19,5,206,45"/>
+<area shape="rect" id="Node000002" href="$d0/dff/src_2internal_2send__coroutine_8h.html" title=" " alt="" coords="5,93,220,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,59,115,93,110,93,110,59"/>
 </map>

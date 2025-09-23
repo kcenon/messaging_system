@@ -728,13 +728,6 @@ var annotated_dup =
       [ "zipkin_exporter", "d8/d0b/classmonitoring__system_1_1zipkin__exporter.html", "d8/d0b/classmonitoring__system_1_1zipkin__exporter" ],
       [ "zipkin_span_data", "d9/dce/structmonitoring__system_1_1zipkin__span__data.html", "d9/dce/structmonitoring__system_1_1zipkin__span__data" ]
     ] ],
-    [ "network_module", "d1/df3/namespacenetwork__module.html", [
-      [ "messaging_client", "dc/d94/classnetwork__module_1_1messaging__client.html", "dc/d94/classnetwork__module_1_1messaging__client" ],
-      [ "messaging_server", "de/d13/classnetwork__module_1_1messaging__server.html", "de/d13/classnetwork__module_1_1messaging__server" ],
-      [ "messaging_session", "de/d65/classnetwork__module_1_1messaging__session.html", "de/d65/classnetwork__module_1_1messaging__session" ],
-      [ "pipeline", "d2/dc7/structnetwork__module_1_1pipeline.html", "d2/dc7/structnetwork__module_1_1pipeline" ],
-      [ "tcp_socket", "d3/d43/classnetwork__module_1_1tcp__socket.html", "d3/d43/classnetwork__module_1_1tcp__socket" ]
-    ] ],
     [ "network_system", "d3/da6/namespacenetwork__system.html", [
       [ "core", "da/d6e/namespacenetwork__system_1_1core.html", [
         [ "messaging_client", "de/d3d/classnetwork__system_1_1core_1_1messaging__client.html", "de/d3d/classnetwork__system_1_1core_1_1messaging__client" ],

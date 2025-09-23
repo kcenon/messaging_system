@@ -103,9 +103,9 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;<a class="code" href="../../d1/dac/container__service_8h.html">kcenon/messaging/services/container/container_service.h</a>&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/dc6/database__service_8h.html">kcenon/messaging/services/database/database_service.h</a>&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/dcb/network__service_8h.html">kcenon/messaging/services/network/network_service.h</a>&gt;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;kcenon/logger/logger.h&gt;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d9a/console__writer_8h.html">logger/writers/console_writer.h</a>&gt;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;<a class="code" href="../../d0/dc1/rotating__file__writer_8h.html">logger/writers/rotating_file_writer.h</a>&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;<a class="code" href="../../d1/d8c/logger_8h.html">kcenon/logger/core/logger.h</a>&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d9a/console__writer_8h.html">kcenon/logger/writers/console_writer.h</a>&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;<a class="code" href="../../d0/dc1/rotating__file__writer_8h.html">kcenon/logger/writers/rotating_file_writer.h</a>&gt;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;random&gt;</span></div>
@@ -188,7 +188,7 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    std::unique_ptr&lt;services::container::container_service&gt; container_svc;</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    std::unique_ptr&lt;services::database::database_service&gt; database_svc;</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    std::unique_ptr&lt;services::network::network_service&gt; network_svc;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    std::shared_ptr&lt;logger_module::logger&gt; m_logger;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    std::shared_ptr&lt;kcenon::logger::logger&gt; m_logger;</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="comment">// Device management</span></div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    std::map&lt;std::string, device_config&gt; devices;</div>
@@ -216,12 +216,12 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="foldopen" id="foldopen00113" data-start="{" data-end="}">
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="../../d9/d2e/classiot__monitoring__system.html#a72828b9ca10af4b7b3e0d85fe88366f4">  113</a></span>    <a class="code hl_function" href="../../d9/d2e/classiot__monitoring__system.html#a72828b9ca10af4b7b3e0d85fe88366f4">iot_monitoring_system</a>() : gen(rd()) {</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="comment">// Initialize logger</span></div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        m_logger = std::make_shared&lt;logger_module::logger&gt;(<span class="keyword">true</span>, 8192);</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        m_logger-&gt;add_writer(std::make_unique&lt;logger_module::console_writer&gt;());</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        m_logger-&gt;add_writer(std::make_unique&lt;logger_module::rotating_file_writer&gt;(</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        m_logger = std::make_shared&lt;kcenon::logger::logger&gt;(<span class="keyword">true</span>, 8192);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        m_logger-&gt;add_writer(std::make_unique&lt;kcenon::logger::console_writer&gt;());</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        m_logger-&gt;add_writer(std::make_unique&lt;kcenon::logger::rotating_file_writer&gt;(</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <span class="stringliteral">&quot;iot_monitoring.log&quot;</span>, 10 * 1024 * 1024, 5));</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        m_logger-&gt;log(logger_module::log_level::info, <span class="stringliteral">&quot;Initializing IoT Monitoring System&quot;</span>);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        m_logger-&gt;log(kcenon::logger::log_level::info, <span class="stringliteral">&quot;Initializing IoT Monitoring System&quot;</span>);</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="comment">// Configure for IoT workload</span></div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <a class="code hl_class" href="../../d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config::config_builder</a> builder;</div>
@@ -296,7 +296,7 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <a class="code hl_function" href="../../d9/d2e/classiot__monitoring__system.html#aab83d77797c26e09b3612fc75a36e0ec">registerDevice</a>(<span class="stringliteral">&quot;lock-001&quot;</span>, <a class="code hl_enumvalue" href="../../d4/d8b/iot__monitoring_8cpp.html#af2b559cc2ee2eaee47fe1f15cc99f49eaf99582e8dd6be5ac4c41734adbfee83d">device_type::SMART_LOCK</a>, <span class="stringliteral">&quot;Front Door&quot;</span>, 0.0, 1.0);</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
 <div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>            <span class="stringliteral">&quot;Initialized &quot;</span> + std::to_string(devices.size()) + <span class="stringliteral">&quot; IoT devices&quot;</span>);</div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    }</div>
 </div>
@@ -364,12 +364,12 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>            <span class="comment">// Log high-frequency updates less frequently</span></div>
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>            <span class="keywordflow">if</span> (total_messages % 100 == 0) {</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>                m_logger-&gt;log(logger_module::log_level::debug,</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>                m_logger-&gt;log(kcenon::logger::log_level::debug,</div>
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>                    <span class="stringliteral">&quot;Processed &quot;</span> + std::to_string(total_messages.load()) + <span class="stringliteral">&quot; telemetry messages&quot;</span>);</div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            }</div>
 <div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            m_logger-&gt;log(logger_module::log_level::error,</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            m_logger-&gt;log(kcenon::logger::log_level::error,</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>                <span class="stringliteral">&quot;Error processing telemetry: &quot;</span> + std::string(e.what()));</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        }</div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    }</div>
@@ -449,7 +449,7 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>        <span class="comment">// Publish alert</span></div>
 <div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        <a class="code hl_function" href="../../d9/d2e/classiot__monitoring__system.html#a2d6f80c80bc4dd86d72604322e38235b">publishAlert</a>(alert_obj);</div>
 <div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span> </div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>        m_logger-&gt;log(logger_module::log_level::warning,</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>        m_logger-&gt;log(kcenon::logger::log_level::warning,</div>
 <div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>            <span class="stringliteral">&quot;[ALERT] &quot;</span> + <a class="code hl_function" href="../../d9/d2e/classiot__monitoring__system.html#a3fbf03d1bddee04af7870a39580f8036">getSeverityString</a>(severity) + <span class="stringliteral">&quot;: &quot;</span> + message +</div>
 <div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>            <span class="stringliteral">&quot; (Device: &quot;</span> + device_id + <span class="stringliteral">&quot;)&quot;</span>);</div>
 <div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    }</div>
@@ -493,7 +493,7 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span> </div>
 <div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        <a class="code hl_function" href="../../d9/d2e/classiot__monitoring__system.html#aab83d77797c26e09b3612fc75a36e0ec">registerDevice</a>(device_id, type, location, 0.0, 100.0);</div>
 <div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span> </div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
 <div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>            <span class="stringliteral">&quot;Registered new device: &quot;</span> + device_id + <span class="stringliteral">&quot; at &quot;</span> + location);</div>
 <div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>    }</div>
 </div>
@@ -503,7 +503,7 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        <span class="keyword">auto</span> device_id = msg.<a class="code hl_variable" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a79eb560ff3c4a3cf26100bd22fedc6fa">metadata</a>.<a class="code hl_variable" href="../../d6/d94/structkcenon_1_1messaging_1_1core_1_1message__metadata.html#a110b932bf4d72b6c4ad28f8f1e2e26a3">headers</a>.count(<span class="stringliteral">&quot;device_id&quot;</span>) ? msg.<a class="code hl_variable" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a79eb560ff3c4a3cf26100bd22fedc6fa">metadata</a>.<a class="code hl_variable" href="../../d6/d94/structkcenon_1_1messaging_1_1core_1_1message__metadata.html#a110b932bf4d72b6c4ad28f8f1e2e26a3">headers</a>.at(<span class="stringliteral">&quot;device_id&quot;</span>) : <span class="stringliteral">&quot;&quot;</span>;</div>
 <div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        <span class="keyword">auto</span> command = msg.<a class="code hl_variable" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a79eb560ff3c4a3cf26100bd22fedc6fa">metadata</a>.<a class="code hl_variable" href="../../d6/d94/structkcenon_1_1messaging_1_1core_1_1message__metadata.html#a110b932bf4d72b6c4ad28f8f1e2e26a3">headers</a>.count(<span class="stringliteral">&quot;command&quot;</span>) ? msg.<a class="code hl_variable" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a79eb560ff3c4a3cf26100bd22fedc6fa">metadata</a>.<a class="code hl_variable" href="../../d6/d94/structkcenon_1_1messaging_1_1core_1_1message__metadata.html#a110b932bf4d72b6c4ad28f8f1e2e26a3">headers</a>.at(<span class="stringliteral">&quot;command&quot;</span>) : <span class="stringliteral">&quot;&quot;</span>;</div>
 <div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span> </div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
 <div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>            <span class="stringliteral">&quot;Executing command &#39;&quot;</span> + command + <span class="stringliteral">&quot;&#39; on device &quot;</span> + device_id);</div>
 <div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span> </div>
 <div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>        <span class="comment">// Forward command to device</span></div>
@@ -536,7 +536,7 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>        <span class="keyword">auto</span> alert_id = msg.<a class="code hl_variable" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a79eb560ff3c4a3cf26100bd22fedc6fa">metadata</a>.<a class="code hl_variable" href="../../d6/d94/structkcenon_1_1messaging_1_1core_1_1message__metadata.html#a110b932bf4d72b6c4ad28f8f1e2e26a3">headers</a>.count(<span class="stringliteral">&quot;alert_id&quot;</span>) ? msg.<a class="code hl_variable" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a79eb560ff3c4a3cf26100bd22fedc6fa">metadata</a>.<a class="code hl_variable" href="../../d6/d94/structkcenon_1_1messaging_1_1core_1_1message__metadata.html#a110b932bf4d72b6c4ad28f8f1e2e26a3">headers</a>.at(<span class="stringliteral">&quot;alert_id&quot;</span>) : <span class="stringliteral">&quot;&quot;</span>;</div>
 <div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>        <span class="keyword">auto</span> user_id = msg.<a class="code hl_variable" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a79eb560ff3c4a3cf26100bd22fedc6fa">metadata</a>.<a class="code hl_variable" href="../../d6/d94/structkcenon_1_1messaging_1_1core_1_1message__metadata.html#a110b932bf4d72b6c4ad28f8f1e2e26a3">headers</a>.count(<span class="stringliteral">&quot;user_id&quot;</span>) ? msg.<a class="code hl_variable" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a79eb560ff3c4a3cf26100bd22fedc6fa">metadata</a>.<a class="code hl_variable" href="../../d6/d94/structkcenon_1_1messaging_1_1core_1_1message__metadata.html#a110b932bf4d72b6c4ad28f8f1e2e26a3">headers</a>.at(<span class="stringliteral">&quot;user_id&quot;</span>) : <span class="stringliteral">&quot;&quot;</span>;</div>
 <div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span> </div>
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
 <div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>            <span class="stringliteral">&quot;Alert &quot;</span> + alert_id + <span class="stringliteral">&quot; acknowledged by user &quot;</span> + user_id);</div>
 <div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span> </div>
 <div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>        <span class="comment">// In production, would update alert status in database</span></div>
@@ -772,7 +772,7 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span><span class="keyword">public</span>:</div>
 <div class="foldopen" id="foldopen00622" data-start="{" data-end="}">
 <div class="line"><a id="l00622" name="l00622"></a><span class="lineno"><a class="line" href="../../d9/d2e/classiot__monitoring__system.html#a39b0ffc4b13d1fc6a12926ef6c572fc1">  622</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d9/d2e/classiot__monitoring__system.html#a39b0ffc4b13d1fc6a12926ef6c572fc1">start</a>() {</div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>        m_logger-&gt;log(logger_module::log_level::info, <span class="stringliteral">&quot;\n=== IoT Monitoring System Starting ===&quot;</span>);</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>        m_logger-&gt;log(kcenon::logger::log_level::info, <span class="stringliteral">&quot;\n=== IoT Monitoring System Starting ===&quot;</span>);</div>
 <div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span> </div>
 <div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>        <span class="comment">// Start the integrator (if it has a start method)</span></div>
 <div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>        <span class="comment">// integrator-&gt;start();</span></div>
@@ -804,7 +804,7 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>        stats += <span class="stringliteral">&quot;Total alerts generated: &quot;</span> + std::to_string(total_alerts) + <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>        stats += <span class="stringliteral">&quot;======================&quot;</span>;</div>
 <div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span> </div>
-<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>        m_logger-&gt;log(logger_module::log_level::info, stats);</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>        m_logger-&gt;log(kcenon::logger::log_level::info, stats);</div>
 <div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>        m_logger-&gt;flush();</div>
 <div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>        m_logger-&gt;stop();</div>
 <div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>    }</div>
@@ -861,7 +861,7 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span> </div>
 <div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>        dashboard &lt;&lt; <span class="stringliteral">&quot;╚═══════════════════════════════════════════════════════╝&quot;</span>;</div>
 <div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span> </div>
-<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>        m_logger-&gt;log(logger_module::log_level::info, dashboard.str());</div>
+<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>        m_logger-&gt;log(kcenon::logger::log_level::info, dashboard.str());</div>
 <div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>    }</div>
 </div>
 <div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>};</div>
@@ -875,9 +875,9 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span> </div>
 <div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
 <div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span>        <span class="comment">// Create a minimal logger for error reporting</span></div>
-<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>        <span class="keyword">auto</span> error_logger = std::make_shared&lt;logger_module::logger&gt;(<span class="keyword">true</span>, 8192);</div>
-<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>        error_logger-&gt;add_writer(std::make_unique&lt;logger_module::console_writer&gt;());</div>
-<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>        error_logger-&gt;log(logger_module::log_level::error, <span class="stringliteral">&quot;Error: &quot;</span> + std::string(e.what()));</div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>        <span class="keyword">auto</span> error_logger = std::make_shared&lt;kcenon::logger::logger&gt;(<span class="keyword">true</span>, 8192);</div>
+<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>        error_logger-&gt;add_writer(std::make_unique&lt;kcenon::logger::console_writer&gt;());</div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>        error_logger-&gt;log(kcenon::logger::log_level::error, <span class="stringliteral">&quot;Error: &quot;</span> + std::string(e.what()));</div>
 <div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>        error_logger-&gt;stop();</div>
 <div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span>        <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>    }</div>
@@ -939,6 +939,7 @@ $(document).ready(function(){initNavTree('d4/d8b/iot__monitoring_8cpp_source.htm
 <div class="ttc" id="aiot__monitoring_8cpp_html_af2b559cc2ee2eaee47fe1f15cc99f49eab4011588a65f4e9a53ce76a5ecf1280a"><div class="ttname"><a href="../../d4/d8b/iot__monitoring_8cpp.html#af2b559cc2ee2eaee47fe1f15cc99f49eab4011588a65f4e9a53ce76a5ecf1280a">device_type::HUMIDITY_SENSOR</a></div><div class="ttdeci">@ HUMIDITY_SENSOR</div></div>
 <div class="ttc" id="aiot__monitoring_8cpp_html_af2b559cc2ee2eaee47fe1f15cc99f49eaddf0d6b21537d984fea6544f58101fa8"><div class="ttname"><a href="../../d4/d8b/iot__monitoring_8cpp.html#af2b559cc2ee2eaee47fe1f15cc99f49eaddf0d6b21537d984fea6544f58101fa8">device_type::CAMERA</a></div><div class="ttdeci">@ CAMERA</div></div>
 <div class="ttc" id="aiot__monitoring_8cpp_html_af2b559cc2ee2eaee47fe1f15cc99f49eaf99582e8dd6be5ac4c41734adbfee83d"><div class="ttname"><a href="../../d4/d8b/iot__monitoring_8cpp.html#af2b559cc2ee2eaee47fe1f15cc99f49eaf99582e8dd6be5ac4c41734adbfee83d">device_type::SMART_LOCK</a></div><div class="ttdeci">@ SMART_LOCK</div></div>
+<div class="ttc" id="alogger_8h_html"><div class="ttname"><a href="../../d1/d8c/logger_8h.html">logger.h</a></div><div class="ttdoc">High-performance, thread-safe logging system with asynchronous capabilities.</div></div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_html"><div class="ttname"><a href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a></div><div class="ttdef"><b>Definition</b> <a href="../../d7/d6e/distributed__messaging_8h_source.html#l00015">distributed_messaging.h:15</a></div></div>
 <div class="ttc" id="anetwork__service_8h_html"><div class="ttname"><a href="../../dc/dcb/network__service_8h.html">network_service.h</a></div></div>
 <div class="ttc" id="arotating__file__writer_8h_html"><div class="ttname"><a href="../../d0/dc1/rotating__file__writer_8h.html">rotating_file_writer.h</a></div></div>

@@ -1,27 +1,9 @@
 <map id="libraries/network_system/src/internal/tcp_socket.cpp" name="libraries/network_system/src/internal/tcp_socket.cpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="369,5,567,45"/>
-<area shape="rect" id="Node000002" href="$df/d12/src_2internal_2tcp__socket_8h.html" title=" " alt="" coords="301,93,403,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="441,48,382,88,379,83,438,43"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="428,93,508,119"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="471,46,471,79,465,79,465,46"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="533,93,625,119"/>
-<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="496,43,553,83,550,87,493,48"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,83,192"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="303,121,97,169,96,163,302,116"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="107,167,194,192"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="321,121,197,165,195,159,319,116"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="219,167,296,192"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="338,121,285,160,282,156,335,117"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="321,167,383,192"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="355,119,355,153,349,153,349,119"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="408,167,464,192"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="367,117,413,155,410,160,364,121"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="489,167,597,192"/>
-<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="384,116,500,159,498,164,382,121"/>
-<area shape="rect" id="Node000009" href="$d2/da6/src_2internal_2common__defs_8h.html" title=" " alt="" coords="621,167,747,192"/>
-<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="404,116,618,161,617,166,403,121"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="597,240,664,265"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="677,194,650,231,645,228,673,191"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="689,240,786,265"/>
-<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="695,191,723,228,718,231,691,194"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="154,5,353,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,189,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,48,145,89,142,84,218,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="213,101,293,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="256,46,256,87,251,87,251,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="318,101,410,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="280,43,339,90,336,94,276,48"/>
 </map>

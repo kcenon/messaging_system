@@ -1,4 +1,4 @@
 var session_2messaging__session_8h =
 [
-    [ "network_module::messaging_session", "de/d65/classnetwork__module_1_1messaging__session.html", "de/d65/classnetwork__module_1_1messaging__session" ]
+    [ "network_system::session::messaging_session", "d1/de6/classnetwork__system_1_1session_1_1messaging__session.html", "d1/de6/classnetwork__system_1_1session_1_1messaging__session" ]
 ];

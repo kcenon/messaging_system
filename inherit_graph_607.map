@@ -1,58 +1,17 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="28,544,173,584"/>
-<area shape="rect" id="Node000001" href="$db/de5/classcontainer__module_1_1thread__safe__container.html" title="Thread&#45;safe container with lock optimization." alt="" coords="255,704,444,744"/>
-<area shape="poly" id="edge166_Node000000_Node000001" title=" " alt="" coords="130,592,181,642,212,668,245,690,270,701,268,706,243,694,209,672,177,646,126,596"/>
-<area shape="rect" id="Node000002" href="$d5/df9/classcontainer__module_1_1value.html" title="The base class for all values stored in the container system." alt="" coords="258,769,441,794"/>
-<area shape="poly" id="edge167_Node000000_Node000002" title=" " alt="" coords="120,596,140,633,168,676,204,718,245,754,271,766,268,771,243,758,200,722,164,679,135,636,115,598"/>
-<area shape="rect" id="Node000008" href="$d9/dad/classcontainer__module_1_1value__container.html" title="A high&#45;level container for messages, including source/target IDs, message type, and a list of values ..." alt="" coords="258,320,441,360"/>
-<area shape="poly" id="edge173_Node000000_Node000008" title=" " alt="" coords="115,530,136,493,165,450,200,407,242,370,264,358,266,362,246,374,204,411,169,453,141,496,120,533"/>
-<area shape="rect" id="Node000009" href="$d9/da2/classkcenon_1_1thread_1_1job__queue.html" title="A thread&#45;safe job queue for managing and dispatching work items." alt="" coords="276,141,423,181"/>
-<area shape="poly" id="edge174_Node000000_Node000009" title=" " alt="" coords="110,530,177,339,214,244,230,211,242,193,274,173,277,177,246,197,234,214,219,246,182,340,115,532"/>
-<area shape="rect" id="Node000017" href="$d8/dbe/classkcenon_1_1thread_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads." alt="" coords="247,206,451,231"/>
-<area shape="poly" id="edge181_Node000000_Node000017" title=" " alt="" coords="104,530,118,468,143,390,161,349,184,310,211,274,242,242,263,229,266,234,246,246,215,277,188,313,166,352,148,392,123,469,110,531"/>
-<area shape="rect" id="Node000019" href="$d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="247,256,451,296"/>
-<area shape="poly" id="edge182_Node000000_Node000019" title=" " alt="" coords="109,530,127,481,154,420,192,359,216,331,242,306,261,294,264,299,246,310,220,334,197,362,159,423,131,483,114,532"/>
-<area shape="rect" id="Node000020" href="$dc/d94/classnetwork__module_1_1messaging__client.html" title="A basic TCP client that connects to a remote host, sends/receives data using asynchronous operations,..." alt="" coords="244,384,455,424"/>
-<area shape="poly" id="edge183_Node000000_Node000020" title=" " alt="" coords="126,532,177,482,209,456,243,434,268,422,270,427,245,438,212,460,181,486,130,536"/>
-<area shape="rect" id="Node000021" href="$de/d13/classnetwork__module_1_1messaging__server.html" title="A server class that manages incoming TCP connections, creating messaging_session instances for each a..." alt="" coords="244,448,455,488"/>
-<area shape="poly" id="edge184_Node000000_Node000021" title=" " alt="" coords="154,536,243,498,277,486,279,491,245,502,157,540"/>
-<area shape="rect" id="Node000022" href="$de/d65/classnetwork__module_1_1messaging__session.html" title="Manages a single connected client session on the server side, providing asynchronous read/write opera..." alt="" coords="244,512,455,552"/>
-<area shape="poly" id="edge185_Node000000_Node000022" title=" " alt="" coords="187,550,243,543,244,548,188,556"/>
-<area shape="rect" id="Node000023" href="$d3/d43/classnetwork__module_1_1tcp__socket.html" title="A lightweight wrapper around asio::ip::tcp::socket, enabling asynchronous read and write operations." alt="" coords="270,576,429,616"/>
-<area shape="poly" id="edge186_Node000000_Node000023" title=" " alt="" coords="187,572,270,583,269,588,187,578"/>
-<area shape="rect" id="Node000024" href="$de/d3d/classnetwork__system_1_1core_1_1messaging__client.html" title="A basic TCP client that connects to a remote host, sends/receives data using asynchronous operations,..." alt="" coords="266,640,433,680"/>
-<area shape="poly" id="edge187_Node000000_Node000024" title=" " alt="" coords="157,588,245,626,279,637,277,642,243,630,154,592"/>
-<area shape="rect" id="Node000025" href="$df/d9d/classnetwork__system_1_1core_1_1messaging__server.html" title="A server class that manages incoming TCP connections, creating messaging_session instances for each a..." alt="" coords="266,819,433,859"/>
-<area shape="poly" id="edge188_Node000000_Node000025" title=" " alt="" coords="115,596,133,643,161,699,198,756,221,782,246,805,267,818,264,822,242,809,217,786,194,759,156,702,128,645,110,598"/>
-<area shape="rect" id="Node000026" href="$d1/d19/classnetwork__system_1_1internal_1_1tcp__socket.html" title="A lightweight wrapper around asio::ip::tcp::socket, enabling asynchronous read and write operations." alt="" coords="255,883,443,923"/>
-<area shape="poly" id="edge189_Node000000_Node000026" title=" " alt="" coords="111,597,126,656,152,729,170,767,191,804,216,838,246,869,263,880,260,885,242,873,212,842,187,807,165,769,147,731,121,657,106,598"/>
-<area shape="rect" id="Node000027" href="$d1/de6/classnetwork__system_1_1session_1_1messaging__session.html" title="Manages a single connected client session on the server side, providing asynchronous read/write opera..." alt="" coords="256,947,443,987"/>
-<area shape="poly" id="edge190_Node000000_Node000027" title=" " alt="" coords="108,597,119,667,143,758,161,805,184,852,212,895,246,933,262,944,259,949,242,937,208,898,179,854,156,807,138,759,114,668,103,598"/>
-<area shape="rect" id="Node000003" href="$d7/d22/classcontainer__module_1_1bool__value.html" title="A specialized value for boolean data." alt="" coords="519,633,694,673"/>
-<area shape="poly" id="edge168_Node000002_Node000003" title=" " alt="" coords="441,761,453,754,469,738,476,720,484,701,501,683,521,671,524,676,504,687,489,704,481,722,473,740,456,758,444,766"/>
-<area shape="rect" id="Node000004" href="$df/df7/classcontainer__module_1_1bytes__value.html" title="A specialized value that stores an arbitrary byte array (Base64&#45;encoded in string form)." alt="" coords="515,697,698,737"/>
-<area shape="poly" id="edge169_Node000002_Node000004" title=" " alt="" coords="416,763,454,753,527,735,529,740,455,759,417,768"/>
-<area shape="rect" id="Node000005" href="$da/d1c/classcontainer__module_1_1container__value.html" title="A specialized value that can hold child values, i.e." alt="" coords="503,761,711,801"/>
-<area shape="poly" id="edge170_Node000002_Node000005" title=" " alt="" coords="455,779,502,779,502,784,455,784"/>
-<area shape="rect" id="Node000006" href="$de/dc4/classcontainer__module_1_1numeric__value.html" title="A template class for storing and converting numeric types (integral or floating)." alt="" coords="507,825,707,865"/>
-<area shape="poly" id="edge171_Node000002_Node000006" title=" " alt="" coords="417,795,455,804,529,823,527,828,454,809,416,800"/>
-<area shape="rect" id="Node000007" href="$d5/d22/classcontainer__module_1_1string__value.html" title="A specialized value for storing textual data." alt="" coords="515,889,699,929"/>
-<area shape="poly" id="edge172_Node000002_Node000007" title=" " alt="" coords="444,797,456,805,473,822,481,841,489,858,504,875,524,887,521,891,501,879,484,861,476,843,469,825,453,809,441,802"/>
-<area shape="rect" id="Node000010" href="$d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title=" " alt="" coords="506,5,707,45"/>
-<area shape="poly" id="edge175_Node000009_Node000010" title=" " alt="" coords="384,131,438,92,501,55,530,43,532,48,504,60,441,97,387,135"/>
-<area shape="rect" id="Node000011" href="$d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title=" " alt="" coords="509,69,704,109"/>
-<area shape="poly" id="edge176_Node000009_Node000011" title=" " alt="" coords="434,135,534,107,535,112,435,140"/>
-<area shape="rect" id="Node000012" href="$d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html" title=" " alt="" coords="523,134,691,189"/>
-<area shape="poly" id="edge177_Node000009_Node000012" title=" " alt="" coords="436,159,523,159,523,164,436,164"/>
-<area shape="rect" id="Node000013" href="$d6/d65/classkcenon_1_1thread_1_1typed__job__queue__t.html" title="A template&#45;based queue that manages jobs with distinct priority levels." alt="" coords="509,213,704,253"/>
-<area shape="poly" id="edge178_Node000009_Node000013" title=" " alt="" coords="435,183,535,211,534,216,434,188"/>
-<area shape="rect" id="Node000015" href="$d3/db3/classkcenon_1_1thread_1_1typed__lockfree__job__queue__t.html" title="High&#45;performance lock&#45;free priority&#45;based job queue." alt="" coords="523,278,691,333"/>
-<area shape="poly" id="edge180_Node000009_Node000015" title=" " alt="" coords="437,181,456,193,473,210,481,229,489,246,504,263,524,276,521,280,501,267,485,249,477,231,469,213,453,197,434,185"/>
-<area shape="rect" id="Node000014" href="$d9/da4/classkcenon_1_1thread_1_1adaptive__typed__job__queue__t.html" title="Adaptive priority queue that switches between mutex&#45;based and lock&#45;free implementations." alt="" coords="759,213,997,253"/>
-<area shape="poly" id="edge179_Node000013_Node000014" title=" " alt="" coords="718,231,759,231,759,236,718,236"/>
-<area shape="rect" id="Node000018" href="$d1/df5/classkcenon_1_1thread_1_1executor__interface.html" title="Executor interface for submitting work and coordinating shutdown." alt="" coords="9,231,192,271"/>
-<area shape="poly" id="edge191_Node000018_Node000017" title=" " alt="" coords="205,235,250,229,251,234,206,240"/>
-<area shape="poly" id="edge192_Node000018_Node000019" title=" " alt="" coords="206,259,247,263,247,268,205,264"/>
-<area shape="rect" id="Node000016" href="$dd/dc3/classkcenon_1_1thread_1_1scheduler__interface.html" title="Scheduler interface for queuing and retrieving jobs." alt="" coords="5,141,196,181"/>
-<area shape="poly" id="edge193_Node000016_Node000009" title=" " alt="" coords="210,159,276,159,276,164,210,164"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,229,124,254"/>
+<area shape="rect" id="Node000001" href="$d9/d6f/structcontainer__module_1_1is__variant__type.html" title="Type traits for variant value types." alt="" coords="218,5,377,45"/>
+<area shape="poly" id="edge190_Node000000_Node000001" title=" " alt="" coords="71,214,85,178,105,135,134,92,170,55,193,42,217,33,219,38,195,47,174,59,138,95,110,138,90,180,76,216"/>
+<area shape="rect" id="Node000002" href="$d9/d63/structkcenon_1_1thread_1_1detail_1_1has__do__work__method.html" title="SFINAE helper to detect if a type has a do_work method." alt="" coords="206,70,389,125"/>
+<area shape="poly" id="edge191_Node000000_Node000002" title=" " alt="" coords="82,216,120,175,171,135,205,119,207,123,173,140,124,179,86,220"/>
+<area shape="rect" id="Node000003" href="$d0/d07/structkcenon_1_1thread_1_1detail_1_1has__get__method.html" title="SFINAE helper to detect if a type has a specific member." alt="" coords="172,149,423,189"/>
+<area shape="poly" id="edge192_Node000000_Node000003" title=" " alt="" coords="109,221,171,199,212,187,214,192,173,204,111,226"/>
+<area shape="rect" id="Node000004" href="$d9/db8/structkcenon_1_1thread_1_1detail_1_1has__priority__method.html" title="SFINAE helper to detect if a type has a specific member function." alt="" coords="215,214,379,269"/>
+<area shape="poly" id="edge193_Node000000_Node000004" title=" " alt="" coords="138,239,215,239,215,244,138,244"/>
+<area shape="rect" id="Node000005" href="$da/d15/structkcenon_1_1thread_1_1detail_1_1is__compatible__job.html" title="Compile&#45;time job validation." alt="" coords="204,293,391,347"/>
+<area shape="poly" id="edge194_Node000000_Node000005" title=" " alt="" coords="114,256,173,277,211,290,209,295,171,283,112,261"/>
+<area shape="rect" id="Node000006" href="$d3/d8a/structkcenon_1_1thread_1_1detail_1_1is__duration.html" title="Type trait to detect if a type is a duration." alt="" coords="215,372,379,412"/>
+<area shape="poly" id="edge195_Node000000_Node000006" title=" " alt="" coords="84,264,121,311,146,336,173,356,216,375,214,380,171,361,142,340,117,315,79,267"/>
+<area shape="rect" id="Node000007" href="$dd/d34/structkcenon_1_1thread_1_1detail_1_1is__valid__job__type.html" title="SFINAE helper for optional job type validation." alt="" coords="212,437,383,491"/>
+<area shape="poly" id="edge196_Node000000_Node000007" title=" " alt="" coords="77,266,90,301,111,343,139,386,174,422,213,444,210,448,170,426,134,389,106,346,85,303,72,268"/>
 </map>
