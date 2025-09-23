@@ -30,7 +30,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
-#include "container/internal/thread_safe_container.h"
+#include "thread_safe_container.h"
 #include "utilities/core/formatter.h"
 #include <algorithm>
 #include <cstring>

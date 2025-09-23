@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "container/core/value.h"
-#include "container/core/value_types.h"
+#include "../core/value.h"
+#include "../core/value_types.h"
 
 #include <cstring>
 #include <type_traits>
@@ -120,4 +120,4 @@ namespace container_module
 	using double_value = numeric_value<double, value_types::double_value>;
 } // namespace container_module
 
-#include "container/values/numeric_value.tpp"
+#include "numeric_value.tpp"

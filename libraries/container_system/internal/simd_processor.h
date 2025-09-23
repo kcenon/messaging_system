@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "container/internal/variant_value.h"
-#include "container/internal/thread_safe_container.h"
+#include "variant_value.h"
+#include "thread_safe_container.h"
 #include <vector>
 #include <numeric>
 #include <algorithm>

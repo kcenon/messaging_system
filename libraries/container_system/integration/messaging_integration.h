@@ -32,10 +32,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include "container/core/container.h"
-#include "container/values/bool_value.h"
-#include "container/values/numeric_value.h"
-#include "container/values/string_value.h"
+#include "../core/container.h"
+#include "../values/bool_value.h"
+#include "../values/numeric_value.h"
+#include "../values/string_value.h"
 #include <functional>
 #include <memory>
 #include <chrono>

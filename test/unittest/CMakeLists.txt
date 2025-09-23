@@ -28,7 +28,7 @@ if(BUILD_CONTAINER AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/container_test.cpp)
     add_executable(container_test container_test.cpp)
     target_link_libraries(container_test
         ${TEST_COMMON_LIBS}
-        container
+        container_system
     )
     add_test(NAME container_test COMMAND container_test)
     list(APPEND TESTS container_test)

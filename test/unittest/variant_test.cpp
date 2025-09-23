@@ -33,8 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <gtest/gtest.h>
 #include <cstdint>
 #include <type_traits>
-#include "container_system/internal/variant_value.h"
-#include "container_system/core/value_types.h"
+#include "../../libraries/container_system/internal/variant_value.h"
+#include "../../libraries/container_system/core/value_types.h"
 
 namespace container_module {
 namespace test {
