@@ -356,6 +356,10 @@ if(BUILD_WITH_CONTAINER_SYSTEM)
     if(CONTAINER_SYSTEM_TARGET)
         # Link against the CMake target
         target_link_libraries(NetworkSystem PRIVATE ${CONTAINER_SYSTEM_TARGET})
+        # Also add the include directory explicitly for header-only usage
+        target_include_directories(NetworkSystem PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/../container_system
+            ${CMAKE_CURRENT_SOURCE_DIR}/../container_system/..)
         message(STATUS "Linked NetworkSystem with container_system target")
     elseif(CONTAINER_SYSTEM_INCLUDE_DIR)
         # Manual include and library linking
