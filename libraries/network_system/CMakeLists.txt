@@ -258,6 +258,7 @@ if(BUILD_WITH_THREAD_SYSTEM)
         PATHS
             ../thread_system/include
             ${CMAKE_CURRENT_SOURCE_DIR}/../thread_system/include
+            /Users/dongcheolshin/Sources/messaging_system/libraries/thread_system/include
             /Users/dongcheolshin/Sources/thread_system/include
         NO_DEFAULT_PATH
     )
@@ -265,10 +266,10 @@ if(BUILD_WITH_THREAD_SYSTEM)
         NAMES thread_base
         PATHS
             ${CMAKE_BINARY_DIR}/lib
+            ${CMAKE_BINARY_DIR}/thread_system/core
             ../thread_system/build/lib
             ../thread_system/build
             ../thread_system/lib
-        NO_DEFAULT_PATH
     )
     if(THREAD_SYSTEM_INCLUDE_DIR)
         message(STATUS "Found thread_system at: ${THREAD_SYSTEM_INCLUDE_DIR}")
@@ -297,11 +298,11 @@ if(BUILD_WITH_LOGGER_SYSTEM)
         NAMES LoggerSystem logger_system logger
         PATHS
             ${CMAKE_BINARY_DIR}/lib
+            ${CMAKE_BINARY_DIR}/libraries/logger_system
             ../logger_system/build/lib
             ../logger_system/build_test/lib
             ../logger_system/build
             ../logger_system/lib
-        NO_DEFAULT_PATH
     )
     if(LOGGER_SYSTEM_INCLUDE_DIR)
         message(STATUS "Found logger_system at: ${LOGGER_SYSTEM_INCLUDE_DIR}")
@@ -374,7 +375,7 @@ if(BUILD_WITH_CONTAINER_SYSTEM)
 endif()
 
 if(BUILD_WITH_THREAD_SYSTEM AND THREAD_SYSTEM_INCLUDE_DIR)
-    target_include_directories(NetworkSystem PRIVATE ${THREAD_SYSTEM_INCLUDE_DIR})
+    target_include_directories(NetworkSystem PUBLIC ${THREAD_SYSTEM_INCLUDE_DIR})
     if(THREAD_SYSTEM_LIBRARY)
         target_link_libraries(NetworkSystem PUBLIC ${THREAD_SYSTEM_LIBRARY})
     endif()
