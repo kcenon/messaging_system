@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <array>
 #include <system_error>
 
-#include "network/internal/common_defs.h"
+#include "../internal/common_defs.h"
 
 namespace network_module
 {

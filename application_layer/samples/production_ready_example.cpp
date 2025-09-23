@@ -12,9 +12,9 @@
 
 #include <kcenon/messaging/integrations/system_integrator.h>
 #include <kcenon/messaging/core/config.h>
-#include <kcenon/logger/logger.h>
-#include <logger/writers/console_writer.h>
-#include <logger/writers/rotating_file_writer.h>
+#include <kcenon/logger/core/logger.h>
+#include <kcenon/logger/writers/console_writer.h>
+#include <kcenon/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -53,12 +53,12 @@ public:
 
 private:
     metrics m_metrics;
-    std::shared_ptr<logger_module::logger> m_logger;
+    std::shared_ptr<kcenon::logger::logger> m_logger;
     std::thread m_reporter_thread;
     std::atomic<bool> m_running{false};
 
 public:
-    explicit metrics_collector(std::shared_ptr<logger_module::logger> logger)
+    explicit metrics_collector(std::shared_ptr<kcenon::logger::logger> logger)
         : m_logger(logger) {}
 
     ~metrics_collector() {
@@ -120,7 +120,7 @@ public:
            << "%" << std::endl
            << "===================";
 
-        m_logger->log(logger_module::log_level::info, ss.str());
+        m_logger->log(kcenon::logger::log_level::info, ss.str());
     }
 };
 
@@ -136,21 +136,21 @@ public:
         std::chrono::milliseconds retry_delay{100};
         std::chrono::seconds health_check_interval{30};
         std::string log_file = "messaging_system.log";
-        logger_module::log_level log_level = logger_module::log_level::info;
+        kcenon::logger::log_level log_level = kcenon::logger::log_level::info;
     };
 
     static app_config load_from_file(const std::string& filename,
-                                     std::shared_ptr<logger_module::logger> logger) {
+                                     std::shared_ptr<kcenon::logger::logger> logger) {
         app_config config;
 
         std::ifstream file(filename);
         if (!file.is_open()) {
-            logger->log(logger_module::log_level::warning,
+            logger->log(kcenon::logger::log_level::warning,
                        "Config file not found: " + filename + ". Using defaults.");
             return config;
         }
 
-        logger->log(logger_module::log_level::info, "Loading configuration from: " + filename);
+        logger->log(kcenon::logger::log_level::info, "Loading configuration from: " + filename);
 
         std::string line;
         while (std::getline(file, line)) {
@@ -187,15 +187,15 @@ public:
             } else if (key == "log_file") {
                 config.log_file = value;
             } else if (key == "log_level") {
-                if (value == "debug") config.log_level = logger_module::log_level::debug;
-                else if (value == "info") config.log_level = logger_module::log_level::info;
-                else if (value == "warning") config.log_level = logger_module::log_level::warning;
-                else if (value == "error") config.log_level = logger_module::log_level::error;
-                else if (value == "critical") config.log_level = logger_module::log_level::critical;
+                if (value == "debug") config.log_level = kcenon::logger::log_level::debug;
+                else if (value == "info") config.log_level = kcenon::logger::log_level::info;
+                else if (value == "warning") config.log_level = kcenon::logger::log_level::warning;
+                else if (value == "error") config.log_level = kcenon::logger::log_level::error;
+                else if (value == "critical") config.log_level = kcenon::logger::log_level::critical;
             }
         }
 
-        logger->log(logger_module::log_level::info, "Configuration loaded successfully");
+        logger->log(kcenon::logger::log_level::info, "Configuration loaded successfully");
         return config;
     }
 
@@ -231,13 +231,13 @@ public:
 // Retry mechanism for message publishing
 class retry_handler {
 private:
-    std::shared_ptr<logger_module::logger> m_logger;
+    std::shared_ptr<kcenon::logger::logger> m_logger;
     metrics_collector* m_metrics;
     int m_max_retries;
     std::chrono::milliseconds m_retry_delay;
 
 public:
-    retry_handler(std::shared_ptr<logger_module::logger> logger,
+    retry_handler(std::shared_ptr<kcenon::logger::logger> logger,
                   metrics_collector* metrics,
                   int max_retries = 3,
                   std::chrono::milliseconds retry_delay = 100ms)
@@ -252,7 +252,7 @@ public:
             try {
                 func();
                 if (attempt > 0) {
-                    m_logger->log(logger_module::log_level::info,
+                    m_logger->log(kcenon::logger::log_level::info,
                         "Operation '" + operation_name + "' succeeded after " +
                         std::to_string(attempt) + " retries");
                     if (m_metrics) {
@@ -266,7 +266,7 @@ public:
                 }
 
                 if (attempt < m_max_retries - 1) {
-                    m_logger->log(logger_module::log_level::warning,
+                    m_logger->log(kcenon::logger::log_level::warning,
                         "Operation '" + operation_name + "' failed (attempt " +
                         std::to_string(attempt + 1) + "/" + std::to_string(m_max_retries) +
                         "): " + e.what() + ". Retrying...");
@@ -275,7 +275,7 @@ public:
                     }
                     std::this_thread::sleep_for(m_retry_delay * (attempt + 1));
                 } else {
-                    m_logger->log(logger_module::log_level::error,
+                    m_logger->log(kcenon::logger::log_level::error,
                         "Operation '" + operation_name + "' failed after " +
                         std::to_string(m_max_retries) + " attempts: " + e.what());
                 }
@@ -302,14 +302,14 @@ void setup_signal_handlers() {
 // Health check monitor
 class health_monitor {
 private:
-    std::shared_ptr<logger_module::logger> m_logger;
+    std::shared_ptr<kcenon::logger::logger> m_logger;
     system_integrator* m_integrator;
     std::thread m_monitor_thread;
     std::atomic<bool> m_running{false};
     std::chrono::seconds m_check_interval;
 
 public:
-    health_monitor(std::shared_ptr<logger_module::logger> logger,
+    health_monitor(std::shared_ptr<kcenon::logger::logger> logger,
                    system_integrator* integrator,
                    std::chrono::seconds interval = 30s)
         : m_logger(logger)
@@ -355,19 +355,19 @@ private:
 
             std::string status = health.message_bus_healthy ? "HEALTHY" : "UNHEALTHY";
             m_logger->log(health.message_bus_healthy ?
-                         logger_module::log_level::debug :
-                         logger_module::log_level::warning,
+                         kcenon::logger::log_level::debug :
+                         kcenon::logger::log_level::warning,
                          "Health Check: " + status +
                          " | Active Services: " + std::to_string(health.active_services) +
                          " | Messages Processed: " + std::to_string(health.total_messages_processed));
 
             if (!health.message_bus_healthy) {
-                m_logger->log(logger_module::log_level::error,
+                m_logger->log(kcenon::logger::log_level::error,
                              "System health check failed! Attempting recovery...");
                 // Implement recovery logic here
             }
         } catch (const std::exception& e) {
-            m_logger->log(logger_module::log_level::error,
+            m_logger->log(kcenon::logger::log_level::error,
                          "Health check failed with exception: " + std::string(e.what()));
         }
     }
@@ -381,8 +381,8 @@ int main(int argc, char* argv[]) {
     }
 
     // Initialize logger early for startup messages
-    auto logger = std::make_shared<logger_module::logger>(true, 8192);
-    logger->add_writer(std::make_unique<logger_module::console_writer>());
+    auto logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+    logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
 
     try {
         // Load configuration
@@ -392,34 +392,34 @@ int main(int argc, char* argv[]) {
         std::ifstream test_file(config_file);
         if (!test_file.is_open()) {
             config_loader::save_default_config(config_file);
-            logger->log(logger_module::log_level::info,
+            logger->log(kcenon::logger::log_level::info,
                        "Created default configuration file: " + config_file);
         }
 
         // Update logger based on config
-        logger = std::make_shared<logger_module::logger>(true, 8192);
-        logger->add_writer(std::make_unique<logger_module::console_writer>());
-        logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+        logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+        logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        logger->add_writer(std::make_unique<kcenon::logger::rotating_file_writer>(
             app_config.log_file, 10 * 1024 * 1024, 5));
 
-        logger->log(logger_module::log_level::info, "Production-Ready Messaging System");
-        logger->log(logger_module::log_level::info, "=====================================");
-        logger->log(logger_module::log_level::info, "Environment: " + app_config.environment);
+        logger->log(kcenon::logger::log_level::info, "Production-Ready Messaging System");
+        logger->log(kcenon::logger::log_level::info, "=====================================");
+        logger->log(kcenon::logger::log_level::info, "Environment: " + app_config.environment);
 
         // Setup signal handlers
         setup_signal_handlers();
-        logger->log(logger_module::log_level::info, "Signal handlers installed (SIGINT, SIGTERM)");
+        logger->log(kcenon::logger::log_level::info, "Signal handlers installed (SIGINT, SIGTERM)");
 
         // Initialize metrics collector
         metrics_collector metrics(logger);
         metrics.start(10s);
-        logger->log(logger_module::log_level::info, "Metrics collection started");
+        logger->log(kcenon::logger::log_level::info, "Metrics collection started");
 
         // Initialize retry handler
         retry_handler retry(logger, &metrics, app_config.max_retries, app_config.retry_delay);
 
         // Create and configure the messaging system
-        logger->log(logger_module::log_level::info, "Initializing messaging system...");
+        logger->log(kcenon::logger::log_level::info, "Initializing messaging system...");
 
         config_builder builder;
         auto config = builder
@@ -439,26 +439,26 @@ int main(int argc, char* argv[]) {
         }, "system_initialization");
 
         if (!init_success) {
-            logger->log(logger_module::log_level::critical, "Failed to initialize system after retries!");
+            logger->log(kcenon::logger::log_level::critical, "Failed to initialize system after retries!");
             return 1;
         }
 
-        logger->log(logger_module::log_level::info, "System initialized successfully!");
+        logger->log(kcenon::logger::log_level::info, "System initialized successfully!");
 
         // Start health monitor
         health_monitor health(logger, integrator.get(), app_config.health_check_interval);
         health.start();
-        logger->log(logger_module::log_level::info, "Health monitoring started");
+        logger->log(kcenon::logger::log_level::info, "Health monitoring started");
 
         // Set up message subscribers with error handling
-        logger->log(logger_module::log_level::info, "Setting up message subscribers...");
+        logger->log(kcenon::logger::log_level::info, "Setting up message subscribers...");
 
         // User login handler with error recovery
         integrator->subscribe("user.login", [&logger, &metrics, &retry](const message& msg) {
             metrics.increment_received();
 
             try {
-                logger->log(logger_module::log_level::info, "[Login Handler] Processing login event");
+                logger->log(kcenon::logger::log_level::info, "[Login Handler] Processing login event");
 
                 auto user_it = msg.payload.data.find("username");
                 if (user_it != msg.payload.data.end() &&
@@ -470,11 +470,11 @@ int main(int argc, char* argv[]) {
                         throw std::runtime_error("Simulated login error");
                     }
 
-                    logger->log(logger_module::log_level::info,
+                    logger->log(kcenon::logger::log_level::info,
                         "[Login Handler] User logged in: " + username);
                 }
             } catch (const std::exception& e) {
-                logger->log(logger_module::log_level::error,
+                logger->log(kcenon::logger::log_level::error,
                     "[Login Handler] Error processing login: " + std::string(e.what()));
                 metrics.increment_errors();
                 // Could implement retry or error queue here
@@ -486,7 +486,7 @@ int main(int argc, char* argv[]) {
             metrics.increment_received();
 
             try {
-                logger->log(logger_module::log_level::info, "[Order Handler] Processing new order");
+                logger->log(kcenon::logger::log_level::info, "[Order Handler] Processing new order");
 
                 // Validate required fields
                 auto order_id_it = msg.payload.data.find("order_id");
@@ -513,10 +513,10 @@ int main(int argc, char* argv[]) {
                 std::stringstream ss;
                 ss << "[Order Handler] Order processed - ID: " << order_id
                    << ", Amount: $" << std::fixed << std::setprecision(2) << amount;
-                logger->log(logger_module::log_level::info, ss.str());
+                logger->log(kcenon::logger::log_level::info, ss.str());
 
             } catch (const std::exception& e) {
-                logger->log(logger_module::log_level::error,
+                logger->log(kcenon::logger::log_level::error,
                     "[Order Handler] Failed to process order: " + std::string(e.what()));
                 metrics.increment_errors();
             }
@@ -525,14 +525,14 @@ int main(int argc, char* argv[]) {
         // System metrics handler
         integrator->subscribe("system.metrics", [&logger, &metrics](const message& msg) {
             metrics.increment_received();
-            logger->log(logger_module::log_level::debug, "[Metrics] Received system metrics update");
+            logger->log(kcenon::logger::log_level::debug, "[Metrics] Received system metrics update");
         });
 
-        logger->log(logger_module::log_level::info, "Subscribers registered!");
+        logger->log(kcenon::logger::log_level::info, "Subscribers registered!");
 
         // Main message publishing loop with graceful shutdown
-        logger->log(logger_module::log_level::info, "Starting message publishing...");
-        logger->log(logger_module::log_level::info, "Press Ctrl+C for graceful shutdown");
+        logger->log(kcenon::logger::log_level::info, "Starting message publishing...");
+        logger->log(kcenon::logger::log_level::info, "Press Ctrl+C for graceful shutdown");
 
         std::thread publisher_thread([&] {
             std::random_device rd;
@@ -560,7 +560,7 @@ int main(int argc, char* argv[]) {
                     }, "publish_login");
 
                     if (!success) {
-                        logger->log(logger_module::log_level::error, "Failed to publish login message");
+                        logger->log(kcenon::logger::log_level::error, "Failed to publish login message");
                     }
                 }
 
@@ -578,7 +578,7 @@ int main(int argc, char* argv[]) {
                     }, "publish_order");
 
                     if (!success) {
-                        logger->log(logger_module::log_level::error, "Failed to publish order message");
+                        logger->log(kcenon::logger::log_level::error, "Failed to publish order message");
                     }
                 }
 
@@ -610,7 +610,7 @@ int main(int argc, char* argv[]) {
         }
 
         // Graceful shutdown sequence
-        logger->log(logger_module::log_level::info, "Initiating graceful shutdown...");
+        logger->log(kcenon::logger::log_level::info, "Initiating graceful shutdown...");
 
         // Stop publisher thread
         if (publisher_thread.joinable()) {
@@ -618,28 +618,28 @@ int main(int argc, char* argv[]) {
         }
 
         // Allow pending messages to process
-        logger->log(logger_module::log_level::info, "Processing remaining messages...");
+        logger->log(kcenon::logger::log_level::info, "Processing remaining messages...");
         std::this_thread::sleep_for(1s);
 
         // Stop health monitor
         health.stop();
-        logger->log(logger_module::log_level::info, "Health monitor stopped");
+        logger->log(kcenon::logger::log_level::info, "Health monitor stopped");
 
         // Stop metrics collection
         metrics.stop();
-        logger->log(logger_module::log_level::info, "Metrics collection stopped");
+        logger->log(kcenon::logger::log_level::info, "Metrics collection stopped");
 
         // Shutdown messaging system
         integrator->shutdown();
-        logger->log(logger_module::log_level::info, "Messaging system shutdown complete");
+        logger->log(kcenon::logger::log_level::info, "Messaging system shutdown complete");
 
-        logger->log(logger_module::log_level::info, "Application terminated successfully!");
+        logger->log(kcenon::logger::log_level::info, "Application terminated successfully!");
         logger->flush();
         logger->stop();
 
     } catch (const std::exception& e) {
         if (logger) {
-            logger->log(logger_module::log_level::critical,
+            logger->log(kcenon::logger::log_level::critical,
                        "Fatal error: " + std::string(e.what()));
             logger->stop();
         } else {

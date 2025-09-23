@@ -34,8 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <future>
 #include <asio.hpp>
-#include "network/internal/pipeline.h"
-#include "network/internal/tcp_socket.h"
+#include "../internal/pipeline.h"
+#include "../internal/tcp_socket.h"
 
 namespace network_module
 {

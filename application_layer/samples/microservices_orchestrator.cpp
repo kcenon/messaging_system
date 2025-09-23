@@ -11,9 +11,9 @@
 #include <kcenon/messaging/services/container/container_service.h>
 #include <kcenon/messaging/services/database/database_service.h>
 #include <kcenon/messaging/services/network/network_service.h>
-#include <kcenon/logger/logger.h>
-#include <logger/writers/console_writer.h>
-#include <logger/writers/rotating_file_writer.h>
+#include <kcenon/logger/core/logger.h>
+#include <kcenon/logger/writers/console_writer.h>
+#include <kcenon/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -216,7 +216,7 @@ private:
     std::unique_ptr<services::container::container_service> container_svc;
     std::unique_ptr<services::database::database_service> database_svc;
     std::unique_ptr<services::network::network_service> network_svc;
-    std::shared_ptr<logger_module::logger> m_logger;
+    std::shared_ptr<kcenon::logger::logger> m_logger;
 
     // Service registry
     std::map<std::string, service_definition> service_definitions;
@@ -237,12 +237,12 @@ private:
 public:
     microservices_orchestrator() {
         // Initialize logger
-        m_logger = std::make_shared<logger_module::logger>(true, 16384);
-        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+        m_logger = std::make_shared<kcenon::logger::logger>(true, 16384);
+        m_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        m_logger->add_writer(std::make_unique<kcenon::logger::rotating_file_writer>(
             "microservices_orchestrator.log", 20 * 1024 * 1024, 5));
 
-        m_logger->log(logger_module::log_level::info, "Initializing Microservices Orchestrator");
+        m_logger->log(kcenon::logger::log_level::info, "Initializing Microservices Orchestrator");
 
         // Configure for microservices workload
         config::config_builder builder;
@@ -318,7 +318,7 @@ public:
             }
         }
 
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Initialized " + std::to_string(service_definitions.size()) + " service definitions");
     }
 
@@ -363,7 +363,7 @@ public:
             std::this_thread::sleep_for(2s);
             updateInstanceState(instance.instance_id, service_instance::HEALTHY);
 
-            m_logger->log(logger_module::log_level::info,
+            m_logger->log(kcenon::logger::log_level::info,
                 "Started " + instance.service_name + " instance " + instance.instance_id +
                 " at " + instance.host + ":" + std::to_string(instance.port));
         }).detach();
@@ -389,7 +389,7 @@ public:
             service_instances[service_name].push_back(instance);
         }
 
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Registered service instance: " + service_name + " (" + instance_id +
             ") at " + host + ":" + std::to_string(port));
 
@@ -418,7 +418,7 @@ public:
 
                 integrator->get_message_bus()->publish(response);
 
-                m_logger->log(logger_module::log_level::debug,
+                m_logger->log(kcenon::logger::log_level::debug,
                     "Service discovery: " + client_id + " -> " + instance->instance_id);
             } else {
                 // No healthy instances available
@@ -548,7 +548,7 @@ public:
             deploy_service_instance(service_name);
         }
 
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Scaling up " + service_name + " by " + std::to_string(count) + " instances");
     }
 
@@ -580,7 +580,7 @@ public:
                 instances.end()
             );
 
-            m_logger->log(logger_module::log_level::info,
+            m_logger->log(kcenon::logger::log_level::info,
                 "Scaled down " + service_name + " by " + std::to_string(to_remove) + " instances");
         }).detach();
     }
@@ -618,7 +618,7 @@ public:
     }
 
     void performRollingUpdate(const std::string& service_name, const std::string& new_version) {
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Starting rolling update for " + service_name + " to version " + new_version);
 
         std::thread([this, service_name, new_version]() {
@@ -635,18 +635,18 @@ public:
                 std::this_thread::sleep_for(5s);  // Startup time
 
                 instance.m_state = service_instance::HEALTHY;
-                m_logger->log(logger_module::log_level::info,
+                m_logger->log(kcenon::logger::log_level::info,
                     "Updated " + instance.instance_id + " to version " + new_version);
             }
 
             service_definitions[service_name].version = new_version;
-            m_logger->log(logger_module::log_level::info,
+            m_logger->log(kcenon::logger::log_level::info,
                 "Rolling update complete for " + service_name);
         }).detach();
     }
 
     void performBlueGreenDeployment(const std::string& service_name, const std::string& new_version) {
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Starting blue-green deployment for " + service_name);
 
         // Deploy green environment
@@ -664,13 +664,13 @@ public:
             service_instances[service_name] = service_instances[service_name + "-green"];
             service_instances.erase(service_name + "-green");
 
-            m_logger->log(logger_module::log_level::info,
+            m_logger->log(kcenon::logger::log_level::info,
                 "Blue-green deployment complete for " + service_name);
         }).detach();
     }
 
     void performCanaryDeployment(const std::string& service_name, const std::string& new_version) {
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Starting canary deployment for " + service_name);
 
         // Deploy canary instance (10% of traffic)
@@ -683,7 +683,7 @@ public:
             // If canary is healthy, continue rollout
             autoScale(service_name);  // This would check canary metrics
 
-            m_logger->log(logger_module::log_level::info,
+            m_logger->log(kcenon::logger::log_level::info,
                 "Canary deployment validated for " + service_name);
         }).detach();
     }
@@ -703,7 +703,7 @@ public:
     }
 
     void handleUnhealthyInstance(const service_instance& instance) {
-        m_logger->log(logger_module::log_level::warning,
+        m_logger->log(kcenon::logger::log_level::warning,
             "Instance " + instance.instance_id + " marked unhealthy");
 
         // Replace unhealthy instance
@@ -861,12 +861,12 @@ public:
                   << circuit_breaker_trips.load() << " ║\n";
         map_output << "╚══════════════════════════════════════════════════════════════╝";
 
-        m_logger->log(logger_module::log_level::info, map_output.str());
+        m_logger->log(kcenon::logger::log_level::info, map_output.str());
     }
 
 public:
     void start() {
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "\n=== Microservices Orchestrator Starting ===");
 
         // The integrator is automatically started upon initialization
@@ -932,7 +932,7 @@ public:
               << "%\n";
         stats << "========================";
 
-        m_logger->log(logger_module::log_level::info, stats.str());
+        m_logger->log(kcenon::logger::log_level::info, stats.str());
         m_logger->flush();
         m_logger->stop();
     }
@@ -945,9 +945,9 @@ int main(int argc, char* argv[]) {
 
     } catch (const std::exception& e) {
         // Create a minimal logger for error reporting
-        auto error_logger = std::make_shared<logger_module::logger>(true, 8192);
-        error_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
+        auto error_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+        error_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        error_logger->log(kcenon::logger::log_level::error, "Error: " + std::string(e.what()));
         return 1;
     }
 

@@ -10,7 +10,7 @@
 #include <iostream>
 
 #ifdef HAS_LOGGER_SYSTEM
-#include <logger/logger_system.h>
+#include <kcenon/logger/core/logger.h>
 #endif
 
 namespace kcenon::messaging::services::logging {

@@ -18,7 +18,10 @@
 #include <any>
 
 #ifdef BUILD_WITH_CONTAINER_SYSTEM
-#include <container_system/container.h>
+// Forward declaration to avoid circular dependencies
+namespace container_module {
+    class value_container;
+}
 #endif
 
 namespace network_system::integration {

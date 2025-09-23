@@ -43,8 +43,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <asio.hpp>
 
-#include "network/internal/tcp_socket.h"
-#include "network/internal/pipeline.h"
+#include "../internal/tcp_socket.h"
+#include "../internal/pipeline.h"
 
 // Use nested namespace definition in C++17
 namespace network_module

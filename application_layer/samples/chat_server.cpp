@@ -9,9 +9,9 @@
 #include <kcenon/messaging/integrations/system_integrator.h>
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/services/network/network_service.h>
-#include <kcenon/logger/logger.h>
-#include <logger/writers/console_writer.h>
-#include <logger/writers/rotating_file_writer.h>
+#include <kcenon/logger/core/logger.h>
+#include <kcenon/logger/writers/console_writer.h>
+#include <kcenon/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <atomic>
@@ -43,7 +43,7 @@ class chat_server {
 private:
     std::unique_ptr<integrations::system_integrator> system_integrator;
     std::unique_ptr<services::network::network_service> network_service;
-    std::shared_ptr<logger_module::logger> m_logger;
+    std::shared_ptr<kcenon::logger::logger> m_logger;
 
     // User management
     struct User {
@@ -74,12 +74,12 @@ private:
 public:
     chat_server() {
         // Initialize logger with async mode and larger buffer size
-        m_logger = std::make_shared<logger_module::logger>(true, 16384);
-        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+        m_logger = std::make_shared<kcenon::logger::logger>(true, 16384);
+        m_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        m_logger->add_writer(std::make_unique<kcenon::logger::rotating_file_writer>(
             "chat_server.log", 10 * 1024 * 1024, 5)); // 10MB per file, 5 files
 
-        m_logger->log(logger_module::log_level::info, "Initializing chat server with error recovery...");
+        m_logger->log(kcenon::logger::log_level::info, "Initializing chat server with error recovery...");
 
         // Setup signal handlers
         std::signal(SIGINT, signal_handler);
@@ -108,9 +108,9 @@ public:
             startRetryWorker();
             startHealthMonitor();
 
-            m_logger->log(logger_module::log_level::info, "Chat server initialized successfully");
+            m_logger->log(kcenon::logger::log_level::info, "Chat server initialized successfully");
         } catch (const std::exception& e) {
-            m_logger->log(logger_module::log_level::critical,
+            m_logger->log(kcenon::logger::log_level::critical,
                          "Failed to initialize chat server: " + std::string(e.what()));
             throw;
         }
@@ -180,12 +180,12 @@ public:
             if (is_reconnection) {
                 broadcast.payload.topic = "system.user_reconnected";
                 broadcast.payload.set("message", nickname + " has reconnected");
-                m_logger->log(logger_module::log_level::info,
+                m_logger->log(kcenon::logger::log_level::info,
                     "User reconnected: " + nickname + " (" + user_id + ")");
             } else {
                 broadcast.payload.topic = "system.user_joined";
                 broadcast.payload.set("message", nickname + " has joined the chat");
-                m_logger->log(logger_module::log_level::info,
+                m_logger->log(kcenon::logger::log_level::info,
                     "New user connected: " + nickname + " (" + user_id + ")");
             }
             broadcast.set_priority(core::message_priority::high);
@@ -193,7 +193,7 @@ public:
             broadcastToAll(broadcast);
 
         } catch (const std::exception& e) {
-            m_logger->log(logger_module::log_level::error,
+            m_logger->log(kcenon::logger::log_level::error,
                 "Error handling user connection: " + std::string(e.what()));
             metrics.failed_messages++;
         }
@@ -219,7 +219,7 @@ public:
 
             broadcastToAll(broadcast);
 
-            m_logger->log(logger_module::log_level::info,
+            m_logger->log(kcenon::logger::log_level::info,
                 "User disconnected: " + nickname);
         }
     }
@@ -267,7 +267,7 @@ public:
                         metrics.messages_processed++;
                         break;
                     } catch (const std::exception& e) {
-                        m_logger->log(logger_module::log_level::warning,
+                        m_logger->log(kcenon::logger::log_level::warning,
                             "Broadcast attempt " + std::to_string(attempt + 1) +
                             " failed: " + std::string(e.what()));
                         if (attempt < 2) {
@@ -287,11 +287,11 @@ public:
                 // Log message for persistence
                 logMessage(nickname, message_text, target_room_id);
             } else if (!user_connected) {
-                m_logger->log(logger_module::log_level::warning,
+                m_logger->log(kcenon::logger::log_level::warning,
                     "Message from disconnected user: " + sender_user_id);
             }
         } catch (const std::exception& e) {
-            m_logger->log(logger_module::log_level::error,
+            m_logger->log(kcenon::logger::log_level::error,
                 "Error handling chat message: " + std::string(e.what()));
             metrics.failed_messages++;
         }
@@ -341,7 +341,7 @@ public:
         auto target_room_id = join_message.payload.get<std::string>("room_id", "");
 
         // Add user to room (implementation would include room management)
-        m_logger->log(logger_module::log_level::debug,
+        m_logger->log(kcenon::logger::log_level::debug,
             "User " + joining_user_id + " joined room " + target_room_id);
 
         // Send room history to user
@@ -353,7 +353,7 @@ public:
         auto leaving_user_id = (it != leave_message.metadata.headers.end()) ? it->second : "";
         auto leaving_room_id = leave_message.payload.get<std::string>("room_id", "");
 
-        m_logger->log(logger_module::log_level::debug,
+        m_logger->log(kcenon::logger::log_level::debug,
             "User " + leaving_user_id + " left room " + leaving_room_id);
     }
 
@@ -388,7 +388,7 @@ public:
         // In production, write to database
         std::string log_msg = "[" + (room_id.empty() ? "global" : room_id) + "] " +
                              sender_nickname + ": " + message_text;
-        m_logger->log(logger_module::log_level::info, log_msg);
+        m_logger->log(kcenon::logger::log_level::info, log_msg);
     }
 
     void cleanupInactiveUsers() {
@@ -401,12 +401,12 @@ public:
                 if (user_iter->second.is_connected) {
                     // Mark as disconnected first, will be cleaned up later
                     user_iter->second.is_connected = false;
-                    m_logger->log(logger_module::log_level::warning,
+                    m_logger->log(kcenon::logger::log_level::warning,
                         "Marking user as disconnected: " + user_iter->second.nickname);
                     ++user_iter;
                 } else if (user_iter->second.retry_count >= 3) {
                     // Remove after max retries
-                    m_logger->log(logger_module::log_level::info,
+                    m_logger->log(kcenon::logger::log_level::info,
                         "Removing inactive user after retries: " + user_iter->second.nickname);
                     metrics.active_users--;
                     user_iter = users.erase(user_iter);
@@ -436,7 +436,7 @@ public:
                     try {
                         task();
                     } catch (const std::exception& e) {
-                        m_logger->log(logger_module::log_level::error,
+                        m_logger->log(kcenon::logger::log_level::error,
                             "Retry task failed: " + std::string(e.what()));
                     }
                 } else {
@@ -451,7 +451,7 @@ public:
         if (retry_queue.size() < 1000) { // Limit retry queue size
             retry_queue.push(task);
         } else {
-            m_logger->log(logger_module::log_level::warning,
+            m_logger->log(kcenon::logger::log_level::warning,
                 "Retry queue full, dropping task");
         }
     }
@@ -469,7 +469,7 @@ public:
                 try {
                     auto health = system_integrator->check_system_health();
                     if (!health.message_bus_healthy) {
-                        m_logger->log(logger_module::log_level::error,
+                        m_logger->log(kcenon::logger::log_level::error,
                             "System unhealthy, attempting recovery");
                         attemptRecovery();
                     }
@@ -477,7 +477,7 @@ public:
                     // Report metrics
                     reportMetrics();
                 } catch (const std::exception& e) {
-                    m_logger->log(logger_module::log_level::error,
+                    m_logger->log(kcenon::logger::log_level::error,
                         "Health monitor error: " + std::string(e.what()));
                 }
             }
@@ -485,7 +485,7 @@ public:
     }
 
     void attemptRecovery() {
-        m_logger->log(logger_module::log_level::info, "Attempting system recovery...");
+        m_logger->log(kcenon::logger::log_level::info, "Attempting system recovery...");
 
         try {
             // Reinitialize message handlers
@@ -502,7 +502,7 @@ public:
                 }
             }
         } catch (const std::exception& e) {
-            m_logger->log(logger_module::log_level::error,
+            m_logger->log(kcenon::logger::log_level::error,
                 "Recovery failed: " + std::string(e.what()));
         }
     }
@@ -510,7 +510,7 @@ public:
     void attemptUserReconnection(const std::string& user_id) {
         std::lock_guard<std::mutex> lock(users_mutex);
         if (auto it = users.find(user_id); it != users.end()) {
-            m_logger->log(logger_module::log_level::info,
+            m_logger->log(kcenon::logger::log_level::info,
                 "Attempting to reconnect user: " + it->second.nickname);
             // In production, would attempt actual network reconnection
             it->second.is_connected = true;
@@ -526,11 +526,11 @@ public:
            << "Failed Messages: " << metrics.failed_messages.load() << "\n"
            << "Reconnections: " << metrics.reconnections.load() << "\n"
            << "==========================";
-        m_logger->log(logger_module::log_level::info, ss.str());
+        m_logger->log(kcenon::logger::log_level::info, ss.str());
     }
 
     void start(int port = 8080) {
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Chat server starting on port " + std::to_string(port) + "...");
 
         try {
@@ -547,7 +547,7 @@ public:
                         throw std::runtime_error("Failed to start network service after 3 attempts: " +
                                                  std::string(e.what()));
                     }
-                    m_logger->log(logger_module::log_level::warning,
+                    m_logger->log(kcenon::logger::log_level::warning,
                         "Network service start attempt " + std::to_string(retry_count) +
                         " failed, retrying...");
                     std::this_thread::sleep_for(std::chrono::seconds(retry_count));
@@ -566,7 +566,7 @@ public:
 
             // The system integrator is automatically started upon initialization
 
-            m_logger->log(logger_module::log_level::info,
+            m_logger->log(kcenon::logger::log_level::info,
                 "Chat server is running. Press Ctrl+C to stop...");
 
             // Wait for shutdown signal
@@ -579,7 +579,7 @@ public:
                 cleanup_thread.join();
             }
         } catch (const std::exception& e) {
-            m_logger->log(logger_module::log_level::critical,
+            m_logger->log(kcenon::logger::log_level::critical,
                 "Failed to start chat server: " + std::string(e.what()));
             throw;
         }
@@ -590,7 +590,7 @@ public:
             return;  // Already stopped
         }
 
-        m_logger->log(logger_module::log_level::info, "Stopping chat server...");
+        m_logger->log(kcenon::logger::log_level::info, "Stopping chat server...");
 
         // Stop retry worker
         if (retry_thread.joinable()) {
@@ -604,7 +604,7 @@ public:
         try {
             broadcastToAll(shutdown_msg);
         } catch (const std::exception& e) {
-            m_logger->log(logger_module::log_level::warning,
+            m_logger->log(kcenon::logger::log_level::warning,
                 "Failed to broadcast shutdown message: " + std::string(e.what()));
         }
 
@@ -619,7 +619,7 @@ public:
         // Final metrics report
         reportMetrics();
 
-        m_logger->log(logger_module::log_level::info, "Chat server stopped.");
+        m_logger->log(kcenon::logger::log_level::info, "Chat server stopped.");
         m_logger->flush();
         m_logger->stop();
     }
@@ -627,13 +627,13 @@ public:
     // Statistics
     void printStats() {
         std::lock_guard<std::mutex> lock(users_mutex);
-        m_logger->log(logger_module::log_level::info, "\n=== Server Statistics ===");
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info, "\n=== Server Statistics ===");
+        m_logger->log(kcenon::logger::log_level::info,
             "Active users: " + std::to_string(users.size()));
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Message bus stats: [messages published: " +
             std::to_string(system_integrator->get_message_bus()->get_statistics().messages_published) + "].");
-        m_logger->log(logger_module::log_level::info, "========================\n");
+        m_logger->log(kcenon::logger::log_level::info, "========================\n");
     }
 };
 

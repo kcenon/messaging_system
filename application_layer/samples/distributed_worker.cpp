@@ -9,9 +9,9 @@
 #include <kcenon/messaging/integrations/system_integrator.h>
 #include <kcenon/messaging/services/container/container_service.h>
 #include <kcenon/messaging/services/database/database_service.h>
-#include <kcenon/logger/logger.h>
-#include <logger/writers/console_writer.h>
-#include <logger/writers/rotating_file_writer.h>
+#include <kcenon/logger/core/logger.h>
+#include <kcenon/logger/writers/console_writer.h>
+#include <kcenon/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <random>
@@ -60,7 +60,7 @@ private:
     std::unique_ptr<integrations::system_integrator> system_integrator;
     std::unique_ptr<services::container::container_service> container_service;
     std::unique_ptr<services::database::database_service> database_service;
-    std::shared_ptr<logger_module::logger> m_logger;
+    std::shared_ptr<kcenon::logger::logger> m_logger;
 
     std::string worker_id;
     std::atomic<bool> running{true};
@@ -82,12 +82,12 @@ public:
         : worker_id(id.empty() ? generateWorkerId() : id) {
 
         // Initialize logger
-        m_logger = std::make_shared<logger_module::logger>(true, 8192);
-        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+        m_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+        m_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        m_logger->add_writer(std::make_unique<kcenon::logger::rotating_file_writer>(
             "distributed_worker_" + worker_id + ".log", 10 * 1024 * 1024, 5));
 
-        m_logger->log(logger_module::log_level::info, "Initializing distributed worker: " + worker_id);
+        m_logger->log(kcenon::logger::log_level::info, "Initializing distributed worker: " + worker_id);
 
         // Configure for distributed processing
         config::config_builder builder;
@@ -187,13 +187,13 @@ public:
             }
 
         } catch (const std::exception& e) {
-            m_logger->log(logger_module::log_level::error, "Error handling task: " + std::string(e.what()));
+            m_logger->log(kcenon::logger::log_level::error, "Error handling task: " + std::string(e.what()));
             tasks_failed++;
         }
     }
 
     bool processTask(const task& t) {
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Worker " + worker_id + " processing task " + t.id +
             " of type " + std::to_string(static_cast<int>(t.type)));
 
@@ -202,14 +202,14 @@ public:
             return it->second(t);
         }
 
-        m_logger->log(logger_module::log_level::error, "No processor found for task type");
+        m_logger->log(kcenon::logger::log_level::error, "No processor found for task type");
         return false;
     }
 
     // Task processors implementation
     bool processData(const task& t) {
         // Simulate data processing
-        m_logger->log(logger_module::log_level::debug,
+        m_logger->log(kcenon::logger::log_level::debug,
             "Processing data: " + t.payload.substr(0, 50) + "...");
 
         // Note: In production, would use actual container and database services
@@ -223,7 +223,7 @@ public:
     }
 
     bool analyzeImage(const task& t) {
-        m_logger->log(logger_module::log_level::debug, "Analyzing image: " + t.id);
+        m_logger->log(kcenon::logger::log_level::debug, "Analyzing image: " + t.id);
 
         // Simulate image analysis with random success rate
         std::this_thread::sleep_for(std::chrono::milliseconds(500 + rand() % 1500));
@@ -233,7 +233,7 @@ public:
     }
 
     bool generateReport(const task& t) {
-        m_logger->log(logger_module::log_level::debug, "Generating report: " + t.id);
+        m_logger->log(kcenon::logger::log_level::debug, "Generating report: " + t.id);
 
         // In production, would fetch data from database
         // Note: database_service doesn't have fetch/store methods yet
@@ -245,7 +245,7 @@ public:
     }
 
     bool sendEmail(const task& t) {
-        m_logger->log(logger_module::log_level::debug, "Sending email for task: " + t.id);
+        m_logger->log(kcenon::logger::log_level::debug, "Sending email for task: " + t.id);
 
         // Simulate email sending
         std::this_thread::sleep_for(std::chrono::milliseconds(50 + rand() % 200));
@@ -254,7 +254,7 @@ public:
     }
 
     bool warmCache(const task& t) {
-        m_logger->log(logger_module::log_level::debug, "Warming cache: " + t.payload);
+        m_logger->log(kcenon::logger::log_level::debug, "Warming cache: " + t.payload);
 
         // In production, would fetch and cache data
         // Note: Services don't have fetch_batch/cache methods yet
@@ -268,12 +268,12 @@ public:
 
     void handleTaskCancel(const core::message& cancel_message) {
         auto task_id_to_cancel = cancel_message.payload.get<std::string>("task_id", "");
-        m_logger->log(logger_module::log_level::info, "Cancelling task: " + task_id_to_cancel);
+        m_logger->log(kcenon::logger::log_level::info, "Cancelling task: " + task_id_to_cancel);
         // In production, would need to track and cancel running tasks
     }
 
     void handleRebalance(const core::message& msg) {
-        m_logger->log(logger_module::log_level::info, "Rebalancing work distribution...");
+        m_logger->log(kcenon::logger::log_level::info, "Rebalancing work distribution...");
         // Implement load balancing logic
     }
 
@@ -323,7 +323,7 @@ public:
     }
 
     void logTaskReceived(const task& received_task) {
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "[" + worker_id + "] Received task " + received_task.id +
             " with priority " + std::to_string(received_task.priority));
     }
@@ -356,7 +356,7 @@ public:
     }
 
     void start() {
-        m_logger->log(logger_module::log_level::info, "Starting distributed worker: " + worker_id);
+        m_logger->log(kcenon::logger::log_level::info, "Starting distributed worker: " + worker_id);
 
         // Start the integrator (if it has a start method)
         // system_integrator->start();
@@ -390,7 +390,7 @@ public:
     void stop() {
         running = false;
         if (m_logger) {
-            m_logger->log(logger_module::log_level::info, "Stopping distributed worker: " + worker_id);
+            m_logger->log(kcenon::logger::log_level::info, "Stopping distributed worker: " + worker_id);
             m_logger->flush();
             m_logger->stop();
         }
@@ -409,7 +409,7 @@ public:
         status += "===================";
 
         if (m_logger) {
-            m_logger->log(logger_module::log_level::info, status);
+            m_logger->log(kcenon::logger::log_level::info, status);
         }
     }
 };
@@ -418,7 +418,7 @@ public:
 class task_generator {
 private:
     std::unique_ptr<integrations::system_integrator> system_integrator;
-    std::shared_ptr<logger_module::logger> m_logger;
+    std::shared_ptr<kcenon::logger::logger> m_logger;
     std::atomic<int> generated_task_counter{0};
     std::random_device random_device;
     std::mt19937 random_generator;
@@ -426,12 +426,12 @@ private:
 public:
     task_generator() : random_generator(random_device()) {
         // Initialize logger
-        m_logger = std::make_shared<logger_module::logger>(true, 8192);
-        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+        m_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+        m_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        m_logger->add_writer(std::make_unique<kcenon::logger::rotating_file_writer>(
             "task_generator.log", 10 * 1024 * 1024, 5));
 
-        m_logger->log(logger_module::log_level::info, "Initializing task generator");
+        m_logger->log(kcenon::logger::log_level::info, "Initializing task generator");
 
         config::config_builder builder;
         auto generator_config = builder
@@ -471,7 +471,7 @@ public:
 
             system_integrator->get_message_bus()->publish(task_message);
 
-            m_logger->log(logger_module::log_level::info, "Generated task: " + generated_task.id);
+            m_logger->log(kcenon::logger::log_level::info, "Generated task: " + generated_task.id);
 
             if (delay_between_tasks_ms > 0) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(delay_between_tasks_ms));
@@ -483,7 +483,7 @@ public:
         // Stop the integrator (if it has a stop method)
         // system_integrator->stop();
         if (m_logger) {
-            m_logger->log(logger_module::log_level::info, "Shutting down task generator");
+            m_logger->log(kcenon::logger::log_level::info, "Shutting down task generator");
             m_logger->flush();
             m_logger->stop();
         }
@@ -508,10 +508,10 @@ int main(int argc, char* argv[]) {
         if (is_generator) {
             // Run as task generator
             // Initialize logger for main
-            auto main_logger = std::make_shared<logger_module::logger>(true, 8192);
-            main_logger->add_writer(std::make_unique<logger_module::console_writer>());
+            auto main_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+            main_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
 
-            main_logger->log(logger_module::log_level::info, "Running as task generator");
+            main_logger->log(kcenon::logger::log_level::info, "Running as task generator");
             task_generator generator;
 
             // Generate tasks continuously
@@ -549,9 +549,9 @@ int main(int argc, char* argv[]) {
 
     } catch (const std::exception& e) {
         // Create a minimal logger for error reporting
-        auto error_logger = std::make_shared<logger_module::logger>(true, 8192);
-        error_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
+        auto error_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+        error_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        error_logger->log(kcenon::logger::log_level::error, "Error: " + std::string(e.what()));
         error_logger->stop();
         return 1;
     }

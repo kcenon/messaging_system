@@ -9,9 +9,9 @@
 #include <kcenon/messaging/integrations/system_integrator.h>
 #include <kcenon/messaging/services/container/container_service.h>
 #include <kcenon/messaging/services/database/database_service.h>
-#include <kcenon/logger/logger.h>
-#include <logger/writers/console_writer.h>
-#include <logger/writers/rotating_file_writer.h>
+#include <kcenon/logger/core/logger.h>
+#include <kcenon/logger/writers/console_writer.h>
+#include <kcenon/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <queue>
@@ -104,7 +104,7 @@ public:
         }
     }
 
-    void printStats(std::shared_ptr<logger_module::logger> logger = nullptr) const {
+    void printStats(std::shared_ptr<kcenon::logger::logger> logger = nullptr) const {
         std::stringstream stats;
         stats << "Stage: " << stage_name
               << " | Processed: " << processed_count
@@ -112,7 +112,7 @@ public:
               << " | Errors: " << error_count;
 
         if (logger) {
-            logger->log(logger_module::log_level::info, stats.str());
+            logger->log(kcenon::logger::log_level::info, stats.str());
         }
     }
 };
@@ -122,7 +122,7 @@ private:
     std::unique_ptr<integrations::system_integrator> integrator;
     std::unique_ptr<services::container::container_service> container_svc;
     std::unique_ptr<services::database::database_service> database_svc;
-    std::shared_ptr<logger_module::logger> m_logger;
+    std::shared_ptr<kcenon::logger::logger> m_logger;
 
     // Pipeline stages
     std::unique_ptr<pipeline_stage<raw_event, raw_event>> validation_stage;
@@ -154,12 +154,12 @@ private:
 public:
     event_pipeline() {
         // Initialize logger
-        m_logger = std::make_shared<logger_module::logger>(true, 8192);
-        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+        m_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+        m_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        m_logger->add_writer(std::make_unique<kcenon::logger::rotating_file_writer>(
             "event_pipeline.log", 10 * 1024 * 1024, 5));
 
-        m_logger->log(logger_module::log_level::info, "Initializing Event Pipeline");
+        m_logger->log(kcenon::logger::log_level::info, "Initializing Event Pipeline");
 
         // Configure for event processing
         config::config_builder builder;
@@ -423,7 +423,7 @@ public:
             queue_cv.notify_one();
 
         } catch (const std::exception& e) {
-            m_logger->log(logger_module::log_level::error,
+            m_logger->log(kcenon::logger::log_level::error,
                 "Error handling raw event: " + std::string(e.what()));
         }
     }
@@ -458,7 +458,7 @@ public:
         std::lock_guard<std::mutex> lock(dlq_mutex);
         dead_letter_queue.push({reason, event});
 
-        m_logger->log(logger_module::log_level::warning,
+        m_logger->log(kcenon::logger::log_level::warning,
             "Event " + event.id + " sent to DLQ. Reason: " + reason);
 
         // In production, would persist to database
@@ -468,7 +468,7 @@ public:
     void retryDeadLetterEvents() {
         std::lock_guard<std::mutex> lock(dlq_mutex);
 
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Retrying " + std::to_string(dead_letter_queue.size()) +
             " events from dead letter queue");
 
@@ -613,24 +613,24 @@ public:
     }
 
     void pausePipeline() {
-        m_logger->log(logger_module::log_level::info, "Pipeline paused");
+        m_logger->log(kcenon::logger::log_level::info, "Pipeline paused");
         // Implementation would pause processing
     }
 
     void resumePipeline() {
-        m_logger->log(logger_module::log_level::info, "Pipeline resumed");
+        m_logger->log(kcenon::logger::log_level::info, "Pipeline resumed");
         // Implementation would resume processing
     }
 
     void flushPipeline() {
-        m_logger->log(logger_module::log_level::info, "Flushing pipeline...");
+        m_logger->log(kcenon::logger::log_level::info, "Flushing pipeline...");
 
         // Process all pending events
         while (!raw_events.empty() || !processed_events.empty()) {
             std::this_thread::sleep_for(100ms);
         }
 
-        m_logger->log(logger_module::log_level::info, "Pipeline flushed");
+        m_logger->log(kcenon::logger::log_level::info, "Pipeline flushed");
     }
 
     void printPipelineStats() {
@@ -659,7 +659,7 @@ public:
               << total_events.load() << " ║\n";
         stats << "╚══════════════════════════════════════════════════════════╝";
 
-        m_logger->log(logger_module::log_level::info, stats.str());
+        m_logger->log(kcenon::logger::log_level::info, stats.str());
     }
 
     void sendAggregatedData() {
@@ -691,7 +691,7 @@ public:
 
 public:
     void start() {
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "\n=== Event Processing Pipeline Starting ===");
 
         // Start the integrator (if it has a start method)
@@ -726,9 +726,9 @@ public:
         // Stop the integrator (if it has a stop method)
         // integrator->stop();
 
-        m_logger->log(logger_module::log_level::info, "\n=== Final Statistics ===");
+        m_logger->log(kcenon::logger::log_level::info, "\n=== Final Statistics ===");
         printPipelineStats();
-        m_logger->log(logger_module::log_level::info, "========================");
+        m_logger->log(kcenon::logger::log_level::info, "========================");
         m_logger->flush();
         m_logger->stop();
     }
@@ -741,9 +741,9 @@ int main(int argc, char* argv[]) {
 
     } catch (const std::exception& e) {
         // Create a minimal logger for error reporting
-        auto error_logger = std::make_shared<logger_module::logger>(true, 8192);
-        error_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
+        auto error_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+        error_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        error_logger->log(kcenon::logger::log_level::error, "Error: " + std::string(e.what()));
         error_logger->stop();
         return 1;
     }

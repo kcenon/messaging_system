@@ -1,9 +1,9 @@
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/core/message_types.h>
 #include <kcenon/messaging/integrations/system_integrator.h>
-#include <kcenon/logger/logger.h>
-#include <logger/writers/console_writer.h>
-#include <logger/writers/rotating_file_writer.h>
+#include <kcenon/logger/core/logger.h>
+#include <kcenon/logger/writers/console_writer.h>
+#include <kcenon/logger/writers/rotating_file_writer.h>
 #include <chrono>
 #include <thread>
 #include <atomic>
@@ -18,14 +18,14 @@ using namespace kcenon::messaging::integrations;
 
 class BenchmarkRunner {
 private:
-    std::shared_ptr<logger_module::logger> m_logger;
+    std::shared_ptr<kcenon::logger::logger> m_logger;
 
 public:
     BenchmarkRunner() {
         // Initialize logger
-        m_logger = std::make_shared<logger_module::logger>(true, 8192);
-        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+        m_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+        m_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        m_logger->add_writer(std::make_unique<kcenon::logger::rotating_file_writer>(
             "message_bus_benchmark.log", 10 * 1024 * 1024, 3));
     }
 
@@ -37,7 +37,7 @@ public:
     }
 
     void run_all_benchmarks() {
-        m_logger->log(logger_module::log_level::info, "=== Messaging System Performance Benchmarks ===");
+        m_logger->log(kcenon::logger::log_level::info, "=== Messaging System Performance Benchmarks ===");
 
         run_throughput_benchmark();
         run_concurrent_benchmark();
@@ -45,13 +45,13 @@ public:
         run_message_size_benchmark();
         run_system_integrator_benchmark();
 
-        m_logger->log(logger_module::log_level::info, "\n=== Benchmark Complete ===");
+        m_logger->log(kcenon::logger::log_level::info, "\n=== Benchmark Complete ===");
     }
 
 private:
     void run_throughput_benchmark() {
-        m_logger->log(logger_module::log_level::info, "1. Throughput Benchmark");
-        m_logger->log(logger_module::log_level::info, "   Testing message processing throughput...");
+        m_logger->log(kcenon::logger::log_level::info, "1. Throughput Benchmark");
+        m_logger->log(kcenon::logger::log_level::info, "   Testing message processing throughput...");
 
         message_bus_config config;
         config.worker_threads = 8;
@@ -99,14 +99,14 @@ private:
         results << "   - Publish rate: " << std::fixed << std::setprecision(0) << publish_rate << " msg/sec\n";
         results << "   - Processing rate: " << std::fixed << std::setprecision(0) << process_rate << " msg/sec\n";
         results << "   - Total time: " << total_duration.count() << " ms";
-        m_logger->log(logger_module::log_level::info, results.str());
+        m_logger->log(kcenon::logger::log_level::info, results.str());
 
         bus->shutdown();
     }
 
     void run_concurrent_benchmark() {
-        m_logger->log(logger_module::log_level::info, "2. Concurrent Publishers Benchmark");
-        m_logger->log(logger_module::log_level::info, "   Testing concurrent publishing performance...");
+        m_logger->log(kcenon::logger::log_level::info, "2. Concurrent Publishers Benchmark");
+        m_logger->log(kcenon::logger::log_level::info, "   Testing concurrent publishing performance...");
 
         message_bus_config config;
         config.worker_threads = 8;
@@ -165,14 +165,14 @@ private:
         results << "   - Total messages: " << total_messages << "\n";
         results << "   - Concurrent rate: " << std::fixed << std::setprecision(0) << concurrent_rate << " msg/sec\n";
         results << "   - Publish time: " << publish_duration.count() << " ms";
-        m_logger->log(logger_module::log_level::info, results.str());
+        m_logger->log(kcenon::logger::log_level::info, results.str());
 
         bus->shutdown();
     }
 
     void run_priority_benchmark() {
-        m_logger->log(logger_module::log_level::info, "3. Priority Queue Benchmark");
-        m_logger->log(logger_module::log_level::info, "   Testing priority queue performance...");
+        m_logger->log(kcenon::logger::log_level::info, "3. Priority Queue Benchmark");
+        m_logger->log(kcenon::logger::log_level::info, "   Testing priority queue performance...");
 
         message_bus_config config;
         config.worker_threads = 4;
@@ -218,14 +218,14 @@ private:
         results << "   - Messages: " << total_messages << "\n";
         results << "   - Priority queue rate: " << std::fixed << std::setprecision(0) << rate << " msg/sec\n";
         results << "   - Total time: " << duration.count() << " ms";
-        m_logger->log(logger_module::log_level::info, results.str());
+        m_logger->log(kcenon::logger::log_level::info, results.str());
 
         bus->shutdown();
     }
 
     void run_message_size_benchmark() {
-        m_logger->log(logger_module::log_level::info, "4. Message Size Impact Benchmark");
-        m_logger->log(logger_module::log_level::info, "   Testing performance with different message sizes...");
+        m_logger->log(kcenon::logger::log_level::info, "4. Message Size Impact Benchmark");
+        m_logger->log(kcenon::logger::log_level::info, "   Testing performance with different message sizes...");
 
         message_bus_config config;
         config.worker_threads = 4;
@@ -272,15 +272,15 @@ private:
             size_result << "   Size " << std::setw(6) << size << " bytes: "
                        << std::setw(6) << std::fixed << std::setprecision(0) << rate << " msg/sec, "
                        << std::setw(6) << std::fixed << std::setprecision(2) << throughput_mb << " MB/sec";
-            m_logger->log(logger_module::log_level::info, size_result.str());
+            m_logger->log(kcenon::logger::log_level::info, size_result.str());
         }
 
         bus->shutdown();
     }
 
     void run_system_integrator_benchmark() {
-        m_logger->log(logger_module::log_level::info, "5. System Integrator Benchmark");
-        m_logger->log(logger_module::log_level::info, "   Testing full system integration performance...");
+        m_logger->log(kcenon::logger::log_level::info, "5. System Integrator Benchmark");
+        m_logger->log(kcenon::logger::log_level::info, "   Testing full system integration performance...");
 
         auto integrator = system_integrator::create_default();
         integrator->initialize();
@@ -325,7 +325,7 @@ private:
         results << "   - Active services: " << health.active_services << "\n";
         results << "   - Total messages processed: " << health.total_messages_processed;
 
-        m_logger->log(logger_module::log_level::info, results.str());
+        m_logger->log(kcenon::logger::log_level::info, results.str());
 
         integrator->shutdown();
     }
@@ -333,17 +333,17 @@ private:
 
 int main(int argc, char* argv[]) {
     // Create a simple console logger for the main function
-    auto main_logger = std::make_shared<logger_module::logger>(true, 8192);
-    main_logger->add_writer(std::make_unique<logger_module::console_writer>());
+    auto main_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+    main_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
 
-    main_logger->log(logger_module::log_level::info, "Messaging System Performance Benchmark");
-    main_logger->log(logger_module::log_level::info, "=======================================");
+    main_logger->log(kcenon::logger::log_level::info, "Messaging System Performance Benchmark");
+    main_logger->log(kcenon::logger::log_level::info, "=======================================");
 
     try {
         BenchmarkRunner runner;
         runner.run_all_benchmarks();
     } catch (const std::exception& e) {
-        main_logger->log(logger_module::log_level::error, "Benchmark failed: " + std::string(e.what()));
+        main_logger->log(kcenon::logger::log_level::error, "Benchmark failed: " + std::string(e.what()));
         main_logger->stop();
         return 1;
     }

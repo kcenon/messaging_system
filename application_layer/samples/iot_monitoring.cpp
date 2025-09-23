@@ -11,9 +11,9 @@
 #include <kcenon/messaging/services/container/container_service.h>
 #include <kcenon/messaging/services/database/database_service.h>
 #include <kcenon/messaging/services/network/network_service.h>
-#include <kcenon/logger/logger.h>
-#include <logger/writers/console_writer.h>
-#include <logger/writers/rotating_file_writer.h>
+#include <kcenon/logger/core/logger.h>
+#include <kcenon/logger/writers/console_writer.h>
+#include <kcenon/logger/writers/rotating_file_writer.h>
 #include <iostream>
 #include <thread>
 #include <random>
@@ -85,7 +85,7 @@ private:
     std::unique_ptr<services::container::container_service> container_svc;
     std::unique_ptr<services::database::database_service> database_svc;
     std::unique_ptr<services::network::network_service> network_svc;
-    std::shared_ptr<logger_module::logger> m_logger;
+    std::shared_ptr<kcenon::logger::logger> m_logger;
 
     // Device management
     std::map<std::string, device_config> devices;
@@ -112,12 +112,12 @@ private:
 public:
     iot_monitoring_system() : gen(rd()) {
         // Initialize logger
-        m_logger = std::make_shared<logger_module::logger>(true, 8192);
-        m_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        m_logger->add_writer(std::make_unique<logger_module::rotating_file_writer>(
+        m_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+        m_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        m_logger->add_writer(std::make_unique<kcenon::logger::rotating_file_writer>(
             "iot_monitoring.log", 10 * 1024 * 1024, 5));
 
-        m_logger->log(logger_module::log_level::info, "Initializing IoT Monitoring System");
+        m_logger->log(kcenon::logger::log_level::info, "Initializing IoT Monitoring System");
 
         // Configure for IoT workload
         config::config_builder builder;
@@ -188,7 +188,7 @@ public:
 
         registerDevice("lock-001", device_type::SMART_LOCK, "Front Door", 0.0, 1.0);
 
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Initialized " + std::to_string(devices.size()) + " IoT devices");
     }
 
@@ -252,12 +252,12 @@ public:
 
             // Log high-frequency updates less frequently
             if (total_messages % 100 == 0) {
-                m_logger->log(logger_module::log_level::debug,
+                m_logger->log(kcenon::logger::log_level::debug,
                     "Processed " + std::to_string(total_messages.load()) + " telemetry messages");
             }
 
         } catch (const std::exception& e) {
-            m_logger->log(logger_module::log_level::error,
+            m_logger->log(kcenon::logger::log_level::error,
                 "Error processing telemetry: " + std::string(e.what()));
         }
     }
@@ -333,7 +333,7 @@ public:
         // Publish alert
         publishAlert(alert_obj);
 
-        m_logger->log(logger_module::log_level::warning,
+        m_logger->log(kcenon::logger::log_level::warning,
             "[ALERT] " + getSeverityString(severity) + ": " + message +
             " (Device: " + device_id + ")");
     }
@@ -373,7 +373,7 @@ public:
 
         registerDevice(device_id, type, location, 0.0, 100.0);
 
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Registered new device: " + device_id + " at " + location);
     }
 
@@ -381,7 +381,7 @@ public:
         auto device_id = msg.metadata.headers.count("device_id") ? msg.metadata.headers.at("device_id") : "";
         auto command = msg.metadata.headers.count("command") ? msg.metadata.headers.at("command") : "";
 
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Executing command '" + command + "' on device " + device_id);
 
         // Forward command to device
@@ -410,7 +410,7 @@ public:
         auto alert_id = msg.metadata.headers.count("alert_id") ? msg.metadata.headers.at("alert_id") : "";
         auto user_id = msg.metadata.headers.count("user_id") ? msg.metadata.headers.at("user_id") : "";
 
-        m_logger->log(logger_module::log_level::info,
+        m_logger->log(kcenon::logger::log_level::info,
             "Alert " + alert_id + " acknowledged by user " + user_id);
 
         // In production, would update alert status in database
@@ -620,7 +620,7 @@ public:
 
 public:
     void start() {
-        m_logger->log(logger_module::log_level::info, "\n=== IoT Monitoring System Starting ===");
+        m_logger->log(kcenon::logger::log_level::info, "\n=== IoT Monitoring System Starting ===");
 
         // Start the integrator (if it has a start method)
         // integrator->start();
@@ -650,7 +650,7 @@ public:
         stats += "Total alerts generated: " + std::to_string(total_alerts) + "\n";
         stats += "======================";
 
-        m_logger->log(logger_module::log_level::info, stats);
+        m_logger->log(kcenon::logger::log_level::info, stats);
         m_logger->flush();
         m_logger->stop();
     }
@@ -703,7 +703,7 @@ public:
 
         dashboard << "╚═══════════════════════════════════════════════════════╝";
 
-        m_logger->log(logger_module::log_level::info, dashboard.str());
+        m_logger->log(kcenon::logger::log_level::info, dashboard.str());
     }
 };
 
@@ -714,9 +714,9 @@ int main(int argc, char* argv[]) {
 
     } catch (const std::exception& e) {
         // Create a minimal logger for error reporting
-        auto error_logger = std::make_shared<logger_module::logger>(true, 8192);
-        error_logger->add_writer(std::make_unique<logger_module::console_writer>());
-        error_logger->log(logger_module::log_level::error, "Error: " + std::string(e.what()));
+        auto error_logger = std::make_shared<kcenon::logger::logger>(true, 8192);
+        error_logger->add_writer(std::make_unique<kcenon::logger::console_writer>());
+        error_logger->log(kcenon::logger::log_level::error, "Error: " + std::string(e.what()));
         error_logger->stop();
         return 1;
     }

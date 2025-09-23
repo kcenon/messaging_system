@@ -58,8 +58,8 @@ public:
     performance_metrics metrics_;
 
 #ifdef BUILD_WITH_CONTAINER_SYSTEM
-    std::shared_ptr<messaging_system::common::container::value_container> active_container_;
-    std::function<void(const messaging_system::common::container::value_container&)> container_handler_;
+    std::shared_ptr<container_module::value_container> active_container_;
+    std::function<void(const container_module::value_container&)> container_handler_;
 #endif
 
 #ifdef BUILD_WITH_THREAD_SYSTEM
@@ -88,13 +88,13 @@ std::shared_ptr<core::messaging_client> messaging_bridge::create_client(
 
 #ifdef BUILD_WITH_CONTAINER_SYSTEM
 void messaging_bridge::set_container(
-    std::shared_ptr<messaging_system::common::container::value_container> container
+    std::shared_ptr<container_module::value_container> container
 ) {
     pimpl_->active_container_ = container;
 }
 
 void messaging_bridge::set_container_message_handler(
-    std::function<void(const messaging_system::common::container::value_container&)> handler
+    std::function<void(const container_module::value_container&)> handler
 ) {
     pimpl_->container_handler_ = handler;
 }
