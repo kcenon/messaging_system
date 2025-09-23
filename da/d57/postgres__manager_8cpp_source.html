@@ -302,182 +302,186 @@ $(document).ready(function(){initNavTree('da/d57/postgres__manager_8cpp_source.h
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                        db_row[column_name] = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                        <span class="comment">// Try to convert to appropriate type</span></div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                        <span class="keywordflow">if</span> (row[i].type() == pqxx::oid::int8_oid ||</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                            row[i].type() == pqxx::oid::int4_oid) {</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                            db_row[column_name] = row[i].as&lt;int64_t&gt;();</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (row[i].type() == pqxx::oid::float8_oid ||</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                                   row[i].type() == pqxx::oid::float4_oid) {</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                            db_row[column_name] = row[i].as&lt;<span class="keywordtype">double</span>&gt;();</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (row[i].type() == pqxx::oid::bool_oid) {</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                            db_row[column_name] = row[i].as&lt;<span class="keywordtype">bool</span>&gt;();</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                            db_row[column_name] = row[i].as&lt;std::string&gt;();</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                        }</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                    }</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                }</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                result.push_back(std::move(db_row));</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>            }</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Select query error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        }</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span><span class="preprocessor">#elif defined(HAVE_LIBPQ)</span></div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        <span class="keywordflow">if</span> (!connection_) <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        <span class="keywordflow">try</span> {</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>            PGresult* pg_result = PQexec(<span class="keyword">static_cast&lt;</span>PGconn*<span class="keyword">&gt;</span>(connection_), query_string.c_str());</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>            <span class="keywordflow">if</span> (PQresultStatus(pg_result) != PGRES_TUPLES_OK) {</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                PQclear(pg_result);</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>            }</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>            <span class="keywordtype">int</span> rows = PQntuples(pg_result);</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            <span class="keywordtype">int</span> cols = PQnfields(pg_result);</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> row = 0; row &lt; rows; ++row) {</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                <a class="code hl_typedef" href="../../da/df2/namespacedatabase.html#a04f31a8044c65bf283f7bb4ecd174906">database_row</a> db_row;</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> col = 0; col &lt; cols; ++col) {</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>                    std::string column_name = PQfname(pg_result, col);</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                    <span class="keywordflow">if</span> (PQgetisnull(pg_result, row, col)) {</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                        db_row[column_name] = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                        <span class="keyword">const</span> <span class="keywordtype">char</span>* value = PQgetvalue(pg_result, row, col);</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                        Oid type = PQftype(pg_result, col);</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                        <span class="comment">// Convert based on PostgreSQL type</span></div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                        <span class="keywordflow">if</span> (type == 20 || type == 21 || type == 23) { <span class="comment">// int8, int2, int4</span></div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                            db_row[column_name] = <span class="keyword">static_cast&lt;</span>int64_t<span class="keyword">&gt;</span>(std::stoll(value));</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == 700 || type == 701) { <span class="comment">// float4, float8</span></div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                            db_row[column_name] = std::stod(value);</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>                        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == 16) { <span class="comment">// bool</span></div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>                            db_row[column_name] = (*value == <span class="charliteral">&#39;t&#39;</span> || *value == <span class="charliteral">&#39;1&#39;</span>);</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>                        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>                            db_row[column_name] = std::string(value);</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>                        }</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>                    }</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                }</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>                result.push_back(std::move(db_row));</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>            }</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>            PQclear(pg_result);</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Select query error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        }</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL support not compiled. Select query: &quot;</span> &lt;&lt; query_string.substr(0, 20) &lt;&lt; <span class="stringliteral">&quot;...&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        <span class="comment">// Return empty result with mock data for testing</span></div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        <span class="keywordflow">if</span> (query_string.find(<span class="stringliteral">&quot;SELECT&quot;</span>) != std::string::npos) {</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>            <a class="code hl_typedef" href="../../da/df2/namespacedatabase.html#a04f31a8044c65bf283f7bb4ecd174906">database_row</a> mock_row;</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>            mock_row[<span class="stringliteral">&quot;id&quot;</span>] = int64_t(1);</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>            mock_row[<span class="stringliteral">&quot;name&quot;</span>] = std::string(<span class="stringliteral">&quot;mock_data&quot;</span>);</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>            mock_row[<span class="stringliteral">&quot;active&quot;</span>] = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            result.push_back(mock_row);</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        }</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    }</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                        <span class="comment">// Using numeric OID values for compatibility across libpqxx versions</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                        <span class="comment">// These are standard PostgreSQL OID constants:</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                        <span class="comment">// 20 = int8, 21 = int2, 23 = int4</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                        <span class="comment">// 700 = float4, 701 = float8</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                        <span class="comment">// 16 = bool</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                        pqxx::oid type = row[i].type();</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                        <span class="keywordflow">if</span> (type == 20 || type == 21 || type == 23) { <span class="comment">// int8, int2, int4</span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                            db_row[column_name] = row[i].as&lt;int64_t&gt;();</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == 700 || type == 701) { <span class="comment">// float4, float8</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                            db_row[column_name] = row[i].as&lt;<span class="keywordtype">double</span>&gt;();</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == 16) { <span class="comment">// bool</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                            db_row[column_name] = row[i].as&lt;<span class="keywordtype">bool</span>&gt;();</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                            db_row[column_name] = row[i].as&lt;std::string&gt;();</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>                        }</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                    }</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                }</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                result.push_back(std::move(db_row));</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>            }</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Select query error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        }</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="preprocessor">#elif defined(HAVE_LIBPQ)</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <span class="keywordflow">if</span> (!connection_) <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>            PGresult* pg_result = PQexec(<span class="keyword">static_cast&lt;</span>PGconn*<span class="keyword">&gt;</span>(connection_), query_string.c_str());</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>            <span class="keywordflow">if</span> (PQresultStatus(pg_result) != PGRES_TUPLES_OK) {</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                PQclear(pg_result);</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>            }</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            <span class="keywordtype">int</span> rows = PQntuples(pg_result);</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>            <span class="keywordtype">int</span> cols = PQnfields(pg_result);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> row = 0; row &lt; rows; ++row) {</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                <a class="code hl_typedef" href="../../da/df2/namespacedatabase.html#a04f31a8044c65bf283f7bb4ecd174906">database_row</a> db_row;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> col = 0; col &lt; cols; ++col) {</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                    std::string column_name = PQfname(pg_result, col);</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                    <span class="keywordflow">if</span> (PQgetisnull(pg_result, row, col)) {</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                        db_row[column_name] = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                        <span class="keyword">const</span> <span class="keywordtype">char</span>* value = PQgetvalue(pg_result, row, col);</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                        Oid type = PQftype(pg_result, col);</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                        <span class="comment">// Convert based on PostgreSQL type</span></div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>                        <span class="keywordflow">if</span> (type == 20 || type == 21 || type == 23) { <span class="comment">// int8, int2, int4</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>                            db_row[column_name] = <span class="keyword">static_cast&lt;</span>int64_t<span class="keyword">&gt;</span>(std::stoll(value));</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>                        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == 700 || type == 701) { <span class="comment">// float4, float8</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>                            db_row[column_name] = std::stod(value);</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>                        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == 16) { <span class="comment">// bool</span></div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>                            db_row[column_name] = (*value == <span class="charliteral">&#39;t&#39;</span> || *value == <span class="charliteral">&#39;1&#39;</span>);</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>                            db_row[column_name] = std::string(value);</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>                        }</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                    }</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>                }</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                result.push_back(std::move(db_row));</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            }</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            PQclear(pg_result);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Select query error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        }</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL support not compiled. Select query: &quot;</span> &lt;&lt; query_string.substr(0, 20) &lt;&lt; <span class="stringliteral">&quot;...&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        <span class="comment">// Return empty result with mock data for testing</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        <span class="keywordflow">if</span> (query_string.find(<span class="stringliteral">&quot;SELECT&quot;</span>) != std::string::npos) {</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            <a class="code hl_typedef" href="../../da/df2/namespacedatabase.html#a04f31a8044c65bf283f7bb4ecd174906">database_row</a> mock_row;</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            mock_row[<span class="stringliteral">&quot;id&quot;</span>] = int64_t(1);</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            mock_row[<span class="stringliteral">&quot;name&quot;</span>] = std::string(<span class="stringliteral">&quot;mock_data&quot;</span>);</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            mock_row[<span class="stringliteral">&quot;active&quot;</span>] = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            result.push_back(mock_row);</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        }</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    }</div>
 </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
-<div class="foldopen" id="foldopen00262" data-start="{" data-end="}">
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno"><a class="line" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a55769bfa4bc67285afe675acedb285c5">  262</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a55769bfa4bc67285afe675acedb285c5">postgres_manager::disconnect</a>(<span class="keywordtype">void</span>)</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    {</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        <span class="keywordflow">if</span> (!connection_) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span><span class="preprocessor">#ifdef USE_POSTGRESQL</span></div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        <span class="keywordflow">try</span> {</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>            <span class="keyword">delete</span> <span class="keyword">static_cast&lt;</span>pqxx::connection*<span class="keyword">&gt;</span>(connection_);</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>            connection_ = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Disconnect error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        }</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span><span class="preprocessor">#elif defined(HAVE_LIBPQ)</span></div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        <span class="keywordflow">try</span> {</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>            PQfinish(<span class="keyword">static_cast&lt;</span>PGconn*<span class="keyword">&gt;</span>(connection_));</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            connection_ = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Disconnect error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        }</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        <span class="comment">// Mock disconnect</span></div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        connection_ = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL support not compiled. Mock disconnect.&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    }</div>
+<div class="foldopen" id="foldopen00266" data-start="{" data-end="}">
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno"><a class="line" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a55769bfa4bc67285afe675acedb285c5">  266</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a55769bfa4bc67285afe675acedb285c5">postgres_manager::disconnect</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    {</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        <span class="keywordflow">if</span> (!connection_) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span><span class="preprocessor">#ifdef USE_POSTGRESQL</span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>            <span class="keyword">delete</span> <span class="keyword">static_cast&lt;</span>pqxx::connection*<span class="keyword">&gt;</span>(connection_);</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>            connection_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Disconnect error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        }</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span><span class="preprocessor">#elif defined(HAVE_LIBPQ)</span></div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>            PQfinish(<span class="keyword">static_cast&lt;</span>PGconn*<span class="keyword">&gt;</span>(connection_));</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>            connection_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;Disconnect error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        }</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        <span class="comment">// Mock disconnect</span></div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        connection_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL support not compiled. Mock disconnect.&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    }</div>
 </div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> </div>
-<div class="foldopen" id="foldopen00291" data-start="{" data-end="}">
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno"><a class="line" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#acfc754bc05abb26b3e89dcabeae5e323">  291</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#acfc754bc05abb26b3e89dcabeae5e323">postgres_manager::execute_query</a>(<span class="keyword">const</span> std::string&amp; query_string)</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    {</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="preprocessor">#ifdef USE_POSTGRESQL</span></div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        <span class="keywordflow">try</span> {</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>            <span class="keywordflow">if</span> (!connection_) {</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                std::cerr &lt;&lt; <span class="stringliteral">&quot;No active PostgreSQL connection&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>            }</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>            pqxx::work txn{*<span class="keyword">static_cast&lt;</span>pqxx::connection*<span class="keyword">&gt;</span>(connection_)};</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>            txn.exec(query_string);</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>            txn.commit();</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL execute error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        }</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span><span class="preprocessor">#elif defined(HAVE_LIBPQ)</span></div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        <span class="keywordflow">if</span> (!connection_) {</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;No active PostgreSQL connection&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        }</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span> </div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        PGresult* result = PQexec(<span class="keyword">static_cast&lt;</span>PGconn*<span class="keyword">&gt;</span>(connection_), query_string.c_str());</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>        <span class="keywordflow">if</span> (!result) {</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL execute failed&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        }</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> </div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        ExecStatusType status = PQresultStatus(result);</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        <span class="keywordtype">bool</span> success = (status == PGRES_COMMAND_OK) || (status == PGRES_TUPLES_OK);</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> </div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        <span class="keywordflow">if</span> (!success) {</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL execute error: &quot;</span> &lt;&lt; PQerrorMessage(<span class="keyword">static_cast&lt;</span>PGconn*<span class="keyword">&gt;</span>(connection_)) &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        }</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> </div>
+<div class="foldopen" id="foldopen00295" data-start="{" data-end="}">
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno"><a class="line" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#acfc754bc05abb26b3e89dcabeae5e323">  295</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#acfc754bc05abb26b3e89dcabeae5e323">postgres_manager::execute_query</a>(<span class="keyword">const</span> std::string&amp; query_string)</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    {</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span><span class="preprocessor">#ifdef USE_POSTGRESQL</span></div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>            <span class="keywordflow">if</span> (!connection_) {</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                std::cerr &lt;&lt; <span class="stringliteral">&quot;No active PostgreSQL connection&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>            }</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> </div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>            pqxx::work txn{*<span class="keyword">static_cast&lt;</span>pqxx::connection*<span class="keyword">&gt;</span>(connection_)};</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>            txn.exec(query_string);</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>            txn.commit();</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL execute error: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        }</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span><span class="preprocessor">#elif defined(HAVE_LIBPQ)</span></div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        <span class="keywordflow">if</span> (!connection_) {</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;No active PostgreSQL connection&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        }</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> </div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        PGresult* result = PQexec(<span class="keyword">static_cast&lt;</span>PGconn*<span class="keyword">&gt;</span>(connection_), query_string.c_str());</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        <span class="keywordflow">if</span> (!result) {</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL execute failed&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        }</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        ExecStatusType status = PQresultStatus(result);</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        <span class="keywordtype">bool</span> success = (status == PGRES_COMMAND_OK) || (status == PGRES_TUPLES_OK);</div>
 <div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>        PQclear(result);</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        <span class="keywordflow">return</span> success;</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>        <span class="comment">// Mock execution</span></div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;PostgreSQL support not compiled. Mock execute: &quot;</span> &lt;&lt; query_string &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    }</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>        <span class="keywordflow">if</span> (!success) {</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>            std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL execute error: &quot;</span> &lt;&lt; PQerrorMessage(<span class="keyword">static_cast&lt;</span>PGconn*<span class="keyword">&gt;</span>(connection_)) &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>        }</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> </div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        PQclear(result);</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        <span class="keywordflow">return</span> success;</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        <span class="comment">// Mock execution</span></div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;PostgreSQL support not compiled. Mock execute: &quot;</span> &lt;&lt; query_string &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>    }</div>
 </div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span> </div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    <span class="keywordtype">void</span>* postgres_manager::query_result(<span class="keyword">const</span> std::string&amp; query_string)</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    {</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span><span class="preprocessor">#ifdef USE_POSTGRESQL</span></div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>        <span class="comment">// For libpqxx, we don&#39;t use this method directly</span></div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span><span class="preprocessor">#elif defined(HAVE_LIBPQ)</span></div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>        <span class="keywordflow">if</span> (!connection_) <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>        <span class="keywordflow">return</span> PQexec(<span class="keyword">static_cast&lt;</span>PGconn*<span class="keyword">&gt;</span>(connection_), query_string.c_str());</div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL support not compiled. Query result: &quot;</span> &lt;&lt; query_string.substr(0, 20) &lt;&lt; <span class="stringliteral">&quot;...&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>    }</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>}; <span class="comment">// namespace database</span></div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span> </div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    <span class="keywordtype">void</span>* postgres_manager::query_result(<span class="keyword">const</span> std::string&amp; query_string)</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>    {</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span><span class="preprocessor">#ifdef USE_POSTGRESQL</span></div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>        <span class="comment">// For libpqxx, we don&#39;t use this method directly</span></div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span><span class="preprocessor">#elif defined(HAVE_LIBPQ)</span></div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>        <span class="keywordflow">if</span> (!connection_) <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>        <span class="keywordflow">return</span> PQexec(<span class="keyword">static_cast&lt;</span>PGconn*<span class="keyword">&gt;</span>(connection_), query_string.c_str());</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>        std::cerr &lt;&lt; <span class="stringliteral">&quot;PostgreSQL support not compiled. Query result: &quot;</span> &lt;&lt; query_string.substr(0, 20) &lt;&lt; <span class="stringliteral">&quot;...&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>    }</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>}; <span class="comment">// namespace database</span></div>
 <div class="ttc" id="aclassdatabase_1_1postgres__manager_html_a15b56027fff588d80ec84eb612cd40eb"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a15b56027fff588d80ec84eb612cd40eb">database::postgres_manager::create_query</a></div><div class="ttdeci">bool create_query(const std::string &amp;query_string) override</div><div class="ttdoc">Creates a query (e.g., prepares a statement) using the provided SQL query string.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00088">postgres_manager.cpp:88</a></div></div>
 <div class="ttc" id="aclassdatabase_1_1postgres__manager_html_a174597da4a791e4899467892e7c6904e"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a174597da4a791e4899467892e7c6904e">database::postgres_manager::database_type</a></div><div class="ttdeci">database_types database_type(void) override</div><div class="ttdoc">Returns the specific type of the database.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00054">postgres_manager.cpp:54</a></div></div>
 <div class="ttc" id="aclassdatabase_1_1postgres__manager_html_a2fb6a01c21ad878bfdb0c87815ecbf09"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a2fb6a01c21ad878bfdb0c87815ecbf09">database::postgres_manager::postgres_manager</a></div><div class="ttdeci">postgres_manager(void)</div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00047">postgres_manager.cpp:47</a></div></div>
 <div class="ttc" id="aclassdatabase_1_1postgres__manager_html_a3121587c7035addfa3c3d10765bdb758"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a3121587c7035addfa3c3d10765bdb758">database::postgres_manager::select_query</a></div><div class="ttdeci">database_result select_query(const std::string &amp;query_string) override</div><div class="ttdoc">Executes a SELECT query on the connected PostgreSQL database and returns the resulting data.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00170">postgres_manager.cpp:170</a></div></div>
 <div class="ttc" id="aclassdatabase_1_1postgres__manager_html_a496b0382526022e0676f08401d770d7a"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a496b0382526022e0676f08401d770d7a">database::postgres_manager::insert_query</a></div><div class="ttdeci">unsigned int insert_query(const std::string &amp;query_string) override</div><div class="ttdoc">Executes an INSERT query on the connected PostgreSQL database.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00155">postgres_manager.cpp:155</a></div></div>
-<div class="ttc" id="aclassdatabase_1_1postgres__manager_html_a55769bfa4bc67285afe675acedb285c5"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a55769bfa4bc67285afe675acedb285c5">database::postgres_manager::disconnect</a></div><div class="ttdeci">bool disconnect(void) override</div><div class="ttdoc">Closes the connection to the PostgreSQL database.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00262">postgres_manager.cpp:262</a></div></div>
+<div class="ttc" id="aclassdatabase_1_1postgres__manager_html_a55769bfa4bc67285afe675acedb285c5"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a55769bfa4bc67285afe675acedb285c5">database::postgres_manager::disconnect</a></div><div class="ttdeci">bool disconnect(void) override</div><div class="ttdoc">Closes the connection to the PostgreSQL database.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00266">postgres_manager.cpp:266</a></div></div>
 <div class="ttc" id="aclassdatabase_1_1postgres__manager_html_a5afea6d413dbc295acc6a250ff470210"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a5afea6d413dbc295acc6a250ff470210">database::postgres_manager::connect</a></div><div class="ttdeci">bool connect(const std::string &amp;connect_string) override</div><div class="ttdoc">Establishes a connection to a PostgreSQL database using the provided connection string.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00059">postgres_manager.cpp:59</a></div></div>
 <div class="ttc" id="aclassdatabase_1_1postgres__manager_html_a7cd71674e518a36723c3f5760a2fc225"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a7cd71674e518a36723c3f5760a2fc225">database::postgres_manager::~postgres_manager</a></div><div class="ttdeci">virtual ~postgres_manager(void)</div><div class="ttdoc">Destructor.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00049">postgres_manager.cpp:49</a></div></div>
 <div class="ttc" id="aclassdatabase_1_1postgres__manager_html_ab7cbb0c270f3876ba100a35878347a5a"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#ab7cbb0c270f3876ba100a35878347a5a">database::postgres_manager::update_query</a></div><div class="ttdeci">unsigned int update_query(const std::string &amp;query_string) override</div><div class="ttdoc">Executes an UPDATE query on the connected PostgreSQL database.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00160">postgres_manager.cpp:160</a></div></div>
 <div class="ttc" id="aclassdatabase_1_1postgres__manager_html_abd7010caac3b0b91c24081c026595063"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#abd7010caac3b0b91c24081c026595063">database::postgres_manager::delete_query</a></div><div class="ttdeci">unsigned int delete_query(const std::string &amp;query_string) override</div><div class="ttdoc">Executes a DELETE query on the connected PostgreSQL database.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00165">postgres_manager.cpp:165</a></div></div>
-<div class="ttc" id="aclassdatabase_1_1postgres__manager_html_acfc754bc05abb26b3e89dcabeae5e323"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#acfc754bc05abb26b3e89dcabeae5e323">database::postgres_manager::execute_query</a></div><div class="ttdeci">bool execute_query(const std::string &amp;query_string) override</div><div class="ttdoc">Executes a general SQL query (DDL, DML) on PostgreSQL.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00291">postgres_manager.cpp:291</a></div></div>
+<div class="ttc" id="aclassdatabase_1_1postgres__manager_html_acfc754bc05abb26b3e89dcabeae5e323"><div class="ttname"><a href="../../d6/d7f/classdatabase_1_1postgres__manager.html#acfc754bc05abb26b3e89dcabeae5e323">database::postgres_manager::execute_query</a></div><div class="ttdeci">bool execute_query(const std::string &amp;query_string) override</div><div class="ttdoc">Executes a general SQL query (DDL, DML) on PostgreSQL.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d57/postgres__manager_8cpp_source.html#l00295">postgres_manager.cpp:295</a></div></div>
 <div class="ttc" id="anamespacedatabase_html"><div class="ttname"><a href="../../da/df2/namespacedatabase.html">database</a></div><div class="ttdef"><b>Definition</b> <a href="../../da/dc5/async__operations_8h_source.html#l00051">async_operations.h:52</a></div></div>
 <div class="ttc" id="anamespacedatabase_html_a04f31a8044c65bf283f7bb4ecd174906"><div class="ttname"><a href="../../da/df2/namespacedatabase.html#a04f31a8044c65bf283f7bb4ecd174906">database::database_row</a></div><div class="ttdeci">std::map&lt; std::string, database_value &gt; database_row</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d46/database__base_8h_source.html#l00048">database_base.h:48</a></div></div>
 <div class="ttc" id="anamespacedatabase_html_a9b50450d1f477d5f2fea4e15975023e4"><div class="ttname"><a href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4">database::database_types</a></div><div class="ttdeci">database_types</div><div class="ttdoc">Represents various database backends or modes.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/dac/database__types_8h_source.html#l00019">database_types.h:19</a></div></div>
