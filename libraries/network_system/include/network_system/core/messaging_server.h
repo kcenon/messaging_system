@@ -40,7 +40,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <atomic>
 #include <string>
 
-#include <asio.hpp>
+#if defined(HAS_ASIO) || defined(USE_BOOST_ASIO)
+    #ifdef USE_BOOST_ASIO
+        #include <boost/asio.hpp>
+        namespace asio = boost::asio;
+    #else
+        #include <asio.hpp>
+    #endif
+#endif
 
 namespace network_system::core
 {

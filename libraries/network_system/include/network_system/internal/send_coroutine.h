@@ -33,7 +33,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <future>
-#include <asio.hpp>
+#if defined(HAS_ASIO) || defined(USE_BOOST_ASIO)
+    #ifdef USE_BOOST_ASIO
+        #include <boost/asio.hpp>
+        namespace asio = boost::asio;
+    #else
+        #include <asio.hpp>
+    #endif
+#endif
 #include "network_system/internal/pipeline.h"
 #include "network_system/internal/tcp_socket.h"
 
