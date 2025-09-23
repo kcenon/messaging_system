@@ -116,7 +116,7 @@ else()
 endif()
 
 # Monitoring System Integration
-option(USE_INTERNAL_MONITORING_SYSTEM "Use internal monitoring_system subdirectory" OFF)
+option(USE_INTERNAL_MONITORING_SYSTEM "Use internal monitoring_system subdirectory" ON)
 
 if(USE_INTERNAL_MONITORING_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/monitoring_system)
     # Use internal monitoring_system

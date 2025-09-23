@@ -192,6 +192,9 @@ target_link_libraries(monitoring_system PUBLIC
     Threads::Threads
 )
 
+# Create alias for compatibility with external usage
+add_library(MonitoringSystem::monitoring ALIAS monitoring_system)
+
 # Setup formatting library (std::format, fmt, or basic fallback)
 if(COMMAND setup_monitoring_formatting)
     setup_monitoring_formatting(monitoring_system)
