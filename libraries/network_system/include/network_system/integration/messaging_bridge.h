@@ -47,7 +47,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "network_system/core/messaging_server.h"
 
 #ifdef BUILD_WITH_CONTAINER_SYSTEM
-#include <container_system/container.h>
+// Use a forward declaration instead of including the header to avoid path issues
+namespace messaging_system {
+namespace common {
+namespace container {
+    class value_container;
+}
+}
+}
 #endif
 
 #ifdef BUILD_WITH_THREAD_SYSTEM
@@ -106,7 +113,7 @@ public:
      * @param container Shared pointer to value container
      */
     void set_container(
-        std::shared_ptr<container_module::value_container> container
+        std::shared_ptr<messaging_system::common::container::value_container> container
     );
 
     /**
@@ -114,7 +121,7 @@ public:
      * @param handler Function to handle container messages
      */
     void set_container_message_handler(
-        std::function<void(const container_module::value_container&)> handler
+        std::function<void(const messaging_system::common::container::value_container&)> handler
     );
 #endif
 

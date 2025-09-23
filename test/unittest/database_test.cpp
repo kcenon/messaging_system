@@ -34,8 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <memory>
 
-#include <database_system/database_manager.h>
-#include <database_system/database_types.h>
+#include "../../libraries/database_system/database/database_manager.h"
+#include "../../libraries/database_system/database/database_types.h"
 
 using namespace database;
 
@@ -107,7 +107,7 @@ TEST_F(DatabaseTest, DeleteQueryWithoutConnection) {
 
 TEST_F(DatabaseTest, SelectQueryWithoutConnection) {
     auto result = manager_->select_query("SELECT * FROM test");
-    EXPECT_TRUE(result == nullptr);
+    EXPECT_TRUE(result.empty());
 }
 
 TEST_F(DatabaseTest, DatabaseTypeInitialization) {
@@ -146,7 +146,7 @@ TEST_F(DatabaseTest, EmptyQueryHandling) {
     EXPECT_EQ(delete_result, 0);
     
     auto select_result = manager_->select_query("");
-    EXPECT_TRUE(select_result != nullptr);
+    EXPECT_FALSE(select_result.empty());
 }
 
 TEST_F(DatabaseTest, SequentialOperations) {

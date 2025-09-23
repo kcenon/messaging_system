@@ -7,196 +7,134 @@ All rights reserved.
 
 #include <kcenon/logger/core/logger.h>
 #include <kcenon/logger/writers/console_writer.h>
-#include <kcenon/logger/writers/network_writer.h>
-#include <kcenon/logger/server/log_server.h>
-#include <kcenon/logger/analysis/log_analyzer.h>
+#include <kcenon/logger/writers/file_writer.h>
 #include <iostream>
 #include <thread>
+#include <vector>
 #include <chrono>
 #include <random>
 #include <atomic>
 
 using namespace kcenon::logger;
-using namespace thread_module;
-namespace logger_module = kcenon::logger;
 
-// Simulate a client application
-void simulate_client(int client_id, const std::string& server_host, uint16_t server_port) {
-    std::cout << "Client " << client_id << " starting..." << std::endl;
-    
-    // Create logger with network writer
-    auto logger = std::make_unique<kcenon::logger::logger>(true, 1024);
-    logger->add_writer("console", std::make_unique<console_writer>());
-    logger->add_writer("network", std::make_unique<network_writer>(
-        server_host, server_port, network_writer::protocol_type::tcp
-    ));
-    
-    logger->start();
-    
-    // Simulate various log patterns
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> level_dist(0, 5);
-    std::uniform_int_distribution<> sleep_dist(10, 100);
-    
-    std::vector<std::string> messages = {
-        "User login successful",
-        "Database query executed",
-        "API request processed",
-        "Cache miss occurred",
-        "Background job completed",
-        "Error: Connection timeout",
-        "Warning: High memory usage",
-        "Critical: Disk space low"
-    };
-    
-    for (int i = 0; i < 100; ++i) {
-        auto level = static_cast<log_level>(level_dist(gen));
-        auto& msg = messages[i % messages.size()];
-        
-        logger->log(level, "Client " + std::to_string(client_id) + ": " + msg);
-        
-        std::this_thread::sleep_for(std::chrono::milliseconds(sleep_dist(gen)));
+// Simulate a distributed system with multiple components
+class DistributedComponent {
+public:
+    DistributedComponent(const std::string& name, int id)
+        : name_(name), id_(id), message_count_(0) {
+        logger_ = std::make_unique<logger>(true, 2048);
+        std::string filename = "logs/component_" + name_ + "_" + std::to_string(id_) + ".log";
+        logger_->add_writer(std::make_unique<file_writer>(filename));
+        logger_->add_writer(std::make_unique<console_writer>());
+        logger_->start();
     }
-    
-    logger->flush();
-    logger->stop();
-    
-    std::cout << "Client " << client_id << " finished" << std::endl;
-}
+
+    ~DistributedComponent() {
+        if (logger_) {
+            logger_->flush();
+            logger_->stop();
+        }
+    }
+
+    void simulate_work() {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> level_dist(0, 5);
+        std::uniform_int_distribution<> sleep_dist(10, 100);
+
+        for (int i = 0; i < 20; ++i) {
+            auto level = static_cast<kcenon::thread::log_level>(level_dist(gen));
+            std::string message = "[" + name_ + "-" + std::to_string(id_) + "] ";
+
+            switch(level) {
+                case kcenon::thread::log_level::critical:
+                    message += "Critical system failure detected";
+                    break;
+                case kcenon::thread::log_level::error:
+                    message += "Error processing request #" + std::to_string(message_count_++);
+                    break;
+                case kcenon::thread::log_level::warning:
+                    message += "Warning: Resource usage high";
+                    break;
+                case kcenon::thread::log_level::info:
+                    message += "Processing request successfully";
+                    break;
+                case kcenon::thread::log_level::debug:
+                    message += "Debug: Internal state updated";
+                    break;
+                default:
+                    message += "Trace: Detailed execution info";
+                    break;
+            }
+
+            logger_->log(level, message);
+            std::this_thread::sleep_for(std::chrono::milliseconds(sleep_dist(gen)));
+        }
+    }
+
+    int get_message_count() const { return message_count_; }
+
+private:
+    std::string name_;
+    int id_;
+    std::atomic<int> message_count_;
+    std::unique_ptr<logger> logger_;
+};
 
 int main() {
     std::cout << "=== Distributed Logging Demo ===" << std::endl;
-    
-    const uint16_t server_port = 9999;
-    const std::string server_host = "localhost";
-    
-    // Create log analyzer
-    auto analyzer = std::make_unique<log_analyzer>(
-        std::chrono::seconds(10),  // 10-second windows
-        6                          // Keep 1 minute of history
-    );
-    
-    // Add patterns to track
-    analyzer->add_pattern("errors", "error|fail|exception");
-    analyzer->add_pattern("warnings", "warning|warn");
-    analyzer->add_pattern("database", "database|query|sql");
-    analyzer->add_pattern("api", "api|request|endpoint");
-    
-    // Add alert rules
-    analyzer->add_alert_rule({
-        "high_error_rate",
-        [](const log_analyzer::time_window_stats& stats) {
-            auto error_count = stats.level_counts.count(log_level::error) ? 
-                              stats.level_counts.at(log_level::error) : 0;
-            return error_count > 10;
-        },
-        [](const std::string& rule_name, const log_analyzer::time_window_stats& stats) {
-            std::cout << "\n🚨 ALERT: " << rule_name 
-                     << " - Error count: " << stats.level_counts.at(log_level::error)
-                     << " in current window" << std::endl;
-        }
-    });
-    
-    // Create aggregator
-    auto aggregator = std::make_unique<log_aggregator>();
-    
-    // Create and start log server
-    auto server = std::make_unique<log_server>(server_port, true);
-    
-    // Add handler to process received logs
-    server->add_handler([&analyzer, &aggregator](const log_server::network_log_entry& entry) {
-        // Extract log level from parsed fields
-        log_level level = log_level::info;
-        if (entry.parsed_fields.count("level")) {
-            const auto& level_str = entry.parsed_fields.at("level");
-            if (level_str == "TRACE") level = log_level::trace;
-            else if (level_str == "DEBUG") level = log_level::debug;
-            else if (level_str == "INFO") level = log_level::info;
-            else if (level_str == "WARNING") level = log_level::warning;
-            else if (level_str == "ERROR") level = log_level::error;
-            else if (level_str == "CRITICAL") level = log_level::critical;
-        }
-        
-        // Get message
-        std::string message = entry.parsed_fields.count("message") ? 
-                             entry.parsed_fields.at("message") : entry.raw_data;
-        
-        // Analyze
-        analyzer->analyze(level, message, "", 0, "", entry.received_time);
-        
-        // Aggregate by source
-        aggregator->add_log(entry.source_address, level, message, entry.raw_data.size());
-    });
-    
-    if (!server->start()) {
-        std::cerr << "Failed to start log server" << std::endl;
-        return 1;
+    std::cout << "Simulating a distributed system with multiple components..." << std::endl;
+
+    // Create multiple components simulating different services
+    std::vector<std::unique_ptr<DistributedComponent>> components;
+    components.push_back(std::make_unique<DistributedComponent>("WebServer", 1));
+    components.push_back(std::make_unique<DistributedComponent>("Database", 1));
+    components.push_back(std::make_unique<DistributedComponent>("Cache", 1));
+    components.push_back(std::make_unique<DistributedComponent>("MessageQueue", 1));
+
+    // Run components in parallel threads
+    std::vector<std::thread> threads;
+    for (auto& component : components) {
+        threads.emplace_back([&component]() {
+            component->simulate_work();
+        });
     }
-    
-    std::cout << "\n1. Testing Network Logging:" << std::endl;
-    std::cout << "Starting log server on port " << server_port << std::endl;
-    
-    // Give server time to start
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    
-    // Start multiple client threads
-    std::vector<std::thread> clients;
-    for (int i = 1; i <= 3; ++i) {
-        clients.emplace_back(simulate_client, i, server_host, server_port);
+
+    // Create a central logger for aggregated messages
+    auto central_logger = std::make_unique<logger>(true, 4096);
+    central_logger->add_writer(std::make_unique<file_writer>("logs/central.log"));
+    central_logger->add_writer(std::make_unique<console_writer>());
+    central_logger->start();
+
+    // Simulate central monitoring
+    std::cout << "\n=== Central Monitoring System ===" << std::endl;
+    for (int i = 0; i < 10; ++i) {
+        central_logger->log(kcenon::thread::log_level::info,
+            "Central: System health check #" + std::to_string(i));
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
-    
-    // Monitor server statistics
-    std::thread monitor_thread([&server, &analyzer]() {
-        for (int i = 0; i < 30; ++i) {
-            std::this_thread::sleep_for(std::chrono::seconds(2));
-            
-            auto server_stats = server->get_stats();
-            std::cout << "\n--- Server Stats ---" << std::endl;
-            std::cout << "Total logs received: " << server_stats.total_logs_received << std::endl;
-            std::cout << "Active connections: " << server_stats.active_connections << std::endl;
-            
-            // Show current analysis window
-            auto current_stats = analyzer->get_current_stats();
-            std::cout << "Current window messages/sec: " 
-                     << current_stats.messages_per_second << std::endl;
-        }
-    });
-    
-    // Wait for clients to finish
-    for (auto& client : clients) {
-        client.join();
+
+    // Wait for all component threads to complete
+    for (auto& t : threads) {
+        t.join();
     }
-    
-    std::cout << "\n2. Generating Analysis Report:" << std::endl;
-    
-    // Wait a bit for final logs
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    
-    // Generate report
-    std::string report = analyzer->generate_report(std::chrono::seconds(60));
-    std::cout << "\n" << report << std::endl;
-    
-    // Show aggregated statistics
-    std::cout << "\n3. Source Statistics:" << std::endl;
-    auto all_sources = aggregator->get_all_stats();
-    for (const auto& [source_id, stats] : all_sources) {
-        std::cout << "\nSource: " << source_id << std::endl;
-        std::cout << "  Total messages: " << stats.total_messages << std::endl;
-        std::cout << "  Average rate: " << stats.average_message_rate << " msg/sec" << std::endl;
-        std::cout << "  Level distribution:" << std::endl;
-        for (const auto& [level, count] : stats.level_counts) {
-            std::cout << "    " << static_cast<int>(level) << ": " << count << std::endl;
-        }
+
+    // Log summary
+    std::cout << "\n=== Summary ===" << std::endl;
+    int total_messages = 0;
+    for (const auto& component : components) {
+        total_messages += component->get_message_count();
     }
-    
-    // Stop monitoring
-    monitor_thread.join();
-    
-    // Stop server
-    server->stop();
-    
-    std::cout << "\n=== Demo Complete ===" << std::endl;
-    
+
+    central_logger->log(kcenon::thread::log_level::info,
+        "Total messages processed: " + std::to_string(total_messages));
+
+    // Cleanup
+    central_logger->flush();
+    central_logger->stop();
+
+    std::cout << "\nDistributed logging demo complete." << std::endl;
+    std::cout << "Check logs/ directory for individual component logs and central.log" << std::endl;
+
     return 0;
 }

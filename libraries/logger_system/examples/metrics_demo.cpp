@@ -6,14 +6,15 @@ All rights reserved.
 *****************************************************************************/
 
 #include <kcenon/logger/core/logger.h>
+#include <kcenon/logger/core/metrics/logger_metrics.h>
 #include <kcenon/logger/writers/console_writer.h>
-#include <kcenon/logger/structured/structured_logger.h>
 #include <thread>
 #include <iostream>
 #include <random>
 
 using namespace kcenon::logger;
-namespace logger_module = kcenon::logger;
+using namespace kcenon::logger::metrics;
+namespace thread_module = kcenon::thread;
 
 void generate_logs(logger* log, int thread_id, int count) {
     std::random_device rd;
@@ -22,7 +23,7 @@ void generate_logs(logger* log, int thread_id, int count) {
     std::uniform_int_distribution<> message_size_dist(10, 200);
     
     for (int i = 0; i < count; ++i) {
-        auto level = static_cast<thread_module::log_level>(level_dist(gen));
+        auto level = static_cast<kcenon::thread::log_level>(level_dist(gen));
         
         // Generate message of random size
         std::string message = "Thread " + std::to_string(thread_id) + " - Message " + std::to_string(i);
@@ -34,77 +35,41 @@ void generate_logs(logger* log, int thread_id, int count) {
     }
 }
 
-void print_metrics(const performance_metrics& metrics) {
+void print_metrics(const logger_performance_stats& metrics) {
     std::cout << "\n=== Logger Performance Metrics ===" << std::endl;
-    std::cout << "Messages enqueued: " << metrics.messages_enqueued.load() << std::endl;
-    std::cout << "Messages processed: " << metrics.messages_processed.load() << std::endl;
+    std::cout << "Messages logged: " << metrics.messages_logged.load() << std::endl;
     std::cout << "Messages dropped: " << metrics.messages_dropped.load() << std::endl;
-    std::cout << "Drop rate: " << metrics.get_drop_rate_percent() << "%" << std::endl;
+    std::cout << "Writer errors: " << metrics.writer_errors.load() << std::endl;
+    std::cout << "Queue size: " << metrics.queue_size.load() << std::endl;
+    std::cout << "Max queue size: " << metrics.max_queue_size.load() << std::endl;
     std::cout << "Throughput: " << metrics.get_messages_per_second() << " msg/s" << std::endl;
-    std::cout << "Bandwidth: " << metrics.get_bytes_per_second() / 1024.0 << " KB/s" << std::endl;
     std::cout << "Queue utilization: " << metrics.get_queue_utilization_percent() << "%" << std::endl;
-    std::cout << "Avg enqueue time: " << metrics.get_avg_enqueue_time_ns() << " ns" << std::endl;
-    
-    std::cout << "\n--- Writer Metrics ---" << std::endl;
-    for (const auto& [name, writer_metrics] : metrics.writer_stats) {
-        std::cout << "Writer '" << name << "':" << std::endl;
-        std::cout << "  Messages written: " << writer_metrics.messages_written.load() << std::endl;
-        std::cout << "  Bytes written: " << writer_metrics.bytes_written.load() / 1024.0 << " KB" << std::endl;
-        std::cout << "  Write failures: " << writer_metrics.write_failures.load() << std::endl;
-        std::cout << "  Avg write time: " << writer_metrics.get_avg_write_time_us() << " μs" << std::endl;
-    }
 }
 
-void test_structured_logging() {
-    std::cout << "\n=== Testing Structured Logging ===" << std::endl;
-    
-    auto base_logger = std::make_shared<logger>(false); // Sync mode for testing
-    base_logger->add_writer(std::make_unique<console_writer>());
-    base_logger->start();
-    
-    // Test different output formats
-    auto formats = {
-        structured_logger::output_format::json,
-        structured_logger::output_format::logfmt,
-        structured_logger::output_format::plain
-    };
-    
-    for (auto format : formats) {
-        std::cout << "\n--- Format: " << 
-            (format == structured_logger::output_format::json ? "JSON" :
-             format == structured_logger::output_format::logfmt ? "LOGFMT" : "PLAIN") 
-            << " ---" << std::endl;
-            
-        structured_logger slog(base_logger, format);
-        slog.set_service_info("metrics_demo", "1.0.0", "development");
-        
-        slog.info("User logged in")
-            .field("user_id", 12345)
-            .field("ip_address", "192.168.1.100")
-            .field("login_method", "oauth")
-            .context("request_id", "abc-123-def")
-            .commit();
-            
-        slog.error("Database connection failed")
-            .field("database", "users")
-            .field("host", "db.example.com")
-            .field("port", 5432)
-            .field("retry_count", 3)
-            .duration(std::chrono::milliseconds(1500))
-            .commit();
-    }
+void test_logging_levels() {
+    std::cout << "\n=== Testing Different Log Levels ===" << std::endl;
+
+    auto test_logger = std::make_shared<logger>(false); // Sync mode for testing
+    test_logger->add_writer(std::make_unique<console_writer>());
+    test_logger->start();
+
+    // Test different log levels
+    test_logger->log(kcenon::thread::log_level::debug, "Debug message");
+    test_logger->log(kcenon::thread::log_level::info, "Info message");
+    test_logger->log(kcenon::thread::log_level::warning, "Warning message");
+    test_logger->log(kcenon::thread::log_level::error, "Error message");
+    test_logger->log(kcenon::thread::log_level::critical, "Critical message");
+
+    test_logger->stop();
 }
 
 int main() {
     // Create logger with metrics enabled
-    auto logger = std::make_unique<logger_module::logger>(true, 1024); // Small buffer to test dropping
+    auto logger = std::make_unique<kcenon::logger::logger>(true, 1024); // Small buffer to test dropping
     
     // Add console writer
     logger->add_writer(std::make_unique<console_writer>());
-    
-    // Enable metrics collection
-    logger->enable_metrics_collection(true);
-    
+
     // Start logger
     logger->start();
     
@@ -126,15 +91,10 @@ int main() {
     std::this_thread::sleep_for(std::chrono::seconds(1));
     
     // Get and display metrics
-    auto metrics_result = logger->get_current_metrics();
-    if (metrics_result) {
-        print_metrics(metrics_result.value());
-    } else {
-        std::cerr << "Failed to get metrics" << std::endl;
-    }
+    print_metrics(g_logger_stats);
     
-    // Test structured logging
-    test_structured_logging();
+    // Test logging levels
+    test_logging_levels();
     
     // Stop logger
     logger->stop();

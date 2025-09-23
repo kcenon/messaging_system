@@ -255,7 +255,10 @@ endif()
 if(BUILD_WITH_THREAD_SYSTEM)
     find_path(THREAD_SYSTEM_INCLUDE_DIR
         NAMES kcenon/thread/core/thread_pool.h
-        PATHS ../thread_system/include
+        PATHS
+            ../thread_system/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/../thread_system/include
+            /Users/dongcheolshin/Sources/thread_system/include
         NO_DEFAULT_PATH
     )
     find_library(THREAD_SYSTEM_LIBRARY
