@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "../../libraries/network_system/network.h"
 
-using namespace network_system::core;
+using namespace network_module;
 
 class NetworkTest : public ::testing::Test {
 protected:

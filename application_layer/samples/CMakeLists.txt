@@ -20,10 +20,10 @@ include_directories(
 add_executable(basic_usage_example basic_usage_example.cpp)
 target_link_libraries(basic_usage_example PRIVATE
     messaging_services
-    container
+    container_system
     database
-    network
-    logger
+    NetworkSystem
+    LoggerSystem
     Threads::Threads
 )
 
@@ -31,10 +31,10 @@ target_link_libraries(basic_usage_example PRIVATE
 add_executable(chat_server chat_server.cpp)
 target_link_libraries(chat_server PRIVATE
     messaging_services
-    container
+    container_system
     database
-    network
-    logger
+    NetworkSystem
+    LoggerSystem
     Threads::Threads
 )
 
@@ -42,10 +42,10 @@ target_link_libraries(chat_server PRIVATE
 add_executable(distributed_worker distributed_worker.cpp)
 target_link_libraries(distributed_worker PRIVATE
     messaging_services
-    container
+    container_system
     database
-    network
-    logger
+    NetworkSystem
+    LoggerSystem
     Threads::Threads
 )
 
@@ -53,10 +53,10 @@ target_link_libraries(distributed_worker PRIVATE
 add_executable(iot_monitoring iot_monitoring.cpp)
 target_link_libraries(iot_monitoring PRIVATE
     messaging_services
-    container
+    container_system
     database
-    network
-    logger
+    NetworkSystem
+    LoggerSystem
     Threads::Threads
 )
 
@@ -64,10 +64,10 @@ target_link_libraries(iot_monitoring PRIVATE
 add_executable(microservices_orchestrator microservices_orchestrator.cpp)
 target_link_libraries(microservices_orchestrator PRIVATE
     messaging_services
-    container
+    container_system
     database
-    network
-    logger
+    NetworkSystem
+    LoggerSystem
     Threads::Threads
 )
 
@@ -75,10 +75,10 @@ target_link_libraries(microservices_orchestrator PRIVATE
 add_executable(event_pipeline event_pipeline.cpp)
 target_link_libraries(event_pipeline PRIVATE
     messaging_services
-    container
+    container_system
     database
-    network
-    logger
+    NetworkSystem
+    LoggerSystem
     Threads::Threads
 )
 
@@ -86,10 +86,10 @@ target_link_libraries(event_pipeline PRIVATE
 add_executable(message_bus_benchmark message_bus_benchmark.cpp)
 target_link_libraries(message_bus_benchmark PRIVATE
     messaging_services
-    container
+    container_system
     database
-    network
-    logger
+    NetworkSystem
+    LoggerSystem
     Threads::Threads
 )
 
@@ -97,10 +97,10 @@ target_link_libraries(message_bus_benchmark PRIVATE
 add_executable(production_ready_example production_ready_example.cpp)
 target_link_libraries(production_ready_example PRIVATE
     messaging_services
-    container
+    container_system
     database
-    network
-    logger
+    NetworkSystem
+    LoggerSystem
     Threads::Threads
 )
 

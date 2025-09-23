@@ -42,7 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace container_module;
 using namespace database;
-using namespace network_system::core;
+using namespace network_module;
 
 class IntegrationTest : public ::testing::Test {
 protected:
