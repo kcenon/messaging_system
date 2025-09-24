@@ -58,7 +58,7 @@ namespace kcenon::messaging::services::network {
         return state_ == service_state::running;
     }
 
-    bool network_service::send_message(const std::string& destination, const core::message&) {
+    bool network_service::send_message(const std::string&, const core::message&) {
         if (state_ != service_state::running) {
             return false;
         }

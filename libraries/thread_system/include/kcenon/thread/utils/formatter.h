@@ -39,8 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef USE_STD_FORMAT
 #include <format>
 #else
-// Use fmt library as fallback when std::format is not available
-#include <fmt/format.h>
+// Use ostringstream as fallback when std::format is not available
 #include <sstream>
 #include <iomanip>
 #endif
