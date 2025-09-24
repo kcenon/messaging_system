@@ -146,37 +146,41 @@ $(document).ready(function(){initNavTree('d3/d89/include_2network__system_2inter
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d1/dc6/namespacenetwork__system_1_1internal.html">network_system::internal</a></div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>{</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d1/dc6/namespacenetwork__system_1_1internal.html#a7d1d30c7e4348cadfe6b46c596c920f9">prepare_data_async</a>(<span class="keyword">const</span> std::vector&lt;uint8_t&gt;&amp; input_data,</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                            <span class="keyword">const</span> pipeline&amp; pl,</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                            <span class="keywordtype">bool</span> use_compress,</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                            <span class="keywordtype">bool</span> use_encrypt)</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        -&gt; std::future&lt;std::vector&lt;uint8_t&gt;&gt;;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#ifdef USE_STD_COROUTINE</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#include &lt;asio/experimental/as_tuple.hpp&gt;</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#include &lt;asio/awaitable.hpp&gt;</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#include &lt;asio/use_awaitable.hpp&gt;</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#ifndef NO_ASIO</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d1/dc6/namespacenetwork__system_1_1internal.html#a7d1d30c7e4348cadfe6b46c596c920f9">prepare_data_async</a>(<span class="keyword">const</span> std::vector&lt;uint8_t&gt;&amp; input_data,</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                            <span class="keyword">const</span> pipeline&amp; pl,</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                            <span class="keywordtype">bool</span> use_compress,</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                            <span class="keywordtype">bool</span> use_encrypt)</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        -&gt; std::future&lt;std::vector&lt;uint8_t&gt;&gt;;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#endif </span><span class="comment">// NO_ASIO</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#ifdef USE_STD_COROUTINE</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#ifndef NO_ASIO</span></div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keyword">auto</span> async_send_with_pipeline_co(std::shared_ptr&lt;tcp_socket&gt; sock,</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                                     std::vector&lt;uint8_t&gt; data,</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                                     <span class="keyword">const</span> pipeline&amp; pl,</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                                     <span class="keywordtype">bool</span> use_compress,</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                                     <span class="keywordtype">bool</span> use_encrypt)</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        -&gt; asio::awaitable&lt;std::error_code&gt;;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#else </span><span class="comment">// fallback</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d1/dc6/namespacenetwork__system_1_1internal.html#a72199afa11f8399e2fa507c8f855df22">async_send_with_pipeline_no_co</a>(std::shared_ptr&lt;tcp_socket&gt; sock,</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>                                        std::vector&lt;uint8_t&gt; data,</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                                        <span class="keyword">const</span> pipeline&amp; pl,</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                                        <span class="keywordtype">bool</span> use_compress,</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                                        <span class="keywordtype">bool</span> use_encrypt)</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        -&gt; std::future&lt;std::error_code&gt;;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>} <span class="comment">// namespace network_system::internal</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">#include &lt;asio/experimental/as_tuple.hpp&gt;</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">#include &lt;asio/awaitable.hpp&gt;</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#include &lt;asio/use_awaitable.hpp&gt;</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keyword">auto</span> async_send_with_pipeline_co(std::shared_ptr&lt;tcp_socket&gt; sock,</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>                                     std::vector&lt;uint8_t&gt; data,</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                                     <span class="keyword">const</span> pipeline&amp; pl,</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                                     <span class="keywordtype">bool</span> use_compress,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                                     <span class="keywordtype">bool</span> use_encrypt)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        -&gt; asio::awaitable&lt;std::error_code&gt;;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="preprocessor">#endif </span><span class="comment">// NO_ASIO</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="preprocessor">#else </span><span class="comment">// fallback</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">#ifndef NO_ASIO</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keyword">auto</span> <a class="code hl_function" href="../../d1/dc6/namespacenetwork__system_1_1internal.html#a72199afa11f8399e2fa507c8f855df22">async_send_with_pipeline_no_co</a>(std::shared_ptr&lt;tcp_socket&gt; sock,</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                                        std::vector&lt;uint8_t&gt; data,</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                                        <span class="keyword">const</span> pipeline&amp; pl,</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                                        <span class="keywordtype">bool</span> use_compress,</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>                                        <span class="keywordtype">bool</span> use_encrypt)</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        -&gt; std::future&lt;std::error_code&gt;;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="preprocessor">#endif </span><span class="comment">// NO_ASIO</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>} <span class="comment">// namespace network_system::internal</span></div>
 <div class="ttc" id="anamespacenetwork__system_1_1internal_html"><div class="ttname"><a href="../../d1/dc6/namespacenetwork__system_1_1internal.html">network_system::internal</a></div><div class="ttdef"><b>Definition</b> <a href="../../db/d78/include_2network__system_2internal_2common__defs_8h_source.html#l00039">common_defs.h:40</a></div></div>
 <div class="ttc" id="anamespacenetwork__system_1_1internal_html_a72199afa11f8399e2fa507c8f855df22"><div class="ttname"><a href="../../d1/dc6/namespacenetwork__system_1_1internal.html#a72199afa11f8399e2fa507c8f855df22">network_system::internal::async_send_with_pipeline_no_co</a></div><div class="ttdeci">auto async_send_with_pipeline_no_co(std::shared_ptr&lt; tcp_socket &gt; sock, std::vector&lt; uint8_t &gt; data, const pipeline &amp;pl, bool use_compress, bool use_encrypt) -&gt; std::future&lt; std::error_code &gt;</div><div class="ttdoc">Non-coroutine version that prepares data and then sends it asynchronously, returning a std::future&lt;st...</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d4e/internal_2send__coroutine_8cpp_source.html#l00097">send_coroutine.cpp:97</a></div></div>
 <div class="ttc" id="anamespacenetwork__system_1_1internal_html_a7d1d30c7e4348cadfe6b46c596c920f9"><div class="ttname"><a href="../../d1/dc6/namespacenetwork__system_1_1internal.html#a7d1d30c7e4348cadfe6b46c596c920f9">network_system::internal::prepare_data_async</a></div><div class="ttdeci">auto prepare_data_async(const std::vector&lt; uint8_t &gt; &amp;input_data, const pipeline &amp;pl, bool use_compress, bool use_encrypt) -&gt; std::future&lt; std::vector&lt; uint8_t &gt; &gt;</div><div class="ttdoc">Launches a separate thread (via std::async) to apply compression/encryption to input_data using pl,...</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d4e/internal_2send__coroutine_8cpp_source.html#l00044">send_coroutine.cpp:44</a></div></div>

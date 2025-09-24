@@ -158,47 +158,48 @@ $(document).ready(function(){initNavTree('dc/de4/include_2network__system_2core_
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../da/d6e/namespacenetwork__system_1_1core.html">network_system::core</a> {</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keyword">class </span><a class="code hl_typedef" href="../../d1/df3/namespacenetwork__module.html#a180d89ec18c1a3e3d6c12f313ac5e301">messaging_server</a></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        : <span class="keyword">public</span> std::enable_shared_from_this&lt;messaging_server&gt;</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a797357b2538f2fb06f5c7cdbd5bd43cb">  110</a></span>        <a class="code hl_function" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a797357b2538f2fb06f5c7cdbd5bd43cb">messaging_server</a>(<span class="keyword">const</span> std::string&amp; server_id);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a682fbd41555435391edfde93e8d6b264">  116</a></span>        <a class="code hl_function" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a682fbd41555435391edfde93e8d6b264">~messaging_server</a>();</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#ad2af85cda76e084a70c310155bab972f">  132</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#ad2af85cda76e084a70c310155bab972f">start_server</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> port) -&gt; void;</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno"><a class="line" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a7421409c3bfe838b6ee29aa2dca3d670">  149</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a7421409c3bfe838b6ee29aa2dca3d670">stop_server</a>() -&gt; void;</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a784650b481ee58f141f95f092b68b0d6">  155</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a784650b481ee58f141f95f092b68b0d6">wait_for_stop</a>() -&gt; void;</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keyword">auto</span> do_accept() -&gt; void;</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        <span class="keyword">auto</span> on_accept(std::error_code ec, asio::ip::tcp::socket socket)</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            -&gt; void;</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        std::string</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>            server_id_;     </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        std::unique_ptr&lt;asio::io_context&gt;</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>            io_context_;    </div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        std::unique_ptr&lt;asio::ip::tcp::acceptor&gt;</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            acceptor_;      </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        std::unique_ptr&lt;std::thread&gt;</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            server_thread_; </div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        std::optional&lt;std::promise&lt;void&gt;&gt;</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            stop_promise_;  </div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        std::future&lt;void&gt;</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>            stop_future_;   </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        std::atomic&lt;bool&gt; is_running_{</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            <span class="keyword">false</span></div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        }; </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        std::vector&lt;std::shared_ptr&lt;network_system::session::messaging_session&gt;&gt; sessions_;</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    };</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>} <span class="comment">// namespace network_system::core</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#ifndef NO_ASIO</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keyword">class </span><a class="code hl_typedef" href="../../d1/df3/namespacenetwork__module.html#a180d89ec18c1a3e3d6c12f313ac5e301">messaging_server</a></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        : <span class="keyword">public</span> std::enable_shared_from_this&lt;messaging_server&gt;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a797357b2538f2fb06f5c7cdbd5bd43cb">  111</a></span>        <a class="code hl_function" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a797357b2538f2fb06f5c7cdbd5bd43cb">messaging_server</a>(<span class="keyword">const</span> std::string&amp; server_id);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a682fbd41555435391edfde93e8d6b264">  117</a></span>        <a class="code hl_function" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a682fbd41555435391edfde93e8d6b264">~messaging_server</a>();</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#ad2af85cda76e084a70c310155bab972f">  133</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#ad2af85cda76e084a70c310155bab972f">start_server</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> port) -&gt; void;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a7421409c3bfe838b6ee29aa2dca3d670">  150</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a7421409c3bfe838b6ee29aa2dca3d670">stop_server</a>() -&gt; void;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a784650b481ee58f141f95f092b68b0d6">  156</a></span>        <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a784650b481ee58f141f95f092b68b0d6">wait_for_stop</a>() -&gt; void;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keyword">auto</span> do_accept() -&gt; void;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        <span class="keyword">auto</span> on_accept(std::error_code ec, asio::ip::tcp::socket socket)</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>            -&gt; void;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        std::string</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>            server_id_;     </div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        std::unique_ptr&lt;asio::io_context&gt;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            io_context_;    </div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        std::unique_ptr&lt;asio::ip::tcp::acceptor&gt;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            acceptor_;      </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        std::unique_ptr&lt;std::thread&gt;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            server_thread_; </div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        std::optional&lt;std::promise&lt;void&gt;&gt;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>            stop_promise_;  </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        std::future&lt;void&gt;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            stop_future_;   </div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        std::atomic&lt;bool&gt; is_running_{</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            <span class="keyword">false</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        }; </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        std::vector&lt;std::shared_ptr&lt;network_system::session::messaging_session&gt;&gt; sessions_;</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    };</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="preprocessor">#endif </span><span class="comment">// NO_ASIO</span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>} <span class="comment">// namespace network_system::core</span></div>
 <div class="ttc" id="aclassnetwork__system_1_1core_1_1messaging__server_html_a682fbd41555435391edfde93e8d6b264"><div class="ttname"><a href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a682fbd41555435391edfde93e8d6b264">network_system::core::messaging_server::~messaging_server</a></div><div class="ttdeci">~messaging_server()</div><div class="ttdoc">Destructor. If the server is still running, stop_server() is invoked.</div></div>
 <div class="ttc" id="aclassnetwork__system_1_1core_1_1messaging__server_html_a7421409c3bfe838b6ee29aa2dca3d670"><div class="ttname"><a href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a7421409c3bfe838b6ee29aa2dca3d670">network_system::core::messaging_server::stop_server</a></div><div class="ttdeci">auto stop_server() -&gt; void</div><div class="ttdoc">Stops the server, closing the acceptor and all active sessions, then stops the io_context and joins t...</div></div>
 <div class="ttc" id="aclassnetwork__system_1_1core_1_1messaging__server_html_a784650b481ee58f141f95f092b68b0d6"><div class="ttname"><a href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html#a784650b481ee58f141f95f092b68b0d6">network_system::core::messaging_server::wait_for_stop</a></div><div class="ttdeci">auto wait_for_stop() -&gt; void</div><div class="ttdoc">Blocks until stop_server() is called, allowing the caller to wait for a graceful shutdown in another ...</div></div>
