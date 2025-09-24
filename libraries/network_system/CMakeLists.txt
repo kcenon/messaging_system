@@ -152,17 +152,25 @@ else()
     set(NO_ASIO OFF)
 endif()
 
-# FMT library check
+# FMT library check - verify that fmt/format.h actually exists
 if(FMT_FOUND)
     message(STATUS "Found fmt via pkgconfig")
 elseif(FMT_INCLUDE_DIR)
-    message(STATUS "Found fmt at: ${FMT_INCLUDE_DIR}")
-    if(FMT_LIBRARY)
-        message(STATUS "Found fmt library at: ${FMT_LIBRARY}")
+    # Double-check that fmt/format.h actually exists at the found path
+    if(EXISTS "${FMT_INCLUDE_DIR}/fmt/format.h")
+        message(STATUS "Found fmt at: ${FMT_INCLUDE_DIR}")
+        if(FMT_LIBRARY)
+            message(STATUS "Found fmt library at: ${FMT_LIBRARY}")
+        endif()
+    else()
+        message(STATUS "FMT_INCLUDE_DIR was set but fmt/format.h not found at ${FMT_INCLUDE_DIR}")
+        unset(FMT_INCLUDE_DIR)
+        message(STATUS "FMT not found, will use fallback formatting")
+        set(USE_STD_FORMAT OFF)
     endif()
 else()
-    message(STATUS "FMT not found, will use std::format (C++20) if available")
-    set(USE_STD_FORMAT ON)
+    message(STATUS "FMT not found, will use fallback formatting")
+    set(USE_STD_FORMAT OFF)
 endif()
 
 # Conditional dependencies
@@ -415,19 +423,19 @@ if(FMT_FOUND AND TARGET PkgConfig::FMT)
     target_link_libraries(NetworkSystem PRIVATE PkgConfig::FMT)
     target_compile_definitions(NetworkSystem PRIVATE USE_FMT_LIBRARY)
     message(STATUS "Configured to use fmt library via pkgconfig")
-elseif(FMT_INCLUDE_DIR)
+elseif(FMT_INCLUDE_DIR AND EXISTS "${FMT_INCLUDE_DIR}/fmt/format.h")
     target_include_directories(NetworkSystem PRIVATE ${FMT_INCLUDE_DIR})
     if(FMT_LIBRARY)
         target_link_libraries(NetworkSystem PRIVATE ${FMT_LIBRARY})
         target_compile_definitions(NetworkSystem PRIVATE USE_FMT_LIBRARY)
         message(STATUS "Configured to use fmt library")
     else()
-        target_compile_definitions(NetworkSystem PRIVATE FMT_HEADER_ONLY)
+        target_compile_definitions(NetworkSystem PRIVATE FMT_HEADER_ONLY USE_FMT_LIBRARY)
         message(STATUS "Configured to use fmt header-only")
     endif()
-elseif(USE_STD_FORMAT)
-    target_compile_definitions(NetworkSystem PRIVATE USE_STD_FORMAT)
-    message(STATUS "Configured to use std::format")
+else()
+    # Neither fmt nor std::format available - use fallback
+    message(STATUS "Using fallback formatting (neither fmt nor std::format available)")
 endif()
 
 # Link system libraries
@@ -453,230 +461,93 @@ if(BUILD_MESSAGING_BRIDGE)
     add_compile_definitions(BUILD_MESSAGING_BRIDGE)
 endif()
 
+# Function to configure test targets with same settings as main library
+function(configure_network_test_target TARGET_NAME)
+    # Add container_system include path
+    if(CONTAINER_SYSTEM_INCLUDE_DIR)
+        target_include_directories(${TARGET_NAME} PRIVATE ${CONTAINER_SYSTEM_INCLUDE_DIR})
+        target_compile_definitions(${TARGET_NAME} PRIVATE BUILD_WITH_CONTAINER_SYSTEM)
+    endif()
+
+    # Add thread_system include path
+    if(THREAD_SYSTEM_INCLUDE_DIR)
+        target_include_directories(${TARGET_NAME} PRIVATE ${THREAD_SYSTEM_INCLUDE_DIR})
+        target_compile_definitions(${TARGET_NAME} PRIVATE BUILD_WITH_THREAD_SYSTEM)
+    endif()
+
+    # Add logger_system include path
+    if(LOGGER_SYSTEM_INCLUDE_DIR)
+        target_include_directories(${TARGET_NAME} PRIVATE ${LOGGER_SYSTEM_INCLUDE_DIR})
+        target_compile_definitions(${TARGET_NAME} PRIVATE BUILD_WITH_LOGGER_SYSTEM)
+    endif()
+
+    # Configure ASIO same as main library
+    if(ASIO_INCLUDE_DIR)
+        target_include_directories(${TARGET_NAME} PRIVATE ${ASIO_INCLUDE_DIR})
+        target_compile_definitions(${TARGET_NAME} PRIVATE HAS_ASIO)
+        target_compile_definitions(${TARGET_NAME} PRIVATE ASIO_STANDALONE)
+        target_compile_definitions(${TARGET_NAME} PRIVATE ASIO_NO_DEPRECATED)
+    elseif(NO_ASIO)
+        target_compile_definitions(${TARGET_NAME} PRIVATE NO_ASIO)
+    endif()
+
+    # Configure FMT same as main library
+    if(FMT_FOUND AND TARGET PkgConfig::FMT)
+        target_link_libraries(${TARGET_NAME} PRIVATE PkgConfig::FMT)
+        target_compile_definitions(${TARGET_NAME} PRIVATE USE_FMT_LIBRARY)
+    elseif(FMT_INCLUDE_DIR AND EXISTS "${FMT_INCLUDE_DIR}/fmt/format.h")
+        target_include_directories(${TARGET_NAME} PRIVATE ${FMT_INCLUDE_DIR})
+        if(FMT_LIBRARY)
+            target_link_libraries(${TARGET_NAME} PRIVATE ${FMT_LIBRARY})
+            target_compile_definitions(${TARGET_NAME} PRIVATE USE_FMT_LIBRARY)
+        else()
+            target_compile_definitions(${TARGET_NAME} PRIVATE FMT_HEADER_ONLY USE_FMT_LIBRARY)
+        endif()
+    endif()
+
+    if(WIN32)
+        target_compile_definitions(${TARGET_NAME} PRIVATE _WIN32_WINNT=0x0601)
+    endif()
+endfunction()
+
 # Build verification test
 add_executable(verify_build verify_build.cpp)
 target_link_libraries(verify_build PRIVATE NetworkSystem)
-
-# Add container_system include path
-if(CONTAINER_SYSTEM_INCLUDE_DIR)
-    target_include_directories(verify_build PRIVATE ${CONTAINER_SYSTEM_INCLUDE_DIR})
-    target_compile_definitions(verify_build PRIVATE BUILD_WITH_CONTAINER_SYSTEM)
-endif()
-
-# Add thread_system include path
-if(THREAD_SYSTEM_INCLUDE_DIR)
-    target_include_directories(verify_build PRIVATE ${THREAD_SYSTEM_INCLUDE_DIR})
-    target_compile_definitions(verify_build PRIVATE BUILD_WITH_THREAD_SYSTEM)
-endif()
-
-# Add logger_system include path
-if(LOGGER_SYSTEM_INCLUDE_DIR)
-    target_include_directories(verify_build PRIVATE ${LOGGER_SYSTEM_INCLUDE_DIR})
-    target_compile_definitions(verify_build PRIVATE BUILD_WITH_LOGGER_SYSTEM)
-endif()
-
-# Configure ASIO same as main library
-if(ASIO_INCLUDE_DIR)
-    target_include_directories(verify_build PRIVATE ${ASIO_INCLUDE_DIR})
-    target_compile_definitions(verify_build PRIVATE HAS_ASIO)
-    target_compile_definitions(verify_build PRIVATE ASIO_STANDALONE)
-    target_compile_definitions(verify_build PRIVATE ASIO_NO_DEPRECATED)
-elseif(NO_ASIO)
-    target_compile_definitions(verify_build PRIVATE NO_ASIO)
-endif()
-
-if(WIN32)
-    target_compile_definitions(verify_build PRIVATE _WIN32_WINNT=0x0601)
-endif()
+configure_network_test_target(verify_build)
 
 # Integration tests (optional)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/test_integration.cpp)
     add_executable(test_integration tests/integration/test_integration.cpp)
     target_link_libraries(test_integration PRIVATE NetworkSystem)
-
-    # Add container_system include path
-    if(CONTAINER_SYSTEM_INCLUDE_DIR)
-        target_include_directories(test_integration PRIVATE ${CONTAINER_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(test_integration PRIVATE BUILD_WITH_CONTAINER_SYSTEM)
-    endif()
-
-    # Add thread_system include path
-    if(THREAD_SYSTEM_INCLUDE_DIR)
-        target_include_directories(test_integration PRIVATE ${THREAD_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(test_integration PRIVATE BUILD_WITH_THREAD_SYSTEM)
-    endif()
-
-    # Add logger_system include path
-    if(LOGGER_SYSTEM_INCLUDE_DIR)
-        target_include_directories(test_integration PRIVATE ${LOGGER_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(test_integration PRIVATE BUILD_WITH_LOGGER_SYSTEM)
-    endif()
-
-    # Configure ASIO same as main library
-    if(ASIO_INCLUDE_DIR)
-        target_include_directories(test_integration PRIVATE ${ASIO_INCLUDE_DIR})
-        target_compile_definitions(test_integration PRIVATE HAS_ASIO)
-        target_compile_definitions(test_integration PRIVATE ASIO_STANDALONE)
-        target_compile_definitions(test_integration PRIVATE ASIO_NO_DEPRECATED)
-    elseif(NO_ASIO)
-        target_compile_definitions(test_integration PRIVATE NO_ASIO)
-    endif()
-
-    if(WIN32)
-        target_compile_definitions(test_integration PRIVATE _WIN32_WINNT=0x0601)
-    endif()
+    configure_network_test_target(test_integration)
 endif()
 
 # Compatibility tests (optional)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/test_compatibility.cpp)
     add_executable(test_compatibility tests/integration/test_compatibility.cpp)
     target_link_libraries(test_compatibility PRIVATE NetworkSystem)
-
-    # Add container_system include path
-    if(CONTAINER_SYSTEM_INCLUDE_DIR)
-        target_include_directories(test_compatibility PRIVATE ${CONTAINER_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(test_compatibility PRIVATE BUILD_WITH_CONTAINER_SYSTEM)
-    endif()
-
-    # Add thread_system include path
-    if(THREAD_SYSTEM_INCLUDE_DIR)
-        target_include_directories(test_compatibility PRIVATE ${THREAD_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(test_compatibility PRIVATE BUILD_WITH_THREAD_SYSTEM)
-    endif()
-
-    # Add logger_system include path
-    if(LOGGER_SYSTEM_INCLUDE_DIR)
-        target_include_directories(test_compatibility PRIVATE ${LOGGER_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(test_compatibility PRIVATE BUILD_WITH_LOGGER_SYSTEM)
-    endif()
-
-    # Configure same as main library
-    if(ASIO_INCLUDE_DIR)
-        target_include_directories(test_compatibility PRIVATE ${ASIO_INCLUDE_DIR})
-        target_compile_definitions(test_compatibility PRIVATE HAS_ASIO)
-        target_compile_definitions(test_compatibility PRIVATE ASIO_STANDALONE)
-        target_compile_definitions(test_compatibility PRIVATE ASIO_NO_DEPRECATED)
-    elseif(NO_ASIO)
-        target_compile_definitions(test_compatibility PRIVATE NO_ASIO)
-    endif()
-
-    if(WIN32)
-        target_compile_definitions(test_compatibility PRIVATE _WIN32_WINNT=0x0601)
-    endif()
+    configure_network_test_target(test_compatibility)
 endif()
 
 # End-to-end tests (optional)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/test_e2e.cpp)
     add_executable(test_e2e tests/integration/test_e2e.cpp)
     target_link_libraries(test_e2e PRIVATE NetworkSystem)
-
-    # Add container_system include path
-    if(CONTAINER_SYSTEM_INCLUDE_DIR)
-        target_include_directories(test_e2e PRIVATE ${CONTAINER_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(test_e2e PRIVATE BUILD_WITH_CONTAINER_SYSTEM)
-    endif()
-
-    # Add thread_system include path
-    if(THREAD_SYSTEM_INCLUDE_DIR)
-        target_include_directories(test_e2e PRIVATE ${THREAD_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(test_e2e PRIVATE BUILD_WITH_THREAD_SYSTEM)
-    endif()
-
-    # Add logger_system include path
-    if(LOGGER_SYSTEM_INCLUDE_DIR)
-        target_include_directories(test_e2e PRIVATE ${LOGGER_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(test_e2e PRIVATE BUILD_WITH_LOGGER_SYSTEM)
-    endif()
-
-    # Configure same as main library
-    if(ASIO_INCLUDE_DIR)
-        target_include_directories(test_e2e PRIVATE ${ASIO_INCLUDE_DIR})
-        target_compile_definitions(test_e2e PRIVATE HAS_ASIO)
-        target_compile_definitions(test_e2e PRIVATE ASIO_STANDALONE)
-        target_compile_definitions(test_e2e PRIVATE ASIO_NO_DEPRECATED)
-    elseif(NO_ASIO)
-        target_compile_definitions(test_e2e PRIVATE NO_ASIO)
-    endif()
-
-    if(WIN32)
-        target_compile_definitions(test_e2e PRIVATE _WIN32_WINNT=0x0601)
-    endif()
+    configure_network_test_target(test_e2e)
 endif()
 
 # Stress tests (optional)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/stress/stress_test.cpp)
     add_executable(stress_test tests/stress/stress_test.cpp)
     target_link_libraries(stress_test PRIVATE NetworkSystem)
-
-    # Add container_system include path
-    if(CONTAINER_SYSTEM_INCLUDE_DIR)
-        target_include_directories(stress_test PRIVATE ${CONTAINER_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(stress_test PRIVATE BUILD_WITH_CONTAINER_SYSTEM)
-    endif()
-
-    # Add thread_system include path
-    if(THREAD_SYSTEM_INCLUDE_DIR)
-        target_include_directories(stress_test PRIVATE ${THREAD_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(stress_test PRIVATE BUILD_WITH_THREAD_SYSTEM)
-    endif()
-
-    # Add logger_system include path
-    if(LOGGER_SYSTEM_INCLUDE_DIR)
-        target_include_directories(stress_test PRIVATE ${LOGGER_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(stress_test PRIVATE BUILD_WITH_LOGGER_SYSTEM)
-    endif()
-
-    # Configure same as main library
-    if(ASIO_INCLUDE_DIR)
-        target_include_directories(stress_test PRIVATE ${ASIO_INCLUDE_DIR})
-        target_compile_definitions(stress_test PRIVATE HAS_ASIO)
-        target_compile_definitions(stress_test PRIVATE ASIO_STANDALONE)
-        target_compile_definitions(stress_test PRIVATE ASIO_NO_DEPRECATED)
-    elseif(NO_ASIO)
-        target_compile_definitions(stress_test PRIVATE NO_ASIO)
-    endif()
-
-    if(WIN32)
-        target_compile_definitions(stress_test PRIVATE _WIN32_WINNT=0x0601)
-    endif()
+    configure_network_test_target(stress_test)
 endif()
 
 # Performance benchmark (optional)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/performance/benchmark.cpp)
     add_executable(benchmark tests/performance/benchmark.cpp)
     target_link_libraries(benchmark PRIVATE NetworkSystem)
-
-    # Add container_system include path
-    if(CONTAINER_SYSTEM_INCLUDE_DIR)
-        target_include_directories(benchmark PRIVATE ${CONTAINER_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(benchmark PRIVATE BUILD_WITH_CONTAINER_SYSTEM)
-    endif()
-
-    # Add thread_system include path
-    if(THREAD_SYSTEM_INCLUDE_DIR)
-        target_include_directories(benchmark PRIVATE ${THREAD_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(benchmark PRIVATE BUILD_WITH_THREAD_SYSTEM)
-    endif()
-
-    # Add logger_system include path
-    if(LOGGER_SYSTEM_INCLUDE_DIR)
-        target_include_directories(benchmark PRIVATE ${LOGGER_SYSTEM_INCLUDE_DIR})
-        target_compile_definitions(benchmark PRIVATE BUILD_WITH_LOGGER_SYSTEM)
-    endif()
-
-    # Configure same as main library
-    if(ASIO_INCLUDE_DIR)
-        target_include_directories(benchmark PRIVATE ${ASIO_INCLUDE_DIR})
-        target_compile_definitions(benchmark PRIVATE HAS_ASIO)
-        target_compile_definitions(benchmark PRIVATE ASIO_STANDALONE)
-        target_compile_definitions(benchmark PRIVATE ASIO_NO_DEPRECATED)
-    elseif(NO_ASIO)
-        target_compile_definitions(benchmark PRIVATE NO_ASIO)
-    endif()
-
-    if(WIN32)
-        target_compile_definitions(benchmark PRIVATE _WIN32_WINNT=0x0601)
-    endif()
+    configure_network_test_target(benchmark)
 endif()
 
 # Update test_integration configuration to use proper structure
