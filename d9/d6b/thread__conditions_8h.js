@@ -1,6 +1,5 @@
 var thread__conditions_8h =
 [
-    [ "fmt::formatter< kcenon::thread::thread_conditions >", "da/d65/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_01_4.html", "da/d65/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_01_4" ],
     [ "thread_conditions", "d9/d6b/thread__conditions_8h.html#a34151d8fa0dfc3565fdfc98b6d397367", [
       [ "Created", "d9/d6b/thread__conditions_8h.html#a34151d8fa0dfc3565fdfc98b6d397367a0eceeb45861f9585dd7a97a3e36f85c6", null ],
       [ "Waiting", "d9/d6b/thread__conditions_8h.html#a34151d8fa0dfc3565fdfc98b6d397367a5706de961fb376d701be6e7762d8b09c", null ],

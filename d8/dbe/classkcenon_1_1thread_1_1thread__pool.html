@@ -207,7 +207,7 @@ Public Member Functions</h2></td></tr>
 <li>Graceful handling of thread startup, execution, and shutdown</li>
 </ul>
 <p>The thread pool is designed for scenarios where many short-lived tasks need to be executed asynchronously without creating a new thread for each task.</p>
-<h3><a class="anchor" id="autotoc_md3369"></a>
+<h3><a class="anchor" id="autotoc_md3368"></a>
 Design Principles</h3>
 <ul>
 <li><b>Worker Thread Model</b>: Each worker runs in its own thread, processing jobs from the shared queue.</li>
@@ -216,10 +216,10 @@ Design Principles</h3>
 <li><b>Non-Blocking Submission</b>: Adding jobs to the pool never blocks the caller thread.</li>
 <li><b>Cooperative Shutdown</b>: Workers can complete current jobs before stopping.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3370"></a>
+<h3><a class="anchor" id="autotoc_md3369"></a>
 Thread Safety</h3>
 <p>All public methods of this class are thread-safe and can be called from any thread. The underlying <code><a class="el" href="../../d9/da2/classkcenon_1_1thread_1_1job__queue.html" title="A thread-safe job queue for managing and dispatching work items.">job_queue</a></code> is also thread-safe, allowing multiple workers to dequeue jobs concurrently.</p>
-<h3><a class="anchor" id="autotoc_md3371"></a>
+<h3><a class="anchor" id="autotoc_md3370"></a>
 Performance Considerations</h3>
 <ul>
 <li>The number of worker threads should typically be close to the number of available CPU cores for CPU-bound tasks.</li>

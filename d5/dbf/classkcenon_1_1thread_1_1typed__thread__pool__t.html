@@ -187,7 +187,7 @@ class kcenon::thread::typed_thread_pool_t&lt; job_type &gt;</div><p>A thread poo
   </dd>
 </dl>
 <p>The <a class="el" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html" title="A thread pool that schedules and executes jobs based on their priority levels.">typed_thread_pool_t</a> template class provides a thread pool implementation that processes jobs according to their assigned types rather than just submission order. This allows more important work to be processed ahead of less important work, improving responsiveness for critical tasks.</p>
-<h3><a class="anchor" id="autotoc_md3466"></a>
+<h3><a class="anchor" id="autotoc_md3464"></a>
 Key Features</h3>
 <ul>
 <li><b>Type-Based Scheduling</b>: Jobs with higher priority are processed first.</li>
@@ -197,7 +197,7 @@ Key Features</h3>
 <li><b>Dynamic Thread Management</b>: Add/remove workers at runtime.</li>
 <li><b>Graceful Shutdown</b>: Option to complete current jobs before stopping.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3467"></a>
+<h3><a class="anchor" id="autotoc_md3465"></a>
 Use Cases</h3>
 <ul>
 <li><b>Mixed Workloads</b>: Applications that process both critical and non-critical tasks.</li>
@@ -205,17 +205,17 @@ Use Cases</h3>
 <li><b>Resource Management</b>: Ensure important work gets resources when contention occurs.</li>
 <li><b>Service Level Guarantees</b>: Meet varying response time requirements for different request types.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3468"></a>
+<h3><a class="anchor" id="autotoc_md3466"></a>
 Thread Safety</h3>
 <p>All public methods of this class are thread-safe and can be called from any thread.</p>
-<h3><a class="anchor" id="autotoc_md3469"></a>
+<h3><a class="anchor" id="autotoc_md3467"></a>
 Performance Considerations</h3>
 <ul>
 <li>Type queue operations are more expensive than simple FIFO queues.</li>
 <li>In high-throughput scenarios with all equal-priority jobs, consider using the non-prioritized <a class="el" href="../../d8/dbe/classkcenon_1_1thread_1_1thread__pool.html" title="A thread pool for concurrent execution of jobs using multiple worker threads.">thread_pool</a> instead for better performance.</li>
 <li>For scenarios with mixed types, this implementation can significantly improve response time for high-priority tasks.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3470"></a>
+<h3><a class="anchor" id="autotoc_md3468"></a>
 Example Usage</h3>
 <div class="fragment"><div class="line"><span class="keyword">using </span>my_thread_pool = <a class="code hl_class" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html">typed_thread_pool_t&lt;my_priority_enum&gt;</a>;</div>
 <div class="line"> </div>
@@ -349,7 +349,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>Otherwise, returns a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md3473"></a>
+<h3><a class="anchor" id="autotoc_md3471"></a>
 Thread Safety</h3>
 <p>This method is thread-safe; multiple threads can safely enqueue jobs concurrently. </p>
 
@@ -386,10 +386,10 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>Otherwise, returns a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md3475"></a>
+<h3><a class="anchor" id="autotoc_md3473"></a>
 Note</h3>
 <p>Typically, most applications create a fixed number of workers at startup. However, if your workload changes significantly, adding more workers at runtime can help handle increased job load.</p>
-<h3><a class="anchor" id="autotoc_md3476"></a>
+<h3><a class="anchor" id="autotoc_md3474"></a>
 Thread Safety</h3>
 <p>This method is thread-safe. </p>
 
@@ -425,7 +425,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>Otherwise, returns a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md3474"></a>
+<h3><a class="anchor" id="autotoc_md3472"></a>
 Thread Safety</h3>
 <p>This method is thread-safe; multiple threads can safely enqueue jobs concurrently. </p>
 
@@ -462,10 +462,10 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>Otherwise, returns a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md3477"></a>
+<h3><a class="anchor" id="autotoc_md3475"></a>
 Note</h3>
 <p>Typically, most applications create a fixed number of workers at startup. However, if your workload changes significantly, adding more workers at runtime can help handle increased job load.</p>
-<h3><a class="anchor" id="autotoc_md3478"></a>
+<h3><a class="anchor" id="autotoc_md3476"></a>
 Thread Safety</h3>
 <p>This method is thread-safe. </p>
 
@@ -546,7 +546,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 
 <p>Retrieves the underlying priority job queue managed by this thread pool. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;typed_job_queue_t&lt;job_type&gt;&gt; A shared pointer to the thread-safe priority job queue.</dd></dl>
-<h3><a class="anchor" id="autotoc_md3472"></a>
+<h3><a class="anchor" id="autotoc_md3470"></a>
 Thread Safety</h3>
 <p>This queue is shared and used by worker threads, so care should be taken if you modify or replace the queue. Typically, external code only needs to enqueue new jobs via <a class="el" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html#ac1bb13c6cf8b476c4f1028574a3bbd06" title="Enqueues a priority job into the thread pool&#39;s job queue.">enqueue()</a>, rather than directly accessing the queue. </p>
 
@@ -663,7 +663,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>If no error occurs, the result will be a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md3471"></a>
+<h3><a class="anchor" id="autotoc_md3469"></a>
 Thread Safety</h3>
 <p>This method is typically called once, before using other methods such as <a class="el" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html#ac1bb13c6cf8b476c4f1028574a3bbd06" title="Enqueues a priority job into the thread pool&#39;s job queue.">enqueue()</a>. Calling <a class="el" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html#a34eaf4d4f25e9b3414b6a492ddf97c1b" title="Starts the thread pool by creating worker threads and initializing internal structures.">start()</a> multiple times without stopping is not recommended. </p>
 
@@ -699,7 +699,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 <li>Otherwise, returns a success value.</li>
 </ul>
 </dd></dl>
-<h3><a class="anchor" id="autotoc_md3479"></a>
+<h3><a class="anchor" id="autotoc_md3477"></a>
 Thread Safety</h3>
 <p>Calling <a class="el" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html#aa4549fcd5d21bc43bcad52f954e32525" title="Stops the thread pool and optionally waits for currently running jobs to finish.">stop()</a> from multiple threads simultaneously is safe, but redundant calls to <a class="el" href="../../d5/dbf/classkcenon_1_1thread_1_1typed__thread__pool__t.html#aa4549fcd5d21bc43bcad52f954e32525" title="Stops the thread pool and optionally waits for currently running jobs to finish.">stop()</a> will have no additional effect after the first. </p>
 
@@ -727,7 +727,7 @@ template&lt;typename job_type  = job_types&gt; </div>
 
 <p>Generates a string representation of the thread pool's internal state. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::string A human-readable string containing pool details, such as whether the pool is running, the thread title, and potentially the number of workers.</dd></dl>
-<h3><a class="anchor" id="autotoc_md3480"></a>
+<h3><a class="anchor" id="autotoc_md3478"></a>
 Example</h3>
 <div class="fragment"><div class="line">std::cout &lt;&lt; pool.to_string() &lt;&lt; std::endl;</div>
 <div class="line"><span class="comment">// Output might look like:</span></div>

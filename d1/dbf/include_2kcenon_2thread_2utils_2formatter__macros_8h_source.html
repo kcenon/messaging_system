@@ -159,10 +159,9 @@ $(document).ready(function(){initNavTree('d1/dbf/include_2kcenon_2thread_2utils_
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="preprocessor">    }                                                                                              \</span></div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="preprocessor">};</span></div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="preprocessor">#else </span><span class="comment">// USE_STD_FORMAT</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="preprocessor">#elif defined(USE_FMT_LIBRARY) </span><span class="comment">// USE_STD_FORMAT</span></div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="foldopen" id="foldopen00102" data-start="" data-end="">
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">  102</a></span><span class="preprocessor">#define DECLARE_FORMATTER(CLASS_NAME)                                                              \</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">#define DECLARE_FORMATTER(CLASS_NAME)                                                              \</span></div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="preprocessor">template &lt;&gt; struct fmt::formatter&lt;CLASS_NAME&gt; : fmt::formatter&lt;std::string_view&gt;                   \</span></div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="preprocessor">{                                                                                                  \</span></div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">    template &lt;typename FormatContext&gt;                                                              \</span></div>
@@ -171,9 +170,12 @@ $(document).ready(function(){initNavTree('d1/dbf/include_2kcenon_2thread_2utils_
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="preprocessor">        return fmt::formatter&lt;std::string_view&gt;::format(item.to_string(), ctx);                   \</span></div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">    }                                                                                              \</span></div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="preprocessor">};</span></div>
-</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">#endif </span><span class="comment">// USE_STD_FORMAT</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">#else </span><span class="comment">// Neither std::format nor fmt available</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">  122</a></span><span class="preprocessor">#define DECLARE_FORMATTER(CLASS_NAME)</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="preprocessor">#endif </span><span class="comment">// USE_STD_FORMAT</span></div>
 <div class="ttc" id="athread__system_2utilities_2include_2convert__string_8h_html"><div class="ttname"><a href="../../da/d5c/thread__system_2utilities_2include_2convert__string_8h.html">convert_string.h</a></div></div>
 <div class="ttc" id="athread__system_2utilities_2include_2formatter_8h_html"><div class="ttname"><a href="../../dd/da9/thread__system_2utilities_2include_2formatter_8h.html">formatter.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

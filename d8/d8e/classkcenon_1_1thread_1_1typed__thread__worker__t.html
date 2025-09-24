@@ -215,7 +215,7 @@ class kcenon::thread::typed_thread_worker_t&lt; job_type &gt;</div><p>A template
   </table>
   </dd>
 </dl>
-<h3><a class="anchor" id="autotoc_md3481"></a>
+<h3><a class="anchor" id="autotoc_md3479"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"> <span class="keyword">auto</span> worker = std::make_shared&lt;typed_thread_worker_t&lt;job_types&gt;&gt;(</div>
 <div class="line">     std::vector&lt;job_types&gt;{job_types::HIGH, job_types::MEDIUM},</div>
@@ -236,7 +236,7 @@ Usage Example</h3>
 <div class="line">  <span class="comment">// Stop and join the worker once done</span></div>
 <div class="line">*worker-&gt;stop();</div>
 <div class="line">*worker-&gt;join();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3482"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3480"></a>
 Thread Safety</h3>
 <p>The worker is designed to run its own thread that continuously checks the queue for new jobs. Any shared data structures should be either thread-safe or externally synchronized.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="../../de/da3/classkcenon_1_1thread_1_1thread__base.html" title="A foundational class for implementing custom worker threads.">thread_base</a> </dd>

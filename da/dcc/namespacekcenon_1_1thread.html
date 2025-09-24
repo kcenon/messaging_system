@@ -1230,7 +1230,7 @@ template&lt;detail::JobType job_type&gt; </div>
 <div class="ttc" id="anamespacekcenon_1_1thread_html_ac1fa3652ae46c82170f0ccd26378a264"><div class="ttname"><a href="../../da/dcc/namespacekcenon_1_1thread.html#ac1fa3652ae46c82170f0ccd26378a264">kcenon::thread::all_types</a></div><div class="ttdeci">auto all_types(void) -&gt; std::vector&lt; thread_conditions &gt;</div><div class="ttdoc">Retrieves a vector containing all possible thread_conditions values.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d6b/thread__conditions_8h_source.html#l00131">thread_conditions.h:131</a></div></div>
 </div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>A <code>std::vector&lt;job_types&gt;</code> with [RealTime, Batch, Background].</dd></dl>
 <p>This function is useful when iterating over all defined types (e.g. for logging, UI selection, or testing).</p>
-<h3><a class="anchor" id="autotoc_md3465"></a>
+<h3><a class="anchor" id="autotoc_md3463"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> type : <a class="code hl_function" href="../../da/dcc/namespacekcenon_1_1thread.html#ac1fa3652ae46c82170f0ccd26378a264">all_types</a>()) {</div>
 <div class="line">    std::cout &lt;&lt; <a class="code hl_function" href="../../da/dcc/namespacekcenon_1_1thread.html#a20588054746305af414fa9695358e786">to_string</a>(type) &lt;&lt; std::endl;</div>
@@ -1616,7 +1616,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <code>std::string_view</code> containing one of "REALTIME", "BATCH", "BACKGROUND", or "UNKNOWN" if <code>job_type</code> is out of expected range.</dd></dl>
-<h3><a class="anchor" id="autotoc_md3464"></a>
+<h3><a class="anchor" id="autotoc_md3462"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> p = <a class="code hl_enumvalue" href="../../da/dcc/namespacekcenon_1_1thread.html#a6faed361e157803f7263e729501847b6ad50ae798e3aa50c3a502118e759cc216">job_types::RealTime</a>;</div>
 <div class="line">std::string_view sv = <a class="code hl_function" href="../../da/dcc/namespacekcenon_1_1thread.html#a20588054746305af414fa9695358e786">to_string</a>(p); <span class="comment">// &quot;REALTIME&quot;</span></div>
@@ -1699,8 +1699,6 @@ Example</h3>
 <p class="definition">Definition at line <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00111">111</a> of file <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html">thread_conditions.h</a>.</p>
 
 <p class="reference">References <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00086">kcenon::thread::job_detail::thread_conditions_count</a>, and <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00081">kcenon::thread::job_detail::thread_conditions_strings</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="../../d9/d6b/thread__conditions_8h_source.html#l00222">fmt::formatter&lt; kcenon::thread::thread_conditions &gt;::format()</a>.</p>
 
 </div>
 </div>

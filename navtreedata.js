@@ -3199,583 +3199,583 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Thread System - New Structure", "dc/dc8/md_libraries_2thread__system_2STRUCTURE.html", [
-      [ "Directory Layout", "dc/dc8/md_libraries_2thread__system_2STRUCTURE.html#autotoc_md3484", null ],
-      [ "Namespace Structure", "dc/dc8/md_libraries_2thread__system_2STRUCTURE.html#autotoc_md3485", null ],
-      [ "Migration Notes", "dc/dc8/md_libraries_2thread__system_2STRUCTURE.html#autotoc_md3486", null ]
+      [ "Directory Layout", "dc/dc8/md_libraries_2thread__system_2STRUCTURE.html#autotoc_md3482", null ],
+      [ "Namespace Structure", "dc/dc8/md_libraries_2thread__system_2STRUCTURE.html#autotoc_md3483", null ],
+      [ "Migration Notes", "dc/dc8/md_libraries_2thread__system_2STRUCTURE.html#autotoc_md3484", null ]
     ] ],
     [ "API Reference", "db/d91/md_docs_2API__REFERENCE.html", [
-      [ "Table of Contents", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3514", null ],
-      [ "Component Documentation Links", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3515", null ],
-      [ "Container System API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3517", [
-        [ "Namespace: <tt>container_module</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3518", null ],
-        [ "Class: <tt>value_container</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3519", [
-          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3520", null ],
-          [ "Core Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3521", [
-            [ "Setting Values", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3522", null ],
-            [ "Adding Values", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3523", null ],
-            [ "Retrieving Values", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3524", null ],
-            [ "Serialization", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3525", null ]
+      [ "Table of Contents", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3512", null ],
+      [ "Component Documentation Links", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3513", null ],
+      [ "Container System API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3515", [
+        [ "Namespace: <tt>container_module</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3516", null ],
+        [ "Class: <tt>value_container</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3517", [
+          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3518", null ],
+          [ "Core Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3519", [
+            [ "Setting Values", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3520", null ],
+            [ "Adding Values", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3521", null ],
+            [ "Retrieving Values", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3522", null ],
+            [ "Serialization", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3523", null ]
           ] ],
-          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3526", null ]
+          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3524", null ]
         ] ],
-        [ "Class: <tt>variant</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3527", [
-          [ "Supported Types", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3528", null ],
-          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3529", null ]
+        [ "Class: <tt>variant</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3525", [
+          [ "Supported Types", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3526", null ],
+          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3527", null ]
         ] ]
       ] ],
-      [ "Network System API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3531", [
-        [ "Namespace: <tt>network_module</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3532", null ],
-        [ "Class: <tt>messaging_server</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3533", [
-          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3534", null ],
-          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3535", null ],
-          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3536", null ]
+      [ "Network System API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3529", [
+        [ "Namespace: <tt>network_module</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3530", null ],
+        [ "Class: <tt>messaging_server</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3531", [
+          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3532", null ],
+          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3533", null ],
+          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3534", null ]
         ] ],
-        [ "Class: <tt>messaging_client</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3537", [
-          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3538", null ],
-          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3539", null ],
-          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3540", null ]
+        [ "Class: <tt>messaging_client</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3535", [
+          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3536", null ],
+          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3537", null ],
+          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3538", null ]
         ] ]
       ] ],
-      [ "Database System API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3542", [
-        [ "Namespace: <tt>database</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3543", null ],
-        [ "Class: <tt>database_manager</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3544", [
-          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3545", null ],
-          [ "Configuration", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3546", null ],
-          [ "Connection Management", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3547", null ],
-          [ "Query Execution", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3548", null ],
-          [ "Transaction Support", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3549", null ],
-          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3550", null ]
+      [ "Database System API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3540", [
+        [ "Namespace: <tt>database</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3541", null ],
+        [ "Class: <tt>database_manager</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3542", [
+          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3543", null ],
+          [ "Configuration", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3544", null ],
+          [ "Connection Management", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3545", null ],
+          [ "Query Execution", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3546", null ],
+          [ "Transaction Support", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3547", null ],
+          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3548", null ]
         ] ]
       ] ],
-      [ "Message Bus API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3552", [
-        [ "Namespace: <tt>kcenon::messaging::core</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3553", null ],
-        [ "Class: <tt>message_bus</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3554", [
-          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3555", null ],
-          [ "Configuration Structure", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3556", null ],
-          [ "Lifecycle Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3557", null ],
-          [ "Publishing", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3558", null ],
-          [ "Subscription", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3559", null ],
-          [ "Request-Response", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3560", null ],
-          [ "Monitoring", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3561", null ],
-          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3562", null ]
+      [ "Message Bus API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3550", [
+        [ "Namespace: <tt>kcenon::messaging::core</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3551", null ],
+        [ "Class: <tt>message_bus</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3552", [
+          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3553", null ],
+          [ "Configuration Structure", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3554", null ],
+          [ "Lifecycle Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3555", null ],
+          [ "Publishing", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3556", null ],
+          [ "Subscription", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3557", null ],
+          [ "Request-Response", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3558", null ],
+          [ "Monitoring", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3559", null ],
+          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3560", null ]
         ] ]
       ] ],
-      [ "Service Container API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3564", [
-        [ "Namespace: <tt>kcenon::messaging::services</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3565", null ],
-        [ "Class: <tt>service_container</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3566", [
-          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3567", null ],
-          [ "Service Lifetimes", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3568", null ],
-          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3569", null ]
+      [ "Service Container API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3562", [
+        [ "Namespace: <tt>kcenon::messaging::services</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3563", null ],
+        [ "Class: <tt>service_container</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3564", [
+          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3565", null ],
+          [ "Service Lifetimes", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3566", null ],
+          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3567", null ]
         ] ]
       ] ],
-      [ "Thread System API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3571", [
-        [ "Namespace: <tt>thread_system</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3572", null ],
-        [ "Class: <tt>thread_pool</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3573", [
-          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3574", null ],
-          [ "Job Submission", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3575", null ],
-          [ "Pool Management", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3576", null ],
-          [ "Priority Levels", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3577", null ],
-          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3578", null ]
+      [ "Thread System API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3569", [
+        [ "Namespace: <tt>thread_system</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3570", null ],
+        [ "Class: <tt>thread_pool</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3571", [
+          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3572", null ],
+          [ "Job Submission", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3573", null ],
+          [ "Pool Management", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3574", null ],
+          [ "Priority Levels", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3575", null ],
+          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3576", null ]
         ] ],
-        [ "Class: <tt>lock_free_queue</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3579", [
-          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3580", null ],
-          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3581", null ],
-          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3582", null ]
+        [ "Class: <tt>lock_free_queue</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3577", [
+          [ "Constructor", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3578", null ],
+          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3579", null ],
+          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3580", null ]
         ] ]
       ] ],
-      [ "Logger System API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3584", [
-        [ "Namespace: <tt>logger</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3585", null ],
-        [ "Class: <tt>logger_manager</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3586", [
-          [ "Configuration", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3587", null ],
-          [ "Log Levels", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3588", null ],
-          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3589", null ],
-          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3590", null ]
+      [ "Logger System API", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3582", [
+        [ "Namespace: <tt>logger</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3583", null ],
+        [ "Class: <tt>logger_manager</tt>", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3584", [
+          [ "Configuration", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3585", null ],
+          [ "Log Levels", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3586", null ],
+          [ "Methods", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3587", null ],
+          [ "Usage Example", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3588", null ]
         ] ]
       ] ],
-      [ "Error Codes", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3592", [
-        [ "System Error Codes", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3593", null ],
-        [ "Error Handling", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3594", null ],
-        [ "Error Recovery Strategies", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3595", null ]
+      [ "Error Codes", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3590", [
+        [ "System Error Codes", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3591", null ],
+        [ "Error Handling", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3592", null ],
+        [ "Error Recovery Strategies", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3593", null ]
       ] ],
-      [ "Configuration Reference", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3596", [
-        [ "System Configuration File Format", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3597", null ],
-        [ "Environment Variables", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3598", null ]
+      [ "Configuration Reference", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3594", [
+        [ "System Configuration File Format", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3595", null ],
+        [ "Environment Variables", "db/d91/md_docs_2API__REFERENCE.html#autotoc_md3596", null ]
       ] ]
     ] ],
     [ "Architecture", "d2/d64/md_docs_2architecture.html", [
-      [ "Overview", "d2/d64/md_docs_2architecture.html#autotoc_md3600", null ],
-      [ "Related Documentation", "d2/d64/md_docs_2architecture.html#autotoc_md3601", [
-        [ "Component-Specific Architecture", "d2/d64/md_docs_2architecture.html#autotoc_md3602", null ],
-        [ "Module Documentation", "d2/d64/md_docs_2architecture.html#autotoc_md3603", null ],
-        [ "Integration Guides", "d2/d64/md_docs_2architecture.html#autotoc_md3604", null ]
+      [ "Overview", "d2/d64/md_docs_2architecture.html#autotoc_md3598", null ],
+      [ "Related Documentation", "d2/d64/md_docs_2architecture.html#autotoc_md3599", [
+        [ "Component-Specific Architecture", "d2/d64/md_docs_2architecture.html#autotoc_md3600", null ],
+        [ "Module Documentation", "d2/d64/md_docs_2architecture.html#autotoc_md3601", null ],
+        [ "Integration Guides", "d2/d64/md_docs_2architecture.html#autotoc_md3602", null ]
       ] ],
-      [ "Architectural Principles", "d2/d64/md_docs_2architecture.html#autotoc_md3605", null ],
-      [ "System Layers", "d2/d64/md_docs_2architecture.html#autotoc_md3606", null ],
-      [ "Component Architecture", "d2/d64/md_docs_2architecture.html#autotoc_md3607", [
-        [ "1. Container System", "d2/d64/md_docs_2architecture.html#autotoc_md3608", null ],
-        [ "2. Network System", "d2/d64/md_docs_2architecture.html#autotoc_md3609", null ],
-        [ "3. Database System", "d2/d64/md_docs_2architecture.html#autotoc_md3610", null ],
-        [ "4. Thread System", "d2/d64/md_docs_2architecture.html#autotoc_md3611", null ]
+      [ "Architectural Principles", "d2/d64/md_docs_2architecture.html#autotoc_md3603", null ],
+      [ "System Layers", "d2/d64/md_docs_2architecture.html#autotoc_md3604", null ],
+      [ "Component Architecture", "d2/d64/md_docs_2architecture.html#autotoc_md3605", [
+        [ "1. Container System", "d2/d64/md_docs_2architecture.html#autotoc_md3606", null ],
+        [ "2. Network System", "d2/d64/md_docs_2architecture.html#autotoc_md3607", null ],
+        [ "3. Database System", "d2/d64/md_docs_2architecture.html#autotoc_md3608", null ],
+        [ "4. Thread System", "d2/d64/md_docs_2architecture.html#autotoc_md3609", null ]
       ] ],
-      [ "Data Flow Architecture", "d2/d64/md_docs_2architecture.html#autotoc_md3612", [
-        [ "Message Processing Pipeline", "d2/d64/md_docs_2architecture.html#autotoc_md3613", null ],
-        [ "Request-Response Flow", "d2/d64/md_docs_2architecture.html#autotoc_md3614", null ],
-        [ "Distributed Architecture", "d2/d64/md_docs_2architecture.html#autotoc_md3615", null ]
+      [ "Data Flow Architecture", "d2/d64/md_docs_2architecture.html#autotoc_md3610", [
+        [ "Message Processing Pipeline", "d2/d64/md_docs_2architecture.html#autotoc_md3611", null ],
+        [ "Request-Response Flow", "d2/d64/md_docs_2architecture.html#autotoc_md3612", null ],
+        [ "Distributed Architecture", "d2/d64/md_docs_2architecture.html#autotoc_md3613", null ]
       ] ],
-      [ "Scalability Patterns", "d2/d64/md_docs_2architecture.html#autotoc_md3616", [
-        [ "Horizontal Scaling", "d2/d64/md_docs_2architecture.html#autotoc_md3617", null ],
-        [ "Vertical Scaling", "d2/d64/md_docs_2architecture.html#autotoc_md3618", null ]
+      [ "Scalability Patterns", "d2/d64/md_docs_2architecture.html#autotoc_md3614", [
+        [ "Horizontal Scaling", "d2/d64/md_docs_2architecture.html#autotoc_md3615", null ],
+        [ "Vertical Scaling", "d2/d64/md_docs_2architecture.html#autotoc_md3616", null ]
       ] ],
-      [ "Integration Points", "d2/d64/md_docs_2architecture.html#autotoc_md3619", [
-        [ "External Systems", "d2/d64/md_docs_2architecture.html#autotoc_md3620", null ],
-        [ "Internal Communication", "d2/d64/md_docs_2architecture.html#autotoc_md3621", null ]
+      [ "Integration Points", "d2/d64/md_docs_2architecture.html#autotoc_md3617", [
+        [ "External Systems", "d2/d64/md_docs_2architecture.html#autotoc_md3618", null ],
+        [ "Internal Communication", "d2/d64/md_docs_2architecture.html#autotoc_md3619", null ]
       ] ],
-      [ "Performance Optimization", "d2/d64/md_docs_2architecture.html#autotoc_md3622", [
-        [ "Memory Management", "d2/d64/md_docs_2architecture.html#autotoc_md3623", null ],
-        [ "Concurrency", "d2/d64/md_docs_2architecture.html#autotoc_md3624", null ],
-        [ "Network", "d2/d64/md_docs_2architecture.html#autotoc_md3625", null ]
+      [ "Performance Optimization", "d2/d64/md_docs_2architecture.html#autotoc_md3620", [
+        [ "Memory Management", "d2/d64/md_docs_2architecture.html#autotoc_md3621", null ],
+        [ "Concurrency", "d2/d64/md_docs_2architecture.html#autotoc_md3622", null ],
+        [ "Network", "d2/d64/md_docs_2architecture.html#autotoc_md3623", null ]
       ] ],
-      [ "Fault Tolerance", "d2/d64/md_docs_2architecture.html#autotoc_md3626", [
-        [ "Error Recovery", "d2/d64/md_docs_2architecture.html#autotoc_md3627", null ],
-        [ "High Availability", "d2/d64/md_docs_2architecture.html#autotoc_md3628", null ]
+      [ "Fault Tolerance", "d2/d64/md_docs_2architecture.html#autotoc_md3624", [
+        [ "Error Recovery", "d2/d64/md_docs_2architecture.html#autotoc_md3625", null ],
+        [ "High Availability", "d2/d64/md_docs_2architecture.html#autotoc_md3626", null ]
       ] ],
-      [ "Security Considerations", "d2/d64/md_docs_2architecture.html#autotoc_md3629", [
-        [ "Transport Security", "d2/d64/md_docs_2architecture.html#autotoc_md3630", null ],
-        [ "Application Security", "d2/d64/md_docs_2architecture.html#autotoc_md3631", null ]
+      [ "Security Considerations", "d2/d64/md_docs_2architecture.html#autotoc_md3627", [
+        [ "Transport Security", "d2/d64/md_docs_2architecture.html#autotoc_md3628", null ],
+        [ "Application Security", "d2/d64/md_docs_2architecture.html#autotoc_md3629", null ]
       ] ],
-      [ "Monitoring and Observability", "d2/d64/md_docs_2architecture.html#autotoc_md3632", [
-        [ "Metrics Collection", "d2/d64/md_docs_2architecture.html#autotoc_md3633", null ],
-        [ "Distributed Tracing", "d2/d64/md_docs_2architecture.html#autotoc_md3634", null ],
-        [ "Logging", "d2/d64/md_docs_2architecture.html#autotoc_md3635", null ]
+      [ "Monitoring and Observability", "d2/d64/md_docs_2architecture.html#autotoc_md3630", [
+        [ "Metrics Collection", "d2/d64/md_docs_2architecture.html#autotoc_md3631", null ],
+        [ "Distributed Tracing", "d2/d64/md_docs_2architecture.html#autotoc_md3632", null ],
+        [ "Logging", "d2/d64/md_docs_2architecture.html#autotoc_md3633", null ]
       ] ],
-      [ "Configuration Management", "d2/d64/md_docs_2architecture.html#autotoc_md3636", [
-        [ "Static Configuration", "d2/d64/md_docs_2architecture.html#autotoc_md3637", null ],
-        [ "Dynamic Configuration", "d2/d64/md_docs_2architecture.html#autotoc_md3638", null ]
+      [ "Configuration Management", "d2/d64/md_docs_2architecture.html#autotoc_md3634", [
+        [ "Static Configuration", "d2/d64/md_docs_2architecture.html#autotoc_md3635", null ],
+        [ "Dynamic Configuration", "d2/d64/md_docs_2architecture.html#autotoc_md3636", null ]
       ] ],
-      [ "Deployment Architecture", "d2/d64/md_docs_2architecture.html#autotoc_md3639", [
-        [ "Container Deployment", "d2/d64/md_docs_2architecture.html#autotoc_md3640", null ],
-        [ "Kubernetes Integration", "d2/d64/md_docs_2architecture.html#autotoc_md3641", null ]
+      [ "Deployment Architecture", "d2/d64/md_docs_2architecture.html#autotoc_md3637", [
+        [ "Container Deployment", "d2/d64/md_docs_2architecture.html#autotoc_md3638", null ],
+        [ "Kubernetes Integration", "d2/d64/md_docs_2architecture.html#autotoc_md3639", null ]
       ] ],
-      [ "Future Considerations", "d2/d64/md_docs_2architecture.html#autotoc_md3642", [
-        [ "Planned Enhancements", "d2/d64/md_docs_2architecture.html#autotoc_md3643", null ],
-        [ "Technology Evaluation", "d2/d64/md_docs_2architecture.html#autotoc_md3644", null ]
+      [ "Future Considerations", "d2/d64/md_docs_2architecture.html#autotoc_md3640", [
+        [ "Planned Enhancements", "d2/d64/md_docs_2architecture.html#autotoc_md3641", null ],
+        [ "Technology Evaluation", "d2/d64/md_docs_2architecture.html#autotoc_md3642", null ]
       ] ]
     ] ],
     [ "Deployment Guide", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html", [
-      [ "System Requirements", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3646", [
-        [ "Hardware Requirements", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3647", [
-          [ "Minimum Requirements", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3648", null ],
-          [ "Recommended Requirements", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3649", null ],
-          [ "Production Requirements", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3650", null ]
+      [ "System Requirements", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3644", [
+        [ "Hardware Requirements", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3645", [
+          [ "Minimum Requirements", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3646", null ],
+          [ "Recommended Requirements", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3647", null ],
+          [ "Production Requirements", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3648", null ]
         ] ],
-        [ "Operating System Support", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3651", null ],
-        [ "Software Dependencies", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3652", [
-          [ "Build Dependencies", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3653", null ],
-          [ "Runtime Dependencies", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3654", null ]
+        [ "Operating System Support", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3649", null ],
+        [ "Software Dependencies", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3650", [
+          [ "Build Dependencies", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3651", null ],
+          [ "Runtime Dependencies", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3652", null ]
         ] ]
       ] ],
-      [ "Installation", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3655", [
-        [ "From Source", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3656", [
-          [ "1. Clone Repository", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3657", null ],
-          [ "2. Configure Build", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3658", null ],
-          [ "3. Build and Install", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3659", null ]
+      [ "Installation", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3653", [
+        [ "From Source", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3654", [
+          [ "1. Clone Repository", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3655", null ],
+          [ "2. Configure Build", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3656", null ],
+          [ "3. Build and Install", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3657", null ]
         ] ],
-        [ "Using Package Managers", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3660", [
-          [ "APT Repository (Ubuntu/Debian)", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3661", null ],
-          [ "YUM Repository (RHEL/CentOS)", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3662", null ]
+        [ "Using Package Managers", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3658", [
+          [ "APT Repository (Ubuntu/Debian)", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3659", null ],
+          [ "YUM Repository (RHEL/CentOS)", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3660", null ]
         ] ],
-        [ "Docker Installation", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3663", [
-          [ "Pull Official Image", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3664", null ],
-          [ "Build Custom Image", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3665", null ]
+        [ "Docker Installation", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3661", [
+          [ "Pull Official Image", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3662", null ],
+          [ "Build Custom Image", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3663", null ]
         ] ]
       ] ],
-      [ "Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3666", [
-        [ "Configuration File Structure", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3667", null ],
-        [ "Environment Variables", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3668", null ],
-        [ "Secrets Management", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3669", [
-          [ "Using HashiCorp Vault", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3670", null ],
-          [ "Using Kubernetes Secrets", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3671", null ]
+      [ "Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3664", [
+        [ "Configuration File Structure", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3665", null ],
+        [ "Environment Variables", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3666", null ],
+        [ "Secrets Management", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3667", [
+          [ "Using HashiCorp Vault", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3668", null ],
+          [ "Using Kubernetes Secrets", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3669", null ]
         ] ]
       ] ],
-      [ "Deployment Scenarios", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3672", [
-        [ "Single Server Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3673", null ],
-        [ "High Availability Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3674", [
-          [ "Architecture", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3675", null ],
-          [ "HAProxy Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3676", null ]
+      [ "Deployment Scenarios", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3670", [
+        [ "Single Server Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3671", null ],
+        [ "High Availability Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3672", [
+          [ "Architecture", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3673", null ],
+          [ "HAProxy Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3674", null ]
         ] ],
-        [ "Kubernetes Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3677", [
-          [ "Namespace and ConfigMap", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3678", null ],
-          [ "Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3679", null ],
-          [ "Service and Ingress", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3680", null ],
-          [ "Horizontal Pod Autoscaler", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3681", null ]
+        [ "Kubernetes Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3675", [
+          [ "Namespace and ConfigMap", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3676", null ],
+          [ "Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3677", null ],
+          [ "Service and Ingress", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3678", null ],
+          [ "Horizontal Pod Autoscaler", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3679", null ]
         ] ],
-        [ "Docker Compose Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3682", null ]
+        [ "Docker Compose Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3680", null ]
       ] ],
-      [ "Performance Tuning", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3683", [
-        [ "System Tuning", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3684", [
-          [ "Linux Kernel Parameters", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3685", null ],
-          [ "ulimit Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3686", null ]
+      [ "Performance Tuning", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3681", [
+        [ "System Tuning", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3682", [
+          [ "Linux Kernel Parameters", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3683", null ],
+          [ "ulimit Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3684", null ]
         ] ],
-        [ "Application Tuning", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3687", [
-          [ "Thread Pool Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3688", null ],
-          [ "Memory Management", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3689", null ],
-          [ "Network Optimization", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3690", null ]
+        [ "Application Tuning", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3685", [
+          [ "Thread Pool Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3686", null ],
+          [ "Memory Management", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3687", null ],
+          [ "Network Optimization", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3688", null ]
         ] ],
-        [ "Database Tuning", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3691", [
-          [ "PostgreSQL Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3692", null ],
-          [ "Connection Pool Tuning", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3693", null ]
+        [ "Database Tuning", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3689", [
+          [ "PostgreSQL Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3690", null ],
+          [ "Connection Pool Tuning", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3691", null ]
         ] ]
       ] ],
-      [ "Monitoring Setup", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3694", [
-        [ "Prometheus Integration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3695", [
-          [ "Prometheus Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3696", null ],
-          [ "Metrics Exposed", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3697", null ]
+      [ "Monitoring Setup", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3692", [
+        [ "Prometheus Integration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3693", [
+          [ "Prometheus Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3694", null ],
+          [ "Metrics Exposed", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3695", null ]
         ] ],
-        [ "Grafana Dashboard", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3698", null ],
-        [ "Logging Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3699", [
-          [ "Structured Logging", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3700", null ],
-          [ "Log Aggregation (ELK Stack)", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3701", null ]
+        [ "Grafana Dashboard", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3696", null ],
+        [ "Logging Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3697", [
+          [ "Structured Logging", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3698", null ],
+          [ "Log Aggregation (ELK Stack)", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3699", null ]
         ] ]
       ] ],
-      [ "Scaling Strategies", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3702", [
-        [ "Horizontal Scaling", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3703", [
-          [ "Load Balancer Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3704", null ],
-          [ "Auto-scaling Rules", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3705", null ]
+      [ "Scaling Strategies", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3700", [
+        [ "Horizontal Scaling", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3701", [
+          [ "Load Balancer Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3702", null ],
+          [ "Auto-scaling Rules", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3703", null ]
         ] ],
-        [ "Vertical Scaling", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3706", [
-          [ "Resource Allocation", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3707", null ]
+        [ "Vertical Scaling", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3704", [
+          [ "Resource Allocation", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3705", null ]
         ] ],
-        [ "Database Scaling", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3708", [
-          [ "Read Replicas", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3709", null ],
-          [ "Sharding Strategy", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3710", null ]
+        [ "Database Scaling", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3706", [
+          [ "Read Replicas", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3707", null ],
+          [ "Sharding Strategy", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3708", null ]
         ] ]
       ] ],
-      [ "Backup and Recovery", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3711", [
-        [ "Backup Strategy", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3712", [
-          [ "Application State Backup", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3713", null ],
-          [ "Database Backup", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3714", null ]
+      [ "Backup and Recovery", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3709", [
+        [ "Backup Strategy", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3710", [
+          [ "Application State Backup", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3711", null ],
+          [ "Database Backup", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3712", null ]
         ] ],
-        [ "Recovery Procedures", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3715", [
-          [ "Service Recovery", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3716", null ],
-          [ "Disaster Recovery Plan", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3717", null ]
+        [ "Recovery Procedures", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3713", [
+          [ "Service Recovery", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3714", null ],
+          [ "Disaster Recovery Plan", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3715", null ]
         ] ]
       ] ],
-      [ "Security Hardening", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3718", [
-        [ "Network Security", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3719", [
-          [ "Firewall Rules", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3720", null ],
-          [ "SSL/TLS Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3721", null ]
+      [ "Security Hardening", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3716", [
+        [ "Network Security", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3717", [
+          [ "Firewall Rules", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3718", null ],
+          [ "SSL/TLS Configuration", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3719", null ]
         ] ],
-        [ "Application Security", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3722", [
-          [ "Authentication", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3723", null ],
-          [ "Rate Limiting", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3724", null ]
+        [ "Application Security", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3720", [
+          [ "Authentication", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3721", null ],
+          [ "Rate Limiting", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3722", null ]
         ] ],
-        [ "Compliance", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3725", [
-          [ "Audit Logging", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3726", null ],
-          [ "Data Encryption", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3727", null ]
+        [ "Compliance", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3723", [
+          [ "Audit Logging", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3724", null ],
+          [ "Data Encryption", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3725", null ]
         ] ]
       ] ],
-      [ "Troubleshooting Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3728", [
-        [ "Common Issues", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3729", [
-          [ "Service Won't Start", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3730", null ],
-          [ "High Memory Usage", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3731", null ],
-          [ "Performance Issues", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3732", null ]
+      [ "Troubleshooting Deployment", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3726", [
+        [ "Common Issues", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3727", [
+          [ "Service Won't Start", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3728", null ],
+          [ "High Memory Usage", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3729", null ],
+          [ "Performance Issues", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3730", null ]
         ] ],
-        [ "Health Checks", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3733", [
-          [ "Application Health", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3734", null ],
-          [ "System Health", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3735", null ]
+        [ "Health Checks", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3731", [
+          [ "Application Health", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3732", null ],
+          [ "System Health", "df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3733", null ]
         ] ]
       ] ]
     ] ],
     [ "Design Patterns and Architectural Decisions", "d5/dca/md_docs_2DESIGN__PATTERNS.html", [
-      [ "Overview", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3737", null ],
-      [ "Creational Patterns", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3738", [
-        [ "1. Singleton Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3739", null ],
-        [ "2. Factory Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3740", null ],
-        [ "3. Builder Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3741", null ],
-        [ "4. Object Pool Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3742", null ]
+      [ "Overview", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3735", null ],
+      [ "Creational Patterns", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3736", [
+        [ "1. Singleton Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3737", null ],
+        [ "2. Factory Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3738", null ],
+        [ "3. Builder Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3739", null ],
+        [ "4. Object Pool Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3740", null ]
       ] ],
-      [ "Structural Patterns", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3743", [
-        [ "5. Adapter Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3744", null ],
-        [ "6. Decorator Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3745", null ],
-        [ "7. Proxy Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3746", null ],
-        [ "8. Composite Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3747", null ]
+      [ "Structural Patterns", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3741", [
+        [ "5. Adapter Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3742", null ],
+        [ "6. Decorator Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3743", null ],
+        [ "7. Proxy Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3744", null ],
+        [ "8. Composite Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3745", null ]
       ] ],
-      [ "Behavioral Patterns", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3748", [
-        [ "9. Observer Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3749", null ],
-        [ "10. Strategy Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3750", null ],
-        [ "11. Chain of Responsibility Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3751", null ],
-        [ "12. Command Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3752", null ],
-        [ "13. Template Method Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3753", null ]
+      [ "Behavioral Patterns", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3746", [
+        [ "9. Observer Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3747", null ],
+        [ "10. Strategy Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3748", null ],
+        [ "11. Chain of Responsibility Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3749", null ],
+        [ "12. Command Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3750", null ],
+        [ "13. Template Method Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3751", null ]
       ] ],
-      [ "Concurrency Patterns", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3754", [
-        [ "14. Producer-Consumer Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3755", null ],
-        [ "15. Thread Pool Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3756", null ]
+      [ "Concurrency Patterns", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3752", [
+        [ "14. Producer-Consumer Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3753", null ],
+        [ "15. Thread Pool Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3754", null ]
       ] ],
-      [ "Architectural Patterns", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3757", [
-        [ "16. Microkernel Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3758", null ],
-        [ "17. Event-Driven Architecture", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3759", null ]
+      [ "Architectural Patterns", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3755", [
+        [ "16. Microkernel Pattern", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3756", null ],
+        [ "17. Event-Driven Architecture", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3757", null ]
       ] ],
-      [ "Summary", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3760", null ]
+      [ "Summary", "d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3758", null ]
     ] ],
     [ "Developer Guide", "db/dac/md_docs_2DEVELOPER__GUIDE.html", [
-      [ "Quick Start", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3762", [
-        [ "Prerequisites", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3763", null ],
-        [ "1. Clone and Setup", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3764", null ],
-        [ "2. Build the Project", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3765", null ],
-        [ "3. Your First Application", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3766", null ]
+      [ "Quick Start", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3760", [
+        [ "Prerequisites", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3761", null ],
+        [ "1. Clone and Setup", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3762", null ],
+        [ "2. Build the Project", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3763", null ],
+        [ "3. Your First Application", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3764", null ]
       ] ],
-      [ "Development Setup", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3767", [
-        [ "IDE Configuration", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3768", [
-          [ "Visual Studio Code", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3769", null ],
-          [ "CLion", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3770", null ],
-          [ "Visual Studio", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3771", null ]
+      [ "Development Setup", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3765", [
+        [ "IDE Configuration", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3766", [
+          [ "Visual Studio Code", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3767", null ],
+          [ "CLion", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3768", null ],
+          [ "Visual Studio", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3769", null ]
         ] ],
-        [ "Development Dependencies", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3772", null ]
+        [ "Development Dependencies", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3770", null ]
       ] ],
-      [ "Project Structure", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3773", [
-        [ "Directory Layout", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3774", null ],
-        [ "Module Organization", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3775", null ]
+      [ "Project Structure", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3771", [
+        [ "Directory Layout", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3772", null ],
+        [ "Module Organization", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3773", null ]
       ] ],
-      [ "Coding Standards", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3776", [
-        [ "C++ Style Guide", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3777", [
-          [ "Naming Conventions", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3778", null ],
-          [ "File Organization", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3779", null ],
-          [ "Best Practices", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3780", null ]
+      [ "Coding Standards", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3774", [
+        [ "C++ Style Guide", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3775", [
+          [ "Naming Conventions", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3776", null ],
+          [ "File Organization", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3777", null ],
+          [ "Best Practices", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3778", null ]
         ] ],
-        [ "Documentation Standards", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3781", [
-          [ "Code Documentation", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3782", null ],
-          [ "Comment Guidelines", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3783", null ]
+        [ "Documentation Standards", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3779", [
+          [ "Code Documentation", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3780", null ],
+          [ "Comment Guidelines", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3781", null ]
         ] ]
       ] ],
-      [ "Testing Guidelines", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3784", [
-        [ "Unit Testing", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3785", [
-          [ "Test Structure", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3786", null ],
-          [ "Test Coverage", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3787", null ]
+      [ "Testing Guidelines", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3782", [
+        [ "Unit Testing", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3783", [
+          [ "Test Structure", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3784", null ],
+          [ "Test Coverage", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3785", null ]
         ] ],
-        [ "Integration Testing", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3788", null ],
-        [ "Performance Testing", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3789", null ]
+        [ "Integration Testing", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3786", null ],
+        [ "Performance Testing", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3787", null ]
       ] ],
-      [ "Debugging", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3790", [
-        [ "Using GDB", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3791", null ],
-        [ "Using Valgrind", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3792", null ],
-        [ "Using AddressSanitizer", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3793", null ],
-        [ "Using ThreadSanitizer", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3794", null ]
+      [ "Debugging", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3788", [
+        [ "Using GDB", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3789", null ],
+        [ "Using Valgrind", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3790", null ],
+        [ "Using AddressSanitizer", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3791", null ],
+        [ "Using ThreadSanitizer", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3792", null ]
       ] ],
-      [ "Performance Profiling", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3795", [
-        [ "Using perf", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3796", null ],
-        [ "Using Instruments (macOS)", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3797", null ],
-        [ "Using Intel VTune", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3798", null ]
+      [ "Performance Profiling", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3793", [
+        [ "Using perf", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3794", null ],
+        [ "Using Instruments (macOS)", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3795", null ],
+        [ "Using Intel VTune", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3796", null ]
       ] ],
-      [ "Contributing Guidelines", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3799", [
-        [ "Workflow", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3800", null ],
-        [ "Commit Message Format", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3801", null ],
-        [ "Code Review Checklist", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3802", null ]
+      [ "Contributing Guidelines", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3797", [
+        [ "Workflow", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3798", null ],
+        [ "Commit Message Format", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3799", null ],
+        [ "Code Review Checklist", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3800", null ]
       ] ],
-      [ "Build System", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3803", [
-        [ "CMake Configuration", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3804", null ],
-        [ "Creating New Modules", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3805", null ]
+      [ "Build System", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3801", [
+        [ "CMake Configuration", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3802", null ],
+        [ "Creating New Modules", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3803", null ]
       ] ],
-      [ "Deployment", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3806", [
-        [ "Docker Deployment", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3807", null ],
-        [ "Kubernetes Deployment", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3808", null ]
+      [ "Deployment", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3804", [
+        [ "Docker Deployment", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3805", null ],
+        [ "Kubernetes Deployment", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3806", null ]
       ] ],
-      [ "Security Best Practices", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3809", [
-        [ "Input Validation", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3810", null ],
-        [ "Secure Communication", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3811", null ],
-        [ "Rate Limiting", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3812", null ]
+      [ "Security Best Practices", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3807", [
+        [ "Input Validation", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3808", null ],
+        [ "Secure Communication", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3809", null ],
+        [ "Rate Limiting", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3810", null ]
       ] ],
-      [ "Troubleshooting Common Issues", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3813", [
-        [ "Build Issues", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3814", null ],
-        [ "Runtime Issues", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3815", null ],
-        [ "Performance Issues", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3816", null ]
+      [ "Troubleshooting Common Issues", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3811", [
+        [ "Build Issues", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3812", null ],
+        [ "Runtime Issues", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3813", null ],
+        [ "Performance Issues", "db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md3814", null ]
       ] ]
     ] ],
     [ "Getting Started", "d2/d41/md_docs_2GETTING__STARTED.html", [
-      [ "Table of Contents", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3818", null ],
-      [ "Prerequisites", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3819", [
-        [ "System Requirements", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3820", null ],
-        [ "Development Dependencies", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3821", null ],
-        [ "Runtime Dependencies", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3822", null ]
+      [ "Table of Contents", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3816", null ],
+      [ "Prerequisites", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3817", [
+        [ "System Requirements", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3818", null ],
+        [ "Development Dependencies", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3819", null ],
+        [ "Runtime Dependencies", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3820", null ]
       ] ],
-      [ "Installation", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3823", [
-        [ "1. Clone the Repository", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3824", null ],
-        [ "2. Platform-Specific Setup", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3825", [
-          [ "Linux (Ubuntu/Debian)", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3826", null ],
-          [ "macOS", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3827", null ],
-          [ "Windows", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3828", null ]
+      [ "Installation", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3821", [
+        [ "1. Clone the Repository", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3822", null ],
+        [ "2. Platform-Specific Setup", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3823", [
+          [ "Linux (Ubuntu/Debian)", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3824", null ],
+          [ "macOS", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3825", null ],
+          [ "Windows", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3826", null ]
         ] ],
-        [ "3. Build the System", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3829", [
-          [ "Quick Build (Recommended)", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3830", null ],
-          [ "Custom Build Options", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3831", null ]
+        [ "3. Build the System", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3827", [
+          [ "Quick Build (Recommended)", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3828", null ],
+          [ "Custom Build Options", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3829", null ]
         ] ],
-        [ "4. Verify Installation", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3832", null ]
+        [ "4. Verify Installation", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3830", null ]
       ] ],
-      [ "Quick Start", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3833", [
-        [ "1. Basic Message Bus Usage", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3834", null ],
-        [ "2. Container-Based Data Handling", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3835", null ],
-        [ "3. Network Client/Server", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3836", null ]
+      [ "Quick Start", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3831", [
+        [ "1. Basic Message Bus Usage", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3832", null ],
+        [ "2. Container-Based Data Handling", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3833", null ],
+        [ "3. Network Client/Server", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3834", null ]
       ] ],
-      [ "Basic Usage", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3837", [
-        [ "Project Structure", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3838", null ],
-        [ "Environment Configuration", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3839", null ],
-        [ "Basic Configuration File", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3840", null ]
+      [ "Basic Usage", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3835", [
+        [ "Project Structure", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3836", null ],
+        [ "Environment Configuration", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3837", null ],
+        [ "Basic Configuration File", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3838", null ]
       ] ],
-      [ "First Application", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3841", [
-        [ "1. Chat Server (chat_server.cpp)", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3842", null ],
-        [ "2. Build and Run", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3843", null ],
-        [ "3. Test with Sample Client", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3844", null ]
+      [ "First Application", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3839", [
+        [ "1. Chat Server (chat_server.cpp)", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3840", null ],
+        [ "2. Build and Run", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3841", null ],
+        [ "3. Test with Sample Client", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3842", null ]
       ] ],
-      [ "Next Steps", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3845", [
-        [ "1. Explore Sample Applications", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3846", null ],
-        [ "2. Advanced Features", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3847", null ],
-        [ "3. Development", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3848", null ],
-        [ "4. Community", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3849", null ]
+      [ "Next Steps", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3843", [
+        [ "1. Explore Sample Applications", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3844", null ],
+        [ "2. Advanced Features", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3845", null ],
+        [ "3. Development", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3846", null ],
+        [ "4. Community", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md3847", null ]
       ] ]
     ] ],
     [ "Performance Guide", "df/d94/md_docs_2performance.html", [
-      [ "Table of Contents", "df/d94/md_docs_2performance.html#autotoc_md3852", null ],
-      [ "Performance Overview", "df/d94/md_docs_2performance.html#autotoc_md3853", [
-        [ "Design Goals", "df/d94/md_docs_2performance.html#autotoc_md3854", null ],
-        [ "Key Performance Features", "df/d94/md_docs_2performance.html#autotoc_md3855", null ]
+      [ "Table of Contents", "df/d94/md_docs_2performance.html#autotoc_md3850", null ],
+      [ "Performance Overview", "df/d94/md_docs_2performance.html#autotoc_md3851", [
+        [ "Design Goals", "df/d94/md_docs_2performance.html#autotoc_md3852", null ],
+        [ "Key Performance Features", "df/d94/md_docs_2performance.html#autotoc_md3853", null ]
       ] ],
-      [ "Benchmark Results", "df/d94/md_docs_2performance.html#autotoc_md3856", [
-        [ "Test Environment", "df/d94/md_docs_2performance.html#autotoc_md3857", null ],
-        [ "Overall System Performance", "df/d94/md_docs_2performance.html#autotoc_md3858", null ],
-        [ "Latency Measurements", "df/d94/md_docs_2performance.html#autotoc_md3859", null ],
-        [ "Memory Performance", "df/d94/md_docs_2performance.html#autotoc_md3860", null ]
+      [ "Benchmark Results", "df/d94/md_docs_2performance.html#autotoc_md3854", [
+        [ "Test Environment", "df/d94/md_docs_2performance.html#autotoc_md3855", null ],
+        [ "Overall System Performance", "df/d94/md_docs_2performance.html#autotoc_md3856", null ],
+        [ "Latency Measurements", "df/d94/md_docs_2performance.html#autotoc_md3857", null ],
+        [ "Memory Performance", "df/d94/md_docs_2performance.html#autotoc_md3858", null ]
       ] ],
-      [ "Component Performance", "df/d94/md_docs_2performance.html#autotoc_md3861", [
-        [ "Thread System Performance", "df/d94/md_docs_2performance.html#autotoc_md3862", [
-          [ "Lock-free vs Mutex Comparison", "df/d94/md_docs_2performance.html#autotoc_md3863", null ],
-          [ "Scaling Characteristics", "df/d94/md_docs_2performance.html#autotoc_md3864", null ]
+      [ "Component Performance", "df/d94/md_docs_2performance.html#autotoc_md3859", [
+        [ "Thread System Performance", "df/d94/md_docs_2performance.html#autotoc_md3860", [
+          [ "Lock-free vs Mutex Comparison", "df/d94/md_docs_2performance.html#autotoc_md3861", null ],
+          [ "Scaling Characteristics", "df/d94/md_docs_2performance.html#autotoc_md3862", null ]
         ] ],
-        [ "Container System Performance", "df/d94/md_docs_2performance.html#autotoc_md3865", [
-          [ "Serialization Performance", "df/d94/md_docs_2performance.html#autotoc_md3866", null ],
-          [ "SIMD Optimization Impact", "df/d94/md_docs_2performance.html#autotoc_md3867", null ]
+        [ "Container System Performance", "df/d94/md_docs_2performance.html#autotoc_md3863", [
+          [ "Serialization Performance", "df/d94/md_docs_2performance.html#autotoc_md3864", null ],
+          [ "SIMD Optimization Impact", "df/d94/md_docs_2performance.html#autotoc_md3865", null ]
         ] ],
-        [ "Network System Performance", "df/d94/md_docs_2performance.html#autotoc_md3868", [
-          [ "Connection Scaling", "df/d94/md_docs_2performance.html#autotoc_md3869", null ],
-          [ "Protocol Overhead", "df/d94/md_docs_2performance.html#autotoc_md3870", null ]
+        [ "Network System Performance", "df/d94/md_docs_2performance.html#autotoc_md3866", [
+          [ "Connection Scaling", "df/d94/md_docs_2performance.html#autotoc_md3867", null ],
+          [ "Protocol Overhead", "df/d94/md_docs_2performance.html#autotoc_md3868", null ]
         ] ],
-        [ "Database System Performance", "df/d94/md_docs_2performance.html#autotoc_md3871", [
-          [ "Query Performance", "df/d94/md_docs_2performance.html#autotoc_md3872", null ],
-          [ "Connection Pool Impact", "df/d94/md_docs_2performance.html#autotoc_md3873", null ]
+        [ "Database System Performance", "df/d94/md_docs_2performance.html#autotoc_md3869", [
+          [ "Query Performance", "df/d94/md_docs_2performance.html#autotoc_md3870", null ],
+          [ "Connection Pool Impact", "df/d94/md_docs_2performance.html#autotoc_md3871", null ]
         ] ]
       ] ],
-      [ "Optimization Techniques", "df/d94/md_docs_2performance.html#autotoc_md3874", [
-        [ "1. Memory Optimization", "df/d94/md_docs_2performance.html#autotoc_md3875", [
-          [ "Object Pooling", "df/d94/md_docs_2performance.html#autotoc_md3876", null ],
-          [ "Custom Allocators", "df/d94/md_docs_2performance.html#autotoc_md3877", null ]
+      [ "Optimization Techniques", "df/d94/md_docs_2performance.html#autotoc_md3872", [
+        [ "1. Memory Optimization", "df/d94/md_docs_2performance.html#autotoc_md3873", [
+          [ "Object Pooling", "df/d94/md_docs_2performance.html#autotoc_md3874", null ],
+          [ "Custom Allocators", "df/d94/md_docs_2performance.html#autotoc_md3875", null ]
         ] ],
-        [ "2. CPU Optimization", "df/d94/md_docs_2performance.html#autotoc_md3878", [
-          [ "SIMD Utilization", "df/d94/md_docs_2performance.html#autotoc_md3879", null ],
-          [ "Cache Optimization", "df/d94/md_docs_2performance.html#autotoc_md3880", null ]
+        [ "2. CPU Optimization", "df/d94/md_docs_2performance.html#autotoc_md3876", [
+          [ "SIMD Utilization", "df/d94/md_docs_2performance.html#autotoc_md3877", null ],
+          [ "Cache Optimization", "df/d94/md_docs_2performance.html#autotoc_md3878", null ]
         ] ],
-        [ "3. Network Optimization", "df/d94/md_docs_2performance.html#autotoc_md3881", [
-          [ "Batching and Pipelining", "df/d94/md_docs_2performance.html#autotoc_md3882", null ]
+        [ "3. Network Optimization", "df/d94/md_docs_2performance.html#autotoc_md3879", [
+          [ "Batching and Pipelining", "df/d94/md_docs_2performance.html#autotoc_md3880", null ]
         ] ]
       ] ],
-      [ "Performance Monitoring", "df/d94/md_docs_2performance.html#autotoc_md3883", [
-        [ "1. Built-in Metrics", "df/d94/md_docs_2performance.html#autotoc_md3884", null ],
-        [ "2. Performance Profiling", "df/d94/md_docs_2performance.html#autotoc_md3885", null ]
+      [ "Performance Monitoring", "df/d94/md_docs_2performance.html#autotoc_md3881", [
+        [ "1. Built-in Metrics", "df/d94/md_docs_2performance.html#autotoc_md3882", null ],
+        [ "2. Performance Profiling", "df/d94/md_docs_2performance.html#autotoc_md3883", null ]
       ] ],
-      [ "Tuning Guidelines", "df/d94/md_docs_2performance.html#autotoc_md3886", [
-        [ "1. Thread Configuration", "df/d94/md_docs_2performance.html#autotoc_md3887", null ],
-        [ "2. Memory Configuration", "df/d94/md_docs_2performance.html#autotoc_md3888", null ],
-        [ "3. Network Configuration", "df/d94/md_docs_2performance.html#autotoc_md3889", null ]
+      [ "Tuning Guidelines", "df/d94/md_docs_2performance.html#autotoc_md3884", [
+        [ "1. Thread Configuration", "df/d94/md_docs_2performance.html#autotoc_md3885", null ],
+        [ "2. Memory Configuration", "df/d94/md_docs_2performance.html#autotoc_md3886", null ],
+        [ "3. Network Configuration", "df/d94/md_docs_2performance.html#autotoc_md3887", null ]
       ] ],
-      [ "Troubleshooting Performance Issues", "df/d94/md_docs_2performance.html#autotoc_md3890", [
-        [ "1. Common Performance Problems", "df/d94/md_docs_2performance.html#autotoc_md3891", [
-          [ "High CPU Usage", "df/d94/md_docs_2performance.html#autotoc_md3892", null ],
-          [ "Memory Leaks", "df/d94/md_docs_2performance.html#autotoc_md3893", null ],
-          [ "Network Bottlenecks", "df/d94/md_docs_2performance.html#autotoc_md3894", null ]
+      [ "Troubleshooting Performance Issues", "df/d94/md_docs_2performance.html#autotoc_md3888", [
+        [ "1. Common Performance Problems", "df/d94/md_docs_2performance.html#autotoc_md3889", [
+          [ "High CPU Usage", "df/d94/md_docs_2performance.html#autotoc_md3890", null ],
+          [ "Memory Leaks", "df/d94/md_docs_2performance.html#autotoc_md3891", null ],
+          [ "Network Bottlenecks", "df/d94/md_docs_2performance.html#autotoc_md3892", null ]
         ] ],
-        [ "2. Performance Monitoring Dashboard", "df/d94/md_docs_2performance.html#autotoc_md3895", null ]
+        [ "2. Performance Monitoring Dashboard", "df/d94/md_docs_2performance.html#autotoc_md3893", null ]
       ] ]
     ] ],
     [ "Troubleshooting Guide", "d4/d2f/md_docs_2TROUBLESHOOTING.html", [
-      [ "Table of Contents", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3912", null ],
-      [ "FAQ", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3913", [
-        [ "General Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3914", null ],
-        [ "Performance Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3915", null ],
-        [ "Configuration Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3916", null ]
+      [ "Table of Contents", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3910", null ],
+      [ "FAQ", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3911", [
+        [ "General Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3912", null ],
+        [ "Performance Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3913", null ],
+        [ "Configuration Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3914", null ]
       ] ],
-      [ "Debug Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3917", [
-        [ "Enable Debug Logging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3918", [
-          [ "Runtime Configuration", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3919", null ],
-          [ "Environment Variables", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3920", null ],
-          [ "Programmatic", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3921", null ]
+      [ "Debug Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3915", [
+        [ "Enable Debug Logging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3916", [
+          [ "Runtime Configuration", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3917", null ],
+          [ "Environment Variables", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3918", null ],
+          [ "Programmatic", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3919", null ]
         ] ],
-        [ "Using GDB for Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3922", [
-          [ "Attach to Running Process", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3923", null ],
-          [ "Debug Core Dumps", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3924", null ]
+        [ "Using GDB for Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3920", [
+          [ "Attach to Running Process", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3921", null ],
+          [ "Debug Core Dumps", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3922", null ]
         ] ],
-        [ "Memory Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3925", [
-          [ "Using Valgrind", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3926", null ],
-          [ "Using AddressSanitizer", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3927", null ],
-          [ "Using HeapTrack", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3928", null ]
+        [ "Memory Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3923", [
+          [ "Using Valgrind", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3924", null ],
+          [ "Using AddressSanitizer", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3925", null ],
+          [ "Using HeapTrack", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3926", null ]
         ] ],
-        [ "Network Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3929", [
-          [ "TCP Dump", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3930", null ],
-          [ "Network Statistics", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3931", null ],
-          [ "Test Connectivity", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3932", null ]
+        [ "Network Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3927", [
+          [ "TCP Dump", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3928", null ],
+          [ "Network Statistics", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3929", null ],
+          [ "Test Connectivity", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3930", null ]
         ] ],
-        [ "Thread Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3933", [
-          [ "Thread Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3934", null ],
-          [ "Detect Deadlocks", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3935", null ],
-          [ "ThreadSanitizer", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3936", null ]
+        [ "Thread Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3931", [
+          [ "Thread Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3932", null ],
+          [ "Detect Deadlocks", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3933", null ],
+          [ "ThreadSanitizer", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3934", null ]
         ] ],
-        [ "Tracing and Profiling", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3937", [
-          [ "System Tracing with strace", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3938", null ],
-          [ "Performance Profiling with perf", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3939", null ],
-          [ "Application Tracing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3940", null ]
+        [ "Tracing and Profiling", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3935", [
+          [ "System Tracing with strace", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3936", null ],
+          [ "Performance Profiling with perf", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3937", null ],
+          [ "Application Tracing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3938", null ]
         ] ]
       ] ],
-      [ "Performance Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3941", [
-        [ "CPU Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3942", [
-          [ "Identify CPU Bottlenecks", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3943", null ],
-          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3944", null ]
+      [ "Performance Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3939", [
+        [ "CPU Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3940", [
+          [ "Identify CPU Bottlenecks", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3941", null ],
+          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3942", null ]
         ] ],
-        [ "Memory Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3945", [
-          [ "Memory Usage Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3946", null ],
-          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3947", null ]
+        [ "Memory Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3943", [
+          [ "Memory Usage Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3944", null ],
+          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3945", null ]
         ] ],
-        [ "I/O Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3948", [
-          [ "Disk I/O Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3949", null ],
-          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3950", null ]
+        [ "I/O Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3946", [
+          [ "Disk I/O Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3947", null ],
+          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3948", null ]
         ] ],
-        [ "Network Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3951", [
-          [ "Network Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3952", null ],
-          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3953", null ]
+        [ "Network Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3949", [
+          [ "Network Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3950", null ],
+          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3951", null ]
         ] ]
       ] ],
-      [ "Known Issues", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3954", [
-        [ "Issue 1: High CPU Usage with Small Messages", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3955", null ],
-        [ "Issue 2: Memory Leak in Long-Running Connections", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3956", null ],
-        [ "Issue 3: Database Connection Pool Exhaustion", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3957", null ],
-        [ "Issue 4: Deadlock in Message Processing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3958", null ],
-        [ "Issue 5: Performance Degradation with Many Topics", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3959", null ]
+      [ "Known Issues", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3952", [
+        [ "Issue 1: High CPU Usage with Small Messages", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3953", null ],
+        [ "Issue 2: Memory Leak in Long-Running Connections", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3954", null ],
+        [ "Issue 3: Database Connection Pool Exhaustion", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3955", null ],
+        [ "Issue 4: Deadlock in Message Processing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3956", null ],
+        [ "Issue 5: Performance Degradation with Many Topics", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3957", null ]
       ] ],
-      [ "Error Messages", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3960", [
-        [ "Connection Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3961", [
-          [ "\"Connection refused\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3962", null ],
-          [ "\"Connection timeout\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3963", null ]
+      [ "Error Messages", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3958", [
+        [ "Connection Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3959", [
+          [ "\"Connection refused\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3960", null ],
+          [ "\"Connection timeout\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3961", null ]
         ] ],
-        [ "Database Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3964", [
-          [ "\"Database connection failed\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3965", null ],
-          [ "\"Deadlock detected\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3966", null ]
+        [ "Database Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3962", [
+          [ "\"Database connection failed\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3963", null ],
+          [ "\"Deadlock detected\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3964", null ]
         ] ],
-        [ "Memory Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3967", [
-          [ "\"Out of memory\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3968", null ],
-          [ "\"Segmentation fault\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3969", null ]
+        [ "Memory Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3965", [
+          [ "\"Out of memory\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3966", null ],
+          [ "\"Segmentation fault\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3967", null ]
         ] ]
       ] ],
-      [ "Common Problems", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3970", [
-        [ "Problem: Service Won't Start", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3971", null ],
-        [ "Problem: Slow Message Processing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3972", null ],
-        [ "Problem: Connection Drops", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3973", null ],
-        [ "Problem: High Memory Usage", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3974", null ],
-        [ "Problem: Database Bottleneck", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3975", null ]
+      [ "Common Problems", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3968", [
+        [ "Problem: Service Won't Start", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3969", null ],
+        [ "Problem: Slow Message Processing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3970", null ],
+        [ "Problem: Connection Drops", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3971", null ],
+        [ "Problem: High Memory Usage", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3972", null ],
+        [ "Problem: Database Bottleneck", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md3973", null ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
@@ -3835,7 +3835,7 @@ var NAVTREEINDEX =
 "d1/dd2/md_libraries_2container__system_2performance.html#autotoc_md307",
 "d2/d12/structmonitoring__system_1_1metric__export__config.html#a370e2744af080431d50209043dcd7ffe",
 "d2/d43/classkcenon_1_1thread_1_1service__container.html#a728db07e25fd75d91b143930b9df1870a2ed500a3529637175e675a8791b7c56e",
-"d2/d64/md_docs_2architecture.html#autotoc_md3626",
+"d2/d64/md_docs_2architecture.html#autotoc_md3624",
 "d2/d97/namespacekcenon_1_1messaging_1_1routing.html#acbb9d2cb916452bc9b770494271e5ef4",
 "d2/db7/classkcenon_1_1thread_1_1pool__future.html#a7e06ca38df68ce515f6e8b9d343e7ff8",
 "d2/dd4/circuit__breaker_8h.html#a7a24f62ead93706e63e061d5e99e9556a349e686330723975502e9ef4f939a5ac",
@@ -3882,39 +3882,39 @@ var NAVTREEINDEX =
 "d9/de0/test__health__monitoring_8cpp.html#a2d4d49961c998aa224ae97b85037df2b",
 "da/d0c/md_libraries_2network__system_2docs_2CHANGELOG.html#autotoc_md2170",
 "da/d4a/container__system_2utilities_2core_2formatter_8h_source.html",
-"da/d71/classContainerServiceTest.html#a49408a132e0b9621a324b342a899c9ae",
-"da/db5/structmonitoring__system_1_1stream__aggregator__config.html#a3d82010a1115774055dc10947c39182f",
-"da/dd4/classLegacyServer.html#a03159178e960a05acaa604c020335b85",
-"da/df9/classmonitoring__system_1_1trace__exporter__interface.html#aedd0e014a834cb42a3e3ae60bc2980c1",
-"db/d31/structmonitoring__system_1_1health__check__event_1_1health__check__result.html#af0bba77718e00cfdf1b9154fe8efdecd",
-"db/d79/classkcenon_1_1monitoring_1_1web_1_1DashboardServer.html#ab70e0212608e06f0c8d640982095ce73",
-"db/d9b/namespacekcenon_1_1thread_1_1detail.html#ae4d9687b75fc46506842048bf764eca8",
-"db/db4/classkcenon_1_1monitoring_1_1web_1_1MetricAPI.html#a576f51b009185e1235bd6dc6169e0bf8",
-"db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md101",
-"db/dfe/classcontainer__module_1_1simd_1_1simd__processor.html#aaac47079ef7d3c54976afbc206a06260",
-"dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#ab6fa492e532536018d9b61bf337cf766",
-"dc/d53/classmonitoring__system_1_1distributed__tracer.html#a03f453048aeeb815ff13e64eec3c6cd9",
-"dc/d84/logger__system_2examples_2crash__protection_2main_8cpp.html#a613f5438c7fb32191a2dc5b4a21c1b19",
-"dc/de1/classkcenon_1_1logger_1_1memory_1_1object__pool.html#aea5057e4a38092e0b567978397e6df7b",
-"dd/d10/structkcenon_1_1messaging_1_1core_1_1message__bus_1_1statistics.html#ac9ea14b4f8468d8b546356f2580761db",
-"dd/d38/structdatabase_1_1security_1_1audit__log__entry.html#a691f8ac3a99110e342d8a74ca66c2c88",
-"dd/d6d/md_libraries_2monitoring__system_2docs_2API__REFERENCE.html#autotoc_md1483",
-"dd/d98/classmonitoring__system_1_1adaptive__monitor.html#ae50bdbd9fbef07b5f8a538dd68d8c2b0",
-"dd/dd5/classkcenon_1_1logger_1_1logger.html#a172f074ac33f7b8f6fd531c556764b3b",
-"de/d01/include_2kcenon_2thread_2core_2error__handling_8h.html#a20e1d8b59344b87a5dc3a46603607a23a4e44c97a51e5519cd277f335de285ead",
-"de/d1b/md_libraries_2monitoring__system_2docs_2PHASE3.html#autotoc_md1830",
-"de/d3f/namespacemonitoring__system.html#a22dca6fa0d74ff9143a6386fbd724eccaa3e737a90e4c67df71574f314e530060",
-"de/d3f/namespacemonitoring__system.html#aef92b8e2bf6dec9fa51b05c2c7016ff9acd69b4957f06cd818d7bf3d61980e291",
-"de/d62/namespacekcenon_1_1messaging_1_1persistence.html#afc4b8ee2b78e4b968103c167e8f8af9c",
-"de/d92/structnetwork__system_1_1integration_1_1thread__integration__manager_1_1metrics.html#a5691cc3dc66a3d7cb6174968ad1e5e86",
-"de/dc4/classcontainer__module_1_1numeric__value.html#a698767795f433f2a27d4dfdfa270e03a",
-"de/dfb/structdatabase_1_1security_1_1security__credentials.html#ac8cd34ca7897f85c857cfc9c33f82dee",
-"df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3694",
-"df/d75/classkcenon_1_1messaging_1_1services_1_1logging_1_1logging__service__adapter.html#a781cd946c46531a78c6c7e88c0b1cbad",
-"df/da0/structkcenon_1_1monitoring_1_1web_1_1Route.html#a4bf37f56af108b77fe532e11f63218dc",
-"df/dd6/md_libraries_2database__system_2docs_2SAMPLES__GUIDE.html#autotoc_md754",
-"df/dfe/test__type_8h.html#ad32194f99371a0d604b0d5676eb17ddea2ad9d63b69c4a10a5cc9cad923133bc4",
-"functions.html"
+"da/d71/classContainerServiceTest.html#a7fbebb95bb41910285cfdf7348355467",
+"da/db5/structmonitoring__system_1_1stream__aggregator__config.html#a57eb53b1f197aadcb97f286ce36d296f",
+"da/dd4/classLegacyServer.html#adb21f539d8f2561df5869ed7e2975fdd",
+"da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp.html#a0a5e349cd4df2a927eea49a8c8201682",
+"db/d32/structmonitoring__system_1_1distributed__tracer_1_1tracer__impl.html",
+"db/d79/classkcenon_1_1monitoring_1_1web_1_1DashboardServer.html#ab8d1068b206fc2e2731147537ec27350",
+"db/d9d/job__queue_8h.html",
+"db/db4/classkcenon_1_1monitoring_1_1web_1_1MetricAPI.html#a586409f86268c664859062fc50bcee9a",
+"db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md103",
+"db/dfe/classcontainer__module_1_1simd_1_1simd__processor.html#ab0208489892cdf3f339673f809f58e94",
+"dc/d1d/structmonitoring__system_1_1thread__pool__metric__event_1_1thread__pool__stats.html",
+"dc/d53/classmonitoring__system_1_1distributed__tracer.html#a045ec3ba7fe673fba317c2ccaf050e28",
+"dc/d84/logger__system_2examples_2crash__protection_2main_8cpp.html#a7a3108b0d92c1b74b8bdece3c1f7cc76",
+"dc/de4/include_2network__system_2core_2messaging__server_8h.html",
+"dd/d14/structmonitoring__system_1_1adaptive__monitor_1_1monitor__impl_1_1collector__info.html",
+"dd/d38/structdatabase_1_1security_1_1audit__log__entry.html#a9c378fe0939caaf72cd9d0e68f3d0fb4",
+"dd/d6d/md_libraries_2monitoring__system_2docs_2API__REFERENCE.html#autotoc_md1487",
+"dd/d98/classmonitoring__system_1_1adaptive__monitor.html#af6dc528a652931ecc1125c6a5c98f9ee",
+"dd/dd5/classkcenon_1_1logger_1_1logger.html#a19f45e20be4cbbc578c1d8e38ad7b5c5",
+"de/d01/include_2kcenon_2thread_2core_2error__handling_8h.html#a20e1d8b59344b87a5dc3a46603607a23a50cecda0eb9fb6cc7ce9e83a1fde99a6",
+"de/d1b/md_libraries_2monitoring__system_2docs_2PHASE3.html#autotoc_md1832",
+"de/d3f/namespacemonitoring__system.html#a22dca6fa0d74ff9143a6386fbd724eccaaf768e3c117a3edcb1ab8aea22c276dc",
+"de/d3f/namespacemonitoring__system.html#af0289a7f100a6ae6a2507d37156cd416a2c127bf32ccb4edf2bf22fea5a00e494",
+"de/d62/namespacekcenon_1_1messaging_1_1persistence.html#afc4b8ee2b78e4b968103c167e8f8af9ca2cea8148518550b5aacb9cc4150a3178",
+"de/d92/structnetwork__system_1_1integration_1_1thread__integration__manager_1_1metrics.html#aa05ec5263cb298cd6dfcd1bcc9818770",
+"de/dc4/classcontainer__module_1_1numeric__value.html#a9481bd88e73920cbbb13cdd0ec2c34f2",
+"de/dfb/structdatabase_1_1security_1_1security__credentials.html#aea714c329da6246d063a54de4392fc10",
+"df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md3696",
+"df/d78/classkcenon_1_1messaging_1_1security_1_1security__manager.html",
+"df/da0/structkcenon_1_1monitoring_1_1web_1_1Route.html#a81f3e2d9640c1b206508d4d77e205bd7",
+"df/dd6/md_libraries_2database__system_2docs_2SAMPLES__GUIDE.html#autotoc_md758",
+"df/dfe/test__type_8h.html#afcaedff294183930d6c66d7d9a5cb96c",
+"functions_e.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

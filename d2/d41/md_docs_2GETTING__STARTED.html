@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d2/d41/md_docs_2GETTING__STARTED.html'
   <div class="headertitle"><div class="title">Getting Started</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md3817"></a> Welcome to the Messaging System! This guide will help you quickly set up and start using the high-performance C++20 distributed messaging framework.</p>
-<h1><a class="anchor" id="autotoc_md3818"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md3815"></a> Welcome to the Messaging System! This guide will help you quickly set up and start using the high-performance C++20 distributed messaging framework.</p>
+<h1><a class="anchor" id="autotoc_md3816"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Prerequisites</li>
@@ -104,9 +104,9 @@ Table of Contents</h1>
 <li>First Application</li>
 <li>Next Steps</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3819"></a>
+<h1><a class="anchor" id="autotoc_md3817"></a>
 Prerequisites</h1>
-<h2><a class="anchor" id="autotoc_md3820"></a>
+<h2><a class="anchor" id="autotoc_md3818"></a>
 System Requirements</h2>
 <ul>
 <li><b>Operating System</b>: Linux, macOS 10.15+, Windows 10+</li>
@@ -120,7 +120,7 @@ System Requirements</h2>
 <li><b>Memory</b>: Minimum 4GB RAM (8GB+ recommended for development)</li>
 <li><b>Disk Space</b>: 2GB for full build with dependencies</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3821"></a>
+<h2><a class="anchor" id="autotoc_md3819"></a>
 Development Dependencies</h2>
 <ul>
 <li><b>Git</b>: For cloning the repository and submodules</li>
@@ -128,7 +128,7 @@ Development Dependencies</h2>
 <li><b>PostgreSQL</b>: 12+ (optional, for database module)</li>
 <li><b>Python</b>: 3.8+ (optional, for Python bindings)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3822"></a>
+<h2><a class="anchor" id="autotoc_md3820"></a>
 Runtime Dependencies</h2>
 <p>The messaging system automatically manages most dependencies through vcpkg:</p>
 <ul>
@@ -137,9 +137,9 @@ Runtime Dependencies</h2>
 <li><b>Google Test</b>: Testing framework (development only)</li>
 <li><b>Google Benchmark</b>: Performance testing (development only)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3823"></a>
+<h1><a class="anchor" id="autotoc_md3821"></a>
 Installation</h1>
-<h2><a class="anchor" id="autotoc_md3824"></a>
+<h2><a class="anchor" id="autotoc_md3822"></a>
 1. Clone the Repository</h2>
 <div class="fragment"><div class="line"># Clone the main repository</div>
 <div class="line">git clone &lt;repository-url&gt; messaging_system</div>
@@ -147,9 +147,9 @@ Installation</h1>
 <div class="line"> </div>
 <div class="line"># Initialize submodules (includes thread_system and vcpkg)</div>
 <div class="line">git submodule update --init --recursive</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3825"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3823"></a>
 2. Platform-Specific Setup</h2>
-<h3><a class="anchor" id="autotoc_md3826"></a>
+<h3><a class="anchor" id="autotoc_md3824"></a>
 Linux (Ubuntu/Debian)</h3>
 <div class="fragment"><div class="line"># Install basic development tools</div>
 <div class="line">sudo apt update</div>
@@ -168,7 +168,7 @@ Linux (Ubuntu/Debian)</h3>
 <div class="line"> </div>
 <div class="line"># Install Python development headers (optional)</div>
 <div class="line">sudo apt install -y python3-dev python3-pip</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3827"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3825"></a>
 macOS</h3>
 <div class="fragment"><div class="line"># Install Xcode command line tools</div>
 <div class="line">xcode-select --install</div>
@@ -184,7 +184,7 @@ macOS</h3>
 <div class="line"> </div>
 <div class="line"># Install Python (optional)</div>
 <div class="line">brew install python@3.9</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3828"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3826"></a>
 Windows</h3>
 <ol type="1">
 <li><b>Install Visual Studio 2019 or later</b> with C++ development tools</li>
@@ -192,17 +192,17 @@ Windows</h3>
 <li><b>Install CMake</b> (3.16+) from <a href="https://cmake.org/download/">cmake.org</a></li>
 <li><b>Install PostgreSQL</b> (optional) from <a href="https://www.postgresql.org/download/windows/">postgresql.org</a></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3829"></a>
+<h2><a class="anchor" id="autotoc_md3827"></a>
 3. Build the System</h2>
 <p>The project includes automated build scripts for all platforms:</p>
-<h3><a class="anchor" id="autotoc_md3830"></a>
+<h3><a class="anchor" id="autotoc_md3828"></a>
 Quick Build (Recommended)</h3>
 <div class="fragment"><div class="line"># Build with default configuration</div>
 <div class="line">./build.sh</div>
 <div class="line"> </div>
 <div class="line"># On Windows (use PowerShell or Git Bash)</div>
 <div class="line">./build.bat</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3831"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3829"></a>
 Custom Build Options</h3>
 <div class="fragment"><div class="line"># Build with specific options</div>
 <div class="line">./build.sh --release --tests --python-bindings</div>
@@ -215,7 +215,7 @@ Custom Build Options</h3>
 <div class="line"># --python-bindings: Build Python bindings</div>
 <div class="line"># --no-database    : Skip database module</div>
 <div class="line"># --clean          : Clean before building</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3832"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3830"></a>
 4. Verify Installation</h2>
 <div class="fragment"><div class="line"># Check if build was successful</div>
 <div class="line">ls build/bin/</div>
@@ -227,9 +227,9 @@ Custom Build Options</h3>
 <div class="line"> </div>
 <div class="line"># Run sample application</div>
 <div class="line">./production_ready_example</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3833"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3831"></a>
 Quick Start</h1>
-<h2><a class="anchor" id="autotoc_md3834"></a>
+<h2><a class="anchor" id="autotoc_md3832"></a>
 1. Basic Message Bus Usage</h2>
 <p>Create a simple messaging application:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -268,7 +268,7 @@ Quick Start</h1>
 <div class="ttc" id="amessage__bus_8h_html"><div class="ttname"><a href="../../d9/d29/message__bus_8h.html">message_bus.h</a></div></div>
 <div class="ttc" id="astructkcenon_1_1messaging_1_1core_1_1message__payload_html"><div class="ttname"><a href="../../d9/d87/structkcenon_1_1messaging_1_1core_1_1message__payload.html">kcenon::messaging::core::message_payload</a></div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00064">message_types.h:64</a></div></div>
 <div class="ttc" id="astructkcenon_1_1messaging_1_1core_1_1message__payload_html_a9daa7c303354b40b10f08887097f122a"><div class="ttname"><a href="../../d9/d87/structkcenon_1_1messaging_1_1core_1_1message__payload.html#a9daa7c303354b40b10f08887097f122a">kcenon::messaging::core::message_payload::set</a></div><div class="ttdeci">void set(const std::string &amp;key, const T &amp;value)</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00071">message_types.h:71</a></div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3835"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3833"></a>
 2. Container-Based Data Handling</h2>
 <p>Work with type-safe containers:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;container/container.h&gt;</span></div>
@@ -306,7 +306,7 @@ Quick Start</h1>
 <div class="ttc" id="aclasscontainer__module_1_1numeric__value_html"><div class="ttname"><a href="../../de/dc4/classcontainer__module_1_1numeric__value.html">container_module::numeric_value</a></div><div class="ttdoc">A template class for storing and converting numeric types (integral or floating).</div><div class="ttdef"><b>Definition</b> <a href="../../d6/df0/numeric__value_8h_source.html#l00054">numeric_value.h:55</a></div></div>
 <div class="ttc" id="aclasscontainer__module_1_1string__value_html"><div class="ttname"><a href="../../d5/d22/classcontainer__module_1_1string__value.html">container_module::string_value</a></div><div class="ttdoc">A specialized value for storing textual data.</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d41/string__value_8h_source.html#l00043">string_value.h:44</a></div></div>
 <div class="ttc" id="anamespacecontainer__module_html"><div class="ttname"><a href="../../d1/d1a/namespacecontainer__module.html">container_module</a></div><div class="ttdef"><b>Definition</b> <a href="../../d3/dda/container_8cpp_source.html#l00051">container.cpp:52</a></div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3836"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3834"></a>
 3. Network Client/Server</h2>
 <p>Set up basic networking:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;network/messaging_server.h&gt;</span></div>
@@ -355,9 +355,9 @@ Quick Start</h1>
 <div class="ttc" id="anamespacemonitoring__system_html_a85c35f5354bb46fdd8f4e39a0aa37c9ea62608e08adc29a8d6dbc9754e659f125"><div class="ttname"><a href="../../de/d3f/namespacemonitoring__system.html#a85c35f5354bb46fdd8f4e39a0aa37c9ea62608e08adc29a8d6dbc9754e659f125">monitoring_system::otel_span_kind::client</a></div><div class="ttdeci">@ client</div></div>
 <div class="ttc" id="anamespacemonitoring__system_html_a85c35f5354bb46fdd8f4e39a0aa37c9eacf1e8c14e54505f60aa10ceb8d5d8ab3"><div class="ttname"><a href="../../de/d3f/namespacemonitoring__system.html#a85c35f5354bb46fdd8f4e39a0aa37c9eacf1e8c14e54505f60aa10ceb8d5d8ab3">monitoring_system::otel_span_kind::server</a></div><div class="ttdeci">@ server</div></div>
 <div class="ttc" id="anamespacenetwork__module_html"><div class="ttname"><a href="../../d1/df3/namespacenetwork__module.html">network_module</a></div><div class="ttdoc">Main namespace for all network-related functionality.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/ddf/network__system_2include_2network__system_2compatibility_8h_source.html#l00023">compatibility.h:23</a></div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3837"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3835"></a>
 Basic Usage</h1>
-<h2><a class="anchor" id="autotoc_md3838"></a>
+<h2><a class="anchor" id="autotoc_md3836"></a>
 Project Structure</h2>
 <p>Create a basic CMake project that uses the messaging system:</p>
 <div class="fragment"><div class="line"># CMakeLists.txt</div>
@@ -380,7 +380,7 @@ Project Structure</h2>
 <div class="line">    messaging_system::database</div>
 <div class="line">    messaging_system::thread_system</div>
 <div class="line">)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3839"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3837"></a>
 Environment Configuration</h2>
 <p>Set up environment variables for database connections:</p>
 <div class="fragment"><div class="line"># Database configuration</div>
@@ -397,7 +397,7 @@ Environment Configuration</h2>
 <div class="line"># Performance tuning</div>
 <div class="line">export THREAD_POOL_SIZE=8</div>
 <div class="line">export MESSAGE_BUFFER_SIZE=1048576</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3840"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3838"></a>
 Basic Configuration File</h2>
 <p>Create a configuration file for your application:</p>
 <div class="fragment"><div class="line">{</div>
@@ -424,10 +424,10 @@ Basic Configuration File</h2>
 <div class="line">    &quot;max_file_size&quot;: &quot;100MB&quot;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3841"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3839"></a>
 First Application</h1>
 <p>Let's build a complete chat server application:</p>
-<h2><a class="anchor" id="autotoc_md3842"></a>
+<h2><a class="anchor" id="autotoc_md3840"></a>
 1. Chat Server (chat_server.cpp)</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
@@ -548,7 +548,7 @@ First Application</h1>
 <div class="ttc" id="aclassnetwork__system_1_1core_1_1messaging__server_html"><div class="ttname"><a href="../../df/d9d/classnetwork__system_1_1core_1_1messaging__server.html">network_system::core::messaging_server</a></div><div class="ttdoc">A server class that manages incoming TCP connections, creating messaging_session instances for each a...</div><div class="ttdef"><b>Definition</b> <a href="../../d0/db0/core_2messaging__server_8h_source.html#l00091">messaging_server.h:93</a></div></div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_1_1core_html_accdec513cff0fa75c42e41e381b490a4ab605ea609b9dfcf295cfd5a7803dcd37"><div class="ttname"><a href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ab605ea609b9dfcf295cfd5a7803dcd37">kcenon::messaging::core::message_type::broadcast</a></div><div class="ttdeci">@ broadcast</div></div>
 <div class="ttc" id="anamespacemonitoring__system_html_a8e692c8ceac634f141c23c45c3491aa8a5f0b6ebc4bea10285ba2b8a6ce78b863"><div class="ttname"><a href="../../de/d3f/namespacemonitoring__system.html#a8e692c8ceac634f141c23c45c3491aa8a5f0b6ebc4bea10285ba2b8a6ce78b863">monitoring_system::otel_resource_type::container</a></div><div class="ttdeci">@ container</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3843"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3841"></a>
 2. Build and Run</h2>
 <div class="fragment"><div class="line"># Add to CMakeLists.txt</div>
 <div class="line">add_executable(chat_server chat_server.cpp)</div>
@@ -562,16 +562,16 @@ First Application</h1>
 <div class="line"> </div>
 <div class="line"># Run</div>
 <div class="line">./build/bin/chat_server</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3844"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3842"></a>
 3. Test with Sample Client</h2>
 <div class="fragment"><div class="line"># Use the provided sample client</div>
 <div class="line">./build/bin/chat_client</div>
 <div class="line"> </div>
 <div class="line"># Or test with telnet</div>
 <div class="line">telnet localhost 8080</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3845"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3843"></a>
 Next Steps</h1>
-<h2><a class="anchor" id="autotoc_md3846"></a>
+<h2><a class="anchor" id="autotoc_md3844"></a>
 1. Explore Sample Applications</h2>
 <p>Check out the comprehensive examples in <code>application_layer/samples/</code>:</p>
 <div class="fragment"><div class="line"># IoT monitoring system</div>
@@ -582,7 +582,7 @@ Next Steps</h1>
 <div class="line"> </div>
 <div class="line"># Microservices orchestrator</div>
 <div class="line">./build/bin/microservices_orchestrator</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3847"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3845"></a>
 2. Advanced Features</h2>
 <ul>
 <li><b>Database Integration</b>: See <a class="el" href="../..//home/runner/work/messaging_system/messaging_system/libraries/database_system/README.md#md_libraries_2database__system_2README">Database System</a></li>
@@ -590,14 +590,14 @@ Next Steps</h1>
 <li><b>Production Deployment</b>: Follow Deployment Guide</li>
 <li><b>Python Integration</b>: Explore Python bindings</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3848"></a>
+<h2><a class="anchor" id="autotoc_md3846"></a>
 3. Development</h2>
 <ul>
 <li><b>API Reference</b>: Complete documentation in API Reference</li>
 <li><b>Architecture</b>: System design in <a class="el" href="../../d2/d64/md_docs_2architecture.html">Architecture</a></li>
 <li><b>Contributing</b>: Guidelines in Developer Guide</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3849"></a>
+<h2><a class="anchor" id="autotoc_md3847"></a>
 4. Community</h2>
 <ul>
 <li><b>GitHub Repository</b>: Source code, issues, and discussions</li>

@@ -98,9 +98,7 @@ var annotated_dup =
       [ "sqlite_manager", "d9/d69/classdatabase_1_1sqlite__manager.html", "d9/d69/classdatabase_1_1sqlite__manager" ]
     ] ],
     [ "fmt", null, [
-      [ "formatter< kcenon::thread::thread_conditions >", "da/d65/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_01_4.html", "da/d65/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__conditions_01_4" ],
       [ "formatter< kcenon::thread::thread_pool >", "d2/deb/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_01_4.html", "d2/deb/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__pool_01_4" ],
-      [ "formatter< kcenon::thread::thread_worker >", "de/d99/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_01_4.html", "de/d99/structfmt_1_1formatter_3_01kcenon_1_1thread_1_1thread__worker_01_4" ],
       [ "formatter< test_priority >", "d0/d48/structfmt_1_1formatter_3_01test__priority_01_4.html", "d0/d48/structfmt_1_1formatter_3_01test__priority_01_4" ],
       [ "formatter< test_priority, wchar_t >", "d4/d08/structfmt_1_1formatter_3_01test__priority_00_01wchar__t_01_4.html", "d4/d08/structfmt_1_1formatter_3_01test__priority_00_01wchar__t_01_4" ],
       [ "formatter< typed_kcenon::thread::job_types >", "da/d05/structfmt_1_1formatter_3_01typed__kcenon_1_1thread_1_1job__types_01_4.html", "da/d05/structfmt_1_1formatter_3_01typed__kcenon_1_1thread_1_1job__types_01_4" ],

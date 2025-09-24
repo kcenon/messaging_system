@@ -14,6 +14,6 @@ var searchData=
   ['9_20budget_20tracking_11',['9. Budget Tracking',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md246',1,'']]],
   ['9_20limitations_20future_20enhancements_12',['9. Limitations &amp; Future Enhancements',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md187',1,'']]],
   ['9_20migration_20strategy_13',['9. Migration Strategy',['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md127',1,'']]],
-  ['9_20observer_20pattern_14',['9. Observer Pattern',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3749',1,'']]],
+  ['9_20observer_20pattern_14',['9. Observer Pattern',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3747',1,'']]],
   ['9_20risk_20management_15',['9. Risk Management',['../d0/df8/md_libraries_2thread__system_2docs_2DESIGN__IMPROVEMENTS.html#autotoc_md2925',1,'']]]
 ];

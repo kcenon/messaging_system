@@ -219,18 +219,18 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><p>String conversion utilities. </p>
 <p>Provides utilities for string encoding conversion, Base64 encoding/decoding, and substring operations like splitting or replacing.</p>
 <p>This class relies on platform-specific APIs or <code>iconv</code> (when available) to convert strings between different encodings such as UTF-8, UTF-16, UTF-32, and the local system encoding. It also provides methods to handle Base64 encoding/decoding and some basic string manipulation (split, replace).</p>
-<h3><a class="anchor" id="autotoc_md3374"></a>
+<h3><a class="anchor" id="autotoc_md3372"></a>
 Encoding Conversions</h3>
 <ul>
 <li>Typically returns a tuple containing either a successful result (<code>std::optional&lt;T&gt;</code>) and an empty error (<code>std::nullopt</code>), or <code>std::nullopt</code> with an error message describing the failure.</li>
 <li>BOM (Byte Order Mark) is handled in certain functions for UTF-8, UTF-16, and UTF-32.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3375"></a>
+<h3><a class="anchor" id="autotoc_md3373"></a>
 Base64</h3>
 <ul>
 <li>Encodes and decodes raw byte arrays (<code>std::vector&lt;uint8_t&gt;</code>).</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3376"></a>
+<h3><a class="anchor" id="autotoc_md3374"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// Converting a wstring to system-encoded string</span></div>
 <div class="line"><span class="keyword">auto</span> [strOpt, errMsg] = convert_string::to_string(L<span class="stringliteral">&quot;안녕하세요&quot;</span>);</div>
@@ -240,18 +240,18 @@ Usage Example</h3>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Converted string: &quot;</span> &lt;&lt; *strOpt &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This class relies on platform-specific APIs or <code>iconv</code> (when available) to convert strings between different encodings such as UTF-8, UTF-16, UTF-32, and the local system encoding. It also provides methods to handle Base64 encoding/decoding and some basic string manipulation (split, replace).</p>
-<h3><a class="anchor" id="autotoc_md3508"></a>
+<h3><a class="anchor" id="autotoc_md3506"></a>
 Encoding Conversions</h3>
 <ul>
 <li>Typically returns a tuple containing either a successful result (<code>std::optional&lt;T&gt;</code>) and an empty error (<code>std::nullopt</code>), or <code>std::nullopt</code> with an error message describing the failure.</li>
 <li>BOM (Byte Order Mark) is handled in certain functions for UTF-8, UTF-16, and UTF-32.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3509"></a>
+<h3><a class="anchor" id="autotoc_md3507"></a>
 Base64</h3>
 <ul>
 <li>Encodes and decodes raw byte arrays (<code>std::vector&lt;uint8_t&gt;</code>).</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3510"></a>
+<h3><a class="anchor" id="autotoc_md3508"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// Converting a wstring to system-encoded string</span></div>
 <div class="line"><span class="keyword">auto</span> [strOpt, errMsg] = convert_string::to_string(L<span class="stringliteral">&quot;안녕하세요&quot;</span>);</div>

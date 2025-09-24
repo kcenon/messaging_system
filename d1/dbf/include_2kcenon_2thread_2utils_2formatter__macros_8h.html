@@ -308,7 +308,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ad353e070b78b0b1f98da791dfc46f0a1" id="r_ad353e070b78b0b1f98da791dfc46f0a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a>(CLASS_NAME)</td></tr>
-<tr class="memdesc:ad353e070b78b0b1f98da791dfc46f0a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates fmt::formatter specialization.  <br /></td></tr>
+<tr class="memdesc:ad353e070b78b0b1f98da791dfc46f0a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">No-op formatter when neither std::format nor fmt is available.  <br /></td></tr>
 <tr class="separator:ad353e070b78b0b1f98da791dfc46f0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -316,7 +316,7 @@ Macros</h2></td></tr>
 <p>This file contains macros that generate formatter specializations for custom types to work with both std::format (C++20) and fmt library. The macros eliminate code duplication by generating the necessary boilerplate code for formatter specializations.</p>
 <p>Usage example: </p><div class="fragment"><div class="line"><span class="comment">// In your header file after class definition:</span></div>
 <div class="line"><a class="code hl_define" href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a>(my_namespace::my_class)</div>
-<div class="ttc" id="ainclude_2kcenon_2thread_2utils_2formatter__macros_8h_html_ad353e070b78b0b1f98da791dfc46f0a1"><div class="ttname"><a href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a></div><div class="ttdeci">#define DECLARE_FORMATTER(CLASS_NAME)</div><div class="ttdoc">Generates fmt::formatter specialization.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h_source.html#l00102">formatter_macros.h:102</a></div></div>
+<div class="ttc" id="ainclude_2kcenon_2thread_2utils_2formatter__macros_8h_html_ad353e070b78b0b1f98da791dfc46f0a1"><div class="ttname"><a href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h.html#ad353e070b78b0b1f98da791dfc46f0a1">DECLARE_FORMATTER</a></div><div class="ttdeci">#define DECLARE_FORMATTER(CLASS_NAME)</div><div class="ttdoc">No-op formatter when neither std::format nor fmt is available.</div><div class="ttdef"><b>Definition</b> <a href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h_source.html#l00122">formatter_macros.h:122</a></div></div>
 </div><!-- fragment --> 
 <p class="definition">Definition in file <a class="el" href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
@@ -335,20 +335,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>fmt::formatter&lt;CLASS_NAME&gt; : fmt::formatter&lt;std::string_view&gt;                   \</div>
-<div class="line">{                                                                                                  \</div>
-<div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;                                                              \</div>
-<div class="line">    <span class="keyword">auto</span> format(<span class="keyword">const</span> CLASS_NAME&amp; item, FormatContext&amp; ctx) <span class="keyword">const</span>                                  \</div>
-<div class="line">    {                                                                                              \</div>
-<div class="line">        <span class="keywordflow">return</span> fmt::formatter&lt;std::string_view&gt;::format(item.to_string(), ctx);                   \</div>
-<div class="line">    }                                                                                              \</div>
-<div class="line">};</div>
-</div><!-- fragment -->
-<p>Generates fmt::formatter specialization. </p>
-<p>This macro creates a formatter specialization for the fmt library.</p>
-<p>Requirements:</p><ul>
-<li>The class must have a <a class="el" href="../../df/dfe/test__type_8h.html#aea2c791847a50005ae23b3994b166afb" title="Converts a test_priority value to its string representation.">to_string()</a> method that returns std::string</li>
-</ul>
+
+<p>No-op formatter when neither std::format nor fmt is available. </p>
+<p>This macro becomes a no-op when no formatting library is available, preventing compilation errors.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">CLASS_NAME</td><td>The fully qualified class name (including namespace if any) </td></tr>
@@ -356,7 +345,7 @@ Macros</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h_source.html#l00102">102</a> of file <a class="el" href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h_source.html#l00122">122</a> of file <a class="el" href="../../d1/dbf/include_2kcenon_2thread_2utils_2formatter__macros_8h_source.html">formatter_macros.h</a>.</p>
 
 </div>
 </div>

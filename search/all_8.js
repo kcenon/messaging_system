@@ -15,7 +15,7 @@ var searchData=
   ['8_204_20gradual_20adoption_12',['8.4 Gradual Adoption',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md185',1,'']]],
   ['8_20advantages_20of_20minimal_20approach_13',['8. Advantages of Minimal Approach',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md181',1,'']]],
   ['8_20alternative_20approaches_14',['8. Alternative Approaches',['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md122',1,'']]],
-  ['8_20composite_20pattern_15',['8. Composite Pattern',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3747',1,'']]],
+  ['8_20composite_20pattern_15',['8. Composite Pattern',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3745',1,'']]],
   ['8_20core_203_202ghz_2016gb_20macos_20sonoma_16',['Latest Performance Metrics (Apple M1, 8-core @ 3.2GHz, 16GB, macOS Sonoma)',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md2738',1,'']]],
   ['8_20expected_20benefits_17',['8. Expected Benefits',['../d0/df8/md_libraries_2thread__system_2docs_2DESIGN__IMPROVEMENTS.html#autotoc_md2924',1,'']]],
   ['8_20strong_20message_5fbus_5fbenchmark_20cpp_20strong_18',['8. &lt;strong&gt;message_bus_benchmark.cpp&lt;/strong&gt;',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md45',1,'']]],
