@@ -84,15 +84,17 @@ find_path(ASIO_INCLUDE_DIR
         $ENV{ASIO_ROOT}/include
 )
 
-# FMT Detection with pkgconfig support
-if(PkgConfig_FOUND)
+# FMT Detection with pkgconfig support - but disable by default for CI compatibility
+option(ENABLE_FMT "Enable fmt library support" OFF)
+
+if(ENABLE_FMT AND PkgConfig_FOUND)
     pkg_check_modules(FMT QUIET IMPORTED_TARGET fmt)
     if(FMT_FOUND)
         message(STATUS "Found fmt via pkgconfig: ${FMT_VERSION}")
     endif()
 endif()
 
-if(NOT FMT_FOUND)
+if(ENABLE_FMT AND NOT FMT_FOUND)
     find_path(FMT_INCLUDE_DIR
         NAMES fmt/format.h
         PATHS
@@ -107,15 +109,22 @@ if(NOT FMT_FOUND)
             # macOS Homebrew
             /opt/homebrew/include
             /usr/local/include
-            # Ubuntu/Debian system paths
-            /usr/include
             # MSYS2/MinGW paths
             /mingw64/include
             /mingw32/include
             # Custom installation paths
             ${FMT_ROOT}/include
             $ENV{FMT_ROOT}/include
+        NO_DEFAULT_PATH  # Don't search system paths like /usr/include
     )
+
+    # If not found in specific paths, try system paths but verify the file actually exists
+    if(NOT FMT_INCLUDE_DIR)
+        find_path(FMT_INCLUDE_DIR
+            NAMES fmt/format.h
+            PATHS /usr/include
+        )
+    endif()
 
     if(FMT_INCLUDE_DIR)
         find_library(FMT_LIBRARY
@@ -153,23 +162,28 @@ else()
 endif()
 
 # FMT library check - verify that fmt/format.h actually exists
-if(FMT_FOUND)
-    message(STATUS "Found fmt via pkgconfig")
-elseif(FMT_INCLUDE_DIR)
-    # Double-check that fmt/format.h actually exists at the found path
-    if(EXISTS "${FMT_INCLUDE_DIR}/fmt/format.h")
-        message(STATUS "Found fmt at: ${FMT_INCLUDE_DIR}")
-        if(FMT_LIBRARY)
-            message(STATUS "Found fmt library at: ${FMT_LIBRARY}")
+if(ENABLE_FMT)
+    if(FMT_FOUND)
+        message(STATUS "Found fmt via pkgconfig")
+    elseif(FMT_INCLUDE_DIR)
+        # Double-check that fmt/format.h actually exists at the found path
+        if(EXISTS "${FMT_INCLUDE_DIR}/fmt/format.h")
+            message(STATUS "Found fmt at: ${FMT_INCLUDE_DIR}")
+            if(FMT_LIBRARY)
+                message(STATUS "Found fmt library at: ${FMT_LIBRARY}")
+            endif()
+        else()
+            message(STATUS "FMT_INCLUDE_DIR was set but fmt/format.h not found at ${FMT_INCLUDE_DIR}")
+            unset(FMT_INCLUDE_DIR)
+            message(STATUS "FMT not found, will use fallback formatting")
+            set(USE_STD_FORMAT OFF)
         endif()
     else()
-        message(STATUS "FMT_INCLUDE_DIR was set but fmt/format.h not found at ${FMT_INCLUDE_DIR}")
-        unset(FMT_INCLUDE_DIR)
         message(STATUS "FMT not found, will use fallback formatting")
         set(USE_STD_FORMAT OFF)
     endif()
 else()
-    message(STATUS "FMT not found, will use fallback formatting")
+    message(STATUS "FMT support disabled, using fallback formatting")
     set(USE_STD_FORMAT OFF)
 endif()
 
@@ -419,23 +433,27 @@ if(WIN32)
 endif()
 
 # Configure FMT
-if(FMT_FOUND AND TARGET PkgConfig::FMT)
-    target_link_libraries(NetworkSystem PRIVATE PkgConfig::FMT)
-    target_compile_definitions(NetworkSystem PRIVATE USE_FMT_LIBRARY)
-    message(STATUS "Configured to use fmt library via pkgconfig")
-elseif(FMT_INCLUDE_DIR AND EXISTS "${FMT_INCLUDE_DIR}/fmt/format.h")
-    target_include_directories(NetworkSystem PRIVATE ${FMT_INCLUDE_DIR})
-    if(FMT_LIBRARY)
-        target_link_libraries(NetworkSystem PRIVATE ${FMT_LIBRARY})
+if(ENABLE_FMT)
+    if(FMT_FOUND AND TARGET PkgConfig::FMT)
+        target_link_libraries(NetworkSystem PRIVATE PkgConfig::FMT)
         target_compile_definitions(NetworkSystem PRIVATE USE_FMT_LIBRARY)
-        message(STATUS "Configured to use fmt library")
+        message(STATUS "Configured to use fmt library via pkgconfig")
+    elseif(FMT_INCLUDE_DIR AND EXISTS "${FMT_INCLUDE_DIR}/fmt/format.h")
+        target_include_directories(NetworkSystem PRIVATE ${FMT_INCLUDE_DIR})
+        if(FMT_LIBRARY)
+            target_link_libraries(NetworkSystem PRIVATE ${FMT_LIBRARY})
+            target_compile_definitions(NetworkSystem PRIVATE USE_FMT_LIBRARY)
+            message(STATUS "Configured to use fmt library")
+        else()
+            target_compile_definitions(NetworkSystem PRIVATE FMT_HEADER_ONLY USE_FMT_LIBRARY)
+            message(STATUS "Configured to use fmt header-only")
+        endif()
     else()
-        target_compile_definitions(NetworkSystem PRIVATE FMT_HEADER_ONLY USE_FMT_LIBRARY)
-        message(STATUS "Configured to use fmt header-only")
+        # Neither fmt nor std::format available - use fallback
+        message(STATUS "Using fallback formatting (neither fmt nor std::format available)")
     endif()
 else()
-    # Neither fmt nor std::format available - use fallback
-    message(STATUS "Using fallback formatting (neither fmt nor std::format available)")
+    message(STATUS "FMT support disabled for NetworkSystem")
 endif()
 
 # Link system libraries
@@ -492,16 +510,18 @@ function(configure_network_test_target TARGET_NAME)
     endif()
 
     # Configure FMT same as main library
-    if(FMT_FOUND AND TARGET PkgConfig::FMT)
-        target_link_libraries(${TARGET_NAME} PRIVATE PkgConfig::FMT)
-        target_compile_definitions(${TARGET_NAME} PRIVATE USE_FMT_LIBRARY)
-    elseif(FMT_INCLUDE_DIR AND EXISTS "${FMT_INCLUDE_DIR}/fmt/format.h")
-        target_include_directories(${TARGET_NAME} PRIVATE ${FMT_INCLUDE_DIR})
-        if(FMT_LIBRARY)
-            target_link_libraries(${TARGET_NAME} PRIVATE ${FMT_LIBRARY})
+    if(ENABLE_FMT)
+        if(FMT_FOUND AND TARGET PkgConfig::FMT)
+            target_link_libraries(${TARGET_NAME} PRIVATE PkgConfig::FMT)
             target_compile_definitions(${TARGET_NAME} PRIVATE USE_FMT_LIBRARY)
-        else()
-            target_compile_definitions(${TARGET_NAME} PRIVATE FMT_HEADER_ONLY USE_FMT_LIBRARY)
+        elseif(FMT_INCLUDE_DIR AND EXISTS "${FMT_INCLUDE_DIR}/fmt/format.h")
+            target_include_directories(${TARGET_NAME} PRIVATE ${FMT_INCLUDE_DIR})
+            if(FMT_LIBRARY)
+                target_link_libraries(${TARGET_NAME} PRIVATE ${FMT_LIBRARY})
+                target_compile_definitions(${TARGET_NAME} PRIVATE USE_FMT_LIBRARY)
+            else()
+                target_compile_definitions(${TARGET_NAME} PRIVATE FMT_HEADER_ONLY USE_FMT_LIBRARY)
+            endif()
         endif()
     endif()
 
