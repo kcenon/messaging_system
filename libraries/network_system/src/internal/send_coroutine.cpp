@@ -67,6 +67,7 @@ namespace network_system::internal
     }
 
 #ifdef USE_STD_COROUTINE
+#ifndef NO_ASIO
 
     auto async_send_with_pipeline_co(std::shared_ptr<tcp_socket> sock,
                                      std::vector<uint8_t> data,
@@ -91,9 +92,9 @@ namespace network_system::internal
         
         co_return ec;
     }
-
+#endif // NO_ASIO
 #else // fallback
-
+#ifndef NO_ASIO
     auto async_send_with_pipeline_no_co(std::shared_ptr<tcp_socket> sock,
                                         std::vector<uint8_t> data,
                                         const pipeline& pl,
@@ -128,7 +129,7 @@ namespace network_system::internal
         
         return future_result;
     }
-
+#endif // NO_ASIO
 #endif
 
 } // namespace network_system::internal

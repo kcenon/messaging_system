@@ -21,7 +21,7 @@ namespace kcenon::messaging::services::network {
 
             state_ = service_state::running;
             return true;
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             state_ = service_state::error;
             return false;
         }
@@ -58,7 +58,7 @@ namespace kcenon::messaging::services::network {
         return state_ == service_state::running;
     }
 
-    bool network_service::send_message(const std::string& destination, const core::message& msg) {
+    bool network_service::send_message(const std::string& destination, const core::message&) {
         if (state_ != service_state::running) {
             return false;
         }

@@ -50,6 +50,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace network_system::internal
 {
+#ifndef NO_ASIO
 	/*!
 	 * \class tcp_socket
 	 * \brief A lightweight wrapper around \c asio::ip::tcp::socket,
@@ -177,4 +178,5 @@ namespace network_system::internal
 		std::function<void(std::error_code)>
 			error_callback_;   /*!< Error callback. */
 	};
+#endif // NO_ASIO
 } // namespace network_system::internal

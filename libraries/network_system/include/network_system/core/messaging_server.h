@@ -58,6 +58,7 @@ namespace network_system::session {
 }
 
 namespace network_system::core {
+#ifndef NO_ASIO
 
 	/*!
 	 * \class messaging_server
@@ -203,5 +204,5 @@ namespace network_system::core {
 		 */
 		std::vector<std::shared_ptr<network_system::session::messaging_session>> sessions_;
 	};
-
+#endif // NO_ASIO
 } // namespace network_system::core

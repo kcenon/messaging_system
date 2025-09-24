@@ -100,7 +100,7 @@ namespace kcenon::messaging::core {
             for (const auto& handler : handlers) {
                 try {
                     handler(msg);
-                } catch (const std::exception& e) {
+                } catch (const std::exception&) {
                     // Log error (in production would use proper logging)
                     // For now, silently continue to next handler
                 }
@@ -138,7 +138,7 @@ namespace kcenon::messaging::core {
 
             running_.store(true);
             return true;
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             shutdown();
             return false;
         }

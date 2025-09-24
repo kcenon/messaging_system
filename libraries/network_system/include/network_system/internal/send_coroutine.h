@@ -46,6 +46,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace network_system::internal
 {
+#ifndef NO_ASIO
 	/*!
 	 * \brief Launches a separate thread (via std::async) to apply
 	 * compression/encryption to \p input_data using \p pl, returning a future
@@ -63,7 +64,10 @@ namespace network_system::internal
 							bool use_encrypt)
 		-> std::future<std::vector<uint8_t>>;
 
+#endif // NO_ASIO
+
 #ifdef USE_STD_COROUTINE
+#ifndef NO_ASIO
 
 #include <asio/experimental/as_tuple.hpp>
 #include <asio/awaitable.hpp>
@@ -93,9 +97,9 @@ namespace network_system::internal
 									 bool use_compress,
 									 bool use_encrypt)
 		-> asio::awaitable<std::error_code>;
-
+#endif // NO_ASIO
 #else // fallback
-
+#ifndef NO_ASIO
 	/*!
 	 * \brief Non-coroutine version that prepares data and then sends it
 	 * asynchronously, returning a std::future<std::error_code>.
@@ -121,7 +125,7 @@ namespace network_system::internal
 										bool use_compress,
 										bool use_encrypt)
 		-> std::future<std::error_code>;
-
+#endif // NO_ASIO
 #endif
 
 } // namespace network_system::internal

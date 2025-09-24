@@ -32,6 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "network_system/internal/tcp_socket.h"
 
+#ifndef NO_ASIO
+
 #include <iostream> // for debugging/logging
 #include <type_traits>
 
@@ -119,3 +121,5 @@ namespace network_system::internal
 	}
 
 } // namespace network_system::internal
+
+#endif // NO_ASIO

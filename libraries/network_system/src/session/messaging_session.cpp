@@ -31,6 +31,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "network_system/session/messaging_session.h"
+
+#ifndef NO_ASIO
+
 #include "network_system/internal/send_coroutine.h" // for async_send_with_pipeline_co / no_co
 #include "network_system/integration/logger_integration.h"
 #include <string_view>
@@ -157,3 +160,5 @@ if constexpr (std::is_same_v<decltype(socket_->socket().get_executor()), asio::i
 	}
 
 } // namespace network_system::session
+
+#endif // NO_ASIO

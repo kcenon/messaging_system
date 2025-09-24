@@ -56,6 +56,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Use nested namespace definition in C++17
 namespace network_system::core
 {
+#ifndef NO_ASIO
 
 	/*!
 	 * \class messaging_client
@@ -187,5 +188,5 @@ namespace network_system::core
 			false
 		}; /*!< If true, encrypt data before sending. */
 	};
-
+#endif // NO_ASIO
 } // namespace network_system::core

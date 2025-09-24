@@ -31,6 +31,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************************************************/
 
 #include "network_system/core/messaging_server.h"
+
+#ifndef NO_ASIO
+
 #include "network_system/session/messaging_session.h"
 #include "network_system/integration/logger_integration.h"
 
@@ -175,3 +178,5 @@ namespace network_system::core
 	}
 
 } // namespace network_system::core
+
+#endif // NO_ASIO

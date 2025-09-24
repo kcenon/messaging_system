@@ -54,6 +54,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Use nested namespace definition in C++17
 namespace network_system::session
 {
+#ifndef NO_ASIO
 
 	/*!
 	 * \class messaging_session
@@ -154,5 +155,5 @@ namespace network_system::session
 			false
 		}; /*!< Indicates whether this session is stopped. */
 	};
-
+#endif // NO_ASIO
 } // namespace network_system::session

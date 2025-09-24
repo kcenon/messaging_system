@@ -48,7 +48,7 @@ namespace kcenon::messaging::integrations {
             initialized_ = true;
             return true;
 
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             return false;
         }
     }

@@ -24,7 +24,7 @@ namespace kcenon::messaging::services::container {
 
             state_ = service_state::running;
             return true;
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             state_ = service_state::error;
             return false;
         }
@@ -97,7 +97,7 @@ namespace kcenon::messaging::services::container {
 
             stats_.serializations.fetch_add(1);
             return true;
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             stats_.errors.fetch_add(1);
             return false;
         }
@@ -112,7 +112,7 @@ namespace kcenon::messaging::services::container {
 
             stats_.deserializations.fetch_add(1);
             return true;
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             stats_.errors.fetch_add(1);
             return false;
         }
@@ -133,7 +133,7 @@ namespace kcenon::messaging::services::container {
 
             stats_.validations.fetch_add(1);
             return valid;
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             stats_.errors.fetch_add(1);
             return false;
         }
@@ -153,7 +153,7 @@ namespace kcenon::messaging::services::container {
 
             stats_.compressions.fetch_add(1);
             return true;
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             stats_.errors.fetch_add(1);
             return false;
         }
@@ -165,7 +165,7 @@ namespace kcenon::messaging::services::container {
             // Dummy decompression: just copy for now
             output = input;
             return true;
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             stats_.errors.fetch_add(1);
             return false;
         }
