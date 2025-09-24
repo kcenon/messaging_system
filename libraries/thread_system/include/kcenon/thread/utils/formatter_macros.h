@@ -87,16 +87,16 @@ struct std::formatter<CLASS_NAME, wchar_t> : std::formatter<std::wstring_view, w
     }                                                                                              \
 };
 
-#else // USE_STD_FORMAT
+#elif defined(USE_FMT_LIBRARY) // USE_STD_FORMAT
 
 /**
  * @brief Generates fmt::formatter specialization.
- * 
+ *
  * This macro creates a formatter specialization for the fmt library.
- * 
+ *
  * Requirements:
  * - The class must have a to_string() method that returns std::string
- * 
+ *
  * @param CLASS_NAME The fully qualified class name (including namespace if any)
  */
 #define DECLARE_FORMATTER(CLASS_NAME)                                                              \
@@ -108,5 +108,17 @@ template <> struct fmt::formatter<CLASS_NAME> : fmt::formatter<std::string_view>
         return fmt::formatter<std::string_view>::format(item.to_string(), ctx);                   \
     }                                                                                              \
 };
+
+#else // Neither std::format nor fmt available
+
+/**
+ * @brief No-op formatter when neither std::format nor fmt is available.
+ *
+ * This macro becomes a no-op when no formatting library is available,
+ * preventing compilation errors.
+ *
+ * @param CLASS_NAME The fully qualified class name (including namespace if any)
+ */
+#define DECLARE_FORMATTER(CLASS_NAME)
 
 #endif // USE_STD_FORMAT
