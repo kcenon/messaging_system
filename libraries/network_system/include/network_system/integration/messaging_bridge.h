@@ -85,6 +85,7 @@ public:
      */
     ~messaging_bridge();
 
+#ifndef NO_ASIO
     /**
      * @brief Create a messaging server with messaging_system compatible API
      * @param server_id Unique identifier for the server
@@ -102,6 +103,7 @@ public:
     std::shared_ptr<core::messaging_client> create_client(
         const std::string& client_id
     );
+#endif // NO_ASIO
 
 #ifdef BUILD_WITH_CONTAINER_SYSTEM
     /**
@@ -188,7 +190,9 @@ namespace bridge = network_system::integration;
 // Additional backward compatibility aliases
 namespace network_module {
     using messaging_bridge = network_system::integration::messaging_bridge;
+#ifndef NO_ASIO
     using messaging_server = network_system::core::messaging_server;
     using messaging_client = network_system::core::messaging_client;
     using messaging_session = network_system::session::messaging_session;
+#endif // NO_ASIO
 }

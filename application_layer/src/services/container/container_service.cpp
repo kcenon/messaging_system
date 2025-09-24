@@ -104,7 +104,7 @@ namespace kcenon::messaging::services::container {
     }
 
     bool container_service::deserialize_payload(const std::vector<uint8_t>& input,
-                                               core::message_payload& payload) {
+                                               core::message_payload&) {
         try {
             // Simplified deserialization
             std::string data(input.begin(), input.end());

@@ -67,13 +67,13 @@ namespace kcenon::messaging::services::network {
             // Simplified implementation - would actually send over network
             stats_.messages_sent.fetch_add(1);
             return true;
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             stats_.failed_connections.fetch_add(1);
             return false;
         }
     }
 
-    bool network_service::broadcast_message(const core::message& msg) {
+    bool network_service::broadcast_message(const core::message&) {
         if (state_ != service_state::running) {
             return false;
         }
@@ -82,7 +82,7 @@ namespace kcenon::messaging::services::network {
             // Simplified implementation - would broadcast to all connections
             stats_.messages_sent.fetch_add(1);
             return true;
-        } catch (const std::exception& e) {
+        } catch (const std::exception&) {
             return false;
         }
     }

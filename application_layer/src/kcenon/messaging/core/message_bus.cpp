@@ -210,7 +210,7 @@ namespace kcenon::messaging::core {
         return future;
     }
 
-    void message_bus::respond(const message& original_msg, const message& response_msg) {
+    void message_bus::respond(const message&, const message& response_msg) {
         // Simplified - in production would correlate with pending requests
         publish(response_msg);
     }
@@ -238,7 +238,7 @@ namespace kcenon::messaging::core {
                     dispatcher_->dispatch(msg);
                     stats_.messages_processed.fetch_add(1);
                     update_statistics(msg, true);
-                } catch (const std::exception& e) {
+                } catch (const std::exception&) {
                     stats_.messages_failed.fetch_add(1);
                     update_statistics(msg, false);
                 }
@@ -250,7 +250,7 @@ namespace kcenon::messaging::core {
         return !msg.payload.topic.empty() && !msg.metadata.id.empty();
     }
 
-    void message_bus::update_statistics(const message& msg, bool success) {
+    void message_bus::update_statistics(const message&, bool) {
         // Additional statistics tracking can be added here
         // For now, this is handled in specific methods
     }

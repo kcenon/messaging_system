@@ -74,6 +74,7 @@ messaging_bridge::messaging_bridge() : pimpl_(std::make_unique<impl>()) {
 
 messaging_bridge::~messaging_bridge() = default;
 
+#ifndef NO_ASIO
 std::shared_ptr<core::messaging_server> messaging_bridge::create_server(
     const std::string& server_id
 ) {
@@ -85,6 +86,7 @@ std::shared_ptr<core::messaging_client> messaging_bridge::create_client(
 ) {
     return std::make_shared<core::messaging_client>(client_id);
 }
+#endif // NO_ASIO
 
 #ifdef BUILD_WITH_CONTAINER_SYSTEM
 void messaging_bridge::set_container(
