@@ -338,6 +338,12 @@ if [ $BUILD_NETWORK -eq 0 ]; then
     CMAKE_ARGS+=" -DBUILD_NETWORK=OFF"
 fi
 
+# Disable messaging bridge to avoid thread_system dependency issues
+CMAKE_ARGS+=" -DBUILD_MESSAGING_BRIDGE=OFF"
+
+# Skip install rules for subdirectories to avoid export issues
+CMAKE_ARGS+=" -DCMAKE_SKIP_INSTALL_RULES=ON"
+
 if [ $BUILD_PYTHON -eq 0 ]; then
     CMAKE_ARGS+=" -DBUILD_PYTHON_BINDINGS=OFF"
 fi
