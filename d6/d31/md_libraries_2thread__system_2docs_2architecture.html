@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: Threading Ecosystem Architecture</title>
+<title>Messaging System: Thread System Architecture</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -90,251 +90,467 @@ $(document).ready(function(){initNavTree('d6/d31/md_libraries_2thread__system_2d
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Threading Ecosystem Architecture</div></div>
+  <div class="headertitle"><div class="title">Thread System Architecture</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md2793"></a> A comprehensive overview of the modular threading ecosystem and inter-project relationships.</p>
-<h1><a class="anchor" id="autotoc_md2794"></a>
-🏗️ Ecosystem Overview</h1>
-<p>The threading ecosystem consists of four interconnected projects designed to provide a complete, high-performance concurrent programming solution:</p>
-<div class="fragment"><div class="line">                    ┌─────────────────────────────┐</div>
-<div class="line">                    │   Application Layer         │</div>
-<div class="line">                    │                             │</div>
-<div class="line">                    │   Your Production Apps      │</div>
-<div class="line">                    └─────────────┬───────────────┘</div>
-<div class="line">                                  │</div>
-<div class="line">                    ┌─────────────▼───────────────┐</div>
-<div class="line">                    │ integrated_thread_system    │</div>
-<div class="line">                    │ (Integration Hub)           │</div>
-<div class="line">                    │                             │</div>
-<div class="line">                    │ • Complete Examples         │</div>
-<div class="line">                    │ • Integration Tests         │</div>
-<div class="line">                    │ • Best Practices           │</div>
-<div class="line">                    │ • Migration Guides         │</div>
-<div class="line">                    └─────────────┬───────────────┘</div>
-<div class="line">                                  │ uses all</div>
-<div class="line">        ┌─────────────────────────┼─────────────────────────┐</div>
-<div class="line">        │                         │                         │</div>
-<div class="line">        ▼                         ▼                         ▼</div>
-<div class="line">┌───────────────┐     ┌───────────────┐     ┌─────────────────┐</div>
-<div class="line">│ thread_system │────▶│ logger_system │     │monitoring_system│</div>
-<div class="line">│   (Core)      │     │ (Logging)     │     │  (Metrics)      │</div>
-<div class="line">│               │     │               │     │                 │</div>
-<div class="line">│ Foundation    │     │ Implements    │     │ Implements      │</div>
-<div class="line">│ interfaces    │     │ logger_       │     │ monitoring_     │</div>
-<div class="line">│ and core      │     │ interface     │     │ interface       │</div>
-<div class="line">│ threading     │     │               │     │                 │</div>
-<div class="line">└───────────────┘     └───────────────┘     └─────────────────┘</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2795"></a>
-📋 Project Roles &amp; Responsibilities</h1>
-<h2><a class="anchor" id="autotoc_md2796"></a>
-1. thread_system (Foundation)</h2>
-<p><b>Repository</b>: <a href="https://github.com/kcenon/thread_system">https://github.com/kcenon/thread_system</a> <br  />
- <b>Role</b>: Core threading framework and interface provider <br  />
- <b>Code Size</b>: ~2,700 lines (streamlined from 8,700+ through coroutine removal)</p>
-<p>Responsibilities:</p><ul>
-<li>Interface Definitions: <code>logger_interface</code>, <code><a class="el" href="../../db/d58/classmonitoring__interface.html" title="Abstract interface for monitoring system.">monitoring_interface</a></code>, <code>executor_interface</code></li>
-<li>Core Threading: worker pools, job queues, thread management</li>
-<li>Synchronization Primitives: Enhanced wrappers and utilities</li>
-<li>Service Infrastructure: Dependency injection and service registry</li>
-<li>Cross-Platform Support: Windows, Linux, macOS</li>
-</ul>
-<p>Key Components: </p><div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../da/dcc/namespacekcenon_1_1thread.html">thread_module</a> {</div>
-<div class="line">    <span class="comment">// Interfaces</span></div>
-<div class="line">    <span class="keyword">class </span>logger_interface;           <span class="comment">// Implemented by logger_system</span></div>
-<div class="line">    <span class="keyword">class </span><a class="code hl_namespace" href="../../d3/d80/namespacekcenon_1_1thread_1_1interfaces.html">monitoring_interface</a>;       <span class="comment">// Implemented by monitoring_system</span></div>
-<div class="line">    <span class="keyword">class </span>executor_interface;         <span class="comment">// Job execution contract</span></div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// Core Threading</span></div>
-<div class="line">    <span class="keyword">class </span>thread_pool;                <span class="comment">// Main thread pool implementation</span></div>
-<div class="line">    <span class="keyword">class </span>thread_worker;              <span class="comment">// Worker thread management</span></div>
-<div class="line">    <span class="keyword">class </span>job_queue;                  <span class="comment">// Thread-safe job distribution</span></div>
-<div class="line">    <span class="keyword">class </span>callback_job;               <span class="comment">// Job wrapper for callbacks</span></div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// Synchronization (NEW)</span></div>
-<div class="line">    <span class="keyword">class </span>cancellation_token;         <span class="comment">// Cooperative cancellation</span></div>
-<div class="line">    <span class="keyword">class </span>scoped_lock_guard;          <span class="comment">// RAII lock with timeout</span></div>
-<div class="line">    <span class="keyword">class </span>condition_variable_wrapper; <span class="comment">// Enhanced condition variable</span></div>
-<div class="line">    <span class="keyword">class </span>service_registry;           <span class="comment">// Dependency injection container</span></div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// Adaptive Components</span></div>
-<div class="line">    <span class="keyword">class </span>adaptive_job_queue;         <span class="comment">// Dual-mode queue optimization</span></div>
-<div class="line">    <span class="keyword">class </span>hazard_pointer_manager;     <span class="comment">// Lock-free memory reclamation</span></div>
-<div class="line">}</div>
-<div class="ttc" id="anamespacekcenon_1_1thread_1_1interfaces_html"><div class="ttname"><a href="../../d3/d80/namespacekcenon_1_1thread_1_1interfaces.html">kcenon::thread::interfaces</a></div><div class="ttdef"><b>Definition</b> <a href="../../d6/d49/thread__system_2include_2kcenon_2thread_2compatibility_8h_source.html#l00009">compatibility.h:9</a></div></div>
-<div class="ttc" id="anamespacekcenon_1_1thread_html"><div class="ttname"><a href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d70/core_2base_2include_2detail_2thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
-</div><!-- fragment --><p>Dependencies:</p><ul>
-<li>External: None (standalone)</li>
-<li>Internal: Self-contained</li>
-</ul>
-<hr  />
-<h2><a class="anchor" id="autotoc_md2798"></a>
-2. logger_system (Logging)</h2>
-<p><b>Repository</b>: <a href="https://github.com/kcenon/logger_system">https://github.com/kcenon/logger_system</a> <br  />
- <b>Role</b>: High-performance asynchronous logging implementation</p>
-<p>Responsibilities:</p><ul>
-<li>Implements <code>thread_module::logger_interface</code></li>
-<li>Asynchronous logging with high throughput</li>
-<li>Multiple writers (console/file/custom)</li>
-<li>Thread-safe</li>
-</ul>
-<hr  />
-<h2><a class="anchor" id="autotoc_md2800"></a>
-3. monitoring_system (Metrics)</h2>
-<p><b>Repository</b>: <a href="https://github.com/kcenon/monitoring_system">https://github.com/kcenon/monitoring_system</a> <br  />
- <b>Role</b>: Real-time performance monitoring and metrics collection</p>
-<p>Responsibilities:</p><ul>
-<li>Implements <code><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html">monitoring_interface::monitoring_interface</a></code></li>
-<li>System, thread pool, and worker metrics</li>
-<li>Low-overhead collection and ring buffers</li>
-</ul>
-<hr  />
-<h2><a class="anchor" id="autotoc_md2802"></a>
-4. integrated_thread_system (Integration Hub)</h2>
-<p><b>Repository</b>: <a href="https://github.com/kcenon/integrated_thread_system">https://github.com/kcenon/integrated_thread_system</a> <br  />
- <b>Role</b>: Complete integration examples and testing framework</p>
-<p>Responsibilities:</p><ul>
-<li>Integration examples and best practices</li>
-<li>Cross-system integration tests</li>
-<li>Migration guides</li>
-</ul>
-<hr  />
-<h1><a class="anchor" id="autotoc_md2804"></a>
-🔄 Dependency Flow &amp; Interface Contracts</h1>
-<p>Interface Hierarchy: </p><div class="fragment"><div class="line">thread_module::logger_interface</div>
-<div class="line">    ↑ implements</div>
-<div class="line">logger_module::logger</div>
+<div class="textblock"><p><a class="anchor" id="autotoc_md842"></a> </p>
+<h1><a class="anchor" id="autotoc_md843"></a>
+Table of Contents</h1>
+<ol type="1">
+<li>Overview</li>
+<li>Core Architecture</li>
+<li>Component Design</li>
+<li>Implementation Details</li>
+<li>Performance Characteristics</li>
+<li>Design Patterns</li>
+<li>Memory Management</li>
+<li>Platform Support</li>
+<li>Future Roadmap</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md844"></a>
+Overview</h1>
+<p>The Thread System is a modern C++20 multi-threading framework designed for high-performance concurrent programming. It provides a modular, interface-based architecture with clear separation of concerns, enabling both ease of use and advanced customization.</p>
+<h2><a class="anchor" id="autotoc_md845"></a>
+Architecture Principles</h2>
+<ol type="1">
+<li><b>Modular Design</b>: Core threading functionality separated from auxiliary features</li>
+<li><b>Interface-Based Architecture</b>: Clean contracts enable external module integration</li>
+<li><b>Layered Design</b>: Clear separation between core threading primitives and higher-level abstractions</li>
+<li><b>Adaptive Performance</b>: Runtime optimization based on workload characteristics</li>
+<li><b>Type Safety</b>: Strong typing with compile-time guarantees</li>
+<li><b>Zero-Overhead Abstractions</b>: Modern C++ techniques minimize runtime costs</li>
+<li><b>Platform Agnostic</b>: Consistent API across Windows, Linux, and macOS</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md846"></a>
+Core Architecture</h1>
+<h2><a class="anchor" id="autotoc_md847"></a>
+System Layers</h2>
+<div class="fragment"><div class="line">┌─────────────────────────────────────────────────────┐</div>
+<div class="line">│                   Applications                      │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│              External Modules                       │</div>
+<div class="line">│         (Logger, Monitoring, etc.)                  │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│          High-Level APIs (Thread Pools)             │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│         Core Threading Components                   │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│          Platform Abstraction Layer                 │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│            Operating System APIs                    │</div>
+<div class="line">└─────────────────────────────────────────────────────┘</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md848"></a>
+Component Hierarchy</h2>
+<div class="fragment"><div class="line">[Core Thread System - ~2,700 lines]</div>
 <div class="line"> </div>
-<div class="line">monitoring_interface::monitoring_interface</div>
-<div class="line">    ↑ implements</div>
-<div class="line">monitoring_module::monitoring</div>
-</div><!-- fragment --><p>Dependency Graph: </p><div class="fragment"><div class="line">┌─────────────────┐</div>
-<div class="line">│  thread_system  │ ← No external dependencies (foundation)</div>
-<div class="line">└─────────┬───────┘</div>
-<div class="line">          │ provides interfaces</div>
-<div class="line">          ├─────────────────────┬─────────────────────┐</div>
-<div class="line">          ▼                     ▼                     ▼</div>
-<div class="line">┌─────────────────┐   ┌─────────────────┐   ┌─────────────────┐</div>
-<div class="line">│  logger_system  │   │monitoring_system│   │integrated_thread│</div>
-<div class="line">│                 │   │                 │   │    _system      │</div>
-<div class="line">│ depends on:     │   │ depends on:     │   │                 │</div>
-<div class="line">│ - thread_system │   │ - thread_system │   │ depends on:     │</div>
-<div class="line">│   (interfaces)  │   │   (interfaces)  │   │ - thread_system │</div>
-<div class="line">└─────────────────┘   └─────────────────┘   │ - logger_system │</div>
-<div class="line">                                            │ - monitoring_   │</div>
-<div class="line">                                            │   system        │</div>
-<div class="line">                                            └─────────────────┘</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2805"></a>
-📁 Directory Structure (Overview)</h1>
-<p>Project layout after modularization (~2,700 lines):</p>
-<div class="fragment"><div class="line">thread_system/</div>
-<div class="line">├── core/                          # Core threading foundation</div>
-<div class="line">│   ├── base/                      # Thread base, service registry</div>
-<div class="line">│   │   ├── include/</div>
-<div class="line">│   │   │   ├── thread_base.h</div>
-<div class="line">│   │   │   ├── service_registry.h  # 🆕 DI container</div>
-<div class="line">│   │   │   └── thread_conditions.h</div>
-<div class="line">│   │   └── src/</div>
-<div class="line">│   ├── jobs/                      # Job system</div>
-<div class="line">│   │   ├── include/</div>
-<div class="line">│   │   │   ├── job.h               # With cancellation</div>
-<div class="line">│   │   │   ├── callback_job.h</div>
-<div class="line">│   │   │   └── job_queue.h</div>
-<div class="line">│   │   └── src/</div>
-<div class="line">│   └── sync/                      # Synchronization</div>
-<div class="line">│       ├── include/</div>
-<div class="line">│       │   ├── sync_primitives.h   # 🆕 Enhanced wrappers</div>
-<div class="line">│       │   ├── cancellation_token.h # 🆕 Cooperative cancellation</div>
-<div class="line">│       │   └── error_handling.h    # Result&lt;T&gt; pattern</div>
-<div class="line">│       └── src/</div>
-<div class="line">├── interfaces/                    # Public contracts</div>
-<div class="line">│   ├── executor_interface.h</div>
-<div class="line">│   ├── scheduler_interface.h</div>
-<div class="line">│   ├── logger_interface.h</div>
-<div class="line">│   └── monitoring_interface.h</div>
-<div class="line">├── implementations/</div>
-<div class="line">│   ├── thread_pool/{include,src}</div>
-<div class="line">│   ├── typed_thread_pool/{include,src}</div>
-<div class="line">│   └── lockfree/{include,src}</div>
-<div class="line">├── utilities/{include,src}</div>
-<div class="line">├── benchmarks/</div>
-<div class="line">├── samples/</div>
-<div class="line">├── docs/</div>
-<div class="line">└── cmake/</div>
-</div><!-- fragment --><p>Design rules:</p><ul>
-<li>core exposes public headers under <code>include/</code> and implementations under <code>src/</code></li>
-<li>implementations depend on core and interfaces</li>
-<li>utilities is standalone; interfaces depend only on core/base</li>
-</ul>
-<hr  />
-<h1><a class="anchor" id="autotoc_md2807"></a>
-🚀 Recent Architectural Highlights</h1>
-<h2><a class="anchor" id="autotoc_md2808"></a>
-Enhanced Synchronization Primitives 🆕</h2>
+<div class="line">utilities</div>
+<div class="line">    ├── conversion      # String conversions</div>
+<div class="line">    ├── core           # Formatters, spans</div>
+<div class="line">    ├── io             # File operations</div>
+<div class="line">    ├── parsing        # Argument parsing</div>
+<div class="line">    └── time           # Date/time utilities</div>
+<div class="line"> </div>
+<div class="line">thread_base</div>
+<div class="line">    ├── core           # Base thread class</div>
+<div class="line">    ├── jobs           # Job abstraction</div>
+<div class="line">    ├── sync           # Synchronization primitives</div>
+<div class="line">    └── lockfree       # Lock-free data structures</div>
+<div class="line">        ├── memory     # Hazard pointers, node pools</div>
+<div class="line">        └── queues     # MPMC queues, adaptive queues</div>
+<div class="line"> </div>
+<div class="line">thread_pool</div>
+<div class="line">    ├── core           # Thread pool implementation</div>
+<div class="line">    ├── workers        # Worker thread management</div>
+<div class="line">    └── async          # Future extensions</div>
+<div class="line"> </div>
+<div class="line">typed_thread_pool</div>
+<div class="line">    ├── core           # Type interfaces</div>
+<div class="line">    ├── jobs           # Typed job implementations</div>
+<div class="line">    ├── pool           # Typed pool implementation</div>
+<div class="line">    └── scheduling     # Priority scheduling</div>
+<div class="line"> </div>
+<div class="line">[External Modules - Separate Projects]</div>
+<div class="line"> </div>
+<div class="line">logger_module           # https://github.com/kcenon/logger_module</div>
+<div class="line">    ├── core           # Logger implementation</div>
+<div class="line">    ├── jobs           # Log job processing</div>
+<div class="line">    ├── types          # Log types and formatting</div>
+<div class="line">    └── writers        # Output destinations</div>
+<div class="line"> </div>
+<div class="line">monitoring_module      # https://github.com/kcenon/monitoring_module</div>
+<div class="line">    ├── core           # Metrics collection</div>
+<div class="line">    ├── collectors     # Metric collectors</div>
+<div class="line">    └── storage        # Time-series storage</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md849"></a>
+Component Design</h1>
+<h2><a class="anchor" id="autotoc_md850"></a>
+Modular Architecture Benefits</h2>
+<p>The modularized architecture provides significant advantages:</p>
 <ul>
-<li>**<code>sync_primitives.h</code>**: Comprehensive synchronization wrappers<ul>
-<li><code>scoped_lock_guard</code>: RAII with timeout support</li>
-<li><code>condition_variable_wrapper</code>: Predicates and timeouts</li>
-<li><code>atomic_flag_wrapper</code>: Wait/notify operations</li>
-<li><code>shared_mutex_wrapper</code>: Reader-writer locks</li>
+<li><b>Reduced Complexity</b>: Core thread system focused on threading (~2,700 lines vs ~11,400 lines)</li>
+<li><b>Clean Interfaces</b>: Well-defined contracts between modules</li>
+<li><b>Independent Development</b>: External modules can evolve separately</li>
+<li><b>Selective Usage</b>: Include only the modules you need</li>
+<li><b>Easier Testing</b>: Smaller, focused modules are easier to test</li>
+<li><b>Better Maintainability</b>: Single responsibility per module</li>
 </ul>
-</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md2809"></a>
-Improved Cancellation Support 🆕</h2>
+<h2><a class="anchor" id="autotoc_md851"></a>
+Thread Base Module</h2>
+<p>The foundation of the system, providing:</p>
 <ul>
-<li>**<code>cancellation_token</code>**: Cooperative cancellation mechanism<ul>
-<li>Linked token creation for hierarchical cancellation</li>
-<li>Thread-safe callback registration</li>
-<li>Automatic signal propagation</li>
-<li>Weak pointer usage to prevent cycles</li>
+<li><b>thread_base</b>: Abstract base class for all worker threads</li>
+<li><b>job</b>: Interface for work units</li>
+<li><b>job_queue</b>: Thread-safe FIFO queue</li>
+<li><b>Adaptive components</b>: Dynamic optimization based on contention</li>
 </ul>
-</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md2810"></a>
-Service Registry Pattern 🆕</h2>
+<div class="fragment"><div class="line"><span class="keyword">class </span>thread_base {</div>
+<div class="line"><span class="keyword">protected</span>:</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> before_start() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> { <span class="keywordflow">return</span> {}; }</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> do_work() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> after_stop() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> { <span class="keywordflow">return</span> {}; }</div>
+<div class="line">};</div>
+<div class="ttc" id="aclassthread__module_1_1result__void_html"><div class="ttname"><a href="../../dd/da2/classthread__module_1_1result__void.html">thread_module::result_void</a></div><div class="ttdoc">Wrapper for void result.</div><div class="ttdef"><b>Definition</b> <a href="../../d9/d4e/modular__structure_2core_2include_2thread__system__core_2thread__base_2sync_2error__handling_8h_source.html#l00197">error_handling.h:197</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md852"></a>
+Thread Pool Module</h2>
+<p>Standard thread pool implementation with:</p>
 <ul>
-<li>**<code>service_registry</code>**: Lightweight dependency injection<ul>
-<li>Type-safe service registration/retrieval</li>
-<li>Thread-safe with shared_mutex</li>
-<li>Automatic lifetime management</li>
-<li>Header-only implementation</li>
+<li><b>Dynamic worker management</b>: Add/remove workers at runtime</li>
+<li><b>Adaptive queue optimization</b>: Automatic strategy selection</li>
+<li><b>Batch processing support</b>: Process multiple jobs efficiently</li>
 </ul>
-</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md2811"></a>
-Adaptive Job Queue</h2>
+<h2><a class="anchor" id="autotoc_md853"></a>
+Typed Thread Pool Module</h2>
+<p>Advanced type-based scheduling:</p>
 <ul>
-<li>Runtime switching between mutex-based and lock-free MPMC strategies</li>
-<li>Uses lightweight metrics (latency, contention ratio, operation count)</li>
-<li>Automatic optimization based on workload characteristics</li>
-<li>Up to 7.7x performance improvement under high contention</li>
+<li><b>Priority levels</b>: RealTime &gt; Batch &gt; Background</li>
+<li><b>Per-type queues</b>: Separate queues for each job type</li>
+<li><b>Worker specialization</b>: Workers can handle specific types</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2812"></a>
-Interface-Driven Integration</h2>
+<h2><a class="anchor" id="autotoc_md854"></a>
+Interface-Based External Module Integration</h2>
+<p>The thread system provides clean interfaces for external modules:</p>
+<div class="fragment"><div class="line"><span class="comment">// Example: Logger module integration</span></div>
+<div class="line"><span class="keyword">class </span>logger_job : <span class="keyword">public</span> job {</div>
+<div class="line">    <span class="comment">// Logger-specific job implementation</span></div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Example: Monitoring module integration</span></div>
+<div class="line"><span class="keyword">class </span>metric_collector_job : <span class="keyword">public</span> job {</div>
+<div class="line">    <span class="comment">// Metric collection job implementation</span></div>
+<div class="line">};</div>
+</div><!-- fragment --><p>External modules can:</p><ul>
+<li>Implement the <code>job</code> interface for task execution</li>
+<li>Use thread pools for concurrent processing</li>
+<li>Leverage lock-free structures for performance</li>
+<li>Integrate without modifying core thread system</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md855"></a>
+Adaptive Queue System</h2>
+<p>The adaptive queue automatically switches between strategies:</p>
+<div class="fragment"><div class="line"><span class="keyword">enum class</span> queue_strategy {</div>
+<div class="line">    AUTO_DETECT,    <span class="comment">// Automatic selection</span></div>
+<div class="line">    FORCE_LEGACY,   <span class="comment">// Always use mutex</span></div>
+<div class="line">    FORCE_LOCKFREE, <span class="comment">// Always use lock-free</span></div>
+<div class="line">    ADAPTIVE        <span class="comment">// Dynamic switching</span></div>
+<div class="line">};</div>
+</div><!-- fragment --><p>Performance characteristics:</p><ul>
+<li><b>Low contention</b>: Mutex-based (lower overhead)</li>
+<li><b>High contention</b>: Lock-free MPMC (better scalability)</li>
+<li><b>Automatic switching</b>: Based on runtime metrics</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md856"></a>
+Implementation Details</h1>
+<h2><a class="anchor" id="autotoc_md857"></a>
+Lock-Free MPMC Queue</h2>
+<p>Uses Michael &amp; Scott algorithm with enhancements:</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">class </span>lockfree_mpmc_queue {</div>
+<div class="line">    <span class="keyword">struct </span>Node {</div>
+<div class="line">        std::atomic&lt;T*&gt; data{<span class="keyword">nullptr</span>};</div>
+<div class="line">        std::atomic&lt;Node*&gt; next{<span class="keyword">nullptr</span>};</div>
+<div class="line">    };</div>
+<div class="line">    </div>
+<div class="line">    std::atomic&lt;Node*&gt; head;</div>
+<div class="line">    std::atomic&lt;Node*&gt; tail;</div>
+<div class="line">    hazard_pointer_manager hp_manager;</div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md858"></a>
+Hazard Pointer Memory Management</h2>
+<p>Safe memory reclamation for lock-free structures:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>hazard_pointer {</div>
+<div class="line">    <span class="comment">// Protects pointer from deletion</span></div>
+<div class="line">    T* protect(std::atomic&lt;T*&gt;&amp; ptr);</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment">// Retires pointer when safe</span></div>
+<div class="line">    <span class="keywordtype">void</span> retire(T* ptr);</div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md859"></a>
+Adaptive Strategy Selection</h2>
+<p>The system monitors these metrics:</p><ul>
+<li>Contention level (CAS failures)</li>
+<li>Operation latency</li>
+<li>Queue depth</li>
+<li>Throughput</li>
+</ul>
+<p>Strategy switches when:</p><ul>
+<li>Contention &gt; threshold for 100ms</li>
+<li>Performance degradation detected</li>
+<li>Queue characteristics change</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md860"></a>
+Performance Characteristics</h1>
+<h2><a class="anchor" id="autotoc_md861"></a>
+Measured Performance (Apple M1, 8 cores)</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Workload Type   </th><th class="markdownTableHeadNone">Throughput   </th><th class="markdownTableHeadNone">Latency   </th><th class="markdownTableHeadNone">Scaling    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Empty jobs   </td><td class="markdownTableBodyNone">8.2M/s   </td><td class="markdownTableBodyNone">122ns   </td><td class="markdownTableBodyNone">95%    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1μs jobs   </td><td class="markdownTableBodyNone">1.5M/s   </td><td class="markdownTableBodyNone">667ns   </td><td class="markdownTableBodyNone">94%    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">10μs jobs   </td><td class="markdownTableBodyNone">540K/s   </td><td class="markdownTableBodyNone">1.85μs   </td><td class="markdownTableBodyNone">92%    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">100μs jobs   </td><td class="markdownTableBodyNone">70K/s   </td><td class="markdownTableBodyNone">14.3μs   </td><td class="markdownTableBodyNone">90%   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md862"></a>
+Adaptive Queue Performance</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Scenario   </th><th class="markdownTableHeadNone">Mutex Time   </th><th class="markdownTableHeadNone">Lock-free Time   </th><th class="markdownTableHeadNone">Improvement    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Low contention (2 threads)   </td><td class="markdownTableBodyNone">45ms   </td><td class="markdownTableBodyNone">52ms   </td><td class="markdownTableBodyNone">Mutex wins    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">High contention (16 threads)   </td><td class="markdownTableBodyNone">892ms   </td><td class="markdownTableBodyNone">756ms   </td><td class="markdownTableBodyNone">+18%    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Variable load   </td><td class="markdownTableBodyNone">Baseline   </td><td class="markdownTableBodyNone">Optimized   </td><td class="markdownTableBodyNone">Automatic   </td></tr>
+</table>
+<h1><a class="anchor" id="autotoc_md863"></a>
+Design Patterns</h1>
+<h2><a class="anchor" id="autotoc_md864"></a>
+Template Method Pattern</h2>
+<p>Used in <code>thread_base</code> for lifecycle management:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> run() {</div>
+<div class="line">    before_start();</div>
+<div class="line">    <span class="keywordflow">while</span> (!stop_requested()) {</div>
+<div class="line">        do_work();</div>
+<div class="line">    }</div>
+<div class="line">    after_stop();</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md865"></a>
+Command Pattern</h2>
+<p>Jobs encapsulate work as objects:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>job {</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">auto</span> do_work() -&gt; <a class="code hl_class" href="../../dd/da2/classthread__module_1_1result__void.html">result_void</a> = 0;</div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md866"></a>
+Strategy Pattern</h2>
+<p>Adaptive queues select strategies at runtime:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>adaptive_job_queue {</div>
+<div class="line">    std::unique_ptr&lt;queue_interface&gt; current_strategy;</div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordtype">void</span> switch_strategy() {</div>
+<div class="line">        <span class="keywordflow">if</span> (should_use_lockfree()) {</div>
+<div class="line">            current_strategy = make_lockfree();</div>
+<div class="line">        } <span class="keywordflow">else</span> {</div>
+<div class="line">            current_strategy = make_mutex_based();</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">};</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md867"></a>
+Memory Management</h1>
+<h2><a class="anchor" id="autotoc_md868"></a>
+Smart Pointer Usage</h2>
 <ul>
-<li><code>executor_interface</code> implemented by thread pools (<code>execute</code>, <code>shutdown</code>)</li>
-<li><code>scheduler_interface</code> implemented by job queues (enqueue/dequeue)</li>
-<li><code><a class="el" href="../../db/d58/classmonitoring__interface.html" title="Abstract interface for monitoring system.">monitoring_interface</a></code> provides pool/worker/system metrics</li>
-<li><code>logger_interface</code> keeps logging pluggable and optional</li>
+<li><b>unique_ptr</b>: Exclusive ownership (workers, jobs)</li>
+<li><b>shared_ptr</b>: Shared ownership (queues, pools)</li>
+<li><b>weak_ptr</b>: Break circular dependencies</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2813"></a>
-Error Handling Excellence</h2>
+<h2><a class="anchor" id="autotoc_md869"></a>
+RAII Principles</h2>
+<p>All resources follow RAII: </p><div class="fragment"><div class="line"><span class="keyword">class </span>thread_worker {</div>
+<div class="line">    std::unique_ptr&lt;std::thread&gt; thread_;</div>
+<div class="line">    <span class="comment">// Automatic cleanup in destructor</span></div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md870"></a>
+Lock-Free Memory Safety</h2>
+<p>Hazard pointers prevent use-after-free:</p><ol type="1">
+<li>Protect pointer before access</li>
+<li>Use pointer safely</li>
+<li>Retire when done</li>
+<li>Batch reclamation for efficiency</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md871"></a>
+Memory Optimization Strategies</h2>
+<h3><a class="anchor" id="autotoc_md872"></a>
+Lazy Initialization</h3>
+<p>Adaptive queues now use lazy initialization to reduce initial memory footprint: </p><div class="fragment"><div class="line"><span class="keyword">class </span>adaptive_job_queue {</div>
+<div class="line">    <span class="keyword">mutable</span> std::unique_ptr&lt;job_queue&gt; legacy_queue_;</div>
+<div class="line">    <span class="keyword">mutable</span> std::unique_ptr&lt;lockfree_job_queue&gt; mpmc_queue_;</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment">// Queues created only when needed</span></div>
+<div class="line">    <span class="keyword">auto</span> ensure_legacy_queue() const -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line">        <span class="keywordflow">if</span> (!legacy_queue_) {</div>
+<div class="line">            legacy_queue_ = std::make_unique&lt;job_queue&gt;();</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">};</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md873"></a>
+Optimized Node Pool</h3>
+<p>Node pools now use conservative initial allocation: </p><div class="fragment"><div class="line"><span class="comment">// Before: 4 chunks × 1024 nodes = 4096 nodes pre-allocated</span></div>
+<div class="line"><span class="comment">// After: 1 chunk × 256 nodes = 256 nodes pre-allocated</span></div>
+<div class="line"><span class="comment">// Memory savings: ~93.75%</span></div>
+<div class="line">node_pool(<span class="keywordtype">size_t</span> initial_chunks = 1, <span class="keywordtype">size_t</span> chunk_size = 256);</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md874"></a>
+Memory Usage Profile</h3>
 <ul>
-<li>**<code>result&lt;T&gt;</code> pattern**: Modern error handling similar to C++23 std::expected<ul>
-<li>Type-safe error codes</li>
-<li>Monadic operations (map, and_then)</li>
-<li>Zero-overhead abstractions</li>
-<li>Clear error propagation</li>
+<li><b>Initial allocation</b>: Reduced by &gt;90% for most components</li>
+<li><b>On-demand growth</b>: Memory allocated as needed</li>
+<li><b>Peak usage</b>: Unchanged - same maximum capacity</li>
+<li><b>Performance impact</b>: Negligible - allocation amortized</li>
 </ul>
-</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md2814"></a>
-Typed Thread Pool</h2>
+<h1><a class="anchor" id="autotoc_md875"></a>
+Platform Support</h1>
+<h2><a class="anchor" id="autotoc_md876"></a>
+Conditional Compilation</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifdef USE_STD_JTHREAD</span></div>
+<div class="line">    std::jthread worker_thread_;</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line">    std::thread worker_thread_;</div>
+<div class="line">    std::atomic&lt;bool&gt; stop_requested_;</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md877"></a>
+Platform-Specific Features</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Platform   </th><th class="markdownTableHeadNone">Features   </th><th class="markdownTableHeadNone">Optimizations    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Linux   </td><td class="markdownTableBodyNone">Full support   </td><td class="markdownTableBodyNone">NUMA awareness    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Windows   </td><td class="markdownTableBodyNone">Full support   </td><td class="markdownTableBodyNone">IOCP integration    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">macOS   </td><td class="markdownTableBodyNone">Full support   </td><td class="markdownTableBodyNone">GCD compatibility   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md878"></a>
+Build Configuration</h2>
 <ul>
-<li>Per-type queues with lock-free/adaptive variants</li>
-<li>Priority/type-aware scheduling for heterogeneous workloads</li>
-<li>Maintains 99%+ type accuracy under all conditions </li>
+<li><b>C++20</b>: Primary target with fallback</li>
+<li><b>CMake 3.16+</b>: Cross-platform builds</li>
+<li><b>vcpkg</b>: Dependency management</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md879"></a>
+Modularization Impact</h1>
+<h2><a class="anchor" id="autotoc_md880"></a>
+Before Modularization</h2>
+<ul>
+<li><b>Total Lines</b>: ~11,400</li>
+<li><b>Components</b>: Monolithic with logger and monitoring</li>
+<li><b>Dependencies</b>: Tightly coupled components</li>
+<li><b>Build Time</b>: Longer due to larger codebase</li>
+<li><b>Testing</b>: Complex due to interdependencies</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md881"></a>
+After Modularization</h2>
+<ul>
+<li><b>Core Lines</b>: ~2,700 (76% reduction)</li>
+<li><b>Components</b>: Focused on threading only</li>
+<li><b>Dependencies</b>: Clean interface-based separation</li>
+<li><b>Build Time</b>: Significantly faster</li>
+<li><b>Testing</b>: Simplified and more focused</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md882"></a>
+Key Improvements</h2>
+<ul>
+<li><b>8,700+ lines</b> moved to separate projects</li>
+<li><b>Clear separation</b> of concerns</li>
+<li><b>Optional dependencies</b> - use only what you need</li>
+<li><b>Faster compilation</b> and linking</li>
+<li><b>Easier to understand</b> and maintain</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md883"></a>
+Future Roadmap</h1>
+<h2><a class="anchor" id="autotoc_md884"></a>
+Short Term (Completed)</h2>
+<ul>
+<li>✅ Remove duplicate code</li>
+<li>✅ Simplify architecture</li>
+<li>✅ Add formatter macros</li>
+<li>✅ Modularize logger into separate project</li>
+<li>✅ Modularize monitoring into separate project</li>
+<li>✅ Reduce core codebase by 76%</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md885"></a>
+Medium Term</h2>
+<ul>
+<li>[ ] Enhanced monitoring dashboard</li>
+<li>[ ] Dynamic worker scaling</li>
+<li>[ ] Work-stealing queues</li>
+<li>[ ] CPU affinity support</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md886"></a>
+Long Term</h2>
+<ul>
+<li>[ ] Distributed thread pools</li>
+<li>[ ] GPU task offloading</li>
+<li>[ ] Coroutine integration</li>
+<li>[ ] Real-time scheduling</li>
+<li>[ ] Plugin system for dynamic module loading</li>
+<li>[ ] Additional external modules (networking, serialization)</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md887"></a>
+Best Practices</h1>
+<h2><a class="anchor" id="autotoc_md888"></a>
+When to Use Each Component</h2>
+<ol type="1">
+<li><b>Standard Thread Pool</b>: General-purpose concurrent tasks</li>
+<li><b>Typed Thread Pool</b>: Priority-based scheduling requirements</li>
+<li><b>Adaptive Queues</b>: Variable or unknown workload patterns</li>
+<li><b>Lock-free Structures</b>: High-contention scenarios</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md889"></a>
+Module Integration Guidelines</h2>
+<ol type="1">
+<li><b>Core Only</b>: Use just the thread system for lightweight applications</li>
+<li><b>With Logger</b>: Add the logger module for production applications</li>
+<li><b>With Monitoring</b>: Add monitoring for performance-critical systems</li>
+<li><b>Custom Modules</b>: Implement the job interface for your own modules</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md890"></a>
+Configuration Guidelines</h2>
+<div class="fragment"><div class="line"><span class="comment">// Low-latency configuration</span></div>
+<div class="line"><span class="keyword">auto</span> pool = std::make_shared&lt;thread_pool&gt;();</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; cores; ++i) {</div>
+<div class="line">    <span class="keyword">auto</span> worker = std::make_unique&lt;thread_worker&gt;();</div>
+<div class="line">    worker-&gt;set_wake_interval(std::chrono::microseconds(100));</div>
+<div class="line">    pool-&gt;enqueue(std::move(worker));</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// High-throughput configuration</span></div>
+<div class="line"><span class="keyword">auto</span> typed_pool = std::make_shared&lt;typed_thread_pool&lt;job_types&gt;&gt;();</div>
+<div class="line">typed_pool-&gt;set_queue_strategy(queue_strategy::ADAPTIVE);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md891"></a>
+Performance Tuning</h2>
+<ol type="1">
+<li><b>Match workers to cores</b>: Avoid oversubscription</li>
+<li><b>Use batch operations</b>: Reduce synchronization overhead</li>
+<li><b>Profile first</b>: Measure before optimizing</li>
+<li><b>Consider job granularity</b>: Balance between overhead and parallelism</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md892"></a>
+Conclusion</h1>
+<p>The Thread System provides a robust, focused foundation for concurrent programming in modern C++. Through modularization, the core system has been reduced from ~11,400 lines to ~2,700 lines, resulting in a cleaner, more maintainable codebase. The interface-based architecture allows seamless integration with external modules like logging and monitoring, while the adaptive components ensure optimal performance across diverse workloads.</p>
+<p>The modular design empowers developers to:</p><ul>
+<li>Use only the components they need</li>
+<li>Integrate custom modules through clean interfaces</li>
+<li>Benefit from faster compilation and easier testing</li>
+<li>Focus on threading without auxiliary complexity</li>
+</ul>
+<p>For practical examples, see the <a href="../../../samples/">samples directory</a>. For API details, consult the <a class="el" href="../../de/ded/md_libraries_2thread__system_2docs_2api-reference.html">API reference</a>.</p>
+<h2><a class="anchor" id="autotoc_md893"></a>
+External Module Projects</h2>
+<ul>
+<li><b>Logger Module</b>: <a href="https://github.com/kcenon/logger_module">github.com/kcenon/logger_module</a></li>
+<li><b>Monitoring Module</b>: <a href="https://github.com/kcenon/monitoring_module">github.com/kcenon/monitoring_module</a> </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

@@ -1,5 +1,0 @@
-<map id="monitoring_system::system_resource_collector" name="monitoring_system::system_resource_collector">
-<area shape="rect" id="Node000001" title="System resource collector plugin implementation." alt="" coords="5,93,201,133"/>
-<area shape="rect" id="Node000002" href="$db/d84/classmonitoring__system_1_1metric__collector__plugin.html" title="Plugin interface for metric collectors All metric collector plugins must implement this interface." alt="" coords="16,5,191,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,59,106,93,101,93,101,59"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$da/df9/classmonitoring__system_1_1trace__exporter__interface.html" title="Abstract interface for trace exporters." alt="" coords="5,69,188,109"/>
-<area shape="rect" id="Node000001" href="$d5/ddc/classmonitoring__system_1_1jaeger__exporter.html" title="Jaeger trace exporter implementation." alt="" coords="236,5,392,45"/>
-<area shape="poly" id="edge154_Node000000_Node000001" title=" " alt="" coords="177,63,245,43,246,48,179,68"/>
-<area shape="rect" id="Node000002" href="$d6/dc5/classmonitoring__system_1_1otlp__exporter.html" title="OpenTelemetry Protocol (OTLP) trace exporter implementation." alt="" coords="236,69,392,109"/>
-<area shape="poly" id="edge155_Node000000_Node000002" title=" " alt="" coords="202,87,236,87,236,92,202,92"/>
-<area shape="rect" id="Node000003" href="$d8/d0b/classmonitoring__system_1_1zipkin__exporter.html" title="Zipkin trace exporter implementation." alt="" coords="236,133,392,173"/>
-<area shape="poly" id="edge156_Node000000_Node000003" title=" " alt="" coords="179,111,246,131,245,136,177,116"/>
-</map>

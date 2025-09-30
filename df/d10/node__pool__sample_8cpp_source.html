@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/thread_system/examples/node_pool_sample/node_pool_sample.cpp Source File</title>
+<title>Messaging System: libraries/thread_system/samples/node_pool_sample/node_pool_sample.cpp Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment">*****************************************************************************/</span></div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &quot;thread_base/lockfree/memory/node_pool.h&quot;</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include &quot;<a class="code" href="../../d1/d8c/logger_8h.html">logger/core/logger.h</a>&quot;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include &quot;logger/core/logger.h&quot;</span></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a>;</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
 <div class="foldopen" id="foldopen00045" data-start="{" data-end="};">
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="../../d8/de1/structTestData.html">   45</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../d8/de1/structTestData.html">TestData</a> {</div>
@@ -158,10 +158,10 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    log_module::write_information(<span class="stringliteral">&quot;\n=== Basic Node Pool Usage Demo ===&quot;</span>);</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    </div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="comment">// Create a node pool with 2 initial chunks, 512 nodes per chunk</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    node_pool&lt;TestData&gt; pool(2, 512);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <a class="code hl_class" href="../../d8/dad/classthread__module_1_1node__pool.html">node_pool&lt;TestData&gt;</a> pool(2, 512);</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    </div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="comment">// Show initial statistics</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keyword">auto</span> stats = pool.get_statistics();</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keyword">auto</span> stats = pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#aa5eb71507afd6b54b8327aaaab270efb">get_statistics</a>();</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    log_module::write_information(<span class="stringliteral">&quot;Initial pool statistics:&quot;</span>);</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    log_module::write_information(<span class="stringliteral">&quot;  Total chunks: {}&quot;</span>, stats.total_chunks);</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    log_module::write_information(<span class="stringliteral">&quot;  Total nodes: {}&quot;</span>, stats.total_nodes);</div>
@@ -174,14 +174,14 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    </div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    log_module::write_information(<span class="stringliteral">&quot;\nAllocating {} nodes...&quot;</span>, NUM_ALLOCATIONS);</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; NUM_ALLOCATIONS; ++i) {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keyword">auto</span>* node = pool.allocate();</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keyword">auto</span>* node = pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#ad3f522898dc84c7088ff9a0a433fbfc6">allocate</a>();</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        node-&gt;value = i;</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        node-&gt;data = i * 3.14;</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        allocated_nodes.push_back(node);</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    </div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="comment">// Show statistics after allocation</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    stats = pool.get_statistics();</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    stats = pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#aa5eb71507afd6b54b8327aaaab270efb">get_statistics</a>();</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    log_module::write_information(<span class="stringliteral">&quot;After allocation:&quot;</span>);</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    log_module::write_information(<span class="stringliteral">&quot;  Total chunks: {}&quot;</span>, stats.total_chunks);</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    log_module::write_information(<span class="stringliteral">&quot;  Total nodes: {}&quot;</span>, stats.total_nodes);</div>
@@ -203,12 +203,12 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="comment">// Deallocate half the nodes</span></div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    log_module::write_information(<span class="stringliteral">&quot;\nDeallocating half the nodes...&quot;</span>);</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; NUM_ALLOCATIONS / 2; ++i) {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        pool.deallocate(allocated_nodes[i]);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804">deallocate</a>(allocated_nodes[i]);</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        allocated_nodes[i] = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    }</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    </div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="comment">// Show statistics after partial deallocation</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    stats = pool.get_statistics();</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    stats = pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#aa5eb71507afd6b54b8327aaaab270efb">get_statistics</a>();</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    log_module::write_information(<span class="stringliteral">&quot;After partial deallocation:&quot;</span>);</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    log_module::write_information(<span class="stringliteral">&quot;  Total chunks: {}&quot;</span>, stats.total_chunks);</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    log_module::write_information(<span class="stringliteral">&quot;  Total nodes: {}&quot;</span>, stats.total_nodes);</div>
@@ -217,11 +217,11 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    </div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="comment">// Deallocate remaining nodes</span></div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = NUM_ALLOCATIONS / 2; i &lt; NUM_ALLOCATIONS; ++i) {</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        pool.deallocate(allocated_nodes[i]);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804">deallocate</a>(allocated_nodes[i]);</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    }</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    </div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="comment">// Final statistics</span></div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    stats = pool.get_statistics();</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    stats = pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#aa5eb71507afd6b54b8327aaaab270efb">get_statistics</a>();</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    log_module::write_information(<span class="stringliteral">&quot;After full deallocation:&quot;</span>);</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    log_module::write_information(<span class="stringliteral">&quot;  Total chunks: {}&quot;</span>, stats.total_chunks);</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    log_module::write_information(<span class="stringliteral">&quot;  Total nodes: {}&quot;</span>, stats.total_nodes);</div>
@@ -239,7 +239,7 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keyword">constexpr</span> <span class="keywordtype">int</span> INITIAL_CHUNKS = 2;</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keyword">constexpr</span> <span class="keywordtype">int</span> CHUNK_SIZE = 256;</div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    node_pool&lt;TestData&gt; pool(INITIAL_CHUNKS, CHUNK_SIZE);</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <a class="code hl_class" href="../../d8/dad/classthread__module_1_1node__pool.html">node_pool&lt;TestData&gt;</a> pool(INITIAL_CHUNKS, CHUNK_SIZE);</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    </div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    std::atomic&lt;int&gt; total_allocations{0};</div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    std::atomic&lt;int&gt; total_deallocations{0};</div>
@@ -263,7 +263,7 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> op = 0; op &lt; OPERATIONS_PER_THREAD; ++op) {</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>                <span class="keywordflow">if</span> (dis(gen) &lt; 70 || local_nodes.empty()) { <span class="comment">// 70% chance to allocate</span></div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>                    <span class="keywordflow">try</span> {</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                        <span class="keyword">auto</span>* node = pool.allocate();</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                        <span class="keyword">auto</span>* node = pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#ad3f522898dc84c7088ff9a0a433fbfc6">allocate</a>();</div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                        node-&gt;value = thread_id * 10000 + op;</div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                        node-&gt;data = thread_id + op * 0.001;</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                        local_nodes.push_back(node);</div>
@@ -274,7 +274,7 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                } <span class="keywordflow">else</span> { <span class="comment">// Deallocate</span></div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                    <span class="keywordflow">if</span> (!local_nodes.empty()) {</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                        <span class="keyword">auto</span> idx = std::uniform_int_distribution&lt;size_t&gt;(0, local_nodes.size() - 1)(gen);</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                        pool.deallocate(local_nodes[idx]);</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                        pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804">deallocate</a>(local_nodes[idx]);</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                        local_nodes.erase(local_nodes.begin() + idx);</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                        total_deallocations.fetch_add(1, std::memory_order_relaxed);</div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                    }</div>
@@ -284,7 +284,7 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>            <span class="comment">// Clean up remaining nodes</span></div>
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span>* node : local_nodes) {</div>
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                <span class="keywordflow">if</span> (node) {</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                    pool.deallocate(node);</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                    pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804">deallocate</a>(node);</div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                    total_deallocations.fetch_add(1, std::memory_order_relaxed);</div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                }</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            }</div>
@@ -305,7 +305,7 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    log_module::write_information(<span class="stringliteral">&quot;Allocation failures: {}&quot;</span>, allocation_failures.load());</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    </div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="comment">// Final pool statistics</span></div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keyword">auto</span> stats = pool.get_statistics();</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keyword">auto</span> stats = pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#aa5eb71507afd6b54b8327aaaab270efb">get_statistics</a>();</div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    log_module::write_information(<span class="stringliteral">&quot;Final pool statistics:&quot;</span>);</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    log_module::write_information(<span class="stringliteral">&quot;  Total chunks: {}&quot;</span>, stats.total_chunks);</div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    log_module::write_information(<span class="stringliteral">&quot;  Total nodes: {}&quot;</span>, stats.total_nodes);</div>
@@ -328,15 +328,15 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    </div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    <span class="comment">// Test with node pool</span></div>
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    log_module::write_information(<span class="stringliteral">&quot;Testing node pool performance...&quot;</span>);</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    node_pool&lt;TestData&gt; pool(4, 1024);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <a class="code hl_class" href="../../d8/dad/classthread__module_1_1node__pool.html">node_pool&lt;TestData&gt;</a> pool(4, 1024);</div>
 <div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    </div>
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <span class="comment">// Warmup</span></div>
 <div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    std::vector&lt;TestData*&gt; warmup_nodes;</div>
 <div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; WARMUP_OPERATIONS; ++i) {</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        warmup_nodes.push_back(pool.allocate());</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        warmup_nodes.push_back(pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#ad3f522898dc84c7088ff9a0a433fbfc6">allocate</a>());</div>
 <div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    }</div>
 <div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span>* node : warmup_nodes) {</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        pool.deallocate(node);</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804">deallocate</a>(node);</div>
 <div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    }</div>
 <div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    </div>
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    <span class="keyword">auto</span> start_time = std::chrono::high_resolution_clock::now();</div>
@@ -346,12 +346,12 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    </div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    <span class="comment">// Allocate</span></div>
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; NUM_OPERATIONS; ++i) {</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        pool_nodes.push_back(pool.allocate());</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        pool_nodes.push_back(pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#ad3f522898dc84c7088ff9a0a433fbfc6">allocate</a>());</div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    }</div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    </div>
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    <span class="comment">// Deallocate</span></div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span>* node : pool_nodes) {</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        pool.deallocate(node);</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804">deallocate</a>(node);</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    }</div>
 <div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    </div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    <span class="keyword">auto</span> end_time = std::chrono::high_resolution_clock::now();</div>
@@ -399,9 +399,9 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    log_module::write_information(<span class="stringliteral">&quot;\n=== Memory Efficiency Demo ===&quot;</span>);</div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    </div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    <span class="comment">// Small pool for testing</span></div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    node_pool&lt;TestData&gt; small_pool(1, 256);</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    node_pool&lt;TestData&gt; medium_pool(2, 512);</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    node_pool&lt;TestData&gt; large_pool(4, 1024);</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    <a class="code hl_class" href="../../d8/dad/classthread__module_1_1node__pool.html">node_pool&lt;TestData&gt;</a> small_pool(1, 256);</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <a class="code hl_class" href="../../d8/dad/classthread__module_1_1node__pool.html">node_pool&lt;TestData&gt;</a> medium_pool(2, 512);</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    <a class="code hl_class" href="../../d8/dad/classthread__module_1_1node__pool.html">node_pool&lt;TestData&gt;</a> large_pool(4, 1024);</div>
 <div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    </div>
 <div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    <span class="keyword">auto</span> show_pool_info = [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; pool, <span class="keyword">const</span> <span class="keywordtype">char</span>* name) {</div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        <span class="keyword">auto</span> stats = pool.get_statistics();</div>
@@ -423,16 +423,16 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    </div>
 <div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    <span class="comment">// Allocate many nodes</span></div>
 <div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 100; ++i) {</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>        nodes.push_back(medium_pool.allocate());</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>        nodes.push_back(medium_pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#ad3f522898dc84c7088ff9a0a433fbfc6">allocate</a>());</div>
 <div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    }</div>
 <div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    </div>
 <div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    <span class="comment">// Deallocate every other node (create fragmentation)</span></div>
 <div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; nodes.size(); i += 2) {</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        medium_pool.deallocate(nodes[i]);</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        medium_pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804">deallocate</a>(nodes[i]);</div>
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        nodes[i] = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    }</div>
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    </div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    <span class="keyword">auto</span> stats = medium_pool.get_statistics();</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    <span class="keyword">auto</span> stats = medium_pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#aa5eb71507afd6b54b8327aaaab270efb">get_statistics</a>();</div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    log_module::write_information(<span class="stringliteral">&quot;After fragmentation:&quot;</span>);</div>
 <div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    log_module::write_information(<span class="stringliteral">&quot;  Allocated nodes: {}&quot;</span>, stats.allocated_nodes);</div>
 <div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    log_module::write_information(<span class="stringliteral">&quot;  Free list size: {}&quot;</span>, stats.free_list_size);</div>
@@ -441,12 +441,12 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    <span class="keywordtype">int</span> reused_count = 0;</div>
 <div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; nodes.size() &amp;&amp; reused_count &lt; 25; i += 2) {</div>
 <div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        <span class="keywordflow">if</span> (!nodes[i]) {</div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>            nodes[i] = medium_pool.allocate();</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>            nodes[i] = medium_pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#ad3f522898dc84c7088ff9a0a433fbfc6">allocate</a>();</div>
 <div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>            reused_count++;</div>
 <div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>        }</div>
 <div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>    }</div>
 <div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    </div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    stats = medium_pool.get_statistics();</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>    stats = medium_pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#aa5eb71507afd6b54b8327aaaab270efb">get_statistics</a>();</div>
 <div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>    log_module::write_information(<span class="stringliteral">&quot;After reuse ({} nodes):&quot;</span>, reused_count);</div>
 <div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>    log_module::write_information(<span class="stringliteral">&quot;  Allocated nodes: {}&quot;</span>, stats.allocated_nodes);</div>
 <div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>    log_module::write_information(<span class="stringliteral">&quot;  Free list size: {}&quot;</span>, stats.free_list_size);</div>
@@ -454,7 +454,7 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>    <span class="comment">// Clean up</span></div>
 <div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span>* node : nodes) {</div>
 <div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>        <span class="keywordflow">if</span> (node) {</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>            medium_pool.deallocate(node);</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>            medium_pool.<a class="code hl_function" href="../../d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804">deallocate</a>(node);</div>
 <div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>        }</div>
 <div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>    }</div>
 <div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>}</div>
@@ -488,8 +488,11 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>}</div>
 </div>
-<div class="ttc" id="alogger_8h_html"><div class="ttname"><a href="../../d1/d8c/logger_8h.html">logger.h</a></div><div class="ttdoc">High-performance, thread-safe logging system with asynchronous capabilities.</div></div>
-<div class="ttc" id="anamespacekcenon_1_1thread_html"><div class="ttname"><a href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d70/core_2base_2include_2detail_2thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1node__pool_html"><div class="ttname"><a href="../../d8/dad/classthread__module_1_1node__pool.html">thread_module::node_pool</a></div><div class="ttdoc">High-performance memory pool for lock-free data structures.</div><div class="ttdef"><b>Definition</b> <a href="../../da/d05/modular__structure_2core_2include_2thread__system__core_2thread__base_2lockfree_2memory_2node__pool_8h_source.html#l00064">node_pool.h:65</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1node__pool_html_a5eb347b7451fc73b86deb90ec1a2b804"><div class="ttname"><a href="../../d8/dad/classthread__module_1_1node__pool.html#a5eb347b7451fc73b86deb90ec1a2b804">thread_module::node_pool::deallocate</a></div><div class="ttdeci">auto deallocate(T *node) -&gt; void</div><div class="ttdoc">Deallocate a node back to the pool.</div></div>
+<div class="ttc" id="aclassthread__module_1_1node__pool_html_aa5eb71507afd6b54b8327aaaab270efb"><div class="ttname"><a href="../../d8/dad/classthread__module_1_1node__pool.html#aa5eb71507afd6b54b8327aaaab270efb">thread_module::node_pool::get_statistics</a></div><div class="ttdeci">auto get_statistics() const -&gt; statistics</div></div>
+<div class="ttc" id="aclassthread__module_1_1node__pool_html_ad3f522898dc84c7088ff9a0a433fbfc6"><div class="ttname"><a href="../../d8/dad/classthread__module_1_1node__pool.html#ad3f522898dc84c7088ff9a0a433fbfc6">thread_module::node_pool::allocate</a></div><div class="ttdeci">auto allocate() -&gt; T *</div><div class="ttdoc">Allocate a node from the pool.</div></div>
+<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d44/logger__system_2sources_2logger_2logger__interface_8h_source.html#l00032">logger_interface.h:32</a></div></div>
 <div class="ttc" id="anode__pool__sample_8cpp_html_a045af7dc6cffef072ee51d32a2bdcdf4"><div class="ttname"><a href="../../df/d10/node__pool__sample_8cpp.html#a045af7dc6cffef072ee51d32a2bdcdf4">demonstrate_memory_efficiency</a></div><div class="ttdeci">void demonstrate_memory_efficiency()</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/node__pool__sample_8cpp_source.html#l00289">node_pool_sample.cpp:289</a></div></div>
 <div class="ttc" id="anode__pool__sample_8cpp_html_a0b8a24e2a3fa5fabbfe9aaf38342e331"><div class="ttname"><a href="../../df/d10/node__pool__sample_8cpp.html#a0b8a24e2a3fa5fabbfe9aaf38342e331">demonstrate_concurrent_usage</a></div><div class="ttdeci">void demonstrate_concurrent_usage()</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/node__pool__sample_8cpp_source.html#l00129">node_pool_sample.cpp:129</a></div></div>
 <div class="ttc" id="anode__pool__sample_8cpp_html_a2a76b47d313e62bb496b4401923146da"><div class="ttname"><a href="../../df/d10/node__pool__sample_8cpp.html#a2a76b47d313e62bb496b4401923146da">demonstrate_basic_usage</a></div><div class="ttdeci">void demonstrate_basic_usage()</div><div class="ttdef"><b>Definition</b> <a href="../../df/d10/node__pool__sample_8cpp_source.html#l00054">node_pool_sample.cpp:54</a></div></div>
@@ -506,7 +509,7 @@ $(document).ready(function(){initNavTree('df/d10/node__pool__sample_8cpp_source.
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_62aa39980ad34ebd1eec6b25d2703f9b.html">examples</a></li><li class="navelem"><a class="el" href="../../dir_5bad364e68bee679715b7aae7b8b0e55.html">node_pool_sample</a></li><li class="navelem"><a class="el" href="../../df/d10/node__pool__sample_8cpp.html">node_pool_sample.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_d5639982d944765b2c04ab5f88dacbbf.html">samples</a></li><li class="navelem"><a class="el" href="../../dir_53aed36445c7a23c39fe192cbb6c6106.html">node_pool_sample</a></li><li class="navelem"><a class="el" href="../../df/d10/node__pool__sample_8cpp.html">node_pool_sample.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

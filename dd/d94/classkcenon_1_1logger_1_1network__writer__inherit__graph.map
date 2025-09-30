@@ -1,7 +1,0 @@
-<map id="kcenon::logger::network_writer" name="kcenon::logger::network_writer">
-<area shape="rect" id="Node000001" title="Sends logs over network (TCP/UDP)" alt="" coords="5,181,184,221"/>
-<area shape="rect" id="Node000002" href="$d0/dc9/classkcenon_1_1logger_1_1base__writer.html" title="Abstract base class for all log output writers." alt="" coords="16,93,173,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,147,97,181,92,181,92,147"/>
-<area shape="rect" id="Node000003" href="$dd/d95/classkcenon_1_1logger_1_1log__writer__interface.html" title="Interface for log writers." alt="" coords="21,5,168,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,59,97,93,92,93,92,59"/>
-</map>

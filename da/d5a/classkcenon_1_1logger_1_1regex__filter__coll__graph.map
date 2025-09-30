@@ -1,7 +1,0 @@
-<map id="kcenon::logger::regex_filter" name="kcenon::logger::regex_filter">
-<area shape="rect" id="Node000001" title="Filter logs by regex pattern." alt="" coords="5,181,168,221"/>
-<area shape="rect" id="Node000002" href="$db/d76/classkcenon_1_1logger_1_1log__filter.html" title="Base class for log filtering." alt="" coords="13,93,160,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,147,89,181,84,181,84,147"/>
-<area shape="rect" id="Node000003" href="$d5/d0f/classkcenon_1_1logger_1_1log__filter__interface.html" title="Interface for log filters." alt="" coords="13,5,160,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,59,89,93,84,93,84,59"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="kcenon::logger::di::di_container_interface" name="kcenon::logger::di::di_container_interface">
-<area shape="rect" id="Node000001" title="Interface for dependency injection container." alt="" coords="5,5,180,45"/>
-<area shape="rect" id="Node000002" href="$de/db9/classkcenon_1_1logger_1_1di_1_1basic__di__container.html" title="Basic DI container implementation." alt="" coords="17,93,168,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,59,95,93,90,93,90,59"/>
-</map>

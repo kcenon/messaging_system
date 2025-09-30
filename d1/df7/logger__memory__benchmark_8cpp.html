@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/logger_system/tests/benchmarks/logger_benchmarks/logger_memory_benchmark.cpp File Reference</title>
+<title>Messaging System: libraries/logger_system/benchmarks/logger_benchmarks/logger_memory_benchmark.cpp File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -97,26 +97,49 @@ $(document).ready(function(){initNavTree('d1/df7/logger__memory__benchmark_8cpp.
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;benchmark/benchmark.h&gt;</code><br />
-<code>#include &lt;logger/logger.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="../../d1/d8c/logger_8h_source.html">logger/logger.h</a>&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for logger_memory_benchmark.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d9/dc2/logger__memory__benchmark_8cpp__incl.png" border="0" usemap="#alibraries_2logger__system_2tests_2benchmarks_2logger__benchmarks_2logger__memory__benchmark_8cpp" alt=""/></div>
-<map name="alibraries_2logger__system_2tests_2benchmarks_2logger__benchmarks_2logger__memory__benchmark_8cpp" id="alibraries_2logger__system_2tests_2benchmarks_2logger__benchmarks_2logger__memory__benchmark_8cpp">
-<area shape="rect" title=" " alt="" coords="287,5,503,75"/>
-<area shape="rect" title=" " alt="" coords="5,123,189,148"/>
-<area shape="poly" title=" " alt="" coords="288,77,148,121,146,116,287,72"/>
-<area shape="rect" title=" " alt="" coords="214,123,333,148"/>
-<area shape="poly" title=" " alt="" coords="352,77,301,116,298,112,349,73"/>
-<area shape="rect" title=" " alt="" coords="356,123,433,148"/>
-<area shape="poly" title=" " alt="" coords="397,75,397,109,392,109,392,75"/>
-<area shape="rect" title=" " alt="" coords="457,123,516,148"/>
-<area shape="poly" title=" " alt="" coords="430,73,467,111,463,114,426,77"/>
-<area shape="rect" title=" " alt="" coords="541,123,603,148"/>
-<area shape="poly" title=" " alt="" coords="460,72,539,114,536,118,457,77"/>
+<div class="center"><img src="../../d9/dc2/logger__memory__benchmark_8cpp__incl.png" border="0" usemap="#alibraries_2logger__system_2benchmarks_2logger__benchmarks_2logger__memory__benchmark_8cpp" alt=""/></div>
+<map name="alibraries_2logger__system_2benchmarks_2logger__benchmarks_2logger__memory__benchmark_8cpp" id="alibraries_2logger__system_2benchmarks_2logger__benchmarks_2logger__memory__benchmark_8cpp">
+<area shape="rect" title=" " alt="" coords="158,5,397,60"/>
+<area shape="rect" title=" " alt="" coords="5,108,189,133"/>
+<area shape="poly" title=" " alt="" coords="223,62,135,105,132,100,221,58"/>
+<area shape="rect" href="../../d1/d8c/logger_8h.html" title=" " alt="" coords="503,108,622,133"/>
+<area shape="poly" title=" " alt="" coords="365,58,512,102,511,107,364,63"/>
+<area shape="rect" title=" " alt="" coords="289,255,367,280"/>
+<area shape="poly" title=" " alt="" coords="269,61,259,92,252,129,251,168,261,206,277,228,297,245,293,249,273,231,256,208,246,169,247,129,254,91,264,60"/>
+<area shape="rect" title=" " alt="" coords="878,181,941,207"/>
+<area shape="poly" title=" " alt="" coords="398,53,512,77,634,105,760,141,866,175,864,180,759,147,633,111,511,82,397,59"/>
+<area shape="rect" title=" " alt="" coords="399,255,457,280"/>
+<area shape="poly" title=" " alt="" coords="287,59,312,129,331,168,355,205,376,227,399,245,396,249,373,231,351,208,327,171,307,131,282,61"/>
+<area shape="poly" title=" " alt="" coords="503,127,466,132,426,142,388,159,355,183,345,196,339,211,332,242,327,240,334,209,341,193,351,179,386,154,425,137,465,127,503,121"/>
+<area shape="poly" title=" " alt="" coords="622,131,859,179,865,180,864,185,858,184,621,136"/>
+<area shape="rect" title=" " alt="" coords="900,255,967,280"/>
+<area shape="poly" title=" " alt="" coords="623,127,715,145,766,160,816,179,869,210,912,243,908,247,866,214,814,184,765,165,714,150,622,132"/>
+<area shape="rect" title=" " alt="" coords="531,181,595,207"/>
+<area shape="poly" title=" " alt="" coords="565,134,565,168,560,168,560,134"/>
+<area shape="rect" href="../../d7/d44/logger__system_2sources_2logger_2logger__interface_8h.html" title=" " alt="" coords="366,181,506,207"/>
+<area shape="poly" title=" " alt="" coords="544,136,470,177,467,172,541,131"/>
+<area shape="rect" href="../../db/dd9/logger__metrics_8h.html" title=" " alt="" coords="619,181,803,207"/>
+<area shape="poly" title=" " alt="" coords="588,131,675,173,673,178,585,136"/>
+<area shape="poly" title=" " alt="" coords="420,209,359,249,356,245,417,204"/>
+<area shape="rect" title=" " alt="" coords="481,255,545,280"/>
+<area shape="poly" title=" " alt="" coords="450,205,492,243,489,247,447,209"/>
+<area shape="poly" title=" " alt="" coords="437,207,433,241,428,241,432,207"/>
+<area shape="poly" title=" " alt="" coords="747,204,888,249,886,254,746,209"/>
+<area shape="poly" title=" " alt="" coords="680,209,559,252,558,247,678,204"/>
+<area shape="poly" title=" " alt="" coords="664,209,472,257,470,252,662,204"/>
+<area shape="rect" title=" " alt="" coords="569,255,636,280"/>
+<area shape="poly" title=" " alt="" coords="695,209,633,249,630,245,692,204"/>
+<area shape="rect" title=" " alt="" coords="660,255,727,280"/>
+<area shape="poly" title=" " alt="" coords="710,208,702,242,697,241,705,206"/>
+<area shape="rect" title=" " alt="" coords="751,255,875,280"/>
+<area shape="poly" title=" " alt="" coords="729,204,787,244,784,249,726,209"/>
 </map>
 </div>
 </div>
@@ -125,7 +148,6 @@ Include dependency graph for logger_memory_benchmark.cpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8c/classnull__writer.html">null_writer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comprehensive benchmark suite for logger system.  <a href="../../d6/d8c/classnull__writer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -221,6 +243,8 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../d1/df7/logger__memory__benchmark_8cpp_source.html#l00049">49</a> of file <a class="el" href="../../d1/df7/logger__memory__benchmark_8cpp_source.html">logger_memory_benchmark.cpp</a>.</p>
 
+<p class="reference">References <a class="el" href="../../de/d48/namespacethread__module.html#a5a2719d6d43f27e1e8e913fbfa5c9288acaf9b6b99962bf5c2264824231d7a40c">thread_module::info</a>.</p>
+
 </div>
 </div>
 <a id="adc2138bec5d21b2f5d0bb4e2aad283e3" name="adc2138bec5d21b2f5d0bb4e2aad283e3"></a>
@@ -256,7 +280,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_f55c931e23855b4a2daadc4e2bb6196a.html">tests</a></li><li class="navelem"><a class="el" href="../../dir_4369b71693d4883a3c60d098867d92da.html">benchmarks</a></li><li class="navelem"><a class="el" href="../../dir_6479f6eba2e155b01d4e21d239122bf5.html">logger_benchmarks</a></li><li class="navelem"><a class="el" href="../../d1/df7/logger__memory__benchmark_8cpp.html">logger_memory_benchmark.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_fc96425a4d8632db8a49951208d7327c.html">benchmarks</a></li><li class="navelem"><a class="el" href="../../dir_c0433d094b3db0c3c7cb54aab37ccaf3.html">logger_benchmarks</a></li><li class="navelem"><a class="el" href="../../d1/df7/logger__memory__benchmark_8cpp.html">logger_memory_benchmark.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

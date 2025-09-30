@@ -1,9 +1,0 @@
-<map id="kcenon::logger::di_container_interface&lt; T &gt;" name="kcenon::logger::di_container_interface&lt; T &gt;">
-<area shape="rect" id="Node000001" title="Abstract interface for dependency injection container." alt="" coords="5,41,199,81"/>
-<area shape="rect" id="Node000002" href="$d0/d7f/classkcenon_1_1logger_1_1lightweight__di__container.html" title="Lightweight implementation of DI container." alt="" coords="357,5,556,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,48,357,33,357,38,213,53"/>
-<area shape="rect" id="Node000003" href="$d3/d8c/classkcenon_1_1logger_1_1di__container__interface.html" title=" " alt="" coords="379,70,534,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="213,70,379,87,379,92,212,75"/>
-<area shape="rect" id="Node000004" href="$d8/dda/classlogger__system_1_1testing_1_1mock__di__container.html" title="Mock DI container for unit testing." alt="" coords="605,77,776,117"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="548,95,605,95,605,100,548,100"/>
-</map>

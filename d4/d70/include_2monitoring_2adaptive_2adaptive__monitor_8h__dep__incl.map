@@ -1,7 +1,0 @@
-<map id="libraries/monitoring_system/include/monitoring/adaptive/adaptive_monitor.h" name="libraries/monitoring_system/include/monitoring/adaptive/adaptive_monitor.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="122,5,335,60"/>
-<area shape="rect" id="Node000002" href="$d1/d9b/test__integration__e2e_8cpp.html" title="End&#45;to&#45;end integration tests for the monitoring system." alt="" coords="5,108,225,163"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,71,147,110,143,106,187,67"/>
-<area shape="rect" id="Node000003" href="$de/da5/test__stress__performance_8cpp.html" title="Stress testing for the monitoring system." alt="" coords="249,108,437,163"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="271,67,315,106,312,110,267,71"/>
-</map>

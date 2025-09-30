@@ -1,9 +1,0 @@
-<map id="libraries/network_system/include/network_system/internal/send_coroutine.h" name="libraries/network_system/include/network_system/internal/send_coroutine.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="87,5,278,60"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,67,141"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,62,67,110,64,106,140,58"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="91,108,275,148"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="185,60,185,94,180,94,180,60"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="299,108,483,148"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="242,58,337,100,335,105,240,62"/>
-</map>

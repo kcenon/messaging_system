@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d4/dd1/classdatabase_1_1security_1_1query__security.html" title="SQL injection prevention and query security." alt="" coords="5,5,148,45"/>
+<area shape="rect" id="Node000000" href="$d7/d2f/classkcenon_1_1messaging_1_1management_1_1management__command__processor.html" title=" " alt="" coords="5,5,209,60"/>
+<area shape="rect" id="Node000001" href="$dd/d2d/classkcenon_1_1messaging_1_1management_1_1system__management__commands.html" title=" " alt="" coords="257,5,516,60"/>
+<area shape="poly" id="edge20_Node000000_Node000001" title=" " alt="" coords="223,30,257,30,257,35,223,35"/>
 </map>

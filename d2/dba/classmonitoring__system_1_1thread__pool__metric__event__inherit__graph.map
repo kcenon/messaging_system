@@ -1,5 +1,0 @@
-<map id="monitoring_system::thread_pool_metric_event" name="monitoring_system::thread_pool_metric_event">
-<area shape="rect" id="Node000001" title="Event containing thread pool metrics." alt="" coords="5,93,197,133"/>
-<area shape="rect" id="Node000002" href="$d6/d1e/classmonitoring__system_1_1event__base.html" title="Base class for all events in the system." alt="" coords="23,5,179,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,59,104,93,99,93,99,59"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="database::connection_pool" name="database::connection_pool">
-<area shape="rect" id="Node000001" title="Generic connection pool implementation." alt="" coords="5,93,201,119"/>
-<area shape="rect" id="Node000002" href="$d5/d24/classdatabase_1_1connection__pool__base.html" title="Abstract base class for database connection pools." alt="" coords="23,5,184,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,59,106,93,101,93,101,59"/>
-</map>

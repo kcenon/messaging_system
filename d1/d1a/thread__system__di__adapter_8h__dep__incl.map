@@ -1,5 +1,0 @@
-<map id="libraries/logger_system/src/impl/di/thread_system_di_adapter.h" name="libraries/logger_system/src/impl/di/thread_system_di_adapter.h">
-<area shape="rect" id="Node000001" title="Adapter for thread_system&#39;s service container." alt="" coords="5,5,200,60"/>
-<area shape="rect" id="Node000002" href="$d7/d30/src_2impl_2di_2di__container__factory_8h.html" title="Factory for creating appropriate DI containers." alt="" coords="13,108,192,163"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,74,105,108,100,108,100,74"/>
-</map>

@@ -1,3 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$da/d06/classkcenon_1_1shared_1_1IConfigurable.html" title="Configuration interface." alt="" coords="5,5,220,31"/>
+<area shape="rect" id="Node000000" href="$d1/dcb/classthread__module_1_1logger__interface.html" title="Logger interface for thread system." alt="" coords="5,73,175,113"/>
+<area shape="rect" id="Node000001" href="$de/d3f/classTestLogger.html" title=" " alt="" coords="261,5,353,31"/>
+<area shape="poly" id="edge154_Node000000_Node000001" title=" " alt="" coords="152,65,222,39,260,28,261,33,224,45,154,70"/>
+<area shape="rect" id="Node000002" href="$d4/d06/classconsole__logger.html" title="Simple console logger implementation." alt="" coords="247,55,367,80"/>
+<area shape="poly" id="edge155_Node000000_Node000002" title=" " alt="" coords="188,79,246,72,247,77,189,84"/>
+<area shape="rect" id="Node000003" href="$da/d2e/classlogger__module_1_1logger.html" title="Main logger implementation that implements thread_system&#39;s logger_interface." alt="" coords="223,104,391,129"/>
+<area shape="poly" id="edge156_Node000000_Node000003" title=" " alt="" coords="188,101,223,105,222,110,188,106"/>
+<area shape="rect" id="Node000004" href="$dd/d02/classmock__logger.html" title="Mock logger implementation for demonstration." alt="" coords="253,153,360,179"/>
+<area shape="poly" id="edge157_Node000000_Node000004" title=" " alt="" coords="158,115,224,138,263,151,261,156,222,143,156,120"/>
 </map>

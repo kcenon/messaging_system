@@ -1,7 +1,0 @@
-<map id="kcenon::logger::function_filter" name="kcenon::logger::function_filter">
-<area shape="rect" id="Node000001" title="Filter logs by custom function." alt="" coords="5,181,184,221"/>
-<area shape="rect" id="Node000002" href="$db/d76/classkcenon_1_1logger_1_1log__filter.html" title="Base class for log filtering." alt="" coords="21,93,168,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,147,97,181,92,181,92,147"/>
-<area shape="rect" id="Node000003" href="$d5/d0f/classkcenon_1_1logger_1_1log__filter__interface.html" title="Interface for log filters." alt="" coords="21,5,168,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,59,97,93,92,93,92,59"/>
-</map>

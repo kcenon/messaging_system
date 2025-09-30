@@ -93,10 +93,10 @@ $(document).ready(function(){initNavTree('da/dae/md_libraries_2thread__system_2d
   <div class="headertitle"><div class="title">Contributing to Thread System</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md2858"></a> Thank you for your interest in contributing to the Thread System project! This document provides guidelines and information for contributors.</p>
-<h1><a class="anchor" id="autotoc_md2859"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md894"></a> Thank you for your interest in contributing to the Thread System project! This document provides guidelines and information for contributors.</p>
+<h1><a class="anchor" id="autotoc_md895"></a>
 Getting Started</h1>
-<h2><a class="anchor" id="autotoc_md2860"></a>
+<h2><a class="anchor" id="autotoc_md896"></a>
 Prerequisites</h2>
 <p>Before contributing, ensure you have:</p><ul>
 <li><b>C++20 compatible compiler</b>: GCC 9+, Clang 10+, or MSVC 2019+</li>
@@ -104,7 +104,7 @@ Prerequisites</h2>
 <li><b>vcpkg</b>: Package manager for dependencies</li>
 <li><b>Git</b>: Version control system</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2861"></a>
+<h2><a class="anchor" id="autotoc_md897"></a>
 Development Setup</h2>
 <div class="fragment"><div class="line"># Fork and clone the repository</div>
 <div class="line">git clone https://github.com/YOUR_USERNAME/thread_system.git</div>
@@ -120,12 +120,12 @@ Development Setup</h2>
 <div class="line"> </div>
 <div class="line"># Run tests (Linux only)</div>
 <div class="line">cd build &amp;&amp; ctest --verbose</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2862"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md898"></a>
 Contribution Workflow</h1>
-<h2><a class="anchor" id="autotoc_md2863"></a>
+<h2><a class="anchor" id="autotoc_md899"></a>
 1. Create a Feature Branch</h2>
 <div class="fragment"><div class="line">git checkout -b feature/your-feature-name</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2864"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md900"></a>
 2. Make Changes</h2>
 <ul>
 <li>Follow the coding standards</li>
@@ -133,14 +133,14 @@ Contribution Workflow</h1>
 <li>Update documentation as needed</li>
 <li>Ensure all existing tests pass</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2865"></a>
+<h2><a class="anchor" id="autotoc_md901"></a>
 3. Commit Changes</h2>
 <div class="fragment"><div class="line">git commit -m &quot;Add feature: Brief description of changes</div>
 <div class="line"> </div>
 <div class="line">- Detailed explanation of what was added/changed</div>
 <div class="line">- Why the change was necessary</div>
 <div class="line">- Any breaking changes or migration notes&quot;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2866"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md902"></a>
 4. Submit Pull Request</h2>
 <ul>
 <li>Push to your fork</li>
@@ -148,16 +148,16 @@ Contribution Workflow</h1>
 <li>Provide clear description of changes</li>
 <li>Link related issues</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2867"></a>
+<h1><a class="anchor" id="autotoc_md903"></a>
 Coding Standards</h1>
-<h2><a class="anchor" id="autotoc_md2868"></a>
+<h2><a class="anchor" id="autotoc_md904"></a>
 C++ Style Guidelines</h2>
 <div class="fragment"><div class="line"><span class="comment">// Classes: snake_case with _t suffix for templates</span></div>
 <div class="line"><span class="keyword">class </span>thread_pool;</div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span>typed_job_queue_t;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Functions and variables: snake_case</span></div>
-<div class="line"><span class="keyword">auto</span> process_job() -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>;</div>
+<div class="line"><span class="keyword">auto</span> process_job() -&gt; <a class="code hl_typedef" href="../../d2/d41/benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>;</div>
 <div class="line">std::atomic&lt;bool&gt; is_running_;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Constants: SCREAMING_SNAKE_CASE</span></div>
@@ -167,13 +167,13 @@ C++ Style Guidelines</h2>
 <div class="line"><span class="keyword">auto</span> result = create_thread_pool();</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Use trailing return types for complex signatures</span></div>
-<div class="line"><span class="keyword">auto</span> process_batch(std::vector&lt;job&gt;&amp;&amp; jobs) -&gt; <a class="code hl_typedef" href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>;</div>
+<div class="line"><span class="keyword">auto</span> process_batch(std::vector&lt;job&gt;&amp;&amp; jobs) -&gt; <a class="code hl_typedef" href="../../d2/d41/benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Use smart pointers for memory management</span></div>
 <div class="line">std::unique_ptr&lt;thread_base&gt; worker;</div>
 <div class="line">std::shared_ptr&lt;job_queue&gt; queue;</div>
-<div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2benchmark__common_8h_html_a13fa946184c58584adc65e45561d6772"><div class="ttname"><a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a></div><div class="ttdeci">thread_module::result_void result_void</div><div class="ttdef"><b>Definition</b> <a href="../../df/dad/benchmarks_2thread__pool__benchmarks_2benchmark__common_8h_source.html#l00012">benchmark_common.h:12</a></div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2869"></a>
+<div class="ttc" id="abenchmark__common_8h_html_a13fa946184c58584adc65e45561d6772"><div class="ttname"><a href="../../d2/d41/benchmark__common_8h.html#a13fa946184c58584adc65e45561d6772">result_void</a></div><div class="ttdeci">thread_module::result_void result_void</div><div class="ttdef"><b>Definition</b> <a href="../../d2/d41/benchmark__common_8h_source.html#l00012">benchmark_common.h:12</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md905"></a>
 Error Handling</h2>
 <div class="fragment"><div class="line"><span class="comment">// Use result&lt;T&gt; pattern for error handling</span></div>
 <div class="line"><span class="keyword">auto</span> create_worker() -&gt; result&lt;std::unique_ptr&lt;thread_worker&gt;&gt; {</div>
@@ -188,9 +188,9 @@ Error Handling</h2>
 <div class="line"><span class="keywordflow">if</span> (worker_result.has_error()) {</div>
 <div class="line">    <span class="keywordflow">return</span> worker_result.get_error();</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2870"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md906"></a>
 Testing Guidelines</h1>
-<h2><a class="anchor" id="autotoc_md2871"></a>
+<h2><a class="anchor" id="autotoc_md907"></a>
 Unit Tests</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;gtest/gtest.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;your_component.h&quot;</span></div>
@@ -205,15 +205,15 @@ Unit Tests</h2>
 <div class="line">    configuration test_config_;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_function" href="../../d9/dfb/application__layer_2tests_2integration_2test__messaging__integration_8cpp.html#afa9a03b8890cf589bc9d9246e1149b1b">TEST_F</a>(YourComponentTest, StartStopCycle) {</div>
+<div class="line"><a class="code hl_function" href="../../d7/d62/test__messaging__integration_8cpp.html#afa9a03b8890cf589bc9d9246e1149b1b">TEST_F</a>(YourComponentTest, StartStopCycle) {</div>
 <div class="line">    ASSERT_TRUE(component_-&gt;start().has_value() == <span class="keyword">false</span>);</div>
 <div class="line">    EXPECT_TRUE(component_-&gt;is_running());</div>
 <div class="line">    </div>
 <div class="line">    component_-&gt;stop();</div>
 <div class="line">    EXPECT_FALSE(component_-&gt;is_running());</div>
 <div class="line">}</div>
-<div class="ttc" id="aapplication__layer_2tests_2integration_2test__messaging__integration_8cpp_html_afa9a03b8890cf589bc9d9246e1149b1b"><div class="ttname"><a href="../../d9/dfb/application__layer_2tests_2integration_2test__messaging__integration_8cpp.html#afa9a03b8890cf589bc9d9246e1149b1b">TEST_F</a></div><div class="ttdeci">TEST_F(MessagingIntegrationTest, EndToEndMessaging)</div><div class="ttdef"><b>Definition</b> <a href="../../d9/dfb/application__layer_2tests_2integration_2test__messaging__integration_8cpp_source.html#l00038">test_messaging_integration.cpp:38</a></div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2872"></a>
+<div class="ttc" id="atest__messaging__integration_8cpp_html_afa9a03b8890cf589bc9d9246e1149b1b"><div class="ttname"><a href="../../d7/d62/test__messaging__integration_8cpp.html#afa9a03b8890cf589bc9d9246e1149b1b">TEST_F</a></div><div class="ttdeci">TEST_F(MessagingIntegrationTest, EndToEndMessaging)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d62/test__messaging__integration_8cpp_source.html#l00038">test_messaging_integration.cpp:38</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md908"></a>
 Performance Tests</h2>
 <ul>
 <li>Benchmark critical performance paths</li>
@@ -221,16 +221,16 @@ Performance Tests</h2>
 <li>Test under realistic load conditions</li>
 <li>Measure memory usage and efficiency</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2873"></a>
+<h1><a class="anchor" id="autotoc_md909"></a>
 Documentation Guidelines</h1>
-<h2><a class="anchor" id="autotoc_md2874"></a>
+<h2><a class="anchor" id="autotoc_md910"></a>
 Code Documentation</h2>
 <div class="fragment"><div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> create_thread_pool(<span class="keyword">const</span> thread_pool_configuration&amp; config) </div>
 <div class="line">    -&gt; result&lt;std::unique_ptr&lt;thread_pool&gt;&gt;;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2875"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md911"></a>
 Review Process</h1>
-<h2><a class="anchor" id="autotoc_md2876"></a>
+<h2><a class="anchor" id="autotoc_md912"></a>
 Pull Request Requirements</h2>
 <p>Before submitting:</p><ul>
 <li>[ ] All tests pass locally</li>
@@ -239,7 +239,7 @@ Pull Request Requirements</h2>
 <li>[ ] Documentation is updated for public API changes</li>
 <li>[ ] Performance impact is measured and acceptable</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2877"></a>
+<h2><a class="anchor" id="autotoc_md913"></a>
 Review Criteria</h2>
 <p>Reviewers evaluate:</p><ol type="1">
 <li><b>Correctness</b>: Does the code solve the intended problem?</li>
@@ -248,16 +248,16 @@ Review Criteria</h2>
 <li><b>Thread Safety</b>: Are concurrent access patterns safe?</li>
 <li><b>API Design</b>: Is the public interface intuitive and consistent?</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md2878"></a>
+<h1><a class="anchor" id="autotoc_md914"></a>
 Getting Help</h1>
-<h2><a class="anchor" id="autotoc_md2879"></a>
+<h2><a class="anchor" id="autotoc_md915"></a>
 Support Channels</h2>
 <ul>
 <li><b>GitHub Issues</b>: For bug reports and feature requests</li>
 <li><b>GitHub Discussions</b>: For questions and general discussion</li>
 <li><b>Code Review</b>: For implementation guidance during development</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2880"></a>
+<h2><a class="anchor" id="autotoc_md916"></a>
 Response Times</h2>
 <ul>
 <li><b>Bug reports</b>: 24-48 hours</li>

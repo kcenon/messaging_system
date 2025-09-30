@@ -1,9 +1,0 @@
-<map id="libraries/monitoring_system/include/monitoring/performance/performance_monitor.h" name="libraries/monitoring_system/include/monitoring/performance/performance_monitor.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="229,5,431,75"/>
-<area shape="rect" id="Node000002" href="$d0/d97/basic__monitoring__example_8cpp.html" title="Basic example demonstrating simple monitoring setup." alt="" coords="5,123,196,177"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="248,83,157,125,155,120,245,78"/>
-<area shape="rect" id="Node000003" href="$d1/d9b/test__integration__e2e_8cpp.html" title="End&#45;to&#45;end integration tests for the monitoring system." alt="" coords="220,123,440,177"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="333,88,333,122,327,122,327,88"/>
-<area shape="rect" id="Node000004" href="$de/da5/test__stress__performance_8cpp.html" title="Stress testing for the monitoring system." alt="" coords="464,123,652,177"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="414,78,504,120,502,125,412,83"/>
-</map>

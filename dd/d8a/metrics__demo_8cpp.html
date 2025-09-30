@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/logger_system/examples/metrics_demo.cpp File Reference</title>
+<title>Messaging System: libraries/logger_system/samples/metrics_demo.cpp File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -95,119 +95,78 @@ $(document).ready(function(){initNavTree('dd/d8a/metrics__demo_8cpp.html','../..
   <div class="headertitle"><div class="title">metrics_demo.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="../../d1/d8c/logger_8h_source.html">kcenon/logger/core/logger.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="../../db/dd9/logger__metrics_8h_source.html">kcenon/logger/core/metrics/logger_metrics.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="../../dc/d9a/console__writer_8h_source.html">kcenon/logger/writers/console_writer.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="../../d1/d8c/logger_8h_source.html">logger/logger.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="../../dc/d9a/console__writer_8h_source.html">logger/writers/console_writer.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="../../dd/d82/structured__logger_8h_source.html">logger/structured/structured_logger.h</a>&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;random&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for metrics_demo.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d7/dd7/metrics__demo_8cpp__incl.png" border="0" usemap="#alibraries_2logger__system_2examples_2metrics__demo_8cpp" alt=""/></div>
-<map name="alibraries_2logger__system_2examples_2metrics__demo_8cpp" id="alibraries_2logger__system_2examples_2metrics__demo_8cpp">
-<area shape="rect" title=" " alt="" coords="935,5,1150,45"/>
-<area shape="rect" href="../../d1/d8c/logger_8h.html" title="High&#45;performance, thread&#45;safe logging system with asynchronous capabilities." alt="" coords="669,255,816,295"/>
-<area shape="poly" title=" " alt="" coords="1021,48,778,248,774,244,1018,44"/>
-<area shape="rect" title=" " alt="" coords="952,350,1016,375"/>
-<area shape="poly" title=" " alt="" coords="1033,47,1012,94,997,162,989,230,986,337,981,336,984,229,992,161,1007,93,1028,45"/>
-<area shape="rect" href="../../db/dd9/logger__metrics_8h.html" title="Logger performance metrics and monitoring." alt="" coords="5,350,189,375"/>
-<area shape="poly" title=" " alt="" coords="991,48,143,348,141,343,989,43"/>
-<area shape="rect" href="../../dc/d9a/console__writer_8h.html" title=" " alt="" coords="1021,93,1184,133"/>
-<area shape="poly" title=" " alt="" coords="1058,44,1084,81,1079,84,1054,47"/>
-<area shape="rect" title=" " alt="" coords="1208,101,1288,126"/>
-<area shape="poly" title=" " alt="" coords="1089,43,1209,93,1207,98,1087,48"/>
-<area shape="rect" title=" " alt="" coords="1312,101,1384,126"/>
-<area shape="poly" title=" " alt="" coords="1126,43,1211,64,1301,91,1308,93,1307,98,1299,96,1209,70,1124,48"/>
-<area shape="rect" title=" " alt="" coords="689,519,767,544"/>
-<area shape="poly" title=" " alt="" coords="700,297,671,317,649,344,642,366,641,388,646,411,655,433,681,474,708,507,704,510,676,478,650,436,641,412,636,388,636,365,644,341,668,313,697,293"/>
-<area shape="rect" title=" " alt="" coords="265,350,327,375"/>
-<area shape="poly" title=" " alt="" coords="670,287,520,309,433,325,347,345,338,348,336,343,346,340,432,320,519,303,669,282"/>
-<area shape="rect" title=" " alt="" coords="240,438,307,463"/>
-<area shape="poly" title=" " alt="" coords="669,281,607,287,536,298,462,317,392,345,346,381,296,430,292,426,343,377,389,340,461,312,535,293,607,282,669,276"/>
-<area shape="poly" title=" " alt="" coords="798,292,934,340,942,343,940,348,932,345,796,297"/>
-<area shape="rect" href="../../d5/de3/logger__system_2include_2kcenon_2logger_2interfaces_2logger__interface_8h.html" title=" " alt="" coords="1142,343,1325,383"/>
-<area shape="poly" title=" " alt="" coords="817,286,1129,340,1128,346,816,291"/>
-<area shape="rect" href="../../da/d5e/logger__types_8h.html" title="Common types and enumerations for logger system." alt="" coords="1155,438,1274,463"/>
-<area shape="poly" title=" " alt="" coords="779,293,941,380,1045,413,1142,434,1141,440,1044,418,939,385,776,297"/>
-<area shape="rect" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h.html" title=" " alt="" coords="2061,350,2171,375"/>
-<area shape="poly" title=" " alt="" coords="816,278,2047,354,2047,360,816,283"/>
-<area shape="poly" title=" " alt="" coords="669,287,462,311,208,345,176,350,175,345,208,340,461,306,669,282"/>
-<area shape="rect" href="../../d9/db2/include_2kcenon_2logger_2core_2di_2di__container__interface_8h.html" title="Dependency injection container interface." alt="" coords="341,438,536,463"/>
-<area shape="poly" title=" " alt="" coords="669,283,422,306,311,324,273,334,254,345,245,360,246,373,254,386,269,397,313,417,365,432,363,437,311,422,266,402,250,389,241,375,240,358,250,341,271,329,310,319,421,301,669,278"/>
-<area shape="rect" href="../../da/d24/include_2kcenon_2logger_2core_2di_2di__container__factory_8h.html" title="Factory for creating DI container instances." alt="" coords="403,350,584,375"/>
-<area shape="poly" title=" " alt="" coords="689,297,540,348,539,343,687,292"/>
-<area shape="rect" href="../../d3/d61/logger__system_2include_2kcenon_2logger_2core_2monitoring_2monitoring__interface_8h.html" title="Interface for logger monitoring and health checks." alt="" coords="773,431,941,471"/>
-<area shape="poly" title=" " alt="" coords="785,293,815,313,841,341,856,379,861,417,855,417,851,380,836,344,812,317,782,297"/>
-<area shape="rect" href="../../db/d89/include_2kcenon_2logger_2core_2monitoring_2monitoring__factory_8h.html" title="Factory for creating monitoring instances." alt="" coords="659,343,827,383"/>
-<area shape="poly" title=" " alt="" coords="745,295,745,329,740,329,740,295"/>
-<area shape="poly" title=" " alt="" coords="1209,385,1146,433,1121,455,1093,473,1010,501,925,519,846,528,781,532,780,527,845,523,924,513,1009,496,1091,468,1118,451,1142,429,1206,381"/>
-<area shape="rect" title=" " alt="" coords="1016,438,1080,463"/>
-<area shape="poly" title=" " alt="" coords="1194,385,1086,435,1084,430,1192,380"/>
-<area shape="rect" title=" " alt="" coords="1435,519,1493,544"/>
-<area shape="poly" title=" " alt="" coords="1261,381,1439,509,1436,513,1258,385"/>
-<area shape="poly" title=" " alt="" coords="1232,384,1223,425,1218,424,1227,382"/>
-<area shape="poly" title=" " alt="" coords="1252,461,1422,514,1420,519,1250,466"/>
-<area shape="rect" title=" " alt="" coords="1064,519,1131,544"/>
-<area shape="poly" title=" " alt="" coords="1199,466,1128,513,1125,509,1196,461"/>
-<area shape="poly" title=" " alt="" coords="2172,372,2228,387,2280,408,2299,422,2311,437,2313,454,2302,473,2285,483,2258,493,2177,507,2069,518,1945,525,1692,532,1507,533,1507,528,1692,527,1944,520,2068,513,2176,502,2256,487,2283,479,2298,469,2307,453,2306,439,2295,426,2277,413,2226,392,2171,377"/>
-<area shape="rect" title=" " alt="" coords="2109,438,2195,463"/>
-<area shape="poly" title=" " alt="" coords="2123,374,2144,424,2139,426,2118,377"/>
-<area shape="rect" title=" " alt="" coords="1874,438,1934,463"/>
-<area shape="poly" title=" " alt="" coords="2088,378,1946,435,1944,430,2086,373"/>
-<area shape="rect" title=" " alt="" coords="2009,438,2084,463"/>
-<area shape="poly" title=" " alt="" coords="2109,377,2067,429,2063,425,2105,374"/>
-<area shape="rect" title=" " alt="" coords="2219,438,2287,463"/>
-<area shape="poly" title=" " alt="" coords="2136,373,2225,428,2222,433,2133,378"/>
-<area shape="poly" title=" " alt="" coords="122,373,238,429,236,434,120,378"/>
-<area shape="poly" title=" " alt="" coords="109,373,156,422,191,448,229,468,279,479,365,489,604,506,1050,526,1050,531,604,511,365,494,278,484,227,473,188,452,153,426,105,377"/>
-<area shape="rect" title=" " alt="" coords="64,438,131,463"/>
-<area shape="poly" title=" " alt="" coords="100,376,100,424,95,424,95,376"/>
-<area shape="poly" title=" " alt="" coords="481,461,677,513,675,519,480,466"/>
-<area shape="poly" title=" " alt="" coords="536,457,1421,524,1421,529,536,462"/>
-<area shape="rect" title=" " alt="" coords="397,519,483,544"/>
-<area shape="poly" title=" " alt="" coords="442,463,442,505,437,505,436,464"/>
-<area shape="rect" title=" " alt="" coords="286,519,373,544"/>
-<area shape="poly" title=" " alt="" coords="424,466,358,513,355,508,421,461"/>
-<area shape="rect" title=" " alt="" coords="530,519,654,544"/>
-<area shape="poly" title=" " alt="" coords="463,461,558,510,556,515,460,466"/>
-<area shape="poly" title=" " alt="" coords="505,374,547,418,607,468,647,492,686,511,684,516,644,497,604,473,544,422,501,377"/>
-<area shape="poly" title=" " alt="" coords="488,377,456,428,451,425,484,374"/>
-<area shape="poly" title=" " alt="" coords="942,460,1421,522,1421,527,941,465"/>
-<area shape="poly" title=" " alt="" coords="916,468,1052,512,1050,517,914,473"/>
-<area shape="poly" title=" " alt="" coords="795,473,645,517,643,512,793,468"/>
-<area shape="poly" title=" " alt="" coords="744,383,733,505,728,505,738,383"/>
-<area shape="poly" title=" " alt="" coords="770,381,823,420,820,425,767,385"/>
-<area shape="poly" title=" " alt="" coords="1102,134,1055,425,1049,424,1097,133"/>
-<area shape="rect" href="../../d2/d49/base__writer_8h.html" title="Abstract base class for all log output writers." alt="" coords="1384,181,1493,207"/>
-<area shape="poly" title=" " alt="" coords="1184,131,1377,176,1376,181,1183,136"/>
-<area shape="poly" title=" " alt="" coords="1417,209,1381,230,1342,257,1298,296,1261,334,1257,330,1294,292,1338,253,1378,225,1415,205"/>
-<area shape="poly" title=" " alt="" coords="1494,192,1607,192,1761,196,1933,207,2104,228,2182,243,2252,262,2311,285,2357,312,2374,327,2387,344,2395,362,2398,381,2396,402,2387,424,2373,448,2352,473,2335,484,2305,494,2219,509,2103,520,1971,527,1703,533,1507,533,1507,528,1703,528,1971,522,2103,515,2218,504,2304,489,2332,479,2349,469,2369,445,2383,422,2391,401,2393,382,2390,363,2383,346,2370,331,2354,316,2309,289,2250,267,2181,248,2103,233,1933,213,1761,202,1607,197,1494,197"/>
-<area shape="poly" title=" " alt="" coords="1385,208,1294,231,1241,250,1187,273,1133,303,1083,339,1040,382,1006,432,1000,451,1006,469,1027,493,1053,510,1050,515,1023,497,1002,472,995,451,1002,430,1036,378,1080,335,1130,299,1184,269,1239,245,1293,226,1383,202"/>
-<area shape="poly" title=" " alt="" coords="1494,195,1640,201,1822,212,1985,229,2043,240,2076,252,2093,271,2105,292,2116,336,2111,337,2100,294,2089,274,2073,257,2042,245,1985,234,1821,218,1639,206,1493,200"/>
-<area shape="rect" href="../../d9/dd6/log__writer__interface_8h.html" title=" " alt="" coords="1895,255,2063,295"/>
-<area shape="poly" title=" " alt="" coords="1494,201,1881,257,1880,262,1493,206"/>
-<area shape="rect" href="../../d4/d0b/log__entry_8h.html" title="Data structures for representing log entries and source locations." alt="" coords="1351,262,1526,287"/>
-<area shape="poly" title=" " alt="" coords="1441,207,1441,248,1436,248,1436,207"/>
-<area shape="poly" title=" " alt="" coords="2063,289,2170,315,2225,332,2274,354,2314,378,2339,406,2344,421,2344,438,2338,455,2324,473,2307,484,2279,493,2195,508,2084,519,1956,526,1697,533,1507,533,1507,528,1697,527,1956,521,2084,514,2195,503,2278,488,2305,479,2321,469,2333,452,2339,437,2339,422,2334,408,2311,382,2272,358,2223,337,2169,320,2062,294"/>
-<area shape="poly" title=" " alt="" coords="1985,295,1989,333,1988,381,1977,431,1965,453,1948,473,1911,483,1833,493,1600,510,1145,531,1144,526,1600,505,1833,488,1910,478,1945,468,1961,450,1972,429,1983,380,1984,333,1980,295"/>
-<area shape="poly" title=" " alt="" coords="2010,292,2087,340,2085,345,2007,297"/>
-<area shape="poly" title=" " alt="" coords="1412,290,1292,340,1290,335,1410,285"/>
-<area shape="poly" title=" " alt="" coords="1442,287,1464,505,1459,505,1437,288"/>
-<area shape="poly" title=" " alt="" coords="1432,289,1394,334,1339,385,1296,413,1255,435,1252,430,1294,408,1336,381,1390,330,1428,286"/>
-<area shape="poly" title=" " alt="" coords="1436,289,1417,326,1385,376,1342,429,1316,453,1288,473,1252,491,1214,506,1145,524,1143,519,1213,501,1250,486,1285,468,1313,449,1338,425,1381,373,1412,323,1431,286"/>
-<area shape="poly" title=" " alt="" coords="1483,285,1687,340,1997,431,1996,437,1686,345,1482,290"/>
-<area shape="rect" href="../../da/db2/small__string_8h.html" title=" " alt="" coords="1515,350,1674,375"/>
-<area shape="poly" title=" " alt="" coords="1461,285,1563,341,1560,346,1458,290"/>
-<area shape="poly" title=" " alt="" coords="1569,378,1449,425,1369,451,1287,473,1145,499,1003,516,781,531,780,526,1002,511,1144,494,1286,468,1368,446,1447,420,1568,373"/>
-<area shape="poly" title=" " alt="" coords="1587,377,1542,432,1483,509,1479,505,1538,429,1583,374"/>
-<area shape="poly" title=" " alt="" coords="1654,373,1753,396,1864,428,1869,430,1867,435,1862,433,1751,401,1652,378"/>
-<area shape="rect" title=" " alt="" coords="1661,438,1728,463"/>
-<area shape="poly" title=" " alt="" coords="1610,373,1672,426,1668,430,1606,378"/>
-<area shape="rect" title=" " alt="" coords="1753,438,1850,463"/>
-<area shape="poly" title=" " alt="" coords="1624,373,1762,430,1760,435,1622,378"/>
-<area shape="rect" title=" " alt="" coords="1552,438,1637,463"/>
-<area shape="poly" title=" " alt="" coords="1597,376,1597,424,1592,424,1592,376"/>
+<div class="center"><img src="../../d7/dd7/metrics__demo_8cpp__incl.png" border="0" usemap="#alibraries_2logger__system_2samples_2metrics__demo_8cpp" alt=""/></div>
+<map name="alibraries_2logger__system_2samples_2metrics__demo_8cpp" id="alibraries_2logger__system_2samples_2metrics__demo_8cpp">
+<area shape="rect" title=" " alt="" coords="651,5,856,45"/>
+<area shape="rect" href="../../d1/d8c/logger_8h.html" title=" " alt="" coords="390,189,509,214"/>
+<area shape="poly" title=" " alt="" coords="651,40,580,60,545,75,514,95,495,113,480,135,460,177,455,175,476,132,491,110,510,91,543,71,578,55,650,35"/>
+<area shape="rect" title=" " alt="" coords="696,269,760,295"/>
+<area shape="poly" title=" " alt="" coords="754,46,733,255,728,255,749,45"/>
+<area shape="rect" href="../../dc/d9a/console__writer_8h.html" title=" " alt="" coords="523,93,690,133"/>
+<area shape="poly" title=" " alt="" coords="722,48,652,89,649,84,720,43"/>
+<area shape="rect" href="../../dd/d82/structured__logger_8h.html" title=" " alt="" coords="828,181,1031,221"/>
+<area shape="poly" title=" " alt="" coords="761,44,777,87,790,111,806,131,834,155,866,173,863,178,831,159,802,135,785,114,772,90,756,46"/>
+<area shape="rect" title=" " alt="" coords="816,101,896,126"/>
+<area shape="poly" title=" " alt="" coords="778,44,833,89,829,93,774,48"/>
+<area shape="rect" title=" " alt="" coords="920,101,992,126"/>
+<area shape="poly" title=" " alt="" coords="799,43,917,93,915,98,797,48"/>
+<area shape="rect" title=" " alt="" coords="551,343,628,368"/>
+<area shape="poly" title=" " alt="" coords="468,212,500,236,534,268,559,299,578,329,574,332,554,302,530,271,497,240,465,216"/>
+<area shape="rect" title=" " alt="" coords="83,269,146,295"/>
+<area shape="poly" title=" " alt="" coords="398,217,160,272,159,267,397,211"/>
+<area shape="rect" title=" " alt="" coords="5,343,72,368"/>
+<area shape="poly" title=" " alt="" coords="390,209,308,216,214,228,129,247,97,258,74,271,62,284,54,298,44,330,39,328,49,296,58,281,70,267,94,253,128,241,213,223,307,211,390,204"/>
+<area shape="poly" title=" " alt="" coords="491,211,683,265,682,271,489,217"/>
+<area shape="rect" href="../../d7/d44/logger__system_2sources_2logger_2logger__interface_8h.html" title=" " alt="" coords="379,269,519,295"/>
+<area shape="poly" title=" " alt="" coords="452,214,452,255,447,255,447,214"/>
+<area shape="rect" href="../../db/dd9/logger__metrics_8h.html" title=" " alt="" coords="171,269,355,295"/>
+<area shape="poly" title=" " alt="" coords="423,216,303,267,301,262,421,212"/>
+<area shape="poly" title=" " alt="" coords="473,292,556,334,553,339,471,297"/>
+<area shape="rect" title=" " alt="" coords="231,343,295,368"/>
+<area shape="poly" title=" " alt="" coords="420,297,307,340,305,335,418,292"/>
+<area shape="rect" title=" " alt="" coords="319,343,377,368"/>
+<area shape="poly" title=" " alt="" coords="435,297,377,337,374,332,432,292"/>
+<area shape="poly" title=" " alt="" coords="227,297,86,342,84,337,226,292"/>
+<area shape="poly" title=" " alt="" coords="265,295,265,329,260,329,260,295"/>
+<area shape="poly" title=" " alt="" coords="278,293,325,332,322,336,275,297"/>
+<area shape="rect" title=" " alt="" coords="652,343,719,368"/>
+<area shape="poly" title=" " alt="" coords="350,292,482,312,639,340,638,345,481,317,349,297"/>
+<area shape="rect" title=" " alt="" coords="140,343,207,368"/>
+<area shape="poly" title=" " alt="" coords="250,297,200,336,197,332,247,293"/>
+<area shape="rect" title=" " alt="" coords="402,343,526,368"/>
+<area shape="poly" title=" " alt="" coords="296,292,419,335,418,341,294,297"/>
+<area shape="poly" title=" " alt="" coords="523,129,403,150,267,181,203,201,147,222,103,246,74,271,70,282,74,293,127,312,218,339,217,344,125,317,70,297,64,282,70,268,100,241,145,217,202,196,266,176,402,145,522,124"/>
+<area shape="rect" href="../../d2/d49/base__writer_8h.html" title=" " alt="" coords="552,189,661,214"/>
+<area shape="poly" title=" " alt="" coords="609,134,609,175,604,175,604,134"/>
+<area shape="poly" title=" " alt="" coords="585,216,486,266,483,261,583,212"/>
+<area shape="poly" title=" " alt="" coords="603,216,576,255,556,277,533,297,477,318,392,344,390,339,475,313,531,292,553,274,572,252,598,213"/>
+<area shape="poly" title=" " alt="" coords="615,213,675,329,671,332,610,215"/>
+<area shape="poly" title=" " alt="" coords="913,223,872,261,817,297,747,318,642,344,640,339,745,313,815,292,868,257,910,219"/>
+<area shape="poly" title=" " alt="" coords="882,224,771,267,769,262,880,219"/>
+<area shape="poly" title=" " alt="" coords="828,222,533,270,532,265,827,217"/>
+<area shape="poly" title=" " alt="" coords="923,223,902,260,887,280,868,297,836,317,800,332,733,350,732,345,798,327,833,312,865,293,883,276,898,257,919,220"/>
+<area shape="poly" title=" " alt="" coords="899,224,773,297,670,322,540,345,539,340,669,317,771,292,896,219"/>
+<area shape="rect" title=" " alt="" coords="937,269,983,295"/>
+<area shape="poly" title=" " alt="" coords="939,221,953,256,948,257,934,223"/>
+<area shape="rect" title=" " alt="" coords="1008,269,1083,295"/>
+<area shape="poly" title=" " alt="" coords="959,219,1018,259,1015,264,956,224"/>
+<area shape="rect" title=" " alt="" coords="1107,269,1181,295"/>
+<area shape="poly" title=" " alt="" coords="982,219,1101,262,1099,267,980,224"/>
+<area shape="rect" title=" " alt="" coords="1205,269,1304,295"/>
+<area shape="poly" title=" " alt="" coords="1008,219,1195,264,1193,269,1007,224"/>
+<area shape="rect" title=" " alt="" coords="1328,269,1421,295"/>
+<area shape="poly" title=" " alt="" coords="1031,217,1315,266,1314,272,1030,222"/>
+<area shape="rect" title=" " alt="" coords="1446,269,1511,295"/>
+<area shape="poly" title=" " alt="" coords="1031,210,1214,232,1433,267,1432,272,1213,237,1030,215"/>
 </map>
 </div>
 </div>
@@ -215,12 +174,12 @@ Include dependency graph for metrics_demo.cpp:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a601ed57bdda4ff982e86702111c91887" id="r_a601ed57bdda4ff982e86702111c91887"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8a/metrics__demo_8cpp.html#a601ed57bdda4ff982e86702111c91887">generate_logs</a> (<a class="el" href="../../dd/dd5/classkcenon_1_1logger_1_1logger.html">logger</a> *log, int thread_id, int count)</td></tr>
+<tr class="memitem:a601ed57bdda4ff982e86702111c91887" id="r_a601ed57bdda4ff982e86702111c91887"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8a/metrics__demo_8cpp.html#a601ed57bdda4ff982e86702111c91887">generate_logs</a> (<a class="el" href="../../da/d2e/classlogger__module_1_1logger.html">logger</a> *log, int thread_id, int count)</td></tr>
 <tr class="separator:a601ed57bdda4ff982e86702111c91887"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a324b6a019b806084c81344dc42b932" id="r_a1a324b6a019b806084c81344dc42b932"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8a/metrics__demo_8cpp.html#a1a324b6a019b806084c81344dc42b932">print_metrics</a> (const <a class="el" href="../../da/d5e/structkcenon_1_1logger_1_1metrics_1_1logger__performance__stats.html">logger_performance_stats</a> &amp;metrics)</td></tr>
-<tr class="separator:a1a324b6a019b806084c81344dc42b932"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17da56679f27b7a9994fc77b60936dfe" id="r_a17da56679f27b7a9994fc77b60936dfe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8a/metrics__demo_8cpp.html#a17da56679f27b7a9994fc77b60936dfe">test_logging_levels</a> ()</td></tr>
-<tr class="separator:a17da56679f27b7a9994fc77b60936dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2b4424caab3d146f906dd3ec597645d" id="r_af2b4424caab3d146f906dd3ec597645d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8a/metrics__demo_8cpp.html#af2b4424caab3d146f906dd3ec597645d">print_metrics</a> (const <a class="el" href="../../dc/d9f/structlogger__module_1_1performance__metrics.html">performance_metrics</a> &amp;metrics)</td></tr>
+<tr class="separator:af2b4424caab3d146f906dd3ec597645d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6546239568db590b52c2817062ecb654" id="r_a6546239568db590b52c2817062ecb654"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8a/metrics__demo_8cpp.html#a6546239568db590b52c2817062ecb654">test_structured_logging</a> ()</td></tr>
+<tr class="separator:a6546239568db590b52c2817062ecb654"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d8a/metrics__demo_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
 <tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -234,7 +193,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void generate_logs </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../dd/dd5/classkcenon_1_1logger_1_1logger.html">logger</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="../../da/d2e/classlogger__module_1_1logger.html">logger</a> *&#160;</td>
           <td class="paramname"><em>log</em>, </td>
         </tr>
         <tr>
@@ -257,11 +216,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00019">19</a> of file <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html">metrics_demo.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00017">17</a> of file <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html">metrics_demo.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d3/d30/logger_8cpp_source.html#l00144">kcenon::logger::logger::log()</a>.</p>
+<p class="reference">References <a class="el" href="../../d3/d30/logger_8cpp_source.html#l00299">logger_module::logger::log()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00066">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00097">main()</a>.</p>
 
 </div>
 </div>
@@ -280,14 +239,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00066">66</a> of file <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html">metrics_demo.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00097">97</a> of file <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html">metrics_demo.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d3/d30/logger_8cpp_source.html#l00115">kcenon::logger::logger::add_writer()</a>, <a class="el" href="../../df/d19/logger__metrics_8cpp_source.html#l00011">kcenon::logger::metrics::g_logger_stats</a>, <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00019">generate_logs()</a>, <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00038">print_metrics()</a>, <a class="el" href="../../d3/d30/logger_8cpp_source.html#l00095">kcenon::logger::logger::start()</a>, <a class="el" href="../../d3/d30/logger_8cpp_source.html#l00103">kcenon::logger::logger::stop()</a>, and <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00049">test_logging_levels()</a>.</p>
+<p class="reference">References <a class="el" href="../../d3/d30/logger_8cpp_source.html#l00316">logger_module::logger::add_writer()</a>, <a class="el" href="../../d3/d30/logger_8cpp_source.html#l00344">logger_module::logger::enable_metrics_collection()</a>, <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00017">generate_logs()</a>, <a class="el" href="../../d3/d30/logger_8cpp_source.html#l00352">logger_module::logger::get_current_metrics()</a>, <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00036">print_metrics()</a>, <a class="el" href="../../d3/d30/logger_8cpp_source.html#l00332">logger_module::logger::start()</a>, <a class="el" href="../../d3/d30/logger_8cpp_source.html#l00336">logger_module::logger::stop()</a>, and <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00057">test_structured_logging()</a>.</p>
 
 </div>
 </div>
-<a id="a1a324b6a019b806084c81344dc42b932" name="a1a324b6a019b806084c81344dc42b932"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a324b6a019b806084c81344dc42b932">&#9670;&#160;</a></span>print_metrics()</h2>
+<a id="af2b4424caab3d146f906dd3ec597645d" name="af2b4424caab3d146f906dd3ec597645d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2b4424caab3d146f906dd3ec597645d">&#9670;&#160;</a></span>print_metrics()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,29 +254,29 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void print_metrics </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="../../da/d5e/structkcenon_1_1logger_1_1metrics_1_1logger__performance__stats.html">logger_performance_stats</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="../../dc/d9f/structlogger__module_1_1performance__metrics.html">performance_metrics</a> &amp;&#160;</td>
           <td class="paramname"><em>metrics</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00038">38</a> of file <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html">metrics_demo.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00036">36</a> of file <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html">metrics_demo.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00029">kcenon::logger::metrics::logger_performance_stats::get_messages_per_second()</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00049">kcenon::logger::metrics::logger_performance_stats::get_queue_utilization_percent()</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00022">kcenon::logger::metrics::logger_performance_stats::max_queue_size</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00019">kcenon::logger::metrics::logger_performance_stats::messages_dropped</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00018">kcenon::logger::metrics::logger_performance_stats::messages_logged</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00021">kcenon::logger::metrics::logger_performance_stats::queue_size</a>, and <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00023">kcenon::logger::metrics::logger_performance_stats::writer_errors</a>.</p>
+<p class="reference">References <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00025">logger_module::writer_metrics::bytes_written</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00122">logger_module::performance_metrics::get_avg_enqueue_time_ns()</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00031">logger_module::writer_metrics::get_avg_write_time_us()</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00116">logger_module::performance_metrics::get_bytes_per_second()</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00134">logger_module::performance_metrics::get_drop_rate_percent()</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00110">logger_module::performance_metrics::get_messages_per_second()</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00128">logger_module::performance_metrics::get_queue_utilization_percent()</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00094">logger_module::performance_metrics::messages_dropped</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00086">logger_module::performance_metrics::messages_enqueued</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00088">logger_module::performance_metrics::messages_processed</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00024">logger_module::writer_metrics::messages_written</a>, <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00026">logger_module::writer_metrics::write_failures</a>, and <a class="el" href="../../db/dd9/logger__metrics_8h_source.html#l00103">logger_module::performance_metrics::writer_stats</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00066">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00097">main()</a>.</p>
 
 </div>
 </div>
-<a id="a17da56679f27b7a9994fc77b60936dfe" name="a17da56679f27b7a9994fc77b60936dfe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17da56679f27b7a9994fc77b60936dfe">&#9670;&#160;</a></span>test_logging_levels()</h2>
+<a id="a6546239568db590b52c2817062ecb654" name="a6546239568db590b52c2817062ecb654"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6546239568db590b52c2817062ecb654">&#9670;&#160;</a></span>test_structured_logging()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void test_logging_levels </td>
+          <td class="memname">void test_structured_logging </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -325,9 +284,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00049">49</a> of file <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html">metrics_demo.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00057">57</a> of file <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html">metrics_demo.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00066">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../dd/d8a/metrics__demo_8cpp_source.html#l00097">main()</a>.</p>
 
 </div>
 </div>
@@ -336,7 +295,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_ace5f56aa808e9d1ec51aed24dc8e3ed.html">examples</a></li><li class="navelem"><a class="el" href="../../dd/d8a/metrics__demo_8cpp.html">metrics_demo.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_fc9d966c4e96cf5505f757ee18fecfda.html">samples</a></li><li class="navelem"><a class="el" href="../../dd/d8a/metrics__demo_8cpp.html">metrics_demo.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

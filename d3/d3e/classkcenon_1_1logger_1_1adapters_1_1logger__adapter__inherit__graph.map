@@ -1,7 +1,0 @@
-<map id="kcenon::logger::adapters::logger_adapter" name="kcenon::logger::adapters::logger_adapter">
-<area shape="rect" id="Node000001" title="Adapter to make logger compatible with ILogger interface." alt="" coords="104,79,287,119"/>
-<area shape="rect" id="Node000002" href="$d8/d48/classkcenon_1_1shared_1_1ILogger.html" title="Common logging interface." alt="" coords="5,5,183,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,37,173,76,169,81,118,41"/>
-<area shape="rect" id="Node000003" href="$d9/d4d/classkcenon_1_1shared_1_1IService.html" title="Service lifecycle interface." alt="" coords="207,5,389,31"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="274,41,222,81,218,76,271,37"/>
-</map>

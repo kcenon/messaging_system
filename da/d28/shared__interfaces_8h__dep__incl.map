@@ -1,9 +1,0 @@
-<map id="libraries/thread_system/include/kcenon/thread/interfaces/shared_interfaces.h" name="libraries/thread_system/include/kcenon/thread/interfaces/shared_interfaces.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="221,5,444,60"/>
-<area shape="rect" id="Node000002" href="$d1/d87/logger__adapter_8h.html" title=" " alt="" coords="5,115,201,170"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="265,69,160,118,158,113,263,64"/>
-<area shape="rect" id="Node000003" href="$df/d39/monitor__adapter_8h.html" title=" " alt="" coords="226,108,439,177"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="335,74,335,108,330,108,330,74"/>
-<area shape="rect" id="Node000004" href="$d0/d08/thread__pool__executor_8h.html" title=" " alt="" coords="464,115,703,170"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="408,63,523,113,521,118,406,68"/>
-</map>

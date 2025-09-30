@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/logger_system/src/impl/writers/rotating_file_writer.cpp File Reference</title>
+<title>Messaging System: libraries/logger_system/sources/logger/writers/rotating_file_writer.cpp File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -95,93 +95,52 @@ $(document).ready(function(){initNavTree('df/d4f/rotating__file__writer_8cpp.htm
   <div class="headertitle"><div class="title">rotating_file_writer.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="../../d0/dc1/rotating__file__writer_8h_source.html">kcenon/logger/writers/rotating_file_writer.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../d0/dc1/rotating__file__writer_8h_source.html">rotating_file_writer.h</a>&quot;</code><br />
 <code>#include &lt;filesystem&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;regex&gt;</code><br />
-<code>#include &lt;ctime&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for rotating_file_writer.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../db/d11/rotating__file__writer_8cpp__incl.png" border="0" usemap="#alibraries_2logger__system_2src_2impl_2writers_2rotating__file__writer_8cpp" alt=""/></div>
-<map name="alibraries_2logger__system_2src_2impl_2writers_2rotating__file__writer_8cpp" id="alibraries_2logger__system_2src_2impl_2writers_2rotating__file__writer_8cpp">
-<area shape="rect" title=" " alt="" coords="1537,5,1719,60"/>
-<area shape="rect" href="../../d0/dc1/rotating__file__writer_8h.html" title=" " alt="" coords="1161,108,1324,148"/>
-<area shape="poly" title=" " alt="" coords="1537,59,1335,107,1333,102,1536,53"/>
-<area shape="rect" title=" " alt="" coords="1133,519,1219,544"/>
-<area shape="poly" title=" " alt="" coords="1586,62,1523,110,1469,163,1416,220,1320,335,1243,438,1193,509,1189,506,1239,435,1316,332,1412,216,1465,159,1520,106,1583,58"/>
-<area shape="rect" title=" " alt="" coords="1533,115,1624,141"/>
-<area shape="poly" title=" " alt="" coords="1616,62,1594,104,1589,101,1612,59"/>
-<area shape="rect" title=" " alt="" coords="1648,115,1707,141"/>
-<area shape="poly" title=" " alt="" coords="1644,59,1667,101,1662,104,1640,62"/>
-<area shape="rect" title=" " alt="" coords="1731,115,1789,141"/>
-<area shape="poly" title=" " alt="" coords="1667,58,1734,105,1731,110,1664,62"/>
-<area shape="rect" title=" " alt="" coords="1813,115,1893,141"/>
-<area shape="poly" title=" " alt="" coords="1692,58,1814,108,1812,113,1690,63"/>
-<area shape="rect" href="../../d0/d76/file__writer_8h.html" title=" " alt="" coords="1193,196,1292,221"/>
-<area shape="poly" title=" " alt="" coords="1245,148,1245,182,1240,182,1240,148"/>
-<area shape="rect" title=" " alt="" coords="1223,592,1289,617"/>
-<area shape="poly" title=" " alt="" coords="1310,146,1356,166,1401,194,1420,212,1435,232,1444,255,1448,280,1448,452,1444,479,1433,503,1417,524,1396,542,1349,572,1303,592,1301,587,1347,567,1393,538,1413,520,1429,500,1439,477,1443,452,1443,281,1439,257,1430,235,1416,216,1397,198,1354,171,1307,151"/>
-<area shape="rect" title=" " alt="" coords="996,196,1071,221"/>
-<area shape="poly" title=" " alt="" coords="1193,151,1078,194,1076,189,1192,146"/>
-<area shape="rect" title=" " alt="" coords="1095,196,1169,221"/>
-<area shape="poly" title=" " alt="" coords="1217,150,1161,190,1158,186,1214,146"/>
-<area shape="rect" href="../../d2/d49/base__writer_8h.html" title="Abstract base class for all log output writers." alt="" coords="973,269,1083,295"/>
-<area shape="poly" title=" " alt="" coords="1209,224,1077,267,1075,262,1207,219"/>
-<area shape="rect" title=" " alt="" coords="981,519,1059,544"/>
-<area shape="poly" title=" " alt="" coords="1243,222,1233,267,1213,332,1181,405,1159,441,1134,473,1103,498,1069,516,1067,511,1100,493,1130,469,1155,438,1176,403,1208,330,1228,265,1238,221"/>
-<area shape="rect" title=" " alt="" coords="1293,519,1357,544"/>
-<area shape="poly" title=" " alt="" coords="1249,221,1264,269,1322,504,1317,506,1259,270,1244,223"/>
-<area shape="rect" title=" " alt="" coords="785,269,858,295"/>
-<area shape="poly" title=" " alt="" coords="1194,222,1182,224,1029,247,872,272,871,267,1028,241,1181,219,1193,217"/>
-<area shape="rect" title=" " alt="" coords="883,269,949,295"/>
-<area shape="poly" title=" " alt="" coords="1194,222,963,272,962,267,1193,217"/>
-<area shape="rect" title=" " alt="" coords="423,592,481,617"/>
-<area shape="poly" title=" " alt="" coords="974,296,649,363,486,402,429,419,396,433,361,457,333,482,325,496,321,510,322,526,330,543,346,561,366,575,410,593,408,598,363,579,342,565,326,545,317,527,316,510,320,494,329,479,358,453,393,428,427,414,485,397,647,358,973,291"/>
-<area shape="poly" title=" " alt="" coords="1063,292,1133,320,1220,367,1264,397,1305,432,1342,472,1372,518,1376,531,1374,543,1359,564,1333,581,1303,593,1301,588,1330,576,1355,560,1369,541,1371,531,1367,520,1338,476,1302,436,1261,401,1217,371,1131,325,1061,297"/>
-<area shape="rect" href="../../d5/de3/logger__system_2include_2kcenon_2logger_2interfaces_2logger__interface_8h.html" title=" " alt="" coords="937,431,1119,471"/>
-<area shape="poly" title=" " alt="" coords="1031,295,1031,417,1025,417,1025,295"/>
-<area shape="rect" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h.html" title=" " alt="" coords="119,431,265,471"/>
-<area shape="poly" title=" " alt="" coords="973,296,962,297,895,302,811,303,617,303,518,305,426,312,346,325,285,345,262,360,242,379,211,420,207,417,238,376,259,356,283,340,345,319,425,307,518,300,617,297,811,298,895,296,961,292,973,290"/>
-<area shape="rect" href="../../d9/dd6/log__writer__interface_8h.html" title=" " alt="" coords="5,343,173,383"/>
-<area shape="poly" title=" " alt="" coords="973,296,962,297,749,316,582,322,416,327,203,345,187,347,186,342,202,340,415,322,582,316,748,311,961,292,973,290"/>
-<area shape="rect" href="../../d4/d0b/log__entry_8h.html" title="Data structures for representing log entries and source locations." alt="" coords="811,350,986,375"/>
-<area shape="poly" title=" " alt="" coords="1010,297,931,345,928,340,1008,293"/>
-<area shape="poly" title=" " alt="" coords="1050,469,1065,486,1076,506,1081,527,1073,546,1061,554,1041,561,984,573,819,591,636,601,495,605,495,600,636,595,819,585,983,568,1040,556,1058,549,1069,542,1075,526,1071,508,1060,489,1046,473"/>
-<area shape="poly" title=" " alt="" coords="1029,471,1025,505,1020,504,1023,471"/>
-<area shape="poly" title=" " alt="" coords="1100,468,1280,515,1279,521,1099,473"/>
-<area shape="rect" href="../../da/d5e/logger__types_8h.html" title="Common types and enumerations for logger system." alt="" coords="839,519,958,544"/>
-<area shape="poly" title=" " alt="" coords="998,473,931,514,928,509,995,469"/>
-<area shape="poly" title=" " alt="" coords="839,545,495,599,494,594,838,539"/>
-<area shape="poly" title=" " alt="" coords="957,541,1209,591,1208,597,956,547"/>
-<area shape="poly" title=" " alt="" coords="136,473,106,487,81,504,69,523,70,532,75,542,98,559,132,572,175,582,224,589,325,598,409,601,409,606,324,603,223,595,174,587,130,577,95,563,71,546,64,534,64,522,77,501,103,483,134,468"/>
-<area shape="rect" title=" " alt="" coords="178,519,265,544"/>
-<area shape="poly" title=" " alt="" coords="202,470,215,505,210,506,197,472"/>
-<area shape="rect" title=" " alt="" coords="490,519,550,544"/>
-<area shape="poly" title=" " alt="" coords="266,467,477,517,476,522,265,472"/>
-<area shape="rect" title=" " alt="" coords="340,519,415,544"/>
-<area shape="poly" title=" " alt="" coords="237,468,339,511,337,516,235,473"/>
-<area shape="rect" title=" " alt="" coords="86,519,154,544"/>
-<area shape="poly" title=" " alt="" coords="177,473,142,510,138,507,173,469"/>
-<area shape="poly" title=" " alt="" coords="67,385,47,406,32,432,23,465,25,493,38,518,63,542,89,556,126,567,222,584,325,594,409,599,409,605,324,600,221,590,125,573,87,561,60,546,34,521,20,494,18,464,27,430,43,403,63,381"/>
-<area shape="poly" title=" " alt="" coords="82,384,68,418,57,461,55,483,57,505,63,525,75,542,91,549,125,556,237,568,575,585,946,596,1209,600,1209,605,946,601,575,591,237,573,124,561,89,554,72,546,58,527,52,506,50,483,52,460,63,416,77,382"/>
-<area shape="poly" title=" " alt="" coords="114,381,160,420,157,424,110,385"/>
-<area shape="poly" title=" " alt="" coords="812,375,731,390,642,417,597,436,554,459,514,487,479,520,463,549,456,579,451,578,459,547,475,517,511,483,551,455,595,431,640,412,730,385,811,370"/>
-<area shape="poly" title=" " alt="" coords="969,373,1050,394,1093,409,1133,428,1166,447,1191,465,1211,486,1233,517,1247,548,1255,578,1250,579,1242,550,1228,520,1207,490,1187,469,1163,452,1131,433,1091,414,1048,399,968,378"/>
-<area shape="poly" title=" " alt="" coords="918,373,990,421,987,425,915,378"/>
-<area shape="poly" title=" " alt="" coords="901,375,901,505,896,505,896,375"/>
-<area shape="poly" title=" " alt="" coords="811,370,711,377,601,389,502,407,463,419,435,433,418,448,404,467,387,507,382,505,400,465,414,445,432,428,461,414,500,402,600,383,711,371,811,365"/>
-<area shape="rect" href="../../da/db2/small__string_8h.html" title=" " alt="" coords="702,438,861,463"/>
-<area shape="poly" title=" " alt="" coords="884,378,810,432,807,428,881,373"/>
-<area shape="poly" title=" " alt="" coords="750,466,614,521,485,588,483,583,612,516,748,461"/>
-<area shape="poly" title=" " alt="" coords="817,461,973,512,971,517,815,466"/>
-<area shape="poly" title=" " alt="" coords="744,466,564,520,563,514,743,461"/>
-<area shape="rect" title=" " alt="" coords="748,519,815,544"/>
-<area shape="poly" title=" " alt="" coords="784,464,784,505,779,505,779,464"/>
-<area shape="rect" title=" " alt="" coords="626,519,723,544"/>
-<area shape="poly" title=" " alt="" coords="767,466,703,513,700,508,764,461"/>
-<area shape="poly" title=" " alt="" coords="839,461,1120,516,1119,522,838,466"/>
+<div class="center"><img src="../../db/d11/rotating__file__writer_8cpp__incl.png" border="0" usemap="#alibraries_2logger__system_2sources_2logger_2writers_2rotating__file__writer_8cpp" alt=""/></div>
+<map name="alibraries_2logger__system_2sources_2logger_2writers_2rotating__file__writer_8cpp" id="alibraries_2logger__system_2sources_2logger_2writers_2rotating__file__writer_8cpp">
+<area shape="rect" title=" " alt="" coords="583,5,758,60"/>
+<area shape="rect" href="../../d0/dc1/rotating__file__writer_8h.html" title=" " alt="" coords="333,108,489,133"/>
+<area shape="poly" title=" " alt="" coords="592,63,459,106,457,101,590,58"/>
+<area shape="rect" title=" " alt="" coords="513,108,604,133"/>
+<area shape="poly" title=" " alt="" coords="638,62,586,102,583,97,635,58"/>
+<area shape="rect" title=" " alt="" coords="628,108,713,133"/>
+<area shape="poly" title=" " alt="" coords="673,60,673,94,668,94,668,60"/>
+<area shape="rect" title=" " alt="" coords="737,108,796,133"/>
+<area shape="poly" title=" " alt="" coords="702,58,745,97,742,101,698,62"/>
+<area shape="rect" title=" " alt="" coords="820,108,900,133"/>
+<area shape="poly" title=" " alt="" coords="730,58,823,100,821,105,727,62"/>
+<area shape="rect" href="../../d0/d76/file__writer_8h.html" title=" " alt="" coords="120,181,219,207"/>
+<area shape="poly" title=" " alt="" coords="373,136,223,180,221,175,371,131"/>
+<area shape="rect" title=" " alt="" coords="329,328,396,353"/>
+<area shape="poly" title=" " alt="" coords="411,134,371,315,366,314,405,133"/>
+<area shape="rect" title=" " alt="" coords="411,181,485,207"/>
+<area shape="poly" title=" " alt="" coords="419,132,438,168,433,171,414,135"/>
+<area shape="rect" title=" " alt="" coords="509,181,584,207"/>
+<area shape="poly" title=" " alt="" coords="434,131,514,173,511,177,431,136"/>
+<area shape="rect" href="../../d2/d49/base__writer_8h.html" title=" " alt="" coords="227,255,336,280"/>
+<area shape="poly" title=" " alt="" coords="189,204,253,245,250,249,186,209"/>
+<area shape="rect" title=" " alt="" coords="5,401,69,427"/>
+<area shape="poly" title=" " alt="" coords="121,204,69,221,46,236,28,256,15,289,14,324,20,359,30,388,24,390,15,360,9,325,10,288,23,253,43,232,67,217,119,199"/>
+<area shape="rect" title=" " alt="" coords="38,255,111,280"/>
+<area shape="poly" title=" " alt="" coords="156,209,103,248,100,244,153,205"/>
+<area shape="rect" title=" " alt="" coords="136,255,203,280"/>
+<area shape="poly" title=" " alt="" coords="172,207,172,241,167,241,167,207"/>
+<area shape="rect" title=" " alt="" coords="241,401,300,427"/>
+<area shape="poly" title=" " alt="" coords="283,281,275,388,270,387,278,280"/>
+<area shape="poly" title=" " alt="" coords="296,278,341,317,337,321,293,282"/>
+<area shape="rect" href="../../d7/d44/logger__system_2sources_2logger_2logger__interface_8h.html" title=" " alt="" coords="92,328,244,353"/>
+<area shape="poly" title=" " alt="" coords="265,282,199,323,196,318,262,278"/>
+<area shape="poly" title=" " alt="" coords="186,351,244,391,241,395,183,356"/>
+<area shape="rect" title=" " alt="" coords="129,401,207,427"/>
+<area shape="poly" title=" " alt="" coords="171,354,171,388,165,388,165,354"/>
+<area shape="poly" title=" " alt="" coords="148,356,72,397,69,392,146,351"/>
 </map>
 </div>
 </div>
@@ -189,9 +148,7 @@ Include dependency graph for rotating_file_writer.cpp:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:d9/d03/namespacekcenon" id="r_d9/d03/namespacekcenon"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d03/namespacekcenon.html">kcenon</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:da/d02/namespacekcenon_1_1logger" id="r_da/d02/namespacekcenon_1_1logger"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html">kcenon::logger</a></td></tr>
+<tr class="memitem:dc/d2b/namespacelogger__module" id="r_dc/d2b/namespacelogger__module"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d2b/namespacelogger__module.html">logger_module</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
@@ -199,7 +156,7 @@ Namespaces</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_6da4838b994c130fa41b1177c895a59f.html">src</a></li><li class="navelem"><a class="el" href="../../dir_40a5d87b6592be374069283e0e9bd6cb.html">impl</a></li><li class="navelem"><a class="el" href="../../dir_99fb7f2310739c044344789907d56a3a.html">writers</a></li><li class="navelem"><a class="el" href="../../df/d4f/rotating__file__writer_8cpp.html">rotating_file_writer.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_159ca4044b70767904d058f73f132e19.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_401468f6de0b7ebb423d61aa28df8bb9.html">logger</a></li><li class="navelem"><a class="el" href="../../dir_1455209c9766edda7d547325226fccb8.html">writers</a></li><li class="navelem"><a class="el" href="../../df/d4f/rotating__file__writer_8cpp.html">rotating_file_writer.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

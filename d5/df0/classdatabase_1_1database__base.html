@@ -106,17 +106,9 @@ Inheritance diagram for database::database_base:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d3/de9/classdatabase_1_1database__base__inherit__graph.png" border="0" usemap="#adatabase_1_1database__base_inherit__map" alt="Inheritance graph"/></div>
 <map name="adatabase_1_1database__base_inherit__map" id="adatabase_1_1database__base_inherit__map">
-<area shape="rect" title="Abstract base class defining common database operations." alt="" coords="5,112,193,137"/>
-<area shape="rect" href="../../d3/d50/classdatabase_1_1mongodb__manager.html" title="Manages MongoDB database operations." alt="" coords="241,5,457,31"/>
-<area shape="poly" title=" " alt="" coords="128,102,179,70,240,40,276,28,278,33,242,44,182,74,131,106"/>
-<area shape="rect" href="../../de/d84/classdatabase_1_1mysql__manager.html" title="Manages MySQL database operations." alt="" coords="252,55,447,80"/>
-<area shape="poly" title=" " alt="" coords="168,106,293,77,294,83,170,111"/>
-<area shape="rect" href="../../d6/d7f/classdatabase_1_1postgres__manager.html" title="Manages PostgreSQL database operations." alt="" coords="276,105,423,145"/>
-<area shape="poly" title=" " alt="" coords="207,122,276,122,276,127,207,127"/>
-<area shape="rect" href="../../d3/d71/classdatabase_1_1redis__manager.html" title="Manages Redis database operations." alt="" coords="256,169,443,195"/>
-<area shape="poly" title=" " alt="" coords="170,138,294,167,293,172,168,143"/>
-<area shape="rect" href="../../d9/d69/classdatabase_1_1sqlite__manager.html" title="Manages SQLite database operations." alt="" coords="254,219,445,244"/>
-<area shape="poly" title=" " alt="" coords="131,143,182,174,242,204,282,216,280,221,240,208,180,179,129,147"/>
+<area shape="rect" title="Abstract base class defining common database operations." alt="" coords="5,5,193,31"/>
+<area shape="rect" href="../../d6/d7f/classdatabase_1_1postgres__manager.html" title="Manages PostgreSQL database operations." alt="" coords="26,79,173,119"/>
+<area shape="poly" title=" " alt="" coords="102,44,102,79,97,79,97,44"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -128,7 +120,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a80b326d57c0a1189f8459a5747a4bbc3" id="r_a80b326d57c0a1189f8459a5747a4bbc3"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a80b326d57c0a1189f8459a5747a4bbc3">~database_base</a> (void)</td></tr>
 <tr class="memdesc:a80b326d57c0a1189f8459a5747a4bbc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <br /></td></tr>
 <tr class="separator:a80b326d57c0a1189f8459a5747a4bbc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a432438602c7a844466f8970c99cb9521" id="r_a432438602c7a844466f8970c99cb9521"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4">database_types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a432438602c7a844466f8970c99cb9521">database_type</a> (void)=0</td></tr>
+<tr class="memitem:a432438602c7a844466f8970c99cb9521" id="r_a432438602c7a844466f8970c99cb9521"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../da/df2/namespacedatabase.html#ad983a92aeb2e850207432d806579489b">database_types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a432438602c7a844466f8970c99cb9521">database_type</a> (void)=0</td></tr>
 <tr class="memdesc:a432438602c7a844466f8970c99cb9521"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the type of the database.  <br /></td></tr>
 <tr class="separator:a432438602c7a844466f8970c99cb9521"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0bcd9f681b3ebad418972d1b2555876" id="r_ac0bcd9f681b3ebad418972d1b2555876"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#ac0bcd9f681b3ebad418972d1b2555876">connect</a> (const std::string &amp;connect_string)=0</td></tr>
@@ -146,12 +138,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a87010caaf7873802e4e096f76ca76273" id="r_a87010caaf7873802e4e096f76ca76273"><td class="memItemLeft" align="right" valign="top">virtual unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a87010caaf7873802e4e096f76ca76273">delete_query</a> (const std::string &amp;query_string)=0</td></tr>
 <tr class="memdesc:a87010caaf7873802e4e096f76ca76273"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a DELETE query on the database.  <br /></td></tr>
 <tr class="separator:a87010caaf7873802e4e096f76ca76273"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f746539eac7ca8d1c438628e6cfe168" id="r_a7f746539eac7ca8d1c438628e6cfe168"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../da/df2/namespacedatabase.html#aefd19fdc143c6142e8e67853b536103a">database_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a7f746539eac7ca8d1c438628e6cfe168">select_query</a> (const std::string &amp;query_string)=0</td></tr>
-<tr class="memdesc:a7f746539eac7ca8d1c438628e6cfe168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a SELECT query on the database and retrieves the results.  <br /></td></tr>
-<tr class="separator:a7f746539eac7ca8d1c438628e6cfe168"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a507beb6d6428b7777facb42664afd860" id="r_a507beb6d6428b7777facb42664afd860"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a507beb6d6428b7777facb42664afd860">execute_query</a> (const std::string &amp;query_string)=0</td></tr>
-<tr class="memdesc:a507beb6d6428b7777facb42664afd860"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a general SQL query (DDL, DML).  <br /></td></tr>
-<tr class="separator:a507beb6d6428b7777facb42664afd860"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad92ad8ba5deebf1fca43d20d093bdc3a" id="r_ad92ad8ba5deebf1fca43d20d093bdc3a"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="../../d9/dad/classcontainer__module_1_1value__container.html">container_module::value_container</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#ad92ad8ba5deebf1fca43d20d093bdc3a">select_query</a> (const std::string &amp;query_string)=0</td></tr>
+<tr class="memdesc:ad92ad8ba5deebf1fca43d20d093bdc3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes a SELECT query on the database and retrieves the results.  <br /></td></tr>
+<tr class="separator:ad92ad8ba5deebf1fca43d20d093bdc3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e351c68eefbbaa17e957319e44f2607" id="r_a3e351c68eefbbaa17e957319e44f2607"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/df0/classdatabase_1_1database__base.html#a3e351c68eefbbaa17e957319e44f2607">disconnect</a> (void)=0</td></tr>
 <tr class="memdesc:a3e351c68eefbbaa17e957319e44f2607"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates the current database connection.  <br /></td></tr>
 <tr class="separator:a3e351c68eefbbaa17e957319e44f2607"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,7 +149,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Abstract base class defining common database operations. </p>
 <p>This class serves as an interface for database operations such as connecting, querying, and disconnecting. It provides pure virtual methods that derived classes must implement for specific database systems. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d46/database__base_8h_source.html#l00059">59</a> of file <a class="el" href="../../d9/d46/database__base_8h_source.html">database_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d46/database__base_8h_source.html#l00052">52</a> of file <a class="el" href="../../d9/d46/database__base_8h_source.html">database_base.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5e6da86fe2327a8ea071bbcff7227863" name="a5e6da86fe2327a8ea071bbcff7227863"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5e6da86fe2327a8ea071bbcff7227863">&#9670;&#160;</a></span>database_base()</h2>
@@ -188,7 +177,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Default constructor. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d46/database__base_8h_source.html#l00065">65</a> of file <a class="el" href="../../d9/d46/database__base_8h_source.html">database_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d46/database__base_8h_source.html#l00058">58</a> of file <a class="el" href="../../d9/d46/database__base_8h_source.html">database_base.h</a>.</p>
 
 </div>
 </div>
@@ -218,7 +207,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Virtual destructor. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d46/database__base_8h_source.html#l00070">70</a> of file <a class="el" href="../../d9/d46/database__base_8h_source.html">database_base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d9/d46/database__base_8h_source.html#l00063">63</a> of file <a class="el" href="../../d9/d46/database__base_8h_source.html">database_base.h</a>.</p>
 
 </div>
 </div>
@@ -256,7 +245,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the connection is established successfully, <code>false</code> otherwise. </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d3/d50/classdatabase_1_1mongodb__manager.html#ae691c87f09661eb0b807af19c845e2d0">database::mongodb_manager</a>, <a class="el" href="../../de/d84/classdatabase_1_1mysql__manager.html#a590304c91c6d94480f350b2e23c6466c">database::mysql_manager</a>, <a class="el" href="../../d3/d71/classdatabase_1_1redis__manager.html#ade26162dd50c97d4bab88ee6d6c55eb0">database::redis_manager</a>, <a class="el" href="../../d9/d69/classdatabase_1_1sqlite__manager.html#a3bb29463c18737283d41b935fa59df55">database::sqlite_manager</a>, and <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a5afea6d413dbc295acc6a250ff470210">database::postgres_manager</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a5afea6d413dbc295acc6a250ff470210">database::postgres_manager</a>.</p>
 
 </div>
 </div>
@@ -294,7 +283,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the query was created (prepared) successfully, <code>false</code> otherwise.</dd></dl>
 <p>This function is intended to handle the preparation of a query before execution in some database engines (e.g., prepared statements). </p>
 
-<p>Implemented in <a class="el" href="../../d3/d50/classdatabase_1_1mongodb__manager.html#a97a62488d3dc2ebe119a0d226128c0e7">database::mongodb_manager</a>, <a class="el" href="../../de/d84/classdatabase_1_1mysql__manager.html#aea12129467710979051cfade52ffc92d">database::mysql_manager</a>, <a class="el" href="../../d3/d71/classdatabase_1_1redis__manager.html#a84e6939b7bd170c92244d7802953e123">database::redis_manager</a>, <a class="el" href="../../d9/d69/classdatabase_1_1sqlite__manager.html#a4afe57ca5d078aa56c23b110c387800d">database::sqlite_manager</a>, and <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a15b56027fff588d80ec84eb612cd40eb">database::postgres_manager</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a15b56027fff588d80ec84eb612cd40eb">database::postgres_manager</a>.</p>
 
 </div>
 </div>
@@ -308,7 +297,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="../../da/df2/namespacedatabase.html#a9b50450d1f477d5f2fea4e15975023e4">database_types</a> database::database_base::database_type </td>
+          <td class="memname">virtual <a class="el" href="../../da/df2/namespacedatabase.html#ad983a92aeb2e850207432d806579489b">database_types</a> database::database_base::database_type </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -325,7 +314,7 @@ Public Member Functions</h2></td></tr>
 <p>Retrieves the type of the database. </p>
 <dl class="section return"><dt>Returns</dt><dd>An enum value of type <code>database_types</code> representing the specific database type (e.g., MySQL, SQLite, etc.). </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d3/d50/classdatabase_1_1mongodb__manager.html#a84cdddc1628db638d82b04559f05443b">database::mongodb_manager</a>, <a class="el" href="../../de/d84/classdatabase_1_1mysql__manager.html#ac5ddc50031cc6bcba286bc386aa7c01c">database::mysql_manager</a>, <a class="el" href="../../d3/d71/classdatabase_1_1redis__manager.html#a2b4f0a575bb10c1f88bd11f4deea38b6">database::redis_manager</a>, <a class="el" href="../../d9/d69/classdatabase_1_1sqlite__manager.html#a4d0b596c36dda56b490315fb12763004">database::sqlite_manager</a>, and <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a174597da4a791e4899467892e7c6904e">database::postgres_manager</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a174597da4a791e4899467892e7c6904e">database::postgres_manager</a>.</p>
 
 </div>
 </div>
@@ -362,7 +351,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of rows deleted by the query. If the database does not support row counts, this may be an implementation-specific value. </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d3/d50/classdatabase_1_1mongodb__manager.html#a914d0d6f78b8bdfeea4860360979ccb8">database::mongodb_manager</a>, <a class="el" href="../../de/d84/classdatabase_1_1mysql__manager.html#a3b5821081a2a94386e8c6585ba1609b9">database::mysql_manager</a>, <a class="el" href="../../d3/d71/classdatabase_1_1redis__manager.html#a5db4bbf94c70e6f64635e83ee50f7a3d">database::redis_manager</a>, <a class="el" href="../../d9/d69/classdatabase_1_1sqlite__manager.html#ac350bca0f06bbb77b61d52f6efe98081">database::sqlite_manager</a>, and <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#abd7010caac3b0b91c24081c026595063">database::postgres_manager</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#abd7010caac3b0b91c24081c026595063">database::postgres_manager</a>.</p>
 
 </div>
 </div>
@@ -393,45 +382,7 @@ Public Member Functions</h2></td></tr>
 <p>Terminates the current database connection. </p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the disconnection is successful, <code>false</code> otherwise (e.g., if no active connection exists). </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d3/d50/classdatabase_1_1mongodb__manager.html#adf86ce70f3de96d4562bf8ce9840dd4a">database::mongodb_manager</a>, <a class="el" href="../../de/d84/classdatabase_1_1mysql__manager.html#a85a36249b3a07f86b1f9d752779211a0">database::mysql_manager</a>, <a class="el" href="../../d3/d71/classdatabase_1_1redis__manager.html#ac55027ce127492f950d7646897cf2b3b">database::redis_manager</a>, <a class="el" href="../../d9/d69/classdatabase_1_1sqlite__manager.html#adf5d076d6e0a4b398586916fc194f25f">database::sqlite_manager</a>, and <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a55769bfa4bc67285afe675acedb285c5">database::postgres_manager</a>.</p>
-
-</div>
-</div>
-<a id="a507beb6d6428b7777facb42664afd860" name="a507beb6d6428b7777facb42664afd860"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a507beb6d6428b7777facb42664afd860">&#9670;&#160;</a></span>execute_query()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool database::database_base::execute_query </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>query_string</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Executes a general SQL query (DDL, DML). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">query_string</td><td>The SQL query string to execute. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the query executed successfully, <code>false</code> otherwise.</dd></dl>
-<p>This function is used for executing queries that don't return result sets (CREATE, DROP, INSERT, UPDATE, DELETE, etc.). </p>
-
-<p>Implemented in <a class="el" href="../../d3/d50/classdatabase_1_1mongodb__manager.html#a6a7b856c88bcceaf7f8b8449f180d7da">database::mongodb_manager</a>, <a class="el" href="../../de/d84/classdatabase_1_1mysql__manager.html#ad8096a4b7b3200489e707de17e0b0ef6">database::mysql_manager</a>, <a class="el" href="../../d3/d71/classdatabase_1_1redis__manager.html#adf677c3874aff3916712cb7feb26f187">database::redis_manager</a>, <a class="el" href="../../d9/d69/classdatabase_1_1sqlite__manager.html#a1304b0223a9d3574fa5f792f75e9e94c">database::sqlite_manager</a>, and <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#acfc754bc05abb26b3e89dcabeae5e323">database::postgres_manager</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a55769bfa4bc67285afe675acedb285c5">database::postgres_manager</a>.</p>
 
 </div>
 </div>
@@ -468,12 +419,12 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of rows inserted, typically returned by the database engine. If the database does not support row counts, this may be an implementation-specific value. </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d3/d50/classdatabase_1_1mongodb__manager.html#a2316927106fc07b12827f447a812e447">database::mongodb_manager</a>, <a class="el" href="../../de/d84/classdatabase_1_1mysql__manager.html#a116f2a07a2e57dd8eb6384e9bee0f6a0">database::mysql_manager</a>, <a class="el" href="../../d3/d71/classdatabase_1_1redis__manager.html#afde51d75cb93ba7182d0eb0792b7f0fc">database::redis_manager</a>, <a class="el" href="../../d9/d69/classdatabase_1_1sqlite__manager.html#a5d6e314b60de55905a6fbae0c26f991a">database::sqlite_manager</a>, and <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a496b0382526022e0676f08401d770d7a">database::postgres_manager</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a496b0382526022e0676f08401d770d7a">database::postgres_manager</a>.</p>
 
 </div>
 </div>
-<a id="a7f746539eac7ca8d1c438628e6cfe168" name="a7f746539eac7ca8d1c438628e6cfe168"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f746539eac7ca8d1c438628e6cfe168">&#9670;&#160;</a></span>select_query()</h2>
+<a id="ad92ad8ba5deebf1fca43d20d093bdc3a" name="ad92ad8ba5deebf1fca43d20d093bdc3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad92ad8ba5deebf1fca43d20d093bdc3a">&#9670;&#160;</a></span>select_query()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -482,7 +433,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="../../da/df2/namespacedatabase.html#aefd19fdc143c6142e8e67853b536103a">database_result</a> database::database_base::select_query </td>
+          <td class="memname">virtual std::unique_ptr&lt; <a class="el" href="../../d9/dad/classcontainer__module_1_1value__container.html">container_module::value_container</a> &gt; database::database_base::select_query </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>query_string</em></td><td>)</td>
@@ -503,11 +454,9 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A database_result containing rows of data as key-value pairs. Returns empty vector if query fails or returns no results. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared pointer to a <code><a class="el" href="../../d9/dad/classcontainer__module_1_1value__container.html" title="A high-level container for messages, including source/target IDs, message type, and a list of values ...">container_module::value_container</a></code> object that holds the result set of the query. If the query fails or returns no results, the behavior of this container is implementation-specific (it may be empty or null). </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d3/d50/classdatabase_1_1mongodb__manager.html#ada94517cf7784e82a0ff1d6613cbfeb1">database::mongodb_manager</a>, <a class="el" href="../../de/d84/classdatabase_1_1mysql__manager.html#a4dda490b9c974a6b6f340b8ea5e694de">database::mysql_manager</a>, <a class="el" href="../../d3/d71/classdatabase_1_1redis__manager.html#a352d9f0b43b089ae2f164d0534ea5aa7">database::redis_manager</a>, <a class="el" href="../../d9/d69/classdatabase_1_1sqlite__manager.html#ab307564c50a4ceb9b8c26a03e7d90459">database::sqlite_manager</a>, and <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#a3121587c7035addfa3c3d10765bdb758">database::postgres_manager</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="../../d1/d1d/query__builder_8cpp_source.html#l01126">database::query_builder::execute()</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#abfbf903c64f29d0819e082dc652efcc0">database::postgres_manager</a>.</p>
 
 </div>
 </div>
@@ -544,12 +493,12 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of rows affected by the update query. If the database does not support row counts, this may be an implementation-specific value. </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d3/d50/classdatabase_1_1mongodb__manager.html#a1a56defc3929f2f7fd71fc373bac8acc">database::mongodb_manager</a>, <a class="el" href="../../de/d84/classdatabase_1_1mysql__manager.html#ae31d6378185b5780042b6cf6e9b24589">database::mysql_manager</a>, <a class="el" href="../../d3/d71/classdatabase_1_1redis__manager.html#aae80fe928d63245ba7e0327e2e2bd43e">database::redis_manager</a>, <a class="el" href="../../d9/d69/classdatabase_1_1sqlite__manager.html#a855d749fd8e34b29aafcb9135482d05f">database::sqlite_manager</a>, and <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#ab7cbb0c270f3876ba100a35878347a5a">database::postgres_manager</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/d7f/classdatabase_1_1postgres__manager.html#ab7cbb0c270f3876ba100a35878347a5a">database::postgres_manager</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>libraries/database_system/database/<a class="el" href="../../d9/d46/database__base_8h_source.html">database_base.h</a></li>
+<li>libraries/database_system/<a class="el" href="../../d9/d46/database__base_8h_source.html">database_base.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

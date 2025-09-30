@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('dc/d94/classnetwork__module_1_1messagi
 <p>A basic TCP client that connects to a remote host, sends/receives data using asynchronous operations, and can apply a pipeline for transformations.  
  <a href="../../dc/d94/classnetwork__module_1_1messaging__client.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../dc/d6b/core_2messaging__client_8h_source.html">messaging_client.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../d6/dc0/messaging__client_8h_source.html">messaging_client.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for network_module::messaging_client:</div>
 <div class="dyncontent">
@@ -145,7 +145,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A basic TCP client that connects to a remote host, sends/receives data using asynchronous operations, and can apply a pipeline for transformations. </p>
-<h3><a class="anchor" id="autotoc_md2048"></a>
+<h3><a class="anchor" id="autotoc_md658"></a>
 Key Features</h3>
 <ul>
 <li>Uses <code>asio::io_context</code> in a dedicated thread to handle I/O events.</li>
@@ -154,7 +154,7 @@ Key Features</h3>
 <li>Provides <code><a class="el" href="../../dc/d94/classnetwork__module_1_1messaging__client.html#a73ef19f667ccf61a42abbd661def8170" title="Starts the client by resolving host and port, connecting asynchronously, and spawning a thread to run...">start_client()</a></code>, <code><a class="el" href="../../dc/d94/classnetwork__module_1_1messaging__client.html#a4c95e7b18cdb7f41d5efb1407dfe1fc6" title="Stops the client: closes the socket, stops the io_context_, and joins the worker thread.">stop_client()</a></code>, and <code><a class="el" href="../../dc/d94/classnetwork__module_1_1messaging__client.html#a0278a8ca96f4ad56692957fe09653a5e" title="Blocks until stop_client() is invoked, i.e., a synchronization mechanism.">wait_for_stop()</a></code> to control lifecycle. </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d6b/core_2messaging__client_8h_source.html#l00068">68</a> of file <a class="el" href="../../dc/d6b/core_2messaging__client_8h_source.html">messaging_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d6/dc0/messaging__client_8h_source.html#l00068">68</a> of file <a class="el" href="../../d6/dc0/messaging__client_8h_source.html">messaging_client.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8f6aeefb110e7ee3e70742b7509bd531" name="a8f6aeefb110e7ee3e70742b7509bd531"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8f6aeefb110e7ee3e70742b7509bd531">&#9670;&#160;</a></span>messaging_client()</h2>
@@ -180,9 +180,9 @@ Key Features</h3>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html#l00047">47</a> of file <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html#l00047">47</a> of file <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../da/d6c/internal_2pipeline_8cpp_source.html#l00084">network_module::make_default_pipeline()</a>.</p>
+<p class="reference">References <a class="el" href="../../d4/d71/pipeline_8cpp_source.html#l00084">network_module::make_default_pipeline()</a>.</p>
 
 </div>
 </div>
@@ -203,9 +203,9 @@ Key Features</h3>
 
 <p>Destructor; automatically calls <code><a class="el" href="../../dc/d94/classnetwork__module_1_1messaging__client.html#a4c95e7b18cdb7f41d5efb1407dfe1fc6" title="Stops the client: closes the socket, stops the io_context_, and joins the worker thread.">stop_client()</a></code> if the client is still running. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html#l00056">56</a> of file <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html#l00094">stop_client()</a>.</p>
+<p class="reference">References <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html#l00094">stop_client()</a>.</p>
 
 </div>
 </div>
@@ -235,9 +235,9 @@ Key Features</h3>
 </dl>
 <p>If not connected or not running, this call does nothing. Otherwise, <code><a class="el" href="../../d1/df3/namespacenetwork__module.html#acca7c2a6f3f16ab29babe18b6b70433c" title="Launches a separate thread (via std::async) to apply compression/encryption to input_data using pl,...">prepare_data_async()</a></code> + <code><a class="el" href="../../d3/d43/classnetwork__module_1_1tcp__socket.html#a338e08fdd196f326a317c2a5e029e6f5" title="Initiates an asynchronous write of the given data buffer.">tcp_socket::async_send</a></code> is used to deliver the bytes. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html#l00193">193</a> of file <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html#l00197">197</a> of file <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d0/d4e/internal_2send__coroutine_8cpp_source.html#l00097">network_module::async_send_with_pipeline_no_co()</a>, and <a class="el" href="../../d4/d98/logger__integration_8h_source.html#l00263">NETWORK_LOG_ERROR</a>.</p>
+<p class="reference">References <a class="el" href="../../dc/df1/send__coroutine_8cpp_source.html#l00097">network_module::async_send_with_pipeline_no_co()</a>.</p>
 
 </div>
 </div>
@@ -275,7 +275,7 @@ Key Features</h3>
   </table>
   </dd>
 </dl>
-<h3><a class="anchor" id="autotoc_md2049"></a>
+<h3><a class="anchor" id="autotoc_md659"></a>
 Steps:</h3>
 <ol type="1">
 <li>Create <code>io_context_</code>.</li>
@@ -284,9 +284,7 @@ Steps:</h3>
 <li><code>on_connect()</code> sets up the <code><a class="el" href="../../d3/d43/classnetwork__module_1_1tcp__socket.html" title="A lightweight wrapper around asio::ip::tcp::socket, enabling asynchronous read and write operations.">tcp_socket</a></code> and starts reading. </li>
 </ol>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
-
-<p class="reference">References <a class="el" href="../../d4/d98/logger__integration_8h_source.html#l00255">NETWORK_LOG_INFO</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html#l00059">59</a> of file <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
 
 </div>
 </div>
@@ -307,11 +305,9 @@ Steps:</h3>
 
 <p>Stops the client: closes the socket, stops the <code>io_context_</code>, and joins the worker thread. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html#l00094">94</a> of file <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html#l00094">94</a> of file <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d4/d98/logger__integration_8h_source.html#l00255">NETWORK_LOG_INFO</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html#l00056">~messaging_client()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html#l00056">~messaging_client()</a>.</p>
 
 </div>
 </div>
@@ -332,13 +328,13 @@ Steps:</h3>
 
 <p>Blocks until <code><a class="el" href="../../dc/d94/classnetwork__module_1_1messaging__client.html#a4c95e7b18cdb7f41d5efb1407dfe1fc6" title="Stops the client: closes the socket, stops the io_context_, and joins the worker thread.">stop_client()</a></code> is invoked, i.e., a synchronization mechanism. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html#l00127">127</a> of file <a class="el" href="../../de/dcc/messaging__client_8cpp_source.html">messaging_client.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>libraries/network_system/core/<a class="el" href="../../dc/d6b/core_2messaging__client_8h_source.html">messaging_client.h</a></li>
-<li>libraries/network_system/core/<a class="el" href="../../d8/da3/core_2messaging__client_8cpp_source.html">messaging_client.cpp</a></li>
+<li>libraries/network_system/core/<a class="el" href="../../d6/dc0/messaging__client_8h_source.html">messaging_client.h</a></li>
+<li>libraries/network_system/core/<a class="el" href="../../de/dcc/messaging__client_8cpp_source.html">messaging_client.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

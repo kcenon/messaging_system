@@ -1,5 +1,0 @@
-<map id="network_system::integration::logger_interface" name="network_system::integration::logger_interface">
-<area shape="rect" id="Node000001" title="Abstract interface for logger integration." alt="" coords="5,5,215,45"/>
-<area shape="rect" id="Node000002" href="$d0/d9d/classnetwork__system_1_1integration_1_1basic__logger.html" title="Basic console logger implementation for standalone use." alt="" coords="5,93,215,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,59,113,93,107,93,107,59"/>
-</map>

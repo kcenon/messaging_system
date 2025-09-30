@@ -1,33 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$dd/d95/classkcenon_1_1logger_1_1log__writer__interface.html" title="Interface for log writers." alt="" coords="5,361,152,401"/>
-<area shape="rect" id="Node000001" href="$d0/dc9/classkcenon_1_1logger_1_1base__writer.html" title="Abstract base class for all log output writers." alt="" coords="200,361,357,401"/>
-<area shape="poly" id="edge41_Node000000_Node000001" title=" " alt="" coords="166,378,200,378,200,383,166,383"/>
-<area shape="rect" id="Node000002" href="$d3/d23/classMockCollectorWriter.html" title=" " alt="" coords="425,5,579,31"/>
-<area shape="poly" id="edge42_Node000001_Node000002" title=" " alt="" coords="280,346,289,281,310,199,326,155,346,113,372,74,404,40,423,28,426,32,407,44,376,77,351,116,331,157,315,200,294,282,285,347"/>
-<area shape="rect" id="Node000003" href="$d0/df9/classMockWriter.html" title=" " alt="" coords="453,55,551,80"/>
-<area shape="poly" id="edge43_Node000001_Node000003" title=" " alt="" coords="282,347,294,291,316,221,332,185,352,150,376,118,404,89,427,76,452,68,454,73,429,80,407,93,380,121,357,153,337,187,321,223,299,292,287,348"/>
-<area shape="rect" id="Node000004" href="$d5/d72/classbenchmark__writer.html" title="Placeholder benchmark for batch processing." alt="" coords="432,104,572,129"/>
-<area shape="poly" id="edge44_Node000001_Node000004" title=" " alt="" coords="285,347,300,300,324,244,358,187,379,161,404,138,430,124,433,129,407,143,383,165,362,190,329,246,305,302,290,348"/>
-<area shape="rect" id="Node000005" href="$d0/d26/classkcenon_1_1logger_1_1async_1_1high__performance__async__writer.html" title="High&#45;performance asynchronous writer." alt="" coords="405,153,599,208"/>
-<area shape="poly" id="edge45_Node000001_Node000005" title=" " alt="" coords="296,347,340,283,370,249,404,219,423,206,426,210,407,223,374,253,344,286,300,350"/>
-<area shape="rect" id="Node000006" href="$d2/d5c/classkcenon_1_1logger_1_1async__writer.html" title="Asynchronous wrapper for log writers." alt="" coords="420,233,584,273"/>
-<area shape="poly" id="edge46_Node000001_Node000006" title=" " alt="" coords="310,349,353,315,404,282,431,270,433,275,407,287,356,319,314,354"/>
-<area shape="rect" id="Node000007" href="$d1/d2d/classkcenon_1_1logger_1_1batch__writer.html" title="Batch writer that accumulates log entries and writes them in batches." alt="" coords="421,297,583,337"/>
-<area shape="poly" id="edge47_Node000001_Node000007" title=" " alt="" coords="362,354,431,334,432,339,363,359"/>
-<area shape="rect" id="Node000008" href="$d0/d48/classkcenon_1_1logger_1_1console__writer.html" title="Console writer that outputs logs to stdout/stderr." alt="" coords="414,361,590,401"/>
-<area shape="poly" id="edge48_Node000001_Node000008" title=" " alt="" coords="371,378,414,378,414,383,371,383"/>
-<area shape="rect" id="Node000009" href="$d3/dc3/classkcenon_1_1logger_1_1encrypted__writer.html" title="Writer that encrypts log data before passing to another writer." alt="" coords="407,425,597,465"/>
-<area shape="poly" id="edge49_Node000001_Node000009" title=" " alt="" coords="363,402,432,422,431,427,362,407"/>
-<area shape="rect" id="Node000010" href="$d4/d76/classkcenon_1_1logger_1_1file__writer.html" title="Basic file writer for logging to files." alt="" coords="429,489,575,529"/>
-<area shape="poly" id="edge50_Node000001_Node000010" title=" " alt="" coords="314,408,356,442,407,474,433,486,431,491,404,479,353,446,310,412"/>
-<area shape="rect" id="Node000012" href="$d5/dc6/classkcenon_1_1logger_1_1network__writer.html" title="Sends logs over network (TCP/UDP)" alt="" coords="413,553,591,593"/>
-<area shape="poly" id="edge52_Node000001_Node000012" title=" " alt="" coords="300,411,343,476,373,509,407,538,428,550,425,555,404,543,369,513,339,479,295,414"/>
-<area shape="rect" id="Node000013" href="$d2/d4a/classlogger__system_1_1testing_1_1mock__writer.html" title="Mock writer for unit testing." alt="" coords="417,617,587,657"/>
-<area shape="poly" id="edge53_Node000001_Node000013" title=" " alt="" coords="293,414,309,457,333,507,366,559,407,603,425,614,422,619,404,607,361,562,328,510,304,459,288,415"/>
-<area shape="rect" id="Node000014" href="$da/d78/classmock__writer.html" title=" " alt="" coords="451,681,553,707"/>
-<area shape="poly" id="edge54_Node000001_Node000014" title=" " alt="" coords="288,414,300,469,322,538,357,608,380,639,407,667,428,679,451,687,450,692,426,684,404,671,376,643,353,610,317,540,295,471,282,415"/>
-<area shape="rect" id="Node000015" href="$d6/d8c/classnull__writer.html" title="Comprehensive benchmark suite for logger system." alt="" coords="457,731,547,756"/>
-<area shape="poly" id="edge55_Node000001_Node000015" title=" " alt="" coords="285,414,295,478,315,560,331,603,351,644,376,683,407,716,431,730,457,738,456,743,428,735,404,720,372,686,347,647,326,605,310,562,289,479,280,415"/>
-<area shape="rect" id="Node000011" href="$d1/d84/classkcenon_1_1logger_1_1rotating__file__writer.html" title="File writer with rotation support based on size or time." alt="" coords="647,489,824,529"/>
-<area shape="poly" id="edge51_Node000010_Node000011" title=" " alt="" coords="589,506,647,506,647,511,589,511"/>
+<area shape="rect" id="Node000000" href="$d3/d25/structlogger__module_1_1emergency__log__entry.html" title="Emergency log entry for crash scenarios." alt="" coords="5,5,205,45"/>
 </map>

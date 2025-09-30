@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['audit_5flog_5faccess_0',['AUDIT_LOG_ACCESS',['../dd/d91/secure__connection_8h.html#a37be14d714920c1ef9c2fc6234b3c615',1,'secure_connection.h']]],
-  ['audit_5flog_5fauth_1',['AUDIT_LOG_AUTH',['../dd/d91/secure__connection_8h.html#a69fe080c498958c0b72984d935a8bd24',1,'secure_connection.h']]]
+  ['close_0',['close',['../da/dcd/log__server_8cpp.html#a9c7f6d5331abb2692a876d5ee67474b7',1,'close:&#160;log_server.cpp'],['../d3/d61/network__writer_8cpp.html#a9c7f6d5331abb2692a876d5ee67474b7',1,'close:&#160;network_writer.cpp']]]
 ];

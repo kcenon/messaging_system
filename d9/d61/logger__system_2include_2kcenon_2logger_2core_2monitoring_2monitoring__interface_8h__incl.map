@@ -1,9 +1,0 @@
-<map id="libraries/logger_system/include/kcenon/logger/core/monitoring/monitoring_interface.h" name="libraries/logger_system/include/kcenon/logger/core/monitoring/monitoring_interface.h">
-<area shape="rect" id="Node000001" title="Interface for logger monitoring and health checks." alt="" coords="49,5,253,75"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,123,64,148"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,77,62,116,58,112,107,73"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="89,123,213,148"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,75,153,109,148,109,148,75"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="237,123,304,148"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="196,73,246,112,243,116,192,77"/>
-</map>

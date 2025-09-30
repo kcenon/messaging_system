@@ -1,9 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d1/df0/classkcenon_1_1messaging_1_1cluster_1_1load__balancer.html" title=" " alt="" coords="5,91,171,131"/>
-<area shape="rect" id="Node000001" href="$d0/da1/classkcenon_1_1messaging_1_1cluster_1_1consistent__hash__balancer.html" title=" " alt="" coords="219,5,375,60"/>
-<area shape="poly" id="edge61_Node000000_Node000001" title=" " alt="" coords="154,84,223,58,225,63,156,89"/>
-<area shape="rect" id="Node000002" href="$d3/dab/classkcenon_1_1messaging_1_1cluster_1_1least__loaded__balancer.html" title=" " alt="" coords="219,84,376,139"/>
-<area shape="poly" id="edge62_Node000000_Node000002" title=" " alt="" coords="184,109,219,109,219,114,184,114"/>
-<area shape="rect" id="Node000003" href="$de/d17/classkcenon_1_1messaging_1_1cluster_1_1round__robin__balancer.html" title=" " alt="" coords="219,163,375,217"/>
-<area shape="poly" id="edge63_Node000000_Node000003" title=" " alt="" coords="156,134,225,160,223,165,154,139"/>
+<area shape="rect" id="Node000000" href="$dc/d59/structmonitoring__interface_1_1metrics__snapshot.html" title="Complete snapshot of all metrics at a point in time." alt="" coords="5,5,164,45"/>
 </map>

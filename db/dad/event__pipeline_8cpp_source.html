@@ -102,9 +102,9 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;<a class="code" href="../../d6/deb/system__integrator_8h.html">kcenon/messaging/integrations/system_integrator.h</a>&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;<a class="code" href="../../d1/dac/container__service_8h.html">kcenon/messaging/services/container/container_service.h</a>&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/dc6/database__service_8h.html">kcenon/messaging/services/database/database_service.h</a>&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;<a class="code" href="../../d1/d8c/logger_8h.html">kcenon/logger/core/logger.h</a>&gt;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d9a/console__writer_8h.html">kcenon/logger/writers/console_writer.h</a>&gt;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;<a class="code" href="../../d0/dc1/rotating__file__writer_8h.html">kcenon/logger/writers/rotating_file_writer.h</a>&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;<a class="code" href="../../d1/d8c/logger_8h.html">logger/logger.h</a>&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d9a/console__writer_8h.html">logger/writers/console_writer.h</a>&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;<a class="code" href="../../d0/dc1/rotating__file__writer_8h.html">logger/writers/rotating_file_writer.h</a>&gt;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;queue&gt;</span></div>
@@ -209,7 +209,7 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 </div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
 <div class="foldopen" id="foldopen00107" data-start="{" data-end="}">
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="../../df/d30/classpipeline__stage.html#a28cb56763e378d96a64235260853d99d">  107</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../df/d30/classpipeline__stage.html#a28cb56763e378d96a64235260853d99d">printStats</a>(std::shared_ptr&lt;kcenon::logger::logger&gt; logger = <span class="keyword">nullptr</span>)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="../../df/d30/classpipeline__stage.html#ae9697034a56311408e709ae04d7a9b22">  107</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../df/d30/classpipeline__stage.html#ae9697034a56311408e709ae04d7a9b22">printStats</a>(std::shared_ptr&lt;logger_module::logger&gt; logger = <span class="keyword">nullptr</span>)<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        std::stringstream stats;</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        stats &lt;&lt; <span class="stringliteral">&quot;Stage: &quot;</span> &lt;&lt; stage_name</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>              &lt;&lt; <span class="stringliteral">&quot; | Processed: &quot;</span> &lt;&lt; processed_count</div>
@@ -217,7 +217,7 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>              &lt;&lt; <span class="stringliteral">&quot; | Errors: &quot;</span> &lt;&lt; error_count;</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="keywordflow">if</span> (logger) {</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            logger-&gt;log(kcenon::logger::log_level::info, stats.str());</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            logger-&gt;log(logger_module::log_level::info, stats.str());</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        }</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    }</div>
 </div>
@@ -230,7 +230,7 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    std::unique_ptr&lt;integrations::system_integrator&gt; integrator;</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    std::unique_ptr&lt;services::container::container_service&gt; container_svc;</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    std::unique_ptr&lt;services::database::database_service&gt; database_svc;</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    std::shared_ptr&lt;kcenon::logger::logger&gt; m_logger;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    std::shared_ptr&lt;logger_module::logger&gt; m_logger;</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="comment">// Pipeline stages</span></div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    std::unique_ptr&lt;pipeline_stage&lt;raw_event, raw_event&gt;&gt; validation_stage;</div>
@@ -263,12 +263,12 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="foldopen" id="foldopen00155" data-start="{" data-end="}">
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="../../dc/d11/classevent__pipeline.html#a20c3437ddfcf053aca8a13ac79abccfe">  155</a></span>    <a class="code hl_function" href="../../dc/d11/classevent__pipeline.html#a20c3437ddfcf053aca8a13ac79abccfe">event_pipeline</a>() {</div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="comment">// Initialize logger</span></div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        m_logger = std::make_shared&lt;kcenon::logger::logger&gt;(<span class="keyword">true</span>, 8192);</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        m_logger-&gt;add_writer(std::make_unique&lt;kcenon::logger::console_writer&gt;());</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        m_logger-&gt;add_writer(std::make_unique&lt;kcenon::logger::rotating_file_writer&gt;(</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        m_logger = std::make_shared&lt;logger_module::logger&gt;(<span class="keyword">true</span>, 8192);</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        m_logger-&gt;add_writer(std::make_unique&lt;logger_module::console_writer&gt;());</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        m_logger-&gt;add_writer(std::make_unique&lt;logger_module::rotating_file_writer&gt;(</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            <span class="stringliteral">&quot;event_pipeline.log&quot;</span>, 10 * 1024 * 1024, 5));</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        m_logger-&gt;log(kcenon::logger::log_level::info, <span class="stringliteral">&quot;Initializing Event Pipeline&quot;</span>);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        m_logger-&gt;log(logger_module::log_level::info, <span class="stringliteral">&quot;Initializing Event Pipeline&quot;</span>);</div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="comment">// Configure for event processing</span></div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <a class="code hl_class" href="../../d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config::config_builder</a> builder;</div>
@@ -546,7 +546,7 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>            queue_cv.notify_one();</div>
 <div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span> </div>
 <div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
-<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>            m_logger-&gt;log(kcenon::logger::log_level::error,</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>            m_logger-&gt;log(logger_module::log_level::error,</div>
 <div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>                <span class="stringliteral">&quot;Error handling raw event: &quot;</span> + std::string(e.what()));</div>
 <div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>        }</div>
 <div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>    }</div>
@@ -587,7 +587,7 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>        std::lock_guard&lt;std::mutex&gt; lock(dlq_mutex);</div>
 <div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>        dead_letter_queue.push({reason, <span class="keyword">event</span>});</div>
 <div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span> </div>
-<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>        m_logger-&gt;log(kcenon::logger::log_level::warning,</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>        m_logger-&gt;log(logger_module::log_level::warning,</div>
 <div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>            <span class="stringliteral">&quot;Event &quot;</span> + event.<a class="code hl_variable" href="../../d2/da5/structraw__event.html#a310bee1d6781077ed807403aa2f86b2f">id</a> + <span class="stringliteral">&quot; sent to DLQ. Reason: &quot;</span> + reason);</div>
 <div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span> </div>
 <div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>        <span class="comment">// In production, would persist to database</span></div>
@@ -599,7 +599,7 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00468" name="l00468"></a><span class="lineno"><a class="line" href="../../dc/d11/classevent__pipeline.html#a1cb50bc5afe68653cca963cf1fad97fb">  468</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../dc/d11/classevent__pipeline.html#a1cb50bc5afe68653cca963cf1fad97fb">retryDeadLetterEvents</a>() {</div>
 <div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>        std::lock_guard&lt;std::mutex&gt; lock(dlq_mutex);</div>
 <div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span> </div>
-<div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span>            <span class="stringliteral">&quot;Retrying &quot;</span> + std::to_string(dead_letter_queue.size()) +</div>
 <div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span>            <span class="stringliteral">&quot; events from dead letter queue&quot;</span>);</div>
 <div class="line"><a id="l00474" name="l00474"></a><span class="lineno">  474</span> </div>
@@ -754,28 +754,28 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span> </div>
 <div class="foldopen" id="foldopen00615" data-start="{" data-end="}">
 <div class="line"><a id="l00615" name="l00615"></a><span class="lineno"><a class="line" href="../../dc/d11/classevent__pipeline.html#a84b1634c527ae7567a0ecc92ed5be028">  615</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../dc/d11/classevent__pipeline.html#a84b1634c527ae7567a0ecc92ed5be028">pausePipeline</a>() {</div>
-<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>        m_logger-&gt;log(kcenon::logger::log_level::info, <span class="stringliteral">&quot;Pipeline paused&quot;</span>);</div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>        m_logger-&gt;log(logger_module::log_level::info, <span class="stringliteral">&quot;Pipeline paused&quot;</span>);</div>
 <div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>        <span class="comment">// Implementation would pause processing</span></div>
 <div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>    }</div>
 </div>
 <div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span> </div>
 <div class="foldopen" id="foldopen00620" data-start="{" data-end="}">
 <div class="line"><a id="l00620" name="l00620"></a><span class="lineno"><a class="line" href="../../dc/d11/classevent__pipeline.html#a099289831a495ce85d90dddb52d3bdf7">  620</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../dc/d11/classevent__pipeline.html#a099289831a495ce85d90dddb52d3bdf7">resumePipeline</a>() {</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>        m_logger-&gt;log(kcenon::logger::log_level::info, <span class="stringliteral">&quot;Pipeline resumed&quot;</span>);</div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>        m_logger-&gt;log(logger_module::log_level::info, <span class="stringliteral">&quot;Pipeline resumed&quot;</span>);</div>
 <div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>        <span class="comment">// Implementation would resume processing</span></div>
 <div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>    }</div>
 </div>
 <div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span> </div>
 <div class="foldopen" id="foldopen00625" data-start="{" data-end="}">
 <div class="line"><a id="l00625" name="l00625"></a><span class="lineno"><a class="line" href="../../dc/d11/classevent__pipeline.html#a28473580dcfdc47aaeda1c48fa8dba30">  625</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../dc/d11/classevent__pipeline.html#a28473580dcfdc47aaeda1c48fa8dba30">flushPipeline</a>() {</div>
-<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>        m_logger-&gt;log(kcenon::logger::log_level::info, <span class="stringliteral">&quot;Flushing pipeline...&quot;</span>);</div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>        m_logger-&gt;log(logger_module::log_level::info, <span class="stringliteral">&quot;Flushing pipeline...&quot;</span>);</div>
 <div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span> </div>
 <div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>        <span class="comment">// Process all pending events</span></div>
 <div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>        <span class="keywordflow">while</span> (!raw_events.empty() || !processed_events.empty()) {</div>
 <div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>            std::this_thread::sleep_for(100ms);</div>
 <div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>        }</div>
 <div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span> </div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>        m_logger-&gt;log(kcenon::logger::log_level::info, <span class="stringliteral">&quot;Pipeline flushed&quot;</span>);</div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>        m_logger-&gt;log(logger_module::log_level::info, <span class="stringliteral">&quot;Pipeline flushed&quot;</span>);</div>
 <div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>    }</div>
 </div>
 <div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span> </div>
@@ -806,7 +806,7 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>              &lt;&lt; total_events.load() &lt;&lt; <span class="stringliteral">&quot; ║\n&quot;</span>;</div>
 <div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>        stats &lt;&lt; <span class="stringliteral">&quot;╚══════════════════════════════════════════════════════════╝&quot;</span>;</div>
 <div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span> </div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>        m_logger-&gt;log(kcenon::logger::log_level::info, stats.str());</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>        m_logger-&gt;log(logger_module::log_level::info, stats.str());</div>
 <div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>    }</div>
 </div>
 <div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span> </div>
@@ -846,7 +846,7 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span><span class="keyword">public</span>:</div>
 <div class="foldopen" id="foldopen00693" data-start="{" data-end="}">
 <div class="line"><a id="l00693" name="l00693"></a><span class="lineno"><a class="line" href="../../dc/d11/classevent__pipeline.html#a2bede904b47b784ac7a1cfa6d63a6f91">  693</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../dc/d11/classevent__pipeline.html#a2bede904b47b784ac7a1cfa6d63a6f91">start</a>() {</div>
-<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>            <span class="stringliteral">&quot;\n=== Event Processing Pipeline Starting ===&quot;</span>);</div>
 <div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span> </div>
 <div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>        <span class="comment">// Start the integrator (if it has a start method)</span></div>
@@ -883,9 +883,9 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span>        <span class="comment">// Stop the integrator (if it has a stop method)</span></div>
 <div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span>        <span class="comment">// integrator-&gt;stop();</span></div>
 <div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span> </div>
-<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span>        m_logger-&gt;log(kcenon::logger::log_level::info, <span class="stringliteral">&quot;\n=== Final Statistics ===&quot;</span>);</div>
+<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span>        m_logger-&gt;log(logger_module::log_level::info, <span class="stringliteral">&quot;\n=== Final Statistics ===&quot;</span>);</div>
 <div class="line"><a id="l00730" name="l00730"></a><span class="lineno">  730</span>        <a class="code hl_function" href="../../dc/d11/classevent__pipeline.html#a10563f53dd6c454228c144db1772e76d">printPipelineStats</a>();</div>
-<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span>        m_logger-&gt;log(kcenon::logger::log_level::info, <span class="stringliteral">&quot;========================&quot;</span>);</div>
+<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span>        m_logger-&gt;log(logger_module::log_level::info, <span class="stringliteral">&quot;========================&quot;</span>);</div>
 <div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span>        m_logger-&gt;flush();</div>
 <div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span>        m_logger-&gt;stop();</div>
 <div class="line"><a id="l00734" name="l00734"></a><span class="lineno">  734</span>    }</div>
@@ -901,9 +901,9 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span> </div>
 <div class="line"><a id="l00742" name="l00742"></a><span class="lineno">  742</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
 <div class="line"><a id="l00743" name="l00743"></a><span class="lineno">  743</span>        <span class="comment">// Create a minimal logger for error reporting</span></div>
-<div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span>        <span class="keyword">auto</span> error_logger = std::make_shared&lt;kcenon::logger::logger&gt;(<span class="keyword">true</span>, 8192);</div>
-<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span>        error_logger-&gt;add_writer(std::make_unique&lt;kcenon::logger::console_writer&gt;());</div>
-<div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span>        error_logger-&gt;log(kcenon::logger::log_level::error, <span class="stringliteral">&quot;Error: &quot;</span> + std::string(e.what()));</div>
+<div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span>        <span class="keyword">auto</span> error_logger = std::make_shared&lt;logger_module::logger&gt;(<span class="keyword">true</span>, 8192);</div>
+<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span>        error_logger-&gt;add_writer(std::make_unique&lt;logger_module::console_writer&gt;());</div>
+<div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span>        error_logger-&gt;log(logger_module::log_level::error, <span class="stringliteral">&quot;Error: &quot;</span> + std::string(e.what()));</div>
 <div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>        error_logger-&gt;stop();</div>
 <div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span>        <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span>    }</div>
@@ -951,15 +951,15 @@ $(document).ready(function(){initNavTree('db/dad/event__pipeline_8cpp_source.htm
 <div class="ttc" id="aclasskcenon_1_1messaging_1_1core_1_1message_html_a79eb560ff3c4a3cf26100bd22fedc6fa"><div class="ttname"><a href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a79eb560ff3c4a3cf26100bd22fedc6fa">kcenon::messaging::core::message::metadata</a></div><div class="ttdeci">message_metadata metadata</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00090">message_types.h:90</a></div></div>
 <div class="ttc" id="aclasspipeline__stage_html"><div class="ttname"><a href="../../df/d30/classpipeline__stage.html">pipeline_stage</a></div><div class="ttdef"><b>Definition</b> <a href="../../db/dad/event__pipeline_8cpp_source.html#l00062">event_pipeline.cpp:62</a></div></div>
 <div class="ttc" id="aclasspipeline__stage_html_a04cd3d3b2ab004ac7117049b946f9785"><div class="ttname"><a href="../../df/d30/classpipeline__stage.html#a04cd3d3b2ab004ac7117049b946f9785">pipeline_stage::ProcessFunc</a></div><div class="ttdeci">std::function&lt; TOutput(const TInput &amp;)&gt; ProcessFunc</div><div class="ttdef"><b>Definition</b> <a href="../../db/dad/event__pipeline_8cpp_source.html#l00064">event_pipeline.cpp:64</a></div></div>
-<div class="ttc" id="aclasspipeline__stage_html_a28cb56763e378d96a64235260853d99d"><div class="ttname"><a href="../../df/d30/classpipeline__stage.html#a28cb56763e378d96a64235260853d99d">pipeline_stage::printStats</a></div><div class="ttdeci">void printStats(std::shared_ptr&lt; kcenon::logger::logger &gt; logger=nullptr) const</div><div class="ttdef"><b>Definition</b> <a href="../../db/dad/event__pipeline_8cpp_source.html#l00107">event_pipeline.cpp:107</a></div></div>
 <div class="ttc" id="aclasspipeline__stage_html_a5027cf8c78bda4c6e2eb37822fcff4c3"><div class="ttname"><a href="../../df/d30/classpipeline__stage.html#a5027cf8c78bda4c6e2eb37822fcff4c3">pipeline_stage::pipeline_stage</a></div><div class="ttdeci">pipeline_stage(const std::string &amp;name, ProcessFunc proc, FilterFunc filt=nullptr, ErrorHandler err=nullptr)</div><div class="ttdef"><b>Definition</b> <a href="../../db/dad/event__pipeline_8cpp_source.html#l00078">event_pipeline.cpp:78</a></div></div>
 <div class="ttc" id="aclasspipeline__stage_html_a6afb62c61379b8520c7f5303cd1cc8d4"><div class="ttname"><a href="../../df/d30/classpipeline__stage.html#a6afb62c61379b8520c7f5303cd1cc8d4">pipeline_stage::ErrorHandler</a></div><div class="ttdeci">std::function&lt; void(const TInput &amp;, const std::exception &amp;)&gt; ErrorHandler</div><div class="ttdef"><b>Definition</b> <a href="../../db/dad/event__pipeline_8cpp_source.html#l00066">event_pipeline.cpp:66</a></div></div>
 <div class="ttc" id="aclasspipeline__stage_html_aa7d9b4e4bce1bb0358b277ca925fded4"><div class="ttname"><a href="../../df/d30/classpipeline__stage.html#aa7d9b4e4bce1bb0358b277ca925fded4">pipeline_stage::process</a></div><div class="ttdeci">std::optional&lt; TOutput &gt; process(const TInput &amp;input)</div><div class="ttdef"><b>Definition</b> <a href="../../db/dad/event__pipeline_8cpp_source.html#l00085">event_pipeline.cpp:85</a></div></div>
+<div class="ttc" id="aclasspipeline__stage_html_ae9697034a56311408e709ae04d7a9b22"><div class="ttname"><a href="../../df/d30/classpipeline__stage.html#ae9697034a56311408e709ae04d7a9b22">pipeline_stage::printStats</a></div><div class="ttdeci">void printStats(std::shared_ptr&lt; logger_module::logger &gt; logger=nullptr) const</div><div class="ttdef"><b>Definition</b> <a href="../../db/dad/event__pipeline_8cpp_source.html#l00107">event_pipeline.cpp:107</a></div></div>
 <div class="ttc" id="aclasspipeline__stage_html_af5fd9bebf188c2ae9e8f7c5c1f3f60b9"><div class="ttname"><a href="../../df/d30/classpipeline__stage.html#af5fd9bebf188c2ae9e8f7c5c1f3f60b9">pipeline_stage::FilterFunc</a></div><div class="ttdeci">std::function&lt; bool(const TInput &amp;)&gt; FilterFunc</div><div class="ttdef"><b>Definition</b> <a href="../../db/dad/event__pipeline_8cpp_source.html#l00065">event_pipeline.cpp:65</a></div></div>
 <div class="ttc" id="aconsole__writer_8h_html"><div class="ttname"><a href="../../dc/d9a/console__writer_8h.html">console_writer.h</a></div></div>
 <div class="ttc" id="acontainer__service_8h_html"><div class="ttname"><a href="../../d1/dac/container__service_8h.html">container_service.h</a></div></div>
 <div class="ttc" id="adatabase__service_8h_html"><div class="ttname"><a href="../../dc/dc6/database__service_8h.html">database_service.h</a></div></div>
-<div class="ttc" id="alogger_8h_html"><div class="ttname"><a href="../../d1/d8c/logger_8h.html">logger.h</a></div><div class="ttdoc">High-performance, thread-safe logging system with asynchronous capabilities.</div></div>
+<div class="ttc" id="alogger_8h_html"><div class="ttname"><a href="../../d1/d8c/logger_8h.html">logger.h</a></div></div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_html"><div class="ttname"><a href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a></div><div class="ttdef"><b>Definition</b> <a href="../../d7/d6e/distributed__messaging_8h_source.html#l00015">distributed_messaging.h:15</a></div></div>
 <div class="ttc" id="arotating__file__writer_8h_html"><div class="ttname"><a href="../../d0/dc1/rotating__file__writer_8h.html">rotating_file_writer.h</a></div></div>
 <div class="ttc" id="astructaggregated__data_html"><div class="ttname"><a href="../../da/da0/structaggregated__data.html">aggregated_data</a></div><div class="ttdef"><b>Definition</b> <a href="../../db/dad/event__pipeline_8cpp_source.html#l00050">event_pipeline.cpp:50</a></div></div>

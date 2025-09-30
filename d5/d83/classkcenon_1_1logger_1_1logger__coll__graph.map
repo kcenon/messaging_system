@@ -1,5 +1,0 @@
-<map id="kcenon::logger::logger" name="kcenon::logger::logger">
-<area shape="rect" id="Node000001" title="Main logger implementation that implements thread_system&#39;s logger_interface." alt="" coords="5,93,172,119"/>
-<area shape="rect" id="Node000002" href="$d7/d38/classlogger__system_1_1logger__interface.html" title="Logger interface for standalone mode." alt="" coords="5,5,172,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,59,91,93,86,93,86,59"/>
-</map>

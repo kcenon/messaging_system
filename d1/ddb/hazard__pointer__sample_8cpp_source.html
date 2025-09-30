@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/thread_system/examples/hazard_pointer_sample/hazard_pointer_sample.cpp Source File</title>
+<title>Messaging System: libraries/thread_system/samples/hazard_pointer_sample/hazard_pointer_sample.cpp Source File</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -131,14 +131,14 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment">*****************************************************************************/</span></div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &quot;thread_base/lockfree/memory/hazard_pointer.h&quot;</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include &quot;<a class="code" href="../../d1/d8c/logger_8h.html">logger/core/logger.h</a>&quot;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include &quot;logger/core/logger.h&quot;</span></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &lt;random&gt;</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &lt;atomic&gt;</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../de/d48/namespacethread__module.html">thread_module</a>;</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="foldopen" id="foldopen00043" data-start="{" data-end="};">
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="../../d3/d4f/structTestNode.html">   43</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../d3/d4f/structTestNode.html">TestNode</a> {</div>
@@ -153,10 +153,10 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="../../d0/d8f/classLockFreeStack.html">   50</a></span><span class="keyword">class </span><a class="code hl_class" href="../../d0/d8f/classLockFreeStack.html">LockFreeStack</a> {</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">private</span>:</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    std::atomic&lt;TestNode*&gt; head_{<span class="keyword">nullptr</span>};</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    hazard_pointer_manager&amp; hp_manager_;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <a class="code hl_class" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html">hazard_pointer_manager</a>&amp; hp_manager_;</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    </div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="../../d0/d8f/classLockFreeStack.html#a47c79478d4cd0f36c736cae27b54c178">   56</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="../../d0/d8f/classLockFreeStack.html#a47c79478d4cd0f36c736cae27b54c178">LockFreeStack</a>(hazard_pointer_manager&amp; hp_mgr) : hp_manager_(hp_mgr) {}</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="../../d0/d8f/classLockFreeStack.html#a47c79478d4cd0f36c736cae27b54c178">   56</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="../../d0/d8f/classLockFreeStack.html#a47c79478d4cd0f36c736cae27b54c178">LockFreeStack</a>(<a class="code hl_class" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html">hazard_pointer_manager</a>&amp; hp_mgr) : hp_manager_(hp_mgr) {}</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    </div>
 <div class="foldopen" id="foldopen00058" data-start="{" data-end="}">
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="../../d0/d8f/classLockFreeStack.html#a81bc65b086de0fe651db5082842933a8">   58</a></span>    <a class="code hl_function" href="../../d0/d8f/classLockFreeStack.html#a81bc65b086de0fe651db5082842933a8">~LockFreeStack</a>() {</div>
@@ -179,8 +179,8 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 </div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    </div>
 <div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="../../d0/d8f/classLockFreeStack.html#afd33b9fd259a45ad66f84221dcd43fc7">   74</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="../../d0/d8f/classLockFreeStack.html#afd33b9fd259a45ad66f84221dcd43fc7">pop</a>(<span class="keywordtype">int</span>&amp; <a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a>) {</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keyword">auto</span> hp = hp_manager_.acquire();</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="../../d0/d8f/classLockFreeStack.html#afd33b9fd259a45ad66f84221dcd43fc7">   74</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="../../d0/d8f/classLockFreeStack.html#afd33b9fd259a45ad66f84221dcd43fc7">pop</a>(<span class="keywordtype">int</span>&amp; <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>) {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keyword">auto</span> hp = hp_manager_.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a69100c32f1d656f895520adbb913ef6f">acquire</a>();</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        </div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <span class="keyword">auto</span>* head = hp.protect(head_);</div>
@@ -192,8 +192,8 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            </div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <span class="comment">// Try to update head</span></div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <span class="keywordflow">if</span> (head_.compare_exchange_weak(head, next)) {</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                <a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a> = head-&gt;data.load();</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                hp_manager_.retire(head);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a> = head-&gt;data.load();</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                hp_manager_.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a55ed2d8c2d40a7a6419b795dfd8a8734">retire</a>(head);</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            }</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        }</div>
@@ -206,10 +206,10 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="../../d1/ddb/hazard__pointer__sample_8cpp.html#a2a76b47d313e62bb496b4401923146da">   95</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d1/ddb/hazard__pointer__sample_8cpp.html#a2a76b47d313e62bb496b4401923146da">demonstrate_basic_usage</a>() {</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    log_module::write_information(<span class="stringliteral">&quot;\n=== Basic Hazard Pointer Usage Demo ===&quot;</span>);</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    hazard_pointer_manager hp_manager(4, 2); <span class="comment">// 4 threads, 2 pointers per thread</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <a class="code hl_class" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html">hazard_pointer_manager</a> hp_manager(4, 2); <span class="comment">// 4 threads, 2 pointers per thread</span></div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    </div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="comment">// Show initial statistics</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keyword">auto</span> stats = hp_manager.get_statistics();</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keyword">auto</span> stats = hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a668a414e9b7c851bc2c82762605eff65">get_statistics</a>();</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    log_module::write_information(<span class="stringliteral">&quot;Initial statistics:&quot;</span>);</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    log_module::write_information(<span class="stringliteral">&quot;  Active hazard pointers: {}&quot;</span>, stats.active_hazard_pointers);</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    log_module::write_information(<span class="stringliteral">&quot;  Retired list size: {}&quot;</span>, stats.retired_list_size);</div>
@@ -221,7 +221,7 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    </div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    {</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="comment">// Acquire hazard pointer and protect the object</span></div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keyword">auto</span> hp = hp_manager.acquire();</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keyword">auto</span> hp = hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a69100c32f1d656f895520adbb913ef6f">acquire</a>();</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="keyword">auto</span>* protected_ptr = hp.protect(test_ptr);</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        </div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        log_module::write_information(<span class="stringliteral">&quot;Protected pointer value: {}&quot;</span>, protected_ptr-&gt;data.load());</div>
@@ -231,13 +231,13 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    </div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="comment">// Retire the object</span></div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keyword">auto</span>* node_to_retire = test_ptr.exchange(<span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    hp_manager.retire(node_to_retire);</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a55ed2d8c2d40a7a6419b795dfd8a8734">retire</a>(node_to_retire);</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    </div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="comment">// Force reclamation</span></div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    hp_manager.scan_and_reclaim();</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#aab7fe85697dc3d120477eb65f86b12af">scan_and_reclaim</a>();</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    </div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="comment">// Show final statistics</span></div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    stats = hp_manager.get_statistics();</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    stats = hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a668a414e9b7c851bc2c82762605eff65">get_statistics</a>();</div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    log_module::write_information(<span class="stringliteral">&quot;Final statistics:&quot;</span>);</div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    log_module::write_information(<span class="stringliteral">&quot;  Active hazard pointers: {}&quot;</span>, stats.active_hazard_pointers);</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    log_module::write_information(<span class="stringliteral">&quot;  Retired list size: {}&quot;</span>, stats.retired_list_size);</div>
@@ -253,7 +253,7 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keyword">constexpr</span> <span class="keywordtype">int</span> NUM_THREADS = 4;</div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="keyword">constexpr</span> <span class="keywordtype">int</span> OPERATIONS_PER_THREAD = 1000;</div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    hazard_pointer_manager hp_manager(NUM_THREADS, 2);</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <a class="code hl_class" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html">hazard_pointer_manager</a> hp_manager(NUM_THREADS, 2);</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <a class="code hl_class" href="../../d0/d8f/classLockFreeStack.html">LockFreeStack</a> stack(hp_manager);</div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    </div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="comment">// Fill the stack initially</span></div>
@@ -285,8 +285,8 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                    push_count.fetch_add(1);</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                    <span class="comment">// Pop operation</span></div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                    <span class="keywordtype">int</span> <a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a>;</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                    <span class="keywordflow">if</span> (stack.<a class="code hl_function" href="../../d0/d8f/classLockFreeStack.html#afd33b9fd259a45ad66f84221dcd43fc7">pop</a>(<a class="code hl_class" href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">result</a>)) {</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                    <span class="keywordtype">int</span> <a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                    <span class="keywordflow">if</span> (stack.<a class="code hl_function" href="../../d0/d8f/classLockFreeStack.html#afd33b9fd259a45ad66f84221dcd43fc7">pop</a>(<a class="code hl_class" href="../../d2/d93/classthread__module_1_1result.html">result</a>)) {</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                        pop_count.fetch_add(1);</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                        failed_pops.fetch_add(1);</div>
@@ -310,7 +310,7 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    log_module::write_information(<span class="stringliteral">&quot;Failed pop operations: {}&quot;</span>, failed_pops.load());</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    </div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="comment">// Final statistics</span></div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keyword">auto</span> stats = hp_manager.get_statistics();</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keyword">auto</span> stats = hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a668a414e9b7c851bc2c82762605eff65">get_statistics</a>();</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    log_module::write_information(<span class="stringliteral">&quot;Final hazard pointer statistics:&quot;</span>);</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    log_module::write_information(<span class="stringliteral">&quot;  Active hazard pointers: {}&quot;</span>, stats.active_hazard_pointers);</div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    log_module::write_information(<span class="stringliteral">&quot;  Retired list size: {}&quot;</span>, stats.retired_list_size);</div>
@@ -323,7 +323,7 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="../../d1/ddb/hazard__pointer__sample_8cpp.html#ab7e2ebf0084c8bf2ee7d10b83a834c36">  208</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d1/ddb/hazard__pointer__sample_8cpp.html#ab7e2ebf0084c8bf2ee7d10b83a834c36">demonstrate_memory_safety</a>() {</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    log_module::write_information(<span class="stringliteral">&quot;\n=== Memory Safety Demo ===&quot;</span>);</div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    </div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    hazard_pointer_manager hp_manager(2, 1);</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <a class="code hl_class" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html">hazard_pointer_manager</a> hp_manager(2, 1);</div>
 <div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    std::atomic&lt;TestNode*&gt; shared_ptr{<span class="keyword">new</span> <a class="code hl_struct" href="../../d3/d4f/structTestNode.html">TestNode</a>(123)};</div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    </div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    std::atomic&lt;bool&gt; reader_done{<span class="keyword">false</span>};</div>
@@ -331,7 +331,7 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    </div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    <span class="comment">// Reader thread - tries to access the shared object</span></div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    std::thread reader([&amp;]() {</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <span class="keyword">auto</span> hp = hp_manager.acquire();</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <span class="keyword">auto</span> hp = hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a69100c32f1d656f895520adbb913ef6f">acquire</a>();</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        </div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 100; ++i) {</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>            <span class="keyword">auto</span>* protected_ptr = hp.protect(shared_ptr);</div>
@@ -356,7 +356,7 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>            <span class="keyword">auto</span>* old_node = shared_ptr.exchange(new_node);</div>
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>            </div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>            <span class="keywordflow">if</span> (old_node) {</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                hp_manager.retire(old_node);</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a55ed2d8c2d40a7a6419b795dfd8a8734">retire</a>(old_node);</div>
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            }</div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            </div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            std::this_thread::sleep_for(std::chrono::milliseconds(5));</div>
@@ -370,12 +370,12 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <span class="comment">// Clean up remaining object</span></div>
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keyword">auto</span>* final_node = shared_ptr.exchange(<span class="keyword">nullptr</span>);</div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    <span class="keywordflow">if</span> (final_node) {</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        hp_manager.retire(final_node);</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a55ed2d8c2d40a7a6419b795dfd8a8734">retire</a>(final_node);</div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    }</div>
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    hp_manager.scan_and_reclaim();</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#aab7fe85697dc3d120477eb65f86b12af">scan_and_reclaim</a>();</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    <span class="keyword">auto</span> stats = hp_manager.get_statistics();</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    <span class="keyword">auto</span> stats = hp_manager.<a class="code hl_function" href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a668a414e9b7c851bc2c82762605eff65">get_statistics</a>();</div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    log_module::write_information(<span class="stringliteral">&quot;Memory safety test completed safely!&quot;</span>);</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    log_module::write_information(<span class="stringliteral">&quot;Final statistics:&quot;</span>);</div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    log_module::write_information(<span class="stringliteral">&quot;  Total retired: {}&quot;</span>, stats.total_retired);</div>
@@ -415,13 +415,17 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <div class="ttc" id="aclassLockFreeStack_html_a5805194d42cf8202b1f8d81c446fe947"><div class="ttname"><a href="../../d0/d8f/classLockFreeStack.html#a5805194d42cf8202b1f8d81c446fe947">LockFreeStack::push</a></div><div class="ttdeci">void push(int value)</div><div class="ttdef"><b>Definition</b> <a href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00065">hazard_pointer_sample.cpp:65</a></div></div>
 <div class="ttc" id="aclassLockFreeStack_html_a81bc65b086de0fe651db5082842933a8"><div class="ttname"><a href="../../d0/d8f/classLockFreeStack.html#a81bc65b086de0fe651db5082842933a8">LockFreeStack::~LockFreeStack</a></div><div class="ttdeci">~LockFreeStack()</div><div class="ttdef"><b>Definition</b> <a href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00058">hazard_pointer_sample.cpp:58</a></div></div>
 <div class="ttc" id="aclassLockFreeStack_html_afd33b9fd259a45ad66f84221dcd43fc7"><div class="ttname"><a href="../../d0/d8f/classLockFreeStack.html#afd33b9fd259a45ad66f84221dcd43fc7">LockFreeStack::pop</a></div><div class="ttdeci">bool pop(int &amp;result)</div><div class="ttdef"><b>Definition</b> <a href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00074">hazard_pointer_sample.cpp:74</a></div></div>
-<div class="ttc" id="aclasskcenon_1_1thread_1_1result_html"><div class="ttname"><a href="../../d0/d3c/classkcenon_1_1thread_1_1result.html">kcenon::thread::result</a></div><div class="ttdoc">A template class representing either a value or an error.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d01/include_2kcenon_2thread_2core_2error__handling_8h_source.html#l00238">error_handling.h:238</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1hazard__pointer__manager_html"><div class="ttname"><a href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html">thread_module::hazard_pointer_manager</a></div><div class="ttdoc">Thread-safe memory reclamation using hazard pointers.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/dd7/modular__structure_2core_2include_2thread__system__core_2thread__base_2lockfree_2memory_2hazard__pointer_8h_source.html#l00059">hazard_pointer.h:60</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1hazard__pointer__manager_html_a55ed2d8c2d40a7a6419b795dfd8a8734"><div class="ttname"><a href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a55ed2d8c2d40a7a6419b795dfd8a8734">thread_module::hazard_pointer_manager::retire</a></div><div class="ttdeci">auto retire(T *ptr, std::function&lt; void(T *)&gt; deleter=std::default_delete&lt; T &gt;{}) -&gt; void</div><div class="ttdoc">Retire a pointer for later reclamation.</div><div class="ttdef"><b>Definition</b> <a href="../../d0/dd7/modular__structure_2core_2include_2thread__system__core_2thread__base_2lockfree_2memory_2hazard__pointer_8h_source.html#l00155">hazard_pointer.h:155</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1hazard__pointer__manager_html_a668a414e9b7c851bc2c82762605eff65"><div class="ttname"><a href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a668a414e9b7c851bc2c82762605eff65">thread_module::hazard_pointer_manager::get_statistics</a></div><div class="ttdeci">auto get_statistics() const -&gt; statistics</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp_source.html#l00275">hazard_pointer.cpp:275</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1hazard__pointer__manager_html_a69100c32f1d656f895520adbb913ef6f"><div class="ttname"><a href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#a69100c32f1d656f895520adbb913ef6f">thread_module::hazard_pointer_manager::acquire</a></div><div class="ttdeci">auto acquire() -&gt; hazard_pointer</div><div class="ttdoc">Acquire a hazard pointer.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp_source.html#l00219">hazard_pointer.cpp:219</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1hazard__pointer__manager_html_aab7fe85697dc3d120477eb65f86b12af"><div class="ttname"><a href="../../d7/ded/classthread__module_1_1hazard__pointer__manager.html#aab7fe85697dc3d120477eb65f86b12af">thread_module::hazard_pointer_manager::scan_and_reclaim</a></div><div class="ttdeci">auto scan_and_reclaim() -&gt; void</div><div class="ttdoc">Force a scan and reclaim cycle.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp_source.html#l00250">hazard_pointer.cpp:250</a></div></div>
+<div class="ttc" id="aclassthread__module_1_1result_html"><div class="ttname"><a href="../../d2/d93/classthread__module_1_1result.html">thread_module::result</a></div><div class="ttdoc">A template class representing either a value or an error.</div><div class="ttdef"><b>Definition</b> <a href="../../d4/d7d/sources_2thread__base_2sync_2error__handling_8h_source.html#l00241">error_handling.h:241</a></div></div>
 <div class="ttc" id="ahazard__pointer__sample_8cpp_html_a1051075875056cb7708ae56346e00712"><div class="ttname"><a href="../../d1/ddb/hazard__pointer__sample_8cpp.html#a1051075875056cb7708ae56346e00712">demonstrate_concurrent_access</a></div><div class="ttdeci">void demonstrate_concurrent_access()</div><div class="ttdef"><b>Definition</b> <a href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00137">hazard_pointer_sample.cpp:137</a></div></div>
 <div class="ttc" id="ahazard__pointer__sample_8cpp_html_a2a76b47d313e62bb496b4401923146da"><div class="ttname"><a href="../../d1/ddb/hazard__pointer__sample_8cpp.html#a2a76b47d313e62bb496b4401923146da">demonstrate_basic_usage</a></div><div class="ttdeci">void demonstrate_basic_usage()</div><div class="ttdef"><b>Definition</b> <a href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00095">hazard_pointer_sample.cpp:95</a></div></div>
 <div class="ttc" id="ahazard__pointer__sample_8cpp_html_ab7e2ebf0084c8bf2ee7d10b83a834c36"><div class="ttname"><a href="../../d1/ddb/hazard__pointer__sample_8cpp.html#ab7e2ebf0084c8bf2ee7d10b83a834c36">demonstrate_memory_safety</a></div><div class="ttdeci">void demonstrate_memory_safety()</div><div class="ttdef"><b>Definition</b> <a href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00208">hazard_pointer_sample.cpp:208</a></div></div>
 <div class="ttc" id="ahazard__pointer__sample_8cpp_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="../../d1/ddb/hazard__pointer__sample_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> <a href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00270">hazard_pointer_sample.cpp:270</a></div></div>
-<div class="ttc" id="alogger_8h_html"><div class="ttname"><a href="../../d1/d8c/logger_8h.html">logger.h</a></div><div class="ttdoc">High-performance, thread-safe logging system with asynchronous capabilities.</div></div>
-<div class="ttc" id="anamespacekcenon_1_1thread_html"><div class="ttname"><a href="../../da/dcc/namespacekcenon_1_1thread.html">kcenon::thread</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../de/d70/core_2base_2include_2detail_2thread__impl_8h_source.html#l00044">thread_impl.h:44</a></div></div>
+<div class="ttc" id="anamespacethread__module_html"><div class="ttname"><a href="../../de/d48/namespacethread__module.html">thread_module</a></div><div class="ttdoc">Core threading foundation of the thread system library.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d44/logger__system_2sources_2logger_2logger__interface_8h_source.html#l00032">logger_interface.h:32</a></div></div>
 <div class="ttc" id="astructTestNode_html"><div class="ttname"><a href="../../d3/d4f/structTestNode.html">TestNode</a></div><div class="ttdef"><b>Definition</b> <a href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00043">hazard_pointer_sample.cpp:43</a></div></div>
 <div class="ttc" id="astructTestNode_html_a1fb17b20c6b0c01c87105c2f3bcf1a09"><div class="ttname"><a href="../../d3/d4f/structTestNode.html#a1fb17b20c6b0c01c87105c2f3bcf1a09">TestNode::data</a></div><div class="ttdeci">std::atomic&lt; int &gt; data</div><div class="ttdef"><b>Definition</b> <a href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00044">hazard_pointer_sample.cpp:44</a></div></div>
 <div class="ttc" id="astructTestNode_html_a342ee34130e1ddd6562e9aadbd56445f"><div class="ttname"><a href="../../d3/d4f/structTestNode.html#a342ee34130e1ddd6562e9aadbd56445f">TestNode::next</a></div><div class="ttdeci">std::atomic&lt; TestNode * &gt; next</div><div class="ttdef"><b>Definition</b> <a href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00045">hazard_pointer_sample.cpp:45</a></div></div>
@@ -431,7 +435,7 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp_so
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_62aa39980ad34ebd1eec6b25d2703f9b.html">examples</a></li><li class="navelem"><a class="el" href="../../dir_042659c15f66a6ccf817df51735258bb.html">hazard_pointer_sample</a></li><li class="navelem"><a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp.html">hazard_pointer_sample.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_d5639982d944765b2c04ab5f88dacbbf.html">samples</a></li><li class="navelem"><a class="el" href="../../dir_9f7b57e56688e2d069f0c917b96b29ce.html">hazard_pointer_sample</a></li><li class="navelem"><a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp.html">hazard_pointer_sample.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

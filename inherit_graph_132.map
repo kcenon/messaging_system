@@ -1,3 +1,15 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d8/dcc/classkcenon_1_1logger_1_1monitoring_1_1monitoring__factory.html" title="Factory class for creating monitoring instances." alt="" coords="5,5,203,45"/>
+<area shape="rect" id="Node000000" href="$d1/d9c/classlogger__module_1_1log__filter.html" title="Base class for log filtering." alt="" coords="5,165,152,205"/>
+<area shape="rect" id="Node000001" href="$d0/dd6/classlogger__module_1_1access__control__filter.html" title="Filter that controls access based on log level and source." alt="" coords="212,5,383,45"/>
+<area shape="poly" id="edge50_Node000000_Node000001" title=" " alt="" coords="100,152,142,103,169,77,199,55,222,43,224,48,201,60,173,81,146,106,104,156"/>
+<area shape="rect" id="Node000002" href="$d7/d30/classlogger__module_1_1composite__filter.html" title="Combine multiple filters with AND/OR logic." alt="" coords="200,69,395,109"/>
+<area shape="poly" id="edge51_Node000000_Node000002" title=" " alt="" coords="124,156,199,119,230,107,232,112,201,124,127,161"/>
+<area shape="rect" id="Node000003" href="$da/d34/classlogger__module_1_1function__filter.html" title="Filter logs by custom function." alt="" coords="207,133,387,173"/>
+<area shape="poly" id="edge52_Node000000_Node000003" title=" " alt="" coords="166,170,207,164,208,169,166,175"/>
+<area shape="rect" id="Node000004" href="$d8/dd3/classlogger__module_1_1level__filter.html" title="Filter logs by minimum level." alt="" coords="218,197,377,237"/>
+<area shape="poly" id="edge53_Node000000_Node000004" title=" " alt="" coords="166,195,218,203,217,208,166,201"/>
+<area shape="rect" id="Node000005" href="$d4/d40/classlogger__module_1_1regex__filter.html" title="Filter logs by regex pattern." alt="" coords="215,261,379,301"/>
+<area shape="poly" id="edge54_Node000000_Node000005" title=" " alt="" coords="127,210,201,247,232,259,230,264,199,252,124,214"/>
+<area shape="rect" id="Node000006" href="$d2/da8/classlogger__module_1_1sanitizing__filter.html" title="Log filter that sanitizes messages before logging." alt="" coords="202,325,393,365"/>
+<area shape="poly" id="edge55_Node000000_Node000006" title=" " alt="" coords="104,215,146,264,173,289,201,311,224,323,222,328,199,316,169,293,142,268,100,218"/>
 </map>

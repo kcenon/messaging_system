@@ -1,7 +1,0 @@
-<map id="network_system::internal::tcp_socket" name="network_system::internal::tcp_socket">
-<area shape="rect" id="Node000001" title="A lightweight wrapper around asio::ip::tcp::socket, enabling asynchronous read and write operations." alt="" coords="7,93,195,133"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,196,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,59,88,93,83,93,80,59"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="103,59,103,93,98,93,98,59"/>
-<area shape="poly" id="edge3_Node000001_Node000002" title=" " alt="" coords="121,59,119,93,113,93,116,59"/>
-</map>

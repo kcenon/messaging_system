@@ -103,9 +103,9 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;<a class="code" href="../../d1/dac/container__service_8h.html">kcenon/messaging/services/container/container_service.h</a>&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/dc6/database__service_8h.html">kcenon/messaging/services/database/database_service.h</a>&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/dcb/network__service_8h.html">kcenon/messaging/services/network/network_service.h</a>&gt;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;<a class="code" href="../../d1/d8c/logger_8h.html">kcenon/logger/core/logger.h</a>&gt;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d9a/console__writer_8h.html">kcenon/logger/writers/console_writer.h</a>&gt;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;<a class="code" href="../../d0/dc1/rotating__file__writer_8h.html">kcenon/logger/writers/rotating_file_writer.h</a>&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;<a class="code" href="../../d1/d8c/logger_8h.html">logger/logger.h</a>&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;<a class="code" href="../../dc/d9a/console__writer_8h.html">logger/writers/console_writer.h</a>&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;<a class="code" href="../../d0/dc1/rotating__file__writer_8h.html">logger/writers/rotating_file_writer.h</a>&gt;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
@@ -333,7 +333,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    std::unique_ptr&lt;services::container::container_service&gt; container_svc;</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    std::unique_ptr&lt;services::database::database_service&gt; database_svc;</div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    std::unique_ptr&lt;services::network::network_service&gt; network_svc;</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    std::shared_ptr&lt;kcenon::logger::logger&gt; m_logger;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    std::shared_ptr&lt;logger_module::logger&gt; m_logger;</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    <span class="comment">// Service registry</span></div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    std::map&lt;std::string, service_definition&gt; service_definitions;</div>
@@ -355,12 +355,12 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="foldopen" id="foldopen00238" data-start="{" data-end="}">
 <div class="line"><a id="l00238" name="l00238"></a><span class="lineno"><a class="line" href="../../d3/d02/classmicroservices__orchestrator.html#a7d5b127165dea38a505e71a946653b38">  238</a></span>    <a class="code hl_function" href="../../d3/d02/classmicroservices__orchestrator.html#a7d5b127165dea38a505e71a946653b38">microservices_orchestrator</a>() {</div>
 <div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        <span class="comment">// Initialize logger</span></div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        m_logger = std::make_shared&lt;kcenon::logger::logger&gt;(<span class="keyword">true</span>, 16384);</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        m_logger-&gt;add_writer(std::make_unique&lt;kcenon::logger::console_writer&gt;());</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        m_logger-&gt;add_writer(std::make_unique&lt;kcenon::logger::rotating_file_writer&gt;(</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        m_logger = std::make_shared&lt;logger_module::logger&gt;(<span class="keyword">true</span>, 16384);</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        m_logger-&gt;add_writer(std::make_unique&lt;logger_module::console_writer&gt;());</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        m_logger-&gt;add_writer(std::make_unique&lt;logger_module::rotating_file_writer&gt;(</div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>            <span class="stringliteral">&quot;microservices_orchestrator.log&quot;</span>, 20 * 1024 * 1024, 5));</div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        m_logger-&gt;log(kcenon::logger::log_level::info, <span class="stringliteral">&quot;Initializing Microservices Orchestrator&quot;</span>);</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        m_logger-&gt;log(logger_module::log_level::info, <span class="stringliteral">&quot;Initializing Microservices Orchestrator&quot;</span>);</div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <span class="comment">// Configure for microservices workload</span></div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <a class="code hl_class" href="../../d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html">config::config_builder</a> builder;</div>
@@ -440,7 +440,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>            }</div>
 <div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        }</div>
 <div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span> </div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>            <span class="stringliteral">&quot;Initialized &quot;</span> + std::to_string(service_definitions.size()) + <span class="stringliteral">&quot; service definitions&quot;</span>);</div>
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>    }</div>
 </div>
@@ -489,7 +489,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>            std::this_thread::sleep_for(2s);</div>
 <div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>            <a class="code hl_function" href="../../d3/d02/classmicroservices__orchestrator.html#aeea54165520c578ade34f86af13698f2">updateInstanceState</a>(instance.<a class="code hl_variable" href="../../d0/d45/structservice__instance.html#a38aa3e5bc3cbf4baa04bc7b6594c9da8">instance_id</a>, <a class="code hl_enumvalue" href="../../d0/d45/structservice__instance.html#a1079dc2e0ad7c45d20c986755bafad09a5e4a2acc9ed434bf02133a283b8caeba">service_instance::HEALTHY</a>);</div>
 <div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span> </div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>            m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>            m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>                <span class="stringliteral">&quot;Started &quot;</span> + instance.<a class="code hl_variable" href="../../d0/d45/structservice__instance.html#af0c34e070c04adc9d73630bb1cc395a4">service_name</a> + <span class="stringliteral">&quot; instance &quot;</span> + instance.<a class="code hl_variable" href="../../d0/d45/structservice__instance.html#a38aa3e5bc3cbf4baa04bc7b6594c9da8">instance_id</a> +</div>
 <div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>                <span class="stringliteral">&quot; at &quot;</span> + instance.<a class="code hl_variable" href="../../d0/d45/structservice__instance.html#a64bac8c89fdd056fd64ffee99684b79c">host</a> + <span class="stringliteral">&quot;:&quot;</span> + std::to_string(instance.<a class="code hl_variable" href="../../d0/d45/structservice__instance.html#aee84b30383b6b7db72cd29dff29ef5bf">port</a>));</div>
 <div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>        }).detach();</div>
@@ -517,7 +517,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>            service_instances[service_name].push_back(instance);</div>
 <div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>        }</div>
 <div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span> </div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>            <span class="stringliteral">&quot;Registered service instance: &quot;</span> + service_name + <span class="stringliteral">&quot; (&quot;</span> + instance_id +</div>
 <div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>            <span class="stringliteral">&quot;) at &quot;</span> + host + <span class="stringliteral">&quot;:&quot;</span> + std::to_string(port));</div>
 <div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span> </div>
@@ -548,7 +548,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span> </div>
 <div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>                integrator-&gt;get_message_bus()-&gt;publish(response);</div>
 <div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span> </div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>                m_logger-&gt;log(kcenon::logger::log_level::debug,</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>                m_logger-&gt;log(logger_module::log_level::debug,</div>
 <div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>                    <span class="stringliteral">&quot;Service discovery: &quot;</span> + client_id + <span class="stringliteral">&quot; -&gt; &quot;</span> + instance-&gt;instance_id);</div>
 <div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>            } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>                <span class="comment">// No healthy instances available</span></div>
@@ -688,7 +688,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>            <a class="code hl_function" href="../../d3/d02/classmicroservices__orchestrator.html#ad4a244d669834c68bab4d10e60d23bab">deploy_service_instance</a>(service_name);</div>
 <div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span>        }</div>
 <div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span> </div>
-<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>            <span class="stringliteral">&quot;Scaling up &quot;</span> + service_name + <span class="stringliteral">&quot; by &quot;</span> + std::to_string(count) + <span class="stringliteral">&quot; instances&quot;</span>);</div>
 <div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>    }</div>
 </div>
@@ -722,7 +722,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>                instances.end()</div>
 <div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>            );</div>
 <div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span> </div>
-<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>            m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>            m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>                <span class="stringliteral">&quot;Scaled down &quot;</span> + service_name + <span class="stringliteral">&quot; by &quot;</span> + std::to_string(to_remove) + <span class="stringliteral">&quot; instances&quot;</span>);</div>
 <div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span>        }).detach();</div>
 <div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>    }</div>
@@ -764,7 +764,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span> </div>
 <div class="foldopen" id="foldopen00620" data-start="{" data-end="}">
 <div class="line"><a id="l00620" name="l00620"></a><span class="lineno"><a class="line" href="../../d3/d02/classmicroservices__orchestrator.html#a5ef8343024cecdc4554caf5e56996bf2">  620</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d3/d02/classmicroservices__orchestrator.html#a5ef8343024cecdc4554caf5e56996bf2">performRollingUpdate</a>(<span class="keyword">const</span> std::string&amp; service_name, <span class="keyword">const</span> std::string&amp; new_version) {</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>            <span class="stringliteral">&quot;Starting rolling update for &quot;</span> + service_name + <span class="stringliteral">&quot; to version &quot;</span> + new_version);</div>
 <div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span> </div>
 <div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>        std::thread([<span class="keyword">this</span>, service_name, new_version]() {</div>
@@ -781,12 +781,12 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>                std::this_thread::sleep_for(5s);  <span class="comment">// Startup time</span></div>
 <div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span> </div>
 <div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>                instance.m_state = <a class="code hl_enumvalue" href="../../d0/d45/structservice__instance.html#a1079dc2e0ad7c45d20c986755bafad09a5e4a2acc9ed434bf02133a283b8caeba">service_instance::HEALTHY</a>;</div>
-<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>                m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>                m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>                    <span class="stringliteral">&quot;Updated &quot;</span> + instance.instance_id + <span class="stringliteral">&quot; to version &quot;</span> + new_version);</div>
 <div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>            }</div>
 <div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span> </div>
 <div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>            service_definitions[service_name].version = new_version;</div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>            m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>            m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>                <span class="stringliteral">&quot;Rolling update complete for &quot;</span> + service_name);</div>
 <div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>        }).detach();</div>
 <div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>    }</div>
@@ -794,7 +794,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span> </div>
 <div class="foldopen" id="foldopen00648" data-start="{" data-end="}">
 <div class="line"><a id="l00648" name="l00648"></a><span class="lineno"><a class="line" href="../../d3/d02/classmicroservices__orchestrator.html#ab4b1f9a3db61a0084bde6030a32951e8">  648</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d3/d02/classmicroservices__orchestrator.html#ab4b1f9a3db61a0084bde6030a32951e8">performBlueGreenDeployment</a>(<span class="keyword">const</span> std::string&amp; service_name, <span class="keyword">const</span> std::string&amp; new_version) {</div>
-<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>            <span class="stringliteral">&quot;Starting blue-green deployment for &quot;</span> + service_name);</div>
 <div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span> </div>
 <div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>        <span class="comment">// Deploy green environment</span></div>
@@ -812,7 +812,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>            service_instances[service_name] = service_instances[service_name + <span class="stringliteral">&quot;-green&quot;</span>];</div>
 <div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>            service_instances.erase(service_name + <span class="stringliteral">&quot;-green&quot;</span>);</div>
 <div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span> </div>
-<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>            m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>            m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>                <span class="stringliteral">&quot;Blue-green deployment complete for &quot;</span> + service_name);</div>
 <div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>        }).detach();</div>
 <div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>    }</div>
@@ -820,7 +820,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span> </div>
 <div class="foldopen" id="foldopen00672" data-start="{" data-end="}">
 <div class="line"><a id="l00672" name="l00672"></a><span class="lineno"><a class="line" href="../../d3/d02/classmicroservices__orchestrator.html#aba29a10076d32e51330750e1bf623daf">  672</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d3/d02/classmicroservices__orchestrator.html#aba29a10076d32e51330750e1bf623daf">performCanaryDeployment</a>(<span class="keyword">const</span> std::string&amp; service_name, <span class="keyword">const</span> std::string&amp; new_version) {</div>
-<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>            <span class="stringliteral">&quot;Starting canary deployment for &quot;</span> + service_name);</div>
 <div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span> </div>
 <div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>        <span class="comment">// Deploy canary instance (10% of traffic)</span></div>
@@ -833,7 +833,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>            <span class="comment">// If canary is healthy, continue rollout</span></div>
 <div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>            <a class="code hl_function" href="../../d3/d02/classmicroservices__orchestrator.html#acf9bfb01a6c1aa1dd51cc24590ac9ecb">autoScale</a>(service_name);  <span class="comment">// This would check canary metrics</span></div>
 <div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span> </div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>            m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>            m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>                <span class="stringliteral">&quot;Canary deployment validated for &quot;</span> + service_name);</div>
 <div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>        }).detach();</div>
 <div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>    }</div>
@@ -857,7 +857,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span> </div>
 <div class="foldopen" id="foldopen00705" data-start="{" data-end="}">
 <div class="line"><a id="l00705" name="l00705"></a><span class="lineno"><a class="line" href="../../d3/d02/classmicroservices__orchestrator.html#a2e6eb6dfab482788d0f2b2bc68b4de22">  705</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d3/d02/classmicroservices__orchestrator.html#a2e6eb6dfab482788d0f2b2bc68b4de22">handleUnhealthyInstance</a>(<span class="keyword">const</span> <a class="code hl_struct" href="../../d0/d45/structservice__instance.html">service_instance</a>&amp; instance) {</div>
-<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>        m_logger-&gt;log(kcenon::logger::log_level::warning,</div>
+<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>        m_logger-&gt;log(logger_module::log_level::warning,</div>
 <div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>            <span class="stringliteral">&quot;Instance &quot;</span> + instance.<a class="code hl_variable" href="../../d0/d45/structservice__instance.html#a38aa3e5bc3cbf4baa04bc7b6594c9da8">instance_id</a> + <span class="stringliteral">&quot; marked unhealthy&quot;</span>);</div>
 <div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span> </div>
 <div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>        <span class="comment">// Replace unhealthy instance</span></div>
@@ -1033,14 +1033,14 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span>                  &lt;&lt; circuit_breaker_trips.load() &lt;&lt; <span class="stringliteral">&quot; ║\n&quot;</span>;</div>
 <div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span>        map_output &lt;&lt; <span class="stringliteral">&quot;╚══════════════════════════════════════════════════════════════╝&quot;</span>;</div>
 <div class="line"><a id="l00863" name="l00863"></a><span class="lineno">  863</span> </div>
-<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>        m_logger-&gt;log(kcenon::logger::log_level::info, map_output.str());</div>
+<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>        m_logger-&gt;log(logger_module::log_level::info, map_output.str());</div>
 <div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>    }</div>
 </div>
 <div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span> </div>
 <div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span><span class="keyword">public</span>:</div>
 <div class="foldopen" id="foldopen00868" data-start="{" data-end="}">
 <div class="line"><a id="l00868" name="l00868"></a><span class="lineno"><a class="line" href="../../d3/d02/classmicroservices__orchestrator.html#a4bad5c6d8760d806e7cfd92d3f11c4a7">  868</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="../../d3/d02/classmicroservices__orchestrator.html#a4bad5c6d8760d806e7cfd92d3f11c4a7">start</a>() {</div>
-<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>        m_logger-&gt;log(kcenon::logger::log_level::info,</div>
+<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>        m_logger-&gt;log(logger_module::log_level::info,</div>
 <div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span>            <span class="stringliteral">&quot;\n=== Microservices Orchestrator Starting ===&quot;</span>);</div>
 <div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span> </div>
 <div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>        <span class="comment">// The integrator is automatically started upon initialization</span></div>
@@ -1108,7 +1108,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span>              &lt;&lt; <span class="stringliteral">&quot;%\n&quot;</span>;</div>
 <div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span>        stats &lt;&lt; <span class="stringliteral">&quot;========================&quot;</span>;</div>
 <div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span> </div>
-<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>        m_logger-&gt;log(kcenon::logger::log_level::info, stats.str());</div>
+<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>        m_logger-&gt;log(logger_module::log_level::info, stats.str());</div>
 <div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>        m_logger-&gt;flush();</div>
 <div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span>        m_logger-&gt;stop();</div>
 <div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span>    }</div>
@@ -1124,9 +1124,9 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span> </div>
 <div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
 <div class="line"><a id="l00947" name="l00947"></a><span class="lineno">  947</span>        <span class="comment">// Create a minimal logger for error reporting</span></div>
-<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>        <span class="keyword">auto</span> error_logger = std::make_shared&lt;kcenon::logger::logger&gt;(<span class="keyword">true</span>, 8192);</div>
-<div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>        error_logger-&gt;add_writer(std::make_unique&lt;kcenon::logger::console_writer&gt;());</div>
-<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span>        error_logger-&gt;log(kcenon::logger::log_level::error, <span class="stringliteral">&quot;Error: &quot;</span> + std::string(e.what()));</div>
+<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>        <span class="keyword">auto</span> error_logger = std::make_shared&lt;logger_module::logger&gt;(<span class="keyword">true</span>, 8192);</div>
+<div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>        error_logger-&gt;add_writer(std::make_unique&lt;logger_module::console_writer&gt;());</div>
+<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span>        error_logger-&gt;log(logger_module::log_level::error, <span class="stringliteral">&quot;Error: &quot;</span> + std::string(e.what()));</div>
 <div class="line"><a id="l00951" name="l00951"></a><span class="lineno">  951</span>        <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a id="l00952" name="l00952"></a><span class="lineno">  952</span>    }</div>
 <div class="line"><a id="l00953" name="l00953"></a><span class="lineno">  953</span> </div>
@@ -1197,7 +1197,7 @@ $(document).ready(function(){initNavTree('d4/dd5/microservices__orchestrator_8cp
 <div class="ttc" id="aconsole__writer_8h_html"><div class="ttname"><a href="../../dc/d9a/console__writer_8h.html">console_writer.h</a></div></div>
 <div class="ttc" id="acontainer__service_8h_html"><div class="ttname"><a href="../../d1/dac/container__service_8h.html">container_service.h</a></div></div>
 <div class="ttc" id="adatabase__service_8h_html"><div class="ttname"><a href="../../dc/dc6/database__service_8h.html">database_service.h</a></div></div>
-<div class="ttc" id="alogger_8h_html"><div class="ttname"><a href="../../d1/d8c/logger_8h.html">logger.h</a></div><div class="ttdoc">High-performance, thread-safe logging system with asynchronous capabilities.</div></div>
+<div class="ttc" id="alogger_8h_html"><div class="ttname"><a href="../../d1/d8c/logger_8h.html">logger.h</a></div></div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_html"><div class="ttname"><a href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a></div><div class="ttdef"><b>Definition</b> <a href="../../d7/d6e/distributed__messaging_8h_source.html#l00015">distributed_messaging.h:15</a></div></div>
 <div class="ttc" id="anetwork__service_8h_html"><div class="ttname"><a href="../../dc/dcb/network__service_8h.html">network_service.h</a></div></div>
 <div class="ttc" id="arotating__file__writer_8h_html"><div class="ttname"><a href="../../d0/dc1/rotating__file__writer_8h.html">rotating_file_writer.h</a></div></div>

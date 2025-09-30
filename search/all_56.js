@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['🛠️_20strong_20build_20integration_20strong_0',['🛠️ strong build integration strong',['..//home/runner/work/messaging_system/messaging_system/libraries/container_system/README.md#autotoc_md372',1,'🛠️ &lt;strong&gt;Build &amp; Integration&lt;/strong&gt;'],['..//home/runner/work/messaging_system/messaging_system/libraries/database_system/README.md#autotoc_md809',1,'🛠️ &lt;strong&gt;Build &amp; Integration&lt;/strong&gt;'],['..//home/runner/work/messaging_system/messaging_system/libraries/monitoring_system/README.md#autotoc_md2000',1,'🛠️ &lt;strong&gt;Build &amp; Integration&lt;/strong&gt;'],['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md3448',1,'🛠️ &lt;strong&gt;Build &amp; Integration&lt;/strong&gt;']]],
-  ['🛠️_20strong_20build_20output_20structure_20strong_1',['🛠️ &lt;strong&gt;Build Output Structure&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md3411',1,'']]],
-  ['🛠️_20technical_20implementation_20details_2',['🛠️ Technical Implementation Details',['../db/dc0/md_libraries_2network__system_2docs_2NETWORK__SYSTEM__SEPARATION__PLAN.html#autotoc_md2351',1,'']]],
-  ['🛠️_20technology_20stack_20architecture_3',['🛠️ Technology Stack &amp; Architecture',['..//home/runner/work/messaging_system/messaging_system/libraries/network_system/README.md#autotoc_md2578',1,'']]]
-];

@@ -1,25 +1,9 @@
 <map id="libraries/container_system/values/bytes_value.h" name="libraries/container_system/values/bytes_value.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="1126,5,1290,60"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="230,5,394,60"/>
 <area shape="rect" id="Node000002" href="$d3/dda/container_8cpp.html" title=" " alt="" coords="5,115,205,155"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1113,39,943,45,720,58,469,79,216,111,178,118,177,113,216,105,469,74,720,53,943,40,1112,34"/>
-<area shape="rect" id="Node000003" href="$d8/d75/advanced__container__example_8cpp.html" title=" " alt="" coords="229,108,441,163"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1113,42,817,66,635,85,452,111,441,113,440,107,452,105,634,80,816,61,1112,37"/>
-<area shape="rect" id="Node000004" href="$d5/da6/basic__container__example_8cpp.html" title=" " alt="" coords="465,108,647,163"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="1113,46,904,71,659,111,648,113,647,108,658,105,903,66,1112,41"/>
-<area shape="rect" id="Node000005" href="$d9/dc9/container__system_2samples_2basic__usage_8cpp.html" title=" " alt="" coords="671,108,846,163"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="1113,55,858,111,847,113,846,108,857,105,1112,50"/>
-<area shape="rect" id="Node000006" href="$df/db0/performance__benchmark_8cpp.html" title=" " alt="" coords="870,108,1093,163"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1138,68,1041,110,1039,106,1135,63"/>
-<area shape="rect" id="Node000007" href="$d4/d1b/thread__safe__example_8cpp.html" title=" " alt="" coords="1117,108,1299,163"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1211,74,1211,108,1205,108,1205,74"/>
-<area shape="rect" id="Node000008" href="$da/dee/container__system_2tests_2benchmark__tests_8cpp.html" title="Performance benchmarks for the container system." alt="" coords="1323,108,1514,163"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1276,63,1365,106,1363,110,1274,68"/>
-<area shape="rect" id="Node000009" href="$d8/d14/performance__tests_8cpp.html" title=" " alt="" coords="1539,108,1739,163"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1304,54,1539,108,1538,113,1303,59"/>
-<area shape="rect" id="Node000010" href="$d9/d83/container__system_2tests_2unit__tests_8cpp.html" title="Comprehensive unit tests for the container system." alt="" coords="1763,115,1971,155"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="1304,42,1510,68,1751,105,1787,113,1786,118,1750,111,1509,73,1303,47"/>
-<area shape="rect" id="Node000011" href="$dc/da1/bytes__value_8cpp.html" title=" " alt="" coords="1995,108,2159,163"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="1304,35,1438,43,1608,56,1795,77,1983,105,1995,108,1994,113,1982,111,1795,82,1607,62,1437,48,1303,40"/>
-<area shape="rect" id="Node000012" href="$d5/d5c/container__value_8cpp.html" title=" " alt="" coords="2184,108,2373,163"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="1304,34,1469,40,1685,53,1928,74,2172,105,2184,107,2183,113,2172,111,1928,79,1685,58,1469,45,1304,39"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,68,146,117,143,113,245,63"/>
+<area shape="rect" id="Node000003" href="$dc/da1/bytes__value_8cpp.html" title=" " alt="" coords="230,108,394,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="315,74,315,108,309,108,309,74"/>
+<area shape="rect" id="Node000004" href="$d5/d5c/container__value_8cpp.html" title=" " alt="" coords="419,108,608,163"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="378,64,462,106,460,110,375,68"/>
 </map>

@@ -1,5 +1,0 @@
-<map id="monitoring_system::file_storage_backend" name="monitoring_system::file_storage_backend">
-<area shape="rect" id="Node000001" title="File storage backend &#45; stub implementation." alt="" coords="5,93,164,133"/>
-<area shape="rect" id="Node000002" href="$d7/d84/classmonitoring__system_1_1kv__storage__backend.html" title="Basic key&#45;value storage interface &#45; stub." alt="" coords="7,5,163,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,59,87,93,82,93,82,59"/>
-</map>

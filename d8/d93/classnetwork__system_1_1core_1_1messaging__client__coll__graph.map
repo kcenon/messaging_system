@@ -1,6 +1,0 @@
-<map id="network_system::core::messaging_client" name="network_system::core::messaging_client">
-<area shape="rect" id="Node000001" title="A basic TCP client that connects to a remote host, sends/receives data using asynchronous operations,..." alt="" coords="11,108,177,148"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,183,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,74,89,108,84,108,82,74"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="106,74,104,108,99,108,100,74"/>
-</map>

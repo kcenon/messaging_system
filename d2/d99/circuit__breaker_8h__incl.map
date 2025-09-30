@@ -1,9 +1,0 @@
-<map id="libraries/monitoring_system/include/monitoring/reliability/circuit_breaker.h" name="libraries/monitoring_system/include/monitoring/reliability/circuit_breaker.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="28,5,231,60"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,72,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,62,63,100,59,96,100,58"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="96,108,163,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="132,60,132,94,127,94,127,60"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="187,108,274,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="162,58,208,97,205,101,159,62"/>
-</map>

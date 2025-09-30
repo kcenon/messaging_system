@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/logger_system/include/kcenon/logger/core/logger.h File Reference</title>
+<title>Messaging System: libraries/logger_system/sources/logger/logger.h File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -92,154 +92,102 @@ $(document).ready(function(){initNavTree('d1/d8c/logger_8h.html','../../'); init
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle"><div class="title">logger.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>High-performance, thread-safe logging system with asynchronous capabilities.  
-<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;atomic&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
-<code>#include &lt;<a class="el" href="../../d5/de3/logger__system_2include_2kcenon_2logger_2interfaces_2logger__interface_8h_source.html">kcenon/logger/interfaces/logger_interface.h</a>&gt;</code><br />
-<code>#include &quot;<a class="el" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h_source.html">error_codes.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d7/d44/logger__system_2sources_2logger_2logger__interface_8h_source.html">logger_interface.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../db/dd9/logger__metrics_8h_source.html">metrics/logger_metrics.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d9/db2/include_2kcenon_2logger_2core_2di_2di__container__interface_8h_source.html">di/di_container_interface.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../da/d24/include_2kcenon_2logger_2core_2di_2di__container__factory_8h_source.html">di/di_container_factory.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d3/d61/logger__system_2include_2kcenon_2logger_2core_2monitoring_2monitoring__interface_8h_source.html">monitoring/monitoring_interface.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../db/d89/include_2kcenon_2logger_2core_2monitoring_2monitoring__factory_8h_source.html">monitoring/monitoring_factory.h</a>&quot;</code><br />
-<code>#include &lt;<a class="el" href="../../da/d5e/logger__types_8h_source.html">kcenon/logger/interfaces/logger_types.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for logger.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d6/db3/logger_8h__incl.png" border="0" usemap="#alibraries_2logger__system_2include_2kcenon_2logger_2core_2logger_8h" alt=""/></div>
-<map name="alibraries_2logger__system_2include_2kcenon_2logger_2core_2logger_8h" id="alibraries_2logger__system_2include_2kcenon_2logger_2core_2logger_8h">
-<area shape="rect" title="High&#45;performance, thread&#45;safe logging system with asynchronous capabilities." alt="" coords="603,5,778,60"/>
-<area shape="rect" title=" " alt="" coords="20,284,97,309"/>
-<area shape="poly" title=" " alt="" coords="603,40,445,48,263,62,107,83,54,96,26,110,14,128,9,148,9,170,12,192,28,236,46,271,41,274,23,238,7,194,3,170,4,147,10,126,22,106,52,91,106,77,263,57,445,43,603,35"/>
-<area shape="rect" title=" " alt="" coords="1211,115,1274,141"/>
-<area shape="poly" title=" " alt="" coords="779,37,974,59,1088,78,1201,105,1208,108,1206,113,1199,111,1087,84,973,64,778,42"/>
-<area shape="rect" title=" " alt="" coords="981,203,1048,229"/>
-<area shape="poly" title=" " alt="" coords="779,43,902,68,956,85,991,106,1005,125,1013,147,1018,189,1013,190,1008,148,1000,128,988,110,954,90,901,73,778,48"/>
-<area shape="rect" title=" " alt="" coords="1299,115,1363,141"/>
-<area shape="poly" title=" " alt="" coords="779,35,883,42,1011,55,1150,75,1287,105,1295,108,1294,113,1286,111,1149,80,1010,60,882,47,778,40"/>
-<area shape="rect" href="../../d5/de3/logger__system_2include_2kcenon_2logger_2interfaces_2logger__interface_8h.html" title=" " alt="" coords="535,108,718,148"/>
-<area shape="poly" title=" " alt="" coords="675,62,649,98,645,95,670,59"/>
-<area shape="rect" href="../../da/d5e/logger__types_8h.html" title="Common types and enumerations for logger system." alt="" coords="697,203,815,229"/>
-<area shape="poly" title=" " alt="" coords="709,59,732,107,745,150,754,189,749,191,740,152,727,109,704,61"/>
-<area shape="rect" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h.html" title=" " alt="" coords="1077,115,1187,141"/>
-<area shape="poly" title=" " alt="" coords="779,50,1065,110,1064,115,778,55"/>
-<area shape="rect" href="../../db/dd9/logger__metrics_8h.html" title="Logger performance metrics and monitoring." alt="" coords="793,115,977,141"/>
-<area shape="poly" title=" " alt="" coords="747,58,851,107,848,112,744,62"/>
-<area shape="rect" href="../../d9/db2/include_2kcenon_2logger_2core_2di_2di__container__interface_8h.html" title="Dependency injection container interface." alt="" coords="147,203,341,229"/>
-<area shape="poly" title=" " alt="" coords="603,42,515,51,420,64,336,84,304,96,282,110,267,127,257,148,248,190,243,189,252,147,263,125,278,106,302,91,335,79,419,59,514,45,603,37"/>
-<area shape="rect" href="../../da/d24/include_2kcenon_2logger_2core_2di_2di__container__factory_8h.html" title="Factory for creating DI container instances." alt="" coords="36,115,217,141"/>
-<area shape="poly" title=" " alt="" coords="603,51,236,111,206,116,205,110,236,105,603,45"/>
-<area shape="rect" href="../../d3/d61/logger__system_2include_2kcenon_2logger_2core_2monitoring_2monitoring__interface_8h.html" title="Interface for logger monitoring and health checks." alt="" coords="365,196,533,236"/>
-<area shape="poly" title=" " alt="" coords="608,63,565,83,524,110,491,146,467,185,462,182,487,143,521,106,562,78,606,58"/>
-<area shape="rect" href="../../db/d89/include_2kcenon_2logger_2core_2monitoring_2monitoring__factory_8h.html" title="Factory for creating monitoring instances." alt="" coords="292,108,460,148"/>
-<area shape="poly" title=" " alt="" coords="604,62,454,107,452,101,602,57"/>
-<area shape="poly" title=" " alt="" coords="535,144,286,176,136,198,115,214,98,233,72,273,68,270,94,230,112,210,134,194,285,171,535,138"/>
-<area shape="rect" title=" " alt="" coords="557,203,621,229"/>
-<area shape="poly" title=" " alt="" coords="621,149,602,191,598,189,616,147"/>
-<area shape="rect" title=" " alt="" coords="629,284,688,309"/>
-<area shape="poly" title=" " alt="" coords="633,148,657,270,651,271,628,149"/>
-<area shape="poly" title=" " alt="" coords="657,146,728,193,725,198,654,150"/>
-<area shape="poly" title=" " alt="" coords="743,231,685,277,682,273,740,227"/>
-<area shape="rect" title=" " alt="" coords="723,284,789,309"/>
-<area shape="poly" title=" " alt="" coords="759,229,759,270,753,270,753,229"/>
-<area shape="poly" title=" " alt="" coords="1130,142,1107,190,1087,216,1062,238,1014,263,972,277,932,283,893,283,812,279,765,280,711,287,702,288,701,283,710,281,764,275,812,274,893,278,931,278,970,272,1012,258,1059,234,1083,213,1102,187,1126,140"/>
-<area shape="rect" title=" " alt="" coords="1215,203,1302,229"/>
-<area shape="poly" title=" " alt="" coords="1151,139,1232,193,1229,198,1148,143"/>
-<area shape="rect" title=" " alt="" coords="1326,203,1386,229"/>
-<area shape="poly" title=" " alt="" coords="1167,138,1316,194,1320,196,1318,200,1314,198,1165,143"/>
-<area shape="rect" title=" " alt="" coords="1411,203,1485,229"/>
-<area shape="poly" title=" " alt="" coords="1173,138,1201,145,1300,168,1399,193,1407,196,1406,201,1398,199,1299,173,1199,151,1172,143"/>
-<area shape="rect" title=" " alt="" coords="1123,203,1191,229"/>
-<area shape="poly" title=" " alt="" coords="1138,140,1153,189,1147,191,1133,142"/>
-<area shape="poly" title=" " alt="" coords="904,139,987,193,984,198,901,143"/>
-<area shape="poly" title=" " alt="" coords="897,139,911,159,923,184,929,211,927,225,921,238,897,262,866,279,834,289,803,295,802,290,833,284,864,274,893,258,916,234,922,223,924,211,918,186,906,162,893,142"/>
-<area shape="rect" title=" " alt="" coords="840,203,907,229"/>
-<area shape="poly" title=" " alt="" coords="886,141,880,190,874,189,881,140"/>
-<area shape="poly" title=" " alt="" coords="218,231,99,281,97,276,216,226"/>
-<area shape="poly" title=" " alt="" coords="305,226,616,285,615,290,304,231"/>
-<area shape="rect" title=" " alt="" coords="134,284,221,309"/>
-<area shape="poly" title=" " alt="" coords="236,231,198,275,194,272,232,227"/>
-<area shape="rect" title=" " alt="" coords="245,284,331,309"/>
-<area shape="poly" title=" " alt="" coords="253,228,277,271,272,273,248,230"/>
-<area shape="rect" title=" " alt="" coords="366,284,490,309"/>
-<area shape="poly" title=" " alt="" coords="272,226,390,276,388,281,270,231"/>
-<area shape="poly" title=" " alt="" coords="103,143,69,165,54,180,42,197,37,215,38,235,49,271,44,272,33,235,32,215,38,195,50,176,66,161,100,139"/>
-<area shape="poly" title=" " alt="" coords="144,139,219,193,215,197,141,143"/>
-<area shape="poly" title=" " alt="" coords="500,234,617,277,615,282,499,239"/>
-<area shape="poly" title=" " alt="" coords="523,233,710,281,709,286,522,239"/>
-<area shape="poly" title=" " alt="" coords="447,237,437,271,432,270,442,236"/>
-<area shape="poly" title=" " alt="" coords="292,142,175,164,125,180,92,198,80,214,71,232,63,270,57,269,66,231,75,211,89,194,123,175,174,159,291,137"/>
-<area shape="poly" title=" " alt="" coords="394,147,426,184,422,187,390,150"/>
+<div class="center"><img src="../../d6/db3/logger_8h__incl.png" border="0" usemap="#alibraries_2logger__system_2sources_2logger_2logger_8h" alt=""/></div>
+<map name="alibraries_2logger__system_2sources_2logger_2logger_8h" id="alibraries_2logger__system_2sources_2logger_2logger_8h">
+<area shape="rect" title=" " alt="" coords="235,5,413,45"/>
+<area shape="rect" title=" " alt="" coords="5,167,83,192"/>
+<area shape="poly" title=" " alt="" coords="235,31,193,38,149,50,107,68,71,95,61,108,55,123,48,153,43,152,50,121,57,105,67,91,105,64,147,45,192,33,235,26"/>
+<area shape="rect" title=" " alt="" coords="506,93,569,119"/>
+<area shape="poly" title=" " alt="" coords="376,43,494,86,492,91,374,48"/>
+<area shape="rect" title=" " alt="" coords="277,167,344,192"/>
+<area shape="poly" title=" " alt="" coords="311,47,298,69,288,94,286,109,288,125,299,154,294,155,283,126,281,109,283,93,293,67,307,44"/>
+<area shape="rect" title=" " alt="" coords="593,93,657,119"/>
+<area shape="poly" title=" " alt="" coords="397,43,580,90,579,95,396,48"/>
+<area shape="rect" href="../../d7/d44/logger__system_2sources_2logger_2logger__interface_8h.html" title=" " alt="" coords="82,93,222,119"/>
+<area shape="poly" title=" " alt="" coords="284,48,191,90,189,85,282,43"/>
+<area shape="rect" href="../../db/dd9/logger__metrics_8h.html" title=" " alt="" coords="297,93,481,119"/>
+<area shape="poly" title=" " alt="" coords="342,44,373,81,369,84,338,47"/>
+<area shape="poly" title=" " alt="" coords="136,121,75,161,72,157,133,116"/>
+<area shape="rect" title=" " alt="" coords="189,167,253,192"/>
+<area shape="poly" title=" " alt="" coords="165,117,203,155,199,159,162,121"/>
+<area shape="rect" title=" " alt="" coords="107,167,165,192"/>
+<area shape="poly" title=" " alt="" coords="152,120,144,154,139,153,147,118"/>
+<area shape="poly" title=" " alt="" coords="378,121,335,159,332,156,375,117"/>
+<area shape="poly" title=" " alt="" coords="363,121,262,164,260,159,361,116"/>
+<area shape="poly" title=" " alt="" coords="349,121,179,169,178,164,348,116"/>
+<area shape="rect" title=" " alt="" coords="368,167,435,192"/>
+<area shape="poly" title=" " alt="" coords="394,119,400,153,394,154,389,119"/>
+<area shape="rect" title=" " alt="" coords="459,167,525,192"/>
+<area shape="poly" title=" " alt="" coords="407,116,465,156,462,161,404,121"/>
+<area shape="rect" title=" " alt="" coords="550,167,674,192"/>
+<area shape="poly" title=" " alt="" coords="426,116,564,160,562,165,424,121"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d4/dcf/logger_8h__dep__incl.png" border="0" usemap="#alibraries_2logger__system_2include_2kcenon_2logger_2core_2logger_8hdep" alt=""/></div>
-<map name="alibraries_2logger__system_2include_2kcenon_2logger_2core_2logger_8hdep" id="alibraries_2logger__system_2include_2kcenon_2logger_2core_2logger_8hdep">
-<area shape="rect" title="High&#45;performance, thread&#45;safe logging system with asynchronous capabilities." alt="" coords="2925,5,3099,60"/>
-<area shape="rect" href="../../db/d5d/basic__usage__example_8cpp.html" title=" " alt="" coords="5,123,203,163"/>
-<area shape="poly" title=" " alt="" coords="2911,38,2330,45,1488,60,684,82,389,95,215,111,156,125,155,120,214,105,389,90,684,76,1488,55,2329,40,2911,32"/>
-<area shape="rect" href="../../d3/d95/chat__server_8cpp.html" title="Real&#45;time chat server using the messaging system." alt="" coords="227,123,421,163"/>
-<area shape="poly" title=" " alt="" coords="2911,38,2370,46,1597,61,861,83,591,96,432,111,376,125,374,120,432,105,591,91,861,78,1597,56,2370,41,2911,33"/>
-<area shape="rect" href="../../d4/daa/distributed__worker_8cpp.html" title="Distributed task processing system using messaging." alt="" coords="445,123,638,163"/>
-<area shape="poly" title=" " alt="" coords="2911,36,2454,37,1800,45,1457,54,1135,68,858,86,744,98,650,111,593,125,592,120,649,105,743,92,858,81,1135,62,1457,49,1800,40,2454,32,2911,31"/>
-<area shape="rect" href="../../db/dad/event__pipeline_8cpp.html" title="Event&#45;driven data processing pipeline." alt="" coords="662,123,855,163"/>
-<area shape="poly" title=" " alt="" coords="2910,37,2491,39,1900,48,1592,58,1303,71,1055,88,867,111,810,125,809,120,866,105,1054,83,1303,65,1592,52,1900,43,2491,34,2910,31"/>
-<area shape="rect" href="../../d4/d8b/iot__monitoring_8cpp.html" title="IoT device monitoring and management system." alt="" coords="879,123,1073,163"/>
-<area shape="poly" title=" " alt="" coords="2911,37,2530,41,2002,52,1728,61,1472,74,1251,90,1084,111,1028,125,1026,120,1084,105,1250,85,1471,68,1728,56,2002,46,2530,36,2911,32"/>
-<area shape="rect" href="../../d7/d5c/message__bus__benchmark_8cpp.html" title=" " alt="" coords="1097,123,1319,163"/>
-<area shape="poly" title=" " alt="" coords="2911,38,2575,45,2119,59,1664,80,1475,94,1332,111,1268,125,1267,120,1332,105,1475,89,1664,75,2119,53,2575,40,2911,33"/>
-<area shape="rect" href="../../d4/dd5/microservices__orchestrator_8cpp.html" title="Microservices orchestration and service mesh implementation." alt="" coords="1344,123,1573,163"/>
-<area shape="poly" title=" " alt="" coords="2911,39,2621,48,2239,63,1861,84,1705,96,1586,111,1520,125,1519,120,1585,105,1704,91,1861,78,2239,57,2621,43,2911,34"/>
-<area shape="rect" href="../../d9/dd9/production__ready__example_8cpp.html" title="Production&#45;ready messaging system with signal handling, config, metrics, and error recovery." alt="" coords="1598,123,1829,163"/>
-<area shape="poly" title=" " alt="" coords="2911,37,2713,40,2447,51,2145,73,1992,89,1842,111,1776,125,1775,120,1841,105,1991,84,2145,67,2446,45,2713,34,2911,31"/>
-<area shape="rect" href="../../d9/d6e/advanced__features__demo_8cpp.html" title=" " alt="" coords="1853,115,2072,170"/>
-<area shape="poly" title=" " alt="" coords="2911,39,2751,44,2545,57,2315,78,2084,111,2050,118,2049,113,2084,105,2314,73,2545,51,2751,39,2911,33"/>
-<area shape="rect" href="../../d3/dee/logger__system_2examples_2basic__usage_8cpp.html" title=" " alt="" coords="2097,123,2298,163"/>
-<area shape="poly" title=" " alt="" coords="2911,41,2638,63,2474,83,2310,111,2254,125,2253,120,2309,105,2473,78,2638,58,2911,36"/>
-<area shape="rect" href="../../de/d56/distributed__logging__demo_8cpp.html" title=" " alt="" coords="2322,115,2497,170"/>
-<area shape="poly" title=" " alt="" coords="2911,46,2723,70,2615,88,2509,111,2482,118,2481,113,2507,105,2614,83,2722,65,2911,41"/>
-<area shape="rect" href="../../dd/d8a/metrics__demo_8cpp.html" title=" " alt="" coords="2521,123,2735,163"/>
-<area shape="poly" title=" " alt="" coords="2912,65,2696,125,2694,120,2911,60"/>
-<area shape="rect" href="../../d3/d47/migration__example_8cpp.html" title="Example demonstrating migration from Logger System v1 to v2." alt="" coords="2760,123,3008,163"/>
-<area shape="poly" title=" " alt="" coords="2971,72,2908,125,2905,120,2968,67"/>
-<area shape="rect" href="../../d1/dcb/security__demo_8cpp.html" title=" " alt="" coords="3033,123,3250,163"/>
-<area shape="poly" title=" " alt="" coords="3056,67,3120,120,3117,125,3053,72"/>
-<area shape="rect" href="../../d1/d87/logger__adapter_8h.html" title=" " alt="" coords="3274,115,3470,170"/>
-<area shape="poly" title=" " alt="" coords="3114,61,3263,105,3287,113,3286,118,3262,111,3112,66"/>
-<area shape="rect" href="../../d3/d30/logger_8cpp.html" title=" " alt="" coords="3494,123,3669,163"/>
-<area shape="poly" title=" " alt="" coords="3114,42,3287,67,3386,84,3483,105,3532,120,3530,125,3482,111,3385,89,3287,72,3113,48"/>
-<area shape="rect" href="../../d9/deb/integration__test_8cpp.html" title=" " alt="" coords="3693,123,3885,163"/>
-<area shape="poly" title=" " alt="" coords="3113,37,3372,59,3528,78,3682,105,3736,120,3735,125,3681,111,3527,84,3372,64,3113,42"/>
-<area shape="rect" href="../../d6/d86/adaptive__queue__sample_8cpp.html" title=" " alt="" coords="3909,115,4176,170"/>
-<area shape="poly" title=" " alt="" coords="3113,35,3462,56,3679,77,3898,105,3938,113,3937,118,3897,111,3679,82,3461,62,3113,40"/>
-<area shape="rect" href="../../d1/ddb/hazard__pointer__sample_8cpp.html" title=" " alt="" coords="4201,115,4461,170"/>
-<area shape="poly" title=" " alt="" coords="3113,32,3312,36,3579,48,3883,70,4037,86,4188,105,4229,113,4228,118,4188,111,4037,91,3882,75,3579,53,3312,42,3113,37"/>
-<area shape="rect" href="../../d6/d01/logger__sample_8cpp.html" title=" " alt="" coords="4485,115,4675,170"/>
-<area shape="poly" title=" " alt="" coords="3113,33,3410,40,3803,54,4191,75,4352,89,4474,105,4505,113,4504,118,4473,111,4351,94,4190,80,3802,59,3410,46,3113,38"/>
-<area shape="rect" href="../../d4/ddd/mpmc__queue__sample_8cpp.html" title=" " alt="" coords="4700,115,4937,170"/>
-<area shape="poly" title=" " alt="" coords="3113,33,3449,40,3904,54,4357,76,4545,89,4688,105,4727,113,4726,118,4688,111,4545,95,4357,81,3903,60,3449,46,3113,38"/>
-<area shape="rect" href="../../df/d10/node__pool__sample_8cpp.html" title=" " alt="" coords="4961,115,5177,170"/>
-<area shape="poly" title=" " alt="" coords="3113,32,3495,37,4026,49,4560,71,4782,86,4950,105,4985,113,4984,118,4949,111,4781,92,4559,76,4026,54,3495,42,3113,37"/>
-<area shape="rect" href="../../d5/de9/thread__pool__sample_8cpp.html" title=" " alt="" coords="5201,115,5441,170"/>
-<area shape="poly" title=" " alt="" coords="3113,32,3537,36,4138,48,4451,57,4745,70,4998,86,5190,105,5229,113,5228,118,5189,111,4998,91,4745,75,4451,63,4138,53,3537,42,3113,37"/>
-<area shape="rect" href="../../d0/d68/typed__job__queue__sample_8cpp.html" title=" " alt="" coords="5465,115,5740,170"/>
-<area shape="poly" title=" " alt="" coords="3114,32,3583,36,4260,48,4615,57,4949,70,5236,86,5454,105,5498,113,5497,118,5453,111,5236,91,4948,75,4615,62,4260,53,3583,42,3114,37"/>
-<area shape="rect" href="../../d4/dd6/typed__thread__pool__sample_8cpp.html" title=" " alt="" coords="5764,108,5967,177"/>
-<area shape="poly" title=" " alt="" coords="3113,33,3684,40,4508,55,5294,77,5582,90,5752,105,5764,107,5763,113,5752,111,5582,96,5293,83,4507,61,3684,46,3113,38"/>
-<area shape="rect" href="../../dd/d32/typed__thread__pool__sample__2_8cpp.html" title=" " alt="" coords="5991,108,6209,177"/>
-<area shape="poly" title=" " alt="" coords="3113,32,3726,40,4621,55,5478,77,5793,90,5979,105,5992,107,5991,113,5978,111,5793,96,5478,82,4620,60,3726,45,3113,38"/>
+<div class="center"><img src="../../d4/dcf/logger_8h__dep__incl.png" border="0" usemap="#alibraries_2logger__system_2sources_2logger_2logger_8hdep" alt=""/></div>
+<map name="alibraries_2logger__system_2sources_2logger_2logger_8hdep" id="alibraries_2logger__system_2sources_2logger_2logger_8hdep">
+<area shape="rect" title=" " alt="" coords="2705,5,2882,45"/>
+<area shape="rect" href="../../db/d5d/basic__usage__example_8cpp.html" title=" " alt="" coords="5,101,203,141"/>
+<area shape="poly" title=" " alt="" coords="2691,29,2197,31,1481,39,1104,47,750,59,445,75,215,96,174,103,173,98,214,91,445,70,750,53,1104,42,1481,33,2197,25,2691,24"/>
+<area shape="rect" href="../../d3/d95/chat__server_8cpp.html" title="Real&#45;time chat server using the messaging system." alt="" coords="227,101,421,141"/>
+<area shape="poly" title=" " alt="" coords="2691,29,2235,32,1581,41,1239,49,918,61,641,76,432,96,393,103,392,98,432,91,641,71,918,55,1239,44,1581,35,2235,26,2691,24"/>
+<area shape="rect" href="../../d4/daa/distributed__worker_8cpp.html" title="Distributed task processing system using messaging." alt="" coords="445,101,638,141"/>
+<area shape="poly" title=" " alt="" coords="2691,30,2272,33,1682,43,1086,63,837,78,650,96,611,103,610,98,649,91,837,72,1086,58,1682,38,2272,28,2691,24"/>
+<area shape="rect" href="../../db/dad/event__pipeline_8cpp.html" title="Event&#45;driven data processing pipeline." alt="" coords="662,101,855,141"/>
+<area shape="poly" title=" " alt="" coords="2691,30,2310,35,1783,46,1254,66,1034,79,867,96,828,103,827,98,866,91,1033,74,1254,60,1783,41,2310,30,2691,25"/>
+<area shape="rect" href="../../d4/d8b/iot__monitoring_8cpp.html" title="IoT device monitoring and management system." alt="" coords="879,101,1073,141"/>
+<area shape="poly" title=" " alt="" coords="2691,31,2349,37,1885,49,1423,68,1230,81,1084,96,1045,103,1044,98,1084,91,1230,76,1422,63,1885,43,2349,31,2691,25"/>
+<area shape="rect" href="../../d7/d5c/message__bus__benchmark_8cpp.html" title=" " alt="" coords="1097,101,1319,141"/>
+<area shape="poly" title=" " alt="" coords="2691,28,2449,29,2112,38,1725,58,1526,75,1332,96,1288,103,1287,98,1332,91,1526,69,1724,53,2112,32,2449,24,2691,23"/>
+<area shape="rect" href="../../d4/dd5/microservices__orchestrator_8cpp.html" title="Microservices orchestration and service mesh implementation." alt="" coords="1344,101,1573,141"/>
+<area shape="poly" title=" " alt="" coords="2691,30,2487,34,2212,44,1901,64,1741,78,1586,96,1541,103,1540,98,1585,91,1741,73,1900,58,2212,39,2487,28,2691,25"/>
+<area shape="rect" href="../../d9/dd9/production__ready__example_8cpp.html" title="Production&#45;ready messaging system with signal handling, config, metrics, and error recovery." alt="" coords="1598,101,1829,141"/>
+<area shape="poly" title=" " alt="" coords="2691,32,2315,50,2078,69,1840,96,1797,103,1796,98,1840,91,2078,64,2315,45,2690,27"/>
+<area shape="rect" href="../../dd/df2/log__level__benchmark_8cpp.html" title=" " alt="" coords="1853,93,2091,148"/>
+<area shape="poly" title=" " alt="" coords="2691,36,2424,58,2263,75,2103,96,2092,98,2091,92,2102,91,2263,70,2424,53,2690,31"/>
+<area shape="rect" href="../../d1/df7/logger__memory__benchmark_8cpp.html" title=" " alt="" coords="2115,93,2354,148"/>
+<area shape="poly" title=" " alt="" coords="2691,44,2367,96,2355,98,2354,93,2366,91,2691,39"/>
+<area shape="rect" href="../../d9/d71/logger__performance__benchmark_8cpp.html" title=" " alt="" coords="2379,93,2643,148"/>
+<area shape="poly" title=" " alt="" coords="2724,52,2591,96,2589,91,2723,47"/>
+<area shape="rect" href="../../df/d5d/logger__throughput__benchmark_8cpp.html" title=" " alt="" coords="2667,93,2919,148"/>
+<area shape="poly" title=" " alt="" coords="2796,59,2796,93,2791,93,2791,59"/>
+<area shape="rect" href="../../d2/db1/multithreaded__logging__benchmark_8cpp.html" title=" " alt="" coords="2944,93,3224,148"/>
+<area shape="poly" title=" " alt="" coords="2866,47,3003,91,3001,96,2864,52"/>
+<area shape="rect" href="../../d7/d4c/sync__vs__async__benchmark_8cpp.html" title=" " alt="" coords="3249,93,3487,148"/>
+<area shape="poly" title=" " alt="" coords="2896,38,3236,91,3249,93,3248,98,3236,96,2895,43"/>
+<area shape="rect" href="../../d9/d6e/advanced__features__demo_8cpp.html" title=" " alt="" coords="3511,93,3721,148"/>
+<area shape="poly" title=" " alt="" coords="2896,30,3170,51,3335,68,3500,91,3512,93,3511,98,3500,96,3335,73,3169,56,2896,35"/>
+<area shape="rect" href="../../d6/d15/basic__usage_8cpp.html" title=" " alt="" coords="3745,101,3937,141"/>
+<area shape="poly" title=" " alt="" coords="2896,26,3057,31,3266,42,3500,61,3734,91,3771,98,3770,103,3733,96,3499,67,3266,48,3057,36,2896,31"/>
+<area shape="rect" href="../../d9/d11/logger__system_2samples_2crash__protection_2main_8cpp.html" title="Logger crash protection demonstration." alt="" coords="3962,93,4155,148"/>
+<area shape="poly" title=" " alt="" coords="2896,24,3092,27,3354,36,3651,57,3802,72,3950,91,3962,93,3961,98,3949,96,3801,77,3650,62,3354,42,3092,32,2896,29"/>
+<area shape="rect" href="../../de/d56/distributed__logging__demo_8cpp.html" title=" " alt="" coords="4180,93,4391,148"/>
+<area shape="poly" title=" " alt="" coords="2896,23,3125,24,3441,33,3802,53,3987,70,4168,91,4180,92,4180,98,4168,96,3987,75,3802,59,3441,38,3125,30,2896,28"/>
+<area shape="rect" href="../../dd/d8a/metrics__demo_8cpp.html" title=" " alt="" coords="4415,101,4620,141"/>
+<area shape="poly" title=" " alt="" coords="2896,26,3654,46,4087,65,4267,77,4403,91,4444,98,4443,103,4402,96,4266,82,4087,70,3654,51,2896,31"/>
+<area shape="rect" href="../../d1/dcb/security__demo_8cpp.html" title=" " alt="" coords="4644,101,4852,141"/>
+<area shape="poly" title=" " alt="" coords="2896,25,3261,31,3762,43,4265,63,4474,75,4632,91,4675,98,4674,103,4632,96,4473,81,4264,68,3762,48,3261,36,2896,31"/>
+<area shape="rect" href="../../d3/d30/logger_8cpp.html" title=" " alt="" coords="4876,101,5068,141"/>
+<area shape="poly" title=" " alt="" coords="2896,25,3302,29,3871,39,4445,59,4684,73,4864,91,4904,98,4903,103,4864,96,4683,78,4444,64,3871,44,3302,34,2896,30"/>
+<area shape="rect" href="../../d9/deb/integration__test_8cpp.html" title=" " alt="" coords="5092,101,5284,141"/>
+<area shape="poly" title=" " alt="" coords="2896,24,3340,27,3972,36,4302,45,4612,56,4879,71,5080,91,5120,98,5119,103,5080,96,4878,77,4611,61,4302,50,3971,42,3340,32,2896,30"/>
+<area shape="rect" href="../../d4/d83/logger__test_8cpp.html" title=" " alt="" coords="5309,93,5483,148"/>
+<area shape="poly" title=" " alt="" coords="2896,24,3376,24,4071,32,4436,40,4778,52,5073,68,5296,91,5309,93,5308,98,5296,96,5073,74,4778,57,4435,45,4071,37,3376,30,2896,29"/>
 </map>
 </div>
 </div>
@@ -247,65 +195,21 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dd5/classkcenon_1_1logger_1_1logger.html">kcenon::logger::logger</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main logger implementation that implements thread_system's logger_interface.  <a href="../../dd/dd5/classkcenon_1_1logger_1_1logger.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d2e/classlogger__module_1_1logger.html">logger_module::logger</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main logger implementation that implements thread_system's logger_interface.  <a href="../../da/d2e/classlogger__module_1_1logger.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:d9/d03/namespacekcenon" id="r_d9/d03/namespacekcenon"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d03/namespacekcenon.html">kcenon</a></td></tr>
+<tr class="memitem:dc/d2b/namespacelogger__module" id="r_dc/d2b/namespacelogger__module"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d2b/namespacelogger__module.html">logger_module</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:da/d02/namespacekcenon_1_1logger" id="r_da/d02/namespacekcenon_1_1logger"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html">kcenon::logger</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:acdaf23732dcef4f4fe25976ae15baf70" id="r_acdaf23732dcef4f4fe25976ae15baf70"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#acdaf23732dcef4f4fe25976ae15baf70">kcenon::logger::log_level</a> = <a class="el" href="../../da/d11/namespacelogger__system.html#ad8e3c64f7744daa2d80e68c884e342d1">logger_system::log_level</a></td></tr>
-<tr class="separator:acdaf23732dcef4f4fe25976ae15baf70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9ec28cc11456fa093bc51b43eb242fd" id="r_ac9ec28cc11456fa093bc51b43eb242fd"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#ac9ec28cc11456fa093bc51b43eb242fd">kcenon::logger::logger_metrics</a> = <a class="el" href="../../da/d5e/structkcenon_1_1logger_1_1metrics_1_1logger__performance__stats.html">metrics::logger_performance_stats</a></td></tr>
-<tr class="separator:ac9ec28cc11456fa093bc51b43eb242fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace0c3551d9b46d3bc6736aec9e4131b9" id="r_ace0c3551d9b46d3bc6736aec9e4131b9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#ace0c3551d9b46d3bc6736aec9e4131b9">kcenon::logger::performance_metrics</a> = <a class="el" href="../../da/d5e/structkcenon_1_1logger_1_1metrics_1_1logger__performance__stats.html">metrics::logger_performance_stats</a></td></tr>
-<tr class="separator:ace0c3551d9b46d3bc6736aec9e4131b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7a976cc460ec3b4953baaeed4b47018" id="r_ae7a976cc460ec3b4953baaeed4b47018"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#ae7a976cc460ec3b4953baaeed4b47018">kcenon::logger::monitoring_metrics</a> = <a class="el" href="../../da/dc1/structkcenon_1_1logger_1_1monitoring_1_1monitoring__data.html">monitoring::monitoring_data</a></td></tr>
-<tr class="separator:ae7a976cc460ec3b4953baaeed4b47018"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1f148089d3294b336f5928b91793045" id="r_aa1f148089d3294b336f5928b91793045"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#aa1f148089d3294b336f5928b91793045">kcenon::logger::monitoring_interface</a> = <a class="el" href="../../d0/d66/classkcenon_1_1logger_1_1monitoring_1_1monitoring__interface.html">monitoring::monitoring_interface</a></td></tr>
-<tr class="separator:aa1f148089d3294b336f5928b91793045"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbbda3a208bdf55d02dc776cc7c23554" id="r_afbbda3a208bdf55d02dc776cc7c23554"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#afbbda3a208bdf55d02dc776cc7c23554">kcenon::logger::di_container_interface</a> = <a class="el" href="../../d9/d6d/classkcenon_1_1logger_1_1di_1_1di__container__interface.html">di::di_container_interface</a></td></tr>
-<tr class="separator:afbbda3a208bdf55d02dc776cc7c23554"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae278ad6e7c874e218f83133f9d342b22" id="r_ae278ad6e7c874e218f83133f9d342b22"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#ae278ad6e7c874e218f83133f9d342b22">kcenon::logger::di_container_factory</a> = <a class="el" href="../../d3/da0/classkcenon_1_1logger_1_1di_1_1di__container__factory.html">di::di_container_factory</a></td></tr>
-<tr class="separator:ae278ad6e7c874e218f83133f9d342b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71d0f0ea943fa829fab714a3b1053666" id="r_a71d0f0ea943fa829fab714a3b1053666"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#a71d0f0ea943fa829fab714a3b1053666">kcenon::logger::monitoring_factory</a> = <a class="el" href="../../d8/dcc/classkcenon_1_1logger_1_1monitoring_1_1monitoring__factory.html">monitoring::monitoring_factory</a></td></tr>
-<tr class="separator:a71d0f0ea943fa829fab714a3b1053666"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a3d04613d2854b686866a52f7d8407423" id="r_a3d04613d2854b686866a52f7d8407423"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#a3d04613d2854b686866a52f7d8407423">kcenon::logger::metric_type</a> { <br />
-&#160;&#160;<a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#a3d04613d2854b686866a52f7d8407423a37e1a9c3ba6042b79266687d13f3c5ff">kcenon::logger::gauge</a>
-, <a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#a3d04613d2854b686866a52f7d8407423a886bb73b3156b0aa24aac99d2de0b238">kcenon::logger::counter</a>
-, <a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#a3d04613d2854b686866a52f7d8407423abdfb01f3ea1f6351d0d53d79625c347f">kcenon::logger::histogram</a>
-, <a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#a3d04613d2854b686866a52f7d8407423a886bb73b3156b0aa24aac99d2de0b238">kcenon::logger::counter</a>
-, <br />
-&#160;&#160;<a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#a3d04613d2854b686866a52f7d8407423a37e1a9c3ba6042b79266687d13f3c5ff">kcenon::logger::gauge</a>
-, <a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#a3d04613d2854b686866a52f7d8407423abdfb01f3ea1f6351d0d53d79625c347f">kcenon::logger::histogram</a>
-, <a class="el" href="../../da/d02/namespacekcenon_1_1logger.html#a3d04613d2854b686866a52f7d8407423aa80da1282f2c775bbc5f2c92c836968b">kcenon::logger::summary</a>
-<br />
- }</td></tr>
-<tr class="separator:a3d04613d2854b686866a52f7d8407423"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>High-performance, thread-safe logging system with asynchronous capabilities. </p>
-<dl class="section author"><dt>Author</dt><dd>🍀☀🌕🌥 🌊 </dd></dl>
-<dl class="section since"><dt>Since</dt><dd>1.0.0</dd></dl>
-<p>This file defines the main logger class that provides a comprehensive logging solution with support for multiple output destinations, asynchronous processing, metrics collection, and dependency injection. The logger is designed to be thread-safe and supports both synchronous and asynchronous operation modes.</p>
-<dl class="section note"><dt>Note</dt><dd>The logger integrates with the thread_system when USE_THREAD_SYSTEM is defined, providing seamless compatibility with the broader thread management infrastructure. </dd></dl>
-
-<p class="definition">Definition in file <a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>.</p>
-</div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_485cf39311ea0bca9a7e4e1d44f82346.html">include</a></li><li class="navelem"><a class="el" href="../../dir_d3549f3861a755c5be8e37f56f0b863f.html">kcenon</a></li><li class="navelem"><a class="el" href="../../dir_8f70cce443a447233fd6a17485a2ebf9.html">logger</a></li><li class="navelem"><a class="el" href="../../dir_87185a76c1ec37eea418405b1e3ab3bc.html">core</a></li><li class="navelem"><a class="el" href="../../d1/d8c/logger_8h.html">logger.h</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_159ca4044b70767904d058f73f132e19.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_401468f6de0b7ebb423d61aa28df8bb9.html">logger</a></li><li class="navelem"><a class="el" href="../../d1/d8c/logger_8h.html">logger.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

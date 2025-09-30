@@ -1,11 +1,14 @@
 <map id="simple_test_job" name="simple_test_job">
-<area shape="rect" id="Node000001" title=" " alt="" coords="25,272,150,297"/>
-<area shape="rect" id="Node000002" href="$d6/df3/classkcenon_1_1thread_1_1typed__job__t.html" title=" " alt="" coords="5,183,169,223"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,236,83,272,78,272,76,236"/>
-<area shape="poly" id="edge5_Node000001_Node000002" title=" " alt="" coords="99,236,97,272,91,272,94,236"/>
-<area shape="rect" id="Node000003" href="$dc/df7/classkcenon_1_1thread_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="9,5,155,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="85,44,89,183,84,183,80,45"/>
-<area shape="rect" id="Node000004" href="$d6/df3/classkcenon_1_1thread_1_1typed__job__t.html" title="Represents a job that carries a specific priority level." alt="" coords="104,80,268,120"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="109,37,163,78,160,82,106,41"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="160,132,108,184,104,181,156,128"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="42,272,167,297"/>
+<area shape="rect" id="Node000002" href="$d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html" title=" " alt="" coords="5,183,204,223"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,236,107,272,102,272,102,236"/>
+<area shape="rect" id="Node000003" href="$d8/d42/classthread__module_1_1job.html" title="Represents a unit of work (task) to be executed, typically by a job queue." alt="" coords="71,5,219,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="129,44,108,115,100,183,95,182,103,113,124,42"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="142,45,111,183,106,182,137,43"/>
+<area shape="poly" id="edge4_Node000002_Node000003" title=" " alt="" coords="155,45,144,116,123,183,118,182,139,114,149,44"/>
+<area shape="rect" id="Node000004" href="$d8/d4f/classtyped__thread__pool__module_1_1typed__job__t.html" title="Represents a job that carries a specific priority level." alt="" coords="165,80,364,120"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="161,37,222,78,219,82,158,42"/>
+<area shape="poly" id="edge7_Node000004_Node000003" title=" " alt="" coords="175,36,238,78,235,82,172,41"/>
+<area shape="poly" id="edge8_Node000004_Node000003" title=" " alt="" coords="189,35,253,78,250,82,186,40"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="225,129,136,185,133,180,222,125"/>
 </map>

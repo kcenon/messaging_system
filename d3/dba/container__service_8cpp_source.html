@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('d3/dba/container__service_8cpp_source.
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            state_ = <a class="code hl_enumvalue" href="../../d8/d37/namespacekcenon_1_1messaging_1_1services.html#ae8981c5ac75bd2103225b8b01a570477a75101dcdfc88455bcafc9e53e0b06689">service_state::running</a>;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp;) {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            state_ = <a class="code hl_enumvalue" href="../../d8/d37/namespacekcenon_1_1messaging_1_1services.html#ae8981c5ac75bd2103225b8b01a570477acb5e100e5a9a3e7f6d1fd97512215282">service_state::error</a>;</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        }</div>
@@ -210,7 +210,7 @@ $(document).ready(function(){initNavTree('d3/dba/container__service_8cpp_source.
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#a9f375f246bc3655c03d356fe91423d1b">serializations</a>.fetch_add(1);</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp;) {</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#a236ad603e50852108e69f72accdf8270">errors</a>.fetch_add(1);</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        }</div>
@@ -219,7 +219,7 @@ $(document).ready(function(){initNavTree('d3/dba/container__service_8cpp_source.
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
 <div class="foldopen" id="foldopen00106" data-start="{" data-end="}">
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="../../db/daf/classkcenon_1_1messaging_1_1services_1_1container_1_1container__service.html#ad5bdc35269ec2635d6b416c601520b91">  106</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="../../db/daf/classkcenon_1_1messaging_1_1services_1_1container_1_1container__service.html#ad5bdc35269ec2635d6b416c601520b91">container_service::deserialize_payload</a>(<span class="keyword">const</span> std::vector&lt;uint8_t&gt;&amp; input,</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                                               <a class="code hl_struct" href="../../d9/d87/structkcenon_1_1messaging_1_1core_1_1message__payload.html">core::message_payload</a>&amp;) {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                                               <a class="code hl_struct" href="../../d9/d87/structkcenon_1_1messaging_1_1core_1_1message__payload.html">core::message_payload</a>&amp; payload) {</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordflow">try</span> {</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <span class="comment">// Simplified deserialization</span></div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            std::string data(input.begin(), input.end());</div>
@@ -227,7 +227,7 @@ $(document).ready(function(){initNavTree('d3/dba/container__service_8cpp_source.
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#a7cf1b90471d8d9c11511984f88f8d399">deserializations</a>.fetch_add(1);</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp;) {</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#a236ad603e50852108e69f72accdf8270">errors</a>.fetch_add(1);</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        }</div>
@@ -250,7 +250,7 @@ $(document).ready(function(){initNavTree('d3/dba/container__service_8cpp_source.
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#add7b743a1882716d8cce6bcb079441f2">validations</a>.fetch_add(1);</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            <span class="keywordflow">return</span> valid;</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp;) {</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#a236ad603e50852108e69f72accdf8270">errors</a>.fetch_add(1);</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        }</div>
@@ -272,7 +272,7 @@ $(document).ready(function(){initNavTree('d3/dba/container__service_8cpp_source.
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#ab05c12467b47e3284a712d1200a19ce3">compressions</a>.fetch_add(1);</div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp;) {</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#a236ad603e50852108e69f72accdf8270">errors</a>.fetch_add(1);</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        }</div>
@@ -286,34 +286,34 @@ $(document).ready(function(){initNavTree('d3/dba/container__service_8cpp_source.
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            <span class="comment">// Dummy decompression: just copy for now</span></div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            output = input;</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp;) {</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#a236ad603e50852108e69f72accdf8270">errors</a>.fetch_add(1);</div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        }</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    }</div>
 </div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordtype">void</span> container_service::process_serialize_request(<span class="keyword">const</span> <a class="code hl_class" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a>&amp;) {</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordtype">void</span> container_service::process_serialize_request(<span class="keyword">const</span> <a class="code hl_class" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a>&amp; msg) {</div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        <span class="comment">// Implementation would extract payload from message and serialize it</span></div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#a9f375f246bc3655c03d356fe91423d1b">serializations</a>.fetch_add(1);</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    }</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <span class="keywordtype">void</span> container_service::process_deserialize_request(<span class="keyword">const</span> <a class="code hl_class" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a>&amp;) {</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <span class="keywordtype">void</span> container_service::process_deserialize_request(<span class="keyword">const</span> <a class="code hl_class" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a>&amp; msg) {</div>
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        <span class="comment">// Implementation would extract binary data and deserialize it</span></div>
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#a7cf1b90471d8d9c11511984f88f8d399">deserializations</a>.fetch_add(1);</div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    }</div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordtype">void</span> container_service::process_validate_request(<span class="keyword">const</span> <a class="code hl_class" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a>&amp;) {</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordtype">void</span> container_service::process_validate_request(<span class="keyword">const</span> <a class="code hl_class" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">core::message</a>&amp; msg) {</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="comment">// Implementation would validate the message payload</span></div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#add7b743a1882716d8cce6bcb079441f2">validations</a>.fetch_add(1);</div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    }</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="keywordtype">void</span> container_service::process_compress_request(<span class="keyword">const</span> core::message&amp;) {</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="keywordtype">void</span> container_service::process_compress_request(<span class="keyword">const</span> core::message&amp; msg) {</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <span class="comment">// Implementation would compress the message data</span></div>
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#ab05c12467b47e3284a712d1200a19ce3">compressions</a>.fetch_add(1);</div>
 <div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    }</div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <span class="keywordtype">void</span> container_service::process_decompress_request(<span class="keyword">const</span> core::message&amp;) {</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <span class="keywordtype">void</span> container_service::process_decompress_request(<span class="keyword">const</span> core::message&amp; msg) {</div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="comment">// Implementation would decompress the message data</span></div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        stats_.<a class="code hl_variable" href="../../d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#ab05c12467b47e3284a712d1200a19ce3">compressions</a>.fetch_add(1);</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    }</div>

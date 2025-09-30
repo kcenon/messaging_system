@@ -1,9 +1,0 @@
-<map id="libraries/monitoring_system/include/monitoring/tracing/distributed_tracer.h" name="libraries/monitoring_system/include/monitoring/tracing/distributed_tracer.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="257,5,460,60"/>
-<area shape="rect" id="Node000002" href="$d4/d6c/distributed__tracing__example_8cpp.html" title="Example demonstrating distributed tracing across services." alt="" coords="5,108,224,163"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="284,68,179,110,177,105,282,63"/>
-<area shape="rect" id="Node000003" href="$d1/d9b/test__integration__e2e_8cpp.html" title="End&#45;to&#45;end integration tests for the monitoring system." alt="" coords="249,108,469,163"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="361,74,361,108,356,108,356,74"/>
-<area shape="rect" id="Node000004" href="$de/da5/test__stress__performance_8cpp.html" title="Stress testing for the monitoring system." alt="" coords="493,108,681,163"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="432,63,528,106,526,110,429,68"/>
-</map>

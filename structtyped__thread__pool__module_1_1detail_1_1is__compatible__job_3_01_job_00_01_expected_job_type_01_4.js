@@ -1,4 +1,0 @@
-var structtyped__thread__pool__module_1_1detail_1_1is__compatible__job_3_01_job_00_01_expected_job_type_01_4 =
-[
-    [ "value", "structtyped__thread__pool__module_1_1detail_1_1is__compatible__job_3_01_job_00_01_expected_job_type_01_4.html#af1f9368682565f1a1d78b68d7e0b1169", null ]
-];

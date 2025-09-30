@@ -93,24 +93,23 @@ $(document).ready(function(){initNavTree('d7/df4/md_libraries_2thread__system_2C
   <div class="headertitle"><div class="title">Changelog</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md2707"></a> All notable changes to the Thread System project will be documented in this file.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md780"></a> All notable changes to the Thread System project will be documented in this file.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h1><a class="anchor" id="autotoc_md2708"></a>
-[Unreleased] - 2025-09-13</h1>
-<p>Note: No official releases have been published yet. All entries below are pre-release milestones under Unreleased.</p>
-<h2><a class="anchor" id="autotoc_md2709"></a>
+<h1><a class="anchor" id="autotoc_md781"></a>
+[Unreleased] - 2025-07-25</h1>
+<h2><a class="anchor" id="autotoc_md782"></a>
 Changed</h2>
 <ul>
 <li><b>Major Modularization</b> 🏗️<ul>
-<li>Moved logger module to separate project (<a href="https://github.com/kcenon/logger_system">https://github.com/kcenon/logger_system</a>)</li>
-<li>Moved monitoring module to separate project (<a href="https://github.com/kcenon/monitoring_system">https://github.com/kcenon/monitoring_system</a>)</li>
+<li>Moved logger module to separate project (<a href="https://github.com/kcenon/logger">https://github.com/kcenon/logger</a>)</li>
+<li>Moved monitoring module to separate project (<a href="https://github.com/kcenon/monitoring">https://github.com/kcenon/monitoring</a>)</li>
 <li>Removed ~8,700+ lines of code from core thread system</li>
 <li>Core thread system now ~2,700 lines focused purely on threading</li>
 <li>Created interface-based architecture for external module integration</li>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2710"></a>
+<h2><a class="anchor" id="autotoc_md783"></a>
 Removed</h2>
 <ul>
 <li><b>Logger Module</b> 📝<ul>
@@ -136,7 +135,7 @@ Removed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2711"></a>
+<h2><a class="anchor" id="autotoc_md784"></a>
 Added</h2>
 <ul>
 <li><b>Interface-Based Design</b> 🔌<ul>
@@ -146,51 +145,22 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2712"></a>
+<h2><a class="anchor" id="autotoc_md785"></a>
 Documentation</h2>
 <ul>
 <li><b>Updated All Documentation</b> 📚<ul>
 <li>README.md reflects modular architecture</li>
 <li>api-reference.md focuses on core APIs</li>
 <li>architecture.md describes new modular design</li>
-<li><a class="el" href="../../d6/d69/USER__GUIDE_8md.html">USER_GUIDE.md</a> enhanced with detailed build instructions and complete sample listing</li>
-<li><b>NEW: PLATFORM_BUILD_GUIDE.md</b> - Comprehensive platform-specific build instructions</li>
-<li>dependency_compatibility_matrix.md updated with latest dependency versions</li>
-<li><a class="el" href="../../d2/de3/MIGRATION_8md.html">MIGRATION.md</a> updated with current status (2025-09-13)</li>
-<li>INTERFACES.md verified for consistency with current implementation</li>
-<li>Performance benchmarks updated to 2025-09-13</li>
-<li>samples/ demonstrate both core-only and with-modules usage</li>
-<li>All documentation synchronized with current codebase structure</li>
+<li>getting-started.md shows usage without external dependencies</li>
+<li><a class="el" href="../../d2/d4b/examples_8md.html">examples.md</a> demonstrates both core-only and with-modules usage</li>
+<li>performance.md updated with latest benchmarks</li>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2713"></a>
-[Unreleased: Milestone 2.1.0] - 2025-09-06</h1>
-<h2><a class="anchor" id="autotoc_md2714"></a>
-Added</h2>
-<ul>
-<li>Interfaces: <code>executor_interface</code>, <code>scheduler_interface</code>, <code>monitorable_interface</code></li>
-<li><code>service_registry</code> (header-only) for lightweight DI</li>
-<li>Interface tests and service registry sample</li>
-<li>Docs: <code>docs/INTERFACES.md</code>, <code><a class="el" href="../../d6/d69/USER__GUIDE_8md.html">docs/USER_GUIDE.md</a></code>, <code><a class="el" href="../../d6/da2/QUALITY_8md.html">docs/QUALITY.md</a></code>, <code>docs/COVERAGE.md</code>, module READMEs</li>
-<li>CMake: docs target (Doxygen), sanitizer and clang-tidy options</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md2715"></a>
-Changed</h2>
-<ul>
-<li><code>thread_pool</code>, <code>typed_thread_pool</code> implement <code>executor_interface</code></li>
-<li><code>job_queue</code> implements <code>scheduler_interface</code></li>
-<li>CMake modular structure and install rules updated for new layout</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md2716"></a>
-Testing</h2>
-<ul>
-<li>Added error-path tests for job_queue, thread_pool, typed_thread_pool</li>
-<li>Wired sanitizers to unit test targets</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md2717"></a>
-[Unreleased: Milestone 2.0.0] - 2025-07-22</h1>
-<h2><a class="anchor" id="autotoc_md2718"></a>
+<h1><a class="anchor" id="autotoc_md786"></a>
+[2.0.0] - 2025-07-22</h1>
+<h2><a class="anchor" id="autotoc_md787"></a>
 Added</h2>
 <ul>
 <li><b>Memory Optimization Improvements</b> 💾<ul>
@@ -209,7 +179,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2719"></a>
+<h2><a class="anchor" id="autotoc_md788"></a>
 Changed</h2>
 <ul>
 <li><b>Memory Management</b> 🔧<ul>
@@ -219,9 +189,9 @@ Changed</h2>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2720"></a>
-[Unreleased: 2025-07-09]</h1>
-<h2><a class="anchor" id="autotoc_md2721"></a>
+<h1><a class="anchor" id="autotoc_md789"></a>
+[Previous] - 2025-07-09</h1>
+<h2><a class="anchor" id="autotoc_md790"></a>
 Changed</h2>
 <ul>
 <li><b>Major Code Cleanup</b> 🧹<ul>
@@ -229,13 +199,13 @@ Changed</h2>
 <li>Eliminated duplicate job_queue files from internal directories</li>
 <li>Removed duplicate typed_job_queue implementations</li>
 <li>Removed unused builder pattern (thread_pool_builder, pool_factory)</li>
-<li>Removed unused C++20 coroutine implementation (<a class="el" href="../../db/da2/structtask.html#af4e0c9c56562acf2c1e7129f60f66d99">task.h</a> - 867 lines)</li>
+<li>Removed unused C++20 coroutine implementation (task.h - 867 lines)</li>
 <li>Created formatter_macros.h to eliminate formatter duplication</li>
 <li>Simplified architecture while maintaining all performance capabilities</li>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2722"></a>
+<h2><a class="anchor" id="autotoc_md791"></a>
 Added</h2>
 <ul>
 <li><b>Code Quality Improvements</b> ✨<ul>
@@ -245,22 +215,22 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2723"></a>
+<h2><a class="anchor" id="autotoc_md792"></a>
 Documentation</h2>
 <ul>
 <li><b>Complete Documentation Update</b> 📚<ul>
 <li>Updated README.md to reflect removed components</li>
 <li>Rewrote api-reference.md to match current codebase</li>
 <li>Updated architecture.md with cleaner structure</li>
-<li>Updated <a class="el" href="../../d6/d69/USER__GUIDE_8md.html">USER_GUIDE.md</a> examples</li>
+<li>Updated getting-started.md examples</li>
 <li>Updated performance.md to focus on adaptive queues</li>
 <li>All references to removed components cleaned up</li>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2724"></a>
-[Unreleased: 2025-06-30]</h1>
-<h2><a class="anchor" id="autotoc_md2725"></a>
+<h1><a class="anchor" id="autotoc_md793"></a>
+[Previous Release] - 2025-06-30</h1>
+<h2><a class="anchor" id="autotoc_md794"></a>
 Fixed</h2>
 <ul>
 <li><b>Test Stability Improvements</b> 🔧<ul>
@@ -271,7 +241,7 @@ Fixed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2726"></a>
+<h2><a class="anchor" id="autotoc_md795"></a>
 Added</h2>
 <ul>
 <li><b>Code Quality Analysis</b> 📊<ul>
@@ -282,7 +252,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2727"></a>
+<h2><a class="anchor" id="autotoc_md796"></a>
 Changed</h2>
 <ul>
 <li><b>Build System Reliability</b> ⚡<ul>
@@ -293,7 +263,7 @@ Changed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2728"></a>
+<h2><a class="anchor" id="autotoc_md797"></a>
 Removed</h2>
 <ul>
 <li><b>Lock-Free System Cleanup</b> 🧹<ul>
@@ -308,9 +278,9 @@ Removed</h2>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2729"></a>
-[Unreleased: 2025-06-29]</h1>
-<h2><a class="anchor" id="autotoc_md2730"></a>
+<h1><a class="anchor" id="autotoc_md798"></a>
+[Previous Release] - 2025-06-29</h1>
+<h2><a class="anchor" id="autotoc_md799"></a>
 Added</h2>
 <ul>
 <li><b>Complete Lock-Free Thread Pool System</b> 🆕<ul>
@@ -369,7 +339,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2731"></a>
+<h2><a class="anchor" id="autotoc_md800"></a>
 Changed</h2>
 <ul>
 <li><b>BREAKING</b>: Renamed <code>priority_thread_pool</code> to <code>typed_thread_pool</code> to better reflect the job type-based scheduling paradigm</li>
@@ -410,7 +380,7 @@ Changed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2732"></a>
+<h2><a class="anchor" id="autotoc_md801"></a>
 Fixed</h2>
 <ul>
 <li>Thread safety improvements in typed job queue</li>
@@ -420,9 +390,9 @@ Fixed</h2>
 <li>Thread-local storage cleanup segmentation faults</li>
 <li>All disabled tests now enabled and passing</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2733"></a>
-[Unreleased: Initial] - 2024-01-15</h1>
-<h2><a class="anchor" id="autotoc_md2734"></a>
+<h1><a class="anchor" id="autotoc_md802"></a>
+[1.0.0] - 2024-01-15</h1>
+<h2><a class="anchor" id="autotoc_md803"></a>
 Added</h2>
 <ul>
 <li>Initial release of Thread System framework</li>
@@ -433,7 +403,7 @@ Added</h2>
 <li>Cross-platform build system with vcpkg integration</li>
 <li>Extensive unit test suite with Google Test</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2735"></a>
+<h2><a class="anchor" id="autotoc_md804"></a>
 Core Components</h2>
 <ul>
 <li><b>Thread Base Module</b>: Foundation for all threading operations</li>
@@ -441,16 +411,16 @@ Core Components</h2>
 <li><b>Thread Pool System</b>: Efficient worker thread management</li>
 <li><b>Priority Thread Pool System</b>: Advanced priority-based scheduling (renamed to Typed Thread Pool in later versions)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2736"></a>
+<h2><a class="anchor" id="autotoc_md805"></a>
 Supported Platforms</h2>
 <ul>
-<li>Windows (MSVC 2019+, MSYS2)</li>
+<li>Windows (MSVC 2019+, MinGW, MSYS2)</li>
 <li>Linux (GCC 9+, Clang 10+)</li>
 <li>macOS (Clang 10+)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2737"></a>
+<h2><a class="anchor" id="autotoc_md806"></a>
 Performance Characteristics</h2>
-<h3><a class="anchor" id="autotoc_md2738"></a>
+<h3><a class="anchor" id="autotoc_md807"></a>
 Latest Performance Metrics (Apple M1, 8-core @ 3.2GHz, 16GB, macOS Sonoma)</h3>
 <p><b>Core Performance Improvements:</b></p><ul>
 <li><b>Peak Throughput</b>: Up to 15.2M jobs/second (lock-free, 1 worker, empty jobs)</li>
@@ -480,10 +450,10 @@ Latest Performance Metrics (Apple M1, 8-core @ 3.2GHz, 16GB, macOS Sonoma)</h3>
 <li>Hazard pointer overhead: &lt;5% for memory safety guarantees</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md2740"></a>
+<h1><a class="anchor" id="autotoc_md809"></a>
 Contributing</h1>
-<p>Please read <a class="el" href="../../d9/d8a/monitoring__system_2docs_2CONTRIBUTING_8md.html">CONTRIBUTING.md</a> for details on our code of conduct and the process for submitting pull requests.</p>
-<h1><a class="anchor" id="autotoc_md2741"></a>
+<p>Please read <a class="el" href="../../d1/df7/monitoring__system_2CONTRIBUTING_8md.html">CONTRIBUTING.md</a> for details on our code of conduct and the process for submitting pull requests.</p>
+<h1><a class="anchor" id="autotoc_md810"></a>
 License</h1>
 <p>This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details. </p>
 </div></div><!-- contents -->

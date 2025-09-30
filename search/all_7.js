@@ -1,27 +1,7 @@
 var searchData=
 [
-  ['7_0',['7',['../db/dc0/md_libraries_2network__system_2docs_2NETWORK__SYSTEM__SEPARATION__PLAN.html#autotoc_md2339',1,'Day 6-7'],['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md105',1,'Milestone 4: Native Integration (Week 6-7)'],['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md214',1,'Week 1: Foundation Setup (Feb 1-7)']]],
-  ['7_200_20phase_205_20p4_20ci_20cd_20monitoring_20dashboard_202025_2009_2010_1',['[2.7.0] - Phase 5 P4 CI/CD Monitoring Dashboard (2025-09-10)',['../d7/dee/md_libraries_2logger__system_2docs_2CHANGELOG.html#autotoc_md1061',1,'']]],
-  ['7_201_20performance_20metrics_2',['7.1 Performance Metrics',['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md118',1,'']]],
-  ['7_201_20risk_20assessment_3',['7.1 Risk Assessment',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md178',1,'']]],
-  ['7_201_20testing_20strategy_4',['7.1 Testing Strategy',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md237',1,'']]],
-  ['7_2013_5',['Week 6: Optimization (Mar 7-13)',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md219',1,'']]],
-  ['7_202_20code_20review_20process_6',['7.2 Code Review Process',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md238',1,'']]],
-  ['7_202_20quality_20metrics_7',['7.2 Quality Metrics',['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md119',1,'']]],
-  ['7_202_20rollback_20plan_8',['7.2 Rollback Plan',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md179',1,'']]],
-  ['7_203_20business_20metrics_9',['7.3 Business Metrics',['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md120',1,'']]],
-  ['7_203_20definition_20of_20done_10',['7.3 Definition of Done',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md239',1,'']]],
-  ['7_20circuit_20breaker_20issues_11',['7. Circuit Breaker Issues',['../d6/dba/md_libraries_2monitoring__system_2docs_2TROUBLESHOOTING.html#autotoc_md1936',1,'']]],
-  ['7_20days_12',['Build Failures (Last 7 Days)',['../d7/d59/md_libraries_2logger__system_2docs_2advanced_2CI__CD__DASHBOARD.html#autotoc_md908',1,'']]],
-  ['7_20execution_20plan_13',['7. Execution Plan',['../d0/df8/md_libraries_2thread__system_2docs_2DESIGN__IMPROVEMENTS.html#autotoc_md2918',1,'']]],
-  ['7_20message_20bus_20benchmark_20tt_20message_5fbus_5fbenchmark_20cpp_20tt_14',['7. Message Bus Benchmark (&lt;tt&gt;message_bus_benchmark.cpp&lt;/tt&gt;)',['../index.html#autotoc_md29',1,'']]],
-  ['7_20proxy_20pattern_15',['7. Proxy Pattern',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md3744',1,'']]],
-  ['7_20quality_20assurance_20plan_16',['7. Quality Assurance Plan',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md236',1,'']]],
-  ['7_20risk_20analysis_20minimal_20approach_17',['7. Risk Analysis (Minimal Approach)',['../d9/d46/md_libraries_2container__system_2docs_2grpc__minimal__integration__plan.html#autotoc_md177',1,'']]],
-  ['7_20strong_20event_5fpipeline_20cpp_20strong_18',['7. &lt;strong&gt;event_pipeline.cpp&lt;/strong&gt;',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md44',1,'']]],
-  ['7_20strong_20throughput_5fdetailed_5fbenchmark_20cpp_20strong_19',['7 strong throughput_detailed_benchmark cpp strong',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/benchmarks/README.md#autotoc_md2695',1,'7. &lt;strong&gt;throughput_detailed_benchmark.cpp&lt;/strong&gt;'],['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/tests/benchmarks/README.md#autotoc_md3494',1,'7. &lt;strong&gt;throughput_detailed_benchmark.cpp&lt;/strong&gt;']]],
-  ['7_20success_20metrics_20',['7. Success Metrics',['../db/ddf/md_libraries_2container__system_2docs_2grpc__integration__proposal.html#autotoc_md117',1,'']]],
-  ['7_20troubleshooting_21',['7. Troubleshooting',['../de/d88/md_libraries_2monitoring__system_2docs_2guides_2TUTORIAL.html#autotoc_md1727',1,'']]],
-  ['7_3a_20namespace_20and_20include_20path_20updates_22',['Day 6-7: Namespace and Include Path Updates',['../d5/d00/md_libraries_2network__system_2docs_2MIGRATION__CHECKLIST.html#autotoc_md2222',1,'']]],
-  ['7_3a_20testing_20documentation_20mar_2014_2020_23',['Week 7: Testing &amp; Documentation (Mar 14-20)',['../dc/d11/md_libraries_2container__system_2docs_2grpc__project__plan.html#autotoc_md220',1,'']]]
+  ['7_20message_20bus_20benchmark_20tt_20message_5fbus_5fbenchmark_20cpp_20tt_0',['7. Message Bus Benchmark (&lt;tt&gt;message_bus_benchmark.cpp&lt;/tt&gt;)',['../index.html#autotoc_md29',1,'']]],
+  ['7_20proxy_20pattern_1',['7. Proxy Pattern',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md1780',1,'']]],
+  ['7_20strong_20event_5fpipeline_20cpp_20strong_2',['7. &lt;strong&gt;event_pipeline.cpp&lt;/strong&gt;',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md44',1,'']]],
+  ['7_20strong_20throughput_5fdetailed_5fbenchmark_20cpp_20strong_3',['7. &lt;strong&gt;throughput_detailed_benchmark.cpp&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/benchmarks/README.md#autotoc_md768',1,'']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/logger_system/src/impl/writers/network_writer.cpp File Reference</title>
+<title>Messaging System: libraries/logger_system/sources/logger/writers/network_writer.cpp File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -92,103 +92,59 @@ $(document).ready(function(){initNavTree('d3/d61/network__writer_8cpp.html','../
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">network_writer.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="../../da/d7f/network__writer_8h_source.html">kcenon/logger/writers/network_writer.h</a>&gt;</code><br />
-<code>#include &lt;winsock2.h&gt;</code><br />
-<code>#include &lt;ws2tcpip.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../da/d7f/network__writer_8h_source.html">network_writer.h</a>&quot;</code><br />
+<code>#include &lt;WinSock2.h&gt;</code><br />
+<code>#include &lt;WS2tcpip.h&gt;</code><br />
 <code>#include &lt;cstring&gt;</code><br />
-<code>#include &lt;cerrno&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;iomanip&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for network_writer.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../de/dec/network__writer_8cpp__incl.png" border="0" usemap="#alibraries_2logger__system_2src_2impl_2writers_2network__writer_8cpp" alt=""/></div>
-<map name="alibraries_2logger__system_2src_2impl_2writers_2network__writer_8cpp" id="alibraries_2logger__system_2src_2impl_2writers_2network__writer_8cpp">
-<area shape="rect" title=" " alt="" coords="1144,5,1328,60"/>
-<area shape="rect" href="../../da/d7f/network__writer_8h.html" title=" " alt="" coords="833,108,996,148"/>
-<area shape="poly" title=" " alt="" coords="1146,63,993,107,992,102,1145,57"/>
-<area shape="rect" title=" " alt="" coords="477,445,544,471"/>
-<area shape="poly" title=" " alt="" coords="1144,44,985,61,799,91,710,112,631,136,569,165,546,181,528,198,511,225,500,256,494,288,492,321,497,383,506,431,501,432,491,384,487,321,489,287,495,254,507,223,524,194,542,177,566,160,629,131,708,106,798,86,984,56,1143,38"/>
-<area shape="rect" title=" " alt="" coords="1020,115,1115,141"/>
-<area shape="poly" title=" " alt="" coords="1190,62,1101,111,1099,107,1187,58"/>
-<area shape="rect" title=" " alt="" coords="1139,115,1231,141"/>
-<area shape="poly" title=" " alt="" coords="1224,62,1200,104,1196,102,1219,59"/>
-<area shape="rect" title=" " alt="" coords="1255,115,1318,141"/>
-<area shape="poly" title=" " alt="" coords="1252,59,1276,102,1271,104,1248,62"/>
-<area shape="rect" title=" " alt="" coords="1342,115,1417,141"/>
-<area shape="poly" title=" " alt="" coords="1278,58,1352,106,1349,110,1275,62"/>
-<area shape="rect" title=" " alt="" coords="1441,115,1516,141"/>
-<area shape="poly" title=" " alt="" coords="1305,58,1437,108,1435,113,1303,63"/>
-<area shape="rect" title=" " alt="" coords="1540,115,1620,141"/>
-<area shape="poly" title=" " alt="" coords="1328,52,1528,105,1538,108,1536,113,1527,111,1327,57"/>
-<area shape="rect" href="../../d2/d49/base__writer_8h.html" title="Abstract base class for all log output writers." alt="" coords="1062,196,1172,221"/>
-<area shape="poly" title=" " alt="" coords="964,146,1075,188,1073,193,962,151"/>
-<area shape="rect" title=" " alt="" coords="1145,445,1222,471"/>
-<area shape="poly" title=" " alt="" coords="997,144,1117,172,1164,185,1185,194,1203,223,1213,255,1218,288,1218,322,1209,385,1195,433,1190,432,1203,384,1212,321,1212,289,1208,256,1198,225,1182,198,1162,190,1116,178,995,150"/>
-<area shape="rect" title=" " alt="" coords="1348,445,1412,471"/>
-<area shape="poly" title=" " alt="" coords="996,143,1132,173,1212,194,1244,220,1272,250,1319,316,1353,381,1374,431,1369,433,1348,383,1314,319,1268,253,1240,224,1209,198,1131,178,995,149"/>
-<area shape="rect" title=" " alt="" coords="538,196,602,221"/>
-<area shape="poly" title=" " alt="" coords="833,149,616,198,615,193,832,144"/>
-<area shape="rect" title=" " alt="" coords="627,196,690,221"/>
-<area shape="poly" title=" " alt="" coords="854,151,704,196,703,191,852,145"/>
-<area shape="rect" title=" " alt="" coords="714,196,856,221"/>
-<area shape="poly" title=" " alt="" coords="884,150,817,191,814,187,882,146"/>
-<area shape="rect" title=" " alt="" coords="881,196,948,221"/>
-<area shape="poly" title=" " alt="" coords="917,148,917,182,912,182,912,148"/>
-<area shape="rect" title=" " alt="" coords="972,196,1038,221"/>
-<area shape="poly" title=" " alt="" coords="938,146,983,185,979,189,935,150"/>
-<area shape="rect" title=" " alt="" coords="552,519,610,544"/>
-<area shape="poly" title=" " alt="" coords="1063,222,1051,224,973,229,877,232,653,234,538,237,430,243,336,254,262,272,178,301,112,331,85,350,60,375,36,406,13,446,8,459,12,469,39,482,90,493,240,510,407,521,538,526,538,531,407,526,239,515,89,498,37,487,8,472,3,459,8,444,32,403,56,371,82,346,110,327,176,296,260,267,335,249,430,238,538,231,652,228,877,226,973,224,1050,219,1062,217"/>
-<area shape="rect" title=" " alt="" coords="1128,519,1194,544"/>
-<area shape="poly" title=" " alt="" coords="1130,220,1160,255,1199,308,1235,373,1249,408,1258,445,1261,458,1258,472,1236,497,1209,515,1206,511,1233,493,1253,469,1256,458,1253,446,1244,410,1230,375,1194,310,1156,258,1126,223"/>
-<area shape="rect" href="../../d5/de3/logger__system_2include_2kcenon_2logger_2interfaces_2logger__interface_8h.html" title=" " alt="" coords="988,357,1171,397"/>
-<area shape="poly" title=" " alt="" coords="1117,222,1090,345,1084,343,1112,221"/>
-<area shape="rect" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h.html" title=" " alt="" coords="189,357,336,397"/>
-<area shape="poly" title=" " alt="" coords="1063,222,1051,224,905,228,662,231,535,235,423,243,336,255,307,262,289,271,277,286,269,305,263,344,258,343,264,303,272,284,286,267,305,257,335,249,422,237,535,230,662,226,905,223,1050,219,1062,217"/>
-<area shape="rect" href="../../d9/dd6/log__writer__interface_8h.html" title=" " alt="" coords="300,269,468,309"/>
-<area shape="poly" title=" " alt="" coords="1063,222,1051,224,739,260,482,283,481,278,739,254,1050,219,1062,217"/>
-<area shape="rect" href="../../d4/d0b/log__entry_8h.html" title="Data structures for representing log entries and source locations." alt="" coords="863,277,1038,302"/>
-<area shape="poly" title=" " alt="" coords="1094,224,988,273,986,268,1092,219"/>
-<area shape="poly" title=" " alt="" coords="1047,400,973,437,883,473,813,493,742,508,624,528,624,522,741,503,812,488,882,468,971,432,1045,395"/>
-<area shape="poly" title=" " alt="" coords="1107,395,1159,435,1156,439,1103,400"/>
-<area shape="poly" title=" " alt="" coords="1152,395,1335,442,1333,447,1151,400"/>
-<area shape="rect" href="../../da/d5e/logger__types_8h.html" title="Common types and enumerations for logger system." alt="" coords="1003,445,1122,471"/>
-<area shape="poly" title=" " alt="" coords="1078,398,1071,432,1065,431,1073,397"/>
-<area shape="poly" title=" " alt="" coords="1003,471,624,526,624,521,1003,465"/>
-<area shape="poly" title=" " alt="" coords="1080,469,1136,508,1132,513,1077,473"/>
-<area shape="poly" title=" " alt="" coords="189,386,120,395,57,411,34,423,20,436,18,451,28,469,54,481,104,492,248,510,410,520,538,526,538,531,410,526,248,515,103,498,52,486,25,473,13,451,16,433,31,418,55,406,119,390,188,381"/>
-<area shape="rect" title=" " alt="" coords="39,445,126,471"/>
-<area shape="poly" title=" " alt="" coords="220,400,122,442,120,437,218,395"/>
-<area shape="rect" title=" " alt="" coords="342,445,402,471"/>
-<area shape="poly" title=" " alt="" coords="290,395,346,435,343,439,287,400"/>
-<area shape="rect" title=" " alt="" coords="242,445,317,471"/>
-<area shape="poly" title=" " alt="" coords="269,397,277,431,272,432,264,398"/>
-<area shape="rect" title=" " alt="" coords="150,445,218,471"/>
-<area shape="poly" title=" " alt="" coords="245,399,207,437,203,434,241,396"/>
-<area shape="poly" title=" " alt="" coords="390,309,415,385,437,429,467,469,502,496,540,514,538,519,499,500,463,473,433,432,410,387,385,311"/>
-<area shape="poly" title=" " alt="" coords="468,297,603,318,679,334,753,355,822,382,874,408,924,437,991,468,1115,513,1113,518,989,473,922,442,871,413,820,386,751,360,677,339,602,323,467,302"/>
-<area shape="poly" title=" " alt="" coords="358,312,302,352,299,347,355,307"/>
-<area shape="poly" title=" " alt="" coords="949,303,936,337,914,383,881,432,861,454,839,473,785,501,727,519,672,529,624,532,624,527,671,523,726,514,783,496,836,468,858,450,877,428,909,380,931,335,944,301"/>
-<area shape="poly" title=" " alt="" coords="1039,297,1113,317,1150,334,1184,355,1214,380,1236,407,1243,421,1245,437,1243,453,1237,472,1220,496,1198,513,1194,509,1216,492,1232,469,1238,452,1240,437,1237,423,1232,409,1210,384,1181,359,1148,338,1111,322,1037,303"/>
-<area shape="poly" title=" " alt="" coords="969,300,1041,347,1038,352,966,304"/>
-<area shape="poly" title=" " alt="" coords="953,302,958,346,966,372,978,396,1000,419,1026,436,1023,441,996,423,974,399,961,374,953,347,948,302"/>
-<area shape="poly" title=" " alt="" coords="863,305,725,327,570,360,433,402,322,443,320,438,431,397,568,355,724,322,862,299"/>
-<area shape="rect" href="../../da/db2/small__string_8h.html" title=" " alt="" coords="582,365,740,390"/>
-<area shape="poly" title=" " alt="" coords="912,305,714,363,712,358,911,300"/>
-<area shape="poly" title=" " alt="" coords="651,392,629,416,609,447,596,477,588,506,583,504,591,475,604,444,625,413,647,389"/>
-<area shape="poly" title=" " alt="" coords="741,385,916,408,1131,442,1131,448,915,414,740,391"/>
-<area shape="poly" title=" " alt="" coords="620,393,416,448,414,442,618,387"/>
-<area shape="poly" title=" " alt="" coords="640,393,546,441,543,437,638,388"/>
-<area shape="rect" title=" " alt="" coords="728,445,826,471"/>
-<area shape="poly" title=" " alt="" coords="680,388,750,435,747,440,677,392"/>
-<area shape="rect" title=" " alt="" coords="618,445,704,471"/>
-<area shape="poly" title=" " alt="" coords="664,390,664,431,658,431,658,390"/>
+<div class="center"><img src="../../de/dec/network__writer_8cpp__incl.png" border="0" usemap="#alibraries_2logger__system_2sources_2logger_2writers_2network__writer_8cpp" alt=""/></div>
+<map name="alibraries_2logger__system_2sources_2logger_2writers_2network__writer_8cpp" id="alibraries_2logger__system_2sources_2logger_2writers_2network__writer_8cpp">
+<area shape="rect" title=" " alt="" coords="694,5,868,60"/>
+<area shape="rect" href="../../da/d7f/network__writer_8h.html" title=" " alt="" coords="350,108,481,133"/>
+<area shape="poly" title=" " alt="" coords="694,57,478,107,477,102,693,52"/>
+<area shape="rect" title=" " alt="" coords="505,108,604,133"/>
+<area shape="poly" title=" " alt="" coords="713,63,598,106,596,101,711,58"/>
+<area shape="rect" title=" " alt="" coords="628,108,723,133"/>
+<area shape="poly" title=" " alt="" coords="750,62,702,101,699,97,747,58"/>
+<area shape="rect" title=" " alt="" coords="748,108,814,133"/>
+<area shape="poly" title=" " alt="" coords="784,60,784,94,778,94,778,60"/>
+<area shape="rect" title=" " alt="" coords="838,108,913,133"/>
+<area shape="poly" title=" " alt="" coords="812,58,855,97,851,101,808,62"/>
+<area shape="rect" title=" " alt="" coords="937,108,1012,133"/>
+<area shape="poly" title=" " alt="" coords="841,58,937,100,935,105,839,63"/>
+<area shape="rect" title=" " alt="" coords="1036,108,1116,133"/>
+<area shape="poly" title=" " alt="" coords="869,57,1024,102,1022,107,868,62"/>
+<area shape="rect" href="../../d2/d49/base__writer_8h.html" title=" " alt="" coords="68,181,177,207"/>
+<area shape="poly" title=" " alt="" coords="369,136,183,181,182,175,368,131"/>
+<area shape="rect" title=" " alt="" coords="254,328,332,353"/>
+<area shape="poly" title=" " alt="" coords="390,136,358,155,330,183,313,216,303,251,295,315,290,314,298,250,308,214,325,180,354,151,387,131"/>
+<area shape="rect" title=" " alt="" coords="340,181,404,207"/>
+<area shape="poly" title=" " alt="" coords="411,135,388,171,384,168,406,132"/>
+<area shape="rect" title=" " alt="" coords="428,181,491,207"/>
+<area shape="poly" title=" " alt="" coords="425,132,448,168,443,171,421,135"/>
+<area shape="rect" title=" " alt="" coords="515,181,658,207"/>
+<area shape="poly" title=" " alt="" coords="444,131,547,174,545,178,442,136"/>
+<area shape="rect" title=" " alt="" coords="682,181,749,207"/>
+<area shape="poly" title=" " alt="" coords="466,131,669,178,668,184,465,136"/>
+<area shape="rect" title=" " alt="" coords="16,328,74,353"/>
+<area shape="poly" title=" " alt="" coords="79,209,42,227,25,240,13,256,8,271,11,286,27,316,23,319,6,288,3,270,8,253,22,236,39,223,77,204"/>
+<area shape="rect" title=" " alt="" coords="22,255,89,280"/>
+<area shape="poly" title=" " alt="" coords="113,209,78,246,74,243,109,205"/>
+<area shape="rect" href="../../d7/d44/logger__system_2sources_2logger_2logger__interface_8h.html" title=" " alt="" coords="113,255,265,280"/>
+<area shape="poly" title=" " alt="" coords="135,205,171,243,167,246,131,209"/>
+<area shape="poly" title=" " alt="" coords="167,282,82,324,80,319,165,278"/>
+<area shape="poly" title=" " alt="" coords="207,278,266,318,263,322,204,282"/>
+<area shape="rect" title=" " alt="" coords="157,328,221,353"/>
+<area shape="poly" title=" " alt="" coords="192,280,192,314,186,314,186,280"/>
 </map>
 </div>
 </div>
@@ -196,22 +152,13 @@ Include dependency graph for network_writer.cpp:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:d9/d03/namespacekcenon" id="r_d9/d03/namespacekcenon"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d03/namespacekcenon.html">kcenon</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:da/d02/namespacekcenon_1_1logger" id="r_da/d02/namespacekcenon_1_1logger"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d02/namespacekcenon_1_1logger.html">kcenon::logger</a></td></tr>
+<tr class="memitem:dc/d2b/namespacelogger__module" id="r_dc/d2b/namespacelogger__module"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d2b/namespacelogger__module.html">logger_module</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a9c7f6d5331abb2692a876d5ee67474b7" id="r_a9c7f6d5331abb2692a876d5ee67474b7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d61/network__writer_8cpp.html#a9c7f6d5331abb2692a876d5ee67474b7">close</a>&#160;&#160;&#160;closesocket</td></tr>
 <tr class="separator:a9c7f6d5331abb2692a876d5ee67474b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a6b82106923cc13b3a9734520ecc29514" id="r_a6b82106923cc13b3a9734520ecc29514"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d61/network__writer_8cpp.html#a6b82106923cc13b3a9734520ecc29514">socklen_t</a></td></tr>
-<tr class="separator:a6b82106923cc13b3a9734520ecc29514"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a894c4d58faeee7675b9e7e8244de1386" id="r_a894c4d58faeee7675b9e7e8244de1386"><td class="memItemLeft" align="right" valign="top">typedef SSIZE_T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d61/network__writer_8cpp.html#a894c4d58faeee7675b9e7e8244de1386">ssize_t</a></td></tr>
-<tr class="separator:a894c4d58faeee7675b9e7e8244de1386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a9c7f6d5331abb2692a876d5ee67474b7" name="a9c7f6d5331abb2692a876d5ee67474b7"></a>
@@ -226,40 +173,7 @@ Typedefs</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d3/d61/network__writer_8cpp_source.html#l00016">16</a> of file <a class="el" href="../../d3/d61/network__writer_8cpp_source.html">network_writer.cpp</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a6b82106923cc13b3a9734520ecc29514" name="a6b82106923cc13b3a9734520ecc29514"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b82106923cc13b3a9734520ecc29514">&#9670;&#160;</a></span>socklen_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef int <a class="el" href="../../d3/d61/network__writer_8cpp.html#a6b82106923cc13b3a9734520ecc29514">socklen_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
 <p class="definition">Definition at line <a class="el" href="../../d3/d61/network__writer_8cpp_source.html#l00014">14</a> of file <a class="el" href="../../d3/d61/network__writer_8cpp_source.html">network_writer.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a894c4d58faeee7675b9e7e8244de1386" name="a894c4d58faeee7675b9e7e8244de1386"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a894c4d58faeee7675b9e7e8244de1386">&#9670;&#160;</a></span>ssize_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef SSIZE_T <a class="el" href="../../d3/d61/network__writer_8cpp.html#a894c4d58faeee7675b9e7e8244de1386">ssize_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d3/d61/network__writer_8cpp_source.html#l00015">15</a> of file <a class="el" href="../../d3/d61/network__writer_8cpp_source.html">network_writer.cpp</a>.</p>
 
 </div>
 </div>
@@ -268,7 +182,7 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_6da4838b994c130fa41b1177c895a59f.html">src</a></li><li class="navelem"><a class="el" href="../../dir_40a5d87b6592be374069283e0e9bd6cb.html">impl</a></li><li class="navelem"><a class="el" href="../../dir_99fb7f2310739c044344789907d56a3a.html">writers</a></li><li class="navelem"><a class="el" href="../../d3/d61/network__writer_8cpp.html">network_writer.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_1d07fac6b1a9d651388bf1558080144d.html">logger_system</a></li><li class="navelem"><a class="el" href="../../dir_159ca4044b70767904d058f73f132e19.html">sources</a></li><li class="navelem"><a class="el" href="../../dir_401468f6de0b7ebb423d61aa28df8bb9.html">logger</a></li><li class="navelem"><a class="el" href="../../dir_1455209c9766edda7d547325226fccb8.html">writers</a></li><li class="navelem"><a class="el" href="../../d3/d61/network__writer_8cpp.html">network_writer.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

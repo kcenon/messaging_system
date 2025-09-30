@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d4/d9e/md_libraries_2thread__system_2d
   <div class="headertitle"><div class="title">Thread System Performance Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md3172"></a> This comprehensive guide covers performance benchmarks, tuning strategies, and optimization techniques for the Thread System framework. All measurements are based on real benchmark data and extensive testing.</p>
-<h1><a class="anchor" id="autotoc_md3173"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1130"></a> This comprehensive guide covers performance benchmarks, tuning strategies, and optimization techniques for the Thread System framework. All measurements are based on real benchmark data and extensive testing.</p>
+<h1><a class="anchor" id="autotoc_md1131"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Performance Overview</li>
@@ -110,10 +110,10 @@ Table of Contents</h1>
 <li>Platform-Specific Optimizations</li>
 <li>Best Practices</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3174"></a>
+<h1><a class="anchor" id="autotoc_md1132"></a>
 Performance Overview</h1>
 <p>The Thread System framework delivers exceptional performance across various workload patterns:</p>
-<h2><a class="anchor" id="autotoc_md3175"></a>
+<h2><a class="anchor" id="autotoc_md1133"></a>
 Key Performance Highlights (Current Architecture)</h2>
 <ul>
 <li><b>Peak Throughput</b>: Up to 13.0M jobs/second (1 worker, empty jobs - theoretical)</li>
@@ -131,18 +131,17 @@ Key Performance Highlights (Current Architecture)</h2>
 <li><b>Scaling Efficiency</b>: 96% at 8 cores (theoretical), 55-56% real-world</li>
 <li><b>Memory Efficient</b>: &lt;1MB baseline memory usage</li>
 <li>**Cross-Platform**: Consistent performance across Windows, Linux, and macOS</li>
-<li>**Streamlined Architecture**:<ul>
+<li>**Modularized Architecture**:<ul>
 <li>Adaptive queue strategy for automatic optimization</li>
-<li>Reduced code complexity from ~8,700 to ~2,700 lines</li>
+<li>Reduced code complexity by ~8,700+ lines</li>
 <li>Separated logger and monitoring into independent projects</li>
-<li>Enhanced synchronization primitives and cancellation support</li>
-<li>Service registry for dependency injection</li>
+<li>Maintains high performance with cleaner design</li>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3176"></a>
+<h1><a class="anchor" id="autotoc_md1134"></a>
 Benchmark Environment</h1>
-<h2><a class="anchor" id="autotoc_md3177"></a>
+<h2><a class="anchor" id="autotoc_md1135"></a>
 Test Hardware</h2>
 <ul>
 <li>**CPU**: Apple M1 (8-core) - 4 performance + 4 efficiency cores</li>
@@ -150,7 +149,7 @@ Test Hardware</h2>
 <li>**Storage**: NVMe SSD</li>
 <li>**OS**: macOS Sonoma 14.x</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3178"></a>
+<h2><a class="anchor" id="autotoc_md1136"></a>
 Compiler Configuration</h2>
 <ul>
 <li>**Compiler**: Apple Clang 17.0.0</li>
@@ -158,25 +157,24 @@ Compiler Configuration</h2>
 <li>**Optimization**: -O3 Release mode</li>
 <li>**Features**: std::format enabled, std::thread fallback (std::jthread not available)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3179"></a>
+<h2><a class="anchor" id="autotoc_md1137"></a>
 Thread System Version</h2>
 <ul>
-<li>**Version**: Latest development build with streamlined architecture</li>
-<li>**Build Date**: 2025-09-07 (latest update - modularized architecture)</li>
+<li>**Version**: Latest development build with modularized architecture</li>
+<li>**Build Date**: 2025-07-25 (latest update - logger and monitoring modules removed)</li>
 <li>**Configuration**: Release build with adaptive queue support</li>
 <li>**Benchmark Tool**: Google Benchmark</li>
 <li>**Architecture Changes**:<ul>
-<li>Streamlined from ~8,700 to ~2,700 lines of code</li>
+<li>Removed ~8,700+ lines including logger and monitoring modules</li>
 <li>Logger and monitoring moved to separate projects</li>
 <li>Clean interface-based architecture</li>
-<li>Added sync_primitives, cancellation_token, service_registry</li>
 </ul>
 </li>
 <li>**Performance**: Maintained with automatic optimization via adaptive queues</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3180"></a>
+<h1><a class="anchor" id="autotoc_md1138"></a>
 Core Performance Metrics</h1>
-<h2><a class="anchor" id="autotoc_md3181"></a>
+<h2><a class="anchor" id="autotoc_md1139"></a>
 Component Overhead</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -194,21 +192,23 @@ Component Overhead</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Thread Pool   </td><td class="markdownTableBodyNone">Pool creation (16 workers)   </td><td class="markdownTableBodyNone">~1041 ns   </td><td class="markdownTableBodyNone">Consistent overhead    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Adaptive Queue   </td><td class="markdownTableBodyNone">Mutex mode enqueue   </td><td class="markdownTableBodyNone">~96 ns   </td><td class="markdownTableBodyNone">Default strategy    </td></tr>
+<td class="markdownTableBodyNone">Adaptive Queue   </td><td class="markdownTableBodyNone">Lock-free enqueue   </td><td class="markdownTableBodyNone">~320 ns   </td><td class="markdownTableBodyNone">Available when needed    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Adaptive Queue   </td><td class="markdownTableBodyNone">Lock-free mode enqueue   </td><td class="markdownTableBodyNone">~320 ns   </td><td class="markdownTableBodyNone">High contention mode    </td></tr>
+<td class="markdownTableBodyNone">Adaptive Queue   </td><td class="markdownTableBodyNone">Lock-free dequeue   </td><td class="markdownTableBodyNone">~580 ns   </td><td class="markdownTableBodyNone">Fallback to mutex    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Adaptive Queue   </td><td class="markdownTableBodyNone">Batch operations   </td><td class="markdownTableBodyNone">~212 ns/job   </td><td class="markdownTableBodyNone">Optimized processing    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Sync Primitives   </td><td class="markdownTableBodyNone">Scoped lock with timeout   </td><td class="markdownTableBodyNone">~15 ns   </td><td class="markdownTableBodyNone">RAII wrapper overhead    </td></tr>
+<td class="markdownTableBodyNone">Lock-free Components   </td><td class="markdownTableBodyNone">Memory overhead   </td><td class="markdownTableBodyNone">~188 KB   </td><td class="markdownTableBodyNone">Job queues only    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Cancellation Token   </td><td class="markdownTableBodyNone">Registration   </td><td class="markdownTableBodyNone">+3%   </td><td class="markdownTableBodyNone">Thread-safe callbacks    </td></tr>
+<td class="markdownTableBodyNone">Cancellation Token   </td><td class="markdownTableBodyNone">Registration   </td><td class="markdownTableBodyNone">+3%   </td><td class="markdownTableBodyNone">Double-check pattern fixed    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Service Registry   </td><td class="markdownTableBodyNone">Service lookup   </td><td class="markdownTableBodyNone">~25 ns   </td><td class="markdownTableBodyNone">Type-safe retrieval    </td></tr>
+<td class="markdownTableBodyNone">Job Queue   </td><td class="markdownTableBodyNone">Operations   </td><td class="markdownTableBodyNone">-4%   </td><td class="markdownTableBodyNone">Redundant atomic removed    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Job Queue   </td><td class="markdownTableBodyNone">Operations   </td><td class="markdownTableBodyNone">-4%   </td><td class="markdownTableBodyNone">Optimized atomics   </td></tr>
+<td class="markdownTableBodyNone">Logger   </td><td class="markdownTableBodyNone">Async log call   </td><td class="markdownTableBodyNone">&lt;1 μs   </td><td class="markdownTableBodyNone">Single log entry    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Logger   </td><td class="markdownTableBodyNone">Throughput   </td><td class="markdownTableBodyNone">~450K logs/s   </td><td class="markdownTableBodyNone">Sustained logging rate   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3182"></a>
+<h2><a class="anchor" id="autotoc_md1140"></a>
 Thread Pool Creation Performance</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -224,9 +224,9 @@ Thread Pool Creation Performance</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">16   </td><td class="markdownTableBodyNone">1041 ns   </td><td class="markdownTableBodyNone">960K/s   </td><td class="markdownTableBodyNone">Still sub-microsecond   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md3183"></a>
+<h1><a class="anchor" id="autotoc_md1141"></a>
 Data Race Fix Impact</h1>
-<h2><a class="anchor" id="autotoc_md3184"></a>
+<h2><a class="anchor" id="autotoc_md1142"></a>
 Overview</h2>
 <p>The recent data race fixes addressed three critical concurrency issues while maintaining excellent performance characteristics:</p>
 <ol type="1">
@@ -234,7 +234,7 @@ Overview</h2>
 <li><b>cancellation_token</b> - Fixed double-check pattern and circular references</li>
 <li><b>job_queue::queue_size_</b> - Removed redundant atomic counter</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3185"></a>
+<h2><a class="anchor" id="autotoc_md1143"></a>
 Performance Impact Analysis</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -248,7 +248,7 @@ Performance Impact Analysis</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Net Impact</b>   </td><td class="markdownTableBodyNone"><b>+4% overall</b>   </td><td class="markdownTableBodyNone"><b>100% thread safety</b>   </td><td class="markdownTableBodyNone"><b>Excellent trade-off</b>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3186"></a>
+<h2><a class="anchor" id="autotoc_md1144"></a>
 Before vs After Comparison</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -262,18 +262,18 @@ Before vs After Comparison</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Memory ordering   </td><td class="markdownTableBodyNone">Weak   </td><td class="markdownTableBodyNone">Strong   </td><td class="markdownTableBodyNone">✅   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3187"></a>
+<h2><a class="anchor" id="autotoc_md1145"></a>
 Real-World Impact</h2>
 <ul>
 <li><b>Production Safety</b>: All data races eliminated, ensuring reliable operation under high concurrency</li>
 <li><b>Performance</b>: Slight net improvement due to job queue optimization offsetting mutex overhead</li>
 <li><b>Maintainability</b>: Cleaner code with proper synchronization primitives</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3188"></a>
+<h1><a class="anchor" id="autotoc_md1146"></a>
 Detailed Benchmark Results</h1>
-<h2><a class="anchor" id="autotoc_md3189"></a>
+<h2><a class="anchor" id="autotoc_md1147"></a>
 Job Submission Latency</h2>
-<h3><a class="anchor" id="autotoc_md3190"></a>
+<h3><a class="anchor" id="autotoc_md1148"></a>
 Standard Thread Pool (Mutex-based)</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -289,7 +289,7 @@ Standard Thread Pool (Mutex-based)</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">100K jobs   </td><td class="markdownTableBodyNone">1.6 μs   </td><td class="markdownTableBodyNone">1.4 μs   </td><td class="markdownTableBodyNone">3.2 μs   </td><td class="markdownTableBodyNone">4.8 μs   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3191"></a>
+<h3><a class="anchor" id="autotoc_md1149"></a>
 Adaptive Queue (Lock-free Mode)</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -305,9 +305,9 @@ Adaptive Queue (Lock-free Mode)</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">100K jobs   </td><td class="markdownTableBodyNone">0.48 μs   </td><td class="markdownTableBodyNone">0.43 μs   </td><td class="markdownTableBodyNone">0.68 μs   </td><td class="markdownTableBodyNone">0.85 μs   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3192"></a>
+<h2><a class="anchor" id="autotoc_md1150"></a>
 Throughput by Job Complexity</h2>
-<h3><a class="anchor" id="autotoc_md3193"></a>
+<h3><a class="anchor" id="autotoc_md1151"></a>
 Standard Thread Pool Performance</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -327,7 +327,7 @@ Standard Thread Pool Performance</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Real workload</b>   </td><td class="markdownTableBodyNone"><b>1.16M/s</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone"><b>10 workers, measured</b>   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3194"></a>
+<h3><a class="anchor" id="autotoc_md1152"></a>
 Adaptive Job Queue Performance (Lock-free Mode)</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -347,7 +347,7 @@ Adaptive Job Queue Performance (Lock-free Mode)</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Real workload</b>   </td><td class="markdownTableBodyNone"><b>Available via adaptive strategy</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone"><b>Dynamic selection</b>   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3195"></a>
+<h3><a class="anchor" id="autotoc_md1153"></a>
 Type Thread Pool Performance</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -363,7 +363,7 @@ Type Thread Pool Performance</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">10 Levels   </td><td class="markdownTableBodyNone">540K/s   </td><td class="markdownTableBodyNone">420K/s   </td><td class="markdownTableBodyNone">-29%   </td><td class="markdownTableBodyNone">98.8%   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3196"></a>
+<h3><a class="anchor" id="autotoc_md1154"></a>
 Real-World Measurements (Lock-Free Implementation)</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -373,10 +373,10 @@ Real-World Measurements (Lock-Free Implementation)</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Type Pool   </td><td class="markdownTableBodyNone">1.24M/s   </td><td class="markdownTableBodyNone">806 ms   </td><td class="markdownTableBodyNone">6   </td><td class="markdownTableBodyNone">330%   </td><td class="markdownTableBodyNone">+6.9%   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3197"></a>
+<h3><a class="anchor" id="autotoc_md1155"></a>
 Type Thread Pool with Adaptive Queues</h3>
 <p>The Type Thread Pool features adaptive job queue implementation:</p>
-<h4><a class="anchor" id="autotoc_md3198"></a>
+<h4><a class="anchor" id="autotoc_md1156"></a>
 typed_thread_pool (Current Implementation)</h4>
 <ul>
 <li><b>Architecture</b>: Type-specific job queues with adaptive strategy selection</li>
@@ -384,7 +384,7 @@ typed_thread_pool (Current Implementation)</h4>
 <li><b>Memory</b>: Adaptive queue allocation per job type</li>
 <li><b>Best for</b>: All scenarios with automatic optimization</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md3199"></a>
+<h4><a class="anchor" id="autotoc_md1157"></a>
 Adaptive Queue Strategy</h4>
 <ul>
 <li><b>Architecture</b>: Automatic switching between mutex and lock-free based on load</li>
@@ -415,14 +415,14 @@ Adaptive Queue Strategy</h4>
 <li>Compatible API with seamless optimization</li>
 </ul>
 <p><em>Note: The adaptive implementation automatically selects the optimal queue strategy based on runtime conditions, providing both simplicity and performance.</em></p>
-<h1><a class="anchor" id="autotoc_md3200"></a>
+<h1><a class="anchor" id="autotoc_md1158"></a>
 Adaptive Job Queue Benchmarks</h1>
-<h2><a class="anchor" id="autotoc_md3201"></a>
+<h2><a class="anchor" id="autotoc_md1159"></a>
 Overview</h2>
 <p>Comprehensive benchmarks demonstrating adaptive job queue performance with automatic strategy selection across multiple dimensions:</p>
-<h2><a class="anchor" id="autotoc_md3202"></a>
+<h2><a class="anchor" id="autotoc_md1160"></a>
 Thread Pool Level Benchmarks</h2>
-<h3><a class="anchor" id="autotoc_md3203"></a>
+<h3><a class="anchor" id="autotoc_md1161"></a>
 Simple Job Processing</h3>
 <p><em>Jobs with minimal computation (10 iterations)</em></p>
 <table class="markdownTable">
@@ -441,7 +441,7 @@ Simple Job Processing</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Adaptive   </td><td class="markdownTableBodyNone">10,000   </td><td class="markdownTableBodyNone">~3.0 ms   </td><td class="markdownTableBodyNone">3.33M/s   </td><td class="markdownTableBodyNone"><b>+6.4%</b>   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3204"></a>
+<h3><a class="anchor" id="autotoc_md1162"></a>
 Medium Workload Processing</h3>
 <p><em>Jobs with moderate computation (100 iterations)</em></p>
 <table class="markdownTable">
@@ -456,7 +456,7 @@ Medium Workload Processing</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Adaptive   </td><td class="markdownTableBodyNone">1,000   </td><td class="markdownTableBodyNone">~1.0 ms   </td><td class="markdownTableBodyNone">1.00M/s   </td><td class="markdownTableBodyNone"><b>+10.0%</b>   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3205"></a>
+<h3><a class="anchor" id="autotoc_md1163"></a>
 Priority Scheduling Performance</h3>
 <p><em>Type-based job routing with adaptive queue selection</em></p>
 <table class="markdownTable">
@@ -469,7 +469,7 @@ Priority Scheduling Performance</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">1,000   </td><td class="markdownTableBodyNone">3,000   </td><td class="markdownTableBodyNone">~2.65 ms   </td><td class="markdownTableBodyNone">99.1%   </td><td class="markdownTableBodyNone">Stable   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3206"></a>
+<h3><a class="anchor" id="autotoc_md1164"></a>
 High Contention Scenarios</h3>
 <p><em>Multiple producer threads simultaneously submitting jobs</em></p>
 <table class="markdownTable">
@@ -486,9 +486,9 @@ High Contention Scenarios</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">16   </td><td class="markdownTableBodyNone">190 jobs/μs   </td><td class="markdownTableBodyNone">520 jobs/μs   </td><td class="markdownTableBodyNone"><b>+173.7%</b>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3207"></a>
+<h2><a class="anchor" id="autotoc_md1165"></a>
 Queue Level Benchmarks</h2>
-<h3><a class="anchor" id="autotoc_md3208"></a>
+<h3><a class="anchor" id="autotoc_md1166"></a>
 Basic Queue Operations</h3>
 <p><em>Raw enqueue/dequeue performance</em></p>
 <table class="markdownTable">
@@ -501,7 +501,7 @@ Basic Queue Operations</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Enqueue/Dequeue pair   </td><td class="markdownTableBodyNone">~280 ns   </td><td class="markdownTableBodyNone">~220 ns   </td><td class="markdownTableBodyNone"><b>+27.3%</b>   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3209"></a>
+<h3><a class="anchor" id="autotoc_md1167"></a>
 Batch Operations</h3>
 <p><em>Processing multiple items at once</em></p>
 <table class="markdownTable">
@@ -518,7 +518,7 @@ Batch Operations</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">1024   </td><td class="markdownTableBodyNone">248.7   </td><td class="markdownTableBodyNone">175.3   </td><td class="markdownTableBodyNone"><b>+41.9%</b>   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3210"></a>
+<h3><a class="anchor" id="autotoc_md1168"></a>
 Contention Stress Tests</h3>
 <p><em>Multiple threads competing for queue access</em></p>
 <table class="markdownTable">
@@ -535,7 +535,7 @@ Contention Stress Tests</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">16   </td><td class="markdownTableBodyNone">892.5   </td><td class="markdownTableBodyNone">218.6   </td><td class="markdownTableBodyNone"><b>4.08x</b>   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3211"></a>
+<h3><a class="anchor" id="autotoc_md1169"></a>
 Job Type Routing Features</h3>
 <p><em>Type-based job queue selection and routing</em></p>
 <table class="markdownTable">
@@ -548,7 +548,7 @@ Job Type Routing Features</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">80% High priority   </td><td class="markdownTableBodyNone">2,400   </td><td class="markdownTableBodyNone">135 ns   </td><td class="markdownTableBodyNone">182 ns   </td><td class="markdownTableBodyNone"><b>+34.8%</b>   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3212"></a>
+<h3><a class="anchor" id="autotoc_md1170"></a>
 Memory Usage Comparison</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -566,7 +566,7 @@ Memory Usage Comparison</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Adaptive Queue   </td><td class="markdownTableBodyNone">10,000   </td><td class="markdownTableBodyNone">248.7 KB   </td><td class="markdownTableBodyNone">25 bytes   </td><td class="markdownTableBodyNone">Acceptable overhead   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3213"></a>
+<h2><a class="anchor" id="autotoc_md1171"></a>
 Benchmark Environment Details</h2>
 <ul>
 <li><b>Hardware</b>: Apple M1 (8-core), 16GB RAM</li>
@@ -578,10 +578,10 @@ Benchmark Environment Details</h2>
 <li><b>Thread Configuration</b>: 4 workers (1 per type + 1 universal)</li>
 <li><b>Latest Update</b>: 2025-06-29 with enhanced lock-free algorithms</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3214"></a>
+<h2><a class="anchor" id="autotoc_md1172"></a>
 Available Benchmarks</h2>
 <p>The Thread System includes comprehensive benchmarks for performance testing:</p>
-<h3><a class="anchor" id="autotoc_md3215"></a>
+<h3><a class="anchor" id="autotoc_md1173"></a>
 Thread Pool Benchmarks (&lt;tt&gt;benchmarks/thread_pool_benchmarks/&lt;/tt&gt;)</h3>
 <ul>
 <li><b>gbench_thread_pool</b>: Basic Google Benchmark integration</li>
@@ -594,19 +594,19 @@ Thread Pool Benchmarks (&lt;tt&gt;benchmarks/thread_pool_benchmarks/&lt;/tt&gt;)
 <li><b>comparison_benchmark</b>: Cross-library comparisons</li>
 <li><b>throughput_detailed_benchmark</b>: Detailed throughput analysis</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3216"></a>
+<h3><a class="anchor" id="autotoc_md1174"></a>
 Queue Benchmarks (&lt;tt&gt;benchmarks/thread_base_benchmarks/&lt;/tt&gt;)</h3>
 <ul>
 <li><b>mpmc_performance_test</b>: MPMC queue performance analysis</li>
 <li><b>simple_mpmc_benchmark</b>: Basic queue operations</li>
 <li><b>quick_mpmc_test</b>: Fast queue validation</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3217"></a>
+<h3><a class="anchor" id="autotoc_md1175"></a>
 Other Benchmarks</h3>
 <ul>
 <li><b>data_race_benchmark</b>: Data race fix impact analysis</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3218"></a>
+<h3><a class="anchor" id="autotoc_md1176"></a>
 Running Benchmarks</h3>
 <div class="fragment"><div class="line"># Build with benchmarks enabled</div>
 <div class="line">./build.sh --clean --benchmark</div>
@@ -622,7 +622,7 @@ Running Benchmarks</h3>
 <div class="line"> </div>
 <div class="line"># Export results</div>
 <div class="line">./build/bin/thread_pool_benchmark --benchmark_format=json &gt; results.json</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3219"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1177"></a>
 Key Performance Insights</h2>
 <ol type="1">
 <li><b>Adaptive Queue Advantages</b>:<ul>
@@ -652,9 +652,9 @@ Key Performance Insights</h2>
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3220"></a>
+<h1><a class="anchor" id="autotoc_md1178"></a>
 Scalability Analysis</h1>
-<h2><a class="anchor" id="autotoc_md3221"></a>
+<h2><a class="anchor" id="autotoc_md1179"></a>
 Worker Thread Scaling Efficiency</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -674,9 +674,9 @@ Worker Thread Scaling Efficiency</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">64   </td><td class="markdownTableBodyNone">52.1x   </td><td class="markdownTableBodyNone">81.4%   </td><td class="markdownTableBodyNone">22.4   </td><td class="markdownTableBodyNone">78%   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3222"></a>
+<h2><a class="anchor" id="autotoc_md1180"></a>
 Workload-Specific Scaling</h2>
-<h3><a class="anchor" id="autotoc_md3223"></a>
+<h3><a class="anchor" id="autotoc_md1181"></a>
 CPU-Bound Tasks</h3>
 <ul>
 <li><b>Optimal Workers</b>: Hardware core count</li>
@@ -684,7 +684,7 @@ CPU-Bound Tasks</h3>
 <li><b>Scaling Limit</b>: Physical cores (performance cores on ARM)</li>
 <li><b>Recommended</b>: Use exact core count for CPU-intensive work</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3224"></a>
+<h3><a class="anchor" id="autotoc_md1182"></a>
 I/O-Bound Tasks</h3>
 <ul>
 <li><b>Optimal Workers</b>: 2-3x hardware core count</li>
@@ -692,7 +692,7 @@ I/O-Bound Tasks</h3>
 <li><b>Scaling Benefit</b>: Continues beyond core count</li>
 <li><b>Recommended</b>: Start with 2x cores, tune based on I/O wait time</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3225"></a>
+<h3><a class="anchor" id="autotoc_md1183"></a>
 Mixed Workloads</h3>
 <ul>
 <li><b>Optimal Workers</b>: 1.5x hardware core count</li>
@@ -700,9 +700,9 @@ Mixed Workloads</h3>
 <li><b>Balance <a class="el" href="../../d8/d43/structPoint.html">Point</a></b>: Between CPU and I/O characteristics</li>
 <li><b>Recommended</b>: Profile workload to find optimal balance</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3226"></a>
+<h1><a class="anchor" id="autotoc_md1184"></a>
 Memory Performance</h1>
-<h2><a class="anchor" id="autotoc_md3227"></a>
+<h2><a class="anchor" id="autotoc_md1185"></a>
 Memory Usage by Configuration</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -720,7 +720,7 @@ Memory Usage by Configuration</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">32 Workers   </td><td class="markdownTableBodyNone">63.2 MB   </td><td class="markdownTableBodyNone">20.2 MB   </td><td class="markdownTableBodyNone">25.1 MB   </td><td class="markdownTableBodyNone">231 KB   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3228"></a>
+<h2><a class="anchor" id="autotoc_md1186"></a>
 Memory Optimization Impact (v2.0)</h2>
 <p>With the latest memory optimizations:</p>
 <table class="markdownTable">
@@ -735,7 +735,7 @@ Memory Optimization Impact (v2.0)</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Peak Memory (unchanged)   </td><td class="markdownTableBodyNone">16.3 MB   </td><td class="markdownTableBodyNone">16.3 MB   </td><td class="markdownTableBodyNone">0%   </td><td class="markdownTableBodyNone">Same maximum capacity   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3229"></a>
+<h2><a class="anchor" id="autotoc_md1187"></a>
 Startup Memory Profile</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -753,7 +753,7 @@ Startup Memory Profile</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Steady State   </td><td class="markdownTableBodyNone">12.8 MB   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Normal operation   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3230"></a>
+<h2><a class="anchor" id="autotoc_md1188"></a>
 Memory Allocation Impact on Performance</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -769,7 +769,7 @@ Memory Allocation Impact on Performance</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Very Large   </td><td class="markdownTableBodyNone">&gt;1MB   </td><td class="markdownTableBodyNone">58,000   </td><td class="markdownTableBodyNone">5%   </td><td class="markdownTableBodyNone">42μs   </td><td class="markdownTableBodyNone">+300%   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3231"></a>
+<h2><a class="anchor" id="autotoc_md1189"></a>
 Potential Memory Pool Optimization</h2>
 <p><em>Note: Thread System does not currently implement built-in memory pools. The following represents potential improvements with custom memory pool implementations:</em></p>
 <table class="markdownTable">
@@ -782,9 +782,9 @@ Potential Memory Pool Optimization</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Large Jobs   </td><td class="markdownTableBodyNone">267K/s   </td><td class="markdownTableBodyNone">385K/s (estimated)   </td><td class="markdownTableBodyNone">+44%   </td><td class="markdownTableBodyNone">80%   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md3232"></a>
+<h1><a class="anchor" id="autotoc_md1190"></a>
 Adaptive MPMC Queue Performance</h1>
-<h2><a class="anchor" id="autotoc_md3233"></a>
+<h2><a class="anchor" id="autotoc_md1191"></a>
 Overview</h2>
 <p>The adaptive MPMC (Multiple Producer Multiple Consumer) queue implementation provides automatic strategy selection for optimal performance:</p>
 <ul>
@@ -793,7 +793,7 @@ Overview</h2>
 <li><b>Contention Handling</b>: Automatic detection and strategy switching</li>
 <li><b>Cache Optimization</b>: Optimized memory layout for performance</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3234"></a>
+<h2><a class="anchor" id="autotoc_md1192"></a>
 Performance Comparison</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -811,7 +811,7 @@ Performance Comparison</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Real workload</b>   </td><td class="markdownTableBodyNone"><b>950 ms/1M</b>   </td><td class="markdownTableBodyNone"><b>865 ms/1M</b>   </td><td class="markdownTableBodyNone"><b>+10%</b>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3235"></a>
+<h2><a class="anchor" id="autotoc_md1193"></a>
 Scalability Analysis</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -825,11 +825,11 @@ Scalability Analysis</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">8   </td><td class="markdownTableBodyNone">29%   </td><td class="markdownTableBodyNone">82%   </td><td class="markdownTableBodyNone">+53%   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3236"></a>
+<h2><a class="anchor" id="autotoc_md1194"></a>
 Implementation Details</h2>
-<h1><a class="anchor" id="autotoc_md3237"></a>
+<h1><a class="anchor" id="autotoc_md1195"></a>
 Adaptive Logger Performance</h1>
-<h2><a class="anchor" id="autotoc_md3238"></a>
+<h2><a class="anchor" id="autotoc_md1196"></a>
 Overview</h2>
 <p>The adaptive logger implementation provides automatic optimization for high-throughput logging scenarios:</p>
 <ul>
@@ -838,7 +838,7 @@ Overview</h2>
 <li><b>Scalability</b>: Optimal performance scaling with thread count</li>
 <li><b>Compatibility</b>: Seamless integration with existing code</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3239"></a>
+<h2><a class="anchor" id="autotoc_md1197"></a>
 Single-Threaded Performance</h2>
 <p><em>Message throughput comparison</em></p>
 <table class="markdownTable">
@@ -852,7 +852,7 @@ Single-Threaded Performance</h2>
 <td class="markdownTableBodyNone">Long (1024 chars)   </td><td class="markdownTableBodyNone">2.59 M/s   </td><td class="markdownTableBodyNone">2.55 M/s   </td><td class="markdownTableBodyNone">-1.5%   </td></tr>
 </table>
 <p><em>Note: Single-threaded performance shows minimal overhead. Benefits appear under contention.</em></p>
-<h2><a class="anchor" id="autotoc_md3240"></a>
+<h2><a class="anchor" id="autotoc_md1198"></a>
 Multi-Threaded Scalability</h2>
 <p><em>Throughput with concurrent logging threads</em></p>
 <table class="markdownTable">
@@ -867,7 +867,7 @@ Multi-Threaded Scalability</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">16   </td><td class="markdownTableBodyNone">0.16 M/s   </td><td class="markdownTableBodyNone">0.54 M/s   </td><td class="markdownTableBodyNone"><b>+237.5%</b>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3241"></a>
+<h2><a class="anchor" id="autotoc_md1199"></a>
 Formatted Logging Performance</h2>
 <p><em>Complex format string with multiple parameters</em></p>
 <table class="markdownTable">
@@ -878,7 +878,7 @@ Formatted Logging Performance</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Adaptive   </td><td class="markdownTableBodyNone">2.89 M/s   </td><td class="markdownTableBodyNone">346   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3242"></a>
+<h2><a class="anchor" id="autotoc_md1200"></a>
 Burst Logging Performance</h2>
 <p><em>Handling sudden log bursts</em></p>
 <table class="markdownTable">
@@ -889,7 +889,7 @@ Burst Logging Performance</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">100 messages   </td><td class="markdownTableBodyNone">5.33 M/s   </td><td class="markdownTableBodyNone">5.15 M/s   </td><td class="markdownTableBodyNone">-3.4%   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3243"></a>
+<h2><a class="anchor" id="autotoc_md1201"></a>
 Mixed Log Types Performance</h2>
 <p><em>Different log levels (Info, Debug, Error, Exception)</em></p>
 <table class="markdownTable">
@@ -900,7 +900,7 @@ Mixed Log Types Performance</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Adaptive   </td><td class="markdownTableBodyNone">6.42 M/s   </td><td class="markdownTableBodyNone">98%   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3244"></a>
+<h2><a class="anchor" id="autotoc_md1202"></a>
 Key Findings</h2>
 <ol type="1">
 <li><b>High Contention Benefits</b>: Adaptive logger shows significant advantages with 4+ threads</li>
@@ -908,7 +908,7 @@ Key Findings</h2>
 <li><b>Minimal Overhead</b>: Single-threaded performance nearly identical</li>
 <li><b>Use Cases</b>: Ideal for all multi-threaded applications with automatic optimization</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3245"></a>
+<h2><a class="anchor" id="autotoc_md1203"></a>
 Recommendations</h2>
 <ul>
 <li><b>Use Adaptive Logger</b>: Automatic optimization for all scenarios</li>
@@ -916,7 +916,7 @@ Recommendations</h2>
 <li><b>Batch Processing</b>: Automatically enabled when beneficial for throughput</li>
 <li><b>Buffer Management</b>: Dynamic queue sizing based on workload</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3246"></a>
+<h2><a class="anchor" id="autotoc_md1204"></a>
 Implementation Details</h2>
 <ul>
 <li><b>Adaptive Strategy</b>: Automatic switching between mutex and lock-free based on contention</li>
@@ -925,7 +925,7 @@ Implementation Details</h2>
 <li><b>Queue Optimization</b>: Automatic batching and buffer management</li>
 <li><b>Performance Monitoring</b>: Built-in metrics for optimization decisions</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3247"></a>
+<h2><a class="anchor" id="autotoc_md1205"></a>
 Current Status</h2>
 <ul>
 <li>Modularized architecture with adaptive queue selection</li>
@@ -938,9 +938,9 @@ Current Status</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3248"></a>
+<h2><a class="anchor" id="autotoc_md1206"></a>
 Recent Benchmark Results (2025-07-25)</h2>
-<h3><a class="anchor" id="autotoc_md3249"></a>
+<h3><a class="anchor" id="autotoc_md1207"></a>
 Data Race Fix Verification</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -955,7 +955,7 @@ Data Race Fix Verification</h3>
 <td class="markdownTableBodyNone">16   </td><td class="markdownTableBodyNone">750μs/10K   </td><td class="markdownTableBodyNone">210μs/1.6K   </td><td class="markdownTableBodyNone">4.81ms/8K dequeued   </td></tr>
 </table>
 <p><em>Note: All data race issues have been resolved with proper synchronization.</em></p>
-<h2><a class="anchor" id="autotoc_md3250"></a>
+<h2><a class="anchor" id="autotoc_md1208"></a>
 Usage Recommendations</h2>
 <ol type="1">
 <li><b>Adaptive Queue Benefits</b>:<ul>
@@ -973,7 +973,7 @@ Usage Recommendations</h2>
 <div class="line">adaptive_job_queue lockfree_queue(adaptive_job_queue::queue_strategy::FORCE_LOCKFREE);</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3251"></a>
+<h2><a class="anchor" id="autotoc_md1209"></a>
 Performance Tuning Tips</h2>
 <ol type="1">
 <li><b>Batch Operations</b>: Use batch enqueue/dequeue for better throughput</li>
@@ -982,15 +982,15 @@ Performance Tuning Tips</h2>
 <li><b>Retry Handling</b>: Operations may fail under extreme contention - implement retry logic</li>
 <li><b>Monitoring</b>: Use built-in statistics to track performance metrics including retry counts</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3252"></a>
+<h1><a class="anchor" id="autotoc_md1210"></a>
 Logger Performance (Now Separate Project)</h1>
 <p><em>Note: Logger has been moved to a separate project. The following benchmarks are from when logger was integrated with Thread System.</em></p>
-<h2><a class="anchor" id="autotoc_md3253"></a>
+<h2><a class="anchor" id="autotoc_md1211"></a>
 Logger Comparison with Industry Standards</h2>
-<h2><a class="anchor" id="autotoc_md3254"></a>
+<h2><a class="anchor" id="autotoc_md1212"></a>
 Overview</h2>
 <p>This section compares Thread System's logging performance against industry-standard logging libraries. The logger uses adaptive job queues for automatic optimization.</p>
-<h2><a class="anchor" id="autotoc_md3255"></a>
+<h2><a class="anchor" id="autotoc_md1213"></a>
 Single-Threaded Performance Comparison</h2>
 <p><em>Baseline measurements on Apple M1 (8-core)</em></p>
 <table class="markdownTable">
@@ -1003,7 +1003,7 @@ Single-Threaded Performance Comparison</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Thread System (Adaptive)   </td><td class="markdownTableBodyNone">4.34M/s   </td><td class="markdownTableBodyNone">240   </td><td class="markdownTableBodyNone"><b>8.0x</b> faster   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3256"></a>
+<h2><a class="anchor" id="autotoc_md1214"></a>
 Multi-Threaded Scalability</h2>
 <p><em>Concurrent logging performance with adaptive optimization</em></p>
 <table class="markdownTable">
@@ -1018,7 +1018,7 @@ Multi-Threaded Scalability</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">16   </td><td class="markdownTableBodyNone">177K/s   </td><td class="markdownTableBodyNone">385K/s   </td><td class="markdownTableBodyNone"><b>+118%</b>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3257"></a>
+<h2><a class="anchor" id="autotoc_md1215"></a>
 Latency Characteristics</h2>
 <p><em>End-to-end logging latency</em></p>
 <table class="markdownTable">
@@ -1029,7 +1029,7 @@ Latency Characteristics</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Console Output   </td><td class="markdownTableBodyNone">1,880 ns   </td><td class="markdownTableBodyNone">~2,500 ns   </td><td class="markdownTableBodyNone">System call overhead   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3258"></a>
+<h2><a class="anchor" id="autotoc_md1216"></a>
 Key Findings</h2>
 <ol type="1">
 <li><b>Logger Excellence</b>:<ul>
@@ -1051,10 +1051,10 @@ Key Findings</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3259"></a>
+<h2><a class="anchor" id="autotoc_md1217"></a>
 Comparison with spdlog</h2>
 <p><em>Comprehensive performance comparison with the popular spdlog library</em></p>
-<h3><a class="anchor" id="autotoc_md3260"></a>
+<h3><a class="anchor" id="autotoc_md1218"></a>
 Single-Threaded Performance</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1068,7 +1068,7 @@ Single-Threaded Performance</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>spdlog (async)</b>   </td><td class="markdownTableBodyNone"><b>5.35M/s</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone"><b>9.2x</b>   </td><td class="markdownTableBodyNone">Best throughput   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3261"></a>
+<h3><a class="anchor" id="autotoc_md1219"></a>
 Multi-Threaded Performance (4 Threads)</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1082,7 +1082,7 @@ Multi-Threaded Performance (4 Threads)</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">spdlog (async)   </td><td class="markdownTableBodyNone">785K/s   </td><td class="markdownTableBodyNone">-85%   </td><td class="markdownTableBodyNone">Poor   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3262"></a>
+<h3><a class="anchor" id="autotoc_md1220"></a>
 High Contention (8 Threads)</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1096,7 +1096,7 @@ High Contention (8 Threads)</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">spdlog (async)   </td><td class="markdownTableBodyNone">240K/s   </td><td class="markdownTableBodyNone">0.41x   </td><td class="markdownTableBodyNone">Queue saturation   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3263"></a>
+<h3><a class="anchor" id="autotoc_md1221"></a>
 Key Findings</h3>
 <ol type="1">
 <li><b>Single-threaded Champion</b>: spdlog async (5.35M/s) edges out Thread System (4.34M/s)</li>
@@ -1104,7 +1104,7 @@ Key Findings</h3>
 <li><b>Latency Champion</b>: Thread System with 148ns, <b>15.8x lower</b> than spdlog sync (2333/148 = 15.76)</li>
 <li><b>Scalability</b>: Thread System adaptive mode provides automatic optimization</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3264"></a>
+<h2><a class="anchor" id="autotoc_md1222"></a>
 Recommendations</h2>
 <ol type="1">
 <li><b>For All Applications</b>: Use Thread System Logger<ul>
@@ -1127,9 +1127,9 @@ Recommendations</h2>
 <div class="line">log_module::stop();</div>
 </div><!-- fragment --></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3265"></a>
+<h1><a class="anchor" id="autotoc_md1223"></a>
 Comparison with Other Libraries</h1>
-<h2><a class="anchor" id="autotoc_md3266"></a>
+<h2><a class="anchor" id="autotoc_md1224"></a>
 Throughput Comparison (Real-world measurements)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1149,7 +1149,7 @@ Throughput Comparison (Real-world measurements)</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Microsoft PPL   </td><td class="markdownTableBodyNone">~1.02M/s   </td><td class="markdownTableBodyNone">~88%   </td><td class="markdownTableBodyNone">Windows-specific   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3267"></a>
+<h2><a class="anchor" id="autotoc_md1225"></a>
 Feature Comparison</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1163,7 +1163,7 @@ Feature Comparison</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">std::async   </td><td class="markdownTableBodyNone">❌ No   </td><td class="markdownTableBodyNone">❌ No   </td><td class="markdownTableBodyNone">✅ Yes   </td><td class="markdownTableBodyNone">✅ Yes   </td><td class="markdownTableBodyNone">❌ No   </td><td class="markdownTableBodyNone">⚠️ Basic   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3268"></a>
+<h2><a class="anchor" id="autotoc_md1226"></a>
 Latency Comparison (μs)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1177,9 +1177,9 @@ Latency Comparison (μs)</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">std::async   </td><td class="markdownTableBodyNone">~15.2 μs   </td><td class="markdownTableBodyNone">~12.8 μs   </td><td class="markdownTableBodyNone">~28.0 μs   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md3269"></a>
+<h1><a class="anchor" id="autotoc_md1227"></a>
 Optimization Strategies</h1>
-<h2><a class="anchor" id="autotoc_md3270"></a>
+<h2><a class="anchor" id="autotoc_md1228"></a>
 1. Optimal Thread Count Selection</h2>
 <div class="fragment"><div class="line">uint16_t determine_optimal_thread_count(WorkloadType workload) {</div>
 <div class="line">    uint16_t hardware_threads = std::thread::hardware_concurrency();</div>
@@ -1203,7 +1203,7 @@ Optimization Strategies</h1>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">return</span> hardware_threads;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3271"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1229"></a>
 2. Job Batching for Performance</h2>
 <p>Batching reduces scheduling overhead significantly:</p>
 <table class="markdownTable">
@@ -1229,7 +1229,7 @@ Optimization Strategies</h1>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">pool-&gt;enqueue_batch(std::move(jobs));</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3272"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1230"></a>
 3. Job Granularity Optimization</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1245,7 +1245,7 @@ Optimization Strategies</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">&gt; 10ms   </td><td class="markdownTableBodyNone">Consider subdivision   </td><td class="markdownTableBodyNone">Improve responsiveness   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3273"></a>
+<h2><a class="anchor" id="autotoc_md1231"></a>
 4. Type Pool Configuration</h2>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> configure_type_pool(std::shared_ptr&lt;typed_thread_pool&gt; pool,</div>
 <div class="line">                            <span class="keyword">const</span> WorkloadProfile&amp; profile) {</div>
@@ -1266,7 +1266,7 @@ Optimization Strategies</h1>
 <div class="line">    add_type_workers(pool, job_types::Normal, normal_workers);</div>
 <div class="line">    add_type_workers(pool, job_types::Low, low_workers);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3274"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1232"></a>
 4b. Adaptive Queue Configuration</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;typed_thread_pool/pool/typed_thread_pool.h&quot;</span></div>
 <div class="line"> </div>
@@ -1310,9 +1310,9 @@ Optimization Strategies</h1>
 <div class="line">    </div>
 <div class="line"><span class="keyword">auto</span> simple_pool = create_optimal_pool(</div>
 <div class="line">    <span class="stringliteral">&quot;Simple&quot;</span>, 2, <span class="keyword">false</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3275"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1233"></a>
 5. Memory Optimization</h2>
-<h3><a class="anchor" id="autotoc_md3276"></a>
+<h3><a class="anchor" id="autotoc_md1234"></a>
 Cache-Line Alignment</h3>
 <div class="fragment"><div class="line"><span class="comment">// Prevent false sharing</span></div>
 <div class="line"><span class="keyword">struct </span><span class="keyword">alignas</span>(64) WorkerData {</div>
@@ -1320,7 +1320,7 @@ Cache-Line Alignment</h3>
 <div class="line">    std::atomic&lt;uint64_t&gt; execution_time{0};</div>
 <div class="line">    <span class="keywordtype">char</span> padding[64 - 2 * <span class="keyword">sizeof</span>(std::atomic&lt;uint64_t&gt;)];</div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3277"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1235"></a>
 Memory Pool Implementation (Suggested Optimization)</h3>
 <p><em>Note: This is a suggested optimization pattern for users who need memory pool functionality. Thread System does not currently include built-in memory pools.</em></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> JobType, <span class="keywordtype">size_t</span> PoolSize = 1024&gt;</div>
@@ -1350,25 +1350,28 @@ Memory Pool Implementation (Suggested Optimization)</h3>
 <div class="line">    std::vector&lt;std::unique_ptr&lt;JobType&gt;&gt; pool_;</div>
 <div class="line">    std::mutex mutex_;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3278"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1236"></a>
 Platform-Specific Optimizations</h1>
-<h2><a class="anchor" id="autotoc_md3279"></a>
+<h2><a class="anchor" id="autotoc_md1237"></a>
 macOS/ARM64 Optimizations</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifdef __APPLE__</span></div>
 <div class="line"><span class="comment">// Leverage performance cores on Apple Silicon</span></div>
-<div class="line"><span class="keywordtype">void</span> configure_for_apple_silicon(thread_pool_module::thread_pool&amp; pool) {</div>
+<div class="line"><span class="keywordtype">void</span> configure_for_apple_silicon(<a class="code hl_class" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html">thread_pool_module::thread_pool</a>&amp; pool) {</div>
 <div class="line">    <span class="keywordtype">size_t</span> performance_cores = 4; <span class="comment">// M1 has 4 performance cores</span></div>
 <div class="line">    <span class="keywordtype">size_t</span> efficiency_cores = 4;  <span class="comment">// M1 has 4 efficiency cores</span></div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Prioritize performance cores for CPU-intensive work</span></div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; performance_cores; ++i) {</div>
-<div class="line">        <span class="keyword">auto</span> worker = std::make_unique&lt;thread_worker&gt;(pool.get_job_queue());</div>
+<div class="line">        <span class="keyword">auto</span> worker = std::make_unique&lt;thread_worker&gt;(pool.<a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#ad4bfb75eb1899973dcc2db13d493eb3f">get_job_queue</a>());</div>
 <div class="line">        pthread_set_qos_class_self_np(QOS_CLASS_USER_INITIATED, 0);</div>
-<div class="line">        pool.enqueue(std::move(worker));</div>
+<div class="line">        pool.<a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a318d67c6132d192ecef1c27f6276bfb0">enqueue</a>(std::move(worker));</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3280"></a>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html">thread_pool_module::thread_pool</a></div><div class="ttdoc">A thread pool for concurrent execution of jobs using multiple worker threads.</div><div class="ttdef"><b>Definition</b> <a href="../../da/ddf/modular__structure_2core_2include_2thread__system__core_2thread__pool_2core_2thread__pool_8h_source.html#l00116">thread_pool.h:117</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a318d67c6132d192ecef1c27f6276bfb0"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a318d67c6132d192ecef1c27f6276bfb0">thread_pool_module::thread_pool::enqueue</a></div><div class="ttdeci">auto enqueue(std::unique_ptr&lt; job &gt; &amp;&amp;job) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">Enqueues a new job into the shared job_queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d53/modular__structure_2core_2src_2thread__pool_2core_2thread__pool_8cpp_source.html#l00198">thread_pool.cpp:198</a></div></div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_ad4bfb75eb1899973dcc2db13d493eb3f"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#ad4bfb75eb1899973dcc2db13d493eb3f">thread_pool_module::thread_pool::get_job_queue</a></div><div class="ttdeci">auto get_job_queue(void) -&gt; std::shared_ptr&lt; job_queue &gt;</div><div class="ttdoc">Returns the shared job_queue used by this thread pool.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d53/modular__structure_2core_2src_2thread__pool_2core_2thread__pool_8cpp_source.html#l00175">thread_pool.cpp:175</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1238"></a>
 Linux Optimizations</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifdef __linux__</span></div>
 <div class="line"><span class="keywordtype">void</span> set_thread_affinity(std::thread&amp; thread, uint32_t core_id) {</div>
@@ -1378,7 +1381,7 @@ Linux Optimizations</h2>
 <div class="line">    pthread_setaffinity_np(thread.native_handle(), <span class="keyword">sizeof</span>(cpu_set_t), &amp;cpuset);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> configure_numa_awareness(thread_pool_module::thread_pool&amp; pool) {</div>
+<div class="line"><span class="keywordtype">void</span> configure_numa_awareness(<a class="code hl_class" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html">thread_pool_module::thread_pool</a>&amp; pool) {</div>
 <div class="line">    <span class="comment">// Distribute workers across NUMA nodes</span></div>
 <div class="line">    <span class="keywordtype">int</span> numa_nodes = numa_max_node() + 1;</div>
 <div class="line">    <span class="keyword">auto</span> workers = pool.get_workers();</div>
@@ -1390,10 +1393,10 @@ Linux Optimizations</h2>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3281"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1239"></a>
 Windows Optimizations</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><span class="keywordtype">void</span> configure_windows_type(thread_pool_module::thread_pool&amp; pool) {</div>
+<div class="line"><span class="keywordtype">void</span> configure_windows_type(<a class="code hl_class" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html">thread_pool_module::thread_pool</a>&amp; pool) {</div>
 <div class="line">    <span class="keyword">auto</span> workers = pool.get_workers();</div>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; worker : workers) {</div>
@@ -1401,7 +1404,7 @@ Windows Optimizations</h2>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> configure_processor_groups(thread_pool_module::thread_pool&amp; pool) {</div>
+<div class="line"><span class="keywordtype">void</span> configure_processor_groups(<a class="code hl_class" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html">thread_pool_module::thread_pool</a>&amp; pool) {</div>
 <div class="line">    DWORD num_groups = GetActiveProcessorGroupCount();</div>
 <div class="line">    <span class="keywordflow">if</span> (num_groups &lt;= 1) <span class="keywordflow">return</span>;</div>
 <div class="line">    </div>
@@ -1416,11 +1419,11 @@ Windows Optimizations</h2>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3282"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1240"></a>
 Best Practices</h1>
-<h2><a class="anchor" id="autotoc_md3283"></a>
+<h2><a class="anchor" id="autotoc_md1241"></a>
 Performance Tuning Checklist</h2>
-<h3><a class="anchor" id="autotoc_md3284"></a>
+<h3><a class="anchor" id="autotoc_md1242"></a>
 Measurement and Analysis</h3>
 <ul>
 <li>[x] Establish performance baseline with benchmarks</li>
@@ -1428,7 +1431,7 @@ Measurement and Analysis</h3>
 <li>[x] Measure thread utilization and queue depths</li>
 <li>[x] Identify bottlenecks through systematic analysis</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3285"></a>
+<h3><a class="anchor" id="autotoc_md1243"></a>
 Thread Pool Configuration</h3>
 <ul>
 <li>[x] Set optimal thread count based on workload type</li>
@@ -1436,7 +1439,7 @@ Thread Pool Configuration</h3>
 <li>[x] Consider thread affinity for critical applications</li>
 <li>[x] Adjust for platform-specific characteristics</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3286"></a>
+<h3><a class="anchor" id="autotoc_md1244"></a>
 Job Design</h3>
 <ul>
 <li>[x] Batch job submission where possible</li>
@@ -1444,7 +1447,7 @@ Job Design</h3>
 <li>[x] Balance workload across job types</li>
 <li>[x] Minimize memory allocation in job execution</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3287"></a>
+<h3><a class="anchor" id="autotoc_md1245"></a>
 Memory Considerations</h3>
 <ul>
 <li>[x] Prevent false sharing with proper alignment</li>
@@ -1452,7 +1455,7 @@ Memory Considerations</h3>
 <li>[x] Consider thread-local storage for worker data</li>
 <li>[x] Monitor memory growth under sustained load</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3288"></a>
+<h3><a class="anchor" id="autotoc_md1246"></a>
 Advanced Techniques</h3>
 <ul>
 <li>[x] Implement backpressure mechanisms for overload protection</li>
@@ -1460,9 +1463,9 @@ Advanced Techniques</h3>
 <li>[x] Use lock-free data structures where appropriate</li>
 <li>[x] Implement circuit breakers for fault tolerance</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3289"></a>
+<h2><a class="anchor" id="autotoc_md1247"></a>
 Real-World Performance Guidelines</h2>
-<h3><a class="anchor" id="autotoc_md3290"></a>
+<h3><a class="anchor" id="autotoc_md1248"></a>
 Web Server Applications</h3>
 <ul>
 <li><b>Thread Count</b>: 2x hardware threads for I/O-heavy workloads</li>
@@ -1470,7 +1473,7 @@ Web Server Applications</h3>
 <li><b>Type Usage</b>: High for interactive requests, Normal for API calls, Low for analytics</li>
 <li><b>Memory</b>: Use connection pools and request object pools</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3291"></a>
+<h3><a class="anchor" id="autotoc_md1249"></a>
 Data Processing Pipelines</h3>
 <ul>
 <li><b>Thread Count</b>: Match physical core count</li>
@@ -1478,7 +1481,7 @@ Data Processing Pipelines</h3>
 <li><b>Memory</b>: Pre-allocate buffers, use memory-mapped files for large datasets</li>
 <li><b>Optimization</b>: Pipeline stages with different thread pools</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3292"></a>
+<h3><a class="anchor" id="autotoc_md1250"></a>
 Real-Time Systems</h3>
 <ul>
 <li><b>Thread Count</b>: Reserve 1 core for OS, use remaining cores</li>
@@ -1486,7 +1489,7 @@ Real-Time Systems</h3>
 <li>**Type**: Strict type separation with dedicated workers</li>
 <li>**Memory**: Pre-allocate all memory, avoid runtime allocation</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3293"></a>
+<h3><a class="anchor" id="autotoc_md1251"></a>
 Scientific Computing</h3>
 <ul>
 <li>**Thread Count**: Use all available cores</li>
@@ -1494,9 +1497,9 @@ Scientific Computing</h3>
 <li>**Memory**: Consider NUMA topology and memory bandwidth</li>
 <li>**Optimization**: Use CPU-specific optimizations (SIMD, cache optimization)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3294"></a>
+<h2><a class="anchor" id="autotoc_md1252"></a>
 Monitoring and Diagnostics</h2>
-<h3><a class="anchor" id="autotoc_md3295"></a>
+<h3><a class="anchor" id="autotoc_md1253"></a>
 Key Performance Indicators</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1512,13 +1515,13 @@ Key Performance Indicators</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Error Rate   </td><td class="markdownTableBodyNone">&lt;0.1%   </td><td class="markdownTableBodyNone">&gt;1%   </td><td class="markdownTableBodyNone">&gt;5%   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md3296"></a>
+<h3><a class="anchor" id="autotoc_md1254"></a>
 Diagnostic Tools</h3>
 <div class="fragment"><div class="line"><span class="keyword">class </span>PerformanceMonitor {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <span class="keyword">struct </span>Metrics {</div>
 <div class="line">        std::atomic&lt;uint64_t&gt; jobs_submitted{0};</div>
-<div class="line">        std::atomic&lt;uint64_t&gt; jobs_completed{0};</div>
+<div class="line">        std::atomic&lt;uint64_t&gt; <a class="code hl_variable" href="../../df/de0/optimized__storage_8h.html#a1e01545799cb0944029bea465dd2c0ba">jobs_completed</a>{0};</div>
 <div class="line">        std::atomic&lt;uint64_t&gt; total_execution_time{0};</div>
 <div class="line">        std::atomic&lt;uint32_t&gt; current_queue_depth{0};</div>
 <div class="line">        std::atomic&lt;uint32_t&gt; peak_queue_depth{0};</div>
@@ -1541,9 +1544,10 @@ Diagnostic Tools</h3>
 <div class="line">    std::chrono::steady_clock::time_point start_time_{std::chrono::steady_clock::now()};</div>
 <div class="line">};</div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_1_1core_html_a0ebc74b13acdfe5c2939ed4e5acaeab6aaa8fb77e57d1ca18d593e909729871fe"><div class="ttname"><a href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a0ebc74b13acdfe5c2939ed4e5acaeab6aaa8fb77e57d1ca18d593e909729871fe">kcenon::messaging::core::message_status::completed</a></div><div class="ttdeci">@ completed</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3297"></a>
+<div class="ttc" id="aoptimized__storage_8h_html_a1e01545799cb0944029bea465dd2c0ba"><div class="ttname"><a href="../../df/de0/optimized__storage_8h.html#a1e01545799cb0944029bea465dd2c0ba">jobs_completed</a></div><div class="ttdeci">std::uint32_t jobs_completed</div><div class="ttdef"><b>Definition</b> <a href="../../df/de0/optimized__storage_8h_source.html#l00004">optimized_storage.h:4</a></div></div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1255"></a>
 Future Performance Improvements</h1>
-<h2><a class="anchor" id="autotoc_md3298"></a>
+<h2><a class="anchor" id="autotoc_md1256"></a>
 Planned Optimizations</h2>
 <ol type="1">
 <li><b>Type Thread Pool Optimizations</b>:<ul>
@@ -1565,21 +1569,22 @@ Planned Optimizations</h2>
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3299"></a>
+<h1><a class="anchor" id="autotoc_md1257"></a>
 Performance Recommendations Summary (2025)</h1>
-<h2><a class="anchor" id="autotoc_md3300"></a>
+<h2><a class="anchor" id="autotoc_md1258"></a>
 Quick Configuration Guide</h2>
-<h3><a class="anchor" id="autotoc_md3301"></a>
+<h3><a class="anchor" id="autotoc_md1259"></a>
 1. &lt;strong&gt;For General Applications&lt;/strong&gt;</h3>
 <div class="fragment"><div class="line"><span class="comment">// Use standard thread pool with adaptive queues</span></div>
 <div class="line"><span class="keyword">auto</span> pool = std::make_shared&lt;thread_pool&gt;(<span class="stringliteral">&quot;MyPool&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Add workers (hardware_concurrency for CPU-bound)</span></div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; std::thread::hardware_concurrency(); ++i) {</div>
-<div class="line">    pool-&gt;enqueue(std::make_unique&lt;thread_worker&gt;());</div>
+<div class="line">    pool-&gt;<a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a318d67c6132d192ecef1c27f6276bfb0">enqueue</a>(std::make_unique&lt;thread_worker&gt;());</div>
 <div class="line">}</div>
-<div class="line">pool-&gt;start();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3302"></a>
+<div class="line">pool-&gt;<a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a60f3cd30f157cefb2e1fe521e03d6d8f">start</a>();</div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_a60f3cd30f157cefb2e1fe521e03d6d8f"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a60f3cd30f157cefb2e1fe521e03d6d8f">thread_pool_module::thread_pool::start</a></div><div class="ttdeci">auto start(void) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">Starts the thread pool and all associated workers.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d53/modular__structure_2core_2src_2thread__pool_2core_2thread__pool_8cpp_source.html#l00139">thread_pool.cpp:139</a></div></div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1260"></a>
 2. &lt;strong&gt;For Priority-Sensitive Applications&lt;/strong&gt;</h3>
 <div class="fragment"><div class="line"><span class="comment">// Use typed thread pool with adaptive queues</span></div>
 <div class="line"><span class="keyword">auto</span> pool = std::make_shared&lt;typed_thread_pool_t&lt;job_types&gt;&gt;(<span class="stringliteral">&quot;PriorityPool&quot;</span>);</div>
@@ -1588,17 +1593,17 @@ Quick Configuration Guide</h2>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> priority : {job_types::RealTime, job_types::Batch, job_types::Background}) {</div>
 <div class="line">    <span class="keyword">auto</span> worker = std::make_unique&lt;typed_thread_worker_t&lt;job_types&gt;&gt;();</div>
 <div class="line">    worker-&gt;set_responsibilities({priority});</div>
-<div class="line">    pool-&gt;enqueue(std::move(worker));</div>
+<div class="line">    pool-&gt;<a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a318d67c6132d192ecef1c27f6276bfb0">enqueue</a>(std::move(worker));</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Add universal workers for load balancing</span></div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 2; ++i) {</div>
 <div class="line">    <span class="keyword">auto</span> worker = std::make_unique&lt;typed_thread_worker_t&lt;job_types&gt;&gt;();</div>
 <div class="line">    worker-&gt;set_responsibilities({job_types::RealTime, job_types::Batch, job_types::Background});</div>
-<div class="line">    pool-&gt;enqueue(std::move(worker));</div>
+<div class="line">    pool-&gt;<a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a318d67c6132d192ecef1c27f6276bfb0">enqueue</a>(std::move(worker));</div>
 <div class="line">}</div>
-<div class="line">pool-&gt;start();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3303"></a>
+<div class="line">pool-&gt;<a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a60f3cd30f157cefb2e1fe521e03d6d8f">start</a>();</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1261"></a>
 3. &lt;strong&gt;For High-Concurrency Scenarios&lt;/strong&gt;</h3>
 <div class="fragment"><div class="line"><span class="comment">// Standard pool with batch processing</span></div>
 <div class="line"><span class="keyword">auto</span> pool = std::make_shared&lt;thread_pool&gt;(<span class="stringliteral">&quot;HighConcurrency&quot;</span>);</div>
@@ -1610,9 +1615,10 @@ Quick Configuration Guide</h2>
 <div class="line">    worker-&gt;set_batch_processing(<span class="keyword">true</span>, 32); <span class="comment">// Process up to 32 jobs at once</span></div>
 <div class="line">    workers.push_back(std::move(worker));</div>
 <div class="line">}</div>
-<div class="line">pool-&gt;enqueue_batch(std::move(workers));</div>
-<div class="line">pool-&gt;start();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3304"></a>
+<div class="line">pool-&gt;<a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#aebcc6418f9018add94a5ccc407b0437e">enqueue_batch</a>(std::move(workers));</div>
+<div class="line">pool-&gt;<a class="code hl_function" href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#a60f3cd30f157cefb2e1fe521e03d6d8f">start</a>();</div>
+<div class="ttc" id="aclassthread__pool__module_1_1thread__pool_html_aebcc6418f9018add94a5ccc407b0437e"><div class="ttname"><a href="../../d9/da1/classthread__pool__module_1_1thread__pool.html#aebcc6418f9018add94a5ccc407b0437e">thread_pool_module::thread_pool::enqueue_batch</a></div><div class="ttdeci">auto enqueue_batch(std::vector&lt; std::unique_ptr&lt; job &gt; &gt; &amp;&amp;jobs) -&gt; std::optional&lt; std::string &gt;</div><div class="ttdoc">Enqueues a batch of jobs into the shared job_queue.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d53/modular__structure_2core_2src_2thread__pool_2core_2thread__pool_8cpp_source.html#l00221">thread_pool.cpp:221</a></div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1262"></a>
 Performance Tuning Quick Reference</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1630,7 +1636,7 @@ Performance Tuning Quick Reference</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Priority Scheduling</b>   </td><td class="markdownTableBodyNone">Typed pool with 3-4 workers per type   </td><td class="markdownTableBodyNone">99.6% type accuracy   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md3305"></a>
+<h2><a class="anchor" id="autotoc_md1263"></a>
 Common Pitfalls to Avoid</h2>
 <ol type="1">
 <li><b>Over-Threading</b>: Don't create more workers than 2× hardware threads</li>
@@ -1639,7 +1645,7 @@ Common Pitfalls to Avoid</h2>
 <li><b>Queue Depth</b>: Monitor queue depth; &gt; 1000 indicates backpressure needed</li>
 <li><b>Type Proliferation</b>: Keep priority types to 3-5 for optimal performance</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3306"></a>
+<h1><a class="anchor" id="autotoc_md1264"></a>
 Conclusion</h1>
 <p>The Thread System framework provides exceptional performance characteristics with the simplified adaptive architecture:</p>
 <ol type="1">
@@ -1679,7 +1685,7 @@ Conclusion</h1>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md3307"></a>
+<h2><a class="anchor" id="autotoc_md1265"></a>
 Key Success Factors</h2>
 <ol type="1">
 <li><b>Simplified Usage</b>:<ul>

@@ -267,7 +267,7 @@ System Integrator</h2>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <span class="comment">// System lifecycle</span></div>
 <div class="line">    <span class="keywordtype">bool</span> initialize();</div>
-<div class="line">    <span class="keywordtype">void</span> shutdown();</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_define" href="da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a>();</div>
 <div class="line">    <span class="keywordtype">bool</span> is_running() <span class="keyword">const</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Message operations</span></div>
@@ -282,12 +282,13 @@ System Integrator</h2>
 <div class="line">    system_health check_system_health() <span class="keyword">const</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Factory methods</span></div>
-<div class="line">    <span class="keyword">static</span> std::unique_ptr&lt;system_integrator&gt; <a class="code hl_function" href="da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp.html#a75b6b3ce3590f7f29e3a71cc698bb69a">create_default</a>();</div>
+<div class="line">    <span class="keyword">static</span> std::unique_ptr&lt;system_integrator&gt; <a class="code hl_function" href="d6/d0d/comparison__benchmark_8cpp.html#a85c1bc628eb54edb6a3c2f3e611ef6e2">create_default</a>();</div>
 <div class="line">    <span class="keyword">static</span> std::unique_ptr&lt;system_integrator&gt; create_for_environment(<span class="keyword">const</span> std::string&amp; environment);</div>
 <div class="line">};</div>
-<div class="ttc" id="abenchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp_html_a75b6b3ce3590f7f29e3a71cc698bb69a"><div class="ttname"><a href="da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp.html#a75b6b3ce3590f7f29e3a71cc698bb69a">create_default</a></div><div class="ttdeci">auto create_default(const uint16_t &amp;worker_counts) -&gt; std::tuple&lt; std::shared_ptr&lt; kcenon::thread::thread_pool &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdef"><b>Definition</b> <a href="da/dfb/benchmarks_2thread__pool__benchmarks_2comparison__benchmark_8cpp_source.html#l00068">comparison_benchmark.cpp:68</a></div></div>
 <div class="ttc" id="aclasskcenon_1_1messaging_1_1integrations_1_1service__container_html"><div class="ttname"><a href="d5/d8f/classkcenon_1_1messaging_1_1integrations_1_1service__container.html">kcenon::messaging::integrations::service_container</a></div><div class="ttdef"><b>Definition</b> <a href="d9/dc3/application__layer_2include_2kcenon_2messaging_2integrations_2service__container_8h_source.html#l00044">service_container.h:44</a></div></div>
 <div class="ttc" id="aclasskcenon_1_1messaging_1_1integrations_1_1system__integrator_html"><div class="ttname"><a href="d7/d69/classkcenon_1_1messaging_1_1integrations_1_1system__integrator.html">kcenon::messaging::integrations::system_integrator</a></div><div class="ttdef"><b>Definition</b> <a href="d6/deb/system__integrator_8h_source.html#l00009">system_integrator.h:9</a></div></div>
+<div class="ttc" id="acomparison__benchmark_8cpp_html_a85c1bc628eb54edb6a3c2f3e611ef6e2"><div class="ttname"><a href="d6/d0d/comparison__benchmark_8cpp.html#a85c1bc628eb54edb6a3c2f3e611ef6e2">create_default</a></div><div class="ttdeci">auto create_default(const uint16_t &amp;worker_counts) -&gt; std::tuple&lt; std::shared_ptr&lt; thread_pool_module::thread_pool &gt;, std::optional&lt; std::string &gt; &gt;</div><div class="ttdef"><b>Definition</b> <a href="d6/d0d/comparison__benchmark_8cpp_source.html#l00068">comparison_benchmark.cpp:68</a></div></div>
+<div class="ttc" id="alog__server_8cpp_html_aaefada63b967623c915b6b3ae59c43c8"><div class="ttname"><a href="da/dcd/log__server_8cpp.html#aaefada63b967623c915b6b3ae59c43c8">shutdown</a></div><div class="ttdeci">#define shutdown(fd, how)</div><div class="ttdef"><b>Definition</b> <a href="da/dcd/log__server_8cpp_source.html#l00015">log_server.cpp:15</a></div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
 Message Types</h2>
 <p>Core message structures:</p>
@@ -358,7 +359,7 @@ Sample Programs</h1>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md24"></a>
 2. Chat Server (&lt;tt&gt;chat_server.cpp&lt;/tt&gt;)</h2>
 <p>A complete real-time chat server implementation featuring:</p><ul>
-<li><a class="el" href="d9/dc0/classUser.html">User</a> authentication and session management</li>
+<li>User authentication and session management</li>
 <li>Public and private messaging</li>
 <li>Room-based chat with history</li>
 <li>Automatic cleanup of inactive users</li>

@@ -1,7 +1,0 @@
-<map id="kcenon::thread::typed_thread_pool_t&lt; job_type &gt;" name="kcenon::thread::typed_thread_pool_t&lt; job_type &gt;">
-<area shape="rect" id="Node000001" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="245,49,449,89"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,197,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,46,245,51,245,56,210,51"/>
-<area shape="rect" id="Node000003" href="$d1/df5/classkcenon_1_1thread_1_1executor__interface.html" title="Executor interface for submitting work and coordinating shutdown." alt="" coords="10,85,193,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="206,87,245,81,246,86,207,92"/>
-</map>

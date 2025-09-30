@@ -1,15 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d4/df5/classkcenon_1_1messaging_1_1services_1_1service__interface.html" title=" " alt="" coords="5,131,201,171"/>
-<area shape="rect" id="Node000001" href="$db/daf/classkcenon_1_1messaging_1_1services_1_1container_1_1container__service.html" title=" " alt="" coords="271,5,427,60"/>
-<area shape="poly" id="edge82_Node000000_Node000001" title=" " alt="" coords="149,122,248,69,274,58,276,63,251,74,151,127"/>
-<area shape="rect" id="Node000002" href="$db/d94/classkcenon_1_1messaging_1_1services_1_1logging_1_1logging__service.html" title=" " alt="" coords="255,84,443,139"/>
-<area shape="poly" id="edge83_Node000000_Node000002" title=" " alt="" coords="214,131,254,124,255,129,215,136"/>
-<area shape="rect" id="Node000004" href="$db/d02/classkcenon_1_1messaging_1_1services_1_1monitoring_1_1monitoring__service.html" title=" " alt="" coords="271,163,427,217"/>
-<area shape="poly" id="edge85_Node000000_Node000004" title=" " alt="" coords="216,166,271,175,270,180,215,172"/>
-<area shape="rect" id="Node000006" href="$d2/db0/classkcenon_1_1messaging_1_1services_1_1network_1_1network__service.html" title=" " alt="" coords="249,241,448,296"/>
-<area shape="poly" id="edge87_Node000000_Node000006" title=" " alt="" coords="152,176,250,228,276,239,274,244,248,232,150,181"/>
-<area shape="rect" id="Node000003" href="$d7/ddd/classkcenon_1_1messaging_1_1services_1_1logging_1_1internal__logging__service.html" title=" " alt="" coords="496,80,687,135"/>
-<area shape="poly" id="edge84_Node000002_Node000003" title=" " alt="" coords="456,107,496,106,496,112,456,112"/>
-<area shape="rect" id="Node000005" href="$d6/db1/classkcenon_1_1messaging_1_1services_1_1monitoring_1_1internal__monitoring__service.html" title=" " alt="" coords="512,159,671,229"/>
-<area shape="poly" id="edge86_Node000004_Node000005" title=" " alt="" coords="441,189,512,190,512,195,441,194"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,60,147,85"/>
+<area shape="rect" id="Node000001" href="$d4/d57/structthread__pool__module_1_1detail_1_1is__future__like.html" title="SFINAE helper to detect future&#45;like types." alt="" coords="195,5,349,60"/>
+<area shape="poly" id="edge66_Node000000_Node000001" title=" " alt="" coords="152,55,194,46,195,51,153,60"/>
+<area shape="rect" id="Node000002" href="$d4/d3e/structthread__pool__module_1_1detail_1_1is__nothrow__callable.html" title="Type trait to check if a callable is noexcept." alt="" coords="195,84,349,139"/>
+<area shape="poly" id="edge67_Node000000_Node000002" title=" " alt="" coords="155,86,195,93,194,99,154,91"/>
 </map>

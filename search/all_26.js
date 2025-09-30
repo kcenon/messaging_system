@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['—_20design_20improvement_20plan_0',['Thread System — Design Improvement Plan',['../d0/df8/md_libraries_2thread__system_2docs_2DESIGN__IMPROVEMENTS.html',1,'']]]
+  ['→_20modular_0',['→ modular',['../d9/d9b/md_libraries_2logger__system_2ARCHITECTURE.html#autotoc_md152',1,'🔄 Evolution: Monolithic → Modular'],['../dc/d4e/md_libraries_2monitoring__system_2ARCHITECTURE.html#autotoc_md406',1,'🔄 Evolution: Monolithic → Modular'],['../df/d5b/md_libraries_2thread__system_2ARCHITECTURE.html#autotoc_md740',1,'🔄 Evolution: Monolithic → Modular']]]
 ];

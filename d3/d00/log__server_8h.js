@@ -1,6 +1,6 @@
 var log__server_8h =
 [
-    [ "kcenon::logger::server::server_config", "d4/daf/structkcenon_1_1logger_1_1server_1_1server__config.html", "d4/daf/structkcenon_1_1logger_1_1server_1_1server__config" ],
-    [ "kcenon::logger::server::log_server", "d8/d0c/classkcenon_1_1logger_1_1server_1_1log__server.html", "d8/d0c/classkcenon_1_1logger_1_1server_1_1log__server" ],
-    [ "kcenon::logger::server::log_server_factory", "d9/d0d/classkcenon_1_1logger_1_1server_1_1log__server__factory.html", "d9/d0d/classkcenon_1_1logger_1_1server_1_1log__server__factory" ]
+    [ "logger_module::log_server", "df/d21/classlogger__module_1_1log__server.html", "df/d21/classlogger__module_1_1log__server" ],
+    [ "logger_module::log_server::network_log_entry", "d1/dd7/structlogger__module_1_1log__server_1_1network__log__entry.html", "d1/dd7/structlogger__module_1_1log__server_1_1network__log__entry" ],
+    [ "logger_module::log_server::server_stats", "d7/d01/structlogger__module_1_1log__server_1_1server__stats.html", "d7/d01/structlogger__module_1_1log__server_1_1server__stats" ]
 ];

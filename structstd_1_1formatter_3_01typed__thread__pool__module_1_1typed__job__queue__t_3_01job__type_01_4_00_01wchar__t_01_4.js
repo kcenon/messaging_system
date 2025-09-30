@@ -1,4 +1,0 @@
-var structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_00_01wchar__t_01_4 =
-[
-    [ "format", "structstd_1_1formatter_3_01typed__thread__pool__module_1_1typed__job__queue__t_3_01job__type_01_4_00_01wchar__t_01_4.html#afc310e318de7a0a478b1991f6e181201", null ]
-];

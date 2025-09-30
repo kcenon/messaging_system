@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('dc/d6a/classmonitoring__interface_1_1n
 <p>No-op implementation of monitoring interface.  
  <a href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for monitoring_interface::null_monitoring:</div>
 <div class="dyncontent">
@@ -108,7 +108,9 @@ Inheritance diagram for monitoring_interface::null_monitoring:</div>
 <map name="amonitoring__interface_1_1null__monitoring_inherit__map" id="amonitoring__interface_1_1null__monitoring_inherit__map">
 <area shape="rect" title="No&#45;op implementation of monitoring interface." alt="" coords="9,93,168,133"/>
 <area shape="rect" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="5,5,172,45"/>
+<area shape="poly" title=" " alt="" coords="74,59,76,93,71,93,68,59"/>
 <area shape="poly" title=" " alt="" coords="91,59,91,93,86,93,86,59"/>
+<area shape="poly" title=" " alt="" coords="109,59,107,93,101,93,104,59"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -118,7 +120,9 @@ Collaboration diagram for monitoring_interface::null_monitoring:</div>
 <map name="amonitoring__interface_1_1null__monitoring_coll__map" id="amonitoring__interface_1_1null__monitoring_coll__map">
 <area shape="rect" title="No&#45;op implementation of monitoring interface." alt="" coords="9,93,168,133"/>
 <area shape="rect" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html" title=" " alt="" coords="5,5,172,45"/>
+<area shape="poly" title=" " alt="" coords="74,59,76,93,71,93,68,59"/>
 <area shape="poly" title=" " alt="" coords="91,59,91,93,86,93,86,59"/>
+<area shape="poly" title=" " alt="" coords="109,59,107,93,101,93,104,59"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -142,7 +146,50 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1f0eedfe8abf8cd5ab662cb12ab7371d" id="r_a1f0eedfe8abf8cd5ab662cb12ab7371d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">is_active</a> () const override</td></tr>
 <tr class="memdesc:a1f0eedfe8abf8cd5ab662cb12ab7371d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if monitoring is currently active.  <br /></td></tr>
 <tr class="separator:a1f0eedfe8abf8cd5ab662cb12ab7371d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf6fb177fd04598bdfe448e802635fb1" id="r_aaf6fb177fd04598bdfe448e802635fb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">update_system_metrics</a> (const <a class="el" href="../../df/d06/structmonitoring__interface_1_1system__metrics.html">system_metrics</a> &amp;) override</td></tr>
+<tr class="memdesc:aaf6fb177fd04598bdfe448e802635fb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates system metrics.  <br /></td></tr>
+<tr class="separator:aaf6fb177fd04598bdfe448e802635fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03bab574157fdc0f1c7f22ec9d0b6a6d" id="r_a03bab574157fdc0f1c7f22ec9d0b6a6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">update_thread_pool_metrics</a> (const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;) override</td></tr>
+<tr class="memdesc:a03bab574157fdc0f1c7f22ec9d0b6a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates thread pool metrics.  <br /></td></tr>
+<tr class="separator:a03bab574157fdc0f1c7f22ec9d0b6a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e4d8f933c29fdfee61c799d91849a1c" id="r_a9e4d8f933c29fdfee61c799d91849a1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">update_worker_metrics</a> (std::size_t, const <a class="el" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html">worker_metrics</a> &amp;) override</td></tr>
+<tr class="memdesc:a9e4d8f933c29fdfee61c799d91849a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates worker thread metrics.  <br /></td></tr>
+<tr class="separator:a9e4d8f933c29fdfee61c799d91849a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adea87d72ffbc1e85f5ce223a9650735a" id="r_adea87d72ffbc1e85f5ce223a9650735a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">get_current_snapshot</a> () const override</td></tr>
+<tr class="memdesc:adea87d72ffbc1e85f5ce223a9650735a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the most recent metrics snapshot.  <br /></td></tr>
+<tr class="separator:adea87d72ffbc1e85f5ce223a9650735a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7efcd15367b60608bbe51ef21ec39ee4" id="r_a7efcd15367b60608bbe51ef21ec39ee4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">get_recent_snapshots</a> (std::size_t) const override</td></tr>
+<tr class="memdesc:a7efcd15367b60608bbe51ef21ec39ee4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves multiple recent metrics snapshots.  <br /></td></tr>
+<tr class="separator:a7efcd15367b60608bbe51ef21ec39ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f0eedfe8abf8cd5ab662cb12ab7371d" id="r_a1f0eedfe8abf8cd5ab662cb12ab7371d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">is_active</a> () const override</td></tr>
+<tr class="memdesc:a1f0eedfe8abf8cd5ab662cb12ab7371d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if monitoring is currently active.  <br /></td></tr>
+<tr class="separator:a1f0eedfe8abf8cd5ab662cb12ab7371d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf6fb177fd04598bdfe448e802635fb1" id="r_aaf6fb177fd04598bdfe448e802635fb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">update_system_metrics</a> (const <a class="el" href="../../df/d06/structmonitoring__interface_1_1system__metrics.html">system_metrics</a> &amp;) override</td></tr>
+<tr class="memdesc:aaf6fb177fd04598bdfe448e802635fb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates system metrics.  <br /></td></tr>
+<tr class="separator:aaf6fb177fd04598bdfe448e802635fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03bab574157fdc0f1c7f22ec9d0b6a6d" id="r_a03bab574157fdc0f1c7f22ec9d0b6a6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">update_thread_pool_metrics</a> (const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;) override</td></tr>
+<tr class="memdesc:a03bab574157fdc0f1c7f22ec9d0b6a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates thread pool metrics.  <br /></td></tr>
+<tr class="separator:a03bab574157fdc0f1c7f22ec9d0b6a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e4d8f933c29fdfee61c799d91849a1c" id="r_a9e4d8f933c29fdfee61c799d91849a1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">update_worker_metrics</a> (std::size_t, const <a class="el" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html">worker_metrics</a> &amp;) override</td></tr>
+<tr class="memdesc:a9e4d8f933c29fdfee61c799d91849a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates worker thread metrics.  <br /></td></tr>
+<tr class="separator:a9e4d8f933c29fdfee61c799d91849a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adea87d72ffbc1e85f5ce223a9650735a" id="r_adea87d72ffbc1e85f5ce223a9650735a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">get_current_snapshot</a> () const override</td></tr>
+<tr class="memdesc:adea87d72ffbc1e85f5ce223a9650735a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the most recent metrics snapshot.  <br /></td></tr>
+<tr class="separator:adea87d72ffbc1e85f5ce223a9650735a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7efcd15367b60608bbe51ef21ec39ee4" id="r_a7efcd15367b60608bbe51ef21ec39ee4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">get_recent_snapshots</a> (std::size_t) const override</td></tr>
+<tr class="memdesc:a7efcd15367b60608bbe51ef21ec39ee4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves multiple recent metrics snapshots.  <br /></td></tr>
+<tr class="separator:a7efcd15367b60608bbe51ef21ec39ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f0eedfe8abf8cd5ab662cb12ab7371d" id="r_a1f0eedfe8abf8cd5ab662cb12ab7371d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">is_active</a> () const override</td></tr>
+<tr class="memdesc:a1f0eedfe8abf8cd5ab662cb12ab7371d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if monitoring is currently active.  <br /></td></tr>
+<tr class="separator:a1f0eedfe8abf8cd5ab662cb12ab7371d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classmonitoring__interface_1_1monitoring__interface"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmonitoring__interface_1_1monitoring__interface')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html">monitoring_interface::monitoring_interface</a></td></tr>
+<tr class="memitem:ae2a72b6ecc902138caa6de4fb6f20fe1 inherit pub_methods_classmonitoring__interface_1_1monitoring__interface" id="r_ae2a72b6ecc902138caa6de4fb6f20fe1"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae2a72b6ecc902138caa6de4fb6f20fe1">~monitoring_interface</a> ()=default</td></tr>
+<tr class="separator:ae2a72b6ecc902138caa6de4fb6f20fe1 inherit pub_methods_classmonitoring__interface_1_1monitoring__interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2a72b6ecc902138caa6de4fb6f20fe1 inherit pub_methods_classmonitoring__interface_1_1monitoring__interface" id="r_ae2a72b6ecc902138caa6de4fb6f20fe1"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae2a72b6ecc902138caa6de4fb6f20fe1">~monitoring_interface</a> ()=default</td></tr>
+<tr class="separator:ae2a72b6ecc902138caa6de4fb6f20fe1 inherit pub_methods_classmonitoring__interface_1_1monitoring__interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f7ab4041c72d63972e360fbef85801b inherit pub_methods_classmonitoring__interface_1_1monitoring__interface" id="r_a9f7ab4041c72d63972e360fbef85801b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a9f7ab4041c72d63972e360fbef85801b">update_thread_pool_metrics</a> (const std::string &amp;pool_name, std::uint32_t pool_instance_id, const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;metrics)</td></tr>
+<tr class="memdesc:a9f7ab4041c72d63972e360fbef85801b inherit pub_methods_classmonitoring__interface_1_1monitoring__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates thread pool metrics with pool identifier (for multi-pool scenarios).  <br /></td></tr>
+<tr class="separator:a9f7ab4041c72d63972e360fbef85801b inherit pub_methods_classmonitoring__interface_1_1monitoring__interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2a72b6ecc902138caa6de4fb6f20fe1 inherit pub_methods_classmonitoring__interface_1_1monitoring__interface" id="r_ae2a72b6ecc902138caa6de4fb6f20fe1"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae2a72b6ecc902138caa6de4fb6f20fe1">~monitoring_interface</a> ()=default</td></tr>
 <tr class="separator:ae2a72b6ecc902138caa6de4fb6f20fe1 inherit pub_methods_classmonitoring__interface_1_1monitoring__interface"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f7ab4041c72d63972e360fbef85801b inherit pub_methods_classmonitoring__interface_1_1monitoring__interface" id="r_a9f7ab4041c72d63972e360fbef85801b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a9f7ab4041c72d63972e360fbef85801b">update_thread_pool_metrics</a> (const std::string &amp;pool_name, std::uint32_t pool_instance_id, const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;metrics)</td></tr>
@@ -153,10 +200,10 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>No-op implementation of monitoring interface. </p>
 <p>Used when monitoring is disabled or not configured. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00184">184</a> of file <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00157">157</a> of file <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="adea87d72ffbc1e85f5ce223a9650735a" name="adea87d72ffbc1e85f5ce223a9650735a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adea87d72ffbc1e85f5ce223a9650735a">&#9670;&#160;</a></span>get_current_snapshot()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adea87d72ffbc1e85f5ce223a9650735a">&#9670;&#160;</a></span>get_current_snapshot() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,12 +230,76 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ac6fe853ef31e781b321e1fd8e2885096">monitoring_interface::monitoring_interface</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00190">190</a> of file <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00163">163</a> of file <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="adea87d72ffbc1e85f5ce223a9650735a" name="adea87d72ffbc1e85f5ce223a9650735a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adea87d72ffbc1e85f5ce223a9650735a">&#9670;&#160;</a></span>get_current_snapshot() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> monitoring_interface::null_monitoring::get_current_snapshot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the most recent metrics snapshot. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current metrics snapshot </dd></dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ac6fe853ef31e781b321e1fd8e2885096">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00190">190</a> of file <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="adea87d72ffbc1e85f5ce223a9650735a" name="adea87d72ffbc1e85f5ce223a9650735a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adea87d72ffbc1e85f5ce223a9650735a">&#9670;&#160;</a></span>get_current_snapshot() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> monitoring_interface::null_monitoring::get_current_snapshot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the most recent metrics snapshot. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current metrics snapshot </dd></dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ac6fe853ef31e781b321e1fd8e2885096">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html#l00190">190</a> of file <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
 
 </div>
 </div>
 <a id="a7efcd15367b60608bbe51ef21ec39ee4" name="a7efcd15367b60608bbe51ef21ec39ee4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7efcd15367b60608bbe51ef21ec39ee4">&#9670;&#160;</a></span>get_recent_snapshots()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7efcd15367b60608bbe51ef21ec39ee4">&#9670;&#160;</a></span>get_recent_snapshots() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -222,12 +333,90 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a6f6baf3ab4f6d6768a34ee3d6668a526">monitoring_interface::monitoring_interface</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00194">194</a> of file <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00167">167</a> of file <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="a7efcd15367b60608bbe51ef21ec39ee4" name="a7efcd15367b60608bbe51ef21ec39ee4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7efcd15367b60608bbe51ef21ec39ee4">&#9670;&#160;</a></span>get_recent_snapshots() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> &gt; monitoring_interface::null_monitoring::get_recent_snapshots </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>count</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves multiple recent metrics snapshots. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">count</td><td>Number of snapshots to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of metrics snapshots, newest first </dd></dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a6f6baf3ab4f6d6768a34ee3d6668a526">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00194">194</a> of file <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="a7efcd15367b60608bbe51ef21ec39ee4" name="a7efcd15367b60608bbe51ef21ec39ee4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7efcd15367b60608bbe51ef21ec39ee4">&#9670;&#160;</a></span>get_recent_snapshots() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> &gt; monitoring_interface::null_monitoring::get_recent_snapshots </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>count</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves multiple recent metrics snapshots. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">count</td><td>Number of snapshots to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of metrics snapshots, newest first </dd></dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a6f6baf3ab4f6d6768a34ee3d6668a526">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html#l00194">194</a> of file <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
 
 </div>
 </div>
 <a id="a1f0eedfe8abf8cd5ab662cb12ab7371d" name="a1f0eedfe8abf8cd5ab662cb12ab7371d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f0eedfe8abf8cd5ab662cb12ab7371d">&#9670;&#160;</a></span>is_active()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f0eedfe8abf8cd5ab662cb12ab7371d">&#9670;&#160;</a></span>is_active() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -254,12 +443,76 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a6380254711b03f0f572b25080cf57b9d">monitoring_interface::monitoring_interface</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00198">198</a> of file <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00171">171</a> of file <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="a1f0eedfe8abf8cd5ab662cb12ab7371d" name="a1f0eedfe8abf8cd5ab662cb12ab7371d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f0eedfe8abf8cd5ab662cb12ab7371d">&#9670;&#160;</a></span>is_active() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool monitoring_interface::null_monitoring::is_active </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if monitoring is currently active. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if monitoring is active </dd></dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a6380254711b03f0f572b25080cf57b9d">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00198">198</a> of file <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="a1f0eedfe8abf8cd5ab662cb12ab7371d" name="a1f0eedfe8abf8cd5ab662cb12ab7371d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f0eedfe8abf8cd5ab662cb12ab7371d">&#9670;&#160;</a></span>is_active() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool monitoring_interface::null_monitoring::is_active </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if monitoring is currently active. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if monitoring is active </dd></dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a6380254711b03f0f572b25080cf57b9d">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html#l00198">198</a> of file <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
 
 </div>
 </div>
 <a id="aaf6fb177fd04598bdfe448e802635fb1" name="aaf6fb177fd04598bdfe448e802635fb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf6fb177fd04598bdfe448e802635fb1">&#9670;&#160;</a></span>update_system_metrics()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf6fb177fd04598bdfe448e802635fb1">&#9670;&#160;</a></span>update_system_metrics() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -292,12 +545,88 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae4944cdd740f04c1fb5ceab3cecf10b6">monitoring_interface::monitoring_interface</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00186">186</a> of file <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00159">159</a> of file <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="aaf6fb177fd04598bdfe448e802635fb1" name="aaf6fb177fd04598bdfe448e802635fb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf6fb177fd04598bdfe448e802635fb1">&#9670;&#160;</a></span>update_system_metrics() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void monitoring_interface::null_monitoring::update_system_metrics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../df/d06/structmonitoring__interface_1_1system__metrics.html">system_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates system metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>The system metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae4944cdd740f04c1fb5ceab3cecf10b6">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00186">186</a> of file <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="aaf6fb177fd04598bdfe448e802635fb1" name="aaf6fb177fd04598bdfe448e802635fb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf6fb177fd04598bdfe448e802635fb1">&#9670;&#160;</a></span>update_system_metrics() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void monitoring_interface::null_monitoring::update_system_metrics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../df/d06/structmonitoring__interface_1_1system__metrics.html">system_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates system metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>The system metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae4944cdd740f04c1fb5ceab3cecf10b6">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html#l00186">186</a> of file <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
 
 </div>
 </div>
 <a id="a03bab574157fdc0f1c7f22ec9d0b6a6d" name="a03bab574157fdc0f1c7f22ec9d0b6a6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03bab574157fdc0f1c7f22ec9d0b6a6d">&#9670;&#160;</a></span>update_thread_pool_metrics()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a03bab574157fdc0f1c7f22ec9d0b6a6d">&#9670;&#160;</a></span>update_thread_pool_metrics() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -330,12 +659,88 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::monitoring_interface</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00187">187</a> of file <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00160">160</a> of file <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="a03bab574157fdc0f1c7f22ec9d0b6a6d" name="a03bab574157fdc0f1c7f22ec9d0b6a6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03bab574157fdc0f1c7f22ec9d0b6a6d">&#9670;&#160;</a></span>update_thread_pool_metrics() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void monitoring_interface::null_monitoring::update_thread_pool_metrics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates thread pool metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>The thread pool metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00187">187</a> of file <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="a03bab574157fdc0f1c7f22ec9d0b6a6d" name="a03bab574157fdc0f1c7f22ec9d0b6a6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03bab574157fdc0f1c7f22ec9d0b6a6d">&#9670;&#160;</a></span>update_thread_pool_metrics() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void monitoring_interface::null_monitoring::update_thread_pool_metrics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates thread pool metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>The thread pool metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html#l00187">187</a> of file <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
 
 </div>
 </div>
 <a id="a9e4d8f933c29fdfee61c799d91849a1c" name="a9e4d8f933c29fdfee61c799d91849a1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e4d8f933c29fdfee61c799d91849a1c">&#9670;&#160;</a></span>update_worker_metrics()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e4d8f933c29fdfee61c799d91849a1c">&#9670;&#160;</a></span>update_worker_metrics() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -379,12 +784,112 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae6de59ed110a7b26c74f1ca33a9aa329">monitoring_interface::monitoring_interface</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00188">188</a> of file <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00161">161</a> of file <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>libraries/thread_system/include/kcenon/thread/interfaces/<a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a></li>
+<a id="a9e4d8f933c29fdfee61c799d91849a1c" name="a9e4d8f933c29fdfee61c799d91849a1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e4d8f933c29fdfee61c799d91849a1c">&#9670;&#160;</a></span>update_worker_metrics() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void monitoring_interface::null_monitoring::update_worker_metrics </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>worker_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html">worker_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates worker thread metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worker_id</td><td>Unique identifier for the worker </td></tr>
+    <tr><td class="paramname">metrics</td><td>The worker metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae6de59ed110a7b26c74f1ca33a9aa329">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00188">188</a> of file <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<a id="a9e4d8f933c29fdfee61c799d91849a1c" name="a9e4d8f933c29fdfee61c799d91849a1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e4d8f933c29fdfee61c799d91849a1c">&#9670;&#160;</a></span>update_worker_metrics() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void monitoring_interface::null_monitoring::update_worker_metrics </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>worker_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html">worker_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates worker thread metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worker_id</td><td>Unique identifier for the worker </td></tr>
+    <tr><td class="paramname">metrics</td><td>The worker metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae6de59ed110a7b26c74f1ca33a9aa329">monitoring_interface::monitoring_interface</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html#l00188">188</a> of file <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>libraries/monitoring_system/sources/monitoring/<a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a></li>
+<li>libraries/thread_system/modular_structure/core/include/thread_system_core/interfaces/<a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a></li>
+<li>libraries/thread_system/sources/interfaces/<a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

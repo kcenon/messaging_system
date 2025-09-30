@@ -91,45 +91,76 @@ $(document).ready(function(){initNavTree('d1/d53/classutility__module_1_1convert
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="../../de/dc1/classutility__module_1_1convert__string-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">utility_module::convert_string Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>String conversion utilities.  
+<p>Provides utilities for string encoding conversion, Base64 encoding/decoding, and substring operations like splitting or replacing.  
  <a href="../../d1/d53/classutility__module_1_1convert__string.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html">convert_string.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:abd95bc09617a96479dfb71d15869dd43" id="r_abd95bc09617a96479dfb71d15869dd43"><td class="memTemplParams" colspan="2">template&lt;typename FromType , typename ToType &gt; </td></tr>
-<tr class="memitem:abd95bc09617a96479dfb71d15869dd43"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#abd95bc09617a96479dfb71d15869dd43">convert</a> (const FromType &amp;value, const std::string &amp;from_encoding, const std::string &amp;to_encoding) -&gt; std::tuple&lt; std::optional&lt; ToType &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:abd95bc09617a96479dfb71d15869dd43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core template function for string encoding conversion.  <br /></td></tr>
-<tr class="separator:abd95bc09617a96479dfb71d15869dd43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae462f372e8eca320639571d113319b6b" id="r_ae462f372e8eca320639571d113319b6b"><td class="memItemLeft" align="right" valign="top">static std::pair&lt; std::vector&lt; uint8_t &gt;, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ae462f372e8eca320639571d113319b6b">to_array</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:ae462f372e8eca320639571d113319b6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert string to byte array.  <br /></td></tr>
-<tr class="separator:ae462f372e8eca320639571d113319b6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2c2800fe883822329cd1d9213234c1c" id="r_af2c2800fe883822329cd1d9213234c1c"><td class="memItemLeft" align="right" valign="top">static std::pair&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#af2c2800fe883822329cd1d9213234c1c">to_string</a> (const std::vector&lt; uint8_t &gt; &amp;arr)</td></tr>
-<tr class="memdesc:af2c2800fe883822329cd1d9213234c1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert byte array to string.  <br /></td></tr>
-<tr class="separator:af2c2800fe883822329cd1d9213234c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15b03b855608b2f4c6a2593f96acee13" id="r_a15b03b855608b2f4c6a2593f96acee13"><td class="memItemLeft" align="right" valign="top">static std::pair&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a15b03b855608b2f4c6a2593f96acee13">to_base64</a> (const std::vector&lt; uint8_t &gt; &amp;data)</td></tr>
-<tr class="memdesc:a15b03b855608b2f4c6a2593f96acee13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert data to base64.  <br /></td></tr>
-<tr class="separator:a15b03b855608b2f4c6a2593f96acee13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84cebfeb1a9d9bddd666437bea485084" id="r_a84cebfeb1a9d9bddd666437bea485084"><td class="memItemLeft" align="right" valign="top">static std::pair&lt; std::vector&lt; uint8_t &gt;, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a84cebfeb1a9d9bddd666437bea485084">from_base64</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a84cebfeb1a9d9bddd666437bea485084"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert from base64.  <br /></td></tr>
-<tr class="separator:a84cebfeb1a9d9bddd666437bea485084"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11e709bbe3bff8fa4318d812711cfd9e" id="r_a11e709bbe3bff8fa4318d812711cfd9e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a11e709bbe3bff8fa4318d812711cfd9e">replace</a> (std::string &amp;str, const std::string &amp;from, const std::string &amp;to)</td></tr>
-<tr class="memdesc:a11e709bbe3bff8fa4318d812711cfd9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace all occurrences of a substring.  <br /></td></tr>
-<tr class="separator:a11e709bbe3bff8fa4318d812711cfd9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ac23d04f5bd3b5c8bb0a263e745c422" id="r_a1ac23d04f5bd3b5c8bb0a263e745c422"><td class="memItemLeft" align="right" valign="top">static std::pair&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a1ac23d04f5bd3b5c8bb0a263e745c422">to_string</a> (const std::string &amp;str)</td></tr>
-<tr class="memdesc:a1ac23d04f5bd3b5c8bb0a263e745c422"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert string to string (identity function for compatibility)  <br /></td></tr>
-<tr class="separator:a1ac23d04f5bd3b5c8bb0a263e745c422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ef9ac21c605c5b5a1426f8cfbfca63" id="r_a35ef9ac21c605c5b5a1426f8cfbfca63"><td class="memItemLeft" align="right" valign="top">static std::tuple&lt; <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; std::string &gt;, <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a35ef9ac21c605c5b5a1426f8cfbfca63">to_string</a> (const std::vector&lt; uint8_t &gt; &amp;data)</td></tr>
+<tr class="separator:a35ef9ac21c605c5b5a1426f8cfbfca63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa74a2b02183ce7d3d4d8978b564c1620" id="r_aa74a2b02183ce7d3d4d8978b564c1620"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aa74a2b02183ce7d3d4d8978b564c1620"><td class="memTemplItemLeft" align="right" valign="top">static std::tuple&lt; <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; std::string &gt;, <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; bool &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#aa74a2b02183ce7d3d4d8978b564c1620">to_string</a> (const T &amp;value)</td></tr>
+<tr class="separator:aa74a2b02183ce7d3d4d8978b564c1620"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac262fa1f73b6054d12d850bfc56a7efc" id="r_ac262fa1f73b6054d12d850bfc56a7efc"><td class="memItemLeft" align="right" valign="top">static std::tuple&lt; <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; std::string &gt;, <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ac262fa1f73b6054d12d850bfc56a7efc">to_base64</a> (const std::vector&lt; uint8_t &gt; &amp;data)</td></tr>
+<tr class="separator:ac262fa1f73b6054d12d850bfc56a7efc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c2aa29abed1150863100ca993876187" id="r_a5c2aa29abed1150863100ca993876187"><td class="memItemLeft" align="right" valign="top">static std::tuple&lt; <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; std::vector&lt; uint8_t &gt; &gt;, <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a5c2aa29abed1150863100ca993876187">from_base64</a> (const std::string &amp;encoded)</td></tr>
+<tr class="separator:a5c2aa29abed1150863100ca993876187"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8e324703420b8fa2247cf54f847511c" id="r_ac8e324703420b8fa2247cf54f847511c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ac8e324703420b8fa2247cf54f847511c">replace</a> (std::string &amp;str, const std::string &amp;from, const std::string &amp;to)</td></tr>
+<tr class="separator:ac8e324703420b8fa2247cf54f847511c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca6d40bc39dbd6c09c8b4ffe5e94c9c2" id="r_aca6d40bc39dbd6c09c8b4ffe5e94c9c2"><td class="memItemLeft" align="right" valign="top">static std::tuple&lt; <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; std::string &gt;, <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#aca6d40bc39dbd6c09c8b4ffe5e94c9c2">utf8_to_system</a> (const std::string &amp;utf8_str)</td></tr>
+<tr class="separator:aca6d40bc39dbd6c09c8b4ffe5e94c9c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42a3e2433f1991d247db2bcf36c309b3" id="r_a42a3e2433f1991d247db2bcf36c309b3"><td class="memItemLeft" align="right" valign="top">static std::tuple&lt; <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; std::vector&lt; uint8_t &gt; &gt;, <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; bool &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a42a3e2433f1991d247db2bcf36c309b3">to_array</a> (const std::string &amp;str)</td></tr>
+<tr class="separator:a42a3e2433f1991d247db2bcf36c309b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a253963501540b93269546be1be251f6e" id="r_a253963501540b93269546be1be251f6e"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e">to_string</a> (const std::wstring &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a253963501540b93269546be1be251f6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::wstring</code> to a <code>std::string</code> using the system encoding.  <br /></td></tr>
+<tr class="separator:a253963501540b93269546be1be251f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a776bbd0131c66d25b5704348286bcbfd" id="r_a776bbd0131c66d25b5704348286bcbfd"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a776bbd0131c66d25b5704348286bcbfd">to_string</a> (std::wstring_view value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a776bbd0131c66d25b5704348286bcbfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::wstring_view</code> to a <code>std::string</code> using the system encoding.  <br /></td></tr>
+<tr class="separator:a776bbd0131c66d25b5704348286bcbfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b61bbabdc9b7a5118130f5330a928d4" id="r_a8b61bbabdc9b7a5118130f5330a928d4"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4">to_wstring</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::wstring &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a8b61bbabdc9b7a5118130f5330a928d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::string</code> (system-encoded) to a <code>std::wstring</code>.  <br /></td></tr>
+<tr class="separator:a8b61bbabdc9b7a5118130f5330a928d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29faff84bcbfaff3f9216b89f9b38619" id="r_a29faff84bcbfaff3f9216b89f9b38619"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a29faff84bcbfaff3f9216b89f9b38619">to_wstring</a> (std::string_view value) -&gt; std::tuple&lt; std::optional&lt; std::wstring &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a29faff84bcbfaff3f9216b89f9b38619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::string_view</code> (system-encoded) to a <code>std::wstring</code>.  <br /></td></tr>
+<tr class="separator:a29faff84bcbfaff3f9216b89f9b38619"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72c39f9c977f20e433d4f1ddc13a3eb5" id="r_a72c39f9c977f20e433d4f1ddc13a3eb5"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a72c39f9c977f20e433d4f1ddc13a3eb5">get_system_code_page</a> () -&gt; int</td></tr>
+<tr class="memdesc:a72c39f9c977f20e433d4f1ddc13a3eb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the system code page used for conversions.  <br /></td></tr>
+<tr class="separator:a72c39f9c977f20e433d4f1ddc13a3eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad30f587d85f8caf0bdcfddf109d60ce0" id="r_ad30f587d85f8caf0bdcfddf109d60ce0"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ad30f587d85f8caf0bdcfddf109d60ce0">system_to_utf8</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:ad30f587d85f8caf0bdcfddf109d60ce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a system-encoded string to UTF-8.  <br /></td></tr>
+<tr class="separator:ad30f587d85f8caf0bdcfddf109d60ce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae9f1ce0b04dca1ea447630e06d75a68" id="r_aae9f1ce0b04dca1ea447630e06d75a68"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#aae9f1ce0b04dca1ea447630e06d75a68">utf8_to_system</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:aae9f1ce0b04dca1ea447630e06d75a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a UTF-8 encoded string to the system encoding.  <br /></td></tr>
+<tr class="separator:aae9f1ce0b04dca1ea447630e06d75a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af38229e1d31f5460f04aad36890d6fde" id="r_af38229e1d31f5460f04aad36890d6fde"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#af38229e1d31f5460f04aad36890d6fde">split</a> (const std::string &amp;source, const std::string &amp;token) -&gt; std::tuple&lt; std::optional&lt; std::vector&lt; std::string &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:af38229e1d31f5460f04aad36890d6fde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits a string by a given delimiter.  <br /></td></tr>
+<tr class="separator:af38229e1d31f5460f04aad36890d6fde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbd47b8526118271c9925eb31249d5b1" id="r_afbd47b8526118271c9925eb31249d5b1"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#afbd47b8526118271c9925eb31249d5b1">to_array</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::vector&lt; uint8_t &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:afbd47b8526118271c9925eb31249d5b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a system-encoded string to a UTF-8 byte array.  <br /></td></tr>
+<tr class="separator:afbd47b8526118271c9925eb31249d5b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13681ca6bce18bf1581696fc0a925381" id="r_a13681ca6bce18bf1581696fc0a925381"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a13681ca6bce18bf1581696fc0a925381">to_string</a> (const std::vector&lt; uint8_t &gt; &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a13681ca6bce18bf1581696fc0a925381"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a UTF-8 byte array to a system-encoded string.  <br /></td></tr>
+<tr class="separator:a13681ca6bce18bf1581696fc0a925381"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d68ea1d1294be848228cc14bf120957" id="r_a3d68ea1d1294be848228cc14bf120957"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a3d68ea1d1294be848228cc14bf120957">to_base64</a> (const std::vector&lt; uint8_t &gt; &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a3d68ea1d1294be848228cc14bf120957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes a byte array into a Base64 string.  <br /></td></tr>
+<tr class="separator:a3d68ea1d1294be848228cc14bf120957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a773a8b469c25ab5183de37ad3231020e" id="r_a773a8b469c25ab5183de37ad3231020e"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a773a8b469c25ab5183de37ad3231020e">from_base64</a> (const std::string &amp;base64_str) -&gt; std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a773a8b469c25ab5183de37ad3231020e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes a Base64 string into a byte array.  <br /></td></tr>
+<tr class="separator:a773a8b469c25ab5183de37ad3231020e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a662270a574384800b768e148f283840d" id="r_a662270a574384800b768e148f283840d"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a662270a574384800b768e148f283840d">replace</a> (std::string &amp;source, const std::string &amp;token, const std::string &amp;target) -&gt; std::optional&lt; std::string &gt;</td></tr>
+<tr class="memdesc:a662270a574384800b768e148f283840d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all occurrences of <code>token</code> in <code>source</code> with <code>target</code>, in place.  <br /></td></tr>
+<tr class="separator:a662270a574384800b768e148f283840d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a735255ee06de6baa6f70ddd97b724402" id="r_a735255ee06de6baa6f70ddd97b724402"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a735255ee06de6baa6f70ddd97b724402">replace2</a> (const std::string &amp;source, const std::string &amp;token, const std::string &amp;target) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a735255ee06de6baa6f70ddd97b724402"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all occurrences of <code>token</code> in <code>source</code> with <code>target</code>, returning a new string.  <br /></td></tr>
+<tr class="separator:a735255ee06de6baa6f70ddd97b724402"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06610a0d3935a2b75e2281334f5a5698" id="r_a06610a0d3935a2b75e2281334f5a5698"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a06610a0d3935a2b75e2281334f5a5698">to_string</a> (const std::wstring &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
 <tr class="memdesc:a06610a0d3935a2b75e2281334f5a5698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::wstring</code> to a <code>std::string</code> using the system encoding.  <br /></td></tr>
 <tr class="separator:a06610a0d3935a2b75e2281334f5a5698"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,167 +203,120 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:adbbc7c8d09e74175c5c569dc9a2fbf52" id="r_adbbc7c8d09e74175c5c569dc9a2fbf52"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#adbbc7c8d09e74175c5c569dc9a2fbf52">replace2</a> (const std::string &amp;source, const std::string &amp;token, const std::string &amp;target) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
 <tr class="memdesc:adbbc7c8d09e74175c5c569dc9a2fbf52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all occurrences of <code>token</code> in <code>source</code> with <code>target</code>, returning a new string.  <br /></td></tr>
 <tr class="separator:adbbc7c8d09e74175c5c569dc9a2fbf52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46d663aa2bbe928c0e4be785a70913dd" id="r_a46d663aa2bbe928c0e4be785a70913dd"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a46d663aa2bbe928c0e4be785a70913dd">to_string</a> (const std::wstring &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:a46d663aa2bbe928c0e4be785a70913dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::wstring</code> to a <code>std::string</code> using the system encoding.  <br /></td></tr>
-<tr class="separator:a46d663aa2bbe928c0e4be785a70913dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a902cd5bc155a724319249e74ee29d4" id="r_a8a902cd5bc155a724319249e74ee29d4"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a8a902cd5bc155a724319249e74ee29d4">to_string</a> (std::wstring_view value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:a8a902cd5bc155a724319249e74ee29d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::wstring_view</code> to a <code>std::string</code> using the system encoding.  <br /></td></tr>
-<tr class="separator:a8a902cd5bc155a724319249e74ee29d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01e15c6aadb7c3effabf632ea25cb127" id="r_a01e15c6aadb7c3effabf632ea25cb127"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a01e15c6aadb7c3effabf632ea25cb127">to_wstring</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::wstring &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:a01e15c6aadb7c3effabf632ea25cb127"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::string</code> (system-encoded) to a <code>std::wstring</code>.  <br /></td></tr>
-<tr class="separator:a01e15c6aadb7c3effabf632ea25cb127"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4ec34b41d493113985fb3f46db68e99" id="r_ad4ec34b41d493113985fb3f46db68e99"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ad4ec34b41d493113985fb3f46db68e99">to_wstring</a> (std::string_view value) -&gt; std::tuple&lt; std::optional&lt; std::wstring &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:ad4ec34b41d493113985fb3f46db68e99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::string_view</code> (system-encoded) to a <code>std::wstring</code>.  <br /></td></tr>
-<tr class="separator:ad4ec34b41d493113985fb3f46db68e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae09d97bb6efc3aa2180c680c0a18c1a8" id="r_ae09d97bb6efc3aa2180c680c0a18c1a8"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ae09d97bb6efc3aa2180c680c0a18c1a8">get_system_code_page</a> () -&gt; int</td></tr>
-<tr class="memdesc:ae09d97bb6efc3aa2180c680c0a18c1a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the system code page used for conversions.  <br /></td></tr>
-<tr class="separator:ae09d97bb6efc3aa2180c680c0a18c1a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d974d72670e84f01f44b4d02be2467f" id="r_a6d974d72670e84f01f44b4d02be2467f"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a6d974d72670e84f01f44b4d02be2467f">system_to_utf8</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:a6d974d72670e84f01f44b4d02be2467f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a system-encoded string to UTF-8.  <br /></td></tr>
-<tr class="separator:a6d974d72670e84f01f44b4d02be2467f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a977038d1dff06e386a99c53fe473f353" id="r_a977038d1dff06e386a99c53fe473f353"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a977038d1dff06e386a99c53fe473f353">utf8_to_system</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:a977038d1dff06e386a99c53fe473f353"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a UTF-8 encoded string to the system encoding.  <br /></td></tr>
-<tr class="separator:a977038d1dff06e386a99c53fe473f353"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae280ce01a6fdb0b0c01994e8ec85c829" id="r_ae280ce01a6fdb0b0c01994e8ec85c829"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ae280ce01a6fdb0b0c01994e8ec85c829">split</a> (const std::string &amp;source, const std::string &amp;token) -&gt; std::tuple&lt; std::optional&lt; std::vector&lt; std::string &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:ae280ce01a6fdb0b0c01994e8ec85c829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits a string by a given delimiter.  <br /></td></tr>
-<tr class="separator:ae280ce01a6fdb0b0c01994e8ec85c829"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b5fb67a9aa7881ead07f65acc76d70f" id="r_a0b5fb67a9aa7881ead07f65acc76d70f"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a0b5fb67a9aa7881ead07f65acc76d70f">to_array</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::vector&lt; uint8_t &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:a0b5fb67a9aa7881ead07f65acc76d70f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a system-encoded string to a UTF-8 byte array.  <br /></td></tr>
-<tr class="separator:a0b5fb67a9aa7881ead07f65acc76d70f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a770bb9ae663fe1804b07da1b0f412e1c" id="r_a770bb9ae663fe1804b07da1b0f412e1c"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a770bb9ae663fe1804b07da1b0f412e1c">to_string</a> (const std::vector&lt; uint8_t &gt; &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:a770bb9ae663fe1804b07da1b0f412e1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a UTF-8 byte array to a system-encoded string.  <br /></td></tr>
-<tr class="separator:a770bb9ae663fe1804b07da1b0f412e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad99cf184988c6cc68e15ec21518c766f" id="r_ad99cf184988c6cc68e15ec21518c766f"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ad99cf184988c6cc68e15ec21518c766f">to_base64</a> (const std::vector&lt; uint8_t &gt; &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:ad99cf184988c6cc68e15ec21518c766f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes a byte array into a Base64 string.  <br /></td></tr>
-<tr class="separator:ad99cf184988c6cc68e15ec21518c766f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30f5e68a921378baa09b30c447351fc8" id="r_a30f5e68a921378baa09b30c447351fc8"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a30f5e68a921378baa09b30c447351fc8">from_base64</a> (const std::string &amp;base64_str) -&gt; std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:a30f5e68a921378baa09b30c447351fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes a Base64 string into a byte array.  <br /></td></tr>
-<tr class="separator:a30f5e68a921378baa09b30c447351fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b5c3298bd0426ba51b49f8322f14d8e" id="r_a1b5c3298bd0426ba51b49f8322f14d8e"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a1b5c3298bd0426ba51b49f8322f14d8e">replace</a> (std::string &amp;source, const std::string &amp;token, const std::string &amp;target) -&gt; std::optional&lt; std::string &gt;</td></tr>
-<tr class="memdesc:a1b5c3298bd0426ba51b49f8322f14d8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all occurrences of <code>token</code> in <code>source</code> with <code>target</code>, in place.  <br /></td></tr>
-<tr class="separator:a1b5c3298bd0426ba51b49f8322f14d8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a573caf162cc352db2c00a74563201ba1" id="r_a573caf162cc352db2c00a74563201ba1"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a573caf162cc352db2c00a74563201ba1">replace2</a> (const std::string &amp;source, const std::string &amp;token, const std::string &amp;target) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
-<tr class="memdesc:a573caf162cc352db2c00a74563201ba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all occurrences of <code>token</code> in <code>source</code> with <code>target</code>, returning a new string.  <br /></td></tr>
-<tr class="separator:a573caf162cc352db2c00a74563201ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06610a0d3935a2b75e2281334f5a5698" id="r_a06610a0d3935a2b75e2281334f5a5698"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a06610a0d3935a2b75e2281334f5a5698">to_string</a> (const std::wstring &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a06610a0d3935a2b75e2281334f5a5698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::wstring</code> to a <code>std::string</code> using the system encoding.  <br /></td></tr>
+<tr class="separator:a06610a0d3935a2b75e2281334f5a5698"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1837c364b95bca95f28e8ac6431059e" id="r_ad1837c364b95bca95f28e8ac6431059e"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ad1837c364b95bca95f28e8ac6431059e">to_string</a> (std::wstring_view value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:ad1837c364b95bca95f28e8ac6431059e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::wstring_view</code> to a <code>std::string</code> using the system encoding.  <br /></td></tr>
+<tr class="separator:ad1837c364b95bca95f28e8ac6431059e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6e54e98a95c9788c88cbafb6ab14cc4" id="r_ae6e54e98a95c9788c88cbafb6ab14cc4"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ae6e54e98a95c9788c88cbafb6ab14cc4">to_wstring</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::wstring &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:ae6e54e98a95c9788c88cbafb6ab14cc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::string</code> (system-encoded) to a <code>std::wstring</code>.  <br /></td></tr>
+<tr class="separator:ae6e54e98a95c9788c88cbafb6ab14cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a406479c216da48dd7d5884c78f5f2097" id="r_a406479c216da48dd7d5884c78f5f2097"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a406479c216da48dd7d5884c78f5f2097">to_wstring</a> (std::string_view value) -&gt; std::tuple&lt; std::optional&lt; std::wstring &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a406479c216da48dd7d5884c78f5f2097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a <code>std::string_view</code> (system-encoded) to a <code>std::wstring</code>.  <br /></td></tr>
+<tr class="separator:a406479c216da48dd7d5884c78f5f2097"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a550e52055c5dd552d364a1fa60ae452d" id="r_a550e52055c5dd552d364a1fa60ae452d"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a550e52055c5dd552d364a1fa60ae452d">get_system_code_page</a> () -&gt; int</td></tr>
+<tr class="memdesc:a550e52055c5dd552d364a1fa60ae452d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the system code page used for conversions.  <br /></td></tr>
+<tr class="separator:a550e52055c5dd552d364a1fa60ae452d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabad5570b97f17d359d4ade5702c47d1" id="r_aabad5570b97f17d359d4ade5702c47d1"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#aabad5570b97f17d359d4ade5702c47d1">system_to_utf8</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:aabad5570b97f17d359d4ade5702c47d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a system-encoded string to UTF-8.  <br /></td></tr>
+<tr class="separator:aabad5570b97f17d359d4ade5702c47d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae9f1ce0b04dca1ea447630e06d75a68" id="r_aae9f1ce0b04dca1ea447630e06d75a68"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#aae9f1ce0b04dca1ea447630e06d75a68">utf8_to_system</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:aae9f1ce0b04dca1ea447630e06d75a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a UTF-8 encoded string to the system encoding.  <br /></td></tr>
+<tr class="separator:aae9f1ce0b04dca1ea447630e06d75a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a549cbe23904e983dac180ae1133064fd" id="r_a549cbe23904e983dac180ae1133064fd"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a549cbe23904e983dac180ae1133064fd">split</a> (const std::string &amp;source, const std::string &amp;token) -&gt; std::tuple&lt; std::optional&lt; std::vector&lt; std::string &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a549cbe23904e983dac180ae1133064fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits a string by a given delimiter.  <br /></td></tr>
+<tr class="separator:a549cbe23904e983dac180ae1133064fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbd47b8526118271c9925eb31249d5b1" id="r_afbd47b8526118271c9925eb31249d5b1"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#afbd47b8526118271c9925eb31249d5b1">to_array</a> (const std::string &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::vector&lt; uint8_t &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:afbd47b8526118271c9925eb31249d5b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a system-encoded string to a UTF-8 byte array.  <br /></td></tr>
+<tr class="separator:afbd47b8526118271c9925eb31249d5b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13681ca6bce18bf1581696fc0a925381" id="r_a13681ca6bce18bf1581696fc0a925381"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a13681ca6bce18bf1581696fc0a925381">to_string</a> (const std::vector&lt; uint8_t &gt; &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a13681ca6bce18bf1581696fc0a925381"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a UTF-8 byte array to a system-encoded string.  <br /></td></tr>
+<tr class="separator:a13681ca6bce18bf1581696fc0a925381"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d68ea1d1294be848228cc14bf120957" id="r_a3d68ea1d1294be848228cc14bf120957"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a3d68ea1d1294be848228cc14bf120957">to_base64</a> (const std::vector&lt; uint8_t &gt; &amp;value) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a3d68ea1d1294be848228cc14bf120957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes a byte array into a Base64 string.  <br /></td></tr>
+<tr class="separator:a3d68ea1d1294be848228cc14bf120957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a773a8b469c25ab5183de37ad3231020e" id="r_a773a8b469c25ab5183de37ad3231020e"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a773a8b469c25ab5183de37ad3231020e">from_base64</a> (const std::string &amp;base64_str) -&gt; std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:a773a8b469c25ab5183de37ad3231020e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes a Base64 string into a byte array.  <br /></td></tr>
+<tr class="separator:a773a8b469c25ab5183de37ad3231020e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a662270a574384800b768e148f283840d" id="r_a662270a574384800b768e148f283840d"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a662270a574384800b768e148f283840d">replace</a> (std::string &amp;source, const std::string &amp;token, const std::string &amp;target) -&gt; std::optional&lt; std::string &gt;</td></tr>
+<tr class="memdesc:a662270a574384800b768e148f283840d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all occurrences of <code>token</code> in <code>source</code> with <code>target</code>, in place.  <br /></td></tr>
+<tr class="separator:a662270a574384800b768e148f283840d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbbc7c8d09e74175c5c569dc9a2fbf52" id="r_adbbc7c8d09e74175c5c569dc9a2fbf52"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#adbbc7c8d09e74175c5c569dc9a2fbf52">replace2</a> (const std::string &amp;source, const std::string &amp;token, const std::string &amp;target) -&gt; std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td></tr>
+<tr class="memdesc:adbbc7c8d09e74175c5c569dc9a2fbf52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces all occurrences of <code>token</code> in <code>source</code> with <code>target</code>, returning a new string.  <br /></td></tr>
+<tr class="separator:adbbc7c8d09e74175c5c569dc9a2fbf52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>String conversion utilities. </p>
-<p>Provides utilities for string encoding conversion, Base64 encoding/decoding, and substring operations like splitting or replacing.</p>
+<div class="textblock"><p>Provides utilities for string encoding conversion, Base64 encoding/decoding, and substring operations like splitting or replacing. </p>
 <p>This class relies on platform-specific APIs or <code>iconv</code> (when available) to convert strings between different encodings such as UTF-8, UTF-16, UTF-32, and the local system encoding. It also provides methods to handle Base64 encoding/decoding and some basic string manipulation (split, replace).</p>
-<h3><a class="anchor" id="autotoc_md3372"></a>
+<h3><a class="anchor" id="autotoc_md1334"></a>
 Encoding Conversions</h3>
 <ul>
 <li>Typically returns a tuple containing either a successful result (<code>std::optional&lt;T&gt;</code>) and an empty error (<code>std::nullopt</code>), or <code>std::nullopt</code> with an error message describing the failure.</li>
 <li>BOM (Byte Order Mark) is handled in certain functions for UTF-8, UTF-16, and UTF-32.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3373"></a>
+<h3><a class="anchor" id="autotoc_md1335"></a>
 Base64</h3>
 <ul>
 <li>Encodes and decodes raw byte arrays (<code>std::vector&lt;uint8_t&gt;</code>).</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3374"></a>
+<h3><a class="anchor" id="autotoc_md1336"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// Converting a wstring to system-encoded string</span></div>
-<div class="line"><span class="keyword">auto</span> [strOpt, errMsg] = convert_string::to_string(L<span class="stringliteral">&quot;안녕하세요&quot;</span>);</div>
+<div class="line"><span class="keyword">auto</span> [strOpt, errMsg] = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a35ef9ac21c605c5b5a1426f8cfbfca63">convert_string::to_string</a>(L<span class="stringliteral">&quot;안녕하세요&quot;</span>);</div>
+<div class="line"><span class="keywordflow">if</span> (!strOpt) {</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; *errMsg &lt;&lt; std::endl;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Converted string: &quot;</span> &lt;&lt; *strOpt &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassutility__module_1_1convert__string_html_a35ef9ac21c605c5b5a1426f8cfbfca63"><div class="ttname"><a href="../../d1/d53/classutility__module_1_1convert__string.html#a35ef9ac21c605c5b5a1426f8cfbfca63">utility_module::convert_string::to_string</a></div><div class="ttdeci">static std::tuple&lt; result_wrapper&lt; std::string &gt;, result_wrapper&lt; bool &gt; &gt; to_string(const std::vector&lt; uint8_t &gt; &amp;data)</div><div class="ttdef"><b>Definition</b> <a href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html#l00117">convert_string.h:117</a></div></div>
+</div><!-- fragment --><p>This class relies on platform-specific APIs or <code>iconv</code> (when available) to convert strings between different encodings such as UTF-8, UTF-16, UTF-32, and the local system encoding. It also provides methods to handle Base64 encoding/decoding and some basic string manipulation (split, replace).</p>
+<h3><a class="anchor" id="autotoc_md1382"></a>
+Encoding Conversions</h3>
+<ul>
+<li>Typically returns a tuple containing either a successful result (<code>std::optional&lt;T&gt;</code>) and an empty error (<code>std::nullopt</code>), or <code>std::nullopt</code> with an error message describing the failure.</li>
+<li>BOM (Byte Order Mark) is handled in certain functions for UTF-8, UTF-16, and UTF-32.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md1383"></a>
+Base64</h3>
+<ul>
+<li>Encodes and decodes raw byte arrays (<code>std::vector&lt;uint8_t&gt;</code>).</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md1384"></a>
+Usage Example</h3>
+<div class="fragment"><div class="line"><span class="comment">// Converting a wstring to system-encoded string</span></div>
+<div class="line"><span class="keyword">auto</span> [strOpt, errMsg] = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a35ef9ac21c605c5b5a1426f8cfbfca63">convert_string::to_string</a>(L<span class="stringliteral">&quot;안녕하세요&quot;</span>);</div>
 <div class="line"><span class="keywordflow">if</span> (!strOpt) {</div>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; *errMsg &lt;&lt; std::endl;</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Converted string: &quot;</span> &lt;&lt; *strOpt &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This class relies on platform-specific APIs or <code>iconv</code> (when available) to convert strings between different encodings such as UTF-8, UTF-16, UTF-32, and the local system encoding. It also provides methods to handle Base64 encoding/decoding and some basic string manipulation (split, replace).</p>
-<h3><a class="anchor" id="autotoc_md3506"></a>
+<h3><a class="anchor" id="autotoc_md1527"></a>
 Encoding Conversions</h3>
 <ul>
 <li>Typically returns a tuple containing either a successful result (<code>std::optional&lt;T&gt;</code>) and an empty error (<code>std::nullopt</code>), or <code>std::nullopt</code> with an error message describing the failure.</li>
 <li>BOM (Byte Order Mark) is handled in certain functions for UTF-8, UTF-16, and UTF-32.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3507"></a>
+<h3><a class="anchor" id="autotoc_md1528"></a>
 Base64</h3>
 <ul>
 <li>Encodes and decodes raw byte arrays (<code>std::vector&lt;uint8_t&gt;</code>).</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3508"></a>
+<h3><a class="anchor" id="autotoc_md1529"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// Converting a wstring to system-encoded string</span></div>
-<div class="line"><span class="keyword">auto</span> [strOpt, errMsg] = convert_string::to_string(L<span class="stringliteral">&quot;안녕하세요&quot;</span>);</div>
+<div class="line"><span class="keyword">auto</span> [strOpt, errMsg] = <a class="code hl_function" href="../../d1/d53/classutility__module_1_1convert__string.html#a35ef9ac21c605c5b5a1426f8cfbfca63">convert_string::to_string</a>(L<span class="stringliteral">&quot;안녕하세요&quot;</span>);</div>
 <div class="line"><span class="keywordflow">if</span> (!strOpt) {</div>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; *errMsg &lt;&lt; std::endl;</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Converted string: &quot;</span> &lt;&lt; *strOpt &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html#l00015">15</a> of file <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html">convert_string.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html#l00114">114</a> of file <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="abd95bc09617a96479dfb71d15869dd43" name="abd95bc09617a96479dfb71d15869dd43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd95bc09617a96479dfb71d15869dd43">&#9670;&#160;</a></span>convert()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename FromType , typename ToType &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">auto utility_module::convert_string::convert </td>
-          <td>(</td>
-          <td class="paramtype">const FromType &amp;&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>from_encoding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>to_encoding</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> -&gt; std::tuple&lt;std::optional&lt;ToType&gt;, std::optional&lt;std::string&gt;&gt;
-	</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Core template function for string encoding conversion. </p>
-<p>Implementation details:</p><ul>
-<li>Template-based for type safety and performance</li>
-<li>Supports conversion between different character encodings</li>
-<li>Uses platform-specific APIs for optimal performance</li>
-<li>Handles both narrow (char) and wide (wchar_t) character types</li>
-</ul>
-<p>Error Handling:</p><ul>
-<li>Throws std::runtime_error on conversion failures</li>
-<li>Provides detailed error messages with encoding information</li>
-<li>Handles edge cases like empty strings and invalid sequences</li>
-</ul>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">FromType</td><td>Source string type (std::string, std::wstring, etc.) </td></tr>
-    <tr><td class="paramname">ToType</td><td>Target string type (std::string, std::wstring, etc.) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">value</td><td>Source string to convert </td></tr>
-    <tr><td class="paramname">from_encoding</td><td>Source character encoding </td></tr>
-    <tr><td class="paramname">to_encoding</td><td>Target character encoding </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Converted string in target encoding </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00101">101</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-
-</div>
-</div>
 <a id="a773a8b469c25ab5183de37ad3231020e" name="a773a8b469c25ab5183de37ad3231020e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a773a8b469c25ab5183de37ad3231020e">&#9670;&#160;</a></span>from_base64() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a773a8b469c25ab5183de37ad3231020e">&#9670;&#160;</a></span>from_base64() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -370,8 +354,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="a30f5e68a921378baa09b30c447351fc8" name="a30f5e68a921378baa09b30c447351fc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30f5e68a921378baa09b30c447351fc8">&#9670;&#160;</a></span>from_base64() <span class="overload">[2/3]</span></h2>
+<a id="a773a8b469c25ab5183de37ad3231020e" name="a773a8b469c25ab5183de37ad3231020e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a773a8b469c25ab5183de37ad3231020e">&#9670;&#160;</a></span>from_base64() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -380,11 +364,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::from_base64 </td>
+          <td class="memname">static auto utility_module::convert_string::from_base64 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>base64_str</em></td><td>)</td>
-          <td> -&gt; std::tuple&lt;std::vector&lt;uint8_t&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td> -&gt;  std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -407,12 +391,10 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00452">452</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-
 </div>
 </div>
-<a id="a84cebfeb1a9d9bddd666437bea485084" name="a84cebfeb1a9d9bddd666437bea485084"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84cebfeb1a9d9bddd666437bea485084">&#9670;&#160;</a></span>from_base64() <span class="overload">[3/3]</span></h2>
+<a id="a773a8b469c25ab5183de37ad3231020e" name="a773a8b469c25ab5183de37ad3231020e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a773a8b469c25ab5183de37ad3231020e">&#9670;&#160;</a></span>from_base64() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -421,10 +403,49 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::pair&lt; std::vector&lt; uint8_t &gt;, std::string &gt; utility_module::convert_string::from_base64 </td>
+          <td class="memname">static auto utility_module::convert_string::from_base64 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>str</em></td><td>)</td>
+          <td class="paramname"><em>base64_str</em></td><td>)</td>
+          <td> -&gt;  std::tuple&lt; std::vector&lt; uint8_t &gt;, std::optional&lt; std::string &gt; &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Decodes a Base64 string into a byte array. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base64_str</td><td>The Base64-encoded string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A tuple of:<ul>
+<li><code>std::vector&lt;uint8_t&gt;</code>: The decoded data. May be empty if decoding fails.</li>
+<li><code>std::optional&lt;std::string&gt;</code>: An error message on failure, or <code>std::nullopt</code> on success. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="a5c2aa29abed1150863100ca993876187" name="a5c2aa29abed1150863100ca993876187"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c2aa29abed1150863100ca993876187">&#9670;&#160;</a></span>from_base64() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::from_base64 </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>encoded</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -435,14 +456,45 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Convert from base64. </p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html#l00194">194</a> of file <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html#l00077">77</a> of file <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html">convert_string.h</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d2/dc0/value_8cpp_source.html#l00417">container_module::value::set_byte_string()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00334">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00241">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00363">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00315">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00373">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00301">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00278">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00259">TEST_F()</a>, and <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00344">TEST_F()</a>.</p>
+
+</div>
+</div>
+<a id="a72c39f9c977f20e433d4f1ddc13a3eb5" name="a72c39f9c977f20e433d4f1ddc13a3eb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72c39f9c977f20e433d4f1ddc13a3eb5">&#9670;&#160;</a></span>get_system_code_page() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::get_system_code_page </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> -&gt; int</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the system code page used for conversions. </p>
+<dl class="section return"><dt>Returns</dt><dd>An integer representing the system code page (e.g., CP_ACP on Windows).</dd></dl>
+<p>On Unix-like systems using <code>iconv</code>, this may return an approximation based on locale info, or a default if detection fails. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html#l00313">313</a> of file <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
 
 </div>
 </div>
 <a id="a550e52055c5dd552d364a1fa60ae452d" name="a550e52055c5dd552d364a1fa60ae452d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a550e52055c5dd552d364a1fa60ae452d">&#9670;&#160;</a></span>get_system_code_page() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a550e52055c5dd552d364a1fa60ae452d">&#9670;&#160;</a></span>get_system_code_page() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -470,8 +522,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="ae09d97bb6efc3aa2180c680c0a18c1a8" name="ae09d97bb6efc3aa2180c680c0a18c1a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae09d97bb6efc3aa2180c680c0a18c1a8">&#9670;&#160;</a></span>get_system_code_page() <span class="overload">[2/2]</span></h2>
+<a id="a550e52055c5dd552d364a1fa60ae452d" name="a550e52055c5dd552d364a1fa60ae452d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a550e52055c5dd552d364a1fa60ae452d">&#9670;&#160;</a></span>get_system_code_page() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -480,10 +532,10 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::get_system_code_page </td>
+          <td class="memname">static auto utility_module::convert_string::get_system_code_page </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> -&gt; int</td>
+          <td> -&gt;  int</td>
         </tr>
       </table>
   </td>
@@ -497,12 +549,10 @@ template&lt;typename FromType , typename ToType &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>An integer representing the system code page (e.g., CP_ACP on Windows).</dd></dl>
 <p>On Unix-like systems using <code>iconv</code>, this may return an approximation based on locale info, or a default if detection fails. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00347">347</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-
 </div>
 </div>
 <a id="a662270a574384800b768e148f283840d" name="a662270a574384800b768e148f283840d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a662270a574384800b768e148f283840d">&#9670;&#160;</a></span>replace() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a662270a574384800b768e148f283840d">&#9670;&#160;</a></span>replace() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -555,8 +605,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="a1b5c3298bd0426ba51b49f8322f14d8e" name="a1b5c3298bd0426ba51b49f8322f14d8e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b5c3298bd0426ba51b49f8322f14d8e">&#9670;&#160;</a></span>replace() <span class="overload">[2/3]</span></h2>
+<a id="a662270a574384800b768e148f283840d" name="a662270a574384800b768e148f283840d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a662270a574384800b768e148f283840d">&#9670;&#160;</a></span>replace() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -565,7 +615,7 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::replace </td>
+          <td class="memname">static auto utility_module::convert_string::replace </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&#160;</td>
           <td class="paramname"><em>source</em>, </td>
@@ -585,7 +635,7 @@ template&lt;typename FromType , typename ToType &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt; std::optional&lt;std::string&gt;</td>
+          <td></td><td> -&gt;  std::optional&lt; std::string &gt;</td>
         </tr>
       </table>
   </td>
@@ -607,12 +657,10 @@ template&lt;typename FromType , typename ToType &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd><code>std::optional&lt;std::string&gt;</code> containing an error message if replacement fails, or <code>std::nullopt</code> on success.</dd></dl>
 <p>This function modifies <code>source</code> directly. If <code>token</code> is empty, it returns an error. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00458">458</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-
 </div>
 </div>
-<a id="a11e709bbe3bff8fa4318d812711cfd9e" name="a11e709bbe3bff8fa4318d812711cfd9e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11e709bbe3bff8fa4318d812711cfd9e">&#9670;&#160;</a></span>replace() <span class="overload">[3/3]</span></h2>
+<a id="a662270a574384800b768e148f283840d" name="a662270a574384800b768e148f283840d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a662270a574384800b768e148f283840d">&#9670;&#160;</a></span>replace() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -621,7 +669,61 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void utility_module::convert_string::replace </td>
+          <td class="memname">static auto utility_module::convert_string::replace </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>target</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt;  std::optional&lt; std::string &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Replaces all occurrences of <code>token</code> in <code>source</code> with <code>target</code>, in place. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>The string to modify. </td></tr>
+    <tr><td class="paramname">token</td><td>The substring to find. </td></tr>
+    <tr><td class="paramname">target</td><td>The substring to replace <code>token</code> with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>std::optional&lt;std::string&gt;</code> containing an error message if replacement fails, or <code>std::nullopt</code> on success.</dd></dl>
+<p>This function modifies <code>source</code> directly. If <code>token</code> is empty, it returns an error. </p>
+
+</div>
+</div>
+<a id="ac8e324703420b8fa2247cf54f847511c" name="ac8e324703420b8fa2247cf54f847511c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8e324703420b8fa2247cf54f847511c">&#9670;&#160;</a></span>replace() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::replace </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em>, </td>
@@ -651,14 +753,77 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Replace all occurrences of a substring. </p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html#l00270">270</a> of file <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html#l00106">106</a> of file <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html">convert_string.h</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d2/dc0/value_8cpp_source.html#l00387">container_module::value::convert_specific_string()</a>, <a class="el" href="../../d2/dc0/value_8cpp_source.html#l00403">container_module::value::convert_specific_string()</a>, and <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00531">TEST_F()</a>.</p>
+
+</div>
+</div>
+<a id="a735255ee06de6baa6f70ddd97b724402" name="a735255ee06de6baa6f70ddd97b724402"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a735255ee06de6baa6f70ddd97b724402">&#9670;&#160;</a></span>replace2() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::replace2 </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>target</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Replaces all occurrences of <code>token</code> in <code>source</code> with <code>target</code>, returning a new string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>The source string (unchanged). </td></tr>
+    <tr><td class="paramname">token</td><td>The substring to find. </td></tr>
+    <tr><td class="paramname">target</td><td>The substring to replace <code>token</code> with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A tuple of:<ul>
+<li><code>std::optional&lt;std::string&gt;</code>: The modified string on success.</li>
+<li><code>std::optional&lt;std::string&gt;</code>: An error message if replacement fails. </li>
+</ul>
+</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html#l00438">438</a> of file <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../da/d4a/container__system_2utilities_2core_2formatter_8h_source.html#l00045">utility_module::formatter::format_to()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00383">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00459">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00432">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00519">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00483">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00507">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00471">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00420">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00408">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00495">TEST_F()</a>, and <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00396">TEST_F()</a>.</p>
 
 </div>
 </div>
 <a id="adbbc7c8d09e74175c5c569dc9a2fbf52" name="adbbc7c8d09e74175c5c569dc9a2fbf52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbbc7c8d09e74175c5c569dc9a2fbf52">&#9670;&#160;</a></span>replace2() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adbbc7c8d09e74175c5c569dc9a2fbf52">&#9670;&#160;</a></span>replace2() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -714,8 +879,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="a573caf162cc352db2c00a74563201ba1" name="a573caf162cc352db2c00a74563201ba1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a573caf162cc352db2c00a74563201ba1">&#9670;&#160;</a></span>replace2() <span class="overload">[2/2]</span></h2>
+<a id="adbbc7c8d09e74175c5c569dc9a2fbf52" name="adbbc7c8d09e74175c5c569dc9a2fbf52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbbc7c8d09e74175c5c569dc9a2fbf52">&#9670;&#160;</a></span>replace2() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -724,7 +889,7 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::replace2 </td>
+          <td class="memname">static auto utility_module::convert_string::replace2 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>source</em>, </td>
@@ -744,7 +909,7 @@ template&lt;typename FromType , typename ToType &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td></td><td> -&gt;  std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -769,12 +934,63 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00472">472</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+</div>
+</div>
+<a id="af38229e1d31f5460f04aad36890d6fde" name="af38229e1d31f5460f04aad36890d6fde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af38229e1d31f5460f04aad36890d6fde">&#9670;&#160;</a></span>split() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::split </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>token</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; std::tuple&lt;std::optional&lt;std::vector&lt;std::string&gt;&gt;, std::optional&lt;std::string&gt;&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Splits a string by a given delimiter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>The source string to split. </td></tr>
+    <tr><td class="paramname">token</td><td>The delimiter substring. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A tuple of:<ul>
+<li><code>std::optional&lt;std::vector&lt;std::string&gt;&gt;</code>: A vector of tokens on success.</li>
+<li><code>std::optional&lt;std::string&gt;</code>: An error message if splitting fails.</li>
+</ul>
+</dd></dl>
+<p>If <code>token</code> is empty, splitting cannot proceed and an error is returned. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html#l00357">357</a> of file <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
 
 </div>
 </div>
 <a id="a549cbe23904e983dac180ae1133064fd" name="a549cbe23904e983dac180ae1133064fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a549cbe23904e983dac180ae1133064fd">&#9670;&#160;</a></span>split() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a549cbe23904e983dac180ae1133064fd">&#9670;&#160;</a></span>split() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -824,8 +1040,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="ae280ce01a6fdb0b0c01994e8ec85c829" name="ae280ce01a6fdb0b0c01994e8ec85c829"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae280ce01a6fdb0b0c01994e8ec85c829">&#9670;&#160;</a></span>split() <span class="overload">[2/2]</span></h2>
+<a id="a549cbe23904e983dac180ae1133064fd" name="a549cbe23904e983dac180ae1133064fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a549cbe23904e983dac180ae1133064fd">&#9670;&#160;</a></span>split() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -834,7 +1050,7 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::split </td>
+          <td class="memname">static auto utility_module::convert_string::split </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>source</em>, </td>
@@ -848,7 +1064,7 @@ template&lt;typename FromType , typename ToType &gt; </div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt; std::tuple&lt;std::optional&lt;std::vector&lt;std::string&gt;&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td></td><td> -&gt;  std::tuple&lt; std::optional&lt; std::vector&lt; std::string &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -873,12 +1089,51 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </dd></dl>
 <p>If <code>token</code> is empty, splitting cannot proceed and an error is returned. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00391">391</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+</div>
+</div>
+<a id="ad30f587d85f8caf0bdcfddf109d60ce0" name="ad30f587d85f8caf0bdcfddf109d60ce0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad30f587d85f8caf0bdcfddf109d60ce0">&#9670;&#160;</a></span>system_to_utf8() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::system_to_utf8 </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a system-encoded string to UTF-8. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The input string in system encoding. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A tuple of:<ul>
+<li><code>std::optional&lt;std::string&gt;</code>: The UTF-8 encoded string on success.</li>
+<li><code>std::optional&lt;std::string&gt;</code>: An error message on failure. </li>
+</ul>
+</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html#l00333">333</a> of file <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
 
 </div>
 </div>
 <a id="aabad5570b97f17d359d4ade5702c47d1" name="aabad5570b97f17d359d4ade5702c47d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabad5570b97f17d359d4ade5702c47d1">&#9670;&#160;</a></span>system_to_utf8() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aabad5570b97f17d359d4ade5702c47d1">&#9670;&#160;</a></span>system_to_utf8() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -916,8 +1171,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="a6d974d72670e84f01f44b4d02be2467f" name="a6d974d72670e84f01f44b4d02be2467f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d974d72670e84f01f44b4d02be2467f">&#9670;&#160;</a></span>system_to_utf8() <span class="overload">[2/2]</span></h2>
+<a id="aabad5570b97f17d359d4ade5702c47d1" name="aabad5570b97f17d359d4ade5702c47d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabad5570b97f17d359d4ade5702c47d1">&#9670;&#160;</a></span>system_to_utf8() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -926,11 +1181,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::system_to_utf8 </td>
+          <td class="memname">static auto utility_module::convert_string::system_to_utf8 </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
-          <td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -953,12 +1208,10 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00367">367</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-
 </div>
 </div>
-<a id="ae462f372e8eca320639571d113319b6b" name="ae462f372e8eca320639571d113319b6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae462f372e8eca320639571d113319b6b">&#9670;&#160;</a></span>to_array() <span class="overload">[1/3]</span></h2>
+<a id="a42a3e2433f1991d247db2bcf36c309b3" name="a42a3e2433f1991d247db2bcf36c309b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42a3e2433f1991d247db2bcf36c309b3">&#9670;&#160;</a></span>to_array() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -967,7 +1220,7 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::pair&lt; std::vector&lt; uint8_t &gt;, std::string &gt; utility_module::convert_string::to_array </td>
+          <td class="memname">auto utility_module::convert_string::to_array </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -981,14 +1234,14 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Convert string to byte array. </p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html#l00296">296</a> of file <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html#l00020">20</a> of file <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html">convert_string.h</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d2/dc0/value_8cpp_source.html#l00403">container_module::value::convert_specific_string()</a>, <a class="el" href="../../d3/dda/container_8cpp_source.html#l00585">container_module::value_container::serialize_array()</a>, <a class="el" href="../../d2/dc0/value_8cpp_source.html#l00432">container_module::value::set_string()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00201">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00094">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00136">TEST_F()</a>, and <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00106">TEST_F()</a>.</p>
 
 </div>
 </div>
 <a id="afbd47b8526118271c9925eb31249d5b1" name="afbd47b8526118271c9925eb31249d5b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbd47b8526118271c9925eb31249d5b1">&#9670;&#160;</a></span>to_array() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afbd47b8526118271c9925eb31249d5b1">&#9670;&#160;</a></span>to_array() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1026,8 +1279,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="a0b5fb67a9aa7881ead07f65acc76d70f" name="a0b5fb67a9aa7881ead07f65acc76d70f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b5fb67a9aa7881ead07f65acc76d70f">&#9670;&#160;</a></span>to_array() <span class="overload">[3/3]</span></h2>
+<a id="afbd47b8526118271c9925eb31249d5b1" name="afbd47b8526118271c9925eb31249d5b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbd47b8526118271c9925eb31249d5b1">&#9670;&#160;</a></span>to_array() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1036,11 +1289,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::to_array </td>
+          <td class="memname">static auto utility_module::convert_string::to_array </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
-          <td> -&gt; std::tuple&lt;std::optional&lt;std::vector&lt;uint8_t&gt;&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::vector&lt; uint8_t &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -1063,12 +1316,10 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00415">415</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-
 </div>
 </div>
-<a id="a15b03b855608b2f4c6a2593f96acee13" name="a15b03b855608b2f4c6a2593f96acee13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15b03b855608b2f4c6a2593f96acee13">&#9670;&#160;</a></span>to_base64() <span class="overload">[1/3]</span></h2>
+<a id="afbd47b8526118271c9925eb31249d5b1" name="afbd47b8526118271c9925eb31249d5b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbd47b8526118271c9925eb31249d5b1">&#9670;&#160;</a></span>to_array() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1077,7 +1328,46 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::pair&lt; std::string, std::string &gt; utility_module::convert_string::to_base64 </td>
+          <td class="memname">static auto utility_module::convert_string::to_array </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::vector&lt; uint8_t &gt; &gt;, std::optional&lt; std::string &gt; &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a system-encoded string to a UTF-8 byte array. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The input string in system encoding. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A tuple of:<ul>
+<li><code>std::optional&lt;std::vector&lt;uint8_t&gt;&gt;</code>: The UTF-8 byte array on success.</li>
+<li><code>std::optional&lt;std::string&gt;</code>: An error message on failure. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ac262fa1f73b6054d12d850bfc56a7efc" name="ac262fa1f73b6054d12d850bfc56a7efc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac262fa1f73b6054d12d850bfc56a7efc">&#9670;&#160;</a></span>to_base64() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::to_base64 </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; uint8_t &gt; &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -1091,14 +1381,14 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Convert data to base64. </p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html#l00155">155</a> of file <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html#l00044">44</a> of file <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html">convert_string.h</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00344">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00325">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00232">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00288">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00269">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00250">TEST_F()</a>, and <a class="el" href="../../dc/da1/bytes__value_8cpp_source.html#l00069">container_module::bytes_value::to_string()</a>.</p>
 
 </div>
 </div>
 <a id="a3d68ea1d1294be848228cc14bf120957" name="a3d68ea1d1294be848228cc14bf120957"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d68ea1d1294be848228cc14bf120957">&#9670;&#160;</a></span>to_base64() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d68ea1d1294be848228cc14bf120957">&#9670;&#160;</a></span>to_base64() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1137,8 +1427,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="ad99cf184988c6cc68e15ec21518c766f" name="ad99cf184988c6cc68e15ec21518c766f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad99cf184988c6cc68e15ec21518c766f">&#9670;&#160;</a></span>to_base64() <span class="overload">[3/3]</span></h2>
+<a id="a3d68ea1d1294be848228cc14bf120957" name="a3d68ea1d1294be848228cc14bf120957"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d68ea1d1294be848228cc14bf120957">&#9670;&#160;</a></span>to_base64() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1147,11 +1437,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::to_base64 </td>
+          <td class="memname">static auto utility_module::convert_string::to_base64 </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; uint8_t &gt; &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
-          <td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -1175,12 +1465,10 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </dd></dl>
 <p>Typically, Base64 encoding should not fail unless the input is extremely large and memory allocation fails. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00438">438</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
-
 </div>
 </div>
-<a id="a1ac23d04f5bd3b5c8bb0a263e745c422" name="a1ac23d04f5bd3b5c8bb0a263e745c422"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ac23d04f5bd3b5c8bb0a263e745c422">&#9670;&#160;</a></span>to_string() <span class="overload">[1/8]</span></h2>
+<a id="a3d68ea1d1294be848228cc14bf120957" name="a3d68ea1d1294be848228cc14bf120957"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d68ea1d1294be848228cc14bf120957">&#9670;&#160;</a></span>to_base64() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1189,40 +1477,50 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::pair&lt; std::string, std::string &gt; utility_module::convert_string::to_string </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>str</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Convert string to string (identity function for compatibility) </p>
-
-<p class="definition">Definition at line <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html#l00119">119</a> of file <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html">convert_string.h</a>.</p>
-
-</div>
-</div>
-<a id="af2c2800fe883822329cd1d9213234c1c" name="af2c2800fe883822329cd1d9213234c1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2c2800fe883822329cd1d9213234c1c">&#9670;&#160;</a></span>to_string() <span class="overload">[2/8]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::pair&lt; std::string, std::string &gt; utility_module::convert_string::to_string </td>
+          <td class="memname">static auto utility_module::convert_string::to_base64 </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; uint8_t &gt; &amp;&#160;</td>
-          <td class="paramname"><em>arr</em></td><td>)</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Encodes a byte array into a Base64 string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The raw byte array to encode. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A tuple of:<ul>
+<li><code>std::optional&lt;std::string&gt;</code>: The Base64-encoded string on success.</li>
+<li><code>std::optional&lt;std::string&gt;</code>: An error message if encoding fails.</li>
+</ul>
+</dd></dl>
+<p>Typically, Base64 encoding should not fail unless the input is extremely large and memory allocation fails. </p>
+
+</div>
+</div>
+<a id="a35ef9ac21c605c5b5a1426f8cfbfca63" name="a35ef9ac21c605c5b5a1426f8cfbfca63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35ef9ac21c605c5b5a1426f8cfbfca63">&#9670;&#160;</a></span>to_string() <span class="overload">[1/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::to_string </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; uint8_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1233,14 +1531,14 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Convert byte array to string. </p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html#l00117">117</a> of file <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html#l00032">32</a> of file <a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html">convert_string.h</a>.</p>
+<p class="reference">Referenced by <a class="el" href="../../d2/dc0/value_8cpp_source.html#l00387">container_module::value::convert_specific_string()</a>, <a class="el" href="../../d3/dda/container_8cpp_source.html#l00633">container_module::value_container::deserialize()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00201">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00164">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00049">TEST_F()</a>, <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00174">TEST_F()</a>, and <a class="el" href="../../da/dfb/string__value_8cpp_source.html#l00057">container_module::string_value::to_string()</a>.</p>
 
 </div>
 </div>
 <a id="a13681ca6bce18bf1581696fc0a925381" name="a13681ca6bce18bf1581696fc0a925381"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13681ca6bce18bf1581696fc0a925381">&#9670;&#160;</a></span>to_string() <span class="overload">[3/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a13681ca6bce18bf1581696fc0a925381">&#9670;&#160;</a></span>to_string() <span class="overload">[2/11]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1278,8 +1576,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="a770bb9ae663fe1804b07da1b0f412e1c" name="a770bb9ae663fe1804b07da1b0f412e1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a770bb9ae663fe1804b07da1b0f412e1c">&#9670;&#160;</a></span>to_string() <span class="overload">[4/8]</span></h2>
+<a id="a13681ca6bce18bf1581696fc0a925381" name="a13681ca6bce18bf1581696fc0a925381"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13681ca6bce18bf1581696fc0a925381">&#9670;&#160;</a></span>to_string() <span class="overload">[3/11]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1288,11 +1586,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::to_string </td>
+          <td class="memname">static auto utility_module::convert_string::to_string </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; uint8_t &gt; &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
-          <td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -1315,12 +1613,91 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00429">429</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+</div>
+</div>
+<a id="a13681ca6bce18bf1581696fc0a925381" name="a13681ca6bce18bf1581696fc0a925381"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13681ca6bce18bf1581696fc0a925381">&#9670;&#160;</a></span>to_string() <span class="overload">[4/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto utility_module::convert_string::to_string </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; uint8_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a UTF-8 byte array to a system-encoded string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The input byte array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A tuple with:<ul>
+<li><code>std::optional&lt;std::string&gt;</code>: The system-encoded string on success.</li>
+<li><code>std::optional&lt;std::string&gt;</code>: An error message on failure. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="a253963501540b93269546be1be251f6e" name="a253963501540b93269546be1be251f6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a253963501540b93269546be1be251f6e">&#9670;&#160;</a></span>to_string() <span class="overload">[5/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::to_string </td>
+          <td>(</td>
+          <td class="paramtype">const std::wstring &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a <code>std::wstring</code> to a <code>std::string</code> using the system encoding. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The wide-string input. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A tuple of:<ul>
+<li><code>std::optional&lt;std::string&gt;</code>: The converted narrow string on success, or <code>std::nullopt</code> on failure.</li>
+<li><code>std::optional&lt;std::string&gt;</code>: The error message if conversion fails, otherwise <code>std::nullopt</code>.</li>
+</ul>
+</dd></dl>
+<p>On Windows, this typically uses the current code page. On Unix-like systems, it may use <code>iconv</code> or locale-based conversion functions. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html#l00136">136</a> of file <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
 
 </div>
 </div>
 <a id="a06610a0d3935a2b75e2281334f5a5698" name="a06610a0d3935a2b75e2281334f5a5698"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06610a0d3935a2b75e2281334f5a5698">&#9670;&#160;</a></span>to_string() <span class="overload">[5/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a06610a0d3935a2b75e2281334f5a5698">&#9670;&#160;</a></span>to_string() <span class="overload">[6/11]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1359,8 +1736,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="a46d663aa2bbe928c0e4be785a70913dd" name="a46d663aa2bbe928c0e4be785a70913dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46d663aa2bbe928c0e4be785a70913dd">&#9670;&#160;</a></span>to_string() <span class="overload">[6/8]</span></h2>
+<a id="a06610a0d3935a2b75e2281334f5a5698" name="a06610a0d3935a2b75e2281334f5a5698"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06610a0d3935a2b75e2281334f5a5698">&#9670;&#160;</a></span>to_string() <span class="overload">[7/11]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1369,11 +1746,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::to_string </td>
+          <td class="memname">static auto utility_module::convert_string::to_string </td>
           <td>(</td>
           <td class="paramtype">const std::wstring &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
-          <td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -1397,12 +1774,78 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </dd></dl>
 <p>On Windows, this typically uses the current code page. On Unix-like systems, it may use <code>iconv</code> or locale-based conversion functions. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00170">170</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+</div>
+</div>
+<a id="aa74a2b02183ce7d3d4d8978b564c1620" name="aa74a2b02183ce7d3d4d8978b564c1620"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa74a2b02183ce7d3d4d8978b564c1620">&#9670;&#160;</a></span>to_string() <span class="overload">[8/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::tuple&lt; <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; std::string &gt;, <a class="el" href="../../d6/d68/classutility__module_1_1result__wrapper.html">result_wrapper</a>&lt; bool &gt; &gt; utility_module::convert_string::to_string </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html#l00138">138</a> of file <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a>.</p>
+
+</div>
+</div>
+<a id="a776bbd0131c66d25b5704348286bcbfd" name="a776bbd0131c66d25b5704348286bcbfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a776bbd0131c66d25b5704348286bcbfd">&#9670;&#160;</a></span>to_string() <span class="overload">[9/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::to_string </td>
+          <td>(</td>
+          <td class="paramtype">std::wstring_view&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a <code>std::wstring_view</code> to a <code>std::string</code> using the system encoding. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The wide-string view. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e" title="Converts a std::wstring to a std::string using the system encoding.">to_string(const std::wstring&amp;)</a></code>.</dd></dl>
+<p>This is a convenience overload for handling string views without copying the entire wide string first. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html#l00151">151</a> of file <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
 
 </div>
 </div>
 <a id="ad1837c364b95bca95f28e8ac6431059e" name="ad1837c364b95bca95f28e8ac6431059e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1837c364b95bca95f28e8ac6431059e">&#9670;&#160;</a></span>to_string() <span class="overload">[7/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1837c364b95bca95f28e8ac6431059e">&#9670;&#160;</a></span>to_string() <span class="overload">[10/11]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1432,13 +1875,13 @@ template&lt;typename FromType , typename ToType &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code>to_string(const std::wstring&amp;)</code>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e" title="Converts a std::wstring to a std::string using the system encoding.">to_string(const std::wstring&amp;)</a></code>.</dd></dl>
 <p>This is a convenience overload for handling string views without copying the entire wide string first. </p>
 
 </div>
 </div>
-<a id="a8a902cd5bc155a724319249e74ee29d4" name="a8a902cd5bc155a724319249e74ee29d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a902cd5bc155a724319249e74ee29d4">&#9670;&#160;</a></span>to_string() <span class="overload">[8/8]</span></h2>
+<a id="ad1837c364b95bca95f28e8ac6431059e" name="ad1837c364b95bca95f28e8ac6431059e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1837c364b95bca95f28e8ac6431059e">&#9670;&#160;</a></span>to_string() <span class="overload">[11/11]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1447,11 +1890,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::to_string </td>
+          <td class="memname">static auto utility_module::convert_string::to_string </td>
           <td>(</td>
           <td class="paramtype">std::wstring_view&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
-          <td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -1468,15 +1911,56 @@ template&lt;typename FromType , typename ToType &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code>to_string(const std::wstring&amp;)</code>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a253963501540b93269546be1be251f6e" title="Converts a std::wstring to a std::string using the system encoding.">to_string(const std::wstring&amp;)</a></code>.</dd></dl>
 <p>This is a convenience overload for handling string views without copying the entire wide string first. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00185">185</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+</div>
+</div>
+<a id="a8b61bbabdc9b7a5118130f5330a928d4" name="a8b61bbabdc9b7a5118130f5330a928d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b61bbabdc9b7a5118130f5330a928d4">&#9670;&#160;</a></span>to_wstring() <span class="overload">[1/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::to_wstring </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> -&gt; std::tuple&lt;std::optional&lt;std::wstring&gt;, std::optional&lt;std::string&gt;&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a <code>std::string</code> (system-encoded) to a <code>std::wstring</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The narrow string in system encoding. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A tuple containing:<ul>
+<li><code>std::optional&lt;std::wstring&gt;</code>: The converted wide string on success.</li>
+<li><code>std::optional&lt;std::string&gt;</code>: An error message if conversion fails. </li>
+</ul>
+</dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html#l00166">166</a> of file <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="../../d4/d2e/modular__structure_2core_2include_2thread__system__core_2typed__thread__pool_2core_2job__types_8h_source.html#l00248">fmt::formatter&lt; typed_thread_pool_module::job_types, wchar_t &gt;::format()</a>, and <a class="el" href="../../d8/d26/convert__string__test_8cpp_source.html#l00072">TEST_F()</a>.</p>
 
 </div>
 </div>
 <a id="ae6e54e98a95c9788c88cbafb6ab14cc4" name="ae6e54e98a95c9788c88cbafb6ab14cc4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6e54e98a95c9788c88cbafb6ab14cc4">&#9670;&#160;</a></span>to_wstring() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6e54e98a95c9788c88cbafb6ab14cc4">&#9670;&#160;</a></span>to_wstring() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1514,8 +1998,8 @@ template&lt;typename FromType , typename ToType &gt; </div>
 
 </div>
 </div>
-<a id="a01e15c6aadb7c3effabf632ea25cb127" name="a01e15c6aadb7c3effabf632ea25cb127"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01e15c6aadb7c3effabf632ea25cb127">&#9670;&#160;</a></span>to_wstring() <span class="overload">[2/4]</span></h2>
+<a id="ae6e54e98a95c9788c88cbafb6ab14cc4" name="ae6e54e98a95c9788c88cbafb6ab14cc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6e54e98a95c9788c88cbafb6ab14cc4">&#9670;&#160;</a></span>to_wstring() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1524,11 +2008,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::to_wstring </td>
+          <td class="memname">static auto utility_module::convert_string::to_wstring </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
-          <td> -&gt; std::tuple&lt;std::optional&lt;std::wstring&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::wstring &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -1551,12 +2035,47 @@ template&lt;typename FromType , typename ToType &gt; </div>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00200">200</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+</div>
+</div>
+<a id="a29faff84bcbfaff3f9216b89f9b38619" name="a29faff84bcbfaff3f9216b89f9b38619"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29faff84bcbfaff3f9216b89f9b38619">&#9670;&#160;</a></span>to_wstring() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::to_wstring </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> -&gt; std::tuple&lt;std::optional&lt;std::wstring&gt;, std::optional&lt;std::string&gt;&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a <code>std::string_view</code> (system-encoded) to a <code>std::wstring</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The narrow string view in system encoding. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4" title="Converts a std::string (system-encoded) to a std::wstring.">to_wstring(const std::string&amp;)</a></code>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html#l00181">181</a> of file <a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
 
 </div>
 </div>
 <a id="a406479c216da48dd7d5884c78f5f2097" name="a406479c216da48dd7d5884c78f5f2097"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a406479c216da48dd7d5884c78f5f2097">&#9670;&#160;</a></span>to_wstring() <span class="overload">[3/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a406479c216da48dd7d5884c78f5f2097">&#9670;&#160;</a></span>to_wstring() <span class="overload">[5/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1586,12 +2105,12 @@ template&lt;typename FromType , typename ToType &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code>to_wstring(const std::string&amp;)</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4" title="Converts a std::string (system-encoded) to a std::wstring.">to_wstring(const std::string&amp;)</a></code>. </dd></dl>
 
 </div>
 </div>
-<a id="ad4ec34b41d493113985fb3f46db68e99" name="ad4ec34b41d493113985fb3f46db68e99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4ec34b41d493113985fb3f46db68e99">&#9670;&#160;</a></span>to_wstring() <span class="overload">[4/4]</span></h2>
+<a id="a406479c216da48dd7d5884c78f5f2097" name="a406479c216da48dd7d5884c78f5f2097"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a406479c216da48dd7d5884c78f5f2097">&#9670;&#160;</a></span>to_wstring() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1600,11 +2119,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::to_wstring </td>
+          <td class="memname">static auto utility_module::convert_string::to_wstring </td>
           <td>(</td>
           <td class="paramtype">std::string_view&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
-          <td> -&gt; std::tuple&lt;std::optional&lt;std::wstring&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::wstring &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -1621,14 +2140,42 @@ template&lt;typename FromType , typename ToType &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code>to_wstring(const std::string&amp;)</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#a8b61bbabdc9b7a5118130f5330a928d4" title="Converts a std::string (system-encoded) to a std::wstring.">to_wstring(const std::string&amp;)</a></code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00215">215</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+</div>
+</div>
+<a id="aca6d40bc39dbd6c09c8b4ffe5e94c9c2" name="aca6d40bc39dbd6c09c8b4ffe5e94c9c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca6d40bc39dbd6c09c8b4ffe5e94c9c2">&#9670;&#160;</a></span>utf8_to_system() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto utility_module::convert_string::utf8_to_system </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>utf8_str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html#l00279">279</a> of file <a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="../../da/d57/postgres__manager_8cpp_source.html#l00052">database::postgres_manager::connect()</a>.</p>
 
 </div>
 </div>
 <a id="aae9f1ce0b04dca1ea447630e06d75a68" name="aae9f1ce0b04dca1ea447630e06d75a68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae9f1ce0b04dca1ea447630e06d75a68">&#9670;&#160;</a></span>utf8_to_system() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aae9f1ce0b04dca1ea447630e06d75a68">&#9670;&#160;</a></span>utf8_to_system() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1658,12 +2205,12 @@ template&lt;typename FromType , typename ToType &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code>system_to_utf8()</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ad30f587d85f8caf0bdcfddf109d60ce0" title="Converts a system-encoded string to UTF-8.">system_to_utf8()</a></code>. </dd></dl>
 
 </div>
 </div>
-<a id="a977038d1dff06e386a99c53fe473f353" name="a977038d1dff06e386a99c53fe473f353"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a977038d1dff06e386a99c53fe473f353">&#9670;&#160;</a></span>utf8_to_system() <span class="overload">[2/2]</span></h2>
+<a id="aae9f1ce0b04dca1ea447630e06d75a68" name="aae9f1ce0b04dca1ea447630e06d75a68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae9f1ce0b04dca1ea447630e06d75a68">&#9670;&#160;</a></span>utf8_to_system() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1672,11 +2219,11 @@ template&lt;typename FromType , typename ToType &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto kcenon::thread::utils::convert_string::utf8_to_system </td>
+          <td class="memname">static auto utility_module::convert_string::utf8_to_system </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
-          <td> -&gt; std::tuple&lt;std::optional&lt;std::string&gt;, std::optional&lt;std::string&gt;&gt;</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td>
         </tr>
       </table>
   </td>
@@ -1693,17 +2240,52 @@ template&lt;typename FromType , typename ToType &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code>system_to_utf8()</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ad30f587d85f8caf0bdcfddf109d60ce0" title="Converts a system-encoded string to UTF-8.">system_to_utf8()</a></code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d86/convert__string_8cpp_source.html#l00379">379</a> of file <a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a>.</p>
+</div>
+</div>
+<a id="aae9f1ce0b04dca1ea447630e06d75a68" name="aae9f1ce0b04dca1ea447630e06d75a68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae9f1ce0b04dca1ea447630e06d75a68">&#9670;&#160;</a></span>utf8_to_system() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static auto utility_module::convert_string::utf8_to_system </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td> -&gt;  std::tuple&lt; std::optional&lt; std::string &gt;, std::optional&lt; std::string &gt; &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a UTF-8 encoded string to the system encoding. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The UTF-8 encoded input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Same tuple semantics as <code><a class="el" href="../../d1/d53/classutility__module_1_1convert__string.html#ad30f587d85f8caf0bdcfddf109d60ce0" title="Converts a system-encoded string to UTF-8.">system_to_utf8()</a></code>. </dd></dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>libraries/container_system/utilities/core/<a class="el" href="../../df/d16/container__system_2utilities_2core_2convert__string_8h_source.html">convert_string.h</a></li>
-<li>libraries/thread_system/include/kcenon/thread/utils/<a class="el" href="../../d6/d26/thread__system_2include_2kcenon_2thread_2utils_2convert__string_8h_source.html">convert_string.h</a></li>
-<li>libraries/thread_system/utilities/include/<a class="el" href="../../da/d5c/thread__system_2utilities_2include_2convert__string_8h_source.html">convert_string.h</a></li>
-<li>libraries/thread_system/src/utils/<a class="el" href="../../d9/d86/convert__string_8cpp_source.html">convert_string.cpp</a></li>
+<li>libraries/container_system/utilities/conversion/<a class="el" href="../../d5/d59/container__system_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a></li>
+<li>libraries/thread_system/modular_structure/core/include/thread_system_core/utilities/conversion/<a class="el" href="../../da/d42/thread__system_2modular__structure_2core_2include_2thread__system__core_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a></li>
+<li>libraries/thread_system/modular_structure/core/src/utilities/conversion/<a class="el" href="../../d2/d43/thread__system_2modular__structure_2core_2src_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a></li>
+<li>libraries/thread_system/sources/utilities/conversion/<a class="el" href="../../df/d2d/thread__system_2sources_2utilities_2conversion_2convert__string_8h_source.html">convert_string.h</a></li>
+<li>libraries/thread_system/modular_structure/core/src/utilities/conversion/<a class="el" href="../../d3/d81/modular__structure_2core_2src_2utilities_2conversion_2convert__string_8cpp_source.html">convert_string.cpp</a></li>
+<li>libraries/thread_system/sources/utilities/conversion/<a class="el" href="../../d1/d01/sources_2utilities_2conversion_2convert__string_8cpp_source.html">convert_string.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

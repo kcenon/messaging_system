@@ -97,26 +97,79 @@ $(document).ready(function(){initNavTree('d6/d8e/classmonitoring__interface_1_1m
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for monitoring_interface::monitoring_interface:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d7/d7b/classmonitoring__interface_1_1monitoring__interface__inherit__graph.png" border="0" usemap="#amonitoring__interface_1_1monitoring__interface_inherit__map" alt="Inheritance graph"/></div>
 <map name="amonitoring__interface_1_1monitoring__interface_inherit__map" id="amonitoring__interface_1_1monitoring__interface_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,77,172,117"/>
-<area shape="rect" href="../../d7/dde/classconsole__monitoring.html" title="Simple monitoring implementation." alt="" coords="224,5,375,31"/>
-<area shape="poly" title=" " alt="" coords="146,69,219,39,253,28,255,33,221,45,148,74"/>
-<area shape="rect" href="../../d2/db4/classmock__monitoring.html" title="Mock monitoring implementation for demonstration." alt="" coords="231,55,367,80"/>
-<area shape="poly" title=" " alt="" coords="185,81,231,74,231,79,186,86"/>
-<area shape="rect" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html" title="No&#45;op implementation of monitoring interface." alt="" coords="220,105,379,145"/>
-<area shape="poly" title=" " alt="" coords="186,107,220,111,219,117,185,112"/>
-<area shape="rect" href="../../d3/d20/classsample__monitoring.html" title=" " alt="" coords="225,169,373,195"/>
-<area shape="poly" title=" " alt="" coords="144,120,221,154,256,167,255,172,219,159,142,125"/>
+<area shape="rect" title=" " alt="" coords="5,233,172,273"/>
+<area shape="rect" href="../../d3/dce/classTestMonitoring.html" title=" " alt="" coords="260,5,379,31"/>
+<area shape="poly" title=" " alt="" coords="99,218,116,177,142,129,176,81,218,40,238,29,259,22,261,27,240,34,222,44,180,84,146,132,121,179,104,221"/>
+<area shape="rect" href="../../d7/dde/classconsole__monitoring.html" title="Simple monitoring implementation." alt="" coords="244,55,395,80"/>
+<area shape="poly" title=" " alt="" coords="105,219,151,152,182,118,219,89,242,78,245,82,221,94,186,122,155,156,110,222"/>
+<area shape="rect" href="../../d2/db4/classmock__monitoring.html" title="Mock monitoring implementation for demonstration." alt="" coords="251,104,387,129"/>
+<area shape="poly" title=" " alt="" coords="115,221,161,178,189,156,219,138,250,126,252,131,221,143,192,161,164,182,119,224"/>
+<area shape="rect" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html" title="다중 프로세스 모니터링 인터페이스" alt="" coords="220,153,419,208"/>
+<area shape="poly" title=" " alt="" coords="165,226,231,205,232,211,167,231"/>
+<area shape="rect" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html" title="No&#45;op implementation of monitoring interface." alt="" coords="240,233,399,273"/>
+<area shape="poly" title=" " alt="" coords="186,268,240,267,240,273,186,273"/>
+<area shape="poly" title=" " alt="" coords="186,250,240,250,240,255,186,255"/>
+<area shape="poly" title=" " alt="" coords="186,232,240,233,240,238,186,238"/>
+<area shape="rect" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html" title="Main monitoring implementation that implements thread_system&#39;s monitoring_interface." alt="" coords="241,297,398,337"/>
+<area shape="poly" title=" " alt="" coords="175,274,247,294,246,299,174,279"/>
+<area shape="rect" href="../../d3/d20/classsample__monitoring.html" title=" " alt="" coords="245,361,393,387"/>
+<area shape="poly" title=" " alt="" coords="124,280,168,315,221,346,255,359,253,364,219,351,165,319,120,284"/>
+<area shape="rect" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html" title="다중 프로세스 모니터링 구현 클래스" alt="" coords="467,161,657,201"/>
+<area shape="poly" title=" " alt="" coords="433,178,466,178,466,183,433,183"/>
 </map>
 <center><span class="legend">[<a target="top" href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ae2a72b6ecc902138caa6de4fb6f20fe1" id="r_ae2a72b6ecc902138caa6de4fb6f20fe1"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae2a72b6ecc902138caa6de4fb6f20fe1">~monitoring_interface</a> ()=default</td></tr>
+<tr class="separator:ae2a72b6ecc902138caa6de4fb6f20fe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4944cdd740f04c1fb5ceab3cecf10b6" id="r_ae4944cdd740f04c1fb5ceab3cecf10b6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae4944cdd740f04c1fb5ceab3cecf10b6">update_system_metrics</a> (const <a class="el" href="../../df/d06/structmonitoring__interface_1_1system__metrics.html">system_metrics</a> &amp;metrics)=0</td></tr>
+<tr class="memdesc:ae4944cdd740f04c1fb5ceab3cecf10b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates system metrics.  <br /></td></tr>
+<tr class="separator:ae4944cdd740f04c1fb5ceab3cecf10b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee80daf8a2c30809c709a04d17aad4e2" id="r_aee80daf8a2c30809c709a04d17aad4e2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">update_thread_pool_metrics</a> (const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;metrics)=0</td></tr>
+<tr class="memdesc:aee80daf8a2c30809c709a04d17aad4e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates thread pool metrics.  <br /></td></tr>
+<tr class="separator:aee80daf8a2c30809c709a04d17aad4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6de59ed110a7b26c74f1ca33a9aa329" id="r_ae6de59ed110a7b26c74f1ca33a9aa329"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae6de59ed110a7b26c74f1ca33a9aa329">update_worker_metrics</a> (std::size_t worker_id, const <a class="el" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html">worker_metrics</a> &amp;metrics)=0</td></tr>
+<tr class="memdesc:ae6de59ed110a7b26c74f1ca33a9aa329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates worker thread metrics.  <br /></td></tr>
+<tr class="separator:ae6de59ed110a7b26c74f1ca33a9aa329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6fe853ef31e781b321e1fd8e2885096" id="r_ac6fe853ef31e781b321e1fd8e2885096"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ac6fe853ef31e781b321e1fd8e2885096">get_current_snapshot</a> () const =0</td></tr>
+<tr class="memdesc:ac6fe853ef31e781b321e1fd8e2885096"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the most recent metrics snapshot.  <br /></td></tr>
+<tr class="separator:ac6fe853ef31e781b321e1fd8e2885096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f6baf3ab4f6d6768a34ee3d6668a526" id="r_a6f6baf3ab4f6d6768a34ee3d6668a526"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a6f6baf3ab4f6d6768a34ee3d6668a526">get_recent_snapshots</a> (std::size_t count) const =0</td></tr>
+<tr class="memdesc:a6f6baf3ab4f6d6768a34ee3d6668a526"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves multiple recent metrics snapshots.  <br /></td></tr>
+<tr class="separator:a6f6baf3ab4f6d6768a34ee3d6668a526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6380254711b03f0f572b25080cf57b9d" id="r_a6380254711b03f0f572b25080cf57b9d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a6380254711b03f0f572b25080cf57b9d">is_active</a> () const =0</td></tr>
+<tr class="memdesc:a6380254711b03f0f572b25080cf57b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if monitoring is currently active.  <br /></td></tr>
+<tr class="separator:a6380254711b03f0f572b25080cf57b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2a72b6ecc902138caa6de4fb6f20fe1" id="r_ae2a72b6ecc902138caa6de4fb6f20fe1"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae2a72b6ecc902138caa6de4fb6f20fe1">~monitoring_interface</a> ()=default</td></tr>
+<tr class="separator:ae2a72b6ecc902138caa6de4fb6f20fe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4944cdd740f04c1fb5ceab3cecf10b6" id="r_ae4944cdd740f04c1fb5ceab3cecf10b6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae4944cdd740f04c1fb5ceab3cecf10b6">update_system_metrics</a> (const <a class="el" href="../../df/d06/structmonitoring__interface_1_1system__metrics.html">system_metrics</a> &amp;metrics)=0</td></tr>
+<tr class="memdesc:ae4944cdd740f04c1fb5ceab3cecf10b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates system metrics.  <br /></td></tr>
+<tr class="separator:ae4944cdd740f04c1fb5ceab3cecf10b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee80daf8a2c30809c709a04d17aad4e2" id="r_aee80daf8a2c30809c709a04d17aad4e2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">update_thread_pool_metrics</a> (const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;metrics)=0</td></tr>
+<tr class="memdesc:aee80daf8a2c30809c709a04d17aad4e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates thread pool metrics.  <br /></td></tr>
+<tr class="separator:aee80daf8a2c30809c709a04d17aad4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f7ab4041c72d63972e360fbef85801b" id="r_a9f7ab4041c72d63972e360fbef85801b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a9f7ab4041c72d63972e360fbef85801b">update_thread_pool_metrics</a> (const std::string &amp;pool_name, std::uint32_t pool_instance_id, const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;metrics)</td></tr>
+<tr class="memdesc:a9f7ab4041c72d63972e360fbef85801b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates thread pool metrics with pool identifier (for multi-pool scenarios).  <br /></td></tr>
+<tr class="separator:a9f7ab4041c72d63972e360fbef85801b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6de59ed110a7b26c74f1ca33a9aa329" id="r_ae6de59ed110a7b26c74f1ca33a9aa329"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae6de59ed110a7b26c74f1ca33a9aa329">update_worker_metrics</a> (std::size_t worker_id, const <a class="el" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html">worker_metrics</a> &amp;metrics)=0</td></tr>
+<tr class="memdesc:ae6de59ed110a7b26c74f1ca33a9aa329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates worker thread metrics.  <br /></td></tr>
+<tr class="separator:ae6de59ed110a7b26c74f1ca33a9aa329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6fe853ef31e781b321e1fd8e2885096" id="r_ac6fe853ef31e781b321e1fd8e2885096"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ac6fe853ef31e781b321e1fd8e2885096">get_current_snapshot</a> () const =0</td></tr>
+<tr class="memdesc:ac6fe853ef31e781b321e1fd8e2885096"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the most recent metrics snapshot.  <br /></td></tr>
+<tr class="separator:ac6fe853ef31e781b321e1fd8e2885096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f6baf3ab4f6d6768a34ee3d6668a526" id="r_a6f6baf3ab4f6d6768a34ee3d6668a526"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a6f6baf3ab4f6d6768a34ee3d6668a526">get_recent_snapshots</a> (std::size_t count) const =0</td></tr>
+<tr class="memdesc:a6f6baf3ab4f6d6768a34ee3d6668a526"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves multiple recent metrics snapshots.  <br /></td></tr>
+<tr class="separator:a6f6baf3ab4f6d6768a34ee3d6668a526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6380254711b03f0f572b25080cf57b9d" id="r_a6380254711b03f0f572b25080cf57b9d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#a6380254711b03f0f572b25080cf57b9d">is_active</a> () const =0</td></tr>
+<tr class="memdesc:a6380254711b03f0f572b25080cf57b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if monitoring is currently active.  <br /></td></tr>
+<tr class="separator:a6380254711b03f0f572b25080cf57b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2a72b6ecc902138caa6de4fb6f20fe1" id="r_ae2a72b6ecc902138caa6de4fb6f20fe1"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae2a72b6ecc902138caa6de4fb6f20fe1">~monitoring_interface</a> ()=default</td></tr>
 <tr class="separator:ae2a72b6ecc902138caa6de4fb6f20fe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4944cdd740f04c1fb5ceab3cecf10b6" id="r_ae4944cdd740f04c1fb5ceab3cecf10b6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d8e/classmonitoring__interface_1_1monitoring__interface.html#ae4944cdd740f04c1fb5ceab3cecf10b6">update_system_metrics</a> (const <a class="el" href="../../df/d06/structmonitoring__interface_1_1system__metrics.html">system_metrics</a> &amp;metrics)=0</td></tr>
@@ -143,10 +196,60 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00119">119</a> of file <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html#l00108">108</a> of file <a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae2a72b6ecc902138caa6de4fb6f20fe1" name="ae2a72b6ecc902138caa6de4fb6f20fe1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2a72b6ecc902138caa6de4fb6f20fe1">&#9670;&#160;</a></span>~monitoring_interface()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2a72b6ecc902138caa6de4fb6f20fe1">&#9670;&#160;</a></span>~monitoring_interface() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual monitoring_interface::monitoring_interface::~monitoring_interface </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae2a72b6ecc902138caa6de4fb6f20fe1" name="ae2a72b6ecc902138caa6de4fb6f20fe1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2a72b6ecc902138caa6de4fb6f20fe1">&#9670;&#160;</a></span>~monitoring_interface() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual monitoring_interface::monitoring_interface::~monitoring_interface </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae2a72b6ecc902138caa6de4fb6f20fe1" name="ae2a72b6ecc902138caa6de4fb6f20fe1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2a72b6ecc902138caa6de4fb6f20fe1">&#9670;&#160;</a></span>~monitoring_interface() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,7 +275,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac6fe853ef31e781b321e1fd8e2885096" name="ac6fe853ef31e781b321e1fd8e2885096"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6fe853ef31e781b321e1fd8e2885096">&#9670;&#160;</a></span>get_current_snapshot()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6fe853ef31e781b321e1fd8e2885096">&#9670;&#160;</a></span>get_current_snapshot() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -197,12 +300,72 @@ Public Member Functions</h2></td></tr>
 <p>Retrieves the most recent metrics snapshot. </p>
 <dl class="section return"><dt>Returns</dt><dd>Current metrics snapshot </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d7/dde/classconsole__monitoring.html#a84503c7a139398c9173eb24c9be0ea0f">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a3d1214f0644d3de27a8ac758a4b5936e">mock_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#a84d877f96a454c46ea6bc82d3cef997d">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>.</p>
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a12581599fcadecf508d42af9bb140152">monitoring_module::monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aaeb825c971565196c80b0fd8f1b7ec2f">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#a84503c7a139398c9173eb24c9be0ea0f">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a3d1214f0644d3de27a8ac758a4b5936e">mock_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#a84d877f96a454c46ea6bc82d3cef997d">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>.</p>
+
+</div>
+</div>
+<a id="ac6fe853ef31e781b321e1fd8e2885096" name="ac6fe853ef31e781b321e1fd8e2885096"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6fe853ef31e781b321e1fd8e2885096">&#9670;&#160;</a></span>get_current_snapshot() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> monitoring_interface::monitoring_interface::get_current_snapshot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the most recent metrics snapshot. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current metrics snapshot </dd></dl>
+
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a12581599fcadecf508d42af9bb140152">monitoring_module::monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aaeb825c971565196c80b0fd8f1b7ec2f">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#a84503c7a139398c9173eb24c9be0ea0f">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a3d1214f0644d3de27a8ac758a4b5936e">mock_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#a84d877f96a454c46ea6bc82d3cef997d">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>.</p>
+
+</div>
+</div>
+<a id="ac6fe853ef31e781b321e1fd8e2885096" name="ac6fe853ef31e781b321e1fd8e2885096"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6fe853ef31e781b321e1fd8e2885096">&#9670;&#160;</a></span>get_current_snapshot() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> monitoring_interface::monitoring_interface::get_current_snapshot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the most recent metrics snapshot. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current metrics snapshot </dd></dl>
+
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a12581599fcadecf508d42af9bb140152">monitoring_module::monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aaeb825c971565196c80b0fd8f1b7ec2f">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#a84503c7a139398c9173eb24c9be0ea0f">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a3d1214f0644d3de27a8ac758a4b5936e">mock_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#a84d877f96a454c46ea6bc82d3cef997d">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#adea87d72ffbc1e85f5ce223a9650735a">monitoring_interface::null_monitoring</a>.</p>
 
 </div>
 </div>
 <a id="a6f6baf3ab4f6d6768a34ee3d6668a526" name="a6f6baf3ab4f6d6768a34ee3d6668a526"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f6baf3ab4f6d6768a34ee3d6668a526">&#9670;&#160;</a></span>get_recent_snapshots()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f6baf3ab4f6d6768a34ee3d6668a526">&#9670;&#160;</a></span>get_recent_snapshots() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -234,12 +397,86 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of metrics snapshots, newest first </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d7/dde/classconsole__monitoring.html#aef2569fef8f87604828b642195052c4b">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a9b21d9861542772df8a018fffd59dc76">mock_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#ae536d7fd4d7cc1fa007729d917f98896">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>.</p>
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a6a4961ebf5900a51a63755e7b47fe36f">monitoring_module::monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#acaf9b5135d344825694e94bfc4b65a3f">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#aef2569fef8f87604828b642195052c4b">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a9b21d9861542772df8a018fffd59dc76">mock_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#ae536d7fd4d7cc1fa007729d917f98896">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>.</p>
+
+</div>
+</div>
+<a id="a6f6baf3ab4f6d6768a34ee3d6668a526" name="a6f6baf3ab4f6d6768a34ee3d6668a526"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f6baf3ab4f6d6768a34ee3d6668a526">&#9670;&#160;</a></span>get_recent_snapshots() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::vector&lt; <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> &gt; monitoring_interface::monitoring_interface::get_recent_snapshots </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>count</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves multiple recent metrics snapshots. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">count</td><td>Number of snapshots to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of metrics snapshots, newest first </dd></dl>
+
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a6a4961ebf5900a51a63755e7b47fe36f">monitoring_module::monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#acaf9b5135d344825694e94bfc4b65a3f">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#aef2569fef8f87604828b642195052c4b">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a9b21d9861542772df8a018fffd59dc76">mock_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#ae536d7fd4d7cc1fa007729d917f98896">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>.</p>
+
+</div>
+</div>
+<a id="a6f6baf3ab4f6d6768a34ee3d6668a526" name="a6f6baf3ab4f6d6768a34ee3d6668a526"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f6baf3ab4f6d6768a34ee3d6668a526">&#9670;&#160;</a></span>get_recent_snapshots() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::vector&lt; <a class="el" href="../../dc/d59/structmonitoring__interface_1_1metrics__snapshot.html">metrics_snapshot</a> &gt; monitoring_interface::monitoring_interface::get_recent_snapshots </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>count</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves multiple recent metrics snapshots. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">count</td><td>Number of snapshots to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of metrics snapshots, newest first </dd></dl>
+
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a6a4961ebf5900a51a63755e7b47fe36f">monitoring_module::monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#acaf9b5135d344825694e94bfc4b65a3f">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#aef2569fef8f87604828b642195052c4b">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a9b21d9861542772df8a018fffd59dc76">mock_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#ae536d7fd4d7cc1fa007729d917f98896">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a7efcd15367b60608bbe51ef21ec39ee4">monitoring_interface::null_monitoring</a>.</p>
 
 </div>
 </div>
 <a id="a6380254711b03f0f572b25080cf57b9d" name="a6380254711b03f0f572b25080cf57b9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6380254711b03f0f572b25080cf57b9d">&#9670;&#160;</a></span>is_active()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6380254711b03f0f572b25080cf57b9d">&#9670;&#160;</a></span>is_active() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -264,12 +501,72 @@ Public Member Functions</h2></td></tr>
 <p>Checks if monitoring is currently active. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if monitoring is active </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d7/dde/classconsole__monitoring.html#a84da24be478fa4e500195b3a711e07b9">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a5750e05cb87377e837b6d6097a3d235a">mock_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#a3c059b5810d3fd155c38ea0f895e2ab8">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>.</p>
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#acdc6a9a24f3455d7f7eab080e571bc13">monitoring_module::monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aaeeef1fd828897acd24bd7d157af5606">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#a84da24be478fa4e500195b3a711e07b9">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a5750e05cb87377e837b6d6097a3d235a">mock_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#a3c059b5810d3fd155c38ea0f895e2ab8">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>.</p>
+
+</div>
+</div>
+<a id="a6380254711b03f0f572b25080cf57b9d" name="a6380254711b03f0f572b25080cf57b9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6380254711b03f0f572b25080cf57b9d">&#9670;&#160;</a></span>is_active() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool monitoring_interface::monitoring_interface::is_active </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if monitoring is currently active. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if monitoring is active </dd></dl>
+
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#acdc6a9a24f3455d7f7eab080e571bc13">monitoring_module::monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aaeeef1fd828897acd24bd7d157af5606">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#a84da24be478fa4e500195b3a711e07b9">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a5750e05cb87377e837b6d6097a3d235a">mock_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#a3c059b5810d3fd155c38ea0f895e2ab8">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>.</p>
+
+</div>
+</div>
+<a id="a6380254711b03f0f572b25080cf57b9d" name="a6380254711b03f0f572b25080cf57b9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6380254711b03f0f572b25080cf57b9d">&#9670;&#160;</a></span>is_active() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool monitoring_interface::monitoring_interface::is_active </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if monitoring is currently active. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if monitoring is active </dd></dl>
+
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#acdc6a9a24f3455d7f7eab080e571bc13">monitoring_module::monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aaeeef1fd828897acd24bd7d157af5606">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d7/dde/classconsole__monitoring.html#a84da24be478fa4e500195b3a711e07b9">console_monitoring</a>, <a class="el" href="../../d2/db4/classmock__monitoring.html#a5750e05cb87377e837b6d6097a3d235a">mock_monitoring</a>, <a class="el" href="../../d3/d20/classsample__monitoring.html#a3c059b5810d3fd155c38ea0f895e2ab8">sample_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a1f0eedfe8abf8cd5ab662cb12ab7371d">monitoring_interface::null_monitoring</a>.</p>
 
 </div>
 </div>
 <a id="ae4944cdd740f04c1fb5ceab3cecf10b6" name="ae4944cdd740f04c1fb5ceab3cecf10b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4944cdd740f04c1fb5ceab3cecf10b6">&#9670;&#160;</a></span>update_system_metrics()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4944cdd740f04c1fb5ceab3cecf10b6">&#9670;&#160;</a></span>update_system_metrics() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -300,12 +597,84 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">monitoring_interface::null_monitoring</a>.</p>
+<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">monitoring_interface::null_monitoring</a>, and <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a34e3f241496420db12043c568f386a35">monitoring_module::monitoring</a>.</p>
+
+</div>
+</div>
+<a id="ae4944cdd740f04c1fb5ceab3cecf10b6" name="ae4944cdd740f04c1fb5ceab3cecf10b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4944cdd740f04c1fb5ceab3cecf10b6">&#9670;&#160;</a></span>update_system_metrics() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void monitoring_interface::monitoring_interface::update_system_metrics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../df/d06/structmonitoring__interface_1_1system__metrics.html">system_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates system metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>The system metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">monitoring_interface::null_monitoring</a>, and <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a34e3f241496420db12043c568f386a35">monitoring_module::monitoring</a>.</p>
+
+</div>
+</div>
+<a id="ae4944cdd740f04c1fb5ceab3cecf10b6" name="ae4944cdd740f04c1fb5ceab3cecf10b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4944cdd740f04c1fb5ceab3cecf10b6">&#9670;&#160;</a></span>update_system_metrics() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void monitoring_interface::monitoring_interface::update_system_metrics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../df/d06/structmonitoring__interface_1_1system__metrics.html">system_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates system metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>The system metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#aaf6fb177fd04598bdfe448e802635fb1">monitoring_interface::null_monitoring</a>, and <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a34e3f241496420db12043c568f386a35">monitoring_module::monitoring</a>.</p>
 
 </div>
 </div>
 <a id="a9f7ab4041c72d63972e360fbef85801b" name="a9f7ab4041c72d63972e360fbef85801b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f7ab4041c72d63972e360fbef85801b">&#9670;&#160;</a></span>update_thread_pool_metrics() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f7ab4041c72d63972e360fbef85801b">&#9670;&#160;</a></span>update_thread_pool_metrics() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -354,14 +723,74 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00141">141</a> of file <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+<p>Reimplemented in <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#a9f7ab4041c72d63972e360fbef85801b">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#a9f7ab4041c72d63972e360fbef85801b">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#a9f7ab4041c72d63972e360fbef85801b">monitoring_module::multi_process_monitoring</a>, and <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#a9f7ab4041c72d63972e360fbef85801b">monitoring_module::multi_process_monitoring</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00080">monitoring_interface::thread_pool_metrics::pool_instance_id</a>, and <a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html#l00079">monitoring_interface::thread_pool_metrics::pool_name</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00141">141</a> of file <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00080">monitoring_interface::thread_pool_metrics::pool_instance_id</a>, and <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00079">monitoring_interface::thread_pool_metrics::pool_name</a>.</p>
+
+</div>
+</div>
+<a id="a9f7ab4041c72d63972e360fbef85801b" name="a9f7ab4041c72d63972e360fbef85801b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f7ab4041c72d63972e360fbef85801b">&#9670;&#160;</a></span>update_thread_pool_metrics() <span class="overload">[2/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void monitoring_interface::monitoring_interface::update_thread_pool_metrics </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>pool_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::uint32_t&#160;</td>
+          <td class="paramname"><em>pool_instance_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates thread pool metrics with pool identifier (for multi-pool scenarios). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pool_name</td><td>Name of the thread pool </td></tr>
+    <tr><td class="paramname">pool_instance_id</td><td>Instance ID for multiple pools with same name </td></tr>
+    <tr><td class="paramname">metrics</td><td>The thread pool metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#a9f7ab4041c72d63972e360fbef85801b">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#a9f7ab4041c72d63972e360fbef85801b">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#a9f7ab4041c72d63972e360fbef85801b">monitoring_module::multi_process_monitoring</a>, and <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#a9f7ab4041c72d63972e360fbef85801b">monitoring_module::multi_process_monitoring</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html#l00141">141</a> of file <a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00080">monitoring_interface::thread_pool_metrics::pool_instance_id</a>, and <a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html#l00079">monitoring_interface::thread_pool_metrics::pool_name</a>.</p>
 
 </div>
 </div>
 <a id="aee80daf8a2c30809c709a04d17aad4e2" name="aee80daf8a2c30809c709a04d17aad4e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee80daf8a2c30809c709a04d17aad4e2">&#9670;&#160;</a></span>update_thread_pool_metrics() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aee80daf8a2c30809c709a04d17aad4e2">&#9670;&#160;</a></span>update_thread_pool_metrics() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -392,12 +821,84 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">monitoring_interface::null_monitoring</a>.</p>
+<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#ae3ccd3734c2b8e3691c60b7c6dbad1fe">monitoring_module::monitoring</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_module::multi_process_monitoring</a>, and <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_module::multi_process_monitoring</a>.</p>
+
+</div>
+</div>
+<a id="aee80daf8a2c30809c709a04d17aad4e2" name="aee80daf8a2c30809c709a04d17aad4e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee80daf8a2c30809c709a04d17aad4e2">&#9670;&#160;</a></span>update_thread_pool_metrics() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void monitoring_interface::monitoring_interface::update_thread_pool_metrics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates thread pool metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>The thread pool metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#ae3ccd3734c2b8e3691c60b7c6dbad1fe">monitoring_module::monitoring</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_module::multi_process_monitoring</a>, and <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_module::multi_process_monitoring</a>.</p>
+
+</div>
+</div>
+<a id="aee80daf8a2c30809c709a04d17aad4e2" name="aee80daf8a2c30809c709a04d17aad4e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee80daf8a2c30809c709a04d17aad4e2">&#9670;&#160;</a></span>update_thread_pool_metrics() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void monitoring_interface::monitoring_interface::update_thread_pool_metrics </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../d6/d3b/structmonitoring__interface_1_1thread__pool__metrics.html">thread_pool_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates thread pool metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metrics</td><td>The thread pool metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a03bab574157fdc0f1c7f22ec9d0b6a6d">monitoring_interface::null_monitoring</a>, <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#ae3ccd3734c2b8e3691c60b7c6dbad1fe">monitoring_module::monitoring</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../dd/d4a/classmonitoring__interface_1_1multi__process__monitoring__interface.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_interface::multi_process_monitoring_interface</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_module::multi_process_monitoring</a>, <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_module::multi_process_monitoring</a>, and <a class="el" href="../../d3/d11/classmonitoring__module_1_1multi__process__monitoring.html#aee80daf8a2c30809c709a04d17aad4e2">monitoring_module::multi_process_monitoring</a>.</p>
 
 </div>
 </div>
 <a id="ae6de59ed110a7b26c74f1ca33a9aa329" name="ae6de59ed110a7b26c74f1ca33a9aa329"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6de59ed110a7b26c74f1ca33a9aa329">&#9670;&#160;</a></span>update_worker_metrics()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6de59ed110a7b26c74f1ca33a9aa329">&#9670;&#160;</a></span>update_worker_metrics() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -439,12 +940,108 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">monitoring_interface::null_monitoring</a>.</p>
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a6976fed9c568c4ff3392d340c9f5a07b">monitoring_module::monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">monitoring_interface::null_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">monitoring_interface::null_monitoring</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>libraries/thread_system/include/kcenon/thread/interfaces/<a class="el" href="../../d9/d5c/thread__system_2include_2kcenon_2thread_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a></li>
+<a id="ae6de59ed110a7b26c74f1ca33a9aa329" name="ae6de59ed110a7b26c74f1ca33a9aa329"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6de59ed110a7b26c74f1ca33a9aa329">&#9670;&#160;</a></span>update_worker_metrics() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void monitoring_interface::monitoring_interface::update_worker_metrics </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>worker_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html">worker_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates worker thread metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worker_id</td><td>Unique identifier for the worker </td></tr>
+    <tr><td class="paramname">metrics</td><td>The worker metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a6976fed9c568c4ff3392d340c9f5a07b">monitoring_module::monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">monitoring_interface::null_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">monitoring_interface::null_monitoring</a>.</p>
+
+</div>
+</div>
+<a id="ae6de59ed110a7b26c74f1ca33a9aa329" name="ae6de59ed110a7b26c74f1ca33a9aa329"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6de59ed110a7b26c74f1ca33a9aa329">&#9670;&#160;</a></span>update_worker_metrics() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void monitoring_interface::monitoring_interface::update_worker_metrics </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>worker_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../d6/da4/structmonitoring__interface_1_1worker__metrics.html">worker_metrics</a> &amp;&#160;</td>
+          <td class="paramname"><em>metrics</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updates worker thread metrics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">worker_id</td><td>Unique identifier for the worker </td></tr>
+    <tr><td class="paramname">metrics</td><td>The worker metrics to record </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../d8/d4c/classmonitoring__module_1_1monitoring.html#a6976fed9c568c4ff3392d340c9f5a07b">monitoring_module::monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">monitoring_interface::null_monitoring</a>, <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">monitoring_interface::null_monitoring</a>, and <a class="el" href="../../dc/d6a/classmonitoring__interface_1_1null__monitoring.html#a9e4d8f933c29fdfee61c799d91849a1c">monitoring_interface::null_monitoring</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>libraries/monitoring_system/sources/monitoring/<a class="el" href="../../d5/d0a/monitoring__system_2sources_2monitoring_2monitoring__interface_8h_source.html">monitoring_interface.h</a></li>
+<li>libraries/thread_system/modular_structure/core/include/thread_system_core/interfaces/<a class="el" href="../../d3/d65/thread__system_2modular__structure_2core_2include_2thread__system__core_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a></li>
+<li>libraries/thread_system/sources/interfaces/<a class="el" href="../../d9/d8e/thread__system_2sources_2interfaces_2monitoring__interface_8h_source.html">monitoring_interface.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

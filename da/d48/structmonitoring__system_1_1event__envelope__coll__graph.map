@@ -1,5 +1,0 @@
-<map id="monitoring_system::event_envelope" name="monitoring_system::event_envelope">
-<area shape="rect" id="Node000001" title="Container for events with metadata." alt="" coords="5,93,161,133"/>
-<area shape="rect" id="Node000002" href="$dd/d73/classevent__priority.html" title="Priority levels for event processing." alt="" coords="27,5,140,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,44,86,93,81,93,81,44"/>
-</map>

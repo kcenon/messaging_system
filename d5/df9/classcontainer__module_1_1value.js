@@ -34,7 +34,6 @@ var classcontainer__module_1_1value =
     [ "serialize", "d5/df9/classcontainer__module_1_1value.html#ae2d6a5ff0505af3f3c56e50b2ece015e", null ],
     [ "set_boolean", "d5/df9/classcontainer__module_1_1value.html#a6ba4c552c02581c3c5e3813aa75eaa93", null ],
     [ "set_byte_string", "d5/df9/classcontainer__module_1_1value.html#a8052f3e0396d6e9bbd8622c27e8b4e6d", null ],
-    [ "set_container", "d5/df9/classcontainer__module_1_1value.html#a9d29161fbd476c636ecb3a6a94327352", null ],
     [ "set_data", "d5/df9/classcontainer__module_1_1value.html#a5c492926cddeda0f9b19d846e711ee9e", null ],
     [ "set_data", "d5/df9/classcontainer__module_1_1value.html#ae8e109566cfbe310585e6412c313760c", null ],
     [ "set_data", "d5/df9/classcontainer__module_1_1value.html#a3953e73aecb916b738da3c39a2119cc9", null ],

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: libraries/thread_system/examples/hazard_pointer_sample/hazard_pointer_sample.cpp File Reference</title>
+<title>Messaging System: libraries/thread_system/samples/hazard_pointer_sample/hazard_pointer_sample.cpp File Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp.ht
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;thread_base/lockfree/memory/hazard_pointer.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="../../d1/d8c/logger_8h_source.html">logger/core/logger.h</a>&quot;</code><br />
+<code>#include &quot;logger/core/logger.h&quot;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;random&gt;</code><br />
@@ -106,80 +106,23 @@ $(document).ready(function(){initNavTree('d1/ddb/hazard__pointer__sample_8cpp.ht
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for hazard_pointer_sample.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../dc/dde/hazard__pointer__sample_8cpp__incl.png" border="0" usemap="#alibraries_2thread__system_2examples_2hazard__pointer__sample_2hazard__pointer__sample_8cpp" alt=""/></div>
-<map name="alibraries_2thread__system_2examples_2hazard__pointer__sample_2hazard__pointer__sample_8cpp" id="alibraries_2thread__system_2examples_2hazard__pointer__sample_2hazard__pointer__sample_8cpp">
-<area shape="rect" title=" " alt="" coords="565,5,825,60"/>
+<div class="center"><img src="../../dc/dde/hazard__pointer__sample_8cpp__incl.png" border="0" usemap="#alibraries_2thread__system_2samples_2hazard__pointer__sample_2hazard__pointer__sample_8cpp" alt=""/></div>
+<map name="alibraries_2thread__system_2samples_2hazard__pointer__sample_2hazard__pointer__sample_8cpp" id="alibraries_2thread__system_2samples_2hazard__pointer__sample_2hazard__pointer__sample_8cpp">
+<area shape="rect" title=" " alt="" coords="388,5,648,60"/>
 <area shape="rect" title=" " alt="" coords="5,108,199,148"/>
-<area shape="poly" title=" " alt="" coords="566,57,218,111,213,112,212,106,218,105,565,51"/>
-<area shape="rect" href="../../d1/d8c/logger_8h.html" title="High&#45;performance, thread&#45;safe logging system with asynchronous capabilities." alt="" coords="993,115,1144,141"/>
-<area shape="poly" title=" " alt="" coords="801,57,1010,109,1009,115,800,63"/>
-<area shape="rect" title=" " alt="" coords="460,203,523,229"/>
-<area shape="poly" title=" " alt="" coords="667,62,517,196,513,192,664,58"/>
-<area shape="rect" title=" " alt="" coords="713,291,779,317"/>
-<area shape="poly" title=" " alt="" coords="703,60,744,277,739,278,698,61"/>
-<area shape="rect" title=" " alt="" coords="1799,203,1863,229"/>
-<area shape="poly" title=" " alt="" coords="826,35,903,42,988,55,1075,76,1158,106,1174,116,1184,127,1194,137,1208,146,1288,172,1357,185,1419,189,1479,188,1604,181,1677,183,1761,193,1787,199,1786,204,1760,199,1676,188,1604,186,1479,193,1419,195,1356,191,1286,177,1206,150,1190,141,1180,130,1170,120,1155,110,1073,81,987,60,902,47,825,40"/>
-<area shape="rect" title=" " alt="" coords="878,372,945,397"/>
-<area shape="poly" title=" " alt="" coords="589,63,454,105,385,133,323,164,274,200,257,218,245,238,239,258,240,278,248,300,264,322,275,330,294,337,353,349,525,366,715,376,864,380,864,385,715,381,524,372,353,354,293,342,273,334,260,326,243,302,234,279,234,257,240,236,253,215,271,196,320,160,383,128,452,100,587,57"/>
-<area shape="rect" title=" " alt="" coords="1219,115,1291,141"/>
-<area shape="poly" title=" " alt="" coords="826,44,1005,67,1104,85,1201,105,1213,109,1211,114,1200,111,1103,90,1004,73,825,49"/>
-<area shape="rect" title=" " alt="" coords="1495,372,1573,397"/>
-<area shape="poly" title=" " alt="" coords="1117,138,1152,145,1226,152,1323,156,1416,167,1455,178,1482,194,1499,212,1511,232,1528,277,1536,321,1537,358,1532,359,1530,322,1523,278,1507,234,1494,215,1479,198,1452,183,1415,172,1322,161,1225,157,1151,151,1116,143"/>
-<area shape="poly" title=" " alt="" coords="993,135,900,141,784,152,659,171,535,199,528,201,526,196,533,193,658,166,784,147,899,135,993,129"/>
-<area shape="poly" title=" " alt="" coords="993,140,865,161,809,178,788,187,773,198,761,215,753,236,748,277,742,277,748,235,756,213,769,194,785,183,807,173,864,156,993,135"/>
-<area shape="poly" title=" " alt="" coords="1121,138,1164,145,1257,156,1337,160,1473,161,1609,166,1689,176,1781,193,1792,196,1791,201,1780,199,1688,181,1609,172,1473,167,1337,166,1257,161,1163,151,1120,143"/>
-<area shape="rect" href="../../d5/de3/logger__system_2include_2kcenon_2logger_2interfaces_2logger__interface_8h.html" title=" " alt="" coords="1043,196,1225,236"/>
-<area shape="poly" title=" " alt="" coords="1080,139,1113,183,1109,186,1075,142"/>
-<area shape="rect" href="../../da/d5e/logger__types_8h.html" title="Common types and enumerations for logger system." alt="" coords="945,291,1064,317"/>
-<area shape="poly" title=" " alt="" coords="1063,142,1034,197,1020,240,1012,278,1006,277,1015,238,1029,195,1059,139"/>
-<area shape="rect" href="../../d8/df1/logger__system_2include_2kcenon_2logger_2core_2error__codes_8h.html" title=" " alt="" coords="547,203,657,229"/>
-<area shape="poly" title=" " alt="" coords="1007,143,671,205,670,199,1006,138"/>
-<area shape="rect" href="../../db/dd9/logger__metrics_8h.html" title="Logger performance metrics and monitoring." alt="" coords="783,203,967,229"/>
-<area shape="poly" title=" " alt="" coords="1044,143,915,200,913,195,1042,138"/>
-<area shape="rect" href="../../d9/db2/include_2kcenon_2logger_2core_2di_2di__container__interface_8h.html" title="Dependency injection container interface." alt="" coords="1622,291,1817,317"/>
-<area shape="poly" title=" " alt="" coords="1122,138,1164,145,1274,150,1458,155,1638,167,1703,178,1725,185,1739,194,1749,214,1750,237,1744,260,1735,280,1730,278,1739,258,1744,237,1744,216,1735,198,1723,190,1702,183,1637,173,1457,160,1273,155,1163,151,1121,143"/>
-<area shape="rect" href="../../da/d24/include_2kcenon_2logger_2core_2di_2di__container__factory_8h.html" title="Factory for creating DI container instances." alt="" coords="1543,203,1725,229"/>
-<area shape="poly" title=" " alt="" coords="1124,138,1164,145,1344,170,1525,193,1557,198,1556,204,1524,199,1344,175,1163,151,1123,143"/>
-<area shape="rect" href="../../d3/d61/logger__system_2include_2kcenon_2logger_2core_2monitoring_2monitoring__interface_8h.html" title="Interface for logger monitoring and health checks." alt="" coords="1227,284,1395,324"/>
-<area shape="poly" title=" " alt="" coords="1120,138,1180,159,1211,175,1240,194,1274,231,1299,270,1294,273,1270,234,1236,198,1208,179,1178,164,1118,143"/>
-<area shape="rect" href="../../db/d89/include_2kcenon_2logger_2core_2monitoring_2monitoring__factory_8h.html" title="Factory for creating monitoring instances." alt="" coords="1301,196,1469,236"/>
-<area shape="poly" title=" " alt="" coords="1112,138,1303,190,1301,195,1111,143"/>
-<area shape="poly" title=" " alt="" coords="1226,225,1317,246,1364,261,1409,282,1432,300,1453,322,1507,362,1503,366,1450,326,1429,304,1406,286,1362,266,1315,251,1225,231"/>
-<area shape="rect" title=" " alt="" coords="1139,291,1203,317"/>
-<area shape="poly" title=" " alt="" coords="1145,235,1163,277,1158,279,1140,237"/>
-<area shape="rect" title=" " alt="" coords="1073,372,1131,397"/>
-<area shape="poly" title=" " alt="" coords="1133,237,1109,359,1104,358,1128,236"/>
-<area shape="poly" title=" " alt="" coords="1107,238,1035,286,1032,281,1104,234"/>
-<area shape="poly" title=" " alt="" coords="1021,315,1079,361,1075,365,1017,319"/>
-<area shape="poly" title=" " alt="" coords="993,319,937,365,934,361,989,315"/>
-<area shape="poly" title=" " alt="" coords="611,227,646,274,672,301,702,322,757,335,855,351,1059,376,1059,381,855,356,756,341,700,326,668,305,642,278,607,230"/>
-<area shape="rect" title=" " alt="" coords="275,291,361,317"/>
-<area shape="poly" title=" " alt="" coords="562,231,373,287,365,289,363,284,372,281,560,226"/>
-<area shape="rect" title=" " alt="" coords="385,291,445,317"/>
-<area shape="poly" title=" " alt="" coords="578,231,454,288,452,283,576,226"/>
-<area shape="rect" title=" " alt="" coords="470,291,545,317"/>
-<area shape="poly" title=" " alt="" coords="591,231,532,284,529,280,587,227"/>
-<area shape="rect" title=" " alt="" coords="569,291,637,317"/>
-<area shape="poly" title=" " alt="" coords="605,229,606,277,600,277,600,229"/>
-<area shape="poly" title=" " alt="" coords="859,231,776,286,773,281,856,227"/>
-<area shape="poly" title=" " alt="" coords="869,230,857,249,846,272,840,298,844,323,860,345,880,362,877,366,856,348,840,325,835,298,840,271,852,246,864,227"/>
-<area shape="rect" title=" " alt="" coords="854,291,921,317"/>
-<area shape="poly" title=" " alt="" coords="880,228,886,277,881,278,874,229"/>
-<area shape="poly" title=" " alt="" coords="1693,319,1574,369,1572,364,1691,314"/>
-<area shape="poly" title=" " alt="" coords="1630,319,1145,381,1145,375,1629,314"/>
-<area shape="rect" title=" " alt="" coords="1747,372,1833,397"/>
-<area shape="poly" title=" " alt="" coords="1732,315,1772,360,1768,363,1728,319"/>
-<area shape="rect" title=" " alt="" coords="1636,372,1723,397"/>
-<area shape="poly" title=" " alt="" coords="1716,318,1694,361,1689,359,1711,316"/>
-<area shape="rect" title=" " alt="" coords="1297,372,1421,397"/>
-<area shape="poly" title=" " alt="" coords="1668,319,1426,372,1425,366,1666,314"/>
-<area shape="poly" title=" " alt="" coords="1629,230,1550,362,1546,359,1625,227"/>
-<area shape="poly" title=" " alt="" coords="1647,227,1700,279,1696,283,1644,231"/>
-<area shape="poly" title=" " alt="" coords="1262,327,1145,370,1143,365,1260,322"/>
-<area shape="poly" title=" " alt="" coords="1228,324,959,377,958,372,1226,319"/>
-<area shape="poly" title=" " alt="" coords="1325,323,1347,359,1343,361,1321,326"/>
-<area shape="poly" title=" " alt="" coords="1406,234,1453,282,1518,359,1514,362,1449,286,1402,238"/>
-<area shape="poly" title=" " alt="" coords="1370,238,1338,275,1334,272,1366,235"/>
+<area shape="poly" title=" " alt="" coords="402,63,200,108,199,102,400,57"/>
+<area shape="rect" title=" " alt="" coords="223,115,373,141"/>
+<area shape="poly" title=" " alt="" coords="457,63,338,113,336,108,455,58"/>
+<area shape="rect" title=" " alt="" coords="398,115,462,141"/>
+<area shape="poly" title=" " alt="" coords="495,62,452,107,448,103,491,58"/>
+<area shape="rect" title=" " alt="" coords="487,115,549,141"/>
+<area shape="poly" title=" " alt="" coords="521,60,521,101,515,101,515,60"/>
+<area shape="rect" title=" " alt="" coords="574,115,646,141"/>
+<area shape="poly" title=" " alt="" coords="546,58,591,103,587,107,542,62"/>
+<area shape="rect" title=" " alt="" coords="670,115,737,141"/>
+<area shape="poly" title=" " alt="" coords="571,58,670,107,667,112,569,62"/>
+<area shape="rect" title=" " alt="" coords="761,115,827,141"/>
+<area shape="poly" title=" " alt="" coords="606,58,750,105,755,108,754,113,748,111,604,63"/>
 </map>
 </div>
 </div>
@@ -221,6 +164,8 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00095">95</a> of file <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html">hazard_pointer_sample.cpp</a>.</p>
 
+<p class="reference">References <a class="el" href="../../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp_source.html#l00219">thread_module::hazard_pointer_manager::acquire()</a>, <a class="el" href="../../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp_source.html#l00275">thread_module::hazard_pointer_manager::get_statistics()</a>, <a class="el" href="../../d0/dd7/modular__structure_2core_2include_2thread__system__core_2thread__base_2lockfree_2memory_2hazard__pointer_8h_source.html#l00155">thread_module::hazard_pointer_manager::retire()</a>, and <a class="el" href="../../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp_source.html#l00250">thread_module::hazard_pointer_manager::scan_and_reclaim()</a>.</p>
+
 <p class="reference">Referenced by <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00270">main()</a>.</p>
 
 </div>
@@ -242,7 +187,7 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00137">137</a> of file <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html">hazard_pointer_sample.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00074">LockFreeStack::pop()</a>, and <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00065">LockFreeStack::push()</a>.</p>
+<p class="reference">References <a class="el" href="../../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp_source.html#l00275">thread_module::hazard_pointer_manager::get_statistics()</a>, <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00074">LockFreeStack::pop()</a>, and <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00065">LockFreeStack::push()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00270">main()</a>.</p>
 
@@ -264,6 +209,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00208">208</a> of file <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html">hazard_pointer_sample.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp_source.html#l00219">thread_module::hazard_pointer_manager::acquire()</a>, <a class="el" href="../../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp_source.html#l00275">thread_module::hazard_pointer_manager::get_statistics()</a>, <a class="el" href="../../d0/dd7/modular__structure_2core_2include_2thread__system__core_2thread__base_2lockfree_2memory_2hazard__pointer_8h_source.html#l00155">thread_module::hazard_pointer_manager::retire()</a>, and <a class="el" href="../../d7/d28/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2hazard__pointer_8cpp_source.html#l00250">thread_module::hazard_pointer_manager::scan_and_reclaim()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp_source.html#l00270">main()</a>.</p>
 
@@ -295,7 +242,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_62aa39980ad34ebd1eec6b25d2703f9b.html">examples</a></li><li class="navelem"><a class="el" href="../../dir_042659c15f66a6ccf817df51735258bb.html">hazard_pointer_sample</a></li><li class="navelem"><a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp.html">hazard_pointer_sample.cpp</a></li>
+    <li class="navelem"><a class="el" href="../../dir_bc0718b08fb2015b8e59c47b2805f60c.html">libraries</a></li><li class="navelem"><a class="el" href="../../dir_2464fa62fe6a065afce63478b16fe3db.html">thread_system</a></li><li class="navelem"><a class="el" href="../../dir_d5639982d944765b2c04ab5f88dacbbf.html">samples</a></li><li class="navelem"><a class="el" href="../../dir_9f7b57e56688e2d069f0c917b96b29ce.html">hazard_pointer_sample</a></li><li class="navelem"><a class="el" href="../../d1/ddb/hazard__pointer__sample_8cpp.html">hazard_pointer_sample.cpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

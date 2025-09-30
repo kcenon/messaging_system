@@ -1,5 +1,0 @@
-<map id="monitoring_system::ring_buffer&lt; T &gt;" name="monitoring_system::ring_buffer&lt; T &gt;">
-<area shape="rect" id="Node000001" title="Lock&#45;free ring buffer with atomic operations." alt="" coords="23,5,179,45"/>
-<area shape="rect" id="Node000002" href="$d2/dcf/classmonitoring__system_1_1ring__buffer.html" title=" " alt="" coords="5,123,196,192"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,59,103,122,98,122,98,59"/>
-</map>

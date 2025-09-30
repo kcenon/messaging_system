@@ -100,10 +100,24 @@ $(document).ready(function(){initNavTree('d1/dec/classutility__module_1_1enum__f
 <p>A generic formatter for enum types, using a user-provided converter functor.  
  <a href="../../d1/dec/classutility__module_1_1enum__formatter.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="../../d5/d14/thread__system_2include_2kcenon_2thread_2utils_2formatter_8h_source.html">formatter.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="../../dc/deb/thread__system_2modular__structure_2core_2include_2thread__system__core_2utilities_2core_2formatter_8h_source.html">formatter.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a86421b021ba81b03d2e0dc621ca8dfb1" id="r_a86421b021ba81b03d2e0dc621ca8dfb1"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html#a86421b021ba81b03d2e0dc621ca8dfb1">parse</a> (auto &amp;context)</td></tr>
+<tr class="memdesc:a86421b021ba81b03d2e0dc621ca8dfb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A no-op parse function required by the formatting library.  <br /></td></tr>
+<tr class="separator:a86421b021ba81b03d2e0dc621ca8dfb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac48cf9e06d61ac58964e78c472d4cae4" id="r_ac48cf9e06d61ac58964e78c472d4cae4"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext &gt; </td></tr>
+<tr class="memitem:ac48cf9e06d61ac58964e78c472d4cae4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html#ac48cf9e06d61ac58964e78c472d4cae4">format</a> (const T &amp;value, FormatContext &amp;context) const</td></tr>
+<tr class="memdesc:ac48cf9e06d61ac58964e78c472d4cae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats the enum value into a provided format context.  <br /></td></tr>
+<tr class="separator:ac48cf9e06d61ac58964e78c472d4cae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86421b021ba81b03d2e0dc621ca8dfb1" id="r_a86421b021ba81b03d2e0dc621ca8dfb1"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html#a86421b021ba81b03d2e0dc621ca8dfb1">parse</a> (auto &amp;context)</td></tr>
+<tr class="memdesc:a86421b021ba81b03d2e0dc621ca8dfb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A no-op parse function required by the formatting library.  <br /></td></tr>
+<tr class="separator:a86421b021ba81b03d2e0dc621ca8dfb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac48cf9e06d61ac58964e78c472d4cae4" id="r_ac48cf9e06d61ac58964e78c472d4cae4"><td class="memTemplParams" colspan="2">template&lt;typename FormatContext &gt; </td></tr>
+<tr class="memitem:ac48cf9e06d61ac58964e78c472d4cae4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html#ac48cf9e06d61ac58964e78c472d4cae4">format</a> (const T &amp;value, FormatContext &amp;context) const</td></tr>
+<tr class="memdesc:ac48cf9e06d61ac58964e78c472d4cae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats the enum value into a provided format context.  <br /></td></tr>
+<tr class="separator:ac48cf9e06d61ac58964e78c472d4cae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86421b021ba81b03d2e0dc621ca8dfb1" id="r_a86421b021ba81b03d2e0dc621ca8dfb1"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html#a86421b021ba81b03d2e0dc621ca8dfb1">parse</a> (auto &amp;context)</td></tr>
 <tr class="memdesc:a86421b021ba81b03d2e0dc621ca8dfb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A no-op parse function required by the formatting library.  <br /></td></tr>
 <tr class="separator:a86421b021ba81b03d2e0dc621ca8dfb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,7 +137,59 @@ class utility_module::enum_formatter&lt; T, Converter &gt;</div><p>A generic for
   </table>
   </dd>
 </dl>
-<h3><a class="anchor" id="autotoc_md3375"></a>
+<h3><a class="anchor" id="autotoc_md1337"></a>
+Example</h3>
+<div class="fragment"><div class="line"><span class="comment">// 1) Define an enum and a corresponding converter functor:</span></div>
+<div class="line"><span class="keyword">enum class</span> color { Red, Green, Blue };</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>color_converter {</div>
+<div class="line">    std::string operator()(color c)<span class="keyword"> const </span>{</div>
+<div class="line">        <span class="keywordflow">switch</span> (c) {</div>
+<div class="line">        <span class="keywordflow">case</span> color::Red:   <span class="keywordflow">return</span> <span class="stringliteral">&quot;Red&quot;</span>;</div>
+<div class="line">        <span class="keywordflow">case</span> color::Green: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Green&quot;</span>;</div>
+<div class="line">        <span class="keywordflow">case</span> color::Blue:  <span class="keywordflow">return</span> <span class="stringliteral">&quot;Blue&quot;</span>;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
+<div class="line">    }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// 2) Use enum_formatter&lt;Color, color_converter&gt; to format:</span></div>
+<div class="line"><span class="comment">// e.g. std::format(&quot;Color: {}&quot;, color::Green) // -&gt; &quot;Color: Green&quot;</span></div>
+</div><!-- fragment --><p>The <code><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html" title="A generic formatter for enum types, using a user-provided converter functor.">enum_formatter</a></code> template allows formatting an enum value by converting it to a string (via a custom <code>Converter</code> functor) and then passing that string to either C++20's <code>std::format</code> or the {fmt} library, depending on the build configuration.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The enum type to be formatted. </td></tr>
+    <tr><td class="paramname">Converter</td><td>A callable object (e.g., a functor or lambda) that accepts an enum value of type <code>T</code> and returns its string representation.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h3><a class="anchor" id="autotoc_md1385"></a>
+Example</h3>
+<div class="fragment"><div class="line"><span class="comment">// 1) Define an enum and a corresponding converter functor:</span></div>
+<div class="line"><span class="keyword">enum class</span> color { Red, Green, Blue };</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>color_converter {</div>
+<div class="line">    std::string operator()(color c)<span class="keyword"> const </span>{</div>
+<div class="line">        <span class="keywordflow">switch</span> (c) {</div>
+<div class="line">        <span class="keywordflow">case</span> color::Red:   <span class="keywordflow">return</span> <span class="stringliteral">&quot;Red&quot;</span>;</div>
+<div class="line">        <span class="keywordflow">case</span> color::Green: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Green&quot;</span>;</div>
+<div class="line">        <span class="keywordflow">case</span> color::Blue:  <span class="keywordflow">return</span> <span class="stringliteral">&quot;Blue&quot;</span>;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
+<div class="line">    }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// 2) Use enum_formatter&lt;Color, color_converter&gt; to format:</span></div>
+<div class="line"><span class="comment">// e.g. std::format(&quot;Color: {}&quot;, color::Green) // -&gt; &quot;Color: Green&quot;</span></div>
+</div><!-- fragment --><p>The <code><a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html" title="A generic formatter for enum types, using a user-provided converter functor.">enum_formatter</a></code> template allows formatting an enum value by converting it to a string (via a custom <code>Converter</code> functor) and then passing that string to either C++20's <code>std::format</code> or the {fmt} library, depending on the build configuration.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The enum type to be formatted. </td></tr>
+    <tr><td class="paramname">Converter</td><td>A callable object (e.g., a functor or lambda) that accepts an enum value of type <code>T</code> and returns its string representation.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h3><a class="anchor" id="autotoc_md1530"></a>
 Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// 1) Define an enum and a corresponding converter functor:</span></div>
 <div class="line"><span class="keyword">enum class</span> color { Red, Green, Blue };</div>
@@ -142,10 +208,10 @@ Example</h3>
 <div class="line"><span class="comment">// 2) Use enum_formatter&lt;Color, color_converter&gt; to format:</span></div>
 <div class="line"><span class="comment">// e.g. std::format(&quot;Color: {}&quot;, color::Green) // -&gt; &quot;Color: Green&quot;</span></div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="../../d5/d14/thread__system_2include_2kcenon_2thread_2utils_2formatter_8h_source.html#l00082">82</a> of file <a class="el" href="../../d5/d14/thread__system_2include_2kcenon_2thread_2utils_2formatter_8h_source.html">formatter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/deb/thread__system_2modular__structure_2core_2include_2thread__system__core_2utilities_2core_2formatter_8h_source.html#l00083">83</a> of file <a class="el" href="../../dc/deb/thread__system_2modular__structure_2core_2include_2thread__system__core_2utilities_2core_2formatter_8h_source.html">formatter.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac48cf9e06d61ac58964e78c472d4cae4" name="ac48cf9e06d61ac58964e78c472d4cae4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac48cf9e06d61ac58964e78c472d4cae4">&#9670;&#160;</a></span>format()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac48cf9e06d61ac58964e78c472d4cae4">&#9670;&#160;</a></span>format() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -158,7 +224,7 @@ template&lt;typename FormatContext &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d0/d55/classkcenon_1_1thread_1_1utils_1_1enum__formatter.html">utility_module::enum_formatter</a>&lt; T, Converter &gt;::format </td>
+          <td class="memname">auto <a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html">utility_module::enum_formatter</a>&lt; T, Converter &gt;::format </td>
           <td>(</td>
           <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>value</em>, </td>
@@ -199,12 +265,130 @@ template&lt;typename FormatContext &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of the formatted output.</dd></dl>
 <p>Internally calls the helper <code>do_format()</code> to convert the enum to a string using <code>Converter</code> and then writes it. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d14/thread__system_2include_2kcenon_2thread_2utils_2formatter_8h_source.html#l00133">133</a> of file <a class="el" href="../../d5/d14/thread__system_2include_2kcenon_2thread_2utils_2formatter_8h_source.html">formatter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/deb/thread__system_2modular__structure_2core_2include_2thread__system__core_2utilities_2core_2formatter_8h_source.html#l00134">134</a> of file <a class="el" href="../../dc/deb/thread__system_2modular__structure_2core_2include_2thread__system__core_2utilities_2core_2formatter_8h_source.html">formatter.h</a>.</p>
+
+</div>
+</div>
+<a id="ac48cf9e06d61ac58964e78c472d4cae4" name="ac48cf9e06d61ac58964e78c472d4cae4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac48cf9e06d61ac58964e78c472d4cae4">&#9670;&#160;</a></span>format() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Converter &gt; </div>
+<div class="memtemplate">
+template&lt;typename FormatContext &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html">utility_module::enum_formatter</a>&lt; T, Converter &gt;::format </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FormatContext &amp;&#160;</td>
+          <td class="paramname"><em>context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats the enum value into a provided format context. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FormatContext</td><td>The type of the format context (provided by either std::format or {fmt}). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The enum value to format. </td></tr>
+    <tr><td class="paramname">context</td><td>The format context, which holds the output iterator and additional state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of the formatted output.</dd></dl>
+<p>Internally calls the helper <code>do_format()</code> to convert the enum to a string using <code>Converter</code> and then writes it. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../df/dfd/thread__system_2modular__structure_2core_2src_2utilities_2core_2formatter_8h_source.html#l00134">134</a> of file <a class="el" href="../../df/dfd/thread__system_2modular__structure_2core_2src_2utilities_2core_2formatter_8h_source.html">formatter.h</a>.</p>
+
+</div>
+</div>
+<a id="ac48cf9e06d61ac58964e78c472d4cae4" name="ac48cf9e06d61ac58964e78c472d4cae4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac48cf9e06d61ac58964e78c472d4cae4">&#9670;&#160;</a></span>format() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Converter &gt; </div>
+<div class="memtemplate">
+template&lt;typename FormatContext &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html">utility_module::enum_formatter</a>&lt; T, Converter &gt;::format </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FormatContext &amp;&#160;</td>
+          <td class="paramname"><em>context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Formats the enum value into a provided format context. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FormatContext</td><td>The type of the format context (provided by either std::format or {fmt}). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The enum value to format. </td></tr>
+    <tr><td class="paramname">context</td><td>The format context, which holds the output iterator and additional state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of the formatted output.</dd></dl>
+<p>Internally calls the helper <code>do_format()</code> to convert the enum to a string using <code>Converter</code> and then writes it. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../de/d36/thread__system_2sources_2utilities_2core_2formatter_8h_source.html#l00134">134</a> of file <a class="el" href="../../de/d36/thread__system_2sources_2utilities_2core_2formatter_8h_source.html">formatter.h</a>.</p>
 
 </div>
 </div>
 <a id="a86421b021ba81b03d2e0dc621ca8dfb1" name="a86421b021ba81b03d2e0dc621ca8dfb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86421b021ba81b03d2e0dc621ca8dfb1">&#9670;&#160;</a></span>parse()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a86421b021ba81b03d2e0dc621ca8dfb1">&#9670;&#160;</a></span>parse() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +399,7 @@ template&lt;typename T , typename Converter &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr auto <a class="el" href="../../d0/d55/classkcenon_1_1thread_1_1utils_1_1enum__formatter.html">utility_module::enum_formatter</a>&lt; T, Converter &gt;::parse </td>
+          <td class="memname">constexpr auto <a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html">utility_module::enum_formatter</a>&lt; T, Converter &gt;::parse </td>
           <td>(</td>
           <td class="paramtype">auto &amp;&#160;</td>
           <td class="paramname"><em>context</em></td><td>)</td>
@@ -239,12 +423,94 @@ template&lt;typename T , typename Converter &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of <code>context</code>.</dd></dl>
 <p>The formatter does not accept any custom formatting specifiers, so it simply returns <code>context.begin()</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../d5/d14/thread__system_2include_2kcenon_2thread_2utils_2formatter_8h_source.html#l00120">120</a> of file <a class="el" href="../../d5/d14/thread__system_2include_2kcenon_2thread_2utils_2formatter_8h_source.html">formatter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../dc/deb/thread__system_2modular__structure_2core_2include_2thread__system__core_2utilities_2core_2formatter_8h_source.html#l00121">121</a> of file <a class="el" href="../../dc/deb/thread__system_2modular__structure_2core_2include_2thread__system__core_2utilities_2core_2formatter_8h_source.html">formatter.h</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>libraries/thread_system/include/kcenon/thread/utils/<a class="el" href="../../d5/d14/thread__system_2include_2kcenon_2thread_2utils_2formatter_8h_source.html">formatter.h</a></li>
+<a id="a86421b021ba81b03d2e0dc621ca8dfb1" name="a86421b021ba81b03d2e0dc621ca8dfb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86421b021ba81b03d2e0dc621ca8dfb1">&#9670;&#160;</a></span>parse() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Converter &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto <a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html">utility_module::enum_formatter</a>&lt; T, Converter &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">auto &amp;&#160;</td>
+          <td class="paramname"><em>context</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A no-op parse function required by the formatting library. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>The format parse context. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of <code>context</code>.</dd></dl>
+<p>The formatter does not accept any custom formatting specifiers, so it simply returns <code>context.begin()</code>. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../df/dfd/thread__system_2modular__structure_2core_2src_2utilities_2core_2formatter_8h_source.html#l00121">121</a> of file <a class="el" href="../../df/dfd/thread__system_2modular__structure_2core_2src_2utilities_2core_2formatter_8h_source.html">formatter.h</a>.</p>
+
+</div>
+</div>
+<a id="a86421b021ba81b03d2e0dc621ca8dfb1" name="a86421b021ba81b03d2e0dc621ca8dfb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86421b021ba81b03d2e0dc621ca8dfb1">&#9670;&#160;</a></span>parse() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename Converter &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto <a class="el" href="../../d1/dec/classutility__module_1_1enum__formatter.html">utility_module::enum_formatter</a>&lt; T, Converter &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">auto &amp;&#160;</td>
+          <td class="paramname"><em>context</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A no-op parse function required by the formatting library. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>The format parse context. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An iterator pointing to the end of <code>context</code>.</dd></dl>
+<p>The formatter does not accept any custom formatting specifiers, so it simply returns <code>context.begin()</code>. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../de/d36/thread__system_2sources_2utilities_2core_2formatter_8h_source.html#l00121">121</a> of file <a class="el" href="../../de/d36/thread__system_2sources_2utilities_2core_2formatter_8h_source.html">formatter.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>libraries/thread_system/modular_structure/core/include/thread_system_core/utilities/core/<a class="el" href="../../dc/deb/thread__system_2modular__structure_2core_2include_2thread__system__core_2utilities_2core_2formatter_8h_source.html">formatter.h</a></li>
+<li>libraries/thread_system/modular_structure/core/src/utilities/core/<a class="el" href="../../df/dfd/thread__system_2modular__structure_2core_2src_2utilities_2core_2formatter_8h_source.html">formatter.h</a></li>
+<li>libraries/thread_system/sources/utilities/core/<a class="el" href="../../de/d36/thread__system_2sources_2utilities_2core_2formatter_8h_source.html">formatter.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

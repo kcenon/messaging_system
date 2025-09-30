@@ -1,7 +1,0 @@
-<map id="kcenon::logger::async_writer" name="kcenon::logger::async_writer">
-<area shape="rect" id="Node000001" title="Asynchronous wrapper for log writers." alt="" coords="5,181,169,221"/>
-<area shape="rect" id="Node000002" href="$d0/dc9/classkcenon_1_1logger_1_1base__writer.html" title="Abstract base class for all log output writers." alt="" coords="9,93,166,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,147,90,181,85,181,85,147"/>
-<area shape="rect" id="Node000003" href="$dd/d95/classkcenon_1_1logger_1_1log__writer__interface.html" title="Interface for log writers." alt="" coords="14,5,161,45"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="90,59,90,93,85,93,85,59"/>
-</map>

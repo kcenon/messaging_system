@@ -1,7 +1,0 @@
-<map id="libraries/monitoring_system/include/kcenon/monitoring/utils/time_series.h" name="libraries/monitoring_system/include/kcenon/monitoring/utils/time_series.h">
-<area shape="rect" id="Node000001" title="Time&#45;series data storage for efficient metric history." alt="" coords="124,5,303,75"/>
-<area shape="rect" id="Node000002" href="$d9/d72/include_2monitoring_2utils_2time__series_8h.html" title=" " alt="" coords="5,123,208,177"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="172,86,135,124,131,121,169,82"/>
-<area shape="rect" id="Node000003" href="$d7/dd4/src_2utils_2metric__storage_8h.html" title="Memory&#45;efficient metric storage with ring buffers." alt="" coords="232,123,411,177"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="258,82,297,121,293,124,255,86"/>
-</map>
