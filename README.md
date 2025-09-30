@@ -184,16 +184,16 @@ using namespace container_module;
 int main() {
     // Create a type-safe container
     auto container = std::make_shared<value_container>();
-    
+
     // Set various value types
     container->set_source("client_01", "session_1");
     container->set_target("server", "main");
     container->set_message_type("user_data");
-    
+
     // Serialize and deserialize
     std::string serialized = container->serialize();
     auto restored = std::make_shared<value_container>(serialized);
-    
+
     return 0;
 }
 ```
@@ -208,17 +208,17 @@ int main() {
     // Create server
     auto server = std::make_shared<messaging_server>("main_server");
     server->start_server(8080);
-    
+
     // Create client
     auto client = std::make_shared<messaging_client>("client_01");
     client->start_client("127.0.0.1", 8080);
-    
+
     // Server and client automatically handle messaging
-    
+
     // Cleanup
     client->stop_client();
     server->stop_server();
-    
+
     return 0;
 }
 ```
@@ -232,14 +232,14 @@ int main() {
     // Configure database
     database_manager manager;
     manager.set_mode(database_types::postgres);
-    
+
     // Connect and execute queries
     if (manager.connect("host=localhost dbname=mydb")) {
         auto result = manager.select_query("SELECT * FROM users");
         // Process results...
         manager.disconnect();
     }
-    
+
     return 0;
 }
 ```
@@ -253,7 +253,7 @@ import time
 container = Container()
 container.create(
     target_id="server",
-    source_id="python_client", 
+    source_id="python_client",
     message_type="data_update",
     values=[
         Value("user_id", "9", "12345"),
@@ -265,7 +265,7 @@ container.create(
 # Network client
 client = MessagingClient(
     source_id="py_client",
-    connection_key="secure_key", 
+    connection_key="secure_key",
     recv_callback=lambda msg: print(f"Received: {msg}")
 )
 
@@ -289,7 +289,7 @@ if client.start("localhost", 8080):
 
 ### Performance Features
 - **Sub-microsecond Latency**: Job scheduling and message processing
-- **Linear Scalability**: Performance scales with CPU cores up to 32+ threads  
+- **Linear Scalability**: Performance scales with CPU cores up to 32+ threads
 - **Memory Efficiency**: Hazard pointer-based memory reclamation eliminates GC pauses
 - **SIMD Optimization**: ARM NEON and x86 AVX for numeric operations
 - **Zero-copy Operations**: Minimize memory allocations in hot paths
@@ -321,7 +321,7 @@ if client.start("localhost", 8080):
 
 ### Test Coverage
 - **Container Tests**: 15 unit tests covering serialization, threading, SIMD operations
-- **Database Tests**: 14 unit tests covering connections, queries, error handling  
+- **Database Tests**: 14 unit tests covering connections, queries, error handling
 - **Network Tests**: 14 unit tests covering client/server, sessions, protocols
 - **Integration Tests**: 8 cross-module integration tests
 - **Performance Tests**: Benchmark suite with regression detection
@@ -331,7 +331,7 @@ if client.start("localhost", 8080):
 # All tests with coverage
 ./build.sh --tests
 
-# Specific test modules  
+# Specific test modules
 cd build/bin
 ./container_test --gtest_filter="ContainerTest.*"
 ./database_test --gtest_filter="DatabaseTest.SingletonAccess"
@@ -389,7 +389,7 @@ cd build
 
 **BSD 3-Clause License**
 
-Copyright (c) 2021-2025, Messaging System Contributors  
+Copyright (c) 2021-2025, Messaging System Contributors
 All rights reserved.
 
 See [LICENSE](LICENSE) file for full license text.
