@@ -6,16 +6,26 @@ A production-ready, high-performance C++20 distributed messaging framework engin
 
 ```
 messaging_system/
-├── libraries/           # All system libraries
-│   ├── container_system/    # Type-safe, SIMD-optimized data containers
-│   ├── database_system/     # PostgreSQL integration with connection pooling
-│   ├── network_system/      # Asynchronous TCP client/server
-│   ├── thread_system/       # Lock-free thread pools
-│   ├── logger_system/       # High-performance logging
-│   └── monitoring_system/   # System monitoring and metrics
-├── services_system/     # Application service layer with Python bindings
-├── test/               # Unit and integration tests
-└── cmake/              # CMake configuration files
+├── libraries/              # Core system libraries
+│   ├── container_system/   # Type-safe, SIMD-optimized data containers
+│   ├── network_system/     # Asynchronous TCP client/server
+│   ├── thread_system/      # Lock-free thread pools
+│   ├── logger_system/      # High-performance logging
+│   └── monitoring_system/  # System monitoring and metrics
+├── application_layer/      # Application service layer
+│   ├── samples/            # Production-ready examples
+│   └── python_bindings/    # Python API
+├── src/                    # Unified messaging system implementation
+├── include/                # Public headers
+├── test/                   # Unit and integration tests
+├── docs/                   # Documentation
+│   ├── guides/             # User guides and tutorials
+│   ├── libraries/          # Library-specific documentation
+│   ├── samples/            # Sample application guides
+│   └── api/                # API references
+├── scripts/                # Build and utility scripts
+├── cmake/                  # CMake configuration files
+└── examples/               # Usage examples
 ```
 
 ## ✨ Key Features
@@ -86,13 +96,13 @@ git submodule update --init --recursive
 ### 2. Build and Run
 ```bash
 # Quick build with all features
-./build.sh
+./scripts/build.sh
 
 # Run sample application
 ./build/bin/production_ready_example
 
 # Run tests
-./build.sh --tests
+./scripts/build.sh --tests
 ```
 
 ### 3. Basic Usage
@@ -119,7 +129,7 @@ int main() {
 }
 ```
 
-For detailed setup instructions, see the [Developer Guide](docs/DEVELOPER_GUIDE.md).
+For detailed setup instructions, see the [Developer Guide](docs/DEVELOPER_GUIDE.MD).
 
 ## 🎯 Sample Applications
 
@@ -348,7 +358,7 @@ cd build
 
 1. **Fork** the repository
 2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
-3. **Test** your changes: `./build.sh --tests`
+3. **Test** your changes: `./scripts/build.sh --tests`
 4. **Format** code: Follow the project's C++ style guide
 5. **Commit** changes: `git commit -m 'feat: add amazing feature'`
 6. **Push** to branch: `git push origin feature/amazing-feature`
@@ -364,27 +374,29 @@ cd build
 ## 📚 Documentation
 
 ### Quick Start
-- **[Getting Started](docs/GETTING_STARTED.md)** - Installation and first steps
-- **[API Reference](docs/API_REFERENCE.md)** - Complete API documentation
-- **[Architecture](docs/ARCHITECTURE.md)** - System design and components
+- **[Getting Started](docs/GETTING_STARTED.MD)** - Installation and first steps
+- **[API Reference](docs/API_REFERENCE.MD)** - Complete API documentation
+- **[Architecture](docs/guides/ARCHITECTURE.MD)** - System design and components
 
 ### Development & Deployment
-- **[Developer Guide](docs/DEVELOPER_GUIDE.md)** - Development setup and best practices
-- **[Performance Guide](docs/PERFORMANCE.md)** - Benchmarks and optimization techniques
-- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.md)** - Production deployment strategies
+- **[Developer Guide](docs/DEVELOPER_GUIDE.MD)** - Development setup and best practices
+- **[Performance Guide](docs/guides/PERFORMANCE.MD)** - Benchmarks and optimization techniques
+- **[Deployment Guide](docs/DEPLOYMENT_GUIDE.MD)** - Production deployment strategies
+- **[Dependencies Guide](docs/guides/DEPENDENCIES.MD)** - Dependency management
+- **[Testing Guide](docs/guides/TESTING.MD)** - Unit and integration testing
 
 ### Advanced Topics
-- **[Design Patterns](docs/DESIGN_PATTERNS.md)** - Architectural patterns and decisions
-- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Debugging and problem resolution
-- **[Sample Applications](application_layer/samples/SAMPLES_README.md)** - Production examples
+- **[Design Patterns](docs/DESIGN_PATTERNS.MD)** - Architectural patterns and decisions
+- **[Troubleshooting](docs/TROUBLESHOOTING.MD)** - Debugging and problem resolution
+- **[Sample Applications](docs/samples/README.md)** - Production examples
+- **[Application Layer](docs/APPLICATION_LAYER.MD)** - Application layer overview
 
 ### Component Documentation
-- **[Thread System](libraries/thread_system/docs/)** - Lock-free concurrent processing
-- **[Logger System](libraries/logger_system/docs/)** - High-performance logging
-- **[Monitoring System](libraries/monitoring_system/docs/)** - Real-time monitoring
-- **[Container System](libraries/container_system/README.md)** - Type-safe data containers
-- **[Database System](libraries/database_system/README.md)** - PostgreSQL integration
-- **[Network System](libraries/network_system/README.md)** - Asynchronous TCP messaging
+- **[Thread System](docs/libraries/THREAD_SYSTEM.MD)** - Lock-free concurrent processing
+- **[Logger System](docs/libraries/LOGGER_SYSTEM.MD)** - High-performance logging
+- **[Monitoring System](docs/libraries/MONITORING_SYSTEM.MD)** - Real-time monitoring
+- **[Container System](docs/libraries/CONTAINER_SYSTEM.MD)** - Type-safe data containers
+- **[Network System](docs/libraries/NETWORK_SYSTEM.MD)** - Asynchronous TCP messaging
 
 ## 📄 License
 

@@ -1,79 +1,88 @@
-# Messaging System Documentation
+# Documentation
 
-Welcome to the Messaging System documentation! This guide provides comprehensive information for using and understanding the high-performance C++20 distributed messaging framework.
+Welcome to the Messaging System documentation. This directory contains comprehensive documentation for all aspects of the messaging system.
 
-## 📚 Documentation Overview
+## 📚 Documentation Structure
 
-| Document | Description |
-|----------|-------------|
-| [Getting Started](./GETTING_STARTED.md) | Installation guide and first steps with Messaging System |
-| [API Reference](./API_REFERENCE.md) | Complete API documentation for all components |
-| [Architecture](./ARCHITECTURE.md) | Technical architecture and system design |
-| [Performance](./PERFORMANCE.md) | Benchmarks, metrics, and optimization guide |
-| [Design Patterns](./DESIGN_PATTERNS.md) | Best practices, patterns, and troubleshooting |
-| [Developer Guide](./DEVELOPER_GUIDE.md) | Development setup and contribution guidelines |
-| [Deployment Guide](./DEPLOYMENT_GUIDE.md) | Production deployment strategies |
-| [Troubleshooting](./TROUBLESHOOTING.md) | Debugging and problem resolution |
+### Quick Start Guides
+- [Getting Started](GETTING_STARTED.MD) - Installation and first steps
+- [API Reference](API_REFERENCE.MD) - Complete API documentation
 
-## 🚀 Quick Navigation
+### User Guides
+- [Architecture](guides/ARCHITECTURE.MD) - System design and components
+- [Developer Guide](DEVELOPER_GUIDE.MD) - Development setup and best practices
+- [Performance Guide](guides/PERFORMANCE.MD) - Benchmarks and optimization techniques
+- [Deployment Guide](DEPLOYMENT_GUIDE.MD) - Production deployment strategies
+- [Dependencies Guide](guides/DEPENDENCIES.MD) - Dependency management
+- [Testing Guide](guides/TESTING.MD) - Unit and integration testing
 
-### For New Users
-1. Start with [Getting Started](./GETTING_STARTED.md) for installation and basic usage
-2. Review [Architecture](./ARCHITECTURE.md) for system overview
-3. Check the [Developer Guide](./DEVELOPER_GUIDE.md) for development setup
-
-### For Developers
-1. Study the [API Reference](./API_REFERENCE.md) for detailed component documentation
-2. Read [Design Patterns](./DESIGN_PATTERNS.md) for best practices
-3. Follow [Developer Guide](./DEVELOPER_GUIDE.md) for contribution guidelines
-
-### For System Administrators
-1. Review [Deployment Guide](./DEPLOYMENT_GUIDE.md) for production setup
-2. Study [Performance](./PERFORMANCE.md) for optimization strategies
-3. Check [Troubleshooting](./TROUBLESHOOTING.md) for operational issues
-
-## 🧩 Component Documentation
-
-The messaging system integrates multiple high-performance modules:
-
-### Core Infrastructure
-- **[Thread System](../libraries/thread_system/docs/)** - Lock-free concurrent processing framework
-- **[Logger System](../libraries/logger_system/docs/)** - High-performance asynchronous logging
-- **[Monitoring System](../libraries/monitoring_system/docs/)** - Real-time metrics and health monitoring
-
-### Data & Communication Modules
-- **[Container System](../libraries/container_system/README.md)** - Type-safe SIMD-optimized data containers
-- **[Database System](../libraries/database_system/README.md)** - PostgreSQL integration with connection pooling
-- **[Network System](../libraries/network_system/README.md)** - Asynchronous TCP messaging infrastructure
+### Advanced Topics
+- [Design Patterns](DESIGN_PATTERNS.MD) - Architectural patterns and decisions
+- [Troubleshooting](TROUBLESHOOTING.MD) - Debugging and problem resolution
 
 ### Application Layer
-- **[Sample Applications](../application_layer/samples/SAMPLES_README.md)** - 8 production-ready examples including chat server, IoT monitoring, and microservices orchestrator
+- [Application Layer Overview](APPLICATION_LAYER.MD) - Application service layer
+- [Sample Applications](samples/README.md) - Production-ready examples
 
-## 📖 Documentation Standards
+### Component Documentation
+- [Container System](libraries/CONTAINER_SYSTEM.MD) - Type-safe data containers
+- [Network System](libraries/NETWORK_SYSTEM.MD) - Asynchronous TCP messaging
+- [Thread System](libraries/THREAD_SYSTEM.MD) - Lock-free thread pools
+- [Logger System](libraries/LOGGER_SYSTEM.MD) - High-performance logging
+- [Monitoring System](libraries/MONITORING_SYSTEM.MD) - System monitoring and metrics
 
-All documentation follows these principles:
-- **Clear and Concise**: Direct explanations without unnecessary complexity
-- **Example-Driven**: Code examples for every major concept
-- **Performance-Focused**: Optimization tips throughout
-- **Integration-Aware**: Shows how components work together
-- **Production-Ready**: Real-world deployment considerations
+## 🎯 Documentation by Use Case
 
-## 🔄 Documentation Updates
+### For New Users
+1. Start with [Getting Started](GETTING_STARTED.MD)
+2. Explore [Sample Applications](samples/README.md)
+3. Review [API Reference](API_REFERENCE.MD)
 
-- Documentation is updated with each release
-- API changes are reflected immediately
-- Performance metrics are re-measured quarterly
-- Examples are tested with each build
-- Cross-references are validated automatically
+### For Developers
+1. Read [Developer Guide](DEVELOPER_GUIDE.MD)
+2. Understand [Architecture](guides/ARCHITECTURE.MD)
+3. Review [Design Patterns](DESIGN_PATTERNS.MD)
+4. Check [Testing Guide](guides/TESTING.MD)
 
-## 💬 Feedback
+### For System Administrators
+1. Review [Deployment Guide](DEPLOYMENT_GUIDE.MD)
+2. Check [Performance Guide](guides/PERFORMANCE.MD)
+3. Refer to [Troubleshooting](TROUBLESHOOTING.MD)
 
-Help us improve the documentation:
-- Report issues on [GitHub Issues](https://github.com/kcenon/messaging_system/issues)
-- Submit improvements via pull requests
-- Ask questions in GitHub Discussions
-- Contribute examples and use cases
+### For Library Users
+1. Choose your component from [Component Documentation](#component-documentation)
+2. Review architecture documents for each library
+3. Explore integration examples
 
----
+## 🔍 Finding Information
 
-*Last updated: January 2025*
+- **API Details**: See [API Reference](API_REFERENCE.MD)
+- **Performance**: See [Performance Guide](guides/PERFORMANCE.MD)
+- **Build Issues**: See [Troubleshooting](TROUBLESHOOTING.MD)
+- **Dependencies**: See [Dependencies Guide](guides/DEPENDENCIES.MD)
+- **Examples**: See [Sample Applications](samples/README.md)
+
+## 📝 Contributing to Documentation
+
+When contributing documentation:
+
+1. Use clear, concise language
+2. Include code examples where appropriate
+3. Keep documentation in sync with code
+4. Follow the existing structure and style
+5. Test all code examples before committing
+
+## 🔗 External Resources
+
+- [C++20 Standard](https://en.cppreference.com/w/cpp/20)
+- [CMake Documentation](https://cmake.org/documentation/)
+- [vcpkg Package Manager](https://vcpkg.io/)
+- [Google Test](https://google.github.io/googletest/)
+
+## 📧 Support
+
+For questions and support:
+- Review existing documentation
+- Check [Troubleshooting](TROUBLESHOOTING.MD)
+- Open an issue on GitHub
+- Contact the development team
