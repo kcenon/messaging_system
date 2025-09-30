@@ -24,22 +24,22 @@ cd messaging_system
 git submodule update --init --recursive
 
 # Install system dependencies
-./dependency.sh
+./scripts/dependency.sh
 ```
 
 ### 2. Build the Project
 
 ```bash
 # Quick build with default settings
-./build.sh
+./scripts/build.sh
 
 # Build with specific options
-./build.sh --tests --release --parallel 8
+./scripts/build.sh --tests --release --parallel 8
 
 # Manual CMake build
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release \
-         -DCMAKE_TOOLCHAIN_FILE=../vcpkg/buildsystems/vcpkg.cmake
+         -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build . --parallel
 ```
 
@@ -97,7 +97,7 @@ g++ -std=c++20 simple_app.cpp -lmessaging_core -lmessaging_services -o simple_ap
 {
     "cmake.configureSettings": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_TOOLCHAIN_FILE": "${workspaceFolder}/vcpkg/buildsystems/vcpkg.cmake"
+        "CMAKE_TOOLCHAIN_FILE": "${workspaceFolder}/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     "C_Cpp.default.cppStandard": "c++20",
     "C_Cpp.default.includePath": [
@@ -172,7 +172,7 @@ messaging_system/
 │   ├── tests/                 # Unit and integration tests
 │   └── python_bindings/       # Python API
 ├── test/                      # System-wide tests
-├──                    # Build and utility scripts
+├── scripts/                   # Build and utility scripts
 ├── cmake/                     # CMake modules
 └── docs/                      # Documentation
 ```
@@ -718,7 +718,7 @@ git checkout -b feature/amazing-feature
 3. **Make** changes following coding standards
 4. **Test** your changes
 ```bash
-./build.sh --tests
+./scripts/build.sh --tests
 ctest --output-on-failure
 ```
 
