@@ -20,7 +20,8 @@ option(BUILD_MESSAGING_SAMPLES "Build messaging system samples" ON)
 
 # Module options
 option(BUILD_CONTAINER "Build container module" ON)
-option(BUILD_DATABASE "Build database module" ON)
+# Database module removed - not used
+# option(BUILD_DATABASE "Build database module" OFF)
 option(BUILD_NETWORK "Build network module" ON)
 option(BUILD_PYTHON_BINDINGS "Build Python bindings" ON)  # Handled in services_system
 
@@ -57,6 +58,18 @@ option(USE_EXTERNAL_LOGGER_SYSTEM "Use external logger system" ON)
 
 # Option to use external monitoring system
 option(USE_EXTERNAL_MONITORING_SYSTEM "Use external monitoring system" ON)
+
+# Option to use external common system
+option(USE_EXTERNAL_COMMON_SYSTEM "Use external common system" ON)
+
+# Option to use external container system
+option(USE_EXTERNAL_CONTAINER_SYSTEM "Use external container system" ON)
+
+# Option to use external database system
+option(USE_EXTERNAL_DATABASE_SYSTEM "Use external database system" ON)
+
+# Option to build unified messaging system
+option(BUILD_UNIFIED_MESSAGING "Build unified messaging system with all integrations" ON)
 
 if(USE_INTERNAL_THREAD_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system)
     # Legacy mode: use internal thread_system
@@ -152,18 +165,7 @@ if(BUILD_CONTAINER)
     # )
 endif()
 
-if(BUILD_DATABASE)
-    add_subdirectory(libraries/database_system)
-    # # Add database to the export set
-    # if(TARGET database)
-    #     install(TARGETS database
-    #         EXPORT messaging_system_targets
-    #         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    #         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    #         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    #     )
-    # endif()
-endif()
+# Database module removed - not used
 
 if(BUILD_NETWORK)
     add_subdirectory(libraries/network_system)
@@ -184,6 +186,234 @@ endif()
 # Samples
 if(BUILD_MESSAGING_SAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/samples)
     add_subdirectory(samples)
+endif()
+
+# Find external system modules
+set(EXTERNAL_SYSTEMS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/.." CACHE PATH "Path to external system modules")
+
+# Common System
+# First check if we have it in libraries folder
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/common_system)
+    message(STATUS "Using internal common_system from libraries folder")
+    add_subdirectory(libraries/common_system)
+    set(HAS_COMMON_SYSTEM ON)
+elseif(USE_EXTERNAL_COMMON_SYSTEM)
+    if(EXISTS ${EXTERNAL_SYSTEMS_PATH}/common_system)
+        add_subdirectory(${EXTERNAL_SYSTEMS_PATH}/common_system ${CMAKE_CURRENT_BINARY_DIR}/common_system)
+        set(HAS_COMMON_SYSTEM ON)
+        message(STATUS "Found common_system at ${EXTERNAL_SYSTEMS_PATH}/common_system")
+    else()
+        message(STATUS "Common system not found at ${EXTERNAL_SYSTEMS_PATH}/common_system")
+    endif()
+endif()
+
+# Thread System (already handled above)
+if(TARGET ThreadSystem::Core OR TARGET thread_pool OR TARGET thread_base)
+    set(HAS_THREAD_SYSTEM ON)
+    message(STATUS "Thread system available")
+elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system)
+    # Internal thread_system in libraries
+    set(HAS_THREAD_SYSTEM ON)
+    message(STATUS "Using internal thread_system from libraries")
+elseif(EXISTS ${EXTERNAL_SYSTEMS_PATH}/thread_system)
+    # External thread_system
+    add_subdirectory(${EXTERNAL_SYSTEMS_PATH}/thread_system ${CMAKE_CURRENT_BINARY_DIR}/thread_system_ext)
+    set(HAS_THREAD_SYSTEM ON)
+    message(STATUS "Found thread_system at ${EXTERNAL_SYSTEMS_PATH}/thread_system")
+endif()
+
+# Logger System (already handled above)
+if(TARGET LoggerSystem::logger OR TARGET logger)
+    set(HAS_LOGGER_SYSTEM ON)
+endif()
+
+# Monitoring System
+if(USE_EXTERNAL_MONITORING_SYSTEM)
+    if(EXISTS ${EXTERNAL_SYSTEMS_PATH}/monitoring_system)
+        add_subdirectory(${EXTERNAL_SYSTEMS_PATH}/monitoring_system ${CMAKE_CURRENT_BINARY_DIR}/monitoring_system)
+        set(HAS_MONITORING_SYSTEM ON)
+        message(STATUS "Found monitoring_system at ${EXTERNAL_SYSTEMS_PATH}/monitoring_system")
+    else()
+        message(STATUS "Monitoring system not found at ${EXTERNAL_SYSTEMS_PATH}/monitoring_system")
+    endif()
+endif()
+
+# Container System
+if(USE_EXTERNAL_CONTAINER_SYSTEM)
+    if(EXISTS ${EXTERNAL_SYSTEMS_PATH}/container_system)
+        add_subdirectory(${EXTERNAL_SYSTEMS_PATH}/container_system ${CMAKE_CURRENT_BINARY_DIR}/container_system_ext)
+        set(HAS_CONTAINER_SYSTEM ON)
+        message(STATUS "Found container_system at ${EXTERNAL_SYSTEMS_PATH}/container_system")
+    else()
+        message(STATUS "Container system not found at ${EXTERNAL_SYSTEMS_PATH}/container_system")
+    endif()
+endif()
+
+# Database System removed - not used
+
+# Network System
+if(BUILD_NETWORK AND EXISTS ${EXTERNAL_SYSTEMS_PATH}/network_system)
+    add_subdirectory(${EXTERNAL_SYSTEMS_PATH}/network_system ${CMAKE_CURRENT_BINARY_DIR}/network_system_ext)
+    set(HAS_NETWORK_SYSTEM ON)
+    message(STATUS "Found network_system at ${EXTERNAL_SYSTEMS_PATH}/network_system")
+endif()
+
+# Build Unified Messaging System
+if(BUILD_UNIFIED_MESSAGING)
+    message(STATUS "Building Unified Messaging System with available integrations:")
+    message(STATUS "  Common System: ${HAS_COMMON_SYSTEM}")
+    message(STATUS "  Thread System: ${HAS_THREAD_SYSTEM}")
+    message(STATUS "  Logger System: ${HAS_LOGGER_SYSTEM}")
+    message(STATUS "  Monitoring System: ${HAS_MONITORING_SYSTEM}")
+    message(STATUS "  Container System: ${HAS_CONTAINER_SYSTEM}")
+    # Database System: removed - not used
+    message(STATUS "  Network System: ${HAS_NETWORK_SYSTEM}")
+
+    # Create unified messaging library
+    add_library(unified_messaging STATIC
+        src/unified_messaging_system.cpp
+    )
+
+    target_include_directories(unified_messaging PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    )
+
+    # Add include directories for external systems
+    if(HAS_THREAD_SYSTEM)
+        target_include_directories(unified_messaging PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/../thread_system/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system/sources
+        )
+    endif()
+
+    if(HAS_LOGGER_SYSTEM)
+        target_include_directories(unified_messaging PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/../logger_system/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/logger_system/include
+        )
+        # Logger system may need thread_system headers
+        if(HAS_THREAD_SYSTEM)
+            target_compile_definitions(unified_messaging PRIVATE USE_THREAD_SYSTEM_INTEGRATION)
+        endif()
+    endif()
+
+    if(HAS_MONITORING_SYSTEM)
+        target_include_directories(unified_messaging PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/../monitoring_system/include
+        )
+    endif()
+
+    if(HAS_CONTAINER_SYSTEM)
+        target_include_directories(unified_messaging SYSTEM PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/../container_system
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/container_system
+        )
+    endif()
+
+    # Database system removed - not used
+
+    if(HAS_NETWORK_SYSTEM)
+        target_include_directories(unified_messaging PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/../network_system/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/libraries/network_system
+        )
+    endif()
+
+    # Set compilation definitions based on available systems
+    if(HAS_COMMON_SYSTEM)
+        target_compile_definitions(unified_messaging PUBLIC HAS_COMMON_SYSTEM)
+        if(TARGET common_system)
+            target_link_libraries(unified_messaging PUBLIC common_system)
+        endif()
+    endif()
+
+    if(HAS_THREAD_SYSTEM)
+        target_compile_definitions(unified_messaging PUBLIC HAS_THREAD_SYSTEM)
+        if(TARGET thread_pool)
+            target_link_libraries(unified_messaging PUBLIC thread_pool)
+        elseif(TARGET ThreadSystem::Core)
+            target_link_libraries(unified_messaging PUBLIC ThreadSystem::Core)
+        endif()
+    endif()
+
+    if(HAS_LOGGER_SYSTEM)
+        target_compile_definitions(unified_messaging PUBLIC HAS_LOGGER_SYSTEM)
+        if(TARGET logger)
+            target_link_libraries(unified_messaging PUBLIC logger)
+        elseif(TARGET LoggerSystem::logger)
+            target_link_libraries(unified_messaging PUBLIC LoggerSystem::logger)
+        endif()
+    endif()
+
+    if(HAS_MONITORING_SYSTEM)
+        target_compile_definitions(unified_messaging PUBLIC HAS_MONITORING_SYSTEM)
+        if(TARGET monitoring_system)
+            target_link_libraries(unified_messaging PUBLIC monitoring_system)
+        elseif(TARGET MonitoringSystem::monitoring)
+            target_link_libraries(unified_messaging PUBLIC MonitoringSystem::monitoring)
+        endif()
+    endif()
+
+    if(HAS_CONTAINER_SYSTEM)
+        target_compile_definitions(unified_messaging PUBLIC HAS_CONTAINER_SYSTEM)
+        if(TARGET container_system)
+            target_link_libraries(unified_messaging PUBLIC container_system)
+        elseif(TARGET container)
+            target_link_libraries(unified_messaging PUBLIC container)
+        endif()
+    endif()
+
+    # Database system removed - not used
+
+    if(HAS_NETWORK_SYSTEM)
+        target_compile_definitions(unified_messaging PUBLIC HAS_NETWORK_SYSTEM)
+        if(TARGET NetworkSystem)
+            target_link_libraries(unified_messaging PUBLIC NetworkSystem)
+        elseif(TARGET network_system)
+            target_link_libraries(unified_messaging PUBLIC network_system)
+        elseif(TARGET network)
+            target_link_libraries(unified_messaging PUBLIC network)
+        endif()
+    endif()
+
+    # Always need threads
+    target_link_libraries(unified_messaging PUBLIC Threads::Threads)
+
+    # Set C++ standard
+    target_compile_features(unified_messaging PUBLIC cxx_std_20)
+
+    # Install unified messaging
+    install(TARGETS unified_messaging
+        EXPORT unified_messaging_targets
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+
+    install(FILES
+        include/kcenon/messaging/unified_messaging_system.h
+        include/kcenon/messaging/result_adapter.h
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/kcenon/messaging
+    )
+
+    # Build example if requested
+    if(BUILD_MESSAGING_SAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples/unified_messaging_example.cpp)
+        add_executable(unified_messaging_example examples/unified_messaging_example.cpp)
+        target_link_libraries(unified_messaging_example PRIVATE unified_messaging)
+        target_compile_features(unified_messaging_example PRIVATE cxx_std_20)
+    endif()
+
+    # Build test if requested
+    if(USE_UNIT_TEST AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/unified_messaging_test.cpp)
+        find_package(GTest QUIET)
+        if(GTest_FOUND)
+            add_executable(unified_messaging_test tests/unified_messaging_test.cpp)
+            target_link_libraries(unified_messaging_test PRIVATE unified_messaging GTest::gtest_main)
+            target_compile_features(unified_messaging_test PRIVATE cxx_std_20)
+            add_test(NAME unified_messaging_test COMMAND unified_messaging_test)
+        endif()
+    endif()
 endif()
 
 # Integration example
@@ -223,13 +453,7 @@ if(BUILD_CONTAINER)
     )
 endif()
 
-if(BUILD_DATABASE)
-    install(DIRECTORY libraries/database_system/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/messaging_system/database
-        FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
-        PATTERN "tests" EXCLUDE
-    )
-endif()
+# Database system removed
 
 if(BUILD_NETWORK)
     install(DIRECTORY libraries/network_system/

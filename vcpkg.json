@@ -1,13 +1,12 @@
 {
   "name": "messaging-system",
   "version": "1.0.0",
-  "description": "Messaging system with container, database, and network modules",
+  "description": "Messaging system with integrated system modules",
   "dependencies": [
     "fmt",
     "gtest",
     "benchmark",
     "spdlog",
-    "libpqxx",
     "asio",
     "nlohmann-json"
   ]
