@@ -370,3 +370,6 @@ tmp/
 
 # Documents
 documents/
+
+# Library directories
+libraries/

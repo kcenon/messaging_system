@@ -1,2 +1,0 @@
-#pragma once
-#include <thread_system_core/interfaces/thread_context.h>
