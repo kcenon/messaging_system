@@ -1,0 +1,37 @@
+messaging_system:
+  version: "2.0"
+
+  network:
+    port: 8080
+    max_connections: 50000
+    timeout_ms: 5000
+    retry_attempts: 3
+
+  thread_pools:
+    io:
+      workers: 4
+      queue_size: 100000
+    work:
+      workers: 32
+      queue_size: 500000
+      lockfree: true
+
+  database:
+    type: postgresql
+    connection_string: "host=localhost port=5432 dbname=messaging"
+    pool:
+      min_connections: 10
+      max_connections: 100
+      idle_timeout_s: 60
+      max_lifetime_s: 3600
+
+  logging:
+    level: info
+    async: true
+    writers:
+      - console
+      - rotating_file
+
+  monitoring:
+    enabled: true
+    interval_ms: 1000
