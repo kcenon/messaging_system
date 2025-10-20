@@ -90,6 +90,12 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         message(STATUS "Using FetchContent for external systems")
         include(FetchContent)
 
+        # Disable tests in external systems to avoid dependency issues
+        set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
+        set(BUILD_INTEGRATION_TESTS OFF CACHE BOOL "" FORCE)
+        set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+        set(BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+
         # Common System
         FetchContent_Declare(
             CommonSystem
