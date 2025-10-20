@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['⭐_20new_0',['2. &lt;strong&gt;production_ready_example.cpp&lt;/strong&gt; ⭐ NEW',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md39',1,'']]]
+  ['❌_20don_20t_3a_0',['❌ don t:',['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1071',1,'❌ DON&apos;T:'],['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1074',1,'❌ DON&apos;T:'],['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1077',1,'❌ DON&apos;T:'],['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1080',1,'❌ DON&apos;T:']]]
 ];
