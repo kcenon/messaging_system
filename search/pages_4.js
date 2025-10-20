@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['4_3a_20test_20suite_20summary_0',['Phase 4: Test Suite Summary',['../df/d5e/md_docs_2phase4_2TEST__SUMMARY.html',1,'']]],
-  ['4_3a_20validation_20and_20deployment_20design_20document_1',['Phase 4: Validation and Deployment - Design Document',['../db/d5d/md_docs_2phase4_2DESIGN.html',1,'']]]
+  ['ecosystem_20architecture_0',['ecosystem architecture',['../d9/d9b/md_libraries_2logger__system_2ARCHITECTURE.html',1,'Threading Ecosystem Architecture'],['../dc/d4e/md_libraries_2monitoring__system_2ARCHITECTURE.html',1,'Threading Ecosystem Architecture'],['../df/d5b/md_libraries_2thread__system_2ARCHITECTURE.html',1,'Threading Ecosystem Architecture']]],
+  ['examples_1',['Thread System Examples',['../de/deb/md_libraries_2thread__system_2docs_2examples.html',1,'']]]
 ];

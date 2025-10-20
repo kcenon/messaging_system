@@ -13,6 +13,5 @@ var searchData=
   ['postgres_5fmanager_2eh_10',['postgres_manager.h',['../d6/d94/postgres__manager_8h.html',1,'']]],
   ['process_5fidentifier_2eh_11',['process_identifier.h',['../d4/d82/process__identifier_8h.html',1,'']]],
   ['production_5foptimizations_2eh_12',['production_optimizations.h',['../d9/d34/production__optimizations_8h.html',1,'']]],
-  ['production_5fready_5fexample_2ecpp_13',['production_ready_example.cpp',['../d9/dd9/production__ready__example_8cpp.html',1,'']]],
-  ['project_5fcompletion_5fsummary_2emd_14',['PROJECT_COMPLETION_SUMMARY.md',['../d3/dcc/PROJECT__COMPLETION__SUMMARY_8md.html',1,'']]]
+  ['production_5fready_5fexample_2ecpp_13',['production_ready_example.cpp',['../d9/dd9/production__ready__example_8cpp.html',1,'']]]
 ];

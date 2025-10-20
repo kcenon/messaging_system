@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['모니터링_20데이터_20흐름_20통합_20strong_0',['&lt;strong&gt;Task 3.3 – 로깅/모니터링 데이터 흐름 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2286',1,'']]],
-  ['모듈_20테스트_20수립_20strong_1',['&lt;strong&gt;Task 4.1 – 교차 모듈 테스트 수립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2289',1,'']]],
-  ['모듈_20통합_20재구성_20strong_2',['&lt;strong&gt;Task 1.1 – 외부 모듈 통합 재구성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2274',1,'']]]
+  ['🗄️_20database_20module_20tt_20database_20tt_0',['🗄️ Database Module (&lt;tt&gt;database/&lt;/tt&gt;)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2071',1,'']]]
 ];

@@ -1,11 +1,8 @@
 var searchData=
 [
-  ['decisions_0',['Design Patterns and Architectural Decisions',['../d5/dca/md_docs_2DESIGN__PATTERNS.html',1,'']]],
-  ['dependency_20refactoring_20design_20document_1',['Phase 1: Build System and Dependency Refactoring - Design Document',['../d5/d7c/md_docs_2phase1_2DESIGN.html',1,'']]],
-  ['deployment_20design_20document_2',['Phase 4: Validation and Deployment - Design Document',['../db/d5d/md_docs_2phase4_2DESIGN.html',1,'']]],
-  ['deployment_20guide_3',['Deployment Guide',['../df/d23/md_docs_2DEPLOYMENT__GUIDE.html',1,'']]],
-  ['design_20document_4',['design document',['../d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html',1,'Build Configuration Design Document'],['../d5/d7c/md_docs_2phase1_2DESIGN.html',1,'Phase 1: Build System and Dependency Refactoring - Design Document'],['../d6/df5/md_docs_2phase2_2DESIGN.html',1,'Phase 2: Messaging Core Redesign - Design Document'],['../d7/de1/md_docs_2phase3_2DESIGN.html',1,'Phase 3: Infrastructure Integration - Design Document'],['../db/d5d/md_docs_2phase4_2DESIGN.html',1,'Phase 4: Validation and Deployment - Design Document']]],
-  ['design_20patterns_20and_20architectural_20decisions_5',['Design Patterns and Architectural Decisions',['../d5/dca/md_docs_2DESIGN__PATTERNS.html',1,'']]],
-  ['developer_20guide_6',['Developer Guide',['../db/dac/md_docs_2DEVELOPER__GUIDE.html',1,'']]],
-  ['document_7',['document',['../d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html',1,'Build Configuration Design Document'],['../d5/d7c/md_docs_2phase1_2DESIGN.html',1,'Phase 1: Build System and Dependency Refactoring - Design Document'],['../d6/df5/md_docs_2phase2_2DESIGN.html',1,'Phase 2: Messaging Core Redesign - Design Document'],['../d7/de1/md_docs_2phase3_2DESIGN.html',1,'Phase 3: Infrastructure Integration - Design Document'],['../db/d5d/md_docs_2phase4_2DESIGN.html',1,'Phase 4: Validation and Deployment - Design Document'],['../df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html',1,'System Interface Mapping Document']]]
+  ['layer_20messaging_20system_0',['Application Layer - Messaging System',['../index.html',1,'']]],
+  ['logger_20system_1',['logger system',['../d3/da5/md_libraries_2logger__system_2CONTRIBUTING.html',1,'Contributing to Logger System'],['../d7/de1/md_libraries_2logger__system_2docs_2getting-started.html',1,'Getting Started with Logger System']]],
+  ['logger_20system_20api_20reference_2',['Logger System API Reference',['../da/dc7/md_libraries_2logger__system_2docs_2api-reference.html',1,'']]],
+  ['logger_20system_20architecture_3',['Logger System Architecture',['../d5/d03/md_libraries_2logger__system_2docs_2architecture.html',1,'']]],
+  ['logger_20system_20performance_20guide_4',['Logger System Performance Guide',['../de/d4f/md_libraries_2logger__system_2docs_2performance.html',1,'']]]
 ];

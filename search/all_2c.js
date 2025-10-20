@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['⭐_20new_0',['2. &lt;strong&gt;production_ready_example.cpp&lt;/strong&gt; ⭐ NEW',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md39',1,'']]]
+  ['🆕_0',['🆕',['../d8/d53/md_libraries_2thread__system_2docs_2getting-started.html#autotoc_md997',1,'High-Performance Adaptive Example 🆕'],['../d8/d53/md_libraries_2thread__system_2docs_2getting-started.html#autotoc_md1002',1,'High-Performance Adaptive Type Scheduling 🆕'],['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1435',1,'Typed Thread Pool Files (Adaptive) 🆕']]]
 ];

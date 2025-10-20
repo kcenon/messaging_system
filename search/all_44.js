@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['병렬_20작업_20최적화_0',['병렬 작업 최적화',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2296',1,'']]]
+  ['🛡️_20strong_20production_20grade_20reliability_20strong_0',['🛡️ &lt;strong&gt;Production-Grade Reliability&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1416',1,'']]]
 ];

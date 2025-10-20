@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['가이드_20및_20api_20문서화_0',['**Task 4.2 – 마이그레이션 가이드 및 API 문서화**',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2290',1,'']]]
+  ['🌐_20integration_0',['🌐 Integration',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2058',1,'']]],
+  ['🌐_20network_20module_20tt_20network_20tt_1',['🌐 Network Module (&lt;tt&gt;network/&lt;/tt&gt;)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2072',1,'']]],
+  ['🌐_20strong_20cross_20platform_20compatibility_20strong_2',['🌐 &lt;strong&gt;Cross-Platform Compatibility&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1418',1,'']]]
 ];
