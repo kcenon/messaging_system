@@ -71,20 +71,61 @@ std::string MessagingContainer::trace_id() const {
 }
 
 Result<std::vector<uint8_t>> MessagingContainer::serialize() const {
-    // TODO: Implement actual serialization
-    return Result<std::vector<uint8_t>>::ok(std::vector<uint8_t>{});
+    try {
+        auto serialized = container_.serialize();
+        return Result<std::vector<uint8_t>>::ok(std::move(serialized));
+    } catch (const std::exception& e) {
+        return Result<std::vector<uint8_t>>::error(
+            common::error_info{
+                error::SERIALIZATION_ERROR,
+                std::string("Serialization failed: ") + e.what(),
+                "MessagingContainer::serialize",
+                ""
+            }
+        );
+    }
 }
 
 Result<MessagingContainer> MessagingContainer::deserialize(const std::vector<uint8_t>& data) {
-    // TODO: Implement actual deserialization
-    return Result<MessagingContainer>::error(
-        common::error_info{
-            error::SERIALIZATION_ERROR,
-            "Not implemented",
-            "MessagingContainer::deserialize",
-            ""
+    if (data.empty()) {
+        return Result<MessagingContainer>::error(
+            common::error_info{
+                error::SERIALIZATION_ERROR,
+                "Cannot deserialize empty data",
+                "MessagingContainer::deserialize",
+                ""
+            }
+        );
+    }
+
+    try {
+        MessagingContainer container;
+        container.container_ = value_container::deserialize(data);
+
+        // Validate required fields
+        if (!container.container_.contains("topic") ||
+            container.container_.get_value("topic").to_string().empty()) {
+            return Result<MessagingContainer>::error(
+                common::error_info{
+                    error::INVALID_MESSAGE,
+                    "Deserialized container missing required 'topic' field",
+                    "MessagingContainer::deserialize",
+                    ""
+                }
+            );
         }
-    );
+
+        return Result<MessagingContainer>::ok(std::move(container));
+    } catch (const std::exception& e) {
+        return Result<MessagingContainer>::error(
+            common::error_info{
+                error::SERIALIZATION_ERROR,
+                std::string("Deserialization failed: ") + e.what(),
+                "MessagingContainer::deserialize",
+                ""
+            }
+        );
+    }
 }
 
 // Builder implementation

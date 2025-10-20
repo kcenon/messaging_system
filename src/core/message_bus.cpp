@@ -58,8 +58,15 @@ common::Result<void> MessageBus::publish_async(MessagingContainer msg) {
         );
     }
 
-    // TODO: Implement actual async publication via executor
-    return router_->route(msg);
+    // Offload to work executor for async processing
+    work_executor_->execute([router = router_, msg = std::move(msg)]() {
+        auto result = router->route(msg);
+        if (result.is_error()) {
+            // TODO: Log error when logger is available
+        }
+    });
+
+    return common::VoidResult::ok();
 }
 
 common::Result<void> MessageBus::publish_sync(const MessagingContainer& msg) {

@@ -1,13 +1,24 @@
-# Test CMakeLists.txt - Phase 4
+# Test CMakeLists.txt
 
-# Placeholder for future test implementation
-# See docs/phase4/DESIGN.md for complete test structure
+message(STATUS "Configuring tests...")
 
-message(STATUS "Test directory configured (implementation pending)")
+# Simple unit test (no GTest dependency yet)
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unit/core/test_messaging_container.cpp)
+    add_executable(test_messaging_container
+        unit/core/test_messaging_container.cpp
+    )
 
-# TODO: Add GTest integration
-# TODO: Add benchmark integration
-# TODO: Add test targets for:
-#   - Unit tests
-#   - Integration tests
-#   - Benchmarks
+    target_link_libraries(test_messaging_container
+        PRIVATE
+            messaging_system_core
+    )
+
+    # Add as a test
+    add_test(NAME test_messaging_container COMMAND test_messaging_container)
+
+    message(STATUS "  Added test: test_messaging_container")
+endif()
+
+# TODO (Phase 4): Add GTest integration
+# TODO (Phase 4): Add benchmark integration
+# TODO (Phase 4): Add integration tests

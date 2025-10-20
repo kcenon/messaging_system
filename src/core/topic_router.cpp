@@ -85,18 +85,21 @@ common::Result<void> TopicRouter::route(const MessagingContainer& msg) {
         );
     }
 
-    // Execute callbacks
+    // Execute callbacks via executor for async processing
     for (const auto& sub : matching) {
         // Apply filter if present
         if (sub.filter && !sub.filter(msg)) {
             continue;
         }
 
-        // TODO: Execute via executor for async processing
-        auto result = sub.callback(msg);
-        if (result.is_error()) {
-            // Log error but continue with other subscribers
-        }
+        // Execute callback asynchronously via executor
+        executor_->execute([callback = sub.callback, msg]() {
+            auto result = callback(msg);
+            if (result.is_error()) {
+                // TODO: Log error when logger is available
+                // For now, silently continue with other subscribers
+            }
+        });
     }
 
     return common::VoidResult::ok();
@@ -135,19 +138,62 @@ bool TopicRouter::match_pattern(const std::string& topic, const std::string& pat
         return true;
     }
 
-    // TODO: Implement wildcard pattern matching
-    // "user.*" should match "user.created", "user.deleted"
-    // "order.#" should match "order", "order.placed", "order.placed.confirmed"
+    // No wildcards - no match
+    if (pattern.find('*') == std::string::npos && pattern.find('#') == std::string::npos) {
+        return false;
+    }
 
-    return false;
+    // Convert pattern to regex and match
+    try {
+        auto regex_pattern = pattern_to_regex(pattern);
+        return std::regex_match(topic, regex_pattern);
+    } catch (const std::exception&) {
+        return false;
+    }
 }
 
 std::regex TopicRouter::pattern_to_regex(const std::string& pattern) {
-    // TODO: Convert topic pattern to regex
-    // "user.*" -> "user\\.[^.]*"
-    // "order.#" -> "order(\\..*)?"
+    std::string regex_str;
+    regex_str.reserve(pattern.size() * 2);
+    regex_str += "^";
 
-    return std::regex(pattern);
+    for (size_t i = 0; i < pattern.size(); ++i) {
+        char c = pattern[i];
+
+        if (c == '*') {
+            // Single-level wildcard: matches one segment
+            // "user.*" should match "user.created" but not "user.admin.created"
+            regex_str += "[^.]+";
+        } else if (c == '#') {
+            // Multi-level wildcard: matches zero or more segments
+            // "order.#" should match "order", "order.placed", "order.placed.confirmed"
+            if (i > 0 && pattern[i-1] == '.') {
+                // After a dot: match current and all subsequent segments
+                regex_str += ".*";
+            } else if (i == 0) {
+                // At start: match everything
+                regex_str += ".*";
+            } else {
+                // Treat as literal #
+                regex_str += "\\#";
+            }
+        } else if (c == '.') {
+            // Literal dot separator
+            regex_str += "\\.";
+        } else if (c == '^' || c == '$' || c == '\\' || c == '[' || c == ']' ||
+                   c == '(' || c == ')' || c == '{' || c == '}' || c == '|' ||
+                   c == '+' || c == '?') {
+            // Escape regex special characters
+            regex_str += '\\';
+            regex_str += c;
+        } else {
+            // Regular character
+            regex_str += c;
+        }
+    }
+
+    regex_str += "$";
+    return std::regex(regex_str);
 }
 
 } // namespace messaging
