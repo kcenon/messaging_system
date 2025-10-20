@@ -162,15 +162,36 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             GIT_SHALLOW TRUE
         )
 
+        # Make CommonSystem available first (required by most others)
+        FetchContent_MakeAvailable(CommonSystem)
+
+        # Then ThreadSystem (required by logger, monitoring)
+        FetchContent_MakeAvailable(ThreadSystem)
+
+        # Then systems that depend on common and thread
         FetchContent_MakeAvailable(
-            CommonSystem
-            ThreadSystem
             LoggerSystem
             MonitoringSystem
             ContainerSystem
             DatabaseSystem
             NetworkSystem
         )
+
+        # Workaround: Remove problematic integration_tests after FetchContent
+        # This prevents GTest dependency issues in external systems
+        FetchContent_GetProperties(MonitoringSystem SOURCE_DIR monitoringsystem_source_dir)
+        if(EXISTS "${monitoringsystem_source_dir}/integration_tests/CMakeLists.txt")
+            file(RENAME
+                "${monitoringsystem_source_dir}/integration_tests/CMakeLists.txt"
+                "${monitoringsystem_source_dir}/integration_tests/CMakeLists.txt.disabled")
+        endif()
+
+        FetchContent_GetProperties(LoggerSystem SOURCE_DIR loggersystem_source_dir)
+        if(EXISTS "${loggersystem_source_dir}/integration_tests/CMakeLists.txt")
+            file(RENAME
+                "${loggersystem_source_dir}/integration_tests/CMakeLists.txt"
+                "${loggersystem_source_dir}/integration_tests/CMakeLists.txt.disabled")
+        endif()
 
     else()
         # find_package mode (production)
