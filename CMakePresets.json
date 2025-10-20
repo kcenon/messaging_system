@@ -1,0 +1,176 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 16,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Default Config",
+      "description": "Default build using system-installed external packages",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "MESSAGING_USE_EXTERNAL_SYSTEMS": "ON",
+        "MESSAGING_USE_FETCHCONTENT": "OFF"
+      }
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "description": "Debug build with all logging enabled",
+      "inherits": "default",
+      "binaryDir": "${sourceDir}/build-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "MESSAGING_ENABLE_LOGGING": "ON",
+        "MESSAGING_ENABLE_MONITORING": "ON"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release",
+      "description": "Optimized release build",
+      "inherits": "default",
+      "binaryDir": "${sourceDir}/build-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "MESSAGING_BUILD_TESTS": "OFF",
+        "MESSAGING_BUILD_EXAMPLES": "OFF"
+      }
+    },
+    {
+      "name": "asan",
+      "displayName": "AddressSanitizer",
+      "description": "Build with AddressSanitizer for memory error detection",
+      "inherits": "debug",
+      "binaryDir": "${sourceDir}/build-asan",
+      "cacheVariables": {
+        "MESSAGING_BUILD_PROFILE": "ASAN"
+      }
+    },
+    {
+      "name": "tsan",
+      "displayName": "ThreadSanitizer",
+      "description": "Build with ThreadSanitizer for data race detection",
+      "inherits": "debug",
+      "binaryDir": "${sourceDir}/build-tsan",
+      "cacheVariables": {
+        "MESSAGING_BUILD_PROFILE": "TSAN"
+      }
+    },
+    {
+      "name": "ubsan",
+      "displayName": "UndefinedBehaviorSanitizer",
+      "description": "Build with UndefinedBehaviorSanitizer",
+      "inherits": "debug",
+      "binaryDir": "${sourceDir}/build-ubsan",
+      "cacheVariables": {
+        "MESSAGING_BUILD_PROFILE": "UBSAN"
+      }
+    },
+    {
+      "name": "dev-fetchcontent",
+      "displayName": "Development with FetchContent",
+      "description": "Development build using FetchContent for all dependencies",
+      "inherits": "debug",
+      "binaryDir": "${sourceDir}/build-dev",
+      "cacheVariables": {
+        "MESSAGING_USE_FETCHCONTENT": "ON",
+        "MESSAGING_BUILD_TESTS": "ON",
+        "MESSAGING_BUILD_EXAMPLES": "ON"
+      }
+    },
+    {
+      "name": "ci",
+      "displayName": "CI Build",
+      "description": "Configuration for continuous integration",
+      "inherits": "default",
+      "binaryDir": "${sourceDir}/build-ci",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "MESSAGING_USE_FETCHCONTENT": "ON",
+        "MESSAGING_BUILD_TESTS": "ON",
+        "MESSAGING_BUILD_BENCHMARKS": "ON",
+        "MESSAGING_WARNING_LEVEL": "Pedantic"
+      }
+    },
+    {
+      "name": "lockfree",
+      "displayName": "Lock-Free Build",
+      "description": "Build with lock-free data structures enabled",
+      "inherits": "release",
+      "binaryDir": "${sourceDir}/build-lockfree",
+      "cacheVariables": {
+        "MESSAGING_USE_LOCKFREE": "ON"
+      }
+    },
+    {
+      "name": "minimal",
+      "displayName": "Minimal Build",
+      "description": "Minimal build without optional features",
+      "inherits": "default",
+      "binaryDir": "${sourceDir}/build-minimal",
+      "cacheVariables": {
+        "MESSAGING_ENABLE_MONITORING": "OFF",
+        "MESSAGING_ENABLE_METRICS": "OFF",
+        "MESSAGING_BUILD_TESTS": "OFF",
+        "MESSAGING_BUILD_BENCHMARKS": "OFF",
+        "MESSAGING_BUILD_EXAMPLES": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default"
+    },
+    {
+      "name": "debug",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
+    },
+    {
+      "name": "asan",
+      "configurePreset": "asan"
+    },
+    {
+      "name": "tsan",
+      "configurePreset": "tsan"
+    },
+    {
+      "name": "ubsan",
+      "configurePreset": "ubsan"
+    },
+    {
+      "name": "dev",
+      "configurePreset": "dev-fetchcontent"
+    },
+    {
+      "name": "ci",
+      "configurePreset": "ci"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "ci",
+      "configurePreset": "ci",
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
+      }
+    }
+  ]
+}

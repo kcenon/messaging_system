@@ -1,267 +1,449 @@
 cmake_minimum_required(VERSION 3.16)
 
-# Project configuration
-project(messaging_system 
-    VERSION 1.0.0.0
-    DESCRIPTION "Messaging system with container, database, and network modules"
+project(messaging_system
+    VERSION 2.0.0
+    DESCRIPTION "High-performance distributed messaging system"
     LANGUAGES CXX
 )
 
 # C++ Standard
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Export compile commands for IDEs
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Options
-option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
-option(USE_UNIT_TEST "Use unit test" ON)
-option(BUILD_MESSAGING_SAMPLES "Build messaging system samples" ON)
+# ============================================================================
+# Build Options
+# ============================================================================
 
-# Module options
-option(BUILD_CONTAINER "Build container module" ON)
-option(BUILD_DATABASE "Build database module" ON)
-option(BUILD_NETWORK "Build network module" ON)
-option(BUILD_PYTHON_BINDINGS "Build Python bindings" ON)  # Handled in services_system
+# Feature flags
+option(MESSAGING_USE_LOCKFREE "Enable lock-free data structures" OFF)
+option(MESSAGING_ENABLE_MONITORING "Enable runtime monitoring" ON)
+option(MESSAGING_ENABLE_LOGGING "Enable logging system" ON)
+option(MESSAGING_ENABLE_METRICS "Enable metrics collection" ON)
+option(MESSAGING_ENABLE_TLS "Enable TLS/SSL support" OFF)
 
-# Feature options
-option(USE_LOCKFREE_BY_DEFAULT "Use lock-free implementations by default" OFF)
-option(USE_STD_FORMAT "Use std::format instead of fmt library" OFF)
+# Dependency strategy
+option(MESSAGING_USE_EXTERNAL_SYSTEMS "Use external system packages" ON)
+option(MESSAGING_USE_FETCHCONTENT "Use FetchContent for dependencies" OFF)
 
-# Output directories
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+# Development options
+option(MESSAGING_BUILD_TESTS "Build unit tests" ON)
+option(MESSAGING_BUILD_BENCHMARKS "Build performance benchmarks" OFF)
+option(MESSAGING_BUILD_EXAMPLES "Build example applications" ON)
+option(MESSAGING_BUILD_DOCS "Build documentation with Doxygen" OFF)
 
-# Debug flags
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
+# Build profile
+set(MESSAGING_BUILD_PROFILE "Release" CACHE STRING "Build profile")
+set_property(CACHE MESSAGING_BUILD_PROFILE PROPERTY STRINGS
+    "Debug" "Release" "RelWithDebInfo" "MinSizeRel"
+    "ASAN" "TSAN" "UBSAN" "MSAN"
+)
 
-# Platform-specific settings
-if(WIN32)
-    add_definitions(-D_WIN32_WINNT=0x0A00) # Windows 10
-elseif(APPLE)
-    add_definitions(-DAPPLE_PLATFORM)
+# ============================================================================
+# Compiler Settings
+# ============================================================================
+
+# Warning level
+set(MESSAGING_WARNING_LEVEL "High" CACHE STRING "Compiler warning level")
+
+if(MESSAGING_WARNING_LEVEL STREQUAL "High" OR MESSAGING_WARNING_LEVEL STREQUAL "Pedantic")
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        add_compile_options(-Wall -Wextra -Wpedantic)
+        if(MESSAGING_WARNING_LEVEL STREQUAL "Pedantic")
+            add_compile_options(-Werror -Wconversion -Wsign-conversion)
+        endif()
+    elseif(MSVC)
+        add_compile_options(/W4)
+        if(MESSAGING_WARNING_LEVEL STREQUAL "Pedantic")
+            add_compile_options(/WX)
+        endif()
+    endif()
 endif()
 
-# Find required packages
-find_package(Threads REQUIRED)
+# Build profile flags
+if(MESSAGING_BUILD_PROFILE STREQUAL "ASAN")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer -g")
+    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
+elseif(MESSAGING_BUILD_PROFILE STREQUAL "TSAN")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=thread -g")
+    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=thread")
+elseif(MESSAGING_BUILD_PROFILE STREQUAL "UBSAN")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined -fno-sanitize-recover=all -g")
+    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=undefined")
+elseif(MESSAGING_BUILD_PROFILE STREQUAL "MSAN")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=memory -fno-omit-frame-pointer -g")
+    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=memory")
+endif()
 
-# Find external ThreadSystemCore
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+# ============================================================================
+# External System Integration
+# ============================================================================
 
-# Option to use internal thread_system (for backward compatibility)
-option(USE_INTERNAL_THREAD_SYSTEM "Use internal thread_system subdirectory" OFF)
+if(MESSAGING_USE_EXTERNAL_SYSTEMS)
+    message(STATUS "Using external system packages")
 
-# Option to use external logger system
-option(USE_EXTERNAL_LOGGER_SYSTEM "Use external logger system" ON)
+    if(MESSAGING_USE_FETCHCONTENT)
+        # FetchContent mode (development)
+        message(STATUS "Using FetchContent for external systems")
+        include(FetchContent)
 
-# Option to use external monitoring system
-option(USE_EXTERNAL_MONITORING_SYSTEM "Use external monitoring system" ON)
+        # Common System
+        FetchContent_Declare(
+            CommonSystem
+            GIT_REPOSITORY https://github.com/kcenon/common_system.git
+            GIT_TAG main
+            GIT_SHALLOW TRUE
+        )
 
-if(USE_INTERNAL_THREAD_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system)
-    # Legacy mode: use internal thread_system
-    message(STATUS "Using internal thread_system subdirectory")
-    set(BUILD_THREADSYSTEM_AS_SUBMODULE ON CACHE BOOL "Build ThreadSystem as submodule" FORCE)
-    
-    # Pass lock-free option to thread_system
-    if(USE_LOCKFREE_BY_DEFAULT)
-        set(USE_LOCKFREE_THREAD_POOL ON CACHE BOOL "Use lock-free thread pool by default" FORCE)
-        set(USE_LOCKFREE_LOGGER ON CACHE BOOL "Use lock-free logger by default" FORCE)
+        # Thread System
+        FetchContent_Declare(
+            ThreadSystem
+            GIT_REPOSITORY https://github.com/kcenon/thread_system.git
+            GIT_TAG main
+            GIT_SHALLOW TRUE
+        )
+
+        # Logger System
+        FetchContent_Declare(
+            LoggerSystem
+            GIT_REPOSITORY https://github.com/kcenon/logger_system.git
+            GIT_TAG main
+            GIT_SHALLOW TRUE
+        )
+
+        # Monitoring System
+        FetchContent_Declare(
+            MonitoringSystem
+            GIT_REPOSITORY https://github.com/kcenon/monitoring_system.git
+            GIT_TAG main
+            GIT_SHALLOW TRUE
+        )
+
+        # Container System
+        FetchContent_Declare(
+            ContainerSystem
+            GIT_REPOSITORY https://github.com/kcenon/container_system.git
+            GIT_TAG main
+            GIT_SHALLOW TRUE
+        )
+
+        # Database System
+        FetchContent_Declare(
+            DatabaseSystem
+            GIT_REPOSITORY https://github.com/kcenon/database_system.git
+            GIT_TAG main
+            GIT_SHALLOW TRUE
+        )
+
+        # Network System
+        FetchContent_Declare(
+            NetworkSystem
+            GIT_REPOSITORY https://github.com/kcenon/network_system.git
+            GIT_TAG main
+            GIT_SHALLOW TRUE
+        )
+
+        FetchContent_MakeAvailable(
+            CommonSystem
+            ThreadSystem
+            LoggerSystem
+            MonitoringSystem
+            ContainerSystem
+            DatabaseSystem
+            NetworkSystem
+        )
+
+    else()
+        # find_package mode (production)
+        message(STATUS "Using find_package for external systems")
+
+        list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+        find_package(CommonSystem 1.0 QUIET)
+        find_package(ThreadSystem 1.0 QUIET)
+        find_package(LoggerSystem 1.0 QUIET)
+        find_package(MonitoringSystem 1.0 QUIET)
+        find_package(ContainerSystem 1.0 QUIET)
+        find_package(DatabaseSystem 1.0 QUIET)
+        find_package(NetworkSystem 1.0 QUIET)
     endif()
-    
-    add_subdirectory(libraries/thread_system)
-    
-    # Include directories for thread_system
-    include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system/sources
-    )
-else()
-    # Modern mode: use external ThreadSystemCore
-    message(STATUS "Attempting to find external ThreadSystemCore")
-    find_package(ThreadSystemCore QUIET)
-    
-    # Create compatibility aliases for internal targets
-    if(TARGET ThreadSystem::Core)
-        # Create aliases for backward compatibility
+
+    # Validate dependencies
+    include(cmake/validate_dependencies.cmake)
+    validate_messaging_dependencies()
+
+    # Create backward-compatible aliases
+    if(TARGET CommonSystem::common AND NOT TARGET common)
+        add_library(common ALIAS CommonSystem::common)
+    endif()
+
+    if(TARGET ThreadSystem::Core AND NOT TARGET thread_pool)
         add_library(thread_pool ALIAS ThreadSystem::Core)
-        add_library(thread_base ALIAS ThreadSystem::Core)
-        add_library(utilities ALIAS ThreadSystem::Core)
-        add_library(typed_thread_pool ALIAS ThreadSystem::Core)
     endif()
-endif()
 
-# Logger System Integration
-option(USE_INTERNAL_LOGGER_SYSTEM "Use internal logger_system subdirectory" ON)
-
-if(USE_INTERNAL_LOGGER_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/logger_system)
-    # Use internal logger_system
-    message(STATUS "Using internal logger_system subdirectory")
-    set(BUILD_LOGGER_AS_SUBMODULE ON CACHE BOOL "Build Logger as submodule" FORCE)
-    add_subdirectory(libraries/logger_system)
-
-    # Include directories for logger_system
-    include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/logger_system/sources
-    )
-elseif(USE_EXTERNAL_LOGGER_SYSTEM)
-    message(STATUS "Attempting to find external LoggerSystem")
-    find_package(LoggerSystem QUIET)
-
-    # Make logger available to all modules
-    if(TARGET LoggerSystem::logger)
+    if(TARGET LoggerSystem::logger AND NOT TARGET logger)
         add_library(logger ALIAS LoggerSystem::logger)
     endif()
-else()
-    message(STATUS "Logger system integration disabled")
-endif()
 
-# Monitoring System Integration
-option(USE_INTERNAL_MONITORING_SYSTEM "Use internal monitoring_system subdirectory" OFF)
-
-if(USE_INTERNAL_MONITORING_SYSTEM AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/monitoring_system)
-    # Use internal monitoring_system
-    message(STATUS "Using internal monitoring_system subdirectory")
-    set(BUILD_MONITORING_AS_SUBMODULE ON CACHE BOOL "Build Monitoring as submodule" FORCE)
-    add_subdirectory(libraries/monitoring_system)
-
-    # Include directories for monitoring_system
-    include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}/libraries/monitoring_system/sources
-    )
-elseif(USE_EXTERNAL_MONITORING_SYSTEM)
-    message(STATUS "Attempting to find external MonitoringSystem")
-    find_package(MonitoringSystem QUIET)
-
-    # Make monitoring available to all modules
-    if(TARGET MonitoringSystem::monitoring)
+    if(TARGET MonitoringSystem::monitoring AND NOT TARGET monitoring)
         add_library(monitoring ALIAS MonitoringSystem::monitoring)
     endif()
+
+    if(TARGET ContainerSystem::container AND NOT TARGET container)
+        add_library(container ALIAS ContainerSystem::container)
+    endif()
+
+    if(TARGET DatabaseSystem::database AND NOT TARGET database)
+        add_library(database ALIAS DatabaseSystem::database)
+    endif()
+
+    if(TARGET NetworkSystem::network AND NOT TARGET network)
+        add_library(network ALIAS NetworkSystem::network)
+    endif()
+
 else()
-    message(STATUS "Monitoring system integration disabled")
+    message(WARNING "Building without external systems (legacy mode)")
+    # Fall back to internal implementations (deprecated)
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/container_system)
+        add_subdirectory(libraries/container_system)
+    endif()
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/network_system)
+        add_subdirectory(libraries/network_system)
+    endif()
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system)
+        add_subdirectory(libraries/thread_system)
+    endif()
 endif()
 
-# Messaging system modules
-if(BUILD_CONTAINER)
-    add_subdirectory(libraries/container_system)
-    # # Add container to the export set
-    # install(TARGETS container
-    #     EXPORT messaging_system_targets
-    #     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    #     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    #     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    # )
+# ============================================================================
+# Propagate Options to External Systems
+# ============================================================================
+
+if(MESSAGING_USE_LOCKFREE)
+    set(USE_LOCKFREE_BY_DEFAULT ON CACHE BOOL "" FORCE)
+    set(USE_LOCKFREE_THREAD_POOL ON CACHE BOOL "" FORCE)
 endif()
 
-if(BUILD_DATABASE)
-    add_subdirectory(libraries/database_system)
-    # # Add database to the export set
-    # if(TARGET database)
-    #     install(TARGETS database
-    #         EXPORT messaging_system_targets
-    #         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    #         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    #         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    #     )
-    # endif()
+if(MESSAGING_ENABLE_MONITORING)
+    set(ENABLE_MONITORING ON CACHE BOOL "" FORCE)
 endif()
 
-if(BUILD_NETWORK)
-    add_subdirectory(libraries/network_system)
+if(MESSAGING_ENABLE_LOGGING)
+    set(ENABLE_LOGGING ON CACHE BOOL "" FORCE)
 endif()
 
-# Add application layer
-add_subdirectory(application_layer)
+if(MESSAGING_ENABLE_TLS)
+    set(ENABLE_TLS ON CACHE BOOL "" FORCE)
+endif()
 
-# Python bindings are now handled within services_system
-# The old python directory has been removed to avoid duplication
+# ============================================================================
+# Messaging System Core Library
+# ============================================================================
 
-# Unit tests
-if(USE_UNIT_TEST)
+add_library(messaging_system_core
+    src/core/messaging_container.cpp
+    src/core/message_bus.cpp
+    src/core/topic_router.cpp
+)
+
+target_include_directories(messaging_system_core
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
+
+# Link external systems if available
+set(MESSAGING_CORE_LIBS "")
+
+if(TARGET CommonSystem::common)
+    list(APPEND MESSAGING_CORE_LIBS CommonSystem::common)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_COMMON_SYSTEM)
+endif()
+
+if(TARGET ThreadSystem::Core)
+    list(APPEND MESSAGING_CORE_LIBS ThreadSystem::Core)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_THREAD_SYSTEM)
+endif()
+
+if(TARGET LoggerSystem::logger)
+    list(APPEND MESSAGING_CORE_LIBS LoggerSystem::logger)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_LOGGER_SYSTEM)
+endif()
+
+if(TARGET MonitoringSystem::monitoring)
+    list(APPEND MESSAGING_CORE_LIBS MonitoringSystem::monitoring)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_MONITORING_SYSTEM)
+endif()
+
+if(TARGET ContainerSystem::container)
+    list(APPEND MESSAGING_CORE_LIBS ContainerSystem::container)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_CONTAINER_SYSTEM)
+endif()
+
+if(TARGET DatabaseSystem::database)
+    list(APPEND MESSAGING_CORE_LIBS DatabaseSystem::database)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
+endif()
+
+if(TARGET NetworkSystem::network)
+    list(APPEND MESSAGING_CORE_LIBS NetworkSystem::network)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
+endif()
+
+if(MESSAGING_CORE_LIBS)
+    target_link_libraries(messaging_system_core PUBLIC ${MESSAGING_CORE_LIBS})
+    target_compile_definitions(messaging_system_core PUBLIC MESSAGING_USE_EXTERNAL_SYSTEMS)
+endif()
+
+target_compile_features(messaging_system_core PUBLIC cxx_std_20)
+
+# ============================================================================
+# Main Executable
+# ============================================================================
+
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+    add_executable(messaging_system
+        src/main.cpp
+    )
+
+    target_link_libraries(messaging_system
+        PRIVATE
+            messaging_system_core
+    )
+endif()
+
+# ============================================================================
+# Tests
+# ============================================================================
+
+if(MESSAGING_BUILD_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt)
     enable_testing()
-    add_subdirectory(test/unittest)
+    add_subdirectory(test)
 endif()
 
-# Samples
-if(BUILD_MESSAGING_SAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/samples)
-    add_subdirectory(samples)
+# ============================================================================
+# Benchmarks
+# ============================================================================
+
+if(MESSAGING_BUILD_BENCHMARKS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/benchmarks)
+    add_subdirectory(benchmarks)
 endif()
 
-# Integration example
-if(BUILD_MESSAGING_SAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_example.cpp)
-    add_executable(integration_example integration_example.cpp)
-    
-    # Define macros based on what's available
-    if(TARGET ThreadSystem::Core)
-        target_compile_definitions(integration_example PRIVATE HAS_THREAD_SYSTEM_CORE)
-        target_link_libraries(integration_example PRIVATE ThreadSystem::Core)
-    endif()
-    
-    if(TARGET LoggerSystem::logger)
-        target_compile_definitions(integration_example PRIVATE HAS_LOGGER_SYSTEM)
-        target_link_libraries(integration_example PRIVATE LoggerSystem::logger)
-    endif()
-    
-    if(TARGET MonitoringSystem::monitoring)
-        target_compile_definitions(integration_example PRIVATE HAS_MONITORING_SYSTEM)
-        target_link_libraries(integration_example PRIVATE MonitoringSystem::monitoring)
-    endif()
-    
-    # Link messaging system components
-    target_link_libraries(integration_example PRIVATE container network)
+# ============================================================================
+# Examples
+# ============================================================================
+
+if(MESSAGING_BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples)
+    add_subdirectory(examples)
 endif()
 
-# Installation configuration
+# ============================================================================
+# Documentation
+# ============================================================================
+
+if(MESSAGING_BUILD_DOCS)
+    find_package(Doxygen)
+    if(DOXYGEN_FOUND AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/docs)
+        add_subdirectory(docs)
+    endif()
+endif()
+
+# ============================================================================
+# Installation
+# ============================================================================
+
 include(GNUInstallDirs)
 
-# Install header files
-if(BUILD_CONTAINER)
-    install(DIRECTORY libraries/container_system/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/messaging_system/container
-        FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.tpp"
-        PATTERN "tests" EXCLUDE
-        PATTERN "internal" EXCLUDE
+install(TARGETS messaging_system_core
+    EXPORT messaging_system_targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+if(TARGET messaging_system)
+    install(TARGETS messaging_system
+        EXPORT messaging_system_targets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
 endif()
 
-if(BUILD_DATABASE)
-    install(DIRECTORY libraries/database_system/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/messaging_system/database
-        FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
-        PATTERN "tests" EXCLUDE
-    )
+install(DIRECTORY include/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(EXPORT messaging_system_targets
+    FILE messaging_system-targets.cmake
+    NAMESPACE MessagingSystem::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/messaging_system
+)
+
+# ============================================================================
+# Summary
+# ============================================================================
+
+message(STATUS "")
+message(STATUS "=== Messaging System Configuration ===")
+message(STATUS "Version: ${PROJECT_VERSION}")
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "Build profile: ${MESSAGING_BUILD_PROFILE}")
+message(STATUS "")
+message(STATUS "Features:")
+message(STATUS "  Lock-free: ${MESSAGING_USE_LOCKFREE}")
+message(STATUS "  Monitoring: ${MESSAGING_ENABLE_MONITORING}")
+message(STATUS "  Logging: ${MESSAGING_ENABLE_LOGGING}")
+message(STATUS "  Metrics: ${MESSAGING_ENABLE_METRICS}")
+message(STATUS "  TLS: ${MESSAGING_ENABLE_TLS}")
+message(STATUS "")
+message(STATUS "Build options:")
+message(STATUS "  Tests: ${MESSAGING_BUILD_TESTS}")
+message(STATUS "  Benchmarks: ${MESSAGING_BUILD_BENCHMARKS}")
+message(STATUS "  Examples: ${MESSAGING_BUILD_EXAMPLES}")
+message(STATUS "  Documentation: ${MESSAGING_BUILD_DOCS}")
+message(STATUS "")
+message(STATUS "External systems: ${MESSAGING_USE_EXTERNAL_SYSTEMS}")
+if(MESSAGING_USE_EXTERNAL_SYSTEMS)
+    message(STATUS "  Using FetchContent: ${MESSAGING_USE_FETCHCONTENT}")
+    message(STATUS "")
+    message(STATUS "External systems found:")
+    if(TARGET CommonSystem::common)
+        message(STATUS "  ✓ CommonSystem")
+    else()
+        message(STATUS "  ✗ CommonSystem")
+    endif()
+    if(TARGET ThreadSystem::Core)
+        message(STATUS "  ✓ ThreadSystem")
+    else()
+        message(STATUS "  ✗ ThreadSystem")
+    endif()
+    if(TARGET LoggerSystem::logger)
+        message(STATUS "  ✓ LoggerSystem")
+    else()
+        message(STATUS "  ✗ LoggerSystem")
+    endif()
+    if(TARGET MonitoringSystem::monitoring)
+        message(STATUS "  ✓ MonitoringSystem")
+    else()
+        message(STATUS "  ✗ MonitoringSystem")
+    endif()
+    if(TARGET ContainerSystem::container)
+        message(STATUS "  ✓ ContainerSystem")
+    else()
+        message(STATUS "  ✗ ContainerSystem")
+    endif()
+    if(TARGET DatabaseSystem::database)
+        message(STATUS "  ✓ DatabaseSystem")
+    else()
+        message(STATUS "  ✗ DatabaseSystem")
+    endif()
+    if(TARGET NetworkSystem::network)
+        message(STATUS "  ✓ NetworkSystem")
+    else()
+        message(STATUS "  ✗ NetworkSystem")
+    endif()
 endif()
-
-if(BUILD_NETWORK)
-    install(DIRECTORY libraries/network_system/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/messaging_system/network
-        FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
-        PATTERN "tests" EXCLUDE
-    )
-endif()
-
-# Export configuration - temporarily commented out
-# install(EXPORT messaging_system_targets
-#     FILE messaging_system_targets.cmake
-#     NAMESPACE messaging_system::
-#     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/messaging_system
-# )
-
-# # Create config file
-# include(CMakePackageConfigHelpers)
-# configure_package_config_file(
-#     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/messaging_system_config.cmake.in
-#     ${CMAKE_CURRENT_BINARY_DIR}/messaging_system_config.cmake
-#     INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/messaging_system
-# )
-
-# write_basic_package_version_file(
-#     ${CMAKE_CURRENT_BINARY_DIR}/messaging_system_config_version.cmake
-#     VERSION ${PROJECT_VERSION}
-#     COMPATIBILITY SameMajorVersion
-# )
-
-# install(FILES
-#     ${CMAKE_CURRENT_BINARY_DIR}/messaging_system_config.cmake
-#     ${CMAKE_CURRENT_BINARY_DIR}/messaging_system_config_version.cmake
-#     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/messaging_system
-# )
+message(STATUS "======================================")
+message(STATUS "")
