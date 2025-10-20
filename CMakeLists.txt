@@ -247,6 +247,8 @@ add_library(messaging_system_core
     src/core/messaging_container.cpp
     src/core/message_bus.cpp
     src/core/topic_router.cpp
+    src/integration/trace_context.cpp
+    src/integration/config_loader.cpp
 )
 
 target_include_directories(messaging_system_core
@@ -296,6 +298,16 @@ endif()
 if(MESSAGING_CORE_LIBS)
     target_link_libraries(messaging_system_core PUBLIC ${MESSAGING_CORE_LIBS})
     target_compile_definitions(messaging_system_core PUBLIC MESSAGING_USE_EXTERNAL_SYSTEMS)
+endif()
+
+# Find and link yaml-cpp for configuration
+find_package(yaml-cpp QUIET)
+if(yaml-cpp_FOUND)
+    target_link_libraries(messaging_system_core PUBLIC yaml-cpp)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_YAML_CPP)
+    message(STATUS "  ✓ yaml-cpp found")
+else()
+    message(STATUS "  ✗ yaml-cpp not found (ConfigLoader disabled)")
 endif()
 
 target_compile_features(messaging_system_core PUBLIC cxx_std_20)
