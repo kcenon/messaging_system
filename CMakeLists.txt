@@ -95,6 +95,16 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(BUILD_INTEGRATION_TESTS OFF CACHE BOOL "" FORCE)
         set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
         set(BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+        set(ENABLE_TESTING OFF CACHE BOOL "" FORCE)
+
+        # Prevent local system conflicts with FetchContent
+        set(CMAKE_DISABLE_FIND_PACKAGE_CommonSystem TRUE)
+        set(CMAKE_DISABLE_FIND_PACKAGE_ThreadSystem TRUE)
+        set(CMAKE_DISABLE_FIND_PACKAGE_LoggerSystem TRUE)
+        set(CMAKE_DISABLE_FIND_PACKAGE_MonitoringSystem TRUE)
+        set(CMAKE_DISABLE_FIND_PACKAGE_ContainerSystem TRUE)
+        set(CMAKE_DISABLE_FIND_PACKAGE_DatabaseSystem TRUE)
+        set(CMAKE_DISABLE_FIND_PACKAGE_NetworkSystem TRUE)
 
         # Common System
         FetchContent_Declare(

@@ -84,10 +84,10 @@ check_dependencies() {
 
     # Check for C++20 compiler
     if command_exists g++; then
-        local gcc_version=$(g++ --version | head -n1 | grep -oP '\d+\.\d+' | head -1)
+        local gcc_version=$(g++ --version | head -n1 | grep -oE '[0-9]+\.[0-9]+' | head -1)
         print_status "Found g++ $gcc_version"
     elif command_exists clang++; then
-        local clang_version=$(clang++ --version | head -n1 | grep -oP '\d+\.\d+' | head -1)
+        local clang_version=$(clang++ --version | head -n1 | grep -oE '[0-9]+\.[0-9]+' | head -1)
         print_status "Found clang++ $clang_version"
     else
         missing_deps+=("g++ or clang++ with C++20 support")

@@ -285,10 +285,10 @@ verify_installation() {
 
     # Check C++20 compiler
     if command_exists g++; then
-        local gcc_version=$(g++ --version | head -n1 | grep -oP '\d+\.\d+' | head -1)
+        local gcc_version=$(g++ --version | head -n1 | grep -oE '[0-9]+\.[0-9]+' | head -1)
         print_success "  ✓ g++ $gcc_version"
     elif command_exists clang++; then
-        local clang_version=$(clang++ --version | head -n1 | grep -oP '\d+\.\d+' | head -1)
+        local clang_version=$(clang++ --version | head -n1 | grep -oE '[0-9]+\.[0-9]+' | head -1)
         print_success "  ✓ clang++ $clang_version"
     else
         print_error "  ✗ No C++20 compatible compiler found"
