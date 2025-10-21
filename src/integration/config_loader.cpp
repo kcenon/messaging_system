@@ -11,7 +11,7 @@ common::Result<MessagingSystemConfig> MessagingSystemConfig::load_from_file(cons
         YAML::Node config = YAML::LoadFile(path);
 
         if (!config["messaging_system"]) {
-            return common::common::error<MessagingSystemConfig>(
+            return common::error<MessagingSystemConfig>(
                 common::error_info{
                     error::INVALID_MESSAGE,
                     "Missing 'messaging_system' root node in config",
@@ -102,7 +102,7 @@ common::Result<MessagingSystemConfig> MessagingSystemConfig::load_from_file(cons
         return common::Result<MessagingSystemConfig>::ok(std::move(result));
 
     } catch (const YAML::Exception& e) {
-        return common::common::error<MessagingSystemConfig>(
+        return common::error<MessagingSystemConfig>(
             common::error_info{
                 error::SERIALIZATION_ERROR,
                 std::string("YAML parse error: ") + e.what(),
@@ -111,7 +111,7 @@ common::Result<MessagingSystemConfig> MessagingSystemConfig::load_from_file(cons
             }
         );
     } catch (const std::exception& e) {
-        return common::common::error<MessagingSystemConfig>(
+        return common::error<MessagingSystemConfig>(
             common::error_info{
                 error::SERIALIZATION_ERROR,
                 std::string("Failed to load config: ") + e.what(),

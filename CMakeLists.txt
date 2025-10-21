@@ -535,7 +535,7 @@ endif()
 # Find and link yaml-cpp for configuration
 find_package(yaml-cpp QUIET)
 if(yaml-cpp_FOUND)
-    target_link_libraries(messaging_system_core PUBLIC yaml-cpp)
+    target_link_libraries(messaging_system_core PUBLIC yaml-cpp::yaml-cpp)
     target_compile_definitions(messaging_system_core PUBLIC HAS_YAML_CPP)
     message(STATUS "  ✓ yaml-cpp found")
 else()

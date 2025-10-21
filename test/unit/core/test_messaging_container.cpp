@@ -26,8 +26,8 @@ void test_create_invalid_message() {
     std::cout << "Test: Create invalid message (empty topic)..." << std::endl;
 
     auto result = MessagingContainer::create("source1", "target1", "");
-    assert(result.is_error() && "Should fail with empty topic");
-    assert(result.error().code == error::INVALID_MESSAGE && "Error code should be INVALID_MESSAGE");
+    assert(result.is_err() && "Should fail with empty topic");
+    assert(result.error().code == messaging::error::INVALID_MESSAGE && "Error code should be INVALID_MESSAGE");
 
     std::cout << "  ✓ Passed" << std::endl;
 }
