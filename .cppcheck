@@ -1,0 +1,34 @@
+# Cppcheck configuration for messaging_system
+
+# Suppress "Include file not found" warnings for standard library
+--suppress=missingIncludeSystem
+
+# Suppress warnings from external dependencies
+--suppress=*:*/container_system/*
+--suppress=*:*/thread_system/*
+--suppress=*:*/logger_system/*
+--suppress=*:*/monitoring_system/*
+--suppress=*:*/database_system/*
+--suppress=*:*/network_system/*
+--suppress=*:*/common_system/*
+
+# Include paths for external systems
+--include-path=/Users/raphaelshin/Sources/common_system/include
+--include-path=/Users/raphaelshin/Sources/thread_system/include
+--include-path=/Users/raphaelshin/Sources/logger_system/include
+--include-path=/Users/raphaelshin/Sources/monitoring_system/include
+--include-path=/Users/raphaelshin/Sources/container_system
+--include-path=/Users/raphaelshin/Sources/database_system
+--include-path=/Users/raphaelshin/Sources/network_system/include
+
+# C++ standard
+--std=c++20
+
+# Enable only relevant checks
+--enable=warning,style,performance,portability
+
+# Exclude directories
+--suppress=*:build-*/*
+--suppress=*:_builds/*
+--suppress=*:.git/*
+--suppress=*:*.md

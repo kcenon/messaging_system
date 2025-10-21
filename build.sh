@@ -201,7 +201,7 @@ fi
 
 # Configure with preset
 print_status "Configuring with preset: $PRESET"
-cmake --preset $PRESET $EXTRA_CMAKE_ARGS
+cmake --preset "$PRESET" $EXTRA_CMAKE_ARGS
 
 if [ $? -ne 0 ]; then
     print_error "CMake configuration failed"
@@ -221,9 +221,9 @@ case $PRESET in
 esac
 
 if [ $VERBOSE -eq 1 ]; then
-    cmake --build --preset $BUILD_PRESET --parallel $BUILD_CORES -- VERBOSE=1
+    cmake --build --preset "$BUILD_PRESET" --parallel "$BUILD_CORES" -- VERBOSE=1
 else
-    cmake --build --preset $BUILD_PRESET --parallel $BUILD_CORES
+    cmake --build --preset "$BUILD_PRESET" --parallel "$BUILD_CORES"
 fi
 
 if [ $? -ne 0 ]; then

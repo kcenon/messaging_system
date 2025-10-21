@@ -27,7 +27,7 @@ for dir in "${LEGACY_DIRS[@]}"; do
     if [ -d "$full_path" ]; then
         echo "Archiving: ${dir}"
         cp -r "$full_path" "${ARCHIVE_DIR}/"
-        echo "  ✓ Archived to ${ARCHIVE_DIR}/$(basename ${dir})"
+        echo "  ✓ Archived to ${ARCHIVE_DIR}/$(basename "${dir}")"
     else
         echo "  ⚠ Directory not found: ${dir}"
     fi
