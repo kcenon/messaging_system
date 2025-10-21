@@ -1,6 +1,6 @@
 #include "messaging_system/core/messaging_container.h"
 #include "messaging_system/error_codes.h"
-#include <kcenon/common/patterns/error_info.h>
+#include <kcenon/common/patterns/result.h>
 #include <random>
 #include <sstream>
 #include <iomanip>
@@ -35,7 +35,7 @@ Result<MessagingContainer> MessagingContainer::create(
     const std::string& topic
 ) {
     if (topic.empty()) {
-        return Result<MessagingContainer>::error(
+        return common::error<MessagingContainer>(
             common::error_info{
                 error::INVALID_MESSAGE,
                 "Topic cannot be empty",
@@ -46,36 +46,44 @@ Result<MessagingContainer> MessagingContainer::create(
     }
 
     MessagingContainer container;
-    container.container_.set_value("source", source);
-    container.container_.set_value("target", target);
-    container.container_.set_value("topic", topic);
-    container.container_.set_value("trace_id", generate_uuid());
+    container.container_.add(value("source", value_types::string_value, source));
+    container.container_.add(value("target", value_types::string_value, target));
+    container.container_.add(value("topic", value_types::string_value, topic));
+    container.container_.add(value("trace_id", value_types::string_value, generate_uuid()));
 
-    return Result<MessagingContainer>::ok(std::move(container));
+    return common::ok(std::move(container));
 }
 
 std::string MessagingContainer::source() const {
-    return container_.get_value("source").to_string();
+    auto& cont = const_cast<value_container&>(container_);
+    auto val = cont.get_value("source");
+    return val ? val->data() : "";
 }
 
 std::string MessagingContainer::target() const {
-    return container_.get_value("target").to_string();
+    auto& cont = const_cast<value_container&>(container_);
+    auto val = cont.get_value("target");
+    return val ? val->data() : "";
 }
 
 std::string MessagingContainer::topic() const {
-    return container_.get_value("topic").to_string();
+    auto& cont = const_cast<value_container&>(container_);
+    auto val = cont.get_value("topic");
+    return val ? val->data() : "";
 }
 
 std::string MessagingContainer::trace_id() const {
-    return container_.get_value("trace_id").to_string();
+    auto& cont = const_cast<value_container&>(container_);
+    auto val = cont.get_value("trace_id");
+    return val ? val->data() : "";
 }
 
 Result<std::vector<uint8_t>> MessagingContainer::serialize() const {
     try {
-        auto serialized = container_.serialize();
-        return Result<std::vector<uint8_t>>::ok(std::move(serialized));
+        auto serialized = container_.serialize_array();
+        return common::ok(std::move(serialized));
     } catch (const std::exception& e) {
-        return Result<std::vector<uint8_t>>::error(
+        return common::error<std::vector<uint8_t>>(
             common::error_info{
                 error::SERIALIZATION_ERROR,
                 std::string("Serialization failed: ") + e.what(),
@@ -88,7 +96,7 @@ Result<std::vector<uint8_t>> MessagingContainer::serialize() const {
 
 Result<MessagingContainer> MessagingContainer::deserialize(const std::vector<uint8_t>& data) {
     if (data.empty()) {
-        return Result<MessagingContainer>::error(
+        return common::error<MessagingContainer>(
             common::error_info{
                 error::SERIALIZATION_ERROR,
                 "Cannot deserialize empty data",
@@ -100,12 +108,14 @@ Result<MessagingContainer> MessagingContainer::deserialize(const std::vector<uin
 
     try {
         MessagingContainer container;
-        container.container_ = value_container::deserialize(data);
+        // value_container constructor can deserialize from byte array
+        std::string data_str(data.begin(), data.end());
+        container.container_ = value_container(data_str, false);
 
         // Validate required fields
-        if (!container.container_.contains("topic") ||
-            container.container_.get_value("topic").to_string().empty()) {
-            return Result<MessagingContainer>::error(
+        auto topic_val = container.container_.get_value("topic");
+        if (!topic_val || topic_val->data().empty()) {
+            return common::error<MessagingContainer>(
                 common::error_info{
                     error::INVALID_MESSAGE,
                     "Deserialized container missing required 'topic' field",
@@ -115,9 +125,9 @@ Result<MessagingContainer> MessagingContainer::deserialize(const std::vector<uin
             );
         }
 
-        return Result<MessagingContainer>::ok(std::move(container));
+        return common::ok(std::move(container));
     } catch (const std::exception& e) {
-        return Result<MessagingContainer>::error(
+        return common::error<MessagingContainer>(
             common::error_info{
                 error::SERIALIZATION_ERROR,
                 std::string("Deserialization failed: ") + e.what(),
@@ -161,21 +171,21 @@ MessagingContainerBuilder& MessagingContainerBuilder::optimize_for_speed() {
 
 Result<MessagingContainer> MessagingContainerBuilder::build() {
     auto result = MessagingContainer::create(source_, target_, topic_);
-    if (result.is_error()) {
+    if (result.is_err()) {
         return result;
     }
 
-    auto container = result.value();
+    auto container = result.unwrap();
 
     if (!trace_id_.empty()) {
-        container.container().set_value("trace_id", trace_id_);
+        container.container().add(value("trace_id", value_types::string_value, trace_id_));
     }
 
     for (const auto& [key, val] : values_) {
-        container.container().set_value(key, val);
+        container.container().add(val);
     }
 
-    return Result<MessagingContainer>::ok(std::move(container));
+    return common::ok(std::move(container));
 }
 
 } // namespace messaging

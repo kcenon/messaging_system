@@ -1,6 +1,6 @@
 #pragma once
 
-#include <kcenon/container/core/container.h>
+#include <core/container.h>
 #include <kcenon/common/patterns/result.h>
 #include <chrono>
 #include <string>
@@ -10,8 +10,9 @@ namespace messaging {
 
 using common::Result;
 using common::VoidResult;
-using container::value_container;
-using container::value;
+using container_module::value_container;
+using container_module::value;
+using container_module::value_types;
 
 class MessagingContainer {
     value_container container_;

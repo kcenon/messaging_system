@@ -2,7 +2,6 @@
 
 #include <kcenon/common/patterns/result.h>
 #include <kcenon/common/interfaces/executor_interface.h>
-#include <kcenon/thread/core/bounded_job_queue.h>
 #include "messaging_container.h"
 #include <functional>
 #include <regex>
@@ -13,9 +12,11 @@
 
 namespace messaging {
 
+using common::VoidResult;
+
 class TopicRouter {
 public:
-    using SubscriberCallback = std::function<common::Result<void>(const MessagingContainer&)>;
+    using SubscriberCallback = std::function<VoidResult(const MessagingContainer&)>;
     using Filter = std::function<bool(const MessagingContainer&)>;
 
     struct Subscription {
@@ -28,14 +29,13 @@ public:
 
 private:
     std::unordered_map<std::string, std::vector<Subscription>> subscriptions_;
-    std::shared_ptr<common::IExecutor> executor_;
-    std::shared_ptr<thread::bounded_job_queue> queue_;
+    std::shared_ptr<common::interfaces::IExecutor> executor_;
     std::atomic<uint64_t> next_subscription_id_{1};
     mutable std::shared_mutex mutex_;
 
 public:
     TopicRouter(
-        std::shared_ptr<common::IExecutor> executor,
+        std::shared_ptr<common::interfaces::IExecutor> executor,
         size_t queue_capacity = 10000
     );
 
@@ -47,10 +47,10 @@ public:
         int priority = 5
     );
 
-    common::Result<void> unsubscribe(uint64_t subscription_id);
+    VoidResult unsubscribe(uint64_t subscription_id);
 
     // Message routing
-    common::Result<void> route(const MessagingContainer& msg);
+    VoidResult route(const MessagingContainer& msg);
 
     // Statistics
     size_t subscriber_count() const;

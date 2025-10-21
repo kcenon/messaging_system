@@ -2,13 +2,16 @@
 
 #include <yaml-cpp/yaml.h>
 #include <kcenon/common/patterns/result.h>
-#include <kcenon/database/connection_pool_config.h>
+#include <database/connection_pool.h>
 #include <string>
 #include <vector>
 #include <chrono>
 #include <functional>
 
 namespace messaging {
+
+using common::Result;
+using common::VoidResult;
 
 struct NetworkConfig {
     uint16_t port{8080};
@@ -50,7 +53,7 @@ struct MessagingSystemConfig {
     MonitoringConfig monitoring;
 
     static common::Result<MessagingSystemConfig> load_from_file(const std::string& path);
-    common::Result<void> validate() const;
+    VoidResult validate() const;
 };
 
 // File watcher for hot-reload
@@ -58,7 +61,7 @@ class ConfigWatcher {
 public:
     using Callback = std::function<void(const MessagingSystemConfig&)>;
 
-    common::Result<void> watch(const std::string& path, Callback callback);
+    VoidResult watch(const std::string& path, Callback callback);
     void stop();
 
 private:

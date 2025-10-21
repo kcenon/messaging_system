@@ -1,7 +1,7 @@
 #pragma once
 
-#include <kcenon/network/core/messaging_server.h>
-#include <kcenon/network/core/messaging_client.h>
+#include <network_system/core/messaging_server.h>
+#include <network_system/core/messaging_client.h>
 #include <kcenon/common/interfaces/executor_interface.h>
 #include <kcenon/common/patterns/result.h>
 #include "../core/message_bus.h"
@@ -28,24 +28,24 @@ public:
         std::shared_ptr<MessageBus> message_bus
     );
 
-    common::Result<void> start();
-    common::Result<void> stop();
+    VoidResult start();
+    VoidResult stop();
     bool is_running() const { return running_.load(); }
 
 private:
     // Called on I/O thread
-    common::Result<void> on_message_received(
+    VoidResult on_message_received(
         std::shared_ptr<network::messaging_session> session,
         std::vector<uint8_t> data
     );
 
     // Executed on worker thread
-    common::Result<void> process_message(
+    VoidResult process_message(
         std::shared_ptr<network::messaging_session> session,
         const MessagingContainer& msg
     );
 
-    common::Result<void> send_response(
+    VoidResult send_response(
         std::shared_ptr<network::messaging_session> session,
         const MessagingContainer& response
     );

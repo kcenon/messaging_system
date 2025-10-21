@@ -22,6 +22,7 @@ show_help() {
     echo -e "${BOLD}Usage:${NC} $0 [preset] [options]"
     echo ""
     echo -e "${BOLD}CMake Presets:${NC}"
+    echo "  dev-local         ⭐ Local development (recommended, fastest)"
     echo "  default           Production build with find_package"
     echo "  debug             Debug build with all logging"
     echo "  release           Optimized release build"
@@ -48,7 +49,8 @@ show_help() {
     echo "  --enable-tls      Enable TLS/SSL support"
     echo ""
     echo -e "${BOLD}Examples:${NC}"
-    echo "  $0 dev-fetchcontent --tests    # Dev build with tests"
+    echo "  $0 dev-local --tests            # Local dev with tests (fastest)"
+    echo "  $0 dev-fetchcontent --tests     # Dev build with FetchContent"
     echo "  $0 release --examples           # Release with examples"
     echo "  $0 asan --clean                 # Clean ASAN build"
     echo ""
@@ -104,7 +106,7 @@ check_dependencies() {
 }
 
 # Parse arguments
-PRESET="dev-fetchcontent"
+PRESET="dev-local"
 CLEAN_BUILD=0
 RUN_TESTS=0
 BUILD_EXAMPLES=0
@@ -209,10 +211,18 @@ print_success "Configuration complete"
 
 # Build
 print_status "Building project..."
+
+# Determine build preset name (some configure presets have different build preset names)
+BUILD_PRESET="$PRESET"
+case $PRESET in
+    dev-local) BUILD_PRESET="dev-local" ;;
+    dev-fetchcontent) BUILD_PRESET="dev" ;;
+esac
+
 if [ $VERBOSE -eq 1 ]; then
-    cmake --build --preset $(echo $PRESET | sed 's/dev-fetchcontent/dev/') --parallel $BUILD_CORES -- VERBOSE=1
+    cmake --build --preset $BUILD_PRESET --parallel $BUILD_CORES -- VERBOSE=1
 else
-    cmake --build --preset $(echo $PRESET | sed 's/dev-fetchcontent/dev/') --parallel $BUILD_CORES
+    cmake --build --preset $BUILD_PRESET --parallel $BUILD_CORES
 fi
 
 if [ $? -ne 0 ]; then
@@ -250,8 +260,10 @@ echo -e "  Cores: $BUILD_CORES"
 echo ""
 
 # Show available binaries
-BUILD_DIR="build-dev"
+BUILD_DIR="build-local"
 case $PRESET in
+    dev-local) BUILD_DIR="build-local" ;;
+    dev-fetchcontent) BUILD_DIR="build-dev" ;;
     debug) BUILD_DIR="build-debug" ;;
     release) BUILD_DIR="build-release" ;;
     asan) BUILD_DIR="build-asan" ;;

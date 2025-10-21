@@ -72,6 +72,19 @@
       }
     },
     {
+      "name": "dev-local",
+      "displayName": "Local Development (Recommended)",
+      "description": "Development build using local sibling system directories - fastest for local development",
+      "inherits": "debug",
+      "binaryDir": "${sourceDir}/build-local",
+      "cacheVariables": {
+        "MESSAGING_USE_LOCAL_SYSTEMS": "ON",
+        "MESSAGING_USE_FETCHCONTENT": "OFF",
+        "MESSAGING_BUILD_TESTS": "ON",
+        "MESSAGING_BUILD_EXAMPLES": "ON"
+      }
+    },
+    {
       "name": "dev-fetchcontent",
       "displayName": "Development with FetchContent",
       "description": "Development build using FetchContent for all dependencies",
@@ -126,6 +139,10 @@
     {
       "name": "default",
       "configurePreset": "default"
+    },
+    {
+      "name": "dev-local",
+      "configurePreset": "dev-local"
     },
     {
       "name": "debug",

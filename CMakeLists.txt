@@ -28,6 +28,7 @@ option(MESSAGING_ENABLE_TLS "Enable TLS/SSL support" OFF)
 # Dependency strategy
 option(MESSAGING_USE_EXTERNAL_SYSTEMS "Use external system packages" ON)
 option(MESSAGING_USE_FETCHCONTENT "Use FetchContent for dependencies" OFF)
+option(MESSAGING_USE_LOCAL_SYSTEMS "Use local sibling directories for development" OFF)
 
 # Development options
 option(MESSAGING_BUILD_TESTS "Build unit tests" ON)
@@ -85,7 +86,142 @@ endif()
 if(MESSAGING_USE_EXTERNAL_SYSTEMS)
     message(STATUS "Using external system packages")
 
-    if(MESSAGING_USE_FETCHCONTENT)
+    if(MESSAGING_USE_LOCAL_SYSTEMS)
+        # ================================================================
+        # LOCAL DEVELOPMENT MODE (Recommended for local development)
+        # ================================================================
+        message(STATUS "Using local sibling directories for external systems")
+        message(STATUS "Expected directory structure: Sources/{system_name}/")
+
+        # Disable tests/examples in external systems to speed up build
+        set(BUILD_TESTS OFF CACHE BOOL "Disable tests in external systems" FORCE)
+        set(BUILD_INTEGRATION_TESTS OFF CACHE BOOL "Disable integration tests" FORCE)
+        set(BUILD_EXAMPLES OFF CACHE BOOL "Disable examples" FORCE)
+        set(BUILD_SAMPLES OFF CACHE BOOL "Disable samples" FORCE)
+        set(ENABLE_TESTING OFF CACHE BOOL "Disable testing" FORCE)
+
+        # System-specific build flags
+        set(LOGGER_BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+        set(LOGGER_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+        set(LOGGER_BUILD_INTEGRATION_TESTS OFF CACHE BOOL "" FORCE)
+        set(DATABASE_BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+        set(DATABASE_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+        set(DATABASE_BUILD_INTEGRATION_TESTS OFF CACHE BOOL "" FORCE)
+        set(CONTAINER_BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+        set(NETWORK_BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+
+        # CommonSystem (required)
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../common_system/CMakeLists.txt")
+            message(STATUS "  ✓ Found local common_system")
+            add_subdirectory(
+                "${CMAKE_CURRENT_SOURCE_DIR}/../common_system"
+                "${CMAKE_BINARY_DIR}/_local/common_system"
+            )
+        else()
+            message(FATAL_ERROR "common_system not found at ${CMAKE_CURRENT_SOURCE_DIR}/../common_system\n"
+                "Please ensure all system projects are in the same parent directory:\n"
+                "  Sources/common_system/\n"
+                "  Sources/messaging_system/\n"
+                "  Sources/thread_system/\n"
+                "  etc.")
+        endif()
+
+        # ThreadSystem (required)
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../thread_system/CMakeLists.txt")
+            message(STATUS "  ✓ Found local thread_system")
+            set(BUILD_THREADSYSTEM_AS_SUBMODULE ON CACHE BOOL "" FORCE)
+            add_subdirectory(
+                "${CMAKE_CURRENT_SOURCE_DIR}/../thread_system"
+                "${CMAKE_BINARY_DIR}/_local/thread_system"
+            )
+        else()
+            message(FATAL_ERROR "thread_system not found at ${CMAKE_CURRENT_SOURCE_DIR}/../thread_system")
+        endif()
+
+        # LoggerSystem (optional but recommended)
+        # Note: logger_system will be built in standalone mode to avoid thread_system conflicts
+        # The thread_system integration will be provided by our already-loaded thread_system
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../logger_system/CMakeLists.txt")
+            message(STATUS "  ✓ Found local logger_system")
+            # Use standalone mode to prevent logger_system from adding thread_system again
+            set(LOGGER_STANDALONE_MODE ON CACHE BOOL "" FORCE)
+            set(BUILD_WITH_COMMON_SYSTEM ON CACHE BOOL "" FORCE)
+            add_subdirectory(
+                "${CMAKE_CURRENT_SOURCE_DIR}/../logger_system"
+                "${CMAKE_BINARY_DIR}/_local/logger_system"
+            )
+            # Manually link logger with thread_system after it's created
+            if(TARGET logger AND TARGET utilities AND TARGET interfaces)
+                target_link_libraries(logger PUBLIC utilities interfaces)
+            endif()
+        else()
+            message(WARNING "  ✗ logger_system not found - logging features may be limited")
+        endif()
+
+        # MonitoringSystem (optional)
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../monitoring_system/CMakeLists.txt")
+            message(STATUS "  ✓ Found local monitoring_system")
+            add_subdirectory(
+                "${CMAKE_CURRENT_SOURCE_DIR}/../monitoring_system"
+                "${CMAKE_BINARY_DIR}/_local/monitoring_system"
+            )
+        else()
+            message(WARNING "  ✗ monitoring_system not found - monitoring features disabled")
+        endif()
+
+        # ContainerSystem (required)
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../container_system/CMakeLists.txt")
+            message(STATUS "  ✓ Found local container_system")
+            # Force disable samples and set submodule mode before including
+            set(BUILD_CONTAINERSYSTEM_AS_SUBMODULE ON CACHE BOOL "Build as submodule" FORCE)
+            set(BUILD_CONTAINER_SAMPLES OFF CACHE BOOL "Disable container samples" FORCE)
+            set(BUILD_CONTAINER_EXAMPLES OFF CACHE BOOL "Disable container examples" FORCE)
+            set(BUILD_SAMPLES OFF CACHE BOOL "Disable samples" FORCE)
+            add_subdirectory(
+                "${CMAKE_CURRENT_SOURCE_DIR}/../container_system"
+                "${CMAKE_BINARY_DIR}/_local/container_system"
+            )
+        else()
+            message(FATAL_ERROR "container_system not found at ${CMAKE_CURRENT_SOURCE_DIR}/../container_system")
+        endif()
+
+        # DatabaseSystem (optional)
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../database_system/CMakeLists.txt")
+            message(STATUS "  ✓ Found local database_system")
+            # Force disable samples and tests before including
+            set(BUILD_DATABASE_SAMPLES OFF CACHE BOOL "Disable database samples" FORCE)
+            set(DATABASE_BUILD_SAMPLES OFF CACHE BOOL "Disable database samples" FORCE)
+            set(DATABASE_BUILD_TESTS OFF CACHE BOOL "Disable database tests" FORCE)
+            set(USE_UNIT_TEST OFF CACHE BOOL "Disable unit tests" FORCE)
+            set(BUILD_SAMPLES OFF CACHE BOOL "Disable samples" FORCE)
+            add_subdirectory(
+                "${CMAKE_CURRENT_SOURCE_DIR}/../database_system"
+                "${CMAKE_BINARY_DIR}/_local/database_system"
+            )
+        else()
+            message(WARNING "  ✗ database_system not found - database features disabled")
+        endif()
+
+        # NetworkSystem (optional)
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../network_system/CMakeLists.txt")
+            message(STATUS "  ✓ Found local network_system")
+            # Force disable samples, tests, and install before including
+            set(NETWORK_BUILD_SAMPLES OFF CACHE BOOL "Disable network samples" FORCE)
+            set(NETWORK_BUILD_TESTS OFF CACHE BOOL "Disable network tests" FORCE)
+            set(BUILD_SAMPLES OFF CACHE BOOL "Disable samples" FORCE)
+            set(CMAKE_SKIP_INSTALL_RULES ON)
+            add_subdirectory(
+                "${CMAKE_CURRENT_SOURCE_DIR}/../network_system"
+                "${CMAKE_BINARY_DIR}/_local/network_system"
+            )
+            set(CMAKE_SKIP_INSTALL_RULES OFF)
+        else()
+            message(WARNING "  ✗ network_system not found - network features disabled")
+        endif()
+
+        message(STATUS "Local systems integration complete")
+
+    elseif(MESSAGING_USE_FETCHCONTENT)
         # FetchContent mode (development)
         message(STATUS "Using FetchContent for external systems")
         include(FetchContent)
@@ -106,6 +242,9 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(CMAKE_DISABLE_FIND_PACKAGE_DatabaseSystem TRUE)
         set(CMAKE_DISABLE_FIND_PACKAGE_NetworkSystem TRUE)
 
+        # Declare all systems first (before any MakeAvailable calls)
+        # This allows us to set FETCHCONTENT_SOURCE_DIR_* variables to prevent duplicate fetches
+
         # Common System
         FetchContent_Declare(
             CommonSystem
@@ -120,6 +259,8 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             GIT_REPOSITORY https://github.com/kcenon/thread_system.git
             GIT_TAG main
             GIT_SHALLOW TRUE
+            SOURCE_SUBDIR  "."  # Prevent local directory discovery
+            OVERRIDE_FIND_PACKAGE
         )
 
         # Logger System
@@ -144,6 +285,7 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             GIT_REPOSITORY https://github.com/kcenon/container_system.git
             GIT_TAG main
             GIT_SHALLOW TRUE
+            PATCH_COMMAND sed -i.bak "s/add_subdirectory(samples)/#add_subdirectory(samples)/g" CMakeLists.txt || true
         )
 
         # Database System
@@ -152,6 +294,7 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             GIT_REPOSITORY https://github.com/kcenon/database_system.git
             GIT_TAG main
             GIT_SHALLOW TRUE
+            PATCH_COMMAND sed -i.bak -e "s/add_subdirectory(samples)/#add_subdirectory(samples)/g" -e "s/add_subdirectory(integration_tests)/#add_subdirectory(integration_tests)/g" CMakeLists.txt || true
         )
 
         # Network System
@@ -165,33 +308,41 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         # Make CommonSystem available first (required by most others)
         FetchContent_MakeAvailable(CommonSystem)
 
+        # Get the source directory for common_system to provide to other systems
+        FetchContent_GetProperties(CommonSystem SOURCE_DIR commonsystem_source_dir)
+        set(COMMON_SYSTEM_ROOT "${commonsystem_source_dir}" CACHE PATH "Path to common_system" FORCE)
+        set(COMMON_SYSTEM_INCLUDE_DIR "${commonsystem_source_dir}/include" CACHE PATH "Path to common_system headers" FORCE)
+
+        # Prevent logger_system from independently fetching common_system
+        # Create a temporary Config file so find_package(common_system) succeeds
+        file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/common_system-config.cmake"
+            "set(common_system_FOUND TRUE)\n"
+            "set(COMMON_SYSTEM_INCLUDE_DIR \"${commonsystem_source_dir}/include\")\n"
+            "set(common_system_SOURCE_DIR \"${commonsystem_source_dir}\")\n"
+        )
+        list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_BINARY_DIR}")
+        set(common_system_FOUND TRUE CACHE BOOL "" FORCE)
+        set(common_system_SOURCE_DIR "${commonsystem_source_dir}" CACHE STRING "" FORCE)
+
         # Then ThreadSystem (required by logger, monitoring)
         FetchContent_MakeAvailable(ThreadSystem)
 
-        # Then systems that depend on common and thread
+        # Get ThreadSystem source directory for reference
+        FetchContent_GetProperties(ThreadSystem SOURCE_DIR threadsystem_source_dir)
+        set(thread_system_SOURCE_DIR "${threadsystem_source_dir}" CACHE STRING "" FORCE)
+        set(thread_system_FOUND TRUE CACHE BOOL "" FORCE)
+
+        # ContainerSystem needs common_system headers to be fully available
+        FetchContent_MakeAvailable(ContainerSystem)
+
+        # Then remaining systems that depend on common and thread
         FetchContent_MakeAvailable(
             LoggerSystem
             MonitoringSystem
-            ContainerSystem
             DatabaseSystem
             NetworkSystem
         )
 
-        # Workaround: Remove problematic integration_tests after FetchContent
-        # This prevents GTest dependency issues in external systems
-        FetchContent_GetProperties(MonitoringSystem SOURCE_DIR monitoringsystem_source_dir)
-        if(EXISTS "${monitoringsystem_source_dir}/integration_tests/CMakeLists.txt")
-            file(RENAME
-                "${monitoringsystem_source_dir}/integration_tests/CMakeLists.txt"
-                "${monitoringsystem_source_dir}/integration_tests/CMakeLists.txt.disabled")
-        endif()
-
-        FetchContent_GetProperties(LoggerSystem SOURCE_DIR loggersystem_source_dir)
-        if(EXISTS "${loggersystem_source_dir}/integration_tests/CMakeLists.txt")
-            file(RENAME
-                "${loggersystem_source_dir}/integration_tests/CMakeLists.txt"
-                "${loggersystem_source_dir}/integration_tests/CMakeLists.txt.disabled")
-        endif()
 
     else()
         # find_package mode (production)
@@ -208,51 +359,59 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         find_package(NetworkSystem 1.0 QUIET)
     endif()
 
-    # Validate dependencies
-    include(cmake/validate_dependencies.cmake)
-    validate_messaging_dependencies()
+    # Validate dependencies (skip for FetchContent and Local modes - systems are guaranteed to be available)
+    if(NOT MESSAGING_USE_FETCHCONTENT AND NOT MESSAGING_USE_LOCAL_SYSTEMS)
+        include(cmake/validate_dependencies.cmake)
+        validate_messaging_dependencies()
+    else()
+        if(MESSAGING_USE_LOCAL_SYSTEMS)
+            message(STATUS "✓ Using local systems - skipping dependency validation")
+        else()
+            message(STATUS "✓ Using FetchContent - skipping dependency validation")
+        endif()
+    endif()
 
     # Create backward-compatible aliases
-    if(TARGET CommonSystem::common AND NOT TARGET common)
-        add_library(common ALIAS CommonSystem::common)
-    endif()
+    # Note: In Local/FetchContent mode, targets are exported directly without namespace
+    #       In find_package mode, targets use namespace (e.g., CommonSystem::common)
+    if(NOT MESSAGING_USE_FETCHCONTENT AND NOT MESSAGING_USE_LOCAL_SYSTEMS)
+        if(TARGET CommonSystem::common AND NOT TARGET common)
+            add_library(common ALIAS CommonSystem::common)
+        endif()
 
-    if(TARGET ThreadSystem::Core AND NOT TARGET thread_pool)
-        add_library(thread_pool ALIAS ThreadSystem::Core)
-    endif()
+        if(TARGET ThreadSystem::Core AND NOT TARGET thread_pool)
+            add_library(thread_pool ALIAS ThreadSystem::Core)
+        endif()
 
-    if(TARGET LoggerSystem::logger AND NOT TARGET logger)
-        add_library(logger ALIAS LoggerSystem::logger)
-    endif()
+        if(TARGET LoggerSystem::logger AND NOT TARGET logger)
+            add_library(logger ALIAS LoggerSystem::logger)
+        endif()
 
-    if(TARGET MonitoringSystem::monitoring AND NOT TARGET monitoring)
-        add_library(monitoring ALIAS MonitoringSystem::monitoring)
-    endif()
+        if(TARGET MonitoringSystem::monitoring AND NOT TARGET monitoring)
+            add_library(monitoring ALIAS MonitoringSystem::monitoring)
+        endif()
 
-    if(TARGET ContainerSystem::container AND NOT TARGET container)
-        add_library(container ALIAS ContainerSystem::container)
-    endif()
+        if(TARGET ContainerSystem::container AND NOT TARGET container)
+            add_library(container ALIAS ContainerSystem::container)
+        endif()
 
-    if(TARGET DatabaseSystem::database AND NOT TARGET database)
-        add_library(database ALIAS DatabaseSystem::database)
-    endif()
+        if(TARGET DatabaseSystem::database AND NOT TARGET database)
+            add_library(database ALIAS DatabaseSystem::database)
+        endif()
 
-    if(TARGET NetworkSystem::network AND NOT TARGET network)
-        add_library(network ALIAS NetworkSystem::network)
+        if(TARGET NetworkSystem::network AND NOT TARGET network)
+            add_library(network ALIAS NetworkSystem::network)
+        endif()
     endif()
 
 else()
-    message(WARNING "Building without external systems (legacy mode)")
-    # Fall back to internal implementations (deprecated)
-    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/container_system)
-        add_subdirectory(libraries/container_system)
-    endif()
-    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/network_system)
-        add_subdirectory(libraries/network_system)
-    endif()
-    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libraries/thread_system)
-        add_subdirectory(libraries/thread_system)
-    endif()
+    message(FATAL_ERROR
+        "MESSAGING_USE_EXTERNAL_SYSTEMS is OFF. This mode is no longer supported.\n"
+        "Please use one of the following:\n"
+        "  - Local development: cmake --preset dev-local (requires sibling directories)\n"
+        "  - FetchContent: cmake --preset dev-fetchcontent\n"
+        "  - Production: cmake --preset default (requires installed packages)\n"
+    )
 endif()
 
 # ============================================================================
@@ -297,38 +456,74 @@ target_include_directories(messaging_system_core
 # Link external systems if available
 set(MESSAGING_CORE_LIBS "")
 
+# CommonSystem (check both namespaced and non-namespaced targets)
 if(TARGET CommonSystem::common)
+    message(STATUS "Linking messaging_system_core with CommonSystem::common")
     list(APPEND MESSAGING_CORE_LIBS CommonSystem::common)
     target_compile_definitions(messaging_system_core PUBLIC HAS_COMMON_SYSTEM)
+elseif(TARGET kcenon::common)
+    message(STATUS "Linking messaging_system_core with kcenon::common")
+    list(APPEND MESSAGING_CORE_LIBS kcenon::common)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_COMMON_SYSTEM)
+elseif(TARGET common_system)
+    message(STATUS "Linking messaging_system_core with common_system")
+    list(APPEND MESSAGING_CORE_LIBS common_system)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_COMMON_SYSTEM)
+else()
+    message(WARNING "CommonSystem target not found!")
 endif()
 
+# ThreadSystem
 if(TARGET ThreadSystem::Core)
     list(APPEND MESSAGING_CORE_LIBS ThreadSystem::Core)
     target_compile_definitions(messaging_system_core PUBLIC HAS_THREAD_SYSTEM)
+elseif(TARGET thread_pool)
+    list(APPEND MESSAGING_CORE_LIBS thread_pool utilities interfaces)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_THREAD_SYSTEM)
 endif()
 
+# LoggerSystem
 if(TARGET LoggerSystem::logger)
     list(APPEND MESSAGING_CORE_LIBS LoggerSystem::logger)
     target_compile_definitions(messaging_system_core PUBLIC HAS_LOGGER_SYSTEM)
+elseif(TARGET logger)
+    list(APPEND MESSAGING_CORE_LIBS logger)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_LOGGER_SYSTEM)
 endif()
 
+# MonitoringSystem
 if(TARGET MonitoringSystem::monitoring)
     list(APPEND MESSAGING_CORE_LIBS MonitoringSystem::monitoring)
     target_compile_definitions(messaging_system_core PUBLIC HAS_MONITORING_SYSTEM)
+elseif(TARGET monitoring)
+    list(APPEND MESSAGING_CORE_LIBS monitoring)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_MONITORING_SYSTEM)
 endif()
 
+# ContainerSystem
 if(TARGET ContainerSystem::container)
     list(APPEND MESSAGING_CORE_LIBS ContainerSystem::container)
     target_compile_definitions(messaging_system_core PUBLIC HAS_CONTAINER_SYSTEM)
+elseif(TARGET container_system)
+    list(APPEND MESSAGING_CORE_LIBS container_system)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_CONTAINER_SYSTEM)
 endif()
 
+# DatabaseSystem
 if(TARGET DatabaseSystem::database)
     list(APPEND MESSAGING_CORE_LIBS DatabaseSystem::database)
     target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
+elseif(TARGET database)
+    list(APPEND MESSAGING_CORE_LIBS database)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
 endif()
 
+# NetworkSystem
 if(TARGET NetworkSystem::network)
     list(APPEND MESSAGING_CORE_LIBS NetworkSystem::network)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
+elseif(TARGET NetworkSystem)
+    list(APPEND MESSAGING_CORE_LIBS NetworkSystem)
     target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
 endif()
 
@@ -404,31 +599,35 @@ endif()
 # Installation
 # ============================================================================
 
-include(GNUInstallDirs)
+# Skip installation in local development mode
+# (local systems are not installed, so export would fail)
+if(NOT MESSAGING_USE_LOCAL_SYSTEMS)
+    include(GNUInstallDirs)
 
-install(TARGETS messaging_system_core
-    EXPORT messaging_system_targets
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
-
-if(TARGET messaging_system)
-    install(TARGETS messaging_system
+    install(TARGETS messaging_system_core
         EXPORT messaging_system_targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+
+    if(TARGET messaging_system)
+        install(TARGETS messaging_system
+            EXPORT messaging_system_targets
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        )
+    endif()
+
+    install(DIRECTORY include/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    )
+
+    install(EXPORT messaging_system_targets
+        FILE messaging_system-targets.cmake
+        NAMESPACE MessagingSystem::
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/messaging_system
     )
 endif()
-
-install(DIRECTORY include/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-install(EXPORT messaging_system_targets
-    FILE messaging_system-targets.cmake
-    NAMESPACE MessagingSystem::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/messaging_system
-)
 
 # ============================================================================
 # Summary
@@ -455,40 +654,47 @@ message(STATUS "  Documentation: ${MESSAGING_BUILD_DOCS}")
 message(STATUS "")
 message(STATUS "External systems: ${MESSAGING_USE_EXTERNAL_SYSTEMS}")
 if(MESSAGING_USE_EXTERNAL_SYSTEMS)
-    message(STATUS "  Using FetchContent: ${MESSAGING_USE_FETCHCONTENT}")
+    if(MESSAGING_USE_LOCAL_SYSTEMS)
+        message(STATUS "  Using local systems: ON")
+        message(STATUS "  Using FetchContent: OFF")
+    else()
+        message(STATUS "  Using local systems: OFF")
+        message(STATUS "  Using FetchContent: ${MESSAGING_USE_FETCHCONTENT}")
+    endif()
     message(STATUS "")
     message(STATUS "External systems found:")
-    if(TARGET CommonSystem::common)
+    # Check for targets without namespace (local/FetchContent mode) or with namespace (find_package mode)
+    if(TARGET CommonSystem::common OR TARGET common)
         message(STATUS "  ✓ CommonSystem")
     else()
         message(STATUS "  ✗ CommonSystem")
     endif()
-    if(TARGET ThreadSystem::Core)
+    if(TARGET ThreadSystem::Core OR TARGET thread_pool OR TARGET interfaces)
         message(STATUS "  ✓ ThreadSystem")
     else()
         message(STATUS "  ✗ ThreadSystem")
     endif()
-    if(TARGET LoggerSystem::logger)
+    if(TARGET LoggerSystem::logger OR TARGET logger)
         message(STATUS "  ✓ LoggerSystem")
     else()
         message(STATUS "  ✗ LoggerSystem")
     endif()
-    if(TARGET MonitoringSystem::monitoring)
+    if(TARGET MonitoringSystem::monitoring OR TARGET monitoring)
         message(STATUS "  ✓ MonitoringSystem")
     else()
         message(STATUS "  ✗ MonitoringSystem")
     endif()
-    if(TARGET ContainerSystem::container)
+    if(TARGET ContainerSystem::container OR TARGET container)
         message(STATUS "  ✓ ContainerSystem")
     else()
         message(STATUS "  ✗ ContainerSystem")
     endif()
-    if(TARGET DatabaseSystem::database)
+    if(TARGET DatabaseSystem::database OR TARGET database)
         message(STATUS "  ✓ DatabaseSystem")
     else()
         message(STATUS "  ✗ DatabaseSystem")
     endif()
-    if(TARGET NetworkSystem::network)
+    if(TARGET NetworkSystem::network OR TARGET network)
         message(STATUS "  ✓ NetworkSystem")
     else()
         message(STATUS "  ✗ NetworkSystem")

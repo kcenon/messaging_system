@@ -1,12 +1,12 @@
 #include "messaging_system/core/topic_router.h"
 #include "messaging_system/error_codes.h"
-#include <kcenon/common/patterns/error_info.h>
+#include <kcenon/common/patterns/result.h>
 #include <algorithm>
 
 namespace messaging {
 
 TopicRouter::TopicRouter(
-    std::shared_ptr<common::IExecutor> executor,
+    std::shared_ptr<common::interfaces::IExecutor> executor,
     size_t queue_capacity
 )
     : executor_(std::move(executor))
@@ -41,10 +41,10 @@ common::Result<uint64_t> TopicRouter::subscribe(
             return a.priority > b.priority;
         });
 
-    return common::Result<uint64_t>::ok(id);
+    return common::ok(id);
 }
 
-common::Result<void> TopicRouter::unsubscribe(uint64_t subscription_id) {
+VoidResult TopicRouter::unsubscribe(uint64_t subscription_id) {
     std::unique_lock lock(mutex_);
 
     for (auto& [topic, subs] : subscriptions_) {
@@ -55,11 +55,11 @@ common::Result<void> TopicRouter::unsubscribe(uint64_t subscription_id) {
 
         if (it != subs.end()) {
             subs.erase(it);
-            return common::VoidResult::ok();
+            return common::ok(std::monostate{});
         }
     }
 
-    return common::VoidResult::error(
+    return common::error<std::monostate>(
         common::error_info{
             error::SUBSCRIPTION_FAILED,
             "Subscription not found",
@@ -69,13 +69,13 @@ common::Result<void> TopicRouter::unsubscribe(uint64_t subscription_id) {
     );
 }
 
-common::Result<void> TopicRouter::route(const MessagingContainer& msg) {
+VoidResult TopicRouter::route(const MessagingContainer& msg) {
     std::shared_lock lock(mutex_);
 
     auto matching = find_matching_subscriptions(msg.topic());
 
     if (matching.empty()) {
-        return common::VoidResult::error(
+        return common::error<std::monostate>(
             common::error_info{
                 error::NO_SUBSCRIBERS,
                 "No subscribers for topic: " + msg.topic(),
@@ -93,16 +93,16 @@ common::Result<void> TopicRouter::route(const MessagingContainer& msg) {
         }
 
         // Execute callback asynchronously via executor
-        executor_->execute([callback = sub.callback, msg]() {
+        executor_->submit([callback = sub.callback, msg]() {
             auto result = callback(msg);
-            if (result.is_error()) {
+            if (result.is_err()) {
                 // TODO: Log error when logger is available
                 // For now, silently continue with other subscribers
             }
         });
     }
 
-    return common::VoidResult::ok();
+    return common::ok(std::monostate{});
 }
 
 size_t TopicRouter::subscriber_count() const {

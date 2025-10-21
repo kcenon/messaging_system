@@ -1,7 +1,7 @@
 #pragma once
 
-#include <kcenon/database/database_manager.h>
-#include <kcenon/database/orm/entity_manager.h>
+#include <database/database_manager.h>
+#include <database/orm/entity_manager.h>
 #include <kcenon/common/patterns/result.h>
 #include "../core/messaging_container.h"
 #include <chrono>
@@ -41,19 +41,19 @@ public:
     );
 
     // Queue operations
-    common::Result<void> enqueue(const MessagingContainer& msg);
+    VoidResult enqueue(const MessagingContainer& msg);
     common::Result<std::vector<MessageEntity>> dequeue_batch(int limit = 100);
 
     // Status updates
-    common::Result<void> mark_completed(int64_t message_id);
-    common::Result<void> mark_failed(int64_t message_id);
+    VoidResult mark_completed(int64_t message_id);
+    VoidResult mark_failed(int64_t message_id);
 
     // Reprocessing
-    common::Result<void> reprocess_failed(int max_retries = 3);
+    VoidResult reprocess_failed(int max_retries = 3);
     common::Result<size_t> count_pending() const;
 
     // Consumer offset management
-    common::Result<void> save_offset(const std::string& group, const std::string& topic, int64_t offset);
+    VoidResult save_offset(const std::string& group, const std::string& topic, int64_t offset);
     common::Result<int64_t> load_offset(const std::string& group, const std::string& topic);
 };
 

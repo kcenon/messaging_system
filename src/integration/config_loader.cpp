@@ -1,6 +1,6 @@
 #include "messaging_system/integration/config_loader.h"
 #include "messaging_system/error_codes.h"
-#include <kcenon/common/patterns/error_info.h>
+#include <kcenon/common/patterns/result.h>
 #include <fstream>
 #include <thread>
 
@@ -11,7 +11,7 @@ common::Result<MessagingSystemConfig> MessagingSystemConfig::load_from_file(cons
         YAML::Node config = YAML::LoadFile(path);
 
         if (!config["messaging_system"]) {
-            return common::Result<MessagingSystemConfig>::error(
+            return common::common::error<MessagingSystemConfig>(
                 common::error_info{
                     error::INVALID_MESSAGE,
                     "Missing 'messaging_system' root node in config",
@@ -102,7 +102,7 @@ common::Result<MessagingSystemConfig> MessagingSystemConfig::load_from_file(cons
         return common::Result<MessagingSystemConfig>::ok(std::move(result));
 
     } catch (const YAML::Exception& e) {
-        return common::Result<MessagingSystemConfig>::error(
+        return common::common::error<MessagingSystemConfig>(
             common::error_info{
                 error::SERIALIZATION_ERROR,
                 std::string("YAML parse error: ") + e.what(),
@@ -111,7 +111,7 @@ common::Result<MessagingSystemConfig> MessagingSystemConfig::load_from_file(cons
             }
         );
     } catch (const std::exception& e) {
-        return common::Result<MessagingSystemConfig>::error(
+        return common::common::error<MessagingSystemConfig>(
             common::error_info{
                 error::SERIALIZATION_ERROR,
                 std::string("Failed to load config: ") + e.what(),
@@ -122,10 +122,10 @@ common::Result<MessagingSystemConfig> MessagingSystemConfig::load_from_file(cons
     }
 }
 
-common::Result<void> MessagingSystemConfig::validate() const {
+VoidResult MessagingSystemConfig::validate() const {
     // Validate port range
     if (network.port == 0) {
-        return common::VoidResult::error(
+        return common::error<std::monostate>(
             common::error_info{
                 error::INVALID_MESSAGE,
                 "Invalid network port: 0",
@@ -137,7 +137,7 @@ common::Result<void> MessagingSystemConfig::validate() const {
 
     // Validate thread pool sizes
     if (thread_pools.io_workers == 0 || thread_pools.work_workers == 0) {
-        return common::VoidResult::error(
+        return common::error<std::monostate>(
             common::error_info{
                 error::INVALID_MESSAGE,
                 "Thread pool workers must be > 0",
@@ -149,7 +149,7 @@ common::Result<void> MessagingSystemConfig::validate() const {
 
     // Validate database config if type is set
     if (!database.type.empty() && database.connection_string.empty()) {
-        return common::VoidResult::error(
+        return common::error<std::monostate>(
             common::error_info{
                 error::INVALID_MESSAGE,
                 "Database connection string required when type is set",
@@ -159,13 +159,13 @@ common::Result<void> MessagingSystemConfig::validate() const {
         );
     }
 
-    return common::VoidResult::ok();
+    return common::ok(std::monostate{});
 }
 
 // ConfigWatcher implementation
-common::Result<void> ConfigWatcher::watch(const std::string& path, Callback callback) {
+VoidResult ConfigWatcher::watch(const std::string& path, Callback callback) {
     if (running_) {
-        return common::VoidResult::error(
+        return common::error<std::monostate>(
             common::error_info{
                 error::INVALID_MESSAGE,
                 "ConfigWatcher already running",
@@ -203,7 +203,7 @@ common::Result<void> ConfigWatcher::watch(const std::string& path, Callback call
         }
     }).detach();
 
-    return common::VoidResult::ok();
+    return common::ok(std::monostate{});
 }
 
 void ConfigWatcher::stop() {

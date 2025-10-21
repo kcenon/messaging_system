@@ -1,12 +1,12 @@
 #include "messaging_system/core/message_bus.h"
 #include "messaging_system/error_codes.h"
-#include <kcenon/common/patterns/error_info.h>
+#include <kcenon/common/patterns/result.h>
 
 namespace messaging {
 
 MessageBus::MessageBus(
-    std::shared_ptr<common::IExecutor> io_executor,
-    std::shared_ptr<common::IExecutor> work_executor,
+    std::shared_ptr<common::interfaces::IExecutor> io_executor,
+    std::shared_ptr<common::interfaces::IExecutor> work_executor,
     std::shared_ptr<TopicRouter> router
 )
     : io_executor_(std::move(io_executor))
@@ -14,9 +14,9 @@ MessageBus::MessageBus(
     , router_(std::move(router))
 {}
 
-common::Result<void> MessageBus::start() {
+VoidResult MessageBus::start() {
     if (running_.load()) {
-        return common::VoidResult::error(
+        return common::error<std::monostate>(
             common::error_info{
                 error::INVALID_MESSAGE,
                 "MessageBus already running",
@@ -27,12 +27,12 @@ common::Result<void> MessageBus::start() {
     }
 
     running_.store(true);
-    return common::VoidResult::ok();
+    return common::ok(std::monostate{});
 }
 
-common::Result<void> MessageBus::stop() {
+VoidResult MessageBus::stop() {
     if (!running_.load()) {
-        return common::VoidResult::error(
+        return common::error<std::monostate>(
             common::error_info{
                 error::INVALID_MESSAGE,
                 "MessageBus not running",
@@ -43,12 +43,12 @@ common::Result<void> MessageBus::stop() {
     }
 
     running_.store(false);
-    return common::VoidResult::ok();
+    return common::ok(std::monostate{});
 }
 
-common::Result<void> MessageBus::publish_async(MessagingContainer msg) {
+VoidResult MessageBus::publish_async(MessagingContainer msg) {
     if (!running_.load()) {
-        return common::VoidResult::error(
+        return common::error<std::monostate>(
             common::error_info{
                 error::PUBLICATION_FAILED,
                 "MessageBus not running",
@@ -59,19 +59,19 @@ common::Result<void> MessageBus::publish_async(MessagingContainer msg) {
     }
 
     // Offload to work executor for async processing
-    work_executor_->execute([router = router_, msg = std::move(msg)]() {
+    work_executor_->submit([router = router_, msg = std::move(msg)]() {
         auto result = router->route(msg);
-        if (result.is_error()) {
+        if (result.is_err()) {
             // TODO: Log error when logger is available
         }
     });
 
-    return common::VoidResult::ok();
+    return common::ok(std::monostate{});
 }
 
-common::Result<void> MessageBus::publish_sync(const MessagingContainer& msg) {
+VoidResult MessageBus::publish_sync(const MessagingContainer& msg) {
     if (!running_.load()) {
-        return common::VoidResult::error(
+        return common::error<std::monostate>(
             common::error_info{
                 error::PUBLICATION_FAILED,
                 "MessageBus not running",
@@ -84,9 +84,9 @@ common::Result<void> MessageBus::publish_sync(const MessagingContainer& msg) {
     return router_->route(msg);
 }
 
-common::Result<uint64_t> MessageBus::subscribe(const std::string& topic, SubscriberCallback callback) {
+Result<uint64_t> MessageBus::subscribe(const std::string& topic, SubscriberCallback callback) {
     if (!running_.load()) {
-        return common::Result<uint64_t>::error(
+        return common::error<uint64_t>(
             common::error_info{
                 error::SUBSCRIPTION_FAILED,
                 "MessageBus not running",
@@ -99,7 +99,7 @@ common::Result<uint64_t> MessageBus::subscribe(const std::string& topic, Subscri
     return router_->subscribe(topic, std::move(callback));
 }
 
-common::Result<void> MessageBus::unsubscribe(uint64_t subscription_id) {
+VoidResult MessageBus::unsubscribe(uint64_t subscription_id) {
     return router_->unsubscribe(subscription_id);
 }
 
