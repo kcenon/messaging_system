@@ -27,8 +27,14 @@
 # Enable only relevant checks
 --enable=warning,style,performance,portability
 
-# Exclude directories
+# Exclude directories and file types
 --suppress=*:build-*/*
 --suppress=*:_builds/*
 --suppress=*:.git/*
+
+# Exclude documentation files (use markdownlint instead)
 --suppress=*:*.md
+--suppress=*:docs/*
+
+# Exclude scripts (use shellcheck instead)
+--suppress=*:*.sh

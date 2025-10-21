@@ -2,6 +2,9 @@
 
 This document explains how to use Cppcheck with the messaging_system project.
 
+> **Note**: For documentation style checking, use **markdownlint** instead of Cppcheck.
+> See `README_LINTING.md` for the complete linting guide.
+
 ## Configuration Files
 
 - `.cppcheck` - Main configuration file with include paths and suppressions
