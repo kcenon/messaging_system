@@ -13,7 +13,7 @@
 #include <iostream>
 #include <memory>
 
-int main(int argc, char* argv[]) {
+int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
     std::cout << "Messaging System v2.0" << std::endl;
     std::cout << "=====================" << std::endl;
     std::cout << std::endl;

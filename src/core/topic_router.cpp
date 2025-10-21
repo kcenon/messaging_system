@@ -7,7 +7,7 @@ namespace messaging {
 
 TopicRouter::TopicRouter(
     std::shared_ptr<common::interfaces::IExecutor> executor,
-    size_t queue_capacity
+    [[maybe_unused]] size_t queue_capacity
 )
     : executor_(std::move(executor))
 {
