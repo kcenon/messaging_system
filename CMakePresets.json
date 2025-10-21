@@ -32,11 +32,12 @@
     {
       "name": "release",
       "displayName": "Release",
-      "description": "Optimized release build",
-      "inherits": "default",
+      "description": "Optimized release build using local systems",
       "binaryDir": "${sourceDir}/build-release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
+        "MESSAGING_USE_LOCAL_SYSTEMS": "ON",
+        "MESSAGING_USE_FETCHCONTENT": "OFF",
         "MESSAGING_BUILD_TESTS": "OFF",
         "MESSAGING_BUILD_EXAMPLES": "OFF"
       }
