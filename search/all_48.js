@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🧵_20thread_20system_20tt_20thread_5fsystem_20tt_0',['🧵 Thread System (&lt;tt&gt;thread_system/&lt;/tt&gt;)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2073',1,'']]]
+  ['엔진_20정비_20strong_0',['&lt;strong&gt;Task 2.4 – 라우팅/토픽 엔진 정비&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md790',1,'']]]
 ];

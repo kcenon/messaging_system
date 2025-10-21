@@ -1,7 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d0/d14/classkcenon_1_1messaging_1_1integrations_1_1external__system__adapter.html" title=" " alt="" coords="5,45,168,100"/>
-<area shape="rect" id="Node000001" href="$d1/d2a/classkcenon_1_1messaging_1_1integrations_1_1database__adapter.html" title=" " alt="" coords="216,5,384,60"/>
-<area shape="poly" id="edge18_Node000000_Node000001" title=" " alt="" coords="181,52,215,46,216,51,182,58"/>
-<area shape="rect" id="Node000002" href="$da/d59/classkcenon_1_1messaging_1_1integrations_1_1thread__system__adapter.html" title=" " alt="" coords="222,84,378,139"/>
-<area shape="poly" id="edge19_Node000000_Node000002" title=" " alt="" coords="182,87,222,95,221,100,181,92"/>
+<area shape="rect" id="Node000000" href="$dd/d33/classkcenon_1_1messaging_1_1persistence_1_1message__storage.html" title=" " alt="" coords="5,5,169,60"/>
+<area shape="rect" id="Node000001" href="$d3/d07/classkcenon_1_1messaging_1_1persistence_1_1file__message__storage.html" title=" " alt="" coords="217,5,408,60"/>
+<area shape="poly" id="edge7_Node000000_Node000001" title=" " alt="" coords="183,30,217,30,217,35,183,35"/>
 </map>

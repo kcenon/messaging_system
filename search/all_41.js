@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🗄️_20database_20module_20tt_20database_20tt_0',['🗄️ Database Module (&lt;tt&gt;database/&lt;/tt&gt;)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2071',1,'']]]
+  ['비활성화_20및_20제거_20strong_0',['&lt;strong&gt;Task 1.4 – 레거시 코드 비활성화 및 제거&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md785',1,'']]]
 ];

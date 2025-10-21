@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['재구성_20실행_20계획_0',['Messaging System 재구성 실행 계획',['../d7/d01/md_docs_2REBUILD__PLAN.html',1,'']]],
-  ['재구성_20strong_1',['&lt;strong&gt;Task 1.1 – 외부 모듈 통합 재구성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2274',1,'']]],
-  ['재설계_2',['Phase 2. 메시징 코어 재설계',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2278',1,'']]],
-  ['재처리_20경로_20구성_20strong_3',['&lt;strong&gt;Task 3.2 – 영속성 및 재처리 경로 구성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2285',1,'']]]
+  ['준비_0',['Phase 4. 검증·배포 준비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md796',1,'']]],
+  ['준비_20및_20기반_20정비_1',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md775',1,'']]]
 ];

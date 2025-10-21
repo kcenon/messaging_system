@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['피처_20플래그_20통합_20strong_0',['&lt;strong&gt;Task 1.2 – 컴파일 옵션 및 피처 플래그 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2275',1,'']]]
+  ['🌐_20integration_0',['🌐 Integration',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md920',1,'']]],
+  ['🌐_20network_20module_20tt_20network_20tt_1',['🌐 Network Module (&lt;tt&gt;network/&lt;/tt&gt;)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md934',1,'']]]
 ];

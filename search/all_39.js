@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['📚_20documentation_0',['📚 Documentation',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2088',1,'']]],
-  ['📚_20documentation_20overview_1',['📚 documentation overview',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/docs/README.md#autotoc_md1267',1,'📚 Documentation Overview'],['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1932',1,'📚 Documentation Overview']]],
-  ['📚_20documentation_20structure_2',['📚 documentation structure',['../d9/d9b/md_libraries_2logger__system_2ARCHITECTURE.html#autotoc_md160',1,'📚 Documentation Structure'],['../dc/d4e/md_libraries_2monitoring__system_2ARCHITECTURE.html#autotoc_md414',1,'📚 Documentation Structure'],['../df/d5b/md_libraries_2thread__system_2ARCHITECTURE.html#autotoc_md748',1,'📚 Documentation Structure']]],
-  ['📚_20module_20overview_3',['📚 Module Overview',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2069',1,'']]],
-  ['📚_20strong_20comprehensive_20sample_20collection_20strong_4',['📚 &lt;strong&gt;Comprehensive Sample Collection&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1466',1,'']]]
+  ['마이그레이션_20가이드_20및_20api_20문서화_0',['**Task 4.2 – 마이그레이션 가이드 및 API 문서화**',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md798',1,'']]],
+  ['마이그레이션_20전략_20확정_20strong_1',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md779',1,'']]]
 ];

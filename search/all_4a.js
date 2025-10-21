@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['시스템_20인터페이스_20맵핑_20strong_0',['&lt;strong&gt;Task 0.1 – 시스템 인터페이스 맵핑&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2269',1,'']]]
+  ['옵션_20및_20피처_20플래그_20통합_20strong_0',['&lt;strong&gt;Task 1.2 – 컴파일 옵션 및 피처 플래그 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md783',1,'']]]
 ];

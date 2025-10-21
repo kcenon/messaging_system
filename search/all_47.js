@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🧪_20testing_0',['🧪 Testing',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2083',1,'']]]
+  ['아키텍처_20구현_20strong_0',['&lt;strong&gt;Task 2.3 – IExecutor 주입식 아키텍처 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md789',1,'']]]
 ];

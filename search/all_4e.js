@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['영속성_20및_20재처리_20경로_20구성_20strong_0',['&lt;strong&gt;Task 3.2 – 영속성 및 재처리 경로 구성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2285',1,'']]]
+  ['위험_20및_20마이그레이션_20전략_20확정_20strong_0',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md779',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🔬_20strong_20advanced_20threading_20features_20strong_0',['🔬 &lt;strong&gt;Advanced Threading Features&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1453',1,'']]]
+  ['병렬_20작업_20최적화_0',['병렬 작업 최적화',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md804',1,'']]]
 ];

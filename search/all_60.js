@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['차단_20계획_20수립_20strong_0',['&lt;strong&gt;Task 0.4 – 레거시 구현 차단 계획 수립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2272',1,'']]]
+  ['컴파일_20옵션_20및_20피처_20플래그_20통합_20strong_0',['&lt;strong&gt;Task 1.2 – 컴파일 옵션 및 피처 플래그 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md783',1,'']]]
 ];

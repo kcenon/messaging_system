@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['permission_5flevel_0',['permission_level',['../d0/dd6/classlogger__module_1_1access__control__filter.html#a4fb9246236ad41fae5634fb3f61c6c50',1,'logger_module::access_control_filter']]],
-  ['protocol_5ftype_1',['protocol_type',['../d2/daa/classlogger__module_1_1network__writer.html#a18fc427a682425001acdbd038d678ef0',1,'logger_module::network_writer']]]
+  ['task_5ftype_0',['task_type',['../d4/daa/distributed__worker_8cpp.html#ab8d9e3d1f9fdf95a31d7b4ce32768eab',1,'distributed_worker.cpp']]],
+  ['transform_5fresult_1',['transform_result',['../d2/d97/namespacekcenon_1_1messaging_1_1routing.html#acbb9d2cb916452bc9b770494271e5ef4',1,'kcenon::messaging::routing']]]
 ];

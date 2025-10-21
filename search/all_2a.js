@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['❌_20don_20t_3a_0',['❌ don t:',['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1071',1,'❌ DON&apos;T:'],['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1074',1,'❌ DON&apos;T:'],['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1077',1,'❌ DON&apos;T:'],['../d5/de2/md_libraries_2thread__system_2docs_2patterns.html#autotoc_md1080',1,'❌ DON&apos;T:']]]
+  ['강화_20strong_0',['&lt;strong&gt;Task 4.4 – 보안 검토 및 강화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md800',1,'']]]
 ];

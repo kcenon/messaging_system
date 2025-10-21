@@ -1,18 +1,15 @@
 var indexSectionsWithContent =
 {
-  0: "0123456789_abcdefghijklmnopqrstuvwxy~μ→⚙✅✨❌⭐🆕🌐🎛🎯🏗💡💬📁📄📈📊📋📖📚📦🔄🔒🔗🔧🔬🔮🗄🚀🛠🛡🤝🧩🧪🧵",
-  1: "abcdefghijlmnopqrstuvwx",
-  2: "cdklmnpstu",
-  3: "abcdefghijlmnopqrstvw",
-  4: "_abcdefghijklmnopqrstuvwx~",
-  5: "abcdefghijlmnopqrstuvwxy",
-  6: "abcdefijlmprstuv",
-  7: "abcdehjlmnopqrstvw",
-  8: "abcdefghijlmnopqrstuvw",
-  9: "hlos",
-  10: "cdmpst",
-  11: "abcdefgilmpqrstw",
-  12: "nt"
+  0: "0123456789abcdefghijklmnopqrstuvwxy~–✅✨⭐가감강개검경계교구기네데라런레로리마맵메모문및병보비빌성수시실아엔영옵외요우위의인일자작재전정제주준즉차체최출컨컴코테토통플피확환회흐🌐🎯🏗💡💬📁📄📊📋📖📚📦🔄🔧🗄🚀🤝🧩🧪🧵",
+  1: "abcdefghilmnoprstux",
+  2: "k",
+  3: "abcdegilmnprst",
+  4: "abcdefghijlmnopqrstuvwx~",
+  5: "abcdefghijlmnopqrstuvw",
+  6: "efmprs",
+  7: "acdehlmnorst",
+  8: "abcdefhijlmnoprstuvw",
+  9: "01234abcdgilmprstv계실재"
 };
 
 var indexSectionNames =
@@ -26,10 +23,7 @@ var indexSectionNames =
   6: "typedefs",
   7: "enums",
   8: "enumvalues",
-  9: "related",
-  10: "defines",
-  11: "pages",
-  12: "concepts"
+  9: "pages"
 };
 
 var indexSectionLabels =
@@ -43,9 +37,6 @@ var indexSectionLabels =
   6: "Typedefs",
   7: "Enumerations",
   8: "Enumerator",
-  9: "Friends",
-  10: "Macros",
-  11: "Pages",
-  12: "Concepts"
+  9: "Pages"
 };
 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['토픽_20엔진_20정비_20strong_0',['&lt;strong&gt;Task 2.4 – 라우팅/토픽 엔진 정비&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2282',1,'']]]
+  ['환경_20감사_20strong_0',['&lt;strong&gt;Task 0.2 – 빌드 환경 감사&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md778',1,'']]]
 ];

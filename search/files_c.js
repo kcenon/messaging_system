@@ -1,11 +1,10 @@
 var searchData=
 [
-  ['network_2eh_0',['network.h',['../d9/d94/network_8h.html',1,'(Global Namespace)'],['../dc/d03/network_2network_8h.html',1,'(Global Namespace)']]],
-  ['network_5fservice_2ecpp_1',['network_service.cpp',['../d4/ddf/network__service_8cpp.html',1,'']]],
-  ['network_5fservice_2eh_2',['network_service.h',['../dc/dcb/network__service_8h.html',1,'']]],
-  ['network_5fwriter_2ecpp_3',['network_writer.cpp',['../d3/d61/network__writer_8cpp.html',1,'']]],
-  ['network_5fwriter_2eh_4',['network_writer.h',['../da/d7f/network__writer_8h.html',1,'']]],
-  ['node_5fpool_2eh_5',['node_pool.h',['../da/d05/modular__structure_2core_2include_2thread__system__core_2thread__base_2lockfree_2memory_2node__pool_8h.html',1,'(Global Namespace)'],['../d4/da2/modular__structure_2core_2src_2thread__base_2lockfree_2memory_2node__pool_8h.html',1,'(Global Namespace)'],['../d1/da8/sources_2thread__base_2lockfree_2memory_2node__pool_8h.html',1,'(Global Namespace)']]],
-  ['node_5fpool_5fsample_2ecpp_6',['node_pool_sample.cpp',['../df/d10/node__pool__sample_8cpp.html',1,'']]],
-  ['numeric_5fvalue_2eh_7',['numeric_value.h',['../d6/df0/numeric__value_8h.html',1,'']]]
+  ['samples_5freadme_2emd_0',['SAMPLES_README.md',['../d2/d61/SAMPLES__README_8md.html',1,'']]],
+  ['service_5fcontainer_2eh_1',['service_container.h',['../dd/d28/service__container_8h.html',1,'']]],
+  ['service_5finterface_2eh_2',['service_interface.h',['../db/dca/service__interface_8h.html',1,'']]],
+  ['system_5farchitecture_2emd_3',['SYSTEM_ARCHITECTURE.md',['../db/d93/SYSTEM__ARCHITECTURE_8md.html',1,'']]],
+  ['system_5fdashboard_2eh_4',['system_dashboard.h',['../d4/d13/system__dashboard_8h.html',1,'']]],
+  ['system_5fintegrator_2ecpp_5',['system_integrator.cpp',['../d1/d19/system__integrator_8cpp.html',1,'']]],
+  ['system_5fintegrator_2eh_6',['system_integrator.h',['../d6/deb/system__integrator_8h.html',1,'']]]
 ];

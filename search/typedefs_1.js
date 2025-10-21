@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['batch_5fcallback_0',['batch_callback',['../db/d67/classmonitoring__module_1_1batch__metrics__processor.html#a64da9c6ba53aed0b56fbead45b8d2bb2',1,'monitoring_module::batch_metrics_processor']]]
+  ['filterfunc_0',['FilterFunc',['../df/d30/classpipeline__stage.html#af5fd9bebf188c2ae9e8f7c5c1f3f60b9',1,'pipeline_stage']]]
 ];

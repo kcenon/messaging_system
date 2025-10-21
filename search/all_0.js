@@ -1,18 +1,14 @@
 var searchData=
 [
-  ['0_0',['Memory Optimization Impact (v2.0)',['../d4/d9e/md_libraries_2thread__system_2docs_2performance.html#autotoc_md1186',1,'']]],
-  ['0_200_201_200_200_20a_202025_2001_2012_1',['0 0 1 0 0 a 2025 01 12',['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md178',1,'&lt;a href=&quot;https://github.com/kcenon/logger_system/releases/tag/v1.0.0&quot; &gt;1.0.0&lt;/a&gt; - 2025-01-12'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md432',1,'&lt;a href=&quot;https://github.com/kcenon/monitoring_system/releases/tag/v1.0.0&quot; &gt;1.0.0&lt;/a&gt; - 2025-01-12']]],
-  ['0_200_202024_2001_2015_2',['[1.0.0] - 2024-01-15',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md802',1,'']]],
-  ['0_200_202025_2007_2022_3',['[2.0.0] - 2025-07-22',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md786',1,'']]],
-  ['0_200_20future_4',['0 0 future',['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md184',1,'[2.0.0] - Future'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md438',1,'[2.0.0] - Future']]],
-  ['0_200_20head_5',['0 0 head',['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md171',1,'&lt;a href=&quot;https://github.com/kcenon/logger_system/compare/v1.0.0...HEAD&quot;'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md425',1,'&lt;a href=&quot;https://github.com/kcenon/monitoring_system/compare/v1.0.0...HEAD&quot;']]],
-  ['0_20planned_6',['0 planned',['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md182',1,'[1.1.0] - Planned'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md436',1,'[1.1.0] - Planned'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md437',1,'[1.2.0] - Planned'],['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md183',1,'[1.2.0] - Planned']]],
-  ['01_2012_7',['01 12',['../d6/dc5/md_libraries_2logger__system_2CHANGELOG.html#autotoc_md178',1,'&lt;a href=&quot;https://github.com/kcenon/logger_system/releases/tag/v1.0.0&quot; &gt;1.0.0&lt;/a&gt; - 2025-01-12'],['../de/da8/md_libraries_2monitoring__system_2CHANGELOG.html#autotoc_md432',1,'&lt;a href=&quot;https://github.com/kcenon/monitoring_system/releases/tag/v1.0.0&quot; &gt;1.0.0&lt;/a&gt; - 2025-01-12']]],
-  ['01_2015_8',['[1.0.0] - 2024-01-15',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md802',1,'']]],
-  ['06_2029_9',['[Previous Release] - 2025-06-29',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md798',1,'']]],
-  ['06_2030_10',['[Previous Release] - 2025-06-30',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md793',1,'']]],
-  ['07_2009_11',['07 09',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md789',1,'[Previous] - 2025-07-09'],['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1423',1,'Core Performance Metrics (Latest Benchmarks - 2025-07-09)']]],
-  ['07_2022_12',['[2.0.0] - 2025-07-22',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md786',1,'']]],
-  ['07_2025_13',['07 25',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md781',1,'[Unreleased] - 2025-07-25'],['../d4/d9e/md_libraries_2thread__system_2docs_2performance.html#autotoc_md1206',1,'Recent Benchmark Results (2025-07-25)']]],
-  ['09_14',['09',['../d7/df4/md_libraries_2thread__system_2CHANGELOG.html#autotoc_md789',1,'[Previous] - 2025-07-09'],['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1423',1,'Core Performance Metrics (Latest Benchmarks - 2025-07-09)']]]
+  ['0_0',['CMakePresets.json (Already created in Phase 0)',['../d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md599',1,'']]],
+  ['0_20준비_20및_20기반_20정비_1',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md775',1,'']]],
+  ['0_200_20–_20common_5fsystem_20즉시_20통합_20최우선_2',['**Task 0.0 – common_system 즉시 통합 (최우선)**',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md776',1,'']]],
+  ['0_201_20–_20시스템_20인터페이스_20맵핑_20strong_3',['&lt;strong&gt;Task 0.1 – 시스템 인터페이스 맵핑&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md777',1,'']]],
+  ['0_202_20–_20빌드_20환경_20감사_20strong_4',['&lt;strong&gt;Task 0.2 – 빌드 환경 감사&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md778',1,'']]],
+  ['0_203_20–_20위험_20및_20마이그레이션_20전략_20확정_20strong_5',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md779',1,'']]],
+  ['0_204_20–_20레거시_20구현_20차단_20계획_20수립_20strong_6',['&lt;strong&gt;Task 0.4 – 레거시 구현 차단 계획 수립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md780',1,'']]],
+  ['0_20completion_20criteria_7',['Phase 0 Completion Criteria',['../df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md509',1,'']]],
+  ['0_20new_20architecture_8',['v2.0 (New Architecture)',['../d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md558',1,'']]],
+  ['0_20project_20completion_20summary_9',['Messaging System v2.0 - Project Completion Summary',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html',1,'']]],
+  ['0_3a_20foundation_20and_20preparation_20✅_10',['Phase 0: Foundation and Preparation ✅',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md718',1,'']]]
 ];

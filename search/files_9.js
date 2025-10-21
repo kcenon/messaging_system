@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['job_2ecpp_0',['job.cpp',['../d5/d52/modular__structure_2core_2src_2thread__base_2jobs_2job_8cpp.html',1,'(Global Namespace)'],['../df/dbb/sources_2thread__base_2jobs_2job_8cpp.html',1,'(Global Namespace)']]],
-  ['job_2eh_1',['job.h',['../d0/d0e/modular__structure_2core_2include_2thread__system__core_2thread__base_2jobs_2job_8h.html',1,'(Global Namespace)'],['../d7/db1/modular__structure_2core_2src_2thread__base_2jobs_2job_8h.html',1,'(Global Namespace)'],['../d6/d93/sources_2thread__base_2jobs_2job_8h.html',1,'(Global Namespace)']]],
-  ['job_5fqueue_2ecpp_2',['job_queue.cpp',['../dc/d1f/modular__structure_2core_2src_2thread__base_2jobs_2job__queue_8cpp.html',1,'(Global Namespace)'],['../da/d37/sources_2thread__base_2jobs_2job__queue_8cpp.html',1,'(Global Namespace)']]],
-  ['job_5fqueue_2eh_3',['job_queue.h',['../de/d1d/modular__structure_2core_2include_2thread__system__core_2thread__base_2jobs_2job__queue_8h.html',1,'(Global Namespace)'],['../d4/d2a/modular__structure_2core_2src_2thread__base_2jobs_2job__queue_8h.html',1,'(Global Namespace)'],['../db/d33/sources_2thread__base_2jobs_2job__queue_8h.html',1,'(Global Namespace)']]],
-  ['job_5ftypes_2eh_4',['job_types.h',['../d9/de3/modular__structure_2core_2include_2thread__system__core_2thread__base_2jobs_2job__types_8h.html',1,'(Global Namespace)'],['../d4/d2e/modular__structure_2core_2include_2thread__system__core_2typed__thread__pool_2core_2job__types_8h.html',1,'(Global Namespace)'],['../dd/d52/modular__structure_2core_2src_2thread__base_2jobs_2job__types_8h.html',1,'(Global Namespace)'],['../d0/de3/modular__structure_2core_2src_2typed__thread__pool_2core_2job__types_8h.html',1,'(Global Namespace)'],['../d5/d0c/sources_2thread__base_2jobs_2job__types_8h.html',1,'(Global Namespace)'],['../d7/d36/sources_2typed__thread__pool_2core_2job__types_8h.html',1,'(Global Namespace)']]]
+  ['network_5fservice_2ecpp_0',['network_service.cpp',['../d4/ddf/network__service_8cpp.html',1,'']]],
+  ['network_5fservice_2eh_1',['network_service.h',['../dc/dcb/network__service_8h.html',1,'']]]
 ];

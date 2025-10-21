@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['⚙️_20strong_20configuration_20customization_20strong_0',['⚙️ &lt;strong&gt;Configuration &amp; Customization&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1455',1,'']]]
+  ['⭐_20new_0',['2. &lt;strong&gt;production_ready_example.cpp&lt;/strong&gt; ⭐ NEW',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md39',1,'']]]
 ];

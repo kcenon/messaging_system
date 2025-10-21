@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['⭐_20new_0',['2. &lt;strong&gt;production_ready_example.cpp&lt;/strong&gt; ⭐ NEW',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md39',1,'']]]
+  ['개요_20및_20우선순위_0',['개요 및 우선순위',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md774',1,'']]]
 ];

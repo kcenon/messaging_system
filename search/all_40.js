@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🔮_20future_20roadmap_0',['🔮 future roadmap',['../d9/d9b/md_libraries_2logger__system_2ARCHITECTURE.html#autotoc_md165',1,'🔮 Future Roadmap'],['../dc/d4e/md_libraries_2monitoring__system_2ARCHITECTURE.html#autotoc_md419',1,'🔮 Future Roadmap'],['../df/d5b/md_libraries_2thread__system_2ARCHITECTURE.html#autotoc_md753',1,'🔮 Future Roadmap']]]
+  ['보안_20검토_20및_20강화_20strong_0',['&lt;strong&gt;Task 4.4 – 보안 검토 및 강화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md800',1,'']]]
 ];

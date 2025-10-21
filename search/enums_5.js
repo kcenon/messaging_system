@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['health_5fstatus_0',['health_status',['../d5/d6d/namespacekcenon_1_1messaging_1_1management.html#a98fb2fa77c7c4d226d8715122d023fa7',1,'kcenon::messaging::management']]]
+  ['log_5flevel_0',['log_level',['../dc/d17/namespacekcenon_1_1messaging_1_1services_1_1logging.html#a40b6859d314e9c5c8b67c9671120e470',1,'kcenon::messaging::services::logging']]]
 ];

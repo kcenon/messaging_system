@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['작성_20strong_0',['&lt;strong&gt;Task 4.5 – 출시 체크리스트/런북 작성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2293',1,'']]],
-  ['작업_20최적화_1',['병렬 작업 최적화',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2296',1,'']]]
+  ['주입식_20아키텍처_20구현_20strong_0',['&lt;strong&gt;Task 2.3 – IExecutor 주입식 아키텍처 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md789',1,'']]]
 ];

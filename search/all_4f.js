@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['옵션_20및_20피처_20플래그_20통합_20strong_0',['&lt;strong&gt;Task 1.2 – 컴파일 옵션 및 피처 플래그 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md2275',1,'']]]
+  ['의존성_20리팩터링_0',['Phase 1. 빌드 및 의존성 리팩터링',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md781',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['✨_20key_20features_0',['✨ Key Features',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2054',1,'']]]
+  ['감사_20strong_0',['&lt;strong&gt;Task 0.2 – 빌드 환경 감사&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md778',1,'']]]
 ];

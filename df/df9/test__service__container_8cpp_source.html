@@ -99,7 +99,7 @@ $(document).ready(function(){initNavTree('df/df9/test__service__container_8cpp_s
 </div><!--header-->
 <div class="contents">
 <a href="../../df/df9/test__service__container_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;gtest/gtest.h&gt;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;<a class="code" href="../../d9/dc3/application__layer_2include_2kcenon_2messaging_2integrations_2service__container_8h.html">kcenon/messaging/integrations/service_container.h</a>&gt;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;<a class="code" href="../../dd/d28/service__container_8h.html">kcenon/messaging/integrations/service_container.h</a>&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
@@ -123,7 +123,7 @@ $(document).ready(function(){initNavTree('df/df9/test__service__container_8cpp_s
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">public</span>:</div>
 <div class="foldopen" id="foldopen00021" data-start="{" data-end="}">
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="../../d2/dc0/classMockDependentService.html#ada70b4300b4780cc59c2460c484b2923">   21</a></span>    <a class="code hl_function" href="../../d2/dc0/classMockDependentService.html#ada70b4300b4780cc59c2460c484b2923">MockDependentService</a>(std::shared_ptr&lt;MockService&gt; dependency)</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        : dependency_(<a class="code hl_namespace" href="../../d8/dcc/namespacestd.html">std</a>::move(dependency)) {}</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        : dependency_(std::move(dependency)) {}</div>
 </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="foldopen" id="foldopen00024" data-start="{" data-end="}">
@@ -380,7 +380,6 @@ $(document).ready(function(){initNavTree('df/df9/test__service__container_8cpp_s
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    EXPECT_EQ(successful_resolutions.load(), num_threads * registrations_per_thread);</div>
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>}</div>
 </div>
-<div class="ttc" id="aapplication__layer_2include_2kcenon_2messaging_2integrations_2service__container_8h_html"><div class="ttname"><a href="../../d9/dc3/application__layer_2include_2kcenon_2messaging_2integrations_2service__container_8h.html">service_container.h</a></div></div>
 <div class="ttc" id="aclassMockDependentService_html"><div class="ttname"><a href="../../d2/dc0/classMockDependentService.html">MockDependentService</a></div><div class="ttdef"><b>Definition</b> <a href="../../df/df9/test__service__container_8cpp_source.html#l00019">test_service_container.cpp:19</a></div></div>
 <div class="ttc" id="aclassMockDependentService_html_a028d7493aae2b68be14da2f5ed2ef493"><div class="ttname"><a href="../../d2/dc0/classMockDependentService.html#a028d7493aae2b68be14da2f5ed2ef493">MockDependentService::get_dependency_value</a></div><div class="ttdeci">int get_dependency_value() const</div><div class="ttdef"><b>Definition</b> <a href="../../df/df9/test__service__container_8cpp_source.html#l00024">test_service_container.cpp:24</a></div></div>
 <div class="ttc" id="aclassMockDependentService_html_ada70b4300b4780cc59c2460c484b2923"><div class="ttname"><a href="../../d2/dc0/classMockDependentService.html#ada70b4300b4780cc59c2460c484b2923">MockDependentService::MockDependentService</a></div><div class="ttdeci">MockDependentService(std::shared_ptr&lt; MockService &gt; dependency)</div><div class="ttdef"><b>Definition</b> <a href="../../df/df9/test__service__container_8cpp_source.html#l00021">test_service_container.cpp:21</a></div></div>
@@ -392,7 +391,7 @@ $(document).ready(function(){initNavTree('df/df9/test__service__container_8cpp_s
 <div class="ttc" id="aclassServiceContainerTest_html_ab6e4c95e96e77a5356b556ef332e260b"><div class="ttname"><a href="../../df/d3d/classServiceContainerTest.html#ab6e4c95e96e77a5356b556ef332e260b">ServiceContainerTest::container_</a></div><div class="ttdeci">std::unique_ptr&lt; service_container &gt; container_</div><div class="ttdef"><b>Definition</b> <a href="../../df/df9/test__service__container_8cpp_source.html#l00038">test_service_container.cpp:38</a></div></div>
 <div class="ttc" id="aclassServiceContainerTest_html_afcd84a10421f49642637cd08ca07f394"><div class="ttname"><a href="../../df/d3d/classServiceContainerTest.html#afcd84a10421f49642637cd08ca07f394">ServiceContainerTest::SetUp</a></div><div class="ttdeci">void SetUp() override</div><div class="ttdef"><b>Definition</b> <a href="../../df/df9/test__service__container_8cpp_source.html#l00034">test_service_container.cpp:34</a></div></div>
 <div class="ttc" id="anamespacekcenon_1_1messaging_1_1integrations_html"><div class="ttname"><a href="../../d9/dda/namespacekcenon_1_1messaging_1_1integrations.html">kcenon::messaging::integrations</a></div><div class="ttdef"><b>Definition</b> <a href="../../dd/d8d/external__system__adapter_8h_source.html#l00010">external_system_adapter.h:10</a></div></div>
-<div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="../../d8/dcc/namespacestd.html">std</a></div><div class="ttdoc">STL namespace.</div></div>
+<div class="ttc" id="aservice__container_8h_html"><div class="ttname"><a href="../../dd/d28/service__container_8h.html">service_container.h</a></div></div>
 <div class="ttc" id="atest__service__container_8cpp_html_a5b26e0f6b40cd4734276934dd7ad4e5b"><div class="ttname"><a href="../../df/df9/test__service__container_8cpp.html#a5b26e0f6b40cd4734276934dd7ad4e5b">TEST_F</a></div><div class="ttdeci">TEST_F(ServiceContainerTest, RegisterAndResolveTransientService)</div><div class="ttdef"><b>Definition</b> <a href="../../df/df9/test__service__container_8cpp_source.html#l00041">test_service_container.cpp:41</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
