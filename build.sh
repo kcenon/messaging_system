@@ -23,6 +23,7 @@ show_help() {
     echo ""
     echo -e "${BOLD}CMake Presets:${NC}"
     echo "  dev-local         ⭐ Local development (recommended, fastest)"
+    echo "  release-local     🚀 Local release build (optimized)"
     echo "  default           Production build with find_package"
     echo "  debug             Debug build with all logging"
     echo "  release           Optimized release build"

@@ -42,6 +42,19 @@
       }
     },
     {
+      "name": "release-local",
+      "displayName": "Local Release",
+      "description": "Optimized release build using local sibling system directories",
+      "binaryDir": "${sourceDir}/build-release-local",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "MESSAGING_USE_LOCAL_SYSTEMS": "ON",
+        "MESSAGING_USE_FETCHCONTENT": "OFF",
+        "MESSAGING_BUILD_TESTS": "OFF",
+        "MESSAGING_BUILD_EXAMPLES": "OFF"
+      }
+    },
+    {
       "name": "asan",
       "displayName": "AddressSanitizer",
       "description": "Build with AddressSanitizer for memory error detection",
@@ -151,6 +164,10 @@
     {
       "name": "release",
       "configurePreset": "release"
+    },
+    {
+      "name": "release-local",
+      "configurePreset": "release-local"
     },
     {
       "name": "asan",
