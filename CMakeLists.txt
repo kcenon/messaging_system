@@ -352,13 +352,16 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(thread_system_SOURCE_DIR "${threadsystem_source_dir}" CACHE STRING "" FORCE)
         set(thread_system_FOUND TRUE CACHE BOOL "" FORCE)
 
-        # Ensure USE_STD_FORMAT is defined for all thread_system targets
+        # Ensure USE_STD_FORMAT is defined for all thread_system targets IF enabled
         # This is a workaround for thread_system not reading USE_STD_FORMAT option correctly
-        if(TARGET thread_base)
-            target_compile_definitions(thread_base PRIVATE USE_STD_FORMAT)
-        endif()
-        if(TARGET thread_pool)
-            target_compile_definitions(thread_pool PRIVATE USE_STD_FORMAT)
+        # Only add compile definition if USE_STD_FORMAT option is ON
+        if(USE_STD_FORMAT)
+            if(TARGET thread_base)
+                target_compile_definitions(thread_base PRIVATE USE_STD_FORMAT)
+            endif()
+            if(TARGET thread_pool)
+                target_compile_definitions(thread_pool PRIVATE USE_STD_FORMAT)
+            endif()
         endif()
 
         # ContainerSystem needs common_system headers to be fully available
