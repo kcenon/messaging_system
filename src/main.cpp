@@ -102,7 +102,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
         auto subscribe_result = message_bus->subscribe("test.topic",
             [](const messaging::MessagingContainer& msg) -> common::VoidResult {
                 std::cout << "  → Received message on topic: " << msg.topic() << std::endl;
-                return common::VoidResult::ok();
+                return common::VoidResult::ok(std::monostate{});
             });
 
         if (subscribe_result.is_ok()) {
