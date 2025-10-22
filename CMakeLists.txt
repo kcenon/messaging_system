@@ -352,8 +352,11 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(CMAKE_SKIP_INSTALL_RULES "${CMAKE_SKIP_INSTALL_RULES_SAVE}")
 
         # Create missing aliases that some dependencies expect
-        if(TARGET kcenon::common AND NOT TARGET kcenon::common_system)
-            add_library(kcenon::common_system ALIAS kcenon::common)
+        # Note: kcenon::common is already an ALIAS, so we need to alias the real target
+        if(TARGET common AND NOT TARGET kcenon::common_system)
+            add_library(kcenon::common_system ALIAS common)
+        elseif(TARGET common_system AND NOT TARGET kcenon::common_system)
+            add_library(kcenon::common_system ALIAS common_system)
         endif()
 
     else()
