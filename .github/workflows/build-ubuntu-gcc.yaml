@@ -29,7 +29,7 @@ jobs:
       - name: Install build tools
         run: |
           sudo apt update
-          sudo apt install -y cmake build-essential ninja-build git
+          sudo apt install -y cmake build-essential ninja-build git libyaml-cpp-dev
 
       - name: Cache FetchContent downloads
         uses: actions/cache@v4
