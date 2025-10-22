@@ -340,6 +340,11 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         # ContainerSystem needs common_system headers to be fully available
         FetchContent_MakeAvailable(ContainerSystem)
 
+        # Disable PostgreSQL in DatabaseSystem due to libpqxx compatibility issues
+        set(USE_POSTGRESQL OFF CACHE BOOL "Disable PostgreSQL support in database_system" FORCE)
+        set(USE_MYSQL OFF CACHE BOOL "Disable MySQL support in database_system" FORCE)
+        set(USE_SQLITE OFF CACHE BOOL "Disable SQLite support in database_system" FORCE)
+
         # Then remaining systems that depend on common and thread
         FetchContent_MakeAvailable(
             LoggerSystem
