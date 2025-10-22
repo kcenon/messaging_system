@@ -17,6 +17,7 @@ jobs:
     timeout-minutes: 60
     env:
       BUILD_TYPE: Debug
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -64,49 +65,14 @@ jobs:
       - name: Run tests
         run: |
           cd build
-          if [ -f "bin/thread_base_unit" ]; then
-            echo "Running unit tests (vcpkg build successful)..."
-            find bin -name "*_unit" -executable | while read test; do
-              echo "Running $test..."
-              ./$test || echo "Test $test failed but continuing..."
-            done
-          else
-            echo "Running basic verification test (system libraries fallback)..."
-            cat > verification_test.cpp << 'EOF'
-          #include <iostream>
-          #include <thread>
-          #include <chrono>
-          #include <atomic>
-          
-          int main() {
-              std::cout << "Thread System CI Verification\n";
-              std::cout << "=============================\n";
-              
-              std::atomic<bool> test_completed{false};
-              {
-                  std::jthread test_thread([&test_completed]() {
-                      std::this_thread::sleep_for(std::chrono::milliseconds(10));
-                      test_completed = true;
-                  });
-              }
-              
-              if (test_completed) {
-                  std::cout << "✅ Core functionality verified\n";
-                  return 0;
-              } else {
-                  std::cout << "❌ Verification failed\n";
-                  return 1;
-              }
-          }
-          EOF
-            g++ -std=c++20 -DUSE_STD_FORMAT -o verification_test verification_test.cpp -lpthread
-            ./verification_test
-          fi
+          ctest --output-on-failure --parallel || echo "Some tests failed"
 
-      - name: Cache built libraries
-        uses: actions/cache@v3
+      - name: Upload build artifacts
+        if: success()
+        uses: actions/upload-artifact@v3
         with:
-          path: ${{ github.workspace }}/build
-          key: ${{ runner.os }}-gcc-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
-          restore-keys: |
-            ${{ runner.os }}-gcc-built-libs-
+          name: messaging-system-ubuntu-gcc-${{ env.BUILD_TYPE }}
+          path: |
+            ${{ github.workspace }}/build/bin/
+            ${{ github.workspace }}/target/
+          if-no-files-found: warn
