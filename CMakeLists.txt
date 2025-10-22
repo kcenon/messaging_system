@@ -310,6 +310,15 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(CMAKE_SKIP_INSTALL_RULES_SAVE "${CMAKE_SKIP_INSTALL_RULES}")
         set(CMAKE_SKIP_INSTALL_RULES TRUE)
 
+        # Save current BUILD_TESTING state and disable for dependencies
+        # This prevents dependency test failures from blocking our build
+        if(DEFINED BUILD_TESTING)
+            set(BUILD_TESTING_SAVE "${BUILD_TESTING}")
+        else()
+            set(BUILD_TESTING_SAVE ON)
+        endif()
+        set(BUILD_TESTING OFF CACHE BOOL "Disable testing for dependencies" FORCE)
+
         # Make CommonSystem available first (required by most others)
         FetchContent_MakeAvailable(CommonSystem)
 
@@ -358,6 +367,9 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
 
         # Restore original CMAKE_SKIP_INSTALL_RULES setting
         set(CMAKE_SKIP_INSTALL_RULES "${CMAKE_SKIP_INSTALL_RULES_SAVE}")
+
+        # Restore BUILD_TESTING for messaging_system tests
+        set(BUILD_TESTING "${BUILD_TESTING_SAVE}" CACHE BOOL "Enable testing for messaging_system" FORCE)
 
         # Create missing aliases that some dependencies expect
         # Note: kcenon::common is already an ALIAS, so we need to alias the real target
