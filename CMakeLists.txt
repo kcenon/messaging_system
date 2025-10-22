@@ -254,6 +254,9 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         )
 
         # Thread System
+        # Configure ThreadSystem to use std::format instead of fmt library BEFORE declaring it
+        set(USE_STD_FORMAT ON CACHE BOOL "Use std::format instead of fmt library in thread_system" FORCE)
+
         FetchContent_Declare(
             ThreadSystem
             GIT_REPOSITORY https://github.com/kcenon/thread_system.git
@@ -338,10 +341,8 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(common_system_FOUND TRUE CACHE BOOL "" FORCE)
         set(common_system_SOURCE_DIR "${commonsystem_source_dir}" CACHE STRING "" FORCE)
 
-        # Configure ThreadSystem to use std::format instead of fmt library
-        set(USE_STD_FORMAT ON CACHE BOOL "Use std::format instead of fmt library in thread_system" FORCE)
-
         # Then ThreadSystem (required by logger, monitoring)
+        # Note: USE_STD_FORMAT is set earlier before FetchContent_Declare
         FetchContent_MakeAvailable(ThreadSystem)
 
         # Get ThreadSystem source directory for reference
