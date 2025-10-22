@@ -246,12 +246,11 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         # This allows us to set FETCHCONTENT_SOURCE_DIR_* variables to prevent duplicate fetches
 
         # Common System
-        # Pinned to stable commit before Oct 22 breaking changes (error() -> make_error())
         FetchContent_Declare(
             CommonSystem
             GIT_REPOSITORY https://github.com/kcenon/common_system.git
-            GIT_TAG 8afcdf601ed01ab0da9dbff1ff54c1af6d5fac54  # Oct 21, 2025 - Last stable before breaking changes
-            GIT_SHALLOW FALSE  # Need full history for specific commit
+            GIT_TAG main
+            GIT_SHALLOW TRUE
         )
 
         # Thread System
@@ -265,12 +264,11 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         )
 
         # Logger System
-        # Pinned to stable commit before Oct 22 breaking changes (error() -> make_error())
         FetchContent_Declare(
             LoggerSystem
             GIT_REPOSITORY https://github.com/kcenon/logger_system.git
-            GIT_TAG f680cb9cb9ce91adf9f341e740db02fb6a091dbd  # Oct 21, 2025 - Last stable before breaking changes
-            GIT_SHALLOW FALSE  # Need full history for specific commit
+            GIT_TAG main
+            GIT_SHALLOW TRUE
         )
 
         # Monitoring System
