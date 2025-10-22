@@ -250,7 +250,7 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         FetchContent_Declare(
             CommonSystem
             GIT_REPOSITORY https://github.com/kcenon/common_system.git
-            GIT_TAG 5b8fdfa0856a13a9a50f8be0cbe5e98c5b07e4d9
+            GIT_TAG 5b8fdfa8c1db088babfc0389e39e5ad404f4159d
             GIT_SHALLOW FALSE  # Need full history to checkout specific commit
         )
 
