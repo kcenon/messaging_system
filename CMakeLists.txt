@@ -337,12 +337,6 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(thread_system_SOURCE_DIR "${threadsystem_source_dir}" CACHE STRING "" FORCE)
         set(thread_system_FOUND TRUE CACHE BOOL "" FORCE)
 
-        # Fix thread_system utilities target missing include path for formatter.h
-        # The utilities target only includes utilities/include but needs the main include directory too
-        if(TARGET utilities)
-            target_include_directories(utilities PUBLIC "${threadsystem_source_dir}/include")
-        endif()
-
         # ContainerSystem needs common_system headers to be fully available
         FetchContent_MakeAvailable(ContainerSystem)
 
