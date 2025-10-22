@@ -25,7 +25,7 @@ var searchData=
   ['kernel_20parameters_22',['Linux Kernel Parameters',['../df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md256',1,'']]],
   ['key_20configuration_20options_3a_23',['Key Configuration Options:',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md48',1,'']]],
   ['key_20design_20patterns_24',['Key Design Patterns',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md733',1,'']]],
-  ['key_20features_25',['✨ Key Features',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md916',1,'']]],
+  ['key_20highlights_25',['🎯 Key Highlights',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md917',1,'']]],
   ['key_20performance_20features_26',['Key Performance Features',['../df/d94/md_docs_2performance.html#autotoc_md426',1,'']]],
   ['known_20issues_27',['Known Issues',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md892',1,'']]],
   ['known_20limitations_28',['known limitations',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html#autotoc_md207',1,'Known Limitations'],['../df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md705',1,'Known Limitations']]],
