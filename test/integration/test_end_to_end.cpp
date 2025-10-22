@@ -14,6 +14,8 @@
 #endif
 
 #include <iostream>
+#include <fstream>
+#include <filesystem>
 #include <cassert>
 #include <atomic>
 #include <thread>
@@ -27,8 +29,8 @@ using namespace messaging;
 void test_complete_pubsub_flow() {
     std::cout << "Integration Test: Complete pub/sub flow with trace context..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(2);
+    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(4);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -40,7 +42,7 @@ void test_complete_pubsub_flow() {
 
     // Subscribe with trace context handling
     auto sub_result = message_bus->subscribe("order.placed",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             ScopedTrace trace(msg.trace_id());
 
             received_count++;
@@ -48,7 +50,7 @@ void test_complete_pubsub_flow() {
             std::lock_guard<std::mutex> lock(trace_ids_mutex);
             received_trace_ids.push_back(TraceContext::get_trace_id());
 
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     assert(sub_result.is_ok() && "Should subscribe successfully");
@@ -82,8 +84,8 @@ void test_complete_pubsub_flow() {
 void test_complex_routing_scenario() {
     std::cout << "Integration Test: Complex routing with multiple patterns..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(2);
+    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(4);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -95,23 +97,23 @@ void test_complex_routing_scenario() {
 
     // Multi-level wildcard: receives ALL events
     message_bus->subscribe("event.#",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             event_all_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     // Single-level wildcard: receives event.user.*, event.order.*, etc.
     message_bus->subscribe("event.user.*",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             event_user_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     // Exact match: only event.user.login
     message_bus->subscribe("event.user.login",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             event_user_login_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     // Test messages
@@ -140,8 +142,8 @@ void test_complex_routing_scenario() {
 void test_multi_subscriber_coordination() {
     std::cout << "Integration Test: Multi-subscriber coordination..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(4);
-    auto work_executor = std::make_shared<thread::thread_pool>(8);
+    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(4);
+    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(8);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -154,30 +156,30 @@ void test_multi_subscriber_coordination() {
 
     // Inventory service listens to order events
     message_bus->subscribe("order.*",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             ScopedTrace trace(msg.trace_id());
             inventory_service_count++;
             // Simulate inventory update work
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     // Email service listens to specific events
     message_bus->subscribe("order.placed",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             ScopedTrace trace(msg.trace_id());
             email_service_count++;
             // Simulate sending email
             std::this_thread::sleep_for(std::chrono::milliseconds(20));
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     // Analytics service listens to everything
     message_bus->subscribe("#",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             ScopedTrace trace(msg.trace_id());
             analytics_service_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     // Simulate order flow
@@ -206,8 +208,8 @@ void test_multi_subscriber_coordination() {
 void test_high_throughput_scenario() {
     std::cout << "Integration Test: High throughput scenario..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(4);
-    auto work_executor = std::make_shared<thread::thread_pool>(8);
+    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(4);
+    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(8);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -216,9 +218,9 @@ void test_high_throughput_scenario() {
     std::atomic<int> received_count{0};
 
     message_bus->subscribe("high.throughput.#",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             received_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     const int num_messages = 1000;
@@ -265,8 +267,8 @@ void test_high_throughput_scenario() {
 void test_subscribe_unsubscribe_lifecycle() {
     std::cout << "Integration Test: Subscribe/unsubscribe lifecycle..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(2);
+    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(4);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -278,21 +280,21 @@ void test_subscribe_unsubscribe_lifecycle() {
 
     // Subscribe 3 subscribers
     auto sub1 = message_bus->subscribe("lifecycle.test",
-        [&](const MessagingContainer&) -> common::Result<void> {
+        [&](const MessagingContainer&) -> common::VoidResult {
             sub1_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         }).value();
 
     auto sub2 = message_bus->subscribe("lifecycle.test",
-        [&](const MessagingContainer&) -> common::Result<void> {
+        [&](const MessagingContainer&) -> common::VoidResult {
             sub2_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         }).value();
 
     auto sub3 = message_bus->subscribe("lifecycle.test",
-        [&](const MessagingContainer&) -> common::Result<void> {
+        [&](const MessagingContainer&) -> common::VoidResult {
             sub3_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         }).value();
 
     // Round 1: All receive
@@ -353,8 +355,8 @@ messaging_system:
     assert(validate_result.is_ok() && "Config should be valid");
 
     // Use config to create system
-    auto io_executor = std::make_shared<thread::thread_pool>(config.thread_pools.io_workers);
-    auto work_executor = std::make_shared<thread::thread_pool>(config.thread_pools.work_workers);
+    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(config.thread_pools.io_workers);
+    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(config.thread_pools.work_workers);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -364,9 +366,9 @@ messaging_system:
     // Verify it works
     std::atomic<int> count{0};
     message_bus->subscribe("config.test",
-        [&](const MessagingContainer&) -> common::Result<void> {
+        [&](const MessagingContainer&) -> common::VoidResult {
             count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     auto msg = MessagingContainer::create("src", "tgt", "config.test").value();

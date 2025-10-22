@@ -17,6 +17,9 @@ using namespace messaging;
 // Simple mock executor for testing
 class MockExecutor : public common::interfaces::IExecutor {
 public:
+    MockExecutor() : running_(true) {}
+
+    // Function-based execution (legacy)
     std::future<void> submit(std::function<void()> task) override {
         // Execute immediately for testing
         task();
@@ -29,8 +32,34 @@ public:
         return submit(task);
     }
 
-    size_t queue_size() const override { return 0; }
-    void shutdown() override {}
+    // Job-based execution (Phase 2)
+    common::Result<std::future<void>> execute(std::unique_ptr<common::interfaces::IJob>&& job) override {
+        auto result = job->execute();
+        if (result.is_err()) {
+            return common::Result<std::future<void>>::error(result.error());
+        }
+        std::promise<void> promise;
+        promise.set_value();
+        return common::Result<std::future<void>>::ok(promise.get_future());
+    }
+
+    common::Result<std::future<void>> execute_delayed(
+        std::unique_ptr<common::interfaces::IJob>&& job,
+        std::chrono::milliseconds delay) override {
+        return execute(std::move(job));
+    }
+
+    // Status and control
+    size_t worker_count() const override { return 1; }
+    bool is_running() const override { return running_; }
+    size_t pending_tasks() const override { return 0; }
+
+    void shutdown(bool wait_for_completion = true) override {
+        running_ = false;
+    }
+
+private:
+    std::atomic<bool> running_;
 };
 
 void test_start_stop() {
