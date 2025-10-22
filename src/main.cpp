@@ -89,8 +89,11 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
     std::cout << std::endl;
     std::cout << "Initializing MessageBus..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    // Create thread pools with correct API (string name + thread_context)
+    thread::thread_context io_context{2, 1000};  // 2 workers, 1000 queue size
+    thread::thread_context work_context{4, 1000};  // 4 workers, 1000 queue size
+    auto io_executor = std::make_shared<thread::thread_pool>("io_pool", io_context);
+    auto work_executor = std::make_shared<thread::thread_pool>("work_pool", work_context);
     auto router = std::make_shared<messaging::TopicRouter>(work_executor);
     auto message_bus = std::make_shared<messaging::MessageBus>(io_executor, work_executor, router);
 

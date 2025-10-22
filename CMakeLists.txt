@@ -327,6 +327,12 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         # Make CommonSystem available first (required by most others)
         FetchContent_MakeAvailable(CommonSystem)
 
+        # Remove dependency test targets to prevent build failures
+        # common_system tests use deprecated error() API
+        if(TARGET common_system_tests)
+            set_target_properties(common_system_tests PROPERTIES EXCLUDE_FROM_ALL TRUE)
+        endif()
+
         # Get the source directory for common_system to provide to other systems
         FetchContent_GetProperties(CommonSystem SOURCE_DIR commonsystem_source_dir)
         set(COMMON_SYSTEM_ROOT "${commonsystem_source_dir}" CACHE PATH "Path to common_system" FORCE)
