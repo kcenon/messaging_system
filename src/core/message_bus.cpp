@@ -16,7 +16,7 @@ MessageBus::MessageBus(
 
 VoidResult MessageBus::start() {
     if (running_.load()) {
-        return common::error<std::monostate>(
+        return common::make_error<std::monostate>(
             common::error_info{
                 error::INVALID_MESSAGE,
                 "MessageBus already running",
@@ -32,7 +32,7 @@ VoidResult MessageBus::start() {
 
 VoidResult MessageBus::stop() {
     if (!running_.load()) {
-        return common::error<std::monostate>(
+        return common::make_error<std::monostate>(
             common::error_info{
                 error::INVALID_MESSAGE,
                 "MessageBus not running",
@@ -48,7 +48,7 @@ VoidResult MessageBus::stop() {
 
 VoidResult MessageBus::publish_async(MessagingContainer msg) {
     if (!running_.load()) {
-        return common::error<std::monostate>(
+        return common::make_error<std::monostate>(
             common::error_info{
                 error::PUBLICATION_FAILED,
                 "MessageBus not running",
@@ -71,7 +71,7 @@ VoidResult MessageBus::publish_async(MessagingContainer msg) {
 
 VoidResult MessageBus::publish_sync(const MessagingContainer& msg) {
     if (!running_.load()) {
-        return common::error<std::monostate>(
+        return common::make_error<std::monostate>(
             common::error_info{
                 error::PUBLICATION_FAILED,
                 "MessageBus not running",
@@ -86,7 +86,7 @@ VoidResult MessageBus::publish_sync(const MessagingContainer& msg) {
 
 Result<uint64_t> MessageBus::subscribe(const std::string& topic, SubscriberCallback callback) {
     if (!running_.load()) {
-        return common::error<uint64_t>(
+        return common::make_error<uint64_t>(
             common::error_info{
                 error::SUBSCRIPTION_FAILED,
                 "MessageBus not running",

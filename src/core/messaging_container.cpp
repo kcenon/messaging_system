@@ -35,7 +35,7 @@ Result<MessagingContainer> MessagingContainer::create(
     const std::string& topic
 ) {
     if (topic.empty()) {
-        return common::error<MessagingContainer>(
+        return common::make_error<MessagingContainer>(
             common::error_info{
                 error::INVALID_MESSAGE,
                 "Topic cannot be empty",
@@ -83,7 +83,7 @@ Result<std::vector<uint8_t>> MessagingContainer::serialize() const {
         auto serialized = container_.serialize_array();
         return common::ok(std::move(serialized));
     } catch (const std::exception& e) {
-        return common::error<std::vector<uint8_t>>(
+        return common::make_error<std::vector<uint8_t>>(
             common::error_info{
                 error::SERIALIZATION_ERROR,
                 std::string("Serialization failed: ") + e.what(),
@@ -96,7 +96,7 @@ Result<std::vector<uint8_t>> MessagingContainer::serialize() const {
 
 Result<MessagingContainer> MessagingContainer::deserialize(const std::vector<uint8_t>& data) {
     if (data.empty()) {
-        return common::error<MessagingContainer>(
+        return common::make_error<MessagingContainer>(
             common::error_info{
                 error::SERIALIZATION_ERROR,
                 "Cannot deserialize empty data",
@@ -115,7 +115,7 @@ Result<MessagingContainer> MessagingContainer::deserialize(const std::vector<uin
         // Validate required fields
         auto topic_val = container.container_.get_value("topic");
         if (!topic_val || topic_val->data().empty()) {
-            return common::error<MessagingContainer>(
+            return common::make_error<MessagingContainer>(
                 common::error_info{
                     error::INVALID_MESSAGE,
                     "Deserialized container missing required 'topic' field",
@@ -127,7 +127,7 @@ Result<MessagingContainer> MessagingContainer::deserialize(const std::vector<uin
 
         return common::ok(std::move(container));
     } catch (const std::exception& e) {
-        return common::error<MessagingContainer>(
+        return common::make_error<MessagingContainer>(
             common::error_info{
                 error::SERIALIZATION_ERROR,
                 std::string("Deserialization failed: ") + e.what(),

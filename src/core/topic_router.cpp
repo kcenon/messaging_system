@@ -59,7 +59,7 @@ VoidResult TopicRouter::unsubscribe(uint64_t subscription_id) {
         }
     }
 
-    return common::error<std::monostate>(
+    return common::make_error<std::monostate>(
         common::error_info{
             error::SUBSCRIPTION_FAILED,
             "Subscription not found",
@@ -75,7 +75,7 @@ VoidResult TopicRouter::route(const MessagingContainer& msg) {
     auto matching = find_matching_subscriptions(msg.topic());
 
     if (matching.empty()) {
-        return common::error<std::monostate>(
+        return common::make_error<std::monostate>(
             common::error_info{
                 error::NO_SUBSCRIBERS,
                 "No subscribers for topic: " + msg.topic(),
