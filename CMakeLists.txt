@@ -266,11 +266,12 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         )
 
         # Logger System
+        # Using specific commit to ensure latest fixes are used (make_error update)
         FetchContent_Declare(
             LoggerSystem
             GIT_REPOSITORY https://github.com/kcenon/logger_system.git
-            GIT_TAG main
-            GIT_SHALLOW TRUE
+            GIT_TAG 0ba67a543baa8913576fd682b962e9bde55fdf40
+            GIT_SHALLOW FALSE  # Need full history to checkout specific commit
         )
 
         # Monitoring System
