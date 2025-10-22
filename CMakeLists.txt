@@ -246,32 +246,29 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         # This allows us to set FETCHCONTENT_SOURCE_DIR_* variables to prevent duplicate fetches
 
         # Common System
-        # Using specific commit to ensure latest fixes are used (namespace conflict fix + example fix)
         FetchContent_Declare(
             CommonSystem
             GIT_REPOSITORY https://github.com/kcenon/common_system.git
-            GIT_TAG 66d96ad8a0c83d9beaaa4b4cd88e2f7b9f5e1e3e
-            GIT_SHALLOW FALSE  # Need full history to checkout specific commit
+            GIT_TAG main
+            GIT_SHALLOW TRUE
         )
 
         # Thread System
-        # Using specific commit to ensure latest fixes are used (include path fix + fmt fix)
         FetchContent_Declare(
             ThreadSystem
             GIT_REPOSITORY https://github.com/kcenon/thread_system.git
-            GIT_TAG 6bdde9daec17f34ce8a27d95a5ef38c9e3b65c52
-            GIT_SHALLOW FALSE  # Need full history to checkout specific commit
+            GIT_TAG main
+            GIT_SHALLOW TRUE
             SOURCE_SUBDIR  "."  # Prevent local directory discovery
             OVERRIDE_FIND_PACKAGE
         )
 
         # Logger System
-        # Using specific commit to ensure latest fixes are used (make_error update)
         FetchContent_Declare(
             LoggerSystem
             GIT_REPOSITORY https://github.com/kcenon/logger_system.git
-            GIT_TAG 0ba67a543baa8913576fd682b962e9bde55fdf40
-            GIT_SHALLOW FALSE  # Need full history to checkout specific commit
+            GIT_TAG main
+            GIT_SHALLOW TRUE
         )
 
         # Monitoring System
