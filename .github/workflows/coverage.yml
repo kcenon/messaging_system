@@ -41,6 +41,7 @@ jobs:
           -DMESSAGING_BUILD_EXAMPLES=OFF \
           -DMESSAGING_USE_FETCHCONTENT=ON \
           -DENABLE_COVERAGE=ON \
+          -DUSE_STD_FORMAT=ON \
           -DCMAKE_C_COMPILER=gcc \
           -DCMAKE_CXX_COMPILER=g++ \
           -DCMAKE_C_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
