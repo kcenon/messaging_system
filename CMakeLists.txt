@@ -608,9 +608,9 @@ endif()
 # Installation
 # ============================================================================
 
-# Skip installation in local development mode
-# (local systems are not installed, so export would fail)
-if(NOT MESSAGING_USE_LOCAL_SYSTEMS)
+# Skip installation in local development mode or FetchContent mode
+# (local systems and FetchContent dependencies are not installed, so export would fail)
+if(NOT MESSAGING_USE_LOCAL_SYSTEMS AND NOT MESSAGING_USE_FETCHCONTENT)
     include(GNUInstallDirs)
 
     install(TARGETS messaging_system_core
