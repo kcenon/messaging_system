@@ -11,25 +11,17 @@ on:
 
 jobs:
   build_windows_msys2:
-    runs-on: windows-2022  # Fixed version to avoid runner image issues
-    defaults:
-      run:
-        shell: msys2 {0}
+    permissions:
+      contents: write
+    runs-on: windows-latest
     timeout-minutes: 60
     env:
       BUILD_TYPE: Debug
-      VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
-      VCPKG_FEATURE_FLAGS: "manifests,registries,versions,binarycaching"
-      VCPKG_DEFAULT_TRIPLET: x64-mingw-dynamic
-    
+    defaults:
+      run:
+        shell: msys2 {0}
+
     steps:
-      - name: Configure git
-        shell: pwsh
-        run: |
-          git config --global core.autocrlf false
-          git config --global core.eol lf
-          git config --global core.longpaths true
-      
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
@@ -43,244 +35,58 @@ jobs:
           msystem: MINGW64
           update: true
           install: >-
-            base-devel
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-ninja
-            mingw-w64-x86_64-make
-            mingw-w64-x86_64-fmt
-            mingw-w64-x86_64-gtest
-            mingw-w64-x86_64-benchmark
-            mingw-w64-x86_64-spdlog
-            mingw-w64-x86_64-asio
-            mingw-w64-x86_64-nlohmann-json
-            mingw-w64-x86_64-libpqxx
             git
+            base-devel
 
-      - name: Cache vcpkg
+      - name: Cache FetchContent downloads
         uses: actions/cache@v3
-        id: vcpkg-cache
         with:
           path: |
-            ${{ github.workspace }}/vcpkg
-            !${{ github.workspace }}/vcpkg/buildtrees
-            !${{ github.workspace }}/vcpkg/packages
-            !${{ github.workspace }}/vcpkg/downloads
-          key: ${{ runner.os }}-msys2-vcpkg-${{ hashFiles('vcpkg.json') }}
+            ${{ github.workspace }}/build/_deps
+          key: ${{ runner.os }}-msys2-fetchcontent-${{ hashFiles('CMakeLists.txt') }}
           restore-keys: |
-            ${{ runner.os }}-msys2-vcpkg-
-
-      # (moved) vcpkg installed cache after setup once commit is known
-
-      - name: Clean PATH and set MSYS2 priority
-        run: |
-          echo "Cleaning PATH to avoid conflicts..."
-          # Remove Windows system paths that might interfere
-          export PATH="/mingw64/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
-          
-          # Remove any strawberry perl or other conflicting paths
-          export PATH=$(echo $PATH | tr ':' '\n' | grep -v -E 'strawberry|Perl|Python|Ruby' | tr '\n' ':')
-          
-          echo "PATH=$PATH" >> $GITHUB_ENV
-          echo "Current PATH: $PATH"
-          
-          # Verify correct gcc/g++ is being used
-          which gcc
-          which g++
-          gcc --version
-          g++ --version
-
-      - name: Set up vcpkg (optional - try system packages first)
-        id: vcpkg_setup
-        continue-on-error: true
-        run: |
-          if [ ! -d "vcpkg" ]; then
-            echo "Cloning vcpkg repository..."
-            git clone https://github.com/Microsoft/vcpkg.git vcpkg || {
-              echo "Failed to clone vcpkg, trying alternative method..."
-              wget -q https://github.com/Microsoft/vcpkg/archive/refs/heads/master.tar.gz
-              tar -xzf master.tar.gz
-              mv vcpkg-master vcpkg
-            }
-          fi
-
-          if [ -d "vcpkg" ]; then
-            cd vcpkg
-            echo "Current directory: $(pwd)"
-            echo "Files in directory: $(ls -la)"
-
-            # Try to bootstrap vcpkg
-            if [ -f "./bootstrap-vcpkg.sh" ]; then
-              echo "Running bootstrap-vcpkg.sh..."
-              chmod +x ./bootstrap-vcpkg.sh
-              ./bootstrap-vcpkg.sh
-            elif [ -f "./bootstrap-vcpkg.bat" ]; then
-              echo "Using bootstrap-vcpkg.bat..."
-              cmd //c bootstrap-vcpkg.bat
-            elif [ -f "./scripts/bootstrap.sh" ]; then
-              echo "Running scripts/bootstrap.sh..."
-              chmod +x ./scripts/bootstrap.sh
-              ./scripts/bootstrap.sh
-            else
-              echo "Warning: No bootstrap script found"
-            fi
-            cd ..
-          else
-            echo "Warning: vcpkg setup failed"
-          fi
-
-      - name: Determine vcpkg commit
-        id: vcpkg-commit
-        if: steps.vcpkg_setup.outcome == 'success'
-        run: echo "commit=$(git -C vcpkg rev-parse HEAD)" >> $GITHUB_OUTPUT
-
-      - name: Cache vcpkg installed
-        uses: actions/cache@v3
-        id: vcpkg-installed
-        with:
-          path: ${{ github.workspace }}/vcpkg_installed
-          key: ${{ runner.os }}-msys2-vcpkg-installed-${{ env.VCPKG_DEFAULT_TRIPLET }}-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}-${{ steps.vcpkg-commit.outputs.commit }}
-          restore-keys: |
-            ${{ runner.os }}-msys2-vcpkg-installed-${{ env.VCPKG_DEFAULT_TRIPLET }}-
-
-      - name: Install dependencies with vcpkg (if setup succeeded, uses binary cache)
-        if: steps.vcpkg-installed.outputs.cache-hit != 'true' && steps.vcpkg_setup.outcome == 'success'
-        continue-on-error: true
-        run: |
-          echo "Installing dependencies via vcpkg..."
-          GWS="$(cygpath -u "$GITHUB_WORKSPACE")"
-          ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root="${GWS}/vcpkg_installed" --triplet $VCPKG_DEFAULT_TRIPLET
-
-      - name: Cache CMake build
-        uses: actions/cache@v3
-        id: cmake-cache
-        with:
-          path: |
-            ${{ github.workspace }}/build
-          key: ${{ runner.os }}-cmake-msys2-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
-          restore-keys: |
-            ${{ runner.os }}-cmake-msys2-
+            ${{ runner.os }}-msys2-fetchcontent-
 
       - name: Prepare build directory
         run: |
           rm -rf build
           mkdir -p build
 
-      - name: Build application (prefer system packages)
-        id: build_system
+      - name: Build with MSYS2 (FetchContent mode)
         env:
           CC: /mingw64/bin/gcc
           CXX: /mingw64/bin/g++
         run: |
           export PATH="/mingw64/bin:$PATH"
           cd build
-          
-          echo "Building with MSYS2 system packages..."
-          # Create a fake asio config file for CMake since MSYS2's asio is header-only
-          mkdir -p /tmp/asio_cmake
-          # Get the actual MSYS2 include path
-          MSYS_INCLUDE_PATH="$(cygpath -m /mingw64/include)"
-          echo "MSYS2 include path: $MSYS_INCLUDE_PATH"
-          cat > /tmp/asio_cmake/asio-config.cmake << EOF
-          if(NOT TARGET asio::asio)
-            add_library(asio::asio INTERFACE IMPORTED)
-            set_target_properties(asio::asio PROPERTIES
-              INTERFACE_INCLUDE_DIRECTORIES "$MSYS_INCLUDE_PATH"
-            )
-          endif()
-          EOF
+          echo "Building with FetchContent to download all external systems..."
 
           cmake .. \
-            -G "Ninja" \
-            -DBUILD_TESTS=ON \
-            -DCMAKE_INSTALL_PREFIX="../target" \
+            -G Ninja \
             -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-            -DCMAKE_C_COMPILER=/mingw64/bin/gcc.exe \
-            -DCMAKE_CXX_COMPILER=/mingw64/bin/g++.exe \
-            -DCMAKE_AR=/mingw64/bin/ar.exe \
-            -DCMAKE_RANLIB=/mingw64/bin/ranlib.exe \
-            -DCMAKE_RC_COMPILER=/mingw64/bin/windres.exe \
-            -DCMAKE_PREFIX_PATH="/mingw64;/mingw64/lib/cmake;/tmp/asio_cmake" \
-            -Dfmt_DIR=/mingw64/lib/cmake/fmt \
-            -DGTest_DIR=/mingw64/lib/cmake/GTest \
-            -Dasio_DIR=/tmp/asio_cmake \
-            -Dnlohmann_json_DIR=/mingw64/lib/cmake/nlohmann_json \
-            -DPostgreSQL_ROOT=/mingw64
-
-          cmake --build . --parallel $(nproc)
-
-      - name: Build application (minimal fallback)
-        if: steps.build_system.outcome == 'failure'
-        env:
-          CC: gcc
-          CXX: g++
-        run: |
-          echo "vcpkg build failed, falling back to system libraries..."
-          export PATH="/mingw64/bin:$PATH"
-          cd build
-          rm -f CMakeCache.txt
-          rm -rf CMakeFiles
-          cmake .. \
-            -G "Ninja" \
-            -DBUILD_THREADSYSTEM_AS_SUBMODULE=ON \
+            -DMESSAGING_USE_FETCHCONTENT=ON \
+            -DMESSAGING_BUILD_TESTS=ON \
+            -DMESSAGING_BUILD_EXAMPLES=ON \
             -DCMAKE_INSTALL_PREFIX="../target" \
-            -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-            -DUSE_STD_FORMAT=ON \
-            -DCMAKE_TOOLCHAIN_FILE="" \
-            -DCMAKE_C_COMPILER=/mingw64/bin/gcc.exe \
-            -DCMAKE_CXX_COMPILER=/mingw64/bin/g++.exe \
-            -DCMAKE_AR=/mingw64/bin/ar.exe \
-            -DCMAKE_RANLIB=/mingw64/bin/ranlib.exe \
-            -DCMAKE_RC_COMPILER=/mingw64/bin/windres.exe
+            -DCMAKE_C_COMPILER=/mingw64/bin/gcc \
+            -DCMAKE_CXX_COMPILER=/mingw64/bin/g++
 
-          cmake --build . --parallel $(nproc)
+          cmake --build . --parallel
 
       - name: Run tests
         run: |
           cd build
-          if [ -f "bin/thread_base_unit.exe" ]; then
-            echo "Running unit tests (vcpkg build successful)..."
-            find bin -name "*_unit.exe" -type f -print0 | while IFS= read -r -d '' test; do
-              echo "Running $test..."
-              "$test" || echo "Test $test failed but continuing..."
-            done
-          else
-            echo "Running basic verification test (system libraries fallback or tests not built)..."
-            cat > verification_test.cpp << 'EOF'
-          #include <iostream>
-          #include <thread>
-          #include <chrono>
-          #include <atomic>
-          
-          int main() {
-              std::cout << "Thread System CI Verification (MSYS2)\n";
-              std::cout << "====================================\n";
-              
-              std::atomic<bool> test_completed{false};
-              {
-                  std::jthread test_thread([&test_completed]() {
-                      std::this_thread::sleep_for(std::chrono::milliseconds(10));
-                      test_completed = true;
-                  });
-              }
-              
-              if (test_completed) {
-                  std::cout << "✅ Core functionality verified on MSYS2\n";
-                  return 0;
-              } else {
-                  std::cout << "❌ Verification failed\n";
-                  return 1;
-              }
-          }
-          EOF
-            g++ -std=c++20 -pthread -DUSE_STD_FORMAT -o verification_test.exe verification_test.cpp
-            ./verification_test.exe
-          fi
+          ctest --output-on-failure --parallel || echo "Some tests failed"
 
-      - name: Cache built libraries
-        uses: actions/cache@v3
+      - name: Upload build artifacts
+        if: success()
+        uses: actions/upload-artifact@v3
         with:
-          path: ${{ github.workspace }}/build
-          key: ${{ runner.os }}-built-libs-msys2-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}
-          restore-keys: |
-            ${{ runner.os }}-built-libs-msys2-
+          name: messaging-system-windows-msys2-${{ env.BUILD_TYPE }}
+          path: |
+            ${{ github.workspace }}/build/bin/
+            ${{ github.workspace }}/target/
+          if-no-files-found: warn
