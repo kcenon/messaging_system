@@ -2,12 +2,10 @@
 
 #include "messaging_system/core/topic_router.h"
 #include "messaging_system/core/messaging_container.h"
-
-#ifdef HAS_THREAD_SYSTEM
-#include <kcenon/thread/core/thread_pool.h>
-#endif
+#include <kcenon/common/interfaces/executor_interface.h>
 
 #include <iostream>
+#include <future>
 #include <cassert>
 #include <atomic>
 #include <thread>
@@ -15,12 +13,29 @@
 
 using namespace messaging;
 
-#ifdef HAS_THREAD_SYSTEM
+// Simple mock executor for testing
+class MockExecutor : public common::interfaces::IExecutor {
+public:
+    std::future<void> submit(std::function<void()> task) override {
+        // Execute immediately for testing
+        task();
+        std::promise<void> promise;
+        promise.set_value();
+        return promise.get_future();
+    }
+
+    std::future<void> submit_delayed(std::function<void()> task, std::chrono::milliseconds) override {
+        return submit(task);
+    }
+
+    size_t queue_size() const override { return 0; }
+    void shutdown() override {}
+};
 
 void test_exact_topic_match() {
     std::cout << "Test: Exact topic match..." << std::endl;
 
-    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
+    auto executor = std::make_shared<MockExecutor>();
     TopicRouter router(executor);
 
     std::atomic<int> call_count{0};
@@ -45,7 +60,7 @@ void test_exact_topic_match() {
 void test_single_wildcard_match() {
     std::cout << "Test: Single-level wildcard (*)..." << std::endl;
 
-    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
+    auto executor = std::make_shared<MockExecutor>();
     TopicRouter router(executor);
 
     std::atomic<int> call_count{0};
@@ -79,7 +94,7 @@ void test_single_wildcard_match() {
 void test_multilevel_wildcard_match() {
     std::cout << "Test: Multi-level wildcard (#)..." << std::endl;
 
-    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
+    auto executor = std::make_shared<MockExecutor>();
     TopicRouter router(executor);
 
     std::atomic<int> call_count{0};
@@ -116,7 +131,7 @@ void test_multilevel_wildcard_match() {
 void test_multiple_subscribers_same_topic() {
     std::cout << "Test: Multiple subscribers on same topic..." << std::endl;
 
-    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
+    auto executor = std::make_shared<MockExecutor>();
     TopicRouter router(executor);
 
     std::atomic<int> sub1_count{0};
@@ -148,7 +163,7 @@ void test_multiple_subscribers_same_topic() {
 void test_unsubscribe() {
     std::cout << "Test: Unsubscribe functionality..." << std::endl;
 
-    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
+    auto executor = std::make_shared<MockExecutor>();
     TopicRouter router(executor);
 
     std::atomic<int> call_count{0};
@@ -183,7 +198,7 @@ void test_unsubscribe() {
 void test_complex_wildcard_patterns() {
     std::cout << "Test: Complex wildcard patterns..." << std::endl;
 
-    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
+    auto executor = std::make_shared<MockExecutor>();
     TopicRouter router(executor);
 
     std::atomic<int> pattern1_count{0};
@@ -228,7 +243,7 @@ void test_complex_wildcard_patterns() {
 void test_no_match() {
     std::cout << "Test: No matching subscribers..." << std::endl;
 
-    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
+    auto executor = std::make_shared<MockExecutor>();
     TopicRouter router(executor);
 
     std::atomic<int> call_count{0};
@@ -274,12 +289,3 @@ int main() {
         return 1;
     }
 }
-
-#else
-
-int main() {
-    std::cerr << "TopicRouter tests require HAS_THREAD_SYSTEM" << std::endl;
-    return 1;
-}
-
-#endif

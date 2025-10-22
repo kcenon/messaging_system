@@ -3,12 +3,10 @@
 #include "messaging_system/core/message_bus.h"
 #include "messaging_system/core/topic_router.h"
 #include "messaging_system/core/messaging_container.h"
-
-#ifdef HAS_THREAD_SYSTEM
-#include <kcenon/thread/core/thread_pool.h>
-#endif
+#include <kcenon/common/interfaces/executor_interface.h>
 
 #include <iostream>
+#include <future>
 #include <cassert>
 #include <atomic>
 #include <thread>
@@ -16,13 +14,30 @@
 
 using namespace messaging;
 
-#ifdef HAS_THREAD_SYSTEM
+// Simple mock executor for testing
+class MockExecutor : public common::interfaces::IExecutor {
+public:
+    std::future<void> submit(std::function<void()> task) override {
+        // Execute immediately for testing
+        task();
+        std::promise<void> promise;
+        promise.set_value();
+        return promise.get_future();
+    }
+
+    std::future<void> submit_delayed(std::function<void()> task, std::chrono::milliseconds) override {
+        return submit(task);
+    }
+
+    size_t queue_size() const override { return 0; }
+    void shutdown() override {}
+};
 
 void test_start_stop() {
     std::cout << "Test: MessageBus start/stop..." << std::endl;
 
-    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(2);
-    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -39,8 +54,8 @@ void test_start_stop() {
 void test_publish_subscribe_sync() {
     std::cout << "Test: Synchronous publish/subscribe..." << std::endl;
 
-    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(2);
-    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -74,8 +89,8 @@ void test_publish_subscribe_sync() {
 void test_publish_subscribe_async() {
     std::cout << "Test: Asynchronous publish/subscribe..." << std::endl;
 
-    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(2);
-    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -107,8 +122,8 @@ void test_publish_subscribe_async() {
 void test_multiple_subscribers() {
     std::cout << "Test: Multiple subscribers on same topic..." << std::endl;
 
-    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(2);
-    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -151,8 +166,8 @@ void test_multiple_subscribers() {
 void test_wildcard_subscriptions() {
     std::cout << "Test: Wildcard subscriptions via MessageBus..." << std::endl;
 
-    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(2);
-    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -194,8 +209,8 @@ void test_wildcard_subscriptions() {
 void test_unsubscribe_via_bus() {
     std::cout << "Test: Unsubscribe via MessageBus..." << std::endl;
 
-    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(2);
-    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -234,8 +249,8 @@ void test_unsubscribe_via_bus() {
 void test_concurrent_publishing() {
     std::cout << "Test: Concurrent publishing from multiple threads..." << std::endl;
 
-    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(4);
-    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(8);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -281,8 +296,8 @@ void test_concurrent_publishing() {
 void test_error_handling_in_callback() {
     std::cout << "Test: Error handling in subscriber callback..." << std::endl;
 
-    auto io_executor = std::make_shared<kcenon::thread::thread_pool>(2);
-    auto work_executor = std::make_shared<kcenon::thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -340,12 +355,3 @@ int main() {
         return 1;
     }
 }
-
-#else
-
-int main() {
-    std::cerr << "MessageBus tests require HAS_THREAD_SYSTEM" << std::endl;
-    return 1;
-}
-
-#endif
