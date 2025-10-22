@@ -56,11 +56,7 @@ jobs:
           mkdir -p build
 
       - name: Build with MSYS2 (FetchContent mode)
-        env:
-          CC: /mingw64/bin/gcc
-          CXX: /mingw64/bin/g++
         run: |
-          export PATH="/mingw64/bin:$PATH"
           cd build
           echo "Building with FetchContent to download all external systems..."
 
@@ -70,9 +66,7 @@ jobs:
             -DMESSAGING_USE_FETCHCONTENT=ON \
             -DMESSAGING_BUILD_TESTS=ON \
             -DMESSAGING_BUILD_EXAMPLES=ON \
-            -DCMAKE_INSTALL_PREFIX="../target" \
-            -DCMAKE_C_COMPILER=/mingw64/bin/gcc \
-            -DCMAKE_CXX_COMPILER=/mingw64/bin/g++
+            -DCMAKE_INSTALL_PREFIX="../target"
 
           cmake --build . --parallel
 
