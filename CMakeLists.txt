@@ -617,10 +617,10 @@ endif()
 target_compile_features(messaging_system_core PUBLIC cxx_std_20)
 
 # ============================================================================
-# Main Executable
+# Main Executable (Example/Demo)
 # ============================================================================
 
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+if(MESSAGING_BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
     add_executable(messaging_system
         src/main.cpp
     )
