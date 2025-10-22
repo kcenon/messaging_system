@@ -20,14 +20,14 @@ using namespace messaging;
 void test_exact_topic_match() {
     std::cout << "Test: Exact topic match..." << std::endl;
 
-    auto executor = std::make_shared<thread::thread_pool>(2);
+    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
     TopicRouter router(executor);
 
     std::atomic<int> call_count{0};
 
-    auto callback = [&](const MessagingContainer& msg) -> common::Result<void> {
+    auto callback = [&](const MessagingContainer& msg) -> common::VoidResult {
         call_count++;
-        return common::VoidResult::ok();
+        return common::VoidResult::ok(std::monostate{});
     };
 
     auto sub_result = router.subscribe("user.created", callback);
@@ -45,14 +45,14 @@ void test_exact_topic_match() {
 void test_single_wildcard_match() {
     std::cout << "Test: Single-level wildcard (*)..." << std::endl;
 
-    auto executor = std::make_shared<thread::thread_pool>(2);
+    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
     TopicRouter router(executor);
 
     std::atomic<int> call_count{0};
 
-    auto callback = [&](const MessagingContainer& msg) -> common::Result<void> {
+    auto callback = [&](const MessagingContainer& msg) -> common::VoidResult {
         call_count++;
-        return common::VoidResult::ok();
+        return common::VoidResult::ok(std::monostate{});
     };
 
     // Subscribe to user.*
@@ -79,14 +79,14 @@ void test_single_wildcard_match() {
 void test_multilevel_wildcard_match() {
     std::cout << "Test: Multi-level wildcard (#)..." << std::endl;
 
-    auto executor = std::make_shared<thread::thread_pool>(2);
+    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
     TopicRouter router(executor);
 
     std::atomic<int> call_count{0};
 
-    auto callback = [&](const MessagingContainer& msg) -> common::Result<void> {
+    auto callback = [&](const MessagingContainer& msg) -> common::VoidResult {
         call_count++;
-        return common::VoidResult::ok();
+        return common::VoidResult::ok(std::monostate{});
     };
 
     // Subscribe to order.#
@@ -116,7 +116,7 @@ void test_multilevel_wildcard_match() {
 void test_multiple_subscribers_same_topic() {
     std::cout << "Test: Multiple subscribers on same topic..." << std::endl;
 
-    auto executor = std::make_shared<thread::thread_pool>(2);
+    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
     TopicRouter router(executor);
 
     std::atomic<int> sub1_count{0};
@@ -148,14 +148,14 @@ void test_multiple_subscribers_same_topic() {
 void test_unsubscribe() {
     std::cout << "Test: Unsubscribe functionality..." << std::endl;
 
-    auto executor = std::make_shared<thread::thread_pool>(2);
+    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
     TopicRouter router(executor);
 
     std::atomic<int> call_count{0};
 
-    auto callback = [&](const MessagingContainer& msg) -> common::Result<void> {
+    auto callback = [&](const MessagingContainer& msg) -> common::VoidResult {
         call_count++;
-        return common::VoidResult::ok();
+        return common::VoidResult::ok(std::monostate{});
     };
 
     auto sub_result = router.subscribe("test.topic", callback);
@@ -183,7 +183,7 @@ void test_unsubscribe() {
 void test_complex_wildcard_patterns() {
     std::cout << "Test: Complex wildcard patterns..." << std::endl;
 
-    auto executor = std::make_shared<thread::thread_pool>(2);
+    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
     TopicRouter router(executor);
 
     std::atomic<int> pattern1_count{0};
@@ -228,14 +228,14 @@ void test_complex_wildcard_patterns() {
 void test_no_match() {
     std::cout << "Test: No matching subscribers..." << std::endl;
 
-    auto executor = std::make_shared<thread::thread_pool>(2);
+    auto executor = std::make_shared<kcenon::thread::thread_pool>(2);
     TopicRouter router(executor);
 
     std::atomic<int> call_count{0};
 
-    auto callback = [&](const MessagingContainer& msg) -> common::Result<void> {
+    auto callback = [&](const MessagingContainer& msg) -> common::VoidResult {
         call_count++;
-        return common::VoidResult::ok();
+        return common::VoidResult::ok(std::monostate{});
     };
 
     router.subscribe("user.created", callback);
