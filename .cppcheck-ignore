@@ -1,0 +1,10 @@
+# Ignore markdown documentation files
+*.md
+
+# Ignore build directories
+build-*/
+_builds/
+.git/
+
+# Ignore archived legacy code
+archived_legacy/
