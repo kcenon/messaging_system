@@ -329,6 +329,9 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(common_system_FOUND TRUE CACHE BOOL "" FORCE)
         set(common_system_SOURCE_DIR "${commonsystem_source_dir}" CACHE STRING "" FORCE)
 
+        # Configure ThreadSystem to use std::format instead of fmt library
+        set(USE_STD_FORMAT ON CACHE BOOL "Use std::format instead of fmt library in thread_system" FORCE)
+
         # Then ThreadSystem (required by logger, monitoring)
         FetchContent_MakeAvailable(ThreadSystem)
 
