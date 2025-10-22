@@ -91,8 +91,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
     std::cout << "Initializing MessageBus..." << std::endl;
 
     // Create thread pools and wrap them as IExecutor using adapter
-    auto io_pool = std::make_shared<thread::thread_pool>("io_pool");
-    auto work_pool = std::make_shared<thread::thread_pool>("work_pool");
+    auto io_pool = std::make_shared<thread::thread_pool>();
+    auto work_pool = std::make_shared<thread::thread_pool>();
 
     // Wrap thread_pools as IExecutor interface using the adapter
     auto io_executor = std::make_shared<thread::adapters::common_system_executor_adapter>(io_pool);
