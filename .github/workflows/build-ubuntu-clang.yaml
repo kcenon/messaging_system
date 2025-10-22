@@ -43,7 +43,7 @@ jobs:
           fi
       
       - name: Cache vcpkg
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: vcpkg-cache
         with:
           path: |
@@ -92,7 +92,7 @@ jobs:
         run: echo "commit=$(git -C vcpkg rev-parse HEAD)" >> $GITHUB_OUTPUT
 
       - name: Cache vcpkg installed
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: vcpkg-installed
         with:
           path: ${{ github.workspace }}/vcpkg_installed
@@ -117,7 +117,7 @@ jobs:
           fi
 
       - name: Cache CMake build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ${{ github.workspace }}/build
@@ -212,7 +212,7 @@ jobs:
           fi
 
       - name: Cache built libraries
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/build
           key: ${{ runner.os }}-clang-built-libs-${{ hashFiles('CMakeLists.txt', 'vcpkg.json') }}-${{ env.BUILD_TYPE }}

@@ -32,7 +32,7 @@ jobs:
           sudo apt install -y cmake build-essential ninja-build git
 
       - name: Cache FetchContent downloads
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ${{ github.workspace }}/build/_deps
@@ -69,7 +69,7 @@ jobs:
 
       - name: Upload build artifacts
         if: success()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: messaging-system-ubuntu-gcc-${{ env.BUILD_TYPE }}
           path: |
