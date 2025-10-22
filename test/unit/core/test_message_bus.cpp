@@ -36,7 +36,8 @@ public:
     common::Result<std::future<void>> execute(std::unique_ptr<common::interfaces::IJob>&& job) override {
         auto result = job->execute();
         if (result.is_err()) {
-            return common::Result<std::future<void>>::error(result.error());
+            auto err = result.unwrap_err();
+            return common::Result<std::future<void>>(err);
         }
         std::promise<void> promise;
         promise.set_value();
@@ -339,7 +340,7 @@ void test_error_handling_in_callback() {
     bus.subscribe("test.error",
         [&](const MessagingContainer& msg) -> common::VoidResult {
             error_count++;
-            return common::VoidResult::error(
+            return common::VoidResult(
                 common::error_info{-1, "Intentional error", "test", ""}
             );
         });

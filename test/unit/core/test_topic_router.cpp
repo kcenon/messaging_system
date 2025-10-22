@@ -35,7 +35,8 @@ public:
     common::Result<std::future<void>> execute(std::unique_ptr<common::interfaces::IJob>&& job) override {
         auto result = job->execute();
         if (result.is_err()) {
-            return common::Result<std::future<void>>::error(result.error());
+            auto err = result.unwrap_err();
+            return common::Result<std::future<void>>(err);
         }
         std::promise<void> promise;
         promise.set_value();
