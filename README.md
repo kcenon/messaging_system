@@ -1103,3 +1103,260 @@ See [LICENSE](LICENSE) file for full license text.
 Made with ❤️ by the Open Source Community
 
 </div>
+
+---
+
+## 📋 Appendix
+
+### A. Advanced Build Guide
+
+#### Available Build Presets
+
+The system provides 10 CMake presets for different use cases:
+
+| Preset | Description | Use Case |
+|--------|-------------|----------|
+| `default` | Production with find_package | Installed external systems |
+| `dev-fetchcontent` | Development with FetchContent | Development without installs |
+| `debug` | Debug build | Debugging |
+| `release` | Optimized release | Production |
+| `asan` | AddressSanitizer | Memory error detection |
+| `tsan` | ThreadSanitizer | Race condition detection |
+| `ubsan` | UndefinedBehaviorSanitizer | Undefined behavior detection |
+| `ci` | CI/CD with pedantic warnings | Continuous integration |
+| `lockfree` | Lock-free data structures | High performance |
+| `minimal` | Minimal feature set | Embedded/constrained |
+
+Usage:
+```bash
+./build.sh [preset] [options]
+
+# Examples:
+./build.sh dev-fetchcontent --tests
+./build.sh release --examples
+./build.sh asan --clean
+```
+
+#### Build Script Options
+
+```bash
+./build.sh [preset] [options]
+
+Options:
+  --clean           Remove build directory before building
+  --tests           Build and run tests
+  --examples        Build examples
+  --benchmarks      Build benchmarks
+  --verbose         Show detailed build output
+  --cores N         Use N cores (default: auto-detect)
+
+Feature Options:
+  --lockfree        Enable lock-free implementations
+  --no-monitoring   Disable monitoring system
+  --no-logging      Disable logging system
+  --enable-tls      Enable TLS/SSL support
+```
+
+#### Troubleshooting Build Issues
+
+**Target Name Conflicts**
+
+Symptom:
+```
+CMake Error: add_library cannot create target "interfaces" because another
+target with the same name already exists.
+```
+
+Solutions:
+1. Use automated build script: `./scripts/build_with_fetchcontent.sh`
+2. Manually move local systems temporarily
+3. Install systems and use `default` preset
+
+**Platform-Specific Notes**
+
+macOS:
+- Requires Xcode Command Line Tools
+- Homebrew recommended for dependencies
+- Use `grep -E` (BSD grep doesn't support `-P`)
+
+Linux (Ubuntu/Debian):
+- Install build-essential: `sudo apt-get install build-essential cmake`
+- GCC 11+ or Clang 14+ for C++20
+
+### B. Code Quality and Linting
+
+#### Linting Tools
+
+We use specialized tools for different file types:
+
+| Tool | Purpose | Config File | File Types |
+|------|---------|-------------|------------|
+| Cppcheck | C++ analysis | `.cppcheck` | `*.cpp`, `*.h` |
+| clang-tidy | C++ linting | `.clang-tidy` | `*.cpp`, `*.h` |
+| markdownlint | Doc style | `.markdownlint.json` | `*.md` |
+| shellcheck | Script validation | None | `*.sh` |
+
+#### Running Cppcheck
+
+```bash
+# Basic usage
+cppcheck src/ include/ \
+    --enable=warning,style,performance,portability \
+    --std=c++20 \
+    --suppress=missingIncludeSystem
+
+# With compile commands
+cppcheck --project=build/compile_commands.json --enable=all
+```
+
+#### Markdown Linting
+
+```bash
+# Install markdownlint
+npm install -g markdownlint-cli
+
+# Check all markdown files
+markdownlint '**/*.md'
+
+# Fix automatically when possible
+markdownlint '**/*.md' --fix
+```
+
+#### Shell Script Validation
+
+```bash
+# Install shellcheck
+brew install shellcheck  # macOS
+apt-get install shellcheck  # Ubuntu
+
+# Check all shell scripts
+shellcheck build.sh scripts/*.sh
+```
+
+#### Pre-commit Hooks (Optional)
+
+Create `.git/hooks/pre-commit`:
+
+```bash
+#!/bin/bash
+
+echo "Running code quality checks..."
+
+# C++ files
+if git diff --cached --name-only | grep -E '\.(cpp|h)$' > /dev/null; then
+    echo "Checking C++ files with cppcheck..."
+    git diff --cached --name-only | grep -E '\.(cpp|h)$' | xargs cppcheck \
+        --enable=warning,style,performance \
+        --std=c++20 \
+        --suppress=missingIncludeSystem \
+        --error-exitcode=1 || exit 1
+fi
+
+echo "All checks passed!"
+```
+
+Make it executable:
+```bash
+chmod +x .git/hooks/pre-commit
+```
+
+### C. Testing and Benchmarks
+
+#### Test Coverage
+
+Current test suite includes:
+- 39+ test cases across 6 test files
+- Unit tests for all core components (MessageBus, TopicRouter, MessagingContainer)
+- Integration tests for end-to-end scenarios
+- Performance benchmarks
+
+#### Running Specific Tests
+
+```bash
+# After building with --tests
+./build/test/unittest/test_topic_router
+./build/test/unittest/test_message_bus
+./build/test/unittest/test_end_to_end
+
+# With filtering
+./build/test/unittest/messaging_test --gtest_filter="MessageBusTest.*"
+```
+
+#### Performance Benchmarks
+
+Build and run benchmarks:
+
+```bash
+./build.sh --benchmarks
+./build/benchmarks/message_bus_benchmark
+```
+
+### D. Development Guidelines
+
+#### Code Style
+
+- Follow C++20 best practices
+- Use RAII for resource management
+- Prefer `Result<T>` over exceptions in API boundaries
+- Thread safety in all public APIs
+- Comprehensive unit tests for new features
+
+#### Commit Message Format
+
+We follow conventional commits:
+
+```
+<type>(<scope>): <subject>
+
+<body>
+```
+
+Types:
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation only
+- `refactor`: Code refactoring
+- `test`: Adding tests
+- `perf`: Performance improvement
+- `ci`: CI/CD changes
+
+Example:
+```
+feat(message-bus): add priority-based message routing
+
+- Implement priority queue for critical messages
+- Add configuration option for priority levels
+- Update tests to cover priority scenarios
+```
+
+#### VS Code Integration
+
+Recommended extensions (`.vscode/extensions.json`):
+
+```json
+{
+  "recommendations": [
+    "davidanson.vscode-markdownlint",
+    "ms-vscode.cpptools",
+    "ms-vscode.cmake-tools",
+    "timonwong.shellcheck"
+  ]
+}
+```
+
+Settings (`.vscode/settings.json`):
+
+```json
+{
+  "markdownlint.config": {
+    "extends": ".markdownlint.json"
+  },
+  "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+  "shellcheck.enable": true,
+  "cmake.configureOnOpen": true
+}
+```
+
+---
+
+**Last Updated**: 2025-10-22
