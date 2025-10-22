@@ -246,6 +246,9 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         # This allows us to set FETCHCONTENT_SOURCE_DIR_* variables to prevent duplicate fetches
 
         # Common System
+        # Disable testing for all dependencies BEFORE declaring them
+        set(BUILD_TESTING OFF CACHE BOOL "Disable tests" FORCE)
+
         FetchContent_Declare(
             CommonSystem
             GIT_REPOSITORY https://github.com/kcenon/common_system.git
@@ -313,14 +316,13 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(CMAKE_SKIP_INSTALL_RULES_SAVE "${CMAKE_SKIP_INSTALL_RULES}")
         set(CMAKE_SKIP_INSTALL_RULES TRUE)
 
-        # Save current BUILD_TESTING state and disable for dependencies
-        # This prevents dependency test failures from blocking our build
-        if(DEFINED BUILD_TESTING)
-            set(BUILD_TESTING_SAVE "${BUILD_TESTING}")
+        # Note: BUILD_TESTING is already set to OFF above before FetchContent_Declare
+        # Save the MESSAGING_BUILD_TESTS state to restore later
+        if(DEFINED MESSAGING_BUILD_TESTS)
+            set(MESSAGING_BUILD_TESTS_SAVE "${MESSAGING_BUILD_TESTS}")
         else()
-            set(BUILD_TESTING_SAVE ON)
+            set(MESSAGING_BUILD_TESTS_SAVE ON)
         endif()
-        set(BUILD_TESTING OFF CACHE BOOL "Disable testing for dependencies" FORCE)
 
         # Make CommonSystem available first (required by most others)
         FetchContent_MakeAvailable(CommonSystem)
@@ -350,6 +352,15 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(thread_system_SOURCE_DIR "${threadsystem_source_dir}" CACHE STRING "" FORCE)
         set(thread_system_FOUND TRUE CACHE BOOL "" FORCE)
 
+        # Ensure USE_STD_FORMAT is defined for all thread_system targets
+        # This is a workaround for thread_system not reading USE_STD_FORMAT option correctly
+        if(TARGET thread_base)
+            target_compile_definitions(thread_base PRIVATE USE_STD_FORMAT)
+        endif()
+        if(TARGET thread_pool)
+            target_compile_definitions(thread_pool PRIVATE USE_STD_FORMAT)
+        endif()
+
         # ContainerSystem needs common_system headers to be fully available
         FetchContent_MakeAvailable(ContainerSystem)
 
@@ -369,8 +380,11 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         # Restore original CMAKE_SKIP_INSTALL_RULES setting
         set(CMAKE_SKIP_INSTALL_RULES "${CMAKE_SKIP_INSTALL_RULES_SAVE}")
 
-        # Restore BUILD_TESTING for messaging_system tests
-        set(BUILD_TESTING "${BUILD_TESTING_SAVE}" CACHE BOOL "Enable testing for messaging_system" FORCE)
+        # Re-enable BUILD_TESTING for messaging_system's own tests
+        # Use MESSAGING_BUILD_TESTS as the control variable
+        if(MESSAGING_BUILD_TESTS)
+            set(BUILD_TESTING ON CACHE BOOL "Enable testing for messaging_system" FORCE)
+        endif()
 
         # Create missing aliases that some dependencies expect
         # Note: kcenon::common is already an ALIAS, so we need to alias the real target
