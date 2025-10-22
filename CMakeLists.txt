@@ -305,6 +305,11 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             GIT_SHALLOW TRUE
         )
 
+        # Disable installation for all FetchContent dependencies
+        # This prevents export errors when dependencies link to each other
+        set(CMAKE_SKIP_INSTALL_RULES_SAVE "${CMAKE_SKIP_INSTALL_RULES}")
+        set(CMAKE_SKIP_INSTALL_RULES TRUE)
+
         # Make CommonSystem available first (required by most others)
         FetchContent_MakeAvailable(CommonSystem)
 
@@ -343,6 +348,13 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             NetworkSystem
         )
 
+        # Restore original CMAKE_SKIP_INSTALL_RULES setting
+        set(CMAKE_SKIP_INSTALL_RULES "${CMAKE_SKIP_INSTALL_RULES_SAVE}")
+
+        # Create missing aliases that some dependencies expect
+        if(TARGET kcenon::common AND NOT TARGET kcenon::common_system)
+            add_library(kcenon::common_system ALIAS kcenon::common)
+        endif()
 
     else()
         # find_package mode (production)
