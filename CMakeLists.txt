@@ -294,14 +294,14 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             PATCH_COMMAND sed -i.bak "s/add_subdirectory(samples)/#add_subdirectory(samples)/g" CMakeLists.txt || true
         )
 
-        # Database System
-        FetchContent_Declare(
-            DatabaseSystem
-            GIT_REPOSITORY https://github.com/kcenon/database_system.git
-            GIT_TAG main
-            GIT_SHALLOW TRUE
-            PATCH_COMMAND sed -i.bak -e "s/add_subdirectory(samples)/#add_subdirectory(samples)/g" -e "s/add_subdirectory(integration_tests)/#add_subdirectory(integration_tests)/g" CMakeLists.txt || true
-        )
+        # Database System - DISABLED (not needed, has compilation issues)
+        # FetchContent_Declare(
+        #     DatabaseSystem
+        #     GIT_REPOSITORY https://github.com/kcenon/database_system.git
+        #     GIT_TAG main
+        #     GIT_SHALLOW TRUE
+        #     PATCH_COMMAND sed -i.bak -e "s/add_subdirectory(samples)/#add_subdirectory(samples)/g" -e "s/add_subdirectory(integration_tests)/#add_subdirectory(integration_tests)/g" CMakeLists.txt || true
+        # )
 
         # Network System
         FetchContent_Declare(
@@ -382,7 +382,7 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         FetchContent_MakeAvailable(
             LoggerSystem
             MonitoringSystem
-            DatabaseSystem
+            # DatabaseSystem  # DISABLED - not needed
             NetworkSystem
         )
 
@@ -577,14 +577,14 @@ elseif(TARGET container_system)
     target_compile_definitions(messaging_system_core PUBLIC HAS_CONTAINER_SYSTEM)
 endif()
 
-# DatabaseSystem
-if(TARGET DatabaseSystem::database)
-    list(APPEND MESSAGING_CORE_LIBS DatabaseSystem::database)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
-elseif(TARGET database)
-    list(APPEND MESSAGING_CORE_LIBS database)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
-endif()
+# DatabaseSystem - DISABLED (not needed)
+# if(TARGET DatabaseSystem::database)
+#     list(APPEND MESSAGING_CORE_LIBS DatabaseSystem::database)
+#     target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
+# elseif(TARGET database)
+#     list(APPEND MESSAGING_CORE_LIBS database)
+#     target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
+# endif()
 
 # NetworkSystem
 if(TARGET NetworkSystem::network)
