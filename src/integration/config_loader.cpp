@@ -1,6 +1,7 @@
 #include "messaging_system/integration/config_loader.h"
 #include "messaging_system/error_codes.h"
 #include <kcenon/common/patterns/result.h>
+#include <filesystem>
 #include <fstream>
 #include <thread>
 

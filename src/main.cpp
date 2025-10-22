@@ -4,6 +4,7 @@
 
 #ifdef HAS_THREAD_SYSTEM
 #include <kcenon/thread/core/thread_pool.h>
+namespace thread = kcenon::thread;
 #endif
 
 #ifdef HAS_LOGGER_SYSTEM
