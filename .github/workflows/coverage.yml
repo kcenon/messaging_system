@@ -1,0 +1,93 @@
+name: Code Coverage
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  coverage:
+    name: Code Coverage Analysis
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        persist-credentials: true
+        clean: true
+        fetch-depth: 0  # Need full history for coverage
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y cmake build-essential ninja-build gcc g++
+        sudo apt install -y libgtest-dev libgmock-dev libyaml-cpp-dev
+        sudo apt install -y lcov
+
+    - name: Configure CMake with coverage
+      run: |
+        mkdir -p build
+        cd build
+        cmake .. \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DMESSAGING_BUILD_TESTS=ON \
+          -DMESSAGING_BUILD_EXAMPLES=ON \
+          -DMESSAGING_USE_FETCHCONTENT=ON \
+          -DENABLE_COVERAGE=ON \
+          -DCMAKE_C_COMPILER=gcc \
+          -DCMAKE_CXX_COMPILER=g++ \
+          -DCMAKE_C_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
+          -DCMAKE_CXX_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
+          -DCMAKE_EXE_LINKER_FLAGS="--coverage"
+
+    - name: Build
+      run: |
+        cd build
+        cmake --build . --parallel
+
+    - name: Run tests
+      run: |
+        cd build
+        ctest --output-on-failure || true
+
+    - name: Generate coverage report
+      run: |
+        cd build
+        lcov --directory . --capture --output-file coverage.info
+        lcov --remove coverage.info \
+          '/usr/*' \
+          '*/tests/*' \
+          '*/examples/*' \
+          '*/build/_deps/*' \
+          '*/vcpkg_installed/*' \
+          --output-file coverage.info
+        lcov --list coverage.info
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        files: ./build/coverage.info
+        flags: unittests
+        name: messaging_system-coverage
+        fail_ci_if_error: false
+        verbose: true
+        token: ${{ secrets.CODECOV_TOKEN }}
+
+    - name: Upload coverage artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: |
+          build/coverage.info
+          build/**/*.gcda
+          build/**/*.gcno
+        retention-days: 7
+        if-no-files-found: ignore

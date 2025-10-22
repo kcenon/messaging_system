@@ -1,0 +1,107 @@
+name: Static Analysis
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  clang-tidy:
+    name: Clang-Tidy Analysis
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    continue-on-error: true  # Phase 0: Baseline collection
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        persist-credentials: true
+        clean: true
+        fetch-depth: 1
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y cmake build-essential ninja-build clang clang-tidy lld
+        sudo apt install -y libgtest-dev libgmock-dev libyaml-cpp-dev
+
+    - name: Configure CMake
+      run: |
+        mkdir -p build
+        cd build
+        cmake .. \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DMESSAGING_BUILD_TESTS=ON \
+          -DMESSAGING_BUILD_EXAMPLES=ON \
+          -DMESSAGING_USE_FETCHCONTENT=ON \
+          -DCMAKE_C_COMPILER=clang \
+          -DCMAKE_CXX_COMPILER=clang++ \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+    - name: Run clang-tidy
+      run: |
+        cd build
+        # Phase 0: Just collect baseline, don't fail
+        run-clang-tidy -p . || echo "clang-tidy found issues (baseline collection)"
+
+    - name: Upload clang-tidy results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: clang-tidy-results
+        path: |
+          build/compile_commands.json
+          build/**/*.log
+        retention-days: 7
+        if-no-files-found: ignore
+
+  cppcheck:
+    name: Cppcheck Analysis
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    continue-on-error: true  # Phase 0: Baseline collection
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        persist-credentials: true
+        clean: true
+        fetch-depth: 1
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y cppcheck
+
+    - name: Run Cppcheck
+      run: |
+        cppcheck \
+          --enable=all \
+          --inconclusive \
+          --std=c++20 \
+          --suppress=missingInclude \
+          --suppress=unmatchedSuppression \
+          --inline-suppr \
+          --xml \
+          --xml-version=2 \
+          -I include \
+          src/ \
+          2> cppcheck-results.xml || echo "Cppcheck found issues (baseline collection)"
+
+    - name: Upload Cppcheck results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: cppcheck-results
+        path: cppcheck-results.xml
+        retention-days: 7
+        if-no-files-found: ignore
