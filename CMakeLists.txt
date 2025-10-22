@@ -265,11 +265,12 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         )
 
         # Logger System
+        # Pinned to stable commit before Oct 22 breaking changes (error() -> make_error())
         FetchContent_Declare(
             LoggerSystem
             GIT_REPOSITORY https://github.com/kcenon/logger_system.git
-            GIT_TAG main
-            GIT_SHALLOW TRUE
+            GIT_TAG f680cb9cb9ce91adf9f341e740db02fb6a091dbd  # Oct 21, 2025 - Last stable before breaking changes
+            GIT_SHALLOW FALSE  # Need full history for specific commit
         )
 
         # Monitoring System
