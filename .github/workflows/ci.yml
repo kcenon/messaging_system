@@ -174,8 +174,9 @@ jobs:
         cmake .. \
           -G Ninja \
           -DMESSAGING_BUILD_TESTS=ON \
-          -DMESSAGING_BUILD_EXAMPLES=ON \
-          -DMESSAGING_USE_FETCHCONTENT=ON \
+          -DMESSAGING_BUILD_EXAMPLES=OFF \
+          -DMESSAGING_USE_FETCHCONTENT=OFF \
+          -DMESSAGING_USE_EXTERNAL_SYSTEMS=OFF \
           -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
           -DCMAKE_TOOLCHAIN_FILE="${GITHUB_WORKSPACE}/vcpkg/scripts/buildsystems/vcpkg.cmake" \
           -DCMAKE_C_COMPILER=${{ matrix.compiler == 'gcc' && 'gcc' || 'clang' }} \
@@ -188,8 +189,9 @@ jobs:
         cmake .. \
           -G Ninja \
           -DMESSAGING_BUILD_TESTS=ON \
-          -DMESSAGING_BUILD_EXAMPLES=ON \
-          -DMESSAGING_USE_FETCHCONTENT=ON \
+          -DMESSAGING_BUILD_EXAMPLES=OFF \
+          -DMESSAGING_USE_FETCHCONTENT=OFF \
+          -DMESSAGING_USE_EXTERNAL_SYSTEMS=OFF \
           -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
           -DCMAKE_C_COMPILER=${{ matrix.compiler == 'gcc' && 'gcc' || 'clang' }} \
           -DCMAKE_CXX_COMPILER=${{ matrix.compiler == 'gcc' && 'g++' || 'clang++' }}
@@ -205,8 +207,9 @@ jobs:
           -G "Visual Studio 17 2022" `
           -A x64 `
           -DMESSAGING_BUILD_TESTS=ON `
-          -DMESSAGING_BUILD_EXAMPLES=ON `
-          -DMESSAGING_USE_FETCHCONTENT=ON `
+          -DMESSAGING_BUILD_EXAMPLES=OFF `
+          -DMESSAGING_USE_FETCHCONTENT=OFF `
+          -DMESSAGING_USE_EXTERNAL_SYSTEMS=OFF `
           -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
           -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake"
 
@@ -219,8 +222,9 @@ jobs:
           -G "Visual Studio 17 2022" `
           -A x64 `
           -DMESSAGING_BUILD_TESTS=ON `
-          -DMESSAGING_BUILD_EXAMPLES=ON `
-          -DMESSAGING_USE_FETCHCONTENT=ON `
+          -DMESSAGING_BUILD_EXAMPLES=OFF `
+          -DMESSAGING_USE_FETCHCONTENT=OFF `
+          -DMESSAGING_USE_EXTERNAL_SYSTEMS=OFF `
           -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE
 
     - name: Build (Unix)
@@ -318,8 +322,9 @@ jobs:
           -G Ninja \
           -DCMAKE_BUILD_TYPE=Debug \
           -DMESSAGING_BUILD_TESTS=ON \
-          -DMESSAGING_BUILD_EXAMPLES=ON \
-          -DMESSAGING_USE_FETCHCONTENT=ON \
+          -DMESSAGING_BUILD_EXAMPLES=OFF \
+          -DMESSAGING_USE_FETCHCONTENT=OFF \
+          -DMESSAGING_USE_EXTERNAL_SYSTEMS=OFF \
           -DCMAKE_C_COMPILER=clang \
           -DCMAKE_CXX_COMPILER=clang++ \
           -DCMAKE_C_FLAGS="${{ matrix.sanitizer.flags }}" \
