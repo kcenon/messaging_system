@@ -324,6 +324,10 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             set(MESSAGING_BUILD_TESTS_SAVE ON)
         endif()
 
+        # Disable common_system internal tests to avoid missing executables in CI
+        set(COMMON_BUILD_TESTS OFF CACHE BOOL "Disable common_system tests" FORCE)
+        set(COMMON_BUILD_INTEGRATION_TESTS OFF CACHE BOOL "Disable common_system integration tests" FORCE)
+
         # Make CommonSystem available first (required by most others)
         FetchContent_MakeAvailable(CommonSystem)
 
