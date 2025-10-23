@@ -2,6 +2,7 @@
 
 #include "messaging_system/core/topic_router.h"
 #include "messaging_system/core/messaging_container.h"
+#include "messaging_system/support/mock_executor.h"
 #include <kcenon/common/interfaces/executor_interface.h>
 
 #include <iostream>
@@ -12,55 +13,7 @@
 #include <chrono>
 
 using namespace messaging;
-
-// Simple mock executor for testing
-class MockExecutor : public common::interfaces::IExecutor {
-public:
-    MockExecutor() : running_(true) {}
-
-    // Function-based execution (legacy)
-    std::future<void> submit(std::function<void()> task) override {
-        // Execute immediately for testing
-        task();
-        std::promise<void> promise;
-        promise.set_value();
-        return promise.get_future();
-    }
-
-    std::future<void> submit_delayed(std::function<void()> task, std::chrono::milliseconds) override {
-        return submit(task);
-    }
-
-    // Job-based execution (Phase 2)
-    common::Result<std::future<void>> execute(std::unique_ptr<common::interfaces::IJob>&& job) override {
-        auto result = job->execute();
-        if (result.is_err()) {
-            auto err = result.error();
-            return common::Result<std::future<void>>(err);
-        }
-        std::promise<void> promise;
-        promise.set_value();
-        return common::Result<std::future<void>>::ok(promise.get_future());
-    }
-
-    common::Result<std::future<void>> execute_delayed(
-        std::unique_ptr<common::interfaces::IJob>&& job,
-        std::chrono::milliseconds delay) override {
-        return execute(std::move(job));
-    }
-
-    // Status and control
-    size_t worker_count() const override { return 1; }
-    bool is_running() const override { return running_; }
-    size_t pending_tasks() const override { return 0; }
-
-    void shutdown(bool wait_for_completion = true) override {
-        running_ = false;
-    }
-
-private:
-    std::atomic<bool> running_;
-};
+using messaging::support::MockExecutor;
 
 void test_exact_topic_match() {
     std::cout << "Test: Exact topic match..." << std::endl;
@@ -71,6 +24,7 @@ void test_exact_topic_match() {
     std::atomic<int> call_count{0};
 
     auto callback = [&](const MessagingContainer& msg) -> common::VoidResult {
+        (void)msg;
         call_count++;
         return common::VoidResult::ok(std::monostate{});
     };
@@ -96,6 +50,7 @@ void test_single_wildcard_match() {
     std::atomic<int> call_count{0};
 
     auto callback = [&](const MessagingContainer& msg) -> common::VoidResult {
+        (void)msg;
         call_count++;
         return common::VoidResult::ok(std::monostate{});
     };
@@ -130,6 +85,7 @@ void test_multilevel_wildcard_match() {
     std::atomic<int> call_count{0};
 
     auto callback = [&](const MessagingContainer& msg) -> common::VoidResult {
+        (void)msg;
         call_count++;
         return common::VoidResult::ok(std::monostate{});
     };
@@ -165,14 +121,16 @@ void test_multiple_subscribers_same_topic() {
     TopicRouter router(executor);
 
     std::atomic<int> sub1_count{0};
-    std::atomic<int> sub2_count{0};
+   std::atomic<int> sub2_count{0};
 
     auto callback1 = [&](const MessagingContainer& msg) -> common::VoidResult {
+        (void)msg;
         sub1_count++;
         return common::VoidResult::ok(std::monostate{});
     };
 
     auto callback2 = [&](const MessagingContainer& msg) -> common::VoidResult {
+        (void)msg;
         sub2_count++;
         return common::VoidResult::ok(std::monostate{});
     };
@@ -199,6 +157,7 @@ void test_unsubscribe() {
     std::atomic<int> call_count{0};
 
     auto callback = [&](const MessagingContainer& msg) -> common::VoidResult {
+        (void)msg;
         call_count++;
         return common::VoidResult::ok(std::monostate{});
     };
@@ -235,11 +194,13 @@ void test_complex_wildcard_patterns() {
     std::atomic<int> pattern2_count{0};
 
     auto callback1 = [&](const MessagingContainer& msg) -> common::VoidResult {
+        (void)msg;
         pattern1_count++;
         return common::VoidResult::ok(std::monostate{});
     };
 
     auto callback2 = [&](const MessagingContainer& msg) -> common::VoidResult {
+        (void)msg;
         pattern2_count++;
         return common::VoidResult::ok(std::monostate{});
     };
@@ -279,6 +240,7 @@ void test_no_match() {
     std::atomic<int> call_count{0};
 
     auto callback = [&](const MessagingContainer& msg) -> common::VoidResult {
+        (void)msg;
         call_count++;
         return common::VoidResult::ok(std::monostate{});
     };

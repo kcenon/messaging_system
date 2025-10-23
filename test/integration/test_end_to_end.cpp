@@ -95,6 +95,7 @@ void test_complex_routing_scenario() {
     // Multi-level wildcard: receives ALL events
     message_bus->subscribe("event.#",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             event_all_count++;
             return common::VoidResult::ok(std::monostate{});
         });
@@ -102,6 +103,7 @@ void test_complex_routing_scenario() {
     // Single-level wildcard: receives event.user.*, event.order.*, etc.
     message_bus->subscribe("event.user.*",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             event_user_count++;
             return common::VoidResult::ok(std::monostate{});
         });
@@ -109,6 +111,7 @@ void test_complex_routing_scenario() {
     // Exact match: only event.user.login
     message_bus->subscribe("event.user.login",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             event_user_login_count++;
             return common::VoidResult::ok(std::monostate{});
         });
@@ -216,6 +219,7 @@ void test_high_throughput_scenario() {
 
     message_bus->subscribe("high.throughput.#",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             received_count++;
             return common::VoidResult::ok(std::monostate{});
         });

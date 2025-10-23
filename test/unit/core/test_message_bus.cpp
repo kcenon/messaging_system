@@ -3,6 +3,7 @@
 #include "messaging_system/core/message_bus.h"
 #include "messaging_system/core/topic_router.h"
 #include "messaging_system/core/messaging_container.h"
+#include "messaging_system/support/mock_executor.h"
 #include <kcenon/common/interfaces/executor_interface.h>
 
 #include <iostream>
@@ -13,55 +14,7 @@
 #include <chrono>
 
 using namespace messaging;
-
-// Simple mock executor for testing
-class MockExecutor : public common::interfaces::IExecutor {
-public:
-    MockExecutor() : running_(true) {}
-
-    // Function-based execution (legacy)
-    std::future<void> submit(std::function<void()> task) override {
-        // Execute immediately for testing
-        task();
-        std::promise<void> promise;
-        promise.set_value();
-        return promise.get_future();
-    }
-
-    std::future<void> submit_delayed(std::function<void()> task, std::chrono::milliseconds) override {
-        return submit(task);
-    }
-
-    // Job-based execution (Phase 2)
-    common::Result<std::future<void>> execute(std::unique_ptr<common::interfaces::IJob>&& job) override {
-        auto result = job->execute();
-        if (result.is_err()) {
-            auto err = result.error();
-            return common::Result<std::future<void>>(err);
-        }
-        std::promise<void> promise;
-        promise.set_value();
-        return common::Result<std::future<void>>::ok(promise.get_future());
-    }
-
-    common::Result<std::future<void>> execute_delayed(
-        std::unique_ptr<common::interfaces::IJob>&& job,
-        std::chrono::milliseconds delay) override {
-        return execute(std::move(job));
-    }
-
-    // Status and control
-    size_t worker_count() const override { return 1; }
-    bool is_running() const override { return running_; }
-    size_t pending_tasks() const override { return 0; }
-
-    void shutdown(bool wait_for_completion = true) override {
-        running_ = false;
-    }
-
-private:
-    std::atomic<bool> running_;
-};
+using messaging::support::MockExecutor;
 
 void test_start_stop() {
     std::cout << "Test: MessageBus start/stop..." << std::endl;
@@ -130,6 +83,7 @@ void test_publish_subscribe_async() {
 
     auto sub_result = bus.subscribe("async.test",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             received_count++;
             return common::VoidResult::ok(std::monostate{});
         });
@@ -165,18 +119,21 @@ void test_multiple_subscribers() {
 
     bus.subscribe("broadcast.message",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             sub1_count++;
             return common::VoidResult::ok(std::monostate{});
         });
 
     bus.subscribe("broadcast.message",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             sub2_count++;
             return common::VoidResult::ok(std::monostate{});
         });
 
     bus.subscribe("broadcast.message",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             sub3_count++;
             return common::VoidResult::ok(std::monostate{});
         });
@@ -209,6 +166,7 @@ void test_wildcard_subscriptions() {
     // Wildcard subscription
     bus.subscribe("event.*",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             wildcard_count++;
             return common::VoidResult::ok(std::monostate{});
         });
@@ -216,6 +174,7 @@ void test_wildcard_subscriptions() {
     // Exact subscription
     bus.subscribe("event.specific",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             exact_count++;
             return common::VoidResult::ok(std::monostate{});
         });
@@ -250,6 +209,7 @@ void test_unsubscribe_via_bus() {
 
     auto sub_result = bus.subscribe("test.unsub",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             received_count++;
             return common::VoidResult::ok(std::monostate{});
         });
@@ -290,6 +250,7 @@ void test_concurrent_publishing() {
 
     bus.subscribe("concurrent.test",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             received_count++;
             return common::VoidResult::ok(std::monostate{});
         });
@@ -339,6 +300,7 @@ void test_error_handling_in_callback() {
     // Subscriber that fails
     bus.subscribe("test.error",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             error_count++;
             return common::VoidResult(
                 common::error_info{-1, "Intentional error", "test", ""}
@@ -348,6 +310,7 @@ void test_error_handling_in_callback() {
     // Subscriber that succeeds (should still receive message even if other fails)
     bus.subscribe("test.error",
         [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             success_count++;
             return common::VoidResult::ok(std::monostate{});
         });
