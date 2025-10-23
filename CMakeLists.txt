@@ -362,12 +362,22 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         # This is a workaround for thread_system not reading USE_STD_FORMAT option correctly
         # Only add compile definition if USE_STD_FORMAT option is ON
         if(USE_STD_FORMAT)
-            if(TARGET thread_base)
-                target_compile_definitions(thread_base PRIVATE USE_STD_FORMAT)
-            endif()
-            if(TARGET thread_pool)
-                target_compile_definitions(thread_pool PRIVATE USE_STD_FORMAT)
-            endif()
+            # Ensure all thread_system targets propagate the std::format configuration.
+            set(_thread_system_format_targets
+                thread_base
+                thread_pool
+                interfaces
+                utilities
+                typed_thread_pool
+            )
+            foreach(_ts_target IN LISTS _thread_system_format_targets)
+                if(TARGET "${_ts_target}")
+                    get_target_property(_aliased "${_ts_target}" ALIASED_TARGET)
+                    if(NOT _aliased)
+                        target_compile_definitions("${_ts_target}" PUBLIC USE_STD_FORMAT)
+                    endif()
+                endif()
+            endforeach()
         endif()
 
         # ContainerSystem needs common_system headers to be fully available
@@ -598,6 +608,10 @@ endif()
 if(MESSAGING_CORE_LIBS)
     target_link_libraries(messaging_system_core PUBLIC ${MESSAGING_CORE_LIBS})
     target_compile_definitions(messaging_system_core PUBLIC MESSAGING_USE_EXTERNAL_SYSTEMS)
+endif()
+
+if(USE_STD_FORMAT)
+    target_compile_definitions(messaging_system_core PUBLIC USE_STD_FORMAT)
 endif()
 
 # Find and link yaml-cpp for configuration

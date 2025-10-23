@@ -1,12 +1,7 @@
 #include "messaging_system/core/messaging_container.h"
 #include "messaging_system/core/message_bus.h"
 #include "messaging_system/core/topic_router.h"
-
-#ifdef HAS_THREAD_SYSTEM
-#include <kcenon/thread/core/thread_pool.h>
-#include <kcenon/thread/adapters/common_system_executor_adapter.h>
-namespace thread = kcenon::thread;
-#endif
+#include "messaging_system/support/mock_executor.h"
 
 #ifdef HAS_LOGGER_SYSTEM
 #include <kcenon/logger/core/logger.h>
@@ -14,6 +9,7 @@ namespace thread = kcenon::thread;
 
 #include <iostream>
 #include <memory>
+#include <thread>
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
     std::cout << "Messaging System v2.0" << std::endl;
@@ -90,13 +86,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
     std::cout << std::endl;
     std::cout << "Initializing MessageBus..." << std::endl;
 
-    // Create thread pools and wrap them as IExecutor using adapter
-    auto io_pool = std::make_shared<thread::thread_pool>();
-    auto work_pool = std::make_shared<thread::thread_pool>();
-
-    // Wrap thread_pools as IExecutor interface using the adapter
-    auto io_executor = std::make_shared<thread::adapters::common_system_executor_adapter>(io_pool);
-    auto work_executor = std::make_shared<thread::adapters::common_system_executor_adapter>(work_pool);
+    // Use lightweight mock executors to drive the demo without depending on
+    // thread_system's evolving adapters.
+    auto io_executor = std::make_shared<messaging::support::MockExecutor>(2);
+    auto work_executor = std::make_shared<messaging::support::MockExecutor>(4);
 
     auto router = std::make_shared<messaging::TopicRouter>(work_executor);
     auto message_bus = std::make_shared<messaging::MessageBus>(io_executor, work_executor, router);

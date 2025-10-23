@@ -4,6 +4,7 @@
 #include "messaging_system/core/topic_router.h"
 #include "messaging_system/core/messaging_container.h"
 #include "messaging_system/integration/trace_context.h"
+#include "messaging_system/support/mock_executor.h"
 
 #ifdef HAS_YAML_CPP
 #include "messaging_system/integration/config_loader.h"
@@ -20,146 +21,13 @@
 
 using namespace messaging;
 
-// Mock executor for testing - implements IExecutor interface
-class MockExecutor : public common::interfaces::IExecutor {
-public:
-    MockExecutor(size_t num_workers = 4)
-        : num_workers_(num_workers), running_(true) {
-        for (size_t i = 0; i < num_workers_; ++i) {
-            workers_.emplace_back([this] { work_loop(); });
-        }
-    }
-
-    ~MockExecutor() {
-        shutdown(true);
-    }
-
-    std::future<void> submit(std::function<void()> task) override {
-        auto promise = std::make_shared<std::promise<void>>();
-        auto future = promise->get_future();
-
-        {
-            std::lock_guard<std::mutex> lock(queue_mutex_);
-            tasks_.emplace([task = std::move(task), promise]() {
-                try {
-                    task();
-                    promise->set_value();
-                } catch (...) {
-                    promise->set_exception(std::current_exception());
-                }
-            });
-            pending_count_++;
-        }
-        queue_cv_.notify_one();
-
-        return future;
-    }
-
-    std::future<void> submit_delayed(std::function<void()> task, std::chrono::milliseconds delay) override {
-        std::this_thread::sleep_for(delay);
-        return submit(std::move(task));
-    }
-
-    common::Result<std::future<void>> execute(std::unique_ptr<common::interfaces::IJob>&& job) override {
-        if (!job) {
-            return common::Result<std::future<void>>(
-                common::error_info{1, "Job is null", "MockExecutor", ""}
-            );
-        }
-
-        auto shared_job = std::shared_ptr<common::interfaces::IJob>(std::move(job));
-        auto task = [shared_job]() {
-            auto result = shared_job->execute();
-            // Errors are already handled by Result
-        };
-
-        return common::Result<std::future<void>>::ok(submit(std::move(task)));
-    }
-
-    common::Result<std::future<void>> execute_delayed(
-        std::unique_ptr<common::interfaces::IJob>&& job,
-        std::chrono::milliseconds delay) override {
-        if (!job) {
-            return common::Result<std::future<void>>(
-                common::error_info{1, "Job is null", "MockExecutor", ""}
-            );
-        }
-
-        auto shared_job = std::shared_ptr<common::interfaces::IJob>(std::move(job));
-        auto task = [shared_job]() {
-            auto result = shared_job->execute();
-            // Errors are already handled by Result
-        };
-
-        return common::Result<std::future<void>>::ok(submit_delayed(std::move(task), delay));
-    }
-
-    size_t worker_count() const override { return num_workers_; }
-    bool is_running() const override { return running_; }
-    size_t pending_tasks() const override { return pending_count_; }
-
-    void shutdown(bool wait_for_completion = true) override {
-        if (!running_) return;
-
-        if (wait_for_completion) {
-            std::unique_lock<std::mutex> lock(queue_mutex_);
-            queue_cv_.wait(lock, [this] { return tasks_.empty(); });
-        }
-
-        running_ = false;
-        queue_cv_.notify_all();
-
-        for (auto& worker : workers_) {
-            if (worker.joinable()) {
-                worker.join();
-            }
-        }
-    }
-
-private:
-    void work_loop() {
-        while (running_) {
-            std::function<void()> task;
-
-            {
-                std::unique_lock<std::mutex> lock(queue_mutex_);
-                queue_cv_.wait(lock, [this] {
-                    return !tasks_.empty() || !running_;
-                });
-
-                if (!running_ && tasks_.empty()) {
-                    break;
-                }
-
-                if (!tasks_.empty()) {
-                    task = std::move(tasks_.front());
-                    tasks_.pop();
-                    pending_count_--;
-                }
-            }
-
-            if (task) {
-                task();
-            }
-        }
-    }
-
-    size_t num_workers_;
-    std::atomic<bool> running_;
-    std::atomic<size_t> pending_count_{0};
-    std::vector<std::thread> workers_;
-    std::queue<std::function<void()>> tasks_;
-    std::mutex queue_mutex_;
-    std::condition_variable queue_cv_;
-};
-
 #ifdef HAS_THREAD_SYSTEM
 
 void test_complete_pubsub_flow() {
     std::cout << "Integration Test: Complete pub/sub flow with trace context..." << std::endl;
 
-    auto io_executor = std::make_shared<MockExecutor>(2);
-    auto work_executor = std::make_shared<MockExecutor>(4);
+    auto io_executor = std::make_shared<messaging::support::MockExecutor>(2);
+    auto work_executor = std::make_shared<messaging::support::MockExecutor>(4);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -213,8 +81,8 @@ void test_complete_pubsub_flow() {
 void test_complex_routing_scenario() {
     std::cout << "Integration Test: Complex routing with multiple patterns..." << std::endl;
 
-    auto io_executor = std::make_shared<MockExecutor>(2);
-    auto work_executor = std::make_shared<MockExecutor>(4);
+    auto io_executor = std::make_shared<messaging::support::MockExecutor>(2);
+    auto work_executor = std::make_shared<messaging::support::MockExecutor>(4);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -271,8 +139,8 @@ void test_complex_routing_scenario() {
 void test_multi_subscriber_coordination() {
     std::cout << "Integration Test: Multi-subscriber coordination..." << std::endl;
 
-    auto io_executor = std::make_shared<MockExecutor>(4);
-    auto work_executor = std::make_shared<MockExecutor>(8);
+    auto io_executor = std::make_shared<messaging::support::MockExecutor>(4);
+    auto work_executor = std::make_shared<messaging::support::MockExecutor>(8);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -337,8 +205,8 @@ void test_multi_subscriber_coordination() {
 void test_high_throughput_scenario() {
     std::cout << "Integration Test: High throughput scenario..." << std::endl;
 
-    auto io_executor = std::make_shared<MockExecutor>(4);
-    auto work_executor = std::make_shared<MockExecutor>(8);
+    auto io_executor = std::make_shared<messaging::support::MockExecutor>(4);
+    auto work_executor = std::make_shared<messaging::support::MockExecutor>(8);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -396,8 +264,8 @@ void test_high_throughput_scenario() {
 void test_subscribe_unsubscribe_lifecycle() {
     std::cout << "Integration Test: Subscribe/unsubscribe lifecycle..." << std::endl;
 
-    auto io_executor = std::make_shared<MockExecutor>(2);
-    auto work_executor = std::make_shared<MockExecutor>(4);
+    auto io_executor = std::make_shared<messaging::support::MockExecutor>(2);
+    auto work_executor = std::make_shared<messaging::support::MockExecutor>(4);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
@@ -484,8 +352,8 @@ messaging_system:
     assert(validate_result.is_ok() && "Config should be valid");
 
     // Use config to create system
-    auto io_executor = std::make_shared<MockExecutor>(config.thread_pools.io_workers);
-    auto work_executor = std::make_shared<MockExecutor>(config.thread_pools.work_workers);
+    auto io_executor = std::make_shared<messaging::support::MockExecutor>(config.thread_pools.io_workers);
+    auto work_executor = std::make_shared<messaging::support::MockExecutor>(config.thread_pools.work_workers);
     auto router = std::make_shared<TopicRouter>(work_executor);
     auto message_bus = std::make_shared<MessageBus>(io_executor, work_executor, router);
 
