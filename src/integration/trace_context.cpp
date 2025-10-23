@@ -14,9 +14,6 @@ void TraceContext::set_trace_id(const std::string& id) {
 }
 
 std::string TraceContext::get_trace_id() {
-    if (current_trace_id_.empty()) {
-        return generate_trace_id();
-    }
     return current_trace_id_;
 }
 

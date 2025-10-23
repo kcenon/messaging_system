@@ -20,7 +20,7 @@ using common::VoidResult;
 struct NetworkConfig {
     uint16_t port{8080};
     size_t max_connections{10000};
-    std::chrono::milliseconds timeout{5000};
+    std::chrono::milliseconds timeout{30000};
     int retry_attempts{3};
 };
 
@@ -32,7 +32,7 @@ struct ThreadPoolConfig {
 };
 
 struct DatabaseConfig {
-    std::string type{"postgresql"};
+    std::string type;
     std::string connection_string;
 #ifdef HAS_DATABASE_SYSTEM
     database::connection_pool_config pool_config;
@@ -58,7 +58,7 @@ struct MonitoringConfig {
 };
 
 struct MessagingSystemConfig {
-    std::string version;
+    std::string version{"2.0.0"};
     NetworkConfig network;
     ThreadPoolConfig thread_pools;
     DatabaseConfig database;

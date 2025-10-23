@@ -3,21 +3,24 @@
 #include <core/container.h>
 #include <kcenon/common/patterns/result.h>
 #include <chrono>
+#include <memory>
 #include <string>
-#include <unordered_map>
+#include <vector>
 
 namespace messaging {
 
 using common::Result;
 using common::VoidResult;
-using container_module::value_container;
 using container_module::value;
+using container_module::value_container;
 using container_module::value_types;
 
 class MessagingContainer {
-    value_container container_;
+    std::shared_ptr<value_container> container_;
 
 public:
+    MessagingContainer();
+
     // Factory method
     static Result<MessagingContainer> create(
         const std::string& source,
@@ -36,8 +39,8 @@ public:
     static Result<MessagingContainer> deserialize(const std::vector<uint8_t>& data);
 
     // Underlying container access
-    const value_container& container() const { return container_; }
-    value_container& container() { return container_; }
+    const value_container& container() const { return *container_; }
+    value_container& container() { return *container_; }
 };
 
 class MessagingContainerBuilder {
@@ -45,7 +48,7 @@ class MessagingContainerBuilder {
     std::string target_;
     std::string topic_;
     std::string trace_id_;
-    std::unordered_map<std::string, value> values_;
+    std::vector<std::shared_ptr<value>> values_;
     bool optimize_speed_{false};
 
 public:
@@ -53,7 +56,7 @@ public:
     MessagingContainerBuilder& target(std::string t);
     MessagingContainerBuilder& topic(std::string topic);
     MessagingContainerBuilder& trace_id(std::string id);
-    MessagingContainerBuilder& add_value(const std::string& key, value val);
+    MessagingContainerBuilder& add_value(std::shared_ptr<value> val);
     MessagingContainerBuilder& optimize_for_speed();
 
     Result<MessagingContainer> build();
