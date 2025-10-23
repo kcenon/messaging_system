@@ -40,6 +40,7 @@ var searchData=
   ['2_3a_20memory_20leak_20in_20long_20running_20connections_37',['Issue 2: Memory Leak in Long-Running Connections',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md894',1,'']]],
   ['2_3a_20messaging_20core_20implementation_20✅_38',['Phase 2: Messaging Core Implementation ✅',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md722',1,'']]],
   ['2_3a_20messaging_20core_20redesign_20design_20document_39',['Phase 2: Messaging Core Redesign - Design Document',['../d6/df5/md_docs_2phase2_2DESIGN.html',1,'']]],
-  ['2_3a_20real_20time_20chat_20server_20with_20monitoring_40',['Example 2: Real-Time Chat Server with Monitoring',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md940',1,'']]],
-  ['2_3a_20result_20t_20migration_41',['Week 2: Result&lt;T&gt; Migration',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md630',1,'']]]
+  ['2_3a_20real_20time_20chat_20server_20with_20monitoring_40',['Example 2: Real-Time Chat Server with Monitoring',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md941',1,'']]],
+  ['2_3a_20result_20t_20migration_41',['Week 2: Result&lt;T&gt; Migration',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md630',1,'']]],
+  ['2_3a_20your_20first_20program_2060_20seconds_42',['Step 2: Your First Program (60 seconds)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md936',1,'']]]
 ];

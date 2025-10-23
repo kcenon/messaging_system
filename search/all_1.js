@@ -49,12 +49,13 @@ var searchData=
   ['17_20event_20driven_20architecture_46',['17. Event-Driven Architecture',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md330',1,'']]],
   ['1_3a_20build_20system_20and_20dependency_20refactoring_20design_20document_47',['Phase 1: Build System and Dependency Refactoring - Design Document',['../d5/d7c/md_docs_2phase1_2DESIGN.html',1,'']]],
   ['1_3a_20build_20system_20and_20external_20integration_20✅_48',['Phase 1: Build System and External Integration ✅',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md720',1,'']]],
-  ['1_3a_20distributed_20task_20queue_20with_20persistence_49',['Example 1: Distributed Task Queue with Persistence',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md939',1,'']]],
+  ['1_3a_20distributed_20task_20queue_20with_20persistence_49',['Example 1: Distributed Task Queue with Persistence',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md940',1,'']]],
   ['1_3a_20external_20module_20integration_50',['Task 1.1: External Module Integration',['../d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md594',1,'']]],
   ['1_3a_20fetchcontent_20development_20environment_51',['Option 1: FetchContent (Development Environment)',['../d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md471',1,'']]],
   ['1_3a_20high_20cpu_20usage_20with_20small_20messages_52',['Issue 1: High CPU Usage with Small Messages',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md893',1,'']]],
-  ['1_3a_20message_20container_53',['Week 1: Message Container',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md629',1,'']]],
-  ['1_3a_20performance_20regression_54',['Risk 1: Performance Regression',['../d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md574',1,'']]],
-  ['1_3a_20simple_20function_20conversion_55',['Pattern 1: Simple Function Conversion',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md621',1,'']]],
-  ['1_3a_20target_20name_20conflicts_56',['Issue 1: Target Name Conflicts',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html#autotoc_md189',1,'']]]
+  ['1_3a_20install_2030_20seconds_53',['Step 1: Install (30 seconds)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md935',1,'']]],
+  ['1_3a_20message_20container_54',['Week 1: Message Container',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md629',1,'']]],
+  ['1_3a_20performance_20regression_55',['Risk 1: Performance Regression',['../d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md574',1,'']]],
+  ['1_3a_20simple_20function_20conversion_56',['Pattern 1: Simple Function Conversion',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md621',1,'']]],
+  ['1_3a_20target_20name_20conflicts_57',['Issue 1: Target Name Conflicts',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html#autotoc_md189',1,'']]]
 ];

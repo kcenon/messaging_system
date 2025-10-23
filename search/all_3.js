@@ -32,14 +32,15 @@ var searchData=
   ['3_20test_20with_20sample_20client_29',['3. Test with Sample Client',['../d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md415',1,'']]],
   ['3_20tracing_20and_20monitoring_20task_203_203_30',['3. Tracing and Monitoring (Task 3.3)',['../d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md644',1,'']]],
   ['3_20your_20first_20application_31',['3. Your First Application',['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md337',1,'']]],
-  ['30_20second_20setup_32',['30-Second Setup',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md935',1,'']]],
+  ['30_20seconds_32',['Step 1: Install (30 seconds)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md935',1,'']]],
   ['3_3a_20client_20breaking_20changes_33',['Risk 3: Client Breaking Changes',['../d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md576',1,'']]],
   ['3_3a_20configuration_20validation_34',['Task 1.3: Configuration Validation',['../d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md600',1,'']]],
   ['3_3a_20database_20connection_20pool_20exhaustion_35',['Issue 3: Database Connection Pool Exhaustion',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md895',1,'']]],
   ['3_3a_20di_20architecture_36',['Week 3: DI Architecture',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md631',1,'']]],
-  ['3_3a_20event_20driven_20microservice_20with_20tracing_37',['Example 3: Event-Driven Microservice with Tracing',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md941',1,'']]],
+  ['3_3a_20event_20driven_20microservice_20with_20tracing_37',['Example 3: Event-Driven Microservice with Tracing',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md942',1,'']]],
   ['3_3a_20grep_20p_20not_20supported_20macos_38',['Issue 3: grep -P Not Supported (macOS)',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html#autotoc_md193',1,'']]],
   ['3_3a_20infrastructure_20integration_20✅_39',['Phase 3: Infrastructure Integration ✅',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md724',1,'']]],
   ['3_3a_20infrastructure_20integration_20design_20document_40',['Phase 3: Infrastructure Integration - Design Document',['../d7/de1/md_docs_2phase3_2DESIGN.html',1,'']]],
-  ['3_3a_20monadic_20chaining_41',['Pattern 3: Monadic Chaining',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md623',1,'']]]
+  ['3_3a_20monadic_20chaining_41',['Pattern 3: Monadic Chaining',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md623',1,'']]],
+  ['3_3a_20run_20your_20application_42',['Step 3: Run Your Application',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md937',1,'']]]
 ];
