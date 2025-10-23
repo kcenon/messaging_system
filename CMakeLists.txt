@@ -332,6 +332,9 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         if(TARGET common_system_tests)
             set_target_properties(common_system_tests PROPERTIES EXCLUDE_FROM_ALL TRUE)
         endif()
+        if(TEST common_system_tests)
+            set_tests_properties(common_system_tests PROPERTIES DISABLED TRUE)
+        endif()
 
         # Get the source directory for common_system to provide to other systems
         FetchContent_GetProperties(CommonSystem SOURCE_DIR commonsystem_source_dir)
