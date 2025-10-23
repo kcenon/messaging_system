@@ -347,27 +347,17 @@ namespace network {
 
 ## 🚀 Quick Start
 
-### 30-Second Setup
+### Step 1: Install (30 seconds)
 
 ```bash
-# Clone repository
+# Clone and build
 git clone https://github.com/kcenon/messaging_system.git
 cd messaging_system
-
-# Initialize submodules
 git submodule update --init --recursive
-
-# Build (all base systems are automatically included)
-cmake -B build \
-  -DMESSAGING_USE_LOCAL_SYSTEMS=ON \
-  -DMESSAGING_BUILD_EXAMPLES=ON
-cmake --build build -j
-
-# Run basic example
-./build/examples/basic_messaging
+./build.sh --clean
 ```
 
-### Your First Messaging Application
+### Step 2: Your First Program (60 seconds)
 
 ```cpp
 #include "messaging_system/core/message_bus.h"
@@ -417,12 +407,23 @@ int main() {
 }
 ```
 
-**Compile:**
+### Step 3: Run Your Application
+
 ```bash
-cd build
-make basic_messaging
-./examples/basic_messaging
+# Build your application
+cmake -B build -DMESSAGING_BUILD_EXAMPLES=ON
+cmake --build build -j
+
+# Run the example
+./build/examples/basic_messaging
 ```
+
+**Expected Output:**
+```
+New user event: user.created
+```
+
+> 💡 **Next Steps**: Explore more [Real-World Examples](#-real-world-examples) below or dive into the [Complete Documentation](docs/)
 
 ---
 
