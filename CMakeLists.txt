@@ -144,7 +144,10 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../logger_system/CMakeLists.txt")
             message(STATUS "  ✓ Found local logger_system")
             # Use standalone mode to prevent logger_system from adding thread_system again
-            set(LOGGER_STANDALONE_MODE ON CACHE BOOL "" FORCE)
+            # Allow parent project to override this setting
+            if(NOT DEFINED LOGGER_STANDALONE_MODE)
+                set(LOGGER_STANDALONE_MODE ON CACHE BOOL "" FORCE)
+            endif()
             set(BUILD_WITH_COMMON_SYSTEM ON CACHE BOOL "" FORCE)
             add_subdirectory(
                 "${CMAKE_CURRENT_SOURCE_DIR}/../logger_system"
