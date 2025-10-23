@@ -3,26 +3,24 @@
 #include "messaging_system/core/message_bus.h"
 #include "messaging_system/core/topic_router.h"
 #include "messaging_system/core/messaging_container.h"
-
-#ifdef HAS_THREAD_SYSTEM
-#include <kcenon/thread/core/thread_pool.h>
-#endif
+#include "messaging_system/support/mock_executor.h"
+#include <kcenon/common/interfaces/executor_interface.h>
 
 #include <iostream>
+#include <future>
 #include <cassert>
 #include <atomic>
 #include <thread>
 #include <chrono>
 
 using namespace messaging;
-
-#ifdef HAS_THREAD_SYSTEM
+using messaging::support::MockExecutor;
 
 void test_start_stop() {
     std::cout << "Test: MessageBus start/stop..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -39,8 +37,8 @@ void test_start_stop() {
 void test_publish_subscribe_sync() {
     std::cout << "Test: Synchronous publish/subscribe..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -50,10 +48,10 @@ void test_publish_subscribe_sync() {
     std::string received_topic;
 
     auto sub_result = bus.subscribe("test.message",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             received_count++;
             received_topic = msg.topic();
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     assert(sub_result.is_ok() && "Should subscribe successfully");
@@ -74,8 +72,8 @@ void test_publish_subscribe_sync() {
 void test_publish_subscribe_async() {
     std::cout << "Test: Asynchronous publish/subscribe..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -84,9 +82,10 @@ void test_publish_subscribe_async() {
     std::atomic<int> received_count{0};
 
     auto sub_result = bus.subscribe("async.test",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             received_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     assert(sub_result.is_ok() && "Should subscribe successfully");
@@ -107,8 +106,8 @@ void test_publish_subscribe_async() {
 void test_multiple_subscribers() {
     std::cout << "Test: Multiple subscribers on same topic..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -119,21 +118,24 @@ void test_multiple_subscribers() {
     std::atomic<int> sub3_count{0};
 
     bus.subscribe("broadcast.message",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             sub1_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     bus.subscribe("broadcast.message",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             sub2_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     bus.subscribe("broadcast.message",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             sub3_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     auto msg = MessagingContainer::create("publisher", "all", "broadcast.message").value();
@@ -151,8 +153,8 @@ void test_multiple_subscribers() {
 void test_wildcard_subscriptions() {
     std::cout << "Test: Wildcard subscriptions via MessageBus..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -163,16 +165,18 @@ void test_wildcard_subscriptions() {
 
     // Wildcard subscription
     bus.subscribe("event.*",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             wildcard_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     // Exact subscription
     bus.subscribe("event.specific",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             exact_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     // Should match both
@@ -194,8 +198,8 @@ void test_wildcard_subscriptions() {
 void test_unsubscribe_via_bus() {
     std::cout << "Test: Unsubscribe via MessageBus..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -204,9 +208,10 @@ void test_unsubscribe_via_bus() {
     std::atomic<int> received_count{0};
 
     auto sub_result = bus.subscribe("test.unsub",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             received_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     assert(sub_result.is_ok() && "Should subscribe successfully");
@@ -234,8 +239,8 @@ void test_unsubscribe_via_bus() {
 void test_concurrent_publishing() {
     std::cout << "Test: Concurrent publishing from multiple threads..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(4);
-    auto work_executor = std::make_shared<thread::thread_pool>(8);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -244,9 +249,10 @@ void test_concurrent_publishing() {
     std::atomic<int> received_count{0};
 
     bus.subscribe("concurrent.test",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             received_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     const int num_threads = 4;
@@ -281,8 +287,8 @@ void test_concurrent_publishing() {
 void test_error_handling_in_callback() {
     std::cout << "Test: Error handling in subscriber callback..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<MockExecutor>();
+    auto work_executor = std::make_shared<MockExecutor>();
     auto router = std::make_shared<TopicRouter>(work_executor);
 
     MessageBus bus(io_executor, work_executor, router);
@@ -293,18 +299,20 @@ void test_error_handling_in_callback() {
 
     // Subscriber that fails
     bus.subscribe("test.error",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             error_count++;
-            return common::VoidResult::error(
+            return common::VoidResult(
                 common::error_info{-1, "Intentional error", "test", ""}
             );
         });
 
     // Subscriber that succeeds (should still receive message even if other fails)
     bus.subscribe("test.error",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
+            (void)msg;
             success_count++;
-            return common::VoidResult::ok();
+            return common::VoidResult::ok(std::monostate{});
         });
 
     auto msg = MessagingContainer::create("pub", "sub", "test.error").value();
@@ -340,12 +348,3 @@ int main() {
         return 1;
     }
 }
-
-#else
-
-int main() {
-    std::cerr << "MessageBus tests require HAS_THREAD_SYSTEM" << std::endl;
-    return 1;
-}
-
-#endif

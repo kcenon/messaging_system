@@ -1,10 +1,7 @@
 #include "messaging_system/core/messaging_container.h"
 #include "messaging_system/core/message_bus.h"
 #include "messaging_system/core/topic_router.h"
-
-#ifdef HAS_THREAD_SYSTEM
-#include <kcenon/thread/core/thread_pool.h>
-#endif
+#include "messaging_system/support/mock_executor.h"
 
 #ifdef HAS_LOGGER_SYSTEM
 #include <kcenon/logger/core/logger.h>
@@ -12,6 +9,7 @@
 
 #include <iostream>
 #include <memory>
+#include <thread>
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
     std::cout << "Messaging System v2.0" << std::endl;
@@ -88,8 +86,11 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
     std::cout << std::endl;
     std::cout << "Initializing MessageBus..." << std::endl;
 
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    // Use lightweight mock executors to drive the demo without depending on
+    // thread_system's evolving adapters.
+    auto io_executor = std::make_shared<messaging::support::MockExecutor>(2);
+    auto work_executor = std::make_shared<messaging::support::MockExecutor>(4);
+
     auto router = std::make_shared<messaging::TopicRouter>(work_executor);
     auto message_bus = std::make_shared<messaging::MessageBus>(io_executor, work_executor, router);
 
@@ -99,9 +100,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
 
         // Subscribe to a topic
         auto subscribe_result = message_bus->subscribe("test.topic",
-            [](const messaging::MessagingContainer& msg) -> common::Result<void> {
+            [](const messaging::MessagingContainer& msg) -> common::VoidResult {
                 std::cout << "  → Received message on topic: " << msg.topic() << std::endl;
-                return common::VoidResult::ok();
+                return common::VoidResult::ok(std::monostate{});
             });
 
         if (subscribe_result.is_ok()) {

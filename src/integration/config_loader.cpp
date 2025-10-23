@@ -1,10 +1,13 @@
 #include "messaging_system/integration/config_loader.h"
 #include "messaging_system/error_codes.h"
 #include <kcenon/common/patterns/result.h>
+#include <filesystem>
 #include <fstream>
 #include <thread>
 
 namespace messaging {
+
+#ifdef HAS_YAML_CPP
 
 common::Result<MessagingSystemConfig> MessagingSystemConfig::load_from_file(const std::string& path) {
     try {
@@ -122,6 +125,21 @@ common::Result<MessagingSystemConfig> MessagingSystemConfig::load_from_file(cons
     }
 }
 
+#else
+
+common::Result<MessagingSystemConfig> MessagingSystemConfig::load_from_file(const std::string& path) {
+    return common::make_error<MessagingSystemConfig>(
+        common::error_info{
+            error::SERIALIZATION_ERROR,
+            "yaml-cpp support is not available. Rebuild with yaml-cpp to load configuration files.",
+            "MessagingSystemConfig::load_from_file",
+            path
+        }
+    );
+}
+
+#endif // HAS_YAML_CPP
+
 VoidResult MessagingSystemConfig::validate() const {
     // Validate port range
     if (network.port == 0) {
@@ -163,6 +181,7 @@ VoidResult MessagingSystemConfig::validate() const {
 }
 
 // ConfigWatcher implementation
+#ifdef HAS_YAML_CPP
 VoidResult ConfigWatcher::watch(const std::string& path, Callback callback) {
     if (running_) {
         return common::make_error<std::monostate>(
@@ -205,6 +224,23 @@ VoidResult ConfigWatcher::watch(const std::string& path, Callback callback) {
 
     return common::ok(std::monostate{});
 }
+
+#else
+
+VoidResult ConfigWatcher::watch(const std::string& path, Callback callback) {
+    (void)path;
+    (void)callback;
+    return common::make_error<std::monostate>(
+        common::error_info{
+            error::INVALID_MESSAGE,
+            "Config watching is disabled because yaml-cpp support is not available.",
+            "ConfigWatcher::watch",
+            ""
+        }
+    );
+}
+
+#endif // HAS_YAML_CPP
 
 void ConfigWatcher::stop() {
     running_ = false;

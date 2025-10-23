@@ -1,11 +1,16 @@
 #include "messaging_system/core/messaging_container.h"
 #include "messaging_system/error_codes.h"
 #include <kcenon/common/patterns/result.h>
+#include <container/values/string_value.h>
 #include <random>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 namespace messaging {
+
+MessagingContainer::MessagingContainer()
+    : container_(std::make_shared<value_container>()) {}
 
 // Helper to generate trace ID
 static std::string generate_uuid() {
@@ -34,53 +39,64 @@ Result<MessagingContainer> MessagingContainer::create(
     const std::string& target,
     const std::string& topic
 ) {
-    if (topic.empty()) {
-        return common::make_error<MessagingContainer>(
-            common::error_info{
-                error::INVALID_MESSAGE,
-                "Topic cannot be empty",
-                "MessagingContainer::create",
-                ""
-            }
-        );
+    try {
+        if (topic.empty()) {
+            return common::make_error<MessagingContainer>(
+                common::error_info{
+                    error::INVALID_MESSAGE,
+                    "Topic cannot be empty",
+                    "MessagingContainer::create",
+                    ""
+                }
+            );
+        }
+
+        MessagingContainer container;
+
+        auto serialize_entry = [](const std::string& key, const std::string& data) {
+            container_module::string_value value(key, data);
+            return value.serialize();
+        };
+
+        std::string serialized = "@data={{";
+        serialized += serialize_entry("source", source);
+        serialized += serialize_entry("target", target);
+        serialized += serialize_entry("topic", topic);
+        serialized += serialize_entry("trace_id", generate_uuid());
+        serialized += "}};";
+
+        container.container_->deserialize(serialized, false);
+
+        return common::ok(std::move(container));
+    } catch (const std::exception& e) {
+        std::cerr << "MessagingContainer::create failed: " << e.what() << std::endl;
+        throw;
     }
-
-    MessagingContainer container;
-    container.container_.add(value("source", value_types::string_value, source));
-    container.container_.add(value("target", value_types::string_value, target));
-    container.container_.add(value("topic", value_types::string_value, topic));
-    container.container_.add(value("trace_id", value_types::string_value, generate_uuid()));
-
-    return common::ok(std::move(container));
 }
 
 std::string MessagingContainer::source() const {
-    auto& cont = const_cast<value_container&>(container_);
-    auto val = cont.get_value("source");
+    auto val = container_->get_value("source");
     return val ? val->data() : "";
 }
 
 std::string MessagingContainer::target() const {
-    auto& cont = const_cast<value_container&>(container_);
-    auto val = cont.get_value("target");
+    auto val = container_->get_value("target");
     return val ? val->data() : "";
 }
 
 std::string MessagingContainer::topic() const {
-    auto& cont = const_cast<value_container&>(container_);
-    auto val = cont.get_value("topic");
+    auto val = container_->get_value("topic");
     return val ? val->data() : "";
 }
 
 std::string MessagingContainer::trace_id() const {
-    auto& cont = const_cast<value_container&>(container_);
-    auto val = cont.get_value("trace_id");
+    auto val = container_->get_value("trace_id");
     return val ? val->data() : "";
 }
 
 Result<std::vector<uint8_t>> MessagingContainer::serialize() const {
     try {
-        auto serialized = container_.serialize_array();
+        auto serialized = container_->serialize_array();
         return common::ok(std::move(serialized));
     } catch (const std::exception& e) {
         return common::make_error<std::vector<uint8_t>>(
@@ -110,10 +126,10 @@ Result<MessagingContainer> MessagingContainer::deserialize(const std::vector<uin
         MessagingContainer container;
         // value_container constructor can deserialize from byte array
         std::string data_str(data.begin(), data.end());
-        container.container_ = value_container(data_str, false);
+        container.container_ = std::make_shared<value_container>(data_str, false);
 
         // Validate required fields
-        auto topic_val = container.container_.get_value("topic");
+        auto topic_val = container.container_->get_value("topic");
         if (!topic_val || topic_val->data().empty()) {
             return common::make_error<MessagingContainer>(
                 common::error_info{
@@ -159,8 +175,10 @@ MessagingContainerBuilder& MessagingContainerBuilder::trace_id(std::string id) {
     return *this;
 }
 
-MessagingContainerBuilder& MessagingContainerBuilder::add_value(const std::string& key, value val) {
-    values_[key] = std::move(val);
+MessagingContainerBuilder& MessagingContainerBuilder::add_value(std::shared_ptr<value> val) {
+    if (val) {
+        values_.push_back(std::move(val));
+    }
     return *this;
 }
 
@@ -178,11 +196,14 @@ Result<MessagingContainer> MessagingContainerBuilder::build() {
     auto container = result.unwrap();
 
     if (!trace_id_.empty()) {
-        container.container().add(value("trace_id", value_types::string_value, trace_id_));
+        container.container().add(
+            std::make_shared<container_module::string_value>("trace_id", trace_id_), true);
     }
 
-    for (const auto& [key, val] : values_) {
-        container.container().add(val);
+    for (const auto& val : values_) {
+        if (val) {
+            container.container().add(val, true);
+        }
     }
 
     return common::ok(std::move(container));

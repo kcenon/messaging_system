@@ -246,32 +246,35 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         # This allows us to set FETCHCONTENT_SOURCE_DIR_* variables to prevent duplicate fetches
 
         # Common System
-        # Using specific commit to ensure latest fixes are used (namespace conflict fix + example fix)
+        # Disable testing for all dependencies BEFORE declaring them
+        set(BUILD_TESTING OFF CACHE BOOL "Disable tests" FORCE)
+
         FetchContent_Declare(
             CommonSystem
             GIT_REPOSITORY https://github.com/kcenon/common_system.git
-            GIT_TAG 66d96ad8a0c83d9beaaa4b4cd88e2f7b9f5e1e3e
-            GIT_SHALLOW FALSE  # Need full history to checkout specific commit
+            GIT_TAG main
+            GIT_SHALLOW TRUE
         )
 
         # Thread System
-        # Using specific commit to ensure latest fixes are used (include path fix + fmt fix)
+        # Configure ThreadSystem to use std::format instead of fmt library BEFORE declaring it
+        set(USE_STD_FORMAT ON CACHE BOOL "Use std::format instead of fmt library in thread_system" FORCE)
+
         FetchContent_Declare(
             ThreadSystem
             GIT_REPOSITORY https://github.com/kcenon/thread_system.git
-            GIT_TAG 6bdde9daec17f34ce8a27d95a5ef38c9e3b65c52
-            GIT_SHALLOW FALSE  # Need full history to checkout specific commit
+            GIT_TAG main
+            GIT_SHALLOW TRUE
             SOURCE_SUBDIR  "."  # Prevent local directory discovery
             OVERRIDE_FIND_PACKAGE
         )
 
         # Logger System
-        # Using specific commit to ensure latest fixes are used (make_error update)
         FetchContent_Declare(
             LoggerSystem
             GIT_REPOSITORY https://github.com/kcenon/logger_system.git
-            GIT_TAG 0ba67a543baa8913576fd682b962e9bde55fdf40
-            GIT_SHALLOW FALSE  # Need full history to checkout specific commit
+            GIT_TAG main
+            GIT_SHALLOW TRUE
         )
 
         # Monitoring System
@@ -291,14 +294,14 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             PATCH_COMMAND sed -i.bak "s/add_subdirectory(samples)/#add_subdirectory(samples)/g" CMakeLists.txt || true
         )
 
-        # Database System
-        FetchContent_Declare(
-            DatabaseSystem
-            GIT_REPOSITORY https://github.com/kcenon/database_system.git
-            GIT_TAG main
-            GIT_SHALLOW TRUE
-            PATCH_COMMAND sed -i.bak -e "s/add_subdirectory(samples)/#add_subdirectory(samples)/g" -e "s/add_subdirectory(integration_tests)/#add_subdirectory(integration_tests)/g" CMakeLists.txt || true
-        )
+        # Database System - DISABLED (not needed, has compilation issues)
+        # FetchContent_Declare(
+        #     DatabaseSystem
+        #     GIT_REPOSITORY https://github.com/kcenon/database_system.git
+        #     GIT_TAG main
+        #     GIT_SHALLOW TRUE
+        #     PATCH_COMMAND sed -i.bak -e "s/add_subdirectory(samples)/#add_subdirectory(samples)/g" -e "s/add_subdirectory(integration_tests)/#add_subdirectory(integration_tests)/g" CMakeLists.txt || true
+        # )
 
         # Network System
         FetchContent_Declare(
@@ -313,8 +316,29 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(CMAKE_SKIP_INSTALL_RULES_SAVE "${CMAKE_SKIP_INSTALL_RULES}")
         set(CMAKE_SKIP_INSTALL_RULES TRUE)
 
+        # Note: BUILD_TESTING is already set to OFF above before FetchContent_Declare
+        # Save the MESSAGING_BUILD_TESTS state to restore later
+        if(DEFINED MESSAGING_BUILD_TESTS)
+            set(MESSAGING_BUILD_TESTS_SAVE "${MESSAGING_BUILD_TESTS}")
+        else()
+            set(MESSAGING_BUILD_TESTS_SAVE ON)
+        endif()
+
+        # Disable common_system internal tests to avoid missing executables in CI
+        set(COMMON_BUILD_TESTS OFF CACHE BOOL "Disable common_system tests" FORCE)
+        set(COMMON_BUILD_INTEGRATION_TESTS OFF CACHE BOOL "Disable common_system integration tests" FORCE)
+
         # Make CommonSystem available first (required by most others)
         FetchContent_MakeAvailable(CommonSystem)
+
+        # Remove dependency test targets to prevent build failures
+        # common_system tests use deprecated error() API
+        if(TARGET common_system_tests)
+            set_target_properties(common_system_tests PROPERTIES EXCLUDE_FROM_ALL TRUE)
+        endif()
+        if(TEST common_system_tests)
+            set_tests_properties(common_system_tests PROPERTIES DISABLED TRUE)
+        endif()
 
         # Get the source directory for common_system to provide to other systems
         FetchContent_GetProperties(CommonSystem SOURCE_DIR commonsystem_source_dir)
@@ -333,6 +357,7 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(common_system_SOURCE_DIR "${commonsystem_source_dir}" CACHE STRING "" FORCE)
 
         # Then ThreadSystem (required by logger, monitoring)
+        # Note: USE_STD_FORMAT is set earlier before FetchContent_Declare
         FetchContent_MakeAvailable(ThreadSystem)
 
         # Get ThreadSystem source directory for reference
@@ -340,19 +365,52 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         set(thread_system_SOURCE_DIR "${threadsystem_source_dir}" CACHE STRING "" FORCE)
         set(thread_system_FOUND TRUE CACHE BOOL "" FORCE)
 
+        # Ensure USE_STD_FORMAT is defined for all thread_system targets IF enabled
+        # This is a workaround for thread_system not reading USE_STD_FORMAT option correctly
+        # Only add compile definition if USE_STD_FORMAT option is ON
+        if(USE_STD_FORMAT)
+            # Ensure all thread_system targets propagate the std::format configuration.
+            set(_thread_system_format_targets
+                thread_base
+                thread_pool
+                interfaces
+                utilities
+                typed_thread_pool
+            )
+            foreach(_ts_target IN LISTS _thread_system_format_targets)
+                if(TARGET "${_ts_target}")
+                    get_target_property(_aliased "${_ts_target}" ALIASED_TARGET)
+                    if(NOT _aliased)
+                        target_compile_definitions("${_ts_target}" PUBLIC USE_STD_FORMAT)
+                    endif()
+                endif()
+            endforeach()
+        endif()
+
         # ContainerSystem needs common_system headers to be fully available
         FetchContent_MakeAvailable(ContainerSystem)
+
+        # Disable PostgreSQL in DatabaseSystem due to libpqxx compatibility issues
+        set(USE_POSTGRESQL OFF CACHE BOOL "Disable PostgreSQL support in database_system" FORCE)
+        set(USE_MYSQL OFF CACHE BOOL "Disable MySQL support in database_system" FORCE)
+        set(USE_SQLITE OFF CACHE BOOL "Disable SQLite support in database_system" FORCE)
 
         # Then remaining systems that depend on common and thread
         FetchContent_MakeAvailable(
             LoggerSystem
             MonitoringSystem
-            DatabaseSystem
+            # DatabaseSystem  # DISABLED - not needed
             NetworkSystem
         )
 
         # Restore original CMAKE_SKIP_INSTALL_RULES setting
         set(CMAKE_SKIP_INSTALL_RULES "${CMAKE_SKIP_INSTALL_RULES_SAVE}")
+
+        # Re-enable BUILD_TESTING for messaging_system's own tests
+        # Use MESSAGING_BUILD_TESTS as the control variable
+        if(MESSAGING_BUILD_TESTS)
+            set(BUILD_TESTING ON CACHE BOOL "Enable testing for messaging_system" FORCE)
+        endif()
 
         # Create missing aliases that some dependencies expect
         # Note: kcenon::common is already an ALIAS, so we need to alias the real target
@@ -536,14 +594,14 @@ elseif(TARGET container_system)
     target_compile_definitions(messaging_system_core PUBLIC HAS_CONTAINER_SYSTEM)
 endif()
 
-# DatabaseSystem
-if(TARGET DatabaseSystem::database)
-    list(APPEND MESSAGING_CORE_LIBS DatabaseSystem::database)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
-elseif(TARGET database)
-    list(APPEND MESSAGING_CORE_LIBS database)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
-endif()
+# DatabaseSystem - DISABLED (not needed)
+# if(TARGET DatabaseSystem::database)
+#     list(APPEND MESSAGING_CORE_LIBS DatabaseSystem::database)
+#     target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
+# elseif(TARGET database)
+#     list(APPEND MESSAGING_CORE_LIBS database)
+#     target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
+# endif()
 
 # NetworkSystem
 if(TARGET NetworkSystem::network)
@@ -559,12 +617,50 @@ if(MESSAGING_CORE_LIBS)
     target_compile_definitions(messaging_system_core PUBLIC MESSAGING_USE_EXTERNAL_SYSTEMS)
 endif()
 
+# Treat external dependency headers as system to avoid propagating their warnings.
+set(_messaging_external_include_targets
+    CommonSystem::common
+    kcenon::common
+    common_system
+    ThreadSystem::Core
+    thread_pool
+    thread_base
+    interfaces
+    utilities
+    LoggerSystem::logger
+    LoggerSystem
+    logger
+    MonitoringSystem::monitoring
+    monitoring_system
+    monitoring
+    ContainerSystem::container
+    container_system
+    NetworkSystem::network
+    NetworkSystem
+)
+foreach(_dep_target IN LISTS _messaging_external_include_targets)
+    if(TARGET "${_dep_target}")
+        get_target_property(_dep_includes "${_dep_target}" INTERFACE_INCLUDE_DIRECTORIES)
+        if(_dep_includes)
+            target_include_directories(messaging_system_core SYSTEM PUBLIC ${_dep_includes})
+        endif()
+    endif()
+endforeach()
+
+if(USE_STD_FORMAT)
+    target_compile_definitions(messaging_system_core PUBLIC USE_STD_FORMAT)
+endif()
+
 # Find and link yaml-cpp for configuration
 find_package(yaml-cpp QUIET)
-if(yaml-cpp_FOUND)
+if(yaml-cpp_FOUND AND TARGET yaml-cpp::yaml-cpp)
     target_link_libraries(messaging_system_core PUBLIC yaml-cpp::yaml-cpp)
     target_compile_definitions(messaging_system_core PUBLIC HAS_YAML_CPP)
     message(STATUS "  ✓ yaml-cpp found")
+elseif(yaml-cpp_FOUND AND TARGET yaml-cpp)
+    target_link_libraries(messaging_system_core PUBLIC yaml-cpp)
+    target_compile_definitions(messaging_system_core PUBLIC HAS_YAML_CPP)
+    message(STATUS "  ✓ yaml-cpp found (non-namespaced)")
 else()
     message(STATUS "  ✗ yaml-cpp not found (ConfigLoader disabled)")
 endif()
@@ -572,10 +668,10 @@ endif()
 target_compile_features(messaging_system_core PUBLIC cxx_std_20)
 
 # ============================================================================
-# Main Executable
+# Main Executable (Example/Demo)
 # ============================================================================
 
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+if(MESSAGING_BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
     add_executable(messaging_system
         src/main.cpp
     )

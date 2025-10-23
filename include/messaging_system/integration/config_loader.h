@@ -1,8 +1,12 @@
 #pragma once
 
+#ifdef HAS_YAML_CPP
 #include <yaml-cpp/yaml.h>
+#endif
 #include <kcenon/common/patterns/result.h>
+#ifdef HAS_DATABASE_SYSTEM
 #include <database/connection_pool.h>
+#endif
 #include <string>
 #include <vector>
 #include <chrono>
@@ -16,7 +20,7 @@ using common::VoidResult;
 struct NetworkConfig {
     uint16_t port{8080};
     size_t max_connections{10000};
-    std::chrono::milliseconds timeout{5000};
+    std::chrono::milliseconds timeout{30000};
     int retry_attempts{3};
 };
 
@@ -28,9 +32,18 @@ struct ThreadPoolConfig {
 };
 
 struct DatabaseConfig {
-    std::string type{"postgresql"};
+    std::string type;
     std::string connection_string;
+#ifdef HAS_DATABASE_SYSTEM
     database::connection_pool_config pool_config;
+#else
+    // Placeholder struct when database system is not available
+    struct {
+        size_t min_connections{1};
+        size_t max_connections{10};
+        std::chrono::seconds idle_timeout{300};
+    } pool_config;
+#endif
 };
 
 struct LoggingConfig {
@@ -45,7 +58,7 @@ struct MonitoringConfig {
 };
 
 struct MessagingSystemConfig {
-    std::string version;
+    std::string version{"2.0.0"};
     NetworkConfig network;
     ThreadPoolConfig thread_pools;
     DatabaseConfig database;

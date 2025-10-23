@@ -75,14 +75,7 @@ VoidResult TopicRouter::route(const MessagingContainer& msg) {
     auto matching = find_matching_subscriptions(msg.topic());
 
     if (matching.empty()) {
-        return common::make_error<std::monostate>(
-            common::error_info{
-                error::NO_SUBSCRIBERS,
-                "No subscribers for topic: " + msg.topic(),
-                "TopicRouter::route",
-                ""
-            }
-        );
+        return common::ok(std::monostate{});
     }
 
     // Execute callbacks via executor for async processing
