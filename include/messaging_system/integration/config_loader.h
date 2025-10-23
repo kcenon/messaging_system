@@ -1,6 +1,8 @@
 #pragma once
 
+#ifdef HAS_YAML_CPP
 #include <yaml-cpp/yaml.h>
+#endif
 #include <kcenon/common/patterns/result.h>
 #ifdef HAS_DATABASE_SYSTEM
 #include <database/connection_pool.h>

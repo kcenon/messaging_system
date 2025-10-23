@@ -610,6 +610,36 @@ if(MESSAGING_CORE_LIBS)
     target_compile_definitions(messaging_system_core PUBLIC MESSAGING_USE_EXTERNAL_SYSTEMS)
 endif()
 
+# Treat external dependency headers as system to avoid propagating their warnings.
+set(_messaging_external_include_targets
+    CommonSystem::common
+    kcenon::common
+    common_system
+    ThreadSystem::Core
+    thread_pool
+    thread_base
+    interfaces
+    utilities
+    LoggerSystem::logger
+    LoggerSystem
+    logger
+    MonitoringSystem::monitoring
+    monitoring_system
+    monitoring
+    ContainerSystem::container
+    container_system
+    NetworkSystem::network
+    NetworkSystem
+)
+foreach(_dep_target IN LISTS _messaging_external_include_targets)
+    if(TARGET "${_dep_target}")
+        get_target_property(_dep_includes "${_dep_target}" INTERFACE_INCLUDE_DIRECTORIES)
+        if(_dep_includes)
+            target_include_directories(messaging_system_core SYSTEM PUBLIC ${_dep_includes})
+        endif()
+    endif()
+endforeach()
+
 if(USE_STD_FORMAT)
     target_compile_definitions(messaging_system_core PUBLIC USE_STD_FORMAT)
 endif()
