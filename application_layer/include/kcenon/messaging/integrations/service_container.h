@@ -53,7 +53,7 @@ namespace kcenon::messaging::integrations {
         // Register services
         template<typename T>
         void register_service(const std::string& name, service_factory<T> factory, bool singleton = true) {
-            std::lock_guard<std::mutex> lock(mutex_);
+            std::lock_guard<std::recursive_mutex> lock(mutex_);
 
             service_registration registration(name, factory, singleton);
             registrations_[name] = std::move(registration);
@@ -62,7 +62,7 @@ namespace kcenon::messaging::integrations {
 
         template<typename T>
         void register_singleton(const std::string& name, std::shared_ptr<T> instance) {
-            std::lock_guard<std::mutex> lock(mutex_);
+            std::lock_guard<std::recursive_mutex> lock(mutex_);
 
             service_factory<T> factory = [instance]() -> std::shared_ptr<T> { return instance; };
             service_registration registration(name, factory, true);
@@ -75,7 +75,7 @@ namespace kcenon::messaging::integrations {
         // Resolve services
         template<typename T>
         std::shared_ptr<T> resolve(const std::string& name) {
-            std::lock_guard<std::mutex> lock(mutex_);
+            std::lock_guard<std::recursive_mutex> lock(mutex_);
 
             auto it = registrations_.find(name);
             if (it == registrations_.end()) {
@@ -112,20 +112,20 @@ namespace kcenon::messaging::integrations {
 
         // Check if service is registered
         bool is_registered(const std::string& name) const {
-            std::lock_guard<std::mutex> lock(mutex_);
+            std::lock_guard<std::recursive_mutex> lock(mutex_);
             return registrations_.find(name) != registrations_.end();
         }
 
         template<typename T>
         bool is_registered() const {
             auto type_index = std::type_index(typeid(T));
-            std::lock_guard<std::mutex> lock(mutex_);
+            std::lock_guard<std::recursive_mutex> lock(mutex_);
             return type_to_name_.find(type_index) != type_to_name_.end();
         }
 
         // Get all registered service names
         std::vector<std::string> get_registered_services() const {
-            std::lock_guard<std::mutex> lock(mutex_);
+            std::lock_guard<std::recursive_mutex> lock(mutex_);
             std::vector<std::string> names;
             for (const auto& [name, registration] : registrations_) {
                 names.push_back(name);
@@ -135,13 +135,13 @@ namespace kcenon::messaging::integrations {
 
         // Clear all registrations
         void clear() {
-            std::lock_guard<std::mutex> lock(mutex_);
+            std::lock_guard<std::recursive_mutex> lock(mutex_);
             registrations_.clear();
             type_to_name_.clear();
         }
 
     private:
-        mutable std::mutex mutex_;
+        mutable std::recursive_mutex mutex_;
         std::unordered_map<std::string, service_registration> registrations_;
         std::unordered_map<std::type_index, std::string> type_to_name_;
     };
