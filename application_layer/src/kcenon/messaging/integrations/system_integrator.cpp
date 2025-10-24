@@ -125,11 +125,12 @@ namespace kcenon::messaging::integrations {
         std::shared_ptr<services::service_adapter> adapter) {
 
         std::lock_guard<std::mutex> lock(mutex_);
-        adapters_[name] = adapter;
+        register_service_adapter_unlocked(name, adapter);
 
         // If system is already initialized, register with bus immediately
         if (initialized_ && message_bus_) {
             adapter->register_with_bus(message_bus_.get());
+            adapter->initialize();
         }
     }
 
@@ -140,6 +141,12 @@ namespace kcenon::messaging::integrations {
             names.push_back(name);
         }
         return names;
+    }
+
+    void messaging_system_orchestrator::register_service_adapter_unlocked(
+        const std::string& name,
+        const std::shared_ptr<services::service_adapter>& adapter) {
+        adapters_[name] = adapter;
     }
 
     void messaging_system_orchestrator::setup_external_integrations() {
@@ -177,12 +184,12 @@ namespace kcenon::messaging::integrations {
         // Initialize and register default adapters
         auto container_adapter = container_.resolve<services::container::container_service_adapter>("container_adapter");
         if (container_adapter) {
-            register_service_adapter("container", container_adapter);
+            register_service_adapter_unlocked("container", container_adapter);
         }
 
         auto network_adapter = container_.resolve<services::network::network_service_adapter>("network_adapter");
         if (network_adapter) {
-            register_service_adapter("network", network_adapter);
+            register_service_adapter_unlocked("network", network_adapter);
         }
 
         // Register all adapters with message bus

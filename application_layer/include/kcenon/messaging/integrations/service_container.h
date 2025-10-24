@@ -196,6 +196,8 @@ namespace kcenon::messaging::integrations {
         bool initialized_ = false;
         mutable std::mutex mutex_;
 
+        void register_service_adapter_unlocked(const std::string& name,
+                                               const std::shared_ptr<services::service_adapter>& adapter);
         void setup_external_integrations();
         void initialize_adapters();
         void shutdown_adapters();
