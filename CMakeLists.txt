@@ -686,6 +686,17 @@ if(MESSAGING_BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 endif()
 
 # ============================================================================
+# Application Layer (High-level messaging APIs)
+# ============================================================================
+
+option(MESSAGING_BUILD_APPLICATION_LAYER "Build application layer with high-level messaging APIs" ON)
+
+if(MESSAGING_BUILD_APPLICATION_LAYER AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/application_layer/CMakeLists.txt)
+    message(STATUS "Building application layer (messaging_services)")
+    add_subdirectory(application_layer)
+endif()
+
+# ============================================================================
 # Tests
 # ============================================================================
 
