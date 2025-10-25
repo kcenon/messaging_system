@@ -83,9 +83,7 @@ namespace kcenon::messaging::core {
                     msg = priority_queue_.top().msg;
                     priority_queue_.pop();
 
-                    if (maybe_delay_for_higher_priority(lock, msg)) {
-                        continue;
-                    }
+                    // No additional delay; rely on priority ordering.
                 } else {
                     msg = queue_.front();
                     queue_.pop();
@@ -135,39 +133,6 @@ namespace kcenon::messaging::core {
             return enable_priority_ ? priority_queue_.size() : queue_.size();
         }
 
-        bool maybe_delay_for_higher_priority(std::unique_lock<std::mutex>& lock, message& current_msg) {
-            if (!enable_priority_ || priority_reorder_window_.count() == 0) {
-                return false;
-            }
-
-            const int current_priority = static_cast<int>(current_msg.metadata.priority);
-            if (current_priority > static_cast<int>(message_priority::low)) {
-                return false;
-            }
-
-            const auto deadline = std::chrono::steady_clock::now() + priority_reorder_window_;
-            while (!shutdown_) {
-                if (!priority_queue_.empty()) {
-                    int next_priority = static_cast<int>(priority_queue_.top().msg.metadata.priority);
-                    if (next_priority > current_priority) {
-                        priority_queue_.push(queued_message{current_msg, next_sequence_++});
-                        condition_.notify_one();
-                        return true;
-                    }
-                }
-
-                if (std::chrono::steady_clock::now() >= deadline) {
-                    return false;
-                }
-
-                if (condition_.wait_until(lock, deadline) == std::cv_status::timeout) {
-                    return false;
-                }
-            }
-
-            return false;
-        }
-
         mutable std::mutex mutex_;
         std::condition_variable condition_;
         std::queue<message> queue_;
@@ -175,7 +140,6 @@ namespace kcenon::messaging::core {
         uint64_t next_sequence_{0};
         const size_t max_size_;
         const bool enable_priority_;
-        const std::chrono::microseconds priority_reorder_window_{200};
         bool shutdown_ = false;
     };
 

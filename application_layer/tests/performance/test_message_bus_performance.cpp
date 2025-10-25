@@ -209,7 +209,7 @@ TEST_F(PerformanceTest, MessageSizeImpact) {
 }
 
 TEST_F(PerformanceTest, PriorityQueuePerformance) {
-    constexpr int total_messages = 4000;
+    constexpr int total_messages = 10000;
     std::vector<message_priority> received_priorities;
     std::mutex priorities_mutex;
 
@@ -263,8 +263,8 @@ TEST_F(PerformanceTest, PriorityQueuePerformance) {
         : (priority_violations * 100.0) / received_priorities.size();
     std::cout << "Priority violation rate: " << std::fixed << std::setprecision(2) << violation_rate << "%\n";
 
-    EXPECT_GT(rate, 300); // Keep baseline throughput requirement modest for multi-platform stability
-    EXPECT_LT(violation_rate, 60.0); // Allow higher out-of-order rate on Windows while still flagging regressions
+    EXPECT_GT(rate, 1000); // Keep baseline throughput requirement modest for multi-platform stability
+    EXPECT_LT(violation_rate, 40.0); // Allow moderate out-of-order rate on Windows while still flagging regressions
 }
 
 TEST_F(PerformanceTest, MemoryUsageStability) {
