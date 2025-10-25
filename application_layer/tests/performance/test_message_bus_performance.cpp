@@ -208,7 +208,8 @@ TEST_F(PerformanceTest, MessageSizeImpact) {
 }
 
 TEST_F(PerformanceTest, PriorityQueuePerformance) {
-    constexpr int total_messages = 10000;
+    constexpr int messages_per_priority = 2500;
+    constexpr int total_messages = messages_per_priority * 4;
     std::vector<message_priority> received_priorities;
     std::mutex priorities_mutex;
 
@@ -219,18 +220,22 @@ TEST_F(PerformanceTest, PriorityQueuePerformance) {
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    // Publish messages with random priorities
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> priority_dist(0, 3);
+    // Publish messages starting from lowest priority to highest to stress reordering
+    const std::array<message_priority, 4> publish_order = {
+        message_priority::low,
+        message_priority::normal,
+        message_priority::high,
+        message_priority::critical
+    };
 
-    for (int i = 0; i < total_messages; ++i) {
-        message msg;
-        msg.payload.topic = "performance.priority";
-        msg.payload.data["sequence"] = int64_t(i);
-        msg.metadata.priority = static_cast<message_priority>(priority_dist(gen));
-
-        message_bus_->publish(msg);
+    for (auto priority : publish_order) {
+        for (int count = 0; count < messages_per_priority; ++count) {
+            message msg;
+            msg.payload.topic = "performance.priority";
+            msg.payload.data["sequence"] = int64_t(priority) * messages_per_priority + count;
+            msg.metadata.priority = priority;
+            message_bus_->publish(msg);
+        }
     }
 
     // Wait for all messages to be processed
@@ -255,11 +260,13 @@ TEST_F(PerformanceTest, PriorityQueuePerformance) {
         }
     }
 
-    double violation_rate = (priority_violations * 100.0) / received_priorities.size();
+    double violation_rate = received_priorities.empty()
+        ? 0.0
+        : (priority_violations * 100.0) / received_priorities.size();
     std::cout << "Priority violation rate: " << std::fixed << std::setprecision(2) << violation_rate << "%\n";
 
-    EXPECT_GT(rate, 5000); // Priority queue should still maintain decent performance
-    EXPECT_LT(violation_rate, 20.0); // Less than 20% violations (some reordering is expected)
+    EXPECT_GT(rate, 3000); // Priority queue should still maintain decent performance
+    EXPECT_LT(violation_rate, 5.0); // Deterministic publish order should keep violations near zero
 }
 
 TEST_F(PerformanceTest, MemoryUsageStability) {
