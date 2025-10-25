@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['정립_20strong_0',['&lt;strong&gt;Task 2.1 – 메시지 컨테이너 DSL 정립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md787',1,'']]],
-  ['정비_1',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md775',1,'']]],
-  ['정비_20strong_2',['&lt;strong&gt;Task 2.4 – 라우팅/토픽 엔진 정비&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md790',1,'']]],
-  ['정책_20레이어_20strong_3',['&lt;strong&gt;Task 3.4 – 구성 및 정책 레이어&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md795',1,'']]]
+  ['재구성_20실행_20계획_0',['Messaging System 재구성 실행 계획',['../d7/d01/md_docs_2REBUILD__PLAN.html',1,'']]],
+  ['재구성_20strong_1',['&lt;strong&gt;Task 1.1 – 외부 모듈 통합 재구성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md782',1,'']]],
+  ['재설계_2',['Phase 2. 메시징 코어 재설계',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md786',1,'']]],
+  ['재처리_20경로_20구성_20strong_3',['&lt;strong&gt;Task 3.2 – 영속성 및 재처리 경로 구성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md793',1,'']]]
 ];

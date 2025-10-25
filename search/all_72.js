@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📋_20appendix_0',['📋 Appendix',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md987',1,'']]]
+  ['📄_20license_0',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md996',1,'']]]
 ];

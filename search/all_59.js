@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['준비_0',['Phase 4. 검증·배포 준비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md796',1,'']]],
-  ['준비_20및_20기반_20정비_1',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md775',1,'']]]
+  ['제거_20strong_0',['&lt;strong&gt;Task 1.4 – 레거시 코드 비활성화 및 제거&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md785',1,'']]],
+  ['제로화_20strong_1',['&lt;strong&gt;Task 2.2 – Result 기반 플로우 제로화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md788',1,'']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['수립_20strong_0',['수립 strong',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md780',1,'&lt;strong&gt;Task 0.4 – 레거시 구현 차단 계획 수립&lt;/strong&gt;'],['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md797',1,'&lt;strong&gt;Task 4.1 – 교차 모듈 테스트 수립&lt;/strong&gt;']]]
+  ['빌드_20및_20의존성_20리팩터링_0',['Phase 1. 빌드 및 의존성 리팩터링',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md781',1,'']]],
+  ['빌드_20환경_20감사_20strong_1',['&lt;strong&gt;Task 0.2 – 빌드 환경 감사&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md778',1,'']]]
 ];

@@ -30,7 +30,7 @@ var searchData=
   ['2_20persistent_20message_20queue_20task_203_202_27',['2. Persistent Message Queue (Task 3.2)',['../d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md643',1,'']]],
   ['2_20platform_20specific_20setup_28',['2. Platform-Specific Setup',['../d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md396',1,'']]],
   ['2_20strong_20production_5fready_5fexample_20cpp_20strong_20⭐_20new_29',['2. &lt;strong&gt;production_ready_example.cpp&lt;/strong&gt; ⭐ NEW',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md39',1,'']]],
-  ['2_20strong_20thread_5fsystem_20strong_20concurrency_20engine_30',['2. &lt;strong&gt;thread_system&lt;/strong&gt; - Concurrency Engine',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md923',1,'']]],
+  ['2_20strong_20thread_5fsystem_20strong_20concurrency_20engine_30',['2. &lt;strong&gt;thread_system&lt;/strong&gt; - Concurrency Engine',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md929',1,'']]],
   ['2_20topicrouter_20tests_20test_5ftopic_5frouter_20cpp_31',['2. TopicRouter Tests (test_topic_router.cpp)',['../df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md677',1,'']]],
   ['2_3a_20compiler_20options_20and_20feature_20flags_32',['Task 1.2: Compiler Options and Feature Flags',['../d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md597',1,'']]],
   ['2_3a_20data_20loss_20during_20migration_33',['Risk 2: Data Loss During Migration',['../d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md575',1,'']]],
@@ -40,7 +40,7 @@ var searchData=
   ['2_3a_20memory_20leak_20in_20long_20running_20connections_37',['Issue 2: Memory Leak in Long-Running Connections',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md894',1,'']]],
   ['2_3a_20messaging_20core_20implementation_20✅_38',['Phase 2: Messaging Core Implementation ✅',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md722',1,'']]],
   ['2_3a_20messaging_20core_20redesign_20design_20document_39',['Phase 2: Messaging Core Redesign - Design Document',['../d6/df5/md_docs_2phase2_2DESIGN.html',1,'']]],
-  ['2_3a_20real_20time_20chat_20server_20with_20monitoring_40',['Example 2: Real-Time Chat Server with Monitoring',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md941',1,'']]],
+  ['2_3a_20real_20time_20chat_20server_20with_20monitoring_40',['Example 2: Real-Time Chat Server with Monitoring',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md951',1,'']]],
   ['2_3a_20result_20t_20migration_41',['Week 2: Result&lt;T&gt; Migration',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md630',1,'']]],
-  ['2_3a_20your_20first_20program_2060_20seconds_42',['Step 2: Your First Program (60 seconds)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md936',1,'']]]
+  ['2_3a_20your_20first_20program_2060_20seconds_42',['Step 2: Your First Program (60 seconds)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md946',1,'']]]
 ];

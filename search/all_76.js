@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['📬_20contact_20support_0',['📬 Contact &amp; Support',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md984',1,'']]]
+  ['📚_20documentation_0',['📚 Documentation',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md980',1,'']]],
+  ['📚_20documentation_20overview_1',['📚 Documentation Overview',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md760',1,'']]]
 ];

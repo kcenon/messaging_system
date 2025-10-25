@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['시스템_20인터페이스_20맵핑_20strong_0',['&lt;strong&gt;Task 0.1 – 시스템 인터페이스 맵핑&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md777',1,'']]]
+  ['성공_20기준_20최종_0',['성공 기준 (최종)',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md805',1,'']]],
+  ['성능_20및_20회귀_20검증_20strong_1',['&lt;strong&gt;Task 4.3 – 성능 및 회귀 검증&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md799',1,'']]]
 ];

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['계층_20구축_0',['Phase 3. 인프라 통합 계층 구축',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md791',1,'']]],
-  ['계층_20구현_20strong_1',['&lt;strong&gt;Task 3.1 – 네트워크 경계 계층 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md792',1,'']]],
-  ['계획_2',['Messaging System 재구성 실행 계획',['../d7/d01/md_docs_2REBUILD__PLAN.html',1,'']]],
-  ['계획_20수립_20strong_3',['&lt;strong&gt;Task 0.4 – 레거시 구현 차단 계획 수립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md780',1,'']]]
+  ['검증·배포_20준비_0',['Phase 4. 검증·배포 준비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md796',1,'']]],
+  ['검증_20자동화_20strong_1',['&lt;strong&gt;Task 1.3 – 구성 검증 자동화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md784',1,'']]],
+  ['검증_20strong_2',['&lt;strong&gt;Task 4.3 – 성능 및 회귀 검증&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md799',1,'']]],
+  ['검토_20및_20강화_20strong_3',['&lt;strong&gt;Task 4.4 – 보안 검토 및 강화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md800',1,'']]]
 ];

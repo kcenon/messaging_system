@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['의존성_20리팩터링_0',['Phase 1. 빌드 및 의존성 리팩터링',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md781',1,'']]]
+  ['우선순위_0',['개요 및 우선순위',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md774',1,'']]]
 ];

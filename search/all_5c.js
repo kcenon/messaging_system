@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['체크리스트_20런북_20작성_20strong_0',['&lt;strong&gt;Task 4.5 – 출시 체크리스트/런북 작성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md801',1,'']]]
+  ['즉시_20통합_20최우선_0',['**Task 0.0 – common_system 즉시 통합 (최우선)**',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md776',1,'']]]
 ];

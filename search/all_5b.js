@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['차단_20계획_20수립_20strong_0',['&lt;strong&gt;Task 0.4 – 레거시 구현 차단 계획 수립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md780',1,'']]]
+  ['준비_0',['Phase 4. 검증·배포 준비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md796',1,'']]],
+  ['준비_20및_20기반_20정비_1',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md775',1,'']]]
 ];

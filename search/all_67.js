@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['확정_20strong_0',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md779',1,'']]]
+  ['플래그_20통합_20strong_0',['&lt;strong&gt;Task 1.2 – 컴파일 옵션 및 피처 플래그 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md783',1,'']]],
+  ['플로우_20제로화_20strong_1',['&lt;strong&gt;Task 2.2 – Result 기반 플로우 제로화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md788',1,'']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['전략_20확정_20strong_0',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md779',1,'']]],
-  ['전체_20일정_20요약_1',['전체 일정 요약',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md803',1,'']]]
+  ['작성_20strong_0',['&lt;strong&gt;Task 4.5 – 출시 체크리스트/런북 작성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md801',1,'']]],
+  ['작업_20최적화_1',['병렬 작업 최적화',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md804',1,'']]]
 ];

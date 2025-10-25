@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['흐름_20통합_20strong_0',['&lt;strong&gt;Task 3.3 – 로깅/모니터링 데이터 흐름 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md794',1,'']]]
+  ['환경_20감사_20strong_0',['&lt;strong&gt;Task 0.2 – 빌드 환경 감사&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md778',1,'']]]
 ];

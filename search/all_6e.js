@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🏗️_20system_20architecture_0',['🏗️ System Architecture',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md930',1,'']]]
+  ['🌟_20ecosystem_20integration_0',['🌟 Ecosystem Integration',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md925',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📄_20license_0',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md982',1,'']]]
+  ['🏗️_20system_20architecture_0',['🏗️ System Architecture',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md936',1,'']]]
 ];

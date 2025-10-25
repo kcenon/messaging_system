@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['제거_20strong_0',['&lt;strong&gt;Task 1.4 – 레거시 코드 비활성화 및 제거&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md785',1,'']]],
-  ['제로화_20strong_1',['&lt;strong&gt;Task 2.2 – Result 기반 플로우 제로화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md788',1,'']]]
+  ['전략_20확정_20strong_0',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md779',1,'']]],
+  ['전체_20일정_20요약_1',['전체 일정 요약',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md803',1,'']]]
 ];

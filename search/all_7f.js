@@ -1,9 +1,4 @@
 var searchData=
 [
-  ['🔄_20dependency_20flow_20interface_20contracts_0',['🔄 dependency flow interface contracts',['../d9/d9b/md_libraries_2logger__system_2ARCHITECTURE.html#autotoc_md141',1,'🔄 Dependency Flow &amp; Interface Contracts'],['../dc/d4e/md_libraries_2monitoring__system_2ARCHITECTURE.html#autotoc_md395',1,'🔄 Dependency Flow &amp; Interface Contracts'],['../df/d5b/md_libraries_2thread__system_2ARCHITECTURE.html#autotoc_md729',1,'🔄 Dependency Flow &amp; Interface Contracts']]],
-  ['🔄_20documentation_20updates_1',['🔄 documentation updates',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/docs/README.md#autotoc_md1273',1,'🔄 Documentation Updates'],['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md2262',1,'🔄 Documentation Updates']]],
-  ['🔄_20evolution_3a_20monolithic_20→_20modular_2',['🔄 evolution: monolithic → modular',['../d9/d9b/md_libraries_2logger__system_2ARCHITECTURE.html#autotoc_md152',1,'🔄 Evolution: Monolithic → Modular'],['../dc/d4e/md_libraries_2monitoring__system_2ARCHITECTURE.html#autotoc_md406',1,'🔄 Evolution: Monolithic → Modular'],['../df/d5b/md_libraries_2thread__system_2ARCHITECTURE.html#autotoc_md740',1,'🔄 Evolution: Monolithic → Modular']]],
-  ['🔄_20pending_3',['Phase 5: Gradual Deployment 🔄 PENDING',['../d9/dea/md_libraries_2thread__system_2MIGRATION.html#autotoc_md1283',1,'']]],
-  ['🔄_20strong_20design_20patterns_20implementation_20strong_4',['🔄 &lt;strong&gt;Design Patterns Implementation&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1428',1,'']]],
-  ['🔄_20strong_20more_20usage_20examples_20strong_5',['🔄 &lt;strong&gt;More Usage Examples&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1460',1,'']]]
+  ['🤝_20contributing_0',['🤝 Contributing',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md986',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['즉시_20통합_20최우선_0',['**Task 0.0 – common_system 즉시 통합 (최우선)**',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md776',1,'']]]
+  ['주입식_20아키텍처_20구현_20strong_0',['&lt;strong&gt;Task 2.3 – IExecutor 주입식 아키텍처 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md789',1,'']]]
 ];

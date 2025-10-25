@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['🔒_20strong_20safety_20reliability_20strong_0',['🔒 &lt;strong&gt;Safety &amp; Reliability&lt;/strong&gt;',['..//home/runner/work/messaging_system/messaging_system/libraries/thread_system/README.md#autotoc_md1456',1,'']]]
+  ['🧩_20component_20documentation_0',['🧩 Component Documentation',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md765',1,'']]],
+  ['🧩_20how_20each_20system_20contributes_1',['🧩 How Each System Contributes',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md927',1,'']]]
 ];

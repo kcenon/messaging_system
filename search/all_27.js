@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['⭐_20new_0',['2. &lt;strong&gt;production_ready_example.cpp&lt;/strong&gt; ⭐ NEW',['../dd/dbf/md_application__layer_2samples_2SAMPLES__README.html#autotoc_md39',1,'']]]
+  ['✨_20what_20makes_20this_20special_0',['✨ What Makes This Special?',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md916',1,'']]]
 ];
