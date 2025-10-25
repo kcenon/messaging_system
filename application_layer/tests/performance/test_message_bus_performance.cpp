@@ -221,17 +221,20 @@ TEST_F(PerformanceTest, PriorityQueuePerformance) {
     auto start_time = std::chrono::high_resolution_clock::now();
 
     // Publish messages with random priorities
-    std::mt19937 gen(12345);
-    std::uniform_int_distribution<> priority_dist(0, 3);
+    auto publish_priority_batch = [&](message_priority priority, int count) {
+        for (int i = 0; i < count; ++i) {
+            message msg;
+            msg.payload.topic = "performance.priority";
+            msg.payload.data["sequence"] = int64_t(priority) * count + i;
+            msg.metadata.priority = priority;
+            message_bus_->publish(msg);
+        }
+    };
 
-    for (int i = 0; i < total_messages; ++i) {
-        message msg;
-        msg.payload.topic = "performance.priority";
-        msg.payload.data["sequence"] = int64_t(i);
-        msg.metadata.priority = static_cast<message_priority>(priority_dist(gen));
-
-        message_bus_->publish(msg);
-    }
+    publish_priority_batch(message_priority::low, total_messages / 4);
+    publish_priority_batch(message_priority::normal, total_messages / 4);
+    publish_priority_batch(message_priority::high, total_messages / 4);
+    publish_priority_batch(message_priority::critical, total_messages - 3 * (total_messages / 4));
 
     // Wait for all messages to be processed
     ASSERT_TRUE(wait_for_condition([&] {
