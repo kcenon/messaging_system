@@ -4,6 +4,7 @@
 #include "../../core/message_bus.h"
 #include <atomic>
 #include <mutex>
+#include <unordered_set>
 
 namespace kcenon::messaging::services::network {
 
@@ -35,6 +36,8 @@ namespace kcenon::messaging::services::network {
         // Network-specific operations
         bool send_message(const std::string& destination, const core::message& msg);
         bool broadcast_message(const core::message& msg);
+        bool connect_client(const std::string& client_id);
+        bool disconnect_client(const std::string& client_id);
 
         // Statistics
         struct statistics {
@@ -54,6 +57,10 @@ namespace kcenon::messaging::services::network {
 
         void process_send_request(const core::message& msg);
         void process_broadcast_request(const core::message& msg);
+        void process_connect_request(const core::message& msg);
+        void process_disconnect_request(const core::message& msg);
+
+        std::unordered_set<std::string> active_connections_;
     };
 
     // Network service adapter

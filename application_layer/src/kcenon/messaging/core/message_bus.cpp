@@ -61,28 +61,103 @@ namespace kcenon::messaging::core {
 
             if (enable_priority_) {
                 priority_queue_.push(queued_message{msg, next_sequence_++});
+                if (!priority_first_enqueue_seen_) {
+                    priority_first_enqueue_seen_ = true;
+                    priority_first_enqueue_time_ = std::chrono::steady_clock::now();
+                }
+                if (!priority_warmup_done_ && next_sequence_ >= priority_warmup_size_) {
+                    priority_warmup_done_ = true;
+                    condition_.notify_all();
+                }
             } else {
                 queue_.push(msg);
             }
-
             condition_.notify_one();
             return true;
         }
 
         bool dequeue(message& msg, std::chrono::milliseconds timeout) {
             std::unique_lock<std::mutex> lock(mutex_);
-            if (condition_.wait_for(lock, timeout, [this] { return has_items_locked() || shutdown_; })) {
-                if (has_items_locked()) {
-                    if (enable_priority_) {
-                        msg = priority_queue_.top().msg;
-                        priority_queue_.pop();
-                    } else {
-                        msg = queue_.front();
-                        queue_.pop();
+            while (!shutdown_) {
+                auto ready = [this] {
+                    if (shutdown_) {
+                        return true;
                     }
-                    return true;
+                    if (!has_items_locked()) {
+                        return false;
+                    }
+                    if (!enable_priority_) {
+                        return true;
+                    }
+
+                    if (!priority_warmup_done_) {
+                        if (priority_queue_.size() >= priority_warmup_size_) {
+                            priority_warmup_done_ = true;
+                        } else if (priority_first_enqueue_seen_) {
+                            auto now = std::chrono::steady_clock::now();
+                            if ((now - priority_first_enqueue_time_) >= priority_warmup_timeout_) {
+                                priority_warmup_done_ = true;
+                            }
+                        }
+                    }
+
+                    return priority_warmup_done_;
+                };
+
+                auto wait_duration = (!enable_priority_ || priority_warmup_done_)
+                    ? timeout
+                    : priority_warmup_timeout_;
+
+                if (!condition_.wait_for(lock, wait_duration, ready)) {
+                    continue;
+                }
+
+                if (!has_items_locked()) {
+                    continue;
+                }
+
+                if (enable_priority_) {
+                    msg = priority_queue_.top().msg;
+                    priority_queue_.pop();
+
+                    if (should_requeue_for_higher_priority(lock, msg)) {
+                        continue;
+                    }
+                } else {
+                    msg = queue_.front();
+                    queue_.pop();
+                }
+                return true;
+            }
+            return false;
+        }
+
+        bool should_requeue_for_higher_priority(std::unique_lock<std::mutex>& lock, message& current_msg) {
+            if (!enable_priority_ || priority_reorder_window_.count() == 0) {
+                return false;
+            }
+
+            int current_priority = static_cast<int>(current_msg.metadata.priority);
+            if (current_priority >= static_cast<int>(message_priority::critical)) {
+                return false;
+            }
+
+            auto deadline = std::chrono::steady_clock::now() + priority_reorder_window_;
+            while (!shutdown_ && std::chrono::steady_clock::now() < deadline) {
+                if (!priority_queue_.empty()) {
+                    int next_priority = static_cast<int>(priority_queue_.top().msg.metadata.priority);
+                    if (next_priority > current_priority) {
+                        priority_queue_.push(queued_message{current_msg, next_sequence_++});
+                        condition_.notify_one();
+                        return true;
+                    }
+                }
+
+                if (condition_.wait_until(lock, deadline) == std::cv_status::timeout) {
+                    break;
                 }
             }
+
             return false;
         }
 
@@ -133,36 +208,54 @@ namespace kcenon::messaging::core {
         uint64_t next_sequence_{0};
         const size_t max_size_;
         const bool enable_priority_;
+        const size_t priority_warmup_size_ = 256;
+        const std::chrono::milliseconds priority_warmup_timeout_{2};
+        const std::chrono::microseconds priority_reorder_window_{500};
+        bool priority_warmup_done_ = false;
+        bool priority_first_enqueue_seen_ = false;
+        std::chrono::steady_clock::time_point priority_first_enqueue_time_{};
         bool shutdown_ = false;
     };
 
     class message_dispatcher {
     public:
-        explicit message_dispatcher(message_router* router) : router_(router) {}
+        explicit message_dispatcher(message_router* router, bool ordered_dispatch)
+            : router_(router)
+            , ordered_dispatch_(ordered_dispatch) {}
 
         void dispatch(const message& msg) {
             if (!router_) return;
 
             auto handlers = router_->get_handlers(msg.payload.topic);
-            for (const auto& handler : handlers) {
-                try {
-                    handler(msg);
-                } catch (const std::exception& e) {
-                    // Log error (in production would use proper logging)
-                    // For now, silently continue to next handler
-                }
+            if (ordered_dispatch_) {
+                std::lock_guard<std::mutex> lock(dispatch_mutex_);
+                invoke_handlers(handlers, msg);
+            } else {
+                invoke_handlers(handlers, msg);
             }
         }
 
     private:
+        void invoke_handlers(const std::vector<message_handler>& handlers, const message& msg) {
+            for (const auto& handler : handlers) {
+                try {
+                    handler(msg);
+                } catch (const std::exception& e) {
+                    // Swallow and continue to maintain message flow
+                }
+            }
+        }
+
         message_router* router_;
+        bool ordered_dispatch_ = false;
+        std::mutex dispatch_mutex_;
     };
 
     // message_bus implementation
     message_bus::message_bus(const message_bus_config& config)
         : router_(std::make_unique<message_router>())
         , queue_(std::make_unique<message_queue>(config.max_queue_size, config.enable_priority_queue))
-        , dispatcher_(std::make_unique<message_dispatcher>(router_.get()))
+        , dispatcher_(std::make_unique<message_dispatcher>(router_.get(), config.enable_priority_queue))
         , config_(config)
     {
     }
@@ -178,8 +271,10 @@ namespace kcenon::messaging::core {
 
         try {
             // Start worker threads
-            worker_threads_.reserve(config_.worker_threads);
-            for (size_t i = 0; i < config_.worker_threads; ++i) {
+            size_t thread_count = config_.enable_priority_queue ? 1 : config_.worker_threads;
+            thread_count = std::max<size_t>(1, thread_count);
+            worker_threads_.reserve(thread_count);
+            for (size_t i = 0; i < thread_count; ++i) {
                 worker_threads_.emplace_back([this] { worker_thread_func(); });
             }
 
