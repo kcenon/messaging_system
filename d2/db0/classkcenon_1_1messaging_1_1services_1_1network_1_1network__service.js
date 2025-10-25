@@ -5,6 +5,8 @@ var classkcenon_1_1messaging_1_1services_1_1network_1_1network__service =
     [ "~network_service", "d2/db0/classkcenon_1_1messaging_1_1services_1_1network_1_1network__service.html#afc5104afe02b6b068ce9443a5d901d31", null ],
     [ "broadcast_message", "d2/db0/classkcenon_1_1messaging_1_1services_1_1network_1_1network__service.html#a52addcfc8da578e82b92318432f1b3b1", null ],
     [ "can_handle_topic", "d2/db0/classkcenon_1_1messaging_1_1services_1_1network_1_1network__service.html#aec4c9ecfff48daa3155094a9f7f29e7a", null ],
+    [ "connect_client", "d2/db0/classkcenon_1_1messaging_1_1services_1_1network_1_1network__service.html#ae313f65a8cb432daa02fed5a7b33ed5c", null ],
+    [ "disconnect_client", "d2/db0/classkcenon_1_1messaging_1_1services_1_1network_1_1network__service.html#aa9ec87ec5c290d7efcc38cc8a55e24d2", null ],
     [ "get_service_name", "d2/db0/classkcenon_1_1messaging_1_1services_1_1network_1_1network__service.html#a2500738a289d038193a2c4fb2db6f9f7", null ],
     [ "get_service_version", "d2/db0/classkcenon_1_1messaging_1_1services_1_1network_1_1network__service.html#adbd4c266bb4f0dcdee2f2517cd9ab5a8", null ],
     [ "get_state", "d2/db0/classkcenon_1_1messaging_1_1services_1_1network_1_1network__service.html#aa1f96061f4c4f76d83416bfc3e93b92c", null ],

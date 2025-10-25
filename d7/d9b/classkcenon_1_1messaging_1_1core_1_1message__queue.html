@@ -106,6 +106,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3929971fc563f2058af6548654cd5aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5581be7516a583bb05becc6c88a13407" id="r_a5581be7516a583bb05becc6c88a13407"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d9b/classkcenon_1_1messaging_1_1core_1_1message__queue.html#a5581be7516a583bb05becc6c88a13407">dequeue</a> (<a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">message</a> &amp;msg, std::chrono::milliseconds <a class="el" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a0ebc74b13acdfe5c2939ed4e5acaeab6a90272dda245ae1fb3cf197e91a8689dc">timeout</a>)</td></tr>
 <tr class="separator:a5581be7516a583bb05becc6c88a13407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa193d1eecf10859e2a4435a444dafe82" id="r_aa193d1eecf10859e2a4435a444dafe82"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d9b/classkcenon_1_1messaging_1_1core_1_1message__queue.html#aa193d1eecf10859e2a4435a444dafe82">should_requeue_for_higher_priority</a> (std::unique_lock&lt; std::mutex &gt; &amp;lock, <a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">message</a> &amp;current_msg)</td></tr>
+<tr class="separator:aa193d1eecf10859e2a4435a444dafe82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d8f5f50c3b88aa204d3640863485588" id="r_a7d8f5f50c3b88aa204d3640863485588"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d9b/classkcenon_1_1messaging_1_1core_1_1message__queue.html#a7d8f5f50c3b88aa204d3640863485588">shutdown</a> ()</td></tr>
 <tr class="separator:a7d8f5f50c3b88aa204d3640863485588"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfd7c3b26411f73a0db0565609985189" id="r_acfd7c3b26411f73a0db0565609985189"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d9b/classkcenon_1_1messaging_1_1core_1_1message__queue.html#acfd7c3b26411f73a0db0565609985189">size</a> () const</td></tr>
@@ -188,9 +190,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html#l00072">72</a> of file <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html#l00079">79</a> of file <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a0ebc74b13acdfe5c2939ed4e5acaeab6a90272dda245ae1fb3cf197e91a8689dc">kcenon::messaging::core::timeout</a>.</p>
+<p class="reference">References <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html#l00135">should_requeue_for_higher_priority()</a>, and <a class="el" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a0ebc74b13acdfe5c2939ed4e5acaeab6a90272dda245ae1fb3cf197e91a8689dc">kcenon::messaging::core::timeout</a>.</p>
 
 </div>
 </div>
@@ -222,6 +224,48 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aa193d1eecf10859e2a4435a444dafe82" name="aa193d1eecf10859e2a4435a444dafe82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa193d1eecf10859e2a4435a444dafe82">&#9670;&#160;</a></span>should_requeue_for_higher_priority()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool kcenon::messaging::core::message_queue::should_requeue_for_higher_priority </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_lock&lt; std::mutex &gt; &amp;&#160;</td>
+          <td class="paramname"><em>lock</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html">message</a> &amp;&#160;</td>
+          <td class="paramname"><em>current_msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html#l00135">135</a> of file <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
+
+<p class="reference">References <a class="el" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a47838b266b3e051902c04795771bba5ea7e85bcb66fb9a809d5ab4f62a8b8bea8">kcenon::messaging::core::critical</a>, <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00090">kcenon::messaging::core::message::metadata</a>, and <a class="el" href="../../d5/dd2/message__types_8h_source.html#l00054">kcenon::messaging::core::message_metadata::priority</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html#l00079">dequeue()</a>.</p>
+
+</div>
+</div>
 <a id="a7d8f5f50c3b88aa204d3640863485588" name="a7d8f5f50c3b88aa204d3640863485588"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7d8f5f50c3b88aa204d3640863485588">&#9670;&#160;</a></span>shutdown()</h2>
 
@@ -245,7 +289,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html#l00089">89</a> of file <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html#l00164">164</a> of file <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
 
 </div>
 </div>
@@ -272,7 +316,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html#l00095">95</a> of file <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html#l00170">170</a> of file <a class="el" href="../../d0/d2f/message__bus_8cpp_source.html">message_bus.cpp</a>.</p>
 
 </div>
 </div>
