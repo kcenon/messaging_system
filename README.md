@@ -7,9 +7,9 @@
 [![Coverage](https://github.com/kcenon/messaging_system/actions/workflows/coverage.yml/badge.svg)](https://github.com/kcenon/messaging_system/actions/workflows/coverage.yml)
 [![Static Analysis](https://github.com/kcenon/messaging_system/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/kcenon/messaging_system/actions/workflows/static-analysis.yml)
 
-**Production-Ready High-Performance Distributed Messaging Framework**
+**Lightweight Pub/Sub Messaging System with Pluggable Components**
 
-Built on 7 battle-tested subsystems for enterprise-grade reliability
+Integrates with 7 optional subsystems for extended functionality
 
 [📚 Documentation](#-documentation) | [🔗 Quick Start](#-quick-start) | [📖 Examples](#-real-world-examples) | [📊 Architecture](#-system-architecture) | [🔄 Contributing](#-contributing)
 
@@ -19,7 +19,7 @@ Built on 7 battle-tested subsystems for enterprise-grade reliability
 
 ## ✨ What Makes This Special?
 
-This isn't just another messaging system - it's a **carefully orchestrated integration** of seven specialized subsystems, each battle-tested in production, combined to create a unified, high-performance messaging framework.
+This is a **lightweight, extensible messaging system** designed for seamless integration with specialized subsystems. The core provides essential pub/sub messaging, while optional integrations enable advanced features like persistence, networking, and monitoring.
 
 ### 🎯 Key Highlights
 
@@ -27,44 +27,44 @@ This isn't just another messaging system - it's a **carefully orchestrated integ
 <tr>
 <td width="50%">
 
-**🚅 Extreme Performance**
-- **2.48M messages/second** throughput
-- **Sub-microsecond latency** (250ns queue latency)
-- **Linear scalability** up to 32+ cores
-- **Zero-copy operations** in hot paths
-- **Lock-free data structures** everywhere
+**🚅 Core Features**
+- **Pub/Sub messaging** with topic routing
+- **Wildcard patterns** (* single-level, # multi-level)
+- **Async/Sync** publishing modes
+- **Thread-safe** operations
+- **Distributed tracing** support (TraceContext)
 
 </td>
 <td width="50%">
 
-**🛡️ Enterprise Ready**
-- **Fault tolerance** with circuit breakers
-- **Distributed tracing** out of the box
-- **Automatic failover** and recovery
-- **Production telemetry** (Prometheus/JSON)
-- **Type-safe APIs** with compile-time guarantees
+**🛡️ Production Quality**
+- **Type-safe APIs** with Result<T> pattern
+- **YAML configuration** loading
+- **Pluggable executors** (IExecutor interface)
+- **Comprehensive testing** (unit + integration)
+- **Clean abstractions** for external systems
 
 </td>
 </tr>
 <tr>
 <td width="50%">
 
-**🏗️ Modular Architecture**
-- **Pluggable components** via DI
-- **Multi-protocol support** (TCP, REST, custom)
-- **Database persistence** (PostgreSQL)
-- **Python bindings** for rapid development
-- **Docker/K8s ready** deployment
+**🏗️ Extensible Design**
+- **Optional integrations** (network, database, monitoring)
+- **Standalone mode** with MockExecutor
+- **C++20** modern features
+- **Application layer** for advanced scenarios
+- **Header-only** integration points
 
 </td>
 <td width="50%">
 
 **🔧 Developer Friendly**
-- **Zero-configuration** setup
-- **Auto-tuning** thread pools
+- **Minimal dependencies** for core
+- **Multiple build modes** (local/FetchContent)
 - **RAII patterns** throughout
-- **Result<T> error handling**
-- **Comprehensive examples**
+- **Clear separation** of concerns
+- **Well-documented** codebase
 
 </td>
 </tr>
@@ -72,9 +72,59 @@ This isn't just another messaging system - it's a **carefully orchestrated integ
 
 ---
 
+## 📋 Implementation Status
+
+### ✅ Core Features (Fully Implemented)
+
+The following features are complete and production-ready:
+
+- **MessageBus** - Async/sync pub/sub coordination (`src/core/message_bus.cpp`: 106 LOC)
+- **TopicRouter** - Wildcard pattern matching with `*` and `#` support (`src/core/topic_router.cpp`: 192 LOC)
+- **MessagingContainer** - Type-safe message envelope with serialization (`src/core/messaging_container.cpp`: 212 LOC)
+- **TraceContext** - Distributed tracing with thread-local trace ID propagation (`src/integration/trace_context.cpp`: 59 LOC)
+- **ConfigLoader** - YAML-based configuration loading (`src/integration/config_loader.cpp`: 249 LOC)
+- **MockExecutor** - Standalone executor implementation for testing and standalone mode (`include/messaging_system/support/mock_executor.h`: 188 LOC)
+
+**Thread Safety**: All operations use `std::shared_mutex` for concurrent access.
+
+### 🚧 Integration Features (Headers Only - Planned)
+
+The following components have interface definitions but require implementation:
+
+- **MessagingNetworkBridge** (`include/messaging_system/integration/network_bridge.h`)
+  - Purpose: TCP/IP messaging via network_system
+  - Status: Interface defined, implementation planned for Phase 1
+  - Workaround: Use application_layer network services
+
+- **PersistentMessageQueue** (`include/messaging_system/integration/persistent_queue.h`)
+  - Purpose: Database-backed message persistence
+  - Status: Interface defined, implementation planned for Phase 2
+  - Workaround: Use application_layer database services
+
+### ⚠️ Conditional Features (Requires External Systems)
+
+These features are available when the corresponding system is detected:
+
+- **Logger Integration** - Requires `logger_system` (`#ifdef HAS_LOGGER_SYSTEM`)
+- **Monitoring/Metrics** - Requires `monitoring_system` (`#ifdef HAS_MONITORING_SYSTEM`)
+- **YAML Support** - Requires `yaml-cpp` library (`#ifdef HAS_YAML_CPP`)
+- **Thread Pools** - Requires `thread_system` (`#ifdef HAS_THREAD_SYSTEM`, falls back to MockExecutor)
+
+### ❌ Not Implemented
+
+The following features mentioned in early documentation are not currently implemented:
+
+- **Lock-free data structures** - Current implementation uses `std::shared_mutex`
+- **Automatic failover mechanisms** - Manual recovery required
+- **Prometheus telemetry export** - Requires monitoring_system integration
+- **Circuit breakers** - Not implemented in core
+- **Built-in benchmarks** - Performance testing framework pending
+
+---
+
 ## 🌟 Ecosystem Integration
 
-The messaging system is built by composing 7 specialized base systems. This modular design provides unmatched flexibility, reliability, and performance.
+The messaging system integrates with 7 specialized base systems through optional dependencies. Core functionality works standalone with minimal dependencies.
 
 ### Dependency Architecture
 
@@ -347,14 +397,63 @@ namespace network {
 
 ## 🚀 Quick Start
 
-### Step 1: Install (30 seconds)
+### Prerequisites
+
+This project requires several sibling system projects or uses FetchContent to download them automatically.
+
+**Required Systems:**
+- `common_system` - Foundation patterns and Result<T>
+- `thread_system` - Executor interface (or use MockExecutor)
+- `container_system` - Type-safe data containers
+
+**Optional Systems:**
+- `logger_system` - Async logging
+- `monitoring_system` - Metrics and telemetry
+- `database_system` - Persistence features
+- `network_system` - TCP/IP messaging
+
+### Step 1: Choose Your Build Strategy
+
+#### Option A: Local Development (Recommended for Contributors)
+
+Requires all systems in sibling directories:
 
 ```bash
-# Clone and build
+# Expected directory structure:
+# Sources/
+#   ├── common_system/      # Required
+#   ├── thread_system/      # Required
+#   ├── container_system/   # Required
+#   ├── logger_system/      # Optional
+#   ├── monitoring_system/  # Optional
+#   ├── database_system/    # Optional
+#   ├── network_system/     # Optional
+#   └── messaging_system/   # This project
+
+cd messaging_system
+cmake -B build -DMESSAGING_USE_LOCAL_SYSTEMS=ON -DMESSAGING_BUILD_TESTS=ON
+cmake --build build -j
+```
+
+#### Option B: Automatic FetchContent (Easiest for New Users)
+
+CMake will automatically download all dependencies:
+
+```bash
 git clone https://github.com/kcenon/messaging_system.git
 cd messaging_system
-git submodule update --init --recursive
-./build.sh --clean
+cmake -B build -DMESSAGING_USE_FETCHCONTENT=ON -DMESSAGING_BUILD_EXAMPLES=ON
+cmake --build build -j
+```
+
+#### Option C: System-Installed Packages (Production)
+
+If you have installed the system packages:
+
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j
+sudo cmake --install build
 ```
 
 ### Step 2: Your First Program (60 seconds)
@@ -716,49 +815,54 @@ public:
 // across multiple services: Order → Inventory → Payment → Shipping
 ```
 
-[📖 View 20+ More Examples](examples/)
+[📖 View More Examples](examples/) | [Application Layer Samples](application_layer/samples/)
+
+**Note**: Core messaging_system provides 1 basic example. Application layer provides 8 additional samples including chat server, distributed worker, IoT monitoring, and microservices orchestrator.
 
 ---
 
-## 📊 Performance Benchmarks
+## 📊 Performance Characteristics
 
-### Throughput Comparison
+### Expected Performance (Estimates)
 
-Tested on AMD Ryzen 9 5950X (16 cores/32 threads)
+Performance depends heavily on the underlying executor implementation and optional system integrations.
 
+**Core Messaging (Local Pub/Sub)**
+- **Estimated throughput**: 100K-500K messages/second (depends on executor)
+- **Typical latency**: 1-10 μs per message (in-memory routing)
+- **Concurrency**: Thread-safe with `std::shared_mutex`
+
+**With External Systems**
+- **With serialization** (container_system): 50K-200K msg/s
+- **With persistence** (database_system): 1K-10K msg/s (DB-limited)
+- **With network** (network_system): 5K-50K msg/s (network-limited)
+
+**Factors Affecting Performance:**
+- Executor implementation (MockExecutor vs thread_system)
+- Message payload size
+- Number of concurrent subscribers
+- Wildcard pattern complexity
+- External system latencies
+
+### Benchmarking
+
+Formal benchmark suite is planned for future releases. Current test suite includes:
+- Concurrent publishing test (4 threads × 10 messages)
+- Multiple subscribers test (broadcast to 3 subscribers)
+- Wildcard routing test
+
+To add your own benchmarks:
+```cpp
+#include "messaging_system/core/message_bus.h"
+#include <chrono>
+
+auto start = std::chrono::high_resolution_clock::now();
+// Your messaging code here
+auto end = std::chrono::high_resolution_clock::now();
+auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 ```
-Component         │ Lock-free Mode    │ Mutex Mode       │ Improvement
-──────────────────┼───────────────────┼──────────────────┼────────────
-Thread Pool       │ 2.48M jobs/sec    │ 1.16M jobs/sec   │ 2.14x
-Job Queue         │ 250ns latency     │ 1.2μs latency    │ 4.8x
-Container Serialize│ 15M ops/sec      │ 12M ops/sec      │ 1.25x
-Message Routing   │ 1.8M routes/sec   │ 1.5M routes/sec  │ 1.2x
-Network I/O       │ 10K conns         │ 8K conns         │ 1.25x
-```
 
-### Latency Distribution
-
-| Percentile | Simple Msg | With Persistence | With Network | End-to-End |
-|------------|------------|------------------|--------------|------------|
-| p50        | 0.25 μs    | 15 μs            | 120 μs       | 150 μs     |
-| p90        | 0.8 μs     | 25 μs            | 200 μs       | 250 μs     |
-| p95        | 1.2 μs     | 35 μs            | 280 μs       | 350 μs     |
-| p99        | 2.5 μs     | 60 μs            | 450 μs       | 600 μs     |
-| p99.9      | 8 μs       | 120 μs           | 800 μs       | 1.2 ms     |
-
-### Scalability
-
-```
-Threads │ Throughput   │ Speedup  │ Efficiency
-────────┼──────────────┼──────────┼──────────
-1       │ 310K/s       │ 1.0x     │ 100%
-2       │ 615K/s       │ 1.98x    │ 99%
-4       │ 1.22M/s      │ 3.94x    │ 98%
-8       │ 2.40M/s      │ 7.74x    │ 97%
-16      │ 2.48M/s      │ 8.0x     │ 50% (HT)
-```
-
-*HT = Hyper-Threading, efficiency drops as expected*
+**Contribution Welcome**: We welcome benchmark contributions! See [Contributing](#-contributing) for guidelines.
 
 ---
 
@@ -846,32 +950,78 @@ sudo cmake --install build
 
 ## 🧪 Testing
 
+### Test Framework
+
+**Note**: Tests use assert-based validation, not GTest. Each test is a standalone executable.
+
 ### Run Tests
 
 ```bash
 # Build with tests
-cmake -B build -DMESSAGING_BUILD_TESTS=ON
+cmake -B build -DMESSAGING_BUILD_TESTS=ON -DMESSAGING_USE_FETCHCONTENT=ON
 cmake --build build -j
 
-# Run all tests
+# Run all tests via CTest
 cd build
 ctest --output-on-failure
 
-# Run specific test suite
-./test/unittest/messaging_test --gtest_filter="MessageBusTest.*"
+# Or run individual tests directly
+./test_messaging_container
+./test_topic_router
+./test_message_bus
+./test_trace_context
+./test_config_loader
+./test_end_to_end
+```
+
+### Test Suite Overview
+
+**Unit Tests** (test/unit/core/):
+- `test_messaging_container` - Message creation, serialization
+- `test_topic_router` - Wildcard matching, subscription management
+- `test_message_bus` - Pub/sub, async/sync publishing, 8 test cases
+
+**Integration Tests** (test/integration/):
+- `test_trace_context` - Distributed tracing propagation
+- `test_config_loader` - YAML configuration loading
+- `test_end_to_end` - Full system integration
+
+**Test Example Output**:
+```
+=== MessageBus Unit Tests ===
+
+Test: MessageBus start/stop...
+  ✓ Passed
+Test: Synchronous publish/subscribe...
+  ✓ Passed
+Test: Asynchronous publish/subscribe...
+  ✓ Passed
+Test: Multiple subscribers on same topic...
+  ✓ Passed
+Test: Wildcard subscriptions via MessageBus...
+  ✓ Passed
+Test: Unsubscribe via MessageBus...
+  ✓ Passed
+Test: Concurrent publishing from multiple threads...
+  ✓ Passed
+Test: Error handling in subscriber callback...
+  ✓ Passed
+
+All tests passed!
 ```
 
 ### Test Coverage
 
-Phase 0 baseline (current):
-- Unit tests for core components
-- Integration tests for system composition
-- Performance regression tests
+Current coverage (Phase 0):
+- Core components: Comprehensive unit tests
+- Integration scenarios: Basic end-to-end tests
+- Concurrency: Multi-threaded publish/subscribe tests
+- Error handling: Callback failure scenarios
 
-Coverage workflow runs on every PR:
+Coverage workflow runs on CI:
 - lcov-based coverage analysis
-- Excludes tests, examples, external dependencies
-- Uploads to Codecov
+- Excludes external dependencies
+- Reports uploaded to Codecov
 
 ---
 
@@ -961,31 +1111,73 @@ if (config.is_ok()) {
 
 ## 📚 Documentation
 
-### Getting Started
-- [Installation Guide](docs/installation.md)
-- [Quick Start Tutorial](docs/quickstart.md)
-- [API Reference](docs/api/)
+### Available Documentation
 
-### Architecture & Design
-- [System Architecture](docs/architecture.md) - How the 7 systems integrate
-- [Message Flow](docs/message_flow.md) - Detailed message lifecycle
-- [Performance Tuning](docs/performance.md) - Optimization guide
+- [Getting Started Guide](docs/GETTING_STARTED.MD) - Initial setup and basic usage
+- [Developer Guide](docs/DEVELOPER_GUIDE.md) - Detailed development instructions
+- [System Architecture](docs/architecture.md) - How the systems integrate
+- [API Reference](docs/API_REFERENCE.md) - Complete API documentation
+- [Performance Guide](docs/performance.md) - Optimization and tuning
+- [Build Troubleshooting](docs/BUILD_TROUBLESHOOTING.md) - Common build issues
 
-### Component Documentation
-Each base system has detailed documentation:
-- [common_system](https://github.com/kcenon/common_system) - Foundation patterns
-- [thread_system](https://github.com/kcenon/thread_system) - Lock-free concurrency
-- [logger_system](https://github.com/kcenon/logger_system) - Async logging
-- [monitoring_system](https://github.com/kcenon/monitoring_system) - Telemetry
-- [container_system](https://github.com/kcenon/container_system) - Type-safe data
-- [database_system](https://github.com/kcenon/database_system) - PostgreSQL integration
-- [network_system](https://github.com/kcenon/network_system) - TCP messaging
+### Phase Documentation
+
+Detailed design documents for each development phase:
+- [Phase 0](docs/phase0/) - Legacy removal and interface mapping
+- [Phase 1-4](docs/phase1/) - Feature implementation phases
+- [Project Summary](docs/PROJECT_COMPLETION_SUMMARY.md) - Overall project status
+
+### External System Documentation
+
+Each base system has its own repository with detailed documentation:
+- [common_system](https://github.com/kcenon/common_system) - Foundation patterns and Result<T>
+- [thread_system](https://github.com/kcenon/thread_system) - Thread pools and executors
+- [logger_system](https://github.com/kcenon/logger_system) - Async logging system
+- [monitoring_system](https://github.com/kcenon/monitoring_system) - Metrics and telemetry
+- [container_system](https://github.com/kcenon/container_system) - Type-safe containers
+- [database_system](https://github.com/kcenon/database_system) - Database integration
+- [network_system](https://github.com/kcenon/network_system) - Network messaging
+
+### Application Layer
+
+For advanced usage scenarios, see:
+- [Application Layer README](application_layer/README.md) - High-level messaging services
+- [Application Layer Samples](application_layer/samples/) - 8 production-ready examples
+- [Python Bindings](application_layer/python_bindings/) - Python wrapper (requires application_layer build)
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+We welcome contributions!
+
+### How to Contribute
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes with clear commit messages
+4. Ensure all tests pass (`ctest` in build directory)
+5. Submit a pull request
+
+### Contribution Areas
+
+**High Priority:**
+- Implement `MessagingNetworkBridge` (interface exists, needs implementation)
+- Implement `PersistentMessageQueue` (interface exists, needs implementation)
+- Add benchmark suite for performance validation
+- Improve test coverage
+
+**Documentation:**
+- Add more usage examples
+- Improve API documentation
+- Add troubleshooting guides
+
+**Code Quality:**
+- Add GTest support (or remove GTest references)
+- Improve error messages
+- Add more integration tests
+
+For detailed guidelines, open an issue or discussion on GitHub.
 
 ### Development Workflow
 
@@ -1025,33 +1217,40 @@ git push origin feature/amazing-feature
 <tr>
 <td>
 
-**Codebase**
-- 📝 ~8,000 lines of integration code
-- 🧪 Phase 0 baseline testing
+**Core Implementation**
+- 📝 ~820 lines of core code
+- 🧪 6 test executables
 - 📚 Comprehensive documentation
-- 🔍 Static analysis (clang-tidy, cppcheck)
+- 🔍 Static analysis ready
 
 </td>
 <td>
 
-**Performance**
-- ⚡ 2.48M messages/second
-- 🎯 250ns queue latency
-- 📈 Linear scalability to 32+ cores
-- 💾 Minimal memory overhead
+**Test Coverage**
+- ✅ 8 unit test cases (MessageBus)
+- 🧪 5 component tests
+- 🔄 1 end-to-end integration test
+- 🔀 Concurrency test scenarios
 
 </td>
 <td>
 
-**Quality**
-- ✅ Multi-platform CI (Linux, macOS, Windows)
-- 🛡️ Sanitizer testing (ASan, TSan, UBSan)
-- 📊 Code coverage tracking
-- 🔐 Security scanning
+**Quality Assurance**
+- ✅ Multi-platform support
+- 🛡️ Sanitizer-ready code
+- 📊 CI/CD workflows
+- 🔐 Secure coding practices
 
 </td>
 </tr>
 </table>
+
+**Code Distribution:**
+- Core implementation: 818 LOC (message_bus, topic_router, messaging_container, trace_context, config_loader)
+- Support code: 188 LOC (MockExecutor)
+- Tests: ~1,500 LOC
+- Examples: ~170 LOC (core) + ~2,000 LOC (application_layer)
+- Total: ~2,700 LOC core system
 
 ---
 
