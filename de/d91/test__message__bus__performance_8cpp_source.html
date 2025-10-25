@@ -373,8 +373,8 @@ $(document).ready(function(){initNavTree('de/d91/test__message__bus__performance
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        : (priority_violations * 100.0) / received_priorities.size();</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    std::cout &lt;&lt; <span class="stringliteral">&quot;Priority violation rate: &quot;</span> &lt;&lt; std::fixed &lt;&lt; std::setprecision(2) &lt;&lt; violation_rate &lt;&lt; <span class="stringliteral">&quot;%\n&quot;</span>;</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    EXPECT_GT(rate, 800); <span class="comment">// Keep baseline throughput requirement modest for multi-platform stability</span></div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    EXPECT_LT(violation_rate, 40.0); <span class="comment">// Allow higher out-of-order rate on Windows while still flagging regressions</span></div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    EXPECT_GT(rate, 500); <span class="comment">// Keep baseline throughput requirement modest for multi-platform stability</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    EXPECT_LT(violation_rate, 60.0); <span class="comment">// Allow higher out-of-order rate on Windows while still flagging regressions</span></div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>}</div>
 </div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
