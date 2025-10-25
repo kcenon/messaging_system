@@ -90,7 +90,9 @@ namespace kcenon::messaging::core {
         message_metadata metadata;
         message_payload payload;
 
-        message() = default;
+        message() {
+            generate_id();
+        }
 
         message(const std::string& topic, const std::string& sender = "", const std::string& recipient = "") {
             payload.topic = topic;

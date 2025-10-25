@@ -1,7 +1,9 @@
 #include "kcenon/messaging/core/message_bus.h"
 #include <algorithm>
 #include <chrono>
+#include <cstdint>
 #include <stdexcept>
+#include <vector>
 
 namespace kcenon::messaging::core {
 
@@ -46,26 +48,47 @@ namespace kcenon::messaging::core {
 
     class message_queue {
     public:
-        explicit message_queue(size_t max_size) : max_size_(max_size) {}
+        explicit message_queue(size_t max_size, bool enable_priority)
+            : max_size_(max_size)
+            , enable_priority_(enable_priority)
+        {}
 
         bool enqueue(const message& msg) {
             std::lock_guard<std::mutex> lock(mutex_);
-            if (queue_.size() >= max_size_) {
+            if (size_locked() >= max_size_) {
                 return false;  // Queue full
             }
-            queue_.push(msg);
+
+            if (enable_priority_) {
+                priority_queue_.push(queued_message{msg, next_sequence_++});
+            } else {
+                queue_.push(msg);
+            }
             condition_.notify_one();
             return true;
         }
 
         bool dequeue(message& msg, std::chrono::milliseconds timeout) {
             std::unique_lock<std::mutex> lock(mutex_);
-            if (condition_.wait_for(lock, timeout, [this] { return !queue_.empty() || shutdown_; })) {
-                if (!queue_.empty()) {
+            while (!shutdown_) {
+                if (!condition_.wait_for(lock, timeout, [this] { return has_items_locked() || shutdown_; })) {
+                    return false;
+                }
+
+                if (!has_items_locked()) {
+                    continue;
+                }
+
+                if (enable_priority_) {
+                    msg = priority_queue_.top().msg;
+                    priority_queue_.pop();
+
+                    // No additional delay; rely on priority ordering.
+                } else {
                     msg = queue_.front();
                     queue_.pop();
-                    return true;
                 }
+                return true;
             }
             return false;
         }
@@ -78,45 +101,88 @@ namespace kcenon::messaging::core {
 
         size_t size() const {
             std::lock_guard<std::mutex> lock(mutex_);
-            return queue_.size();
+            return size_locked();
         }
 
     private:
+        struct queued_message {
+            message msg;
+            uint64_t sequence;
+        };
+
+        struct priority_compare {
+            bool operator()(const queued_message& lhs, const queued_message& rhs) const {
+                auto lhs_priority = static_cast<int>(lhs.msg.metadata.priority);
+                auto rhs_priority = static_cast<int>(rhs.msg.metadata.priority);
+
+                if (lhs_priority == rhs_priority) {
+                    // Earlier sequence should be processed first
+                    return lhs.sequence > rhs.sequence;
+                }
+
+                // Higher numeric priority value should be processed first
+                return lhs_priority < rhs_priority;
+            }
+        };
+
+        bool has_items_locked() const {
+            return enable_priority_ ? !priority_queue_.empty() : !queue_.empty();
+        }
+
+        size_t size_locked() const {
+            return enable_priority_ ? priority_queue_.size() : queue_.size();
+        }
+
         mutable std::mutex mutex_;
         std::condition_variable condition_;
         std::queue<message> queue_;
-        size_t max_size_;
+        std::priority_queue<queued_message, std::vector<queued_message>, priority_compare> priority_queue_;
+        uint64_t next_sequence_{0};
+        const size_t max_size_;
+        const bool enable_priority_;
         bool shutdown_ = false;
     };
 
     class message_dispatcher {
     public:
-        explicit message_dispatcher(message_router* router) : router_(router) {}
+        explicit message_dispatcher(message_router* router, bool ordered_dispatch)
+            : router_(router)
+            , ordered_dispatch_(ordered_dispatch) {}
 
         void dispatch(const message& msg) {
             if (!router_) return;
 
             auto handlers = router_->get_handlers(msg.payload.topic);
-            for (const auto& handler : handlers) {
-                try {
-                    handler(msg);
-                } catch (const std::exception& e) {
-                    // Log error (in production would use proper logging)
-                    // For now, silently continue to next handler
-                }
+            if (ordered_dispatch_) {
+                std::lock_guard<std::mutex> lock(dispatch_mutex_);
+                invoke_handlers(handlers, msg);
+            } else {
+                invoke_handlers(handlers, msg);
             }
         }
 
     private:
+        void invoke_handlers(const std::vector<message_handler>& handlers, const message& msg) {
+            for (const auto& handler : handlers) {
+                try {
+                    handler(msg);
+                } catch (const std::exception& e) {
+                    // Swallow and continue to maintain message flow
+                }
+            }
+        }
+
         message_router* router_;
+        bool ordered_dispatch_ = false;
+        std::mutex dispatch_mutex_;
     };
 
     // message_bus implementation
     message_bus::message_bus(const message_bus_config& config)
-        : config_(config)
-        , router_(std::make_unique<message_router>())
-        , queue_(std::make_unique<message_queue>(config.max_queue_size))
-        , dispatcher_(std::make_unique<message_dispatcher>(router_.get()))
+        : router_(std::make_unique<message_router>())
+        , queue_(std::make_unique<message_queue>(config.max_queue_size, config.enable_priority_queue))
+        , dispatcher_(std::make_unique<message_dispatcher>(router_.get(), config.enable_priority_queue))
+        , config_(config)
     {
     }
 
@@ -131,8 +197,11 @@ namespace kcenon::messaging::core {
 
         try {
             // Start worker threads
-            worker_threads_.reserve(config_.worker_threads);
-            for (size_t i = 0; i < config_.worker_threads; ++i) {
+            size_t thread_count = config_.enable_priority_queue
+                ? 1
+                : std::max<size_t>(1, config_.worker_threads);
+            worker_threads_.reserve(thread_count);
+            for (size_t i = 0; i < thread_count; ++i) {
                 worker_threads_.emplace_back([this] { worker_thread_func(); });
             }
 
