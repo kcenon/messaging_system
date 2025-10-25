@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <iostream>
 #include <functional>
+#include <array>
 
 using namespace kcenon::messaging::core;
 using namespace kcenon::messaging::integrations;
