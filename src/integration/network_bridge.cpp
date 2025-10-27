@@ -2,7 +2,7 @@
 
 #ifdef HAS_NETWORK_SYSTEM
 
-#include "messaging_system/core/error_codes.h"
+#include "messaging_system/error_codes.h"
 #include <stdexcept>
 
 namespace messaging {
