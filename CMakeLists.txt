@@ -611,9 +611,42 @@ endif()
 if(TARGET NetworkSystem::network)
     list(APPEND MESSAGING_CORE_LIBS NetworkSystem::network)
     target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
+
+    # NetworkSystem requires ASIO headers for its public API
+    # Since NetworkSystem uses ASIO as PRIVATE, we need to find and add it manually
+    # First try to find ASIO in the build directory (FetchContent location)
+    if(EXISTS "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
+        target_include_directories(messaging_system_core SYSTEM PRIVATE
+            "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include"
+        )
+        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
+    # Try NetworkSystem's build directory
+    elseif(EXISTS "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
+        target_include_directories(messaging_system_core SYSTEM PRIVATE
+            "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include"
+        )
+        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
+    else()
+        message(WARNING "Could not find ASIO headers for NetworkSystem - network_bridge.cpp may fail to compile")
+    endif()
 elseif(TARGET NetworkSystem)
     list(APPEND MESSAGING_CORE_LIBS NetworkSystem)
     target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
+
+    # NetworkSystem requires ASIO headers for its public API
+    if(EXISTS "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
+        target_include_directories(messaging_system_core SYSTEM PRIVATE
+            "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include"
+        )
+        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
+    elseif(EXISTS "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
+        target_include_directories(messaging_system_core SYSTEM PRIVATE
+            "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include"
+        )
+        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
+    else()
+        message(WARNING "Could not find ASIO headers for NetworkSystem - network_bridge.cpp may fail to compile")
+    endif()
 endif()
 
 if(MESSAGING_CORE_LIBS)
