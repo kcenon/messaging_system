@@ -1,7 +1,9 @@
 #pragma once
 
-#include <network_system/core/messaging_server.h>
-#include <network_system/core/messaging_client.h>
+#ifdef HAS_NETWORK_SYSTEM
+#include <network_system/compatibility.h>
+#endif
+
 #include <kcenon/common/interfaces/executor_interface.h>
 #include <kcenon/common/patterns/result.h>
 #include "../core/message_bus.h"
@@ -11,6 +13,10 @@
 #include <cstdint>
 
 namespace messaging {
+
+#ifdef HAS_NETWORK_SYSTEM
+// Alias for compatibility with network_system's exported namespace
+namespace network = network_module;
 
 class MessagingNetworkBridge {
     std::shared_ptr<network::messaging_server> server_;
@@ -50,5 +56,7 @@ private:
         const MessagingContainer& response
     );
 };
+
+#endif // HAS_NETWORK_SYSTEM
 
 } // namespace messaging
