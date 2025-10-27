@@ -134,7 +134,7 @@ VoidResult MessagingNetworkBridge::on_message_received(
 
     // 2. Submit to work_executor for background processing
     auto msg = std::move(container_result.value());
-    work_executor_->execute([this, session, msg = std::move(msg)]() mutable {
+    work_executor_->submit([this, session, msg = std::move(msg)]() mutable {
         auto result = process_message(session, msg);
         if (result.is_err()) {
             // Log error but don't crash
