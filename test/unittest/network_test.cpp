@@ -36,9 +36,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <thread>
 
-#include <network/network.h>
-
+#ifdef HAS_NETWORK_SYSTEM
+#include <network_system/compatibility.h>
 using namespace network_module;
+#else
+#error "Network tests require HAS_NETWORK_SYSTEM to be defined. Please build with network_system enabled."
+#endif
 
 class NetworkTest : public ::testing::Test {
 protected:

@@ -1,6 +1,18 @@
 #include "kcenon/messaging/services/network/network_service.h"
 #include <stdexcept>
 
+// TODO: This is currently a STUB implementation that does not use network_system.
+// To enable actual network communication:
+// 1. Include network_system headers when HAS_NETWORK_SYSTEM is defined
+// 2. Create network::messaging_server and network::messaging_client instances
+// 3. Implement actual send_message() and broadcast_message() logic
+// 4. Add connection management with network_system session tracking
+// See: include/messaging_system/integration/network_bridge.h for reference
+
+#ifdef HAS_NETWORK_SYSTEM
+#warning "network_service is still a stub despite HAS_NETWORK_SYSTEM being defined. Real integration pending."
+#endif
+
 namespace kcenon::messaging::services::network {
 
     network_service::network_service(const network_config& config)
@@ -19,8 +31,13 @@ namespace kcenon::messaging::services::network {
         state_ = service_state::initializing;
 
         try {
-            // Initialize network components
-            // In a full implementation, this would set up sockets, SSL context, etc.
+            // TODO: Initialize network components
+            // STUB: In a full implementation, this would:
+            //   1. Create network::messaging_server instance with configured port
+            //   2. Set up SSL context if config_.use_ssl is true
+            //   3. Register message receive callbacks
+            //   4. Start network server using server_->start_server(config_.listen_port)
+            //   5. Initialize connection tracking structures
 
             state_ = service_state::running;
             return true;
@@ -34,7 +51,12 @@ namespace kcenon::messaging::services::network {
         std::lock_guard<std::mutex> lock(mutex_);
         if (state_ == service_state::running) {
             state_ = service_state::stopping;
-            // Close connections and cleanup
+            // TODO: Close connections and cleanup
+            // STUB: In a full implementation, this would:
+            //   1. Call server_->stop_server()
+            //   2. Close all active client connections
+            //   3. Wait for pending send operations to complete
+            //   4. Clean up SSL contexts
             state_ = service_state::stopped;
         }
     }
@@ -75,7 +97,14 @@ namespace kcenon::messaging::services::network {
         }
 
         try {
-            (void)msg;
+            // TODO: Implement actual network send using network_system
+            // STUB: Current implementation only updates counters
+            // Full implementation should:
+            //   1. Serialize msg to std::vector<uint8_t>
+            //   2. Look up connection by destination in active_connections_
+            //   3. Call session->send(serialized_data)
+            //   4. Handle send errors and retry logic
+            (void)msg; // STUB: msg parameter not used in current implementation
             stats_.messages_sent.fetch_add(1);
             return true;
         } catch (const std::exception& e) {
@@ -90,7 +119,13 @@ namespace kcenon::messaging::services::network {
         }
 
         try {
-            // Simplified implementation - would broadcast to all connections
+            // TODO: Implement actual broadcast using network_system
+            // STUB: Current implementation only updates counters
+            // Full implementation should:
+            //   1. Serialize msg to std::vector<uint8_t>
+            //   2. Iterate through all active connections in active_connections_
+            //   3. Call session->send(serialized_data) for each
+            //   4. Track failures and update error counters
             stats_.messages_sent.fetch_add(1);
             return true;
         } catch (const std::exception& e) {

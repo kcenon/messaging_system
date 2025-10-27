@@ -1,7 +1,9 @@
 #pragma once
 
-#include <network_system/core/messaging_server.h>
-#include <network_system/core/messaging_client.h>
+#ifdef HAS_NETWORK_SYSTEM
+#include <network_system/compatibility.h>
+#endif
+
 #include <kcenon/common/interfaces/executor_interface.h>
 #include <kcenon/common/patterns/result.h>
 #include "../core/message_bus.h"
@@ -12,10 +14,14 @@
 
 namespace messaging {
 
-class MessagingNetworkBridge {
+#ifdef HAS_NETWORK_SYSTEM
+// Alias for compatibility with network_system's exported namespace
+namespace network = network_module;
+
+class MessagingNetworkBridge : public std::enable_shared_from_this<MessagingNetworkBridge> {
     std::shared_ptr<network::messaging_server> server_;
-    std::shared_ptr<common::IExecutor> io_executor_;
-    std::shared_ptr<common::IExecutor> work_executor_;
+    std::shared_ptr<common::interfaces::IExecutor> io_executor_;
+    std::shared_ptr<common::interfaces::IExecutor> work_executor_;
     std::shared_ptr<MessageBus> message_bus_;
     uint16_t port_;
     std::atomic<bool> running_{false};
@@ -23,8 +29,8 @@ class MessagingNetworkBridge {
 public:
     MessagingNetworkBridge(
         uint16_t port,
-        std::shared_ptr<common::IExecutor> io_executor,
-        std::shared_ptr<common::IExecutor> work_executor,
+        std::shared_ptr<common::interfaces::IExecutor> io_executor,
+        std::shared_ptr<common::interfaces::IExecutor> work_executor,
         std::shared_ptr<MessageBus> message_bus
     );
 
@@ -50,5 +56,7 @@ private:
         const MessagingContainer& response
     );
 };
+
+#endif // HAS_NETWORK_SYSTEM
 
 } // namespace messaging
