@@ -524,6 +524,7 @@ add_library(messaging_system_core
     src/core/topic_router.cpp
     src/integration/trace_context.cpp
     src/integration/config_loader.cpp
+    src/integration/network_bridge.cpp
 )
 
 target_include_directories(messaging_system_core
