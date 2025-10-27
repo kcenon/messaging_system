@@ -9,8 +9,8 @@ namespace messaging {
 
 MessagingNetworkBridge::MessagingNetworkBridge(
     uint16_t port,
-    std::shared_ptr<common::IExecutor> io_executor,
-    std::shared_ptr<common::IExecutor> work_executor,
+    std::shared_ptr<common::interfaces::IExecutor> io_executor,
+    std::shared_ptr<common::interfaces::IExecutor> work_executor,
     std::shared_ptr<MessageBus> message_bus
 ) : port_(port),
     io_executor_(io_executor),
@@ -31,9 +31,10 @@ MessagingNetworkBridge::MessagingNetworkBridge(
 
 VoidResult MessagingNetworkBridge::start() {
     if (running_.load()) {
-        return VoidResult::error(
+        return VoidResult::err(
             error::NETWORK_ERROR,
-            "Network bridge is already running"
+            "Network bridge is already running",
+            "MessagingNetworkBridge"
         );
     }
 
@@ -44,10 +45,11 @@ VoidResult MessagingNetworkBridge::start() {
         // Start the server on configured port
         auto result = server_->start_server(port_);
 
-        if (!result) {
-            return VoidResult::error(
+        if (result.is_err()) {
+            return VoidResult::err(
                 error::NETWORK_ERROR,
-                std::string("Failed to start network server: ") + result.error().message
+                std::string("Failed to start network server: ") + result.error().message,
+                "MessagingNetworkBridge"
             );
         }
 
@@ -70,44 +72,48 @@ VoidResult MessagingNetworkBridge::start() {
             // Log disconnection
         });
 
-        return VoidResult::ok();
+        return VoidResult::ok(std::monostate{});
 
     } catch (const std::exception& e) {
         running_.store(false);
-        return VoidResult::error(
+        return VoidResult::err(
             error::NETWORK_ERROR,
-            std::string("Exception while starting network bridge: ") + e.what()
+            std::string("Exception while starting network bridge: ") + e.what(),
+            "MessagingNetworkBridge"
         );
     }
 }
 
 VoidResult MessagingNetworkBridge::stop() {
     if (!running_.load()) {
-        return VoidResult::error(
+        return VoidResult::err(
             error::NETWORK_ERROR,
-            "Network bridge is not running"
+            "Network bridge is not running",
+            "MessagingNetworkBridge"
         );
     }
 
     try {
         if (server_) {
             auto result = server_->stop_server();
-            if (!result) {
-                return VoidResult::error(
+            if (result.is_err()) {
+                return VoidResult::err(
                     error::NETWORK_ERROR,
-                    std::string("Failed to stop network server: ") + result.error().message
+                    std::string("Failed to stop network server: ") + result.error().message,
+                    "MessagingNetworkBridge"
                 );
             }
             server_.reset();
         }
 
         running_.store(false);
-        return VoidResult::ok();
+        return VoidResult::ok(std::monostate{});
 
     } catch (const std::exception& e) {
-        return VoidResult::error(
+        return VoidResult::err(
             error::NETWORK_ERROR,
-            std::string("Exception while stopping network bridge: ") + e.what()
+            std::string("Exception while stopping network bridge: ") + e.what(),
+            "MessagingNetworkBridge"
         );
     }
 }
@@ -118,10 +124,11 @@ VoidResult MessagingNetworkBridge::on_message_received(
 ) {
     // 1. Deserialize data into MessagingContainer
     auto container_result = MessagingContainer::deserialize(data);
-    if (!container_result) {
-        return VoidResult::error(
+    if (container_result.is_err()) {
+        return VoidResult::err(
             error::NETWORK_ERROR,
-            "Failed to deserialize message: " + container_result.error().message
+            "Failed to deserialize message: " + container_result.error().message,
+            "MessagingNetworkBridge"
         );
     }
 
@@ -129,13 +136,13 @@ VoidResult MessagingNetworkBridge::on_message_received(
     auto msg = std::move(container_result.value());
     work_executor_->execute([this, session, msg = std::move(msg)]() mutable {
         auto result = process_message(session, msg);
-        if (!result) {
+        if (result.is_err()) {
             // Log error but don't crash
             // Consider: send error response to client
         }
     });
 
-    return VoidResult::ok();
+    return VoidResult::ok(std::monostate{});
 }
 
 VoidResult MessagingNetworkBridge::process_message(
@@ -144,10 +151,11 @@ VoidResult MessagingNetworkBridge::process_message(
 ) {
     // 1. Route message through message_bus
     auto publish_result = message_bus_->publish_sync(msg);
-    if (!publish_result) {
-        return VoidResult::error(
+    if (publish_result.is_err()) {
+        return VoidResult::err(
             error::NETWORK_ERROR,
-            "Failed to publish message: " + publish_result.error().message
+            "Failed to publish message: " + publish_result.error().message,
+            "MessagingNetworkBridge"
         );
     }
 
@@ -162,11 +170,11 @@ VoidResult MessagingNetworkBridge::process_message(
         msg.topic() + "_response"
     );
 
-    if (response_result) {
+    if (response_result.is_ok()) {
         return send_response(session, response_result.value());
     }
 
-    return VoidResult::ok();
+    return VoidResult::ok(std::monostate{});
 }
 
 VoidResult MessagingNetworkBridge::send_response(
@@ -175,32 +183,35 @@ VoidResult MessagingNetworkBridge::send_response(
 ) {
     // Validate session
     if (!session) {
-        return VoidResult::error(
+        return VoidResult::err(
             error::NETWORK_ERROR,
-            "Session is null"
+            "Session is null",
+            "MessagingNetworkBridge"
         );
     }
 
     if (session->is_stopped()) {
-        return VoidResult::error(
+        return VoidResult::err(
             error::NETWORK_ERROR,
-            "Session is stopped"
+            "Session is stopped",
+            "MessagingNetworkBridge"
         );
     }
 
     // 1. Serialize MessagingContainer to std::vector<uint8_t>
     auto serialize_result = response.serialize();
-    if (!serialize_result) {
-        return VoidResult::error(
+    if (serialize_result.is_err()) {
+        return VoidResult::err(
             error::NETWORK_ERROR,
-            "Failed to serialize response: " + serialize_result.error().message
+            "Failed to serialize response: " + serialize_result.error().message,
+            "MessagingNetworkBridge"
         );
     }
 
     // 2. Send via session
     session->send_packet(std::move(serialize_result.value()));
 
-    return VoidResult::ok();
+    return VoidResult::ok(std::monostate{});
 }
 
 } // namespace messaging

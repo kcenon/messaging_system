@@ -20,8 +20,8 @@ namespace network = network_module;
 
 class MessagingNetworkBridge : public std::enable_shared_from_this<MessagingNetworkBridge> {
     std::shared_ptr<network::messaging_server> server_;
-    std::shared_ptr<common::IExecutor> io_executor_;
-    std::shared_ptr<common::IExecutor> work_executor_;
+    std::shared_ptr<common::interfaces::IExecutor> io_executor_;
+    std::shared_ptr<common::interfaces::IExecutor> work_executor_;
     std::shared_ptr<MessageBus> message_bus_;
     uint16_t port_;
     std::atomic<bool> running_{false};
@@ -29,8 +29,8 @@ class MessagingNetworkBridge : public std::enable_shared_from_this<MessagingNetw
 public:
     MessagingNetworkBridge(
         uint16_t port,
-        std::shared_ptr<common::IExecutor> io_executor,
-        std::shared_ptr<common::IExecutor> work_executor,
+        std::shared_ptr<common::interfaces::IExecutor> io_executor,
+        std::shared_ptr<common::interfaces::IExecutor> work_executor,
         std::shared_ptr<MessageBus> message_bus
     );
 
