@@ -38,11 +38,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <container_system/container.h>
 #include <database_system/database_manager.h>
-#include <network_system/network.h>
+#ifdef HAS_NETWORK_SYSTEM
+#include <network_system/compatibility.h>
+#endif
 
 using namespace container_module;
 using namespace database;
+#ifdef HAS_NETWORK_SYSTEM
 using namespace network_module;
+#endif
 
 class IntegrationTest : public ::testing::Test {
 protected:
