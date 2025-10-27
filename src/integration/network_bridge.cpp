@@ -64,11 +64,11 @@ VoidResult MessagingNetworkBridge::start() {
         );
 
         // Optional: Register connection/disconnection callbacks for logging
-        server_->set_connection_callback([](auto session) {
+        server_->set_connection_callback([](auto) {
             // Log new connection
         });
 
-        server_->set_disconnection_callback([](const auto& session_id) {
+        server_->set_disconnection_callback([](const auto&) {
             // Log disconnection
         });
 
