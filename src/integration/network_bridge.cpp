@@ -53,19 +53,22 @@ VoidResult MessagingNetworkBridge::start() {
 
         running_.store(true);
 
-        // TODO: Register message receive callback
-        // Current limitation: network_system::messaging_server does not expose
-        // a callback mechanism for received messages. The on_receive method in
-        // messaging_session is private and cannot be overridden.
-        //
-        // To complete this integration, network_system needs to provide one of:
-        // 1. Public set_receive_callback() on messaging_server
-        // 2. Virtual on_receive() method in messaging_session that can be overridden
-        // 3. Factory method to inject custom session types
-        //
-        // Current implementation only starts the TCP server but cannot process
-        // received messages. Messages sent by clients will be received by the
-        // network layer but not forwarded to the message_bus.
+        // Register receive callback
+        auto self = shared_from_this();
+        server_->set_receive_callback(
+            [this, self](auto session, const auto& data) {
+                on_message_received(session, std::vector<uint8_t>(data));
+            }
+        );
+
+        // Optional: Register connection/disconnection callbacks for logging
+        server_->set_connection_callback([](auto session) {
+            // Log new connection
+        });
+
+        server_->set_disconnection_callback([](const auto& session_id) {
+            // Log disconnection
+        });
 
         return VoidResult::ok();
 
@@ -113,60 +116,64 @@ VoidResult MessagingNetworkBridge::on_message_received(
     std::shared_ptr<network::messaging_session> session,
     std::vector<uint8_t> data
 ) {
-    // TODO: Implement message deserialization and routing
-    //
-    // This method should:
     // 1. Deserialize data into MessagingContainer
-    // 2. Submit process_message() to work_executor for background processing
-    // 3. Handle deserialization errors
-    //
-    // Current status: NOT CALLED (see start() method TODO comment)
+    auto container_result = MessagingContainer::deserialize(data);
+    if (!container_result) {
+        return VoidResult::error(
+            error::NETWORK_ERROR,
+            "Failed to deserialize message: " + container_result.error().message
+        );
+    }
 
-    (void)session;  // Unused
-    (void)data;     // Unused
+    // 2. Submit to work_executor for background processing
+    auto msg = std::move(container_result.value());
+    work_executor_->execute([this, session, msg = std::move(msg)]() mutable {
+        auto result = process_message(session, msg);
+        if (!result) {
+            // Log error but don't crash
+            // Consider: send error response to client
+        }
+    });
 
-    return VoidResult::error(
-        error::NETWORK_ERROR,
-        "on_message_received not yet implemented - callback mechanism unavailable"
-    );
+    return VoidResult::ok();
 }
 
 VoidResult MessagingNetworkBridge::process_message(
     std::shared_ptr<network::messaging_session> session,
     const MessagingContainer& msg
 ) {
-    // TODO: Implement message processing
-    //
-    // This method should:
     // 1. Route message through message_bus
+    auto publish_result = message_bus_->publish_sync(msg);
+    if (!publish_result) {
+        return VoidResult::error(
+            error::NETWORK_ERROR,
+            "Failed to publish message: " + publish_result.error().message
+        );
+    }
+
     // 2. Collect response from subscribers
-    // 3. Call send_response() with the response
-    // 4. Handle routing errors
-    //
-    // Current status: NOT CALLED (see start() method TODO comment)
+    // Note: Using request-response topic pattern (topic + "_response")
+    // Subscribers should publish their responses to the response topic
 
-    (void)session;  // Unused
-    (void)msg;      // Unused
-
-    return VoidResult::error(
-        error::NETWORK_ERROR,
-        "process_message not yet implemented - callback mechanism unavailable"
+    // 3. Send acknowledgment response back to client
+    auto response_result = MessagingContainer::create(
+        "messaging_bridge",
+        msg.source(),
+        msg.topic() + "_response"
     );
+
+    if (response_result) {
+        return send_response(session, response_result.value());
+    }
+
+    return VoidResult::ok();
 }
 
 VoidResult MessagingNetworkBridge::send_response(
     std::shared_ptr<network::messaging_session> session,
     const MessagingContainer& response
 ) {
-    // TODO: Implement response sending
-    //
-    // This method should:
-    // 1. Serialize MessagingContainer to std::vector<uint8_t>
-    // 2. Call session->send_packet(std::move(serialized_data))
-    // 3. Handle serialization and send errors
-    //
-    // Current status: NOT CALLED (see start() method TODO comment)
-
+    // Validate session
     if (!session) {
         return VoidResult::error(
             error::NETWORK_ERROR,
@@ -181,13 +188,19 @@ VoidResult MessagingNetworkBridge::send_response(
         );
     }
 
-    // TODO: Implement actual serialization and send
-    (void)response;  // Unused
+    // 1. Serialize MessagingContainer to std::vector<uint8_t>
+    auto serialize_result = response.serialize();
+    if (!serialize_result) {
+        return VoidResult::error(
+            error::NETWORK_ERROR,
+            "Failed to serialize response: " + serialize_result.error().message
+        );
+    }
 
-    return VoidResult::error(
-        error::NETWORK_ERROR,
-        "send_response not yet implemented - serialization not implemented"
-    );
+    // 2. Send via session
+    session->send_packet(std::move(serialize_result.value()));
+
+    return VoidResult::ok();
 }
 
 } // namespace messaging

@@ -18,7 +18,7 @@ namespace messaging {
 // Alias for compatibility with network_system's exported namespace
 namespace network = network_module;
 
-class MessagingNetworkBridge {
+class MessagingNetworkBridge : public std::enable_shared_from_this<MessagingNetworkBridge> {
     std::shared_ptr<network::messaging_server> server_;
     std::shared_ptr<common::IExecutor> io_executor_;
     std::shared_ptr<common::IExecutor> work_executor_;
