@@ -12,10 +12,10 @@ MessagingNetworkBridge::MessagingNetworkBridge(
     std::shared_ptr<common::interfaces::IExecutor> io_executor,
     std::shared_ptr<common::interfaces::IExecutor> work_executor,
     std::shared_ptr<MessageBus> message_bus
-) : port_(port),
-    io_executor_(io_executor),
+) : io_executor_(io_executor),
     work_executor_(work_executor),
     message_bus_(message_bus),
+    port_(port),
     running_(false) {
 
     if (!message_bus) {

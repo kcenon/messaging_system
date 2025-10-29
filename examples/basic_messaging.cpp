@@ -10,9 +10,7 @@
 #include "messaging_system/integration/config_loader.h"
 #endif
 
-#ifdef HAS_THREAD_SYSTEM
-#include <kcenon/thread/core/thread_pool.h>
-#endif
+#include "messaging_system/support/mock_executor.h"
 
 #include <iostream>
 #include <thread>
@@ -45,12 +43,11 @@ int main() {
     std::cout << std::endl;
 #endif
 
-#ifdef HAS_THREAD_SYSTEM
     std::cout << "Initializing messaging system..." << std::endl;
 
     // Create executors
-    auto io_executor = std::make_shared<thread::thread_pool>(2);
-    auto work_executor = std::make_shared<thread::thread_pool>(4);
+    auto io_executor = std::make_shared<messaging::support::MockExecutor>(2);
+    auto work_executor = std::make_shared<messaging::support::MockExecutor>(4);
 
     // Create router and message bus
     auto router = std::make_shared<TopicRouter>(work_executor);
@@ -69,12 +66,12 @@ int main() {
     std::atomic<int> received_count{0};
 
     auto sub1 = message_bus->subscribe("user.created",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             ScopedTrace trace(msg.trace_id());
             std::cout << "  → [" << TraceContext::get_trace_id() << "] "
                       << "Subscriber 1 received: " << msg.topic() << std::endl;
             received_count++;
-            return common::VoidResult::ok();
+            return common::ok();
         });
 
     if (sub1.is_ok()) {
@@ -98,10 +95,10 @@ int main() {
     std::atomic<int> wildcard_count{0};
 
     auto sub2 = message_bus->subscribe("order.*",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             std::cout << "  → Wildcard subscriber received: " << msg.topic() << std::endl;
             wildcard_count++;
-            return common::VoidResult::ok();
+            return common::ok();
         });
 
     if (sub2.is_ok()) {
@@ -126,10 +123,10 @@ int main() {
     std::atomic<int> multilevel_count{0};
 
     auto sub3 = message_bus->subscribe("event.#",
-        [&](const MessagingContainer& msg) -> common::Result<void> {
+        [&](const MessagingContainer& msg) -> common::VoidResult {
             std::cout << "  → Multi-level subscriber received: " << msg.topic() << std::endl;
             multilevel_count++;
-            return common::VoidResult::ok();
+            return common::ok();
         });
 
     if (sub3.is_ok()) {
@@ -157,11 +154,6 @@ int main() {
     // Cleanup
     message_bus->stop();
     std::cout << "  ✓ Message bus stopped" << std::endl;
-
-#else
-    std::cout << "ThreadSystem not available - example requires HAS_THREAD_SYSTEM" << std::endl;
-#endif
-
     std::cout << std::endl;
     std::cout << "Example completed successfully!" << std::endl;
 
