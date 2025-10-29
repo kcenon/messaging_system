@@ -419,27 +419,27 @@ namespace kcenon::messaging::services::container {
         }
     }
 
-    void container_service::process_serialize_request(const core::message& msg) {
+    void container_service::process_serialize_request(const core::message& /* msg */) {
         // Implementation would extract payload from message and serialize it
         stats_.serializations.fetch_add(1);
     }
 
-    void container_service::process_deserialize_request(const core::message& msg) {
+    void container_service::process_deserialize_request(const core::message& /* msg */) {
         // Implementation would extract binary data and deserialize it
         stats_.deserializations.fetch_add(1);
     }
 
-    void container_service::process_validate_request(const core::message& msg) {
+    void container_service::process_validate_request(const core::message& /* msg */) {
         // Implementation would validate the message payload
         stats_.validations.fetch_add(1);
     }
 
-    void container_service::process_compress_request(const core::message& msg) {
+    void container_service::process_compress_request(const core::message& /* msg */) {
         // Implementation would compress the message data
         stats_.compressions.fetch_add(1);
     }
 
-    void container_service::process_decompress_request(const core::message& msg) {
+    void container_service::process_decompress_request(const core::message& /* msg */) {
         // Implementation would decompress the message data
         stats_.compressions.fetch_add(1);
     }

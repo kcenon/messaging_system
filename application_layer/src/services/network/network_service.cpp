@@ -113,7 +113,7 @@ namespace kcenon::messaging::services::network {
         }
     }
 
-    bool network_service::broadcast_message(const core::message& msg) {
+    bool network_service::broadcast_message(const core::message& /* msg */) {
         if (state_ != service_state::running) {
             return false;
         }
