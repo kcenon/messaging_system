@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['📦_20cmake_20integration_0',['📦 CMake Integration',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md972',1,'']]]
+  ['📚_20documentation_0',['📚 Documentation',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1066',1,'']]],
+  ['📚_20documentation_20overview_1',['📚 Documentation Overview',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md846',1,'']]]
 ];

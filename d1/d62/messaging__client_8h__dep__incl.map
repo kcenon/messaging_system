@@ -1,9 +1,0 @@
-<map id="libraries/network_system/core/messaging_client.h" name="libraries/network_system/core/messaging_client.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="229,5,415,45"/>
-<area shape="rect" id="Node000002" href="$de/dcc/messaging__client_8cpp.html" title=" " alt="" coords="5,93,204,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="262,53,153,96,151,91,261,48"/>
-<area shape="rect" id="Node000003" href="$d9/d94/network_8h.html" title="Main include file for the network module." alt="" coords="229,93,415,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="325,59,325,93,319,93,319,59"/>
-<area shape="rect" id="Node000004" href="$dc/d03/network_2network_8h.html" title="Network module public API." alt="" coords="439,93,626,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="382,48,488,91,486,96,380,53"/>
-</map>

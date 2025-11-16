@@ -499,577 +499,672 @@ var NAVTREE =
         [ "4. Community", "d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md420", null ]
       ] ]
     ] ],
+    [ "Messaging System Improvement Plan", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html", [
+      [ "Progress Overview", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md423", null ],
+      [ "Executive Summary", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md424", null ],
+      [ "Table of Contents", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md425", null ],
+      [ "Current State Analysis", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md427", [
+        [ "Existing Directory Structure", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md428", null ],
+        [ "Current Capabilities", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md429", null ]
+      ] ],
+      [ "Identified Issues", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md431", [
+        [ "1. Error Code Range Conflict", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md432", null ],
+        [ "2. Directory Structure Inconsistency", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md433", null ],
+        [ "3. Missing Architectural Patterns", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md434", null ],
+        [ "4. Lack of Interface Definitions", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md435", null ]
+      ] ],
+      [ "Improvement Objectives", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md437", [
+        [ "Primary Goals", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md438", null ],
+        [ "Secondary Goals", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md439", null ]
+      ] ],
+      [ "Target Architecture", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md441", [
+        [ "Directory Structure (New)", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md442", null ],
+        [ "Component Architecture", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md443", null ]
+      ] ],
+      [ "Implementation Plan", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md445", [
+        [ "Phase 1: Foundation and Error Codes (Week 1)", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md446", [
+          [ "1.1 Add messaging_system Error Codes to common_system", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md447", null ],
+          [ "1.2 Create Core Interfaces", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md448", null ],
+          [ "1.3 Integration Detection Utility", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md449", null ]
+        ] ],
+        [ "Phase 2: Core Message Types (Week 2)", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md450", [
+          [ "2.1 Message Structure", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md451", null ]
+        ] ],
+        [ "Phase 3: Message Queue and Broker (Week 3)", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md452", [
+          [ "3.1 Queue Interface", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md453", null ],
+          [ "3.2 Message Queue Implementation", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md454", null ]
+        ] ],
+        [ "Phase 4: Backend Pattern (Week 4)", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md455", [
+          [ "4.1 Backend Interface", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md456", null ],
+          [ "4.2 Standalone Backend", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md457", null ],
+          [ "4.3 Integration Backend", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md458", null ]
+        ] ],
+        [ "Phase 5: Topic Router and Pub/Sub (Week 5)", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md459", [
+          [ "5.1 Topic Router Implementation", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md460", null ]
+        ] ],
+        [ "Phase 6: Message Bus (Week 6)", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md461", [
+          [ "6.1 Message Bus Implementation", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md462", null ]
+        ] ],
+        [ "Phase 7: DI Container (Week 7)", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md463", [
+          [ "7.1 DI Container Interface", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md464", null ]
+        ] ],
+        [ "Phase 8: Patterns Implementation (Week 8)", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md465", [
+          [ "8.1 Pub/Sub Pattern", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md466", null ],
+          [ "8.2 Request-Reply Pattern", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md467", null ]
+        ] ]
+      ] ],
+      [ "Migration Strategy", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md469", [
+        [ "Backward Compatibility", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md470", [
+          [ "Legacy Include Guard", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md471", null ]
+        ] ],
+        [ "Migration Path", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md472", null ],
+        [ "Coexistence Period", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md473", null ]
+      ] ],
+      [ "Testing Strategy", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md475", [
+        [ "Unit Tests", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md476", null ],
+        [ "Integration Tests", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md477", null ],
+        [ "Performance Benchmarks", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md478", null ]
+      ] ],
+      [ "Timeline and Milestones", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md480", [
+        [ "Phase 1: Foundation (Week 1) - ✅ COMPLETED", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md481", null ],
+        [ "Phase 2: Core Message Types (Week 2) - 🔄 IN PROGRESS", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md482", null ],
+        [ "Phase 3: Message Queue (Week 3) - ⏳ PENDING", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md483", null ],
+        [ "Phase 4: Backend Pattern (Week 4) - ⏳ PENDING", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md484", null ],
+        [ "Phase 5: Topic Router (Week 5) - ⏳ PENDING", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md485", null ],
+        [ "Phase 6: Message Bus (Week 6) - ⏳ PENDING", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md486", null ],
+        [ "Phase 7: DI Container (Week 7) - ⏳ PENDING", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md487", null ],
+        [ "Phase 8: Messaging Patterns (Week 8) - ⏳ PENDING", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md488", null ],
+        [ "Phase 9-10: Testing and Documentation (Weeks 9-10) - ⏳ PENDING", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md489", null ]
+      ] ],
+      [ "Success Criteria", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md491", [
+        [ "Functional", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md492", null ],
+        [ "Non-Functional", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md493", null ],
+        [ "Quality", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md494", null ],
+        [ "Integration", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md495", null ]
+      ] ],
+      [ "Risk Assessment", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md497", [
+        [ "High Risk", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md498", null ],
+        [ "Medium Risk", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md499", null ],
+        [ "Low Risk", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md500", null ]
+      ] ],
+      [ "Appendix", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md502", [
+        [ "A. Error Code Mapping", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md503", null ],
+        [ "B. File Relocation Map", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md504", null ],
+        [ "C. Dependencies", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md505", null ],
+        [ "D. References", "d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md506", null ]
+      ] ]
+    ] ],
     [ "Performance Guide", "df/d94/md_docs_2performance.html", [
-      [ "Table of Contents", "df/d94/md_docs_2performance.html#autotoc_md423", null ],
-      [ "Performance Overview", "df/d94/md_docs_2performance.html#autotoc_md424", [
-        [ "Design Goals", "df/d94/md_docs_2performance.html#autotoc_md425", null ],
-        [ "Key Performance Features", "df/d94/md_docs_2performance.html#autotoc_md426", null ]
+      [ "Table of Contents", "df/d94/md_docs_2performance.html#autotoc_md509", null ],
+      [ "Performance Overview", "df/d94/md_docs_2performance.html#autotoc_md510", [
+        [ "Design Goals", "df/d94/md_docs_2performance.html#autotoc_md511", null ],
+        [ "Key Performance Features", "df/d94/md_docs_2performance.html#autotoc_md512", null ]
       ] ],
-      [ "Benchmark Results", "df/d94/md_docs_2performance.html#autotoc_md427", [
-        [ "Test Environment", "df/d94/md_docs_2performance.html#autotoc_md428", null ],
-        [ "Overall System Performance", "df/d94/md_docs_2performance.html#autotoc_md429", null ],
-        [ "Latency Measurements", "df/d94/md_docs_2performance.html#autotoc_md430", null ],
-        [ "Memory Performance", "df/d94/md_docs_2performance.html#autotoc_md431", null ]
+      [ "Benchmark Results", "df/d94/md_docs_2performance.html#autotoc_md513", [
+        [ "Test Environment", "df/d94/md_docs_2performance.html#autotoc_md514", null ],
+        [ "Overall System Performance", "df/d94/md_docs_2performance.html#autotoc_md515", null ],
+        [ "Latency Measurements", "df/d94/md_docs_2performance.html#autotoc_md516", null ],
+        [ "Memory Performance", "df/d94/md_docs_2performance.html#autotoc_md517", null ]
       ] ],
-      [ "Component Performance", "df/d94/md_docs_2performance.html#autotoc_md432", [
-        [ "Thread System Performance", "df/d94/md_docs_2performance.html#autotoc_md433", [
-          [ "Lock-free vs Mutex Comparison", "df/d94/md_docs_2performance.html#autotoc_md434", null ],
-          [ "Scaling Characteristics", "df/d94/md_docs_2performance.html#autotoc_md435", null ]
+      [ "Component Performance", "df/d94/md_docs_2performance.html#autotoc_md518", [
+        [ "Thread System Performance", "df/d94/md_docs_2performance.html#autotoc_md519", [
+          [ "Lock-free vs Mutex Comparison", "df/d94/md_docs_2performance.html#autotoc_md520", null ],
+          [ "Scaling Characteristics", "df/d94/md_docs_2performance.html#autotoc_md521", null ]
         ] ],
-        [ "Container System Performance", "df/d94/md_docs_2performance.html#autotoc_md436", [
-          [ "Serialization Performance", "df/d94/md_docs_2performance.html#autotoc_md437", null ],
-          [ "SIMD Optimization Impact", "df/d94/md_docs_2performance.html#autotoc_md438", null ]
+        [ "Container System Performance", "df/d94/md_docs_2performance.html#autotoc_md522", [
+          [ "Serialization Performance", "df/d94/md_docs_2performance.html#autotoc_md523", null ],
+          [ "SIMD Optimization Impact", "df/d94/md_docs_2performance.html#autotoc_md524", null ]
         ] ],
-        [ "Network System Performance", "df/d94/md_docs_2performance.html#autotoc_md439", [
-          [ "Connection Scaling", "df/d94/md_docs_2performance.html#autotoc_md440", null ],
-          [ "Protocol Overhead", "df/d94/md_docs_2performance.html#autotoc_md441", null ]
+        [ "Network System Performance", "df/d94/md_docs_2performance.html#autotoc_md525", [
+          [ "Connection Scaling", "df/d94/md_docs_2performance.html#autotoc_md526", null ],
+          [ "Protocol Overhead", "df/d94/md_docs_2performance.html#autotoc_md527", null ]
         ] ],
-        [ "Database System Performance", "df/d94/md_docs_2performance.html#autotoc_md442", [
-          [ "Query Performance", "df/d94/md_docs_2performance.html#autotoc_md443", null ],
-          [ "Connection Pool Impact", "df/d94/md_docs_2performance.html#autotoc_md444", null ]
+        [ "Database System Performance", "df/d94/md_docs_2performance.html#autotoc_md528", [
+          [ "Query Performance", "df/d94/md_docs_2performance.html#autotoc_md529", null ],
+          [ "Connection Pool Impact", "df/d94/md_docs_2performance.html#autotoc_md530", null ]
         ] ]
       ] ],
-      [ "Optimization Techniques", "df/d94/md_docs_2performance.html#autotoc_md445", [
-        [ "1. Memory Optimization", "df/d94/md_docs_2performance.html#autotoc_md446", [
-          [ "Object Pooling", "df/d94/md_docs_2performance.html#autotoc_md447", null ],
-          [ "Custom Allocators", "df/d94/md_docs_2performance.html#autotoc_md448", null ]
+      [ "Optimization Techniques", "df/d94/md_docs_2performance.html#autotoc_md531", [
+        [ "1. Memory Optimization", "df/d94/md_docs_2performance.html#autotoc_md532", [
+          [ "Object Pooling", "df/d94/md_docs_2performance.html#autotoc_md533", null ],
+          [ "Custom Allocators", "df/d94/md_docs_2performance.html#autotoc_md534", null ]
         ] ],
-        [ "2. CPU Optimization", "df/d94/md_docs_2performance.html#autotoc_md449", [
-          [ "SIMD Utilization", "df/d94/md_docs_2performance.html#autotoc_md450", null ],
-          [ "Cache Optimization", "df/d94/md_docs_2performance.html#autotoc_md451", null ]
+        [ "2. CPU Optimization", "df/d94/md_docs_2performance.html#autotoc_md535", [
+          [ "SIMD Utilization", "df/d94/md_docs_2performance.html#autotoc_md536", null ],
+          [ "Cache Optimization", "df/d94/md_docs_2performance.html#autotoc_md537", null ]
         ] ],
-        [ "3. Network Optimization", "df/d94/md_docs_2performance.html#autotoc_md452", [
-          [ "Batching and Pipelining", "df/d94/md_docs_2performance.html#autotoc_md453", null ]
+        [ "3. Network Optimization", "df/d94/md_docs_2performance.html#autotoc_md538", [
+          [ "Batching and Pipelining", "df/d94/md_docs_2performance.html#autotoc_md539", null ]
         ] ]
       ] ],
-      [ "Performance Monitoring", "df/d94/md_docs_2performance.html#autotoc_md454", [
-        [ "1. Built-in Metrics", "df/d94/md_docs_2performance.html#autotoc_md455", null ],
-        [ "2. Performance Profiling", "df/d94/md_docs_2performance.html#autotoc_md456", null ]
+      [ "Performance Monitoring", "df/d94/md_docs_2performance.html#autotoc_md540", [
+        [ "1. Built-in Metrics", "df/d94/md_docs_2performance.html#autotoc_md541", null ],
+        [ "2. Performance Profiling", "df/d94/md_docs_2performance.html#autotoc_md542", null ]
       ] ],
-      [ "Tuning Guidelines", "df/d94/md_docs_2performance.html#autotoc_md457", [
-        [ "1. Thread Configuration", "df/d94/md_docs_2performance.html#autotoc_md458", null ],
-        [ "2. Memory Configuration", "df/d94/md_docs_2performance.html#autotoc_md459", null ],
-        [ "3. Network Configuration", "df/d94/md_docs_2performance.html#autotoc_md460", null ]
+      [ "Tuning Guidelines", "df/d94/md_docs_2performance.html#autotoc_md543", [
+        [ "1. Thread Configuration", "df/d94/md_docs_2performance.html#autotoc_md544", null ],
+        [ "2. Memory Configuration", "df/d94/md_docs_2performance.html#autotoc_md545", null ],
+        [ "3. Network Configuration", "df/d94/md_docs_2performance.html#autotoc_md546", null ]
       ] ],
-      [ "Troubleshooting Performance Issues", "df/d94/md_docs_2performance.html#autotoc_md461", [
-        [ "1. Common Performance Problems", "df/d94/md_docs_2performance.html#autotoc_md462", [
-          [ "High CPU Usage", "df/d94/md_docs_2performance.html#autotoc_md463", null ],
-          [ "Memory Leaks", "df/d94/md_docs_2performance.html#autotoc_md464", null ],
-          [ "Network Bottlenecks", "df/d94/md_docs_2performance.html#autotoc_md465", null ]
+      [ "Troubleshooting Performance Issues", "df/d94/md_docs_2performance.html#autotoc_md547", [
+        [ "1. Common Performance Problems", "df/d94/md_docs_2performance.html#autotoc_md548", [
+          [ "High CPU Usage", "df/d94/md_docs_2performance.html#autotoc_md549", null ],
+          [ "Memory Leaks", "df/d94/md_docs_2performance.html#autotoc_md550", null ],
+          [ "Network Bottlenecks", "df/d94/md_docs_2performance.html#autotoc_md551", null ]
         ] ],
-        [ "2. Performance Monitoring Dashboard", "df/d94/md_docs_2performance.html#autotoc_md466", null ]
+        [ "2. Performance Monitoring Dashboard", "df/d94/md_docs_2performance.html#autotoc_md552", null ]
       ] ]
     ] ],
     [ "Build Configuration Design Document", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html", [
-      [ "Overview", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md469", null ],
-      [ "Dependency Integration Strategy", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md470", [
-        [ "Option 1: FetchContent (Development Environment)", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md471", null ],
-        [ "Option 2: find_package (Production Environment)", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md472", null ]
+      [ "Overview", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md555", null ],
+      [ "Dependency Integration Strategy", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md556", [
+        [ "Option 1: FetchContent (Development Environment)", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md557", null ],
+        [ "Option 2: find_package (Production Environment)", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md558", null ]
       ] ],
-      [ "Unified CMake Configuration Options", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md473", [
-        [ "Feature Flags", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md474", null ],
-        [ "Build Profiles", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md475", null ],
-        [ "Compiler Options", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md476", null ]
+      [ "Unified CMake Configuration Options", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md559", [
+        [ "Feature Flags", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md560", null ],
+        [ "Build Profiles", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md561", null ],
+        [ "Compiler Options", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md562", null ]
       ] ],
-      [ "Propagating Options to External Systems", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md477", [
-        [ "Strategy", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md478", null ]
+      [ "Propagating Options to External Systems", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md563", [
+        [ "Strategy", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md564", null ]
       ] ],
-      [ "CMake Presets", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md479", [
-        [ "CMakePresets.json", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md480", null ]
+      [ "CMake Presets", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md565", [
+        [ "CMakePresets.json", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md566", null ]
       ] ],
-      [ "CI Profile Configurations", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md481", [
-        [ "GitHub Actions Matrix", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md482", null ]
+      [ "CI Profile Configurations", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md567", [
+        [ "GitHub Actions Matrix", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md568", null ]
       ] ],
-      [ "Documentation of Option Impact", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md483", [
-        [ "MESSAGING_USE_LOCKFREE", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md484", null ],
-        [ "MESSAGING_ENABLE_MONITORING", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md485", null ],
-        [ "MESSAGING_ENABLE_LOGGING", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md486", null ],
-        [ "MESSAGING_ENABLE_TLS", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md487", null ]
+      [ "Documentation of Option Impact", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md569", [
+        [ "MESSAGING_USE_LOCKFREE", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md570", null ],
+        [ "MESSAGING_ENABLE_MONITORING", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md571", null ],
+        [ "MESSAGING_ENABLE_LOGGING", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md572", null ],
+        [ "MESSAGING_ENABLE_TLS", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md573", null ]
       ] ],
-      [ "Installation Guide", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md488", [
-        [ "System-Wide Installation (find_package mode)", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md489", null ],
-        [ "FetchContent Mode (Development)", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md490", null ]
+      [ "Installation Guide", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md574", [
+        [ "System-Wide Installation (find_package mode)", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md575", null ],
+        [ "FetchContent Mode (Development)", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md576", null ]
       ] ],
-      [ "Completion Checklist", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md491", null ]
+      [ "Completion Checklist", "d1/d57/md_docs_2phase0_2BUILD__CONFIGURATION.html#autotoc_md577", null ]
     ] ],
     [ "System Interface Mapping Document", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html", [
-      [ "Overview", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md493", null ],
-      [ "Common System Interfaces", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md494", [
-        [ "Error Handling", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md495", null ],
-        [ "Event System", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md496", null ],
-        [ "Execution Contracts", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md497", null ],
-        [ "Logging Contracts", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md498", null ],
-        [ "Monitoring Contracts", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md499", null ],
-        [ "Database Contracts", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md500", null ]
+      [ "Overview", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md579", null ],
+      [ "Common System Interfaces", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md580", [
+        [ "Error Handling", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md581", null ],
+        [ "Event System", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md582", null ],
+        [ "Execution Contracts", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md583", null ],
+        [ "Logging Contracts", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md584", null ],
+        [ "Monitoring Contracts", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md585", null ],
+        [ "Database Contracts", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md586", null ]
       ] ],
-      [ "Error Code Ranges", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md501", [
-        [ "System Error Code Allocation", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md502", null ]
+      [ "Error Code Ranges", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md587", [
+        [ "System Error Code Allocation", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md588", null ]
       ] ],
-      [ "Legacy Dependencies to Remove", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md503", [
-        [ "Internal Implementations", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md504", null ],
-        [ "External Dependencies", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md505", null ]
+      [ "Legacy Dependencies to Remove", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md589", [
+        [ "Internal Implementations", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md590", null ],
+        [ "External Dependencies", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md591", null ]
       ] ],
-      [ "Exception Mapper Utility", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md506", [
-        [ "Usage Pattern", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md507", null ]
+      [ "Exception Mapper Utility", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md592", [
+        [ "Usage Pattern", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md593", null ]
       ] ],
-      [ "Migration Checklist", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md508", [
-        [ "Phase 0 Completion Criteria", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md509", null ],
-        [ "Next Steps", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md510", null ]
+      [ "Migration Checklist", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md594", [
+        [ "Phase 0 Completion Criteria", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md595", null ],
+        [ "Next Steps", "df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md596", null ]
       ] ]
     ] ],
     [ "Legacy Code Removal Plan", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html", [
-      [ "Overview", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md512", null ],
-      [ "Legacy Code Inventory", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md513", [
-        [ "1. Internal Container System", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md514", null ],
-        [ "2. Internal Network System", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md515", null ],
-        [ "3. Internal Thread System", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md516", null ],
-        [ "4. Exception-Based Error Handling", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md517", null ],
-        [ "5. Direct Console Output", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md518", null ]
+      [ "Overview", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md598", null ],
+      [ "Legacy Code Inventory", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md599", [
+        [ "1. Internal Container System", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md600", null ],
+        [ "2. Internal Network System", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md601", null ],
+        [ "3. Internal Thread System", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md602", null ],
+        [ "4. Exception-Based Error Handling", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md603", null ],
+        [ "5. Direct Console Output", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md604", null ]
       ] ],
-      [ "Responsibility Matrix", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md519", null ],
-      [ "Detailed Replacement Mapping", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md520", [
-        [ "Error Handling Transformation", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md521", [
-          [ "Before (Exception-based)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md522", null ],
-          [ "After (Result-based)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md523", null ]
+      [ "Responsibility Matrix", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md605", null ],
+      [ "Detailed Replacement Mapping", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md606", [
+        [ "Error Handling Transformation", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md607", [
+          [ "Before (Exception-based)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md608", null ],
+          [ "After (Result-based)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md609", null ]
         ] ],
-        [ "Async Execution Transformation", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md524", [
-          [ "Before (Internal thread pool)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md525", null ],
-          [ "After (IExecutor-based)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md526", null ]
+        [ "Async Execution Transformation", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md610", [
+          [ "Before (Internal thread pool)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md611", null ],
+          [ "After (IExecutor-based)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md612", null ]
         ] ],
-        [ "Container API Transformation", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md527", [
-          [ "Before (Internal container)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md528", null ],
-          [ "After (value_container)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md529", null ]
+        [ "Container API Transformation", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md613", [
+          [ "Before (Internal container)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md614", null ],
+          [ "After (value_container)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md615", null ]
         ] ],
-        [ "Logging Transformation", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md530", [
-          [ "Before (Direct output)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md531", null ],
-          [ "After (ILogger)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md532", null ]
+        [ "Logging Transformation", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md616", [
+          [ "Before (Direct output)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md617", null ],
+          [ "After (ILogger)", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md618", null ]
         ] ]
       ] ],
-      [ "Archive Strategy", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md533", [
-        [ "Archive Directory Structure", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md534", null ],
-        [ "Archive Script", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md535", null ],
-        [ "CMakeLists.txt Cleanup", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md536", null ]
+      [ "Archive Strategy", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md619", [
+        [ "Archive Directory Structure", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md620", null ],
+        [ "Archive Script", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md621", null ],
+        [ "CMakeLists.txt Cleanup", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md622", null ]
       ] ],
-      [ "Build Guard Implementation", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md537", [
-        [ "Legacy Guard Header", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md538", null ],
-        [ "CMake Configuration for Guards", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md539", null ]
+      [ "Build Guard Implementation", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md623", [
+        [ "Legacy Guard Header", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md624", null ],
+        [ "CMake Configuration for Guards", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md625", null ]
       ] ],
-      [ "Removal Checklist", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md540", [
-        [ "Phase 1.4 Execution Checklist", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md541", null ],
-        [ "Post-Removal Verification", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md542", null ]
+      [ "Removal Checklist", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md626", [
+        [ "Phase 1.4 Execution Checklist", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md627", null ],
+        [ "Post-Removal Verification", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md628", null ]
       ] ],
-      [ "Success Criteria", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md543", null ]
+      [ "Success Criteria", "dd/d64/md_docs_2phase0_2LEGACY__REMOVAL__PLAN.html#autotoc_md629", null ]
     ] ],
     [ "Migration Strategy and Risk Assessment", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html", [
-      [ "Overview", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md545", null ],
-      [ "Breaking Changes", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md546", [
-        [ "1. Error Handling Paradigm Shift", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md547", null ],
-        [ "2. External System Dependencies", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md548", null ],
-        [ "3. Container API Changes", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md549", null ]
+      [ "Overview", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md631", null ],
+      [ "Breaking Changes", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md632", [
+        [ "1. Error Handling Paradigm Shift", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md633", null ],
+        [ "2. External System Dependencies", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md634", null ],
+        [ "3. Container API Changes", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md635", null ]
       ] ],
-      [ "Compatibility Layer Design", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md550", [
-        [ "Legacy API Wrapper", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md551", null ],
-        [ "Feature Flag Configuration", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md552", null ]
+      [ "Compatibility Layer Design", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md636", [
+        [ "Legacy API Wrapper", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md637", null ],
+        [ "Feature Flag Configuration", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md638", null ]
       ] ],
-      [ "Gradual Migration Scenario", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md553", [
-        [ "Release Timeline", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md554", [
-          [ "v1.9 (Current)", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md555", null ],
-          [ "v1.10 (Transition Release)", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md556", null ],
-          [ "v1.11 (Final Transition)", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md557", null ],
-          [ "v2.0 (New Architecture)", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md558", null ]
+      [ "Gradual Migration Scenario", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md639", [
+        [ "Release Timeline", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md640", [
+          [ "v1.9 (Current)", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md641", null ],
+          [ "v1.10 (Transition Release)", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md642", null ],
+          [ "v1.11 (Final Transition)", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md643", null ],
+          [ "v2.0 (New Architecture)", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md644", null ]
         ] ],
-        [ "Migration Schedule", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md559", null ]
+        [ "Migration Schedule", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md645", null ]
       ] ],
-      [ "Rollback Strategy", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md560", [
-        [ "Blue-Green Deployment", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md561", [
-          [ "Preparation", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md562", null ],
-          [ "Cutover", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md563", null ],
-          [ "Rollback (If Issues Detected)", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md564", null ]
+      [ "Rollback Strategy", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md646", [
+        [ "Blue-Green Deployment", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md647", [
+          [ "Preparation", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md648", null ],
+          [ "Cutover", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md649", null ],
+          [ "Rollback (If Issues Detected)", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md650", null ]
         ] ],
-        [ "Database Migration Rollback", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md565", [
-          [ "Forward Migration Script", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md566", null ],
-          [ "Rollback Script", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md567", null ],
-          [ "Execution", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md568", null ]
+        [ "Database Migration Rollback", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md651", [
+          [ "Forward Migration Script", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md652", null ],
+          [ "Rollback Script", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md653", null ],
+          [ "Execution", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md654", null ]
         ] ],
-        [ "Configuration Rollback", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md569", [
-          [ "Configuration Versioning", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md570", null ],
-          [ "Ansible Rollback Playbook", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md571", null ]
+        [ "Configuration Rollback", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md655", [
+          [ "Configuration Versioning", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md656", null ],
+          [ "Ansible Rollback Playbook", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md657", null ]
         ] ]
       ] ],
-      [ "Risk Register", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md572", [
-        [ "High Risk Items", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md573", [
-          [ "Risk 1: Performance Regression", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md574", null ],
-          [ "Risk 2: Data Loss During Migration", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md575", null ],
-          [ "Risk 3: Client Breaking Changes", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md576", null ]
+      [ "Risk Register", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md658", [
+        [ "High Risk Items", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md659", [
+          [ "Risk 1: Performance Regression", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md660", null ],
+          [ "Risk 2: Data Loss During Migration", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md661", null ],
+          [ "Risk 3: Client Breaking Changes", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md662", null ]
         ] ],
-        [ "Medium Risk Items", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md577", [
-          [ "Risk 4: Dependency Version Conflicts", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md578", null ],
-          [ "Risk 5: Build System Issues", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md579", null ]
+        [ "Medium Risk Items", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md663", [
+          [ "Risk 4: Dependency Version Conflicts", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md664", null ],
+          [ "Risk 5: Build System Issues", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md665", null ]
         ] ]
       ] ],
-      [ "Risk Mitigation Checklist", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md580", [
-        [ "Pre-Migration", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md581", null ],
-        [ "During Migration", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md582", null ],
-        [ "Post-Migration", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md583", null ]
+      [ "Risk Mitigation Checklist", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md666", [
+        [ "Pre-Migration", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md667", null ],
+        [ "During Migration", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md668", null ],
+        [ "Post-Migration", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md669", null ]
       ] ],
-      [ "Communication Plan", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md584", [
-        [ "Stakeholders", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md585", null ],
-        [ "Notification Timeline", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md586", null ]
+      [ "Communication Plan", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md670", [
+        [ "Stakeholders", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md671", null ],
+        [ "Notification Timeline", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md672", null ]
       ] ],
-      [ "Success Criteria", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md587", [
-        [ "Technical Criteria", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md588", null ],
-        [ "Business Criteria", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md589", null ]
+      [ "Success Criteria", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md673", [
+        [ "Technical Criteria", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md674", null ],
+        [ "Business Criteria", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md675", null ]
       ] ],
-      [ "Completion Checklist", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md590", null ]
+      [ "Completion Checklist", "d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md676", null ]
     ] ],
     [ "Phase 1: Build System and Dependency Refactoring - Design Document", "d5/d7c/md_docs_2phase1_2DESIGN.html", [
-      [ "Overview", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md592", null ],
-      [ "Architecture Diagram", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md593", null ],
-      [ "Task 1.1: External Module Integration", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md594", [
-        [ "Updated CMakeLists.txt Structure", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md595", null ],
-        [ "Dependency Validation Script", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md596", null ]
+      [ "Overview", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md678", null ],
+      [ "Architecture Diagram", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md679", null ],
+      [ "Task 1.1: External Module Integration", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md680", [
+        [ "Updated CMakeLists.txt Structure", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md681", null ],
+        [ "Dependency Validation Script", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md682", null ]
       ] ],
-      [ "Task 1.2: Compiler Options and Feature Flags", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md597", [
-        [ "Flag Propagation Strategy", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md598", null ],
-        [ "CMakePresets.json (Already created in Phase 0)", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md599", null ]
+      [ "Task 1.2: Compiler Options and Feature Flags", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md683", [
+        [ "Flag Propagation Strategy", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md684", null ],
+        [ "CMakePresets.json (Already created in Phase 0)", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md685", null ]
       ] ],
-      [ "Task 1.3: Configuration Validation", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md600", [
-        [ "Validation Checklist", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md601", null ],
-        [ "Post-build Verification", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md602", null ]
+      [ "Task 1.3: Configuration Validation", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md686", [
+        [ "Validation Checklist", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md687", null ],
+        [ "Post-build Verification", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md688", null ]
       ] ],
-      [ "Task 1.4: Legacy Code Removal", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md603", [
-        [ "Execution Steps", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md604", null ]
+      [ "Task 1.4: Legacy Code Removal", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md689", [
+        [ "Execution Steps", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md690", null ]
       ] ],
-      [ "Success Criteria", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md605", [
-        [ "Build Success", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md606", null ],
-        [ "Functionality", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md607", null ],
-        [ "Performance", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md608", null ],
-        [ "Documentation", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md609", null ]
+      [ "Success Criteria", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md691", [
+        [ "Build Success", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md692", null ],
+        [ "Functionality", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md693", null ],
+        [ "Performance", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md694", null ],
+        [ "Documentation", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md695", null ]
       ] ],
-      [ "Implementation Timeline", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md610", null ],
-      [ "Rollback Plan", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md611", null ],
-      [ "Next Phase", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md612", null ]
+      [ "Implementation Timeline", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md696", null ],
+      [ "Rollback Plan", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md697", null ],
+      [ "Next Phase", "d5/d7c/md_docs_2phase1_2DESIGN.html#autotoc_md698", null ]
     ] ],
     [ "Phase 2: Messaging Core Redesign - Design Document", "d6/df5/md_docs_2phase2_2DESIGN.html", [
-      [ "Overview", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md614", null ],
-      [ "Core Components", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md615", [
-        [ "1. Message Container DSL", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md616", null ],
-        [ "2. Error Code Definitions", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md617", null ],
-        [ "3. Message Bus with DI", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md618", null ],
-        [ "4. Topic Router", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md619", null ]
+      [ "Overview", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md700", null ],
+      [ "Core Components", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md701", [
+        [ "1. Message Container DSL", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md702", null ],
+        [ "2. Error Code Definitions", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md703", null ],
+        [ "3. Message Bus with DI", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md704", null ],
+        [ "4. Topic Router", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md705", null ]
       ] ],
-      [ "Result<T> Migration Patterns", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md620", [
-        [ "Pattern 1: Simple Function Conversion", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md621", null ],
-        [ "Pattern 2: Error Propagation with RETURN_IF_ERROR", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md622", null ],
-        [ "Pattern 3: Monadic Chaining", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md623", null ]
+      [ "Result<T> Migration Patterns", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md706", [
+        [ "Pattern 1: Simple Function Conversion", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md707", null ],
+        [ "Pattern 2: Error Propagation with RETURN_IF_ERROR", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md708", null ],
+        [ "Pattern 3: Monadic Chaining", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md709", null ]
       ] ],
-      [ "Performance Targets", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md624", [
-        [ "Message Container", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md625", null ],
-        [ "Message Bus", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md626", null ],
-        [ "Topic Router", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md627", null ]
+      [ "Performance Targets", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md710", [
+        [ "Message Container", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md711", null ],
+        [ "Message Bus", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md712", null ],
+        [ "Topic Router", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md713", null ]
       ] ],
-      [ "Implementation Plan", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md628", [
-        [ "Week 1: Message Container", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md629", null ],
-        [ "Week 2: Result<T> Migration", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md630", null ],
-        [ "Week 3: DI Architecture", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md631", null ],
-        [ "Week 4: Topic Router", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md632", null ]
+      [ "Implementation Plan", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md714", [
+        [ "Week 1: Message Container", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md715", null ],
+        [ "Week 2: Result<T> Migration", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md716", null ],
+        [ "Week 3: DI Architecture", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md717", null ],
+        [ "Week 4: Topic Router", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md718", null ]
       ] ],
-      [ "Testing Strategy", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md633", [
-        [ "Unit Tests", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md634", null ],
-        [ "Integration Tests", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md635", null ],
-        [ "Benchmarks", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md636", null ]
+      [ "Testing Strategy", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md719", [
+        [ "Unit Tests", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md720", null ],
+        [ "Integration Tests", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md721", null ],
+        [ "Benchmarks", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md722", null ]
       ] ],
-      [ "Success Criteria", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md637", null ]
+      [ "Success Criteria", "d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md723", null ]
     ] ],
     [ "Phase 3: Infrastructure Integration - Design Document", "d7/de1/md_docs_2phase3_2DESIGN.html", [
-      [ "Overview", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md639", null ],
-      [ "Architecture", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md640", null ],
-      [ "Component Designs", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md641", [
-        [ "1. Network Bridge (Task 3.1)", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md642", null ],
-        [ "2. Persistent Message Queue (Task 3.2)", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md643", null ],
-        [ "3. Tracing and Monitoring (Task 3.3)", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md644", null ],
-        [ "4. Configuration System (Task 3.4)", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md645", null ]
+      [ "Overview", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md725", null ],
+      [ "Architecture", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md726", null ],
+      [ "Component Designs", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md727", [
+        [ "1. Network Bridge (Task 3.1)", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md728", null ],
+        [ "2. Persistent Message Queue (Task 3.2)", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md729", null ],
+        [ "3. Tracing and Monitoring (Task 3.3)", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md730", null ],
+        [ "4. Configuration System (Task 3.4)", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md731", null ]
       ] ],
-      [ "Integration Points", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md646", [
-        [ "Startup Sequence", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md647", null ]
+      [ "Integration Points", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md732", [
+        [ "Startup Sequence", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md733", null ]
       ] ],
-      [ "Performance Targets", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md648", null ],
-      [ "Success Criteria", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md649", null ]
+      [ "Performance Targets", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md734", null ],
+      [ "Success Criteria", "d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md735", null ]
     ] ],
     [ "Phase 4: Validation and Deployment - Design Document", "db/d5d/md_docs_2phase4_2DESIGN.html", [
-      [ "Overview", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md651", null ],
-      [ "Architecture", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md652", null ],
-      [ "Component Designs", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md653", [
-        [ "1. Unit Test Framework (Task 4.1)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md654", null ],
-        [ "2. Integration Tests (Task 4.1)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md655", null ],
-        [ "3. Benchmarks (Task 4.2)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md656", null ],
-        [ "4. Security Review (Task 4.4)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md657", null ]
+      [ "Overview", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md737", null ],
+      [ "Architecture", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md738", null ],
+      [ "Component Designs", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md739", [
+        [ "1. Unit Test Framework (Task 4.1)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md740", null ],
+        [ "2. Integration Tests (Task 4.1)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md741", null ],
+        [ "3. Benchmarks (Task 4.2)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md742", null ],
+        [ "4. Security Review (Task 4.4)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md743", null ]
       ] ],
-      [ "Address Sanitizer", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md658", null ],
-      [ "Thread Sanitizer", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md659", null ],
-      [ "Undefined Behavior Sanitizer", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md660", null ],
-      [ "clang-tidy", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md661", null ],
-      [ "cppcheck", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md662", [
-        [ "Testing Strategy", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md665", [
-          [ "5. Performance Validation (Task 4.2)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md663", null ],
-          [ "6. Deployment Artifacts (Task 4.5)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md664", null ],
-          [ "Validation Phases", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md666", null ]
+      [ "Address Sanitizer", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md744", null ],
+      [ "Thread Sanitizer", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md745", null ],
+      [ "Undefined Behavior Sanitizer", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md746", null ],
+      [ "clang-tidy", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md747", null ],
+      [ "cppcheck", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md748", [
+        [ "Testing Strategy", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md751", [
+          [ "5. Performance Validation (Task 4.2)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md749", null ],
+          [ "6. Deployment Artifacts (Task 4.5)", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md750", null ],
+          [ "Validation Phases", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md752", null ]
         ] ],
-        [ "Performance Targets", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md667", null ],
-        [ "Success Criteria", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md668", null ],
-        [ "Implementation Timeline", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md669", null ],
-        [ "Rollback Plan", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md670", null ]
+        [ "Performance Targets", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md753", null ],
+        [ "Success Criteria", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md754", null ],
+        [ "Implementation Timeline", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md755", null ],
+        [ "Rollback Plan", "db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md756", null ]
       ] ]
     ] ],
     [ "Phase 4: Test Suite Summary", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html", [
-      [ "Overview", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md672", null ],
-      [ "Test Structure", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md673", null ],
-      [ "Unit Tests", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md674", [
-        [ "1. MessagingContainer Tests (test_messaging_container.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md675", null ],
-        [ "2. TopicRouter Tests (test_topic_router.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md677", null ],
-        [ "3. MessageBus Tests (test_message_bus.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md679", null ],
-        [ "4. TraceContext Tests (test_trace_context.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md681", null ],
-        [ "5. ConfigLoader Tests (test_config_loader.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md683", null ]
+      [ "Overview", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md758", null ],
+      [ "Test Structure", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md759", null ],
+      [ "Unit Tests", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md760", [
+        [ "1. MessagingContainer Tests (test_messaging_container.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md761", null ],
+        [ "2. TopicRouter Tests (test_topic_router.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md763", null ],
+        [ "3. MessageBus Tests (test_message_bus.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md765", null ],
+        [ "4. TraceContext Tests (test_trace_context.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md767", null ],
+        [ "5. ConfigLoader Tests (test_config_loader.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md769", null ]
       ] ],
-      [ "Integration Tests", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md685", [
-        [ "End-to-End Integration (test_end_to_end.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md686", [
-          [ "1. Complete Pub/Sub Flow (<tt>test_complete_pubsub_flow</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md687", null ],
-          [ "2. Complex Routing (<tt>test_complex_routing_scenario</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md688", null ],
-          [ "3. Multi-Subscriber Coordination (<tt>test_multi_subscriber_coordination</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md689", null ],
-          [ "4. High Throughput (<tt>test_high_throughput_scenario</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md690", null ],
-          [ "5. Subscription Lifecycle (<tt>test_subscribe_unsubscribe_lifecycle</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md691", null ],
-          [ "6. Config-Driven Initialization (<tt>test_config_driven_initialization</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md692", null ]
+      [ "Integration Tests", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md771", [
+        [ "End-to-End Integration (test_end_to_end.cpp)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md772", [
+          [ "1. Complete Pub/Sub Flow (<tt>test_complete_pubsub_flow</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md773", null ],
+          [ "2. Complex Routing (<tt>test_complex_routing_scenario</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md774", null ],
+          [ "3. Multi-Subscriber Coordination (<tt>test_multi_subscriber_coordination</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md775", null ],
+          [ "4. High Throughput (<tt>test_high_throughput_scenario</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md776", null ],
+          [ "5. Subscription Lifecycle (<tt>test_subscribe_unsubscribe_lifecycle</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md777", null ],
+          [ "6. Config-Driven Initialization (<tt>test_config_driven_initialization</tt>)", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md778", null ]
         ] ]
       ] ],
-      [ "Test Execution", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md694", [
-        [ "Build with Tests", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md695", null ],
-        [ "Run Tests", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md696", null ],
-        [ "Test Summary", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md697", null ]
+      [ "Test Execution", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md780", [
+        [ "Build with Tests", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md781", null ],
+        [ "Run Tests", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md782", null ],
+        [ "Test Summary", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md783", null ]
       ] ],
-      [ "Test Coverage", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md699", [
-        [ "Components Tested", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md700", null ],
-        [ "Feature Coverage", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md701", null ]
+      [ "Test Coverage", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md785", [
+        [ "Components Tested", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md786", null ],
+        [ "Feature Coverage", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md787", null ]
       ] ],
-      [ "Performance Benchmarks", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md703", null ],
-      [ "Known Limitations", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md705", null ],
-      [ "Test Dependencies", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md707", [
-        [ "Required", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md708", null ],
-        [ "Optional", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md709", null ]
+      [ "Performance Benchmarks", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md789", null ],
+      [ "Known Limitations", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md791", null ],
+      [ "Test Dependencies", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md793", [
+        [ "Required", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md794", null ],
+        [ "Optional", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md795", null ]
       ] ],
-      [ "Future Enhancements", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md711", null ],
-      [ "Conclusion", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md713", null ]
+      [ "Future Enhancements", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md797", null ],
+      [ "Conclusion", "df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md799", null ]
     ] ],
     [ "Messaging System v2.0 - Project Completion Summary", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html", [
-      [ "Overview", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md715", null ],
-      [ "Project Timeline", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md717", [
-        [ "Phase 0: Foundation and Preparation ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md718", null ],
-        [ "Phase 1: Build System and External Integration ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md720", null ],
-        [ "Phase 2: Messaging Core Implementation ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md722", null ],
-        [ "Phase 3: Infrastructure Integration ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md724", null ],
-        [ "Phase 4: Comprehensive Test Suite ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md726", null ],
-        [ "Build System Improvements ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md728", null ]
+      [ "Overview", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md801", null ],
+      [ "Project Timeline", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md803", [
+        [ "Phase 0: Foundation and Preparation ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md804", null ],
+        [ "Phase 1: Build System and External Integration ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md806", null ],
+        [ "Phase 2: Messaging Core Implementation ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md808", null ],
+        [ "Phase 3: Infrastructure Integration ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md810", null ],
+        [ "Phase 4: Comprehensive Test Suite ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md812", null ],
+        [ "Build System Improvements ✅", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md814", null ]
       ] ],
-      [ "Technical Architecture", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md730", [
-        [ "Core Components", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md731", null ],
-        [ "External System Integration", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md732", null ],
-        [ "Key Design Patterns", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md733", null ]
+      [ "Technical Architecture", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md816", [
+        [ "Core Components", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md817", null ],
+        [ "External System Integration", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md818", null ],
+        [ "Key Design Patterns", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md819", null ]
       ] ],
-      [ "Performance Characteristics", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md735", [
-        [ "Benchmarks (from integration tests)", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md736", null ],
-        [ "Resource Usage", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md737", null ]
+      [ "Performance Characteristics", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md821", [
+        [ "Benchmarks (from integration tests)", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md822", null ],
+        [ "Resource Usage", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md823", null ]
       ] ],
-      [ "Documentation Deliverables", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md739", [
-        [ "Phase-Specific Docs", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md740", null ],
-        [ "Additional Documentation", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md741", null ],
-        [ "Code Documentation", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md742", null ]
+      [ "Documentation Deliverables", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md825", [
+        [ "Phase-Specific Docs", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md826", null ],
+        [ "Additional Documentation", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md827", null ],
+        [ "Code Documentation", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md828", null ]
       ] ],
-      [ "Commit History", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md744", null ],
-      [ "Known Limitations and Future Work", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md746", [
-        [ "Current Limitations", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md747", null ],
-        [ "Future Enhancements", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md748", null ]
+      [ "Commit History", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md830", null ],
+      [ "Known Limitations and Future Work", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md832", [
+        [ "Current Limitations", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md833", null ],
+        [ "Future Enhancements", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md834", null ]
       ] ],
-      [ "Success Metrics", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md750", [
-        [ "Quantitative", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md751", null ],
-        [ "Qualitative", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md752", null ]
+      [ "Success Metrics", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md836", [
+        [ "Quantitative", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md837", null ],
+        [ "Qualitative", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md838", null ]
       ] ],
-      [ "Lessons Learned", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md754", null ],
-      [ "Conclusion", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md756", null ]
+      [ "Lessons Learned", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md840", null ],
+      [ "Conclusion", "da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md842", null ]
     ] ],
     [ "Messaging System 재구성 실행 계획", "d7/d01/md_docs_2REBUILD__PLAN.html", [
-      [ "개요 및 우선순위", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md774", null ],
-      [ "Phase 0. 준비 및 기반 정비", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md775", [
-        [ "**Task 0.0 – common_system 즉시 통합 (최우선)**", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md776", null ],
-        [ "<strong>Task 0.1 – 시스템 인터페이스 맵핑</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md777", null ],
-        [ "<strong>Task 0.2 – 빌드 환경 감사</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md778", null ],
-        [ "<strong>Task 0.3 – 위험 및 마이그레이션 전략 확정</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md779", null ],
-        [ "<strong>Task 0.4 – 레거시 구현 차단 계획 수립</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md780", null ]
+      [ "개요 및 우선순위", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md860", null ],
+      [ "Phase 0. 준비 및 기반 정비", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md861", [
+        [ "**Task 0.0 – common_system 즉시 통합 (최우선)**", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md862", null ],
+        [ "<strong>Task 0.1 – 시스템 인터페이스 맵핑</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md863", null ],
+        [ "<strong>Task 0.2 – 빌드 환경 감사</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md864", null ],
+        [ "<strong>Task 0.3 – 위험 및 마이그레이션 전략 확정</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md865", null ],
+        [ "<strong>Task 0.4 – 레거시 구현 차단 계획 수립</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md866", null ]
       ] ],
-      [ "Phase 1. 빌드 및 의존성 리팩터링", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md781", [
-        [ "<strong>Task 1.1 – 외부 모듈 통합 재구성</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md782", null ],
-        [ "<strong>Task 1.2 – 컴파일 옵션 및 피처 플래그 통합</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md783", null ],
-        [ "<strong>Task 1.3 – 구성 검증 자동화</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md784", null ],
-        [ "<strong>Task 1.4 – 레거시 코드 비활성화 및 제거</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md785", null ]
+      [ "Phase 1. 빌드 및 의존성 리팩터링", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md867", [
+        [ "<strong>Task 1.1 – 외부 모듈 통합 재구성</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md868", null ],
+        [ "<strong>Task 1.2 – 컴파일 옵션 및 피처 플래그 통합</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md869", null ],
+        [ "<strong>Task 1.3 – 구성 검증 자동화</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md870", null ],
+        [ "<strong>Task 1.4 – 레거시 코드 비활성화 및 제거</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md871", null ]
       ] ],
-      [ "Phase 2. 메시징 코어 재설계", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md786", [
-        [ "<strong>Task 2.1 – 메시지 컨테이너 DSL 정립</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md787", null ],
-        [ "<strong>Task 2.2 – Result 기반 플로우 제로화</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md788", null ],
-        [ "<strong>Task 2.3 – IExecutor 주입식 아키텍처 구현</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md789", null ],
-        [ "<strong>Task 2.4 – 라우팅/토픽 엔진 정비</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md790", null ]
+      [ "Phase 2. 메시징 코어 재설계", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md872", [
+        [ "<strong>Task 2.1 – 메시지 컨테이너 DSL 정립</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md873", null ],
+        [ "<strong>Task 2.2 – Result 기반 플로우 제로화</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md874", null ],
+        [ "<strong>Task 2.3 – IExecutor 주입식 아키텍처 구현</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md875", null ],
+        [ "<strong>Task 2.4 – 라우팅/토픽 엔진 정비</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md876", null ]
       ] ],
-      [ "Phase 3. 인프라 통합 계층 구축", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md791", [
-        [ "<strong>Task 3.1 – 네트워크 경계 계층 구현</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md792", null ],
-        [ "<strong>Task 3.2 – 영속성 및 재처리 경로 구성</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md793", null ],
-        [ "<strong>Task 3.3 – 로깅/모니터링 데이터 흐름 통합</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md794", null ],
-        [ "<strong>Task 3.4 – 구성 및 정책 레이어</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md795", null ]
+      [ "Phase 3. 인프라 통합 계층 구축", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md877", [
+        [ "<strong>Task 3.1 – 네트워크 경계 계층 구현</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md878", null ],
+        [ "<strong>Task 3.2 – 영속성 및 재처리 경로 구성</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md879", null ],
+        [ "<strong>Task 3.3 – 로깅/모니터링 데이터 흐름 통합</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md880", null ],
+        [ "<strong>Task 3.4 – 구성 및 정책 레이어</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md881", null ]
       ] ],
-      [ "Phase 4. 검증·배포 준비", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md796", [
-        [ "<strong>Task 4.1 – 교차 모듈 테스트 수립</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md797", null ],
-        [ "**Task 4.2 – 마이그레이션 가이드 및 API 문서화**", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md798", null ],
-        [ "<strong>Task 4.3 – 성능 및 회귀 검증</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md799", null ],
-        [ "<strong>Task 4.4 – 보안 검토 및 강화</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md800", null ],
-        [ "<strong>Task 4.5 – 출시 체크리스트/런북 작성</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md801", null ]
+      [ "Phase 4. 검증·배포 준비", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md882", [
+        [ "<strong>Task 4.1 – 교차 모듈 테스트 수립</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md883", null ],
+        [ "**Task 4.2 – 마이그레이션 가이드 및 API 문서화**", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md884", null ],
+        [ "<strong>Task 4.3 – 성능 및 회귀 검증</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md885", null ],
+        [ "<strong>Task 4.4 – 보안 검토 및 강화</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md886", null ],
+        [ "<strong>Task 4.5 – 출시 체크리스트/런북 작성</strong>", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md887", null ]
       ] ],
-      [ "전체 일정 요약", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md803", null ],
-      [ "병렬 작업 최적화", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md804", null ],
-      [ "성공 기준 (최종)", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md805", null ]
+      [ "전체 일정 요약", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md889", null ],
+      [ "병렬 작업 최적화", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md890", null ],
+      [ "성공 기준 (최종)", "d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md891", null ]
     ] ],
     [ "System Architecture", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html", [
-      [ "Overview", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md808", null ],
-      [ "Architectural Principles", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md809", null ],
-      [ "System Layers", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md810", null ],
-      [ "Component Architecture", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md811", [
-        [ "1. Container System", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md812", null ],
-        [ "2. Network System", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md813", null ],
-        [ "3. Database System", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md814", null ],
-        [ "4. Thread System", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md815", null ]
+      [ "Overview", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md894", null ],
+      [ "Architectural Principles", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md895", null ],
+      [ "System Layers", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md896", null ],
+      [ "Component Architecture", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md897", [
+        [ "1. Container System", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md898", null ],
+        [ "2. Network System", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md899", null ],
+        [ "3. Database System", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md900", null ],
+        [ "4. Thread System", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md901", null ]
       ] ],
-      [ "Data Flow Architecture", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md816", [
-        [ "Message Processing Pipeline", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md817", null ],
-        [ "Request-Response Flow", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md818", null ],
-        [ "Distributed Architecture", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md819", null ]
+      [ "Data Flow Architecture", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md902", [
+        [ "Message Processing Pipeline", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md903", null ],
+        [ "Request-Response Flow", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md904", null ],
+        [ "Distributed Architecture", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md905", null ]
       ] ],
-      [ "Scalability Patterns", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md820", [
-        [ "Horizontal Scaling", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md821", null ],
-        [ "Vertical Scaling", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md822", null ]
+      [ "Scalability Patterns", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md906", [
+        [ "Horizontal Scaling", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md907", null ],
+        [ "Vertical Scaling", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md908", null ]
       ] ],
-      [ "Integration Points", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md823", [
-        [ "External Systems", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md824", null ],
-        [ "Internal Communication", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md825", null ]
+      [ "Integration Points", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md909", [
+        [ "External Systems", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md910", null ],
+        [ "Internal Communication", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md911", null ]
       ] ],
-      [ "Performance Optimization", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md826", [
-        [ "Memory Management", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md827", null ],
-        [ "Concurrency", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md828", null ],
-        [ "Network", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md829", null ]
+      [ "Performance Optimization", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md912", [
+        [ "Memory Management", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md913", null ],
+        [ "Concurrency", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md914", null ],
+        [ "Network", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md915", null ]
       ] ],
-      [ "Fault Tolerance", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md830", [
-        [ "Error Recovery", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md831", null ],
-        [ "High Availability", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md832", null ]
+      [ "Fault Tolerance", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md916", [
+        [ "Error Recovery", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md917", null ],
+        [ "High Availability", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md918", null ]
       ] ],
-      [ "Security Considerations", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md833", [
-        [ "Transport Security", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md834", null ],
-        [ "Application Security", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md835", null ]
+      [ "Security Considerations", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md919", [
+        [ "Transport Security", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md920", null ],
+        [ "Application Security", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md921", null ]
       ] ],
-      [ "Monitoring and Observability", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md836", [
-        [ "Metrics Collection", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md837", null ],
-        [ "Distributed Tracing", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md838", null ],
-        [ "Logging", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md839", null ]
+      [ "Monitoring and Observability", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md922", [
+        [ "Metrics Collection", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md923", null ],
+        [ "Distributed Tracing", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md924", null ],
+        [ "Logging", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md925", null ]
       ] ],
-      [ "Configuration Management", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md840", [
-        [ "Static Configuration", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md841", null ],
-        [ "Dynamic Configuration", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md842", null ]
+      [ "Configuration Management", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md926", [
+        [ "Static Configuration", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md927", null ],
+        [ "Dynamic Configuration", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md928", null ]
       ] ],
-      [ "Deployment Architecture", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md843", [
-        [ "Container Deployment", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md844", null ],
-        [ "Kubernetes Integration", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md845", null ]
+      [ "Deployment Architecture", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md929", [
+        [ "Container Deployment", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md930", null ],
+        [ "Kubernetes Integration", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md931", null ]
       ] ],
-      [ "Future Considerations", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md846", [
-        [ "Planned Enhancements", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md847", null ],
-        [ "Technology Evaluation", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md848", null ]
+      [ "Future Considerations", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md932", [
+        [ "Planned Enhancements", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md933", null ],
+        [ "Technology Evaluation", "da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md934", null ]
       ] ]
     ] ],
     [ "Troubleshooting Guide", "d4/d2f/md_docs_2TROUBLESHOOTING.html", [
-      [ "Table of Contents", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md850", null ],
-      [ "FAQ", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md851", [
-        [ "General Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md852", null ],
-        [ "Performance Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md853", null ],
-        [ "Configuration Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md854", null ]
+      [ "Table of Contents", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md936", null ],
+      [ "FAQ", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md937", [
+        [ "General Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md938", null ],
+        [ "Performance Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md939", null ],
+        [ "Configuration Questions", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md940", null ]
       ] ],
-      [ "Debug Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md855", [
-        [ "Enable Debug Logging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md856", [
-          [ "Runtime Configuration", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md857", null ],
-          [ "Environment Variables", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md858", null ],
-          [ "Programmatic", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md859", null ]
+      [ "Debug Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md941", [
+        [ "Enable Debug Logging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md942", [
+          [ "Runtime Configuration", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md943", null ],
+          [ "Environment Variables", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md944", null ],
+          [ "Programmatic", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md945", null ]
         ] ],
-        [ "Using GDB for Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md860", [
-          [ "Attach to Running Process", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md861", null ],
-          [ "Debug Core Dumps", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md862", null ]
+        [ "Using GDB for Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md946", [
+          [ "Attach to Running Process", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md947", null ],
+          [ "Debug Core Dumps", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md948", null ]
         ] ],
-        [ "Memory Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md863", [
-          [ "Using Valgrind", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md864", null ],
-          [ "Using AddressSanitizer", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md865", null ],
-          [ "Using HeapTrack", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md866", null ]
+        [ "Memory Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md949", [
+          [ "Using Valgrind", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md950", null ],
+          [ "Using AddressSanitizer", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md951", null ],
+          [ "Using HeapTrack", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md952", null ]
         ] ],
-        [ "Network Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md867", [
-          [ "TCP Dump", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md868", null ],
-          [ "Network Statistics", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md869", null ],
-          [ "Test Connectivity", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md870", null ]
+        [ "Network Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md953", [
+          [ "TCP Dump", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md954", null ],
+          [ "Network Statistics", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md955", null ],
+          [ "Test Connectivity", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md956", null ]
         ] ],
-        [ "Thread Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md871", [
-          [ "Thread Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md872", null ],
-          [ "Detect Deadlocks", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md873", null ],
-          [ "ThreadSanitizer", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md874", null ]
+        [ "Thread Debugging", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md957", [
+          [ "Thread Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md958", null ],
+          [ "Detect Deadlocks", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md959", null ],
+          [ "ThreadSanitizer", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md960", null ]
         ] ],
-        [ "Tracing and Profiling", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md875", [
-          [ "System Tracing with strace", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md876", null ],
-          [ "Performance Profiling with perf", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md877", null ],
-          [ "Application Tracing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md878", null ]
+        [ "Tracing and Profiling", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md961", [
+          [ "System Tracing with strace", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md962", null ],
+          [ "Performance Profiling with perf", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md963", null ],
+          [ "Application Tracing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md964", null ]
         ] ]
       ] ],
-      [ "Performance Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md879", [
-        [ "CPU Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md880", [
-          [ "Identify CPU Bottlenecks", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md881", null ],
-          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md882", null ]
+      [ "Performance Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md965", [
+        [ "CPU Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md966", [
+          [ "Identify CPU Bottlenecks", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md967", null ],
+          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md968", null ]
         ] ],
-        [ "Memory Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md883", [
-          [ "Memory Usage Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md884", null ],
-          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md885", null ]
+        [ "Memory Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md969", [
+          [ "Memory Usage Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md970", null ],
+          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md971", null ]
         ] ],
-        [ "I/O Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md886", [
-          [ "Disk I/O Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md887", null ],
-          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md888", null ]
+        [ "I/O Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md972", [
+          [ "Disk I/O Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md973", null ],
+          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md974", null ]
         ] ],
-        [ "Network Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md889", [
-          [ "Network Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md890", null ],
-          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md891", null ]
+        [ "Network Optimization", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md975", [
+          [ "Network Analysis", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md976", null ],
+          [ "Optimization Techniques", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md977", null ]
         ] ]
       ] ],
-      [ "Known Issues", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md892", [
-        [ "Issue 1: High CPU Usage with Small Messages", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md893", null ],
-        [ "Issue 2: Memory Leak in Long-Running Connections", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md894", null ],
-        [ "Issue 3: Database Connection Pool Exhaustion", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md895", null ],
-        [ "Issue 4: Deadlock in Message Processing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md896", null ],
-        [ "Issue 5: Performance Degradation with Many Topics", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md897", null ]
+      [ "Known Issues", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md978", [
+        [ "Issue 1: High CPU Usage with Small Messages", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md979", null ],
+        [ "Issue 2: Memory Leak in Long-Running Connections", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md980", null ],
+        [ "Issue 3: Database Connection Pool Exhaustion", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md981", null ],
+        [ "Issue 4: Deadlock in Message Processing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md982", null ],
+        [ "Issue 5: Performance Degradation with Many Topics", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md983", null ]
       ] ],
-      [ "Error Messages", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md898", [
-        [ "Connection Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md899", [
-          [ "\"Connection refused\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md900", null ],
-          [ "\"Connection timeout\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md901", null ]
+      [ "Error Messages", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md984", [
+        [ "Connection Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md985", [
+          [ "\"Connection refused\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md986", null ],
+          [ "\"Connection timeout\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md987", null ]
         ] ],
-        [ "Database Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md902", [
-          [ "\"Database connection failed\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md903", null ],
-          [ "\"Deadlock detected\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md904", null ]
+        [ "Database Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md988", [
+          [ "\"Database connection failed\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md989", null ],
+          [ "\"Deadlock detected\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md990", null ]
         ] ],
-        [ "Memory Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md905", [
-          [ "\"Out of memory\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md906", null ],
-          [ "\"Segmentation fault\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md907", null ]
+        [ "Memory Errors", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md991", [
+          [ "\"Out of memory\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md992", null ],
+          [ "\"Segmentation fault\"", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md993", null ]
         ] ]
       ] ],
-      [ "Common Problems", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md908", [
-        [ "Problem: Service Won't Start", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md909", null ],
-        [ "Problem: Slow Message Processing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md910", null ],
-        [ "Problem: Connection Drops", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md911", null ],
-        [ "Problem: High Memory Usage", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md912", null ],
-        [ "Problem: Database Bottleneck", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md913", null ]
+      [ "Common Problems", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md994", [
+        [ "Problem: Service Won't Start", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md995", null ],
+        [ "Problem: Slow Message Processing", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md996", null ],
+        [ "Problem: Connection Drops", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md997", null ],
+        [ "Problem: High Memory Usage", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md998", null ],
+        [ "Problem: Database Bottleneck", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md999", null ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
@@ -1109,19 +1204,20 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d1/d28/classkcenon_1_1messaging_1_1cluster_1_1distributed__broker.html#ac2bdf7eaf67262504080a6373c858541",
-"d2/d4e/classchat__server.html#ac0ab77e51f3ec2b9ea82129288bbd6c2",
-"d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md575",
-"d4/d8b/iot__monitoring_8cpp.html#af2b559cc2ee2eaee47fe1f15cc99f49e",
-"d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md317",
-"d7/d5c/message__bus__benchmark_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97",
-"d8/d82/classkcenon_1_1messaging_1_1config_1_1config__builder.html#a0855c73a43545a7962061cf76d428b78",
-"da/d2e/classkcenon_1_1messaging_1_1routing_1_1data__enricher.html#a844ea885888b916b1fd74c7dfaa92292",
-"db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ad1fc8eaf36937be0c3ba8cfe0a2c1bfe",
-"db/daf/classkcenon_1_1messaging_1_1services_1_1container_1_1container__service.html#a3ad969cfca6d2e9ecd22e1d8ad4d7bba",
-"dd/d33/classkcenon_1_1messaging_1_1persistence_1_1message__storage.html#a02730e9ff87552fbdea9a8641134217c",
-"df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md224",
-"df/df0/classkcenon_1_1messaging_1_1routing_1_1routing__rule.html#a4c7a5bfee38a162d736335101237d580"
+"d0/ddb/classcircuit__breaker.html#a7f5440e570241d5536d0b6b13a09e1a0a78db0296d6af3998e8b42b0abf057197",
+"d1/deb/classkcenon_1_1messaging_1_1security_1_1message__encryptor.html#a85ebebbbd083f6a94552756b1a4bb28e",
+"d3/d02/classmicroservices__orchestrator.html#a1f08777ef7f9e27ef2301a93655ac0d2",
+"d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md996",
+"d5/d8f/classkcenon_1_1messaging_1_1integrations_1_1messaging__system__orchestrator.html#a925e09391784fe0db7a01d5a0079335a",
+"d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md863",
+"d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md726",
+"d9/d5f/structkcenon_1_1messaging_1_1services_1_1container_1_1container__service_1_1statistics.html#ab05c12467b47e3284a712d1200a19ce3",
+"da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md920",
+"db/da2/structtask.html#ae34ab25ec78eb977fd08d98d4a9d0f34",
+"dc/def/classkcenon_1_1messaging_1_1cluster_1_1cluster__membership.html#aa5c451990c5a564fe8db74dd7437afaa",
+"de/d87/structkcenon_1_1messaging_1_1core_1_1production__message__allocator_1_1allocator__stats.html#a09462576092f3f4d6e3abd6f27f56508",
+"df/d94/md_docs_2performance.html#autotoc_md511",
+"index.html#autotoc_md33"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

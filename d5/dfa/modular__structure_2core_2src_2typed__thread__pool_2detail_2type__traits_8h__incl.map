@@ -1,9 +1,0 @@
-<map id="libraries/thread_system/modular_structure/core/src/typed_thread_pool/detail/type_traits.h" name="libraries/thread_system/modular_structure/core/src/typed_thread_pool/detail/type_traits.h">
-<area shape="rect" id="Node000001" title="Type traits and concepts for typed_thread_pool module." alt="" coords="57,5,267,75"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,123,97,148"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,77,77,116,74,111,120,73"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="122,123,202,148"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="165,75,165,109,159,109,159,75"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="226,123,285,148"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="198,73,236,111,232,115,194,77"/>
-</map>

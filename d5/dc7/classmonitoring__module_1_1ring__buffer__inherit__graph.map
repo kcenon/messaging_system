@@ -1,7 +1,0 @@
-<map id="monitoring_module::ring_buffer&lt; T &gt;" name="monitoring_module::ring_buffer&lt; T &gt;">
-<area shape="rect" id="Node000001" title="Thread&#45;safe circular buffer for storing historical data." alt="" coords="5,41,163,81"/>
-<area shape="rect" id="Node000002" href="$d7/dc0/classmonitoring__module_1_1ring__buffer.html" title=" " alt="" coords="401,5,558,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,50,400,30,401,35,177,56"/>
-<area shape="rect" id="Node000003" href="$d7/dc0/classmonitoring__module_1_1ring__buffer.html" title=" " alt="" coords="367,70,592,125"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="177,81,187,83,279,92,367,95,366,100,278,97,186,88,176,86"/>
-</map>

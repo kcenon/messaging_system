@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['제거_20strong_0',['&lt;strong&gt;Task 1.4 – 레거시 코드 비활성화 및 제거&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md785',1,'']]],
-  ['제로화_20strong_1',['&lt;strong&gt;Task 2.2 – Result 기반 플로우 제로화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md788',1,'']]]
+  ['정립_20strong_0',['&lt;strong&gt;Task 2.1 – 메시지 컨테이너 DSL 정립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md873',1,'']]],
+  ['정비_1',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md861',1,'']]],
+  ['정비_20strong_2',['&lt;strong&gt;Task 2.4 – 라우팅/토픽 엔진 정비&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md876',1,'']]],
+  ['정책_20레이어_20strong_3',['&lt;strong&gt;Task 3.4 – 구성 및 정책 레이어&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md881',1,'']]]
 ];

@@ -1,7 +1,0 @@
-<map id="libraries/thread_system/modular_structure/core/src/thread_pool/core/config.h" name="libraries/thread_system/modular_structure/core/src/thread_pool/core/config.h">
-<area shape="rect" id="Node000001" title="Central configuration for thread_pool module." alt="" coords="5,5,219,60"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="30,108,101,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,61,81,97,76,95,95,59"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="125,108,192,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="129,59,148,95,143,97,124,61"/>
-</map>

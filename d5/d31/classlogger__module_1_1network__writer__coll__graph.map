@@ -1,5 +1,0 @@
-<map id="logger_module::network_writer" name="logger_module::network_writer">
-<area shape="rect" id="Node000001" title="Sends logs over network (TCP/UDP)" alt="" coords="5,93,185,133"/>
-<area shape="rect" id="Node000002" href="$d0/d97/classlogger__module_1_1base__writer.html" title="Base class for all log writers." alt="" coords="16,5,175,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,59,98,93,93,93,93,59"/>
-</map>

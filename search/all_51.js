@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['의존성_20리팩터링_0',['Phase 1. 빌드 및 의존성 리팩터링',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md781',1,'']]]
+  ['위험_20및_20마이그레이션_20전략_20확정_20strong_0',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md865',1,'']]]
 ];

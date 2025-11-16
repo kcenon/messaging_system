@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('db/d5d/md_docs_2phase4_2DESIGN.html','
   <div class="headertitle"><div class="title">Phase 4: Validation and Deployment - Design Document</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md650"></a> </p>
-<h1><a class="anchor" id="autotoc_md651"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md736"></a> </p>
+<h1><a class="anchor" id="autotoc_md737"></a>
 Overview</h1>
 <p>Comprehensive validation, testing, benchmarking, security review, and production deployment preparation.</p>
-<h1><a class="anchor" id="autotoc_md652"></a>
+<h1><a class="anchor" id="autotoc_md738"></a>
 Architecture</h1>
 <div class="fragment"><div class="line">┌─────────────────────────────────────────────────────────────┐</div>
 <div class="line">│                      Validation Pipeline                     │</div>
@@ -108,9 +108,9 @@ Architecture</h1>
 <div class="line">│       ↓              ↓                    ↓                  │</div>
 <div class="line">│  Quality Gate → Documentation → Deployment Artifacts        │</div>
 <div class="line">└─────────────────────────────────────────────────────────────┘</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md653"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md739"></a>
 Component Designs</h1>
-<h2><a class="anchor" id="autotoc_md654"></a>
+<h2><a class="anchor" id="autotoc_md740"></a>
 1. Unit Test Framework (Task 4.1)</h2>
 <p><b>Directory Structure:</b></p>
 <div class="fragment"><div class="line">test/</div>
@@ -335,7 +335,7 @@ Component Designs</h1>
 <div class="line">        &lt;&lt; <span class="stringliteral">&quot;Performance below target: &quot;</span> &lt;&lt; ops_per_sec &lt;&lt; <span class="stringliteral">&quot; ops/sec&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="atest__messaging__integration_8cpp_html_afa9a03b8890cf589bc9d9246e1149b1b"><div class="ttname"><a href="../../d7/d62/test__messaging__integration_8cpp.html#afa9a03b8890cf589bc9d9246e1149b1b">TEST_F</a></div><div class="ttdeci">TEST_F(MessagingIntegrationTest, EndToEndMessaging)</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d62/test__messaging__integration_8cpp_source.html#l00038">test_messaging_integration.cpp:38</a></div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md655"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md741"></a>
 2. Integration Tests (Task 4.1)</h2>
 <p><b>File:</b> <code>test/integration/test_end_to_end.cpp</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;gtest/gtest.h&gt;</span></div>
@@ -466,7 +466,7 @@ Component Designs</h1>
 <div class="line">    <span class="comment">// Target: 100K+ msg/s</span></div>
 <div class="line">    EXPECT_GT(msgs_per_sec, 100000.0);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md656"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md742"></a>
 3. Benchmarks (Task 4.2)</h2>
 <p><b>File:</b> <code>test/benchmarks/bench_routing.cpp</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;benchmark/benchmark.h&gt;</span></div>
@@ -544,7 +544,7 @@ Component Designs</h1>
 <div class="line">BENCHMARK(BM_MessageSerialization);</div>
 <div class="line"> </div>
 <div class="line">BENCHMARK_MAIN();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md657"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md743"></a>
 4. Security Review (Task 4.4)</h2>
 <p><b>Security Checklist Document:</b></p>
 <p><b>File:</b> <code>docs/phase4/SECURITY_REVIEW.md</code></p>
@@ -570,13 +570,13 @@ Component Designs</h1>
 <div class="line"> </div>
 <div class="line">**Sanitizer Tests:**</div>
 </div><!-- fragment --><p> bash </p>
-<h1><a class="anchor" id="autotoc_md658"></a>
+<h1><a class="anchor" id="autotoc_md744"></a>
 Address Sanitizer</h1>
 <p>cmake &ndash;preset asan cmake &ndash;build &ndash;preset asan ./build-asan/test/messaging_tests</p>
-<h1><a class="anchor" id="autotoc_md659"></a>
+<h1><a class="anchor" id="autotoc_md745"></a>
 Thread Sanitizer</h1>
 <p>cmake &ndash;preset tsan cmake &ndash;build &ndash;preset tsan ./build-tsan/test/messaging_tests</p>
-<h1><a class="anchor" id="autotoc_md660"></a>
+<h1><a class="anchor" id="autotoc_md746"></a>
 Undefined Behavior Sanitizer</h1>
 <p>cmake &ndash;preset ubsan cmake &ndash;build &ndash;preset ubsan ./build-ubsan/test/messaging_tests </p><div class="fragment"><div class="line">## 3. Network Security</div>
 <div class="line"> </div>
@@ -626,10 +626,10 @@ Undefined Behavior Sanitizer</h1>
 <div class="line"> </div>
 <div class="line">**Static Analysis:**</div>
 </div><!-- fragment --><p> bash </p>
-<h1><a class="anchor" id="autotoc_md661"></a>
+<h1><a class="anchor" id="autotoc_md747"></a>
 clang-tidy</h1>
 <p>clang-tidy src/**/*.cpp &ndash; -std=c++20</p>
-<h1><a class="anchor" id="autotoc_md662"></a>
+<h1><a class="anchor" id="autotoc_md748"></a>
 cppcheck</h1>
 <p>cppcheck &ndash;enable=all &ndash;suppress=missingInclude src/ </p><div class="fragment"><div class="line">## Security Review Sign-off</div>
 <div class="line"> </div>
@@ -638,7 +638,7 @@ cppcheck</h1>
 <div class="line">| [Name] | Security Engineer | [ ] Approved | YYYY-MM-DD |</div>
 <div class="line">| [Name] | Lead Developer | [ ] Approved | YYYY-MM-DD |</div>
 <div class="line">| [Name] | DevOps | [ ] Approved | YYYY-MM-DD |</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md663"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md749"></a>
 5. Performance Validation (Task 4.2)</h3>
 <p><b>Performance Test Script:</b></p>
 <p><b>File:</b> <code>scripts/validate_performance.sh</code></p>
@@ -705,7 +705,7 @@ cppcheck</h1>
 <div class="line">    print(&quot;\n✅ All benchmarks meet performance targets&quot;)</div>
 <div class="line">    sys.exit(0)</div>
 <div class="line">EOF</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md664"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md750"></a>
 6. Deployment Artifacts (Task 4.5)</h3>
 <p><b>Production Deployment Configuration:</b></p>
 <p><b>File:</b> <code>deploy/production/config.yaml</code></p>
@@ -883,9 +883,9 @@ cppcheck</h1>
 <div class="line">    targetPort: 9090</div>
 <div class="line">    protocol: TCP</div>
 <div class="line">  type: LoadBalancer</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md665"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md751"></a>
 Testing Strategy</h2>
-<h3><a class="anchor" id="autotoc_md666"></a>
+<h3><a class="anchor" id="autotoc_md752"></a>
 Validation Phases</h3>
 <p><b>Phase 4.1: Unit Testing (Week 1)</b></p><ul>
 <li>Write unit tests for all core components</li>
@@ -916,7 +916,7 @@ Validation Phases</h3>
 <li>Production configuration</li>
 <li>Rollback procedures documented</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md667"></a>
+<h2><a class="anchor" id="autotoc_md753"></a>
 Performance Targets</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -936,7 +936,7 @@ Performance Targets</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">CPU usage   </td><td class="markdownTableBodyNone">&lt;80% @ max load   </td><td class="markdownTableBodyNone">Integration test   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md668"></a>
+<h2><a class="anchor" id="autotoc_md754"></a>
 Success Criteria</h2>
 <ul>
 <li>[ ] All unit tests pass (&gt;80% coverage)</li>
@@ -950,7 +950,7 @@ Success Criteria</h2>
 <li>[ ] Rollback procedure documented and tested</li>
 <li>[ ] Documentation complete</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md669"></a>
+<h2><a class="anchor" id="autotoc_md755"></a>
 Implementation Timeline</h2>
 <p><b>Week 1: Testing Infrastructure</b></p><ul>
 <li>Day 1-2: Set up unit test framework</li>
@@ -967,7 +967,7 @@ Implementation Timeline</h2>
 <li>Day 3-4: Deployment artifacts</li>
 <li>Day 5: Final validation and sign-off</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md670"></a>
+<h2><a class="anchor" id="autotoc_md756"></a>
 Rollback Plan</h2>
 <p>If Phase 4 validation fails:</p><ol type="1">
 <li>Document failing test cases</li>

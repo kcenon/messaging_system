@@ -1,7 +1,0 @@
-<map id="typed_thread_pool_module::typed_thread_pool_t&lt; job_type &gt;" name="typed_thread_pool_module::typed_thread_pool_t&lt; job_type &gt;">
-<area shape="rect" id="Node000001" title="A thread pool that schedules and executes jobs based on their priority levels." alt="" coords="5,108,204,163"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="9,5,201,60"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,74,91,108,86,108,84,74"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="107,74,107,108,102,108,102,74"/>
-<area shape="poly" id="edge3_Node000001_Node000002" title=" " alt="" coords="125,74,123,108,118,108,120,74"/>
-</map>

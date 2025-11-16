@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['⚠️_20conditional_20features_20requires_20external_20systems_0',['⚠️ Conditional Features (Requires External Systems)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md922',1,'']]]
+  ['⏳_20pending_0',['⏳ pending',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md483',1,'Phase 3: Message Queue (Week 3) - ⏳ PENDING'],['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md484',1,'Phase 4: Backend Pattern (Week 4) - ⏳ PENDING'],['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md485',1,'Phase 5: Topic Router (Week 5) - ⏳ PENDING'],['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md486',1,'Phase 6: Message Bus (Week 6) - ⏳ PENDING'],['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md487',1,'Phase 7: DI Container (Week 7) - ⏳ PENDING'],['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md488',1,'Phase 8: Messaging Patterns (Week 8) - ⏳ PENDING'],['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md489',1,'Phase 9-10: Testing and Documentation (Weeks 9-10) - ⏳ PENDING']]]
 ];

@@ -1,5 +1,0 @@
-<map id="libraries/thread_system/modular_structure/core/include/thread_system_core/typed_thread_pool/scheduling/adaptive_typed_job_queue.h" name="libraries/thread_system/modular_structure/core/include/thread_system_core/typed_thread_pool/scheduling/adaptive_typed_job_queue.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="17,5,238,89"/>
-<area shape="rect" id="Node000002" href="$df/d77/modular__structure_2core_2src_2typed__thread__pool_2scheduling_2adaptive__typed__job__queue_8cpp.html" title="Explicit template instantiation for typed job queue with job_types enumeration." alt="" coords="5,137,249,207"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,103,130,137,125,137,125,103"/>
-</map>

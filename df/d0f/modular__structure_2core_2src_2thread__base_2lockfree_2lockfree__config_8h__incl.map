@@ -1,9 +1,0 @@
-<map id="libraries/thread_system/modular_structure/core/src/thread_base/lockfree/lockfree_config.h" name="libraries/thread_system/modular_structure/core/src/thread_base/lockfree/lockfree_config.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="39,5,225,75"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,123,72,148"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,77,62,115,58,111,96,73"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="97,123,167,148"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="135,75,135,109,129,109,129,75"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="192,123,259,148"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="168,73,206,111,202,115,164,77"/>
-</map>

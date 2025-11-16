@@ -1,9 +1,0 @@
-<map id="libraries/monitoring_system/sources/monitoring/analysis_dashboard.h" name="libraries/monitoring_system/sources/monitoring/analysis_dashboard.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="241,5,447,60"/>
-<area shape="rect" id="Node000002" href="$d2/d72/advanced__analysis__example_8cpp.html" title=" " alt="" coords="5,108,208,163"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="271,68,170,110,167,105,269,63"/>
-<area shape="rect" id="Node000003" href="$d9/d49/optimization__demo_8cpp.html" title=" " alt="" coords="233,108,455,163"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="347,74,347,108,341,108,341,74"/>
-<area shape="rect" id="Node000004" href="$d3/ddd/analysis__dashboard_8cpp.html" title=" " alt="" coords="479,108,686,163"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="420,63,522,105,519,110,418,68"/>
-</map>

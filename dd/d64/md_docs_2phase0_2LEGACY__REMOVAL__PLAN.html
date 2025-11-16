@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('dd/d64/md_docs_2phase0_2LEGACY__REMOVA
   <div class="headertitle"><div class="title">Legacy Code Removal Plan</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md511"></a> </p>
-<h1><a class="anchor" id="autotoc_md512"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md597"></a> </p>
+<h1><a class="anchor" id="autotoc_md598"></a>
 Overview</h1>
 <p>This document identifies all legacy code to be removed and defines the responsibility matrix for replacement with external systems.</p>
-<h1><a class="anchor" id="autotoc_md513"></a>
+<h1><a class="anchor" id="autotoc_md599"></a>
 Legacy Code Inventory</h1>
-<h2><a class="anchor" id="autotoc_md514"></a>
+<h2><a class="anchor" id="autotoc_md600"></a>
 1. Internal Container System</h2>
 <p><b>Location:</b> <code>libraries/container_system/</code> (embedded in messaging_system)</p>
 <p><b>Files to Archive:</b></p><ul>
@@ -108,7 +108,7 @@ Legacy Code Inventory</h1>
 <li><code>libraries/container_system/src/</code></li>
 </ul>
 <p><b>Replacement:</b> External <code>container_system</code> package <b>Status:</b> ⚠️ Currently embedded, needs extraction</p>
-<h2><a class="anchor" id="autotoc_md515"></a>
+<h2><a class="anchor" id="autotoc_md601"></a>
 2. Internal Network System</h2>
 <p><b>Location:</b> <code>libraries/network_system/</code> (embedded in messaging_system)</p>
 <p><b>Files to Archive:</b></p><ul>
@@ -117,7 +117,7 @@ Legacy Code Inventory</h1>
 <li><code>libraries/network_system/src/</code></li>
 </ul>
 <p><b>Replacement:</b> External <code>network_system</code> package <b>Status:</b> ⚠️ Currently embedded, needs extraction</p>
-<h2><a class="anchor" id="autotoc_md516"></a>
+<h2><a class="anchor" id="autotoc_md602"></a>
 3. Internal Thread System</h2>
 <p><b>Location:</b> <code>libraries/thread_system/</code> (embedded in messaging_system)</p>
 <p><b>Files to Archive:</b></p><ul>
@@ -125,7 +125,7 @@ Legacy Code Inventory</h1>
 <li><code>libraries/thread_system/include/</code></li>
 </ul>
 <p><b>Replacement:</b> External <code>thread_system</code> package <b>Status:</b> ⚠️ Currently embedded, needs extraction</p>
-<h2><a class="anchor" id="autotoc_md517"></a>
+<h2><a class="anchor" id="autotoc_md603"></a>
 4. Exception-Based Error Handling</h2>
 <p><b>Location:</b> Throughout codebase</p>
 <p><b>Patterns to Remove:</b> </p><div class="fragment"><div class="line"><span class="comment">// Pattern 1: throw statements</span></div>
@@ -142,7 +142,7 @@ Legacy Code Inventory</h1>
 <div class="line"><span class="comment">// Pattern 3: Exception specifications</span></div>
 <div class="line"><span class="keywordtype">void</span> function() throw(std::runtime_error);</div>
 </div><!-- fragment --><p><b>Replacement:</b> <code>Result&lt;T&gt;</code> return types <b>Status:</b> ⚠️ Needs systematic conversion</p>
-<h2><a class="anchor" id="autotoc_md518"></a>
+<h2><a class="anchor" id="autotoc_md604"></a>
 5. Direct Console Output</h2>
 <p><b>Location:</b> Throughout codebase</p>
 <p><b>Patterns to Remove:</b> </p><div class="fragment"><div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;message&quot;</span> &lt;&lt; std::endl;</div>
@@ -150,7 +150,7 @@ Legacy Code Inventory</h1>
 <div class="line">printf(<span class="stringliteral">&quot;message\n&quot;</span>);</div>
 <div class="line">fprintf(stderr, <span class="stringliteral">&quot;error\n&quot;</span>);</div>
 </div><!-- fragment --><p><b>Replacement:</b> <code>ILogger</code> interface <b>Status:</b> ⚠️ Needs systematic conversion</p>
-<h1><a class="anchor" id="autotoc_md519"></a>
+<h1><a class="anchor" id="autotoc_md605"></a>
 Responsibility Matrix</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -174,11 +174,11 @@ Responsibility Matrix</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>DI Container</b>   </td><td class="markdownTableBodyNone">None   </td><td class="markdownTableBodyNone"><code>thread_system</code>   </td><td class="markdownTableBodyNone"><code>service_registry</code>   </td><td class="markdownTableBodyNone">Add   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md520"></a>
+<h1><a class="anchor" id="autotoc_md606"></a>
 Detailed Replacement Mapping</h1>
-<h2><a class="anchor" id="autotoc_md521"></a>
+<h2><a class="anchor" id="autotoc_md607"></a>
 Error Handling Transformation</h2>
-<h3><a class="anchor" id="autotoc_md522"></a>
+<h3><a class="anchor" id="autotoc_md608"></a>
 Before (Exception-based)</h3>
 <div class="fragment"><div class="line"><span class="keyword">class </span>MessageProcessor {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -195,7 +195,7 @@ Before (Exception-based)</h3>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md523"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md609"></a>
 After (Result-based)</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/common/patterns/result.h&gt;</span></div>
 <div class="line"> </div>
@@ -215,9 +215,9 @@ After (Result-based)</h3>
 <div class="line">        <span class="keywordflow">return</span> VoidResult::ok();</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md524"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md610"></a>
 Async Execution Transformation</h2>
-<h3><a class="anchor" id="autotoc_md525"></a>
+<h3><a class="anchor" id="autotoc_md611"></a>
 Before (Internal thread pool)</h3>
 <div class="fragment"><div class="line"><span class="keyword">class </span>MessageBus {</div>
 <div class="line">    std::vector&lt;std::thread&gt; workers_;</div>
@@ -230,7 +230,7 @@ Before (Internal thread pool)</h3>
 <div class="line">        cv_.notify_one();</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md526"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md612"></a>
 After (IExecutor-based)</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/common/interfaces/executor_interface.h&gt;</span></div>
 <div class="line"> </div>
@@ -243,9 +243,9 @@ After (IExecutor-based)</h3>
 <div class="line">        <span class="keywordflow">return</span> executor_-&gt;execute(std::move(job));</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md527"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md613"></a>
 Container API Transformation</h2>
-<h3><a class="anchor" id="autotoc_md528"></a>
+<h3><a class="anchor" id="autotoc_md614"></a>
 Before (Internal container)</h3>
 <div class="fragment"><div class="line">InternalContainer msg;</div>
 <div class="line">msg.set_field(<span class="stringliteral">&quot;user_id&quot;</span>, 123);</div>
@@ -253,7 +253,7 @@ Before (Internal container)</h3>
 <div class="line">msg.set_field(<span class="stringliteral">&quot;timestamp&quot;</span>, time(<span class="keyword">nullptr</span>));</div>
 <div class="line"> </div>
 <div class="line">std::string serialized = msg.to_binary();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md529"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md615"></a>
 After (value_container)</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/container/core/container.h&gt;</span></div>
 <div class="line"> </div>
@@ -267,13 +267,13 @@ After (value_container)</h3>
 <div class="line">    .build();</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> serialized = msg.serialize();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md530"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md616"></a>
 Logging Transformation</h2>
-<h3><a class="anchor" id="autotoc_md531"></a>
+<h3><a class="anchor" id="autotoc_md617"></a>
 Before (Direct output)</h3>
 <div class="fragment"><div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Processing message from user &quot;</span> &lt;&lt; user_id &lt;&lt; std::endl;</div>
 <div class="line">std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: Failed to connect to database&quot;</span> &lt;&lt; std::endl;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md532"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md618"></a>
 After (ILogger)</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/common/interfaces/logger_interface.h&gt;</span></div>
 <div class="line"> </div>
@@ -283,9 +283,9 @@ After (ILogger)</h3>
 <div class="line">logger_-&gt;log(log_level::error,</div>
 <div class="line">    <span class="stringliteral">&quot;Failed to connect to database&quot;</span>,</div>
 <div class="line">    source_location{__FILE__, __LINE__, __func__});</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md533"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md619"></a>
 Archive Strategy</h1>
-<h2><a class="anchor" id="autotoc_md534"></a>
+<h2><a class="anchor" id="autotoc_md620"></a>
 Archive Directory Structure</h2>
 <div class="fragment"><div class="line">_archived/</div>
 <div class="line">├── YYYYMMDD_HHMMSS/</div>
@@ -294,7 +294,7 @@ Archive Directory Structure</h2>
 <div class="line">│   ├── thread_system/</div>
 <div class="line">│   └── exception_handlers/</div>
 <div class="line">└── README.md (explains what was archived and when)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md535"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md621"></a>
 Archive Script</h2>
 <p>Create: <code>scripts/archive_legacy.sh</code></p>
 <div class="fragment"><div class="line">#!/bin/bash</div>
@@ -373,7 +373,7 @@ Archive Script</h2>
 <div class="line">echo &quot;To remove archived code from build:&quot;</div>
 <div class="line">echo &quot;  Edit CMakeLists.txt and remove add_subdirectory() calls&quot;</div>
 <div class="line">echo &quot;&quot;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md536"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md622"></a>
 CMakeLists.txt Cleanup</h2>
 <p>Create: <code>scripts/update_cmake_legacy.sh</code></p>
 <div class="fragment"><div class="line">#!/bin/bash</div>
@@ -401,9 +401,9 @@ CMakeLists.txt Cleanup</h2>
 <div class="line"> </div>
 <div class="line">echo &quot;✓ CMakeLists.txt updated&quot;</div>
 <div class="line">echo &quot;  Backup saved to: ${CMAKE_FILE}.backup&quot;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md537"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md623"></a>
 Build Guard Implementation</h1>
-<h2><a class="anchor" id="autotoc_md538"></a>
+<h2><a class="anchor" id="autotoc_md624"></a>
 Legacy Guard Header</h2>
 <p>Create: <code>include/messaging_system/legacy_guard.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -459,7 +459,7 @@ Legacy Guard Header</h2>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// All systems verified - proceed with build</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md539"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md625"></a>
 CMake Configuration for Guards</h2>
 <div class="fragment"><div class="line"># Define HAS_* macros when systems are found</div>
 <div class="line">if(TARGET CommonSystem::common)</div>
@@ -489,9 +489,9 @@ CMake Configuration for Guards</h2>
 <div class="line">if(TARGET NetworkSystem::network)</div>
 <div class="line">    target_compile_definitions(messaging_system PUBLIC HAS_NETWORK_SYSTEM)</div>
 <div class="line">endif()</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md540"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md626"></a>
 Removal Checklist</h1>
-<h2><a class="anchor" id="autotoc_md541"></a>
+<h2><a class="anchor" id="autotoc_md627"></a>
 Phase 1.4 Execution Checklist</h2>
 <ul>
 <li>[ ] Run archive script: <code>./scripts/archive_legacy.sh</code></li>
@@ -503,7 +503,7 @@ Phase 1.4 Execution Checklist</h2>
 <li>[ ] Verify all tests pass</li>
 <li>[ ] Commit changes</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md542"></a>
+<h2><a class="anchor" id="autotoc_md628"></a>
 Post-Removal Verification</h2>
 <ul>
 <li>[ ] Build succeeds with external systems</li>
@@ -512,7 +512,7 @@ Post-Removal Verification</h2>
 <li>[ ] All include paths updated</li>
 <li>[ ] Documentation updated</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md543"></a>
+<h1><a class="anchor" id="autotoc_md629"></a>
 Success Criteria</h1>
 <ul>
 <li>[x] Legacy code inventory complete</li>

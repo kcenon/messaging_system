@@ -1,9 +1,0 @@
-<map id="libraries/container_system/values/string_value.h" name="libraries/container_system/values/string_value.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="241,5,407,60"/>
-<area shape="rect" id="Node000002" href="$d3/dda/container_8cpp.html" title=" " alt="" coords="5,115,205,155"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,68,148,118,145,113,254,63"/>
-<area shape="rect" id="Node000003" href="$d5/d5c/container__value_8cpp.html" title=" " alt="" coords="229,108,419,163"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="327,74,327,108,321,108,321,74"/>
-<area shape="rect" id="Node000004" href="$da/dfb/string__value_8cpp.html" title=" " alt="" coords="443,108,608,163"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="390,64,474,106,472,110,387,68"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="database::postgres_manager" name="database::postgres_manager">
-<area shape="rect" id="Node000001" title="Manages PostgreSQL database operations." alt="" coords="26,79,173,119"/>
-<area shape="rect" id="Node000002" href="$d5/df0/classdatabase_1_1database__base.html" title="Abstract base class defining common database operations." alt="" coords="5,5,193,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,44,102,79,97,79,97,44"/>
-</map>

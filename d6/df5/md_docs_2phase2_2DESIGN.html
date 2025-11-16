@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d6/df5/md_docs_2phase2_2DESIGN.html','
   <div class="headertitle"><div class="title">Phase 2: Messaging Core Redesign - Design Document</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md613"></a> </p>
-<h1><a class="anchor" id="autotoc_md614"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md699"></a> </p>
+<h1><a class="anchor" id="autotoc_md700"></a>
 Overview</h1>
 <p>Redesign messaging core with Result&lt;T&gt; error handling, DI-based architecture, and high-performance routing.</p>
-<h1><a class="anchor" id="autotoc_md615"></a>
+<h1><a class="anchor" id="autotoc_md701"></a>
 Core Components</h1>
-<h2><a class="anchor" id="autotoc_md616"></a>
+<h2><a class="anchor" id="autotoc_md702"></a>
 1. Message Container DSL</h2>
 <p><b>Header:</b> <code>include/messaging_system/core/messaging_container.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -161,7 +161,7 @@ Core Components</h1>
 <div class="line"> </div>
 <div class="line">    Result&lt;MessagingContainer&gt; build();</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md617"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md703"></a>
 2. Error Code Definitions</h2>
 <p><b>Header:</b> <code>include/messaging_system/error_codes.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -184,7 +184,7 @@ Core Components</h1>
 <div class="line"><span class="keyword">constexpr</span> <span class="keywordtype">int</span> NO_SUBSCRIBERS = -212;</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace messaging::error</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md618"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md704"></a>
 3. Message Bus with DI</h2>
 <p><b>Header:</b> <code>include/messaging_system/core/message_bus.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -228,7 +228,7 @@ Core Components</h1>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace messaging</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md619"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md705"></a>
 4. Topic Router</h2>
 <p><b>Header:</b> <code>include/messaging_system/core/topic_router.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -292,9 +292,9 @@ Core Components</h1>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace messaging</span></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md620"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md706"></a>
 Result&lt;T&gt; Migration Patterns</h1>
-<h2><a class="anchor" id="autotoc_md621"></a>
+<h2><a class="anchor" id="autotoc_md707"></a>
 Pattern 1: Simple Function Conversion</h2>
 <div class="fragment"><div class="line"><span class="comment">// BEFORE</span></div>
 <div class="line"><span class="keywordtype">void</span> validate_message(<span class="keyword">const</span> Message&amp; msg) {</div>
@@ -317,7 +317,7 @@ Pattern 1: Simple Function Conversion</h2>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> VoidResult::ok();</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md622"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md708"></a>
 Pattern 2: Error Propagation with RETURN_IF_ERROR</h2>
 <div class="fragment"><div class="line">Result&lt;void&gt; process_message(<span class="keyword">const</span> MessagingContainer&amp; msg) {</div>
 <div class="line">    <span class="comment">// Validate</span></div>
@@ -334,7 +334,7 @@ Pattern 2: Error Propagation with RETURN_IF_ERROR</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> VoidResult::ok();</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md623"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md709"></a>
 Pattern 3: Monadic Chaining</h2>
 <div class="fragment"><div class="line">Result&lt;ProcessedMessage&gt; process_pipeline(<span class="keyword">const</span> MessagingContainer&amp; msg) {</div>
 <div class="line">    <span class="keywordflow">return</span> parse_message(msg)</div>
@@ -345,62 +345,62 @@ Pattern 3: Monadic Chaining</h2>
 <div class="line">            <span class="keywordflow">return</span> ProcessedMessage{enriched};</div>
 <div class="line">        });</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md624"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md710"></a>
 Performance Targets</h1>
-<h2><a class="anchor" id="autotoc_md625"></a>
+<h2><a class="anchor" id="autotoc_md711"></a>
 Message Container</h2>
 <ul>
 <li><b>Creation:</b> 5M containers/sec</li>
 <li><b>Serialization:</b> 2M containers/sec (binary)</li>
 <li><b>Memory:</b> ~128 bytes baseline</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md626"></a>
+<h2><a class="anchor" id="autotoc_md712"></a>
 Message Bus</h2>
 <ul>
 <li><b>Throughput:</b> 100K+ messages/sec</li>
 <li><b>Latency P95:</b> &lt;10ms</li>
 <li><b>CPU:</b> &lt;80% @ max load</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md627"></a>
+<h2><a class="anchor" id="autotoc_md713"></a>
 Topic Router</h2>
 <ul>
 <li><b>Routing:</b> 100K+ routes/sec</li>
 <li><b>Subscription lookup:</b> O(1) for exact match, O(n) for patterns</li>
 <li><b>Pattern matching:</b> &lt;1μs per pattern</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md628"></a>
+<h1><a class="anchor" id="autotoc_md714"></a>
 Implementation Plan</h1>
-<h2><a class="anchor" id="autotoc_md629"></a>
+<h2><a class="anchor" id="autotoc_md715"></a>
 Week 1: Message Container</h2>
 <ul>
 <li>Day 1-2: Implement MessagingContainer and Builder</li>
 <li>Day 3-4: Unit tests and benchmarks</li>
 <li>Day 5: Integration with value_container</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md630"></a>
+<h2><a class="anchor" id="autotoc_md716"></a>
 Week 2: Result&lt;T&gt; Migration</h2>
 <ul>
 <li>Day 1-2: Define error codes, implement error_info</li>
 <li>Day 3-4: Convert core APIs to Result&lt;T&gt;</li>
 <li>Day 5: Update tests</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md631"></a>
+<h2><a class="anchor" id="autotoc_md717"></a>
 Week 3: DI Architecture</h2>
 <ul>
 <li>Day 1-2: Refactor MessageBus with IExecutor injection</li>
 <li>Day 3-4: Service registry integration</li>
 <li>Day 5: Type-based executor routing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md632"></a>
+<h2><a class="anchor" id="autotoc_md718"></a>
 Week 4: Topic Router</h2>
 <ul>
 <li>Day 1-3: Implement TopicRouter with pattern matching</li>
 <li>Day 4: Backpressure integration</li>
 <li>Day 5: Performance benchmarks</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md633"></a>
+<h1><a class="anchor" id="autotoc_md719"></a>
 Testing Strategy</h1>
-<h2><a class="anchor" id="autotoc_md634"></a>
+<h2><a class="anchor" id="autotoc_md720"></a>
 Unit Tests</h2>
 <ul>
 <li>Message container creation and serialization</li>
@@ -408,7 +408,7 @@ Unit Tests</h2>
 <li>Topic pattern matching</li>
 <li>Subscription management</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md635"></a>
+<h2><a class="anchor" id="autotoc_md721"></a>
 Integration Tests</h2>
 <ul>
 <li>End-to-end message flow</li>
@@ -416,7 +416,7 @@ Integration Tests</h2>
 <li>High-throughput scenarios</li>
 <li>Error handling paths</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md636"></a>
+<h2><a class="anchor" id="autotoc_md722"></a>
 Benchmarks</h2>
 <ul>
 <li>Message creation rate</li>
@@ -424,7 +424,7 @@ Benchmarks</h2>
 <li>Routing performance</li>
 <li>Memory usage</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md637"></a>
+<h1><a class="anchor" id="autotoc_md723"></a>
 Success Criteria</h1>
 <ul>
 <li>[x] All APIs return Result&lt;T&gt;</li>

@@ -1,5 +1,0 @@
-<map id="logger_module::logger" name="logger_module::logger">
-<area shape="rect" id="Node000001" title="Main logger implementation that implements thread_system&#39;s logger_interface." alt="" coords="6,93,174,119"/>
-<area shape="rect" id="Node000002" href="$d1/dcb/classthread__module_1_1logger__interface.html" title="Logger interface for thread system." alt="" coords="5,5,175,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,59,93,93,87,93,87,59"/>
-</map>

@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d7/d01/md_docs_2REBUILD__PLAN.html','.
   <div class="headertitle"><div class="title">Messaging System 재구성 실행 계획</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md773"></a> </p>
-<h1><a class="anchor" id="autotoc_md774"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md859"></a> </p>
+<h1><a class="anchor" id="autotoc_md860"></a>
 개요 및 우선순위</h1>
 <p>본 계획은 7개 외부 시스템(common_system, thread_system, logger_system, monitoring_system, container_system, database_system, network_system)을 활용한 messaging_system 재구성을 위한 실행 계획이다.</p>
 <p><b>핵심 원칙:</b></p><ul>
@@ -109,9 +109,9 @@ $(document).ready(function(){initNavTree('d7/d01/md_docs_2REBUILD__PLAN.html','.
 <li>메모리 사용량: &lt;500MB (10K 동시 연결)</li>
 <li>CPU 사용률: &lt;80% (최대 부하)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md775"></a>
+<h1><a class="anchor" id="autotoc_md861"></a>
 Phase 0. 준비 및 기반 정비</h1>
-<h2><a class="anchor" id="autotoc_md776"></a>
+<h2><a class="anchor" id="autotoc_md862"></a>
 **Task 0.0 – common_system 즉시 통합 (최우선)**</h2>
 <p>**목적:** 모든 후속 작업의 기반이 되는 핵심 추상화 계층 확보 **작업 내용:**</p><ul>
 <li>`common_system` 패키지 설치 또는 FetchContent 설정</li>
@@ -123,7 +123,7 @@ Phase 0. 준비 및 기반 정비</h1>
 <li><code>전역 include 경로 설정:</code>include/kcenon/common/`</li>
 </ul>
 <p><em>결과물</em>: common_system 통합 완료, 빌드 성공 확인 <em>선행 조건</em>: 없음 (최우선 작업) <em>예상 소요</em>: 0.5일</p>
-<h2><a class="anchor" id="autotoc_md777"></a>
+<h2><a class="anchor" id="autotoc_md863"></a>
 &lt;strong&gt;Task 0.1 – 시스템 인터페이스 맵핑&lt;/strong&gt;</h2>
 <p><b>목적:</b> 레거시 타입과 새 인터페이스 간 명확한 대응 관계 정립 <b>작업 내용:</b></p><ul>
 <li><code>common_system</code>의 Result, 이벤트 버스, IExecutor/ILogger/IMonitor 계약을 목록화</li>
@@ -139,7 +139,7 @@ Phase 0. 준비 및 기반 정비</h1>
 <li><code>exception_mapper</code> 활용 방안 문서화</li>
 </ul>
 <p><em>결과물</em>: 인터페이스 매핑 문서, 레거시 의존성 제거 리스트, 에러 코드 정의 문서 <em>선행 조건</em>: Task 0.0 완료 <em>예상 소요</em>: 1일 </p>
-<h2><a class="anchor" id="autotoc_md778"></a>
+<h2><a class="anchor" id="autotoc_md864"></a>
 &lt;strong&gt;Task 0.2 – 빌드 환경 감사&lt;/strong&gt;</h2>
 <p><b>목적:</b> 모든 외부 시스템의 통합 전략 확정 <b>작업 내용:</b></p><ul>
 <li><code>messaging_system/CMakeLists.txt</code> 및 하위 <code>libraries/*</code> CMake 구성 분석</li>
@@ -159,7 +159,7 @@ Phase 0. 준비 및 기반 정비</h1>
 <li>CMake Presets 작성 (cmake-presets.json)</li>
 </ul>
 <p><em>결과물</em>: 빌드 구성 설계 노트, CMake Presets 파일, 의존성 설치 가이드 <em>선행 조건</em>: Task 0.0 완료 <em>예상 소요</em>: 1일</p>
-<h2><a class="anchor" id="autotoc_md779"></a>
+<h2><a class="anchor" id="autotoc_md865"></a>
 &lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;</h2>
 <p><b>목적:</b> 안전한 점진적 전환 경로 확보 <b>작업 내용:</b></p><ul>
 <li>레거시 API와 외부 통합 지점 식별</li>
@@ -183,7 +183,7 @@ Phase 0. 준비 및 기반 정비</h1>
 </li>
 </ul>
 <p><em>결과물</em>: 리스크 레지스터, 롤백/전환 전략 문서, 호환성 레이어 설계 <em>선행 조건</em>: Task 0.1 완료 <em>예상 소요</em>: 1.5일</p>
-<h2><a class="anchor" id="autotoc_md780"></a>
+<h2><a class="anchor" id="autotoc_md866"></a>
 &lt;strong&gt;Task 0.4 – 레거시 구현 차단 계획 수립&lt;/strong&gt;</h2>
 <p><b>목적:</b> 명확한 코드 제거 로드맵 확보 <b>작업 내용:</b></p><ul>
 <li>레거시 코드 목록 작성:<ul>
@@ -210,10 +210,10 @@ Phase 0. 준비 및 기반 정비</h1>
 <li>아카이브 이동 스크립트 작성</li>
 </ul>
 <p><em>결과물</em>: 레거시 제거 체크리스트, 책임 매트릭스, 빌드 가드 헤더, 아카이브 스크립트 <em>선행 조건</em>: Task 0.2 완료 <em>예상 소요</em>: 1일</p>
-<h1><a class="anchor" id="autotoc_md781"></a>
+<h1><a class="anchor" id="autotoc_md867"></a>
 Phase 1. 빌드 및 의존성 리팩터링</h1>
 <p><b>Phase 목표:</b> 모든 외부 시스템을 빌드 시스템에 통합하고 레거시 코드 제거</p>
-<h2><a class="anchor" id="autotoc_md782"></a>
+<h2><a class="anchor" id="autotoc_md868"></a>
 &lt;strong&gt;Task 1.1 – 외부 모듈 통합 재구성&lt;/strong&gt;</h2>
 <p><b>목적:</b> 7개 외부 시스템의 빌드 시스템 통합 <b>작업 내용:</b></p><ul>
 <li>CMakeLists.txt 수정: <div class="fragment"><div class="line"># FetchContent 방식 (개발 환경)</div>
@@ -253,7 +253,7 @@ Phase 1. 빌드 및 의존성 리팩터링</h1>
 </div><!-- fragment --></li>
 </ul>
 <p><em>결과물</em>: 업데이트된 CMakeLists.txt, ALIAS 타깃 정의, 의존성 설치 가이드 <em>선행 조건</em>: Phase 0 완료 <em>예상 소요</em>: 2일</p>
-<h2><a class="anchor" id="autotoc_md783"></a>
+<h2><a class="anchor" id="autotoc_md869"></a>
 &lt;strong&gt;Task 1.2 – 컴파일 옵션 및 피처 플래그 통합&lt;/strong&gt;</h2>
 <p><b>목적:</b> 일관된 빌드 설정 전파 메커니즘 구축 <b>작업 내용:</b></p><ul>
 <li>통합 CMake 캐시 변수 정의: <div class="fragment"><div class="line"># 공통 옵션</div>
@@ -289,7 +289,7 @@ Phase 1. 빌드 및 의존성 리팩터링</h1>
 <li>CI 프로파일별 문서화 (README.md)</li>
 </ul>
 <p><em>결과물</em>: 통합 빌드 옵션 정의, CI 프로파일 문서, 빌드 설정 가이드 <em>선행 조건</em>: Task 1.1 완료 <em>예상 소요</em>: 1일</p>
-<h2><a class="anchor" id="autotoc_md784"></a>
+<h2><a class="anchor" id="autotoc_md870"></a>
 &lt;strong&gt;Task 1.3 – 구성 검증 자동화&lt;/strong&gt;</h2>
 <p><b>목적:</b> 빌드 시 의존성 누락 조기 발견 <b>작업 내용:</b></p><ul>
 <li>CMake 검증 함수 작성 (cmake/validate_dependencies.cmake): <div class="fragment"><div class="line">function(validate_messaging_dependencies)</div>
@@ -345,7 +345,7 @@ Phase 1. 빌드 및 의존성 리팩터링</h1>
 </div><!-- fragment --></li>
 </ul>
 <p><em>결과물</em>: 검증 스크립트, CMake Presets, 설정 가이드 <em>선행 조건</em>: Task 1.2 완료 <em>예상 소요</em>: 0.5일</p>
-<h2><a class="anchor" id="autotoc_md785"></a>
+<h2><a class="anchor" id="autotoc_md871"></a>
 &lt;strong&gt;Task 1.4 – 레거시 코드 비활성화 및 제거&lt;/strong&gt;</h2>
 <p><b>목적:</b> 레거시 코드 빌드 제외 및 안전한 아카이브 <b>작업 내용:</b></p><ul>
 <li>빌드 가드 헤더 추가 (include/messaging_system/legacy_guard.h): <div class="fragment"><div class="line"><span class="preprocessor">#ifndef MESSAGING_USE_EXTERNAL_SYSTEMS</span></div>
@@ -384,10 +384,10 @@ Phase 1. 빌드 및 의존성 리팩터링</h1>
 <li>✅ 레거시 코드 빌드 대상에서 제외</li>
 <li>✅ CI 파이프라인 통과 (모든 프로파일)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md786"></a>
+<h1><a class="anchor" id="autotoc_md872"></a>
 Phase 2. 메시징 코어 재설계</h1>
 <p><b>Phase 목표:</b> Result&lt;T&gt; 기반 메시징 코어 구축 및 DI 아키텍처 적용 <b>병렬 작업:</b> Task 2.1-2.2는 Task 3.1(네트워크 경계)과 병렬 진행 가능</p>
-<h2><a class="anchor" id="autotoc_md787"></a>
+<h2><a class="anchor" id="autotoc_md873"></a>
 &lt;strong&gt;Task 2.1 – 메시지 컨테이너 DSL 정립&lt;/strong&gt;</h2>
 <p><b>목적:</b> container_system 기반 메시지 구조 표준화 <b>작업 내용:</b></p><ul>
 <li>메시지 구조 정의: <div class="fragment"><div class="line"><span class="comment">// Header: source, target, topic, trace_id, timestamp, version</span></div>
@@ -414,7 +414,7 @@ Phase 2. 메시징 코어 재설계</h1>
 <li>성능 검증: 메시지 생성 5M/s, 직렬화 2M/s</li>
 </ul>
 <p><em>결과물</em>: messaging_container.h, messaging_container_builder.h, 단위 테스트 <em>선행 조건</em>: Phase 1 완료 <em>예상 소요</em>: 2일 <em>성능 목표</em>: 메시지 생성 5M/s, 직렬화 2M/s</p>
-<h2><a class="anchor" id="autotoc_md788"></a>
+<h2><a class="anchor" id="autotoc_md874"></a>
 &lt;strong&gt;Task 2.2 – Result 기반 플로우 제로화&lt;/strong&gt;</h2>
 <p><b>목적:</b> 예외 없는 에러 처리로 전환 <b>작업 내용:</b></p><ul>
 <li>에러 코드 정의 (include/messaging_system/error_codes.h): <div class="fragment"><div class="line"><span class="keyword">namespace </span>messaging::error {</div>
@@ -451,7 +451,7 @@ Phase 2. 메시징 코어 재설계</h1>
 <li>exception_mapper 통합 (레거시 호환)</li>
 </ul>
 <p><em>결과물</em>: error_codes.h, Result 기반 API, 마이그레이션 가이드 <em>선행 조건</em>: Task 2.1 완료 <em>예상 소요</em>: 3일</p>
-<h2><a class="anchor" id="autotoc_md789"></a>
+<h2><a class="anchor" id="autotoc_md875"></a>
 &lt;strong&gt;Task 2.3 – IExecutor 주입식 아키텍처 구현&lt;/strong&gt;</h2>
 <p><b>목적:</b> DI 기반 실행기 주입으로 유연성 확보 <b>작업 내용:</b></p><ul>
 <li>service_registry 활용: <div class="fragment"><div class="line"><span class="comment">// 실행기 등록</span></div>
@@ -481,7 +481,7 @@ Phase 2. 메시징 코어 재설계</h1>
 <li>성능 검증: 1.24M jobs/s (typed_thread_pool)</li>
 </ul>
 <p><em>결과물</em>: DI 기반 MessageBus, IExecutor 통합, 성능 테스트 <em>선행 조건</em>: Task 2.2 완료 <em>예상 소요</em>: 2일 <em>성능 목표</em>: 1.2M+ jobs/s</p>
-<h2><a class="anchor" id="autotoc_md790"></a>
+<h2><a class="anchor" id="autotoc_md876"></a>
 &lt;strong&gt;Task 2.4 – 라우팅/토픽 엔진 정비&lt;/strong&gt;</h2>
 <p><b>목적:</b> 고성능 Pub/Sub 엔진 구축 <b>작업 내용:</b></p><ul>
 <li>TopicRouter 구현: <div class="fragment"><div class="line"><span class="keyword">class </span>TopicRouter {</div>
@@ -533,10 +533,10 @@ Phase 2. 메시징 코어 재설계</h1>
 <li>✅ 모든 API Result&lt;T&gt; 반환</li>
 <li>✅ 라우팅 처리량 100K+ msg/s</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md791"></a>
+<h1><a class="anchor" id="autotoc_md877"></a>
 Phase 3. 인프라 통합 계층 구축</h1>
 <p><b>Phase 목표:</b> 네트워크/DB/로깅/모니터링 시스템 통합 <b>병렬 작업:</b> Task 3.1은 Task 2.1-2.2와 병렬, Task 3.2는 Task 2.3-2.4와 병렬 가능</p>
-<h2><a class="anchor" id="autotoc_md792"></a>
+<h2><a class="anchor" id="autotoc_md878"></a>
 &lt;strong&gt;Task 3.1 – 네트워크 경계 계층 구현&lt;/strong&gt;</h2>
 <p><b>목적:</b> network_system 기반 고성능 메시지 송수신 파이프라인 <b>작업 내용:</b></p><ul>
 <li>MessagingNetworkBridge 구현: <div class="fragment"><div class="line"><span class="keyword">class </span>MessagingNetworkBridge {</div>
@@ -570,7 +570,7 @@ Phase 3. 인프라 통합 계층 구축</h1>
 <li>성능 목표: 네트워크 계층 305K msg/s → 전체 파이프라인 100K+ msg/s</li>
 </ul>
 <p><em>결과물</em>: MessagingNetworkBridge, 파이프라인 구현, 성능 벤치마크 <em>선행 조건</em>: Task 2.1-2.2 완료 (병렬 가능) <em>예상 소요</em>: 3일 <em>성능 목표</em>: 100K+ msg/s 처리량, P95 &lt;10ms</p>
-<h2><a class="anchor" id="autotoc_md793"></a>
+<h2><a class="anchor" id="autotoc_md879"></a>
 &lt;strong&gt;Task 3.2 – 영속성 및 재처리 경로 구성&lt;/strong&gt;</h2>
 <p><b>목적:</b> database_system 기반 메시지 영속화 및 재처리 <b>작업 내용:</b></p><ul>
 <li>ORM Entity 정의: <div class="fragment"><div class="line"><span class="keyword">struct </span>MessageEntity : entity_base {</div>
@@ -619,7 +619,7 @@ Phase 3. 인프라 통합 계층 구축</h1>
 </li>
 </ul>
 <p><em>결과물</em>: ORM Entities, PersistentMessageQueue, 재처리 로직, 통합 테스트 <em>선행 조건</em>: Task 2.3-2.4 완료 (병렬 가능) <em>예상 소요</em>: 3일 <em>성능 목표</em>: P95 영속화 지연 &lt;50ms</p>
-<h2><a class="anchor" id="autotoc_md794"></a>
+<h2><a class="anchor" id="autotoc_md880"></a>
 &lt;strong&gt;Task 3.3 – 로깅/모니터링 데이터 흐름 통합&lt;/strong&gt;</h2>
 <p><b>목적:</b> 분산 추적 및 실시간 메트릭 수집 <b>작업 내용:</b></p><ul>
 <li>trace_id 전파 메커니즘: <div class="fragment"><div class="line"><span class="keyword">class </span>TraceContext {</div>
@@ -668,7 +668,7 @@ Phase 3. 인프라 통합 계층 구축</h1>
 <li>메트릭 수집 간격: 1000ms</li>
 </ul>
 <p><em>결과물</em>: TraceContext, 로깅/모니터링 통합, 대시보드 구성 <em>선행 조건</em>: Task 3.1-3.2 완료 <em>예상 소요</em>: 2일</p>
-<h2><a class="anchor" id="autotoc_md795"></a>
+<h2><a class="anchor" id="autotoc_md881"></a>
 &lt;strong&gt;Task 3.4 – 구성 및 정책 레이어&lt;/strong&gt;</h2>
 <p><b>목적:</b> YAML 기반 통합 구성 시스템 <b>작업 내용:</b></p><ul>
 <li>구성 파일 스키마 (config/messaging_system.yaml): <div class="fragment"><div class="line">messaging_system:</div>
@@ -741,10 +741,10 @@ Phase 3. 인프라 통합 계층 구축</h1>
 <li>✅ 분산 추적 trace_id 전파 동작</li>
 <li>✅ YAML 구성 로더 동작</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md796"></a>
+<h1><a class="anchor" id="autotoc_md882"></a>
 Phase 4. 검증·배포 준비</h1>
 <p><b>Phase 목표:</b> 프로덕션 배포를 위한 검증 및 문서화</p>
-<h2><a class="anchor" id="autotoc_md797"></a>
+<h2><a class="anchor" id="autotoc_md883"></a>
 &lt;strong&gt;Task 4.1 – 교차 모듈 테스트 수립&lt;/strong&gt;</h2>
 <p><b>목적:</b> End-to-End 통합 테스트 및 CI/CD 구성 <b>작업 내용:</b></p><ul>
 <li>통합 테스트 시나리오:<ol type="1">
@@ -774,7 +774,7 @@ Phase 4. 검증·배포 준비</h1>
 </li>
 </ul>
 <p>*결과물*: 통합 테스트 Suite, CI/CD 구성, 커버리지 리포트 *선행 조건*: Phase 3 완료 *예상 소요*: 3일</p>
-<h2><a class="anchor" id="autotoc_md798"></a>
+<h2><a class="anchor" id="autotoc_md884"></a>
 **Task 4.2 – 마이그레이션 가이드 및 API 문서화**</h2>
 <p>**목적:** 사용자 대상 문서 완성 **작업 내용:**</p><ul>
 <li>마이그레이션 가이드 (docs/MIGRATION_GUIDE.md):<ul>
@@ -807,7 +807,7 @@ Phase 4. 검증·배포 준비</h1>
 </li>
 </ul>
 <p><em>결과물</em>: 마이그레이션 가이드, API 레퍼런스, 배포 가이드, 튜닝 가이드 <em>선행 조건</em>: Task 4.1 완료 <em>예상 소요</em>: 2일</p>
-<h2><a class="anchor" id="autotoc_md799"></a>
+<h2><a class="anchor" id="autotoc_md885"></a>
 &lt;strong&gt;Task 4.3 – 성능 및 회귀 검증&lt;/strong&gt;</h2>
 <p><b>목적:</b> 성능 목표 달성 검증 및 회귀 방지 <b>작업 내용:</b></p><ul>
 <li>통합 벤치마크 Suite: <div class="fragment"><div class="line"><span class="comment">// benchmarks/end_to_end_benchmark.cpp</span></div>
@@ -845,7 +845,7 @@ Phase 4. 검증·배포 준비</h1>
 </li>
 </ul>
 <p><em>결과물</em>: 벤치마크 Suite, 성능 리포트, 회귀 테스트 설정 <em>선행 조건</em>: Task 4.2 완료 <em>예상 소요</em>: 2일 <em>검증 기준</em>: 모든 성능 목표 달성</p>
-<h2><a class="anchor" id="autotoc_md800"></a>
+<h2><a class="anchor" id="autotoc_md886"></a>
 &lt;strong&gt;Task 4.4 – 보안 검토 및 강화&lt;/strong&gt;</h2>
 <p><b>목적:</b> 프로덕션 배포를 위한 보안 강화 (추가 제안) <b>작업 내용:</b></p><ul>
 <li>TLS/SSL 지원:<ul>
@@ -874,7 +874,7 @@ Phase 4. 검증·배포 준비</h1>
 </li>
 </ul>
 <p><em>결과물</em>: TLS 구성, 인증 시스템, 감사 로그, 보안 스캔 리포트 <em>선행 조건</em>: Task 4.3 완료 <em>예상 소요</em>: 3일</p>
-<h2><a class="anchor" id="autotoc_md801"></a>
+<h2><a class="anchor" id="autotoc_md887"></a>
 &lt;strong&gt;Task 4.5 – 출시 체크리스트/런북 작성&lt;/strong&gt;</h2>
 <p><b>목적:</b> 운영 준비 완료 <b>작업 내용:</b></p><ul>
 <li>배포 전 체크리스트:<ul>
@@ -932,7 +932,7 @@ Phase 4. 검증·배포 준비</h1>
 <li>✅ 운영 런북 작성 완료</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md803"></a>
+<h1><a class="anchor" id="autotoc_md889"></a>
 전체 일정 요약</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -949,7 +949,7 @@ Phase 4. 검증·배포 준비</h1>
 <td class="markdownTableBodyNone"><b>Phase 4</b>   </td><td class="markdownTableBodyNone">11일   </td><td class="markdownTableBodyNone">39.5일   </td><td class="markdownTableBodyNone">통합 테스트, 문서화, 성능 검증, 보안 강화, 런북   </td></tr>
 </table>
 <p><b>총 예상 소요:</b> 약 40일 (8주, 병렬 작업 고려 시 ~6주)</p>
-<h1><a class="anchor" id="autotoc_md804"></a>
+<h1><a class="anchor" id="autotoc_md890"></a>
 병렬 작업 최적화</h1>
 <p><b>Phase 2 + Phase 3 병렬 구간:</b></p><ul>
 <li>Task 2.1-2.2 (메시지 컨테이너, Result 전환) + Task 3.1 (네트워크 브리지)</li>
@@ -957,7 +957,7 @@ Phase 4. 검증·배포 준비</h1>
 <li>병렬 진행 시 약 2주 단축 가능</li>
 </ul>
 <p><b>실제 예상 소요:</b> 6주 (병렬 최적화 적용)</p>
-<h1><a class="anchor" id="autotoc_md805"></a>
+<h1><a class="anchor" id="autotoc_md891"></a>
 성공 기준 (최종)</h1>
 <p>✅ <b>기능 완성도:</b></p><ul>
 <li>모든 Phase 완료</li>

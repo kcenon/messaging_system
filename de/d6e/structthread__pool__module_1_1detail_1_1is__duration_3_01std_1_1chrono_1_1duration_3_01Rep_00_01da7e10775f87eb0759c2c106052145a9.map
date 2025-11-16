@@ -1,7 +1,0 @@
-<map id="thread_pool_module::detail::is_duration&lt; std::chrono::duration&lt; Rep, Period &gt; &gt;" name="thread_pool_module::detail::is_duration&lt; std::chrono::duration&lt; Rep, Period &gt; &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,176,148"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="35,5,147,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,44,76,79,71,78,72,44"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="93,44,93,79,88,79,88,44"/>
-<area shape="poly" id="edge3_Node000001_Node000002" title=" " alt="" coords="109,44,111,78,105,79,104,44"/>
-</map>

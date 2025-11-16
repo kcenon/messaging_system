@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['🚧_20integration_20features_20headers_20only_20planned_0',['🚧 Integration Features (Headers Only - Planned)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md921',1,'']]]
+  ['🚀_20quick_20navigation_0',['🚀 Quick Navigation',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md847',1,'']]],
+  ['🚀_20quick_20start_1',['🚀 Quick Start',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1026',1,'']]]
 ];

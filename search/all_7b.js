@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🔧_20configuration_0',['🔧 Configuration',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md977',1,'']]]
+  ['🔥_20real_20world_20examples_0',['🔥 Real-World Examples',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1035',1,'']]]
 ];

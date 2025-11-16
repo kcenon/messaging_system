@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['📋_20appendix_0',['📋 Appendix',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1001',1,'']]],
-  ['📋_20implementation_20status_1',['📋 Implementation Status',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md919',1,'']]]
+  ['📊_20performance_20characteristics_0',['📊 Performance Characteristics',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1040',1,'']]],
+  ['📊_20project_20statistics_1',['📊 Project Statistics',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1078',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['컴파일_20옵션_20및_20피처_20플래그_20통합_20strong_0',['&lt;strong&gt;Task 1.2 – 컴파일 옵션 및 피처 플래그 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md783',1,'']]]
+  ['컨테이너_20dsl_20정립_20strong_0',['&lt;strong&gt;Task 2.1 – 메시지 컨테이너 DSL 정립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md873',1,'']]]
 ];

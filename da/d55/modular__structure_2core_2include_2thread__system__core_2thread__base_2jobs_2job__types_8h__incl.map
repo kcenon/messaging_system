@@ -1,9 +1,0 @@
-<map id="libraries/thread_system/modular_structure/core/include/thread_system_core/thread_base/jobs/job_types.h" name="libraries/thread_system/modular_structure/core/include/thread_system_core/thread_base/jobs/job_types.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="43,5,259,75"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,123,83,148"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,77,70,115,66,111,110,73"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="107,123,194,148"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,75,153,109,148,109,148,75"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="219,123,277,148"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="188,73,228,111,224,115,184,77"/>
-</map>
