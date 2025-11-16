@@ -83,7 +83,9 @@ endif()
 # External System Integration
 # ============================================================================
 
-if(MESSAGING_USE_EXTERNAL_SYSTEMS)
+# Phase 1: Header-only library - skip all external system integration
+# External systems will be integrated in Phase 2 when implementation is added
+if(FALSE AND MESSAGING_USE_EXTERNAL_SYSTEMS)
     message(STATUS "Using external system packages")
 
     if(MESSAGING_USE_LOCAL_SYSTEMS)
@@ -484,13 +486,8 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
     endif()
 
 else()
-    message(FATAL_ERROR
-        "MESSAGING_USE_EXTERNAL_SYSTEMS is OFF. This mode is no longer supported.\n"
-        "Please use one of the following:\n"
-        "  - Local development: cmake --preset dev-local (requires sibling directories)\n"
-        "  - FetchContent: cmake --preset dev-fetchcontent\n"
-        "  - Production: cmake --preset default (requires installed packages)\n"
-    )
+    # Phase 1: Header-only library doesn't need external systems
+    message(STATUS "Phase 1: Building header-only library without external systems")
 endif()
 
 # ============================================================================
@@ -518,242 +515,20 @@ endif()
 # Messaging System Core Library
 # ============================================================================
 
-add_library(messaging_system_core
-    src/core/messaging_container.cpp
-    src/core/message_bus.cpp
-    src/core/topic_router.cpp
-    src/integration/trace_context.cpp
-    src/integration/config_loader.cpp
-    src/integration/network_bridge.cpp
-)
+# Phase 1: Header-only library (interfaces and error codes only)
+# Implementation will be added in future phases
+message(STATUS "Building Phase 1: Header-only library")
+
+add_library(messaging_system_core INTERFACE)
 
 target_include_directories(messaging_system_core
-    PUBLIC
+    INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
 )
 
-# Link external systems if available
-set(MESSAGING_CORE_LIBS "")
-
-# CommonSystem (check both namespaced and non-namespaced targets)
-if(TARGET CommonSystem::common)
-    message(STATUS "Linking messaging_system_core with CommonSystem::common")
-    list(APPEND MESSAGING_CORE_LIBS CommonSystem::common)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_COMMON_SYSTEM)
-elseif(TARGET kcenon::common)
-    message(STATUS "Linking messaging_system_core with kcenon::common")
-    list(APPEND MESSAGING_CORE_LIBS kcenon::common)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_COMMON_SYSTEM)
-elseif(TARGET common_system)
-    message(STATUS "Linking messaging_system_core with common_system")
-    list(APPEND MESSAGING_CORE_LIBS common_system)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_COMMON_SYSTEM)
-else()
-    message(STATUS "CommonSystem target not found - header-only mode may still work")
-endif()
-
-# ThreadSystem
-if(TARGET ThreadSystem::Core)
-    list(APPEND MESSAGING_CORE_LIBS ThreadSystem::Core)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_THREAD_SYSTEM)
-elseif(TARGET thread_pool)
-    list(APPEND MESSAGING_CORE_LIBS thread_pool utilities interfaces)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_THREAD_SYSTEM)
-elseif(TARGET thread_base)
-    list(APPEND MESSAGING_CORE_LIBS thread_base utilities interfaces)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_THREAD_SYSTEM)
-endif()
-
-# LoggerSystem
-if(TARGET LoggerSystem::logger)
-    list(APPEND MESSAGING_CORE_LIBS LoggerSystem::logger)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_LOGGER_SYSTEM)
-elseif(TARGET LoggerSystem)
-    list(APPEND MESSAGING_CORE_LIBS LoggerSystem)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_LOGGER_SYSTEM)
-elseif(TARGET logger)
-    list(APPEND MESSAGING_CORE_LIBS logger)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_LOGGER_SYSTEM)
-endif()
-
-# MonitoringSystem
-if(TARGET MonitoringSystem::monitoring)
-    list(APPEND MESSAGING_CORE_LIBS MonitoringSystem::monitoring)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_MONITORING_SYSTEM)
-elseif(TARGET monitoring_system)
-    list(APPEND MESSAGING_CORE_LIBS monitoring_system)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_MONITORING_SYSTEM)
-elseif(TARGET monitoring)
-    list(APPEND MESSAGING_CORE_LIBS monitoring)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_MONITORING_SYSTEM)
-endif()
-
-# ContainerSystem
-if(TARGET ContainerSystem::container)
-    list(APPEND MESSAGING_CORE_LIBS ContainerSystem::container)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_CONTAINER_SYSTEM)
-elseif(TARGET container_system)
-    list(APPEND MESSAGING_CORE_LIBS container_system)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_CONTAINER_SYSTEM)
-endif()
-
-# DatabaseSystem - DISABLED (not needed)
-# if(TARGET DatabaseSystem::database)
-#     list(APPEND MESSAGING_CORE_LIBS DatabaseSystem::database)
-#     target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
-# elseif(TARGET database)
-#     list(APPEND MESSAGING_CORE_LIBS database)
-#     target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
-# endif()
-
-# NetworkSystem
-if(TARGET NetworkSystem::network)
-    list(APPEND MESSAGING_CORE_LIBS NetworkSystem::network)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
-
-    # NetworkSystem requires ASIO headers for its public API
-    # Since NetworkSystem uses ASIO as PRIVATE, we need to find and add it manually
-    # First try to find ASIO in the build directory (FetchContent location)
-    if(EXISTS "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
-        target_include_directories(messaging_system_core SYSTEM PRIVATE
-            "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include"
-        )
-        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
-    # Try NetworkSystem's build directory
-    elseif(EXISTS "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
-        target_include_directories(messaging_system_core SYSTEM PRIVATE
-            "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include"
-        )
-        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
-    else()
-        message(WARNING "Could not find ASIO headers for NetworkSystem - network_bridge.cpp may fail to compile")
-    endif()
-elseif(TARGET NetworkSystem)
-    list(APPEND MESSAGING_CORE_LIBS NetworkSystem)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
-
-    # NetworkSystem requires ASIO headers for its public API
-    if(EXISTS "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
-        target_include_directories(messaging_system_core SYSTEM PRIVATE
-            "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include"
-        )
-        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
-    elseif(EXISTS "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
-        target_include_directories(messaging_system_core SYSTEM PRIVATE
-            "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include"
-        )
-        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
-    else()
-        message(WARNING "Could not find ASIO headers for NetworkSystem - network_bridge.cpp may fail to compile")
-    endif()
-endif()
-
-if(MESSAGING_CORE_LIBS)
-    target_link_libraries(messaging_system_core PUBLIC ${MESSAGING_CORE_LIBS})
-    target_compile_definitions(messaging_system_core PUBLIC MESSAGING_USE_EXTERNAL_SYSTEMS)
-endif()
-
-# Treat external dependency headers as system to avoid propagating their warnings.
-set(_messaging_external_include_targets
-    CommonSystem::common
-    kcenon::common
-    common_system
-    ThreadSystem::Core
-    thread_pool
-    thread_base
-    interfaces
-    utilities
-    LoggerSystem::logger
-    LoggerSystem
-    logger
-    MonitoringSystem::monitoring
-    monitoring_system
-    monitoring
-    ContainerSystem::container
-    container_system
-    NetworkSystem::network
-    NetworkSystem
-)
-foreach(_dep_target IN LISTS _messaging_external_include_targets)
-    if(TARGET "${_dep_target}")
-        get_target_property(_dep_includes "${_dep_target}" INTERFACE_INCLUDE_DIRECTORIES)
-        if(_dep_includes)
-            target_include_directories(messaging_system_core SYSTEM PUBLIC ${_dep_includes})
-        endif()
-    endif()
-endforeach()
-
-if(USE_STD_FORMAT)
-    target_compile_definitions(messaging_system_core PUBLIC USE_STD_FORMAT)
-endif()
-
-# Find and link yaml-cpp for configuration
-find_package(yaml-cpp QUIET)
-if(yaml-cpp_FOUND AND TARGET yaml-cpp::yaml-cpp)
-    target_link_libraries(messaging_system_core PUBLIC yaml-cpp::yaml-cpp)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_YAML_CPP)
-    message(STATUS "  ✓ yaml-cpp found")
-elseif(yaml-cpp_FOUND AND TARGET yaml-cpp)
-    target_link_libraries(messaging_system_core PUBLIC yaml-cpp)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_YAML_CPP)
-    message(STATUS "  ✓ yaml-cpp found (non-namespaced)")
-else()
-    message(STATUS "  ✗ yaml-cpp not found (ConfigLoader disabled)")
-endif()
-
-target_compile_features(messaging_system_core PUBLIC cxx_std_20)
-
-# ============================================================================
-# Main Executable (Example/Demo)
-# ============================================================================
-
-if(MESSAGING_BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
-    add_executable(messaging_system
-        src/main.cpp
-    )
-
-    target_link_libraries(messaging_system
-        PRIVATE
-            messaging_system_core
-    )
-endif()
-
-# ============================================================================
-# Application Layer (High-level messaging APIs)
-# ============================================================================
-
-option(MESSAGING_BUILD_APPLICATION_LAYER "Build application layer with high-level messaging APIs" ON)
-
-if(MESSAGING_BUILD_APPLICATION_LAYER AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/application_layer/CMakeLists.txt)
-    message(STATUS "Building application layer (messaging_services)")
-    add_subdirectory(application_layer)
-endif()
-
-# ============================================================================
-# Tests
-# ============================================================================
-
-if(MESSAGING_BUILD_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt)
-    enable_testing()
-    add_subdirectory(test)
-endif()
-
-# ============================================================================
-# Benchmarks
-# ============================================================================
-
-if(MESSAGING_BUILD_BENCHMARKS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/benchmarks)
-    add_subdirectory(benchmarks)
-endif()
-
-# ============================================================================
-# Examples
-# ============================================================================
-
-if(MESSAGING_BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples)
-    add_subdirectory(examples)
-endif()
+# Phase 1: Header-only library - no dependencies or features needed
+message(STATUS "Phase 1: Header-only library - no tests, examples, or dependencies")
 
 # ============================================================================
 # Documentation
