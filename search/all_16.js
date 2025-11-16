@@ -44,7 +44,7 @@ var searchData=
   ['message_20queue_20week_203_20⏳_20pending_41',['Phase 3: Message Queue (Week 3) - ⏳ PENDING',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md427',1,'']]],
   ['message_20structure_42',['2.1 Message Structure',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md395',1,'']]],
   ['message_20types_20week_202_43',['Phase 2: Core Message Types (Week 2)',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md394',1,'']]],
-  ['message_20types_20week_202_20🔄_20in_20progress_44',['Phase 2: Core Message Types (Week 2) - 🔄 IN PROGRESS',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md426',1,'']]],
+  ['message_20types_20week_202_20✅_20completed_44',['Phase 2: Core Message Types (Week 2) - ✅ COMPLETED',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md426',1,'']]],
   ['message_5fbus_20tt_45',['Class: &lt;tt&gt;message_bus&lt;/tt&gt;',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md40',1,'']]],
   ['messagebus_20tests_20test_5fmessage_5fbus_20cpp_46',['3. MessageBus Tests (test_message_bus.cpp)',['../df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md709',1,'']]],
   ['messages_47',['messages',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md928',1,'Error Messages'],['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md923',1,'Issue 1: High CPU Usage with Small Messages']]],
