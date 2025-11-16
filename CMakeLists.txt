@@ -518,17 +518,27 @@ endif()
 # Messaging System Core Library
 # ============================================================================
 
-add_library(messaging_system_core
-    src/core/messaging_container.cpp
-    src/core/message_bus.cpp
-    src/core/topic_router.cpp
-    src/integration/trace_context.cpp
-    src/integration/config_loader.cpp
-    src/integration/network_bridge.cpp
-)
+# Phase 1: Header-only library (interfaces and error codes only)
+# Legacy source files are temporarily disabled until Phase 2 implementation
+option(MESSAGING_BUILD_LEGACY_CODE "Build legacy messaging code" OFF)
+
+if(MESSAGING_BUILD_LEGACY_CODE)
+    # Legacy implementation (currently has namespace issues)
+    add_library(messaging_system_core
+        src/core/messaging_container.cpp
+        src/core/message_bus.cpp
+        src/core/topic_router.cpp
+        src/integration/trace_context.cpp
+        src/integration/config_loader.cpp
+        src/integration/network_bridge.cpp
+    )
+else()
+    # Phase 1: Header-only library with interfaces and error codes
+    add_library(messaging_system_core INTERFACE)
+endif()
 
 target_include_directories(messaging_system_core
-    PUBLIC
+    INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
 )
@@ -607,51 +617,57 @@ endif()
 #     target_compile_definitions(messaging_system_core PUBLIC HAS_DATABASE_SYSTEM)
 # endif()
 
-# NetworkSystem
-if(TARGET NetworkSystem::network)
-    list(APPEND MESSAGING_CORE_LIBS NetworkSystem::network)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
+# NetworkSystem (only for legacy build)
+if(MESSAGING_BUILD_LEGACY_CODE)
+    if(TARGET NetworkSystem::network)
+        list(APPEND MESSAGING_CORE_LIBS NetworkSystem::network)
+        target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
 
-    # NetworkSystem requires ASIO headers for its public API
-    # Since NetworkSystem uses ASIO as PRIVATE, we need to find and add it manually
-    # First try to find ASIO in the build directory (FetchContent location)
-    if(EXISTS "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
-        target_include_directories(messaging_system_core SYSTEM PRIVATE
-            "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include"
-        )
-        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
-    # Try NetworkSystem's build directory
-    elseif(EXISTS "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
-        target_include_directories(messaging_system_core SYSTEM PRIVATE
-            "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include"
-        )
-        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
-    else()
-        message(WARNING "Could not find ASIO headers for NetworkSystem - network_bridge.cpp may fail to compile")
-    endif()
-elseif(TARGET NetworkSystem)
-    list(APPEND MESSAGING_CORE_LIBS NetworkSystem)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
+        # NetworkSystem requires ASIO headers for its public API
+        # Since NetworkSystem uses ASIO as PRIVATE, we need to find and add it manually
+        # First try to find ASIO in the build directory (FetchContent location)
+        if(EXISTS "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
+            target_include_directories(messaging_system_core SYSTEM PRIVATE
+                "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include"
+            )
+            message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
+        # Try NetworkSystem's build directory
+        elseif(EXISTS "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
+            target_include_directories(messaging_system_core SYSTEM PRIVATE
+                "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include"
+            )
+            message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
+        else()
+            message(WARNING "Could not find ASIO headers for NetworkSystem - network_bridge.cpp may fail to compile")
+        endif()
+    elseif(TARGET NetworkSystem)
+        list(APPEND MESSAGING_CORE_LIBS NetworkSystem)
+        target_compile_definitions(messaging_system_core PUBLIC HAS_NETWORK_SYSTEM)
 
-    # NetworkSystem requires ASIO headers for its public API
-    if(EXISTS "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
-        target_include_directories(messaging_system_core SYSTEM PRIVATE
-            "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include"
-        )
-        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
-    elseif(EXISTS "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
-        target_include_directories(messaging_system_core SYSTEM PRIVATE
-            "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include"
-        )
-        message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
-    else()
-        message(WARNING "Could not find ASIO headers for NetworkSystem - network_bridge.cpp may fail to compile")
+        # NetworkSystem requires ASIO headers for its public API
+        if(EXISTS "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
+            target_include_directories(messaging_system_core SYSTEM PRIVATE
+                "${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include"
+            )
+            message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/network_system_asio-src/asio/include")
+        elseif(EXISTS "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
+            target_include_directories(messaging_system_core SYSTEM PRIVATE
+                "${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include"
+            )
+            message(STATUS "Added ASIO include for NetworkSystem: ${CMAKE_BINARY_DIR}/_deps/networksystem-build/_deps/network_system_asio-src/asio/include")
+        else()
+            message(WARNING "Could not find ASIO headers for NetworkSystem - network_bridge.cpp may fail to compile")
+        endif()
     endif()
 endif()
 
-if(MESSAGING_CORE_LIBS)
+if(MESSAGING_CORE_LIBS AND MESSAGING_BUILD_LEGACY_CODE)
+    # Only link libraries for compiled version
     target_link_libraries(messaging_system_core PUBLIC ${MESSAGING_CORE_LIBS})
     target_compile_definitions(messaging_system_core PUBLIC MESSAGING_USE_EXTERNAL_SYSTEMS)
+elseif(MESSAGING_CORE_LIBS)
+    # For INTERFACE library, only add compile definitions
+    target_compile_definitions(messaging_system_core INTERFACE MESSAGING_USE_EXTERNAL_SYSTEMS)
 endif()
 
 # Treat external dependency headers as system to avoid propagating their warnings.
@@ -675,34 +691,45 @@ set(_messaging_external_include_targets
     NetworkSystem::network
     NetworkSystem
 )
-foreach(_dep_target IN LISTS _messaging_external_include_targets)
-    if(TARGET "${_dep_target}")
-        get_target_property(_dep_includes "${_dep_target}" INTERFACE_INCLUDE_DIRECTORIES)
-        if(_dep_includes)
-            target_include_directories(messaging_system_core SYSTEM PUBLIC ${_dep_includes})
+if(MESSAGING_BUILD_LEGACY_CODE)
+    # Only for compiled version
+    foreach(_dep_target IN LISTS _messaging_external_include_targets)
+        if(TARGET "${_dep_target}")
+            get_target_property(_dep_includes "${_dep_target}" INTERFACE_INCLUDE_DIRECTORIES)
+            if(_dep_includes)
+                target_include_directories(messaging_system_core SYSTEM PUBLIC ${_dep_includes})
+            endif()
         endif()
-    endif()
-endforeach()
+    endforeach()
+endif()
 
 if(USE_STD_FORMAT)
-    target_compile_definitions(messaging_system_core PUBLIC USE_STD_FORMAT)
+    if(MESSAGING_BUILD_LEGACY_CODE)
+        target_compile_definitions(messaging_system_core PUBLIC USE_STD_FORMAT)
+    else()
+        target_compile_definitions(messaging_system_core INTERFACE USE_STD_FORMAT)
+    endif()
 endif()
 
-# Find and link yaml-cpp for configuration
-find_package(yaml-cpp QUIET)
-if(yaml-cpp_FOUND AND TARGET yaml-cpp::yaml-cpp)
-    target_link_libraries(messaging_system_core PUBLIC yaml-cpp::yaml-cpp)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_YAML_CPP)
-    message(STATUS "  ✓ yaml-cpp found")
-elseif(yaml-cpp_FOUND AND TARGET yaml-cpp)
-    target_link_libraries(messaging_system_core PUBLIC yaml-cpp)
-    target_compile_definitions(messaging_system_core PUBLIC HAS_YAML_CPP)
-    message(STATUS "  ✓ yaml-cpp found (non-namespaced)")
+# Find and link yaml-cpp for configuration (only for compiled version)
+if(MESSAGING_BUILD_LEGACY_CODE)
+    find_package(yaml-cpp QUIET)
+    if(yaml-cpp_FOUND AND TARGET yaml-cpp::yaml-cpp)
+        target_link_libraries(messaging_system_core PUBLIC yaml-cpp::yaml-cpp)
+        target_compile_definitions(messaging_system_core PUBLIC HAS_YAML_CPP)
+        message(STATUS "  ✓ yaml-cpp found")
+    elseif(yaml-cpp_FOUND AND TARGET yaml-cpp)
+        target_link_libraries(messaging_system_core PUBLIC yaml-cpp)
+        target_compile_definitions(messaging_system_core PUBLIC HAS_YAML_CPP)
+        message(STATUS "  ✓ yaml-cpp found (non-namespaced)")
+    else()
+        message(STATUS "  ✗ yaml-cpp not found (ConfigLoader disabled)")
+    endif()
+    target_compile_features(messaging_system_core PUBLIC cxx_std_20)
 else()
-    message(STATUS "  ✗ yaml-cpp not found (ConfigLoader disabled)")
+    # Header-only library doesn't need compile features
+    message(STATUS "Phase 1: Building header-only library (no yaml-cpp required)")
 endif()
-
-target_compile_features(messaging_system_core PUBLIC cxx_std_20)
 
 # ============================================================================
 # Main Executable (Example/Demo)
