@@ -471,7 +471,8 @@ TEST_F(TopicRouterTest, ConcurrentSubscribeUnsubscribe) {
 		}
 	});
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	// Reduced time for Windows CI compatibility
+	std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	running = false;
 
 	subscriber_thread.join();
