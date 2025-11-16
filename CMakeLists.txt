@@ -486,13 +486,8 @@ if(FALSE AND MESSAGING_USE_EXTERNAL_SYSTEMS)
     endif()
 
 else()
-    message(FATAL_ERROR
-        "MESSAGING_USE_EXTERNAL_SYSTEMS is OFF. This mode is no longer supported.\n"
-        "Please use one of the following:\n"
-        "  - Local development: cmake --preset dev-local (requires sibling directories)\n"
-        "  - FetchContent: cmake --preset dev-fetchcontent\n"
-        "  - Production: cmake --preset default (requires installed packages)\n"
-    )
+    # Phase 1: Header-only library doesn't need external systems
+    message(STATUS "Phase 1: Building header-only library without external systems")
 endif()
 
 # ============================================================================
