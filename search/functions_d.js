@@ -1,8 +1,0 @@
-var searchData=
-[
-  ['object_5fpool_0',['object_pool',['../d5/d6f/classkcenon_1_1messaging_1_1core_1_1object__pool.html#ab0636fa1422a20faa47051cf7cafb64e',1,'kcenon::messaging::core::object_pool']]],
-  ['operator_28_29_1',['operator()',['../d0/d85/classPyMessageHandler.html#ae5c0a7eca6ed7813181447c77f1b45ec',1,'PyMessageHandler']]],
-  ['operator_3d_2',['operator=',['../de/d4b/classkcenon_1_1messaging_1_1core_1_1message__bus.html#a839d878fdb48e1def6f8e6964ea9286e',1,'kcenon::messaging::core::message_bus::operator=(const message_bus &amp;)=delete'],['../de/d4b/classkcenon_1_1messaging_1_1core_1_1message__bus.html#a124a9ae816fc582d6f434f42ba1daab6',1,'kcenon::messaging::core::message_bus::operator=(message_bus &amp;&amp;)=delete'],['../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a39e0adac59d942dbc78178937995f71b',1,'kcenon::messaging::core::message::operator=(const message &amp;)=default'],['../dc/d1b/classkcenon_1_1messaging_1_1core_1_1message.html#a451dd9a663bd45ee772b4ba41e0cb63e',1,'kcenon::messaging::core::message::operator=(message &amp;&amp;)=default'],['../d5/d8f/classkcenon_1_1messaging_1_1integrations_1_1service__container.html#abddaa2809d682977a1828f6e62633f50',1,'kcenon::messaging::integrations::service_container::operator=()']]],
-  ['optimize_5ffor_5fdevelopment_3',['optimize_for_development',['../d0/df9/classkcenon_1_1messaging_1_1core_1_1production__config__optimizer.html#ad67d9cbaa553dbc18825c7cc1fdab309',1,'kcenon::messaging::core::production_config_optimizer']]],
-  ['optimize_5ffor_5fproduction_4',['optimize_for_production',['../d0/df9/classkcenon_1_1messaging_1_1core_1_1production__config__optimizer.html#ae9e9bb8101416de1ec2bbfadd686bdec',1,'kcenon::messaging::core::production_config_optimizer']]]
-];
