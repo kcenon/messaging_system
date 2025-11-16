@@ -742,7 +742,8 @@ endif()
 # Main Executable (Example/Demo)
 # ============================================================================
 
-if(MESSAGING_BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+# Phase 1: Skip main executable (requires legacy implementation)
+if(MESSAGING_BUILD_EXAMPLES AND MESSAGING_BUILD_LEGACY_CODE AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
     add_executable(messaging_system
         src/main.cpp
     )
@@ -751,6 +752,8 @@ if(MESSAGING_BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
         PRIVATE
             messaging_system_core
     )
+elseif(MESSAGING_BUILD_EXAMPLES AND NOT MESSAGING_BUILD_LEGACY_CODE)
+    message(STATUS "Skipping main executable (requires legacy implementation)")
 endif()
 
 # ============================================================================
@@ -759,34 +762,50 @@ endif()
 
 option(MESSAGING_BUILD_APPLICATION_LAYER "Build application layer with high-level messaging APIs" ON)
 
-if(MESSAGING_BUILD_APPLICATION_LAYER AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/application_layer/CMakeLists.txt)
+# Phase 1: Skip application layer (requires legacy implementation)
+if(MESSAGING_BUILD_APPLICATION_LAYER AND MESSAGING_BUILD_LEGACY_CODE AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/application_layer/CMakeLists.txt)
     message(STATUS "Building application layer (messaging_services)")
     add_subdirectory(application_layer)
+elseif(MESSAGING_BUILD_APPLICATION_LAYER AND NOT MESSAGING_BUILD_LEGACY_CODE)
+    message(STATUS "Skipping application layer (requires legacy implementation)")
 endif()
 
 # ============================================================================
 # Tests
 # ============================================================================
 
-if(MESSAGING_BUILD_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt)
+# Phase 1: Skip legacy tests (require legacy implementation)
+if(MESSAGING_BUILD_TESTS AND MESSAGING_BUILD_LEGACY_CODE AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt)
     enable_testing()
     add_subdirectory(test)
+    message(STATUS "Building legacy tests")
+elseif(MESSAGING_BUILD_TESTS AND NOT MESSAGING_BUILD_LEGACY_CODE)
+    message(STATUS "Skipping legacy tests (requires legacy implementation)")
+    message(STATUS "Phase 1: Only header-only library - no tests to run")
 endif()
 
 # ============================================================================
 # Benchmarks
 # ============================================================================
 
-if(MESSAGING_BUILD_BENCHMARKS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/benchmarks)
+# Phase 1: Skip benchmarks (require legacy implementation)
+if(MESSAGING_BUILD_BENCHMARKS AND MESSAGING_BUILD_LEGACY_CODE AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/benchmarks)
     add_subdirectory(benchmarks)
+    message(STATUS "Building benchmarks")
+elseif(MESSAGING_BUILD_BENCHMARKS AND NOT MESSAGING_BUILD_LEGACY_CODE)
+    message(STATUS "Skipping benchmarks (requires legacy implementation)")
 endif()
 
 # ============================================================================
 # Examples
 # ============================================================================
 
-if(MESSAGING_BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples)
+# Phase 1: Skip examples (require legacy implementation)
+if(MESSAGING_BUILD_EXAMPLES AND MESSAGING_BUILD_LEGACY_CODE AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples)
     add_subdirectory(examples)
+    message(STATUS "Building examples")
+elseif(MESSAGING_BUILD_EXAMPLES AND NOT MESSAGING_BUILD_LEGACY_CODE)
+    message(STATUS "Skipping examples (requires legacy implementation)")
 endif()
 
 # ============================================================================
