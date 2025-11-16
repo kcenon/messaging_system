@@ -11,6 +11,15 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Ensure C++20 is properly set for all compilers
+if(MSVC)
+    # MSVC requires explicit /std:c++20 flag
+    add_compile_options(/std:c++20)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    # GCC and Clang use -std=c++20
+    add_compile_options(-std=c++20)
+endif()
+
 # Export compile commands for IDEs
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -83,9 +92,8 @@ endif()
 # External System Integration
 # ============================================================================
 
-# Phase 1: Header-only library - skip all external system integration
-# External systems will be integrated in Phase 2 when implementation is added
-if(FALSE AND MESSAGING_USE_EXTERNAL_SYSTEMS)
+# Phase 2: Enable external system integration for message implementation
+if(MESSAGING_USE_EXTERNAL_SYSTEMS)
     message(STATUS "Using external system packages")
 
     if(MESSAGING_USE_LOCAL_SYSTEMS)
@@ -515,20 +523,66 @@ endif()
 # Messaging System Core Library
 # ============================================================================
 
-# Phase 1: Header-only library (interfaces and error codes only)
-# Implementation will be added in future phases
-message(STATUS "Building Phase 1: Header-only library")
+# Phase 2: Core message types implementation
+message(STATUS "Building Phase 2: Core message types")
 
-add_library(messaging_system_core INTERFACE)
-
-target_include_directories(messaging_system_core
-    INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
+# Collect source files
+set(MESSAGING_CORE_SOURCES
+    src/impl/core/message.cpp
 )
 
-# Phase 1: Header-only library - no dependencies or features needed
-message(STATUS "Phase 1: Header-only library - no tests, examples, or dependencies")
+# Create static library
+add_library(messaging_system_core STATIC ${MESSAGING_CORE_SOURCES})
+
+# Set target properties
+set_target_properties(messaging_system_core PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+    POSITION_INDEPENDENT_CODE ON
+)
+
+target_include_directories(messaging_system_core
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/impl
+)
+
+# Link dependencies
+# container_system is required for value_container
+if(TARGET container)
+    target_link_libraries(messaging_system_core PUBLIC container)
+elseif(TARGET ContainerSystem::container)
+    target_link_libraries(messaging_system_core PUBLIC ContainerSystem::container)
+endif()
+
+# common_system is required for Result<T>
+if(TARGET common)
+    target_link_libraries(messaging_system_core PUBLIC common)
+elseif(TARGET CommonSystem::common)
+    target_link_libraries(messaging_system_core PUBLIC CommonSystem::common)
+endif()
+
+# Add compile definitions
+target_compile_definitions(messaging_system_core
+    PUBLIC
+        KCENON_MESSAGING_SYSTEM_AVAILABLE
+)
+
+# Phase 2: Message types - container_system and common_system required
+message(STATUS "Phase 2: Core message types with container_system integration")
+
+# ============================================================================
+# Tests
+# ============================================================================
+
+if(MESSAGING_BUILD_TESTS)
+    include(CTest)
+    enable_testing()
+    add_subdirectory(test)
+endif()
 
 # ============================================================================
 # Documentation
