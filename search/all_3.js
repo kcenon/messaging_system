@@ -5,7 +5,7 @@ var searchData=
   ['3_20–_20성능_20및_20회귀_20검증_20strong_2',['&lt;strong&gt;Task 4.3 – 성능 및 회귀 검증&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md829',1,'']]],
   ['3_20–_20위험_20및_20마이그레이션_20전략_20확정_20strong_3',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md809',1,'']]],
   ['3_20–_20iexecutor_20주입식_20아키텍처_20구현_20strong_4',['&lt;strong&gt;Task 2.3 – IExecutor 주입식 아키텍처 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md819',1,'']]],
-  ['3_20⏳_20pending_5',['Phase 3: Message Queue (Week 3) - ⏳ PENDING',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md427',1,'']]],
+  ['3_20✅_20completed_5',['Phase 3: Message Queue (Week 3) - ✅ COMPLETED',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md427',1,'']]],
   ['3_20인프라_20통합_20계층_20구축_6',['Phase 3. 인프라 통합 계층 구축',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md821',1,'']]],
   ['3_201_7',['1. Network Bridge (Task 3.1)',['../d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md672',1,'']]],
   ['3_201_20–_20네트워크_20경계_20계층_20구현_20strong_8',['&lt;strong&gt;Task 3.1 – 네트워크 경계 계층 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md822',1,'']]],
@@ -46,7 +46,7 @@ var searchData=
   ['3_3a_20infrastructure_20integration_20✅_43',['Phase 3: Infrastructure Integration ✅',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md754',1,'']]],
   ['3_3a_20infrastructure_20integration_20design_20document_44',['Phase 3: Infrastructure Integration - Design Document',['../d7/de1/md_docs_2phase3_2DESIGN.html',1,'']]],
   ['3_3a_20message_20queue_20and_20broker_20week_203_45',['Phase 3: Message Queue and Broker (Week 3)',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md396',1,'']]],
-  ['3_3a_20message_20queue_20week_203_20⏳_20pending_46',['Phase 3: Message Queue (Week 3) - ⏳ PENDING',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md427',1,'']]],
+  ['3_3a_20message_20queue_20week_203_20✅_20completed_46',['Phase 3: Message Queue (Week 3) - ✅ COMPLETED',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md427',1,'']]],
   ['3_3a_20monadic_20chaining_47',['Pattern 3: Monadic Chaining',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md653',1,'']]],
   ['3_3a_20run_20your_20application_48',['Step 3: Run Your Application',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md977',1,'']]]
 ];
