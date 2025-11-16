@@ -1,11 +1,10 @@
 # Unit tests for messaging_system core
 
-# Add test executable
+# Test: message
 add_executable(test_message
     test_message.cpp
 )
 
-# Link dependencies
 target_link_libraries(test_message
     PRIVATE
         messaging_system_core
@@ -13,5 +12,18 @@ target_link_libraries(test_message
         GTest::gtest_main
 )
 
-# Add test to CTest
 add_test(NAME test_message COMMAND test_message)
+
+# Test: message_queue
+add_executable(test_message_queue
+    test_message_queue.cpp
+)
+
+target_link_libraries(test_message_queue
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME test_message_queue COMMAND test_message_queue)

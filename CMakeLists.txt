@@ -523,12 +523,13 @@ endif()
 # Messaging System Core Library
 # ============================================================================
 
-# Phase 2: Core message types implementation
-message(STATUS "Building Phase 2: Core message types")
+# Phase 2-3: Core message types and message queue implementation
+message(STATUS "Building Phase 2-3: Core message types and message queue")
 
 # Collect source files
 set(MESSAGING_CORE_SOURCES
     src/impl/core/message.cpp
+    src/impl/core/message_queue.cpp
 )
 
 # Create static library
