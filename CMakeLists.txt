@@ -11,6 +11,15 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Ensure C++20 is properly set for all compilers
+if(MSVC)
+    # MSVC requires explicit /std:c++20 flag
+    add_compile_options(/std:c++20)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    # GCC and Clang use -std=c++20
+    add_compile_options(-std=c++20)
+endif()
+
 # Export compile commands for IDEs
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
