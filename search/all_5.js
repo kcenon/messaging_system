@@ -2,7 +2,7 @@ var searchData=
 [
   ['5_0',['5',['../db/d5d/md_docs_2phase4_2DESIGN.html#autotoc_md694',1,'6. Deployment Artifacts (Task 4.5)'],['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md403',1,'Phase 5: Topic Router and Pub/Sub (Week 5)']]],
   ['5_20–_20출시_20체크리스트_20런북_20작성_20strong_1',['&lt;strong&gt;Task 4.5 – 출시 체크리스트/런북 작성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md831',1,'']]],
-  ['5_20⏳_20pending_2',['Phase 5: Topic Router (Week 5) - ⏳ PENDING',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md429',1,'']]],
+  ['5_20✅_20completed_2',['Phase 5: Topic Router (Week 5) - ✅ COMPLETED',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md429',1,'']]],
   ['5_201_20topic_20router_20implementation_3',['5.1 Topic Router Implementation',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md404',1,'']]],
   ['5_20adapter_20pattern_4',['5. Adapter Pattern',['../d5/dca/md_docs_2DESIGN__PATTERNS.html#autotoc_md259',1,'']]],
   ['5_20configloader_20tests_20test_5fconfig_5floader_20cpp_5',['5. ConfigLoader Tests (test_config_loader.cpp)',['../df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md713',1,'']]],
@@ -13,5 +13,5 @@ var searchData=
   ['5_3a_20build_20system_20issues_10',['Risk 5: Build System Issues',['../d3/d70/md_docs_2phase0_2MIGRATION__STRATEGY.html#autotoc_md609',1,'']]],
   ['5_3a_20performance_20degradation_20with_20many_20topics_11',['Issue 5: Performance Degradation with Many Topics',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md927',1,'']]],
   ['5_3a_20topic_20router_20and_20pub_20sub_20week_205_12',['Phase 5: Topic Router and Pub/Sub (Week 5)',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md403',1,'']]],
-  ['5_3a_20topic_20router_20week_205_20⏳_20pending_13',['Phase 5: Topic Router (Week 5) - ⏳ PENDING',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md429',1,'']]]
+  ['5_3a_20topic_20router_20week_205_20✅_20completed_13',['Phase 5: Topic Router (Week 5) - ✅ COMPLETED',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md429',1,'']]]
 ];

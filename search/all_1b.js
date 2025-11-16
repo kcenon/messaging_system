@@ -80,7 +80,7 @@ var searchData=
   ['router_77',['router',['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md649',1,'4. Topic Router'],['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md657',1,'Topic Router'],['../d6/df5/md_docs_2phase2_2DESIGN.html#autotoc_md662',1,'Week 4: Topic Router']]],
   ['router_20and_20pub_20sub_20week_205_78',['Phase 5: Topic Router and Pub/Sub (Week 5)',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md403',1,'']]],
   ['router_20implementation_79',['5.1 Topic Router Implementation',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md404',1,'']]],
-  ['router_20week_205_20⏳_20pending_80',['Phase 5: Topic Router (Week 5) - ⏳ PENDING',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md429',1,'']]],
+  ['router_20week_205_20✅_20completed_80',['Phase 5: Topic Router (Week 5) - ✅ COMPLETED',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md429',1,'']]],
   ['routing_20tt_20test_5fcomplex_5frouting_5fscenario_20tt_81',['2. Complex Routing (&lt;tt&gt;test_complex_routing_scenario&lt;/tt&gt;)',['../df/d5e/md_docs_2phase4_2TEST__SUMMARY.html#autotoc_md718',1,'']]],
   ['rules_82',['rules',['../df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md220',1,'Auto-scaling Rules'],['../df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md235',1,'Firewall Rules']]],
   ['run_83',['2. Build and Run',['../d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md358',1,'']]],
