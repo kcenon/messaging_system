@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['로깅_20모니터링_20데이터_20흐름_20통합_20strong_0',['&lt;strong&gt;Task 3.3 – 로깅/모니터링 데이터 흐름 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md880',1,'']]]
+  ['맵핑_20strong_0',['&lt;strong&gt;Task 0.1 – 시스템 인터페이스 맵핑&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md807',1,'']]]
 ];

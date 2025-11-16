@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['주입식_20아키텍처_20구현_20strong_0',['&lt;strong&gt;Task 2.3 – IExecutor 주입식 아키텍처 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md875',1,'']]]
+  ['차단_20계획_20수립_20strong_0',['&lt;strong&gt;Task 0.4 – 레거시 구현 차단 계획 수립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md810',1,'']]]
 ];

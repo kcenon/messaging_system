@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['기반_20정비_0',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md861',1,'']]],
-  ['기반_20플로우_20제로화_20strong_1',['&lt;strong&gt;Task 2.2 – Result 기반 플로우 제로화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md874',1,'']]],
-  ['기준_20최종_2',['성공 기준 (최종)',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md891',1,'']]]
+  ['라우팅_20토픽_20엔진_20정비_20strong_0',['&lt;strong&gt;Task 2.4 – 라우팅/토픽 엔진 정비&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md820',1,'']]]
 ];

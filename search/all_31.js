@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['계층_20구축_0',['Phase 3. 인프라 통합 계층 구축',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md877',1,'']]],
-  ['계층_20구현_20strong_1',['&lt;strong&gt;Task 3.1 – 네트워크 경계 계층 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md878',1,'']]],
-  ['계획_2',['Messaging System 재구성 실행 계획',['../d7/d01/md_docs_2REBUILD__PLAN.html',1,'']]],
-  ['계획_20수립_20strong_3',['&lt;strong&gt;Task 0.4 – 레거시 구현 차단 계획 수립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md866',1,'']]]
+  ['기반_20정비_0',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md805',1,'']]],
+  ['기반_20플로우_20제로화_20strong_1',['&lt;strong&gt;Task 2.2 – Result 기반 플로우 제로화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md818',1,'']]],
+  ['기준_20최종_2',['성공 기준 (최종)',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md835',1,'']]]
 ];

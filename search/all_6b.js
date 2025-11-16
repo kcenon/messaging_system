@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['환경_20감사_20strong_0',['&lt;strong&gt;Task 0.2 – 빌드 환경 감사&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md864',1,'']]]
+  ['🌐_20platform_20support_0',['🌐 Platform Support',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1024',1,'']]]
 ];

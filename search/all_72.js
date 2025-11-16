@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['💬_20feedback_0',['💬 Feedback',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md857',1,'']]]
+  ['📋_20appendix_0',['📋 Appendix',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1031',1,'']]],
+  ['📋_20implementation_20status_1',['📋 Implementation Status',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md949',1,'']]]
 ];

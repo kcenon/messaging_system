@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d2/d41/md_docs_2GETTING__STARTED.html'
   <div class="headertitle"><div class="title">Getting Started</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md388"></a> Welcome to the Messaging System! This guide will help you quickly set up and start using the high-performance C++20 distributed messaging framework.</p>
-<h1><a class="anchor" id="autotoc_md389"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md332"></a> Welcome to the Messaging System! This guide will help you quickly set up and start using the high-performance C++20 distributed messaging framework.</p>
+<h1><a class="anchor" id="autotoc_md333"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Prerequisites</li>
@@ -104,9 +104,9 @@ Table of Contents</h1>
 <li>First Application</li>
 <li>Next Steps</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md390"></a>
+<h1><a class="anchor" id="autotoc_md334"></a>
 Prerequisites</h1>
-<h2><a class="anchor" id="autotoc_md391"></a>
+<h2><a class="anchor" id="autotoc_md335"></a>
 System Requirements</h2>
 <ul>
 <li><b>Operating System</b>: Linux, macOS 10.15+, Windows 10+</li>
@@ -120,7 +120,7 @@ System Requirements</h2>
 <li><b>Memory</b>: Minimum 4GB RAM (8GB+ recommended for development)</li>
 <li><b>Disk Space</b>: 2GB for full build with dependencies</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md392"></a>
+<h2><a class="anchor" id="autotoc_md336"></a>
 Development Dependencies</h2>
 <ul>
 <li><b>Git</b>: For cloning the repository and submodules</li>
@@ -128,7 +128,7 @@ Development Dependencies</h2>
 <li><b>PostgreSQL</b>: 12+ (optional, for database module)</li>
 <li><b>Python</b>: 3.8+ (optional, for Python bindings)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md393"></a>
+<h2><a class="anchor" id="autotoc_md337"></a>
 Runtime Dependencies</h2>
 <p>The messaging system automatically manages most dependencies through vcpkg:</p>
 <ul>
@@ -137,9 +137,9 @@ Runtime Dependencies</h2>
 <li><b>Google Test</b>: Testing framework (development only)</li>
 <li><b>Google Benchmark</b>: Performance testing (development only)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md394"></a>
+<h1><a class="anchor" id="autotoc_md338"></a>
 Installation</h1>
-<h2><a class="anchor" id="autotoc_md395"></a>
+<h2><a class="anchor" id="autotoc_md339"></a>
 1. Clone the Repository</h2>
 <div class="fragment"><div class="line"># Clone the main repository</div>
 <div class="line">git clone &lt;repository-url&gt; messaging_system</div>
@@ -147,9 +147,9 @@ Installation</h1>
 <div class="line"> </div>
 <div class="line"># Initialize submodules (includes thread_system and vcpkg)</div>
 <div class="line">git submodule update --init --recursive</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md396"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md340"></a>
 2. Platform-Specific Setup</h2>
-<h3><a class="anchor" id="autotoc_md397"></a>
+<h3><a class="anchor" id="autotoc_md341"></a>
 Linux (Ubuntu/Debian)</h3>
 <div class="fragment"><div class="line"># Install basic development tools</div>
 <div class="line">sudo apt update</div>
@@ -168,7 +168,7 @@ Linux (Ubuntu/Debian)</h3>
 <div class="line"> </div>
 <div class="line"># Install Python development headers (optional)</div>
 <div class="line">sudo apt install -y python3-dev python3-pip</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md398"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md342"></a>
 macOS</h3>
 <div class="fragment"><div class="line"># Install Xcode command line tools</div>
 <div class="line">xcode-select --install</div>
@@ -184,7 +184,7 @@ macOS</h3>
 <div class="line"> </div>
 <div class="line"># Install Python (optional)</div>
 <div class="line">brew install python@3.9</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md399"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md343"></a>
 Windows</h3>
 <ol type="1">
 <li><b>Install Visual Studio 2019 or later</b> with C++ development tools</li>
@@ -192,17 +192,17 @@ Windows</h3>
 <li><b>Install CMake</b> (3.16+) from <a href="https://cmake.org/download/">cmake.org</a></li>
 <li><b>Install PostgreSQL</b> (optional) from <a href="https://www.postgresql.org/download/windows/">postgresql.org</a></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md400"></a>
+<h2><a class="anchor" id="autotoc_md344"></a>
 3. Build the System</h2>
 <p>The project includes automated build scripts for all platforms:</p>
-<h3><a class="anchor" id="autotoc_md401"></a>
+<h3><a class="anchor" id="autotoc_md345"></a>
 Quick Build (Recommended)</h3>
 <div class="fragment"><div class="line"># Build with default configuration</div>
 <div class="line">./build.sh</div>
 <div class="line"> </div>
 <div class="line"># On Windows (use PowerShell or Git Bash)</div>
 <div class="line">./build.bat</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md402"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md346"></a>
 Custom Build Options</h3>
 <div class="fragment"><div class="line"># Build with specific options</div>
 <div class="line">./build.sh --release --tests --python-bindings</div>
@@ -215,7 +215,7 @@ Custom Build Options</h3>
 <div class="line"># --python-bindings: Build Python bindings</div>
 <div class="line"># --no-database    : Skip database module</div>
 <div class="line"># --clean          : Clean before building</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md403"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md347"></a>
 4. Verify Installation</h2>
 <div class="fragment"><div class="line"># Check if build was successful</div>
 <div class="line">ls build/bin/</div>
@@ -227,21 +227,21 @@ Custom Build Options</h3>
 <div class="line"> </div>
 <div class="line"># Run sample application</div>
 <div class="line">./production_ready_example</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md404"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md348"></a>
 Quick Start</h1>
-<h2><a class="anchor" id="autotoc_md405"></a>
+<h2><a class="anchor" id="autotoc_md349"></a>
 1. Basic Message Bus Usage</h2>
 <p>Create a simple messaging application:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="../../d9/d29/message__bus_8h.html">kcenon/messaging/core/message_bus.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="../../db/d5d/basic__usage__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {</div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="comment">// Initialize message bus</span></div>
-<div class="line">    <a class="code hl_class" href="../../de/d4b/classkcenon_1_1messaging_1_1core_1_1message__bus.html">kcenon::messaging::core::message_bus</a> bus;</div>
-<div class="line">    bus.<a class="code hl_function" href="../../de/d4b/classkcenon_1_1messaging_1_1core_1_1message__bus.html#ae5d018cd9c042cb6ac992ab4e9fbca48">initialize</a>();</div>
+<div class="line">    kcenon::messaging::core::message_bus bus;</div>
+<div class="line">    bus.initialize();</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Subscribe to messages</span></div>
-<div class="line">    bus.<a class="code hl_function" href="../../de/d4b/classkcenon_1_1messaging_1_1core_1_1message__bus.html#a7c470c9f049d0045b2d7d2797634cbab">subscribe</a>(<span class="stringliteral">&quot;user.login&quot;</span>, [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; message) {</div>
+<div class="line">    bus.subscribe(<span class="stringliteral">&quot;user.login&quot;</span>, [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; message) {</div>
 <div class="line">        <span class="keyword">auto</span> payload = message.get_payload();</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;User logged in: &quot;</span></div>
 <div class="line">                  &lt;&lt; payload.get&lt;std::string&gt;(<span class="stringliteral">&quot;username&quot;</span>) &lt;&lt; std::endl;</div>
@@ -249,32 +249,24 @@ Quick Start</h1>
 <div class="line">    });</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Publish a message</span></div>
-<div class="line">    <a class="code hl_struct" href="../../d9/d87/structkcenon_1_1messaging_1_1core_1_1message__payload.html">kcenon::messaging::core::message_payload</a> payload;</div>
-<div class="line">    payload.<a class="code hl_function" href="../../d9/d87/structkcenon_1_1messaging_1_1core_1_1message__payload.html#a9daa7c303354b40b10f08887097f122a">set</a>(<span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;john_doe&quot;</span>);</div>
-<div class="line">    payload.<a class="code hl_function" href="../../d9/d87/structkcenon_1_1messaging_1_1core_1_1message__payload.html#a9daa7c303354b40b10f08887097f122a">set</a>(<span class="stringliteral">&quot;timestamp&quot;</span>, std::time(<span class="keyword">nullptr</span>));</div>
+<div class="line">    kcenon::messaging::core::message_payload payload;</div>
+<div class="line">    payload.set(<span class="stringliteral">&quot;username&quot;</span>, <span class="stringliteral">&quot;john_doe&quot;</span>);</div>
+<div class="line">    payload.set(<span class="stringliteral">&quot;timestamp&quot;</span>, std::time(<span class="keyword">nullptr</span>));</div>
 <div class="line"> </div>
-<div class="line">    bus.<a class="code hl_function" href="../../de/d4b/classkcenon_1_1messaging_1_1core_1_1message__bus.html#a5062b8819d3d88351c4ad0205c24c4f5">publish</a>(<span class="stringliteral">&quot;user.login&quot;</span>, payload);</div>
+<div class="line">    bus.publish(<span class="stringliteral">&quot;user.login&quot;</span>, payload);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Process messages for 1 second</span></div>
 <div class="line">    std::this_thread::sleep_for(std::chrono::seconds(1));</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="abasic__usage__example_8cpp_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="../../db/d5d/basic__usage__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> <a href="../../db/d5d/basic__usage__example_8cpp_source.html#l00015">basic_usage_example.cpp:15</a></div></div>
-<div class="ttc" id="aclasskcenon_1_1messaging_1_1core_1_1message__bus_html"><div class="ttname"><a href="../../de/d4b/classkcenon_1_1messaging_1_1core_1_1message__bus.html">kcenon::messaging::core::message_bus</a></div><div class="ttdef"><b>Definition</b> <a href="../../d9/d29/message__bus_8h_source.html#l00032">message_bus.h:32</a></div></div>
-<div class="ttc" id="aclasskcenon_1_1messaging_1_1core_1_1message__bus_html_a5062b8819d3d88351c4ad0205c24c4f5"><div class="ttname"><a href="../../de/d4b/classkcenon_1_1messaging_1_1core_1_1message__bus.html#a5062b8819d3d88351c4ad0205c24c4f5">kcenon::messaging::core::message_bus::publish</a></div><div class="ttdeci">bool publish(const message &amp;msg)</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d2f/message__bus_8cpp_source.html#l00236">message_bus.cpp:236</a></div></div>
-<div class="ttc" id="aclasskcenon_1_1messaging_1_1core_1_1message__bus_html_a7c470c9f049d0045b2d7d2797634cbab"><div class="ttname"><a href="../../de/d4b/classkcenon_1_1messaging_1_1core_1_1message__bus.html#a7c470c9f049d0045b2d7d2797634cbab">kcenon::messaging::core::message_bus::subscribe</a></div><div class="ttdeci">void subscribe(const std::string &amp;topic, message_handler handler)</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d2f/message__bus_8cpp_source.html#l00258">message_bus.cpp:258</a></div></div>
-<div class="ttc" id="aclasskcenon_1_1messaging_1_1core_1_1message__bus_html_ae5d018cd9c042cb6ac992ab4e9fbca48"><div class="ttname"><a href="../../de/d4b/classkcenon_1_1messaging_1_1core_1_1message__bus.html#ae5d018cd9c042cb6ac992ab4e9fbca48">kcenon::messaging::core::message_bus::initialize</a></div><div class="ttdeci">bool initialize()</div><div class="ttdef"><b>Definition</b> <a href="../../d0/d2f/message__bus_8cpp_source.html#l00193">message_bus.cpp:193</a></div></div>
-<div class="ttc" id="amessage__bus_8h_html"><div class="ttname"><a href="../../d9/d29/message__bus_8h.html">message_bus.h</a></div></div>
-<div class="ttc" id="astructkcenon_1_1messaging_1_1core_1_1message__payload_html"><div class="ttname"><a href="../../d9/d87/structkcenon_1_1messaging_1_1core_1_1message__payload.html">kcenon::messaging::core::message_payload</a></div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00064">message_types.h:64</a></div></div>
-<div class="ttc" id="astructkcenon_1_1messaging_1_1core_1_1message__payload_html_a9daa7c303354b40b10f08887097f122a"><div class="ttname"><a href="../../d9/d87/structkcenon_1_1messaging_1_1core_1_1message__payload.html#a9daa7c303354b40b10f08887097f122a">kcenon::messaging::core::message_payload::set</a></div><div class="ttdeci">void set(const std::string &amp;key, const T &amp;value)</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00071">message_types.h:71</a></div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md406"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md350"></a>
 2. Container-Based Data Handling</h2>
 <p>Work with type-safe containers:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;container/container.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>container_module;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="../../db/d5d/basic__usage__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {</div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="comment">// Create a container</span></div>
 <div class="line">    <span class="keyword">auto</span> container = std::make_shared&lt;value_container&gt;();</div>
 <div class="line"> </div>
@@ -302,14 +294,14 @@ Quick Start</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md407"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md351"></a>
 3. Network Client/Server</h2>
 <p>Set up basic networking:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;network/messaging_server.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;network/messaging_client.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>network_module;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="../../db/d5d/basic__usage__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {</div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="comment">// Create and start server</span></div>
 <div class="line">    <span class="keyword">auto</span> server = std::make_shared&lt;messaging_server&gt;(<span class="stringliteral">&quot;echo_server&quot;</span>);</div>
 <div class="line"> </div>
@@ -348,9 +340,9 @@ Quick Start</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md408"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md352"></a>
 Basic Usage</h1>
-<h2><a class="anchor" id="autotoc_md409"></a>
+<h2><a class="anchor" id="autotoc_md353"></a>
 Project Structure</h2>
 <p>Create a basic CMake project that uses the messaging system:</p>
 <div class="fragment"><div class="line"># CMakeLists.txt</div>
@@ -373,7 +365,7 @@ Project Structure</h2>
 <div class="line">    messaging_system::database</div>
 <div class="line">    messaging_system::thread_system</div>
 <div class="line">)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md410"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md354"></a>
 Environment Configuration</h2>
 <p>Set up environment variables for database connections:</p>
 <div class="fragment"><div class="line"># Database configuration</div>
@@ -390,7 +382,7 @@ Environment Configuration</h2>
 <div class="line"># Performance tuning</div>
 <div class="line">export THREAD_POOL_SIZE=8</div>
 <div class="line">export MESSAGE_BUFFER_SIZE=1048576</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md411"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md355"></a>
 Basic Configuration File</h2>
 <p>Create a configuration file for your application:</p>
 <div class="fragment"><div class="line">{</div>
@@ -417,10 +409,10 @@ Basic Configuration File</h2>
 <div class="line">    &quot;max_file_size&quot;: &quot;100MB&quot;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md412"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md356"></a>
 First Application</h1>
 <p>Let's build a complete chat server application:</p>
-<h2><a class="anchor" id="autotoc_md413"></a>
+<h2><a class="anchor" id="autotoc_md357"></a>
 1. Chat Server (chat_server.cpp)</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
@@ -493,10 +485,10 @@ First Application</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordtype">void</span> broadcast_message(<span class="keyword">const</span> std::string&amp; username, <span class="keyword">const</span> std::string&amp; text) {</div>
 <div class="line">        <span class="comment">// Create broadcast container</span></div>
-<div class="line">        <span class="keyword">auto</span> <a class="code hl_enumvalue" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ab605ea609b9dfcf295cfd5a7803dcd37">broadcast</a> = std::make_shared&lt;container_module::value_container&gt;();</div>
-<div class="line">        <a class="code hl_enumvalue" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ab605ea609b9dfcf295cfd5a7803dcd37">broadcast</a>-&gt;set_source(<span class="stringliteral">&quot;server&quot;</span>, <span class="stringliteral">&quot;chat&quot;</span>);</div>
-<div class="line">        <a class="code hl_enumvalue" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ab605ea609b9dfcf295cfd5a7803dcd37">broadcast</a>-&gt;set_target(<span class="stringliteral">&quot;all&quot;</span>, <span class="stringliteral">&quot;clients&quot;</span>);</div>
-<div class="line">        <a class="code hl_enumvalue" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ab605ea609b9dfcf295cfd5a7803dcd37">broadcast</a>-&gt;set_message_type(<span class="stringliteral">&quot;chat_broadcast&quot;</span>);</div>
+<div class="line">        <span class="keyword">auto</span> broadcast = std::make_shared&lt;container_module::value_container&gt;();</div>
+<div class="line">        broadcast-&gt;set_source(<span class="stringliteral">&quot;server&quot;</span>, <span class="stringliteral">&quot;chat&quot;</span>);</div>
+<div class="line">        broadcast-&gt;set_target(<span class="stringliteral">&quot;all&quot;</span>, <span class="stringliteral">&quot;clients&quot;</span>);</div>
+<div class="line">        broadcast-&gt;set_message_type(<span class="stringliteral">&quot;chat_broadcast&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">        <span class="keyword">auto</span> values = std::vector&lt;std::shared_ptr&lt;container_module::value&gt;&gt;{</div>
 <div class="line">            container_module::value_factory::create(<span class="stringliteral">&quot;username&quot;</span>,</div>
@@ -506,9 +498,9 @@ First Application</h1>
 <div class="line">            container_module::value_factory::create(<span class="stringliteral">&quot;timestamp&quot;</span>,</div>
 <div class="line">                container_module::int64_value, std::to_string(std::time(<span class="keyword">nullptr</span>)))</div>
 <div class="line">        };</div>
-<div class="line">        <a class="code hl_enumvalue" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ab605ea609b9dfcf295cfd5a7803dcd37">broadcast</a>-&gt;set_values(values);</div>
+<div class="line">        broadcast-&gt;set_values(values);</div>
 <div class="line"> </div>
-<div class="line">        std::string serialized = <a class="code hl_enumvalue" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ab605ea609b9dfcf295cfd5a7803dcd37">broadcast</a>-&gt;serialize();</div>
+<div class="line">        std::string serialized = broadcast-&gt;serialize();</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">// Send to all connected clients</span></div>
 <div class="line">        std::lock_guard&lt;std::mutex&gt; lock(clients_mutex_);</div>
@@ -520,7 +512,7 @@ First Application</h1>
 <div class="line">    }</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="../../db/d5d/basic__usage__example_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {</div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    ChatServer server;</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Starting chat server...&quot;</span> &lt;&lt; std::endl;</div>
@@ -538,8 +530,7 @@ First Application</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacekcenon_1_1messaging_1_1core_html_accdec513cff0fa75c42e41e381b490a4ab605ea609b9dfcf295cfd5a7803dcd37"><div class="ttname"><a href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4ab605ea609b9dfcf295cfd5a7803dcd37">kcenon::messaging::core::message_type::broadcast</a></div><div class="ttdeci">@ broadcast</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md414"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md358"></a>
 2. Build and Run</h2>
 <div class="fragment"><div class="line"># Add to CMakeLists.txt</div>
 <div class="line">add_executable(chat_server chat_server.cpp)</div>
@@ -553,16 +544,16 @@ First Application</h1>
 <div class="line"> </div>
 <div class="line"># Run</div>
 <div class="line">./build/bin/chat_server</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md415"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md359"></a>
 3. Test with Sample Client</h2>
 <div class="fragment"><div class="line"># Use the provided sample client</div>
 <div class="line">./build/bin/chat_client</div>
 <div class="line"> </div>
 <div class="line"># Or test with telnet</div>
 <div class="line">telnet localhost 8080</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md416"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md360"></a>
 Next Steps</h1>
-<h2><a class="anchor" id="autotoc_md417"></a>
+<h2><a class="anchor" id="autotoc_md361"></a>
 1. Explore Sample Applications</h2>
 <p>Check out the comprehensive examples in <code>application_layer/samples/</code>:</p>
 <div class="fragment"><div class="line"># IoT monitoring system</div>
@@ -573,7 +564,7 @@ Next Steps</h1>
 <div class="line"> </div>
 <div class="line"># Microservices orchestrator</div>
 <div class="line">./build/bin/microservices_orchestrator</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md418"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md362"></a>
 2. Advanced Features</h2>
 <ul>
 <li><b>Database Integration</b>: See Database System</li>
@@ -581,14 +572,14 @@ Next Steps</h1>
 <li><b>Production Deployment</b>: Follow Deployment Guide</li>
 <li><b>Python Integration</b>: Explore Python bindings</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md419"></a>
+<h2><a class="anchor" id="autotoc_md363"></a>
 3. Development</h2>
 <ul>
 <li><b>API Reference</b>: Complete documentation in API Reference</li>
 <li><b>Architecture</b>: System design in <a class="el" href="../../d2/d64/md_docs_2architecture.html">Architecture</a></li>
 <li><b>Contributing</b>: Guidelines in Developer Guide</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md420"></a>
+<h2><a class="anchor" id="autotoc_md364"></a>
 4. Community</h2>
 <ul>
 <li><b>GitHub Repository</b>: Source code, issues, and discussions</li>

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['준비_0',['Phase 4. 검증·배포 준비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md882',1,'']]],
-  ['준비_20및_20기반_20정비_1',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md861',1,'']]]
+  ['체크리스트_20런북_20작성_20strong_0',['&lt;strong&gt;Task 4.5 – 출시 체크리스트/런북 작성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md831',1,'']]]
 ];

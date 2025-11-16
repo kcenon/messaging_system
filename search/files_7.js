@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['legacy_5fremoval_5fplan_2emd_0',['LEGACY_REMOVAL_PLAN.md',['../d7/d1d/LEGACY__REMOVAL__PLAN_8md.html',1,'']]],
-  ['logging_5fadapter_2eh_1',['logging_adapter.h',['../d4/d18/logging__adapter_8h.html',1,'']]]
+  ['performance_2emd_0',['performance.md',['../de/d81/performance_8md.html',1,'']]],
+  ['project_5fcompletion_5fsummary_2emd_1',['PROJECT_COMPLETION_SUMMARY.md',['../d3/dcc/PROJECT__COMPLETION__SUMMARY_8md.html',1,'']]]
 ];

@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d0/d01/md_docs_2IMPROVEMENT__PLAN.html
   <div class="headertitle"><div class="title">Messaging System Improvement Plan</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md422"></a> <b>Version</b>: 2.0 <b>Date</b>: 2025-11-16 <b>Status</b>: In Progress - Phase 1 Complete <b>Last Updated</b>: 2025-11-16</p>
-<h1><a class="anchor" id="autotoc_md423"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md366"></a> <b>Version</b>: 2.0 <b>Date</b>: 2025-11-16 <b>Status</b>: In Progress - Phase 1 Complete <b>Last Updated</b>: 2025-11-16</p>
+<h1><a class="anchor" id="autotoc_md367"></a>
 Progress Overview</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -119,10 +119,10 @@ Progress Overview</h1>
 <td class="markdownTableBodyNone">Phase 9-10: Testing &amp; Docs   </td><td class="markdownTableBodyNone">⏳ Pending   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td></tr>
 </table>
 <p><b>Overall Progress</b>: 1/10 phases complete (10%)</p>
-<h1><a class="anchor" id="autotoc_md424"></a>
+<h1><a class="anchor" id="autotoc_md368"></a>
 Executive Summary</h1>
 <p>This document outlines a comprehensive plan to restructure the messaging_system to align with the architectural patterns established in other system modules (common_system, thread_system, logger_system, monitoring_system). The goal is to create a consistent, maintainable, and production-ready messaging infrastructure.</p>
-<h1><a class="anchor" id="autotoc_md425"></a>
+<h1><a class="anchor" id="autotoc_md369"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Current State Analysis</li>
@@ -135,9 +135,9 @@ Table of Contents</h1>
 <li>Timeline and Milestones</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md427"></a>
+<h1><a class="anchor" id="autotoc_md371"></a>
 Current State Analysis</h1>
-<h2><a class="anchor" id="autotoc_md428"></a>
+<h2><a class="anchor" id="autotoc_md372"></a>
 Existing Directory Structure</h2>
 <div class="fragment"><div class="line">messaging_system/</div>
 <div class="line">├── include/messaging_system/          # Legacy structure</div>
@@ -163,7 +163,7 @@ Existing Directory Structure</h2>
 <div class="line">└── src/</div>
 <div class="line">    ├── core/</div>
 <div class="line">    └── integration/</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md429"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md373"></a>
 Current Capabilities</h2>
 <p><b>Strengths</b>:</p><ul>
 <li>✅ Uses <code>Result&lt;T&gt;</code> pattern from common_system</li>
@@ -182,9 +182,9 @@ Current Capabilities</h2>
 <li>❌ Duplicate code between include/ and application_layer/</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md431"></a>
+<h1><a class="anchor" id="autotoc_md375"></a>
 Identified Issues</h1>
-<h2><a class="anchor" id="autotoc_md432"></a>
+<h2><a class="anchor" id="autotoc_md376"></a>
 1. Error Code Range Conflict</h2>
 <p><b>Problem</b>: messaging_system uses error codes -200 to -299, which conflicts with logger_system.</p>
 <p><b>Current</b>: </p><div class="fragment"><div class="line"><span class="comment">// messaging_system/include/messaging_system/error_codes.h</span></div>
@@ -194,7 +194,7 @@ Identified Issues</h1>
 <div class="line">    <span class="comment">// ...</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><p><b>Impact</b>: Build failures when both systems are integrated.</p>
-<h2><a class="anchor" id="autotoc_md433"></a>
+<h2><a class="anchor" id="autotoc_md377"></a>
 2. Directory Structure Inconsistency</h2>
 <p><b>Problem</b>: Other systems follow <code>kcenon/{system}/</code> pattern in include/, but messaging_system has both <code>messaging_system/</code> and <code>kcenon/messaging/</code>.</p>
 <p><b>Reference Pattern</b> (from logger_system, thread_system): </p><div class="fragment"><div class="line">include/kcenon/{system}/</div>
@@ -203,7 +203,7 @@ Identified Issues</h1>
 <div class="line">├── adapters/</div>
 <div class="line">├── backends/</div>
 <div class="line">└── utils/</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md434"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md378"></a>
 3. Missing Architectural Patterns</h2>
 <p><b>Missing from messaging_system</b> but present in other systems:</p>
 <table class="markdownTable">
@@ -222,7 +222,7 @@ Identified Issues</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Interface Segregation   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">⚠️ Partial   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md435"></a>
+<h2><a class="anchor" id="autotoc_md379"></a>
 4. Lack of Interface Definitions</h2>
 <p><b>Problem</b>: No dedicated <code>interfaces/</code> directory for clean abstraction.</p>
 <p><b>Needed Interfaces</b>:</p><ul>
@@ -233,9 +233,9 @@ Identified Issues</h1>
 <li><code>message_broker_interface.h</code> - Broker abstraction</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md437"></a>
+<h1><a class="anchor" id="autotoc_md381"></a>
 Improvement Objectives</h1>
-<h2><a class="anchor" id="autotoc_md438"></a>
+<h2><a class="anchor" id="autotoc_md382"></a>
 Primary Goals</h2>
 <ol type="1">
 <li><b>Consistency</b>: Align with established patterns in common_system, thread_system, logger_system</li>
@@ -245,7 +245,7 @@ Primary Goals</h2>
 <li><b>Reliability</b>: Comprehensive error handling, Result&lt;T&gt; pattern throughout</li>
 <li><b>Observability</b>: Deep integration with logger_system and monitoring_system</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md439"></a>
+<h2><a class="anchor" id="autotoc_md383"></a>
 Secondary Goals</h2>
 <ol type="1">
 <li>Backward compatibility layer for existing code</li>
@@ -255,9 +255,9 @@ Secondary Goals</h2>
 <li>Integration tests with all dependent systems</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md441"></a>
+<h1><a class="anchor" id="autotoc_md385"></a>
 Target Architecture</h1>
-<h2><a class="anchor" id="autotoc_md442"></a>
+<h2><a class="anchor" id="autotoc_md386"></a>
 Directory Structure (New)</h2>
 <div class="fragment"><div class="line">messaging_system/</div>
 <div class="line">├── include/kcenon/messaging/</div>
@@ -367,7 +367,7 @@ Directory Structure (New)</h2>
 <div class="line">    ├── ARCHITECTURE.md</div>
 <div class="line">    ├── API_REFERENCE.md</div>
 <div class="line">    └── MIGRATION_GUIDE.md</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md443"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md387"></a>
 Component Architecture</h2>
 <div class="fragment"><div class="line">┌─────────────────────────────────────────────────────────────┐</div>
 <div class="line">│                      Application Layer                       │</div>
@@ -425,11 +425,11 @@ Component Architecture</h2>
 <div class="line">│   Result&lt;T&gt;, error_info, event_bus, interfaces              │</div>
 <div class="line">└─────────────────────────────────────────────────────────────┘</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md445"></a>
+<h1><a class="anchor" id="autotoc_md389"></a>
 Implementation Plan</h1>
-<h2><a class="anchor" id="autotoc_md446"></a>
+<h2><a class="anchor" id="autotoc_md390"></a>
 Phase 1: Foundation and Error Codes (Week 1)</h2>
-<h3><a class="anchor" id="autotoc_md447"></a>
+<h3><a class="anchor" id="autotoc_md391"></a>
 1.1 Add messaging_system Error Codes to common_system</h3>
 <p><b>File</b>: <code>common_system/include/kcenon/common/error/error_codes.h</code></p>
 <p><b>Changes</b>: </p><div class="fragment"><div class="line"><span class="comment">// ============================================================================</span></div>
@@ -486,7 +486,7 @@ Phase 1: Foundation and Error Codes (Week 1)</h2>
 <div class="line"><span class="keyword">static_assert</span>(codes::messaging_system::invalid_message &gt;= -799 &amp;&amp;</div>
 <div class="line">              codes::messaging_system::invalid_message &lt;= -700,</div>
 <div class="line">              <span class="stringliteral">&quot;messaging_system error codes must be in range [-799, -700]&quot;</span>);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md448"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md392"></a>
 1.2 Create Core Interfaces</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/interfaces/message_handler_interface.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -494,7 +494,7 @@ Phase 1: Foundation and Error Codes (Week 1)</h2>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/common/patterns/result.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Forward declarations</span></div>
 <div class="line"><span class="keyword">class </span>message;</div>
@@ -509,7 +509,6 @@ Phase 1: Foundation and Error Codes (Week 1)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging</span></div>
-<div class="ttc" id="anamespacekcenon_1_1messaging_html"><div class="ttname"><a href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a></div><div class="ttdef"><b>Definition</b> <a href="../../d7/d6e/distributed__messaging_8h_source.html#l00015">distributed_messaging.h:15</a></div></div>
 </div><!-- fragment --><p><b>File</b>: <code>include/kcenon/messaging/interfaces/publisher_interface.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
 <div class="line"> </div>
@@ -517,7 +516,7 @@ Phase 1: Foundation and Error Codes (Week 1)</h2>
 <div class="line"><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>message;</div>
 <div class="line"> </div>
@@ -534,12 +533,12 @@ Phase 1: Foundation and Error Codes (Week 1)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md449"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md393"></a>
 1.3 Integration Detection Utility</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/utils/thread_integration_detector.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>thread_integration_detector {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -569,9 +568,9 @@ Phase 1: Foundation and Error Codes (Week 1)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md450"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md394"></a>
 Phase 2: Core Message Types (Week 2)</h2>
-<h3><a class="anchor" id="autotoc_md451"></a>
+<h3><a class="anchor" id="autotoc_md395"></a>
 2.1 Message Structure</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/core/message.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -583,7 +582,7 @@ Phase 2: Core Message Types (Week 2)</h2>
 <div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;optional&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">enum class</span> message_priority : uint8_t {</div>
 <div class="line">    lowest = 0,</div>
@@ -610,8 +609,8 @@ Phase 2: Core Message Types (Week 2)</h2>
 <div class="line">    std::string correlation_id;        <span class="comment">// For request/reply correlation</span></div>
 <div class="line">    std::string trace_id;              <span class="comment">// Distributed tracing ID</span></div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_enumeration" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4">message_type</a> type;</div>
-<div class="line">    <a class="code hl_enumeration" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a47838b266b3e051902c04795771bba5e">message_priority</a> priority;</div>
+<div class="line">    message_type type;</div>
+<div class="line">    message_priority priority;</div>
 <div class="line"> </div>
 <div class="line">    std::chrono::system_clock::time_point timestamp;</div>
 <div class="line">    std::optional&lt;std::chrono::milliseconds&gt; ttl;  <span class="comment">// Time-to-live</span></div>
@@ -644,8 +643,8 @@ Phase 2: Core Message Types (Week 2)</h2>
 <div class="line">    std::chrono::milliseconds age() <span class="keyword">const</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Serialization</span></div>
-<div class="line">    common::Result&lt;std::vector&lt;uint8_t&gt;&gt; <a class="code hl_enumvalue" href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320a235cdd01b87af1e1de37f4746a88d82c">serialize</a>() <span class="keyword">const</span>;</div>
-<div class="line">    <span class="keyword">static</span> common::Result&lt;message&gt; <a class="code hl_enumvalue" href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320a95f98046b7ecfb92a1d8a6006babb282">deserialize</a>(<span class="keyword">const</span> std::vector&lt;uint8_t&gt;&amp; data);</div>
+<div class="line">    common::Result&lt;std::vector&lt;uint8_t&gt;&gt; serialize() <span class="keyword">const</span>;</div>
+<div class="line">    <span class="keyword">static</span> common::Result&lt;message&gt; deserialize(<span class="keyword">const</span> std::vector&lt;uint8_t&gt;&amp; data);</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>message_builder {</div>
@@ -670,13 +669,9 @@ Phase 2: Core Message Types (Week 2)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging</span></div>
-<div class="ttc" id="anamespacekcenon_1_1messaging_1_1core_html_a47838b266b3e051902c04795771bba5e"><div class="ttname"><a href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a47838b266b3e051902c04795771bba5e">kcenon::messaging::core::message_priority</a></div><div class="ttdeci">message_priority</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00015">message_types.h:15</a></div></div>
-<div class="ttc" id="anamespacekcenon_1_1messaging_1_1core_html_accdec513cff0fa75c42e41e381b490a4"><div class="ttname"><a href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4">kcenon::messaging::core::message_type</a></div><div class="ttdeci">message_type</div><div class="ttdef"><b>Definition</b> <a href="../../d5/dd2/message__types_8h_source.html#l00023">message_types.h:23</a></div></div>
-<div class="ttc" id="anamespacekcenon_1_1messaging_1_1services_1_1container_html_a221266e349efd48a805f4d942db56320a235cdd01b87af1e1de37f4746a88d82c"><div class="ttname"><a href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320a235cdd01b87af1e1de37f4746a88d82c">kcenon::messaging::services::container::container_operation::serialize</a></div><div class="ttdeci">@ serialize</div></div>
-<div class="ttc" id="anamespacekcenon_1_1messaging_1_1services_1_1container_html_a221266e349efd48a805f4d942db56320a95f98046b7ecfb92a1d8a6006babb282"><div class="ttname"><a href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320a95f98046b7ecfb92a1d8a6006babb282">kcenon::messaging::services::container::container_operation::deserialize</a></div><div class="ttdeci">@ deserialize</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md452"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md396"></a>
 Phase 3: Message Queue and Broker (Week 3)</h2>
-<h3><a class="anchor" id="autotoc_md453"></a>
+<h3><a class="anchor" id="autotoc_md397"></a>
 3.1 Queue Interface</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/interfaces/queue_interface.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -686,7 +681,7 @@ Phase 3: Message Queue and Broker (Week 3)</h2>
 <div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>queue_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -708,7 +703,7 @@ Phase 3: Message Queue and Broker (Week 3)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md454"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md398"></a>
 3.2 Message Queue Implementation</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/core/message_queue.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -719,7 +714,7 @@ Phase 3: Message Queue and Broker (Week 3)</h2>
 <div class="line"><span class="preprocessor">#include &lt;condition_variable&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;atomic&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">struct </span>queue_config {</div>
 <div class="line">    <span class="keywordtype">size_t</span> max_size = 10000;</div>
@@ -772,9 +767,9 @@ Phase 3: Message Queue and Broker (Week 3)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md455"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md399"></a>
 Phase 4: Backend Pattern (Week 4)</h2>
-<h3><a class="anchor" id="autotoc_md456"></a>
+<h3><a class="anchor" id="autotoc_md400"></a>
 4.1 Backend Interface</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/backends/backend_interface.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -785,7 +780,7 @@ Phase 4: Backend Pattern (Week 4)</h2>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/common/interfaces/monitoring_interface.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>backend_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -809,7 +804,7 @@ Phase 4: Backend Pattern (Week 4)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md457"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md401"></a>
 4.2 Standalone Backend</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/backends/standalone_backend.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -818,7 +813,7 @@ Phase 4: Backend Pattern (Week 4)</h2>
 <div class="line"><span class="preprocessor">#include &lt;thread&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>standalone_backend : <span class="keyword">public</span> backend_interface {</div>
 <div class="line">    <span class="keyword">struct </span>internal_executor;</div>
@@ -839,14 +834,14 @@ Phase 4: Backend Pattern (Week 4)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md458"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md402"></a>
 4.3 Integration Backend</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/backends/integration_backend.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &quot;backend_interface.h&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>integration_backend : <span class="keyword">public</span> backend_interface {</div>
 <div class="line">    std::shared_ptr&lt;common::interfaces::IExecutor&gt; executor_;</div>
@@ -872,9 +867,9 @@ Phase 4: Backend Pattern (Week 4)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md459"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md403"></a>
 Phase 5: Topic Router and Pub/Sub (Week 5)</h2>
-<h3><a class="anchor" id="autotoc_md460"></a>
+<h3><a class="anchor" id="autotoc_md404"></a>
 5.1 Topic Router Implementation</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/core/topic_router.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -888,7 +883,7 @@ Phase 5: Topic Router and Pub/Sub (Week 5)</h2>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;regex&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using </span>subscription_callback = std::function&lt;common::VoidResult(<span class="keyword">const</span> message&amp;)&gt;;</div>
 <div class="line"> </div>
@@ -938,11 +933,11 @@ Phase 5: Topic Router and Pub/Sub (Week 5)</h2>
 <li><code>user.#</code> matches <code>user.created</code>, <code>user.profile.updated</code> (multi-level)</li>
 <li><code>*.created</code> matches <code>user.created</code>, <code>order.created</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md461"></a>
+<h2><a class="anchor" id="autotoc_md405"></a>
 Phase 6: Message Bus (Week 6)</h2>
-<h3><a class="anchor" id="autotoc_md462"></a>
+<h3><a class="anchor" id="autotoc_md406"></a>
 6.1 Message Bus Implementation</h3>
-<p><b>File</b>: <code><a class="el" href="../../d9/d29/message__bus_8h.html">include/kcenon/messaging/core/message_bus.h</a></code></p>
+<p><b>File</b>: <code>include/kcenon/messaging/core/message_bus.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/common/patterns/result.h&gt;</span></div>
@@ -953,7 +948,7 @@ Phase 6: Message Bus (Week 6)</h2>
 <div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;atomic&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a> {</div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging {</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">struct </span>message_bus_config {</div>
 <div class="line">    <span class="keywordtype">size_t</span> queue_capacity = 10000;</div>
@@ -1006,7 +1001,7 @@ Phase 6: Message Bus (Week 6)</h2>
 <div class="line">    common::VoidResult unsubscribe(uint64_t subscription_id);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Request-Reply pattern</span></div>
-<div class="line">    common::Result&lt;message&gt; <a class="code hl_enumvalue" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4a10573b873d2fa5a365d558a45e328e47">request</a>(</div>
+<div class="line">    common::Result&lt;message&gt; request(</div>
 <div class="line">        <span class="keyword">const</span> message&amp; request,</div>
 <div class="line">        std::chrono::milliseconds timeout = std::chrono::milliseconds{5000}</div>
 <div class="line">    );</div>
@@ -1028,10 +1023,9 @@ Phase 6: Message Bus (Week 6)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging</span></div>
-<div class="ttc" id="anamespacekcenon_1_1messaging_1_1core_html_accdec513cff0fa75c42e41e381b490a4a10573b873d2fa5a365d558a45e328e47"><div class="ttname"><a href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#accdec513cff0fa75c42e41e381b490a4a10573b873d2fa5a365d558a45e328e47">kcenon::messaging::core::message_type::request</a></div><div class="ttdeci">@ request</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md463"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md407"></a>
 Phase 7: DI Container (Week 7)</h2>
-<h3><a class="anchor" id="autotoc_md464"></a>
+<h3><a class="anchor" id="autotoc_md408"></a>
 7.1 DI Container Interface</h3>
 <p><b>File</b>: <code>src/impl/di/messaging_di_container.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -1082,9 +1076,9 @@ Phase 7: DI Container (Week 7)</h2>
 <div class="line">messaging_di_container&amp; get_global_container();</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging::di</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md465"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md409"></a>
 Phase 8: Patterns Implementation (Week 8)</h2>
-<h3><a class="anchor" id="autotoc_md466"></a>
+<h3><a class="anchor" id="autotoc_md410"></a>
 8.1 Pub/Sub Pattern</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/patterns/pub_sub.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -1124,7 +1118,7 @@ Phase 8: Patterns Implementation (Week 8)</h2>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging::patterns</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md467"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md411"></a>
 8.2 Request-Reply Pattern</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/patterns/request_reply.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -1158,11 +1152,11 @@ Phase 8: Patterns Implementation (Week 8)</h2>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace kcenon::messaging::patterns</span></div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md469"></a>
+<h1><a class="anchor" id="autotoc_md413"></a>
 Migration Strategy</h1>
-<h2><a class="anchor" id="autotoc_md470"></a>
+<h2><a class="anchor" id="autotoc_md414"></a>
 Backward Compatibility</h2>
-<h3><a class="anchor" id="autotoc_md471"></a>
+<h3><a class="anchor" id="autotoc_md415"></a>
 Legacy Include Guard</h3>
 <p><b>File</b>: <code>include/kcenon/messaging/compatibility.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -1170,7 +1164,7 @@ Legacy Include Guard</h3>
 <div class="line"><span class="comment">// Provide backward compatibility for existing code</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &quot;core/message.h&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="../../d9/d29/message__bus_8h.html">core/message_bus.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;core/message_bus.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span>messaging {</div>
 <div class="line">    <span class="comment">// Legacy namespace aliases</span></div>
@@ -1192,23 +1186,22 @@ Legacy Include Guard</h3>
 <div class="line">    <span class="keyword">constexpr</span> <span class="keywordtype">int</span> QUEUE_FULL = queue_full;</div>
 <div class="line">    <span class="comment">// ... other mappings</span></div>
 <div class="line">}</div>
-<div class="ttc" id="amessage__bus_8h_html"><div class="ttname"><a href="../../d9/d29/message__bus_8h.html">message_bus.h</a></div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md472"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md416"></a>
 Migration Path</h2>
 <p><b>Step 1</b>: Update common_system with new error codes <b>Step 2</b>: Add compatibility.h for legacy code <b>Step 3</b>: Gradually migrate components to new structure <b>Step 4</b>: Update examples and tests <b>Step 5</b>: Mark old headers as deprecated <b>Step 6</b>: Remove deprecated code after grace period</p>
-<h2><a class="anchor" id="autotoc_md473"></a>
+<h2><a class="anchor" id="autotoc_md417"></a>
 Coexistence Period</h2>
 <p>For 2 releases, support both: </p><div class="fragment"><div class="line"><span class="comment">// Old way (deprecated)</span></div>
 <div class="line"><span class="preprocessor">#include &lt;messaging_system/core/message_bus.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>messaging;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// New way (recommended)</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="../../d9/d29/message__bus_8h.html">kcenon/messaging/core/message_bus.h</a>&gt;</span></div>
-<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="../../df/d4a/namespacekcenon_1_1messaging.html">kcenon::messaging</a>;</div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>kcenon::messaging;</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md475"></a>
+<h1><a class="anchor" id="autotoc_md419"></a>
 Testing Strategy</h1>
-<h2><a class="anchor" id="autotoc_md476"></a>
+<h2><a class="anchor" id="autotoc_md420"></a>
 Unit Tests</h2>
 <p><b>Coverage targets</b>:</p><ul>
 <li>Core components: 90%+</li>
@@ -1229,7 +1222,7 @@ Unit Tests</h2>
 <div class="line">│   └── backends/</div>
 <div class="line">│       ├── test_standalone_backend.cpp</div>
 <div class="line">│       └── test_integration_backend.cpp</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md477"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md421"></a>
 Integration Tests</h2>
 <p><b>Scenarios</b>:</p><ol type="1">
 <li><b>Message Bus + Topic Router</b>: Publish-subscribe flow</li>
@@ -1240,7 +1233,7 @@ Integration Tests</h2>
 <li><b>Full Stack</b>: End-to-end messaging</li>
 </ol>
 <p><b>File</b>: <code>integration_tests/test_full_integration.cpp</code></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="../../d9/d29/message__bus_8h.html">kcenon/messaging/core/message_bus.h</a>&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/backends/integration_backend.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/thread/core/thread_pool.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/logger/core/logger.h&gt;</span></div>
@@ -1291,7 +1284,7 @@ Integration Tests</h2>
 <div class="line">    EXPECT_EQ(stats.messages_published, 1);</div>
 <div class="line">    EXPECT_EQ(stats.messages_processed, 1);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md478"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md422"></a>
 Performance Benchmarks</h2>
 <p><b>Metrics</b>:</p><ul>
 <li>Message throughput (messages/sec)</li>
@@ -1307,9 +1300,9 @@ Performance Benchmarks</h2>
 <div class="line">├── bench_pub_sub_throughput.cpp</div>
 <div class="line">└── bench_request_reply_latency.cpp</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md480"></a>
+<h1><a class="anchor" id="autotoc_md424"></a>
 Timeline and Milestones</h1>
-<h2><a class="anchor" id="autotoc_md481"></a>
+<h2><a class="anchor" id="autotoc_md425"></a>
 Phase 1: Foundation (Week 1) - ✅ COMPLETED</h2>
 <ul>
 <li>✅ Error codes in messaging_system (-700 to -799 range)</li>
@@ -1318,7 +1311,7 @@ Phase 1: Foundation (Week 1) - ✅ COMPLETED</h2>
 <li>⏳ Message structure implementation (moved to Phase 2)</li>
 </ul>
 <p><b>Status</b>: Completed 2025-11-16 <b>Branch</b>: feature/phase-1-foundation <b>Deliverable</b>: Error codes, core interfaces, and integration detection</p>
-<h2><a class="anchor" id="autotoc_md482"></a>
+<h2><a class="anchor" id="autotoc_md426"></a>
 Phase 2: Core Message Types (Week 2) - 🔄 IN PROGRESS</h2>
 <ul>
 <li>⏳ Message structure implemented</li>
@@ -1326,7 +1319,7 @@ Phase 2: Core Message Types (Week 2) - 🔄 IN PROGRESS</h2>
 <li>⏳ Message serialization/deserialization</li>
 </ul>
 <p><b>Deliverable</b>: Core message types and builders</p>
-<h2><a class="anchor" id="autotoc_md483"></a>
+<h2><a class="anchor" id="autotoc_md427"></a>
 Phase 3: Message Queue (Week 3) - ⏳ PENDING</h2>
 <ul>
 <li>⏳ Queue interface</li>
@@ -1335,7 +1328,7 @@ Phase 3: Message Queue (Week 3) - ⏳ PENDING</h2>
 <li>⏳ Dead letter queue</li>
 </ul>
 <p><b>Deliverable</b>: Thread-safe message queue</p>
-<h2><a class="anchor" id="autotoc_md484"></a>
+<h2><a class="anchor" id="autotoc_md428"></a>
 Phase 4: Backend Pattern (Week 4) - ⏳ PENDING</h2>
 <ul>
 <li>⏳ Backend interface</li>
@@ -1344,7 +1337,7 @@ Phase 4: Backend Pattern (Week 4) - ⏳ PENDING</h2>
 <li>⏳ Backend auto-detection</li>
 </ul>
 <p><b>Deliverable</b>: Backend abstraction working</p>
-<h2><a class="anchor" id="autotoc_md485"></a>
+<h2><a class="anchor" id="autotoc_md429"></a>
 Phase 5: Topic Router (Week 5) - ⏳ PENDING</h2>
 <ul>
 <li>⏳ Topic pattern matching</li>
@@ -1353,7 +1346,7 @@ Phase 5: Topic Router (Week 5) - ⏳ PENDING</h2>
 <li>⏳ Filter chains</li>
 </ul>
 <p><b>Deliverable</b>: Topic routing with pattern matching</p>
-<h2><a class="anchor" id="autotoc_md486"></a>
+<h2><a class="anchor" id="autotoc_md430"></a>
 Phase 6: Message Bus (Week 6) - ⏳ PENDING</h2>
 <ul>
 <li>⏳ Message bus core</li>
@@ -1362,7 +1355,7 @@ Phase 6: Message Bus (Week 6) - ⏳ PENDING</h2>
 <li>⏳ Statistics collection</li>
 </ul>
 <p><b>Deliverable</b>: Working message bus</p>
-<h2><a class="anchor" id="autotoc_md487"></a>
+<h2><a class="anchor" id="autotoc_md431"></a>
 Phase 7: DI Container (Week 7) - ⏳ PENDING</h2>
 <ul>
 <li>⏳ DI container implementation</li>
@@ -1370,7 +1363,7 @@ Phase 7: DI Container (Week 7) - ⏳ PENDING</h2>
 <li>⏳ Lifetime management</li>
 </ul>
 <p><b>Deliverable</b>: Dependency injection system</p>
-<h2><a class="anchor" id="autotoc_md488"></a>
+<h2><a class="anchor" id="autotoc_md432"></a>
 Phase 8: Messaging Patterns (Week 8) - ⏳ PENDING</h2>
 <ul>
 <li>⏳ Pub/sub pattern helpers</li>
@@ -1379,7 +1372,7 @@ Phase 8: Messaging Patterns (Week 8) - ⏳ PENDING</h2>
 <li>⏳ Message pipeline</li>
 </ul>
 <p><b>Deliverable</b>: High-level messaging patterns</p>
-<h2><a class="anchor" id="autotoc_md489"></a>
+<h2><a class="anchor" id="autotoc_md433"></a>
 Phase 9-10: Testing and Documentation (Weeks 9-10) - ⏳ PENDING</h2>
 <ul>
 <li>⏳ Unit tests (90%+ coverage)</li>
@@ -1391,9 +1384,9 @@ Phase 9-10: Testing and Documentation (Weeks 9-10) - ⏳ PENDING</h2>
 </ul>
 <p><b>Deliverable</b>: Production-ready system</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md491"></a>
+<h1><a class="anchor" id="autotoc_md435"></a>
 Success Criteria</h1>
-<h2><a class="anchor" id="autotoc_md492"></a>
+<h2><a class="anchor" id="autotoc_md436"></a>
 Functional</h2>
 <ul>
 <li>[ ] All core messaging patterns work (pub/sub, request/reply)</li>
@@ -1402,7 +1395,7 @@ Functional</h2>
 <li>[ ] Backend abstraction allows standalone and integrated modes</li>
 <li>[ ] DI container manages all dependencies</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md493"></a>
+<h2><a class="anchor" id="autotoc_md437"></a>
 Non-Functional</h2>
 <ul>
 <li>[ ] Message throughput &gt; 100k messages/sec</li>
@@ -1411,7 +1404,7 @@ Non-Functional</h2>
 <li>[ ] Memory overhead &lt; 1KB per message</li>
 <li>[ ] Zero memory leaks under valgrind</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md494"></a>
+<h2><a class="anchor" id="autotoc_md438"></a>
 Quality</h2>
 <ul>
 <li>[ ] Unit test coverage &gt; 90%</li>
@@ -1420,7 +1413,7 @@ Quality</h2>
 <li>[ ] Passes ASAN, TSAN, UBSAN</li>
 <li>[ ] Documentation complete and accurate</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md495"></a>
+<h2><a class="anchor" id="autotoc_md439"></a>
 Integration</h2>
 <ul>
 <li>[ ] Works with thread_system</li>
@@ -1430,9 +1423,9 @@ Integration</h2>
 <li>[ ] Standalone mode functional</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md497"></a>
+<h1><a class="anchor" id="autotoc_md441"></a>
 Risk Assessment</h1>
-<h2><a class="anchor" id="autotoc_md498"></a>
+<h2><a class="anchor" id="autotoc_md442"></a>
 High Risk</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1444,7 +1437,7 @@ High Risk</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Lock contention in router   </td><td class="markdownTableBodyNone">Lock-free structures, RCU patterns   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md499"></a>
+<h2><a class="anchor" id="autotoc_md443"></a>
 Medium Risk</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1456,7 +1449,7 @@ Medium Risk</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Integration test flakiness   </td><td class="markdownTableBodyNone">Retry logic, timeouts, isolation   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md500"></a>
+<h2><a class="anchor" id="autotoc_md444"></a>
 Low Risk</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1467,9 +1460,9 @@ Low Risk</h2>
 <td class="markdownTableBodyNone">Example code outdated   </td><td class="markdownTableBodyNone">CI checks for examples   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md502"></a>
+<h1><a class="anchor" id="autotoc_md446"></a>
 Appendix</h1>
-<h2><a class="anchor" id="autotoc_md503"></a>
+<h2><a class="anchor" id="autotoc_md447"></a>
 A. Error Code Mapping</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1485,7 +1478,7 @@ A. Error Code Mapping</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">-210 (PUBLICATION_FAILED)   </td><td class="markdownTableBodyNone">-780   </td><td class="markdownTableBodyNone">Publishing errors   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md504"></a>
+<h2><a class="anchor" id="autotoc_md448"></a>
 B. File Relocation Map</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1497,7 +1490,7 @@ B. File Relocation Map</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>application_layer/include/kcenon/messaging/</code>   </td><td class="markdownTableBodyNone">Merged into <code>include/kcenon/messaging/</code>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md505"></a>
+<h2><a class="anchor" id="autotoc_md449"></a>
 C. Dependencies</h2>
 <p><b>Required</b>:</p><ul>
 <li>common_system &gt;= 2.0</li>
@@ -1508,7 +1501,7 @@ C. Dependencies</h2>
 <li>logger_system &gt;= 2.0 (for logging)</li>
 <li>monitoring_system &gt;= 2.0 (for metrics)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md506"></a>
+<h2><a class="anchor" id="autotoc_md450"></a>
 D. References</h2>
 <ul>
 <li>logger_system Architecture</li>

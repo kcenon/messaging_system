@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['자동화_20strong_0',['&lt;strong&gt;Task 1.3 – 구성 검증 자동화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md870',1,'']]]
+  ['전략_20확정_20strong_0',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md809',1,'']]],
+  ['전체_20일정_20요약_1',['전체 일정 요약',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md833',1,'']]]
 ];

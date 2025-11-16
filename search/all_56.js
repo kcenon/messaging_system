@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['작성_20strong_0',['&lt;strong&gt;Task 4.5 – 출시 체크리스트/런북 작성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md887',1,'']]],
-  ['작업_20최적화_1',['병렬 작업 최적화',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md890',1,'']]]
+  ['정립_20strong_0',['&lt;strong&gt;Task 2.1 – 메시지 컨테이너 DSL 정립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md817',1,'']]],
+  ['정비_1',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md805',1,'']]],
+  ['정비_20strong_2',['&lt;strong&gt;Task 2.4 – 라우팅/토픽 엔진 정비&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md820',1,'']]],
+  ['정책_20레이어_20strong_3',['&lt;strong&gt;Task 3.4 – 구성 및 정책 레이어&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md825',1,'']]]
 ];

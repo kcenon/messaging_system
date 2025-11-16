@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['맵핑_20strong_0',['&lt;strong&gt;Task 0.1 – 시스템 인터페이스 맵핑&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md863',1,'']]]
+  ['문서화_0',['**Task 4.2 – 마이그레이션 가이드 및 API 문서화**',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md828',1,'']]]
 ];

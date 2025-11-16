@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('d7/de1/md_docs_2phase3_2DESIGN.html','
   <div class="headertitle"><div class="title">Phase 3: Infrastructure Integration - Design Document</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md724"></a> </p>
-<h1><a class="anchor" id="autotoc_md725"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md668"></a> </p>
+<h1><a class="anchor" id="autotoc_md669"></a>
 Overview</h1>
 <p>Integrate network, database, logging, and monitoring systems with messaging core.</p>
-<h1><a class="anchor" id="autotoc_md726"></a>
+<h1><a class="anchor" id="autotoc_md670"></a>
 Architecture</h1>
 <div class="fragment"><div class="line">┌─────────────────────────────────────────────────────────────┐</div>
 <div class="line">│                      Client Applications                     │</div>
@@ -125,9 +125,9 @@ Architecture</h1>
 <div class="line">│  - dequeue()           │  │                │  │  - Watch       │</div>
 <div class="line">│  - reprocess()         │  │                │  │                │</div>
 <div class="line">└────────────────────────┘  └────────────────┘  └────────────────┘</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md727"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md671"></a>
 Component Designs</h1>
-<h2><a class="anchor" id="autotoc_md728"></a>
+<h2><a class="anchor" id="autotoc_md672"></a>
 1. Network Bridge (Task 3.1)</h2>
 <p><b>Header:</b> <code>include/messaging_system/integration/network_bridge.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -135,7 +135,7 @@ Component Designs</h1>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/network/core/messaging_server.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/network/core/messaging_client.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/common/interfaces/executor_interface.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="../../d9/d29/message__bus_8h.html">core/message_bus.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;core/message_bus.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span>messaging {</div>
 <div class="line"> </div>
@@ -179,7 +179,6 @@ Component Designs</h1>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace messaging</span></div>
-<div class="ttc" id="amessage__bus_8h_html"><div class="ttname"><a href="../../d9/d29/message__bus_8h.html">message_bus.h</a></div></div>
 </div><!-- fragment --><p><b>Pipeline Flow:</b></p><ol type="1">
 <li><b>Receive</b> (I/O thread): TCP data → buffer</li>
 <li><b>Deserialize</b> (I/O thread): buffer → MessagingContainer</li>
@@ -189,7 +188,7 @@ Component Designs</h1>
 <li><b>Send</b> (I/O thread): buffer → TCP</li>
 </ol>
 <p><b>Performance Target:</b> 100K+ msg/s end-to-end</p>
-<h2><a class="anchor" id="autotoc_md729"></a>
+<h2><a class="anchor" id="autotoc_md673"></a>
 2. Persistent Message Queue (Task 3.2)</h2>
 <p><b>Header:</b> <code>include/messaging_system/integration/persistent_queue.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -270,7 +269,7 @@ Component Designs</h1>
 <div class="line">    <span class="keyword">PRIMARY</span> KEY (consumer_group, topic)</div>
 <div class="line">);</div>
 </div><!-- fragment --><p><b>Performance Target:</b> P95 latency &lt;50ms</p>
-<h2><a class="anchor" id="autotoc_md730"></a>
+<h2><a class="anchor" id="autotoc_md674"></a>
 3. Tracing and Monitoring (Task 3.3)</h2>
 <p><b>Header:</b> <code>include/messaging_system/integration/trace_context.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -347,7 +346,7 @@ Component Designs</h1>
 <div class="line">        monitor_-&gt;record_metric(<span class="stringliteral">&quot;queue_depth&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(depth), {{<span class="stringliteral">&quot;queue&quot;</span>, queue}});</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md731"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md675"></a>
 4. Configuration System (Task 3.4)</h2>
 <p><b>Header:</b> <code>include/messaging_system/integration/config_loader.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -361,7 +360,7 @@ Component Designs</h1>
 <div class="line"><span class="keyword">struct </span>NetworkConfig {</div>
 <div class="line">    uint16_t port{8080};</div>
 <div class="line">    <span class="keywordtype">size_t</span> max_connections{10000};</div>
-<div class="line">    std::chrono::milliseconds <a class="code hl_enumvalue" href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a0ebc74b13acdfe5c2939ed4e5acaeab6a90272dda245ae1fb3cf197e91a8689dc">timeout</a>{5000};</div>
+<div class="line">    std::chrono::milliseconds timeout{5000};</div>
 <div class="line">    <span class="keywordtype">int</span> retry_attempts{3};</div>
 <div class="line">};</div>
 <div class="line"> </div>
@@ -398,7 +397,7 @@ Component Designs</h1>
 <div class="line">    MonitoringConfig monitoring;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">static</span> Result&lt;MessagingSystemConfig&gt; load_from_file(<span class="keyword">const</span> std::string&amp; path);</div>
-<div class="line">    Result&lt;void&gt; <a class="code hl_enumvalue" href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320af9ab05454998236921a6b0e281fae632">validate</a>() <span class="keyword">const</span>;</div>
+<div class="line">    Result&lt;void&gt; validate() <span class="keyword">const</span>;</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// File watcher for hot-reload</span></div>
@@ -411,8 +410,6 @@ Component Designs</h1>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace messaging</span></div>
-<div class="ttc" id="anamespacekcenon_1_1messaging_1_1core_html_a0ebc74b13acdfe5c2939ed4e5acaeab6a90272dda245ae1fb3cf197e91a8689dc"><div class="ttname"><a href="../../db/d06/namespacekcenon_1_1messaging_1_1core.html#a0ebc74b13acdfe5c2939ed4e5acaeab6a90272dda245ae1fb3cf197e91a8689dc">kcenon::messaging::core::message_status::timeout</a></div><div class="ttdeci">@ timeout</div></div>
-<div class="ttc" id="anamespacekcenon_1_1messaging_1_1services_1_1container_html_a221266e349efd48a805f4d942db56320af9ab05454998236921a6b0e281fae632"><div class="ttname"><a href="../../dd/df3/namespacekcenon_1_1messaging_1_1services_1_1container.html#a221266e349efd48a805f4d942db56320af9ab05454998236921a6b0e281fae632">kcenon::messaging::services::container::container_operation::validate</a></div><div class="ttdeci">@ validate</div></div>
 </div><!-- fragment --><p><b>YAML Schema Example:</b></p>
 <div class="fragment"><div class="line">messaging_system:</div>
 <div class="line">  version: &quot;2.0&quot;</div>
@@ -450,9 +447,9 @@ Component Designs</h1>
 <div class="line">  monitoring:</div>
 <div class="line">    enabled: true</div>
 <div class="line">    interval_ms: 1000</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md732"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md676"></a>
 Integration Points</h1>
-<h2><a class="anchor" id="autotoc_md733"></a>
+<h2><a class="anchor" id="autotoc_md677"></a>
 Startup Sequence</h2>
 <ol type="1">
 <li><b>Load Configuration</b> <div class="fragment"><div class="line"><span class="keyword">auto</span> config = MessagingSystemConfig::load_from_file(<span class="stringliteral">&quot;config.yaml&quot;</span>);</div>
@@ -479,7 +476,7 @@ Startup Sequence</h2>
 <div class="line">RETURN_IF_ERROR(bridge-&gt;start());</div>
 </div><!-- fragment --></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md734"></a>
+<h1><a class="anchor" id="autotoc_md678"></a>
 Performance Targets</h1>
 <ul>
 <li><b>Network throughput:</b> 100K+ msg/s</li>
@@ -487,7 +484,7 @@ Performance Targets</h1>
 <li><b>Tracing overhead:</b> &lt;1%</li>
 <li><b>Config reload:</b> &lt;100ms</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md735"></a>
+<h1><a class="anchor" id="autotoc_md679"></a>
 Success Criteria</h1>
 <ul>
 <li>[ ] Network bridge handles 100K+ msg/s</li>

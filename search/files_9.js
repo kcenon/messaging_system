@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['network_5fservice_2ecpp_0',['network_service.cpp',['../d4/ddf/network__service_8cpp.html',1,'']]],
-  ['network_5fservice_2eh_1',['network_service.h',['../dc/dcb/network__service_8h.html',1,'']]]
+  ['system_5farchitecture_2emd_0',['SYSTEM_ARCHITECTURE.md',['../db/d93/SYSTEM__ARCHITECTURE_8md.html',1,'']]]
 ];
