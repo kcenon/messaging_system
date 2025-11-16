@@ -83,7 +83,9 @@ endif()
 # External System Integration
 # ============================================================================
 
-if(MESSAGING_USE_EXTERNAL_SYSTEMS)
+# Phase 1: Header-only library - skip all external system integration
+# External systems will be integrated in Phase 2 when implementation is added
+if(FALSE AND MESSAGING_USE_EXTERNAL_SYSTEMS)
     message(STATUS "Using external system packages")
 
     if(MESSAGING_USE_LOCAL_SYSTEMS)
