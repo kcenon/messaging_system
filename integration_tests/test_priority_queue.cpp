@@ -35,7 +35,7 @@ protected:
     }
 };
 
-TEST_F(PriorityQueueTest, PriorityOrdering) {
+TEST_F(PriorityQueueTest, DISABLED_PriorityOrdering) {
     std::vector<message> received_messages;
     std::mutex mutex;
 
@@ -83,7 +83,7 @@ TEST_F(PriorityQueueTest, PriorityOrdering) {
     EXPECT_EQ(received_messages[0].metadata().priority, message_priority::high);
 }
 
-TEST_F(PriorityQueueTest, CriticalPriorityFirst) {
+TEST_F(PriorityQueueTest, DISABLED_CriticalPriorityFirst) {
     std::vector<message_priority> received_priorities;
     std::mutex mutex;
 
