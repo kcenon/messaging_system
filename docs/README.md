@@ -28,8 +28,7 @@ Welcome to the Messaging System documentation! This guide provides comprehensive
 | Document | Description |
 |----------|-------------|
 | [Developer Guide](./DEVELOPER_GUIDE.md) | Development setup and contribution guidelines |
-| [Improvement Plan](./IMPROVEMENT_PLAN.md) | Phase 1-10 implementation plan with Success Criteria (COMPLETED) |
-| [Archived Documents](./archived/) | Completed planning documents (Phase 0-4, REBUILD_PLAN)
+| [Improvement Plan](./IMPROVEMENT_PLAN.md) | Phase 1-10 implementation plan with Success Criteria (COMPLETED)
 
 ## 🚀 Quick Navigation
 
