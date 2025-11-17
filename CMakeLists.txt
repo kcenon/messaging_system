@@ -530,6 +530,7 @@ message(STATUS "Building Phase 2-4: Core message types, message queue, and backe
 set(MESSAGING_CORE_SOURCES
     src/impl/core/message.cpp
     src/impl/core/message_queue.cpp
+    src/impl/core/topic_router.cpp
     src/impl/backends/standalone_backend.cpp
     src/impl/backends/integration_backend.cpp
 )
