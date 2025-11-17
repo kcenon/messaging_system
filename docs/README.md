@@ -4,16 +4,32 @@ Welcome to the Messaging System documentation! This guide provides comprehensive
 
 ## 📚 Documentation Overview
 
+### User Documentation
 | Document | Description |
 |----------|-------------|
 | [Getting Started](./GETTING_STARTED.md) | Installation guide and first steps with Messaging System |
 | [API Reference](./API_REFERENCE.md) | Complete API documentation for all components |
-| [Architecture](./ARCHITECTURE.md) | Technical architecture and system design |
-| [Performance](./PERFORMANCE.md) | Benchmarks, metrics, and optimization guide |
+| [Patterns API](./PATTERNS_API.md) | High-level messaging patterns (Pub/Sub, Request-Reply, Event Streaming, Pipeline) |
+| [Migration Guide](./MIGRATION_GUIDE.md) | Migration guide from legacy to new architecture |
+| [Architecture](./architecture.md) | Technical architecture and system design |
+| [System Architecture](./SYSTEM_ARCHITECTURE.md) | Overall system architecture and component interactions |
 | [Design Patterns](./DESIGN_PATTERNS.md) | Best practices, patterns, and troubleshooting |
-| [Developer Guide](./DEVELOPER_GUIDE.md) | Development setup and contribution guidelines |
+
+### Operations & Deployment
+| Document | Description |
+|----------|-------------|
+| [Performance](./performance.md) | Benchmarks, metrics, and optimization guide |
 | [Deployment Guide](./DEPLOYMENT_GUIDE.md) | Production deployment strategies |
 | [Troubleshooting](./TROUBLESHOOTING.md) | Debugging and problem resolution |
+| [Build Troubleshooting](./BUILD_TROUBLESHOOTING.md) | Build configuration and troubleshooting |
+| [Windows Optimization](./WINDOWS_OPTIMIZATION.md) | Windows CI performance optimization guide |
+
+### Development & Planning
+| Document | Description |
+|----------|-------------|
+| [Developer Guide](./DEVELOPER_GUIDE.md) | Development setup and contribution guidelines |
+| [Improvement Plan](./IMPROVEMENT_PLAN.md) | Phase 1-10 implementation plan with Success Criteria (COMPLETED) |
+| [Archived Documents](./archived/) | Completed planning documents (Phase 0-4, REBUILD_PLAN)
 
 ## 🚀 Quick Navigation
 
