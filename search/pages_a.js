@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['troubleshooting_20guide_0',['troubleshooting guide',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html',1,'Build Troubleshooting Guide'],['../d4/d2f/md_docs_2TROUBLESHOOTING.html',1,'Troubleshooting Guide']]]
+  ['reference_0',['reference',['../db/d91/md_docs_2API__REFERENCE.html',1,'API Reference'],['../dc/d3e/md_docs_2PATTERNS__API.html',1,'Messaging Patterns API Reference']]]
 ];
