@@ -41,6 +41,7 @@ option(MESSAGING_USE_LOCAL_SYSTEMS "Use local sibling directories for developmen
 
 # Development options
 option(MESSAGING_BUILD_TESTS "Build unit tests" ON)
+option(MESSAGING_BUILD_INTEGRATION_TESTS "Build integration tests" ON)
 option(MESSAGING_BUILD_BENCHMARKS "Build performance benchmarks" OFF)
 option(MESSAGING_BUILD_EXAMPLES "Build example applications" ON)
 option(MESSAGING_BUILD_DOCS "Build documentation with Doxygen" OFF)
@@ -594,8 +595,8 @@ if(MESSAGING_BUILD_TESTS)
     enable_testing()
     add_subdirectory(test)
 
-    # Add integration tests if they exist
-    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests/CMakeLists.txt)
+    # Add integration tests if they exist and option is enabled
+    if(MESSAGING_BUILD_INTEGRATION_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests/CMakeLists.txt)
         add_subdirectory(integration_tests)
     endif()
 endif()
