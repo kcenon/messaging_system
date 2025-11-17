@@ -236,7 +236,10 @@ jobs:
       shell: pwsh
       run: |
         cd build
-        cmake --build . --config $env:BUILD_TYPE --parallel
+        # Use maximum available CPU cores for faster build
+        $cores = (Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
+        Write-Host "Building with $cores parallel jobs"
+        cmake --build . --config $env:BUILD_TYPE --parallel $cores
 
     - name: Run tests (Unix)
       if: runner.os != 'Windows'
@@ -249,7 +252,8 @@ jobs:
       shell: pwsh
       run: |
         cd build
-        ctest -C $env:BUILD_TYPE --output-on-failure
+        # Run tests with timeout and parallel execution
+        ctest -C $env:BUILD_TYPE --output-on-failure --timeout 120 --parallel 4
         if ($LASTEXITCODE -ne 0) { Write-Host "Some tests failed" }
 
     - name: Upload test results
