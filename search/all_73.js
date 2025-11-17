@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['📖_20documentation_20standards_0',['📖 Documentation Standards',['../index.html#autotoc_md799',1,'']]]
+  ['📚_20documentation_0',['📚 Documentation',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1010',1,'']]],
+  ['📚_20documentation_20overview_1',['📚 Documentation Overview',['../index.html#autotoc_md790',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['감사_20strong_0',['&lt;strong&gt;Task 0.2 – 빌드 환경 감사&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md808',1,'']]]
+  ['강화_20strong_0',['&lt;strong&gt;Task 4.4 – 보안 검토 및 강화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md830',1,'']]]
 ];

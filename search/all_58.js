@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['주입식_20아키텍처_20구현_20strong_0',['&lt;strong&gt;Task 2.3 – IExecutor 주입식 아키텍처 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md819',1,'']]]
+  ['준비_0',['Phase 4. 검증·배포 준비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md826',1,'']]],
+  ['준비_20및_20기반_20정비_1',['Phase 0. 준비 및 기반 정비',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md805',1,'']]]
 ];

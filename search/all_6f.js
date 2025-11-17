@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['💬_20feedback_0',['💬 Feedback',['../index.html#autotoc_md801',1,'']]]
+  ['📄_20license_0',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1026',1,'']]]
 ];

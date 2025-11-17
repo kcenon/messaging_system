@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['⏳_20pending_0',['Phase 9-10: Testing and Documentation (Weeks 9-10) - ⏳ PENDING',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md433',1,'']]]
+  ['⚠️_20conditional_20features_20requires_20external_20systems_0',['⚠️ Conditional Features (Requires External Systems)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md952',1,'']]]
 ];
