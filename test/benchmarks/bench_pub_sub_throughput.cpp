@@ -40,7 +40,7 @@ int main() {
         std::atomic<int> received{0};
         auto sub_result = bus->subscribe("bench.single", [&](const message&) {
             received.fetch_add(1);
-            return common::ok();
+            return kcenon::common::ok();
         });
 
         if (!sub_result.is_ok()) {
@@ -78,7 +78,7 @@ int main() {
         for (auto& counter : counters) {
             auto sub_result = bus->subscribe("bench.multi", [&counter](const message&) {
                 counter.fetch_add(1);
-                return common::ok();
+                return kcenon::common::ok();
             });
 
             if (sub_result.is_ok()) {
@@ -123,7 +123,7 @@ int main() {
         std::atomic<int> received{0};
         auto sub_result = bus->subscribe("bench.throughput", [&](const message&) {
             received.fetch_add(1);
-            return common::ok();
+            return kcenon::common::ok();
         });
 
         if (sub_result.is_ok()) {
@@ -155,7 +155,7 @@ int main() {
         std::atomic<int> received{0};
         auto sub_result = bus->subscribe("events.#", [&](const message&) {
             received.fetch_add(1);
-            return common::ok();
+            return kcenon::common::ok();
         });
 
         if (sub_result.is_ok()) {

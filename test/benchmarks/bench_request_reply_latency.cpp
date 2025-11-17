@@ -39,20 +39,13 @@ int main() {
 
     // Register echo handler
     auto register_result = handler->register_handler(
-        [](const message& req) -> common::Result<message> {
+        [](const message& req) -> Result<message> {
             auto reply = message_builder()
                 .topic("service.bench.reply")
                 .correlation_id(req.metadata().correlation_id)
                 .build();
 
-            if (!reply.is_ok()) {
-                return common::error<message>(
-                    common::error::codes::common_system::unknown_error,
-                    "Failed to build reply"
-                );
-            }
-
-            return common::ok(reply.unwrap());
+            return reply;
         }
     );
 

@@ -21,7 +21,7 @@ int main() {
 
         run_benchmark("Router Subscribe", 1000, [&router]() {
             router.subscribe("test.topic", [](const message&) {
-                return common::ok();
+                return kcenon::common::ok();
             });
         });
     }
@@ -33,7 +33,7 @@ int main() {
 
         if (msg.is_ok()) {
             router.subscribe("test.topic", [](const message&) {
-                return common::ok();
+                return kcenon::common::ok();
             });
 
             run_benchmark("Route to Single Subscriber", 10000, [&router, &msg]() {
@@ -49,10 +49,10 @@ int main() {
 
         if (msg.is_ok()) {
             router.subscribe("test.*", [](const message&) {
-                return common::ok();
+                return kcenon::common::ok();
             });
             router.subscribe("test.#", [](const message&) {
-                return common::ok();
+                return kcenon::common::ok();
             });
 
             run_benchmark("Route with Wildcards", 10000, [&router, &msg]() {
@@ -69,7 +69,7 @@ int main() {
         if (msg.is_ok()) {
             for (int i = 0; i < 10; ++i) {
                 router.subscribe("test.topic", [](const message&) {
-                    return common::ok();
+                    return kcenon::common::ok();
                 });
             }
 
@@ -84,12 +84,12 @@ int main() {
         topic_router router;
 
         // Setup complex subscription tree
-        router.subscribe("orders.created", [](const message&) { return common::ok(); });
-        router.subscribe("orders.updated", [](const message&) { return common::ok(); });
-        router.subscribe("orders.deleted", [](const message&) { return common::ok(); });
-        router.subscribe("orders.*", [](const message&) { return common::ok(); });
-        router.subscribe("orders.#", [](const message&) { return common::ok(); });
-        router.subscribe("*.created", [](const message&) { return common::ok(); });
+        router.subscribe("orders.created", [](const message&) { return kcenon::common::ok(); });
+        router.subscribe("orders.updated", [](const message&) { return kcenon::common::ok(); });
+        router.subscribe("orders.deleted", [](const message&) { return kcenon::common::ok(); });
+        router.subscribe("orders.*", [](const message&) { return kcenon::common::ok(); });
+        router.subscribe("orders.#", [](const message&) { return kcenon::common::ok(); });
+        router.subscribe("*.created", [](const message&) { return kcenon::common::ok(); });
 
         auto msg = message_builder().topic("orders.created").build();
 
@@ -104,7 +104,7 @@ int main() {
     {
         topic_router router;
         router.subscribe("test.topic", [](const message&) {
-            return common::ok();
+            return kcenon::common::ok();
         });
 
         auto msg = message_builder().topic("test.topic").build();
