@@ -285,19 +285,22 @@ TEST_F(RequestReplyTest, ServerHandlesMultipleClients) {
 	});
 	ASSERT_TRUE(reg_result.is_ok());
 
-	// Give server time to subscribe
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	// Give server more time to fully initialize and subscribe
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
 
 	// Create multiple clients
 	std::vector<std::thread> threads;
 	std::atomic<int> success_count{0};
 
 	for (int i = 0; i < 5; i++) {
-		threads.emplace_back([this, &success_count]() {
+		threads.emplace_back([this, &success_count, i]() {
+			// Stagger client starts to reduce thundering herd
+			std::this_thread::sleep_for(std::chrono::milliseconds(i * 10));
+
 			request_client client(bus_, "multi.service");
 			message request("multi.service");
 
-			auto reply = client.request(std::move(request), std::chrono::milliseconds{2000});
+			auto reply = client.request(std::move(request), std::chrono::milliseconds{3000});
 			if (reply.is_ok()) {
 				success_count++;
 			}

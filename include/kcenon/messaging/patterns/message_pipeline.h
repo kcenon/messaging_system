@@ -63,7 +63,8 @@ private:
 		std::atomic<uint64_t> messages_succeeded{0};
 		std::atomic<uint64_t> messages_failed{0};
 		std::atomic<uint64_t> stage_failures{0};
-	} stats_;
+	};
+	mutable statistics stats_;
 
 public:
 	/**
