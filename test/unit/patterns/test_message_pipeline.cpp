@@ -178,7 +178,7 @@ TEST_F(MessagePipelineTest, PipelineStageFailure) {
 
 	// Stage that fails
 	pipeline.add_stage("failing_stage", [](const message& msg) -> common::Result<message> {
-		return common::err<message>(common::error_info::create(-1, "Stage failed"));
+		return common::Err<message>(-1, "Stage failed");
 	});
 
 	message input("test.topic");
@@ -193,7 +193,7 @@ TEST_F(MessagePipelineTest, PipelineOptionalStageFailure) {
 
 	// Optional failing stage
 	pipeline.add_stage("optional_fail", [](const message& msg) -> common::Result<message> {
-		return common::err<message>(common::error_info::create(-1, "Optional stage failed"));
+		return common::Err<message>(-1, "Optional stage failed");
 	}, true);  // Mark as optional
 
 	// Final stage that should still execute
@@ -298,9 +298,7 @@ TEST_F(MessagePipelineTest, PipelineStatisticsWithFailures) {
 		if (count % 2 == 0) {
 			return common::ok(message(msg));
 		} else {
-			return common::err<message>(
-				common::error_info::create(-1, "Even numbers only")
-			);
+			return common::Err<message>(-1, "Even numbers only");
 		}
 	});
 
@@ -350,7 +348,7 @@ TEST_F(MessagePipelineTest, PipelineBuilderConstruction) {
 		.build();
 
 	ASSERT_TRUE(result.is_ok());
-	auto pipeline = result.unwrap();
+	auto pipeline = std::move(result.unwrap());
 	EXPECT_FALSE(pipeline->is_running());
 	EXPECT_EQ(pipeline->stage_count(), 0);
 }
@@ -374,7 +372,7 @@ TEST_F(MessagePipelineTest, PipelineBuilderWithStages) {
 		.build();
 
 	ASSERT_TRUE(result.is_ok());
-	auto pipeline = result.unwrap();
+	auto pipeline = std::move(result.unwrap());
 	EXPECT_EQ(pipeline->stage_count(), 2);
 
 	// Test processing
@@ -401,7 +399,7 @@ TEST_F(MessagePipelineTest, PipelineBuilderWithFilter) {
 		.build();
 
 	ASSERT_TRUE(result.is_ok());
-	auto pipeline = result.unwrap();
+	auto pipeline = std::move(result.unwrap());
 
 	// Process low priority message - should be filtered out
 	message low_msg("test.topic");
@@ -431,7 +429,7 @@ TEST_F(MessagePipelineTest, PipelineBuilderWithTransformer) {
 		.build();
 
 	ASSERT_TRUE(result.is_ok());
-	auto pipeline = result.unwrap();
+	auto pipeline = std::move(result.unwrap());
 
 	message input("test.topic");
 	input.metadata().priority = message_priority::low;
@@ -486,9 +484,7 @@ TEST_F(MessagePipelineTest, RetryStage) {
 	auto flaky_processor = [&attempt_count](const message& msg) -> common::Result<message> {
 		int count = attempt_count++;
 		if (count < 2) {
-			return common::err<message>(
-				common::error_info::create(-1, "Temporary failure")
-			);
+			return common::Err<message>(-1, "Temporary failure");
 		}
 		return common::ok(message(msg));
 	};
@@ -510,9 +506,7 @@ TEST_F(MessagePipelineTest, RetryStageMaxAttemptsExceeded) {
 
 	auto always_fail = [&attempt_count](const message& msg) -> common::Result<message> {
 		attempt_count++;
-		return common::err<message>(
-			common::error_info::create(-1, "Always fails")
-		);
+		return common::Err<message>(-1, "Always fails");
 	};
 
 	auto retry_stage = pipeline_stages::create_retry_stage(
