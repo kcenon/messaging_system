@@ -9,7 +9,31 @@ using namespace kcenon::common;
 /**
  * @brief Integration tests for Message Queue + Priority
  */
-class PriorityQueueTest : public MessagingFixture {};
+class PriorityQueueTest : public ::testing::Test {
+protected:
+    std::shared_ptr<backend_interface> backend_;
+    std::shared_ptr<message_bus> bus_;
+
+    void SetUp() override {
+        // Create standalone backend with 2 worker threads
+        backend_ = std::make_shared<standalone_backend>(2);
+
+        // Create message bus with priority queue enabled
+        message_bus_config config;
+        config.queue_capacity = 1000;
+        config.worker_threads = 2;
+        config.enable_priority_queue = true;  // Enable for priority tests
+
+        bus_ = std::make_shared<message_bus>(backend_, config);
+        ASSERT_TRUE(bus_->start().is_ok());
+    }
+
+    void TearDown() override {
+        if (bus_) {
+            bus_->stop();
+        }
+    }
+};
 
 TEST_F(PriorityQueueTest, PriorityOrdering) {
     std::vector<message> received_messages;

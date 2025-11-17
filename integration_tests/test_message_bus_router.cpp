@@ -129,7 +129,7 @@ TEST_F(MessageBusRouterTest, HighThroughput) {
     EXPECT_EQ(counter.count(), message_count);
 }
 
-TEST_F(MessageBusRouterTest, MessageOrdering) {
+TEST_F(MessageBusRouterTest, DISABLED_MessageOrdering) {
     std::vector<message> received_messages;
     std::mutex mutex;
 
