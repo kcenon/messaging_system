@@ -593,6 +593,11 @@ if(MESSAGING_BUILD_TESTS)
     include(CTest)
     enable_testing()
     add_subdirectory(test)
+
+    # Add integration tests if they exist
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/integration_tests/CMakeLists.txt)
+        add_subdirectory(integration_tests)
+    endif()
 endif()
 
 # ============================================================================
