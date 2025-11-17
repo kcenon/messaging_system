@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('d7/de1/md_docs_2phase3_2DESIGN.html','
   <div class="headertitle"><div class="title">Phase 3: Infrastructure Integration - Design Document</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md668"></a> </p>
-<h1><a class="anchor" id="autotoc_md669"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md831"></a> </p>
+<h1><a class="anchor" id="autotoc_md832"></a>
 Overview</h1>
 <p>Integrate network, database, logging, and monitoring systems with messaging core.</p>
-<h1><a class="anchor" id="autotoc_md670"></a>
+<h1><a class="anchor" id="autotoc_md833"></a>
 Architecture</h1>
 <div class="fragment"><div class="line">┌─────────────────────────────────────────────────────────────┐</div>
 <div class="line">│                      Client Applications                     │</div>
@@ -125,9 +125,9 @@ Architecture</h1>
 <div class="line">│  - dequeue()           │  │                │  │  - Watch       │</div>
 <div class="line">│  - reprocess()         │  │                │  │                │</div>
 <div class="line">└────────────────────────┘  └────────────────┘  └────────────────┘</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md671"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md834"></a>
 Component Designs</h1>
-<h2><a class="anchor" id="autotoc_md672"></a>
+<h2><a class="anchor" id="autotoc_md835"></a>
 1. Network Bridge (Task 3.1)</h2>
 <p><b>Header:</b> <code>include/messaging_system/integration/network_bridge.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -188,7 +188,7 @@ Component Designs</h1>
 <li><b>Send</b> (I/O thread): buffer → TCP</li>
 </ol>
 <p><b>Performance Target:</b> 100K+ msg/s end-to-end</p>
-<h2><a class="anchor" id="autotoc_md673"></a>
+<h2><a class="anchor" id="autotoc_md836"></a>
 2. Persistent Message Queue (Task 3.2)</h2>
 <p><b>Header:</b> <code>include/messaging_system/integration/persistent_queue.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -269,7 +269,7 @@ Component Designs</h1>
 <div class="line">    <span class="keyword">PRIMARY</span> KEY (consumer_group, topic)</div>
 <div class="line">);</div>
 </div><!-- fragment --><p><b>Performance Target:</b> P95 latency &lt;50ms</p>
-<h2><a class="anchor" id="autotoc_md674"></a>
+<h2><a class="anchor" id="autotoc_md837"></a>
 3. Tracing and Monitoring (Task 3.3)</h2>
 <p><b>Header:</b> <code>include/messaging_system/integration/trace_context.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -346,7 +346,7 @@ Component Designs</h1>
 <div class="line">        monitor_-&gt;record_metric(<span class="stringliteral">&quot;queue_depth&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(depth), {{<span class="stringliteral">&quot;queue&quot;</span>, queue}});</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md675"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md838"></a>
 4. Configuration System (Task 3.4)</h2>
 <p><b>Header:</b> <code>include/messaging_system/integration/config_loader.h</code></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -447,9 +447,9 @@ Component Designs</h1>
 <div class="line">  monitoring:</div>
 <div class="line">    enabled: true</div>
 <div class="line">    interval_ms: 1000</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md676"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md839"></a>
 Integration Points</h1>
-<h2><a class="anchor" id="autotoc_md677"></a>
+<h2><a class="anchor" id="autotoc_md840"></a>
 Startup Sequence</h2>
 <ol type="1">
 <li><b>Load Configuration</b> <div class="fragment"><div class="line"><span class="keyword">auto</span> config = MessagingSystemConfig::load_from_file(<span class="stringliteral">&quot;config.yaml&quot;</span>);</div>
@@ -476,7 +476,7 @@ Startup Sequence</h2>
 <div class="line">RETURN_IF_ERROR(bridge-&gt;start());</div>
 </div><!-- fragment --></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md678"></a>
+<h1><a class="anchor" id="autotoc_md841"></a>
 Performance Targets</h1>
 <ul>
 <li><b>Network throughput:</b> 100K+ msg/s</li>
@@ -484,7 +484,7 @@ Performance Targets</h1>
 <li><b>Tracing overhead:</b> &lt;1%</li>
 <li><b>Config reload:</b> &lt;100ms</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md679"></a>
+<h1><a class="anchor" id="autotoc_md842"></a>
 Success Criteria</h1>
 <ul>
 <li>[ ] Network bridge handles 100K+ msg/s</li>

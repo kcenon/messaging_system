@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('df/dad/md_docs_2phase0_2INTERFACE__MAP
   <div class="headertitle"><div class="title">System Interface Mapping Document</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md522"></a> </p>
-<h1><a class="anchor" id="autotoc_md523"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md685"></a> </p>
+<h1><a class="anchor" id="autotoc_md686"></a>
 Overview</h1>
 <p>This document maps legacy messaging system types to new external system interfaces.</p>
-<h1><a class="anchor" id="autotoc_md524"></a>
+<h1><a class="anchor" id="autotoc_md687"></a>
 Common System Interfaces</h1>
-<h2><a class="anchor" id="autotoc_md525"></a>
+<h2><a class="anchor" id="autotoc_md688"></a>
 Error Handling</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -111,7 +111,7 @@ Error Handling</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">N/A   </td><td class="markdownTableBodyNone"><code>common::error_info</code>   </td><td class="markdownTableBodyNone"><code>include/kcenon/common/patterns/result.h</code>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md526"></a>
+<h2><a class="anchor" id="autotoc_md689"></a>
 Event System</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -123,7 +123,7 @@ Event System</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">N/A   </td><td class="markdownTableBodyNone"><code>common::error_event</code>   </td><td class="markdownTableBodyNone"><code>include/kcenon/common/patterns/event_bus.h</code>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md527"></a>
+<h2><a class="anchor" id="autotoc_md690"></a>
 Execution Contracts</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -133,7 +133,7 @@ Execution Contracts</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">N/A   </td><td class="markdownTableBodyNone"><code>common::IJob</code>   </td><td class="markdownTableBodyNone"><code>include/kcenon/common/interfaces/executor_interface.h</code>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md528"></a>
+<h2><a class="anchor" id="autotoc_md691"></a>
 Logging Contracts</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -145,7 +145,7 @@ Logging Contracts</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">N/A   </td><td class="markdownTableBodyNone"><code>common::log_entry</code>   </td><td class="markdownTableBodyNone"><code>include/kcenon/common/interfaces/logger_interface.h</code>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md529"></a>
+<h2><a class="anchor" id="autotoc_md692"></a>
 Monitoring Contracts</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -157,7 +157,7 @@ Monitoring Contracts</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">N/A   </td><td class="markdownTableBodyNone"><code>common::health_status</code>   </td><td class="markdownTableBodyNone"><code>include/kcenon/common/interfaces/monitoring_interface.h</code>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md530"></a>
+<h2><a class="anchor" id="autotoc_md693"></a>
 Database Contracts</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -169,9 +169,9 @@ Database Contracts</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">N/A   </td><td class="markdownTableBodyNone"><code>common::database_result</code>   </td><td class="markdownTableBodyNone"><code>include/kcenon/common/interfaces/database_interface.h</code>   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md531"></a>
+<h1><a class="anchor" id="autotoc_md694"></a>
 Error Code Ranges</h1>
-<h2><a class="anchor" id="autotoc_md532"></a>
+<h2><a class="anchor" id="autotoc_md695"></a>
 System Error Code Allocation</h2>
 <div class="fragment"><div class="line"><span class="comment">// Common System: -1 to -99</span></div>
 <div class="line"><span class="keyword">namespace </span>common::error::codes {</div>
@@ -235,9 +235,9 @@ System Error Code Allocation</h2>
 <div class="line">    <span class="keyword">constexpr</span> <span class="keywordtype">int</span> SEND_FAILED = -701;</div>
 <div class="line">    <span class="comment">// ... up to -799</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md533"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md696"></a>
 Legacy Dependencies to Remove</h1>
-<h2><a class="anchor" id="autotoc_md534"></a>
+<h2><a class="anchor" id="autotoc_md697"></a>
 Internal Implementations</h2>
 <ol type="1">
 <li><b>Internal Container System</b><ul>
@@ -271,12 +271,12 @@ Internal Implementations</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md535"></a>
+<h2><a class="anchor" id="autotoc_md698"></a>
 External Dependencies</h2>
 <p>None - all systems are header-only or provide clean interfaces.</p>
-<h1><a class="anchor" id="autotoc_md536"></a>
+<h1><a class="anchor" id="autotoc_md699"></a>
 Exception Mapper Utility</h1>
-<h2><a class="anchor" id="autotoc_md537"></a>
+<h2><a class="anchor" id="autotoc_md700"></a>
 Usage Pattern</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/common/patterns/result.h&gt;</span></div>
 <div class="line"> </div>
@@ -293,9 +293,9 @@ Usage Pattern</h2>
 <div class="line">    <span class="comment">// Handle error</span></div>
 <div class="line">    std::cerr &lt;&lt; result.error().message &lt;&lt; std::endl;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md538"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md701"></a>
 Migration Checklist</h1>
-<h2><a class="anchor" id="autotoc_md539"></a>
+<h2><a class="anchor" id="autotoc_md702"></a>
 Phase 0 Completion Criteria</h2>
 <ul>
 <li>[x] Interface mapping document created</li>
@@ -304,7 +304,7 @@ Phase 0 Completion Criteria</h2>
 <li>[ ] Exception mapper patterns documented</li>
 <li>[ ] All stakeholders reviewed</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md540"></a>
+<h2><a class="anchor" id="autotoc_md703"></a>
 Next Steps</h2>
 <p>Proceed to Task 0.2: Build Environment Audit </p>
 </div></div><!-- contents -->

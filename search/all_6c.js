@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🎯_20key_20highlights_0',['🎯 Key Highlights',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md947',1,'']]]
+  ['🌟_20ecosystem_20integration_0',['🌟 Ecosystem Integration',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1118',1,'']]]
 ];

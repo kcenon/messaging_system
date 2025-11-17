@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['확정_20strong_0',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md809',1,'']]]
+  ['피처_20플래그_20통합_20strong_0',['&lt;strong&gt;Task 1.2 – 컴파일 옵션 및 피처 플래그 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md976',1,'']]]
 ];

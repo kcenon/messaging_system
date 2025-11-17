@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['개요_20및_20우선순위_0',['개요 및 우선순위',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md804',1,'']]]
+  ['강화_20strong_0',['&lt;strong&gt;Task 4.4 – 보안 검토 및 강화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md993',1,'']]]
 ];

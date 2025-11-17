@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['차단_20계획_20수립_20strong_0',['&lt;strong&gt;Task 0.4 – 레거시 구현 차단 계획 수립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md810',1,'']]]
+  ['즉시_20통합_20최우선_0',['**Task 0.0 – common_system 즉시 통합 (최우선)**',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md969',1,'']]]
 ];

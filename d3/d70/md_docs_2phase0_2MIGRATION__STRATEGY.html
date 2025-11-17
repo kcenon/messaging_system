@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d3/d70/md_docs_2phase0_2MIGRATION__STR
   <div class="headertitle"><div class="title">Migration Strategy and Risk Assessment</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md574"></a> </p>
-<h1><a class="anchor" id="autotoc_md575"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md737"></a> </p>
+<h1><a class="anchor" id="autotoc_md738"></a>
 Overview</h1>
 <p>This document defines the migration strategy from legacy architecture to external system-based architecture with Result&lt;T&gt; error handling.</p>
-<h1><a class="anchor" id="autotoc_md576"></a>
+<h1><a class="anchor" id="autotoc_md739"></a>
 Breaking Changes</h1>
-<h2><a class="anchor" id="autotoc_md577"></a>
+<h2><a class="anchor" id="autotoc_md740"></a>
 1. Error Handling Paradigm Shift</h2>
 <p><b>Change:</b> Exception-based → Result&lt;T&gt;-based error handling</p>
 <p><b>Impact:</b></p><ul>
@@ -137,7 +137,7 @@ Breaking Changes</h1>
 <div class="line"><span class="keywordflow">if</span> (result.is_error()) {</div>
 <div class="line">    logger-&gt;log(log_level::error, result.error().message);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md578"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md741"></a>
 2. External System Dependencies</h2>
 <p><b>Change:</b> Embedded systems → External packages</p>
 <p><b>Impact:</b></p><ul>
@@ -152,7 +152,7 @@ Breaking Changes</h1>
 <div class="line"># AFTER</div>
 <div class="line">find_package(ContainerSystem 1.0 REQUIRED)</div>
 <div class="line">find_package(NetworkSystem 1.0 REQUIRED)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md579"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md742"></a>
 3. Container API Changes</h2>
 <p><b>Change:</b> Custom container → value_container</p>
 <p><b>Impact:</b></p><ul>
@@ -172,9 +172,9 @@ Breaking Changes</h1>
 <div class="line">    .add_value(<span class="stringliteral">&quot;action&quot;</span>, <span class="stringliteral">&quot;login&quot;</span>)</div>
 <div class="line">    .build();</div>
 <div class="line"><span class="keyword">auto</span> data = msg.serialize();</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md580"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md743"></a>
 Compatibility Layer Design</h1>
-<h2><a class="anchor" id="autotoc_md581"></a>
+<h2><a class="anchor" id="autotoc_md744"></a>
 Legacy API Wrapper</h2>
 <div class="fragment"><div class="line"><span class="comment">// include/messaging_system/compat/legacy_api.h</span></div>
 <div class="line"><span class="preprocessor">#ifdef MESSAGING_LEGACY_API_COMPAT</span></div>
@@ -216,7 +216,7 @@ Legacy API Wrapper</h2>
 <div class="line">} <span class="comment">// namespace messaging::compat</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">// MESSAGING_LEGACY_API_COMPAT</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md582"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md745"></a>
 Feature Flag Configuration</h2>
 <div class="fragment"><div class="line">option(MESSAGING_LEGACY_API_COMPAT &quot;Enable legacy API compatibility layer&quot; OFF)</div>
 <div class="line"> </div>
@@ -224,18 +224,18 @@ Feature Flag Configuration</h2>
 <div class="line">    target_compile_definitions(messaging_system PUBLIC MESSAGING_LEGACY_API_COMPAT)</div>
 <div class="line">    message(WARNING &quot;Legacy API compatibility enabled. This will be removed in v2.0&quot;)</div>
 <div class="line">endif()</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md583"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md746"></a>
 Gradual Migration Scenario</h1>
-<h2><a class="anchor" id="autotoc_md584"></a>
+<h2><a class="anchor" id="autotoc_md747"></a>
 Release Timeline</h2>
-<h3><a class="anchor" id="autotoc_md585"></a>
+<h3><a class="anchor" id="autotoc_md748"></a>
 v1.9 (Current)</h3>
 <ul>
 <li><b>Status:</b> Legacy architecture</li>
 <li><b>Support:</b> Full support</li>
 <li><b>Timeline:</b> Now</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md586"></a>
+<h3><a class="anchor" id="autotoc_md749"></a>
 v1.10 (Transition Release)</h3>
 <ul>
 <li><b>Changes:</b><ul>
@@ -248,7 +248,7 @@ v1.10 (Transition Release)</h3>
 <li><b>Warnings:</b> Deprecation warnings for old APIs</li>
 <li><b>Timeline:</b> +2 weeks after Phase 1 completion</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md587"></a>
+<h3><a class="anchor" id="autotoc_md750"></a>
 v1.11 (Final Transition)</h3>
 <ul>
 <li><b>Changes:</b><ul>
@@ -260,7 +260,7 @@ v1.11 (Final Transition)</h3>
 <li><b>Support:</b> Both APIs with loud warnings</li>
 <li><b>Timeline:</b> +4 weeks after v1.10</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md588"></a>
+<h3><a class="anchor" id="autotoc_md751"></a>
 v2.0 (New Architecture)</h3>
 <ul>
 <li><b>Changes:</b><ul>
@@ -272,25 +272,25 @@ v2.0 (New Architecture)</h3>
 <li><b>Support:</b> New API only</li>
 <li><b>Timeline:</b> +8 weeks after v1.10</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md589"></a>
+<h2><a class="anchor" id="autotoc_md752"></a>
 Migration Schedule</h2>
 <div class="fragment"><div class="line">Week 0-2:   v1.10 Release (Dual API support)</div>
 <div class="line">Week 3-6:   Migration period (Users update their code)</div>
 <div class="line">Week 7-10:  v1.11 Release (Strong warnings)</div>
 <div class="line">Week 11-14: Final migration warnings</div>
 <div class="line">Week 15:    v2.0 Release (Legacy removed)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md590"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md753"></a>
 Rollback Strategy</h1>
-<h2><a class="anchor" id="autotoc_md591"></a>
+<h2><a class="anchor" id="autotoc_md754"></a>
 Blue-Green Deployment</h2>
-<h3><a class="anchor" id="autotoc_md592"></a>
+<h3><a class="anchor" id="autotoc_md755"></a>
 Preparation</h3>
 <div class="fragment"><div class="line"># Deploy v2.0 to &quot;green&quot; environment</div>
 <div class="line">kubectl apply -f k8s/messaging-v2-deployment.yaml</div>
 <div class="line"> </div>
 <div class="line"># Keep v1.x running in &quot;blue&quot; environment</div>
 <div class="line">kubectl get deployment messaging-v1  # Verify running</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md593"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md756"></a>
 Cutover</h3>
 <div class="fragment"><div class="line"># Route 10% traffic to green</div>
 <div class="line">kubectl patch service messaging -p &#39;{&quot;spec&quot;:{&quot;selector&quot;:{&quot;version&quot;:&quot;v2.0&quot;,&quot;weight&quot;:&quot;10&quot;}}}&#39;</div>
@@ -302,7 +302,7 @@ Cutover</h3>
 <div class="line"># Monitor for 2 hours</div>
 <div class="line"># If successful, route 100%</div>
 <div class="line">kubectl patch service messaging -p &#39;{&quot;spec&quot;:{&quot;selector&quot;:{&quot;version&quot;:&quot;v2.0&quot;}}}&#39;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md594"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md757"></a>
 Rollback (If Issues Detected)</h3>
 <div class="fragment"><div class="line"># Immediate traffic switch back to v1.x</div>
 <div class="line">kubectl patch service messaging -p &#39;{&quot;spec&quot;:{&quot;selector&quot;:{&quot;version&quot;:&quot;v1.11&quot;}}}&#39;</div>
@@ -312,9 +312,9 @@ Rollback (If Issues Detected)</h3>
 <div class="line"> </div>
 <div class="line"># Verify v1.x is handling all traffic</div>
 <div class="line">kubectl get pods -l app=messaging,version=v1.11</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md595"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md758"></a>
 Database Migration Rollback</h2>
-<h3><a class="anchor" id="autotoc_md596"></a>
+<h3><a class="anchor" id="autotoc_md759"></a>
 Forward Migration Script</h3>
 <div class="fragment"><div class="line"><span class="comment">-- migrations/v2.0_messages_table.sql</span></div>
 <div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keywordflow">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> messages_v2 (</div>
@@ -329,22 +329,22 @@ Forward Migration Script</h3>
 <div class="line"> </div>
 <div class="line"><span class="keyword">CREATE</span> INDEX idx_messages_v2_topic <span class="keyword">ON</span> messages_v2(topic);</div>
 <div class="line"><span class="keyword">CREATE</span> INDEX idx_messages_v2_status <span class="keyword">ON</span> messages_v2(status);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md597"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md760"></a>
 Rollback Script</h3>
 <div class="fragment"><div class="line"><span class="comment">-- migrations/rollback_v2.0_messages_table.sql</span></div>
 <div class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keywordflow">IF</span> <span class="keyword">EXISTS</span> messages_v2 CASCADE;</div>
 <div class="line"><span class="keyword">DROP</span> INDEX <span class="keywordflow">IF</span> <span class="keyword">EXISTS</span> idx_messages_v2_topic;</div>
 <div class="line"><span class="keyword">DROP</span> INDEX <span class="keywordflow">IF</span> <span class="keyword">EXISTS</span> idx_messages_v2_status;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md598"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md761"></a>
 Execution</h3>
 <div class="fragment"><div class="line"># Apply migration</div>
 <div class="line">./scripts/migrate_db.sh --execute --version=v2.0</div>
 <div class="line"> </div>
 <div class="line"># Rollback if needed</div>
 <div class="line">./scripts/migrate_db.sh --rollback --version=v2.0</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md599"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md762"></a>
 Configuration Rollback</h2>
-<h3><a class="anchor" id="autotoc_md600"></a>
+<h3><a class="anchor" id="autotoc_md763"></a>
 Configuration Versioning</h3>
 <div class="fragment"><div class="line"># config/messaging_v1.11.yaml (backup)</div>
 <div class="line">messaging_system:</div>
@@ -355,7 +355,7 @@ Configuration Versioning</h3>
 <div class="line">messaging_system:</div>
 <div class="line">  version: &quot;2.0&quot;</div>
 <div class="line">  # ... new configuration</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md601"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md764"></a>
 Ansible Rollback Playbook</h3>
 <div class="fragment"><div class="line"># playbooks/rollback_config.yml</div>
 <div class="line">---</div>
@@ -383,11 +383,11 @@ Ansible Rollback Playbook</h3>
 <div class="line">        status_code: 200</div>
 <div class="line">      retries: 5</div>
 <div class="line">      delay: 10</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md602"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md765"></a>
 Risk Register</h1>
-<h2><a class="anchor" id="autotoc_md603"></a>
+<h2><a class="anchor" id="autotoc_md766"></a>
 High Risk Items</h2>
-<h3><a class="anchor" id="autotoc_md604"></a>
+<h3><a class="anchor" id="autotoc_md767"></a>
 Risk 1: Performance Regression</h3>
 <ul>
 <li><b>Probability:</b> Medium</li>
@@ -400,7 +400,7 @@ Risk 1: Performance Regression</h3>
 </ul>
 </li>
 </ul>
-<h3><a class="anchor" id="autotoc_md605"></a>
+<h3><a class="anchor" id="autotoc_md768"></a>
 Risk 2: Data Loss During Migration</h3>
 <ul>
 <li><b>Probability:</b> Low</li>
@@ -413,7 +413,7 @@ Risk 2: Data Loss During Migration</h3>
 </ul>
 </li>
 </ul>
-<h3><a class="anchor" id="autotoc_md606"></a>
+<h3><a class="anchor" id="autotoc_md769"></a>
 Risk 3: Client Breaking Changes</h3>
 <ul>
 <li><b>Probability:</b> High</li>
@@ -426,9 +426,9 @@ Risk 3: Client Breaking Changes</h3>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md607"></a>
+<h2><a class="anchor" id="autotoc_md770"></a>
 Medium Risk Items</h2>
-<h3><a class="anchor" id="autotoc_md608"></a>
+<h3><a class="anchor" id="autotoc_md771"></a>
 Risk 4: Dependency Version Conflicts</h3>
 <ul>
 <li><b>Probability:</b> Medium</li>
@@ -440,7 +440,7 @@ Risk 4: Dependency Version Conflicts</h3>
 </ul>
 </li>
 </ul>
-<h3><a class="anchor" id="autotoc_md609"></a>
+<h3><a class="anchor" id="autotoc_md772"></a>
 Risk 5: Build System Issues</h3>
 <ul>
 <li><b>Probability:</b> Medium</li>
@@ -452,9 +452,9 @@ Risk 5: Build System Issues</h3>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md610"></a>
+<h1><a class="anchor" id="autotoc_md773"></a>
 Risk Mitigation Checklist</h1>
-<h2><a class="anchor" id="autotoc_md611"></a>
+<h2><a class="anchor" id="autotoc_md774"></a>
 Pre-Migration</h2>
 <ul>
 <li>[ ] Full system backup</li>
@@ -464,7 +464,7 @@ Pre-Migration</h2>
 <li>[ ] Stakeholder notification sent</li>
 <li>[ ] Maintenance window scheduled</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md612"></a>
+<h2><a class="anchor" id="autotoc_md775"></a>
 During Migration</h2>
 <ul>
 <li>[ ] Monitor error rates continuously</li>
@@ -473,7 +473,7 @@ During Migration</h2>
 <li>[ ] Ready rollback scripts available</li>
 <li>[ ] On-call engineers available</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md613"></a>
+<h2><a class="anchor" id="autotoc_md776"></a>
 Post-Migration</h2>
 <ul>
 <li>[ ] Performance comparison report</li>
@@ -482,9 +482,9 @@ Post-Migration</h2>
 <li>[ ] Lessons learned documented</li>
 <li>[ ] Backup retention verified</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md614"></a>
+<h1><a class="anchor" id="autotoc_md777"></a>
 Communication Plan</h1>
-<h2><a class="anchor" id="autotoc_md615"></a>
+<h2><a class="anchor" id="autotoc_md778"></a>
 Stakeholders</h2>
 <ol type="1">
 <li><b>Development Team:</b> Weekly updates during migration</li>
@@ -492,7 +492,7 @@ Stakeholders</h2>
 <li><b>Users:</b> Email notifications at each release</li>
 <li><b>Management:</b> Executive summary reports</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md616"></a>
+<h2><a class="anchor" id="autotoc_md779"></a>
 Notification Timeline</h2>
 <ul>
 <li><b>8 weeks before:</b> v2.0 announcement, migration guide published</li>
@@ -502,9 +502,9 @@ Notification Timeline</h2>
 <li><b>Day of:</b> v2.0 release, support channels monitoring</li>
 <li><b>1 week after:</b> Post-mortem meeting</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md617"></a>
+<h1><a class="anchor" id="autotoc_md780"></a>
 Success Criteria</h1>
-<h2><a class="anchor" id="autotoc_md618"></a>
+<h2><a class="anchor" id="autotoc_md781"></a>
 Technical Criteria</h2>
 <ul>
 <li>[ ] Zero data loss</li>
@@ -514,7 +514,7 @@ Technical Criteria</h2>
 <li>[ ] Zero memory leaks (ASAN clean)</li>
 <li>[ ] Zero data races (TSAN clean)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md619"></a>
+<h2><a class="anchor" id="autotoc_md782"></a>
 Business Criteria</h2>
 <ul>
 <li>[ ] &lt; 5% user complaints</li>
@@ -522,7 +522,7 @@ Business Criteria</h2>
 <li>[ ] Migration completed within timeline</li>
 <li>[ ] Documentation complete</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md620"></a>
+<h1><a class="anchor" id="autotoc_md783"></a>
 Completion Checklist</h1>
 <ul>
 <li>[x] Breaking changes identified and documented</li>
