@@ -13,6 +13,7 @@ target_link_libraries(test_standalone_backend
 )
 
 add_test(NAME test_standalone_backend COMMAND test_standalone_backend)
+set_tests_properties(test_standalone_backend PROPERTIES TIMEOUT 60)
 
 # Test: integration_backend
 add_executable(test_integration_backend
@@ -27,3 +28,4 @@ target_link_libraries(test_integration_backend
 )
 
 add_test(NAME test_integration_backend COMMAND test_integration_backend)
+set_tests_properties(test_integration_backend PROPERTIES TIMEOUT 60)

@@ -13,6 +13,7 @@ target_link_libraries(test_message
 )
 
 add_test(NAME test_message COMMAND test_message)
+set_tests_properties(test_message PROPERTIES TIMEOUT 60)
 
 # Test: message_queue
 add_executable(test_message_queue
@@ -27,6 +28,7 @@ target_link_libraries(test_message_queue
 )
 
 add_test(NAME test_message_queue COMMAND test_message_queue)
+set_tests_properties(test_message_queue PROPERTIES TIMEOUT 60)
 
 # Test: topic_router
 add_executable(test_topic_router
@@ -41,6 +43,7 @@ target_link_libraries(test_topic_router
 )
 
 add_test(NAME test_topic_router COMMAND test_topic_router)
+set_tests_properties(test_topic_router PROPERTIES TIMEOUT 60)
 
 # Test: message_bus
 add_executable(test_message_bus
@@ -55,3 +58,4 @@ target_link_libraries(test_message_bus
 )
 
 add_test(NAME test_message_bus COMMAND test_message_bus)
+set_tests_properties(test_message_bus PROPERTIES TIMEOUT 60)
