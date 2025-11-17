@@ -536,6 +536,10 @@ set(MESSAGING_CORE_SOURCES
     src/impl/backends/integration_backend.cpp
     src/impl/di/messaging_di_container.cpp
     src/impl/di/service_registry.cpp
+    src/impl/patterns/pub_sub.cpp
+    src/impl/patterns/request_reply.cpp
+    src/impl/patterns/event_streaming.cpp
+    src/impl/patterns/message_pipeline.cpp
 )
 
 # Create static library
