@@ -110,6 +110,9 @@ VoidResult message_pipeline::stop() {
 Result<message> message_pipeline::process(message msg) const {
 	std::lock_guard lock(stages_mutex_);
 
+	// Track processing attempt
+	stats_.messages_processed.fetch_add(1, std::memory_order_relaxed);
+
 	message current = std::move(msg);
 
 	// Process through each stage
@@ -122,6 +125,7 @@ Result<message> message_pipeline::process(message msg) const {
 				continue;
 			} else {
 				// Required stage failed, abort pipeline
+				stats_.messages_failed.fetch_add(1, std::memory_order_relaxed);
 				return result;
 			}
 		}
@@ -129,6 +133,8 @@ Result<message> message_pipeline::process(message msg) const {
 		current = result.unwrap();
 	}
 
+	// Successfully processed through all stages
+	stats_.messages_succeeded.fetch_add(1, std::memory_order_relaxed);
 	return current;
 }
 
@@ -166,20 +172,18 @@ void message_pipeline::reset_statistics() {
 }
 
 void message_pipeline::handle_message(const message& msg) {
-	stats_.messages_processed.fetch_add(1, std::memory_order_relaxed);
-
+	// Note: process() already tracks messages_processed, messages_succeeded, messages_failed
 	auto result = process(msg);
 
 	if (result.is_ok()) {
 		// Publish to output topic
 		auto pub_result = bus_->publish(output_topic_, result.unwrap());
-		if (pub_result.is_ok()) {
-			stats_.messages_succeeded.fetch_add(1, std::memory_order_relaxed);
-		} else {
+		if (!pub_result.is_ok()) {
+			// Process succeeded but publish failed
+			// Adjust stats: decrement succeeded, increment failed
+			stats_.messages_succeeded.fetch_sub(1, std::memory_order_relaxed);
 			stats_.messages_failed.fetch_add(1, std::memory_order_relaxed);
 		}
-	} else {
-		stats_.messages_failed.fetch_add(1, std::memory_order_relaxed);
 	}
 }
 

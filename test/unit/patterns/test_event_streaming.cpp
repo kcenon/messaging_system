@@ -289,21 +289,21 @@ TEST_F(EventStreamingTest, GetEvents) {
 TEST_F(EventStreamingTest, GetEventsWithFilter) {
 	event_stream stream(bus_, "events.test");
 
-	// Publish events with different types
+	// Publish events with different priorities
 	for (int i = 0; i < 10; ++i) {
 		message event("events.test");
 		if (i % 3 == 0) {
-			event.metadata().type = message_type::event;
+			event.metadata().priority = message_priority::high;
 		} else {
-			event.metadata().type = message_type::command;
+			event.metadata().priority = message_priority::normal;
 		}
 		stream.publish_event(std::move(event));
 	}
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-	// Get only event type messages
+	// Get only high priority messages
 	auto filter = [](const message& msg) {
-		return msg.metadata().type == message_type::event;
+		return msg.metadata().priority == message_priority::high;
 	};
 	auto events = stream.get_events(filter);
 
