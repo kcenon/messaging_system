@@ -82,6 +82,10 @@ constexpr int no_route_found = base - 81;         // -781
 constexpr int message_rejected = base - 82;       // -782
 constexpr int broker_unavailable = base - 83;     // -783
 constexpr int broker_not_started = base - 84;     // -784
+constexpr int already_running = base - 85;        // -785
+constexpr int not_running = base - 86;            // -786
+constexpr int backend_not_ready = base - 87;      // -787
+constexpr int request_timeout = base - 88;        // -788
 
 // ============================================================================
 // Error Message Lookup
@@ -130,6 +134,10 @@ inline std::string_view get_error_message(int code) {
         case message_rejected: return "Message rejected";
         case broker_unavailable: return "Message broker unavailable";
         case broker_not_started: return "Message broker not started";
+        case already_running: return "Message bus already running";
+        case not_running: return "Message bus not running";
+        case backend_not_ready: return "Backend not ready";
+        case request_timeout: return "Request timeout";
 
         default: return "Unknown messaging error";
     }
@@ -152,6 +160,8 @@ namespace validation {
     static_assert(invalid_subscription >= -799 && invalid_subscription <= -700,
                   "messaging_system error codes must be in range [-799, -700]");
     static_assert(broker_not_started >= -799 && broker_not_started <= -700,
+                  "messaging_system error codes must be in range [-799, -700]");
+    static_assert(request_timeout >= -799 && request_timeout <= -700,
                   "messaging_system error codes must be in range [-799, -700]");
 } // namespace validation
 

@@ -5,6 +5,7 @@
 #include <kcenon/messaging/core/topic_router.h>
 
 #include <kcenon/common/error/error_codes.h>
+#include <kcenon/messaging/error/error_codes.h>
 
 #include <algorithm>
 #include <sstream>
@@ -242,9 +243,10 @@ common::VoidResult topic_router::unsubscribe(uint64_t subscription_id) {
 		}
 	}
 
-	return common::error_info(
-		common::error::codes::common_errors::not_found,
-		"Subscription not found: " + std::to_string(subscription_id));
+	return common::make_error<std::monostate>(
+		error::subscription_not_found,
+		"Subscription not found: " + std::to_string(subscription_id),
+		"messaging_system");
 }
 
 std::vector<const subscription*> topic_router::find_matching_subscriptions(
