@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('d5/d7c/md_docs_2phase1_2DESIGN.html','
   <div class="headertitle"><div class="title">Phase 1: Build System and Dependency Refactoring - Design Document</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md784"></a> </p>
-<h1><a class="anchor" id="autotoc_md785"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md785"></a> </p>
+<h1><a class="anchor" id="autotoc_md786"></a>
 Overview</h1>
 <p>This document provides detailed design specifications for Phase 1: integrating 7 external systems and removing legacy code from the build system.</p>
-<h1><a class="anchor" id="autotoc_md786"></a>
+<h1><a class="anchor" id="autotoc_md787"></a>
 Architecture Diagram</h1>
 <div class="fragment"><div class="line">messaging_system (v2.0)</div>
 <div class="line">│</div>
@@ -120,9 +120,9 @@ Architecture Diagram</h1>
 <div class="line">    ├── CMake Build System</div>
 <div class="line">    ├── CMake Presets</div>
 <div class="line">    └── Validation Scripts</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md787"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md788"></a>
 Task 1.1: External Module Integration</h1>
-<h2><a class="anchor" id="autotoc_md788"></a>
+<h2><a class="anchor" id="autotoc_md789"></a>
 Updated CMakeLists.txt Structure</h2>
 <p><b>File:</b> <code>CMakeLists.txt</code> (root)</p>
 <div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.16)</div>
@@ -501,7 +501,7 @@ Updated CMakeLists.txt Structure</h2>
 <div class="line">endif()</div>
 <div class="line">message(STATUS &quot;======================================&quot;)</div>
 <div class="line">message(STATUS &quot;&quot;)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md789"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md790"></a>
 Dependency Validation Script</h2>
 <p><b>File:</b> <code>cmake/validate_dependencies.cmake</code></p>
 <div class="fragment"><div class="line">function(validate_messaging_dependencies)</div>
@@ -537,9 +537,9 @@ Dependency Validation Script</h2>
 <div class="line"> </div>
 <div class="line">    message(STATUS &quot;✓ All messaging_system dependencies validated&quot;)</div>
 <div class="line">endfunction()</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md790"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md791"></a>
 Task 1.2: Compiler Options and Feature Flags</h1>
-<h2><a class="anchor" id="autotoc_md791"></a>
+<h2><a class="anchor" id="autotoc_md792"></a>
 Flag Propagation Strategy</h2>
 <p><b>Unified Configuration Table:</b></p>
 <table class="markdownTable">
@@ -556,7 +556,7 @@ Flag Propagation Strategy</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>MESSAGING_ENABLE_TLS</code>   </td><td class="markdownTableBodyNone">network_system   </td><td class="markdownTableBodyNone"><code>ENABLE_TLS</code>   </td><td class="markdownTableBodyNone">OFF   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md792"></a>
+<h2><a class="anchor" id="autotoc_md793"></a>
 CMakePresets.json (Already created in Phase 0)</h2>
 <p>Located at project root, defines presets for:</p><ul>
 <li>default</li>
@@ -566,9 +566,9 @@ CMakePresets.json (Already created in Phase 0)</h2>
 <li>dev-fetchcontent</li>
 <li>ci</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md793"></a>
+<h1><a class="anchor" id="autotoc_md794"></a>
 Task 1.3: Configuration Validation</h1>
-<h2><a class="anchor" id="autotoc_md794"></a>
+<h2><a class="anchor" id="autotoc_md795"></a>
 Validation Checklist</h2>
 <p>Pre-build validation ensures:</p><ol type="1">
 <li>All 7 external systems are available</li>
@@ -576,7 +576,7 @@ Validation Checklist</h2>
 <li>Required features enabled in dependencies</li>
 <li>No conflicting options</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md795"></a>
+<h2><a class="anchor" id="autotoc_md796"></a>
 Post-build Verification</h2>
 <div class="fragment"><div class="line"># Verify all external libraries linked</div>
 <div class="line">ldd build/bin/messaging_system | grep -E &quot;(common|thread|logger|monitoring|container|database|network)&quot;</div>
@@ -585,9 +585,9 @@ Post-build Verification</h2>
 <div class="line"># libcommon.so.1 =&gt; /usr/lib/libcommon.so.1</div>
 <div class="line"># libthread.so.1 =&gt; /usr/lib/libthread.so.1</div>
 <div class="line"># ...</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md796"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md797"></a>
 Task 1.4: Legacy Code Removal</h1>
-<h2><a class="anchor" id="autotoc_md797"></a>
+<h2><a class="anchor" id="autotoc_md798"></a>
 Execution Steps</h2>
 <ol type="1">
 <li><b>Backup current state</b> <div class="fragment"><div class="line">git checkout -b backup/pre-phase1</div>
@@ -611,9 +611,9 @@ Execution Steps</h2>
 <div class="line">git commit -m &quot;Phase 1: External system integration complete&quot;</div>
 </div><!-- fragment --></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md798"></a>
+<h1><a class="anchor" id="autotoc_md799"></a>
 Success Criteria</h1>
-<h2><a class="anchor" id="autotoc_md799"></a>
+<h2><a class="anchor" id="autotoc_md800"></a>
 Build Success</h2>
 <ul>
 <li>[ ] CMake configuration succeeds with find_package</li>
@@ -621,27 +621,27 @@ Build Success</h2>
 <li>[ ] All targets build without errors</li>
 <li>[ ] No warnings with -Wpedantic</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md800"></a>
+<h2><a class="anchor" id="autotoc_md801"></a>
 Functionality</h2>
 <ul>
 <li>[ ] All unit tests pass</li>
 <li>[ ] Integration tests pass</li>
 <li>[ ] Examples build and run</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md801"></a>
+<h2><a class="anchor" id="autotoc_md802"></a>
 Performance</h2>
 <ul>
 <li>[ ] No performance regression (benchmark comparison)</li>
 <li>[ ] Binary size within 10% of baseline</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md802"></a>
+<h2><a class="anchor" id="autotoc_md803"></a>
 Documentation</h2>
 <ul>
 <li>[ ] Updated README with new build instructions</li>
 <li>[ ] Migration guide completed</li>
 <li>[ ] API documentation updated</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md803"></a>
+<h1><a class="anchor" id="autotoc_md804"></a>
 Implementation Timeline</h1>
 <ul>
 <li><b>Day 1:</b> Update CMakeLists.txt root</li>
@@ -650,7 +650,7 @@ Implementation Timeline</h1>
 <li><b>Day 4:</b> Test find_package mode</li>
 <li><b>Day 5:</b> Archive legacy code, final testing</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md804"></a>
+<h1><a class="anchor" id="autotoc_md805"></a>
 Rollback Plan</h1>
 <p>If Phase 1 fails:</p><ol type="1">
 <li>Restore from <code>_archived/</code> directory</li>
@@ -659,7 +659,7 @@ Rollback Plan</h1>
 <li>Document failure reasons</li>
 <li>Adjust plan and retry</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md805"></a>
+<h1><a class="anchor" id="autotoc_md806"></a>
 Next Phase</h1>
 <p>Upon successful completion, proceed to Phase 2: Messaging Core Redesign. </p>
 </div></div><!-- contents -->
