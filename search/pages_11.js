@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['v2_200_20project_20completion_20summary_0',['Messaging System v2.0 - Project Completion Summary',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html',1,'']]],
-  ['validation_20and_20deployment_20design_20document_1',['Phase 4: Validation and Deployment - Design Document',['../db/d5d/md_docs_2phase4_2DESIGN.html',1,'']]]
+  ['test_20suite_20summary_0',['Phase 4: Test Suite Summary',['../df/d5e/md_docs_2phase4_2TEST__SUMMARY.html',1,'']]],
+  ['troubleshooting_20guide_1',['troubleshooting guide',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html',1,'Build Troubleshooting Guide'],['../d4/d2f/md_docs_2TROUBLESHOOTING.html',1,'Troubleshooting Guide']]]
 ];

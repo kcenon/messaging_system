@@ -9,7 +9,7 @@ var searchData=
   ['q_3a_20what_20about_20performance_6',['Q: What about performance?',['../db/d3a/md_docs_2MIGRATION__GUIDE.html#autotoc_md501',1,'']]],
   ['qualitative_7',['Qualitative',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md946',1,'']]],
   ['quality_20✅_205_205_20completed_8',['Quality ✅ 5/5 Completed',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md438',1,'']]],
-  ['quality_20and_20linting_9',['B. Code Quality and Linting',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1200',1,'']]],
+  ['quality_20and_20linting_9',['B. Code Quality and Linting',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1233',1,'']]],
   ['quantitative_10',['Quantitative',['../da/da3/md_docs_2PROJECT__COMPLETION__SUMMARY.html#autotoc_md945',1,'']]],
   ['query_20execution_11',['Query Execution',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md34',1,'']]],
   ['query_20performance_12',['Query Performance',['../df/d94/md_docs_2performance.html#autotoc_md637',1,'']]],
@@ -19,10 +19,11 @@ var searchData=
   ['queue_20interface_16',['3.1 Queue Interface',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md397',1,'']]],
   ['queue_20task_203_202_17',['2. Persistent Message Queue (Task 3.2)',['../d7/de1/md_docs_2phase3_2DESIGN.html#autotoc_md837',1,'']]],
   ['queue_20week_203_20✅_20completed_18',['Phase 3: Message Queue (Week 3) - ✅ COMPLETED',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md427',1,'']]],
-  ['queue_20with_20persistence_19',['Example 1: Distributed Task Queue with Persistence',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1144',1,'']]],
+  ['queue_20with_20persistence_19',['Example 1: Distributed Task Queue with Persistence',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1177',1,'']]],
   ['queues_20',['Q: How do I enable lock-free queues?',['../db/d3a/md_docs_2MIGRATION__GUIDE.html#autotoc_md503',1,'']]],
   ['quick_20build_20recommended_21',['Quick Build (Recommended)',['../d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md345',1,'']]],
   ['quick_20fix_20summary_22',['Quick Fix Summary',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html#autotoc_md158',1,'']]],
   ['quick_20navigation_23',['🚀 Quick Navigation',['../index.html#autotoc_md955',1,'']]],
-  ['quick_20start_24',['quick start',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1134',1,'🚀 Quick Start'],['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md277',1,'Quick Start'],['../d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md348',1,'Quick Start']]]
+  ['quick_20start_24',['quick start',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1167',1,'🚀 Quick Start'],['../d2/d41/md_docs_2GETTING__STARTED.html#autotoc_md348',1,'Quick Start'],['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md277',1,'Quick Start']]],
+  ['quick_20wins_25',['Short-Term (Quick Wins)',['../d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1119',1,'']]]
 ];

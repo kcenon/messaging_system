@@ -1324,6 +1324,48 @@ var NAVTREE =
         [ "Problem: High Memory Usage", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md1106", null ],
         [ "Problem: Database Bottleneck", "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md1107", null ]
       ] ]
+    ] ],
+    [ "Windows CI Performance Optimization", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html", [
+      [ "Executive Summary", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1109", null ],
+      [ "Problem Analysis", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1110", [
+        [ "Initial State (PR #31 - Before Fix)", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1111", null ],
+        [ "Target State (PR #30 - Success)", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1112", null ]
+      ] ],
+      [ "Implemented Solutions", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1113", [
+        [ "1. Test-Level Timeouts ✅", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1114", null ],
+        [ "2. CTest Parallel Execution ✅", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1115", null ],
+        [ "3. Build Parallelization ✅", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1116", null ]
+      ] ],
+      [ "Performance Comparison", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1117", null ],
+      [ "Additional Recommendations", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1118", [
+        [ "Short-Term (Quick Wins)", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1119", [
+          [ "1. Use Release Build for Tests", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1120", null ],
+          [ "2. Increase vcpkg Cache Efficiency", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1121", null ],
+          [ "3. Reduce FetchContent Downloads", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1122", null ]
+        ] ],
+        [ "Medium-Term (Architectural)", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1123", [
+          [ "1. Split Test Execution", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1124", null ],
+          [ "2. Implement Test Sharding", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1125", null ],
+          [ "3. Conditional Integration Tests", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1126", null ]
+        ] ],
+        [ "Long-Term (Infrastructure)", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1127", [
+          [ "1. Use Self-Hosted Runners", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1128", null ],
+          [ "2. Implement Build Caching Service", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1129", null ],
+          [ "3. Prebuilt Dependency Binaries", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1130", null ]
+        ] ]
+      ] ],
+      [ "Implementation Priority", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1131", [
+        [ "Priority 1 (Implemented) ✅", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1132", null ],
+        [ "Priority 2 (Recommended - Next Sprint)", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1133", null ],
+        [ "Priority 3 (Future Consideration)", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1134", null ],
+        [ "Priority 4 (Long-Term Planning)", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1135", null ]
+      ] ],
+      [ "Monitoring", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1136", [
+        [ "Key Metrics to Track", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1137", null ],
+        [ "Alerting Thresholds", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1138", null ]
+      ] ],
+      [ "Conclusion", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1139", null ],
+      [ "References", "d8/d29/md_docs_2WINDOWS__OPTIMIZATION.html#autotoc_md1140", null ]
     ] ]
   ] ]
 ];
@@ -1332,9 +1374,9 @@ var NAVTREEINDEX =
 [
 "d0/d01/md_docs_2IMPROVEMENT__PLAN.html",
 "d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md1068",
-"db/d3a/md_docs_2MIGRATION__GUIDE.html#autotoc_md460",
-"dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md567",
-"df/dad/md_docs_2phase0_2INTERFACE__MAPPING.html#autotoc_md692"
+"da/db4/md_docs_2SYSTEM__ARCHITECTURE.html#autotoc_md1015",
+"dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md533",
+"df/d94/md_docs_2performance.html#autotoc_md634"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
