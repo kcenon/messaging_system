@@ -1,4 +1,6 @@
-# 🚀 Messaging System
+# Messaging System
+
+> **Language:** **English** | [한국어](README_KO.md)
 
 <div align="center">
 
@@ -494,6 +496,10 @@ genhtml coverage.info --output-directory coverage_html
 
 ### Core Documentation
 
+- **[Benchmarks](docs/BENCHMARKS.md)** - Performance characteristics and measurements
+- **[Features](docs/FEATURES.md)** - Complete feature documentation
+- **[Production Quality](docs/PRODUCTION_QUALITY.md)** - Quality assurance and reliability
+- **[Project Structure](docs/PROJECT_STRUCTURE.md)** - Codebase organization
 - [API Reference](docs/API_REFERENCE.md) - Complete API documentation
 - [Migration Guide](docs/MIGRATION_GUIDE.md) - Upgrade instructions
 - [Patterns API](docs/PATTERNS_API.md) - Messaging patterns guide
@@ -503,7 +509,7 @@ genhtml coverage.info --output-directory coverage_html
 
 - [Examples](examples/) - Working code examples
 - [Integration Tests](integration_tests/) - End-to-end test scenarios
-- [Benchmarks](test/benchmarks/) - Performance benchmarks
+- [Performance Benchmarks](test/benchmarks/) - Performance benchmark suite
 
 ---
 
