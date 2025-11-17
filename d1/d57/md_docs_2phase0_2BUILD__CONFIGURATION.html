@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d1/d57/md_docs_2phase0_2BUILD__CONFIGU
   <div class="headertitle"><div class="title">Build Configuration Design Document</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md662"></a> </p>
-<h1><a class="anchor" id="autotoc_md663"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md661"></a> </p>
+<h1><a class="anchor" id="autotoc_md662"></a>
 Overview</h1>
 <p>This document defines the build system strategy for integrating 7 external systems into the messaging_system.</p>
-<h1><a class="anchor" id="autotoc_md664"></a>
+<h1><a class="anchor" id="autotoc_md663"></a>
 Dependency Integration Strategy</h1>
-<h2><a class="anchor" id="autotoc_md665"></a>
+<h2><a class="anchor" id="autotoc_md664"></a>
 Option 1: FetchContent (Development Environment)</h2>
 <p><b>Use Case:</b> Rapid iteration during development, CI/CD pipelines</p>
 <p><b>Advantages:</b></p><ul>
@@ -175,7 +175,7 @@ Option 1: FetchContent (Development Environment)</h2>
 <div class="line">  DatabaseSystem</div>
 <div class="line">  NetworkSystem</div>
 <div class="line">)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md666"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md665"></a>
 Option 2: find_package (Production Environment)</h2>
 <p><b>Use Case:</b> Production deployments, system-wide installations</p>
 <p><b>Advantages:</b></p><ul>
@@ -197,9 +197,9 @@ Option 2: find_package (Production Environment)</h2>
 <div class="line">if(NOT TARGET CommonSystem::common)</div>
 <div class="line">  message(FATAL_ERROR &quot;CommonSystem not found. Install via package manager or use FetchContent.&quot;)</div>
 <div class="line">endif()</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md667"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md666"></a>
 Unified CMake Configuration Options</h1>
-<h2><a class="anchor" id="autotoc_md668"></a>
+<h2><a class="anchor" id="autotoc_md667"></a>
 Feature Flags</h2>
 <div class="fragment"><div class="line"># Core features</div>
 <div class="line">option(MESSAGING_USE_LOCKFREE &quot;Enable lock-free data structures&quot; OFF)</div>
@@ -217,7 +217,7 @@ Feature Flags</h2>
 <div class="line">option(MESSAGING_BUILD_BENCHMARKS &quot;Build performance benchmarks&quot; OFF)</div>
 <div class="line">option(MESSAGING_BUILD_EXAMPLES &quot;Build example applications&quot; ON)</div>
 <div class="line">option(MESSAGING_BUILD_DOCS &quot;Build documentation&quot; OFF)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md669"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md668"></a>
 Build Profiles</h2>
 <div class="fragment"><div class="line">set(MESSAGING_BUILD_PROFILE &quot;Release&quot; CACHE STRING &quot;Build profile&quot;)</div>
 <div class="line">set_property(CACHE MESSAGING_BUILD_PROFILE PROPERTY STRINGS</div>
@@ -245,7 +245,7 @@ Build Profiles</h2>
 <div class="line">  set(CMAKE_CXX_FLAGS &quot;${CMAKE_CXX_FLAGS} -fsanitize=memory -fno-omit-frame-pointer -g&quot;)</div>
 <div class="line">  set(CMAKE_LINKER_FLAGS &quot;${CMAKE_LINKER_FLAGS} -fsanitize=memory&quot;)</div>
 <div class="line">endif()</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md670"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md669"></a>
 Compiler Options</h2>
 <div class="fragment"><div class="line"># C++ Standard</div>
 <div class="line">set(MESSAGING_CXX_STANDARD 20 CACHE STRING &quot;C++ standard version&quot;)</div>
@@ -267,9 +267,9 @@ Compiler Options</h2>
 <div class="line">    add_compile_options(/W4 /WX)</div>
 <div class="line">  endif()</div>
 <div class="line">endif()</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md671"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md670"></a>
 Propagating Options to External Systems</h1>
-<h2><a class="anchor" id="autotoc_md672"></a>
+<h2><a class="anchor" id="autotoc_md671"></a>
 Strategy</h2>
 <p>Map messaging_system options to external system options:</p>
 <div class="fragment"><div class="line"># Propagate lock-free preference</div>
@@ -296,9 +296,9 @@ Strategy</h2>
 <div class="line">  set(ENABLE_TLS ON CACHE BOOL &quot;Enable TLS in network_system&quot; FORCE)</div>
 <div class="line">  set(USE_SSL ON CACHE BOOL &quot;Use SSL encryption&quot; FORCE)</div>
 <div class="line">endif()</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md673"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md672"></a>
 CMake Presets</h1>
-<h2><a class="anchor" id="autotoc_md674"></a>
+<h2><a class="anchor" id="autotoc_md673"></a>
 CMakePresets.json</h2>
 <div class="fragment"><div class="line">{</div>
 <div class="line">  &quot;version&quot;: 3,</div>
@@ -414,9 +414,9 @@ CMakePresets.json</h2>
 <div class="line">    }</div>
 <div class="line">  ]</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md675"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md674"></a>
 CI Profile Configurations</h1>
-<h2><a class="anchor" id="autotoc_md676"></a>
+<h2><a class="anchor" id="autotoc_md675"></a>
 GitHub Actions Matrix</h2>
 <div class="fragment"><div class="line">strategy:</div>
 <div class="line">  matrix:</div>
@@ -430,9 +430,9 @@ GitHub Actions Matrix</h2>
 <div class="line">      - ubuntu-latest</div>
 <div class="line">      - macos-latest</div>
 <div class="line">      - windows-latest</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md677"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md676"></a>
 Documentation of Option Impact</h1>
-<h2><a class="anchor" id="autotoc_md678"></a>
+<h2><a class="anchor" id="autotoc_md677"></a>
 MESSAGING_USE_LOCKFREE</h2>
 <ul>
 <li><b>Impact:</b> Uses lock-free queue implementations in thread_system</li>
@@ -440,7 +440,7 @@ MESSAGING_USE_LOCKFREE</h2>
 <li><b>Compatibility:</b> Requires C++20 atomics support</li>
 <li><b>Recommendation:</b> Enable for production, disable for debugging</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md679"></a>
+<h2><a class="anchor" id="autotoc_md678"></a>
 MESSAGING_ENABLE_MONITORING</h2>
 <ul>
 <li><b>Impact:</b> Enables real-time metrics collection</li>
@@ -448,7 +448,7 @@ MESSAGING_ENABLE_MONITORING</h2>
 <li><b>Use Case:</b> Production deployments, performance analysis</li>
 <li><b>Recommendation:</b> Always enable</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md680"></a>
+<h2><a class="anchor" id="autotoc_md679"></a>
 MESSAGING_ENABLE_LOGGING</h2>
 <ul>
 <li><b>Impact:</b> Enables structured logging</li>
@@ -456,7 +456,7 @@ MESSAGING_ENABLE_LOGGING</h2>
 <li><b>Use Case:</b> All environments</li>
 <li><b>Recommendation:</b> Always enable</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md681"></a>
+<h2><a class="anchor" id="autotoc_md680"></a>
 MESSAGING_ENABLE_TLS</h2>
 <ul>
 <li><b>Impact:</b> Enables TLS/SSL encryption for network communication</li>
@@ -464,9 +464,9 @@ MESSAGING_ENABLE_TLS</h2>
 <li><b>Dependencies:</b> Requires OpenSSL or BoringSSL</li>
 <li><b>Recommendation:</b> Enable for production</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md682"></a>
+<h1><a class="anchor" id="autotoc_md681"></a>
 Installation Guide</h1>
-<h2><a class="anchor" id="autotoc_md683"></a>
+<h2><a class="anchor" id="autotoc_md682"></a>
 System-Wide Installation (find_package mode)</h2>
 <div class="fragment"><div class="line"># Install dependencies</div>
 <div class="line">sudo apt-get install libcommon-system-dev libthread-system-dev \</div>
@@ -478,12 +478,12 @@ System-Wide Installation (find_package mode)</h2>
 <div class="line">cmake --preset release</div>
 <div class="line">cmake --build --preset release</div>
 <div class="line">sudo cmake --install build</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md684"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md683"></a>
 FetchContent Mode (Development)</h2>
 <div class="fragment"><div class="line"># No installation required, all dependencies auto-downloaded</div>
 <div class="line">cmake --preset dev-fetchcontent</div>
 <div class="line">cmake --build --preset debug</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md685"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md684"></a>
 Completion Checklist</h1>
 <ul>
 <li>[x] Dependency integration strategies documented</li>

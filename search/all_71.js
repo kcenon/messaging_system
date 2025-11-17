@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['📊_20performance_20characteristics_0',['📊 Performance Characteristics',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1181',1,'']]],
-  ['📊_20project_20statistics_1',['📊 Project Statistics',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1219',1,'']]]
+  ['📊_20performance_20characteristics_0',['📊 Performance Characteristics',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1191',1,'']]],
+  ['📊_20project_20statistics_1',['📊 Project Statistics',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1229',1,'']]]
 ];

@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d8/d29/md_docs_2WINDOWS__OPTIMIZATION.
   <div class="headertitle"><div class="title">Windows CI Performance Optimization</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1108"></a> <b>Version</b>: 1.0 <b>Date</b>: 2025-11-17 <b>Status</b>: Implemented</p>
-<h1><a class="anchor" id="autotoc_md1109"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1118"></a> <b>Version</b>: 1.0 <b>Date</b>: 2025-11-17 <b>Status</b>: Implemented</p>
+<h1><a class="anchor" id="autotoc_md1119"></a>
 Executive Summary</h1>
 <p>This document outlines the performance optimizations implemented for Windows CI builds and provides additional recommendations for further improvements.</p>
-<h1><a class="anchor" id="autotoc_md1110"></a>
+<h1><a class="anchor" id="autotoc_md1120"></a>
 Problem Analysis</h1>
-<h2><a class="anchor" id="autotoc_md1111"></a>
+<h2><a class="anchor" id="autotoc_md1121"></a>
 Initial State (PR #31 - Before Fix)</h2>
 <ul>
 <li><b>Test Time</b>: 1506.99 seconds (~25 minutes)</li>
@@ -107,16 +107,16 @@ Initial State (PR #31 - Before Fix)</h2>
 <li><b>Failure</b>: <code>test_pub_sub</code> timeout</li>
 <li><b>Root Cause</b>: No test-level timeouts, indefinite hangs</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1112"></a>
+<h2><a class="anchor" id="autotoc_md1122"></a>
 Target State (PR #30 - Success)</h2>
 <ul>
 <li><b>Test Time</b>: 8.39 seconds</li>
 <li><b>Total CI Time</b>: ~16 minutes</li>
 <li><b>Success</b>: All tests passed with proper timeouts</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1113"></a>
+<h1><a class="anchor" id="autotoc_md1123"></a>
 Implemented Solutions</h1>
-<h2><a class="anchor" id="autotoc_md1114"></a>
+<h2><a class="anchor" id="autotoc_md1124"></a>
 1. Test-Level Timeouts ✅</h2>
 <p><b>Change</b>: Added 60-second timeout to all unit tests</p>
 <p><b>Files Modified</b>:</p><ul>
@@ -132,7 +132,7 @@ Implemented Solutions</h1>
 <li>Early detection of stuck tests</li>
 <li>Maximum test time: 60 seconds vs unlimited</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1115"></a>
+<h2><a class="anchor" id="autotoc_md1125"></a>
 2. CTest Parallel Execution ✅</h2>
 <p><b>Change</b>: Configure CTest for parallel test execution</p>
 <p><b>File</b>: <code>.github/workflows/ci.yml</code></p>
@@ -142,7 +142,7 @@ Implemented Solutions</h1>
 <li>Reduced overall test execution time</li>
 <li>Better CPU utilization</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1116"></a>
+<h2><a class="anchor" id="autotoc_md1126"></a>
 3. Build Parallelization ✅</h2>
 <p><b>Change</b>: Dynamic CPU core detection for maximum parallel builds</p>
 <p><b>File</b>: <code>.github/workflows/ci.yml</code></p>
@@ -153,7 +153,7 @@ Implemented Solutions</h1>
 <li>Faster compilation</li>
 <li>Reduced build time</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1117"></a>
+<h1><a class="anchor" id="autotoc_md1127"></a>
 Performance Comparison</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -167,11 +167,11 @@ Performance Comparison</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Test Reliability   </td><td class="markdownTableBodyNone">Timeout   </td><td class="markdownTableBodyNone">Pass   </td><td class="markdownTableBodyNone">100%   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md1118"></a>
+<h1><a class="anchor" id="autotoc_md1128"></a>
 Additional Recommendations</h1>
-<h2><a class="anchor" id="autotoc_md1119"></a>
+<h2><a class="anchor" id="autotoc_md1129"></a>
 Short-Term (Quick Wins)</h2>
-<h3><a class="anchor" id="autotoc_md1120"></a>
+<h3><a class="anchor" id="autotoc_md1130"></a>
 1. Use Release Build for Tests</h3>
 <p><b>Current</b>: Debug build (slower) <b>Proposed</b>: Release or RelWithDebInfo for faster execution</p>
 <div class="fragment"><div class="line">env:</div>
@@ -185,7 +185,7 @@ Short-Term (Quick Wins)</h2>
 <li>Harder debugging if tests fail</li>
 <li>Less detailed error information</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1121"></a>
+<h3><a class="anchor" id="autotoc_md1131"></a>
 2. Increase vcpkg Cache Efficiency</h3>
 <p><b>Current</b>: Separate cache for vcpkg tool and installed packages</p>
 <p><b>Proposed</b>: Add build artifacts caching</p>
@@ -201,7 +201,7 @@ Short-Term (Quick Wins)</h2>
 <li>Faster incremental builds</li>
 <li>Reduced compilation time</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1122"></a>
+<h3><a class="anchor" id="autotoc_md1132"></a>
 3. Reduce FetchContent Downloads</h3>
 <p><b>Current</b>: Downloads dependencies on every build</p>
 <p><b>Proposed</b>: Cache FetchContent dependencies</p>
@@ -211,9 +211,9 @@ Short-Term (Quick Wins)</h2>
 <li>Reduced network usage</li>
 <li>More reliable builds</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1123"></a>
+<h2><a class="anchor" id="autotoc_md1133"></a>
 Medium-Term (Architectural)</h2>
-<h3><a class="anchor" id="autotoc_md1124"></a>
+<h3><a class="anchor" id="autotoc_md1134"></a>
 1. Split Test Execution</h3>
 <p><b>Current</b>: All tests in one job</p>
 <p><b>Proposed</b>: Separate test categories</p>
@@ -226,7 +226,7 @@ Medium-Term (Architectural)</h2>
 <li>Better resource utilization</li>
 </ul>
 <p><b>Estimated Time Savings</b>: 30-40%</p>
-<h3><a class="anchor" id="autotoc_md1125"></a>
+<h3><a class="anchor" id="autotoc_md1135"></a>
 2. Implement Test Sharding</h3>
 <p><b>Current</b>: Sequential test execution</p>
 <p><b>Proposed</b>: Use CTest test sharding</p>
@@ -241,7 +241,7 @@ Medium-Term (Architectural)</h2>
 <li>Reduced wall clock time</li>
 </ul>
 <p><b>Estimated Time Savings</b>: 50-60%</p>
-<h3><a class="anchor" id="autotoc_md1126"></a>
+<h3><a class="anchor" id="autotoc_md1136"></a>
 3. Conditional Integration Tests</h3>
 <p><b>Current</b>: Integration tests disabled on Windows</p>
 <p><b>Proposed</b>: Enable with longer timeout</p>
@@ -254,9 +254,9 @@ Medium-Term (Architectural)</h2>
 <li>Better platform coverage</li>
 <li>Early Windows-specific issue detection</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1127"></a>
+<h2><a class="anchor" id="autotoc_md1137"></a>
 Long-Term (Infrastructure)</h2>
-<h3><a class="anchor" id="autotoc_md1128"></a>
+<h3><a class="anchor" id="autotoc_md1138"></a>
 1. Use Self-Hosted Runners</h3>
 <p><b>Current</b>: GitHub-hosted runners (standard specs)</p>
 <p><b>Proposed</b>: Self-hosted runners with optimized specs</p>
@@ -272,7 +272,7 @@ Long-Term (Infrastructure)</h2>
 <li>Better resource control</li>
 </ul>
 <p><b>Estimated Time Savings</b>: 60-70%</p>
-<h3><a class="anchor" id="autotoc_md1129"></a>
+<h3><a class="anchor" id="autotoc_md1139"></a>
 2. Implement Build Caching Service</h3>
 <p><b>Current</b>: GitHub Actions cache (limited)</p>
 <p><b>Proposed</b>: Use sccache or ccache</p>
@@ -289,7 +289,7 @@ Long-Term (Infrastructure)</h2>
 <li>Reduced compilation time</li>
 </ul>
 <p><b>Estimated Time Savings</b>: 40-50%</p>
-<h3><a class="anchor" id="autotoc_md1130"></a>
+<h3><a class="anchor" id="autotoc_md1140"></a>
 3. Prebuilt Dependency Binaries</h3>
 <p><b>Current</b>: Build dependencies from source</p>
 <p><b>Proposed</b>: Use prebuilt binaries for dependencies</p>
@@ -304,39 +304,39 @@ Long-Term (Infrastructure)</h2>
 <li>Faster CI startup</li>
 </ul>
 <p><b>Estimated Time Savings</b>: 20-30%</p>
-<h1><a class="anchor" id="autotoc_md1131"></a>
+<h1><a class="anchor" id="autotoc_md1141"></a>
 Implementation Priority</h1>
-<h2><a class="anchor" id="autotoc_md1132"></a>
+<h2><a class="anchor" id="autotoc_md1142"></a>
 Priority 1 (Implemented) ✅</h2>
 <ul>
 <li>[x] Test-level timeouts</li>
 <li>[x] CTest parallel execution</li>
 <li>[x] Build parallelization</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1133"></a>
+<h2><a class="anchor" id="autotoc_md1143"></a>
 Priority 2 (Recommended - Next Sprint)</h2>
 <ul>
 <li>[ ] Release build for tests</li>
 <li>[ ] Enhanced vcpkg caching</li>
 <li>[ ] FetchContent caching</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1134"></a>
+<h2><a class="anchor" id="autotoc_md1144"></a>
 Priority 3 (Future Consideration)</h2>
 <ul>
 <li>[ ] Test sharding</li>
 <li>[ ] Split test execution</li>
 <li>[ ] Conditional integration tests</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1135"></a>
+<h2><a class="anchor" id="autotoc_md1145"></a>
 Priority 4 (Long-Term Planning)</h2>
 <ul>
 <li>[ ] Self-hosted runners</li>
 <li>[ ] Build caching service</li>
 <li>[ ] Prebuilt dependencies</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1136"></a>
+<h1><a class="anchor" id="autotoc_md1146"></a>
 Monitoring</h1>
-<h2><a class="anchor" id="autotoc_md1137"></a>
+<h2><a class="anchor" id="autotoc_md1147"></a>
 Key Metrics to Track</h2>
 <ol type="1">
 <li><b>Total CI Time</b>: Target &lt; 15 minutes</li>
@@ -345,7 +345,7 @@ Key Metrics to Track</h2>
 <li><b>Cache Hit Rate</b>: Target &gt; 80%</li>
 <li><b>Test Failure Rate</b>: Target &lt; 1%</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1138"></a>
+<h2><a class="anchor" id="autotoc_md1148"></a>
 Alerting Thresholds</h2>
 <ul>
 <li>Total CI time &gt; 20 minutes: Warning</li>
@@ -353,7 +353,7 @@ Alerting Thresholds</h2>
 <li>Test timeout &gt; 5 instances/day: Investigation needed</li>
 <li>Build failure rate &gt; 5%: Architecture review</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1139"></a>
+<h1><a class="anchor" id="autotoc_md1149"></a>
 Conclusion</h1>
 <p>The implemented solutions address the immediate Windows CI performance issues:</p>
 <p><b>Immediate Impact</b>:</p><ul>
@@ -371,7 +371,7 @@ Conclusion</h1>
 <li>Evaluate Priority 2 recommendations</li>
 <li>Plan Priority 3 implementations for Q1 2025</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1140"></a>
+<h1><a class="anchor" id="autotoc_md1150"></a>
 References</h1>
 <ul>
 <li><a href="https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows">GitHub Actions: Caching dependencies</a></li>

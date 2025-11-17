@@ -1,17 +1,10 @@
 var index =
 [
-    [ "📚 Documentation Overview", "index.html#autotoc_md954", null ],
-    [ "🚀 Quick Navigation", "index.html#autotoc_md955", [
-      [ "For New Users", "index.html#autotoc_md956", null ],
-      [ "For Developers", "index.html#autotoc_md957", null ],
-      [ "For System Administrators", "index.html#autotoc_md958", null ]
+    [ "Archived Documents", "index.html#autotoc_md423", [
+      [ "REBUILD_PLAN.md", "index.html#autotoc_md424", null ],
+      [ "PROJECT_COMPLETION_SUMMARY.md", "index.html#autotoc_md425", null ],
+      [ "Phase Directories (phase0-4)", "index.html#autotoc_md426", null ]
     ] ],
-    [ "🧩 Component Documentation", "index.html#autotoc_md959", [
-      [ "Core Infrastructure", "index.html#autotoc_md960", null ],
-      [ "Data & Communication Modules", "index.html#autotoc_md961", null ],
-      [ "Application Layer", "index.html#autotoc_md962", null ]
-    ] ],
-    [ "📖 Documentation Standards", "index.html#autotoc_md963", null ],
-    [ "🔄 Documentation Updates", "index.html#autotoc_md964", null ],
-    [ "💬 Feedback", "index.html#autotoc_md965", null ]
+    [ "Current Planning Documents", "index.html#autotoc_md427", null ],
+    [ "Archive Reason", "index.html#autotoc_md428", null ]
 ];
