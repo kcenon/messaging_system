@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['기반_20정비_0',['Phase 0. 준비 및 기반 정비',['../dd/df9/md_docs_2archived_2REBUILD__PLAN.html#autotoc_md431',1,'']]],
-  ['기반_20플로우_20제로화_20strong_1',['&lt;strong&gt;Task 2.2 – Result 기반 플로우 제로화&lt;/strong&gt;',['../dd/df9/md_docs_2archived_2REBUILD__PLAN.html#autotoc_md444',1,'']]],
-  ['기준_20최종_2',['성공 기준 (최종)',['../dd/df9/md_docs_2archived_2REBUILD__PLAN.html#autotoc_md461',1,'']]]
+  ['📦_20cmake_20integration_0',['📦 CMake Integration',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md877',1,'']]]
 ];

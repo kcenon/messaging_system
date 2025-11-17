@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['legacy_20code_20removal_20plan_0',['Legacy Code Removal Plan',['../de/d28/md_docs_2archived_2phase0_2LEGACY__REMOVAL__PLAN.html',1,'']]]
+  ['troubleshooting_20guide_0',['troubleshooting guide',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html',1,'Build Troubleshooting Guide'],['../d4/d2f/md_docs_2TROUBLESHOOTING.html',1,'Troubleshooting Guide']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['system_5farchitecture_2emd_0',['SYSTEM_ARCHITECTURE.md',['../db/d93/SYSTEM__ARCHITECTURE_8md.html',1,'']]]
+  ['troubleshooting_2emd_0',['TROUBLESHOOTING.md',['../dd/d27/TROUBLESHOOTING_8md.html',1,'']]]
 ];

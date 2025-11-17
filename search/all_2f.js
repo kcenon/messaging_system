@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['교차_20모듈_20테스트_20수립_20strong_0',['&lt;strong&gt;Task 4.1 – 교차 모듈 테스트 수립&lt;/strong&gt;',['../dd/df9/md_docs_2archived_2REBUILD__PLAN.html#autotoc_md453',1,'']]]
+  ['📖_20documentation_20standards_0',['📖 Documentation Standards',['../index.html#autotoc_md675',1,'']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['v2_200_20project_20completion_20summary_0',['Messaging System v2.0 - Project Completion Summary',['../d6/d74/md_docs_2archived_2PROJECT__COMPLETION__SUMMARY.html',1,'']]],
-  ['validation_20and_20deployment_20design_20document_1',['Phase 4: Validation and Deployment - Design Document',['../dd/db6/md_docs_2archived_2phase4_2DESIGN.html',1,'']]]
+  ['계획_0',['Messaging System 재구성 실행 계획',['../d7/d01/md_docs_2REBUILD__PLAN.html',1,'']]]
 ];

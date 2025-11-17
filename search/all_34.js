@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['라우팅_20토픽_20엔진_20정비_20strong_0',['&lt;strong&gt;Task 2.4 – 라우팅/토픽 엔진 정비&lt;/strong&gt;',['../dd/df9/md_docs_2archived_2REBUILD__PLAN.html#autotoc_md446',1,'']]]
+  ['🔥_20real_20world_20examples_0',['🔥 Real-World Examples',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md854',1,'']]]
 ];

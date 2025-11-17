@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['가이드_20및_20api_20문서화_0',['**Task 4.2 – 마이그레이션 가이드 및 API 문서화**',['../dd/df9/md_docs_2archived_2REBUILD__PLAN.html#autotoc_md454',1,'']]]
+  ['🌟_20ecosystem_20integration_0',['🌟 Ecosystem Integration',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md830',1,'']]]
 ];
