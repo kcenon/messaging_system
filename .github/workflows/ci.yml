@@ -205,6 +205,7 @@ jobs:
           -G "Visual Studio 17 2022" `
           -A x64 `
           -DMESSAGING_BUILD_TESTS=ON `
+          -DMESSAGING_BUILD_INTEGRATION_TESTS=OFF `
           -DMESSAGING_BUILD_EXAMPLES=OFF `
           -DMESSAGING_USE_FETCHCONTENT=ON `
           -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
@@ -219,6 +220,7 @@ jobs:
           -G "Visual Studio 17 2022" `
           -A x64 `
           -DMESSAGING_BUILD_TESTS=ON `
+          -DMESSAGING_BUILD_INTEGRATION_TESTS=OFF `
           -DMESSAGING_BUILD_EXAMPLES=OFF `
           -DMESSAGING_USE_FETCHCONTENT=ON `
           -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE
