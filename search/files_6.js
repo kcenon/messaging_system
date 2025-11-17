@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['patterns_5fapi_2emd_0',['PATTERNS_API.md',['../d1/dff/PATTERNS__API_8md.html',1,'']]],
-  ['performance_2emd_1',['performance.md',['../de/d81/performance_8md.html',1,'']]]
+  ['readme_2emd_0',['readme.md',['../d4/d84/docs_2README_8md.html',1,'(Global Namespace)'],['../da/ddd/README_8md.html',1,'(Global Namespace)']]]
 ];

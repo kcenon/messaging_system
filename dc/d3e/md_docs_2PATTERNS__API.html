@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('dc/d3e/md_docs_2PATTERNS__API.html','.
   <div class="headertitle"><div class="title">Messaging Patterns API Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md511"></a> This document provides detailed API documentation for the messaging patterns implemented in the messaging system.</p>
-<h1><a class="anchor" id="autotoc_md512"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md424"></a> This document provides detailed API documentation for the messaging patterns implemented in the messaging system.</p>
+<h1><a class="anchor" id="autotoc_md425"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Pub/Sub Pattern</li>
@@ -103,38 +103,38 @@ Table of Contents</h1>
 <li>Message Pipeline Pattern</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md514"></a>
+<h1><a class="anchor" id="autotoc_md427"></a>
 Pub/Sub Pattern</h1>
-<h2><a class="anchor" id="autotoc_md515"></a>
+<h2><a class="anchor" id="autotoc_md428"></a>
 Namespace: &lt;tt&gt;kcenon::messaging::patterns&lt;/tt&gt;</h2>
 <p>The Pub/Sub pattern provides a simplified interface for publish-subscribe messaging.</p>
-<h2><a class="anchor" id="autotoc_md516"></a>
+<h2><a class="anchor" id="autotoc_md429"></a>
 Class: &lt;tt&gt;publisher&lt;/tt&gt;</h2>
 <p>High-level publisher for the pub/sub pattern.</p>
-<h3><a class="anchor" id="autotoc_md517"></a>
+<h3><a class="anchor" id="autotoc_md430"></a>
 Constructor</h3>
 <div class="fragment"><div class="line">publisher(std::shared_ptr&lt;message_bus&gt; bus);</div>
 <div class="line">publisher(std::shared_ptr&lt;message_bus&gt; bus, std::string default_topic);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md518"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md431"></a>
 Methods</h3>
-<h4><a class="anchor" id="autotoc_md519"></a>
+<h4><a class="anchor" id="autotoc_md432"></a>
 &lt;tt&gt;publish&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult publish(message msg);</div>
 <div class="line">common::VoidResult publish(<span class="keyword">const</span> std::string&amp; topic, message msg);</div>
 </div><!-- fragment --><p> Publishes a message to the default topic or a specified topic.</p>
-<h4><a class="anchor" id="autotoc_md520"></a>
+<h4><a class="anchor" id="autotoc_md433"></a>
 &lt;tt&gt;get_default_topic&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line"><span class="keyword">const</span> std::string&amp; get_default_topic() <span class="keyword">const</span>;</div>
 </div><!-- fragment --><p> Returns the default topic.</p>
-<h4><a class="anchor" id="autotoc_md521"></a>
+<h4><a class="anchor" id="autotoc_md434"></a>
 &lt;tt&gt;set_default_topic&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> set_default_topic(std::string topic);</div>
 </div><!-- fragment --><p> Sets a new default topic.</p>
-<h4><a class="anchor" id="autotoc_md522"></a>
+<h4><a class="anchor" id="autotoc_md435"></a>
 &lt;tt&gt;is_ready&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line"><span class="keywordtype">bool</span> is_ready() <span class="keyword">const</span>;</div>
 </div><!-- fragment --><p> Checks if the publisher is ready to publish messages.</p>
-<h3><a class="anchor" id="autotoc_md523"></a>
+<h3><a class="anchor" id="autotoc_md436"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/pub_sub.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>kcenon::messaging;</div>
@@ -156,15 +156,15 @@ Usage Example</h3>
 <div class="line"><span class="comment">// Publish to specific topic</span></div>
 <div class="line">message msg2(<span class="stringliteral">&quot;events.custom&quot;</span>, message_type::event);</div>
 <div class="line">pub.publish(<span class="stringliteral">&quot;events.custom&quot;</span>, std::move(msg2));</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md524"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md437"></a>
 Class: &lt;tt&gt;subscriber&lt;/tt&gt;</h2>
 <p>High-level subscriber for the pub/sub pattern.</p>
-<h3><a class="anchor" id="autotoc_md525"></a>
+<h3><a class="anchor" id="autotoc_md438"></a>
 Constructor</h3>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> subscriber(std::shared_ptr&lt;message_bus&gt; bus);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md526"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md439"></a>
 Methods</h3>
-<h4><a class="anchor" id="autotoc_md527"></a>
+<h4><a class="anchor" id="autotoc_md440"></a>
 &lt;tt&gt;subscribe&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::Result&lt;uint64_t&gt; subscribe(</div>
 <div class="line">    <span class="keyword">const</span> std::string&amp; topic_pattern,</div>
@@ -172,11 +172,11 @@ Methods</h3>
 <div class="line">    message_filter filter = <span class="keyword">nullptr</span></div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Subscribes to a topic pattern with an optional filter.</p>
-<h4><a class="anchor" id="autotoc_md528"></a>
+<h4><a class="anchor" id="autotoc_md441"></a>
 &lt;tt&gt;unsubscribe_all&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult unsubscribe_all();</div>
 </div><!-- fragment --><p> Unsubscribes from all topics.</p>
-<h3><a class="anchor" id="autotoc_md529"></a>
+<h3><a class="anchor" id="autotoc_md442"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// Create subscriber</span></div>
 <div class="line">subscriber sub(bus);</div>
@@ -199,36 +199,36 @@ Usage Example</h3>
 <div class="line">    }</div>
 <div class="line">);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md531"></a>
+<h1><a class="anchor" id="autotoc_md444"></a>
 Request-Reply Pattern</h1>
-<h2><a class="anchor" id="autotoc_md532"></a>
+<h2><a class="anchor" id="autotoc_md445"></a>
 Namespace: &lt;tt&gt;kcenon::messaging::patterns&lt;/tt&gt;</h2>
 <p>The Request-Reply pattern enables synchronous request-reply communication over asynchronous messaging.</p>
-<h2><a class="anchor" id="autotoc_md533"></a>
+<h2><a class="anchor" id="autotoc_md446"></a>
 Class: &lt;tt&gt;request_reply_handler&lt;/tt&gt;</h2>
 <p>Handles request-reply messaging pattern with correlation IDs.</p>
-<h3><a class="anchor" id="autotoc_md534"></a>
+<h3><a class="anchor" id="autotoc_md447"></a>
 Constructor</h3>
 <div class="fragment"><div class="line">request_reply_handler(</div>
 <div class="line">    std::shared_ptr&lt;message_bus&gt; bus,</div>
 <div class="line">    std::string service_topic</div>
 <div class="line">);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md535"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md448"></a>
 Methods</h3>
-<h4><a class="anchor" id="autotoc_md536"></a>
+<h4><a class="anchor" id="autotoc_md449"></a>
 &lt;tt&gt;request&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::Result&lt;message&gt; request(</div>
 <div class="line">    message req,</div>
 <div class="line">    std::chrono::milliseconds timeout = std::chrono::milliseconds{5000}</div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Sends a request and waits for a reply.</p>
-<h4><a class="anchor" id="autotoc_md537"></a>
+<h4><a class="anchor" id="autotoc_md450"></a>
 &lt;tt&gt;register_handler&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult register_handler(</div>
 <div class="line">    std::function&lt;common::Result&lt;message&gt;(<span class="keyword">const</span> message&amp;)&gt; handler</div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Registers a handler function for processing requests (server side).</p>
-<h3><a class="anchor" id="autotoc_md538"></a>
+<h3><a class="anchor" id="autotoc_md451"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/request_reply.h&gt;</span></div>
 <div class="line"> </div>
@@ -253,48 +253,48 @@ Usage Example</h3>
 <div class="line">    reply.metadata().correlation_id = request.metadata().id;</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(std::move(reply));</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md539"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md452"></a>
 Class: &lt;tt&gt;request_client&lt;/tt&gt;</h2>
 <p>Simplified client for making requests.</p>
-<h3><a class="anchor" id="autotoc_md540"></a>
+<h3><a class="anchor" id="autotoc_md453"></a>
 Constructor</h3>
 <div class="fragment"><div class="line">request_client(std::shared_ptr&lt;message_bus&gt; bus);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md541"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md454"></a>
 Methods</h3>
-<h4><a class="anchor" id="autotoc_md542"></a>
+<h4><a class="anchor" id="autotoc_md455"></a>
 &lt;tt&gt;request&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::Result&lt;message&gt; request(</div>
 <div class="line">    <span class="keyword">const</span> std::string&amp; service_topic,</div>
 <div class="line">    message req,</div>
 <div class="line">    std::chrono::milliseconds timeout = std::chrono::milliseconds{5000}</div>
 <div class="line">);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md543"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md456"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line">request_client client(bus);</div>
 <div class="line"> </div>
 <div class="line">message req(<span class="stringliteral">&quot;service.data&quot;</span>, message_type::query);</div>
 <div class="line"><span class="keyword">auto</span> reply = client.request(<span class="stringliteral">&quot;service.data&quot;</span>, std::move(req));</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md544"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md457"></a>
 Class: &lt;tt&gt;request_server&lt;/tt&gt;</h2>
 <p>Simplified server for handling requests.</p>
-<h3><a class="anchor" id="autotoc_md545"></a>
+<h3><a class="anchor" id="autotoc_md458"></a>
 Constructor</h3>
 <div class="fragment"><div class="line">request_server(</div>
 <div class="line">    std::shared_ptr&lt;message_bus&gt; bus,</div>
 <div class="line">    std::string service_topic</div>
 <div class="line">);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md546"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md459"></a>
 Methods</h3>
-<h4><a class="anchor" id="autotoc_md547"></a>
+<h4><a class="anchor" id="autotoc_md460"></a>
 &lt;tt&gt;register_handler&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult register_handler(</div>
 <div class="line">    std::function&lt;common::Result&lt;message&gt;(<span class="keyword">const</span> message&amp;)&gt; handler</div>
 <div class="line">);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md548"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md461"></a>
 &lt;tt&gt;start&lt;/tt&gt; / &lt;tt&gt;stop&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult start();</div>
 <div class="line">common::VoidResult stop();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md549"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md462"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line">request_server server(bus, <span class="stringliteral">&quot;service.calculator&quot;</span>);</div>
 <div class="line"> </div>
@@ -307,12 +307,12 @@ Usage Example</h3>
 <div class="line"> </div>
 <div class="line">server.start();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md551"></a>
+<h1><a class="anchor" id="autotoc_md464"></a>
 Event Streaming Pattern</h1>
-<h2><a class="anchor" id="autotoc_md552"></a>
+<h2><a class="anchor" id="autotoc_md465"></a>
 Namespace: &lt;tt&gt;kcenon::messaging::patterns&lt;/tt&gt;</h2>
 <p>The Event Streaming pattern provides event sourcing capabilities with replay, filtering, and batch processing.</p>
-<h2><a class="anchor" id="autotoc_md553"></a>
+<h2><a class="anchor" id="autotoc_md466"></a>
 Struct: &lt;tt&gt;event_stream_config&lt;/tt&gt;</h2>
 <p>Configuration for event streams.</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>event_stream_config {</div>
@@ -322,23 +322,23 @@ Struct: &lt;tt&gt;event_stream_config&lt;/tt&gt;</h2>
 <div class="line">    std::chrono::milliseconds batch_timeout{100};</div>
 <div class="line">    <span class="keywordtype">size_t</span> batch_size = 10;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md554"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md467"></a>
 Class: &lt;tt&gt;event_stream&lt;/tt&gt;</h2>
 <p>Event streaming and sourcing with replay capabilities.</p>
-<h3><a class="anchor" id="autotoc_md555"></a>
+<h3><a class="anchor" id="autotoc_md468"></a>
 Constructor</h3>
 <div class="fragment"><div class="line">event_stream(</div>
 <div class="line">    std::shared_ptr&lt;message_bus&gt; bus,</div>
 <div class="line">    std::string stream_topic,</div>
 <div class="line">    event_stream_config config = {}</div>
 <div class="line">);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md556"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md469"></a>
 Methods</h3>
-<h4><a class="anchor" id="autotoc_md557"></a>
+<h4><a class="anchor" id="autotoc_md470"></a>
 &lt;tt&gt;publish_event&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult publish_event(message event);</div>
 </div><!-- fragment --><p> Publishes an event to the stream and buffers it for replay.</p>
-<h4><a class="anchor" id="autotoc_md558"></a>
+<h4><a class="anchor" id="autotoc_md471"></a>
 &lt;tt&gt;subscribe&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::Result&lt;uint64_t&gt; subscribe(</div>
 <div class="line">    subscription_callback callback,</div>
@@ -351,29 +351,29 @@ Methods</h3>
 <div class="line">    <span class="keywordtype">bool</span> replay_past_events = <span class="keyword">false</span></div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Subscribes to the event stream with optional replay and filtering.</p>
-<h4><a class="anchor" id="autotoc_md559"></a>
+<h4><a class="anchor" id="autotoc_md472"></a>
 &lt;tt&gt;unsubscribe&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult unsubscribe(uint64_t subscription_id);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md560"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md473"></a>
 &lt;tt&gt;replay&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult replay(</div>
 <div class="line">    subscription_callback callback,</div>
 <div class="line">    message_filter filter = <span class="keyword">nullptr</span></div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Manually replays buffered events to a callback.</p>
-<h4><a class="anchor" id="autotoc_md561"></a>
+<h4><a class="anchor" id="autotoc_md474"></a>
 &lt;tt&gt;get_events&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">std::vector&lt;message&gt; get_events(message_filter filter = <span class="keyword">nullptr</span>) <span class="keyword">const</span>;</div>
 </div><!-- fragment --><p> Retrieves buffered events with optional filtering.</p>
-<h4><a class="anchor" id="autotoc_md562"></a>
+<h4><a class="anchor" id="autotoc_md475"></a>
 &lt;tt&gt;event_count&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line"><span class="keywordtype">size_t</span> event_count() <span class="keyword">const</span>;</div>
 </div><!-- fragment --><p> Returns the number of buffered events.</p>
-<h4><a class="anchor" id="autotoc_md563"></a>
+<h4><a class="anchor" id="autotoc_md476"></a>
 &lt;tt&gt;clear_buffer&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> clear_buffer();</div>
 </div><!-- fragment --><p> Clears the event buffer.</p>
-<h3><a class="anchor" id="autotoc_md564"></a>
+<h3><a class="anchor" id="autotoc_md477"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/event_streaming.h&gt;</span></div>
 <div class="line"> </div>
@@ -413,10 +413,10 @@ Usage Example</h3>
 <div class="line"><span class="comment">// Get snapshot of events</span></div>
 <div class="line"><span class="keyword">auto</span> events = stream.get_events();</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Total events in stream: &quot;</span> &lt;&lt; events.size() &lt;&lt; std::endl;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md565"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md478"></a>
 Class: &lt;tt&gt;event_batch_processor&lt;/tt&gt;</h2>
 <p>Processes events in batches for efficiency.</p>
-<h3><a class="anchor" id="autotoc_md566"></a>
+<h3><a class="anchor" id="autotoc_md479"></a>
 Constructor</h3>
 <div class="fragment"><div class="line">event_batch_processor(</div>
 <div class="line">    std::shared_ptr&lt;message_bus&gt; bus,</div>
@@ -425,20 +425,20 @@ Constructor</h3>
 <div class="line">    <span class="keywordtype">size_t</span> batch_size = 10,</div>
 <div class="line">    std::chrono::milliseconds batch_timeout = std::chrono::milliseconds{100}</div>
 <div class="line">);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md567"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md480"></a>
 Methods</h3>
-<h4><a class="anchor" id="autotoc_md568"></a>
+<h4><a class="anchor" id="autotoc_md481"></a>
 &lt;tt&gt;start&lt;/tt&gt; / &lt;tt&gt;stop&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult start();</div>
 <div class="line">common::VoidResult stop();</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md569"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md482"></a>
 &lt;tt&gt;flush&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult flush();</div>
 </div><!-- fragment --><p> Immediately processes the current batch.</p>
-<h4><a class="anchor" id="autotoc_md570"></a>
+<h4><a class="anchor" id="autotoc_md483"></a>
 &lt;tt&gt;is_running&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line"><span class="keywordtype">bool</span> is_running() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md571"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md484"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// Process events in batches of 100</span></div>
 <div class="line">event_batch_processor processor(</div>
@@ -460,34 +460,34 @@ Usage Example</h3>
 <div class="line"> </div>
 <div class="line">processor.stop();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md573"></a>
+<h1><a class="anchor" id="autotoc_md486"></a>
 Message Pipeline Pattern</h1>
-<h2><a class="anchor" id="autotoc_md574"></a>
+<h2><a class="anchor" id="autotoc_md487"></a>
 Namespace: &lt;tt&gt;kcenon::messaging::patterns&lt;/tt&gt;</h2>
 <p>The Message Pipeline pattern implements pipes-and-filters for sequential message processing.</p>
-<h2><a class="anchor" id="autotoc_md575"></a>
+<h2><a class="anchor" id="autotoc_md488"></a>
 Type Aliases</h2>
 <div class="fragment"><div class="line"><span class="keyword">using </span>message_processor = std::function&lt;common::Result&lt;message&gt;(<span class="keyword">const</span> message&amp;)&gt;;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md576"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md489"></a>
 Class: &lt;tt&gt;message_pipeline&lt;/tt&gt;</h2>
 <p>Sequential message processing pipeline.</p>
-<h3><a class="anchor" id="autotoc_md577"></a>
+<h3><a class="anchor" id="autotoc_md490"></a>
 Struct: &lt;tt&gt;pipeline_stage&lt;/tt&gt;</h3>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>pipeline_stage {</div>
 <div class="line">    std::string name;</div>
 <div class="line">    message_processor processor;</div>
 <div class="line">    <span class="keywordtype">bool</span> optional;  <span class="comment">// If true, stage failures won&#39;t stop pipeline</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md578"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md491"></a>
 Constructor</h3>
 <div class="fragment"><div class="line">message_pipeline(</div>
 <div class="line">    std::shared_ptr&lt;message_bus&gt; bus,</div>
 <div class="line">    std::string input_topic,</div>
 <div class="line">    std::string output_topic</div>
 <div class="line">);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md579"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md492"></a>
 Methods</h3>
-<h4><a class="anchor" id="autotoc_md580"></a>
+<h4><a class="anchor" id="autotoc_md493"></a>
 &lt;tt&gt;add_stage&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">message_pipeline&amp; add_stage(</div>
 <div class="line">    std::string name,</div>
@@ -495,25 +495,25 @@ Methods</h3>
 <div class="line">    <span class="keywordtype">bool</span> optional = <span class="keyword">false</span></div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Adds a processing stage to the pipeline. Returns reference for chaining.</p>
-<h4><a class="anchor" id="autotoc_md581"></a>
+<h4><a class="anchor" id="autotoc_md494"></a>
 &lt;tt&gt;remove_stage&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult remove_stage(<span class="keyword">const</span> std::string&amp; name);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md582"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md495"></a>
 &lt;tt&gt;start&lt;/tt&gt; / &lt;tt&gt;stop&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::VoidResult start();</div>
 <div class="line">common::VoidResult stop();</div>
 </div><!-- fragment --><p> Starts/stops automatic processing from input to output topic.</p>
-<h4><a class="anchor" id="autotoc_md583"></a>
+<h4><a class="anchor" id="autotoc_md496"></a>
 &lt;tt&gt;process&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::Result&lt;message&gt; process(message msg) <span class="keyword">const</span>;</div>
 </div><!-- fragment --><p> Manually processes a single message through the pipeline.</p>
-<h4><a class="anchor" id="autotoc_md584"></a>
+<h4><a class="anchor" id="autotoc_md497"></a>
 &lt;tt&gt;stage_count&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line"><span class="keywordtype">size_t</span> stage_count() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md585"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md498"></a>
 &lt;tt&gt;get_stage_names&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">std::vector&lt;std::string&gt; get_stage_names() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md586"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md499"></a>
 &lt;tt&gt;get_statistics&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>statistics_snapshot {</div>
 <div class="line">    uint64_t messages_processed;</div>
@@ -524,7 +524,7 @@ Methods</h3>
 <div class="line"> </div>
 <div class="line">statistics_snapshot get_statistics() <span class="keyword">const</span>;</div>
 <div class="line"><span class="keywordtype">void</span> reset_statistics();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md587"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md500"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/message_pipeline.h&gt;</span></div>
 <div class="line"> </div>
@@ -570,45 +570,45 @@ Usage Example</h3>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Processed: &quot;</span> &lt;&lt; stats.messages_processed &lt;&lt; std::endl;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Succeeded: &quot;</span> &lt;&lt; stats.messages_succeeded &lt;&lt; std::endl;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Failed: &quot;</span> &lt;&lt; stats.messages_failed &lt;&lt; std::endl;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md588"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md501"></a>
 Class: &lt;tt&gt;pipeline_builder&lt;/tt&gt;</h2>
 <p>Builder pattern for constructing pipelines.</p>
-<h3><a class="anchor" id="autotoc_md589"></a>
+<h3><a class="anchor" id="autotoc_md502"></a>
 Constructor</h3>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> pipeline_builder(std::shared_ptr&lt;message_bus&gt; bus);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md590"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md503"></a>
 Methods</h3>
-<h4><a class="anchor" id="autotoc_md591"></a>
+<h4><a class="anchor" id="autotoc_md504"></a>
 &lt;tt&gt;from&lt;/tt&gt; / &lt;tt&gt;to&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">pipeline_builder&amp; from(std::string topic);</div>
 <div class="line">pipeline_builder&amp; to(std::string topic);</div>
 </div><!-- fragment --><p> Sets input and output topics.</p>
-<h4><a class="anchor" id="autotoc_md592"></a>
+<h4><a class="anchor" id="autotoc_md505"></a>
 &lt;tt&gt;add_stage&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">pipeline_builder&amp; add_stage(</div>
 <div class="line">    std::string name,</div>
 <div class="line">    message_processor processor,</div>
 <div class="line">    <span class="keywordtype">bool</span> optional = <span class="keyword">false</span></div>
 <div class="line">);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md593"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md506"></a>
 &lt;tt&gt;add_filter&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">pipeline_builder&amp; add_filter(</div>
 <div class="line">    std::string name,</div>
 <div class="line">    std::function&lt;<span class="keywordtype">bool</span>(<span class="keyword">const</span> message&amp;)&gt; filter</div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Adds a filter stage (messages that don't match are dropped).</p>
-<h4><a class="anchor" id="autotoc_md594"></a>
+<h4><a class="anchor" id="autotoc_md507"></a>
 &lt;tt&gt;add_transformer&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">pipeline_builder&amp; add_transformer(</div>
 <div class="line">    std::string name,</div>
 <div class="line">    std::function&lt;message(<span class="keyword">const</span> message&amp;)&gt; transformer</div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Adds a transformation stage.</p>
-<h4><a class="anchor" id="autotoc_md595"></a>
+<h4><a class="anchor" id="autotoc_md508"></a>
 &lt;tt&gt;build&lt;/tt&gt;</h4>
 <div class="fragment"><div class="line">common::Result&lt;std::unique_ptr&lt;message_pipeline&gt;&gt; build();</div>
 </div><!-- fragment --><p> Builds and returns the configured pipeline.</p>
-<h3><a class="anchor" id="autotoc_md596"></a>
+<h3><a class="anchor" id="autotoc_md509"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line">pipeline_builder builder(bus);</div>
 <div class="line"> </div>
@@ -634,26 +634,26 @@ Usage Example</h3>
 <div class="line">    <span class="keyword">auto</span> pipeline = pipeline_result.unwrap();</div>
 <div class="line">    pipeline-&gt;start();</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md597"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md510"></a>
 Namespace: &lt;tt&gt;pipeline_stages&lt;/tt&gt;</h2>
 <p>Common pipeline stage implementations.</p>
-<h3><a class="anchor" id="autotoc_md598"></a>
+<h3><a class="anchor" id="autotoc_md511"></a>
 &lt;tt&gt;create_logging_stage&lt;/tt&gt;</h3>
 <div class="fragment"><div class="line">message_processor create_logging_stage(<span class="keyword">const</span> std::string&amp; stage_name);</div>
 </div><!-- fragment --><p> Creates a stage that logs messages passing through.</p>
-<h3><a class="anchor" id="autotoc_md599"></a>
+<h3><a class="anchor" id="autotoc_md512"></a>
 &lt;tt&gt;create_validation_stage&lt;/tt&gt;</h3>
 <div class="fragment"><div class="line">message_processor create_validation_stage(</div>
 <div class="line">    std::function&lt;<span class="keywordtype">bool</span>(<span class="keyword">const</span> message&amp;)&gt; validator</div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Creates a stage that validates messages.</p>
-<h3><a class="anchor" id="autotoc_md600"></a>
+<h3><a class="anchor" id="autotoc_md513"></a>
 &lt;tt&gt;create_enrichment_stage&lt;/tt&gt;</h3>
 <div class="fragment"><div class="line">message_processor create_enrichment_stage(</div>
 <div class="line">    std::function&lt;<span class="keywordtype">void</span>(message&amp;)&gt; enricher</div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Creates a stage that enriches messages with additional data.</p>
-<h3><a class="anchor" id="autotoc_md601"></a>
+<h3><a class="anchor" id="autotoc_md514"></a>
 &lt;tt&gt;create_retry_stage&lt;/tt&gt;</h3>
 <div class="fragment"><div class="line">message_processor create_retry_stage(</div>
 <div class="line">    message_processor processor,</div>
@@ -661,7 +661,7 @@ Namespace: &lt;tt&gt;pipeline_stages&lt;/tt&gt;</h2>
 <div class="line">    std::chrono::milliseconds retry_delay = std::chrono::milliseconds{100}</div>
 <div class="line">);</div>
 </div><!-- fragment --><p> Wraps a processor with retry logic.</p>
-<h3><a class="anchor" id="autotoc_md602"></a>
+<h3><a class="anchor" id="autotoc_md515"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="keyword">using namespace </span>pipeline_stages;</div>
 <div class="line"> </div>
@@ -692,16 +692,16 @@ Usage Example</h3>
 <div class="line"> </div>
 <div class="line">pipeline.start();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md604"></a>
+<h1><a class="anchor" id="autotoc_md517"></a>
 Best Practices</h1>
-<h2><a class="anchor" id="autotoc_md605"></a>
+<h2><a class="anchor" id="autotoc_md518"></a>
 Pub/Sub Pattern</h2>
 <ul>
 <li>Use topic wildcards (<code>*</code>, <code>#</code>) for flexible subscription patterns</li>
 <li>Apply message filters to reduce callback invocations</li>
 <li>Set appropriate default topics to simplify publishing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md606"></a>
+<h2><a class="anchor" id="autotoc_md519"></a>
 Request-Reply Pattern</h2>
 <ul>
 <li>Always set reasonable timeouts for requests</li>
@@ -709,7 +709,7 @@ Request-Reply Pattern</h2>
 <li>Handle timeout errors gracefully on the client side</li>
 <li>Process requests asynchronously on the server side</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md607"></a>
+<h2><a class="anchor" id="autotoc_md520"></a>
 Event Streaming Pattern</h2>
 <ul>
 <li>Configure buffer size based on replay requirements</li>
@@ -717,7 +717,7 @@ Event Streaming Pattern</h2>
 <li>Consider batch processing for high-throughput scenarios</li>
 <li>Enable persistence for critical event streams</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md608"></a>
+<h2><a class="anchor" id="autotoc_md521"></a>
 Message Pipeline Pattern</h2>
 <ul>
 <li>Keep stages focused on single responsibilities</li>
@@ -726,7 +726,7 @@ Message Pipeline Pattern</h2>
 <li>Use the builder pattern for complex pipelines</li>
 <li>Apply retry logic for transient failures</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md609"></a>
+<h2><a class="anchor" id="autotoc_md522"></a>
 General Guidelines</h2>
 <ul>
 <li>Always check Result return values</li>
@@ -736,7 +736,7 @@ General Guidelines</h2>
 <li>Monitor message bus statistics for performance tuning</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md611"></a>
+<h1><a class="anchor" id="autotoc_md524"></a>
 Error Handling</h1>
 <p>All pattern APIs use the <code>common::Result&lt;T&gt;</code> pattern for error handling:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = publisher.publish(msg);</div>
@@ -747,7 +747,7 @@ Error Handling</h1>
 <div class="line">}</div>
 </div><!-- fragment --><p>Common error codes are defined in <code>kcenon::common::error::codes::messaging_system</code>.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md613"></a>
+<h1><a class="anchor" id="autotoc_md526"></a>
 Thread Safety</h1>
 <ul>
 <li>All pattern classes are thread-safe unless otherwise noted</li>
@@ -756,7 +756,7 @@ Thread Safety</h1>
 <li>Use appropriate synchronization primitives in callback implementations</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md615"></a>
+<h1><a class="anchor" id="autotoc_md528"></a>
 Performance Considerations</h1>
 <ul>
 <li><b>Pub/Sub</b>: Lightweight for simple publish-subscribe scenarios</li>

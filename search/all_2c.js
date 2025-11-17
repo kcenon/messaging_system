@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['📄_20license_0',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md901',1,'']]]
+  ['📖_20documentation_20standards_0',['📖 Documentation Standards',['../index.html#autotoc_md588',1,'']]],
+  ['📖_20usage_20examples_1',['📖 Usage Examples',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md753',1,'']]]
 ];

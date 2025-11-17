@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['🧩_20component_20documentation_0',['🧩 Component Documentation',['../index.html#autotoc_md671',1,'']]],
-  ['🧩_20how_20each_20system_20contributes_1',['🧩 How Each System Contributes',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md832',1,'']]]
+  ['맵핑_20strong_0',['&lt;strong&gt;Task 0.1 – 시스템 인터페이스 맵핑&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md970',1,'']]]
 ];

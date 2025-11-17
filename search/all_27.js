@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🌐_20platform_20support_0',['🌐 Platform Support',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md899',1,'']]]
+  ['🎯_20key_20features_0',['🎯 Key Features',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md735',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🚧_20integration_20features_20headers_20only_20planned_0',['🚧 Integration Features (Headers Only - Planned)',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md826',1,'']]]
+  ['로깅_20모니터링_20데이터_20흐름_20통합_20strong_0',['&lt;strong&gt;Task 3.3 – 로깅/모니터링 데이터 흐름 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md987',1,'']]]
 ];

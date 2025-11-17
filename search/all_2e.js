@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['📋_20appendix_0',['📋 Appendix',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md906',1,'']]],
-  ['📋_20implementation_20status_1',['📋 Implementation Status',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md824',1,'']]]
+  ['📦_20what_20s_20included_0',['📦 What&apos;s Included',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md737',1,'']]]
 ];

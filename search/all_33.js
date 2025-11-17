@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🔄_20documentation_20updates_0',['🔄 Documentation Updates',['../index.html#autotoc_md676',1,'']]]
+  ['🤝_20contributing_0',['🤝 Contributing',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md782',1,'']]]
 ];

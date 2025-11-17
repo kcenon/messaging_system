@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['started_0',['Getting Started',['../d2/d41/md_docs_2GETTING__STARTED.html',1,'']]],
-  ['system_20architecture_1',['System Architecture',['../da/db4/md_docs_2SYSTEM__ARCHITECTURE.html',1,'']]],
-  ['system_20documentation_2',['Messaging System Documentation',['../index.html',1,'']]],
-  ['system_20improvement_20plan_3',['Messaging System Improvement Plan',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html',1,'']]]
+  ['troubleshooting_20guide_0',['troubleshooting guide',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html',1,'Build Troubleshooting Guide'],['../d4/d2f/md_docs_2TROUBLESHOOTING.html',1,'Troubleshooting Guide']]]
 ];

@@ -1,22 +1,21 @@
 var searchData=
 [
   ['gdb_0',['Using GDB',['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md306',1,'']]],
-  ['gdb_20for_20debugging_1',['Using GDB for Debugging',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md732',1,'']]],
-  ['general_20guidelines_2',['General Guidelines',['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md609',1,'']]],
-  ['general_20questions_3',['General Questions',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md724',1,'']]],
-  ['get_5fdefault_5ftopic_20tt_4',['&lt;tt&gt;get_default_topic&lt;/tt&gt;',['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md520',1,'']]],
-  ['get_5fevents_20tt_5',['&lt;tt&gt;get_events&lt;/tt&gt;',['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md561',1,'']]],
-  ['get_5fstage_5fnames_20tt_6',['&lt;tt&gt;get_stage_names&lt;/tt&gt;',['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md585',1,'']]],
-  ['get_5fstatistics_20tt_7',['&lt;tt&gt;get_statistics&lt;/tt&gt;',['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md586',1,'']]],
+  ['gdb_20for_20debugging_1',['Using GDB for Debugging',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md645',1,'']]],
+  ['general_20guidelines_2',['General Guidelines',['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md522',1,'']]],
+  ['general_20questions_3',['General Questions',['../d4/d2f/md_docs_2TROUBLESHOOTING.html#autotoc_md637',1,'']]],
+  ['get_5fdefault_5ftopic_20tt_4',['&lt;tt&gt;get_default_topic&lt;/tt&gt;',['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md433',1,'']]],
+  ['get_5fevents_20tt_5',['&lt;tt&gt;get_events&lt;/tt&gt;',['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md474',1,'']]],
+  ['get_5fstage_5fnames_20tt_6',['&lt;tt&gt;get_stage_names&lt;/tt&gt;',['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md498',1,'']]],
+  ['get_5fstatistics_20tt_7',['&lt;tt&gt;get_statistics&lt;/tt&gt;',['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md499',1,'']]],
   ['getting_20help_8',['Getting Help',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html#autotoc_md149',1,'']]],
   ['getting_20started_9',['Getting Started',['../d2/d41/md_docs_2GETTING__STARTED.html',1,'']]],
   ['getting_5fstarted_2emd_10',['GETTING_STARTED.md',['../d6/d06/GETTING__STARTED_8md.html',1,'']]],
-  ['goals_11',['goals',['../df/d94/md_docs_2performance.html#autotoc_md619',1,'Design Goals'],['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md382',1,'Primary Goals'],['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md383',1,'Secondary Goals']]],
+  ['goals_11',['Design Goals',['../df/d94/md_docs_2performance.html#autotoc_md532',1,'']]],
   ['grafana_20dashboard_12',['Grafana Dashboard',['../df/d23/md_docs_2DEPLOYMENT__GUIDE.html#autotoc_md213',1,'']]],
   ['grep_20p_20not_20supported_20macos_13',['Issue 3: grep -P Not Supported (macOS)',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html#autotoc_md137',1,'']]],
   ['gtest_20not_20found_20in_20external_20systems_14',['Issue 2: GTest Not Found in External Systems',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html#autotoc_md135',1,'']]],
-  ['guard_15',['Legacy Include Guard',['../d0/d01/md_docs_2IMPROVEMENT__PLAN.html#autotoc_md415',1,'']]],
-  ['guide_16',['guide',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md907',1,'A. Advanced Build Guide'],['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html',1,'Build Troubleshooting Guide'],['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md292',1,'C++ Style Guide'],['../df/d23/md_docs_2DEPLOYMENT__GUIDE.html',1,'Deployment Guide'],['../db/dac/md_docs_2DEVELOPER__GUIDE.html',1,'Developer Guide'],['../db/d3a/md_docs_2MIGRATION__GUIDE.html',1,'Migration Guide'],['../df/d94/md_docs_2performance.html',1,'Performance Guide'],['../d4/d2f/md_docs_2TROUBLESHOOTING.html',1,'Troubleshooting Guide']]],
-  ['guidelines_17',['guidelines',['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md298',1,'Comment Guidelines'],['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md314',1,'Contributing Guidelines'],['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md921',1,'D. Development Guidelines'],['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md609',1,'General Guidelines'],['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md299',1,'Testing Guidelines'],['../df/d94/md_docs_2performance.html#autotoc_md651',1,'Tuning Guidelines']]],
-  ['guides_18',['Integration Guides',['../d2/d64/md_docs_2architecture.html#autotoc_md90',1,'']]]
+  ['guide_15',['guide',['../d7/d68/md_docs_2BUILD__TROUBLESHOOTING.html',1,'Build Troubleshooting Guide'],['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md292',1,'C++ Style Guide'],['../df/d23/md_docs_2DEPLOYMENT__GUIDE.html',1,'Deployment Guide'],['../db/dac/md_docs_2DEVELOPER__GUIDE.html',1,'Developer Guide'],['../db/d3a/md_docs_2MIGRATION__GUIDE.html',1,'Migration Guide'],['../df/d94/md_docs_2performance.html',1,'Performance Guide'],['../d4/d2f/md_docs_2TROUBLESHOOTING.html',1,'Troubleshooting Guide']]],
+  ['guidelines_16',['guidelines',['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md298',1,'Comment Guidelines'],['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md314',1,'Contributing Guidelines'],['../dc/d3e/md_docs_2PATTERNS__API.html#autotoc_md522',1,'General Guidelines'],['../db/dac/md_docs_2DEVELOPER__GUIDE.html#autotoc_md299',1,'Testing Guidelines'],['../df/d94/md_docs_2performance.html#autotoc_md564',1,'Tuning Guidelines']]],
+  ['guides_17',['Integration Guides',['../d2/d64/md_docs_2architecture.html#autotoc_md90',1,'']]]
 ];

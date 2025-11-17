@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['❌_20not_20implemented_0',['❌ Not Implemented',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md828',1,'']]]
+  ['🌟_20integration_20with_20base_20systems_0',['🌟 Integration with Base Systems',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md759',1,'']]]
 ];

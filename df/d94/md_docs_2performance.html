@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('df/d94/md_docs_2performance.html','../
   <div class="headertitle"><div class="title">Performance Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md616"></a> This guide provides comprehensive information about the Messaging System's performance characteristics, benchmarking, optimization techniques, and monitoring capabilities.</p>
-<h1><a class="anchor" id="autotoc_md617"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md529"></a> This guide provides comprehensive information about the Messaging System's performance characteristics, benchmarking, optimization techniques, and monitoring capabilities.</p>
+<h1><a class="anchor" id="autotoc_md530"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Performance Overview</li>
@@ -105,10 +105,10 @@ Table of Contents</h1>
 <li>Tuning Guidelines</li>
 <li>Troubleshooting Performance Issues</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md618"></a>
+<h1><a class="anchor" id="autotoc_md531"></a>
 Performance Overview</h1>
 <p>The Messaging System is designed for high-performance, low-latency applications with the following key characteristics:</p>
-<h2><a class="anchor" id="autotoc_md619"></a>
+<h2><a class="anchor" id="autotoc_md532"></a>
 Design Goals</h2>
 <ul>
 <li><b>Throughput</b>: Millions of messages per second</li>
@@ -117,7 +117,7 @@ Design Goals</h2>
 <li><b>Memory Efficiency</b>: Minimal allocations and zero-copy operations</li>
 <li><b>Reliability</b>: Enterprise-grade stability under load</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md620"></a>
+<h2><a class="anchor" id="autotoc_md533"></a>
 Key Performance Features</h2>
 <ul>
 <li><b>Lock-free Architecture</b>: Eliminates contention in critical paths</li>
@@ -126,9 +126,9 @@ Key Performance Features</h2>
 <li><b>Zero-copy Operations</b>: Minimize data copying</li>
 <li><b>Asynchronous I/O</b>: Non-blocking network operations</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md621"></a>
+<h1><a class="anchor" id="autotoc_md534"></a>
 Benchmark Results</h1>
-<h2><a class="anchor" id="autotoc_md622"></a>
+<h2><a class="anchor" id="autotoc_md535"></a>
 Test Environment</h2>
 <ul>
 <li><b>CPU</b>: Intel Core i7-12700K (12 cores, 20 threads) / AMD Ryzen 9 5900X</li>
@@ -138,7 +138,7 @@ Test Environment</h2>
 <li><b>OS</b>: Ubuntu 22.04 LTS / macOS 13+</li>
 <li><b>Compiler</b>: GCC 11.2 / Clang 14</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md623"></a>
+<h2><a class="anchor" id="autotoc_md536"></a>
 Overall System Performance</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -156,7 +156,7 @@ Overall System Performance</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>CPU Utilization</b>   </td><td class="markdownTableBodyNone">Linear scaling   </td><td class="markdownTableBodyNone">Up to 32 cores   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md624"></a>
+<h2><a class="anchor" id="autotoc_md537"></a>
 Latency Measurements</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -172,7 +172,7 @@ Latency Measurements</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Database Query</b>   </td><td class="markdownTableBodyNone">P50: 2.1ms, P99: 15ms   </td><td class="markdownTableBodyNone">Simple SELECT   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md625"></a>
+<h2><a class="anchor" id="autotoc_md538"></a>
 Memory Performance</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -186,11 +186,11 @@ Memory Performance</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Database Connection</b>   </td><td class="markdownTableBodyNone">256KB per connection   </td><td class="markdownTableBodyNone">2.5MB (10 conn)   </td><td class="markdownTableBodyNone">libpq overhead   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md626"></a>
+<h1><a class="anchor" id="autotoc_md539"></a>
 Component Performance</h1>
-<h2><a class="anchor" id="autotoc_md627"></a>
+<h2><a class="anchor" id="autotoc_md540"></a>
 Thread System Performance</h2>
-<h3><a class="anchor" id="autotoc_md628"></a>
+<h3><a class="anchor" id="autotoc_md541"></a>
 Lock-free vs Mutex Comparison</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -204,7 +204,7 @@ Lock-free vs Mutex Comparison</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>CPU Efficiency</b>   </td><td class="markdownTableBodyNone">95%   </td><td class="markdownTableBodyNone">78%   </td><td class="markdownTableBodyNone"><b>1.22x</b>   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md629"></a>
+<h3><a class="anchor" id="autotoc_md542"></a>
 Scaling Characteristics</h3>
 <div class="fragment"><div class="line"><span class="comment">// Performance scaling example</span></div>
 <div class="line"><span class="preprocessor">#include &lt;thread_system/thread_pool.h&gt;</span></div>
@@ -237,9 +237,9 @@ Scaling Characteristics</h3>
 <div class="line">                  &lt;&lt; <span class="stringliteral">&quot;, Throughput: &quot;</span> &lt;&lt; jobs_per_sec &lt;&lt; <span class="stringliteral">&quot; jobs/sec&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md630"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md543"></a>
 Container System Performance</h2>
-<h3><a class="anchor" id="autotoc_md631"></a>
+<h3><a class="anchor" id="autotoc_md544"></a>
 Serialization Performance</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -251,7 +251,7 @@ Serialization Performance</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>XML</b>   </td><td class="markdownTableBodyNone">800K ops/sec   </td><td class="markdownTableBodyNone">600K ops/sec   </td><td class="markdownTableBodyNone">65%   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md632"></a>
+<h3><a class="anchor" id="autotoc_md545"></a>
 SIMD Optimization Impact</h3>
 <div class="fragment"><div class="line"><span class="comment">// SIMD optimization example</span></div>
 <div class="line"><span class="preprocessor">#include &lt;container/values/numeric_array.h&gt;</span></div>
@@ -280,9 +280,9 @@ SIMD Optimization Impact</h3>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;SIMD time: &quot;</span> &lt;&lt; simd_time.count() &lt;&lt; <span class="stringliteral">&quot;ns&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Speedup: &quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(scalar_time.count()) / simd_time.count() &lt;&lt; <span class="stringliteral">&quot;x&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md633"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md546"></a>
 Network System Performance</h2>
-<h3><a class="anchor" id="autotoc_md634"></a>
+<h3><a class="anchor" id="autotoc_md547"></a>
 Connection Scaling</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -296,7 +296,7 @@ Connection Scaling</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">50,000   </td><td class="markdownTableBodyNone">400MB   </td><td class="markdownTableBodyNone">85%   </td><td class="markdownTableBodyNone">50K msg/sec   </td><td class="markdownTableBodyNone">Resource limits   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md635"></a>
+<h3><a class="anchor" id="autotoc_md548"></a>
 Protocol Overhead</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -310,9 +310,9 @@ Protocol Overhead</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>JSON over TCP</b>   </td><td class="markdownTableBodyNone">200+ bytes   </td><td class="markdownTableBodyNone">25%   </td><td class="markdownTableBodyNone">Human-readable   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md636"></a>
+<h2><a class="anchor" id="autotoc_md549"></a>
 Database System Performance</h2>
-<h3><a class="anchor" id="autotoc_md637"></a>
+<h3><a class="anchor" id="autotoc_md550"></a>
 Query Performance</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -328,7 +328,7 @@ Query Performance</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>UPDATE</b>   </td><td class="markdownTableBodyNone">6K/sec   </td><td class="markdownTableBodyNone">3.1ms   </td><td class="markdownTableBodyNone">18ms   </td><td class="markdownTableBodyNone">Indexed updates   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md638"></a>
+<h3><a class="anchor" id="autotoc_md551"></a>
 Connection Pool Impact</h3>
 <div class="fragment"><div class="line"><span class="comment">// Connection pool performance</span></div>
 <div class="line"><span class="preprocessor">#include &lt;database/database_manager.h&gt;</span></div>
@@ -362,11 +362,11 @@ Connection Pool Impact</h3>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;With pool: &quot;</span> &lt;&lt; with_pool.count() &lt;&lt; <span class="stringliteral">&quot;ms&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Speedup: &quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(without_pool.count()) / with_pool.count() &lt;&lt; <span class="stringliteral">&quot;x&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md639"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md552"></a>
 Optimization Techniques</h1>
-<h2><a class="anchor" id="autotoc_md640"></a>
+<h2><a class="anchor" id="autotoc_md553"></a>
 1. Memory Optimization</h2>
-<h3><a class="anchor" id="autotoc_md641"></a>
+<h3><a class="anchor" id="autotoc_md554"></a>
 Object Pooling</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;memory_pool&gt;</span></div>
 <div class="line"> </div>
@@ -412,7 +412,7 @@ Object Pooling</h3>
 <div class="line"><span class="keyword">auto</span>* container = container_pool.acquire();</div>
 <div class="line"><span class="comment">// Use container...</span></div>
 <div class="line">container_pool.release(container);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md642"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md555"></a>
 Custom Allocators</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;memory_resource&gt;</span></div>
 <div class="line"> </div>
@@ -439,9 +439,9 @@ Custom Allocators</h3>
 <div class="line"><span class="comment">// Usage for high-frequency operations</span></div>
 <div class="line">high_performance_allocator allocator(1024 * 1024); <span class="comment">// 1MB buffer</span></div>
 <div class="line">std::pmr::vector&lt;int&gt; fast_vector(allocator.get_allocator&lt;<span class="keywordtype">int</span>&gt;());</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md643"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md556"></a>
 2. CPU Optimization</h2>
-<h3><a class="anchor" id="autotoc_md644"></a>
+<h3><a class="anchor" id="autotoc_md557"></a>
 SIMD Utilization</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;immintrin.h&gt;</span> <span class="comment">// x86 AVX</span></div>
 <div class="line"><span class="preprocessor">#include &lt;arm_neon.h&gt;</span>  <span class="comment">// ARM NEON</span></div>
@@ -486,7 +486,7 @@ SIMD Utilization</h3>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace simd_ops</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md645"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md558"></a>
 Cache Optimization</h3>
 <div class="fragment"><div class="line"><span class="comment">// Cache-friendly data structures</span></div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
@@ -523,9 +523,9 @@ Cache Optimization</h3>
 <div class="line">        process_item(data[i]);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md646"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md559"></a>
 3. Network Optimization</h2>
-<h3><a class="anchor" id="autotoc_md647"></a>
+<h3><a class="anchor" id="autotoc_md560"></a>
 Batching and Pipelining</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;network/messaging_client.h&gt;</span></div>
 <div class="line"> </div>
@@ -600,9 +600,9 @@ Batching and Pipelining</h3>
 <div class="line">        client_-&gt;send_message(batch_container-&gt;serialize());</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md648"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md561"></a>
 Performance Monitoring</h1>
-<h2><a class="anchor" id="autotoc_md649"></a>
+<h2><a class="anchor" id="autotoc_md562"></a>
 1. Built-in Metrics</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;monitoring_system/metrics_collector.h&gt;</span></div>
 <div class="line"> </div>
@@ -659,7 +659,7 @@ Performance Monitoring</h1>
 <div class="line">        <span class="keywordflow">return</span> 0; <span class="comment">// Placeholder</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md650"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md563"></a>
 2. Performance Profiling</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;chrono&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
@@ -743,9 +743,9 @@ Performance Monitoring</h1>
 <div class="line">        profiler.print_report();</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md651"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md564"></a>
 Tuning Guidelines</h1>
-<h2><a class="anchor" id="autotoc_md652"></a>
+<h2><a class="anchor" id="autotoc_md565"></a>
 1. Thread Configuration</h2>
 <div class="fragment"><div class="line"><span class="comment">// Optimal thread pool sizing</span></div>
 <div class="line"><span class="keywordtype">size_t</span> calculate_optimal_thread_count() {</div>
@@ -780,7 +780,7 @@ Tuning Guidelines</h1>
 <div class="line">        std::max(1u, std::thread::hardware_concurrency() / 8)</div>
 <div class="line">    );</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md653"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md566"></a>
 2. Memory Configuration</h2>
 <div class="fragment"><div class="line"><span class="comment">// Memory pool configuration</span></div>
 <div class="line"><span class="keywordtype">void</span> configure_memory_pools() {</div>
@@ -805,7 +805,7 @@ Tuning Guidelines</h1>
 <div class="line">    <span class="keywordtype">size_t</span> retire_threshold = std::thread::hardware_concurrency() * 64;</div>
 <div class="line">    thread_system::hazard_pointer_manager::instance().set_retire_threshold(retire_threshold);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md654"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md567"></a>
 3. Network Configuration</h2>
 <div class="fragment"><div class="line"><span class="comment">// Network optimization settings</span></div>
 <div class="line"><span class="keywordtype">void</span> configure_network_performance() {</div>
@@ -827,11 +827,11 @@ Tuning Guidelines</h1>
 <div class="line">    server-&gt;set_timeout_seconds(CONNECTION_TIMEOUT);</div>
 <div class="line">    server-&gt;set_buffer_sizes(SEND_BUFFER_SIZE, RECV_BUFFER_SIZE);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md655"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md568"></a>
 Troubleshooting Performance Issues</h1>
-<h2><a class="anchor" id="autotoc_md656"></a>
+<h2><a class="anchor" id="autotoc_md569"></a>
 1. Common Performance Problems</h2>
-<h3><a class="anchor" id="autotoc_md657"></a>
+<h3><a class="anchor" id="autotoc_md570"></a>
 High CPU Usage</h3>
 <div class="fragment"><div class="line"><span class="comment">// Diagnose CPU issues</span></div>
 <div class="line"><span class="keywordtype">void</span> diagnose_cpu_usage() {</div>
@@ -851,7 +851,7 @@ High CPU Usage</h3>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Consider adding more worker threads&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md658"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md571"></a>
 Memory Leaks</h3>
 <div class="fragment"><div class="line"><span class="comment">// Memory leak detection</span></div>
 <div class="line"><span class="keywordtype">void</span> diagnose_memory_issues() {</div>
@@ -870,7 +870,7 @@ Memory Leaks</h3>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md659"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md572"></a>
 Network Bottlenecks</h3>
 <div class="fragment"><div class="line"><span class="comment">// Network performance diagnosis</span></div>
 <div class="line"><span class="keywordtype">void</span> diagnose_network_issues() {</div>
@@ -892,7 +892,7 @@ Network Bottlenecks</h3>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Consider increasing buffer sizes&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md660"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md573"></a>
 2. Performance Monitoring Dashboard</h2>
 <div class="fragment"><div class="line"><span class="comment">// Comprehensive performance dashboard</span></div>
 <div class="line"><span class="keyword">class </span>performance_dashboard {</div>
