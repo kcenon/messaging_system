@@ -18,17 +18,18 @@ publisher::publisher(std::shared_ptr<message_bus> bus, std::string default_topic
 VoidResult publisher::publish(message msg) {
 	if (!bus_) {
 		return VoidResult(error_info{messaging::error::broker_unavailable,
-						  "Message bus is not available"});
+					  "Message bus is not available"});
 	}
 
 	if (!bus_->is_running()) {
 		return VoidResult(error_info{messaging::error::broker_unavailable,
-						  "Message bus is not running"});
+					  "Message bus is not running"});
 	}
 
-	if (default_topic_.empty()) {
+	// Check if message has a topic or default topic is available
+	if (msg.metadata().topic.empty() && default_topic_.empty()) {
 		return VoidResult(error_info{messaging::error::invalid_topic_pattern,
-						  "No default topic set and message has no topic"});
+					  "No default topic set and message has no topic"});
 	}
 
 	// Set the topic if not already set
@@ -42,17 +43,17 @@ VoidResult publisher::publish(message msg) {
 VoidResult publisher::publish(const std::string& topic, message msg) {
 	if (!bus_) {
 		return VoidResult(error_info{messaging::error::broker_unavailable,
-						  "Message bus is not available"});
+					  "Message bus is not available"});
 	}
 
 	if (!bus_->is_running()) {
 		return VoidResult(error_info{messaging::error::broker_unavailable,
-						  "Message bus is not running"});
+					  "Message bus is not running"});
 	}
 
 	if (topic.empty()) {
 		return VoidResult(error_info{messaging::error::invalid_topic_pattern,
-						  "Topic cannot be empty"});
+					  "Topic cannot be empty"});
 	}
 
 	return bus_->publish(topic, std::move(msg));
@@ -79,22 +80,22 @@ Result<uint64_t> subscriber::subscribe(
 ) {
 	if (!bus_) {
 		return Result<uint64_t>(error_info{messaging::error::broker_unavailable,
-						  "Message bus is not available"});
+					  "Message bus is not available"});
 	}
 
 	if (!bus_->is_running()) {
 		return Result<uint64_t>(error_info{messaging::error::broker_unavailable,
-						  "Message bus is not running"});
+					  "Message bus is not running"});
 	}
 
 	if (topic_pattern.empty()) {
 		return Result<uint64_t>(error_info{messaging::error::invalid_topic_pattern,
-						  "Topic pattern cannot be empty"});
+					  "Topic pattern cannot be empty"});
 	}
 
 	if (!callback) {
 		return Result<uint64_t>(error_info{messaging::error::subscription_failed,
-						  "Callback cannot be null"});
+					  "Callback cannot be null"});
 	}
 
 	auto result = bus_->subscribe(topic_pattern, callback, filter, priority);
@@ -109,7 +110,7 @@ Result<uint64_t> subscriber::subscribe(
 VoidResult subscriber::unsubscribe(uint64_t subscription_id) {
 	if (!bus_) {
 		return VoidResult(error_info{messaging::error::broker_unavailable,
-						  "Message bus is not available"});
+					  "Message bus is not available"});
 	}
 
 	auto result = bus_->unsubscribe(subscription_id);

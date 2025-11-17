@@ -56,9 +56,11 @@ Result<message> request_reply_handler::request(
 		}
 	}
 
-	// Generate correlation ID
-	std::string correlation_id = generate_correlation_id();
-	req.metadata().correlation_id = correlation_id;
+	// Generate correlation ID if not already set
+	if (req.metadata().correlation_id.empty()) {
+		req.metadata().correlation_id = generate_correlation_id();
+	}
+	std::string correlation_id = req.metadata().correlation_id;
 	req.metadata().topic = service_topic_;
 
 	// Create promise for reply
