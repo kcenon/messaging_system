@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(messaging_system
-    VERSION 2.0.0
-    DESCRIPTION "High-performance distributed messaging system"
+    VERSION 2.1.0
+    DESCRIPTION "Production-ready messaging infrastructure with advanced patterns"
     LANGUAGES CXX
 )
 
-# C++ Standard
+# C++ Standard (C++17 required, C++20 recommended)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -23,6 +23,11 @@ endif()
 # Export compile commands for IDEs
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# ABI Version Configuration
+# Version tracking for binary compatibility
+set(MESSAGING_ABI_VERSION 2 CACHE STRING "Messaging system ABI version")
+message(STATUS "Messaging System ABI Version: ${MESSAGING_ABI_VERSION}")
+
 # ============================================================================
 # Build Options
 # ============================================================================
@@ -33,6 +38,13 @@ option(MESSAGING_ENABLE_MONITORING "Enable runtime monitoring" ON)
 option(MESSAGING_ENABLE_LOGGING "Enable logging system" ON)
 option(MESSAGING_ENABLE_METRICS "Enable metrics collection" ON)
 option(MESSAGING_ENABLE_TLS "Enable TLS/SSL support" OFF)
+option(MESSAGING_ENABLE_TRACING "Enable distributed tracing" ON)
+option(MESSAGING_ENABLE_HEALTH_CHECKS "Enable health monitoring and circuit breakers" ON)
+
+# Performance optimization flags
+option(MESSAGING_ENABLE_MOVE_SEMANTICS "Enable zero-copy move semantics optimization" ON)
+option(MESSAGING_ENABLE_SIMD "Enable SIMD optimizations for message processing" OFF)
+option(MESSAGING_ENABLE_INLINE_OPTIMIZATION "Enable aggressive inlining for hot paths" ON)
 
 # Dependency strategy
 option(MESSAGING_USE_EXTERNAL_SYSTEMS "Use external system packages" ON)
@@ -50,8 +62,13 @@ option(MESSAGING_BUILD_DOCS "Build documentation with Doxygen" OFF)
 set(MESSAGING_BUILD_PROFILE "Release" CACHE STRING "Build profile")
 set_property(CACHE MESSAGING_BUILD_PROFILE PROPERTY STRINGS
     "Debug" "Release" "RelWithDebInfo" "MinSizeRel"
-    "ASAN" "TSAN" "UBSAN" "MSAN"
+    "ASAN" "TSAN" "UBSAN" "MSAN" "Coverage"
 )
+
+# Performance tuning defaults
+set(MESSAGING_DEFAULT_QUEUE_SIZE 10000 CACHE STRING "Default message queue size")
+set(MESSAGING_DEFAULT_BATCH_SIZE 100 CACHE STRING "Default batch processing size")
+set(MESSAGING_DEFAULT_WORKER_THREADS 4 CACHE STRING "Default number of worker threads")
 
 # ============================================================================
 # Compiler Settings
@@ -581,7 +598,53 @@ endif()
 target_compile_definitions(messaging_system_core
     PUBLIC
         KCENON_MESSAGING_SYSTEM_AVAILABLE
+        MESSAGING_ABI_VERSION=${MESSAGING_ABI_VERSION}
+        MESSAGING_DEFAULT_QUEUE_SIZE=${MESSAGING_DEFAULT_QUEUE_SIZE}
+        MESSAGING_DEFAULT_BATCH_SIZE=${MESSAGING_DEFAULT_BATCH_SIZE}
+        MESSAGING_DEFAULT_WORKER_THREADS=${MESSAGING_DEFAULT_WORKER_THREADS}
 )
+
+# Add feature-specific compile definitions
+if(MESSAGING_ENABLE_MOVE_SEMANTICS)
+    target_compile_definitions(messaging_system_core PUBLIC MESSAGING_ENABLE_MOVE_SEMANTICS)
+    message(STATUS "Enabled zero-copy move semantics optimization")
+endif()
+
+if(MESSAGING_ENABLE_SIMD)
+    target_compile_definitions(messaging_system_core PUBLIC MESSAGING_ENABLE_SIMD)
+    # Platform-specific SIMD flags
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
+        target_compile_options(messaging_system_core PRIVATE
+            $<$<CXX_COMPILER_ID:GNU,Clang>:-mavx2 -mfma>
+            $<$<CXX_COMPILER_ID:MSVC>:/arch:AVX2>
+        )
+        message(STATUS "Enabled SIMD optimizations: AVX2 (x86_64)")
+    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm|aarch64|ARM64")
+        target_compile_options(messaging_system_core PRIVATE
+            $<$<CXX_COMPILER_ID:GNU,Clang>:-march=armv8-a+simd>
+        )
+        message(STATUS "Enabled SIMD optimizations: NEON (ARM64)")
+    endif()
+endif()
+
+if(MESSAGING_ENABLE_INLINE_OPTIMIZATION)
+    target_compile_definitions(messaging_system_core PUBLIC MESSAGING_ENABLE_INLINE_OPTIMIZATION)
+    target_compile_options(messaging_system_core PRIVATE
+        $<$<CXX_COMPILER_ID:GNU,Clang>:-finline-functions -finline-limit=600>
+        $<$<CXX_COMPILER_ID:MSVC>:/Ob2>
+    )
+    message(STATUS "Enabled aggressive inlining for hot paths")
+endif()
+
+if(MESSAGING_ENABLE_TRACING)
+    target_compile_definitions(messaging_system_core PUBLIC MESSAGING_ENABLE_TRACING)
+    message(STATUS "Enabled distributed tracing support")
+endif()
+
+if(MESSAGING_ENABLE_HEALTH_CHECKS)
+    target_compile_definitions(messaging_system_core PUBLIC MESSAGING_ENABLE_HEALTH_CHECKS)
+    message(STATUS "Enabled health monitoring and circuit breakers")
+endif()
 
 # Phase 2: Message types - container_system and common_system required
 message(STATUS "Phase 2: Core message types with container_system integration")
@@ -653,18 +716,32 @@ endif()
 message(STATUS "")
 message(STATUS "=== Messaging System Configuration ===")
 message(STATUS "Version: ${PROJECT_VERSION}")
+message(STATUS "ABI Version: ${MESSAGING_ABI_VERSION}")
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Build profile: ${MESSAGING_BUILD_PROFILE}")
 message(STATUS "")
-message(STATUS "Features:")
-message(STATUS "  Lock-free: ${MESSAGING_USE_LOCKFREE}")
+message(STATUS "Core Features:")
+message(STATUS "  Lock-free structures: ${MESSAGING_USE_LOCKFREE}")
 message(STATUS "  Monitoring: ${MESSAGING_ENABLE_MONITORING}")
 message(STATUS "  Logging: ${MESSAGING_ENABLE_LOGGING}")
 message(STATUS "  Metrics: ${MESSAGING_ENABLE_METRICS}")
-message(STATUS "  TLS: ${MESSAGING_ENABLE_TLS}")
+message(STATUS "  TLS/SSL: ${MESSAGING_ENABLE_TLS}")
+message(STATUS "  Distributed tracing: ${MESSAGING_ENABLE_TRACING}")
+message(STATUS "  Health checks: ${MESSAGING_ENABLE_HEALTH_CHECKS}")
+message(STATUS "")
+message(STATUS "Performance Optimizations:")
+message(STATUS "  Move semantics: ${MESSAGING_ENABLE_MOVE_SEMANTICS}")
+message(STATUS "  SIMD acceleration: ${MESSAGING_ENABLE_SIMD}")
+message(STATUS "  Inline optimization: ${MESSAGING_ENABLE_INLINE_OPTIMIZATION}")
+message(STATUS "")
+message(STATUS "Performance Tuning:")
+message(STATUS "  Default queue size: ${MESSAGING_DEFAULT_QUEUE_SIZE}")
+message(STATUS "  Default batch size: ${MESSAGING_DEFAULT_BATCH_SIZE}")
+message(STATUS "  Default worker threads: ${MESSAGING_DEFAULT_WORKER_THREADS}")
 message(STATUS "")
 message(STATUS "Build options:")
 message(STATUS "  Tests: ${MESSAGING_BUILD_TESTS}")
+message(STATUS "  Integration tests: ${MESSAGING_BUILD_INTEGRATION_TESTS}")
 message(STATUS "  Benchmarks: ${MESSAGING_BUILD_BENCHMARKS}")
 message(STATUS "  Examples: ${MESSAGING_BUILD_EXAMPLES}")
 message(STATUS "  Documentation: ${MESSAGING_BUILD_DOCS}")

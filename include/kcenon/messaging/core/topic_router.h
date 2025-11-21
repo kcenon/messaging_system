@@ -117,9 +117,9 @@ private:
 	/**
 	 * @brief Find all subscriptions matching the given topic
 	 * @param topic Topic to match
-	 * @return Vector of pointers to matching subscriptions
+	 * @return Vector of subscription copies (thread-safe)
 	 */
-	std::vector<const subscription*> find_matching_subscriptions(
+	std::vector<subscription> find_matching_subscriptions(
 		const std::string& topic) const;
 
 	/**
