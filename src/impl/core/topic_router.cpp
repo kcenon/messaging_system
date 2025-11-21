@@ -249,24 +249,24 @@ common::VoidResult topic_router::unsubscribe(uint64_t subscription_id) {
 		"messaging_system");
 }
 
-std::vector<const subscription*> topic_router::find_matching_subscriptions(
+std::vector<subscription> topic_router::find_matching_subscriptions(
 	const std::string& topic) const {
-	std::vector<const subscription*> matches;
+	std::vector<subscription> matches;
 
 	std::shared_lock lock(mutex_);
 
 	for (const auto& [pattern, subs] : subscriptions_) {
 		if (match_pattern(topic, pattern)) {
 			for (const auto& sub : subs) {
-				matches.push_back(&sub);
+				matches.push_back(sub);
 			}
 		}
 	}
 
 	// Sort by priority (higher first)
 	std::sort(matches.begin(), matches.end(),
-			  [](const subscription* a, const subscription* b) {
-				  return a->priority > b->priority;
+			  [](const subscription& a, const subscription& b) {
+				  return a.priority > b.priority;
 			  });
 
 	return matches;
@@ -290,10 +290,10 @@ common::VoidResult topic_router::route(const message& msg) {
 	}
 
 	// First, filter subscribers
-	std::vector<const subscription*> filtered_subs;
-	for (const auto* sub : matching_subs) {
+	std::vector<subscription> filtered_subs;
+	for (const auto& sub : matching_subs) {
 		// Apply filter if present
-		if (sub->filter && !sub->filter(msg)) {
+		if (sub.filter && !sub.filter(msg)) {
 			continue;
 		}
 		filtered_subs.push_back(sub);
@@ -309,15 +309,15 @@ common::VoidResult topic_router::route(const message& msg) {
 	bool any_succeeded = false;
 	std::string error_messages;
 
-	for (const auto* sub : filtered_subs) {
-		auto result = sub->callback(msg);
+	for (const auto& sub : filtered_subs) {
+		auto result = sub.callback(msg);
 		if (result.is_ok()) {
 			any_succeeded = true;
 		} else {
 			if (!error_messages.empty()) {
 				error_messages += "; ";
 			}
-			error_messages += "Subscription " + std::to_string(sub->id) +
+			error_messages += "Subscription " + std::to_string(sub.id) +
 							  " failed: " + result.error().message;
 		}
 	}
