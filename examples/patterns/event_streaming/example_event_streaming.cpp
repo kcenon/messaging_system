@@ -4,10 +4,14 @@
  *
  * This example shows how to use event sourcing with replay capabilities,
  * event filtering, and batch processing.
+ * Updated to use messaging_container_builder and serialization features.
  */
 
 #include <kcenon/messaging/patterns/event_streaming.h>
 #include <kcenon/messaging/backends/standalone_backend.h>
+#include <kcenon/messaging/integration/messaging_container_builder.h>
+#include <kcenon/messaging/serialization/message_serializer.h>
+#include <format>
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -16,6 +20,8 @@
 using namespace kcenon;
 using namespace kcenon::messaging;
 using namespace kcenon::messaging::patterns;
+using namespace kcenon::messaging::integration;
+using namespace kcenon::messaging::serialization;
 
 int main() {
     std::cout << "=== Event Streaming Pattern Example ===" << std::endl;
@@ -44,12 +50,32 @@ int main() {
     event_stream stream(bus, "events.orders", stream_config);
     std::cout << "Event stream created for topic: events.orders" << std::endl;
 
-    // 3. Publish some events
+    // 3. Publish some events using messaging_container_builder
     std::cout << "\n3. Publishing events to stream..." << std::endl;
+    message_serializer serializer;
+
     for (int i = 1; i <= 10; ++i) {
+        // Use container builder for type-safe event construction
+        auto container = messaging_container_builder()
+            .source("order-service", "stream-publisher")
+            .target("event-store", "*")
+            .message_type("order_event")
+            .add_value("order_id", std::format("order-{}", i))
+            .add_value("sequence", i)
+            .add_value("amount", 100.0 * i)
+            .add_value("timestamp", std::chrono::system_clock::now())
+            .optimize_for_speed()
+            .build();
+
+        if (!container.is_ok()) {
+            std::cerr << "  Failed to build container for event " << i << std::endl;
+            continue;
+        }
+
         message event("events.orders", message_type::event);
         event.metadata().source = "order-service";
-        event.metadata().id = "order-" + std::to_string(i);
+        event.metadata().id = std::format("order-{}", i);
+        event.payload() = *container.value();
 
         // Make every 3rd event high priority
         if (i % 3 == 0) {
@@ -60,7 +86,23 @@ int main() {
 
         auto result = stream.publish_event(std::move(event));
         if (result.is_ok()) {
-            std::cout << "  Published event: order-" << i << std::endl;
+            std::cout << std::format("  Published event: order-{}\n", i);
+        }
+    }
+
+    // Demonstrate serialization
+    std::cout << "\n  [Serialization Demo]" << std::endl;
+    auto demo_container = messaging_container_builder()
+        .source("demo", "test")
+        .message_type("sample")
+        .add_value("key", "value")
+        .add_value("count", 42)
+        .build();
+
+    if (demo_container.is_ok()) {
+        auto json = serializer.to_json(demo_container.value());
+        if (json.is_ok()) {
+            std::cout << "  JSON output: " << json.value() << std::endl;
         }
     }
 
