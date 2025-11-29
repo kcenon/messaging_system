@@ -72,19 +72,20 @@ int main() {
             continue;
         }
 
-        message event("events.orders", message_type::event);
-        event.metadata().source = "order-service";
-        event.metadata().id = std::format("order-{}", i);
-        event.payload() = *container.value();
+        auto msg_result = message_builder()
+            .topic("events.orders")
+            .type(message_type::event)
+            .source("order-service")
+            .priority((i % 3 == 0) ? message_priority::high : message_priority::normal)
+            .payload(container.value())
+            .build();
 
-        // Make every 3rd event high priority
-        if (i % 3 == 0) {
-            event.metadata().priority = message_priority::high;
-        } else {
-            event.metadata().priority = message_priority::normal;
+        if (!msg_result.is_ok()) {
+            std::cerr << "  Failed to build message for event " << i << std::endl;
+            continue;
         }
 
-        auto result = stream.publish_event(std::move(event));
+        auto result = stream.publish_event(std::move(msg_result.value()));
         if (result.is_ok()) {
             std::cout << std::format("  Published event: order-{}\n", i);
         }

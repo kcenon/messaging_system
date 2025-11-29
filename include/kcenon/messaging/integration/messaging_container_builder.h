@@ -317,11 +317,10 @@ inline messaging_container_builder& messaging_container_builder::optimize_for_ne
 inline common::Result<std::shared_ptr<container_module::value_container>>
 messaging_container_builder::build() {
 	if (!container_) {
-		return common::error<std::shared_ptr<container_module::value_container>>(
-			common::error_info{
-				.code = "BUILDER_INVALID",
-				.message = "Builder is in invalid state"
-			});
+		return common::make_error<std::shared_ptr<container_module::value_container>>(
+			common::error_codes::INTERNAL_ERROR,
+			"Builder is in invalid state",
+			"messaging_container_builder");
 	}
 
 	apply_optimization();

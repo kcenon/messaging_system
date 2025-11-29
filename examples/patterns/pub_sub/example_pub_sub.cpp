@@ -119,14 +119,19 @@ int main() {
             .build();
 
         if (container.is_ok()) {
-            message msg("events.user.created", message_type::event);
-            msg.metadata().source = "user-service";
-            msg.metadata().priority = (i == 2) ? message_priority::high : message_priority::normal;
-            msg.payload() = *container.value();
+            auto msg_result = message_builder()
+                .topic("events.user.created")
+                .type(message_type::event)
+                .source("user-service")
+                .priority((i == 2) ? message_priority::high : message_priority::normal)
+                .payload(container.value())
+                .build();
 
-            auto result = user_pub.publish("events.user.created", std::move(msg));
-            if (result.is_ok()) {
-                std::cout << std::format("  Published: events.user.created (event {})\n", i);
+            if (msg_result.is_ok()) {
+                auto result = user_pub.publish("events.user.created", std::move(msg_result.value()));
+                if (result.is_ok()) {
+                    std::cout << std::format("  Published: events.user.created (event {})\n", i);
+                }
             }
         }
     }
@@ -144,14 +149,19 @@ int main() {
             .build();
 
         if (container.is_ok()) {
-            message msg("events.order.placed", message_type::event);
-            msg.metadata().source = "order-service";
-            msg.metadata().priority = (i == 1) ? message_priority::high : message_priority::normal;
-            msg.payload() = *container.value();
+            auto msg_result = message_builder()
+                .topic("events.order.placed")
+                .type(message_type::event)
+                .source("order-service")
+                .priority((i == 1) ? message_priority::high : message_priority::normal)
+                .payload(container.value())
+                .build();
 
-            auto result = order_pub.publish("events.order.placed", std::move(msg));
-            if (result.is_ok()) {
-                std::cout << std::format("  Published: events.order.placed (event {})\n", i);
+            if (msg_result.is_ok()) {
+                auto result = order_pub.publish("events.order.placed", std::move(msg_result.value()));
+                if (result.is_ok()) {
+                    std::cout << std::format("  Published: events.order.placed (event {})\n", i);
+                }
             }
         }
     }
