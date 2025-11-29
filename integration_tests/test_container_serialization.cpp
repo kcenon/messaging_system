@@ -39,10 +39,10 @@ TEST_F(ContainerSerializationTest, BasicMessageSerialization) {
     auto original_msg = msg_result.unwrap();
 
     // Verify message properties
-    EXPECT_EQ(original_msg.topic(), "orders.created");
+    EXPECT_EQ(original_msg.metadata().topic, "orders.created");
     EXPECT_EQ(original_msg.metadata().type, message_type::event);
     EXPECT_EQ(original_msg.metadata().priority, message_priority::high);
-    EXPECT_EQ(original_msg.source(), "order_service");
+    EXPECT_EQ(original_msg.metadata().source, "order_service");
 }
 
 /**
@@ -133,7 +133,7 @@ TEST_F(ContainerSerializationTest, MessageTypes) {
         {message_type::event, "type.event"},
         {message_type::command, "type.command"},
         {message_type::query, "type.query"},
-        {message_type::response, "type.response"}
+        {message_type::reply, "type.reply"}
     };
 
     for (const auto& test : tests) {
@@ -166,8 +166,8 @@ TEST_F(ContainerSerializationTest, MessageIdUniqueness) {
         auto msg = msg_result.unwrap();
 
         // ID should be unique
-        auto [it, inserted] = ids.insert(msg.metadata().message_id);
-        EXPECT_TRUE(inserted) << "Duplicate ID found: " << msg.metadata().message_id;
+        auto [it, inserted] = ids.insert(msg.metadata().id);
+        EXPECT_TRUE(inserted) << "Duplicate ID found: " << msg.metadata().id;
     }
 
     EXPECT_EQ(ids.size(), num_messages);
@@ -258,7 +258,7 @@ TEST_F(ContainerSerializationTest, MessageRoutingIntegrity) {
     // Check that all topics were received
     std::set<std::string> received_topics;
     for (const auto& msg : received_messages) {
-        received_topics.insert(msg.topic());
+        received_topics.insert(msg.metadata().topic);
     }
 
     for (const auto& [topic, _] : test_cases) {
@@ -324,9 +324,9 @@ TEST_F(ContainerSerializationTest, BuilderChaining) {
     ASSERT_TRUE(msg_result.is_ok());
     auto msg = msg_result.unwrap();
 
-    EXPECT_EQ(msg.topic(), "chained.test");
+    EXPECT_EQ(msg.metadata().topic, "chained.test");
     EXPECT_EQ(msg.metadata().type, message_type::command);
     EXPECT_EQ(msg.metadata().priority, message_priority::critical);
-    EXPECT_EQ(msg.source(), "chain_source");
+    EXPECT_EQ(msg.metadata().source, "chain_source");
     EXPECT_EQ(msg.metadata().correlation_id, "chain-correlation-123");
 }
