@@ -1,0 +1,174 @@
+// BSD 3-Clause License
+// Copyright (c) 2025, kcenon
+// See the LICENSE file in the project root for full license information.
+
+/**
+ * @file websocket_transport.h
+ * @brief WebSocket transport adapter using network_system
+ *
+ * Provides WebSocket-based message transport with support for:
+ * - Bidirectional real-time communication
+ * - Pub/sub messaging pattern
+ * - Topic subscriptions
+ * - Automatic reconnection
+ */
+
+#pragma once
+
+#include <kcenon/messaging/adapters/transport_interface.h>
+
+#include <memory>
+#include <set>
+#include <string>
+#include <vector>
+
+namespace kcenon::messaging::adapters {
+
+/**
+ * @struct websocket_transport_config
+ * @brief Configuration for WebSocket transport
+ */
+struct websocket_transport_config : transport_config {
+    std::string path = "/ws";
+    bool use_ssl = false;
+    std::chrono::milliseconds ping_interval{30000};
+    bool auto_pong = true;
+    std::size_t max_message_size = 10 * 1024 * 1024;  // 10MB
+
+    // Reconnection settings
+    std::chrono::milliseconds reconnect_delay{1000};
+    double reconnect_backoff_multiplier = 2.0;
+    std::chrono::milliseconds max_reconnect_delay{30000};
+};
+
+/**
+ * @class websocket_transport
+ * @brief WebSocket transport implementation using network_system::messaging_ws_client
+ *
+ * This transport is ideal for:
+ * - Real-time pub/sub messaging
+ * - Event streaming
+ * - Low-latency bidirectional communication
+ *
+ * Features:
+ * - Topic-based subscriptions with wildcards (* and #)
+ * - Automatic reconnection with exponential backoff
+ * - Ping/pong keepalive
+ * - Binary and text message support
+ *
+ * Usage Example:
+ * @code
+ * websocket_transport_config config;
+ * config.host = "ws.example.com";
+ * config.port = 8080;
+ * config.path = "/messaging";
+ * config.auto_reconnect = true;
+ *
+ * auto transport = std::make_shared<websocket_transport>(config);
+ *
+ * transport->set_message_handler([](const message& msg) {
+ *     std::cout << "Received: " << msg.metadata().topic << std::endl;
+ * });
+ *
+ * transport->connect();
+ * transport->subscribe("events.user.*");
+ * transport->subscribe("events.order.#");
+ *
+ * // Send message
+ * auto msg = message_builder()
+ *     .topic("events.user.login")
+ *     .source("client-001")
+ *     .build();
+ * transport->send(msg.value());
+ * @endcode
+ */
+class websocket_transport : public transport_interface {
+public:
+    /**
+     * @brief Construct WebSocket transport with configuration
+     * @param config Transport configuration
+     */
+    explicit websocket_transport(const websocket_transport_config& config);
+
+    /**
+     * @brief Destructor
+     */
+    ~websocket_transport() override;
+
+    // transport_interface implementation
+    common::VoidResult connect() override;
+    common::VoidResult disconnect() override;
+    bool is_connected() const override;
+    transport_state get_state() const override;
+
+    common::VoidResult send(const message& msg) override;
+    common::VoidResult send_binary(const std::vector<uint8_t>& data) override;
+
+    void set_message_handler(
+        std::function<void(const message&)> handler) override;
+    void set_binary_handler(
+        std::function<void(const std::vector<uint8_t>&)> handler) override;
+    void set_state_handler(
+        std::function<void(transport_state)> handler) override;
+    void set_error_handler(
+        std::function<void(const std::string&)> handler) override;
+
+    transport_statistics get_statistics() const override;
+    void reset_statistics() override;
+
+    // WebSocket-specific methods
+
+    /**
+     * @brief Subscribe to a topic pattern
+     * @param topic_pattern Topic pattern with optional wildcards
+     *        - '*' matches one level (e.g., "events.*.created")
+     *        - '#' matches multiple levels (e.g., "events.#")
+     * @return Result indicating success or error
+     */
+    common::VoidResult subscribe(const std::string& topic_pattern);
+
+    /**
+     * @brief Unsubscribe from a topic pattern
+     * @param topic_pattern Topic pattern to unsubscribe
+     * @return Result indicating success or error
+     */
+    common::VoidResult unsubscribe(const std::string& topic_pattern);
+
+    /**
+     * @brief Unsubscribe from all topics
+     * @return Result indicating success or error
+     */
+    common::VoidResult unsubscribe_all();
+
+    /**
+     * @brief Get current subscriptions
+     * @return Set of subscribed topic patterns
+     */
+    std::set<std::string> get_subscriptions() const;
+
+    /**
+     * @brief Send text message directly
+     * @param text Text message to send
+     * @return Result indicating success or error
+     */
+    common::VoidResult send_text(const std::string& text);
+
+    /**
+     * @brief Send ping to check connection
+     * @return Result indicating success or error
+     */
+    common::VoidResult ping();
+
+    /**
+     * @brief Set callback for disconnection events
+     * @param handler Callback with close code and reason
+     */
+    void set_disconnect_handler(
+        std::function<void(uint16_t code, const std::string& reason)> handler);
+
+private:
+    class impl;
+    std::unique_ptr<impl> pimpl_;
+};
+
+} // namespace kcenon::messaging::adapters
