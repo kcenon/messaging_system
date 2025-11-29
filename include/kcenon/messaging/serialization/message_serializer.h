@@ -219,22 +219,20 @@ inline common::Result<std::vector<uint8_t>> message_serializer::serialize(
 		auto data = container.serialize_array();
 		return common::ok(std::move(data));
 	} catch (const std::exception& e) {
-		return common::error<std::vector<uint8_t>>(
-			common::error_info{
-				.code = "SERIALIZE_FAILED",
-				.message = std::string("Serialization failed: ") + e.what()
-			});
+		return common::make_error<std::vector<uint8_t>>(
+			common::error_codes::INTERNAL_ERROR,
+			std::string("Serialization failed: ") + e.what(),
+			"message_serializer");
 	}
 }
 
 inline common::Result<std::vector<uint8_t>> message_serializer::serialize(
 	std::shared_ptr<container_module::value_container> container) const {
 	if (!container) {
-		return common::error<std::vector<uint8_t>>(
-			common::error_info{
-				.code = "NULL_CONTAINER",
-				.message = "Container is null"
-			});
+		return common::make_error<std::vector<uint8_t>>(
+			common::error_codes::INVALID_ARGUMENT,
+			"Container is null",
+			"message_serializer");
 	}
 	return serialize(*container);
 }
@@ -247,11 +245,10 @@ message_serializer::deserialize_container(
 			data, false);
 		return common::ok(std::move(container));
 	} catch (const std::exception& e) {
-		return common::error<std::shared_ptr<container_module::value_container>>(
-			common::error_info{
-				.code = "DESERIALIZE_FAILED",
-				.message = std::string("Deserialization failed: ") + e.what()
-			});
+		return common::make_error<std::shared_ptr<container_module::value_container>>(
+			common::error_codes::INTERNAL_ERROR,
+			std::string("Deserialization failed: ") + e.what(),
+			"message_serializer");
 	}
 }
 
@@ -262,11 +259,10 @@ message_serializer::deserialize_container(const std::string& data) const {
 			data, false);
 		return common::ok(std::move(container));
 	} catch (const std::exception& e) {
-		return common::error<std::shared_ptr<container_module::value_container>>(
-			common::error_info{
-				.code = "DESERIALIZE_FAILED",
-				.message = std::string("Deserialization failed: ") + e.what()
-			});
+		return common::make_error<std::shared_ptr<container_module::value_container>>(
+			common::error_codes::INTERNAL_ERROR,
+			std::string("Deserialization failed: ") + e.what(),
+			"message_serializer");
 	}
 }
 
@@ -286,22 +282,20 @@ inline common::Result<std::string> message_serializer::to_json(
 		auto json = const_cast<container_module::value_container&>(container).to_json();
 		return common::ok(std::move(json));
 	} catch (const std::exception& e) {
-		return common::error<std::string>(
-			common::error_info{
-				.code = "JSON_CONVERT_FAILED",
-				.message = std::string("JSON conversion failed: ") + e.what()
-			});
+		return common::make_error<std::string>(
+			common::error_codes::INTERNAL_ERROR,
+			std::string("JSON conversion failed: ") + e.what(),
+			"message_serializer");
 	}
 }
 
 inline common::Result<std::string> message_serializer::to_json(
 	std::shared_ptr<container_module::value_container> container) const {
 	if (!container) {
-		return common::error<std::string>(
-			common::error_info{
-				.code = "NULL_CONTAINER",
-				.message = "Container is null"
-			});
+		return common::make_error<std::string>(
+			common::error_codes::INVALID_ARGUMENT,
+			"Container is null",
+			"message_serializer");
 	}
 	return to_json(*container);
 }
@@ -315,11 +309,10 @@ inline common::Result<std::shared_ptr<container_module::value_container>>
 message_serializer::from_json(const std::string& json) const {
 	// Note: JSON parsing requires additional implementation
 	// For now, we return an error indicating the feature needs implementation
-	return common::error<std::shared_ptr<container_module::value_container>>(
-		common::error_info{
-			.code = "NOT_IMPLEMENTED",
-			.message = "JSON parsing not yet implemented"
-		});
+	return common::make_error<std::shared_ptr<container_module::value_container>>(
+		common::error_codes::INTERNAL_ERROR,
+		"JSON parsing not yet implemented",
+		"message_serializer");
 }
 
 inline common::Result<std::string> message_serializer::to_xml(
@@ -328,22 +321,20 @@ inline common::Result<std::string> message_serializer::to_xml(
 		auto xml = const_cast<container_module::value_container&>(container).to_xml();
 		return common::ok(std::move(xml));
 	} catch (const std::exception& e) {
-		return common::error<std::string>(
-			common::error_info{
-				.code = "XML_CONVERT_FAILED",
-				.message = std::string("XML conversion failed: ") + e.what()
-			});
+		return common::make_error<std::string>(
+			common::error_codes::INTERNAL_ERROR,
+			std::string("XML conversion failed: ") + e.what(),
+			"message_serializer");
 	}
 }
 
 inline common::Result<std::string> message_serializer::to_xml(
 	std::shared_ptr<container_module::value_container> container) const {
 	if (!container) {
-		return common::error<std::string>(
-			common::error_info{
-				.code = "NULL_CONTAINER",
-				.message = "Container is null"
-			});
+		return common::make_error<std::string>(
+			common::error_codes::INVALID_ARGUMENT,
+			"Container is null",
+			"message_serializer");
 	}
 	return to_xml(*container);
 }
@@ -363,7 +354,7 @@ inline common::Result<std::vector<uint8_t>> message_serializer::batch_serialize(
 
 		auto serialized = serialize(*container);
 		if (!serialized.is_ok()) {
-			return common::error<std::vector<uint8_t>>(serialized.error());
+			return common::make_error<std::vector<uint8_t>>(serialized.error());
 		}
 
 		const auto& data = serialized.value();
@@ -394,11 +385,10 @@ message_serializer::batch_deserialize(const std::vector<uint8_t>& data) const {
 		offset += 4;
 
 		if (offset + size > data.size()) {
-			return common::error<std::vector<std::shared_ptr<container_module::value_container>>>(
-				common::error_info{
-					.code = "INVALID_BATCH_DATA",
-					.message = "Batch data is truncated"
-				});
+			return common::make_error<std::vector<std::shared_ptr<container_module::value_container>>>(
+				common::error_codes::INVALID_ARGUMENT,
+				"Batch data is truncated",
+				"message_serializer");
 		}
 
 		std::vector<uint8_t> chunk(data.begin() + offset,
@@ -407,7 +397,7 @@ message_serializer::batch_deserialize(const std::vector<uint8_t>& data) const {
 
 		auto container = deserialize_container(chunk);
 		if (!container.is_ok()) {
-			return common::error<std::vector<std::shared_ptr<container_module::value_container>>>(
+			return common::make_error<std::vector<std::shared_ptr<container_module::value_container>>>(
 				container.error());
 		}
 
