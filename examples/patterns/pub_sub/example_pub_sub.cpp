@@ -4,10 +4,14 @@
  *
  * This example shows how to use the publisher and subscriber classes
  * for simple publish-subscribe messaging with topic patterns and filters.
+ * Updated to use messaging_container_builder for type-safe message construction.
  */
 
 #include <kcenon/messaging/patterns/pub_sub.h>
 #include <kcenon/messaging/backends/standalone_backend.h>
+#include <kcenon/messaging/integration/messaging_container_builder.h>
+#include <kcenon/messaging/serialization/message_serializer.h>
+#include <format>
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -16,6 +20,8 @@
 using namespace kcenon;
 using namespace kcenon::messaging;
 using namespace kcenon::messaging::patterns;
+using namespace kcenon::messaging::integration;
+using namespace kcenon::messaging::serialization;
 
 int main() {
     std::cout << "=== Pub/Sub Pattern Example ===" << std::endl;
@@ -99,27 +105,54 @@ int main() {
     // 4. Publish some events
     std::cout << "\n4. Publishing events..." << std::endl;
 
-    // User events
+    // User events using messaging_container_builder
     for (int i = 1; i <= 3; ++i) {
-        message msg("events.user.created", message_type::event);
-        msg.metadata().source = "user-service";
-        msg.metadata().priority = (i == 2) ? message_priority::high : message_priority::normal;
+        // Use container builder for type-safe message construction
+        auto container = messaging_container_builder()
+            .source("user-service", std::format("session_{}", i))
+            .target("subscribers", "*")
+            .message_type("user_created")
+            .add_value("user_id", std::format("USR-{:05d}", i))
+            .add_value("event_index", i)
+            .add_value("timestamp", std::chrono::system_clock::now())
+            .optimize_for_speed()
+            .build();
 
-        auto result = user_pub.publish("events.user.created", std::move(msg));
-        if (result.is_ok()) {
-            std::cout << "  Published: events.user.created (event " << i << ")" << std::endl;
+        if (container.is_ok()) {
+            message msg("events.user.created", message_type::event);
+            msg.metadata().source = "user-service";
+            msg.metadata().priority = (i == 2) ? message_priority::high : message_priority::normal;
+            msg.payload() = *container.value();
+
+            auto result = user_pub.publish("events.user.created", std::move(msg));
+            if (result.is_ok()) {
+                std::cout << std::format("  Published: events.user.created (event {})\n", i);
+            }
         }
     }
 
-    // Order events
+    // Order events using messaging_container_builder
     for (int i = 1; i <= 2; ++i) {
-        message msg("events.order.placed", message_type::event);
-        msg.metadata().source = "order-service";
-        msg.metadata().priority = (i == 1) ? message_priority::high : message_priority::normal;
+        auto container = messaging_container_builder()
+            .source("order-service", "main")
+            .target("order-processor", "*")
+            .message_type("order_placed")
+            .add_value("order_id", std::format("ORD-{:08d}", i * 1000))
+            .add_value("amount", 99.99 * i)
+            .add_value("quantity", i * 10)
+            .optimize_for_network()
+            .build();
 
-        auto result = order_pub.publish("events.order.placed", std::move(msg));
-        if (result.is_ok()) {
-            std::cout << "  Published: events.order.placed (event " << i << ")" << std::endl;
+        if (container.is_ok()) {
+            message msg("events.order.placed", message_type::event);
+            msg.metadata().source = "order-service";
+            msg.metadata().priority = (i == 1) ? message_priority::high : message_priority::normal;
+            msg.payload() = *container.value();
+
+            auto result = order_pub.publish("events.order.placed", std::move(msg));
+            if (result.is_ok()) {
+                std::cout << std::format("  Published: events.order.placed (event {})\n", i);
+            }
         }
     }
 
