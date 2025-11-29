@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['요약_0',['전체 일정 요약',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md996',1,'']]]
+  ['와일드카드_20패턴_0',['와일드카드 패턴',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md303',1,'']]]
 ];

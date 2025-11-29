@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['📖_20documentation_20standards_0',['📖 Documentation Standards',['../index.html#autotoc_md794',1,'']]],
-  ['📖_20usage_20examples_1',['📖 Usage Examples',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md959',1,'']]]
+  ['느슨한_20결합_0',['1. 느슨한 결합',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md379',1,'']]]
 ];

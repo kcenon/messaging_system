@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['전략_20확정_20strong_0',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md972',1,'']]],
-  ['전체_20일정_20요약_1',['전체 일정 요약',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md996',1,'']]]
+  ['지원_0',['지원',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md583',1,'백엔드 지원'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1098',1,'컴파일러 지원'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1096',1,'플랫폼 지원']]],
+  ['지원_20플랫폼_1',['지원 플랫폼',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1097',1,'']]]
 ];

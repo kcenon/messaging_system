@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🌟_20integration_20with_20base_20systems_0',['🌟 Integration with Base Systems',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md965',1,'']]]
+  ['검증_0',['스레드 안전성 검증',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1090',1,'']]]
 ];

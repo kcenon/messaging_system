@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🌐_20platform_20support_0',['🌐 Platform Support',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md986',1,'']]]
+  ['개요_0',['개요',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md292',1,'개요'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md361',1,'개요'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md566',1,'개요'],['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1140',1,'개요'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md365',1,'시스템 개요']]]
 ];

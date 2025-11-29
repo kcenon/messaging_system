@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['컨테이너_20dsl_20정립_20strong_0',['&lt;strong&gt;Task 2.1 – 메시지 컨테이너 DSL 정립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md980',1,'']]]
+  ['테스트_0',['테스트',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md591',1,'']]],
+  ['테스트_20커버리지_1',['테스트 커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1093',1,'']]],
+  ['테이블_2',['요약 테이블',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md448',1,'']]]
 ];

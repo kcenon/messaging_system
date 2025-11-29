@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['영속성_20및_20재처리_20경로_20구성_20strong_0',['&lt;strong&gt;Task 3.2 – 영속성 및 재처리 경로 구성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md986',1,'']]]
+  ['아키텍처_0',['아키텍처',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md367',1,'컴포넌트 아키텍처'],['../de/de3/md_docs_2ARCHITECTURE__KO.html',1,'Messaging System 아키텍처']]]
 ];

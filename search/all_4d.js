@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['우선순위_0',['개요 및 우선순위',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md967',1,'']]]
+  ['요약_0',['요약',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md443',1,'요약'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1083',1,'요약']]],
+  ['요약_20테이블_1',['요약 테이블',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md448',1,'']]]
 ];

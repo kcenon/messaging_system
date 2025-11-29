@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['일정_20요약_0',['전체 일정 요약',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md996',1,'']]]
+  ['의존성_0',['의존성',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md482',1,'']]],
+  ['의존성_20구조_1',['의존성 구조',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md371',1,'']]]
 ];

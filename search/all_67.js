@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['확정_20strong_0',['&lt;strong&gt;Task 0.3 – 위험 및 마이그레이션 전략 확정&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md972',1,'']]]
+  ['플랫폼_0',['지원 플랫폼',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1097',1,'']]],
+  ['플랫폼_20지원_1',['플랫폼 지원',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1096',1,'']]]
 ];

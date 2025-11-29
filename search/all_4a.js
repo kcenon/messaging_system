@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['옵션_20및_20피처_20플래그_20통합_20strong_0',['&lt;strong&gt;Task 1.2 – 컴파일 옵션 및 피처 플래그 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md976',1,'']]]
+  ['안전성_20검증_0',['스레드 안전성 검증',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1090',1,'']]],
+  ['안전_1',['안전',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md589',1,'스레드 안전'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md590',1,'타입 안전'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md381',1,'3. 스레드 안전']]]
 ];

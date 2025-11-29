@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['모니터링_20데이터_20흐름_20통합_20strong_0',['&lt;strong&gt;Task 3.3 – 로깅/모니터링 데이터 흐름 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md987',1,'']]],
-  ['모듈_20테스트_20수립_20strong_1',['&lt;strong&gt;Task 4.1 – 교차 모듈 테스트 수립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md990',1,'']]],
-  ['모듈_20통합_20재구성_20strong_2',['&lt;strong&gt;Task 1.1 – 외부 모듈 통합 재구성&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md975',1,'']]]
+  ['버스_0',['버스',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md299',1,'메시지 버스'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md571',1,'메시지 버스']]],
+  ['버스_20벤치마크_1',['메시지 버스 벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md450',1,'']]],
+  ['버전_20매트릭스_2',['버전 매트릭스',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md372',1,'']]]
 ];

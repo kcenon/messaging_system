@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['흐름_20통합_20strong_0',['&lt;strong&gt;Task 3.3 – 로깅/모니터링 데이터 흐름 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md987',1,'']]]
+  ['흐름_0',['흐름',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md374',1,'데이터 흐름'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md375',1,'메시지 발행 흐름'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md376',1,'Request/Reply 흐름']]]
 ];

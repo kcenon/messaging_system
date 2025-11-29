@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['레거시_20구현_20차단_20계획_20수립_20strong_0',['&lt;strong&gt;Task 0.4 – 레거시 구현 차단 계획 수립&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md973',1,'']]],
-  ['레거시_20코드_20비활성화_20및_20제거_20strong_1',['&lt;strong&gt;Task 1.4 – 레거시 코드 비활성화 및 제거&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md978',1,'']]],
-  ['레이어_20strong_2',['&lt;strong&gt;Task 3.4 – 구성 및 정책 레이어&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md988',1,'']]]
+  ['목차_0',['목차',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md294',1,'목차'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md363',1,'목차'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md445',1,'목차'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md568',1,'목차'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1085',1,'목차']]]
 ];

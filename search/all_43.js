@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['성공_20기준_20최종_0',['성공 기준 (최종)',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md998',1,'']]],
-  ['성능_20및_20회귀_20검증_20strong_1',['&lt;strong&gt;Task 4.3 – 성능 및 회귀 검증&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md992',1,'']]]
+  ['설계_20원칙_0',['설계 원칙',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md378',1,'']]],
+  ['설명_1',['주요 디렉토리 설명',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1144',1,'']]]
 ];

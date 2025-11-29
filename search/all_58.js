@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['주입식_20아키텍처_20구현_20strong_0',['&lt;strong&gt;Task 2.3 – IExecutor 주입식 아키텍처 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md982',1,'']]]
+  ['추가됨_0',['추가됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md478',1,'추가됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md481',1,'추가됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md485',1,'추가됨']]]
 ];

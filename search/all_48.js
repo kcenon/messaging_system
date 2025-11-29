@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['엔진_20정비_20strong_0',['&lt;strong&gt;Task 2.4 – 라우팅/토픽 엔진 정비&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md983',1,'']]]
+  ['실행_0',['독립 실행',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md584',1,'']]]
 ];

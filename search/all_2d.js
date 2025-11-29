@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['📚_20documentation_0',['📚 Documentation',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md979',1,'']]],
-  ['📚_20documentation_20overview_1',['📚 Documentation Overview',['../index.html#autotoc_md782',1,'']]]
+  ['데이터_20흐름_0',['데이터 흐름',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md374',1,'']]]
 ];

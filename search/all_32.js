@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['🚀_20quick_20navigation_0',['🚀 Quick Navigation',['../index.html#autotoc_md786',1,'']]],
-  ['🚀_20quick_20start_1',['🚀 Quick Start',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md954',1,'']]]
+  ['레퍼런스_0',['Messaging System API 레퍼런스',['../d4/d54/md_docs_2API__REFERENCE__KO.html',1,'']]]
 ];

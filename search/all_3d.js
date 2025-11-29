@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['문서화_0',['**Task 4.2 – 마이그레이션 가이드 및 API 문서화**',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md991',1,'']]]
+  ['벤치마크_0',['벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md450',1,'메시지 버스 벤치마크'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html',1,'Messaging System 성능 벤치마크']]],
+  ['벤치마크_20방법론_1',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md461',1,'']]]
 ];

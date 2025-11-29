@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['토픽_20엔진_20정비_20strong_0',['&lt;strong&gt;Task 2.4 – 라우팅/토픽 엔진 정비&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md983',1,'']]]
+  ['패턴별_20성능_0',['패턴별 성능',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md454',1,'']]],
+  ['패턴_1',['패턴',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md577',1,'고급 패턴'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md305',1,'메시징 패턴'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md369',1,'메시징 패턴'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md303',1,'와일드카드 패턴']]]
 ];

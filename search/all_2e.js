@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📦_20what_20s_20included_0',['📦 What&apos;s Included',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md943',1,'']]]
+  ['독립_20실행_0',['독립 실행',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md584',1,'']]]
 ];

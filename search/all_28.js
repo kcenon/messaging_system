@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🏗️_20architecture_0',['🏗️ Architecture',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md950',1,'']]]
+  ['고급_20패턴_0',['고급 패턴',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md577',1,'']]]
 ];

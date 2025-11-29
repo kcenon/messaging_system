@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['reference_0',['reference',['../db/d91/md_docs_2API__REFERENCE.html',1,'API Reference'],['../dc/d3e/md_docs_2PATTERNS__API.html',1,'Messaging Patterns API Reference']]]
+  ['quality_0',['Messaging System Production Quality',['../dd/def/md_docs_2PRODUCTION__QUALITY.html',1,'']]],
+  ['questions_1',['Frequently Asked Questions',['../d4/da1/md_docs_2guides_2FAQ.html',1,'']]]
 ];

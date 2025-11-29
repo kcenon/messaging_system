@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['재구성_20실행_20계획_0',['Messaging System 재구성 실행 계획',['../d7/d01/md_docs_2REBUILD__PLAN.html',1,'']]]
+  ['변경_20이력_0',['Messaging System 변경 이력',['../db/d9f/md_docs_2CHANGELOG__KO.html',1,'']]]
 ];

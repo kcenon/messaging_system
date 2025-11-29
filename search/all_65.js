@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['플래그_20통합_20strong_0',['&lt;strong&gt;Task 1.2 – 컴파일 옵션 및 피처 플래그 통합&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md976',1,'']]],
-  ['플로우_20제로화_20strong_1',['&lt;strong&gt;Task 2.2 – Result 기반 플로우 제로화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md981',1,'']]]
+  ['품질_0',['Messaging System 프로덕션 품질',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html',1,'']]],
+  ['품질_20및_20운영_1',['품질 및 운영',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1177',1,'']]]
 ];

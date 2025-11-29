@@ -93,9 +93,9 @@ $(document).ready(function(){initNavTree('de/d93/md_docs_2BENCHMARKS.html','../.
   <div class="headertitle"><div class="title">Messaging System Performance Benchmarks</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md131"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-18 <b>Language</b>: [English] | 한국어</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md385"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-18 <b>Language</b>: [English] | <a class="el" href="../../d5/ddb/md_docs_2BENCHMARKS__KO.html">한국어</a></p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md133"></a>
+<h1><a class="anchor" id="autotoc_md387"></a>
 Executive Summary</h1>
 <p>This document provides comprehensive performance benchmarks for the messaging_system, including throughput, latency measurements, and optimization insights.</p>
 <p><b>Platform</b>: Apple M1 (8-core) @ 3.2GHz, 16GB RAM, macOS Sonoma</p>
@@ -107,7 +107,7 @@ Executive Summary</h1>
 <li><b>Request/Reply</b>: ~50K requests/second (2-way latency)</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md135"></a>
+<h1><a class="anchor" id="autotoc_md389"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Core Performance Metrics</li>
@@ -122,9 +122,9 @@ Table of Contents</h1>
 <li>Optimization Insights</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md137"></a>
+<h1><a class="anchor" id="autotoc_md391"></a>
 Core Performance Metrics</h1>
-<h2><a class="anchor" id="autotoc_md138"></a>
+<h2><a class="anchor" id="autotoc_md392"></a>
 Reference Performance Metrics</h2>
 <p>Benchmarked on Apple M1 (8-core) @ 3.2GHz, 16GB, macOS Sonoma.</p>
 <table class="markdownTable">
@@ -146,9 +146,9 @@ Reference Performance Metrics</h2>
 <td class="markdownTableBodyNone"><b>Memory per Message</b>   </td><td class="markdownTableBodyNone">~300 bytes   </td><td class="markdownTableBodyNone">Base overhead   </td><td class="markdownTableBodyNone">Without payload   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md140"></a>
+<h1><a class="anchor" id="autotoc_md394"></a>
 Message Creation Benchmarks</h1>
-<h2><a class="anchor" id="autotoc_md141"></a>
+<h2><a class="anchor" id="autotoc_md395"></a>
 Message Builder Performance</h2>
 <p><b>Test Configuration</b>: 1 million message creations</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> msg = message_builder()</div>
@@ -175,9 +175,9 @@ Message Builder Performance</h2>
 <li>Metadata overhead is minimal (~100 bytes)</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md143"></a>
+<h1><a class="anchor" id="autotoc_md397"></a>
 Queue Performance</h1>
-<h2><a class="anchor" id="autotoc_md144"></a>
+<h2><a class="anchor" id="autotoc_md398"></a>
 Priority Queue Operations</h2>
 <p><b>Test Configuration</b>: 1 million enqueue/dequeue operations</p>
 <table class="markdownTable">
@@ -190,7 +190,7 @@ Priority Queue Operations</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Dead Letter Queue</b>   </td><td class="markdownTableBodyNone">400 ns   </td><td class="markdownTableBodyNone">450 ns   </td><td class="markdownTableBodyNone">~2.2M ops/s   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md145"></a>
+<h2><a class="anchor" id="autotoc_md399"></a>
 Queue Contention Performance</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -210,9 +210,9 @@ Queue Contention Performance</h2>
 <li>Lock-based implementation provides reliable performance</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md147"></a>
+<h1><a class="anchor" id="autotoc_md401"></a>
 Topic Router Performance</h1>
-<h2><a class="anchor" id="autotoc_md148"></a>
+<h2><a class="anchor" id="autotoc_md402"></a>
 Pattern Matching Performance</h2>
 <p><b>Test Configuration</b>: 1 million topic matches</p>
 <table class="markdownTable">
@@ -227,7 +227,7 @@ Pattern Matching Performance</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Complex Pattern</b>   </td><td class="markdownTableBodyNone">2 μs   </td><td class="markdownTableBodyNone">~500K/s   </td><td class="markdownTableBodyNone"><code>*.user.#</code>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md149"></a>
+<h2><a class="anchor" id="autotoc_md403"></a>
 Subscription Count Impact</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -247,9 +247,9 @@ Subscription Count Impact</h2>
 <li>Dispatch time scales linearly with subscriber count</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md151"></a>
+<h1><a class="anchor" id="autotoc_md405"></a>
 Pub/Sub Performance</h1>
-<h2><a class="anchor" id="autotoc_md152"></a>
+<h2><a class="anchor" id="autotoc_md406"></a>
 End-to-End Throughput</h2>
 <p><b>Test Configuration</b>: Message bus with backends</p>
 <table class="markdownTable">
@@ -264,7 +264,7 @@ End-to-End Throughput</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>8 Publishers, 8 Subscribers</b>   </td><td class="markdownTableBodyNone">80K msg/s   </td><td class="markdownTableBodyNone">10 μs   </td><td class="markdownTableBodyNone">100 μs   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md153"></a>
+<h2><a class="anchor" id="autotoc_md407"></a>
 Backend Impact</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -282,9 +282,9 @@ Backend Impact</h2>
 <li>Backend choice affects overall throughput</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md155"></a>
+<h1><a class="anchor" id="autotoc_md409"></a>
 Request/Reply Performance</h1>
-<h2><a class="anchor" id="autotoc_md156"></a>
+<h2><a class="anchor" id="autotoc_md410"></a>
 Synchronous RPC Latency</h2>
 <p><b>Test Configuration</b>: Request-reply over message bus</p>
 <table class="markdownTable">
@@ -299,7 +299,7 @@ Synchronous RPC Latency</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>100 KB</b>   </td><td class="markdownTableBodyNone">500 μs   </td><td class="markdownTableBodyNone">2 ms   </td><td class="markdownTableBodyNone">2K req/s   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md157"></a>
+<h2><a class="anchor" id="autotoc_md411"></a>
 Concurrent Request Performance</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -319,9 +319,9 @@ Concurrent Request Performance</h2>
 <li>Concurrent requests scale reasonably well</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md159"></a>
+<h1><a class="anchor" id="autotoc_md413"></a>
 Memory Usage</h1>
-<h2><a class="anchor" id="autotoc_md160"></a>
+<h2><a class="anchor" id="autotoc_md414"></a>
 Per-Component Memory Overhead</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -341,7 +341,7 @@ Per-Component Memory Overhead</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Backend (integration)</b>   </td><td class="markdownTableBodyNone">10 KB   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Minimal overhead   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md161"></a>
+<h2><a class="anchor" id="autotoc_md415"></a>
 Memory Scaling</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -361,9 +361,9 @@ Memory Scaling</h2>
 <li>Memory usage is predictable and linear</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md163"></a>
+<h1><a class="anchor" id="autotoc_md417"></a>
 Latency Analysis</h1>
-<h2><a class="anchor" id="autotoc_md164"></a>
+<h2><a class="anchor" id="autotoc_md418"></a>
 Latency Distribution (Pub/Sub)</h2>
 <p><b>Test Configuration</b>: 1 million messages, 1 publisher, 1 subscriber</p>
 <table class="markdownTable">
@@ -382,7 +382,7 @@ Latency Distribution (Pub/Sub)</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Max</b>   </td><td class="markdownTableBodyNone">2 ms   </td><td class="markdownTableBodyNone">Rare outlier   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md165"></a>
+<h2><a class="anchor" id="autotoc_md419"></a>
 Latency Breakdown</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -404,9 +404,9 @@ Latency Breakdown</h2>
 <li>Latency is consistent and predictable</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md167"></a>
+<h1><a class="anchor" id="autotoc_md421"></a>
 Scalability</h1>
-<h2><a class="anchor" id="autotoc_md168"></a>
+<h2><a class="anchor" id="autotoc_md422"></a>
 Thread Scaling</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -422,7 +422,7 @@ Thread Scaling</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">16   </td><td class="markdownTableBodyNone">300K msg/s   </td><td class="markdownTableBodyNone">10.0x   </td><td class="markdownTableBodyNone">63%   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md169"></a>
+<h2><a class="anchor" id="autotoc_md423"></a>
 Publisher/Subscriber Scaling</h2>
 <p><b>Fixed Workers (4), Variable Pub/Sub</b>:</p>
 <table class="markdownTable">
@@ -443,9 +443,9 @@ Publisher/Subscriber Scaling</h2>
 <li>Multiple publishers/subscribers scale well</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md171"></a>
+<h1><a class="anchor" id="autotoc_md425"></a>
 Optimization Insights</h1>
-<h2><a class="anchor" id="autotoc_md172"></a>
+<h2><a class="anchor" id="autotoc_md426"></a>
 Performance Tuning Recommendations</h2>
 <ol type="1">
 <li><b>Queue Configuration</b><ul>
@@ -479,7 +479,7 @@ Performance Tuning Recommendations</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md173"></a>
+<h2><a class="anchor" id="autotoc_md427"></a>
 Common Bottlenecks</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -494,13 +494,13 @@ Common Bottlenecks</h2>
 <td class="markdownTableBodyNone"><b>Memory Pressure</b>   </td><td class="markdownTableBodyNone">Slow performance   </td><td class="markdownTableBodyNone">Reduce message size or implement GC   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md175"></a>
+<h1><a class="anchor" id="autotoc_md429"></a>
 Running Benchmarks</h1>
-<h2><a class="anchor" id="autotoc_md176"></a>
+<h2><a class="anchor" id="autotoc_md430"></a>
 Prerequisites</h2>
 <div class="fragment"><div class="line">cmake -B build -DMESSAGING_BUILD_BENCHMARKS=ON</div>
 <div class="line">cmake --build build -j</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md177"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md431"></a>
 Available Benchmarks</h2>
 <div class="fragment"><div class="line"># Message creation benchmark</div>
 <div class="line">./build/test/benchmarks/bench_message_creation</div>
@@ -516,7 +516,7 @@ Available Benchmarks</h2>
 <div class="line"> </div>
 <div class="line"># Request/Reply latency benchmark</div>
 <div class="line">./build/test/benchmarks/bench_request_reply_latency</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md178"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md432"></a>
 Benchmark Output Format</h2>
 <div class="fragment"><div class="line">------------------------------------------------------</div>
 <div class="line">Benchmark: Message Creation</div>
@@ -530,7 +530,7 @@ Benchmark Output Format</h2>
 <div class="line">Memory usage: 300 MB</div>
 <div class="line">------------------------------------------------------</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md180"></a>
+<h1><a class="anchor" id="autotoc_md434"></a>
 Continuous Performance Monitoring</h1>
 <p>Performance metrics are automatically measured in our CI/CD pipeline:</p><ul>
 <li>Regression detection on every PR</li>
@@ -539,9 +539,9 @@ Continuous Performance Monitoring</h1>
 </ul>
 <p>See <a href="../../../.github/workflows/benchmarks.yml">CI/CD Performance Tracking</a> for details.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md182"></a>
+<h1><a class="anchor" id="autotoc_md436"></a>
 Comparison with Other Systems</h1>
-<h2><a class="anchor" id="autotoc_md183"></a>
+<h2><a class="anchor" id="autotoc_md437"></a>
 Feature Comparison</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -559,7 +559,7 @@ Feature Comparison</h2>
 </table>
 <p><b>Note</b>: Comparison is approximate and depends on configuration. messaging_system is optimized for in-process, low-latency messaging.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md185"></a>
+<h1><a class="anchor" id="autotoc_md439"></a>
 Conclusion</h1>
 <p>The messaging_system provides:</p><ul>
 <li><b>High Performance</b>: 100K+ msg/s with &lt;10 μs latency</li>

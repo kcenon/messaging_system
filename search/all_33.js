@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🤝_20contributing_0',['🤝 Contributing',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md988',1,'']]]
+  ['링크_0',['관련 링크',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1181',1,'']]]
 ];

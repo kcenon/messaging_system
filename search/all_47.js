@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['아키텍처_20구현_20strong_0',['&lt;strong&gt;Task 2.3 – IExecutor 주입식 아키텍처 구현&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md982',1,'']]]
+  ['시스템_20개요_0',['시스템 개요',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md365',1,'']]],
+  ['시작하기_1',['시작하기',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1173',1,'']]]
 ];

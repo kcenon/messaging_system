@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['보안_20검토_20및_20강화_20strong_0',['&lt;strong&gt;Task 4.4 – 보안 검토 및 강화&lt;/strong&gt;',['../d7/d01/md_docs_2REBUILD__PLAN.html#autotoc_md993',1,'']]]
+  ['빌드_20매트릭스_0',['빌드 매트릭스',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1088',1,'']]]
 ];

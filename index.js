@@ -1,21 +1,14 @@
 var index =
 [
-    [ "📚 Documentation Overview", "index.html#autotoc_md782", [
-      [ "User Documentation", "index.html#autotoc_md783", null ],
-      [ "Operations & Deployment", "index.html#autotoc_md784", null ],
-      [ "Development & Planning", "index.html#autotoc_md785", null ]
+    [ "Overview", "index.html#autotoc_md950", null ],
+    [ "CMake Integration", "index.html#autotoc_md952", [
+      [ "FetchContent (Recommended)", "index.html#autotoc_md953", null ],
+      [ "Subdirectory", "index.html#autotoc_md954", null ]
     ] ],
-    [ "🚀 Quick Navigation", "index.html#autotoc_md786", [
-      [ "For New Users", "index.html#autotoc_md787", null ],
-      [ "For Developers", "index.html#autotoc_md788", null ],
-      [ "For System Administrators", "index.html#autotoc_md789", null ]
+    [ "Integration with Subsystems", "index.html#autotoc_md956", [
+      [ "Using with thread_system", "index.html#autotoc_md957", null ],
+      [ "Using with network_system", "index.html#autotoc_md958", null ]
     ] ],
-    [ "🧩 Component Documentation", "index.html#autotoc_md790", [
-      [ "Core Infrastructure", "index.html#autotoc_md791", null ],
-      [ "Data & Communication Modules", "index.html#autotoc_md792", null ],
-      [ "Application Layer", "index.html#autotoc_md793", null ]
-    ] ],
-    [ "📖 Documentation Standards", "index.html#autotoc_md794", null ],
-    [ "🔄 Documentation Updates", "index.html#autotoc_md795", null ],
-    [ "💬 Feedback", "index.html#autotoc_md796", null ]
+    [ "Custom Configuration", "index.html#autotoc_md960", null ],
+    [ "Related Documentation", "index.html#autotoc_md962", null ]
 ];
