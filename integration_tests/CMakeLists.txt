@@ -74,3 +74,39 @@ target_include_directories(test_full_integration
 )
 
 gtest_discover_tests(test_full_integration)
+
+# Test event bus integration (TICKET-011)
+add_executable(test_event_bus_integration
+    test_event_bus_integration.cpp
+)
+
+target_link_libraries(test_event_bus_integration
+    PRIVATE
+        messaging_system_core
+        GTest::gtest_main
+)
+
+target_include_directories(test_event_bus_integration
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+gtest_discover_tests(test_event_bus_integration)
+
+# Test container serialization (TICKET-011)
+add_executable(test_container_serialization
+    test_container_serialization.cpp
+)
+
+target_link_libraries(test_container_serialization
+    PRIVATE
+        messaging_system_core
+        GTest::gtest_main
+)
+
+target_include_directories(test_container_serialization
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+gtest_discover_tests(test_container_serialization)
