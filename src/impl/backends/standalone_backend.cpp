@@ -65,10 +65,14 @@ public:
 	}
 
 	void stop() {
-		if (stop_flag_.exchange(true)) {
-			return; // Already stopped
+		{
+			std::lock_guard<std::mutex> lock(queue_mutex_);
+			if (stop_flag_.exchange(true)) {
+				return; // Already stopped
+			}
 		}
-
+		// notify_all must be called after releasing the lock to avoid
+		// blocking workers that are waiting to acquire the lock
 		condition_.notify_all();
 
 		for (auto& worker : workers_) {
