@@ -48,13 +48,11 @@ public:
 	 */
 	~request_reply_handler();
 
-	// Non-copyable
+	// Non-copyable and non-movable (contains std::mutex)
 	request_reply_handler(const request_reply_handler&) = delete;
 	request_reply_handler& operator=(const request_reply_handler&) = delete;
-
-	// Movable
-	request_reply_handler(request_reply_handler&&) noexcept = default;
-	request_reply_handler& operator=(request_reply_handler&&) noexcept = default;
+	request_reply_handler(request_reply_handler&&) = delete;
+	request_reply_handler& operator=(request_reply_handler&&) = delete;
 
 	/**
 	 * @brief Send a request and wait for reply (client side)
