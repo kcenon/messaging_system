@@ -50,9 +50,7 @@ int main() {
 
             // Validate message has required fields
             if (msg.metadata().topic.empty()) {
-                return common::err<message>(
-                    common::error_info::create(-1, "Invalid message: empty topic")
-                );
+                return common::make_error<message>(-1, "Invalid message: empty topic");
             }
 
             std::cout << "  [Stage: Validate] Message validated successfully" << std::endl;
@@ -100,11 +98,11 @@ int main() {
 
     if (!pipeline_result.is_ok()) {
         std::cerr << "Failed to build pipeline: "
-                  << pipeline_result.get_error().message << std::endl;
+                  << pipeline_result.error().message << std::endl;
         return 1;
     }
 
-    auto pipeline = pipeline_result.unwrap();
+    auto pipeline = std::move(pipeline_result.value());
     std::cout << "Pipeline built with " << pipeline->stage_count() << " stages:" << std::endl;
 
     auto stage_names = pipeline->get_stage_names();
@@ -222,9 +220,7 @@ int main() {
         if (++attempt % 3 == 0) {
             return common::ok(message(msg));
         }
-        return common::err<message>(
-            common::error_info::create(-1, "Temporary failure")
-        );
+        return common::make_error<message>(-1, "Temporary failure");
     };
 
     custom_pipeline.add_stage("process_with_retry",

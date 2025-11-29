@@ -48,12 +48,6 @@ void run_server(std::shared_ptr<message_bus> bus) {
         return;
     }
 
-    auto start_result = server.start();
-    if (!start_result.is_ok()) {
-        std::cerr << "[Server Thread] Failed to start server" << std::endl;
-        return;
-    }
-
     std::cout << "[Server Thread] Calculator service started" << std::endl;
 
     // Keep server running
@@ -69,7 +63,7 @@ void run_client(std::shared_ptr<message_bus> bus) {
 
     std::cout << "\n[Client Thread] Starting client..." << std::endl;
 
-    request_client client(bus);
+    request_client client(bus, "service.calculator");
 
     // Make several requests
     for (int i = 1; i <= 3; ++i) {
@@ -79,18 +73,17 @@ void run_client(std::shared_ptr<message_bus> bus) {
         request.metadata().source = "client-app";
 
         auto reply_result = client.request(
-            "service.calculator",
             std::move(request),
-            std::chrono::seconds{2}
+            std::chrono::milliseconds{2000}
         );
 
         if (reply_result.is_ok()) {
-            auto reply = reply_result.unwrap();
+            const auto& reply = reply_result.value();
             std::cout << "[Client Thread] Received reply for request #" << i << std::endl;
             std::cout << "  Correlation ID: " << reply.metadata().correlation_id << std::endl;
         } else {
             std::cerr << "[Client Thread] Request #" << i << " failed: "
-                      << reply_result.get_error().message << std::endl;
+                      << reply_result.error().message << std::endl;
         }
     }
 
