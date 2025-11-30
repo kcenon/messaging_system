@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(messaging_system
-    VERSION 2.1.0
+    VERSION 1.0.0
     DESCRIPTION "Production-ready messaging infrastructure with advanced patterns"
     LANGUAGES CXX
 )
