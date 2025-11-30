@@ -181,8 +181,8 @@ Publisher → Message Bus → Topic Router → Subscribers
 
 ### Prerequisites
 
-- **C++20** compiler (GCC 10+, Clang 12+, MSVC 2019+)
-- **CMake** 3.16+
+- **C++20** compiler (GCC 11+, Clang 14+, MSVC 2022+, Apple Clang 14+)
+- **CMake** 3.20+
 - **vcpkg** (for dependency management)
 
 ### Installation
@@ -551,8 +551,8 @@ cmake --build build -j
 |----------|----------|--------|
 | Ubuntu 22.04 | GCC 11+ | ✅ Tested |
 | Ubuntu 22.04 | Clang 14+ | ✅ Tested |
-| macOS 13+ | Apple Clang | ✅ Tested |
-| Windows 10+ | MSVC 2019+ | ✅ Tested |
+| macOS 13+ | Apple Clang 14+ | ✅ Tested |
+| Windows 10+ | MSVC 2022+ | ✅ Tested |
 
 ---
 
