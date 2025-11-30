@@ -233,10 +233,15 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             message(WARNING "  ✗ database_system not found - database features disabled")
         endif()
 
-        # NetworkSystem (optional)
+        ##################################################
+        # NetworkSystem (REQUIRED - Tier 4)
+        #
+        # Tier 5: messaging_system
+        #   Required: network_system <- logger_system <- thread_system <- common_system
+        #   Required: container_system (serialization)
+        ##################################################
         if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../network_system/CMakeLists.txt")
-            message(STATUS "  ✓ Found local network_system")
-            # Force disable samples, tests, and install before including
+            message(STATUS "  ✓ Found local network_system (REQUIRED)")
             set(NETWORK_BUILD_SAMPLES OFF CACHE BOOL "Disable network samples" FORCE)
             set(NETWORK_BUILD_TESTS OFF CACHE BOOL "Disable network tests" FORCE)
             set(BUILD_SAMPLES OFF CACHE BOOL "Disable samples" FORCE)
@@ -246,8 +251,20 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
                 "${CMAKE_BINARY_DIR}/_local/network_system"
             )
             set(CMAKE_SKIP_INSTALL_RULES OFF)
+            set(NETWORK_SYSTEM_AVAILABLE TRUE)
         else()
-            message(WARNING "  ✗ network_system not found - network features disabled")
+            message(FATAL_ERROR
+                "network_system is REQUIRED for messaging_system (Tier 5).\n"
+                "\n"
+                "Dependency chain:\n"
+                "  messaging_system (Tier 5)\n"
+                "    └── network_system (Tier 4) <- MISSING\n"
+                "          └── logger_system (Tier 2)\n"
+                "                └── thread_system (Tier 1)\n"
+                "                      └── common_system (Tier 0)\n"
+                "\n"
+                "Please ensure network_system is available at:\n"
+                "  ${CMAKE_CURRENT_SOURCE_DIR}/../network_system/")
         endif()
 
         message(STATUS "Local systems integration complete")
@@ -433,6 +450,17 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
             # DatabaseSystem  # DISABLED - not needed
             NetworkSystem
         )
+
+        ##################################################
+        # NetworkSystem Validation (REQUIRED - Tier 4)
+        ##################################################
+        if(NOT TARGET NetworkSystem AND NOT TARGET network_system AND NOT TARGET network)
+            message(FATAL_ERROR
+                "Failed to fetch network_system.\n"
+                "messaging_system requires network_system (Tier 4).\n"
+                "Check network connectivity and repository access.")
+        endif()
+        message(STATUS "network_system: FETCHED (required dependency)")
 
         # Restore original CMAKE_SKIP_INSTALL_RULES setting
         set(CMAKE_SKIP_INSTALL_RULES "${CMAKE_SKIP_INSTALL_RULES_SAVE}")
@@ -766,43 +794,64 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         message(STATUS "  Using FetchContent: ${MESSAGING_USE_FETCHCONTENT}")
     endif()
     message(STATUS "")
-    message(STATUS "External systems found:")
+    message(STATUS "=== Messaging System Dependencies (Tier 5) ===")
+    message(STATUS "")
+    message(STATUS "Required Dependencies:")
     # Check for targets without namespace (local/FetchContent mode) or with namespace (find_package mode)
+
+    # CommonSystem (REQUIRED - Tier 0)
     if(TARGET CommonSystem::common OR TARGET kcenon::common OR TARGET common_system OR TARGET common)
-        message(STATUS "  ✓ CommonSystem")
+        message(STATUS "  ✓ CommonSystem (Tier 0) [REQUIRED]")
     else()
-        message(STATUS "  ✗ CommonSystem")
+        message(FATAL_ERROR "  ✗ CommonSystem - REQUIRED but not found!")
     endif()
+
+    # ThreadSystem (REQUIRED via network_system - Tier 1)
     if(TARGET ThreadSystem::Core OR TARGET thread_pool OR TARGET thread_base OR TARGET interfaces)
-        message(STATUS "  ✓ ThreadSystem")
+        message(STATUS "  ✓ ThreadSystem (Tier 1) [REQUIRED via network_system]")
     else()
-        message(STATUS "  ✗ ThreadSystem")
+        message(STATUS "  ⚠ ThreadSystem - will be included via network_system")
     endif()
-    if(TARGET LoggerSystem::logger OR TARGET LoggerSystem OR TARGET logger)
-        message(STATUS "  ✓ LoggerSystem")
-    else()
-        message(STATUS "  ✗ LoggerSystem")
-    endif()
-    if(TARGET MonitoringSystem::monitoring OR TARGET monitoring_system OR TARGET monitoring)
-        message(STATUS "  ✓ MonitoringSystem")
-    else()
-        message(STATUS "  ✗ MonitoringSystem")
-    endif()
+
+    # ContainerSystem (REQUIRED - Tier 1)
     if(TARGET ContainerSystem::container OR TARGET container_system OR TARGET container)
-        message(STATUS "  ✓ ContainerSystem")
+        message(STATUS "  ✓ ContainerSystem (Tier 1) [REQUIRED]")
     else()
-        message(STATUS "  ✗ ContainerSystem")
+        message(FATAL_ERROR "  ✗ ContainerSystem - REQUIRED but not found!")
     endif()
-    if(TARGET DatabaseSystem::database OR TARGET database)
-        message(STATUS "  ✓ DatabaseSystem")
+
+    # LoggerSystem (REQUIRED via network_system - Tier 2)
+    if(TARGET LoggerSystem::logger OR TARGET LoggerSystem OR TARGET logger)
+        message(STATUS "  ✓ LoggerSystem (Tier 2) [REQUIRED via network_system]")
     else()
-        message(STATUS "  ✗ DatabaseSystem")
+        message(STATUS "  ⚠ LoggerSystem - will be included via network_system")
     endif()
+
+    # NetworkSystem (REQUIRED - Tier 4)
     if(TARGET NetworkSystem::network OR TARGET NetworkSystem OR TARGET network)
-        message(STATUS "  ✓ NetworkSystem")
+        message(STATUS "  ✓ NetworkSystem (Tier 4) [REQUIRED]")
     else()
-        message(STATUS "  ✗ NetworkSystem")
+        message(FATAL_ERROR "  ✗ NetworkSystem - REQUIRED but not found!")
     endif()
+
+    message(STATUS "")
+    message(STATUS "Optional Dependencies:")
+
+    # MonitoringSystem (OPTIONAL - Tier 3)
+    if(TARGET MonitoringSystem::monitoring OR TARGET monitoring_system OR TARGET monitoring)
+        message(STATUS "  ✓ MonitoringSystem (Tier 3) [OPTIONAL]")
+    else()
+        message(STATUS "  ○ MonitoringSystem (Tier 3) [OPTIONAL - not loaded]")
+    endif()
+
+    # DatabaseSystem (OPTIONAL - Tier 5)
+    if(TARGET DatabaseSystem::database OR TARGET database)
+        message(STATUS "  ✓ DatabaseSystem (Tier 5) [OPTIONAL]")
+    else()
+        message(STATUS "  ○ DatabaseSystem (Tier 5) [OPTIONAL - not loaded]")
+    endif()
+
+    message(STATUS "")
+    message(STATUS "===============================================")
 endif()
-message(STATUS "======================================")
 message(STATUS "")
