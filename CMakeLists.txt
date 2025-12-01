@@ -494,6 +494,41 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         find_package(NetworkSystem 1.0 QUIET)
     endif()
 
+    # Bridge unified-build targets to expected names for dependency validation
+    if(NOT MESSAGING_USE_FETCHCONTENT AND NOT MESSAGING_USE_LOCAL_SYSTEMS)
+        if(NOT TARGET CommonSystem::common)
+            if(TARGET common_system)
+                add_library(CommonSystem::common ALIAS common_system)
+            elseif(TARGET common)
+                add_library(CommonSystem::common ALIAS common)
+            endif()
+        endif()
+
+        if(NOT TARGET ContainerSystem::container)
+            if(TARGET container_system)
+                add_library(ContainerSystem::container ALIAS container_system)
+            elseif(TARGET container)
+                add_library(ContainerSystem::container ALIAS container)
+            endif()
+        endif()
+
+        if(NOT TARGET ThreadSystem::Core)
+            if(TARGET thread_base)
+                add_library(ThreadSystem::Core ALIAS thread_base)
+            elseif(TARGET thread_pool)
+                add_library(ThreadSystem::Core ALIAS thread_pool)
+            endif()
+        endif()
+
+        if(NOT TARGET LoggerSystem::logger AND TARGET LoggerSystem)
+            add_library(LoggerSystem::logger ALIAS LoggerSystem)
+        endif()
+
+        if(NOT TARGET NetworkSystem::network AND TARGET NetworkSystem)
+            add_library(NetworkSystem::network ALIAS NetworkSystem)
+        endif()
+    endif()
+
     # Validate dependencies (skip for FetchContent and Local modes - systems are guaranteed to be available)
     if(NOT MESSAGING_USE_FETCHCONTENT AND NOT MESSAGING_USE_LOCAL_SYSTEMS)
         include(cmake/validate_dependencies.cmake)
@@ -511,15 +546,30 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
     #       In find_package mode, targets use namespace (e.g., CommonSystem::common)
     if(NOT MESSAGING_USE_FETCHCONTENT AND NOT MESSAGING_USE_LOCAL_SYSTEMS)
         if(TARGET CommonSystem::common AND NOT TARGET common)
-            add_library(common ALIAS CommonSystem::common)
+            get_target_property(_common_alias CommonSystem::common ALIASED_TARGET)
+            if(_common_alias AND NOT _common_alias STREQUAL "NOTFOUND")
+                add_library(common ALIAS ${_common_alias})
+            else()
+                add_library(common ALIAS CommonSystem::common)
+            endif()
         endif()
 
         if(TARGET ThreadSystem::Core AND NOT TARGET thread_pool)
-            add_library(thread_pool ALIAS ThreadSystem::Core)
+            get_target_property(_thread_alias ThreadSystem::Core ALIASED_TARGET)
+            if(_thread_alias AND NOT _thread_alias STREQUAL "NOTFOUND")
+                add_library(thread_pool ALIAS ${_thread_alias})
+            else()
+                add_library(thread_pool ALIAS ThreadSystem::Core)
+            endif()
         endif()
 
         if(TARGET LoggerSystem::logger AND NOT TARGET logger)
-            add_library(logger ALIAS LoggerSystem::logger)
+            get_target_property(_logger_alias LoggerSystem::logger ALIASED_TARGET)
+            if(_logger_alias AND NOT _logger_alias STREQUAL "NOTFOUND")
+                add_library(logger ALIAS ${_logger_alias})
+            else()
+                add_library(logger ALIAS LoggerSystem::logger)
+            endif()
         endif()
 
         if(TARGET MonitoringSystem::monitoring AND NOT TARGET monitoring)
@@ -527,7 +577,12 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         endif()
 
         if(TARGET ContainerSystem::container AND NOT TARGET container)
-            add_library(container ALIAS ContainerSystem::container)
+            get_target_property(_container_alias ContainerSystem::container ALIASED_TARGET)
+            if(_container_alias AND NOT _container_alias STREQUAL "NOTFOUND")
+                add_library(container ALIAS ${_container_alias})
+            else()
+                add_library(container ALIAS ContainerSystem::container)
+            endif()
         endif()
 
         if(TARGET DatabaseSystem::database AND NOT TARGET database)
@@ -535,7 +590,12 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
         endif()
 
         if(TARGET NetworkSystem::network AND NOT TARGET network)
-            add_library(network ALIAS NetworkSystem::network)
+            get_target_property(_network_alias NetworkSystem::network ALIASED_TARGET)
+            if(_network_alias AND NOT _network_alias STREQUAL "NOTFOUND")
+                add_library(network ALIAS ${_network_alias})
+            else()
+                add_library(network ALIAS NetworkSystem::network)
+            endif()
         endif()
     endif()
 
@@ -717,9 +777,11 @@ endif()
 # Installation
 # ============================================================================
 
-# Skip installation in local development mode or FetchContent mode
-# (local systems and FetchContent dependencies are not installed, so export would fail)
-if(NOT MESSAGING_USE_LOCAL_SYSTEMS AND NOT MESSAGING_USE_FETCHCONTENT)
+# Skip installation in local development mode, FetchContent mode, or when
+# messaging_system is built as a subdirectory of a larger workspace (e.g., unified build)
+if(NOT MESSAGING_USE_LOCAL_SYSTEMS
+   AND NOT MESSAGING_USE_FETCHCONTENT
+   AND CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     include(GNUInstallDirs)
 
     install(TARGETS messaging_system_core
