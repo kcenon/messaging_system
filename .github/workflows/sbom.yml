@@ -1,0 +1,146 @@
+name: SBOM Generation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [ published ]
+  schedule:
+    # Generate SBOM weekly on Sunday at 3 AM UTC
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: read
+  security-events: write
+
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Generate SBOM with Syft (CycloneDX)
+      uses: anchore/sbom-action@v0
+      with:
+        path: .
+        format: cyclonedx-json
+        output-file: sbom-cyclonedx.json
+        artifact-name: sbom-cyclonedx
+
+    - name: Generate SBOM with Syft (SPDX)
+      uses: anchore/sbom-action@v0
+      with:
+        path: .
+        format: spdx-json
+        output-file: sbom-spdx.json
+        artifact-name: sbom-spdx
+
+    - name: Parse vcpkg dependencies
+      run: |
+        if [ -f "vcpkg.json" ]; then
+          echo "# vcpkg Dependencies" > vcpkg-dependencies.md
+          echo "" >> vcpkg-dependencies.md
+          echo "**Generated**: $(date -u)" >> vcpkg-dependencies.md
+          echo "" >> vcpkg-dependencies.md
+          echo "## Direct Dependencies" >> vcpkg-dependencies.md
+          echo "" >> vcpkg-dependencies.md
+
+          python3 << 'EOF'
+        import json
+
+        with open('vcpkg.json', 'r') as f:
+            manifest = json.load(f)
+
+        print(f"**Project**: {manifest.get('name', 'N/A')}")
+        print(f"**Version**: {manifest.get('version', 'N/A')}")
+        print()
+        print("| Package | Features |")
+        print("|---------|----------|")
+
+        deps = manifest.get('dependencies', [])
+        for dep in deps:
+            if isinstance(dep, str):
+                print(f"| {dep} | - |")
+            elif isinstance(dep, dict):
+                name = dep.get('name', 'unknown')
+                features = ', '.join(dep.get('features', [])) or '-'
+                print(f"| {name} | {features} |")
+        EOF
+
+          python3 << 'EOF' >> vcpkg-dependencies.md
+        import json
+
+        with open('vcpkg.json', 'r') as f:
+            manifest = json.load(f)
+
+        print(f"**Project**: {manifest.get('name', 'N/A')}")
+        print(f"**Version**: {manifest.get('version', 'N/A')}")
+        print()
+        print("| Package | Features |")
+        print("|---------|----------|")
+
+        deps = manifest.get('dependencies', [])
+        for dep in deps:
+            if isinstance(dep, str):
+                print(f"| {dep} | - |")
+            elif isinstance(dep, dict):
+                name = dep.get('name', 'unknown')
+                features = ', '.join(dep.get('features', [])) or '-'
+                print(f"| {name} | {features} |")
+        EOF
+        else
+          echo "No vcpkg.json found" > vcpkg-dependencies.md
+        fi
+
+    - name: Create combined SBOM report
+      run: |
+        echo "# Software Bill of Materials (SBOM)" > SBOM_REPORT.md
+        echo "" >> SBOM_REPORT.md
+        echo "**Repository**: ${{ github.repository }}" >> SBOM_REPORT.md
+        echo "**Branch**: ${{ github.ref_name }}" >> SBOM_REPORT.md
+        echo "**Commit**: ${{ github.sha }}" >> SBOM_REPORT.md
+        echo "**Generated**: $(date -u)" >> SBOM_REPORT.md
+        echo "" >> SBOM_REPORT.md
+        echo "## Available Formats" >> SBOM_REPORT.md
+        echo "" >> SBOM_REPORT.md
+        echo "- **CycloneDX**: sbom-cyclonedx.json" >> SBOM_REPORT.md
+        echo "- **SPDX**: sbom-spdx.json" >> SBOM_REPORT.md
+        echo "" >> SBOM_REPORT.md
+        cat vcpkg-dependencies.md >> SBOM_REPORT.md
+
+    - name: Upload SBOM artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: sbom-${{ github.sha }}
+        path: |
+          sbom-cyclonedx.json
+          sbom-spdx.json
+          vcpkg-dependencies.md
+          SBOM_REPORT.md
+        retention-days: 90
+
+    - name: Upload SBOM to release
+      if: github.event_name == 'release'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          sbom-cyclonedx.json
+          sbom-spdx.json
+          SBOM_REPORT.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Submit SBOM to Dependency Graph
+      uses: advanced-security/spdx-dependency-submission-action@v0.1.1
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      continue-on-error: true
+      with:
+        filePath: sbom-spdx.json
