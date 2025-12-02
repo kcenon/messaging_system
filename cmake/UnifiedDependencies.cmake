@@ -376,10 +376,30 @@ macro(_unified_resolve_fetchcontent DEP_NAME GIT_TAG)
         # Special pre-fetch configuration
         if(${DEP_NAME} STREQUAL "thread_system")
             set(USE_STD_FORMAT ON CACHE BOOL "Use std::format" FORCE)
+            set(BUILD_THREADSYSTEM_AS_SUBMODULE ON CACHE BOOL "" FORCE)
+        elseif(${DEP_NAME} STREQUAL "logger_system")
+            set(LOGGER_STANDALONE_MODE ON CACHE BOOL "" FORCE)
+            set(BUILD_WITH_COMMON_SYSTEM ON CACHE BOOL "" FORCE)
+            set(LOGGER_BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+            set(LOGGER_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+        elseif(${DEP_NAME} STREQUAL "container_system")
+            set(BUILD_CONTAINERSYSTEM_AS_SUBMODULE ON CACHE BOOL "" FORCE)
+            set(BUILD_CONTAINER_SAMPLES OFF CACHE BOOL "" FORCE)
+            set(BUILD_CONTAINER_EXAMPLES OFF CACHE BOOL "" FORCE)
+            set(CONTAINER_SKIP_DEPENDENCIES ON CACHE BOOL "" FORCE)
+        elseif(${DEP_NAME} STREQUAL "network_system")
+            set(NETWORK_BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+            set(NETWORK_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+            set(BUILD_WITH_MONITORING_SYSTEM OFF CACHE BOOL "" FORCE)
+        elseif(${DEP_NAME} STREQUAL "monitoring_system")
+            set(MONITORING_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+            set(MONITORING_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
         elseif(${DEP_NAME} STREQUAL "database_system")
             set(USE_POSTGRESQL OFF CACHE BOOL "" FORCE)
             set(USE_MYSQL OFF CACHE BOOL "" FORCE)
             set(USE_SQLITE OFF CACHE BOOL "" FORCE)
+            set(DATABASE_BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+            set(DATABASE_BUILD_TESTS OFF CACHE BOOL "" FORCE)
         endif()
 
         FetchContent_Declare(
@@ -398,8 +418,21 @@ macro(_unified_resolve_fetchcontent DEP_NAME GIT_TAG)
             # Get the source directory and set it for other systems to find
             FetchContent_GetProperties(${_fetch_name} SOURCE_DIR _cs_source_dir)
             set(COMMON_SYSTEM_DIR "${_cs_source_dir}/include" CACHE PATH "common_system include directory" FORCE)
+            set(COMMON_SYSTEM_INCLUDE_DIR "${_cs_source_dir}/include" CACHE PATH "" FORCE)
+            set(COMMON_SYSTEM_ROOT "${_cs_source_dir}" CACHE PATH "" FORCE)
             set(common_system_SOURCE_DIR "${_cs_source_dir}" CACHE STRING "" FORCE)
             set(common_system_FOUND TRUE CACHE BOOL "" FORCE)
+
+            # Create a fake config file so find_package(common_system) succeeds in dependent projects
+            file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/common_system-config.cmake"
+                "set(common_system_FOUND TRUE)\n"
+                "set(COMMON_SYSTEM_INCLUDE_DIR \"${_cs_source_dir}/include\")\n"
+                "set(COMMON_SYSTEM_DIR \"${_cs_source_dir}/include\")\n"
+                "set(common_system_SOURCE_DIR \"${_cs_source_dir}\")\n"
+            )
+            list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_BINARY_DIR}")
+            set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH}" CACHE STRING "" FORCE)
+
             message(STATUS "[UnifiedDependencies] common_system: Set COMMON_SYSTEM_DIR=${_cs_source_dir}/include")
         endif()
 
@@ -408,6 +441,12 @@ macro(_unified_resolve_fetchcontent DEP_NAME GIT_TAG)
             FetchContent_GetProperties(${_fetch_name} SOURCE_DIR _ts_source_dir)
             set(thread_system_SOURCE_DIR "${_ts_source_dir}" CACHE STRING "" FORCE)
             set(thread_system_FOUND TRUE CACHE BOOL "" FORCE)
+
+            # Create a fake config file for dependent projects
+            file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/thread_system-config.cmake"
+                "set(thread_system_FOUND TRUE)\n"
+                "set(thread_system_SOURCE_DIR \"${_ts_source_dir}\")\n"
+            )
         endif()
 
         # Post-fetch: Set logger_system paths
@@ -415,6 +454,12 @@ macro(_unified_resolve_fetchcontent DEP_NAME GIT_TAG)
             FetchContent_GetProperties(${_fetch_name} SOURCE_DIR _ls_source_dir)
             set(logger_system_SOURCE_DIR "${_ls_source_dir}" CACHE STRING "" FORCE)
             set(logger_system_FOUND TRUE CACHE BOOL "" FORCE)
+
+            # Create a fake config file for dependent projects
+            file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/logger_system-config.cmake"
+                "set(logger_system_FOUND TRUE)\n"
+                "set(logger_system_SOURCE_DIR \"${_ls_source_dir}\")\n"
+            )
         endif()
 
         # Post-fetch: Set container_system paths
@@ -422,6 +467,12 @@ macro(_unified_resolve_fetchcontent DEP_NAME GIT_TAG)
             FetchContent_GetProperties(${_fetch_name} SOURCE_DIR _cts_source_dir)
             set(container_system_SOURCE_DIR "${_cts_source_dir}" CACHE STRING "" FORCE)
             set(container_system_FOUND TRUE CACHE BOOL "" FORCE)
+
+            # Create a fake config file for dependent projects
+            file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/container_system-config.cmake"
+                "set(container_system_FOUND TRUE)\n"
+                "set(container_system_SOURCE_DIR \"${_cts_source_dir}\")\n"
+            )
         endif()
 
         # Post-fetch configuration for thread_system
