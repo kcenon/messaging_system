@@ -213,7 +213,9 @@ jobs:
           -DMESSAGING_BUILD_INTEGRATION_TESTS=OFF `
           -DMESSAGING_BUILD_EXAMPLES=OFF `
           -DMESSAGING_USE_LOCAL_SYSTEMS=ON `
-          -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE
+          -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
+          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake `
+          -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}
 
     - name: Build (Unix)
       if: runner.os != 'Windows'
