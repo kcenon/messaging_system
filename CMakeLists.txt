@@ -119,16 +119,20 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
     unified_setup_dependency_mode()
 
     # Required dependencies - ordered by dependency chain
-    # Order is critical: each dependency must be loaded before its dependents
+    # IMPORTANT: container_system MUST be last because it defines its own
+    # unified_find_dependency macro which overwrites ours. Any calls after
+    # container_system would use its macro (which lacks our configurations).
     unified_find_dependency(common_system REQUIRED)      # Tier 0: Base utilities
     unified_find_dependency(thread_system REQUIRED)      # Tier 1: Threading
     unified_find_dependency(logger_system REQUIRED)      # Tier 2: Logging
-    unified_find_dependency(network_system REQUIRED)     # Tier 3: Network (before container)
-    unified_find_dependency(container_system REQUIRED)   # Tier 4: Serialization (depends on network)
+    unified_find_dependency(network_system REQUIRED)     # Tier 3: Network I/O
 
-    # Optional dependencies
+    # Optional dependencies (must come before container_system)
     unified_find_dependency(monitoring_system OPTIONAL)  # Metrics
     unified_find_dependency(database_system OPTIONAL)    # Persistence
+
+    # container_system MUST be loaded last (macro conflict workaround)
+    unified_find_dependency(container_system REQUIRED)   # Tier 4: Serialization
 
     # Create standard aliases for consistent linking
     unified_create_standard_aliases()
