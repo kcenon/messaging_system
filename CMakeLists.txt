@@ -119,24 +119,16 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
     unified_setup_dependency_mode()
 
     # Required dependencies - ordered by dependency chain
-    # Tier 0: common_system (base utilities, no dependencies)
-    unified_find_dependency(common_system REQUIRED)
-
-    # Tier 1: thread_system (depends on common_system)
-    unified_find_dependency(thread_system REQUIRED)
-
-    # Tier 2: logger_system (depends on thread_system, common_system)
-    unified_find_dependency(logger_system REQUIRED)
-
-    # Tier 1: container_system (may depend on logger_system for logging)
-    unified_find_dependency(container_system REQUIRED)
-
-    # Tier 4: network_system (depends on logger_system, thread_system, container_system)
-    unified_find_dependency(network_system REQUIRED)
+    # Order is critical: each dependency must be loaded before its dependents
+    unified_find_dependency(common_system REQUIRED)      # Tier 0: Base utilities
+    unified_find_dependency(thread_system REQUIRED)      # Tier 1: Threading
+    unified_find_dependency(logger_system REQUIRED)      # Tier 2: Logging
+    unified_find_dependency(network_system REQUIRED)     # Tier 3: Network (before container)
+    unified_find_dependency(container_system REQUIRED)   # Tier 4: Serialization (depends on network)
 
     # Optional dependencies
-    unified_find_dependency(monitoring_system OPTIONAL)  # Tier 3: Metrics
-    unified_find_dependency(database_system OPTIONAL)    # Tier 5: Persistence
+    unified_find_dependency(monitoring_system OPTIONAL)  # Metrics
+    unified_find_dependency(database_system OPTIONAL)    # Persistence
 
     # Create standard aliases for consistent linking
     unified_create_standard_aliases()
