@@ -45,7 +45,8 @@ jobs:
         fetch-depth: 1
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Checkout dependencies
+    - name: Checkout dependencies (Unix)
+      if: runner.os != 'Windows'
       run: |
         cd ..
         git clone --depth 1 https://github.com/kcenon/common_system.git
@@ -54,7 +55,18 @@ jobs:
         git clone --depth 1 https://github.com/kcenon/container_system.git
         git clone --depth 1 https://github.com/kcenon/network_system.git
         git clone --depth 1 https://github.com/kcenon/monitoring_system.git
-        ls -la
+
+    - name: Checkout dependencies (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        cd ..
+        git clone --depth 1 https://github.com/kcenon/common_system.git
+        git clone --depth 1 https://github.com/kcenon/thread_system.git
+        git clone --depth 1 https://github.com/kcenon/logger_system.git
+        git clone --depth 1 https://github.com/kcenon/container_system.git
+        git clone --depth 1 https://github.com/kcenon/network_system.git
+        git clone --depth 1 https://github.com/kcenon/monitoring_system.git
 
     - name: Install dependencies (Ubuntu)
       if: runner.os == 'Linux'
