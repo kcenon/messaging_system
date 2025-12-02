@@ -393,6 +393,37 @@ macro(_unified_resolve_fetchcontent DEP_NAME GIT_TAG)
 
         set(CMAKE_SKIP_INSTALL_RULES "${_skip_install_save}")
 
+        # Post-fetch: Set paths for dependent systems
+        if(${DEP_NAME} STREQUAL "common_system")
+            # Get the source directory and set it for other systems to find
+            FetchContent_GetProperties(${_fetch_name} SOURCE_DIR _cs_source_dir)
+            set(COMMON_SYSTEM_DIR "${_cs_source_dir}/include" CACHE PATH "common_system include directory" FORCE)
+            set(common_system_SOURCE_DIR "${_cs_source_dir}" CACHE STRING "" FORCE)
+            set(common_system_FOUND TRUE CACHE BOOL "" FORCE)
+            message(STATUS "[UnifiedDependencies] common_system: Set COMMON_SYSTEM_DIR=${_cs_source_dir}/include")
+        endif()
+
+        # Post-fetch: Set thread_system paths
+        if(${DEP_NAME} STREQUAL "thread_system")
+            FetchContent_GetProperties(${_fetch_name} SOURCE_DIR _ts_source_dir)
+            set(thread_system_SOURCE_DIR "${_ts_source_dir}" CACHE STRING "" FORCE)
+            set(thread_system_FOUND TRUE CACHE BOOL "" FORCE)
+        endif()
+
+        # Post-fetch: Set logger_system paths
+        if(${DEP_NAME} STREQUAL "logger_system")
+            FetchContent_GetProperties(${_fetch_name} SOURCE_DIR _ls_source_dir)
+            set(logger_system_SOURCE_DIR "${_ls_source_dir}" CACHE STRING "" FORCE)
+            set(logger_system_FOUND TRUE CACHE BOOL "" FORCE)
+        endif()
+
+        # Post-fetch: Set container_system paths
+        if(${DEP_NAME} STREQUAL "container_system")
+            FetchContent_GetProperties(${_fetch_name} SOURCE_DIR _cts_source_dir)
+            set(container_system_SOURCE_DIR "${_cts_source_dir}" CACHE STRING "" FORCE)
+            set(container_system_FOUND TRUE CACHE BOOL "" FORCE)
+        endif()
+
         # Post-fetch configuration for thread_system
         if(${DEP_NAME} STREQUAL "thread_system" AND USE_STD_FORMAT)
             set(_ts_targets thread_base thread_pool interfaces utilities typed_thread_pool)
