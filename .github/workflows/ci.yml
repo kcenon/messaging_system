@@ -79,7 +79,7 @@ jobs:
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
-        brew install ninja pkg-config curl zip unzip autoconf automake autoconf-archive yaml-cpp
+        brew install ninja pkg-config curl zip unzip autoconf automake autoconf-archive yaml-cpp googletest
 
     - name: Setup Visual Studio (Windows)
       if: runner.os == 'Windows'
