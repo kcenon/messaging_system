@@ -24,6 +24,16 @@ jobs:
         fetch-depth: 1
         token: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Checkout dependencies
+      run: |
+        cd ..
+        git clone --depth 1 https://github.com/kcenon/common_system.git
+        git clone --depth 1 https://github.com/kcenon/thread_system.git
+        git clone --depth 1 https://github.com/kcenon/logger_system.git
+        git clone --depth 1 https://github.com/kcenon/container_system.git
+        git clone --depth 1 https://github.com/kcenon/network_system.git
+        git clone --depth 1 https://github.com/kcenon/monitoring_system.git
+
     - name: Install dependencies
       run: |
         sudo apt update
@@ -39,7 +49,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Debug \
           -DMESSAGING_BUILD_TESTS=ON \
           -DMESSAGING_BUILD_EXAMPLES=OFF \
-          -DMESSAGING_USE_FETCHCONTENT=ON \
+          -DMESSAGING_USE_LOCAL_SYSTEMS=ON \
           -DCMAKE_C_COMPILER=clang \
           -DCMAKE_CXX_COMPILER=clang++ \
           -DCMAKE_EXPORT_COMPILE_COMMANDS=ON

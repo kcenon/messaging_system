@@ -45,6 +45,29 @@ jobs:
         fetch-depth: 1
         token: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Checkout dependencies (Unix)
+      if: runner.os != 'Windows'
+      run: |
+        cd ..
+        git clone --depth 1 https://github.com/kcenon/common_system.git
+        git clone --depth 1 https://github.com/kcenon/thread_system.git
+        git clone --depth 1 https://github.com/kcenon/logger_system.git
+        git clone --depth 1 https://github.com/kcenon/container_system.git
+        git clone --depth 1 https://github.com/kcenon/network_system.git
+        git clone --depth 1 https://github.com/kcenon/monitoring_system.git
+
+    - name: Checkout dependencies (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        cd ..
+        git clone --depth 1 https://github.com/kcenon/common_system.git
+        git clone --depth 1 https://github.com/kcenon/thread_system.git
+        git clone --depth 1 https://github.com/kcenon/logger_system.git
+        git clone --depth 1 https://github.com/kcenon/container_system.git
+        git clone --depth 1 https://github.com/kcenon/network_system.git
+        git clone --depth 1 https://github.com/kcenon/monitoring_system.git
+
     - name: Install dependencies (Ubuntu)
       if: runner.os == 'Linux'
       run: |
@@ -56,7 +79,7 @@ jobs:
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
-        brew install ninja pkg-config curl zip unzip autoconf automake autoconf-archive yaml-cpp
+        brew install ninja pkg-config curl zip unzip autoconf automake autoconf-archive yaml-cpp googletest
 
     - name: Setup Visual Studio (Windows)
       if: runner.os == 'Windows'
@@ -165,39 +188,21 @@ jobs:
         if (Test-Path build) { Remove-Item -Recurse -Force build }
         New-Item -ItemType Directory -Path build
 
-    - name: Configure CMake (Unix - with vcpkg)
+    - name: Configure CMake (Unix)
       if: runner.os != 'Windows'
-      id: configure_unix
-      continue-on-error: true
       run: |
         cd build
         cmake .. \
           -G Ninja \
           -DMESSAGING_BUILD_TESTS=ON \
           -DMESSAGING_BUILD_EXAMPLES=OFF \
-          -DMESSAGING_USE_FETCHCONTENT=ON \
-          -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-          -DCMAKE_TOOLCHAIN_FILE="${GITHUB_WORKSPACE}/vcpkg/scripts/buildsystems/vcpkg.cmake" \
-          -DCMAKE_C_COMPILER=${{ matrix.compiler == 'gcc' && 'gcc' || 'clang' }} \
-          -DCMAKE_CXX_COMPILER=${{ matrix.compiler == 'gcc' && 'g++' || 'clang++' }}
-
-    - name: Configure CMake (Unix - fallback)
-      if: runner.os != 'Windows' && steps.configure_unix.outcome != 'success'
-      run: |
-        cd build
-        cmake .. \
-          -G Ninja \
-          -DMESSAGING_BUILD_TESTS=ON \
-          -DMESSAGING_BUILD_EXAMPLES=OFF \
-          -DMESSAGING_USE_FETCHCONTENT=ON \
+          -DMESSAGING_USE_LOCAL_SYSTEMS=ON \
           -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
           -DCMAKE_C_COMPILER=${{ matrix.compiler == 'gcc' && 'gcc' || 'clang' }} \
           -DCMAKE_CXX_COMPILER=${{ matrix.compiler == 'gcc' && 'g++' || 'clang++' }}
 
-    - name: Configure CMake (Windows - with vcpkg)
+    - name: Configure CMake (Windows)
       if: runner.os == 'Windows'
-      id: configure_windows
-      continue-on-error: true
       shell: pwsh
       run: |
         cd build
@@ -207,23 +212,10 @@ jobs:
           -DMESSAGING_BUILD_TESTS=ON `
           -DMESSAGING_BUILD_INTEGRATION_TESTS=OFF `
           -DMESSAGING_BUILD_EXAMPLES=OFF `
-          -DMESSAGING_USE_FETCHCONTENT=ON `
+          -DMESSAGING_USE_LOCAL_SYSTEMS=ON `
           -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
-          -DCMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE\vcpkg\scripts\buildsystems\vcpkg.cmake"
-
-    - name: Configure CMake (Windows - fallback)
-      if: runner.os == 'Windows' && steps.configure_windows.outcome != 'success'
-      shell: pwsh
-      run: |
-        cd build
-        cmake .. `
-          -G "Visual Studio 17 2022" `
-          -A x64 `
-          -DMESSAGING_BUILD_TESTS=ON `
-          -DMESSAGING_BUILD_INTEGRATION_TESTS=OFF `
-          -DMESSAGING_BUILD_EXAMPLES=OFF `
-          -DMESSAGING_USE_FETCHCONTENT=ON `
-          -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE
+          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake `
+          -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}
 
     - name: Build (Unix)
       if: runner.os != 'Windows'

@@ -191,14 +191,34 @@ Publisher → Message Bus → Topic Router → Subscribers
 git clone https://github.com/kcenon/messaging_system.git
 cd messaging_system
 
-# Build with vcpkg (recommended)
-cmake -B build -DCMAKE_TOOLCHAIN_FILE=/path/to/vcpkg/scripts/buildsystems/vcpkg.cmake
-cmake --build build -j
-
-# Or use local systems
+# Recommended: Use local sibling directories (for unified_system development)
+# Requires all system projects in the same parent directory:
+#   Sources/common_system/
+#   Sources/thread_system/
+#   Sources/messaging_system/
+#   ...
 cmake -B build -DMESSAGING_USE_LOCAL_SYSTEMS=ON
 cmake --build build -j
+
+# Alternative: Build with vcpkg
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=/path/to/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake --build build -j
 ```
+
+### Dependency Management
+
+The build system uses `UnifiedDependencies.cmake` module which supports three modes:
+
+| Mode | CMake Option | Description |
+|------|--------------|-------------|
+| **LOCAL** | `-DMESSAGING_USE_LOCAL_SYSTEMS=ON` | Use sibling directories (recommended for development) |
+| **FetchContent** | `-DMESSAGING_USE_FETCHCONTENT=ON` | Fetch from GitHub automatically |
+| **find_package** | (default) | Use installed system packages |
+
+The unified module provides:
+- Automatic target mapping for different naming conventions
+- Consistent dependency resolution across all modes
+- Simplified CMakeLists.txt (~300 lines vs ~920 lines previously)
 
 ### Basic Example
 
