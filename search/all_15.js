@@ -13,7 +13,7 @@ var searchData=
   ['level_20timeouts_20✅_10',['1. Test-Level Timeouts ✅',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md178',1,'']]],
   ['levels_11',['levels',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md279',1,'Log Levels'],['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md268',1,'Priority Levels']]],
   ['library_12',['Q: How do I install the library?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md778',1,'']]],
-  ['license_13',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1236',1,'']]],
+  ['license_13',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1237',1,'']]],
   ['lifecycle_20methods_14',['Lifecycle Methods',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md248',1,'']]],
   ['lifetimes_15',['Service Lifetimes',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md259',1,'']]],
   ['limitations_16',['limitations',['../dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1067',1,'Current Limitations'],['../dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1066',1,'Known Limitations'],['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md614',1,'Known Limitations']]],
