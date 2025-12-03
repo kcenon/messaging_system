@@ -109,27 +109,6 @@ if(ThreadSystemCore_FOUND)
         set_property(TARGET ThreadSystem::Core APPEND PROPERTY
             INTERFACE_LINK_LIBRARIES Threads::Threads
         )
-        
-        # Check if we need fmt
-        include(CheckCXXSourceCompiles)
-        set(CMAKE_REQUIRED_FLAGS "-std=c++20")
-        check_cxx_source_compiles("
-            #include <format>
-            int main() { 
-                std::string s = std::format(\"{}\", 42);
-                return 0; 
-            }" HAS_STD_FORMAT)
-        
-        if(HAS_STD_FORMAT)
-            set_property(TARGET ThreadSystem::Core APPEND PROPERTY
-                INTERFACE_COMPILE_DEFINITIONS USE_STD_FORMAT
-            )
-        else()
-            find_package(fmt REQUIRED)
-            set_property(TARGET ThreadSystem::Core APPEND PROPERTY
-                INTERFACE_LINK_LIBRARIES fmt::fmt
-            )
-        endif()
     endif()
 endif()
 
