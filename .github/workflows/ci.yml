@@ -22,15 +22,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             compiler: gcc
             triplet: x64-linux
-          - os: ubuntu-22.04
+          # Note: Ubuntu clang removed due to incomplete std::format support
+          # when using libstdc++ (default on Ubuntu). C++20 std::format requires
+          # either GCC 13+, MSVC, or Clang with libc++.
+          - os: macos-14
             compiler: clang
-            triplet: x64-linux
-          - os: macos-13
-            compiler: clang
-            triplet: x64-osx
+            triplet: arm64-osx
           - os: windows-2022
             compiler: msvc
             triplet: x64-windows

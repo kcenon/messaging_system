@@ -10,7 +10,7 @@ on:
 jobs:
   coverage:
     name: Code Coverage Analysis
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
 
     steps:
@@ -38,7 +38,7 @@ jobs:
         sudo apt update
         sudo apt install -y cmake build-essential ninja-build gcc g++
         sudo apt install -y libgtest-dev libgmock-dev libyaml-cpp-dev
-        sudo apt install -y lcov libfmt-dev
+        sudo apt install -y lcov
 
     - name: Configure CMake with coverage
       run: |
@@ -51,7 +51,6 @@ jobs:
           -DMESSAGING_BUILD_EXAMPLES=OFF \
           -DMESSAGING_USE_LOCAL_SYSTEMS=ON \
           -DENABLE_COVERAGE=ON \
-          -DUSE_STD_FORMAT=OFF \
           -DCMAKE_C_COMPILER=gcc \
           -DCMAKE_CXX_COMPILER=g++ \
           -DCMAKE_C_FLAGS="--coverage -fprofile-arcs -ftest-coverage" \
