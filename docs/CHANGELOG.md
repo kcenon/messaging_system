@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Remove fmt library reference from CMake configuration
+  - Project now uses C++20 std::format exclusively through thread_system
+  - Simplifies dependency management and build configuration
+
 ### Added
 - Documentation structure standardization
 - Korean documentation support

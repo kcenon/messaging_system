@@ -35,7 +35,7 @@ Welcome to the Messaging System! This guide will help you quickly set up and sta
 
 The messaging system automatically manages most dependencies through vcpkg:
 
-- **fmt**: String formatting library
+- **C++20 std::format**: Native string formatting (no external library required)
 - **asio**: Asynchronous I/O library
 - **Google Test**: Testing framework (development only)
 - **Google Benchmark**: Performance testing (development only)
