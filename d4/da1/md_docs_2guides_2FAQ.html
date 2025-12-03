@@ -93,23 +93,23 @@ $(document).ready(function(){initNavTree('d4/da1/md_docs_2guides_2FAQ.html','../
   <div class="headertitle"><div class="title">Frequently Asked Questions</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md770"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-30</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md772"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-30</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md772"></a>
+<h1><a class="anchor" id="autotoc_md774"></a>
 General Questions</h1>
-<h2><a class="anchor" id="autotoc_md773"></a>
+<h2><a class="anchor" id="autotoc_md775"></a>
 Q: What is messaging_system?</h2>
 <p>A: messaging_system is a production-ready messaging infrastructure providing pub/sub, request/reply, event streaming, and message pipeline patterns.</p>
-<h2><a class="anchor" id="autotoc_md774"></a>
+<h2><a class="anchor" id="autotoc_md776"></a>
 Q: What C++ standard is required?</h2>
 <p>A: C++20 is required.</p>
-<h2><a class="anchor" id="autotoc_md775"></a>
+<h2><a class="anchor" id="autotoc_md777"></a>
 Q: Which platforms are supported?</h2>
 <p>A: Linux (Ubuntu 20.04+), macOS (12+), and Windows (10+).</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md777"></a>
+<h1><a class="anchor" id="autotoc_md779"></a>
 Installation &amp; Setup</h1>
-<h2><a class="anchor" id="autotoc_md778"></a>
+<h2><a class="anchor" id="autotoc_md780"></a>
 Q: How do I install the library?</h2>
 <p>A: Use CMake FetchContent:</p>
 <div class="fragment"><div class="line">include(FetchContent)</div>
@@ -119,7 +119,7 @@ Q: How do I install the library?</h2>
 <div class="line">    GIT_TAG main</div>
 <div class="line">)</div>
 <div class="line">FetchContent_MakeAvailable(messaging_system)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md779"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md781"></a>
 Q: What dependencies are required?</h2>
 <p>A: Dependencies are fetched automatically:</p><ul>
 <li>common_system</li>
@@ -130,40 +130,40 @@ Q: What dependencies are required?</h2>
 <li>network_system</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md781"></a>
+<h1><a class="anchor" id="autotoc_md783"></a>
 Usage Questions</h1>
-<h2><a class="anchor" id="autotoc_md782"></a>
+<h2><a class="anchor" id="autotoc_md784"></a>
 Q: How do I create a message bus?</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> bus = messaging_system::message_bus::create();</div>
 <div class="line">bus-&gt;start();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md783"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md785"></a>
 Q: How do I subscribe to topics?</h2>
 <div class="fragment"><div class="line">bus-&gt;subscribe(<span class="stringliteral">&quot;events.*&quot;</span>, [](<span class="keyword">const</span> message&amp; msg) {</div>
 <div class="line">    <span class="comment">// Handle message</span></div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md784"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md786"></a>
 Q: How do I use wildcards?</h2>
 <ul>
 <li><code>*</code> matches one level: <code>events.*</code> matches <code>events.user</code></li>
 <li><code>#</code> matches multiple levels: <code>events.#</code> matches <code>events.user.created</code></li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md786"></a>
+<h1><a class="anchor" id="autotoc_md788"></a>
 Performance Questions</h1>
-<h2><a class="anchor" id="autotoc_md787"></a>
+<h2><a class="anchor" id="autotoc_md789"></a>
 Q: What throughput can I expect?</h2>
 <ul>
 <li>Pub/Sub: 500K+ messages/second</li>
 <li>Request/Reply: 10K+ requests/second</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md788"></a>
+<h2><a class="anchor" id="autotoc_md790"></a>
 Q: What is the latency?</h2>
 <ul>
 <li>Topic routing: &lt;1 μs</li>
 <li>Message delivery: &lt;10 μs</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md790"></a>
+<h1><a class="anchor" id="autotoc_md792"></a>
 More Questions?</h1>
 <ul>
 <li>Check <a class="el" href="../../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html">Troubleshooting</a></li>
