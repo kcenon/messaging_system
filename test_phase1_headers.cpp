@@ -20,10 +20,10 @@ int main() {
 
     // Test integration detector
     std::cout << "\nTesting integration detector:\n";
+    std::cout << "  has_common_system: "
+              << kcenon::messaging::integration_detector::has_common_system() << "\n";
     std::cout << "  has_thread_system: "
               << kcenon::messaging::integration_detector::has_thread_system() << "\n";
-    std::cout << "  has_logger_system: "
-              << kcenon::messaging::integration_detector::has_logger_system() << "\n";
     std::cout << "  has_monitoring_system: "
               << kcenon::messaging::integration_detector::has_monitoring_system() << "\n";
     std::cout << "  has_container_system: "
