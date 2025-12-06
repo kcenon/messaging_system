@@ -116,14 +116,14 @@ common::VoidResult message_bus::publish(const message& msg) {
 		);
 	}
 
-	common::logging::log_trace("Publishing message to topic: " + msg.get_topic() +
-		", id: " + msg.get_id());
+	common::logging::log_trace("Publishing message to topic: " + msg.metadata().topic +
+		", id: " + msg.metadata().id);
 
 	// Enqueue message
 	auto result = queue_->enqueue(msg);
 	if (!result.is_ok()) {
 		common::logging::log_warning("Message dropped, queue full for topic: " +
-			msg.get_topic());
+			msg.metadata().topic);
 		stats_.messages_dropped.fetch_add(1);
 		return result;
 	}
@@ -267,8 +267,8 @@ void message_bus::process_messages() {
 common::VoidResult message_bus::handle_message(const message& msg) {
 	// Check if message is expired
 	if (msg.is_expired()) {
-		common::logging::log_debug("Message expired, id: " + msg.get_id() +
-			", topic: " + msg.get_topic());
+		common::logging::log_debug("Message expired, id: " + msg.metadata().id +
+			", topic: " + msg.metadata().topic);
 		return common::make_error<std::monostate>(
 			error::message_expired,
 			"Message has expired",
@@ -276,13 +276,13 @@ common::VoidResult message_bus::handle_message(const message& msg) {
 		);
 	}
 
-	common::logging::log_trace("Routing message, id: " + msg.get_id() +
-		", topic: " + msg.get_topic());
+	common::logging::log_trace("Routing message, id: " + msg.metadata().id +
+		", topic: " + msg.metadata().topic);
 
 	// Route message to subscribers
 	auto result = router_->route(msg);
 	if (!result.is_ok()) {
-		common::logging::log_debug("Message routing failed, id: " + msg.get_id() +
+		common::logging::log_debug("Message routing failed, id: " + msg.metadata().id +
 			", error: " + result.error().message);
 		return result;
 	}

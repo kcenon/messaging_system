@@ -287,7 +287,7 @@ message_processor create_logging_stage(const std::string& stage_name) {
 	return [stage_name](const message& msg) -> Result<message> {
 		// Log message passing through the pipeline stage using common_system logging
 		logging::log_debug("Pipeline stage '" + stage_name + "' processing message: "
-			+ msg.get_topic());
+			+ msg.metadata().topic);
 		return msg;
 	};
 }
