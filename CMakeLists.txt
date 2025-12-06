@@ -178,6 +178,8 @@ set(MESSAGING_CORE_SOURCES
     src/impl/patterns/request_reply.cpp
     src/impl/patterns/event_streaming.cpp
     src/impl/patterns/message_pipeline.cpp
+    # Task module (Distributed Task Queue System)
+    src/impl/task/task.cpp
 )
 
 add_library(messaging_system_core STATIC ${MESSAGING_CORE_SOURCES})
