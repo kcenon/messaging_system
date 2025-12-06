@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Distributed Task Queue System - Sprint 1 (Issues #98, #99, #100)**
+  - `task_builder`: Fluent builder pattern for task construction
+    - Support for payload, priority, timeout, retries, queue, eta, countdown, expires, tags
+    - Validation on build with Result<task> return type
+  - `task_handler_interface`: Abstract interface for task execution handlers
+    - Lifecycle hooks: on_retry, on_failure, on_success
+    - Lambda-based simple_task_handler type
+    - lambda_task_handler adapter class
+    - make_handler() helper function
+  - `task_context`: Execution context for task handlers
+    - Progress tracking with history
+    - Checkpoint save/restore for long-running task recovery
+    - Subtask spawning for workflow patterns
+    - Cancellation checking
+    - Task-specific logging (info, warning, error)
+  - Task-specific error codes (-706 to -712)
+  - Comprehensive unit tests for all Sprint 1 components
+
 ### Changed
 - **Logging Migration (Issue #94)**
   - Migrated from direct logger_system dependency to common_system's ILogger interface
