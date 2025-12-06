@@ -1,6 +1,7 @@
 #include "kcenon/messaging/core/message_bus.h"
 
 #include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/common/logging/log_functions.h>
 
 #include <thread>
 #include <algorithm>
@@ -47,19 +48,26 @@ message_bus::~message_bus() {
 
 common::VoidResult message_bus::start() {
 	if (running_.load()) {
+		common::logging::log_warning("Message bus start called but already running");
 		return common::make_error<std::monostate>(
 			error::already_running,
 			"Message bus is already running"
 		);
 	}
 
+	common::logging::log_info("Starting message bus with " +
+		std::to_string(config_.worker_threads) + " worker threads");
+
 	// Initialize backend
 	auto result = backend_->initialize();
 	if (!result.is_ok()) {
+		common::logging::log_error("Failed to initialize backend: " +
+			result.error().message);
 		return result;
 	}
 
 	if (!backend_->is_ready()) {
+		common::logging::log_error("Backend is not ready after initialization");
 		return common::make_error<std::monostate>(
 			error::backend_not_ready,
 			"Backend is not ready"
@@ -69,16 +77,20 @@ common::VoidResult message_bus::start() {
 	running_.store(true);
 	start_workers();
 
+	common::logging::log_info("Message bus started successfully");
 	return common::ok();
 }
 
 common::VoidResult message_bus::stop() {
 	if (!running_.load()) {
+		common::logging::log_debug("Message bus stop called but not running");
 		return common::make_error<std::monostate>(
 			error::not_running,
 			"Message bus is not running"
 		);
 	}
+
+	common::logging::log_info("Stopping message bus");
 
 	running_.store(false);
 	stop_workers();
@@ -86,23 +98,32 @@ common::VoidResult message_bus::stop() {
 	// Shutdown backend
 	auto result = backend_->shutdown();
 	if (!result.is_ok()) {
+		common::logging::log_error("Failed to shutdown backend: " +
+			result.error().message);
 		return result;
 	}
 
+	common::logging::log_info("Message bus stopped successfully");
 	return common::ok();
 }
 
 common::VoidResult message_bus::publish(const message& msg) {
 	if (!running_.load()) {
+		common::logging::log_debug("Publish rejected: message bus not running");
 		return common::make_error<std::monostate>(
 			error::not_running,
 			"Message bus is not running"
 		);
 	}
 
+	common::logging::log_trace("Publishing message to topic: " + msg.get_topic() +
+		", id: " + msg.get_id());
+
 	// Enqueue message
 	auto result = queue_->enqueue(msg);
 	if (!result.is_ok()) {
+		common::logging::log_warning("Message dropped, queue full for topic: " +
+			msg.get_topic());
 		stats_.messages_dropped.fetch_add(1);
 		return result;
 	}
@@ -246,6 +267,8 @@ void message_bus::process_messages() {
 common::VoidResult message_bus::handle_message(const message& msg) {
 	// Check if message is expired
 	if (msg.is_expired()) {
+		common::logging::log_debug("Message expired, id: " + msg.get_id() +
+			", topic: " + msg.get_topic());
 		return common::make_error<std::monostate>(
 			error::message_expired,
 			"Message has expired",
@@ -253,9 +276,14 @@ common::VoidResult message_bus::handle_message(const message& msg) {
 		);
 	}
 
+	common::logging::log_trace("Routing message, id: " + msg.get_id() +
+		", topic: " + msg.get_topic());
+
 	// Route message to subscribers
 	auto result = router_->route(msg);
 	if (!result.is_ok()) {
+		common::logging::log_debug("Message routing failed, id: " + msg.get_id() +
+			", error: " + result.error().message);
 		return result;
 	}
 

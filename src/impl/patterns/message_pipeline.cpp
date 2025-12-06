@@ -1,6 +1,7 @@
 #include <kcenon/messaging/patterns/message_pipeline.h>
 
 #include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/common/logging/log_functions.h>
 #include <algorithm>
 #include <thread>
 
@@ -284,8 +285,9 @@ namespace pipeline_stages {
 
 message_processor create_logging_stage(const std::string& stage_name) {
 	return [stage_name](const message& msg) -> Result<message> {
-		// Simple logging (in production, would use logger_system)
-		// For now, just pass through
+		// Log message passing through the pipeline stage using common_system logging
+		logging::log_debug("Pipeline stage '" + stage_name + "' processing message: "
+			+ msg.get_topic());
 		return msg;
 	};
 }

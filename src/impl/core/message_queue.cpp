@@ -1,5 +1,6 @@
 #include "kcenon/messaging/core/message_queue.h"
 #include "kcenon/messaging/error/error_codes.h"
+#include <kcenon/common/logging/log_functions.h>
 
 #include <algorithm>
 
@@ -22,6 +23,7 @@ common::VoidResult message_queue::enqueue(message msg) {
 	std::unique_lock lock(mutex_);
 
 	if (stopped_.load()) {
+		common::logging::log_debug("Enqueue rejected: queue stopped");
 		return common::VoidResult(
 			common::error_info{error::queue_stopped,
 							   "Queue has been stopped"});
@@ -34,15 +36,19 @@ common::VoidResult message_queue::enqueue(message msg) {
 			if (std::holds_alternative<std::queue<message>>(queue_)) {
 				auto& q = std::get<std::queue<message>>(queue_);
 				if (!q.empty()) {
+					common::logging::log_trace("Queue full, dropping oldest message");
 					q.pop();
 				}
 			} else {
 				// For priority queue, cannot drop specific message
+				common::logging::log_warning("Priority queue full, cannot drop messages");
 				return common::VoidResult(
 					common::error_info{error::queue_full,
 									   "Priority queue is full"});
 			}
 		} else {
+			common::logging::log_warning("Queue full, size: " +
+				std::to_string(current_size));
 			return common::VoidResult(
 				common::error_info{error::queue_full,
 								   "Queue is full"});
