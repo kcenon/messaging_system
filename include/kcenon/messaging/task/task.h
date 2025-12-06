@@ -162,6 +162,14 @@ public:
 	const std::string& error_traceback() const;
 	void set_error(const std::string& message, const std::string& traceback = "");
 
+	/**
+	 * @brief Set the task payload
+	 * @param payload Shared pointer to value_container
+	 */
+	void set_task_payload(std::shared_ptr<container_module::value_container> payload) {
+		set_payload(std::move(payload));
+	}
+
 	// Utility methods
 	bool is_terminal_state() const;
 	bool is_expired() const;

@@ -316,17 +316,16 @@ task_builder::task_builder(const std::string& task_name) : task_(task_name) {
 
 task_builder& task_builder::payload(
 	std::shared_ptr<container_module::value_container> payload) {
-	// Use message's internal payload mechanism
 	if (payload) {
-		// Copy values from the provided container to the task's payload
-		// Note: value_container doesn't support copy assignment, so we work with shared_ptr
+		task_.set_task_payload(std::move(payload));
 	}
 	return *this;
 }
 
-task_builder& task_builder::payload(const container_module::value_container& /*payload*/) {
-	// Note: value_container doesn't support copy assignment
-	// Use the shared_ptr version instead
+task_builder& task_builder::payload(const container_module::value_container& payload) {
+	// Create a copy of the value_container
+	auto payload_copy = std::make_shared<container_module::value_container>(payload, false);
+	task_.set_task_payload(std::move(payload_copy));
 	return *this;
 }
 
