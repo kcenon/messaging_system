@@ -178,7 +178,7 @@ TEST_F(MessagePipelineTest, PipelineStageFailure) {
 
 	// Stage that fails
 	pipeline.add_stage("failing_stage", [](const message& msg) -> common::Result<message> {
-		return common::Err<message>(-1, "Stage failed");
+		return common::make_error<message>(-1, "Stage failed");
 	});
 
 	message input("test.topic");
@@ -193,7 +193,7 @@ TEST_F(MessagePipelineTest, PipelineOptionalStageFailure) {
 
 	// Optional failing stage
 	pipeline.add_stage("optional_fail", [](const message& msg) -> common::Result<message> {
-		return common::Err<message>(-1, "Optional stage failed");
+		return common::make_error<message>(-1, "Optional stage failed");
 	}, true);  // Mark as optional
 
 	// Final stage that should still execute
@@ -298,7 +298,7 @@ TEST_F(MessagePipelineTest, PipelineStatisticsWithFailures) {
 		if (count % 2 == 0) {
 			return common::ok(message(msg));
 		} else {
-			return common::Err<message>(-1, "Even numbers only");
+			return common::make_error<message>(-1, "Even numbers only");
 		}
 	});
 
@@ -484,7 +484,7 @@ TEST_F(MessagePipelineTest, RetryStage) {
 	auto flaky_processor = [&attempt_count](const message& msg) -> common::Result<message> {
 		int count = attempt_count++;
 		if (count < 2) {
-			return common::Err<message>(-1, "Temporary failure");
+			return common::make_error<message>(-1, "Temporary failure");
 		}
 		return common::ok(message(msg));
 	};
@@ -506,7 +506,7 @@ TEST_F(MessagePipelineTest, RetryStageMaxAttemptsExceeded) {
 
 	auto always_fail = [&attempt_count](const message& msg) -> common::Result<message> {
 		attempt_count++;
-		return common::Err<message>(-1, "Always fails");
+		return common::make_error<message>(-1, "Always fails");
 	};
 
 	auto retry_stage = pipeline_stages::create_retry_stage(
