@@ -13,7 +13,7 @@ var searchData=
   ['level_20timeouts_20✅_10',['1. Test-Level Timeouts ✅',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md178',1,'']]],
   ['levels_11',['levels',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md279',1,'Log Levels'],['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md268',1,'Priority Levels']]],
   ['library_12',['Q: How do I install the library?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md780',1,'']]],
-  ['license_13',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1239',1,'']]],
+  ['license_13',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1240',1,'']]],
   ['lifecycle_20methods_14',['Lifecycle Methods',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md248',1,'']]],
   ['lifetimes_15',['Service Lifetimes',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md259',1,'']]],
   ['limitations_16',['limitations',['../dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1069',1,'Current Limitations'],['../dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1068',1,'Known Limitations'],['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md616',1,'Known Limitations']]],
@@ -32,7 +32,7 @@ var searchData=
   ['logger_20tt_29',['Namespace: &lt;tt&gt;logger&lt;/tt&gt;',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md276',1,'']]],
   ['logger_5fmanager_20tt_30',['Class: &lt;tt&gt;logger_manager&lt;/tt&gt;',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md277',1,'']]],
   ['logging_31',['logging',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md706',1,'Audit Logging'],['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md892',1,'Enable Debug Logging'],['../d2/d64/md_docs_2architecture.html#autotoc_md349',1,'Logging'],['../df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md162',1,'Logging'],['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md680',1,'Structured Logging']]],
-  ['logging_20configuration_32',['Logging Configuration',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md679',1,'']]],
+  ['logging_20configuration_32',['logging configuration',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md679',1,'Logging Configuration'],['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1215',1,'Logging Configuration']]],
   ['long_20running_20connections_33',['Issue 2: Memory Leak in Long-Running Connections',['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md930',1,'']]],
   ['long_20term_20infrastructure_34',['Long-Term (Infrastructure)',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md191',1,'']]],
   ['long_20term_20planning_35',['Priority 4 (Long-Term Planning)',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md199',1,'']]]
