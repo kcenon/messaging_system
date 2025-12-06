@@ -5,6 +5,7 @@
 #include <kcenon/messaging/core/topic_router.h>
 
 #include <kcenon/common/error/error_codes.h>
+#include <kcenon/common/logging/log_functions.h>
 #include <kcenon/messaging/error/error_codes.h>
 
 #include <algorithm>
@@ -187,18 +188,22 @@ common::Result<uint64_t> topic_router::subscribe(
 	message_filter filter,
 	int priority) {
 	if (!callback) {
+		common::logging::log_error("Subscribe failed: callback is null");
 		return common::error_info(
 			common::error::codes::common_errors::invalid_argument,
 			"Callback cannot be null");
 	}
 
 	if (pattern.empty()) {
+		common::logging::log_error("Subscribe failed: topic pattern is empty");
 		return common::error_info(
 			common::error::codes::common_errors::invalid_argument,
 			"Topic pattern cannot be empty");
 	}
 
 	if (priority < 0 || priority > 10) {
+		common::logging::log_error("Subscribe failed: invalid priority " +
+			std::to_string(priority));
 		return common::error_info(
 			common::error::codes::common_errors::invalid_argument,
 			"Priority must be between 0 and 10");
@@ -219,6 +224,9 @@ common::Result<uint64_t> topic_router::subscribe(
 				  return a.priority > b.priority;
 			  });
 
+	common::logging::log_debug("Subscription created, id: " + std::to_string(id) +
+		", pattern: " + pattern + ", priority: " + std::to_string(priority));
+
 	return id;
 }
 
@@ -232,6 +240,7 @@ common::VoidResult topic_router::unsubscribe(uint64_t subscription_id) {
 							   });
 
 		if (it != subs.end()) {
+			std::string removed_pattern = pattern;
 			subs.erase(it);
 
 			// Clean up empty patterns
@@ -239,10 +248,14 @@ common::VoidResult topic_router::unsubscribe(uint64_t subscription_id) {
 				subscriptions_.erase(pattern);
 			}
 
+			common::logging::log_debug("Subscription removed, id: " +
+				std::to_string(subscription_id) + ", pattern: " + removed_pattern);
 			return common::ok();
 		}
 	}
 
+	common::logging::log_warning("Unsubscribe failed: subscription not found, id: " +
+		std::to_string(subscription_id));
 	return common::make_error<std::monostate>(
 		error::subscription_not_found,
 		"Subscription not found: " + std::to_string(subscription_id),
@@ -276,6 +289,7 @@ common::VoidResult topic_router::route(const message& msg) {
 	const std::string& topic = msg.metadata().topic;
 
 	if (topic.empty()) {
+		common::logging::log_error("Route failed: message topic is empty");
 		return common::error_info(
 			common::error::codes::common_errors::invalid_argument,
 			"Message topic cannot be empty");
@@ -284,10 +298,14 @@ common::VoidResult topic_router::route(const message& msg) {
 	auto matching_subs = find_matching_subscriptions(topic);
 
 	if (matching_subs.empty()) {
+		common::logging::log_trace("No subscribers for topic: " + topic);
 		return common::error_info(
 			common::error::codes::common_errors::not_found,
 			"No subscribers found for topic: " + topic);
 	}
+
+	common::logging::log_trace("Found " + std::to_string(matching_subs.size()) +
+		" subscribers for topic: " + topic);
 
 	// First, filter subscribers
 	std::vector<subscription> filtered_subs;
@@ -301,6 +319,7 @@ common::VoidResult topic_router::route(const message& msg) {
 
 	// If no subscribers remain after filtering, return error
 	if (filtered_subs.empty()) {
+		common::logging::log_trace("No subscribers after filtering for topic: " + topic);
 		return common::error_info(
 			common::error::codes::common_errors::not_found,
 			"No subscribers found for topic after filtering: " + topic);
@@ -323,6 +342,8 @@ common::VoidResult topic_router::route(const message& msg) {
 	}
 
 	if (!any_succeeded && !error_messages.empty()) {
+		common::logging::log_warning("All subscribers failed for topic: " + topic +
+			", errors: " + error_messages);
 		return common::error_info(
 			common::error::codes::common_errors::internal_error,
 			"All subscribers failed: " + error_messages);

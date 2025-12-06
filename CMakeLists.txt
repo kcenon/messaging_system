@@ -122,10 +122,13 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
     # IMPORTANT: container_system MUST be last because it defines its own
     # unified_find_dependency macro which overwrites ours. Any calls after
     # container_system would use its macro (which lacks our configurations).
-    unified_find_dependency(common_system REQUIRED)      # Tier 0: Base utilities
+    #
+    # NOTE: logger_system is no longer a direct dependency (Issue #94).
+    # Logging is now provided through common_system's ILogger interface
+    # with runtime binding via GlobalLoggerRegistry.
+    unified_find_dependency(common_system REQUIRED)      # Tier 0: Base utilities + ILogger
     unified_find_dependency(thread_system REQUIRED)      # Tier 1: Threading
-    unified_find_dependency(logger_system REQUIRED)      # Tier 2: Logging
-    unified_find_dependency(network_system REQUIRED)     # Tier 3: Network I/O
+    unified_find_dependency(network_system REQUIRED)     # Tier 2: Network I/O
 
     # Optional dependencies (must come before container_system)
     unified_find_dependency(monitoring_system OPTIONAL)  # Metrics
