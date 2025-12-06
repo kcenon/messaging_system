@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🛠️_20building_20from_20source_0',['🛠️ Building from Source',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1151',1,'']]]
+  ['🔄_20documentation_20updates_0',['🔄 Documentation Updates',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1169',1,'']]]
 ];

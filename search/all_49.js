@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['아키텍처_0',['아키텍처',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md367',1,'컴포넌트 아키텍처'],['../de/de3/md_docs_2ARCHITECTURE__KO.html',1,'Messaging System 아키텍처']]]
+  ['수평_20확장_0',['수평 확장',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md459',1,'']]]
 ];

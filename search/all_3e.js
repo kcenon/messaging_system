@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['변경됨_0',['변경됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md479',1,'변경됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md488',1,'변경됨']]],
-  ['변경_20이력_1',['Messaging System 변경 이력',['../db/d9f/md_docs_2CHANGELOG__KO.html',1,'']]]
+  ['벤치마크_0',['벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md450',1,'메시지 버스 벤치마크'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html',1,'Messaging System 성능 벤치마크']]],
+  ['벤치마크_20방법론_1',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md461',1,'']]]
 ];

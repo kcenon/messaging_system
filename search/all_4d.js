@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['요약_0',['요약',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md443',1,'요약'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1085',1,'요약']]],
-  ['요약_20테이블_1',['요약 테이블',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md448',1,'']]]
+  ['아키텍처_0',['아키텍처',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md367',1,'컴포넌트 아키텍처'],['../de/de3/md_docs_2ARCHITECTURE__KO.html',1,'Messaging System 아키텍처']]]
 ];

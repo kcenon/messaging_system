@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['빌드_20매트릭스_0',['빌드 매트릭스',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1090',1,'']]]
+  ['분리_0',['2. Result Backend 분리',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1233',1,'']]]
 ];

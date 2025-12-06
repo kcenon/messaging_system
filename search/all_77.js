@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🔧_20build_20options_0',['🔧 Build Options',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1231',1,'']]]
+  ['📊_20performance_0',['📊 Performance',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1272',1,'']]]
 ];

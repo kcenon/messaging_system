@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['🌟_20integration_20with_20base_20systems_0',['🌟 Integration with Base Systems',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1212',1,'']]]
+  ['플랫폼_0',['지원 플랫폼',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1100',1,'']]],
+  ['플랫폼_20지원_1',['플랫폼 지원',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1099',1,'']]]
 ];

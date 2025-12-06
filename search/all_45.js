@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['수평_20확장_0',['수평 확장',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md459',1,'']]]
+  ['서비스_20컨테이너_0',['8.1 통합 서비스 컨테이너',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1214',1,'']]]
 ];

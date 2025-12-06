@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['트레이스_20컨텍스트_0',['트레이스 컨텍스트',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md577',1,'']]]
+  ['클래스_0',['핵심 클래스',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md296',1,'']]]
 ];

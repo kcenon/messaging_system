@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['🧩_20component_20documentation_0',['🧩 Component Documentation',['../index.html#autotoc_md958',1,'']]],
-  ['🧩_20how_20each_20system_20contributes_1',['🧩 How Each System Contributes',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1120',1,'']]]
+  ['🚀_20quick_20navigation_0',['🚀 Quick Navigation',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1160',1,'']]],
+  ['🚀_20quick_20start_1',['🚀 Quick Start',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1254',1,'']]]
 ];

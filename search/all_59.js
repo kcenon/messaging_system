@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['커버리지_0',['커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1096',1,'컴포넌트별 커버리지'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1095',1,'테스트 커버리지']]]
+  ['주요_20디렉토리_20설명_0',['주요 디렉토리 설명',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1147',1,'']]]
 ];

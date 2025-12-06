@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['추가됨_0',['추가됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md480',1,'추가됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md483',1,'추가됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md487',1,'추가됨']]]
+  ['정의_20확장_0',['1.1 Task 정의 확장',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1189',1,'']]]
 ];

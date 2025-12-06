@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['디렉토리_20구조_0',['디렉토리 구조',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1144',1,'디렉토리 구조'],['../d8/d0a/md_docs_2README__KO.html#autotoc_md1181',1,'디렉토리 구조']]],
-  ['디렉토리_20설명_1',['주요 디렉토리 설명',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1146',1,'']]]
+  ['등록_20방식_0',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1234',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📄_20license_0',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1240',1,'']]]
+  ['흐름_0',['흐름',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md374',1,'데이터 흐름'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md375',1,'메시지 발행 흐름'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md376',1,'Request/Reply 흐름']]]
 ];

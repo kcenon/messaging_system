@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['타입_20안전_0',['타입 안전',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md592',1,'']]]
+  ['커버리지_0',['커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1097',1,'컴포넌트별 커버리지'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1096',1,'테스트 커버리지']]]
 ];

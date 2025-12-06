@@ -14,7 +14,8 @@ var searchData=
   ['system_20architecture_11',['System Architecture',['../df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html',1,'']]],
   ['system_20changelog_12',['Messaging System Changelog',['../da/dee/md_docs_2CHANGELOG.html',1,'']]],
   ['system_20features_13',['Messaging System Features',['../da/db6/md_docs_2FEATURES.html',1,'']]],
-  ['system_20performance_20benchmarks_14',['Messaging System Performance Benchmarks',['../de/d93/md_docs_2BENCHMARKS.html',1,'']]],
-  ['system_20production_20quality_15',['Messaging System Production Quality',['../dd/def/md_docs_2PRODUCTION__QUALITY.html',1,'']]],
-  ['system_20project_20structure_16',['Messaging System Project Structure',['../d4/d22/md_docs_2PROJECT__STRUCTURE.html',1,'']]]
+  ['system_20improvement_20plan_14',['Distributed Task Queue System - Improvement Plan',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html',1,'']]],
+  ['system_20performance_20benchmarks_15',['Messaging System Performance Benchmarks',['../de/d93/md_docs_2BENCHMARKS.html',1,'']]],
+  ['system_20production_20quality_16',['Messaging System Production Quality',['../dd/def/md_docs_2PRODUCTION__QUALITY.html',1,'']]],
+  ['system_20project_20structure_17',['Messaging System Project Structure',['../d4/d22/md_docs_2PROJECT__STRUCTURE.html',1,'']]]
 ];

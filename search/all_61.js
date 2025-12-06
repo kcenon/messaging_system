@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['통합_0',['스레드 풀 통합',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md587',1,'']]]
+  ['큐_0',['메시지 큐',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md576',1,'']]]
 ];

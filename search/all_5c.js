@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['큐_0',['메시지 큐',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md575',1,'']]]
+  ['처리량_0',['처리량',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md451',1,'']]]
 ];

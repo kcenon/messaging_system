@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['방법론_0',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md461',1,'']]]
+  ['발행_20흐름_0',['메시지 발행 흐름',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md375',1,'']]]
 ];

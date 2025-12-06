@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['링크_0',['관련 링크',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1183',1,'']]]
+  ['레퍼런스_0',['Messaging System API 레퍼런스',['../d4/d54/md_docs_2API__REFERENCE__KO.html',1,'']]]
 ];

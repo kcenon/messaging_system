@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['클래스_0',['핵심 클래스',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md296',1,'']]]
+  ['추가됨_0',['추가됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md481',1,'추가됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md484',1,'추가됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md488',1,'추가됨']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['🚀_20quick_20navigation_0',['🚀 Quick Navigation',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1159',1,'']]],
-  ['🚀_20quick_20start_1',['🚀 Quick Start',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1200',1,'']]]
+  ['📖_20documentation_20standards_0',['📖 Documentation Standards',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1168',1,'']]],
+  ['📖_20usage_20examples_1',['📖 Usage Examples',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1260',1,'']]]
 ];

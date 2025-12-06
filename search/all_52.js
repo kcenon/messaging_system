@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['이력_0',['Messaging System 변경 이력',['../db/d9f/md_docs_2CHANGELOG__KO.html',1,'']]]
+  ['우선_0',['2. 비동기 우선',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md380',1,'']]],
+  ['우선_20설계_1',['4. 비동기 우선 설계',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1235',1,'']]]
 ];

@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d4/d0c/md_docs_2FEATURES__KO.html','..
   <div class="headertitle"><div class="title">Messaging System 기능</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md566"></a> <b>버전</b>: 1.0 <b>최종 수정일</b>: 2025-11-30 <b>언어</b>: <a class="el" href="../../da/db6/md_docs_2FEATURES.html">English</a> | [한국어]</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md567"></a> <b>버전</b>: 1.0 <b>최종 수정일</b>: 2025-11-30 <b>언어</b>: <a class="el" href="../../da/db6/md_docs_2FEATURES.html">English</a> | [한국어]</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md568"></a>
+<h1><a class="anchor" id="autotoc_md569"></a>
 개요</h1>
 <p>이 문서는 messaging_system의 모든 기능을 포괄적으로 다룹니다.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md570"></a>
+<h1><a class="anchor" id="autotoc_md571"></a>
 목차</h1>
 <ol type="1">
 <li>핵심 메시징</li>
@@ -108,37 +108,37 @@ $(document).ready(function(){initNavTree('d4/d0c/md_docs_2FEATURES__KO.html','..
 <li>프로덕션 기능</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md572"></a>
+<h1><a class="anchor" id="autotoc_md573"></a>
 핵심 메시징</h1>
-<h2><a class="anchor" id="autotoc_md573"></a>
+<h2><a class="anchor" id="autotoc_md574"></a>
 메시지 버스</h2>
 <p>중앙 pub/sub 코디네이터:</p><ul>
 <li>토픽 기반 라우팅</li>
 <li>다중 구독자 지원</li>
 <li>비동기 메시지 전달</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md574"></a>
+<h2><a class="anchor" id="autotoc_md575"></a>
 토픽 라우터</h2>
 <p>와일드카드 패턴 매칭:</p><ul>
 <li><code>*</code>: 단일 레벨 와일드카드</li>
 <li><code>#</code>: 다중 레벨 와일드카드</li>
 <li>정확한 매칭</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md575"></a>
+<h2><a class="anchor" id="autotoc_md576"></a>
 메시지 큐</h2>
 <p>스레드 안전 우선순위 큐:</p><ul>
 <li>우선순위 기반 정렬</li>
 <li>용량 제한</li>
 <li>백프레셔 지원</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md576"></a>
+<h2><a class="anchor" id="autotoc_md577"></a>
 메시지 직렬화</h2>
 <p>container_system 기반 페이로드:</p><ul>
 <li>타입 안전 직렬화</li>
 <li>자동 역직렬화</li>
 <li>스키마 진화</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md577"></a>
+<h2><a class="anchor" id="autotoc_md578"></a>
 트레이스 컨텍스트</h2>
 <p>분산 추적 지원:</p><ul>
 <li>요청 상관 관계</li>
@@ -146,65 +146,65 @@ $(document).ready(function(){initNavTree('d4/d0c/md_docs_2FEATURES__KO.html','..
 <li>OpenTelemetry 호환</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md579"></a>
+<h1><a class="anchor" id="autotoc_md580"></a>
 고급 패턴</h1>
-<h2><a class="anchor" id="autotoc_md580"></a>
+<h2><a class="anchor" id="autotoc_md581"></a>
 Pub/Sub</h2>
 <p>퍼블리셔와 구독자 헬퍼: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> publisher = messaging::publisher(bus, <span class="stringliteral">&quot;events&quot;</span>);</div>
 <div class="line"><span class="keyword">auto</span> subscriber = messaging::subscriber(bus, <span class="stringliteral">&quot;events.#&quot;</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md581"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md582"></a>
 Request/Reply</h2>
 <p>비동기 메시징 위의 동기 RPC: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> client = messaging::request_client(bus, <span class="stringliteral">&quot;services.api&quot;</span>);</div>
 <div class="line"><span class="keyword">auto</span> response = client.request(request_msg);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md582"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md583"></a>
 Event Streaming</h2>
 <p>리플레이 기능의 이벤트 소싱: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> stream = messaging::event_stream(bus, <span class="stringliteral">&quot;events&quot;</span>);</div>
 <div class="line">stream.replay_from(timestamp);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md583"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md584"></a>
 Message Pipeline</h2>
 <p>파이프-필터 처리: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> pipeline = messaging::pipeline()</div>
 <div class="line">    .add_filter(validate)</div>
 <div class="line">    .add_transform(enrich)</div>
 <div class="line">    .add_sink(store);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md585"></a>
+<h1><a class="anchor" id="autotoc_md586"></a>
 백엔드 지원</h1>
-<h2><a class="anchor" id="autotoc_md586"></a>
+<h2><a class="anchor" id="autotoc_md587"></a>
 독립 실행</h2>
 <p>자체 포함 실행:</p><ul>
 <li>내장 스레드 풀</li>
 <li>자동 리소스 관리</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md587"></a>
+<h2><a class="anchor" id="autotoc_md588"></a>
 스레드 풀 통합</h2>
 <p>외부 실행자 사용:</p><ul>
 <li>IExecutor 인터페이스</li>
 <li>커스텀 스레드 풀</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md588"></a>
+<h2><a class="anchor" id="autotoc_md589"></a>
 런타임 백엔드 선택</h2>
 <p>자동 감지 및 선택:</p><ul>
 <li>환경 기반</li>
 <li>설정 기반</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md590"></a>
+<h1><a class="anchor" id="autotoc_md591"></a>
 프로덕션 기능</h1>
-<h2><a class="anchor" id="autotoc_md591"></a>
+<h2><a class="anchor" id="autotoc_md592"></a>
 스레드 안전</h2>
 <p>모든 핵심 연산은 스레드 안전:</p><ul>
 <li>락 기반 동기화</li>
 <li>원자적 연산</li>
 <li>락프리 큐</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md592"></a>
+<h2><a class="anchor" id="autotoc_md593"></a>
 타입 안전</h2>
 <p>Result&lt;T&gt; 에러 처리:</p><ul>
 <li>예외 없는 에러 처리</li>
 <li>명시적 에러 타입</li>
 <li>체이닝 가능한 연산</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md593"></a>
+<h2><a class="anchor" id="autotoc_md594"></a>
 테스트</h2>
 <p>100+ 단위/통합 테스트:</p><ul>
 <li>단위 테스트</li>
@@ -212,7 +212,7 @@ Message Pipeline</h2>
 <li>성능 테스트</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md595"></a>
+<h1><a class="anchor" id="autotoc_md596"></a>
 관련 문서</h1>
 <ul>
 <li><a class="el" href="../../d4/d54/md_docs_2API__REFERENCE__KO.html">API 레퍼런스</a></li>

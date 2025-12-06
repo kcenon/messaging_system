@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['발행_20흐름_0',['메시지 발행 흐름',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md375',1,'']]]
+  ['및_20운영_0',['품질 및 운영',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1180',1,'']]]
 ];
