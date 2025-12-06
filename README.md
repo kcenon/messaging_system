@@ -398,23 +398,39 @@ The messaging system integrates seamlessly with specialized base systems:
 ### Optional Systems
 
 - **thread_system** - High-performance thread pools for message dispatch
-- **logger_system** - Structured logging for debugging and audit trails
 - **monitoring_system** - Real-time metrics and performance telemetry
 - **database_system** - Message persistence and audit logging
 - **network_system** - Distributed messaging over TCP/IP
+
+### Logging Configuration
+
+Logging is provided through common_system's `ILogger` interface with runtime binding
+via `GlobalLoggerRegistry`. This allows flexible logger implementation injection:
+
+```cpp
+#include <kcenon/common/logging/log_functions.h>
+#include <kcenon/common/interfaces/global_logger_registry.h>
+
+// Register a logger with the global registry (typically at application startup)
+auto& registry = kcenon::common::interfaces::GlobalLoggerRegistry::instance();
+registry.set_default_logger(my_logger_implementation);
+
+// Logging is now available throughout the messaging system
+// No explicit logger parameter needed in messaging components
+```
 
 ### Integration Example
 
 ```cpp
 #include <kcenon/messaging/backends/integration_backend.h>
 #include <kcenon/thread/core/thread_pool.h>
-#include <kcenon/logger/core/logger.h>
+#include <kcenon/common/interfaces/global_logger_registry.h>
 
 // Create thread pool from thread_system
 auto thread_pool = std::make_shared<thread::thread_pool>(8);
 
-// Create logger from logger_system
-auto logger = logger::create_logger("messaging");
+// Get logger from common_system's GlobalLoggerRegistry
+auto logger = kcenon::common::interfaces::get_logger();
 
 // Create integration backend
 auto backend = std::make_shared<integration_backend>(
@@ -428,7 +444,7 @@ auto bus = std::make_shared<message_bus>(backend);
 bus->start();
 
 // Messages are now dispatched via thread_system
-// And logged via logger_system
+// And logged via common_system's ILogger interface
 ```
 
 ---
@@ -636,7 +652,6 @@ See [LICENSE](LICENSE) file for full license text.
 
 [common_system](https://github.com/kcenon/common_system) •
 [thread_system](https://github.com/kcenon/thread_system) •
-[logger_system](https://github.com/kcenon/logger_system) •
 [monitoring_system](https://github.com/kcenon/monitoring_system) •
 [container_system](https://github.com/kcenon/container_system) •
 [database_system](https://github.com/kcenon/database_system) •
