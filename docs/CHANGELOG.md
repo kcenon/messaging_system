@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **Logging Migration (Issue #94)**
+  - Migrated from direct logger_system dependency to common_system's ILogger interface
+  - Logging now uses runtime binding via GlobalLoggerRegistry
+  - Removed logger_system from required CMake dependencies
+  - Added comprehensive logging to core components (message_bus, message_queue,
+    topic_router, backends)
+  - Deprecated `has_logger_system()` in favor of `has_common_system()` in
+    integration_detector
+
 - Remove fmt library reference from CMake configuration
   - Project now uses C++20 std::format exclusively through thread_system
   - Simplifies dependency management and build configuration
@@ -15,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Documentation structure standardization
 - Korean documentation support
+- `has_common_system()` method in integration_detector for compile-time detection
 
 ---
 
@@ -50,10 +60,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Comprehensive documentation
 
 ### Dependencies
-- common_system: Result<T>, interfaces
+- common_system: Result<T>, interfaces, ILogger (runtime binding)
 - thread_system: Thread pool, executors
 - container_system: Message serialization
-- logger_system: Logging infrastructure
 - monitoring_system: Metrics collection
 - network_system: Network transport
 
