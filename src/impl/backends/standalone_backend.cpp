@@ -1,5 +1,6 @@
 #include <kcenon/messaging/backends/standalone_backend.h>
 #include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/common/logging/log_functions.h>
 
 namespace kcenon::messaging {
 
@@ -238,12 +239,16 @@ standalone_backend::~standalone_backend() {
 
 common::VoidResult standalone_backend::initialize() {
 	if (initialized_.exchange(true)) {
+		common::logging::log_warning("Standalone backend already initialized");
 		return common::make_error<std::monostate>(
 			error::base,
 			"Backend already initialized",
 			"messaging_system"
 		);
 	}
+
+	common::logging::log_info("Initializing standalone backend with " +
+		std::to_string(num_threads_) + " threads");
 
 	try {
 		thread_pool_ = std::shared_ptr<internal_thread_pool>(
@@ -252,9 +257,12 @@ common::VoidResult standalone_backend::initialize() {
 		executor_ = std::shared_ptr<executor_adapter>(
 			new executor_adapter(thread_pool_)
 		);
+		common::logging::log_info("Standalone backend initialized successfully");
 		return common::ok();
 	} catch (const std::exception& e) {
 		initialized_.store(false);
+		common::logging::log_error("Failed to initialize standalone backend: " +
+			std::string(e.what()));
 		return common::make_error<std::monostate>(
 			error::base,
 			std::string("Failed to initialize backend: ") + e.what(),
@@ -265,6 +273,7 @@ common::VoidResult standalone_backend::initialize() {
 
 common::VoidResult standalone_backend::shutdown() {
 	if (!initialized_.exchange(false)) {
+		common::logging::log_debug("Standalone backend shutdown called but not initialized");
 		return common::make_error<std::monostate>(
 			error::base,
 			"Backend not initialized",
@@ -272,12 +281,15 @@ common::VoidResult standalone_backend::shutdown() {
 		);
 	}
 
+	common::logging::log_info("Shutting down standalone backend");
+
 	if (thread_pool_) {
 		thread_pool_->stop();
 		thread_pool_.reset();
 	}
 	executor_.reset();
 
+	common::logging::log_info("Standalone backend shutdown complete");
 	return common::ok();
 }
 
