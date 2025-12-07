@@ -171,9 +171,44 @@ public:
 	}
 
 	// Utility methods
+
+	/**
+	 * @brief Check if the task is in a terminal state
+	 * @return true if task is succeeded, failed, cancelled, or expired
+	 */
 	bool is_terminal_state() const;
+
+	/**
+	 * @brief Check if the task has expired
+	 * @return true if the task's TTL has been exceeded
+	 */
 	bool is_expired() const;
+
+	/**
+	 * @brief Check if the task should be retried after a failure
+	 *
+	 * This method checks two conditions:
+	 * 1. The task state must be 'failed'
+	 * 2. The current attempt count must be less than max_retries
+	 *
+	 * The caller (worker_pool) must set the state to 'failed' before
+	 * calling this method.
+	 *
+	 * @return true if state is failed AND attempt_count < max_retries
+	 * @see task_config::max_retries
+	 */
 	bool should_retry() const;
+
+	/**
+	 * @brief Calculate the delay before the next retry attempt
+	 *
+	 * Uses exponential backoff: delay = retry_delay * (retry_backoff_multiplier ^ attempt)
+	 * The delay is capped at 1 hour maximum.
+	 *
+	 * @return The delay in milliseconds before the next retry
+	 * @see task_config::retry_delay
+	 * @see task_config::retry_backoff_multiplier
+	 */
 	std::chrono::milliseconds get_next_retry_delay() const;
 
 	// Serialization

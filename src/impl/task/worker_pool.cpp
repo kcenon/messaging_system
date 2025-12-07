@@ -267,8 +267,9 @@ void worker_pool::worker_loop(size_t /* worker_id */) {
 			handler->on_success(t, t.has_result() ? t.result() : container_module::value_container{});
 			record_task_completed(true, duration);
 		} else {
-			// Task failed
+			// Task failed - set state before checking retry eligibility
 			auto error = exec_result.error();
+			t.set_state(task_state::failed);
 
 			if (t.should_retry()) {
 				// Retry the task
