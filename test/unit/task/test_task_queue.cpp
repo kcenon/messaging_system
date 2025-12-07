@@ -5,6 +5,7 @@
 #include <chrono>
 #include <thread>
 #include <atomic>
+#include <set>
 #include <vector>
 
 namespace tsk = kcenon::messaging::task;

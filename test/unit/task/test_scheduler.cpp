@@ -10,6 +10,7 @@
 #include <atomic>
 #include <condition_variable>
 #include <mutex>
+#include <set>
 
 namespace tsk = kcenon::messaging::task;
 using tsk::task_scheduler;
