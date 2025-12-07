@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Distributed Task Queue System - Sprint 3 (Issue #104)**
+  - `worker_pool`: Thread pool for distributed task execution
+    - Configurable concurrency (number of worker threads)
+    - Multi-queue processing with priority ordering
+    - Handler registration for task-to-handler matching
+    - Graceful shutdown with timeout support
+    - Statistics collection (throughput, execution time, success/failure rates)
+    - Integration with task_queue, result_backend, and task_handler_interface
+  - Comprehensive unit tests for worker_pool (15 tests)
+
+### Fixed
+- `task`: Sync metadata.id with task_id for correct task_queue lookup
+
 - **Distributed Task Queue System - Sprint 2 (Issues #101, #102, #103)**
   - `task_queue`: Task-specific queue extending message_queue
     - Multiple named queues support (queue_name -> independent queue)
