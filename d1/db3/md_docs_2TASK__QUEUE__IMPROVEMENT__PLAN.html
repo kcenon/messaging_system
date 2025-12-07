@@ -93,15 +93,15 @@ $(document).ready(function(){initNavTree('d1/db3/md_docs_2TASK__QUEUE__IMPROVEME
   <div class="headertitle"><div class="title">Distributed Task Queue System - Improvement Plan</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1865"></a> </p>
-<h1><a class="anchor" id="autotoc_md1866"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1869"></a> </p>
+<h1><a class="anchor" id="autotoc_md1870"></a>
 Executive Summary</h1>
 <p>messaging_system을 **분산 작업 큐 시스템**으로 개선하기 위한 구현 계획입니다.</p>
 <p><b>목표</b>: Celery/Sidekiq 수준의 기능을 갖춘 C++ 분산 작업 큐 시스템 구축</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1868"></a>
+<h1><a class="anchor" id="autotoc_md1872"></a>
 Phase 1: Task Core (기반 확장)</h1>
-<h2><a class="anchor" id="autotoc_md1869"></a>
+<h2><a class="anchor" id="autotoc_md1873"></a>
 1.1 Task 정의 확장</h2>
 <p><b>위치</b>: <code>include/kcenon/messaging/task/task.h</code></p>
 <p>현재 <code>message</code> 클래스를 확장하여 Task 전용 구조 생성:</p>
@@ -150,7 +150,7 @@ Phase 1: Task Core (기반 확장)</h1>
 <div class="line">    std::optional&lt;std::string&gt; error_message_;</div>
 <div class="line">    std::optional&lt;std::string&gt; error_traceback_;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1870"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1874"></a>
 1.2 Task Builder</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>task_builder {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -169,9 +169,9 @@ Phase 1: Task Core (기반 확장)</h1>
 <div class="line">    common::Result&lt;task&gt; build();</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1872"></a>
+<h1><a class="anchor" id="autotoc_md1876"></a>
 Phase 2: Worker System</h1>
-<h2><a class="anchor" id="autotoc_md1873"></a>
+<h2><a class="anchor" id="autotoc_md1877"></a>
 2.1 Task Handler Interface</h2>
 <p><b>위치</b>: <code>include/kcenon/messaging/task/task_handler.h</code></p>
 <div class="fragment"><div class="line"> </div>
@@ -226,7 +226,7 @@ Phase 2: Worker System</h1>
 <div class="line">        task_context&amp;</div>
 <div class="line">    )</div>
 <div class="line">&gt;;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1874"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1878"></a>
 2.2 Worker Pool</h2>
 <p><b>위치</b>: <code>include/kcenon/messaging/task/worker_pool.h</code></p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>worker_config {</div>
@@ -275,9 +275,9 @@ Phase 2: Worker System</h1>
 <div class="line">    common::VoidResult execute_task(task&amp; t);</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1876"></a>
+<h1><a class="anchor" id="autotoc_md1880"></a>
 Phase 3: Task Queue (확장)</h1>
-<h2><a class="anchor" id="autotoc_md1877"></a>
+<h2><a class="anchor" id="autotoc_md1881"></a>
 3.1 Priority Task Queue</h2>
 <p><b>위치</b>: <code>include/kcenon/messaging/task/task_queue.h</code></p>
 <p>기존 <code>message_queue</code> + <code>message_bus</code>를 확장:</p>
@@ -331,9 +331,9 @@ Phase 3: Task Queue (확장)</h1>
 <div class="line">    &gt; delayed_queue_;</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1879"></a>
+<h1><a class="anchor" id="autotoc_md1883"></a>
 Phase 4: Result Backend</h1>
-<h2><a class="anchor" id="autotoc_md1880"></a>
+<h2><a class="anchor" id="autotoc_md1884"></a>
 4.1 Result Backend Interface</h2>
 <p><b>위치</b>: <code>include/kcenon/messaging/task/result_backend.h</code></p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>result_backend_interface {</div>
@@ -384,7 +384,7 @@ Phase 4: Result Backend</h1>
 <div class="line">        std::chrono::milliseconds max_age</div>
 <div class="line">    ) = 0;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1881"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1885"></a>
 4.2 In-Memory Result Backend</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>memory_result_backend : <span class="keyword">public</span> result_backend_interface {</div>
 <div class="line">    <span class="keyword">struct </span>task_result {</div>
@@ -401,16 +401,16 @@ Phase 4: Result Backend</h1>
 <div class="line">    <span class="keyword">mutable</span> std::shared_mutex mutex_;</div>
 <div class="line">    std::condition_variable_any cv_;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1882"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1886"></a>
 4.3 Redis Result Backend (선택적)</h2>
 <div class="fragment"><div class="line"><span class="comment">// network_system 통합 후 구현</span></div>
 <div class="line"><span class="keyword">class </span>redis_result_backend : <span class="keyword">public</span> result_backend_interface {</div>
 <div class="line">    <span class="comment">// Redis를 통한 분산 결과 저장</span></div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1884"></a>
+<h1><a class="anchor" id="autotoc_md1888"></a>
 Phase 5: Task Client (Producer)</h1>
-<h2><a class="anchor" id="autotoc_md1885"></a>
+<h2><a class="anchor" id="autotoc_md1889"></a>
 5.1 Task Client</h2>
 <p><b>위치</b>: <code>include/kcenon/messaging/task/task_client.h</code></p>
 <div class="fragment"><div class="line"> </div>
@@ -483,9 +483,9 @@ Phase 5: Task Client (Producer)</h1>
 <div class="line">    async_result get_result(<span class="keyword">const</span> std::string&amp; task_id);</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1887"></a>
+<h1><a class="anchor" id="autotoc_md1891"></a>
 Phase 6: Scheduler</h1>
-<h2><a class="anchor" id="autotoc_md1888"></a>
+<h2><a class="anchor" id="autotoc_md1892"></a>
 6.1 Periodic Task Scheduler</h2>
 <p><b>위치</b>: <code>include/kcenon/messaging/task/scheduler.h</code></p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>schedule_entry {</div>
@@ -536,9 +536,9 @@ Phase 6: Scheduler</h1>
 <div class="line">    );</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1890"></a>
+<h1><a class="anchor" id="autotoc_md1894"></a>
 Phase 7: Monitoring &amp; Management</h1>
-<h2><a class="anchor" id="autotoc_md1891"></a>
+<h2><a class="anchor" id="autotoc_md1895"></a>
 7.1 Task Monitor</h2>
 <p><b>위치</b>: <code>include/kcenon/messaging/task/monitor.h</code></p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>queue_stats {</div>
@@ -587,9 +587,9 @@ Phase 7: Monitoring &amp; Management</h1>
 <div class="line">    <span class="keywordtype">void</span> on_worker_offline(std::function&lt;<span class="keywordtype">void</span>(<span class="keyword">const</span> std::string&amp; worker_id)&gt; handler);</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1893"></a>
+<h1><a class="anchor" id="autotoc_md1897"></a>
 Phase 8: Integration</h1>
-<h2><a class="anchor" id="autotoc_md1894"></a>
+<h2><a class="anchor" id="autotoc_md1898"></a>
 8.1 통합 서비스 컨테이너</h2>
 <p><b>위치</b>: <code>include/kcenon/messaging/task/task_system.h</code></p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_system_config {</div>
@@ -621,9 +621,9 @@ Phase 8: Integration</h1>
 <div class="line">    async_result submit(<span class="keyword">const</span> std::string&amp; task_name, container_module::value_container payload);</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1896"></a>
+<h1><a class="anchor" id="autotoc_md1900"></a>
 Implementation Roadmap</h1>
-<h2><a class="anchor" id="autotoc_md1897"></a>
+<h2><a class="anchor" id="autotoc_md1901"></a>
 Sprint 1: Core Task Infrastructure ✅</h2>
 <ol type="1">
 <li><code>task.h</code> / <code>task.cpp</code> - Task 클래스 구현 ✅</li>
@@ -631,28 +631,28 @@ Sprint 1: Core Task Infrastructure ✅</h2>
 <li><code>task_handler.h</code> - 핸들러 인터페이스 ✅</li>
 <li><code>task_context.h</code> - 실행 컨텍스트 ✅</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1898"></a>
+<h2><a class="anchor" id="autotoc_md1902"></a>
 Sprint 2: Queue &amp; Result Backend ✅</h2>
 <ol type="1">
 <li><code>task_queue.h</code> / <code>task_queue.cpp</code> - 작업 큐 (기존 확장) ✅</li>
 <li><code>result_backend.h</code> - 결과 백엔드 인터페이스 ✅</li>
 <li><code>memory_result_backend.h/.cpp</code> - 메모리 백엔드 ✅</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1899"></a>
+<h2><a class="anchor" id="autotoc_md1903"></a>
 Sprint 3: Worker System ✅</h2>
 <ol type="1">
 <li><code>worker_pool.h</code> / <code>worker_pool.cpp</code> - 워커 풀 ✅</li>
 <li>Worker 실행 로직 ✅</li>
 <li>재시도 메커니즘 (기존 <code>resilient_transport</code> 패턴 활용) ✅</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1900"></a>
+<h2><a class="anchor" id="autotoc_md1904"></a>
 Sprint 4: Client &amp; Async Result ✅</h2>
 <ol type="1">
 <li><code>async_result.h</code> / <code>async_result.cpp</code> - 비동기 결과 ✅</li>
 <li><code>task_client.h</code> / <code>task_client.cpp</code> - 클라이언트 ✅</li>
 <li>Chain/Chord 패턴 ✅</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1901"></a>
+<h2><a class="anchor" id="autotoc_md1905"></a>
 Sprint 5: Scheduler ✅</h2>
 <ol type="1">
 <li><code>scheduler.h</code> / <code>scheduler.cpp</code> - 스케줄러 ✅<ul>
@@ -667,14 +667,14 @@ Sprint 5: Scheduler ✅</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1902"></a>
+<h2><a class="anchor" id="autotoc_md1906"></a>
 Sprint 6: Monitoring &amp; System Integration</h2>
 <ol type="1">
 <li><code>monitor.h</code> / <code>monitor.cpp</code> - 모니터링</li>
 <li><code>task_system.h</code> / <code>task_system.cpp</code> - 통합 파사드</li>
 <li>이벤트 브리지 통합</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1903"></a>
+<h2><a class="anchor" id="autotoc_md1907"></a>
 Sprint 7: Testing &amp; Documentation</h2>
 <ol type="1">
 <li>단위 테스트 (각 컴포넌트)</li>
@@ -683,7 +683,7 @@ Sprint 7: Testing &amp; Documentation</h2>
 <li>문서화</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1905"></a>
+<h1><a class="anchor" id="autotoc_md1909"></a>
 File Structure</h1>
 <div class="fragment"><div class="line">include/kcenon/messaging/</div>
 <div class="line">├── task/</div>
@@ -730,7 +730,7 @@ File Structure</h1>
 <div class="line">├── chain_workflow.cpp            # 체인 워크플로우</div>
 <div class="line">└── monitoring_dashboard.cpp      # 모니터링 예제</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1907"></a>
+<h1><a class="anchor" id="autotoc_md1911"></a>
 Usage Example</h1>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_system.h&gt;</span></div>
 <div class="line"> </div>
@@ -788,7 +788,7 @@ Usage Example</h1>
 <div class="line">    system.stop();</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1909"></a>
+<h1><a class="anchor" id="autotoc_md1913"></a>
 Reusing Existing Components</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -811,34 +811,34 @@ Reusing Existing Components</h1>
 <td class="markdownTableBodyNone">이벤트   </td><td class="markdownTableBodyNone"><code>event_bridge</code> 통합   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1911"></a>
+<h1><a class="anchor" id="autotoc_md1915"></a>
 Key Design Decisions</h1>
-<h2><a class="anchor" id="autotoc_md1912"></a>
+<h2><a class="anchor" id="autotoc_md1916"></a>
 1. Task는 Message를 상속</h2>
 <ul>
 <li>기존 메시징 인프라 재사용</li>
 <li>pub/sub, routing 등 기존 기능 활용 가능</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1913"></a>
+<h2><a class="anchor" id="autotoc_md1917"></a>
 2. Result Backend 분리</h2>
 <ul>
 <li>인메모리 → 분산 (Redis) 교체 용이</li>
 <li>테스트 용이성 확보</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1914"></a>
+<h2><a class="anchor" id="autotoc_md1918"></a>
 3. 핸들러 등록 방식</h2>
 <ul>
 <li>인터페이스 기반: 복잡한 핸들러</li>
 <li>Lambda 기반: 간단한 핸들러</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1915"></a>
+<h2><a class="anchor" id="autotoc_md1919"></a>
 4. 비동기 우선 설계</h2>
 <ul>
 <li>모든 작업은 기본적으로 비동기</li>
 <li><code>async_result</code>로 결과 조회</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1917"></a>
+<h1><a class="anchor" id="autotoc_md1921"></a>
 Version</h1>
 <ul>
 <li><b>Plan Version</b>: 1.0.0</li>

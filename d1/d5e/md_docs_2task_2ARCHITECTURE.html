@@ -526,6 +526,34 @@ Design Decisions</h1>
 5. Strategy Pattern</h2>
 <p><code>result_backend_interface</code> allows different storage strategies to be swapped without changing the core logic.</p>
 <h1><a class="anchor" id="autotoc_md1463"></a>
+Testing</h1>
+<p>The task module has comprehensive integration tests located in <code>integration_tests/task/</code>:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Test File   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>test_task_lifecycle.cpp</code>   </td><td class="markdownTableBodyNone">Full task lifecycle from submission to completion    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>test_worker_scenarios.cpp</code>   </td><td class="markdownTableBodyNone">Multiple workers, concurrency, handler matching    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>test_failure_recovery.cpp</code>   </td><td class="markdownTableBodyNone">Retry mechanisms, timeout handling, error propagation    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>test_scheduling.cpp</code>   </td><td class="markdownTableBodyNone">Periodic and cron-based task scheduling    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>test_concurrent_load.cpp</code>   </td><td class="markdownTableBodyNone">High volume processing, throughput measurement   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md1464"></a>
+Running Tests</h2>
+<div class="fragment"><div class="line"># Build tests</div>
+<div class="line">cmake --build build --target test_task_lifecycle test_worker_scenarios \</div>
+<div class="line">    test_failure_recovery test_scheduling test_concurrent_load</div>
+<div class="line"> </div>
+<div class="line"># Run all task integration tests</div>
+<div class="line">ctest --test-dir build -R &quot;test_(task_lifecycle|worker_scenarios|failure_recovery|scheduling|concurrent_load)&quot;</div>
+<div class="line"> </div>
+<div class="line"># Run specific test</div>
+<div class="line">./build/integration_tests/test_task_lifecycle</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1465"></a>
 Related Documentation</h1>
 <ul>
 <li><a class="el" href="../../d9/dff/md_docs_2task_2QUICK__START.html">Quick Start Guide</a></li>
