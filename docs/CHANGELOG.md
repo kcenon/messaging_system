@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Distributed Task Queue System - Sprint 2 (Issue #101)**
+  - `task_queue`: Task-specific queue extending message_queue
+    - Multiple named queues support (queue_name -> independent queue)
+    - Delayed task execution with ETA scheduling
+    - Bulk enqueue operations (enqueue_bulk)
+    - Tag-based task cancellation (cancel_by_tag)
+    - Task registry for tracking and lookups
+    - Priority-based ordering via message_queue integration
+    - Thread-safe implementation with proper lifecycle management
+
 - **Distributed Task Queue System - Sprint 1 (Issues #98, #99, #100)**
   - `task_builder`: Fluent builder pattern for task construction
     - Support for payload, priority, timeout, retries, queue, eta, countdown, expires, tags
