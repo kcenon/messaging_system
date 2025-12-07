@@ -5,7 +5,7 @@ var searchData=
   ['what_20dependencies_20are_20required_2',['Q: What dependencies are required?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md785',1,'']]],
   ['what_20is_20messaging_5fsystem_3',['Q: What is messaging_system?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md779',1,'']]],
   ['what_20is_20the_20latency_4',['Q: What is the latency?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md794',1,'']]],
-  ['what_20s_20included_5',['📦 What&apos;s Included',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1246',1,'']]],
+  ['what_20s_20included_5',['📦 What&apos;s Included',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1252',1,'']]],
   ['what_20throughput_20can_20i_20expect_6',['Q: What throughput can I expect?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md793',1,'']]],
   ['which_20platforms_20are_20supported_7',['Q: Which platforms are supported?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md781',1,'']]],
   ['wildcard_20patterns_8',['Wildcard Patterns',['../da/db6/md_docs_2FEATURES.html#autotoc_md541',1,'']]],
@@ -14,7 +14,7 @@ var searchData=
   ['windows_20ci_20performance_20optimization_11',['Windows CI Performance Optimization',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html',1,'']]],
   ['windows_5foptimization_2emd_12',['WINDOWS_OPTIMIZATION.md',['../d9/dea/WINDOWS__OPTIMIZATION_8md.html',1,'']]],
   ['wins_13',['Short-Term (Quick Wins)',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md183',1,'']]],
-  ['with_20base_20systems_14',['🌟 Integration with Base Systems',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1269',1,'']]],
+  ['with_20base_20systems_14',['🌟 Integration with Base Systems',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1275',1,'']]],
   ['with_20many_20topics_15',['Issue 5: Performance Degradation with Many Topics',['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md937',1,'']]],
   ['with_20network_5fsystem_16',['Using with network_system',['../index.html#autotoc_md964',1,'']]],
   ['with_20old_20includes_17',['Issue: Compilation errors with old includes',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md836',1,'']]],
@@ -26,8 +26,8 @@ var searchData=
   ['with_20subsystems_23',['Integration with Subsystems',['../index.html#autotoc_md962',1,'']]],
   ['with_20thread_5fsystem_24',['Using with thread_system',['../index.html#autotoc_md963',1,'']]],
   ['won_20t_20start_25',['won t start',['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md949',1,'Problem: Service Won&apos;t Start'],['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md714',1,'Service Won&apos;t Start']]],
-  ['worker_20pool_26',['2.2 Worker Pool',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1197',1,'']]],
-  ['worker_20system_27',['Phase 2: Worker System',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1195',1,'']]],
-  ['worker_20system_20✅_28',['Sprint 3: Worker System ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1222',1,'']]],
-  ['workflow_29',['workflow',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1295',1,'Development Workflow'],['../d7/d4b/md_docs_2contributing_2CONTRIBUTING.html#autotoc_md503',1,'Development Workflow'],['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md610',1,'Recommended Build Workflow'],['../da/d7c/md_docs_2guides_2DEVELOPER__GUIDE.html#autotoc_md759',1,'Workflow']]]
+  ['worker_20pool_26',['2.2 Worker Pool',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1203',1,'']]],
+  ['worker_20system_27',['Phase 2: Worker System',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1201',1,'']]],
+  ['worker_20system_20✅_28',['Sprint 3: Worker System ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1228',1,'']]],
+  ['workflow_29',['workflow',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1301',1,'Development Workflow'],['../d7/d4b/md_docs_2contributing_2CONTRIBUTING.html#autotoc_md503',1,'Development Workflow'],['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md610',1,'Recommended Build Workflow'],['../da/d7c/md_docs_2guides_2DEVELOPER__GUIDE.html#autotoc_md759',1,'Workflow']]]
 ];

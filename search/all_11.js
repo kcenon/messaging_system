@@ -1,8 +1,8 @@
 var searchData=
 [
   ['handle_20migration_20testing_0',['Q: How do I handle migration testing?',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md849',1,'']]],
-  ['handler_20interface_1',['2.1 Task Handler Interface',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1196',1,'']]],
-  ['handling_2',['handling',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md873',1,'2. Container-Based Data Handling'],['../dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1050',1,'Error Handling'],['../da/db6/md_docs_2FEATURES.html#autotoc_md551',1,'Error Handling'],['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md285',1,'Error Handling'],['../df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md125',1,'Error Handling'],['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md821',1,'Step 6: Update Error Handling']]],
+  ['handler_20interface_1',['2.1 Task Handler Interface',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1202',1,'']]],
+  ['handling_2',['handling',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md873',1,'2. Container-Based Data Handling'],['../dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1056',1,'Error Handling'],['../da/db6/md_docs_2FEATURES.html#autotoc_md551',1,'Error Handling'],['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md285',1,'Error Handling'],['../df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md125',1,'Error Handling'],['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md821',1,'Step 6: Update Error Handling']]],
   ['haproxy_20configuration_3',['HAProxy Configuration',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md660',1,'']]],
   ['hardening_4',['Security Hardening',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md702',1,'']]],
   ['hardware_20requirements_5',['Hardware Requirements',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md631',1,'']]],
@@ -10,13 +10,13 @@ var searchData=
   ['health_7',['health',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md718',1,'Application Health'],['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md719',1,'System Health']]],
   ['health_20checks_8',['Health Checks',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md717',1,'']]],
   ['heaptrack_9',['Using HeapTrack',['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md906',1,'']]],
-  ['help_10',['help',['../dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1082',1,'Getting Help'],['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md618',1,'Getting Help']]],
+  ['help_10',['help',['../dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1088',1,'Getting Help'],['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md618',1,'Getting Help']]],
   ['high_20availability_11',['high availability',['../d2/d64/md_docs_2architecture.html#autotoc_md342',1,'High Availability'],['../df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md155',1,'High Availability']]],
   ['high_20availability_20deployment_12',['High Availability Deployment',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md658',1,'']]],
-  ['high_20cpu_20usage_13',['High CPU Usage',['../d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1026',1,'']]],
+  ['high_20cpu_20usage_13',['High CPU Usage',['../d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1032',1,'']]],
   ['high_20cpu_20usage_20with_20small_20messages_14',['Issue 1: High CPU Usage with Small Messages',['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md933',1,'']]],
   ['high_20memory_20usage_15',['high memory usage',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md715',1,'High Memory Usage'],['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md952',1,'Problem: High Memory Usage']]],
-  ['historical_20data_16',['Historical Data',['../d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md984',1,'']]],
+  ['historical_20data_16',['Historical Data',['../d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md990',1,'']]],
   ['horizontal_20pod_20autoscaler_17',['Horizontal Pod Autoscaler',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md665',1,'']]],
   ['horizontal_20scaling_18',['horizontal scaling',['../df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md144',1,'Horizontal Scaling'],['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md687',1,'Horizontal Scaling'],['../d2/d64/md_docs_2architecture.html#autotoc_md331',1,'Horizontal Scaling']]],
   ['hosted_20runners_19',['1. Use Self-Hosted Runners',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md192',1,'']]],
@@ -26,5 +26,5 @@ var searchData=
   ['how_20do_20i_20install_20the_20library_23',['Q: How do I install the library?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md784',1,'']]],
   ['how_20do_20i_20subscribe_20to_20topics_24',['Q: How do I subscribe to topics?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md789',1,'']]],
   ['how_20do_20i_20use_20wildcards_25',['Q: How do I use wildcards?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md790',1,'']]],
-  ['how_20to_20contribute_26',['How to Contribute',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1294',1,'']]]
+  ['how_20to_20contribute_26',['How to Contribute',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1300',1,'']]]
 ];

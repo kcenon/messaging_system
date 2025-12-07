@@ -10,5 +10,11 @@ var index =
       [ "Using with network_system", "index.html#autotoc_md964", null ]
     ] ],
     [ "Custom Configuration", "index.html#autotoc_md966", null ],
-    [ "Related Documentation", "index.html#autotoc_md968", null ]
+    [ "Task Event Bridge Integration", "index.html#autotoc_md968", [
+      [ "Event Types", "index.html#autotoc_md969", null ],
+      [ "Basic Usage", "index.html#autotoc_md970", null ],
+      [ "Configuration Options", "index.html#autotoc_md971", null ],
+      [ "Event Type Constants", "index.html#autotoc_md972", null ]
+    ] ],
+    [ "Related Documentation", "index.html#autotoc_md974", null ]
 ];

@@ -1,8 +1,8 @@
 var searchData=
 [
   ['3_20스레드_20안전_0',['3. 스레드 안전',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md381',1,'']]],
-  ['3_20핸들러_20등록_20방식_1',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1237',1,'']]],
-  ['3_201_20priority_20task_20queue_2',['3.1 Priority Task Queue',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1200',1,'']]],
+  ['3_20핸들러_20등록_20방식_1',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1243',1,'']]],
+  ['3_201_20priority_20task_20queue_2',['3.1 Priority Task Queue',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1206',1,'']]],
   ['3_20build_20and_20install_3',['3. Build and Install',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md643',1,'']]],
   ['3_20build_20parallelization_20✅_4',['3. Build Parallelization ✅',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md180',1,'']]],
   ['3_20build_20the_20system_5',['3. Build the System',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md867',1,'']]],
@@ -13,10 +13,10 @@ var searchData=
   ['3_20future_20consideration_10',['Priority 3 (Future Consideration)',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md198',1,'']]],
   ['3_20message_20structure_11',['3. Message Structure',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md807',1,'']]],
   ['3_20network_20client_20server_12',['3. Network Client/Server',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md874',1,'']]],
-  ['3_20network_20configuration_13',['3. Network Configuration',['../d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1023',1,'']]],
-  ['3_20network_20optimization_14',['3. Network Optimization',['../d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1015',1,'']]],
+  ['3_20network_20configuration_13',['3. Network Configuration',['../d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1029',1,'']]],
+  ['3_20network_20optimization_14',['3. Network Optimization',['../d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1021',1,'']]],
   ['3_20prebuilt_20dependency_20binaries_15',['3. Prebuilt Dependency Binaries',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md194',1,'']]],
-  ['3_20redis_20result_20backend_20선택적_16',['4.3 Redis Result Backend (선택적)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1205',1,'']]],
+  ['3_20redis_20result_20backend_20선택적_16',['4.3 Redis Result Backend (선택적)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1211',1,'']]],
   ['3_20reduce_20fetchcontent_20downloads_17',['3. Reduce FetchContent Downloads',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md186',1,'']]],
   ['3_20test_20with_20sample_20client_18',['3. Test with Sample Client',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md882',1,'']]],
   ['3_20your_20first_20application_19',['3. Your First Application',['../da/d7c/md_docs_2guides_2DEVELOPER__GUIDE.html#autotoc_md725',1,'']]],
@@ -26,6 +26,6 @@ var searchData=
   ['3_3a_20event_20streaming_23',['Example 3: Event Streaming',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md832',1,'']]],
   ['3_3a_20grep_20p_20not_20supported_20macos_24',['Issue 3: grep -P Not Supported (macOS)',['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md606',1,'']]],
   ['3_3a_20migrate_20message_20creation_25',['Step 3: Migrate Message Creation',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md816',1,'']]],
-  ['3_3a_20task_20queue_20확장_26',['Phase 3: Task Queue (확장)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1199',1,'']]],
-  ['3_3a_20worker_20system_20✅_27',['Sprint 3: Worker System ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1222',1,'']]]
+  ['3_3a_20task_20queue_20확장_26',['Phase 3: Task Queue (확장)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1205',1,'']]],
+  ['3_3a_20worker_20system_20✅_27',['Sprint 3: Worker System ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1228',1,'']]]
 ];

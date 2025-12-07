@@ -144,6 +144,114 @@ Custom Configuration</h1>
 <div class="line"><span class="keyword">auto</span> bus = messaging_system::message_bus::create(cfg);</div>
 </div><!-- fragment --><hr  />
 <h1><a class="anchor" id="autotoc_md968"></a>
+Task Event Bridge Integration</h1>
+<p>The task event bridge enables cross-module communication by publishing task lifecycle events to the common_system event bus.</p>
+<h2><a class="anchor" id="autotoc_md969"></a>
+Event Types</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Category   </th><th class="markdownTableHeadNone">Event   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Task Lifecycle</b>   </td><td class="markdownTableBodyNone"><code>task_queued_event</code>   </td><td class="markdownTableBodyNone">Task added to queue    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_started_event</code>   </td><td class="markdownTableBodyNone">Task execution began    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_progress_event</code>   </td><td class="markdownTableBodyNone">Task progress updated    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_succeeded_event</code>   </td><td class="markdownTableBodyNone">Task completed successfully    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_failed_event</code>   </td><td class="markdownTableBodyNone">Task execution failed    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_retrying_event</code>   </td><td class="markdownTableBodyNone">Task scheduled for retry    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_cancelled_event</code>   </td><td class="markdownTableBodyNone">Task was cancelled    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Worker</b>   </td><td class="markdownTableBodyNone"><code>worker_online_event</code>   </td><td class="markdownTableBodyNone">Worker came online    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>worker_offline_event</code>   </td><td class="markdownTableBodyNone">Worker went offline    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>worker_heartbeat_event</code>   </td><td class="markdownTableBodyNone">Periodic worker status    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Queue</b>   </td><td class="markdownTableBodyNone"><code>queue_high_watermark_event</code>   </td><td class="markdownTableBodyNone">Queue size threshold reached    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>queue_empty_event</code>   </td><td class="markdownTableBodyNone">Queue became empty   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md970"></a>
+Basic Usage</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/common/patterns/event_bus.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/integration/task_event_bridge.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/integration/task_events.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span>kcenon::messaging::task;</div>
+<div class="line"><span class="keyword">using namespace </span>kcenon::common;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Get global event bus and start it</span></div>
+<div class="line"><span class="keyword">auto</span>&amp; event_bus = get_event_bus();</div>
+<div class="line">event_bus.start();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Subscribe to task events</span></div>
+<div class="line"><span class="keyword">auto</span> sub = event_bus.subscribe&lt;task_succeeded_event&gt;(</div>
+<div class="line">    [](<span class="keyword">const</span> task_succeeded_event&amp; evt) {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Task &quot;</span> &lt;&lt; evt.task_id &lt;&lt; <span class="stringliteral">&quot; completed in &quot;</span></div>
+<div class="line">                  &lt;&lt; evt.duration.count() &lt;&lt; <span class="stringliteral">&quot;ms&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">    });</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Create and start the bridge</span></div>
+<div class="line">task_event_bridge_config config;</div>
+<div class="line">config.enable_progress_events = <span class="keyword">true</span>;</div>
+<div class="line"> </div>
+<div class="line">task_event_bridge bridge(config);</div>
+<div class="line">bridge.start();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Publish events from your worker implementation</span></div>
+<div class="line">bridge.on_task_started(<span class="stringliteral">&quot;task-123&quot;</span>, <span class="stringliteral">&quot;email.send&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;worker-1&quot;</span>);</div>
+<div class="line"><span class="comment">// ... task executes ...</span></div>
+<div class="line">bridge.on_task_succeeded(<span class="stringliteral">&quot;task-123&quot;</span>, <span class="stringliteral">&quot;email.send&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;worker-1&quot;</span>,</div>
+<div class="line">                         std::chrono::milliseconds(150));</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Cleanup</span></div>
+<div class="line">bridge.stop();</div>
+<div class="line">event_bus.unsubscribe(sub);</div>
+<div class="line">event_bus.stop();</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md971"></a>
+Configuration Options</h2>
+<div class="fragment"><div class="line">task_event_bridge_config config;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Threshold for queue high watermark events (default: 1000)</span></div>
+<div class="line">config.queue_high_watermark_threshold = 500;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Enable/disable progress events (default: true)</span></div>
+<div class="line">config.enable_progress_events = <span class="keyword">true</span>;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Enable/disable heartbeat events (default: true)</span></div>
+<div class="line">config.enable_heartbeat_events = <span class="keyword">true</span>;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Heartbeat interval (default: 30 seconds)</span></div>
+<div class="line">config.heartbeat_interval = std::chrono::milliseconds(30000);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md972"></a>
+Event Type Constants</h2>
+<p>String constants are available for event identification:</p>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span>task_event_types {</div>
+<div class="line">    <span class="comment">// Task lifecycle events</span></div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_queued = <span class="stringliteral">&quot;task.queued&quot;</span>;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_started = <span class="stringliteral">&quot;task.started&quot;</span>;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_progress = <span class="stringliteral">&quot;task.progress&quot;</span>;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_succeeded = <span class="stringliteral">&quot;task.succeeded&quot;</span>;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_failed = <span class="stringliteral">&quot;task.failed&quot;</span>;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_retrying = <span class="stringliteral">&quot;task.retrying&quot;</span>;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_cancelled = <span class="stringliteral">&quot;task.cancelled&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Worker events</span></div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> worker_online = <span class="stringliteral">&quot;worker.online&quot;</span>;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> worker_offline = <span class="stringliteral">&quot;worker.offline&quot;</span>;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> worker_heartbeat = <span class="stringliteral">&quot;worker.heartbeat&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Queue events</span></div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> queue_high_watermark = <span class="stringliteral">&quot;queue.high_watermark&quot;</span>;</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> queue_empty = <span class="stringliteral">&quot;queue.empty&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><hr  />
+<h1><a class="anchor" id="autotoc_md974"></a>
 Related Documentation</h1>
 <ul>
 <li><a class="el" href="d6/d63/md_docs_2guides_2QUICK__START.html">Quick Start</a></li>
