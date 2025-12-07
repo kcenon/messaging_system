@@ -59,3 +59,18 @@ target_link_libraries(test_result_backend
 
 add_test(NAME test_result_backend COMMAND test_result_backend)
 set_tests_properties(test_result_backend PROPERTIES TIMEOUT 60)
+
+# Test: worker_pool
+add_executable(test_worker_pool
+    test_worker_pool.cpp
+)
+
+target_link_libraries(test_worker_pool
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME test_worker_pool COMMAND test_worker_pool)
+set_tests_properties(test_worker_pool PROPERTIES TIMEOUT 120)
