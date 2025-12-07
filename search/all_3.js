@@ -27,5 +27,5 @@ var searchData=
   ['3_3a_20grep_20p_20not_20supported_20macos_24',['Issue 3: grep -P Not Supported (macOS)',['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md606',1,'']]],
   ['3_3a_20migrate_20message_20creation_25',['Step 3: Migrate Message Creation',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md816',1,'']]],
   ['3_3a_20task_20queue_20확장_26',['Phase 3: Task Queue (확장)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1199',1,'']]],
-  ['3_3a_20worker_20system_27',['Sprint 3: Worker System',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1222',1,'']]]
+  ['3_3a_20worker_20system_20✅_27',['Sprint 3: Worker System ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1222',1,'']]]
 ];

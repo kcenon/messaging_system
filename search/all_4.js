@@ -11,7 +11,7 @@ var searchData=
   ['4_20object_20pool_20pattern_8',['4. Object Pool Pattern',['../d6/d58/md_docs_2advanced_2DESIGN__PATTERNS.html#autotoc_md6',1,'']]],
   ['4_20thread_20system_9',['4 thread system',['../df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md138',1,'4. Thread System'],['../d2/d64/md_docs_2architecture.html#autotoc_md325',1,'4. Thread System']]],
   ['4_20verify_20installation_10',['4. Verify Installation',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md870',1,'']]],
-  ['4_3a_20client_20async_20result_11',['Sprint 4: Client &amp; Async Result',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1223',1,'']]],
+  ['4_3a_20client_20async_20result_20✅_11',['Sprint 4: Client &amp; Async Result ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1223',1,'']]],
   ['4_3a_20deadlock_20in_20message_20processing_12',['Issue 4: Deadlock in Message Processing',['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md936',1,'']]],
   ['4_3a_20message_20pipeline_13',['Example 4: Message Pipeline',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md833',1,'']]],
   ['4_3a_20migrate_20message_20bus_20usage_14',['Step 4: Migrate Message Bus Usage',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md817',1,'']]],

@@ -13,7 +13,7 @@ var searchData=
   ['task_20client_20producer_10',['Phase 5: Task Client (Producer)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1207',1,'']]],
   ['task_20core_20기반_20확장_11',['Phase 1: Task Core (기반 확장)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1191',1,'']]],
   ['task_20handler_20interface_12',['2.1 Task Handler Interface',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1196',1,'']]],
-  ['task_20infrastructure_13',['Sprint 1: Core Task Infrastructure',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1220',1,'']]],
+  ['task_20infrastructure_20✅_13',['Sprint 1: Core Task Infrastructure ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1220',1,'']]],
   ['task_20monitor_14',['7.1 Task Monitor',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1214',1,'']]],
   ['task_20queue_15',['3.1 Priority Task Queue',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1200',1,'']]],
   ['task_20queue_20확장_16',['Phase 3: Task Queue (확장)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1199',1,'']]],

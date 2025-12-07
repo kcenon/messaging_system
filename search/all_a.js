@@ -63,7 +63,7 @@ var searchData=
   ['are_20supported_60',['Q: Which platforms are supported?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md781',1,'']]],
   ['are_20there_20any_20runtime_20dependencies_61',['Q: Are there any runtime dependencies?',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md846',1,'']]],
   ['asked_20questions_62',['Frequently Asked Questions',['../d4/da1/md_docs_2guides_2FAQ.html',1,'']]],
-  ['async_20result_63',['Sprint 4: Client &amp; Async Result',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1223',1,'']]],
+  ['async_20result_20✅_63',['Sprint 4: Client &amp; Async Result ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1223',1,'']]],
   ['at_20once_64',['Q: Do I need to migrate all code at once?',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md844',1,'']]],
   ['attach_20to_20running_20process_65',['Attach to Running Process',['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md901',1,'']]],
   ['audit_20logging_66',['Audit Logging',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md710',1,'']]],

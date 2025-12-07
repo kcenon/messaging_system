@@ -27,6 +27,7 @@ var searchData=
   ['with_20thread_5fsystem_24',['Using with thread_system',['../index.html#autotoc_md963',1,'']]],
   ['won_20t_20start_25',['won t start',['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md949',1,'Problem: Service Won&apos;t Start'],['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md714',1,'Service Won&apos;t Start']]],
   ['worker_20pool_26',['2.2 Worker Pool',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1197',1,'']]],
-  ['worker_20system_27',['worker system',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1195',1,'Phase 2: Worker System'],['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1222',1,'Sprint 3: Worker System']]],
-  ['workflow_28',['workflow',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1295',1,'Development Workflow'],['../d7/d4b/md_docs_2contributing_2CONTRIBUTING.html#autotoc_md503',1,'Development Workflow'],['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md610',1,'Recommended Build Workflow'],['../da/d7c/md_docs_2guides_2DEVELOPER__GUIDE.html#autotoc_md759',1,'Workflow']]]
+  ['worker_20system_27',['Phase 2: Worker System',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1195',1,'']]],
+  ['worker_20system_20✅_28',['Sprint 3: Worker System ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1222',1,'']]],
+  ['workflow_29',['workflow',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1295',1,'Development Workflow'],['../d7/d4b/md_docs_2contributing_2CONTRIBUTING.html#autotoc_md503',1,'Development Workflow'],['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md610',1,'Recommended Build Workflow'],['../da/d7c/md_docs_2guides_2DEVELOPER__GUIDE.html#autotoc_md759',1,'Workflow']]]
 ];
