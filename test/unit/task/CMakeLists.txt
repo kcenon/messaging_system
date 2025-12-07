@@ -164,3 +164,33 @@ target_link_libraries(test_task_event_bridge
 
 add_test(NAME test_task_event_bridge COMMAND test_task_event_bridge)
 set_tests_properties(test_task_event_bridge PROPERTIES TIMEOUT 60)
+
+# Test: task_queue
+add_executable(test_task_queue
+    test_task_queue.cpp
+)
+
+target_link_libraries(test_task_queue
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME test_task_queue COMMAND test_task_queue)
+set_tests_properties(test_task_queue PROPERTIES TIMEOUT 120)
+
+# Test: scheduler
+add_executable(test_scheduler
+    test_scheduler.cpp
+)
+
+target_link_libraries(test_scheduler
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME test_scheduler COMMAND test_scheduler)
+set_tests_properties(test_scheduler PROPERTIES TIMEOUT 120)
