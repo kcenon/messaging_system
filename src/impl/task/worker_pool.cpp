@@ -8,8 +8,32 @@
 #include <algorithm>
 #include <chrono>
 #include <future>
+#include <format>
 
 namespace kcenon::messaging::task {
+
+// ============================================================================
+// task_pool_worker implementation
+// ============================================================================
+
+task_pool_worker::task_pool_worker(size_t worker_id, worker_pool& pool)
+	: thread_base(std::format("task_worker_{}", worker_id))
+	, worker_id_(worker_id)
+	, pool_(pool) {
+	// Set wake interval to match pool's poll interval
+	set_wake_interval(pool_.config_.poll_interval);
+}
+
+auto task_pool_worker::should_continue_work() const -> bool {
+	// Continue as long as the pool is running and shutdown hasn't been requested
+	return pool_.running_.load() && !pool_.shutdown_requested_.load();
+}
+
+auto task_pool_worker::do_work() -> kcenon::thread::result_void {
+	// Process one task per do_work call
+	pool_.process_one_task();
+	return {};
+}
 
 worker_pool::worker_pool(
 	std::shared_ptr<task_queue> queue,
@@ -89,10 +113,22 @@ common::VoidResult worker_pool::start() {
 		stats_.started_at = std::chrono::system_clock::now();
 	}
 
-	// Spawn worker threads
+	// Create and start worker threads using thread_system
 	workers_.reserve(config_.concurrency);
 	for (size_t i = 0; i < config_.concurrency; ++i) {
-		workers_.emplace_back(&worker_pool::worker_loop, this, i);
+		auto worker = std::make_unique<task_pool_worker>(i, *this);
+		auto result = worker->start();
+		if (result.has_error()) {
+			// Stop already started workers
+			for (auto& w : workers_) {
+				w->stop();
+			}
+			workers_.clear();
+			running_ = false;
+			return common::VoidResult(common::error_info{
+				-1, "Failed to start worker " + std::to_string(i)});
+		}
+		workers_.push_back(std::move(worker));
 	}
 
 	return common::ok();
@@ -109,11 +145,9 @@ common::VoidResult worker_pool::stop() {
 	// Notify workers to stop
 	shutdown_cv_.notify_all();
 
-	// Join all worker threads
+	// Stop all worker threads (thread_system handles joining)
 	for (auto& worker : workers_) {
-		if (worker.joinable()) {
-			worker.join();
-		}
+		worker->stop();
 	}
 	workers_.clear();
 
@@ -143,11 +177,9 @@ common::VoidResult worker_pool::shutdown_graceful(std::chrono::milliseconds time
 	running_ = false;
 	shutdown_cv_.notify_all();
 
-	// Join all worker threads
+	// Stop all worker threads (thread_system handles joining)
 	for (auto& worker : workers_) {
-		if (worker.joinable()) {
-			worker.join();
-		}
+		worker->stop();
 	}
 	workers_.clear();
 
@@ -200,109 +232,108 @@ void worker_pool::reset_statistics() {
 // Private methods
 // ============================================================================
 
-void worker_pool::worker_loop(size_t /* worker_id */) {
-	while (running_ && !shutdown_requested_) {
-		// Try to dequeue a task
-		auto result = queue_->dequeue(config_.queues, config_.poll_interval);
+bool worker_pool::process_one_task() {
+	// Try to dequeue a task (non-blocking with short timeout)
+	auto result = queue_->dequeue(config_.queues, config_.poll_interval);
 
-		if (result.is_err()) {
-			// No task available or error, continue polling
-			continue;
-		}
+	if (result.is_err()) {
+		// No task available or error
+		return false;
+	}
 
-		auto t = result.unwrap();
+	auto t = result.unwrap();
 
-		// Check for shutdown request
-		if (shutdown_requested_) {
-			// Re-enqueue the task if shutting down
-			queue_->enqueue(std::move(t));
-			break;
-		}
+	// Check for shutdown request
+	if (shutdown_requested_) {
+		// Re-enqueue the task if shutting down
+		queue_->enqueue(std::move(t));
+		return false;
+	}
 
-		// Mark as active
-		++active_count_;
+	// Mark as active
+	++active_count_;
 
-		// Find handler
-		auto handler = find_handler(t.task_name());
-		if (!handler) {
-			// No handler found, mark task as failed
-			t.set_state(task_state::failed);
-			t.set_error("No handler registered for task: " + t.task_name());
-			results_->store_state(t.task_id(), task_state::failed);
-			results_->store_error(t.task_id(), t.error_message());
-			--active_count_;
-			shutdown_cv_.notify_all();
-			continue;
-		}
-
-		// Create task context
-		task_context ctx(t, t.attempt_count() + 1);
-
-		// Set subtask spawner
-		ctx.set_subtask_spawner([this](task subtask) -> common::Result<std::string> {
-			return queue_->enqueue(std::move(subtask));
-		});
-
-		// Execute the task
-		auto start_time = std::chrono::steady_clock::now();
-		t.set_state(task_state::running);
-		t.set_started_at(std::chrono::system_clock::now());
-		results_->store_state(t.task_id(), task_state::running);
-
-		auto exec_result = execute_task(t, ctx);
-		auto end_time = std::chrono::steady_clock::now();
-		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
-			end_time - start_time);
-
-		if (exec_result.is_ok()) {
-			// Task succeeded
-			t.set_state(task_state::succeeded);
-			t.set_completed_at(std::chrono::system_clock::now());
-			results_->store_state(t.task_id(), task_state::succeeded);
-
-			// Store result if available
-			if (t.has_result()) {
-				results_->store_result(t.task_id(), t.result());
-			}
-
-			handler->on_success(t, t.has_result() ? t.result() : container_module::value_container{});
-			record_task_completed(true, duration);
-		} else {
-			// Task failed - set state before checking retry eligibility
-			auto error = exec_result.error();
-			t.set_state(task_state::failed);
-
-			if (t.should_retry()) {
-				// Retry the task
-				t.increment_attempt();
-				t.set_state(task_state::retrying);
-				handler->on_retry(t, t.attempt_count());
-				results_->store_state(t.task_id(), task_state::retrying);
-
-				// Calculate retry delay
-				auto retry_delay = t.get_next_retry_delay();
-				auto eta = std::chrono::system_clock::now() + retry_delay;
-				t.config().eta = eta;
-
-				queue_->enqueue(std::move(t));
-				record_task_retried();
-			} else {
-				// Mark as failed permanently
-				t.set_state(task_state::failed);
-				t.set_error(error.message);
-				t.set_completed_at(std::chrono::system_clock::now());
-				results_->store_state(t.task_id(), task_state::failed);
-				results_->store_error(t.task_id(), error.message);
-
-				handler->on_failure(t, error.message);
-				record_task_completed(false, duration);
-			}
-		}
-
-		// Mark as idle
+	// Find handler
+	auto handler = find_handler(t.task_name());
+	if (!handler) {
+		// No handler found, mark task as failed
+		t.set_state(task_state::failed);
+		t.set_error("No handler registered for task: " + t.task_name());
+		results_->store_state(t.task_id(), task_state::failed);
+		results_->store_error(t.task_id(), t.error_message());
 		--active_count_;
 		shutdown_cv_.notify_all();
+		return true;  // Task was processed (even though it failed)
 	}
+
+	// Create task context
+	task_context ctx(t, t.attempt_count() + 1);
+
+	// Set subtask spawner
+	ctx.set_subtask_spawner([this](task subtask) -> common::Result<std::string> {
+		return queue_->enqueue(std::move(subtask));
+	});
+
+	// Execute the task
+	auto start_time = std::chrono::steady_clock::now();
+	t.set_state(task_state::running);
+	t.set_started_at(std::chrono::system_clock::now());
+	results_->store_state(t.task_id(), task_state::running);
+
+	auto exec_result = execute_task(t, ctx);
+	auto end_time = std::chrono::steady_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+		end_time - start_time);
+
+	if (exec_result.is_ok()) {
+		// Task succeeded
+		t.set_state(task_state::succeeded);
+		t.set_completed_at(std::chrono::system_clock::now());
+		results_->store_state(t.task_id(), task_state::succeeded);
+
+		// Store result if available
+		if (t.has_result()) {
+			results_->store_result(t.task_id(), t.result());
+		}
+
+		handler->on_success(t, t.has_result() ? t.result() : container_module::value_container{});
+		record_task_completed(true, duration);
+	} else {
+		// Task failed - set state before checking retry eligibility
+		auto error = exec_result.error();
+		t.set_state(task_state::failed);
+
+		if (t.should_retry()) {
+			// Retry the task
+			t.increment_attempt();
+			t.set_state(task_state::retrying);
+			handler->on_retry(t, t.attempt_count());
+			results_->store_state(t.task_id(), task_state::retrying);
+
+			// Calculate retry delay
+			auto retry_delay = t.get_next_retry_delay();
+			auto eta = std::chrono::system_clock::now() + retry_delay;
+			t.config().eta = eta;
+
+			queue_->enqueue(std::move(t));
+			record_task_retried();
+		} else {
+			// Mark as failed permanently
+			t.set_state(task_state::failed);
+			t.set_error(error.message);
+			t.set_completed_at(std::chrono::system_clock::now());
+			results_->store_state(t.task_id(), task_state::failed);
+			results_->store_error(t.task_id(), error.message);
+
+			handler->on_failure(t, error.message);
+			record_task_completed(false, duration);
+		}
+	}
+
+	// Mark as idle
+	--active_count_;
+	shutdown_cv_.notify_all();
+	return true;
 }
 
 common::VoidResult worker_pool::execute_task(task& t, task_context& ctx) {
