@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Distributed Task Queue System - Sprint 6 (Issue #113)**
+  - `task_system`: Unified facade integrating all task queue components
+    - Single entry point for the entire distributed task queue system
+    - Lifecycle management: `start()`, `stop()`, `shutdown_graceful()`
+    - Component access: `client()`, `workers()`, `scheduler()`, `monitor()`
+    - Convenience methods for handler registration and task submission
+    - Scheduling convenience methods: `schedule_periodic()`, `schedule_cron()`
+    - Statistics and status queries: `get_statistics()`, `pending_count()`, `active_workers()`
+    - Thread-safe implementation with lazy initialization
+    - Comprehensive unit tests (26 tests)
+  - `task_system_config`: Configuration struct combining queue, worker, scheduler, and monitor settings
+
 - **Distributed Task Queue System - Sprint 5 (Issues #110, #111)**
   - `task_scheduler`: Scheduler for periodic and cron-based task execution
     - `add_periodic()`: Register tasks to run at fixed intervals
