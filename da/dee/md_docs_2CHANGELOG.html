@@ -100,6 +100,19 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md466"></a>
 Added</h2>
 <ul>
+<li><b>Distributed Task Queue System - Sprint 2 (Issue #101)</b><ul>
+<li><code>task_queue</code>: Task-specific queue extending message_queue<ul>
+<li>Multiple named queues support (queue_name -&gt; independent queue)</li>
+<li>Delayed task execution with ETA scheduling</li>
+<li>Bulk enqueue operations (enqueue_bulk)</li>
+<li>Tag-based task cancellation (cancel_by_tag)</li>
+<li>Task registry for tracking and lookups</li>
+<li>Priority-based ordering via message_queue integration</li>
+<li>Thread-safe implementation with proper lifecycle management</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><b>Distributed Task Queue System - Sprint 1 (Issues #98, #99, #100)</b><ul>
 <li><code>task_builder</code>: Fluent builder pattern for task construction<ul>
 <li>Support for payload, priority, timeout, retries, queue, eta, countdown, expires, tags</li>
