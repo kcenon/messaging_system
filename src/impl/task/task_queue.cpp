@@ -12,6 +12,56 @@
 namespace kcenon::messaging::task {
 
 // ============================================================================
+// delayed_task_worker implementation
+// ============================================================================
+
+delayed_task_worker::delayed_task_worker(task_queue& parent,
+										 std::chrono::milliseconds poll_interval)
+	: thread_base("delayed_task_worker"), parent_(parent) {
+	set_wake_interval(poll_interval);
+}
+
+void delayed_task_worker::notify_new_task() {
+	{
+		std::lock_guard<std::mutex> lock(cv_mutex_);
+		notified_.store(true);
+	}
+	cv_.notify_one();
+}
+
+bool delayed_task_worker::should_continue_work() const {
+	// Return false when stopped to allow graceful shutdown
+	if (parent_.stopped_.load()) {
+		return false;
+	}
+	// Always return true otherwise to ensure thread_base's wait_for returns
+	// immediately and delegates waiting to do_work()'s cv_.wait_for, which
+	// can be properly notified by notify_new_task()
+	return true;
+}
+
+kcenon::thread::result_void delayed_task_worker::do_work() {
+	// Process any ready delayed tasks
+	parent_.process_delayed_tasks();
+
+	// Calculate wait time
+	auto wait_time = parent_.get_next_delayed_wait_time();
+
+	// Wait for notification or timeout
+	{
+		std::unique_lock<std::mutex> lock(cv_mutex_);
+		if (!parent_.stopped_.load()) {
+			cv_.wait_for(lock, wait_time, [this]() {
+				return notified_.load() || parent_.stopped_.load();
+			});
+			notified_.store(false);
+		}
+	}
+
+	return {};
+}
+
+// ============================================================================
 // Constructor / Destructor
 // ============================================================================
 
@@ -30,7 +80,8 @@ task_queue::task_queue(task_queue&& other) noexcept
 	  cancelled_tasks_(std::move(other.cancelled_tasks_)),
 	  tag_to_tasks_(std::move(other.tag_to_tasks_)),
 	  running_(other.running_.load()),
-	  stopped_(other.stopped_.load()) {
+	  stopped_(other.stopped_.load()),
+	  delayed_worker_(std::move(other.delayed_worker_)) {
 	other.running_.store(false);
 	other.stopped_.store(true);
 }
@@ -47,6 +98,7 @@ task_queue& task_queue::operator=(task_queue&& other) noexcept {
 		tag_to_tasks_ = std::move(other.tag_to_tasks_);
 		running_.store(other.running_.load());
 		stopped_.store(other.stopped_.load());
+		delayed_worker_ = std::move(other.delayed_worker_);
 
 		other.running_.store(false);
 		other.stopped_.store(true);
@@ -68,7 +120,16 @@ common::VoidResult task_queue::start() {
 	running_.store(true);
 
 	if (config_.enable_delayed_queue) {
-		delayed_worker_thread_ = std::thread(&task_queue::delayed_task_worker, this);
+		delayed_worker_ =
+			std::make_unique<delayed_task_worker>(*this, config_.delayed_poll_interval);
+		auto result = delayed_worker_->start();
+		if (result.has_error()) {
+			running_.store(false);
+			stopped_.store(true);
+			delayed_worker_.reset();
+			return common::VoidResult(
+				common::error_info{error::not_running, "Failed to start delayed task worker"});
+		}
 	}
 
 	common::logging::log_info("Task queue started");
@@ -83,12 +144,6 @@ void task_queue::stop() {
 	stopped_.store(true);
 	running_.store(false);
 
-	// Notify delayed worker to stop
-	{
-		std::lock_guard<std::mutex> lock(delayed_mutex_);
-		delayed_cv_.notify_all();
-	}
-
 	// Stop all queues
 	{
 		std::lock_guard<std::mutex> lock(queues_mutex_);
@@ -97,9 +152,11 @@ void task_queue::stop() {
 		}
 	}
 
-	// Wait for delayed worker thread
-	if (delayed_worker_thread_.joinable()) {
-		delayed_worker_thread_.join();
+	// Stop delayed worker using thread_system's lifecycle management
+	if (delayed_worker_) {
+		delayed_worker_->notify_new_task();  // Wake up to check stopped_ flag
+		delayed_worker_->stop();
+		delayed_worker_.reset();
 	}
 
 	common::logging::log_info("Task queue stopped");
@@ -125,11 +182,18 @@ common::Result<std::string> task_queue::enqueue(task t) {
 	// Check if task should be delayed
 	if (t.config().eta.has_value()) {
 		auto now = std::chrono::system_clock::now();
-		if (t.config().eta.value() > now) {
+		auto eta = t.config().eta.value();
+		if (eta > now) {
 			// Add to delayed queue
-			std::lock_guard<std::mutex> lock(delayed_mutex_);
-			delayed_queue_.push({std::move(t), t.config().eta.value()});
-			delayed_cv_.notify_one();
+			// Note: Capture eta before std::move to avoid undefined behavior
+			{
+				std::lock_guard<std::mutex> lock(delayed_mutex_);
+				delayed_queue_.push({std::move(t), eta});
+			}
+			// Notify delayed worker about new task
+			if (delayed_worker_) {
+				delayed_worker_->notify_new_task();
+			}
 
 			common::logging::log_trace("Task " + task_id + " added to delayed queue");
 			return common::ok(task_id);
@@ -404,37 +468,23 @@ void task_queue::process_delayed_tasks() {
 	}
 }
 
-void task_queue::delayed_task_worker() {
-	common::logging::log_trace("Delayed task worker started");
+std::chrono::milliseconds task_queue::get_next_delayed_wait_time() const {
+	std::lock_guard<std::mutex> lock(delayed_mutex_);
 
-	while (!stopped_.load()) {
-		process_delayed_tasks();
-
-		std::unique_lock<std::mutex> lock(delayed_mutex_);
-		if (stopped_.load()) {
-			break;
-		}
-
-		// Calculate wait time
-		std::chrono::milliseconds wait_time = config_.delayed_poll_interval;
-		if (!delayed_queue_.empty()) {
-			auto now = std::chrono::system_clock::now();
-			auto next_eta = delayed_queue_.top().eta;
-			if (next_eta > now) {
-				auto until_eta = std::chrono::duration_cast<std::chrono::milliseconds>(
-					next_eta - now);
-				wait_time = std::min(wait_time, until_eta);
-			} else {
-				wait_time = std::chrono::milliseconds::zero();
-			}
-		}
-
-		if (wait_time > std::chrono::milliseconds::zero()) {
-			delayed_cv_.wait_for(lock, wait_time);
-		}
+	if (delayed_queue_.empty()) {
+		return config_.delayed_poll_interval;
 	}
 
-	common::logging::log_trace("Delayed task worker stopped");
+	auto now = std::chrono::system_clock::now();
+	auto next_eta = delayed_queue_.top().eta;
+
+	if (next_eta <= now) {
+		return std::chrono::milliseconds::zero();
+	}
+
+	auto until_eta =
+		std::chrono::duration_cast<std::chrono::milliseconds>(next_eta - now);
+	return std::min(config_.delayed_poll_interval, until_eta);
 }
 
 bool task_queue::is_task_cancelled(const std::string& task_id) const {
