@@ -186,6 +186,7 @@ set(MESSAGING_CORE_SOURCES
     src/impl/task/worker_pool.cpp
     src/impl/task/async_result.cpp
     src/impl/task/task_client.cpp
+    src/impl/task/cron_parser.cpp
 )
 
 add_library(messaging_system_core STATIC ${MESSAGING_CORE_SOURCES})
