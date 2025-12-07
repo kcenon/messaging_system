@@ -187,10 +187,14 @@ public:
 	/**
 	 * @brief Check if the task should be retried after a failure
 	 *
-	 * This method is called by the worker pool when a task execution fails.
-	 * It checks whether the current attempt count is less than max_retries.
+	 * This method checks two conditions:
+	 * 1. The task state must be 'failed'
+	 * 2. The current attempt count must be less than max_retries
 	 *
-	 * @return true if attempt_count < max_retries, false otherwise
+	 * The caller (worker_pool) must set the state to 'failed' before
+	 * calling this method.
+	 *
+	 * @return true if state is failed AND attempt_count < max_retries
 	 * @see task_config::max_retries
 	 */
 	bool should_retry() const;

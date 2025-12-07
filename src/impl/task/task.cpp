@@ -201,12 +201,9 @@ bool task::is_expired() const {
 }
 
 bool task::should_retry() const {
-	// Note: This method is called when a task execution fails.
-	// The state check is removed because:
-	// 1. The caller (worker_pool) invokes this during failure handling
-	//    while the task state is still 'running'
-	// 2. The caller is responsible for setting the appropriate state
-	//    (retrying or failed) based on this method's return value
+	if (state_ != task_state::failed) {
+		return false;
+	}
 	return attempt_count_ < config_.max_retries;
 }
 
