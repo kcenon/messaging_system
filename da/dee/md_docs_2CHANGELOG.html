@@ -100,7 +100,18 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md466"></a>
 Added</h2>
 <ul>
-<li><b>Distributed Task Queue System - Sprint 5 (Issue #111)</b><ul>
+<li><b>Distributed Task Queue System - Sprint 5 (Issues #110, #111)</b><ul>
+<li><code>task_scheduler</code>: Scheduler for periodic and cron-based task execution<ul>
+<li><code>add_periodic()</code>: Register tasks to run at fixed intervals</li>
+<li><code>add_cron()</code>: Register tasks to run based on cron expressions</li>
+<li>Schedule management: <code>remove()</code>, <code>enable()</code>, <code>disable()</code>, <code>trigger_now()</code></li>
+<li>Background scheduler loop with efficient condition variable waiting</li>
+<li>Event callbacks for task execution and failure notifications</li>
+<li>Integration with task_client for task submission</li>
+<li>Thread-safe implementation with proper lifecycle management</li>
+</ul>
+</li>
+<li>New error code: <code>schedule_already_exists</code> (-715)</li>
 <li><code>cron_parser</code>: Cron expression parser for scheduled task execution<ul>
 <li>Standard 5-field cron format support (minute hour day month weekday)</li>
 <li>Syntax support: wildcards (*), specific values, intervals (*/n), ranges (a-b), lists (a,b,c)</li>
