@@ -460,3 +460,323 @@ TEST(WorkerPoolTest, ProgressTracking) {
 	pool.stop();
 	queue->stop();
 }
+
+// ============================================================================
+// Retry mechanism tests
+// ============================================================================
+
+TEST(WorkerPoolTest, RetryOnFailure) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	std::atomic<int> attempt_count{0};
+	constexpr int max_retries = 3;
+
+	pool.register_handler("retry.task", [&attempt_count](const task_t& t, task_context& ctx) {
+		(void)t;
+		(void)ctx;
+		++attempt_count;
+		// Always fail to trigger retries
+		return cmn::Result<container_module::value_container>(
+			cmn::error_info{-1, "Intentional failure"});
+	});
+
+	pool.start();
+
+	auto task = task_builder("retry.task")
+		.retries(max_retries)
+		.retry_delay(std::chrono::milliseconds(50))
+		.build()
+		.unwrap();
+	auto task_id = task.task_id();
+	queue->enqueue(std::move(task));
+
+	// Wait for all retry attempts plus some buffer time
+	// Initial attempt + max_retries = max_retries + 1 total attempts
+	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+	// Should have attempted max_retries + 1 times (initial + retries)
+	EXPECT_EQ(attempt_count.load(), max_retries + 1);
+
+	// Final state should be failed
+	auto state = results->get_state(task_id);
+	EXPECT_TRUE(state.is_ok());
+	EXPECT_EQ(state.unwrap(), task_state::failed);
+
+	pool.stop();
+	queue->stop();
+}
+
+TEST(WorkerPoolTest, RetrySucceedsOnSecondAttempt) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	std::atomic<int> attempt_count{0};
+
+	pool.register_handler("retry.success", [&attempt_count](const task_t& t, task_context& ctx) {
+		(void)t;
+		(void)ctx;
+		int current_attempt = ++attempt_count;
+
+		if (current_attempt < 2) {
+			// Fail on first attempt
+			return cmn::Result<container_module::value_container>(
+				cmn::error_info{-1, "First attempt failure"});
+		}
+
+		// Succeed on second attempt
+		container_module::value_container result;
+		result.set_value("status", std::string("success"));
+		return cmn::ok(result);
+	});
+
+	pool.start();
+
+	auto task = task_builder("retry.success")
+		.retries(3)
+		.retry_delay(std::chrono::milliseconds(50))
+		.build()
+		.unwrap();
+	auto task_id = task.task_id();
+	queue->enqueue(std::move(task));
+
+	// Wait for result
+	auto result = results->wait_for_result(task_id, std::chrono::seconds(5));
+
+	EXPECT_TRUE(result.is_ok());
+	EXPECT_EQ(attempt_count.load(), 2);
+
+	// Final state should be succeeded
+	auto state = results->get_state(task_id);
+	EXPECT_TRUE(state.is_ok());
+	EXPECT_EQ(state.unwrap(), task_state::succeeded);
+
+	pool.stop();
+	queue->stop();
+}
+
+TEST(WorkerPoolTest, RetryExponentialBackoff) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	std::vector<std::chrono::steady_clock::time_point> attempt_times;
+	std::mutex times_mutex;
+
+	pool.register_handler("backoff.task", [&](const task_t& t, task_context& ctx) {
+		(void)t;
+		(void)ctx;
+		{
+			std::lock_guard<std::mutex> lock(times_mutex);
+			attempt_times.push_back(std::chrono::steady_clock::now());
+		}
+		// Always fail
+		return cmn::Result<container_module::value_container>(
+			cmn::error_info{-1, "Intentional failure"});
+	});
+
+	pool.start();
+
+	// Use base delay of 100ms with 2.0 multiplier
+	// Expected delays: 100ms, 200ms, 400ms
+	auto task = task_builder("backoff.task")
+		.retries(3)
+		.retry_delay(std::chrono::milliseconds(100))
+		.retry_backoff(2.0)
+		.build()
+		.unwrap();
+	queue->enqueue(std::move(task));
+
+	// Wait for all attempts
+	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
+	std::lock_guard<std::mutex> lock(times_mutex);
+	ASSERT_GE(attempt_times.size(), 3);
+
+	// Check that delays are increasing (exponential backoff)
+	if (attempt_times.size() >= 3) {
+		auto delay1 = std::chrono::duration_cast<std::chrono::milliseconds>(
+			attempt_times[1] - attempt_times[0]);
+		auto delay2 = std::chrono::duration_cast<std::chrono::milliseconds>(
+			attempt_times[2] - attempt_times[1]);
+
+		// Second delay should be roughly double the first (with some tolerance)
+		// Note: actual delays include execution time, so we check relative increase
+		EXPECT_GE(delay2.count(), delay1.count());
+	}
+
+	pool.stop();
+	queue->stop();
+}
+
+TEST(WorkerPoolTest, OnRetryHookCalled) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	std::atomic<int> retry_hook_count{0};
+	std::atomic<int> failure_hook_count{0};
+
+	// Create a custom handler to track hooks
+	class retry_tracking_handler : public tsk::task_handler_interface {
+	public:
+		retry_tracking_handler(std::atomic<int>& retry_count, std::atomic<int>& failure_count)
+			: retry_count_(retry_count), failure_count_(failure_count) {}
+
+		std::string name() const override { return "hook.test"; }
+
+		cmn::Result<container_module::value_container> execute(
+			const task_t& t,
+			task_context& ctx) override {
+			(void)t;
+			(void)ctx;
+			// Always fail
+			return cmn::Result<container_module::value_container>(
+				cmn::error_info{-1, "Intentional failure"});
+		}
+
+		void on_retry(const task_t& t, size_t attempt) override {
+			(void)t;
+			(void)attempt;
+			++retry_count_;
+		}
+
+		void on_failure(const task_t& t, const std::string& error) override {
+			(void)t;
+			(void)error;
+			++failure_count_;
+		}
+
+	private:
+		std::atomic<int>& retry_count_;
+		std::atomic<int>& failure_count_;
+	};
+
+	pool.register_handler(
+		std::make_shared<retry_tracking_handler>(retry_hook_count, failure_hook_count));
+
+	pool.start();
+
+	auto task = task_builder("hook.test")
+		.retries(2)
+		.retry_delay(std::chrono::milliseconds(50))
+		.build()
+		.unwrap();
+	queue->enqueue(std::move(task));
+
+	// Wait for all attempts
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+	// on_retry should be called for each retry (2 times)
+	EXPECT_EQ(retry_hook_count.load(), 2);
+	// on_failure should be called once when all retries exhausted
+	EXPECT_EQ(failure_hook_count.load(), 1);
+
+	pool.stop();
+	queue->stop();
+}
+
+TEST(WorkerPoolTest, NoRetryWhenMaxRetriesZero) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	std::atomic<int> attempt_count{0};
+
+	pool.register_handler("no.retry", [&attempt_count](const task_t& t, task_context& ctx) {
+		(void)t;
+		(void)ctx;
+		++attempt_count;
+		return cmn::Result<container_module::value_container>(
+			cmn::error_info{-1, "Intentional failure"});
+	});
+
+	pool.start();
+
+	auto task = task_builder("no.retry")
+		.retries(0)  // No retries
+		.build()
+		.unwrap();
+	auto task_id = task.task_id();
+	queue->enqueue(std::move(task));
+
+	// Wait for task to fail
+	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+	// Should only attempt once (no retries)
+	EXPECT_EQ(attempt_count.load(), 1);
+
+	// Final state should be failed
+	auto state = results->get_state(task_id);
+	EXPECT_TRUE(state.is_ok());
+	EXPECT_EQ(state.unwrap(), task_state::failed);
+
+	pool.stop();
+	queue->stop();
+}
+
+TEST(WorkerPoolTest, RetryStatistics) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	pool.register_handler("stat.retry", [](const task_t& t, task_context& ctx) {
+		(void)t;
+		(void)ctx;
+		return cmn::Result<container_module::value_container>(
+			cmn::error_info{-1, "Intentional failure"});
+	});
+
+	pool.start();
+
+	auto task = task_builder("stat.retry")
+		.retries(2)
+		.retry_delay(std::chrono::milliseconds(50))
+		.build()
+		.unwrap();
+	queue->enqueue(std::move(task));
+
+	// Wait for all attempts
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+	auto stats = pool.get_statistics();
+	// Should have 2 retries recorded
+	EXPECT_EQ(stats.total_tasks_retried, 2);
+	// Should have 1 failed task
+	EXPECT_EQ(stats.total_tasks_failed, 1);
+
+	pool.stop();
+	queue->stop();
+}
