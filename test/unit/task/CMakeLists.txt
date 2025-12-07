@@ -104,3 +104,18 @@ target_link_libraries(test_task_client
 
 add_test(NAME test_task_client COMMAND test_task_client)
 set_tests_properties(test_task_client PROPERTIES TIMEOUT 120)
+
+# Test: cron_parser
+add_executable(test_cron_parser
+    test_cron_parser.cpp
+)
+
+target_link_libraries(test_cron_parser
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME test_cron_parser COMMAND test_cron_parser)
+set_tests_properties(test_cron_parser PROPERTIES TIMEOUT 60)

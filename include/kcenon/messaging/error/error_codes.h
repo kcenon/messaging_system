@@ -50,6 +50,8 @@ constexpr int task_timeout = base - 9;               // -709
 constexpr int task_failed = base - 10;               // -710
 constexpr int task_handler_not_found = base - 11;    // -711
 constexpr int task_spawner_not_configured = base - 12; // -712
+constexpr int task_invalid_argument = base - 13;      // -713
+constexpr int task_operation_failed = base - 14;      // -714
 
 // ============================================================================
 // Routing Errors (-720 to -739)
@@ -123,6 +125,8 @@ inline std::string_view get_error_message(int code) {
         case task_failed: return "Task execution failed";
         case task_handler_not_found: return "Task handler not found";
         case task_spawner_not_configured: return "Subtask spawner not configured";
+        case task_invalid_argument: return "Invalid task argument";
+        case task_operation_failed: return "Task operation failed";
 
         // Routing errors
         case routing_failed: return "Message routing failed";

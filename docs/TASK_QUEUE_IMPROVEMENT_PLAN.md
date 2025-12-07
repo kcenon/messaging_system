@@ -627,7 +627,8 @@ public:
 
 ### Sprint 5: Scheduler
 1. `scheduler.h` / `scheduler.cpp` - 스케줄러
-2. Cron 파싱 (간단한 구현 또는 라이브러리)
+2. Cron 파싱 (간단한 구현 또는 라이브러리) ✅
+   - `cron_parser.h` / `cron_parser.cpp` - Cron 표현식 파서 (#111)
 
 ### Sprint 6: Monitoring & System Integration
 1. `monitor.h` / `monitor.cpp` - 모니터링

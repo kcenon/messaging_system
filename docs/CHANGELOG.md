@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Distributed Task Queue System - Sprint 5 (Issue #111)**
+  - `cron_parser`: Cron expression parser for scheduled task execution
+    - Standard 5-field cron format support (minute hour day month weekday)
+    - Syntax support: wildcards (*), specific values, intervals (*/n), ranges (a-b), lists (a,b,c)
+    - `parse()`: Parse cron expression string to structured cron_expression
+    - `next_run_time()`: Calculate next execution time from given start point
+    - `is_valid()`: Validate cron expression syntax
+    - `to_string()`: Convert parsed expression back to string
+    - Leap year and year rollover handling
+    - Thread-safe static methods
+    - Comprehensive unit tests (32 tests)
+  - New error codes: `task_invalid_argument` (-713), `task_operation_failed` (-714)
+
 - **Distributed Task Queue System - Sprint 4 (Issues #107, #108, #109)**
   - `async_result`: Asynchronous result handle for task execution tracking
     - Status queries (is_ready, is_successful, is_failed, is_cancelled)
