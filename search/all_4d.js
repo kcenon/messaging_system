@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['아키텍처_0',['아키텍처',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md367',1,'컴포넌트 아키텍처'],['../de/de3/md_docs_2ARCHITECTURE__KO.html',1,'Messaging System 아키텍처']]]
+  ['발행_20흐름_0',['메시지 발행 흐름',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md375',1,'']]]
 ];

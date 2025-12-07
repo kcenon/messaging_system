@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['선택적_0',['4.3 Redis Result Backend (선택적)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1211',1,'']]],
-  ['선택_1',['런타임 백엔드 선택',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md592',1,'']]]
+  ['매트릭스_0',['매트릭스',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md372',1,'버전 매트릭스'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1100',1,'빌드 매트릭스']]],
+  ['매핑_1',['개념 매핑',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1626',1,'']]]
 ];

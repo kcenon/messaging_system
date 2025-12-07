@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['관련_20링크_0',['관련 링크',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1193',1,'']]],
-  ['관련_20문서_1',['관련 문서',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md312',1,'관련 문서'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md384',1,'관련 문서'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md463',1,'관련 문서'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md599',1,'관련 문서'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1112',1,'관련 문서'],['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1163',1,'관련 문서']]]
+  ['계산_0',['재시도 지연 계산',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1721',1,'']]]
 ];

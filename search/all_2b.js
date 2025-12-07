@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['기능_0',['기능',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md594',1,'프로덕션 기능'],['../d4/d0c/md_docs_2FEATURES__KO.html',1,'Messaging System 기능']]],
-  ['기반_20확장_1',['Phase 1: Task Core (기반 확장)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1197',1,'']]]
+  ['관련_20링크_0',['관련 링크',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1196',1,'']]],
+  ['관련_20문서_1',['관련 문서',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md384',1,'관련 문서'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1862',1,'관련 문서'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1758',1,'관련 문서'],['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1644',1,'관련 문서'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1578',1,'관련 문서'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1490',1,'관련 문서'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1434',1,'관련 문서'],['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1163',1,'관련 문서'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1112',1,'관련 문서'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md599',1,'관련 문서'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md463',1,'관련 문서'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md312',1,'관련 문서']]],
+  ['관리_2',['관리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1403',1,'스케줄 관리'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1737',1,'스케줄 관리'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1421',1,'작업 관리'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1352',1,'체크포인트 관리'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1353',1,'하위 작업 관리']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['분리_0',['2. Result Backend 분리',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1242',1,'']]]
+  ['레퍼런스_0',['레퍼런스',['../d4/d54/md_docs_2API__REFERENCE__KO.html',1,'Messaging System API 레퍼런스'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html',1,'Task 모듈 API 레퍼런스']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['이력_0',['Messaging System 변경 이력',['../db/d9f/md_docs_2CHANGELOG__KO.html',1,'']]]
+  ['분리_0',['2. Result Backend 분리',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1911',1,'']]]
 ];

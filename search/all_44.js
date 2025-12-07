@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['상속_0',['1. Task는 Message를 상속',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1241',1,'']]]
+  ['링크_0',['관련 링크',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1196',1,'']]]
 ];

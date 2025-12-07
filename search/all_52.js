@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['우선_0',['2. 비동기 우선',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md380',1,'']]],
-  ['우선_20설계_1',['4. 비동기 우선 설계',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1244',1,'']]]
+  ['벤치마크_0',['벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md450',1,'메시지 버스 벤치마크'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html',1,'Messaging System 성능 벤치마크']]],
+  ['벤치마크_20방법론_1',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md461',1,'']]]
 ];

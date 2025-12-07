@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['안전성_20검증_0',['스레드 안전성 검증',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1102',1,'']]],
-  ['안전_1',['안전',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md595',1,'스레드 안전'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md596',1,'타입 안전'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md381',1,'3. 스레드 안전']]]
+  ['방법론_0',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md461',1,'']]],
+  ['방법_1',['디버깅 방법',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1839',1,'']]],
+  ['방식_2',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1912',1,'']]]
 ];

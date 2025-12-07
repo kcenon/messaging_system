@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['변경됨_0',['변경됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md483',1,'변경됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md492',1,'변경됨']]],
-  ['변경_20이력_1',['Messaging System 변경 이력',['../db/d9f/md_docs_2CHANGELOG__KO.html',1,'']]]
+  ['런타임_20백엔드_20선택_0',['런타임 백엔드 선택',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md592',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['링크_0',['관련 링크',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1193',1,'']]]
+  ['느슨한_20결합_0',['1. 느슨한 결합',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md379',1,'']]]
 ];

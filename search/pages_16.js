@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['아키텍처_0',['Messaging System 아키텍처',['../de/de3/md_docs_2ARCHITECTURE__KO.html',1,'']]]
+  ['벤치마크_0',['Messaging System 성능 벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html',1,'']]]
 ];

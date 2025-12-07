@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['데이터_20흐름_0',['데이터 흐름',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md374',1,'']]]
+  ['권장_20사항_0',['설정 권장 사항',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1574',1,'']]]
 ];

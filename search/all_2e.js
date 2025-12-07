@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['독립_20실행_0',['독립 실행',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md590',1,'']]]
+  ['규모별_0',['규모별',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1576',1,'']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['📚_20documentation_0',['📚 Documentation',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1290',1,'']]],
-  ['📚_20documentation_20overview_1',['📚 Documentation Overview',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1165',1,'']]]
+  ['원칙_0',['설계 원칙',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md378',1,'']]]
 ];

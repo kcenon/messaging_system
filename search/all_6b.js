@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['프로덕션_20기능_0',['프로덕션 기능',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md594',1,'']]],
-  ['프로덕션_20품질_1',['Messaging System 프로덕션 품질',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html',1,'']]],
-  ['프로젝트_20구조_2',['Messaging System 프로젝트 구조',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html',1,'']]]
+  ['않을_20에러_0',['재시도 vs 재시도하지 않을 에러',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1724',1,'']]],
+  ['않음_1',['않음',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1833',1,'작업이 처리되지 않음'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1836',1,'재시도가 작동하지 않음']]]
 ];

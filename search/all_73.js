@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🎯_20key_20features_0',['🎯 Key Features',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1250',1,'']]]
+  ['와일드카드_20패턴_0',['와일드카드 패턴',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md303',1,'']]]
 ];

@@ -1,7 +1,13 @@
 var searchData=
 [
-  ['컴파일러_20지원_0',['컴파일러 지원',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1110',1,'']]],
-  ['컴포넌트별_20커버리지_1',['컴포넌트별 커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1106',1,'']]],
-  ['컴포넌트_2',['핵심 컴포넌트',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md368',1,'']]],
-  ['컴포넌트_20아키텍처_3',['컴포넌트 아키텍처',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md367',1,'']]]
+  ['설계_0',['4. 비동기 우선 설계',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1913',1,'']]],
+  ['설계_20결정_1',['설계 결정',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1484',1,'']]],
+  ['설계_20원칙_2',['설계 원칙',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md378',1,'']]],
+  ['설명_3',['주요 디렉토리 설명',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1156',1,'']]],
+  ['설정_4',['설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1568',1,'고처리량 설정'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1720',1,'기본 설정'],['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1641',1,'누락된 큐 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1552',1,'동시성 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1570',1,'리소스 제한 설정'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1358',1,'설정'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1367',1,'설정'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1425',1,'설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1546',1,'영속성 설정'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1728',1,'우선순위 설정'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1729',1,'우선순위 큐 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1549',1,'워커 풀 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1571',1,'장기 실행 작업 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1569',1,'저지연 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1547',1,'지연 큐 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1554',1,'프리페치 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1562',1,'환경별 설정'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1782',1,'2. Task 시스템 생성 및 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1556',1,'Task 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1538',1,'Task 시스템 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1543',1,'Task 큐 설정']]],
+  ['설정_20가이드_5',['Task 모듈 설정 가이드',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html',1,'']]],
+  ['설정_20권장_20사항_6',['설정 권장 사항',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1574',1,'']]],
+  ['설정_20마이그레이션_7',['설정 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1618',1,'']]],
+  ['설정_20메서드_8',['설정 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1325',1,'']]],
+  ['설치_9',['설치',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1779',1,'']]]
 ];

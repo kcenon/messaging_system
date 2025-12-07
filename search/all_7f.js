@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🤝_20contributing_0',['🤝 Contributing',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1299',1,'']]]
+  ['있는_20chain_0',['재시도가 있는 Chain',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1755',1,'']]]
 ];

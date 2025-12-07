@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['의존성_0',['의존성',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md488',1,'']]],
-  ['의존성_20구조_1',['의존성 구조',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md371',1,'']]]
+  ['복구_0',['체크포인트와 복구',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1745',1,'']]]
 ];

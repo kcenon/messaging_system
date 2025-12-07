@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['기능_0',['Messaging System 기능',['../d4/d0c/md_docs_2FEATURES__KO.html',1,'']]]
+  ['구조_0',['Messaging System 프로젝트 구조',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html',1,'']]]
 ];

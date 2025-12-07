@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['🚀_20quick_20navigation_0',['🚀 Quick Navigation',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1169',1,'']]],
-  ['🚀_20quick_20start_1',['🚀 Quick Start',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1263',1,'']]]
+  ['일반적인_20마이그레이션_20문제_0',['일반적인 마이그레이션 문제',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1639',1,'']]],
+  ['일반적인_20문제_1',['일반적인 문제',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1832',1,'']]]
 ];

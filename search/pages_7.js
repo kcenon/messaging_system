@@ -15,5 +15,12 @@ var searchData=
   ['messaging_20system_20performance_20benchmarks_12',['Messaging System Performance Benchmarks',['../de/d93/md_docs_2BENCHMARKS.html',1,'']]],
   ['messaging_20system_20production_20quality_13',['Messaging System Production Quality',['../dd/def/md_docs_2PRODUCTION__QUALITY.html',1,'']]],
   ['messaging_20system_20project_20structure_14',['Messaging System Project Structure',['../d4/d22/md_docs_2PROJECT__STRUCTURE.html',1,'']]],
-  ['migration_20guide_15',['Migration Guide',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html',1,'']]]
+  ['migration_20guide_15',['migration guide',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html',1,'Migration Guide'],['../d2/d8d/md_docs_2task_2MIGRATION.html',1,'Task Module Migration Guide']]],
+  ['module_20api_20reference_16',['Task Module API Reference',['../df/d18/md_docs_2task_2API__REFERENCE.html',1,'']]],
+  ['module_20architecture_17',['Task Module Architecture',['../d1/d5e/md_docs_2task_2ARCHITECTURE.html',1,'']]],
+  ['module_20configuration_20guide_18',['Task Module Configuration Guide',['../dc/d1e/md_docs_2task_2CONFIGURATION.html',1,'']]],
+  ['module_20migration_20guide_19',['Task Module Migration Guide',['../d2/d8d/md_docs_2task_2MIGRATION.html',1,'']]],
+  ['module_20quick_20start_20guide_20',['Task Module Quick Start Guide',['../d9/dff/md_docs_2task_2QUICK__START.html',1,'']]],
+  ['module_20troubleshooting_20guide_21',['Task Module Troubleshooting Guide',['../dd/df5/md_docs_2task_2TROUBLESHOOTING.html',1,'']]],
+  ['module_20workflow_20patterns_22',['Task Module Workflow Patterns',['../d5/dd2/md_docs_2task_2PATTERNS.html',1,'']]]
 ];

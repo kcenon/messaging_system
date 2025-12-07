@@ -1,4 +1,25 @@
 var searchData=
 [
-  ['🧩_20component_20documentation_0',['🧩 Component Documentation',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1173',1,'']]]
+  ['작동하지_20않음_0',['재시도가 작동하지 않음',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1836',1,'']]],
+  ['작업에서_20마이그레이션_1',['Cron 작업에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1628',1,'']]],
+  ['작업을_20순서대로_20처리하려면_20어떻게_20하나요_2',['Q: 작업을 순서대로 처리하려면 어떻게 하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1856',1,'']]],
+  ['작업을_20어떻게_20취소하나요_3',['Q: 실행 중인 작업을 어떻게 취소하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1853',1,'']]],
+  ['작업의_20우선순위를_20어떻게_20높이나요_4',['Q: 특정 작업의 우선순위를 어떻게 높이나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1857',1,'']]],
+  ['작업이_20즉시_20실패함_5',['작업이 즉시 실패함',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1834',1,'']]],
+  ['작업이_20처리되지_20않음_6',['작업이 처리되지 않음',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1833',1,'']]],
+  ['작업_7',['작업',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1362',1,'디큐 작업'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1378',1,'배치 작업'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1733',1,'예약 작업'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1361',1,'인큐 작업'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1364',1,'쿼리 작업'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1485',1,'1. 메시지 기반 작업']]],
+  ['작업_20관리_8',['작업 관리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1421',1,'작업 관리'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1353',1,'하위 작업 관리']]],
+  ['작업_20로그_20보기_9',['작업 로그 보기',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1844',1,'']]],
+  ['작업_20를_20어떻게_20처리하나요_10',['Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1859',1,'']]],
+  ['작업_20생성_11',['작업 생성',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1750',1,'하위 작업 생성'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1749',1,'하위 작업 생성']]],
+  ['작업_20설정_12',['장기 실행 작업 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1571',1,'']]],
+  ['작업_20실행_13',['지연 작업 실행',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1738',1,'']]],
+  ['작업_20제어_14',['작업 제어',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1388',1,'']]],
+  ['작업_20제출_20편의_20메서드_15',['작업 제출 (편의 메서드)',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1430',1,'']]],
+  ['작업_20제출_20흐름_16',['작업 제출 흐름',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1478',1,'']]],
+  ['작업_20종속성을_20어떻게_20처리하나요_17',['Q: 작업 종속성을 어떻게 처리하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1855',1,'']]],
+  ['작업_20진행_20상황을_20어떻게_20얻나요_18',['Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1854',1,'']]],
+  ['작업_20추적_19',['하위 작업 추적',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1751',1,'']]],
+  ['작업_20쿼리_20',['작업 쿼리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1420',1,'']]],
+  ['작업_20타임아웃_21',['작업 타임아웃',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1835',1,'']]]
 ];

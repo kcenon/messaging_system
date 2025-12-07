@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['결과_0',['ThreadSanitizer 결과',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1103',1,'']]],
-  ['결합_1',['1. 느슨한 결합',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md379',1,'']]]
+  ['검증_0',['스레드 안전성 검증',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1102',1,'']]]
 ];

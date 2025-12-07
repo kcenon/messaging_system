@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🧪_20testing_0',['🧪 Testing',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1285',1,'']]]
+  ['장기_20실행_20작업_20설정_0',['장기 실행 작업 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1571',1,'']]]
 ];

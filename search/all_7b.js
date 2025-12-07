@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['📬_20contact_20support_0',['📬 Contact &amp; Support',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1305',1,'']]]
+  ['의존성_0',['의존성',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md488',1,'']]],
+  ['의존성_20구조_1',['의존성 구조',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md371',1,'']]]
 ];

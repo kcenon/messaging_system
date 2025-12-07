@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🌟_20integration_20with_20base_20systems_0',['🌟 Integration with Base Systems',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1275',1,'']]]
+  ['옵션_0',['옵션',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1540',1,'옵션'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1545',1,'옵션'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1551',1,'옵션'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1558',1,'옵션']]]
 ];
