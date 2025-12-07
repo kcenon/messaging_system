@@ -404,12 +404,19 @@ All public APIs are thread-safe:
 
 ### thread_system Integration
 
-The `task_queue` component uses `thread_system` for managing the delayed task worker thread. Instead of direct `std::thread` usage, it leverages `kcenon::thread::thread_base` which provides:
+Both `task_queue` and `worker_pool` components use `thread_system` for thread management. Instead of direct `std::thread` usage, they leverage `kcenon::thread::thread_base` which provides:
 
 - Standardized thread lifecycle management (start/stop)
 - Proper wake interval handling for periodic tasks
 - Consistent thread naming and monitoring
 - Integration with the project's threading infrastructure
+
+**task_queue**: Uses `thread_base` for the delayed task worker thread that processes scheduled tasks.
+
+**worker_pool**: Uses `thread_base` through the `task_pool_worker` class. Each worker thread inherits from `thread_base`, delegating thread lifecycle management to `thread_system`. This replaces direct `std::thread` usage with:
+- `task_pool_worker::do_work()` for per-task processing
+- `task_pool_worker::should_continue_work()` for shutdown coordination
+- Automatic wake interval configuration matching the pool's poll interval
 
 ## Extension Points
 

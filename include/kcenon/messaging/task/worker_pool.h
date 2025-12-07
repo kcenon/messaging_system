@@ -7,8 +7,9 @@
  * @brief Worker pool for distributed task queue system
  *
  * Implements a thread pool that processes tasks from queues using registered
- * handlers. Supports multiple queues, handler matching, graceful shutdown,
- * and statistics collection.
+ * handlers. Uses thread_system for thread management instead of direct
+ * std::thread usage. Supports multiple queues, handler matching, graceful
+ * shutdown, and statistics collection.
  */
 
 #pragma once
@@ -18,6 +19,7 @@
 #include <kcenon/messaging/task/task_queue.h>
 #include <kcenon/messaging/task/result_backend.h>
 #include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/thread_base.h>
 
 #include <atomic>
 #include <chrono>
@@ -27,7 +29,6 @@
 #include <memory>
 #include <mutex>
 #include <string>
-#include <thread>
 #include <unordered_map>
 #include <vector>
 
@@ -61,6 +62,58 @@ struct worker_statistics {
 	std::chrono::system_clock::time_point last_task_at;
 };
 
+// Forward declaration
+class worker_pool;
+
+/**
+ * @class task_pool_worker
+ * @brief Worker thread that processes tasks using thread_system's thread_base
+ *
+ * This class inherits from kcenon::thread::thread_base to delegate thread
+ * lifecycle management to thread_system. Each worker polls the task queue,
+ * matches tasks to handlers, and executes them.
+ */
+class task_pool_worker : public kcenon::thread::thread_base {
+public:
+	/**
+	 * @brief Construct a task pool worker
+	 * @param worker_id Unique identifier for this worker
+	 * @param pool Reference to the owning worker_pool
+	 */
+	task_pool_worker(size_t worker_id, worker_pool& pool);
+
+	~task_pool_worker() override = default;
+
+	// Non-copyable, non-movable
+	task_pool_worker(const task_pool_worker&) = delete;
+	task_pool_worker& operator=(const task_pool_worker&) = delete;
+	task_pool_worker(task_pool_worker&&) = delete;
+	task_pool_worker& operator=(task_pool_worker&&) = delete;
+
+	/**
+	 * @brief Get the worker ID
+	 * @return Worker identifier
+	 */
+	[[nodiscard]] size_t worker_id() const { return worker_id_; }
+
+protected:
+	/**
+	 * @brief Determines whether the worker should continue processing
+	 * @return true if there may be more work to do
+	 */
+	[[nodiscard]] auto should_continue_work() const -> bool override;
+
+	/**
+	 * @brief Main work routine - processes one task per call
+	 * @return result_void indicating success or failure
+	 */
+	auto do_work() -> kcenon::thread::result_void override;
+
+private:
+	size_t worker_id_;
+	worker_pool& pool_;
+};
+
 /**
  * @class worker_pool
  * @brief Thread pool for executing distributed tasks
@@ -68,6 +121,10 @@ struct worker_statistics {
  * The worker pool manages a set of worker threads that fetch tasks from
  * queues, match them to registered handlers, and execute them. It handles
  * retries, timeouts, and result storage automatically.
+ *
+ * Thread management is delegated to thread_system's thread_base class,
+ * providing standardized lifecycle management, graceful shutdown, and
+ * monitoring capabilities.
  *
  * @example
  * auto queue = std::make_shared<task_queue>();
@@ -92,6 +149,7 @@ struct worker_statistics {
  * pool.shutdown_graceful(std::chrono::seconds(30));
  */
 class worker_pool {
+	friend class task_pool_worker;
 public:
 	/**
 	 * @brief Construct a worker pool
@@ -231,8 +289,8 @@ public:
 	void reset_statistics();
 
 private:
-	// Worker thread entry point
-	void worker_loop(size_t worker_id);
+	// Process a single task (called by task_pool_worker::do_work)
+	bool process_one_task();
 
 	// Task execution
 	common::VoidResult execute_task(task& t, task_context& ctx);
@@ -256,8 +314,8 @@ private:
 	mutable std::mutex handlers_mutex_;
 	std::unordered_map<std::string, std::shared_ptr<task_handler_interface>> handlers_;
 
-	// Worker threads
-	std::vector<std::thread> workers_;
+	// Worker threads (managed by thread_system)
+	std::vector<std::unique_ptr<task_pool_worker>> workers_;
 
 	// Worker state tracking
 	mutable std::mutex state_mutex_;

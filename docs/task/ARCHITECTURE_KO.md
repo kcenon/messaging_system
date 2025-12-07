@@ -409,12 +409,19 @@ result.then(
 
 ### thread_system 통합
 
-`task_queue` 컴포넌트는 지연된 태스크 워커 스레드 관리를 위해 `thread_system`을 사용합니다. 직접적인 `std::thread` 사용 대신 `kcenon::thread::thread_base`를 활용하여 다음을 제공합니다:
+`task_queue`와 `worker_pool` 컴포넌트 모두 스레드 관리를 위해 `thread_system`을 사용합니다. 직접적인 `std::thread` 사용 대신 `kcenon::thread::thread_base`를 활용하여 다음을 제공합니다:
 
 - 표준화된 스레드 수명 주기 관리 (시작/중지)
 - 주기적 태스크를 위한 적절한 wake interval 처리
 - 일관된 스레드 명명 및 모니터링
 - 프로젝트의 스레딩 인프라와의 통합
+
+**task_queue**: 예약된 태스크를 처리하는 지연 태스크 워커 스레드에 `thread_base`를 사용합니다.
+
+**worker_pool**: `task_pool_worker` 클래스를 통해 `thread_base`를 사용합니다. 각 워커 스레드는 `thread_base`를 상속하여 스레드 수명 주기 관리를 `thread_system`에 위임합니다. 이를 통해 직접적인 `std::thread` 사용을 다음으로 대체합니다:
+- 태스크별 처리를 위한 `task_pool_worker::do_work()`
+- 종료 조정을 위한 `task_pool_worker::should_continue_work()`
+- 풀의 poll interval에 맞춘 자동 wake interval 구성
 
 ## 확장 포인트
 
