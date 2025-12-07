@@ -52,6 +52,7 @@ constexpr int task_handler_not_found = base - 11;    // -711
 constexpr int task_spawner_not_configured = base - 12; // -712
 constexpr int task_invalid_argument = base - 13;      // -713
 constexpr int task_operation_failed = base - 14;      // -714
+constexpr int schedule_already_exists = base - 15;     // -715
 
 // ============================================================================
 // Routing Errors (-720 to -739)
@@ -127,6 +128,7 @@ inline std::string_view get_error_message(int code) {
         case task_spawner_not_configured: return "Subtask spawner not configured";
         case task_invalid_argument: return "Invalid task argument";
         case task_operation_failed: return "Task operation failed";
+        case schedule_already_exists: return "Schedule already exists";
 
         // Routing errors
         case routing_failed: return "Message routing failed";
