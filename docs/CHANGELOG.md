@@ -8,6 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Distributed Task Queue System - Sprint 7 Unit Tests (Issue #117)**
+  - `test_task_queue.cpp`: Comprehensive unit tests for task_queue component
+    - Queue lifecycle tests (construction, start/stop, move semantics)
+    - Enqueue operations (single, bulk, named queues)
+    - Dequeue operations (single queue, multiple queues, timeout handling)
+    - Delayed execution tests (ETA scheduling, countdown delay)
+    - Cancellation tests (by ID, by tag)
+    - Query operations (get task, list queues, queue size)
+    - Thread safety tests (concurrent enqueue/dequeue)
+    - Priority ordering tests
+    - 29 comprehensive tests
+  - `test_scheduler.cpp`: Unit tests for task_scheduler component
+    - Scheduler lifecycle tests (construction, start/stop, move semantics)
+    - Periodic schedule tests (add, duplicate prevention, execution)
+    - Cron schedule tests (add, invalid expression, duplicate prevention)
+    - Schedule management tests (remove, enable/disable, trigger now)
+    - Interval and cron update tests
+    - Query operations (list, get, has, count)
+    - Callback tests (on_task_executed, run count)
+    - Disabled schedule behavior tests
+    - Thread safety tests (concurrent operations)
+    - 35 comprehensive tests
+
 - **Distributed Task Queue System - Sprint 6 (Issue #113)**
   - `task_system`: Unified facade integrating all task queue components
     - Single entry point for the entire distributed task queue system
