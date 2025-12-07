@@ -418,6 +418,12 @@ Both `task_queue` and `worker_pool` components use `thread_system` for thread ma
 - `task_pool_worker::should_continue_work()` for shutdown coordination
 - Automatic wake interval configuration matching the pool's poll interval
 
+**task_scheduler**: Uses `thread_base` through the `scheduler_worker` class. The scheduler's background thread inherits from `thread_base`, providing:
+- `scheduler_worker::do_work()` for checking and executing due schedules
+- `scheduler_worker::should_continue_work()` for graceful shutdown
+- Condition variable integration for immediate wake-up on schedule changes
+- Consistent thread lifecycle management with other components
+
 ## Extension Points
 
 ### Custom Result Backend

@@ -17,6 +17,7 @@
 #include <kcenon/messaging/task/task_client.h>
 #include <kcenon/messaging/task/cron_parser.h>
 #include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/thread_base.h>
 
 #include <atomic>
 #include <chrono>
@@ -26,12 +27,14 @@
 #include <mutex>
 #include <optional>
 #include <string>
-#include <thread>
 #include <unordered_map>
 #include <variant>
 #include <vector>
 
 namespace kcenon::messaging::task {
+
+// Forward declaration for internal worker class
+class scheduler_worker;
 
 /**
  * @struct schedule_entry
@@ -134,6 +137,7 @@ struct schedule_entry {
  * scheduler.stop();
  */
 class task_scheduler {
+	friend class scheduler_worker;
 public:
 	/**
 	 * @brief Construct a task scheduler
@@ -370,15 +374,56 @@ private:
 	mutable std::mutex mutex_;
 	std::unordered_map<std::string, schedule_entry> schedules_;
 
-	// Background thread management
+	// Background thread management (using thread_system)
 	std::atomic<bool> running_{false};
 	std::atomic<bool> stop_requested_{false};
-	std::thread scheduler_thread_;
+	std::unique_ptr<scheduler_worker> scheduler_worker_;
 	std::condition_variable cv_;
 
 	// Event callbacks
 	schedule_callback on_executed_;
 	schedule_callback on_failed_;
+};
+
+/**
+ * @class scheduler_worker
+ * @brief Worker thread that runs the scheduler loop using thread_system's thread_base
+ *
+ * This class inherits from kcenon::thread::thread_base to delegate thread
+ * lifecycle management to thread_system. It monitors schedules and triggers
+ * task execution when schedules are due.
+ */
+class scheduler_worker : public kcenon::thread::thread_base {
+public:
+	/**
+	 * @brief Construct a scheduler worker
+	 * @param scheduler Reference to the owning task_scheduler
+	 */
+	explicit scheduler_worker(task_scheduler& scheduler);
+
+	~scheduler_worker() override = default;
+
+	// Non-copyable, non-movable
+	scheduler_worker(const scheduler_worker&) = delete;
+	scheduler_worker& operator=(const scheduler_worker&) = delete;
+	scheduler_worker(scheduler_worker&&) = delete;
+	scheduler_worker& operator=(scheduler_worker&&) = delete;
+
+protected:
+	/**
+	 * @brief Determines whether the worker should continue running
+	 * @return true if scheduler is running and stop not requested
+	 */
+	[[nodiscard]] auto should_continue_work() const -> bool override;
+
+	/**
+	 * @brief Main work routine - checks and executes due schedules
+	 * @return result_void indicating success or failure
+	 */
+	auto do_work() -> kcenon::thread::result_void override;
+
+private:
+	task_scheduler& scheduler_;
 };
 
 }  // namespace kcenon::messaging::task
