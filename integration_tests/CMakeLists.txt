@@ -110,3 +110,102 @@ target_include_directories(test_container_serialization
 )
 
 gtest_discover_tests(test_container_serialization)
+
+# ============================================================================
+# Task Module Integration Tests (Issue #118)
+# ============================================================================
+
+# Test task lifecycle
+add_executable(test_task_lifecycle
+    task/test_task_lifecycle.cpp
+)
+
+target_link_libraries(test_task_lifecycle
+    PRIVATE
+        messaging_system_core
+        GTest::gtest_main
+)
+
+target_include_directories(test_task_lifecycle
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/task
+)
+
+gtest_discover_tests(test_task_lifecycle)
+
+# Test worker scenarios
+add_executable(test_worker_scenarios
+    task/test_worker_scenarios.cpp
+)
+
+target_link_libraries(test_worker_scenarios
+    PRIVATE
+        messaging_system_core
+        GTest::gtest_main
+)
+
+target_include_directories(test_worker_scenarios
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/task
+)
+
+gtest_discover_tests(test_worker_scenarios)
+
+# Test failure recovery
+add_executable(test_failure_recovery
+    task/test_failure_recovery.cpp
+)
+
+target_link_libraries(test_failure_recovery
+    PRIVATE
+        messaging_system_core
+        GTest::gtest_main
+)
+
+target_include_directories(test_failure_recovery
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/task
+)
+
+gtest_discover_tests(test_failure_recovery)
+
+# Test scheduling
+add_executable(test_scheduling
+    task/test_scheduling.cpp
+)
+
+target_link_libraries(test_scheduling
+    PRIVATE
+        messaging_system_core
+        GTest::gtest_main
+)
+
+target_include_directories(test_scheduling
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/task
+)
+
+gtest_discover_tests(test_scheduling)
+
+# Test concurrent load
+add_executable(test_concurrent_load
+    task/test_concurrent_load.cpp
+)
+
+target_link_libraries(test_concurrent_load
+    PRIVATE
+        messaging_system_core
+        GTest::gtest_main
+)
+
+target_include_directories(test_concurrent_load
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/task
+)
+
+gtest_discover_tests(test_concurrent_load)
