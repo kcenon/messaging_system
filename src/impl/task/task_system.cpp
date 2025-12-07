@@ -40,6 +40,14 @@ common::VoidResult task_system::start() {
 		}
 	}
 
+	// Start task queue
+	auto queue_result = queue_->start();
+	if (!queue_result.is_ok()) {
+		return common::VoidResult(
+			common::error_info{-1, "Failed to start task queue: " +
+				queue_result.error().message});
+	}
+
 	// Start worker pool
 	auto worker_result = workers_->start();
 	if (!worker_result.is_ok()) {
@@ -80,6 +88,11 @@ common::VoidResult task_system::stop() {
 		workers_->stop();
 	}
 
+	// Stop task queue
+	if (queue_) {
+		queue_->stop();
+	}
+
 	running_ = false;
 	return common::ok();
 }
@@ -102,6 +115,11 @@ common::VoidResult task_system::shutdown_graceful(std::chrono::milliseconds time
 		if (!result.is_ok()) {
 			return result;
 		}
+	}
+
+	// Stop task queue
+	if (queue_) {
+		queue_->stop();
 	}
 
 	running_ = false;

@@ -134,3 +134,18 @@ target_link_libraries(test_task_monitor
 
 add_test(NAME test_task_monitor COMMAND test_task_monitor)
 set_tests_properties(test_task_monitor PROPERTIES TIMEOUT 60)
+
+# Test: task_system
+add_executable(test_task_system
+    test_task_system.cpp
+)
+
+target_link_libraries(test_task_system
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME test_task_system COMMAND test_task_system)
+set_tests_properties(test_task_system PROPERTIES TIMEOUT 120)
