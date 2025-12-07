@@ -181,6 +181,7 @@ set(MESSAGING_CORE_SOURCES
     # Task module (Distributed Task Queue System)
     src/impl/task/task.cpp
     src/impl/task/task_context.cpp
+    src/impl/task/task_queue.cpp
 )
 
 add_library(messaging_system_core STATIC ${MESSAGING_CORE_SOURCES})
