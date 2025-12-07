@@ -100,6 +100,21 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 <h2><a class="anchor" id="autotoc_md481"></a>
 추가됨</h2>
 <ul>
+<li><b>분산 태스크 큐 시스템 - Sprint 6 (Issue #113)</b><ul>
+<li><code>task_system</code>: 모든 태스크 큐 컴포넌트를 통합하는 통합 파사드<ul>
+<li>분산 태스크 큐 시스템의 단일 진입점</li>
+<li>라이프사이클 관리: <code>start()</code>, <code>stop()</code>, <code>shutdown_graceful()</code></li>
+<li>컴포넌트 접근: <code>client()</code>, <code>workers()</code>, <code>scheduler()</code>, <code>monitor()</code></li>
+<li>핸들러 등록 및 태스크 제출을 위한 편의 메서드</li>
+<li>스케줄링 편의 메서드: <code>schedule_periodic()</code>, <code>schedule_cron()</code></li>
+<li>통계 및 상태 조회: <code>get_statistics()</code>, <code>pending_count()</code>, <code>active_workers()</code></li>
+<li>지연 초기화를 사용한 스레드 안전 구현</li>
+<li>포괄적인 단위 테스트 (26개 테스트)</li>
+</ul>
+</li>
+<li><code>task_system_config</code>: 큐, 워커, 스케줄러, 모니터 설정을 결합하는 구성 구조체</li>
+</ul>
+</li>
 <li><b>분산 태스크 큐 시스템 - Sprint 3 (Issue #104)</b><ul>
 <li><code>worker_pool</code>: 분산 태스크 실행을 위한 스레드 풀<ul>
 <li>설정 가능한 동시성 (워커 스레드 수)</li>

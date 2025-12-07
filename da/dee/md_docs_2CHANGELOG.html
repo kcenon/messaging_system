@@ -100,6 +100,21 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md466"></a>
 Added</h2>
 <ul>
+<li><b>Distributed Task Queue System - Sprint 6 (Issue #113)</b><ul>
+<li><code>task_system</code>: Unified facade integrating all task queue components<ul>
+<li>Single entry point for the entire distributed task queue system</li>
+<li>Lifecycle management: <code>start()</code>, <code>stop()</code>, <code>shutdown_graceful()</code></li>
+<li>Component access: <code>client()</code>, <code>workers()</code>, <code>scheduler()</code>, <code>monitor()</code></li>
+<li>Convenience methods for handler registration and task submission</li>
+<li>Scheduling convenience methods: <code>schedule_periodic()</code>, <code>schedule_cron()</code></li>
+<li>Statistics and status queries: <code>get_statistics()</code>, <code>pending_count()</code>, <code>active_workers()</code></li>
+<li>Thread-safe implementation with lazy initialization</li>
+<li>Comprehensive unit tests (26 tests)</li>
+</ul>
+</li>
+<li><code>task_system_config</code>: Configuration struct combining queue, worker, scheduler, and monitor settings</li>
+</ul>
+</li>
 <li><b>Distributed Task Queue System - Sprint 5 (Issues #110, #111)</b><ul>
 <li><code>task_scheduler</code>: Scheduler for periodic and cron-based task execution<ul>
 <li><code>add_periodic()</code>: Register tasks to run at fixed intervals</li>
