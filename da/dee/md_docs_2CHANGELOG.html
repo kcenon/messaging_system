@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md466"></a>
 Added</h2>
 <ul>
-<li><b>Distributed Task Queue System - Sprint 2 (Issue #101)</b><ul>
+<li><b>Distributed Task Queue System - Sprint 2 (Issues #101, #102, #103)</b><ul>
 <li><code>task_queue</code>: Task-specific queue extending message_queue<ul>
 <li>Multiple named queues support (queue_name -&gt; independent queue)</li>
 <li>Delayed task execution with ETA scheduling</li>
@@ -109,6 +109,20 @@ Added</h2>
 <li>Task registry for tracking and lookups</li>
 <li>Priority-based ordering via message_queue integration</li>
 <li>Thread-safe implementation with proper lifecycle management</li>
+</ul>
+</li>
+<li><code>result_backend_interface</code>: Abstract interface for task result storage<ul>
+<li>Store/retrieve task state, results, errors, and progress</li>
+<li>Blocking wait for results with timeout</li>
+<li>Cleanup of expired task data</li>
+<li>Extensible design for different backends (memory, Redis, database)</li>
+</ul>
+</li>
+<li><code>memory_result_backend</code>: In-memory implementation of result backend<ul>
+<li>Thread-safe with shared_mutex for concurrent read access</li>
+<li>Efficient blocking using condition_variable</li>
+<li>Automatic cleanup of expired results</li>
+<li>Suitable for single-process environments</li>
 </ul>
 </li>
 </ul>
