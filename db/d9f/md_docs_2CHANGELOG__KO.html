@@ -93,11 +93,33 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
   <div class="headertitle"><div class="title">Messaging System 변경 이력</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md478"></a> 이 프로젝트의 모든 주요 변경 사항은 이 파일에 문서화됩니다.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md479"></a> 이 프로젝트의 모든 주요 변경 사항은 이 파일에 문서화됩니다.</p>
 <p>이 형식은 <a href="https://keepachangelog.com/ko/1.0.0/">Keep a Changelog</a>를 기반으로 하며, 이 프로젝트는 <a href="https://semver.org/lang/ko/">Semantic Versioning</a>을 준수합니다.</p>
-<h1><a class="anchor" id="autotoc_md479"></a>
+<h1><a class="anchor" id="autotoc_md480"></a>
 [Unreleased]</h1>
-<h2><a class="anchor" id="autotoc_md480"></a>
+<h2><a class="anchor" id="autotoc_md481"></a>
+추가됨</h2>
+<ul>
+<li><b>분산 태스크 큐 시스템 - Sprint 3 (Issue #104)</b><ul>
+<li><code>worker_pool</code>: 분산 태스크 실행을 위한 스레드 풀<ul>
+<li>설정 가능한 동시성 (워커 스레드 수)</li>
+<li>우선순위 정렬을 통한 다중 큐 처리</li>
+<li>태스크-핸들러 매칭을 위한 핸들러 등록</li>
+<li>타임아웃 지원이 있는 정상 종료 (graceful shutdown)</li>
+<li>통계 수집 (처리량, 실행 시간, 성공/실패율)</li>
+<li>task_queue, result_backend, task_handler_interface와의 통합</li>
+</ul>
+</li>
+<li>worker_pool 종합 단위 테스트 (15개 테스트)</li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md482"></a>
+수정됨</h2>
+<ul>
+<li><code>task</code>: task_queue 조회를 위해 metadata.id와 task_id 동기화</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md483"></a>
 변경됨</h2>
 <ul>
 <li>CMake 설정에서 fmt 라이브러리 참조 제거<ul>
@@ -106,16 +128,16 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md481"></a>
+<h2><a class="anchor" id="autotoc_md484"></a>
 추가됨</h2>
 <ul>
 <li>문서 구조 표준화</li>
 <li>한국어 문서 지원</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md483"></a>
+<h1><a class="anchor" id="autotoc_md486"></a>
 [1.0.0] - 2025-11-17</h1>
-<h2><a class="anchor" id="autotoc_md484"></a>
+<h2><a class="anchor" id="autotoc_md487"></a>
 추가됨</h2>
 <ul>
 <li><b>핵심 메시징 인프라</b><ul>
@@ -151,7 +173,7 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md485"></a>
+<h2><a class="anchor" id="autotoc_md488"></a>
 의존성</h2>
 <ul>
 <li>common_system: Result&lt;T&gt;, 인터페이스</li>
@@ -162,16 +184,16 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 <li>network_system: 네트워크 전송</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md487"></a>
+<h1><a class="anchor" id="autotoc_md490"></a>
 [0.9.0] - 2025-10-20</h1>
-<h2><a class="anchor" id="autotoc_md488"></a>
+<h2><a class="anchor" id="autotoc_md491"></a>
 추가됨</h2>
 <ul>
 <li>초기 메시지 버스 구현</li>
 <li>기본 pub/sub 패턴</li>
 <li>와일드카드 토픽 라우팅</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md489"></a>
+<h2><a class="anchor" id="autotoc_md492"></a>
 변경됨</h2>
 <ul>
 <li>CMake FetchContent로 마이그레이션</li>

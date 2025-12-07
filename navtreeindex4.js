@@ -1,5 +1,8 @@
 var NAVTREEINDEX4 =
 {
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md71":[2,3,2,1,0],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md72":[2,3,2,1,1],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md73":[2,3,2,1,2],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md74":[2,3,2,1,3],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md75":[2,3,2,1,4],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md76":[2,3,2,1,5],
@@ -27,14 +30,14 @@ var NAVTREEINDEX4 =
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md99":[2,4,2,2,5],
 "index.html":[],
 "index.html":[0],
-"index.html#autotoc_md953":[0,0],
-"index.html#autotoc_md955":[0,1],
-"index.html#autotoc_md956":[0,1,0],
-"index.html#autotoc_md957":[0,1,1],
-"index.html#autotoc_md959":[0,2],
-"index.html#autotoc_md960":[0,2,0],
-"index.html#autotoc_md961":[0,2,1],
-"index.html#autotoc_md963":[0,3],
-"index.html#autotoc_md965":[0,4],
+"index.html#autotoc_md956":[0,0],
+"index.html#autotoc_md958":[0,1],
+"index.html#autotoc_md959":[0,1,0],
+"index.html#autotoc_md960":[0,1,1],
+"index.html#autotoc_md962":[0,2],
+"index.html#autotoc_md963":[0,2,0],
+"index.html#autotoc_md964":[0,2,1],
+"index.html#autotoc_md966":[0,3],
+"index.html#autotoc_md968":[0,4],
 "pages.html":[]
 };

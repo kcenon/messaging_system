@@ -95,13 +95,13 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_docs_2integration_2README"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-30</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md953"></a>
+<h1><a class="anchor" id="autotoc_md956"></a>
 Overview</h1>
 <p>This guide covers integrating messaging_system with other systems and applications.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md955"></a>
+<h1><a class="anchor" id="autotoc_md958"></a>
 CMake Integration</h1>
-<h2><a class="anchor" id="autotoc_md956"></a>
+<h2><a class="anchor" id="autotoc_md959"></a>
 FetchContent (Recommended)</h2>
 <div class="fragment"><div class="line">include(FetchContent)</div>
 <div class="line"> </div>
@@ -114,27 +114,27 @@ FetchContent (Recommended)</h2>
 <div class="line">FetchContent_MakeAvailable(messaging_system)</div>
 <div class="line"> </div>
 <div class="line">target_link_libraries(your_target PRIVATE messaging_system)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md957"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md960"></a>
 Subdirectory</h2>
 <div class="fragment"><div class="line">add_subdirectory(external/messaging_system)</div>
 <div class="line">target_link_libraries(your_target PRIVATE messaging_system)</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md959"></a>
+<h1><a class="anchor" id="autotoc_md962"></a>
 Integration with Subsystems</h1>
-<h2><a class="anchor" id="autotoc_md960"></a>
+<h2><a class="anchor" id="autotoc_md963"></a>
 Using with thread_system</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;messaging_system/message_bus.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;thread_system/thread_pool.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> pool = thread_system::thread_pool::create(4);</div>
 <div class="line"><span class="keyword">auto</span> bus = messaging_system::message_bus::create(pool);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md961"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md964"></a>
 Using with network_system</h2>
 <div class="fragment"><div class="line"><span class="comment">// Remote messaging over network</span></div>
 <div class="line"><span class="keyword">auto</span> transport = network_system::tcp_transport::create();</div>
 <div class="line"><span class="keyword">auto</span> bus = messaging_system::message_bus::create(transport);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md963"></a>
+<h1><a class="anchor" id="autotoc_md966"></a>
 Custom Configuration</h1>
 <div class="fragment"><div class="line">messaging_system::config cfg;</div>
 <div class="line">cfg.max_queue_size = 10000;</div>
@@ -143,7 +143,7 @@ Custom Configuration</h1>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> bus = messaging_system::message_bus::create(cfg);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md965"></a>
+<h1><a class="anchor" id="autotoc_md968"></a>
 Related Documentation</h1>
 <ul>
 <li><a class="el" href="d6/d63/md_docs_2guides_2QUICK__START.html">Quick Start</a></li>

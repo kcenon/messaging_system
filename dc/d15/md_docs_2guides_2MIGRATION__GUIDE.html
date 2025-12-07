@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('dc/d15/md_docs_2guides_2MIGRATION__GUI
   <div class="headertitle"><div class="title">Migration Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md794"></a> <b>Version</b>: 2.0 <b>Date</b>: 2025-11-17 <b>Target Audience</b>: Developers migrating from messaging_system v1.x to v2.0</p>
-<h1><a class="anchor" id="autotoc_md795"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md797"></a> <b>Version</b>: 2.0 <b>Date</b>: 2025-11-17 <b>Target Audience</b>: Developers migrating from messaging_system v1.x to v2.0</p>
+<h1><a class="anchor" id="autotoc_md798"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Overview</li>
@@ -106,7 +106,7 @@ Table of Contents</h1>
 <li>FAQ</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md797"></a>
+<h1><a class="anchor" id="autotoc_md800"></a>
 Overview</h1>
 <p>Messaging System v2.0 introduces significant architectural improvements and new features:</p>
 <ul>
@@ -116,7 +116,7 @@ Overview</h1>
 <li><b>Improved Error Handling</b>: Consistent use of <code>common::Result&lt;T&gt;</code> pattern</li>
 <li><b>Enhanced Performance</b>: Lock-free queue options and optimized routing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md798"></a>
+<h2><a class="anchor" id="autotoc_md801"></a>
 Migration Timeline</h2>
 <ul>
 <li><b>Phase 1 (Week 1-2)</b>: Update dependencies and error codes</li>
@@ -125,7 +125,7 @@ Migration Timeline</h2>
 <li><b>Phase 4 (Week 7-8)</b>: Testing and validation</li>
 <li><b>Phase 5 (Week 9-10)</b>: Production deployment</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md799"></a>
+<h2><a class="anchor" id="autotoc_md802"></a>
 Compatibility</h2>
 <ul>
 <li><b>v2.0</b> is <b>not</b> fully backward compatible with v1.x</li>
@@ -133,15 +133,15 @@ Compatibility</h2>
 <li>Both versions can coexist during migration period</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md801"></a>
+<h1><a class="anchor" id="autotoc_md804"></a>
 Breaking Changes</h1>
-<h2><a class="anchor" id="autotoc_md802"></a>
+<h2><a class="anchor" id="autotoc_md805"></a>
 1. Namespace Changes</h2>
 <p><b>v1.x</b>: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;messaging_system/core/message_bus.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>messaging;</div>
 </div><!-- fragment --><p><b>v2.0</b>: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>kcenon::messaging;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md803"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md806"></a>
 2. Error Code Range</h2>
 <p>Error codes have been moved from the <code>-200 to -299</code> range to <code>-700 to -799</code> to avoid conflicts with logger_system.</p>
 <p><b>v1.x</b>: </p><div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keywordtype">int</span> INVALID_MESSAGE = -200;</div>
@@ -150,7 +150,7 @@ Breaking Changes</h1>
 <div class="line"><span class="keyword">using namespace </span>kcenon::common::error::codes::messaging_system;</div>
 <div class="line"><span class="keyword">constexpr</span> <span class="keywordtype">int</span> invalid_message = -700;</div>
 <div class="line"><span class="keyword">constexpr</span> <span class="keywordtype">int</span> routing_failed = -720;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md804"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md807"></a>
 3. Message Structure</h2>
 <p><b>v1.x</b>: Messages used a simple struct-based approach.</p>
 <p><b>v2.0</b>: Messages use a rich object model with metadata and builder pattern.</p>
@@ -166,7 +166,7 @@ Breaking Changes</h1>
 <div class="line">    .payload(container_ptr)</div>
 <div class="line">    .build()</div>
 <div class="line">    .unwrap();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md805"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md808"></a>
 4. Message Bus Interface</h2>
 <p><b>v1.x</b>: </p><div class="fragment"><div class="line">message_bus bus;</div>
 <div class="line">bus.publish(topic, payload);</div>
@@ -177,7 +177,7 @@ Breaking Changes</h1>
 <div class="line"> </div>
 <div class="line">bus-&gt;publish(message);</div>
 <div class="line">bus-&gt;subscribe(topic_pattern, callback);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md806"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md809"></a>
 5. Topic Router</h2>
 <p><b>v1.x</b>: Basic exact-match routing.</p>
 <p><b>v2.0</b>: Pattern-based routing with wildcards.</p>
@@ -191,11 +191,11 @@ Breaking Changes</h1>
 <div class="line"><span class="comment">// Multi-level wildcard</span></div>
 <div class="line">router.subscribe(<span class="stringliteral">&quot;user.#&quot;</span>, callback);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md808"></a>
+<h1><a class="anchor" id="autotoc_md811"></a>
 Step-by-Step Migration</h1>
-<h2><a class="anchor" id="autotoc_md809"></a>
+<h2><a class="anchor" id="autotoc_md812"></a>
 Step 1: Update Dependencies</h2>
-<h3><a class="anchor" id="autotoc_md810"></a>
+<h3><a class="anchor" id="autotoc_md813"></a>
 Update CMakeLists.txt</h3>
 <div class="fragment"><div class="line"># OLD</div>
 <div class="line">find_package(messaging_system 1.0 REQUIRED)</div>
@@ -207,13 +207,13 @@ Update CMakeLists.txt</h3>
 <div class="line">    messaging_system::messaging_system_core</div>
 <div class="line">    kcenon::common_system</div>
 <div class="line">)</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md811"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md814"></a>
 Update Include Paths</h3>
 <div class="fragment"><div class="line"># Add to include directories</div>
 <div class="line">target_include_directories(your_target PRIVATE</div>
 <div class="line">    ${messaging_system_INCLUDE_DIRS}</div>
 <div class="line">)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md812"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md815"></a>
 Step 2: Update Includes</h2>
 <p>Create a migration header to ease the transition:</p>
 <p><b>migration_compat.h</b>: </p><div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -239,7 +239,7 @@ Step 2: Update Includes</h2>
 <div class="line">    <span class="keyword">constexpr</span> <span class="keywordtype">int</span> QUEUE_FULL = -740;</div>
 <div class="line">    <span class="comment">// ... other mappings</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md813"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md816"></a>
 Step 3: Migrate Message Creation</h2>
 <p><b>Before (v1.x)</b>: </p><div class="fragment"><div class="line">Message msg;</div>
 <div class="line">msg.topic = <span class="stringliteral">&quot;user.created&quot;</span>;</div>
@@ -263,7 +263,7 @@ Step 3: Migrate Message Creation</h2>
 <div class="line">    <span class="keyword">auto</span> msg = msg_result.unwrap();</div>
 <div class="line">    <span class="comment">// Use message</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md814"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md817"></a>
 Step 4: Migrate Message Bus Usage</h2>
 <p><b>Before (v1.x)</b>: </p><div class="fragment"><div class="line"><span class="comment">// Simple standalone bus</span></div>
 <div class="line">messaging::MessageBus bus;</div>
@@ -309,9 +309,9 @@ Step 4: Migrate Message Bus Usage</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Cleanup</span></div>
 <div class="line">bus-&gt;stop();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md815"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md818"></a>
 Step 5: Migrate to Patterns (Optional but Recommended)</h2>
-<h3><a class="anchor" id="autotoc_md816"></a>
+<h3><a class="anchor" id="autotoc_md819"></a>
 Pub/Sub Pattern</h3>
 <p><b>Before (v1.x)</b>: </p><div class="fragment"><div class="line">bus.subscribe(<span class="stringliteral">&quot;events.*&quot;</span>, handler);</div>
 <div class="line">bus.publish(<span class="stringliteral">&quot;events.user_login&quot;</span>, data);</div>
@@ -327,7 +327,7 @@ Pub/Sub Pattern</h3>
 <div class="line">    <span class="comment">// Handle event</span></div>
 <div class="line">    <span class="keywordflow">return</span> common::ok();</div>
 <div class="line">});</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md817"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md820"></a>
 Request-Reply Pattern</h3>
 <p><b>Before (v1.x)</b>: Manual correlation tracking required.</p>
 <p><b>After (v2.0)</b>: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/request_reply.h&gt;</span></div>
@@ -344,7 +344,7 @@ Request-Reply Pattern</h3>
 <div class="line">    <span class="keywordflow">return</span> common::ok(std::move(reply));</div>
 <div class="line">});</div>
 <div class="line">server.start();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md818"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md821"></a>
 Step 6: Update Error Handling</h2>
 <p><b>Before (v1.x)</b>: </p><div class="fragment"><div class="line"><span class="keywordflow">try</span> {</div>
 <div class="line">    bus.publish(topic, data);</div>
@@ -362,7 +362,7 @@ Step 6: Update Error Handling</h2>
 <div class="line">        <span class="comment">// Retry or backoff</span></div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md819"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md822"></a>
 Step 7: Integration with Other Systems</h2>
 <p>If you're using thread_system, logger_system, or monitoring_system:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/backends/integration_backend.h&gt;</span></div>
@@ -382,9 +382,9 @@ Step 7: Integration with Other Systems</h2>
 <div class="line"><span class="keyword">auto</span> bus = std::make_shared&lt;message_bus&gt;(backend);</div>
 <div class="line">bus-&gt;start();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md821"></a>
+<h1><a class="anchor" id="autotoc_md824"></a>
 API Changes</h1>
-<h2><a class="anchor" id="autotoc_md822"></a>
+<h2><a class="anchor" id="autotoc_md825"></a>
 Message API</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -398,7 +398,7 @@ Message API</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>msg.payload</code> (string)   </td><td class="markdownTableBodyNone"><code>msg.payload()</code> (container)   </td><td class="markdownTableBodyNone">Rich payload support   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md823"></a>
+<h2><a class="anchor" id="autotoc_md826"></a>
 Message Bus API</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -412,7 +412,7 @@ Message Bus API</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone"><code>start()</code> / <code>stop()</code>   </td><td class="markdownTableBodyNone">Explicit lifecycle management   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md824"></a>
+<h2><a class="anchor" id="autotoc_md827"></a>
 Topic Router API</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -425,9 +425,9 @@ Topic Router API</h2>
 <td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Message filters   </td><td class="markdownTableBodyNone">Filter chain support   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md826"></a>
+<h1><a class="anchor" id="autotoc_md829"></a>
 Code Examples</h1>
-<h2><a class="anchor" id="autotoc_md827"></a>
+<h2><a class="anchor" id="autotoc_md830"></a>
 Example 1: Simple Pub/Sub Migration</h2>
 <p><b>v1.x Code</b>: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;messaging_system/message_bus.h&gt;</span></div>
 <div class="line"> </div>
@@ -472,7 +472,7 @@ Example 1: Simple Pub/Sub Migration</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md828"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md831"></a>
 Example 2: Request-Reply Migration</h2>
 <p><b>v1.x Code</b>: Manual correlation</p>
 <p><b>v2.0 Code</b>: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/request_reply.h&gt;</span></div>
@@ -519,7 +519,7 @@ Example 2: Request-Reply Migration</h2>
 <div class="line">    std::this_thread::sleep_for(std::chrono::seconds(60));</div>
 <div class="line">    server.stop();</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md829"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md832"></a>
 Example 3: Event Streaming</h2>
 <p><b>v2.0 New Feature</b>: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/event_streaming.h&gt;</span></div>
 <div class="line"> </div>
@@ -551,7 +551,7 @@ Example 3: Event Streaming</h2>
 <div class="line">    <span class="keyword">auto</span> events = stream.get_events();</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Total events: &quot;</span> &lt;&lt; events.size() &lt;&lt; std::endl;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md830"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md833"></a>
 Example 4: Message Pipeline</h2>
 <p><b>v2.0 New Feature</b>: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/message_pipeline.h&gt;</span></div>
 <div class="line"> </div>
@@ -594,21 +594,21 @@ Example 4: Message Pipeline</h2>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md832"></a>
+<h1><a class="anchor" id="autotoc_md835"></a>
 Troubleshooting</h1>
-<h2><a class="anchor" id="autotoc_md833"></a>
+<h2><a class="anchor" id="autotoc_md836"></a>
 Issue: Compilation errors with old includes</h2>
 <p><b>Solution</b>: Update all includes to use the new namespace: </p><div class="fragment"><div class="line"><span class="comment">// OLD</span></div>
 <div class="line"><span class="preprocessor">#include &lt;messaging_system/core/message_bus.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// NEW</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md834"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md837"></a>
 Issue: Error code conflicts</h2>
 <p><b>Symptom</b>: Build errors when linking with logger_system.</p>
 <p><b>Solution</b>: Update error code references to use the new range: </p><div class="fragment"><div class="line"><span class="comment">// Use centralized error codes</span></div>
 <div class="line"><span class="keyword">using namespace </span>kcenon::common::error::codes::messaging_system;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md835"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md838"></a>
 Issue: Message bus doesn't start</h2>
 <p><b>Symptom</b>: <code>start()</code> returns an error.</p>
 <p><b>Solution</b>: Check backend initialization: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> backend = std::make_shared&lt;standalone_backend&gt;(4);</div>
@@ -622,7 +622,7 @@ Issue: Message bus doesn't start</h2>
 <div class="line"><span class="keywordflow">if</span> (!start_result.is_ok()) {</div>
 <div class="line">    <span class="comment">// Handle bus start error</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md836"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md839"></a>
 Issue: Messages not being delivered</h2>
 <p><b>Symptom</b>: Subscribers don't receive messages.</p>
 <p><b>Solution</b>: Check topic patterns: </p><div class="fragment"><div class="line"><span class="comment">// Make sure patterns match</span></div>
@@ -633,7 +633,7 @@ Issue: Messages not being delivered</h2>
 <div class="line"><span class="keywordflow">if</span> (!bus-&gt;is_running()) {</div>
 <div class="line">    bus-&gt;start();</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md837"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md840"></a>
 Issue: Build performance degradation</h2>
 <p><b>Symptom</b>: Increased build times.</p>
 <p><b>Solution</b>: Use precompiled headers: </p><div class="fragment"><div class="line">target_precompile_headers(your_target PRIVATE</div>
@@ -641,12 +641,12 @@ Issue: Build performance degradation</h2>
 <div class="line">    &lt;kcenon/messaging/core/message_bus.h&gt;</div>
 <div class="line">)</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md839"></a>
+<h1><a class="anchor" id="autotoc_md842"></a>
 FAQ</h1>
-<h2><a class="anchor" id="autotoc_md840"></a>
+<h2><a class="anchor" id="autotoc_md843"></a>
 Q: Can I use v1.x and v2.0 together?</h2>
 <p><b>A</b>: Yes, during the migration period. Use the compatibility layer: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/compatibility.h&gt;</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md841"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md844"></a>
 Q: Do I need to migrate all code at once?</h2>
 <p><b>A</b>: No. Migrate incrementally:</p><ol type="1">
 <li>Start with non-critical components</li>
@@ -654,7 +654,7 @@ Q: Do I need to migrate all code at once?</h2>
 <li>Migrate high-traffic components last</li>
 <li>Remove compatibility layer after full migration</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md842"></a>
+<h2><a class="anchor" id="autotoc_md845"></a>
 Q: What about performance?</h2>
 <p><b>A</b>: v2.0 is generally faster due to:</p><ul>
 <li>Lock-free queue options</li>
@@ -662,7 +662,7 @@ Q: What about performance?</h2>
 <li>Better thread pool integration</li>
 </ul>
 <p>Benchmark your specific use case.</p>
-<h2><a class="anchor" id="autotoc_md843"></a>
+<h2><a class="anchor" id="autotoc_md846"></a>
 Q: Are there any runtime dependencies?</h2>
 <p><b>A</b>: v2.0 requires:</p><ul>
 <li>common_system &gt;= 2.0</li>
@@ -671,17 +671,17 @@ Q: Are there any runtime dependencies?</h2>
 <li>(Optional) logger_system &gt;= 2.0</li>
 <li>(Optional) monitoring_system &gt;= 2.0</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md844"></a>
+<h2><a class="anchor" id="autotoc_md847"></a>
 Q: How do I enable lock-free queues?</h2>
 <p><b>A</b>: </p><div class="fragment"><div class="line">message_bus_config config;</div>
 <div class="line">config.enable_lockfree = <span class="keyword">true</span>;  <span class="comment">// If available</span></div>
 <div class="line"><span class="keyword">auto</span> bus = std::make_shared&lt;message_bus&gt;(backend, config);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md845"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md848"></a>
 Q: Can I still use simple publish/subscribe?</h2>
 <p><b>A</b>: Yes, use the Pub/Sub pattern for simplified API: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/pub_sub.h&gt;</span></div>
 <div class="line">publisher pub(bus);</div>
 <div class="line">subscriber sub(bus);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md846"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md849"></a>
 Q: How do I handle migration testing?</h2>
 <p><b>A</b>: Use a phased approach:</p><ol type="1">
 <li>Unit tests first</li>
@@ -690,7 +690,7 @@ Q: How do I handle migration testing?</h2>
 <li>Gradual production rollout</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md848"></a>
+<h1><a class="anchor" id="autotoc_md851"></a>
 Additional Resources</h1>
 <ul>
 <li><a class="el" href="../../d2/dff/API__REFERENCE_8md.html">API Reference</a></li>
@@ -700,7 +700,7 @@ Additional Resources</h1>
 <li><a class="el" href="../../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html">Troubleshooting Guide</a></li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md850"></a>
+<h1><a class="anchor" id="autotoc_md853"></a>
 Support</h1>
 <p>For migration assistance:</p><ul>
 <li>Check <a href="https://github.com/kcenon/messaging_system/issues">GitHub Issues</a></li>

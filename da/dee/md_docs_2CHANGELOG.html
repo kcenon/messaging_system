@@ -100,6 +100,24 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md466"></a>
 Added</h2>
 <ul>
+<li><b>Distributed Task Queue System - Sprint 3 (Issue #104)</b><ul>
+<li><code>worker_pool</code>: Thread pool for distributed task execution<ul>
+<li>Configurable concurrency (number of worker threads)</li>
+<li>Multi-queue processing with priority ordering</li>
+<li>Handler registration for task-to-handler matching</li>
+<li>Graceful shutdown with timeout support</li>
+<li>Statistics collection (throughput, execution time, success/failure rates)</li>
+<li>Integration with task_queue, result_backend, and task_handler_interface</li>
+</ul>
+</li>
+<li>Comprehensive unit tests for worker_pool (15 tests)</li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md467"></a>
+Fixed</h2>
+<ul>
+<li><code>task</code>: Sync metadata.id with task_id for correct task_queue lookup</li>
 <li><b>Distributed Task Queue System - Sprint 2 (Issues #101, #102, #103)</b><ul>
 <li><code>task_queue</code>: Task-specific queue extending message_queue<ul>
 <li>Multiple named queues support (queue_name -&gt; independent queue)</li>
@@ -153,7 +171,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md467"></a>
+<h2><a class="anchor" id="autotoc_md468"></a>
 Changed</h2>
 <ul>
 <li><b>Logging Migration (Issue #94)</b><ul>
@@ -170,7 +188,7 @@ Changed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md468"></a>
+<h2><a class="anchor" id="autotoc_md469"></a>
 Added</h2>
 <ul>
 <li>Documentation structure standardization</li>
@@ -178,9 +196,9 @@ Added</h2>
 <li><code>has_common_system()</code> method in integration_detector for compile-time detection</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md470"></a>
+<h1><a class="anchor" id="autotoc_md471"></a>
 [1.0.0] - 2025-11-17</h1>
-<h2><a class="anchor" id="autotoc_md471"></a>
+<h2><a class="anchor" id="autotoc_md472"></a>
 Added</h2>
 <ul>
 <li><b>Core Messaging Infrastructure</b><ul>
@@ -216,7 +234,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md472"></a>
+<h2><a class="anchor" id="autotoc_md473"></a>
 Dependencies</h2>
 <ul>
 <li>common_system: Result&lt;T&gt;, interfaces, ILogger (runtime binding)</li>
@@ -226,16 +244,16 @@ Dependencies</h2>
 <li>network_system: Network transport</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md474"></a>
+<h1><a class="anchor" id="autotoc_md475"></a>
 [0.9.0] - 2025-10-20</h1>
-<h2><a class="anchor" id="autotoc_md475"></a>
+<h2><a class="anchor" id="autotoc_md476"></a>
 Added</h2>
 <ul>
 <li>Initial message bus implementation</li>
 <li>Basic pub/sub pattern</li>
 <li>Topic routing with wildcards</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md476"></a>
+<h2><a class="anchor" id="autotoc_md477"></a>
 Changed</h2>
 <ul>
 <li>Migrated to CMake FetchContent</li>
