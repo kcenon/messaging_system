@@ -149,3 +149,18 @@ target_link_libraries(test_task_system
 
 add_test(NAME test_task_system COMMAND test_task_system)
 set_tests_properties(test_task_system PROPERTIES TIMEOUT 120)
+
+# Test: task_event_bridge
+add_executable(test_task_event_bridge
+    test_task_event_bridge.cpp
+)
+
+target_link_libraries(test_task_event_bridge
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME test_task_event_bridge COMMAND test_task_event_bridge)
+set_tests_properties(test_task_event_bridge PROPERTIES TIMEOUT 60)
