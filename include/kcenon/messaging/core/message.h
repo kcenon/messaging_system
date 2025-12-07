@@ -69,6 +69,15 @@ class message {
 	message_metadata metadata_;
 	std::shared_ptr<container_module::value_container> payload_;
 
+protected:
+	/**
+	 * @brief Set the payload pointer directly
+	 * @param payload Shared pointer to value_container
+	 */
+	void set_payload(std::shared_ptr<container_module::value_container> payload) {
+		payload_ = std::move(payload);
+	}
+
 public:
 	message();
 

@@ -42,6 +42,15 @@ constexpr int invalid_payload = base - 3;        // -703
 constexpr int message_serialization_failed = base - 4;  // -704
 constexpr int message_deserialization_failed = base - 5; // -705
 
+// Task-specific errors
+constexpr int task_not_found = base - 6;             // -706
+constexpr int task_already_running = base - 7;       // -707
+constexpr int task_cancelled = base - 8;             // -708
+constexpr int task_timeout = base - 9;               // -709
+constexpr int task_failed = base - 10;               // -710
+constexpr int task_handler_not_found = base - 11;    // -711
+constexpr int task_spawner_not_configured = base - 12; // -712
+
 // ============================================================================
 // Routing Errors (-720 to -739)
 // ============================================================================
@@ -105,6 +114,15 @@ inline std::string_view get_error_message(int code) {
         case invalid_payload: return "Invalid message payload";
         case message_serialization_failed: return "Message serialization failed";
         case message_deserialization_failed: return "Message deserialization failed";
+
+        // Task errors
+        case task_not_found: return "Task not found";
+        case task_already_running: return "Task already running";
+        case task_cancelled: return "Task cancelled";
+        case task_timeout: return "Task timeout";
+        case task_failed: return "Task execution failed";
+        case task_handler_not_found: return "Task handler not found";
+        case task_spawner_not_configured: return "Subtask spawner not configured";
 
         // Routing errors
         case routing_failed: return "Message routing failed";
