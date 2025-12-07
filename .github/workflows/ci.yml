@@ -237,7 +237,7 @@ jobs:
       if: runner.os != 'Windows'
       run: |
         cd build
-        ctest --output-on-failure || echo "Some tests failed"
+        ctest --output-on-failure --timeout 120 || echo "Some tests failed"
 
     - name: Run tests (Windows)
       if: runner.os == 'Windows'
