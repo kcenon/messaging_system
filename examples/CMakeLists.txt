@@ -6,3 +6,6 @@ add_subdirectory(patterns)
 
 # Integration examples
 add_subdirectory(integration)
+
+# Task module examples
+add_subdirectory(task)
