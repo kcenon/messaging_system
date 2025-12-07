@@ -44,3 +44,18 @@ target_link_libraries(test_task_context
 
 add_test(NAME test_task_context COMMAND test_task_context)
 set_tests_properties(test_task_context PROPERTIES TIMEOUT 60)
+
+# Test: result_backend
+add_executable(test_result_backend
+    test_result_backend.cpp
+)
+
+target_link_libraries(test_result_backend
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME test_result_backend COMMAND test_result_backend)
+set_tests_properties(test_result_backend PROPERTIES TIMEOUT 60)
