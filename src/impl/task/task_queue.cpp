@@ -30,8 +30,14 @@ void delayed_task_worker::notify_new_task() {
 }
 
 bool delayed_task_worker::should_continue_work() const {
-	std::lock_guard<std::mutex> lock(parent_.delayed_mutex_);
-	return !parent_.delayed_queue_.empty();
+	// Return false when stopped to allow graceful shutdown
+	if (parent_.stopped_.load()) {
+		return false;
+	}
+	// Always return true otherwise to ensure thread_base's wait_for returns
+	// immediately and delegates waiting to do_work()'s cv_.wait_for, which
+	// can be properly notified by notify_new_task()
+	return true;
 }
 
 kcenon::thread::result_void delayed_task_worker::do_work() {
@@ -176,11 +182,13 @@ common::Result<std::string> task_queue::enqueue(task t) {
 	// Check if task should be delayed
 	if (t.config().eta.has_value()) {
 		auto now = std::chrono::system_clock::now();
-		if (t.config().eta.value() > now) {
+		auto eta = t.config().eta.value();
+		if (eta > now) {
 			// Add to delayed queue
+			// Note: Capture eta before std::move to avoid undefined behavior
 			{
 				std::lock_guard<std::mutex> lock(delayed_mutex_);
-				delayed_queue_.push({std::move(t), t.config().eta.value()});
+				delayed_queue_.push({std::move(t), eta});
 			}
 			// Notify delayed worker about new task
 			if (delayed_worker_) {
