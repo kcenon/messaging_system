@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- **Distributed Task Queue System - Sprint 5 (Issue #111)**
+- **Distributed Task Queue System - Sprint 5 (Issues #110, #111)**
+  - `task_scheduler`: Scheduler for periodic and cron-based task execution
+    - `add_periodic()`: Register tasks to run at fixed intervals
+    - `add_cron()`: Register tasks to run based on cron expressions
+    - Schedule management: `remove()`, `enable()`, `disable()`, `trigger_now()`
+    - Background scheduler loop with efficient condition variable waiting
+    - Event callbacks for task execution and failure notifications
+    - Integration with task_client for task submission
+    - Thread-safe implementation with proper lifecycle management
+  - New error code: `schedule_already_exists` (-715)
   - `cron_parser`: Cron expression parser for scheduled task execution
     - Standard 5-field cron format support (minute hour day month weekday)
     - Syntax support: wildcards (*), specific values, intervals (*/n), ranges (a-b), lists (a,b,c)

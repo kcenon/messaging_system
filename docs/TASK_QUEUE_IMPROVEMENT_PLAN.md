@@ -625,8 +625,12 @@ public:
 2. `task_client.h` / `task_client.cpp` - 클라이언트 ✅
 3. Chain/Chord 패턴 ✅
 
-### Sprint 5: Scheduler
-1. `scheduler.h` / `scheduler.cpp` - 스케줄러
+### Sprint 5: Scheduler ✅
+1. `scheduler.h` / `scheduler.cpp` - 스케줄러 ✅
+   - Periodic task scheduling with fixed intervals
+   - Cron-based scheduling with 5-field expressions
+   - Schedule management (add, remove, enable, disable)
+   - Background scheduler loop with efficient waiting (#110)
 2. Cron 파싱 (간단한 구현 또는 라이브러리) ✅
    - `cron_parser.h` / `cron_parser.cpp` - Cron 표현식 파서 (#111)
 
