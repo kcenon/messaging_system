@@ -41,6 +41,20 @@
 
 ---
 
+## Task 큐 시스템
+
+| 문서 | 설명 |
+|------|------|
+| [빠른 시작](task/QUICK_START_KO.md) | 5분 만에 Task 모듈 시작하기 |
+| [아키텍처](task/ARCHITECTURE_KO.md) | 시스템 설계 및 컴포넌트 개요 |
+| [API 레퍼런스](task/API_REFERENCE_KO.md) | 완전한 API 문서 |
+| [워크플로우 패턴](task/PATTERNS_KO.md) | Chain, Chord, 재시도, 스케줄링 패턴 |
+| [설정 가이드](task/CONFIGURATION_KO.md) | 설정 및 성능 튜닝 |
+| [문제 해결](task/TROUBLESHOOTING_KO.md) | 일반적인 문제와 디버깅 |
+| [마이그레이션](task/MIGRATION_KO.md) | 다른 시스템에서 마이그레이션 |
+
+---
+
 ## 디렉토리 구조
 
 ```
@@ -62,9 +76,18 @@ docs/
 ├── integration/        # 통합 문서
 │   └── README.md
 │
-└── performance/        # 성능 문서
-    ├── PERFORMANCE.md
-    └── BASELINE.md
+├── performance/        # 성능 문서
+│   ├── PERFORMANCE.md
+│   └── BASELINE.md
+│
+└── task/               # Task 큐 시스템 문서
+    ├── QUICK_START.md
+    ├── ARCHITECTURE.md
+    ├── API_REFERENCE.md
+    ├── PATTERNS.md
+    ├── CONFIGURATION.md
+    ├── TROUBLESHOOTING.md
+    └── MIGRATION.md
 ```
 
 ---
