@@ -7,6 +7,20 @@
 
 ## [Unreleased]
 
+### 추가됨
+- **분산 태스크 큐 시스템 - Sprint 3 (Issue #104)**
+  - `worker_pool`: 분산 태스크 실행을 위한 스레드 풀
+    - 설정 가능한 동시성 (워커 스레드 수)
+    - 우선순위 정렬을 통한 다중 큐 처리
+    - 태스크-핸들러 매칭을 위한 핸들러 등록
+    - 타임아웃 지원이 있는 정상 종료 (graceful shutdown)
+    - 통계 수집 (처리량, 실행 시간, 성공/실패율)
+    - task_queue, result_backend, task_handler_interface와의 통합
+  - worker_pool 종합 단위 테스트 (15개 테스트)
+
+### 수정됨
+- `task`: task_queue 조회를 위해 metadata.id와 task_id 동기화
+
 ### 변경됨
 - CMake 설정에서 fmt 라이브러리 참조 제거
   - 프로젝트가 이제 thread_system을 통해 C++20 std::format만 사용
