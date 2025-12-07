@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <future>
 
 namespace kcenon::messaging::task {
 
@@ -319,8 +320,32 @@ common::VoidResult worker_pool::execute_task(task& t, task_context& ctx) {
 			return common::VoidResult(common::error_info{-1, "Task was cancelled"});
 		}
 
-		// Execute the handler
-		auto result = handler->execute(t, ctx);
+		// Get timeout from task config
+		auto timeout = t.config().timeout;
+
+		// Execute the handler asynchronously with timeout support
+		auto future = std::async(std::launch::async, [&handler, &t, &ctx]() {
+			return handler->execute(t, ctx);
+		});
+
+		// Wait for result with timeout
+		auto status = future.wait_for(timeout);
+
+		if (status == std::future_status::timeout) {
+			// Soft timeout: request cancellation so handler can check is_cancelled()
+			ctx.request_cancellation();
+
+			// Record timeout in statistics
+			record_task_timed_out();
+
+			// Return timeout error
+			return common::VoidResult(common::error_info{
+				-1, "Task execution timed out after " +
+					std::to_string(timeout.count()) + "ms"});
+		}
+
+		// Get the result (may throw if handler threw)
+		auto result = future.get();
 
 		if (result.is_err()) {
 			return common::VoidResult(result.error());
@@ -370,6 +395,11 @@ void worker_pool::record_task_completed(bool success, std::chrono::milliseconds 
 void worker_pool::record_task_retried() {
 	std::lock_guard<std::mutex> lock(stats_mutex_);
 	++stats_.total_tasks_retried;
+}
+
+void worker_pool::record_task_timed_out() {
+	std::lock_guard<std::mutex> lock(stats_mutex_);
+	++stats_.total_tasks_timed_out;
 }
 
 }  // namespace kcenon::messaging::task

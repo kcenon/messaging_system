@@ -23,6 +23,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <functional>
+#include <future>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -53,6 +54,7 @@ struct worker_statistics {
 	size_t total_tasks_succeeded = 0;
 	size_t total_tasks_failed = 0;
 	size_t total_tasks_retried = 0;
+	size_t total_tasks_timed_out = 0;
 	std::chrono::milliseconds total_execution_time{0};
 	std::chrono::milliseconds avg_execution_time{0};
 	std::chrono::system_clock::time_point started_at;
@@ -241,6 +243,7 @@ private:
 	// Update statistics
 	void record_task_completed(bool success, std::chrono::milliseconds duration);
 	void record_task_retried();
+	void record_task_timed_out();
 
 	// Configuration
 	worker_config config_;
