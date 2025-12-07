@@ -208,7 +208,7 @@ common::Result<cron_expression> cron_parser::parse(const std::string& expr) {
 	if (!minutes_result.is_ok()) {
 		return common::Result<cron_expression>(
 			common::error_info{error::task_invalid_argument,
-							   "Invalid minutes field: " + minutes_result.unwrap_err().message});
+							   "Invalid minutes field: " + minutes_result.error().message});
 	}
 	result.minutes = minutes_result.unwrap();
 
@@ -217,7 +217,7 @@ common::Result<cron_expression> cron_parser::parse(const std::string& expr) {
 	if (!hours_result.is_ok()) {
 		return common::Result<cron_expression>(
 			common::error_info{error::task_invalid_argument,
-							   "Invalid hours field: " + hours_result.unwrap_err().message});
+							   "Invalid hours field: " + hours_result.error().message});
 	}
 	result.hours = hours_result.unwrap();
 
@@ -226,7 +226,7 @@ common::Result<cron_expression> cron_parser::parse(const std::string& expr) {
 	if (!days_result.is_ok()) {
 		return common::Result<cron_expression>(
 			common::error_info{error::task_invalid_argument,
-							   "Invalid days field: " + days_result.unwrap_err().message});
+							   "Invalid days field: " + days_result.error().message});
 	}
 	result.days = days_result.unwrap();
 
@@ -235,7 +235,7 @@ common::Result<cron_expression> cron_parser::parse(const std::string& expr) {
 	if (!months_result.is_ok()) {
 		return common::Result<cron_expression>(
 			common::error_info{error::task_invalid_argument,
-							   "Invalid months field: " + months_result.unwrap_err().message});
+							   "Invalid months field: " + months_result.error().message});
 	}
 	result.months = months_result.unwrap();
 
@@ -244,7 +244,7 @@ common::Result<cron_expression> cron_parser::parse(const std::string& expr) {
 	if (!weekdays_result.is_ok()) {
 		return common::Result<cron_expression>(common::error_info{
 			error::task_invalid_argument,
-			"Invalid weekdays field: " + weekdays_result.unwrap_err().message});
+			"Invalid weekdays field: " + weekdays_result.error().message});
 	}
 	result.weekdays = weekdays_result.unwrap();
 

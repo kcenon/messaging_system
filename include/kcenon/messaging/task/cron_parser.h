@@ -105,13 +105,7 @@ public:
 	static std::string to_string(const cron_expression& expr);
 
 private:
-	/**
-	 * @brief Parse a single cron field
-	 * @param field Field string (e.g., "*/15", "1-5", "1,3,5")
-	 * @param min Minimum allowed value
-	 * @param max Maximum allowed value
-	 * @return Result containing set of valid values or error
-	 */
+	// Parse a single cron field (e.g., star-slash-15, 1-5, 1,3,5)
 	static common::Result<std::set<int>> parse_field(const std::string& field, int min, int max);
 
 	/**
