@@ -8,6 +8,18 @@
 ## [Unreleased]
 
 ### 추가됨
+- **분산 태스크 큐 시스템 - Sprint 6 (Issue #113)**
+  - `task_system`: 모든 태스크 큐 컴포넌트를 통합하는 통합 파사드
+    - 분산 태스크 큐 시스템의 단일 진입점
+    - 라이프사이클 관리: `start()`, `stop()`, `shutdown_graceful()`
+    - 컴포넌트 접근: `client()`, `workers()`, `scheduler()`, `monitor()`
+    - 핸들러 등록 및 태스크 제출을 위한 편의 메서드
+    - 스케줄링 편의 메서드: `schedule_periodic()`, `schedule_cron()`
+    - 통계 및 상태 조회: `get_statistics()`, `pending_count()`, `active_workers()`
+    - 지연 초기화를 사용한 스레드 안전 구현
+    - 포괄적인 단위 테스트 (26개 테스트)
+  - `task_system_config`: 큐, 워커, 스케줄러, 모니터 설정을 결합하는 구성 구조체
+
 - **분산 태스크 큐 시스템 - Sprint 3 (Issue #104)**
   - `worker_pool`: 분산 태스크 실행을 위한 스레드 풀
     - 설정 가능한 동시성 (워커 스레드 수)
