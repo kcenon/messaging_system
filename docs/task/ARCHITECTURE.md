@@ -487,6 +487,32 @@ The `task_builder` provides a fluent API for constructing tasks with complex con
 
 `result_backend_interface` allows different storage strategies to be swapped without changing the core logic.
 
+## Testing
+
+The task module has comprehensive integration tests located in `integration_tests/task/`:
+
+| Test File | Description |
+|-----------|-------------|
+| `test_task_lifecycle.cpp` | Full task lifecycle from submission to completion |
+| `test_worker_scenarios.cpp` | Multiple workers, concurrency, handler matching |
+| `test_failure_recovery.cpp` | Retry mechanisms, timeout handling, error propagation |
+| `test_scheduling.cpp` | Periodic and cron-based task scheduling |
+| `test_concurrent_load.cpp` | High volume processing, throughput measurement |
+
+### Running Tests
+
+```bash
+# Build tests
+cmake --build build --target test_task_lifecycle test_worker_scenarios \
+    test_failure_recovery test_scheduling test_concurrent_load
+
+# Run all task integration tests
+ctest --test-dir build -R "test_(task_lifecycle|worker_scenarios|failure_recovery|scheduling|concurrent_load)"
+
+# Run specific test
+./build/integration_tests/test_task_lifecycle
+```
+
 ## Related Documentation
 
 - [Quick Start Guide](QUICK_START.md)
