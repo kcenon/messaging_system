@@ -261,7 +261,7 @@ public:
 	 * @param task_id Unique task identifier
 	 * @return VoidResult indicating success or error
 	 */
-	virtual common::VoidResult remove(const std::string& task_id) {
+	virtual common::VoidResult remove(const std::string& /* task_id */) {
 		return common::ok();  // Default: no-op
 	}
 

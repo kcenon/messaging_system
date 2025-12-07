@@ -182,6 +182,7 @@ set(MESSAGING_CORE_SOURCES
     src/impl/task/task.cpp
     src/impl/task/task_context.cpp
     src/impl/task/task_queue.cpp
+    src/impl/task/memory_result_backend.cpp
 )
 
 add_library(messaging_system_core STATIC ${MESSAGING_CORE_SOURCES})
