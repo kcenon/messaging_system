@@ -100,6 +100,34 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 <h2><a class="anchor" id="autotoc_md481"></a>
 추가됨</h2>
 <ul>
+<li><b>분산 태스크 큐 시스템 - Sprint 7 단위 테스트 (Issue #117)</b><ul>
+<li><code>test_task_queue.cpp</code>: task_queue 컴포넌트의 포괄적인 단위 테스트<ul>
+<li>큐 라이프사이클 테스트 (생성, 시작/종료, 이동 시맨틱)</li>
+<li>Enqueue 연산 (단일, 대량, 명명된 큐)</li>
+<li>Dequeue 연산 (단일 큐, 다중 큐, 타임아웃 처리)</li>
+<li>지연 실행 테스트 (ETA 스케줄링, 카운트다운 지연)</li>
+<li>취소 테스트 (ID로, 태그로)</li>
+<li>조회 연산 (태스크 조회, 큐 목록, 큐 크기)</li>
+<li>스레드 안전성 테스트 (동시 enqueue/dequeue)</li>
+<li>우선순위 정렬 테스트</li>
+<li>29개 포괄적인 테스트</li>
+</ul>
+</li>
+<li><code>test_scheduler.cpp</code>: task_scheduler 컴포넌트의 단위 테스트<ul>
+<li>스케줄러 라이프사이클 테스트 (생성, 시작/종료, 이동 시맨틱)</li>
+<li>주기적 스케줄 테스트 (추가, 중복 방지, 실행)</li>
+<li>Cron 스케줄 테스트 (추가, 잘못된 표현식, 중복 방지)</li>
+<li>스케줄 관리 테스트 (제거, 활성화/비활성화, 즉시 트리거)</li>
+<li>인터벌 및 cron 업데이트 테스트</li>
+<li>조회 연산 (목록, 조회, 존재 여부, 개수)</li>
+<li>콜백 테스트 (on_task_executed, 실행 횟수)</li>
+<li>비활성화된 스케줄 동작 테스트</li>
+<li>스레드 안전성 테스트 (동시 연산)</li>
+<li>35개 포괄적인 테스트</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><b>분산 태스크 큐 시스템 - Sprint 6 (Issue #113)</b><ul>
 <li><code>task_system</code>: 모든 태스크 큐 컴포넌트를 통합하는 통합 파사드<ul>
 <li>분산 태스크 큐 시스템의 단일 진입점</li>
