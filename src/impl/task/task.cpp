@@ -37,12 +37,16 @@ std::string generate_unique_id() {
 // ============================================================================
 
 task::task() : message("task", message_type::command), task_id_(generate_task_id()) {
+	// Sync metadata.id with task_id for task_queue lookup
+	metadata().id = task_id_;
 }
 
 task::task(const std::string& task_name)
 	: message("task", message_type::command),
 	  task_id_(generate_task_id()),
 	  task_name_(task_name) {
+	// Sync metadata.id with task_id for task_queue lookup
+	metadata().id = task_id_;
 }
 
 task::task(const task& other)
