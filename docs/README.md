@@ -64,6 +64,15 @@ The messaging system integrates multiple high-performance modules:
 ### Application Layer
 - **[Sample Applications](../application_layer/samples/SAMPLES_README.md)** - 8 production-ready examples including chat server, IoT monitoring, and microservices orchestrator
 
+### Task Queue System
+- **[Task Module Quick Start](./task/QUICK_START.md)** - Get started with distributed task queue in 5 minutes
+- **[Task Module Architecture](./task/ARCHITECTURE.md)** - System design and component overview
+- **[Task Module API Reference](./task/API_REFERENCE.md)** - Complete API documentation
+- **[Task Module Patterns](./task/PATTERNS.md)** - Chain, chord, retry, and scheduling patterns
+- **[Task Module Configuration](./task/CONFIGURATION.md)** - Configuration guide and performance tuning
+- **[Task Module Troubleshooting](./task/TROUBLESHOOTING.md)** - Common issues and debugging
+- **[Task Module Migration](./task/MIGRATION.md)** - Migration from other systems
+
 ## 📖 Documentation Standards
 
 All documentation follows these principles:
