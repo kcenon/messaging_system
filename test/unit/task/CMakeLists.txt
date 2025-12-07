@@ -74,3 +74,18 @@ target_link_libraries(test_worker_pool
 
 add_test(NAME test_worker_pool COMMAND test_worker_pool)
 set_tests_properties(test_worker_pool PROPERTIES TIMEOUT 120)
+
+# Test: async_result
+add_executable(test_async_result
+    test_async_result.cpp
+)
+
+target_link_libraries(test_async_result
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME test_async_result COMMAND test_async_result)
+set_tests_properties(test_async_result PROPERTIES TIMEOUT 60)
