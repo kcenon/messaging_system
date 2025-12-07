@@ -472,6 +472,12 @@ thread_system 통합</h2>
 <li>종료 조정을 위한 <code>task_pool_worker::should_continue_work()</code></li>
 <li>풀의 poll interval에 맞춘 자동 wake interval 구성</li>
 </ul>
+<p><b>task_scheduler</b>: <code>scheduler_worker</code> 클래스를 통해 <code>thread_base</code>를 사용합니다. 스케줄러의 백그라운드 스레드는 <code>thread_base</code>를 상속하여 다음을 제공합니다:</p><ul>
+<li>예정된 스케줄 확인 및 실행을 위한 <code>scheduler_worker::do_work()</code></li>
+<li>정상 종료를 위한 <code>scheduler_worker::should_continue_work()</code></li>
+<li>스케줄 변경 시 즉시 깨어나기 위한 조건 변수 통합</li>
+<li>다른 컴포넌트와 일관된 스레드 수명 주기 관리</li>
+</ul>
 <h1><a class="anchor" id="autotoc_md1483"></a>
 확장 포인트</h1>
 <h2><a class="anchor" id="autotoc_md1484"></a>

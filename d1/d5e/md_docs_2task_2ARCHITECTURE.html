@@ -467,6 +467,12 @@ thread_system Integration</h2>
 <li><code>task_pool_worker::should_continue_work()</code> for shutdown coordination</li>
 <li>Automatic wake interval configuration matching the pool's poll interval</li>
 </ul>
+<p><b>task_scheduler</b>: Uses <code>thread_base</code> through the <code>scheduler_worker</code> class. The scheduler's background thread inherits from <code>thread_base</code>, providing:</p><ul>
+<li><code>scheduler_worker::do_work()</code> for checking and executing due schedules</li>
+<li><code>scheduler_worker::should_continue_work()</code> for graceful shutdown</li>
+<li>Condition variable integration for immediate wake-up on schedule changes</li>
+<li>Consistent thread lifecycle management with other components</li>
+</ul>
 <h1><a class="anchor" id="autotoc_md1454"></a>
 Extension Points</h1>
 <h2><a class="anchor" id="autotoc_md1455"></a>
