@@ -193,13 +193,19 @@ TEST_F(WorkerScenariosTest, GracefulShutdownWaitsForActiveTasks) {
 TEST_F(WorkerScenariosTest, ImmediateStopInterruptsTasks) {
 	std::atomic<int> started{0};
 	std::atomic<int> completed{0};
+	std::atomic<bool> should_exit{false};
 
 	system_->register_handler("worker.immediate_stop", [&](const tsk::task& t, tsk::task_context& ctx) {
 		(void)t;
 		(void)ctx;
 
 		started++;
-		std::this_thread::sleep_for(std::chrono::seconds(5));  // Long task
+
+		// Wait in small increments, checking for exit signal
+		for (int i = 0; i < 50 && !should_exit.load(); ++i) {
+			std::this_thread::sleep_for(std::chrono::milliseconds{100});
+		}
+
 		completed++;
 
 		return cmn::ok(container_module::value_container{});
@@ -216,6 +222,10 @@ TEST_F(WorkerScenariosTest, ImmediateStopInterruptsTasks) {
 
 	// Immediate stop
 	auto stop_result = system_->stop();
+
+	// Signal handler to exit for cleanup
+	should_exit = true;
+
 	EXPECT_TRUE(stop_result.is_ok());
 
 	// System should be stopped
@@ -453,8 +463,9 @@ TEST_F(WorkerScenariosTest, ActiveWorkerCount) {
 
 		task_started = true;
 
-		// Wait until allowed to complete
-		while (!task_can_complete.load()) {
+		// Wait until allowed to complete (with max iterations for safety)
+		const int max_loops = 1000;  // 10 seconds max
+		for (int i = 0; i < max_loops && !task_can_complete.load(); ++i) {
 			std::this_thread::sleep_for(std::chrono::milliseconds{10});
 		}
 

@@ -618,14 +618,15 @@ TEST_F(ConcurrentLoadTest, QueueCapacityHandling) {
 	std::atomic<bool> allow_completion{false};
 	TaskCounter counter;
 
-	// Handler that blocks until released
+	// Handler that blocks until released (with max iterations for safety)
 	system_->register_handler("load.blocking", [&](const tsk::task& t, tsk::task_context& ctx) {
 		(void)t;
 		(void)ctx;
 
 		handler_started = true;
 
-		while (!allow_completion.load()) {
+		const int max_loops = 6000;  // 60 seconds max
+		for (int i = 0; i < max_loops && !allow_completion.load(); ++i) {
 			std::this_thread::sleep_for(std::chrono::milliseconds{10});
 		}
 
