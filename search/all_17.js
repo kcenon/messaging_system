@@ -33,14 +33,14 @@ var searchData=
   ['new_20modules_30',['Creating New Modules',['../da/d7c/md_docs_2guides_2DEVELOPER__GUIDE.html#autotoc_md764',1,'']]],
   ['new_20users_31',['For New Users',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1170',1,'']]],
   ['next_20sprint_32',['Priority 2 (Recommended - Next Sprint)',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md197',1,'']]],
-  ['next_20steps_33',['next steps',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md883',1,'Next Steps'],['../d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1776',1,'Next Steps']]],
+  ['next_20steps_33',['next steps',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md883',1,'Next Steps'],['../d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1778',1,'Next Steps']]],
   ['no_20external_20systems_34',['Alternative: Minimal Build (No External Systems)',['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md614',1,'']]],
-  ['no_20retry_20errors_35',['Retry vs. No Retry Errors',['../d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1667',1,'']]],
+  ['no_20retry_20errors_35',['Retry vs. No Retry Errors',['../d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1669',1,'']]],
   ['not_20being_20delivered_36',['Issue: Messages not being delivered',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md839',1,'']]],
-  ['not_20being_20processed_37',['Tasks Not Being Processed',['../dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1799',1,'']]],
+  ['not_20being_20processed_37',['Tasks Not Being Processed',['../dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1801',1,'']]],
   ['not_20found_38',['Issue 4: yaml-cpp Not Found',['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md608',1,'']]],
   ['not_20found_20in_20external_20systems_39',['Issue 2: GTest Not Found in External Systems',['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md604',1,'']]],
   ['not_20supported_20macos_40',['Issue 3: grep -P Not Supported (macOS)',['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md606',1,'']]],
-  ['not_20working_41',['Retry Not Working',['../dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1802',1,'']]],
+  ['not_20working_41',['Retry Not Working',['../dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1804',1,'']]],
   ['notes_42',['Platform-Specific Notes',['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md622',1,'']]]
 ];

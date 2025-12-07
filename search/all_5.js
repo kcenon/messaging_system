@@ -1,15 +1,15 @@
 var searchData=
 [
-  ['5_20전략_20패턴_0',['5. 전략 패턴',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1489',1,'']]],
-  ['5_201_20task_20client_1',['5.1 Task Client',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1883',1,'']]],
+  ['5_20전략_20패턴_0',['5. 전략 패턴',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1491',1,'']]],
+  ['5_201_20task_20client_1',['5.1 Task Client',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1885',1,'']]],
   ['5_20adapter_20pattern_2',['5. Adapter Pattern',['../d6/d58/md_docs_2advanced_2DESIGN__PATTERNS.html#autotoc_md8',1,'']]],
-  ['5_20strategy_20pattern_3',['5. Strategy Pattern',['../d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1461',1,'']]],
-  ['5_20submit_20a_20task_4',['5. Submit a Task',['../d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1767',1,'']]],
-  ['5_20task_20제출_5',['5. Task 제출',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1785',1,'']]],
-  ['5_20task_5fhandler_6',['5 task_handler',['../d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1443',1,'5. task_handler'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1471',1,'5. task_handler']]],
+  ['5_20strategy_20pattern_3',['5. Strategy Pattern',['../d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1462',1,'']]],
+  ['5_20submit_20a_20task_4',['5. Submit a Task',['../d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1769',1,'']]],
+  ['5_20task_20제출_5',['5. Task 제출',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1787',1,'']]],
+  ['5_20task_5fhandler_6',['5 task_handler',['../d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1443',1,'5. task_handler'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1472',1,'5. task_handler']]],
   ['5_20topic_20router_7',['5. Topic Router',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md809',1,'']]],
   ['5_3a_20migrate_20to_20patterns_20optional_20but_20recommended_8',['Step 5: Migrate to Patterns (Optional but Recommended)',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md818',1,'']]],
   ['5_3a_20performance_20degradation_20with_20many_20topics_9',['Issue 5: Performance Degradation with Many Topics',['../d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md937',1,'']]],
-  ['5_3a_20scheduler_20✅_10',['Sprint 5: Scheduler ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1899',1,'']]],
-  ['5_3a_20task_20client_20producer_11',['Phase 5: Task Client (Producer)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1882',1,'']]]
+  ['5_3a_20scheduler_20✅_10',['Sprint 5: Scheduler ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1901',1,'']]],
+  ['5_3a_20task_20client_20producer_11',['Phase 5: Task Client (Producer)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1884',1,'']]]
 ];

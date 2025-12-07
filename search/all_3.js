@@ -1,13 +1,13 @@
 var searchData=
 [
-  ['3_20빌더_20패턴_0',['3. 빌더 패턴',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1487',1,'']]],
+  ['3_20빌더_20패턴_0',['3. 빌더 패턴',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1489',1,'']]],
   ['3_20스레드_20안전_1',['3. 스레드 안전',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md381',1,'']]],
-  ['3_20핸들러_20등록_20방식_2',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1912',1,'']]],
-  ['3_201_20priority_20task_20queue_3',['3.1 Priority Task Queue',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1875',1,'']]],
+  ['3_20핸들러_20등록_20방식_2',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1914',1,'']]],
+  ['3_201_20priority_20task_20queue_3',['3.1 Priority Task Queue',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1877',1,'']]],
   ['3_20build_20and_20install_4',['3. Build and Install',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md643',1,'']]],
   ['3_20build_20parallelization_20✅_5',['3. Build Parallelization ✅',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md180',1,'']]],
   ['3_20build_20the_20system_6',['3. Build the System',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md867',1,'']]],
-  ['3_20builder_20pattern_7',['3 builder pattern',['../d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1459',1,'3. Builder Pattern'],['../d6/d58/md_docs_2advanced_2DESIGN__PATTERNS.html#autotoc_md5',1,'3. Builder Pattern']]],
+  ['3_20builder_20pattern_7',['3 builder pattern',['../d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1460',1,'3. Builder Pattern'],['../d6/d58/md_docs_2advanced_2DESIGN__PATTERNS.html#autotoc_md5',1,'3. Builder Pattern']]],
   ['3_20conditional_20integration_20tests_8',['3. Conditional Integration Tests',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md190',1,'']]],
   ['3_20database_20system_9',['3 database system',['../df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md137',1,'3. Database System'],['../d2/d64/md_docs_2architecture.html#autotoc_md324',1,'3. Database System']]],
   ['3_20development_10',['3. Development',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md886',1,'']]],
@@ -17,11 +17,11 @@ var searchData=
   ['3_20network_20configuration_14',['3. Network Configuration',['../d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1029',1,'']]],
   ['3_20network_20optimization_15',['3. Network Optimization',['../d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1021',1,'']]],
   ['3_20prebuilt_20dependency_20binaries_16',['3. Prebuilt Dependency Binaries',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md194',1,'']]],
-  ['3_20redis_20result_20backend_20선택적_17',['4.3 Redis Result Backend (선택적)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1880',1,'']]],
+  ['3_20redis_20result_20backend_20선택적_17',['4.3 Redis Result Backend (선택적)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1882',1,'']]],
   ['3_20reduce_20fetchcontent_20downloads_18',['3. Reduce FetchContent Downloads',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md186',1,'']]],
-  ['3_20register_20a_20task_20handler_19',['3. Register a Task Handler',['../d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1765',1,'']]],
-  ['3_20task_20핸들러_20등록_20',['3. Task 핸들러 등록',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1783',1,'']]],
-  ['3_20task_5fqueue_21',['3 task_queue',['../d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1441',1,'3. task_queue'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1469',1,'3. task_queue']]],
+  ['3_20register_20a_20task_20handler_19',['3. Register a Task Handler',['../d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1767',1,'']]],
+  ['3_20task_20핸들러_20등록_20',['3. Task 핸들러 등록',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1785',1,'']]],
+  ['3_20task_5fqueue_21',['3 task_queue',['../d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1441',1,'3. task_queue'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1470',1,'3. task_queue']]],
   ['3_20test_20with_20sample_20client_22',['3. Test with Sample Client',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md882',1,'']]],
   ['3_20your_20first_20application_23',['3. Your First Application',['../da/d7c/md_docs_2guides_2DEVELOPER__GUIDE.html#autotoc_md725',1,'']]],
   ['30_20success_24',['Target State (PR #30 - Success)',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html#autotoc_md176',1,'']]],
@@ -30,6 +30,6 @@ var searchData=
   ['3_3a_20event_20streaming_27',['Example 3: Event Streaming',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md832',1,'']]],
   ['3_3a_20grep_20p_20not_20supported_20macos_28',['Issue 3: grep -P Not Supported (macOS)',['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md606',1,'']]],
   ['3_3a_20migrate_20message_20creation_29',['Step 3: Migrate Message Creation',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md816',1,'']]],
-  ['3_3a_20task_20queue_20확장_30',['Phase 3: Task Queue (확장)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1874',1,'']]],
-  ['3_3a_20worker_20system_20✅_31',['Sprint 3: Worker System ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1897',1,'']]]
+  ['3_3a_20task_20queue_20확장_30',['Phase 3: Task Queue (확장)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1876',1,'']]],
+  ['3_3a_20worker_20system_20✅_31',['Sprint 3: Worker System ✅',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1899',1,'']]]
 ];

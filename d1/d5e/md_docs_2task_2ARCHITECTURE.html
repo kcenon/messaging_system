@@ -440,7 +440,7 @@ Thread Safety</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Component   </th><th class="markdownTableHeadNone">Thread Safety Mechanism    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">task_queue   </td><td class="markdownTableBodyNone">Mutex-protected internal state    </td></tr>
+<td class="markdownTableBodyNone">task_queue   </td><td class="markdownTableBodyNone">Mutex-protected internal state, thread_system integration    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">worker_pool   </td><td class="markdownTableBodyNone">Concurrent worker execution    </td></tr>
 <tr class="markdownTableRowOdd">
@@ -452,9 +452,18 @@ Thread Safety</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">task_scheduler   </td><td class="markdownTableBodyNone">Mutex-protected schedules   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md1453"></a>
+<h2><a class="anchor" id="autotoc_md1453"></a>
+thread_system Integration</h2>
+<p>The <code>task_queue</code> component uses <code>thread_system</code> for managing the delayed task worker thread. Instead of direct <code>std::thread</code> usage, it leverages <code>kcenon::thread::thread_base</code> which provides:</p>
+<ul>
+<li>Standardized thread lifecycle management (start/stop)</li>
+<li>Proper wake interval handling for periodic tasks</li>
+<li>Consistent thread naming and monitoring</li>
+<li>Integration with the project's threading infrastructure</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md1454"></a>
 Extension Points</h1>
-<h2><a class="anchor" id="autotoc_md1454"></a>
+<h2><a class="anchor" id="autotoc_md1455"></a>
 Custom Result Backend</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>redis_result_backend : <span class="keyword">public</span> result_backend_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -471,7 +480,7 @@ Custom Result Backend</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// ... implement other methods</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1455"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1456"></a>
 Custom Task Handler</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>custom_handler : <span class="keyword">public</span> task_handler_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -487,24 +496,24 @@ Custom Task Handler</h2>
 <div class="line">        <span class="comment">// Custom retry logic</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1456"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1457"></a>
 Design Decisions</h1>
-<h2><a class="anchor" id="autotoc_md1457"></a>
+<h2><a class="anchor" id="autotoc_md1458"></a>
 1. Message-Based Tasks</h2>
 <p>Tasks extend the <code>message</code> class to leverage existing messaging infrastructure for serialization and metadata handling.</p>
-<h2><a class="anchor" id="autotoc_md1458"></a>
+<h2><a class="anchor" id="autotoc_md1459"></a>
 2. Result Type Pattern</h2>
 <p>All operations return <code>Result&lt;T&gt;</code> or <code>VoidResult</code> for explicit error handling without exceptions.</p>
-<h2><a class="anchor" id="autotoc_md1459"></a>
+<h2><a class="anchor" id="autotoc_md1460"></a>
 3. Builder Pattern</h2>
 <p>The <code>task_builder</code> provides a fluent API for constructing tasks with complex configurations.</p>
-<h2><a class="anchor" id="autotoc_md1460"></a>
+<h2><a class="anchor" id="autotoc_md1461"></a>
 4. Facade Pattern</h2>
 <p><code>task_system</code> acts as a facade, simplifying the interface while allowing access to individual components.</p>
-<h2><a class="anchor" id="autotoc_md1461"></a>
+<h2><a class="anchor" id="autotoc_md1462"></a>
 5. Strategy Pattern</h2>
 <p><code>result_backend_interface</code> allows different storage strategies to be swapped without changing the core logic.</p>
-<h1><a class="anchor" id="autotoc_md1462"></a>
+<h1><a class="anchor" id="autotoc_md1463"></a>
 Related Documentation</h1>
 <ul>
 <li><a class="el" href="../../d9/dff/md_docs_2task_2QUICK__START.html">Quick Start Guide</a></li>

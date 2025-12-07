@@ -1,5 +1,7 @@
 var NAVTREEINDEX6 =
 {
+"df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md160":[3,10,0],
+"df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md161":[3,10,1],
 "df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md162":[3,10,2],
 "df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md163":[3,11],
 "df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md164":[3,11,0],
