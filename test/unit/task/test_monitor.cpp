@@ -500,8 +500,18 @@ TEST(TaskMonitorTest, IntegrationWithWorkerPool) {
 	// Wait for completion
 	results->wait_for_result(task_id, std::chrono::seconds(5));
 
+	// Wait for statistics to update (may be delayed on Windows)
+	auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+	std::optional<tsk::worker_statistics> stats;
+	while (std::chrono::steady_clock::now() < deadline) {
+		stats = monitor.get_worker_statistics();
+		if (stats.has_value() && stats->total_tasks_processed >= 1) {
+			break;
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	}
+
 	// Check statistics
-	auto stats = monitor.get_worker_statistics();
 	EXPECT_TRUE(stats.has_value());
 	EXPECT_GE(stats->total_tasks_processed, 1);
 
