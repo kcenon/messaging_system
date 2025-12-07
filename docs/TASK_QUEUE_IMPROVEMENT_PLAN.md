@@ -604,26 +604,26 @@ public:
 
 ## Implementation Roadmap
 
-### Sprint 1: Core Task Infrastructure
-1. `task.h` / `task.cpp` - Task 클래스 구현
-2. `task_builder.h` - Task 빌더
-3. `task_handler.h` - 핸들러 인터페이스
-4. `task_context.h` - 실행 컨텍스트
+### Sprint 1: Core Task Infrastructure ✅
+1. `task.h` / `task.cpp` - Task 클래스 구현 ✅
+2. `task_builder.h` - Task 빌더 ✅
+3. `task_handler.h` - 핸들러 인터페이스 ✅
+4. `task_context.h` - 실행 컨텍스트 ✅
 
-### Sprint 2: Queue & Result Backend
-1. `task_queue.h` / `task_queue.cpp` - 작업 큐 (기존 확장)
-2. `result_backend.h` - 결과 백엔드 인터페이스
-3. `memory_result_backend.h/.cpp` - 메모리 백엔드
+### Sprint 2: Queue & Result Backend ✅
+1. `task_queue.h` / `task_queue.cpp` - 작업 큐 (기존 확장) ✅
+2. `result_backend.h` - 결과 백엔드 인터페이스 ✅
+3. `memory_result_backend.h/.cpp` - 메모리 백엔드 ✅
 
-### Sprint 3: Worker System
-1. `worker_pool.h` / `worker_pool.cpp` - 워커 풀
-2. Worker 실행 로직
-3. 재시도 메커니즘 (기존 `resilient_transport` 패턴 활용)
+### Sprint 3: Worker System ✅
+1. `worker_pool.h` / `worker_pool.cpp` - 워커 풀 ✅
+2. Worker 실행 로직 ✅
+3. 재시도 메커니즘 (기존 `resilient_transport` 패턴 활용) ✅
 
-### Sprint 4: Client & Async Result
-1. `async_result.h` / `async_result.cpp` - 비동기 결과
-2. `task_client.h` / `task_client.cpp` - 클라이언트
-3. Chain/Chord 패턴
+### Sprint 4: Client & Async Result ✅
+1. `async_result.h` / `async_result.cpp` - 비동기 결과 ✅
+2. `task_client.h` / `task_client.cpp` - 클라이언트 ✅
+3. Chain/Chord 패턴 ✅
 
 ### Sprint 5: Scheduler
 1. `scheduler.h` / `scheduler.cpp` - 스케줄러

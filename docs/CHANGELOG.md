@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Distributed Task Queue System - Sprint 4 (Issues #107, #108, #109)**
+  - `async_result`: Asynchronous result handle for task execution tracking
+    - Status queries (is_ready, is_successful, is_failed, is_cancelled)
+    - Progress tracking (progress, progress_message)
+    - Blocking result retrieval with timeout
+    - Callback-based result retrieval (then)
+    - Task cancellation (revoke)
+    - Child task management for workflows
+    - Thread-safe implementation with comprehensive tests (25 tests)
+  - `task_client`: High-level API for task submission
+    - Immediate execution (send)
+    - Delayed execution (send_later, send_at)
+    - Batch submission (send_batch)
+    - Chain pattern for sequential task execution
+    - Chord pattern for parallel execution with aggregation
+    - Result retrieval and cancellation APIs
+    - Thread-safe concurrent task submission (24 tests)
+
 - **Distributed Task Queue System - Sprint 3 (Issues #104, #105, #106)**
   - `worker_pool`: Thread pool for distributed task execution
     - Configurable concurrency (number of worker threads)
