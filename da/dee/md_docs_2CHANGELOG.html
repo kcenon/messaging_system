@@ -100,6 +100,22 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md466"></a>
 Added</h2>
 <ul>
+<li><b>Distributed Task Queue System - Sprint 5 (Issue #111)</b><ul>
+<li><code>cron_parser</code>: Cron expression parser for scheduled task execution<ul>
+<li>Standard 5-field cron format support (minute hour day month weekday)</li>
+<li>Syntax support: wildcards (*), specific values, intervals (*/n), ranges (a-b), lists (a,b,c)</li>
+<li><code>parse()</code>: Parse cron expression string to structured cron_expression</li>
+<li><code>next_run_time()</code>: Calculate next execution time from given start point</li>
+<li><code>is_valid()</code>: Validate cron expression syntax</li>
+<li><code>to_string()</code>: Convert parsed expression back to string</li>
+<li>Leap year and year rollover handling</li>
+<li>Thread-safe static methods</li>
+<li>Comprehensive unit tests (32 tests)</li>
+</ul>
+</li>
+<li>New error codes: <code>task_invalid_argument</code> (-713), <code>task_operation_failed</code> (-714)</li>
+</ul>
+</li>
 <li><b>Distributed Task Queue System - Sprint 4 (Issues #107, #108, #109)</b><ul>
 <li><code>async_result</code>: Asynchronous result handle for task execution tracking<ul>
 <li>Status queries (is_ready, is_successful, is_failed, is_cancelled)</li>
