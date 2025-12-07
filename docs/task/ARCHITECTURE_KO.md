@@ -423,6 +423,12 @@ result.then(
 - 종료 조정을 위한 `task_pool_worker::should_continue_work()`
 - 풀의 poll interval에 맞춘 자동 wake interval 구성
 
+**task_scheduler**: `scheduler_worker` 클래스를 통해 `thread_base`를 사용합니다. 스케줄러의 백그라운드 스레드는 `thread_base`를 상속하여 다음을 제공합니다:
+- 예정된 스케줄 확인 및 실행을 위한 `scheduler_worker::do_work()`
+- 정상 종료를 위한 `scheduler_worker::should_continue_work()`
+- 스케줄 변경 시 즉시 깨어나기 위한 조건 변수 통합
+- 다른 컴포넌트와 일관된 스레드 수명 주기 관리
+
 ## 확장 포인트
 
 ### 커스텀 Result Backend
