@@ -395,12 +395,21 @@ All public APIs are thread-safe:
 
 | Component | Thread Safety Mechanism |
 |-----------|------------------------|
-| task_queue | Mutex-protected internal state |
+| task_queue | Mutex-protected internal state, thread_system integration |
 | worker_pool | Concurrent worker execution |
 | async_result | Atomic state + condition variables |
 | task_context | Atomic progress updates |
 | memory_result_backend | shared_mutex for R/W locking |
 | task_scheduler | Mutex-protected schedules |
+
+### thread_system Integration
+
+The `task_queue` component uses `thread_system` for managing the delayed task worker thread. Instead of direct `std::thread` usage, it leverages `kcenon::thread::thread_base` which provides:
+
+- Standardized thread lifecycle management (start/stop)
+- Proper wake interval handling for periodic tasks
+- Consistent thread naming and monitoring
+- Integration with the project's threading infrastructure
 
 ## Extension Points
 
