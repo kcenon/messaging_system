@@ -454,12 +454,18 @@ Thread Safety</h1>
 </table>
 <h2><a class="anchor" id="autotoc_md1453"></a>
 thread_system Integration</h2>
-<p>The <code>task_queue</code> component uses <code>thread_system</code> for managing the delayed task worker thread. Instead of direct <code>std::thread</code> usage, it leverages <code>kcenon::thread::thread_base</code> which provides:</p>
+<p>Both <code>task_queue</code> and <code>worker_pool</code> components use <code>thread_system</code> for thread management. Instead of direct <code>std::thread</code> usage, they leverage <code>kcenon::thread::thread_base</code> which provides:</p>
 <ul>
 <li>Standardized thread lifecycle management (start/stop)</li>
 <li>Proper wake interval handling for periodic tasks</li>
 <li>Consistent thread naming and monitoring</li>
 <li>Integration with the project's threading infrastructure</li>
+</ul>
+<p><b>task_queue</b>: Uses <code>thread_base</code> for the delayed task worker thread that processes scheduled tasks.</p>
+<p><b>worker_pool</b>: Uses <code>thread_base</code> through the <code>task_pool_worker</code> class. Each worker thread inherits from <code>thread_base</code>, delegating thread lifecycle management to <code>thread_system</code>. This replaces direct <code>std::thread</code> usage with:</p><ul>
+<li><code>task_pool_worker::do_work()</code> for per-task processing</li>
+<li><code>task_pool_worker::should_continue_work()</code> for shutdown coordination</li>
+<li>Automatic wake interval configuration matching the pool's poll interval</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md1454"></a>
 Extension Points</h1>

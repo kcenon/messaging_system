@@ -459,12 +459,18 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 </table>
 <h2><a class="anchor" id="autotoc_md1482"></a>
 thread_system 통합</h2>
-<p><code>task_queue</code> 컴포넌트는 지연된 태스크 워커 스레드 관리를 위해 <code>thread_system</code>을 사용합니다. 직접적인 <code>std::thread</code> 사용 대신 <code>kcenon::thread::thread_base</code>를 활용하여 다음을 제공합니다:</p>
+<p><code>task_queue</code>와 <code>worker_pool</code> 컴포넌트 모두 스레드 관리를 위해 <code>thread_system</code>을 사용합니다. 직접적인 <code>std::thread</code> 사용 대신 <code>kcenon::thread::thread_base</code>를 활용하여 다음을 제공합니다:</p>
 <ul>
 <li>표준화된 스레드 수명 주기 관리 (시작/중지)</li>
 <li>주기적 태스크를 위한 적절한 wake interval 처리</li>
 <li>일관된 스레드 명명 및 모니터링</li>
 <li>프로젝트의 스레딩 인프라와의 통합</li>
+</ul>
+<p><b>task_queue</b>: 예약된 태스크를 처리하는 지연 태스크 워커 스레드에 <code>thread_base</code>를 사용합니다.</p>
+<p><b>worker_pool</b>: <code>task_pool_worker</code> 클래스를 통해 <code>thread_base</code>를 사용합니다. 각 워커 스레드는 <code>thread_base</code>를 상속하여 스레드 수명 주기 관리를 <code>thread_system</code>에 위임합니다. 이를 통해 직접적인 <code>std::thread</code> 사용을 다음으로 대체합니다:</p><ul>
+<li>태스크별 처리를 위한 <code>task_pool_worker::do_work()</code></li>
+<li>종료 조정을 위한 <code>task_pool_worker::should_continue_work()</code></li>
+<li>풀의 poll interval에 맞춘 자동 wake interval 구성</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md1483"></a>
 확장 포인트</h1>
