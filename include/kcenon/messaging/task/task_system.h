@@ -25,8 +25,12 @@
 #include <kcenon/messaging/task/async_result.h>
 #include <kcenon/common/patterns/result.h>
 
+#include <atomic>
+#include <chrono>
 #include <memory>
+#include <mutex>
 #include <string>
+#include <vector>
 
 namespace kcenon::messaging::task {
 
