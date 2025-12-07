@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- **Distributed Task Queue System - Sprint 3 (Issue #104)**
+- **Distributed Task Queue System - Sprint 3 (Issues #104, #105, #106)**
   - `worker_pool`: Thread pool for distributed task execution
     - Configurable concurrency (number of worker threads)
     - Multi-queue processing with priority ordering
@@ -16,7 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Graceful shutdown with timeout support
     - Statistics collection (throughput, execution time, success/failure rates)
     - Integration with task_queue, result_backend, and task_handler_interface
-  - Comprehensive unit tests for worker_pool (15 tests)
+    - Retry mechanism with exponential backoff (Issue #105)
+    - Task timeout handling with soft cancellation (Issue #106)
+      - Uses std::async/std::future for timeout enforcement
+      - Requests cancellation via task_context on timeout
+      - Handlers can check is_cancelled() to terminate gracefully
+      - Tasks transition to failed state with clear timeout error message
+      - Added total_tasks_timed_out counter to worker_statistics
+  - Comprehensive unit tests for worker_pool (26 tests)
 
 ### Fixed
 - `task`: Sync metadata.id with task_id for correct task_queue lookup

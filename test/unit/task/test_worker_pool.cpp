@@ -780,3 +780,239 @@ TEST(WorkerPoolTest, RetryStatistics) {
 	pool.stop();
 	queue->stop();
 }
+
+// ============================================================================
+// Timeout handling tests
+// ============================================================================
+
+TEST(WorkerPoolTest, TaskTimeoutSoftCancellation) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	std::atomic<bool> cancellation_detected{false};
+	std::atomic<bool> task_started{false};
+
+	pool.register_handler("timeout.task", [&](const task_t& t, task_context& ctx) {
+		(void)t;
+		task_started = true;
+
+		// Simulate long-running task that checks for cancellation
+		for (int i = 0; i < 100; ++i) {
+			if (ctx.is_cancelled()) {
+				cancellation_detected = true;
+				return cmn::Result<container_module::value_container>(
+					cmn::error_info{-1, "Task cancelled"});
+			}
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		}
+
+		return cmn::ok(container_module::value_container{});
+	});
+
+	pool.start();
+
+	// Create task with short timeout (200ms)
+	auto task = task_builder("timeout.task")
+		.timeout(std::chrono::milliseconds(200))
+		.retries(0)  // No retries for this test
+		.build()
+		.unwrap();
+	auto task_id = task.task_id();
+	queue->enqueue(std::move(task));
+
+	// Wait for task to be processed
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+	EXPECT_TRUE(task_started);
+	EXPECT_TRUE(cancellation_detected);
+
+	// Check final state is failed
+	auto state = results->get_state(task_id);
+	EXPECT_TRUE(state.is_ok());
+	EXPECT_EQ(state.unwrap(), task_state::failed);
+
+	pool.stop();
+	queue->stop();
+}
+
+TEST(WorkerPoolTest, TaskTimeoutErrorMessage) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	pool.register_handler("long.task", [](const task_t& t, task_context& ctx) {
+		(void)t;
+		(void)ctx;
+		// Sleep longer than timeout
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		return cmn::ok(container_module::value_container{});
+	});
+
+	pool.start();
+
+	// Create task with short timeout
+	auto task = task_builder("long.task")
+		.timeout(std::chrono::milliseconds(100))
+		.retries(0)
+		.build()
+		.unwrap();
+	auto task_id = task.task_id();
+	queue->enqueue(std::move(task));
+
+	// Wait for task to timeout
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+	// Check error message contains timeout info
+	auto error = results->get_error(task_id);
+	EXPECT_TRUE(error.is_ok());
+	EXPECT_TRUE(error.unwrap().message.find("timed out") != std::string::npos);
+
+	pool.stop();
+	queue->stop();
+}
+
+TEST(WorkerPoolTest, TaskTimeoutStatistics) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	pool.register_handler("slow.stat", [](const task_t& t, task_context& ctx) {
+		(void)t;
+		(void)ctx;
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		return cmn::ok(container_module::value_container{});
+	});
+
+	pool.start();
+
+	// Submit tasks that will timeout
+	for (int i = 0; i < 2; ++i) {
+		auto task = task_builder("slow.stat")
+			.timeout(std::chrono::milliseconds(100))
+			.retries(0)
+			.build()
+			.unwrap();
+		queue->enqueue(std::move(task));
+	}
+
+	// Wait for tasks to timeout
+	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+	auto stats = pool.get_statistics();
+	EXPECT_EQ(stats.total_tasks_timed_out, 2);
+	EXPECT_EQ(stats.total_tasks_failed, 2);
+
+	pool.stop();
+	queue->stop();
+}
+
+TEST(WorkerPoolTest, TaskCompletesBeforeTimeout) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	pool.register_handler("quick.task", [](const task_t& t, task_context& ctx) {
+		(void)t;
+		(void)ctx;
+		// Complete quickly
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		container_module::value_container result;
+		result.set_value("status", std::string("completed"));
+		return cmn::ok(result);
+	});
+
+	pool.start();
+
+	// Create task with generous timeout
+	auto task = task_builder("quick.task")
+		.timeout(std::chrono::milliseconds(5000))
+		.build()
+		.unwrap();
+	auto task_id = task.task_id();
+	queue->enqueue(std::move(task));
+
+	// Wait for result
+	auto result = results->wait_for_result(task_id, std::chrono::seconds(5));
+	EXPECT_TRUE(result.is_ok());
+
+	// Check final state is succeeded
+	auto state = results->get_state(task_id);
+	EXPECT_TRUE(state.is_ok());
+	EXPECT_EQ(state.unwrap(), task_state::succeeded);
+
+	// No timeouts should be recorded
+	auto stats = pool.get_statistics();
+	EXPECT_EQ(stats.total_tasks_timed_out, 0);
+
+	pool.stop();
+	queue->stop();
+}
+
+TEST(WorkerPoolTest, TaskTimeoutWithRetry) {
+	auto queue = std::make_shared<task_queue>();
+	queue->start();
+	auto results = std::make_shared<memory_result_backend>();
+
+	worker_config config;
+	config.concurrency = 1;
+
+	worker_pool pool(queue, results, config);
+
+	std::atomic<int> attempt_count{0};
+
+	pool.register_handler("timeout.retry", [&attempt_count](const task_t& t, task_context& ctx) {
+		(void)t;
+		(void)ctx;
+		++attempt_count;
+		// Always sleep longer than timeout
+		std::this_thread::sleep_for(std::chrono::milliseconds(300));
+		return cmn::ok(container_module::value_container{});
+	});
+
+	pool.start();
+
+	// Create task with short timeout and retries
+	auto task = task_builder("timeout.retry")
+		.timeout(std::chrono::milliseconds(100))
+		.retries(2)
+		.retry_delay(std::chrono::milliseconds(50))
+		.build()
+		.unwrap();
+	auto task_id = task.task_id();
+	queue->enqueue(std::move(task));
+
+	// Wait for all attempts
+	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+	// Should have attempted 3 times (initial + 2 retries)
+	EXPECT_EQ(attempt_count.load(), 3);
+
+	// Final state should be failed
+	auto state = results->get_state(task_id);
+	EXPECT_TRUE(state.is_ok());
+	EXPECT_EQ(state.unwrap(), task_state::failed);
+
+	pool.stop();
+	queue->stop();
+}
