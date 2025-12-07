@@ -16,6 +16,7 @@
 #include <kcenon/messaging/task/task.h>
 #include <kcenon/messaging/core/message_queue.h>
 #include <kcenon/common/patterns/result.h>
+#include <kcenon/thread/core/thread_base.h>
 
 #include <atomic>
 #include <chrono>
@@ -26,12 +27,14 @@
 #include <optional>
 #include <queue>
 #include <string>
-#include <thread>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
 namespace kcenon::messaging::task {
+
+// Forward declaration
+class task_queue;
 
 /**
  * @struct task_queue_config
@@ -57,6 +60,44 @@ struct delayed_task {
 		// Priority queue is max-heap, so invert comparison for earliest first
 		return eta > other.eta;
 	}
+};
+
+/**
+ * @class delayed_task_worker
+ * @brief Worker thread for processing delayed tasks using thread_system
+ *
+ * This class inherits from kcenon::thread::thread_base to leverage
+ * the thread_system's lifecycle management and replaces direct std::thread usage.
+ */
+class delayed_task_worker : public kcenon::thread::thread_base {
+public:
+	/**
+	 * @brief Construct a delayed task worker
+	 * @param parent Reference to the owning task_queue
+	 * @param poll_interval Interval for checking delayed tasks
+	 */
+	explicit delayed_task_worker(task_queue& parent,
+								 std::chrono::milliseconds poll_interval);
+
+	~delayed_task_worker() override = default;
+
+	/**
+	 * @brief Notify the worker that a new delayed task was added
+	 *
+	 * This wakes up the worker to potentially process the new task
+	 * if its ETA is earlier than the current wait time.
+	 */
+	void notify_new_task();
+
+protected:
+	[[nodiscard]] bool should_continue_work() const override;
+	kcenon::thread::result_void do_work() override;
+
+private:
+	task_queue& parent_;
+	mutable std::mutex cv_mutex_;
+	std::condition_variable cv_;
+	std::atomic<bool> notified_{false};
 };
 
 /**
@@ -256,13 +297,18 @@ public:
 	bool has_queue(const std::string& queue_name) const;
 
 private:
+	// Allow delayed_task_worker to access private members
+	friend class delayed_task_worker;
+
 	// Internal helpers
 	void ensure_queue_exists(const std::string& queue_name);
 	void process_delayed_tasks();
-	void delayed_task_worker();
 	bool is_task_cancelled(const std::string& task_id) const;
 	void register_task(const task& t);
 	void unregister_task(const std::string& task_id);
+
+	// Calculate wait time until next delayed task is ready
+	std::chrono::milliseconds get_next_delayed_wait_time() const;
 
 	task_queue_config config_;
 
@@ -289,8 +335,9 @@ private:
 	// Lifecycle
 	std::atomic<bool> running_{false};
 	std::atomic<bool> stopped_{false};
-	std::thread delayed_worker_thread_;
-	std::condition_variable delayed_cv_;
+
+	// Delayed task worker using thread_system
+	std::unique_ptr<delayed_task_worker> delayed_worker_;
 };
 
 }  // namespace kcenon::messaging::task

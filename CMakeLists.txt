@@ -226,6 +226,15 @@ elseif(TARGET CommonSystem::common)
     target_link_libraries(messaging_system_core PUBLIC CommonSystem::common)
 endif()
 
+# Link thread_system (required for task_queue's delayed_task_worker)
+if(thread_system_TARGET)
+    target_link_libraries(messaging_system_core PUBLIC ${thread_system_TARGET})
+elseif(TARGET thread_pool)
+    target_link_libraries(messaging_system_core PUBLIC thread_pool)
+elseif(TARGET ThreadSystem::thread_pool)
+    target_link_libraries(messaging_system_core PUBLIC ThreadSystem::thread_pool)
+endif()
+
 # Compile definitions
 target_compile_definitions(messaging_system_core PUBLIC
     KCENON_MESSAGING_SYSTEM_AVAILABLE
