@@ -11,6 +11,61 @@
 namespace kcenon::messaging::task {
 
 // ============================================================================
+// scheduler_worker implementation
+// ============================================================================
+
+scheduler_worker::scheduler_worker(task_scheduler& scheduler)
+	: thread_base("task_scheduler")
+	, scheduler_(scheduler) {
+	// Set a short wake interval for responsive schedule checking
+	set_wake_interval(std::chrono::milliseconds(100));
+}
+
+auto scheduler_worker::should_continue_work() const -> bool {
+	return scheduler_.running_.load(std::memory_order_acquire) &&
+		   !scheduler_.stop_requested_.load(std::memory_order_acquire);
+}
+
+auto scheduler_worker::do_work() -> kcenon::thread::result_void {
+	std::unique_lock<std::mutex> lock(scheduler_.mutex_);
+
+	// Find the next schedule to run
+	auto next_it = scheduler_.find_next_schedule();
+
+	if (next_it == scheduler_.schedules_.end()) {
+		// No schedules to run, wait until woken up or timeout
+		scheduler_.cv_.wait_for(lock, std::chrono::seconds(1), [this]() {
+			return scheduler_.stop_requested_.load(std::memory_order_acquire);
+		});
+		return {};
+	}
+
+	auto& entry = next_it->second;
+	auto now = std::chrono::system_clock::now();
+
+	if (!entry.next_run.has_value()) {
+		entry.next_run = scheduler_.calculate_next_run(entry);
+		return {};
+	}
+
+	auto next_run = entry.next_run.value();
+
+	if (next_run <= now) {
+		// Time to execute
+		scheduler_.execute_schedule(entry);
+		entry.next_run = scheduler_.calculate_next_run(entry);
+	} else {
+		// Wait until next run time or until woken up
+		auto wait_duration = next_run - now;
+		scheduler_.cv_.wait_for(lock, wait_duration, [this]() {
+			return scheduler_.stop_requested_.load(std::memory_order_acquire);
+		});
+	}
+
+	return {};
+}
+
+// ============================================================================
 // Constructor / Destructor
 // ============================================================================
 
@@ -269,8 +324,14 @@ common::VoidResult task_scheduler::start() {
 		}
 	}
 
-	// Start the scheduler thread
-	scheduler_thread_ = std::thread([this]() { scheduler_loop(); });
+	// Create and start the scheduler worker using thread_system
+	scheduler_worker_ = std::make_unique<scheduler_worker>(*this);
+	auto result = scheduler_worker_->start();
+	if (result.has_error()) {
+		scheduler_worker_.reset();
+		running_.store(false, std::memory_order_release);
+		return common::VoidResult(common::error_info{-1, "Failed to start scheduler worker"});
+	}
 
 	return common::ok();
 }
@@ -285,8 +346,10 @@ common::VoidResult task_scheduler::stop() {
 	stop_requested_.store(true, std::memory_order_release);
 	cv_.notify_all();
 
-	if (scheduler_thread_.joinable()) {
-		scheduler_thread_.join();
+	// Stop the scheduler worker (thread_system handles joining)
+	if (scheduler_worker_) {
+		scheduler_worker_->stop();
+		scheduler_worker_.reset();
 	}
 
 	return common::ok();
@@ -353,44 +416,6 @@ void task_scheduler::on_task_failed(schedule_callback callback) {
 // Private methods
 // ============================================================================
 
-void task_scheduler::scheduler_loop() {
-	while (!stop_requested_.load(std::memory_order_acquire)) {
-		std::unique_lock<std::mutex> lock(mutex_);
-
-		// Find the next schedule to run
-		auto next_it = find_next_schedule();
-
-		if (next_it == schedules_.end()) {
-			// No schedules to run, wait indefinitely until woken up
-			cv_.wait(lock, [this]() {
-				return stop_requested_.load(std::memory_order_acquire);
-			});
-			continue;
-		}
-
-		auto& entry = next_it->second;
-		auto now = std::chrono::system_clock::now();
-
-		if (!entry.next_run.has_value()) {
-			entry.next_run = calculate_next_run(entry);
-			continue;
-		}
-
-		auto next_run = entry.next_run.value();
-
-		if (next_run <= now) {
-			// Time to execute
-			execute_schedule(entry);
-			entry.next_run = calculate_next_run(entry);
-		} else {
-			// Wait until next run time or until woken up
-			auto wait_duration = next_run - now;
-			cv_.wait_for(lock, wait_duration, [this]() {
-				return stop_requested_.load(std::memory_order_acquire);
-			});
-		}
-	}
-}
 
 std::chrono::system_clock::time_point task_scheduler::calculate_next_run(
 	const schedule_entry& entry) {
