@@ -470,8 +470,17 @@ TEST(TaskSystemTest, FullWorkflow) {
 	auto outcome = result.get(std::chrono::seconds(10));
 	EXPECT_TRUE(outcome.is_ok()) << outcome.error().message;
 
-	// Check statistics
-	auto stats = system.get_statistics();
+	// Check statistics (with polling to handle race condition on Windows)
+	// The statistics update happens after store_result, so we need to wait briefly
+	tsk::worker_statistics stats;
+	auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+	while (std::chrono::steady_clock::now() < deadline) {
+		stats = system.get_statistics();
+		if (stats.total_tasks_processed >= 1) {
+			break;
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
 	EXPECT_GE(stats.total_tasks_processed, 1);
 
 	// Graceful shutdown
