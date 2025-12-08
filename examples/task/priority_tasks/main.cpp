@@ -17,9 +17,11 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include <memory>
 
 using namespace kcenon::messaging::task;
 using namespace kcenon::common;
+using kcenon::messaging::message_priority;
 
 int main() {
     std::cout << "=== Priority Tasks Example ===" << std::endl;
@@ -56,9 +58,19 @@ int main() {
     }
 
     std::cout << "\nSubmitting tasks with different priorities..." << std::endl;
-    std::cout << "(Lower number = higher priority)\n" << std::endl;
+    std::cout << "(Higher priority value executes first)\n" << std::endl;
 
     std::vector<async_result> results;
+
+    const auto low_priority = message_priority::low;
+    const auto medium_priority = message_priority::normal;
+    const auto high_priority = message_priority::high;
+    auto make_payload = [](std::string name, int priority) {
+        auto payload = std::make_shared<container_module::value_container>();
+        payload->set_value("name", std::move(name));
+        payload->set_value("priority", priority);
+        return payload;
+    };
 
     // Submit tasks in reverse priority order to demonstrate priority scheduling
     // Note: The first task may start immediately before the rest are queued
@@ -67,18 +79,18 @@ int main() {
     for (int i = 0; i < 3; ++i) {
         auto task_result =
             task_builder("process")
-                .priority(10)  // Low priority
+                .priority(low_priority)  // Low priority
                 .build();
 
         if (task_result.is_ok()) {
             auto t = task_result.unwrap();
-            container_module::value_container payload;
-            payload.set_value("name", std::string("Low-" + std::to_string(i)));
-            payload.set_value("priority", 10);
-            t.set_task_payload(payload);
+            auto payload = make_payload("Low-" + std::to_string(i),
+                                        static_cast<int>(low_priority));
+            t.set_task_payload(std::move(payload));
 
             results.push_back(system.submit(std::move(t)));
-            std::cout << "  Submitted: Low-" << i << " (priority 10)"
+            std::cout << "  Submitted: Low-" << i << " (priority "
+                      << static_cast<int>(low_priority) << ")"
                       << std::endl;
         }
     }
@@ -87,19 +99,18 @@ int main() {
     for (int i = 0; i < 2; ++i) {
         auto task_result =
             task_builder("process")
-                .priority(5)  // Medium priority
+                .priority(medium_priority)  // Medium priority
                 .build();
 
         if (task_result.is_ok()) {
             auto t = task_result.unwrap();
-            container_module::value_container payload;
-            payload.set_value("name",
-                              std::string("Medium-" + std::to_string(i)));
-            payload.set_value("priority", 5);
-            t.set_task_payload(payload);
+            auto payload = make_payload("Medium-" + std::to_string(i),
+                                        static_cast<int>(medium_priority));
+            t.set_task_payload(std::move(payload));
 
             results.push_back(system.submit(std::move(t)));
-            std::cout << "  Submitted: Medium-" << i << " (priority 5)"
+            std::cout << "  Submitted: Medium-" << i << " (priority "
+                      << static_cast<int>(medium_priority) << ")"
                       << std::endl;
         }
     }
@@ -108,18 +119,18 @@ int main() {
     {
         auto task_result =
             task_builder("process")
-                .priority(1)  // High priority
+                .priority(high_priority)  // High priority
                 .build();
 
         if (task_result.is_ok()) {
             auto t = task_result.unwrap();
-            container_module::value_container payload;
-            payload.set_value("name", std::string("High-0"));
-            payload.set_value("priority", 1);
-            t.set_task_payload(payload);
+            auto payload = make_payload("High-0",
+                                        static_cast<int>(high_priority));
+            t.set_task_payload(std::move(payload));
 
             results.push_back(system.submit(std::move(t)));
-            std::cout << "  Submitted: High-0 (priority 1)" << std::endl;
+            std::cout << "  Submitted: High-0 (priority "
+                      << static_cast<int>(high_priority) << ")" << std::endl;
         }
     }
 
@@ -140,7 +151,7 @@ int main() {
     // Display statistics
     auto stats = system.get_statistics();
     std::cout << "\n=== Statistics ===" << std::endl;
-    std::cout << "Total processed: " << stats.succeeded_tasks << std::endl;
+    std::cout << "Total processed: " << stats.total_tasks_succeeded << std::endl;
 
     system.shutdown_graceful(std::chrono::seconds(5));
     std::cout << "\nDone!" << std::endl;

@@ -154,7 +154,7 @@ int main() {
     std::cout << "Tracking progress:\n" << std::endl;
 
     while (true) {
-        auto status = file_result.status();
+        auto status = file_result.state();
 
         // Get progress from the task
         double progress = file_result.progress();
@@ -191,7 +191,7 @@ int main() {
 
     // Track multi-phase progress
     while (true) {
-        auto status = phase_result.status();
+        auto status = phase_result.state();
         double progress = phase_result.progress();
         auto message = phase_result.progress_message();
 
@@ -218,8 +218,8 @@ int main() {
     // Display statistics
     auto stats = system.get_statistics();
     std::cout << "\n=== Statistics ===" << std::endl;
-    std::cout << "Total tasks: " << stats.total_tasks << std::endl;
-    std::cout << "Succeeded: " << stats.succeeded_tasks << std::endl;
+    std::cout << "Total tasks processed: " << stats.total_tasks_processed << std::endl;
+    std::cout << "Succeeded: " << stats.total_tasks_succeeded << std::endl;
 
     std::cout << "\nShutting down..." << std::endl;
     system.shutdown_graceful(std::chrono::seconds(5));

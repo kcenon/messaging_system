@@ -370,3 +370,6 @@ tmp/
 
 # Documents
 documents/
+
+#npm-cache
+.npm-cache/

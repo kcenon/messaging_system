@@ -115,9 +115,9 @@ int main() {
     // Display statistics
     auto stats = system.get_statistics();
     std::cout << "\n=== Statistics ===" << std::endl;
-    std::cout << "Total tasks: " << stats.total_tasks << std::endl;
-    std::cout << "Succeeded: " << stats.succeeded_tasks << std::endl;
-    std::cout << "Failed: " << stats.failed_tasks << std::endl;
+    std::cout << "Total tasks processed: " << stats.total_tasks_processed << std::endl;
+    std::cout << "Succeeded: " << stats.total_tasks_succeeded << std::endl;
+    std::cout << "Failed: " << stats.total_tasks_failed << std::endl;
 
     // Stop the system gracefully
     std::cout << "\nShutting down..." << std::endl;

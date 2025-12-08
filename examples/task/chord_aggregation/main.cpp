@@ -15,6 +15,7 @@
 #include <kcenon/messaging/task/task_system.h>
 #include <chrono>
 #include <iostream>
+#include <memory>
 #include <random>
 #include <string>
 #include <thread>
@@ -123,9 +124,9 @@ int main() {
         auto task_result = task_builder("fetch.data").build();
         if (task_result.is_ok()) {
             auto t = task_result.unwrap();
-            container_module::value_container payload;
-            payload.set_value("source", source);
-            t.set_task_payload(payload);
+            auto payload = std::make_shared<container_module::value_container>();
+            payload->set_value("source", source);
+            t.set_task_payload(std::move(payload));
             parallel_tasks.push_back(std::move(t));
             std::cout << "  Added fetch task for: " << source << std::endl;
         }
@@ -176,9 +177,9 @@ int main() {
         auto task_result = task_builder("fetch.data").build();
         if (task_result.is_ok()) {
             auto t = task_result.unwrap();
-            container_module::value_container payload;
-            payload.set_value("source", source);
-            t.set_task_payload(payload);
+            auto payload = std::make_shared<container_module::value_container>();
+            payload->set_value("source", source);
+            t.set_task_payload(std::move(payload));
             individual_results.push_back(system.submit(std::move(t)));
         }
     }
@@ -205,8 +206,8 @@ int main() {
     // Display statistics
     auto stats = system.get_statistics();
     std::cout << "\n=== Statistics ===" << std::endl;
-    std::cout << "Total tasks: " << stats.total_tasks << std::endl;
-    std::cout << "Succeeded: " << stats.succeeded_tasks << std::endl;
+    std::cout << "Total tasks processed: " << stats.total_tasks_processed << std::endl;
+    std::cout << "Succeeded: " << stats.total_tasks_succeeded << std::endl;
 
     std::cout << "\nShutting down..." << std::endl;
     system.shutdown_graceful(std::chrono::seconds(5));

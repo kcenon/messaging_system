@@ -87,20 +87,20 @@ void display_dashboard(task_system& system) {
     // Task statistics
     std::cout << "┌─ Task Statistics ─────────────────────────────────────────┐"
               << std::endl;
-    std::cout << "│ Total Submitted:  " << std::setw(8) << stats.total_tasks
+    std::cout << "│ Total Submitted:  " << std::setw(8) << stats.total_tasks_processed
               << "                                │" << std::endl;
-    std::cout << "│ Succeeded:        " << std::setw(8) << stats.succeeded_tasks
+    std::cout << "│ Succeeded:        " << std::setw(8) << stats.total_tasks_succeeded
               << "                                │" << std::endl;
-    std::cout << "│ Failed:           " << std::setw(8) << stats.failed_tasks
+    std::cout << "│ Failed:           " << std::setw(8) << stats.total_tasks_failed
               << "                                │" << std::endl;
-    std::cout << "│ Retried:          " << std::setw(8) << stats.retried_tasks
+    std::cout << "│ Retried:          " << std::setw(8) << stats.total_tasks_retried
               << "                                │" << std::endl;
 
     // Calculate success rate
     double success_rate = 0.0;
-    if (stats.total_tasks > 0) {
-        success_rate = static_cast<double>(stats.succeeded_tasks) /
-                       stats.total_tasks * 100.0;
+    if (stats.total_tasks_processed > 0) {
+        success_rate = static_cast<double>(stats.total_tasks_succeeded) /
+                       stats.total_tasks_processed * 100.0;
     }
     std::cout << "│ Success Rate:     " << std::fixed << std::setprecision(1)
               << std::setw(7) << success_rate
@@ -109,24 +109,31 @@ void display_dashboard(task_system& system) {
               << std::endl;
     std::cout << std::endl;
 
-    // Monitor events (if available)
+    // Show recent failures (if available)
     if (system.monitor()) {
         auto monitor = system.monitor();
-        auto events = monitor->recent_events(5);
+        auto failed_tasks = monitor->list_failed_tasks(5);
 
-        std::cout
-            << "┌─ Recent Events ────────────────────────────────────────────┐"
-            << std::endl;
-        if (events.empty()) {
+        std::cout << "┌─ Recent Failures ──────────────────────────────────────────┐"
+                  << std::endl;
+        if (failed_tasks.empty()) {
             std::cout
-                << "│ No recent events                                           │"
+                << "│ No recent failures                                         │"
                 << std::endl;
         } else {
-            for (const auto& event : events) {
+            for (const auto& task : failed_tasks) {
                 std::stringstream ss;
-                ss << "│ " << std::left << std::setw(58)
-                   << event.description.substr(0, 56) << "│";
-                std::cout << ss.str() << std::endl;
+                ss << "│ " << std::left << std::setw(16)
+                   << task.task_name().substr(0, 16) << " id="
+                   << task.task_id().substr(0, 8) << " error="
+                   << task.error_message().substr(0, 20);
+
+                auto line = ss.str();
+                if (line.size() < 61) {
+                    line.append(61 - line.size(), ' ');
+                }
+                line.back() = '|';
+                std::cout << line << std::endl;
             }
         }
         std::cout
@@ -237,14 +244,14 @@ int main() {
     std::cout << "=== Final Statistics ===" << std::endl;
 
     auto stats = system.get_statistics();
-    std::cout << "Total tasks processed: " << stats.total_tasks << std::endl;
-    std::cout << "Succeeded: " << stats.succeeded_tasks << std::endl;
-    std::cout << "Failed: " << stats.failed_tasks << std::endl;
-    std::cout << "Retried: " << stats.retried_tasks << std::endl;
+    std::cout << "Total tasks processed: " << stats.total_tasks_processed << std::endl;
+    std::cout << "Succeeded: " << stats.total_tasks_succeeded << std::endl;
+    std::cout << "Failed: " << stats.total_tasks_failed << std::endl;
+    std::cout << "Retried: " << stats.total_tasks_retried << std::endl;
 
-    if (stats.total_tasks > 0) {
-        double success_rate = static_cast<double>(stats.succeeded_tasks) /
-                              stats.total_tasks * 100.0;
+    if (stats.total_tasks_processed > 0) {
+        double success_rate = static_cast<double>(stats.total_tasks_succeeded) /
+                              stats.total_tasks_processed * 100.0;
         std::cout << "Success rate: " << std::fixed << std::setprecision(1)
                   << success_rate << "%" << std::endl;
     }
