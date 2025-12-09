@@ -20,7 +20,6 @@
 #include <kcenon/messaging/task/task.h>
 #include <kcenon/messaging/task/task_context.h>
 #include <kcenon/common/patterns/result.h>
-#include <kcenon/common/concepts/concepts.h>
 
 #include <concepts>
 #include <functional>

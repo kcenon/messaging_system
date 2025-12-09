@@ -2,7 +2,6 @@
 
 #include "../core/message_bus.h"
 #include <kcenon/common/patterns/result.h>
-#include <kcenon/common/concepts/concepts.h>
 
 #include <concepts>
 #include <functional>

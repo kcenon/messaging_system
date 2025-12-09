@@ -20,7 +20,6 @@
 #include <kcenon/messaging/task/task_client.h>
 #include <kcenon/messaging/task/cron_parser.h>
 #include <kcenon/common/patterns/result.h>
-#include <kcenon/common/concepts/concepts.h>
 #include <kcenon/thread/core/thread_base.h>
 
 #include <atomic>

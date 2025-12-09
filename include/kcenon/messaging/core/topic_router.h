@@ -1,7 +1,6 @@
 #pragma once
 
 #include <kcenon/common/patterns/result.h>
-#include <kcenon/common/concepts/concepts.h>
 
 #include "message.h"
 
