@@ -492,6 +492,32 @@ public:
 
 `result_backend_interface`는 핵심 로직을 변경하지 않고 다른 저장소 전략을 교체할 수 있게 합니다.
 
+## 테스트
+
+작업 모듈은 `integration_tests/task/`에 위치한 포괄적인 통합 테스트를 제공합니다:
+
+| 테스트 파일 | 설명 |
+|-----------|-------------|
+| `test_task_lifecycle.cpp` | 제출부터 완료까지 전체 작업 라이프사이클 |
+| `test_worker_scenarios.cpp` | 다중 워커, 동시성, 핸들러 매칭 |
+| `test_failure_recovery.cpp` | 재시도 메커니즘, 타임아웃 처리, 에러 전파 |
+| `test_scheduling.cpp` | 주기적 및 크론 기반 작업 스케줄링 |
+| `test_concurrent_load.cpp` | 대용량 처리, 처리량 측정 |
+
+### 테스트 실행
+
+```bash
+# 테스트 빌드
+cmake --build build --target test_task_lifecycle test_worker_scenarios \
+    test_failure_recovery test_scheduling test_concurrent_load
+
+# 모든 작업 통합 테스트 실행
+ctest --test-dir build -R "test_(task_lifecycle|worker_scenarios|failure_recovery|scheduling|concurrent_load)"
+
+# 특정 테스트 실행
+./build/integration_tests/test_task_lifecycle
+```
+
 ## 관련 문서
 
 - [빠른 시작 가이드](QUICK_START_KO.md)

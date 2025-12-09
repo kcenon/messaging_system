@@ -17,6 +17,7 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <memory>
 #include <string>
 #include <thread>
 
@@ -96,10 +97,10 @@ int main() {
         auto task_result = task_builder("delayed.task").build();
         if (task_result.is_ok()) {
             auto t = task_result.unwrap();
-            container_module::value_container payload;
-            payload.set_value("message",
-                              std::string("This was delayed by 3 seconds"));
-            t.set_task_payload(payload);
+            auto payload = std::make_shared<container_module::value_container>();
+            payload->set_value("message",
+                               std::string("This was delayed by 3 seconds"));
+            t.set_task_payload(std::move(payload));
             system.submit_later(std::move(t), std::chrono::seconds(3));
         }
     }
@@ -142,10 +143,10 @@ int main() {
         auto task_result = task_builder("delayed.task").build();
         if (task_result.is_ok()) {
             auto t = task_result.unwrap();
-            container_module::value_container payload;
-            payload.set_value("message",
-                              std::string("This was delayed by 5 seconds"));
-            t.set_task_payload(payload);
+            auto payload = std::make_shared<container_module::value_container>();
+            payload->set_value("message",
+                               std::string("This was delayed by 5 seconds"));
+            t.set_task_payload(std::move(payload));
             system.submit_later(std::move(t), std::chrono::seconds(5));
         }
     }
@@ -160,16 +161,22 @@ int main() {
     if (system.scheduler()) {
         auto schedules = system.scheduler()->list_schedules();
         std::cout << "\n=== Active Schedules ===" << std::endl;
-        for (const auto& name : schedules) {
-            std::cout << "  - " << name << std::endl;
+        for (const auto& entry : schedules) {
+            std::cout << "  - " << entry.name << " (";
+            if (entry.is_cron()) {
+                std::cout << "cron: " << entry.cron_expression();
+            } else {
+                std::cout << "interval: " << entry.interval().count() << "s";
+            }
+            std::cout << ", runs=" << entry.run_count << ")" << std::endl;
         }
     }
 
     // Display statistics
     auto stats = system.get_statistics();
     std::cout << "\n=== Statistics ===" << std::endl;
-    std::cout << "Total tasks: " << stats.total_tasks << std::endl;
-    std::cout << "Succeeded: " << stats.succeeded_tasks << std::endl;
+    std::cout << "Total tasks processed: " << stats.total_tasks_processed << std::endl;
+    std::cout << "Succeeded: " << stats.total_tasks_succeeded << std::endl;
     std::cout << "Heartbeats: " << heartbeat_count.load() << std::endl;
 
     std::cout << "\nShutting down..." << std::endl;

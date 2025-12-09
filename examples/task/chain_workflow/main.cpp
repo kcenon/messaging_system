@@ -15,6 +15,7 @@
 #include <kcenon/messaging/task/task_system.h>
 #include <chrono>
 #include <iostream>
+#include <memory>
 #include <string>
 #include <thread>
 #include <vector>
@@ -126,9 +127,9 @@ int main() {
     auto extract_result = task_builder("extract").build();
     if (extract_result.is_ok()) {
         auto t = extract_result.unwrap();
-        container_module::value_container payload;
-        payload.set_value("source_table", std::string("users"));
-        t.set_task_payload(payload);
+        auto payload = std::make_shared<container_module::value_container>();
+        payload->set_value("source_table", std::string("users"));
+        t.set_task_payload(std::move(payload));
         chain_tasks.push_back(std::move(t));
     }
 
@@ -172,9 +173,9 @@ int main() {
     // Display statistics
     auto stats = system.get_statistics();
     std::cout << "\n=== Statistics ===" << std::endl;
-    std::cout << "Total tasks: " << stats.total_tasks << std::endl;
-    std::cout << "Succeeded: " << stats.succeeded_tasks << std::endl;
-    std::cout << "Failed: " << stats.failed_tasks << std::endl;
+    std::cout << "Total tasks processed: " << stats.total_tasks_processed << std::endl;
+    std::cout << "Succeeded: " << stats.total_tasks_succeeded << std::endl;
+    std::cout << "Failed: " << stats.total_tasks_failed << std::endl;
 
     std::cout << "\nShutting down..." << std::endl;
     system.shutdown_graceful(std::chrono::seconds(5));
