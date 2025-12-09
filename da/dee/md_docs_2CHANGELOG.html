@@ -100,6 +100,43 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md466"></a>
 Added</h2>
 <ul>
+<li><b>C++20 Concepts Support (Issue #146)</b><ul>
+<li>Added C++20 concept definitions for type-safe callback and handler validation</li>
+<li>New concepts in task module:<ul>
+<li><code>TaskHandlerCallable</code>: Validates task handler callable signatures</li>
+<li><code>TaskHandlerLike</code>: Validates task handler interface implementations</li>
+<li><code>ScheduleEventCallable</code>: Validates scheduler event callbacks</li>
+</ul>
+</li>
+<li>New concepts in patterns module:<ul>
+<li><code>MessageProcessorCallable</code>: Validates message pipeline processors</li>
+<li><code>MessageFilterCallable</code>: Validates message filtering predicates</li>
+<li><code>MessageTransformerCallable</code>: Validates message transformers</li>
+<li><code>MessageEnricherCallable</code>: Validates message enrichment callables</li>
+</ul>
+</li>
+<li>New concepts in core module:<ul>
+<li><code>SubscriptionCallable</code>: Validates topic subscription callbacks</li>
+<li><code>MessageFilterCallable</code>: Validates message filter predicates</li>
+</ul>
+</li>
+<li>Benefits:<ul>
+<li>Clearer compile-time error messages for incorrect callback types</li>
+<li>Self-documenting interface requirements through concepts</li>
+<li>Better IDE support with improved auto-completion</li>
+<li>Type-safe callback registration without runtime overhead</li>
+</ul>
+</li>
+<li>Concept-constrained template overloads added to:<ul>
+<li><code>worker_pool::register_handler()</code></li>
+<li><code>task_scheduler::on_task_executed()</code>, <code>on_task_failed()</code></li>
+<li><code>pipeline_builder::add_stage()</code>, <code>add_filter()</code>, <code>add_transformer()</code></li>
+<li><code>topic_router::subscribe()</code></li>
+<li><code>make_task_handler()</code> factory function</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><b>Distributed Task Queue System - Sprint 7 Unit Tests (Issue #117)</b><ul>
 <li><code>test_task_queue.cpp</code>: Comprehensive unit tests for task_queue component<ul>
 <li>Queue lifecycle tests (construction, start/stop, move semantics)</li>

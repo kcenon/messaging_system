@@ -100,6 +100,43 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 <h2><a class="anchor" id="autotoc_md481"></a>
 추가됨</h2>
 <ul>
+<li><b>C++20 Concepts 지원 (Issue #146)</b><ul>
+<li>타입 안전한 콜백 및 핸들러 검증을 위한 C++20 concept 정의 추가</li>
+<li>task 모듈의 새로운 concepts:<ul>
+<li><code>TaskHandlerCallable</code>: 태스크 핸들러 호출 가능 시그니처 검증</li>
+<li><code>TaskHandlerLike</code>: 태스크 핸들러 인터페이스 구현 검증</li>
+<li><code>ScheduleEventCallable</code>: 스케줄러 이벤트 콜백 검증</li>
+</ul>
+</li>
+<li>patterns 모듈의 새로운 concepts:<ul>
+<li><code>MessageProcessorCallable</code>: 메시지 파이프라인 프로세서 검증</li>
+<li><code>MessageFilterCallable</code>: 메시지 필터링 술어 검증</li>
+<li><code>MessageTransformerCallable</code>: 메시지 변환기 검증</li>
+<li><code>MessageEnricherCallable</code>: 메시지 보강 호출 가능 타입 검증</li>
+</ul>
+</li>
+<li>core 모듈의 새로운 concepts:<ul>
+<li><code>SubscriptionCallable</code>: 토픽 구독 콜백 검증</li>
+<li><code>MessageFilterCallable</code>: 메시지 필터 술어 검증</li>
+</ul>
+</li>
+<li>장점:<ul>
+<li>잘못된 콜백 타입에 대한 명확한 컴파일 시간 오류 메시지</li>
+<li>concepts를 통한 자기 문서화 인터페이스 요구사항</li>
+<li>향상된 자동 완성을 통한 더 나은 IDE 지원</li>
+<li>런타임 오버헤드 없는 타입 안전한 콜백 등록</li>
+</ul>
+</li>
+<li>concept 제약 템플릿 오버로드 추가된 함수:<ul>
+<li><code>worker_pool::register_handler()</code></li>
+<li><code>task_scheduler::on_task_executed()</code>, <code>on_task_failed()</code></li>
+<li><code>pipeline_builder::add_stage()</code>, <code>add_filter()</code>, <code>add_transformer()</code></li>
+<li><code>topic_router::subscribe()</code></li>
+<li><code>make_task_handler()</code> 팩토리 함수</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><b>분산 태스크 큐 시스템 - Sprint 7 단위 테스트 (Issue #117)</b><ul>
 <li><code>test_task_queue.cpp</code>: task_queue 컴포넌트의 포괄적인 단위 테스트<ul>
 <li>큐 라이프사이클 테스트 (생성, 시작/종료, 이동 시맨틱)</li>
