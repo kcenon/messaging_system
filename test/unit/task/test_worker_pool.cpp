@@ -5,9 +5,40 @@
 #include <gtest/gtest.h>
 
 #include <chrono>
+#include <condition_variable>
+#include <mutex>
 #include <thread>
 #include <atomic>
 #include <latch>
+
+namespace {
+
+template<typename Predicate>
+bool wait_for_condition(Predicate&& pred, std::chrono::milliseconds timeout = std::chrono::milliseconds{1000}) {
+	if (pred()) {
+		return true;
+	}
+
+	std::mutex mtx;
+	std::condition_variable cv;
+	std::unique_lock<std::mutex> lock(mtx);
+
+	auto deadline = std::chrono::steady_clock::now() + timeout;
+
+	while (!pred()) {
+		auto remaining = deadline - std::chrono::steady_clock::now();
+		if (remaining <= std::chrono::milliseconds::zero()) {
+			return false;
+		}
+
+		auto wait_time = std::min(remaining, std::chrono::milliseconds{50});
+		cv.wait_for(lock, wait_time);
+	}
+
+	return true;
+}
+
+}  // namespace
 
 namespace msg = kcenon::messaging;
 namespace tsk = kcenon::messaging::task;

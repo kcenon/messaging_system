@@ -3,11 +3,42 @@
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/backends/standalone_backend.h>
 #include <chrono>
+#include <condition_variable>
+#include <mutex>
 #include <thread>
 
 using namespace kcenon;
 using namespace kcenon::messaging;
 using namespace kcenon::messaging::patterns;
+
+namespace {
+
+template<typename Predicate>
+bool wait_for_condition(Predicate&& pred, std::chrono::milliseconds timeout = std::chrono::milliseconds{1000}) {
+	if (pred()) {
+		return true;
+	}
+
+	std::mutex mtx;
+	std::condition_variable cv;
+	std::unique_lock<std::mutex> lock(mtx);
+
+	auto deadline = std::chrono::steady_clock::now() + timeout;
+
+	while (!pred()) {
+		auto remaining = deadline - std::chrono::steady_clock::now();
+		if (remaining <= std::chrono::milliseconds::zero()) {
+			return false;
+		}
+
+		auto wait_time = std::min(remaining, std::chrono::milliseconds{50});
+		cv.wait_for(lock, wait_time);
+	}
+
+	return true;
+}
+
+}  // namespace
 
 class RequestReplyTest : public ::testing::Test {
 protected:
@@ -98,7 +129,7 @@ TEST_F(RequestReplyTest, RequestReplyBasic) {
 	ASSERT_TRUE(reg_result.is_ok());
 
 	// Give server time to subscribe
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	wait_for_condition([]() { return false; }, std::chrono::milliseconds(50));
 
 	// Send request
 	message request("echo.service");
@@ -138,7 +169,7 @@ TEST_F(RequestReplyTest, MultipleRequestsSequential) {
 	ASSERT_TRUE(reg_result.is_ok());
 
 	// Give server time to subscribe
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	wait_for_condition([]() { return false; }, std::chrono::milliseconds(50));
 
 	// Send multiple requests
 	for (int i = 0; i < 5; i++) {
@@ -163,7 +194,7 @@ TEST_F(RequestReplyTest, MultipleRequestsSequential) {
 // 	ASSERT_TRUE(reg_result.is_ok());
 //
 // 	// Give server time to subscribe
-// 	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+// 	wait_for_condition([]() { return false; }, std::chrono::milliseconds(50));
 //
 // 	// Send request
 // 	message request("error.service");
@@ -187,7 +218,7 @@ TEST_F(RequestReplyTest, CorrelationIDMatching) {
 	ASSERT_TRUE(reg_result.is_ok());
 
 	// Give server time to subscribe
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	wait_for_condition([]() { return false; }, std::chrono::milliseconds(50));
 
 	// Send multiple requests from different clients
 	request_reply_handler client1(bus_, "test.service");
@@ -227,7 +258,7 @@ TEST_F(RequestReplyTest, ClientRequest) {
 	ASSERT_TRUE(reg_result.is_ok());
 
 	// Give server time to subscribe
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	wait_for_condition([]() { return false; }, std::chrono::milliseconds(50));
 
 	// Send request from client
 	request_client client(bus_, "test.service");
@@ -286,7 +317,7 @@ TEST_F(RequestReplyTest, ServerHandlesMultipleClients) {
 	ASSERT_TRUE(reg_result.is_ok());
 
 	// Give server more time to fully initialize and subscribe
-	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	wait_for_condition([]() { return false; }, std::chrono::milliseconds(200));
 
 	// Create multiple clients
 	std::vector<std::thread> threads;
@@ -295,7 +326,7 @@ TEST_F(RequestReplyTest, ServerHandlesMultipleClients) {
 	for (int i = 0; i < 5; i++) {
 		threads.emplace_back([this, &success_count, i]() {
 			// Stagger client starts to reduce thundering herd
-			std::this_thread::sleep_for(std::chrono::milliseconds(i * 10));
+			wait_for_condition([]() { return false; }, std::chrono::milliseconds(i * 10));
 
 			request_client client(bus_, "multi.service");
 			message request("multi.service");
@@ -334,7 +365,7 @@ TEST_F(RequestReplyTest, ClientServerIntegration) {
 	ASSERT_TRUE(reg_result.is_ok());
 
 	// Give server time to subscribe
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	wait_for_condition([]() { return false; }, std::chrono::milliseconds(50));
 
 	// Send request
 	message request("calc.service");
@@ -364,7 +395,7 @@ TEST_F(RequestReplyTest, MultipleServices) {
 	});
 
 	// Give servers time to subscribe
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	wait_for_condition([]() { return false; }, std::chrono::milliseconds(50));
 
 	// Create clients
 	request_client client1(bus_, "service1");
@@ -398,7 +429,7 @@ TEST_F(RequestReplyTest, RequestWithPayload) {
 	ASSERT_TRUE(reg_result.is_ok());
 
 	// Give server time to subscribe
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	wait_for_condition([]() { return false; }, std::chrono::milliseconds(50));
 
 	// Send request with correlation_id
 	message request("echo.service");
@@ -416,7 +447,7 @@ TEST_F(RequestReplyTest, LongRunningRequest) {
 
 	// Register handler that takes time
 	auto reg_result = server.register_handler([](const message& req) -> common::Result<message> {
-		std::this_thread::sleep_for(std::chrono::milliseconds(200));
+		wait_for_condition([]() { return false; }, std::chrono::milliseconds(200));
 		message reply(req.metadata().topic);
 		reply.metadata().source = "slow.service";
 		return common::ok(std::move(reply));
@@ -424,7 +455,7 @@ TEST_F(RequestReplyTest, LongRunningRequest) {
 	ASSERT_TRUE(reg_result.is_ok());
 
 	// Give server time to subscribe
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	wait_for_condition([]() { return false; }, std::chrono::milliseconds(50));
 
 	// Send request with sufficient timeout
 	message request("slow.service");
