@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['이력_0',['Messaging System 변경 이력',['../db/d9f/md_docs_2CHANGELOG__KO.html',1,'']]]
+  ['성능_20벤치마크_0',['Messaging System 성능 벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html',1,'']]]
 ];

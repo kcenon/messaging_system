@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['종료하려면_20어떻게_20하나요_0',['Q: 시스템을 우아하게 종료하려면 어떻게 하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1866',1,'']]],
-  ['종속성을_20어떻게_20처리하나요_1',['Q: 작업 종속성을 어떻게 처리하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1861',1,'']]]
+  ['정의_0',['문제 정의',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md30',1,'']]],
+  ['정의_20확장_1',['1.1 Task 정의 확장',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1935',1,'']]],
+  ['정적_20메서드_2',['정적 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1474',1,'']]]
 ];

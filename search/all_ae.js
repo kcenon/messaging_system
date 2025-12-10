@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['필드_0',['필드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1333',1,'']]]
+  ['포인트_0',['확장 포인트',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1547',1,'']]],
+  ['포함_1',['1. 헤더 포함',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1849',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['💬_20feedback_0',['💬 Feedback',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1180',1,'']]]
+  ['후_0',['마이그레이션 후',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1704',1,'']]]
 ];

@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['제어_0',['작업 제어',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1388',1,'']]],
-  ['제출_1',['제출',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1736',1,'우선순위 큐에 제출'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1791',1,'5. Task 제출']]],
-  ['제출_20편의_20메서드_2',['작업 제출 (편의 메서드)',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1430',1,'']]],
-  ['제출_20흐름_3',['작업 제출 흐름',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1481',1,'']]],
-  ['제한하나요_4',['Q: 재시도 횟수를 어떻게 제한하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1864',1,'']]],
-  ['제한_20설정_5',['리소스 제한 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1576',1,'']]]
+  ['전략_0',['재시도 전략',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1787',1,'']]],
+  ['전략_20패턴_1',['5. 전략 패턴',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1555',1,'']]],
+  ['전체_20예제_2',['전체 예제',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1855',1,'']]],
+  ['전_3',['마이그레이션 전',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1702',1,'']]]
 ];

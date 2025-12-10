@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['워커_20상태_0',['워커 상태',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1419',1,'']]],
-  ['워커_20상태_20확인_1',['워커 상태 확인',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1849',1,'']]],
-  ['워커_20풀_20설정_2',['워커 풀 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1555',1,'']]],
-  ['워크로드_20유형별_3',['워크로드 유형별',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1581',1,'']]],
-  ['워크플로우_20패턴_4',['워크플로우 패턴',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1379',1,'워크플로우 패턴'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html',1,'Task 모듈 워크플로우 패턴']]]
+  ['요구사항_0',['사전 요구사항',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1846',1,'']]],
+  ['요약_1',['요약',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md502',1,'요약'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1154',1,'요약']]],
+  ['요약_20테이블_2',['요약 테이블',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md507',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['형식_0',['형식',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1409',1,'Cron 표현식 형식'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1742',1,'Cron 표현식 형식']]]
+  ['항상_20실패하는_20작업_20를_20어떻게_20처리하나요_0',['Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1927',1,'']]]
 ];

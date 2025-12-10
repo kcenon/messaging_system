@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['migration_2emd_0',['MIGRATION.md',['../d2/de3/MIGRATION_8md.html',1,'']]],
-  ['migration_5fguide_2emd_1',['MIGRATION_GUIDE.md',['../d7/d6a/MIGRATION__GUIDE_8md.html',1,'']]],
-  ['migration_5fko_2emd_2',['MIGRATION_KO.md',['../d6/d07/MIGRATION__KO_8md.html',1,'']]]
+  ['faq_2emd_0',['FAQ.md',['../da/da6/FAQ_8md.html',1,'']]],
+  ['features_2emd_1',['FEATURES.md',['../de/dd6/FEATURES_8md.html',1,'']]],
+  ['features_5fko_2emd_2',['FEATURES_KO.md',['../db/dd0/FEATURES__KO_8md.html',1,'']]]
 ];

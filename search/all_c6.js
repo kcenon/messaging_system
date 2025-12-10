@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['📖_20documentation_20standards_0',['📖 Documentation Standards',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1178',1,'']]],
-  ['📖_20usage_20examples_1',['📖 Usage Examples',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1944',1,'']]]
+  ['🌐_20platform_20support_0',['🌐 Platform Support',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2034',1,'']]]
 ];

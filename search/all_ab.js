@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['품질_0',['Messaging System 프로덕션 품질',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html',1,'']]],
-  ['품질_20및_20운영_1',['품질 및 운영',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1190',1,'']]]
+  ['파사드_0',['1. task_system (파사드)',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1532',1,'']]],
+  ['파사드_20패턴_1',['4. 파사드 패턴',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1554',1,'']]]
 ];

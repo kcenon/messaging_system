@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['블로킹_20결과_20조회_0',['블로킹 결과 조회',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1386',1,'']]]
+  ['부정적_0',['부정적',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md40',1,'']]]
 ];

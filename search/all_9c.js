@@ -1,11 +1,9 @@
 var searchData=
 [
-  ['큐에_20제출_0',['우선순위 큐에 제출',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1736',1,'']]],
-  ['큐_1',['큐',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md579',1,'메시지 큐'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1732',1,'우선순위 큐']]],
-  ['큐_20상태_20확인_2',['큐 상태 확인',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1848',1,'']]],
-  ['큐_20설정_3',['큐 설정',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1647',1,'누락된 큐 설정'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1735',1,'우선순위 큐 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1553',1,'지연 큐 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1549',1,'Task 큐 설정']]],
-  ['큐_20시스템에서_20마이그레이션_4',['메시지 큐 시스템에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1631',1,'']]],
-  ['큐_20시스템_5',['Task 큐 시스템',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1192',1,'']]],
-  ['큐_20우선순위_6',['큐 우선순위',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1559',1,'']]],
-  ['큐_20통계_7',['큐 통계',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1418',1,'']]]
+  ['커버리지_0',['커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1165',1,'컴포넌트별 커버리지'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1164',1,'테스트 커버리지']]],
+  ['커스텀_20솔루션에서_20마이그레이션_1',['커스텀 솔루션에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1688',1,'']]],
+  ['커스텀_20스레드_20풀_2',['이전 (커스텀 스레드 풀)',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1690',1,'']]],
+  ['커스텀_20재시도_20로직_3',['커스텀 재시도 로직',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1791',1,'']]],
+  ['커스텀_20result_20backend_4',['커스텀 Result Backend',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1548',1,'']]],
+  ['커스텀_20task_20handler_5',['커스텀 Task Handler',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1549',1,'']]]
 ];

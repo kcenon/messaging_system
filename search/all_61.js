@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['성능_0',['성능',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md452',1,'토픽 라우팅 성능'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md454',1,'패턴별 성능']]],
-  ['성능_20메트릭_1',['핵심 성능 메트릭',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md447',1,'']]],
-  ['성능_20문제_2',['성능 문제',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1852',1,'']]],
-  ['성능_20벤치마크_3',['Messaging System 성능 벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html',1,'']]],
-  ['성능_20튜닝_4',['성능 튜닝',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1573',1,'']]]
+  ['선택적_0',['4.3 Redis Result Backend (선택적)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1948',1,'']]],
+  ['선택적_20가상_20메서드_1',['선택적 가상 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1455',1,'']]],
+  ['선택_2',['선택',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md44',1,'대안 B: 템플릿을 통한 컴파일 타임 로거 선택'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md651',1,'런타임 백엔드 선택']]]
 ];

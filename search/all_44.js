@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['링크_0',['관련 링크',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1196',1,'']]]
+  ['리소스_20제한_20설정_0',['리소스 제한 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1638',1,'']]]
 ];

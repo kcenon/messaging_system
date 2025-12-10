@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['유형별_0',['워크로드 유형별',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1581',1,'']]]
+  ['운영_0',['품질 및 운영',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1250',1,'']]]
 ];

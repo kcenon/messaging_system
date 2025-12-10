@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['시작_20가이드_0',['Task 모듈 빠른 시작 가이드',['../da/dee/md_docs_2task_2QUICK__START__KO.html',1,'']]]
+  ['변경_20이력_0',['Messaging System 변경 이력',['../db/d9f/md_docs_2CHANGELOG__KO.html',1,'']]]
 ];

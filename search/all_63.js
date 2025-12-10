@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['수정됨_0',['수정됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md482',1,'']]],
-  ['수준_1',['수준',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1566',1,'우선순위 수준'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1733',1,'우선순위 수준']]],
-  ['수평_20확장_2',['수평 확장',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md459',1,'']]]
+  ['성능_0',['성능',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md511',1,'토픽 라우팅 성능'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md513',1,'패턴별 성능']]],
+  ['성능_20메트릭_1',['핵심 성능 메트릭',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md506',1,'']]],
+  ['성능_20문제_2',['성능 문제',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1914',1,'']]],
+  ['성능_20벤치마크_3',['Messaging System 성능 벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html',1,'']]],
+  ['성능_20튜닝_4',['성능 튜닝',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1635',1,'']]]
 ];

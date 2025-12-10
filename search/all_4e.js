@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['방법론_0',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md461',1,'']]],
-  ['방법_1',['디버깅 방법',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1845',1,'']]],
-  ['방식_2',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1918',1,'']]]
+  ['발행_20흐름_0',['메시지 발행 흐름',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md434',1,'']]]
 ];

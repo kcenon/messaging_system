@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Messaging System: Integration Guide</title>
+<title>Messaging System: Architecture Decision Records (ADR)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,173 +90,74 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Integration Guide </div></div>
+  <div class="headertitle"><div class="title">Architecture Decision Records (ADR) </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_docs_2integration_2README"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-30</p>
-<hr  />
-<h1><a class="anchor" id="autotoc_md956"></a>
-Overview</h1>
-<p>This guide covers integrating messaging_system with other systems and applications.</p>
-<hr  />
-<h1><a class="anchor" id="autotoc_md958"></a>
-CMake Integration</h1>
-<h2><a class="anchor" id="autotoc_md959"></a>
-FetchContent (Recommended)</h2>
-<div class="fragment"><div class="line">include(FetchContent)</div>
-<div class="line"> </div>
-<div class="line">FetchContent_Declare(</div>
-<div class="line">    messaging_system</div>
-<div class="line">    GIT_REPOSITORY https://github.com/kcenon/messaging_system.git</div>
-<div class="line">    GIT_TAG main</div>
-<div class="line">)</div>
-<div class="line"> </div>
-<div class="line">FetchContent_MakeAvailable(messaging_system)</div>
-<div class="line"> </div>
-<div class="line">target_link_libraries(your_target PRIVATE messaging_system)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md960"></a>
-Subdirectory</h2>
-<div class="fragment"><div class="line">add_subdirectory(external/messaging_system)</div>
-<div class="line">target_link_libraries(your_target PRIVATE messaging_system)</div>
-</div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md962"></a>
-Integration with Subsystems</h1>
-<h2><a class="anchor" id="autotoc_md963"></a>
-Using with thread_system</h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;messaging_system/message_bus.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;thread_system/thread_pool.h&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">auto</span> pool = thread_system::thread_pool::create(4);</div>
-<div class="line"><span class="keyword">auto</span> bus = messaging_system::message_bus::create(pool);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md964"></a>
-Using with network_system</h2>
-<div class="fragment"><div class="line"><span class="comment">// Remote messaging over network</span></div>
-<div class="line"><span class="keyword">auto</span> transport = network_system::tcp_transport::create();</div>
-<div class="line"><span class="keyword">auto</span> bus = messaging_system::message_bus::create(transport);</div>
-</div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md966"></a>
-Custom Configuration</h1>
-<div class="fragment"><div class="line">messaging_system::config cfg;</div>
-<div class="line">cfg.max_queue_size = 10000;</div>
-<div class="line">cfg.enable_tracing = <span class="keyword">true</span>;</div>
-<div class="line">cfg.default_timeout = std::chrono::seconds(30);</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">auto</span> bus = messaging_system::message_bus::create(cfg);</div>
-</div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md968"></a>
-Task Event Bridge Integration</h1>
-<p>The task event bridge enables cross-module communication by publishing task lifecycle events to the common_system event bus.</p>
-<h2><a class="anchor" id="autotoc_md969"></a>
-Event Types</h2>
+<div class="textblock"><p><a class="anchor" id="md_docs_2adr_2README"></a> This directory contains Architecture Decision Records (ADRs) for the messaging_system project. ADRs document significant architectural decisions made during the development of the system.</p>
+<h1><a class="anchor" id="autotoc_md53"></a>
+What is an ADR?</h1>
+<p>An Architecture Decision Record is a document that captures an important architectural decision made along with its context and consequences.</p>
+<h1><a class="anchor" id="autotoc_md54"></a>
+ADR Index</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Category   </th><th class="markdownTableHeadNone">Event   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<th class="markdownTableHeadNone">ADR   </th><th class="markdownTableHeadNone">Title   </th><th class="markdownTableHeadNone">Status   </th><th class="markdownTableHeadNone">Date    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Task Lifecycle</b>   </td><td class="markdownTableBodyNone"><code>task_queued_event</code>   </td><td class="markdownTableBodyNone">Task added to queue    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_started_event</code>   </td><td class="markdownTableBodyNone">Task execution began    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_progress_event</code>   </td><td class="markdownTableBodyNone">Task progress updated    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_succeeded_event</code>   </td><td class="markdownTableBodyNone">Task completed successfully    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_failed_event</code>   </td><td class="markdownTableBodyNone">Task execution failed    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_retrying_event</code>   </td><td class="markdownTableBodyNone">Task scheduled for retry    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>task_cancelled_event</code>   </td><td class="markdownTableBodyNone">Task was cancelled    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Worker</b>   </td><td class="markdownTableBodyNone"><code>worker_online_event</code>   </td><td class="markdownTableBodyNone">Worker came online    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>worker_offline_event</code>   </td><td class="markdownTableBodyNone">Worker went offline    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>worker_heartbeat_event</code>   </td><td class="markdownTableBodyNone">Periodic worker status    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Queue</b>   </td><td class="markdownTableBodyNone"><code>queue_high_watermark_event</code>   </td><td class="markdownTableBodyNone">Queue size threshold reached    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"><code>queue_empty_event</code>   </td><td class="markdownTableBodyNone">Queue became empty   </td></tr>
+<td class="markdownTableBodyNone"><a class="el" href="de/dd2/md_docs_2adr_2001-logging-architecture.html">001</a>   </td><td class="markdownTableBodyNone">Logging Architecture - ILogger Interface vs logger_system   </td><td class="markdownTableBodyNone">Accepted   </td><td class="markdownTableBodyNone">2025-12-10   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md970"></a>
-Basic Usage</h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/common/patterns/event_bus.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/integration/task_event_bridge.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/integration/task_events.h&gt;</span></div>
+<h1><a class="anchor" id="autotoc_md55"></a>
+ADR Status</h1>
+<ul>
+<li><b>Proposed</b>: The decision is under discussion</li>
+<li><b>Accepted</b>: The decision has been accepted and is being implemented</li>
+<li><b>Deprecated</b>: The decision is no longer valid</li>
+<li><b>Superseded</b>: The decision has been replaced by another decision</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md56"></a>
+Creating a New ADR</h1>
+<ol type="1">
+<li>Copy the template below</li>
+<li>Name the file <code>NNN-title.md</code> where NNN is the next number</li>
+<li>Fill in the sections</li>
+<li>Submit a PR for review</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md57"></a>
+ADR Template</h1>
+<div class="fragment"><div class="line"># ADR-NNN: [Title]</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using namespace </span>kcenon::messaging::task;</div>
-<div class="line"><span class="keyword">using namespace </span>kcenon::common;</div>
+<div class="line">## Status</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Get global event bus and start it</span></div>
-<div class="line"><span class="keyword">auto</span>&amp; event_bus = get_event_bus();</div>
-<div class="line">event_bus.start();</div>
+<div class="line">[Proposed | Accepted | Deprecated | Superseded by ADR-XXX]</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Subscribe to task events</span></div>
-<div class="line"><span class="keyword">auto</span> sub = event_bus.subscribe&lt;task_succeeded_event&gt;(</div>
-<div class="line">    [](<span class="keyword">const</span> task_succeeded_event&amp; evt) {</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Task &quot;</span> &lt;&lt; evt.task_id &lt;&lt; <span class="stringliteral">&quot; completed in &quot;</span></div>
-<div class="line">                  &lt;&lt; evt.duration.count() &lt;&lt; <span class="stringliteral">&quot;ms&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">    });</div>
+<div class="line">## Context</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Create and start the bridge</span></div>
-<div class="line">task_event_bridge_config config;</div>
-<div class="line">config.enable_progress_events = <span class="keyword">true</span>;</div>
+<div class="line">[Describe the context and problem statement]</div>
 <div class="line"> </div>
-<div class="line">task_event_bridge bridge(config);</div>
-<div class="line">bridge.start();</div>
+<div class="line">## Decision</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Publish events from your worker implementation</span></div>
-<div class="line">bridge.on_task_started(<span class="stringliteral">&quot;task-123&quot;</span>, <span class="stringliteral">&quot;email.send&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;worker-1&quot;</span>);</div>
-<div class="line"><span class="comment">// ... task executes ...</span></div>
-<div class="line">bridge.on_task_succeeded(<span class="stringliteral">&quot;task-123&quot;</span>, <span class="stringliteral">&quot;email.send&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;worker-1&quot;</span>,</div>
-<div class="line">                         std::chrono::milliseconds(150));</div>
+<div class="line">[Describe the decision and the reasoning behind it]</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Cleanup</span></div>
-<div class="line">bridge.stop();</div>
-<div class="line">event_bus.unsubscribe(sub);</div>
-<div class="line">event_bus.stop();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md971"></a>
-Configuration Options</h2>
-<div class="fragment"><div class="line">task_event_bridge_config config;</div>
+<div class="line">## Consequences</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Threshold for queue high watermark events (default: 1000)</span></div>
-<div class="line">config.queue_high_watermark_threshold = 500;</div>
+<div class="line">### Positive</div>
+<div class="line">[List positive consequences]</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Enable/disable progress events (default: true)</span></div>
-<div class="line">config.enable_progress_events = <span class="keyword">true</span>;</div>
+<div class="line">### Negative</div>
+<div class="line">[List negative consequences]</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Enable/disable heartbeat events (default: true)</span></div>
-<div class="line">config.enable_heartbeat_events = <span class="keyword">true</span>;</div>
+<div class="line">## Alternatives Considered</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Heartbeat interval (default: 30 seconds)</span></div>
-<div class="line">config.heartbeat_interval = std::chrono::milliseconds(30000);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md972"></a>
-Event Type Constants</h2>
-<p>String constants are available for event identification:</p>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span>task_event_types {</div>
-<div class="line">    <span class="comment">// Task lifecycle events</span></div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_queued = <span class="stringliteral">&quot;task.queued&quot;</span>;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_started = <span class="stringliteral">&quot;task.started&quot;</span>;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_progress = <span class="stringliteral">&quot;task.progress&quot;</span>;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_succeeded = <span class="stringliteral">&quot;task.succeeded&quot;</span>;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_failed = <span class="stringliteral">&quot;task.failed&quot;</span>;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_retrying = <span class="stringliteral">&quot;task.retrying&quot;</span>;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> task_cancelled = <span class="stringliteral">&quot;task.cancelled&quot;</span>;</div>
+<div class="line">[List alternatives that were considered]</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">// Worker events</span></div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> worker_online = <span class="stringliteral">&quot;worker.online&quot;</span>;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> worker_offline = <span class="stringliteral">&quot;worker.offline&quot;</span>;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> worker_heartbeat = <span class="stringliteral">&quot;worker.heartbeat&quot;</span>;</div>
+<div class="line">## References</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">// Queue events</span></div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> queue_high_watermark = <span class="stringliteral">&quot;queue.high_watermark&quot;</span>;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> queue_empty = <span class="stringliteral">&quot;queue.empty&quot;</span>;</div>
-<div class="line">}</div>
-</div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md974"></a>
+<div class="line">[List relevant references]</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md58"></a>
 Related Documentation</h1>
 <ul>
-<li><a class="el" href="d6/d63/md_docs_2guides_2QUICK__START.html">Quick Start</a></li>
-<li><a class="el" href="db/d91/md_docs_2API__REFERENCE.html">API Reference</a></li>
-<li>Architecture </li>
+<li>Architecture Overview</li>
+<li><a class="el" href="d4/d22/md_docs_2PROJECT__STRUCTURE.html">Project Structure</a></li>
+<li><a class="el" href="df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html">System Architecture</a> </li>
 </ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->

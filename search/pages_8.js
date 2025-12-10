@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['optimization_0',['Windows CI Performance Optimization',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html',1,'']]]
+  ['logger_5fsystem_0',['logger_system',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html',1,'ADR-001: 로깅 아키텍처 - ILogger 인터페이스 vs logger_system'],['../de/dd2/md_docs_2adr_2001-logging-architecture.html',1,'ADR-001: Logging Architecture - ILogger Interface vs logger_system']]],
+  ['logging_20architecture_20ilogger_20interface_20vs_20logger_5fsystem_1',['ADR-001: Logging Architecture - ILogger Interface vs logger_system',['../de/dd2/md_docs_2adr_2001-logging-architecture.html',1,'']]]
 ];

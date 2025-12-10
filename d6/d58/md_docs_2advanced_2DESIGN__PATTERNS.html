@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d6/d58/md_docs_2advanced_2DESIGN__PATT
   <div class="headertitle"><div class="title">Design Patterns and Architectural Decisions</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a> </p>
-<h1><a class="anchor" id="autotoc_md1"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md59"></a> </p>
+<h1><a class="anchor" id="autotoc_md60"></a>
 Overview</h1>
 <p>This document catalogs the design patterns implemented throughout the Messaging System, explaining why each pattern was chosen and providing implementation examples. These patterns ensure scalability, maintainability, and performance in a distributed messaging environment.</p>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1><a class="anchor" id="autotoc_md61"></a>
 Creational Patterns</h1>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md62"></a>
 1. Singleton Pattern</h2>
 <p><b>Purpose</b>: Ensure single instances of critical system components like loggers and configuration managers.</p>
 <p><b>Why Chosen</b>: Prevents resource conflicts and ensures consistent state across the application.</p>
@@ -135,7 +135,7 @@ Creational Patterns</h1>
 <li>System configuration</li>
 <li>Metrics collector</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md63"></a>
 2. Factory Pattern</h2>
 <p><b>Purpose</b>: Create objects without specifying exact classes, enabling runtime polymorphism.</p>
 <p><b>Why Chosen</b>: Allows flexible service creation based on configuration and supports plugin architecture.</p>
@@ -176,7 +176,7 @@ Creational Patterns</h1>
 <li>Storage backend selection</li>
 <li>Serializer selection</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md64"></a>
 3. Builder Pattern</h2>
 <p><b>Purpose</b>: Construct complex objects step by step with fluent interface.</p>
 <p><b>Why Chosen</b>: Simplifies creation of messages and configurations with many optional parameters.</p>
@@ -233,7 +233,7 @@ Creational Patterns</h1>
 <li>Configuration builders</li>
 <li>Network request builders</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md65"></a>
 4. Object Pool Pattern</h2>
 <p><b>Purpose</b>: Reuse expensive objects to reduce allocation overhead.</p>
 <p><b>Why Chosen</b>: Minimizes memory allocation in hot paths, crucial for high-performance messaging.</p>
@@ -309,9 +309,9 @@ Creational Patterns</h1>
 <li>Database connection pooling</li>
 <li>Thread-local storage pools</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md66"></a>
 Structural Patterns</h1>
-<h2><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md67"></a>
 5. Adapter Pattern</h2>
 <p><b>Purpose</b>: Allow incompatible interfaces to work together.</p>
 <p><b>Why Chosen</b>: Enables integration with various external systems and protocols.</p>
@@ -363,7 +363,7 @@ Structural Patterns</h1>
 <li>Protocol adapters (HTTP, WebSocket)</li>
 <li>Logging adapters (syslog, file, console)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md9"></a>
+<h2><a class="anchor" id="autotoc_md68"></a>
 6. Decorator Pattern</h2>
 <p><b>Purpose</b>: Add responsibilities to objects dynamically without altering structure.</p>
 <p><b>Why Chosen</b>: Allows flexible message processing pipelines with composable middleware.</p>
@@ -441,7 +441,7 @@ Structural Patterns</h1>
 <li>Metrics collection</li>
 <li>Security layers</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<h2><a class="anchor" id="autotoc_md69"></a>
 7. Proxy Pattern</h2>
 <p><b>Purpose</b>: Provide placeholder or surrogate for another object to control access.</p>
 <p><b>Why Chosen</b>: Implements lazy loading, caching, and access control for remote services.</p>
@@ -512,7 +512,7 @@ Structural Patterns</h1>
 <li>Authentication proxies</li>
 <li>Rate limiting proxies</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md11"></a>
+<h2><a class="anchor" id="autotoc_md70"></a>
 8. Composite Pattern</h2>
 <p><b>Purpose</b>: Compose objects into tree structures to represent part-whole hierarchies.</p>
 <p><b>Why Chosen</b>: Enables hierarchical message routing and complex filter compositions.</p>
@@ -594,9 +594,9 @@ Structural Patterns</h1>
 <li>Permission hierarchies</li>
 <li>Configuration trees</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md12"></a>
+<h1><a class="anchor" id="autotoc_md71"></a>
 Behavioral Patterns</h1>
-<h2><a class="anchor" id="autotoc_md13"></a>
+<h2><a class="anchor" id="autotoc_md72"></a>
 9. Observer Pattern</h2>
 <p><b>Purpose</b>: Define one-to-many dependency between objects for event notification.</p>
 <p><b>Why Chosen</b>: Core to pub/sub messaging system, enables loose coupling between components.</p>
@@ -686,7 +686,7 @@ Behavioral Patterns</h1>
 <li>Configuration updates</li>
 <li>System event notifications</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md73"></a>
 10. Strategy Pattern</h2>
 <p><b>Purpose</b>: Define family of algorithms and make them interchangeable.</p>
 <p><b>Why Chosen</b>: Allows runtime selection of serialization formats, compression algorithms, and routing strategies.</p>
@@ -788,7 +788,7 @@ Behavioral Patterns</h1>
 <li>Load balancing strategies</li>
 <li>Retry strategies</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md74"></a>
 11. Chain of Responsibility Pattern</h2>
 <p><b>Purpose</b>: Pass requests along a chain of handlers until one handles it.</p>
 <p><b>Why Chosen</b>: Perfect for message processing pipelines with middleware.</p>
@@ -885,7 +885,7 @@ Behavioral Patterns</h1>
 <li>Message transformation pipeline</li>
 <li>Security filter chain</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md16"></a>
+<h2><a class="anchor" id="autotoc_md75"></a>
 12. Command Pattern</h2>
 <p><b>Purpose</b>: Encapsulate requests as objects for parameterization and queuing.</p>
 <p><b>Why Chosen</b>: Enables undo operations, request queuing, and transaction support.</p>
@@ -1003,7 +1003,7 @@ Behavioral Patterns</h1>
 <li>Configuration changes</li>
 <li>Batch processing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md17"></a>
+<h2><a class="anchor" id="autotoc_md76"></a>
 13. Template Method Pattern</h2>
 <p><b>Purpose</b>: Define skeleton of algorithm in base class, subclasses override specific steps.</p>
 <p><b>Why Chosen</b>: Standardizes service lifecycle and message processing flow.</p>
@@ -1095,9 +1095,9 @@ Behavioral Patterns</h1>
 <li>Request processing flow</li>
 <li>Resource initialization</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md18"></a>
+<h1><a class="anchor" id="autotoc_md77"></a>
 Concurrency Patterns</h1>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<h2><a class="anchor" id="autotoc_md78"></a>
 14. Producer-Consumer Pattern</h2>
 <p><b>Purpose</b>: Decouple production and consumption of data with buffering.</p>
 <p><b>Why Chosen</b>: Essential for async message processing and work distribution.</p>
@@ -1186,7 +1186,7 @@ Concurrency Patterns</h1>
 <li>Async I/O buffering</li>
 <li>Log message processing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md20"></a>
+<h2><a class="anchor" id="autotoc_md79"></a>
 15. Thread Pool Pattern</h2>
 <p><b>Purpose</b>: Reuse fixed number of threads for executing tasks.</p>
 <p><b>Why Chosen</b>: Reduces thread creation overhead and controls resource usage.</p>
@@ -1291,9 +1291,9 @@ Concurrency Patterns</h1>
 <li>Network I/O handling</li>
 <li>Background tasks</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md80"></a>
 Architectural Patterns</h1>
-<h2><a class="anchor" id="autotoc_md22"></a>
+<h2><a class="anchor" id="autotoc_md81"></a>
 16. Microkernel Pattern</h2>
 <p><b>Purpose</b>: Separate minimal core functionality from extended features via plugins.</p>
 <p><b>Why Chosen</b>: Allows extensible system with pluggable components.</p>
@@ -1359,7 +1359,7 @@ Architectural Patterns</h1>
 <li>Protocol handlers</li>
 <li>Custom processors</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md23"></a>
+<h2><a class="anchor" id="autotoc_md82"></a>
 17. Event-Driven Architecture</h2>
 <p><b>Purpose</b>: System components communicate through events rather than direct calls.</p>
 <p><b>Why Chosen</b>: Enables loose coupling and scalable distributed systems.</p>
@@ -1433,7 +1433,7 @@ Architectural Patterns</h1>
 <li>Async processing</li>
 <li>Service communication</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md24"></a>
+<h1><a class="anchor" id="autotoc_md83"></a>
 Summary</h1>
 <p>The Messaging System leverages these design patterns to achieve:</p>
 <ol type="1">

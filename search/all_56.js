@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['분리_0',['2. Result Backend 분리',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1917',1,'']]]
+  ['복구_0',['체크포인트와 복구',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1813',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['워크플로우_20패턴_0',['Task 모듈 워크플로우 패턴',['../dd/d35/md_docs_2task_2PATTERNS__KO.html',1,'']]]
+  ['설정_20가이드_0',['Task 모듈 설정 가이드',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html',1,'']]]
 ];

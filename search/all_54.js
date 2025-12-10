@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['보고_0',['진행 상황 보고',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1747',1,'']]],
-  ['보기_1',['작업 로그 보기',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1850',1,'']]]
+  ['변경됨_0',['변경됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md542',1,'변경됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md551',1,'변경됨']]],
+  ['변경_20사항_1',['API 변경 사항',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1685',1,'']]],
+  ['변경_20이력_2',['Messaging System 변경 이력',['../db/d9f/md_docs_2CHANGELOG__KO.html',1,'']]]
 ];

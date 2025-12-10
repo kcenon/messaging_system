@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['장기_20실행_20작업_20설정_0',['장기 실행 작업 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1577',1,'']]]
+  ['일반적인_20마이그레이션_20문제_0',['일반적인 마이그레이션 문제',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1707',1,'']]],
+  ['일반적인_20문제_1',['일반적인 문제',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1900',1,'']]]
 ];

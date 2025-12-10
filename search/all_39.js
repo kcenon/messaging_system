@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['데이터_0',['체크포인트 데이터',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1753',1,'']]],
-  ['데이터_20흐름_1',['데이터 흐름',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md374',1,'데이터 흐름'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1480',1,'데이터 흐름']]]
+  ['던짐_0',['핸들러가 에러 반환 대신 예외를 던짐',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1708',1,'']]]
 ];

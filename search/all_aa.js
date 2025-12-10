@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['풀_0',['이전 (커스텀 스레드 풀)',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1628',1,'']]],
-  ['풀_20구현에서_20마이그레이션_1',['스레드 풀 구현에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1627',1,'']]],
-  ['풀_20설정_2',['워커 풀 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1555',1,'']]],
-  ['풀_20통합_3',['스레드 풀 통합',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md591',1,'']]]
+  ['특정_20작업의_20우선순위를_20어떻게_20높이나요_0',['Q: 특정 작업의 우선순위를 어떻게 높이나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1925',1,'']]]
 ];

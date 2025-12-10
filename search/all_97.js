@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['커버리지_0',['커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1106',1,'컴포넌트별 커버리지'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1105',1,'테스트 커버리지']]],
-  ['커스텀_20솔루션에서_20마이그레이션_1',['커스텀 솔루션에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1626',1,'']]],
-  ['커스텀_20스레드_20풀_2',['이전 (커스텀 스레드 풀)',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1628',1,'']]],
-  ['커스텀_20재시도_20로직_3',['커스텀 재시도 로직',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1729',1,'']]],
-  ['커스텀_20result_20backend_4',['커스텀 Result Backend',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1486',1,'']]],
-  ['커스텀_20task_20handler_5',['커스텀 Task Handler',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1487',1,'']]]
+  ['처리되지_20않음_0',['작업이 처리되지 않음',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1901',1,'']]],
+  ['처리량_1',['처리량',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1917',1,'낮은 처리량'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md510',1,'처리량']]],
+  ['처리하나요_2',['처리하나요',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1927',1,'Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1923',1,'Q: 작업 종속성을 어떻게 처리하나요?']]],
+  ['처리하려면_20어떻게_20하나요_3',['Q: 작업을 순서대로 처리하려면 어떻게 하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1924',1,'']]],
+  ['처리_4',['처리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1390',1,'결과/에러 처리'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1777',1,'에러 처리'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1784',1,'에러 처리'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1861',1,'에러 처리']]]
 ];

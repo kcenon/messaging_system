@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['해결_20가이드_0',['Task 모듈 문제 해결 가이드',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html',1,'']]]
+  ['이력_0',['Messaging System 변경 이력',['../db/d9f/md_docs_2CHANGELOG__KO.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['영속성_20설정_0',['영속성 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1552',1,'']]]
+  ['얻나요_0',['Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1922',1,'']]]
 ];

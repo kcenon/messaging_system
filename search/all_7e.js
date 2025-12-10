@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['일반적인_20마이그레이션_20문제_0',['일반적인 마이그레이션 문제',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1645',1,'']]],
-  ['일반적인_20문제_1',['일반적인 문제',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1838',1,'']]]
+  ['의존성_0',['의존성',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md43',1,'대안 A: logger_system 직접 의존성'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md547',1,'의존성']]],
+  ['의존성_20구성_1',['4. CMake 의존성 구성',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md37',1,'']]],
+  ['의존성_20구조_2',['의존성 구조',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md430',1,'']]]
 ];

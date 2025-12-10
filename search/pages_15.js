@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['문서_0',['Messaging System 문서',['../d8/d0a/md_docs_2README__KO.html',1,'']]],
-  ['문제_20해결_20가이드_1',['Task 모듈 문제 해결 가이드',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html',1,'']]]
+  ['레퍼런스_0',['레퍼런스',['../d4/d54/md_docs_2API__REFERENCE__KO.html',1,'Messaging System API 레퍼런스'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html',1,'Task 모듈 API 레퍼런스']]]
 ];

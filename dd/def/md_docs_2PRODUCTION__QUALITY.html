@@ -93,15 +93,15 @@ $(document).ready(function(){initNavTree('dd/def/md_docs_2PRODUCTION__QUALITY.ht
   <div class="headertitle"><div class="title">Messaging System Production Quality</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1037"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-18 <b>Language</b>: [English] | <a class="el" href="../../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html">한국어</a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1096"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-18 <b>Language</b>: [English] | <a class="el" href="../../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html">한국어</a></p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1039"></a>
+<h1><a class="anchor" id="autotoc_md1098"></a>
 Overview</h1>
 <p>This document outlines the production-quality standards, testing coverage, and reliability features of the messaging_system, demonstrating its readiness for enterprise deployment.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1041"></a>
+<h1><a class="anchor" id="autotoc_md1100"></a>
 Quality Metrics</h1>
-<h2><a class="anchor" id="autotoc_md1042"></a>
+<h2><a class="anchor" id="autotoc_md1101"></a>
 Test Coverage</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -117,7 +117,7 @@ Test Coverage</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Overall</b>   </td><td class="markdownTableBodyNone">150+ tests   </td><td class="markdownTableBodyNone">90%+   </td><td class="markdownTableBodyNone">✅ Excellent   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1043"></a>
+<h2><a class="anchor" id="autotoc_md1102"></a>
 CI/CD Pipeline</h2>
 <p><b>Continuous Integration Status</b>:</p><ul>
 <li>✅ Multi-platform builds (Ubuntu, macOS, Windows)</li>
@@ -141,9 +141,9 @@ CI/CD Pipeline</h2>
 <td class="markdownTableBodyNone"><b>Windows 10+</b>   </td><td class="markdownTableBodyNone">MSVC 2019+   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Production   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1045"></a>
+<h1><a class="anchor" id="autotoc_md1104"></a>
 Code Quality</h1>
-<h2><a class="anchor" id="autotoc_md1046"></a>
+<h2><a class="anchor" id="autotoc_md1105"></a>
 Static Analysis</h2>
 <p><b>Tools</b>:</p><ul>
 <li><b>Clang-Tidy</b>: C++ linting and modernization</li>
@@ -155,7 +155,7 @@ Static Analysis</h2>
 <li>✅ No critical issues</li>
 <li>✅ Modern C++20 compliance</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1047"></a>
+<h2><a class="anchor" id="autotoc_md1106"></a>
 Memory Safety</h2>
 <p><b>Sanitizers</b>:</p><ul>
 <li><b>AddressSanitizer</b> (ASAN): Memory error detection</li>
@@ -167,7 +167,7 @@ Memory Safety</h2>
 <li>✅ TSAN clean</li>
 <li>✅ UBSAN clean</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1048"></a>
+<h2><a class="anchor" id="autotoc_md1107"></a>
 Code Reviews</h2>
 <p><b>Process</b>:</p><ul>
 <li>✅ All PRs require review</li>
@@ -176,9 +176,9 @@ Code Reviews</h2>
 <li>✅ Test coverage requirements</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1050"></a>
+<h1><a class="anchor" id="autotoc_md1109"></a>
 Testing Strategy</h1>
-<h2><a class="anchor" id="autotoc_md1051"></a>
+<h2><a class="anchor" id="autotoc_md1110"></a>
 Unit Tests</h2>
 <p><b>Core Component Tests</b> (40+ tests):</p><ul>
 <li>Message creation and builder</li>
@@ -199,7 +199,7 @@ Unit Tests</h2>
 <li>Event Streaming</li>
 <li>Message Pipeline</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1052"></a>
+<h2><a class="anchor" id="autotoc_md1111"></a>
 Integration Tests</h2>
 <p><b>Test Suites</b> (4 suites):</p><ol type="1">
 <li><b>Message Bus + Router</b>: End-to-end pub/sub flow</li>
@@ -207,7 +207,7 @@ Integration Tests</h2>
 <li><b>Backend Integration</b>: Thread pool integration</li>
 <li><b>Full Stack</b>: Complete messaging scenarios</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1053"></a>
+<h2><a class="anchor" id="autotoc_md1112"></a>
 Performance Tests</h2>
 <p><b>Benchmarks</b> (5 benchmarks):</p><ol type="1">
 <li><b>Message Creation</b>: Throughput and latency</li>
@@ -217,9 +217,9 @@ Performance Tests</h2>
 <li><b>Request/Reply</b>: Round-trip latency</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1055"></a>
+<h1><a class="anchor" id="autotoc_md1114"></a>
 Reliability Features</h1>
-<h2><a class="anchor" id="autotoc_md1056"></a>
+<h2><a class="anchor" id="autotoc_md1115"></a>
 Error Handling</h2>
 <p><b>Mechanisms</b>:</p><ul>
 <li><b>Result&lt;T&gt; Pattern</b>: Type-safe error handling</li>
@@ -227,7 +227,7 @@ Error Handling</h2>
 <li><b>Error Propagation</b>: Proper error context</li>
 <li><b>Graceful Degradation</b>: Fallback strategies</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1057"></a>
+<h2><a class="anchor" id="autotoc_md1116"></a>
 Fault Tolerance</h2>
 <p><b>Features</b>:</p><ul>
 <li><b>Dead Letter Queue</b>: Failed message handling</li>
@@ -236,7 +236,7 @@ Fault Tolerance</h2>
 <li><b>Timeout Management</b>: Configurable timeouts</li>
 <li><b>Resource Cleanup</b>: RAII-based cleanup</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1058"></a>
+<h2><a class="anchor" id="autotoc_md1117"></a>
 Monitoring</h2>
 <p><b>Observability</b>:</p><ul>
 <li><b>Message Metrics</b>: Throughput, latency, errors</li>
@@ -246,9 +246,9 @@ Monitoring</h2>
 <li><b>Health Checks</b>: System health monitoring</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1060"></a>
+<h1><a class="anchor" id="autotoc_md1119"></a>
 Production Deployment</h1>
-<h2><a class="anchor" id="autotoc_md1061"></a>
+<h2><a class="anchor" id="autotoc_md1120"></a>
 Configuration</h2>
 <p><b>Tunable Parameters</b>:</p><ul>
 <li><b>Worker Threads</b>: 1-32 threads (default: 4)</li>
@@ -257,7 +257,7 @@ Configuration</h2>
 <li><b>Drop on Full</b>: Enabled/disabled (default: false)</li>
 <li><b>Processing Timeout</b>: 100ms-60s (default: 5s)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1062"></a>
+<h2><a class="anchor" id="autotoc_md1121"></a>
 Resource Requirements</h2>
 <p><b>Minimum Requirements</b>:</p><ul>
 <li><b>CPU</b>: 2 cores</li>
@@ -269,7 +269,7 @@ Resource Requirements</h2>
 <li><b>Memory</b>: 500 MB + message overhead</li>
 <li><b>Disk</b>: Optional (for persistent queues)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1063"></a>
+<h2><a class="anchor" id="autotoc_md1122"></a>
 Scalability</h2>
 <p><b>Limits</b>:</p><ul>
 <li><b>Message Size</b>: Up to 100 MB (configurable)</li>
@@ -279,9 +279,9 @@ Scalability</h2>
 <li><b>Throughput</b>: 100K+ msg/s per instance</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1065"></a>
+<h1><a class="anchor" id="autotoc_md1124"></a>
 Security</h1>
-<h2><a class="anchor" id="autotoc_md1066"></a>
+<h2><a class="anchor" id="autotoc_md1125"></a>
 Input Validation</h2>
 <p><b>Validation</b>:</p><ul>
 <li>✅ Topic pattern validation</li>
@@ -289,7 +289,7 @@ Input Validation</h2>
 <li>✅ Payload validation</li>
 <li>✅ Timeout bounds checking</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1067"></a>
+<h2><a class="anchor" id="autotoc_md1126"></a>
 Thread Safety</h2>
 <p><b>Guarantees</b>:</p><ul>
 <li>✅ All public APIs are thread-safe</li>
@@ -297,7 +297,7 @@ Thread Safety</h2>
 <li>✅ Atomic operations for counters</li>
 <li>✅ No data races (TSAN verified)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1068"></a>
+<h2><a class="anchor" id="autotoc_md1127"></a>
 Resource Management</h2>
 <p><b>RAII</b>:</p><ul>
 <li>✅ Automatic resource cleanup</li>
@@ -306,9 +306,9 @@ Resource Management</h2>
 <li>✅ Proper object lifetimes</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1070"></a>
+<h1><a class="anchor" id="autotoc_md1129"></a>
 Documentation</h1>
-<h2><a class="anchor" id="autotoc_md1071"></a>
+<h2><a class="anchor" id="autotoc_md1130"></a>
 API Documentation</h2>
 <p><b>Coverage</b>:</p><ul>
 <li>✅ All public APIs documented</li>
@@ -317,7 +317,7 @@ API Documentation</h2>
 <li>✅ Return value documentation</li>
 <li>✅ Error conditions</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1072"></a>
+<h2><a class="anchor" id="autotoc_md1131"></a>
 Guides</h2>
 <p><b>Available Guides</b>:</p><ul>
 <li><a class="el" href="../../db/d91/md_docs_2API__REFERENCE.html">API Reference</a> - Complete API documentation</li>
@@ -327,9 +327,9 @@ Guides</h2>
 <li><a class="el" href="../../d7/d6a/MIGRATION__GUIDE_8md.html">Migration Guide</a> - Upgrade instructions</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1074"></a>
+<h1><a class="anchor" id="autotoc_md1133"></a>
 Industry Standards</h1>
-<h2><a class="anchor" id="autotoc_md1075"></a>
+<h2><a class="anchor" id="autotoc_md1134"></a>
 Compliance</h2>
 <p><b>Standards</b>:</p><ul>
 <li>✅ C++20 standard compliance</li>
@@ -337,7 +337,7 @@ Compliance</h2>
 <li>✅ RAII resource management</li>
 <li>✅ Modern C++ best practices</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1076"></a>
+<h2><a class="anchor" id="autotoc_md1135"></a>
 Best Practices</h2>
 <p><b>Implementation</b>:</p><ul>
 <li>✅ SOLID principles</li>
@@ -346,9 +346,9 @@ Best Practices</h2>
 <li>✅ Separation of concerns</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1078"></a>
+<h1><a class="anchor" id="autotoc_md1137"></a>
 Known Limitations</h1>
-<h2><a class="anchor" id="autotoc_md1079"></a>
+<h2><a class="anchor" id="autotoc_md1138"></a>
 Current Limitations</h2>
 <ol type="1">
 <li><b>No Persistence</b>: In-memory only (persistent queue planned)</li>
@@ -356,7 +356,7 @@ Current Limitations</h2>
 <li><b>No Protocol</b>: No wire protocol (network bridge planned)</li>
 <li><b>Limited Monitoring</b>: Basic metrics only</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1080"></a>
+<h2><a class="anchor" id="autotoc_md1139"></a>
 Planned Improvements</h2>
 <ol type="1">
 <li><b>Phase 11</b>: Persistent message queue</li>
@@ -365,9 +365,9 @@ Planned Improvements</h2>
 <li><b>Phase 14</b>: Clustering support</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1082"></a>
+<h1><a class="anchor" id="autotoc_md1141"></a>
 Production Checklist</h1>
-<h2><a class="anchor" id="autotoc_md1083"></a>
+<h2><a class="anchor" id="autotoc_md1142"></a>
 Pre-Deployment</h2>
 <ul>
 <li>[ ] Configure worker thread count</li>
@@ -378,7 +378,7 @@ Pre-Deployment</h2>
 <li>[ ] Review error handling</li>
 <li>[ ] Plan capacity requirements</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1084"></a>
+<h2><a class="anchor" id="autotoc_md1143"></a>
 Deployment</h2>
 <ul>
 <li>[ ] Deploy with appropriate resources</li>
@@ -388,7 +388,7 @@ Deployment</h2>
 <li>[ ] Configure alerts</li>
 <li>[ ] Test failover scenarios</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1085"></a>
+<h2><a class="anchor" id="autotoc_md1144"></a>
 Post-Deployment</h2>
 <ul>
 <li>[ ] Monitor throughput and latency</li>
@@ -399,16 +399,16 @@ Post-Deployment</h2>
 <li>[ ] Update documentation</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1087"></a>
+<h1><a class="anchor" id="autotoc_md1146"></a>
 Support</h1>
-<h2><a class="anchor" id="autotoc_md1088"></a>
+<h2><a class="anchor" id="autotoc_md1147"></a>
 Getting Help</h2>
 <ul>
 <li><b>Issues</b>: <a href="https://github.com/kcenon/messaging_system/issues">GitHub Issues</a></li>
 <li><b>Discussions</b>: <a href="https://github.com/kcenon/messaging_system/discussions">GitHub Discussions</a></li>
 <li><b>Email</b>: <a href="#" onclick="location.href='mai'+'lto:'+'kce'+'no'+'n@g'+'ma'+'il.'+'co'+'m'; return false;">kceno<span class="obfuscator">.nosp@m.</span>n@gm<span class="obfuscator">.nosp@m.</span>ail.c<span class="obfuscator">.nosp@m.</span>om</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1089"></a>
+<h2><a class="anchor" id="autotoc_md1148"></a>
 Reporting Bugs</h2>
 <p>When reporting bugs, please include:</p><ol type="1">
 <li>Platform and compiler version</li>
@@ -418,7 +418,7 @@ Reporting Bugs</h2>
 <li>Relevant logs or error messages</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1091"></a>
+<h1><a class="anchor" id="autotoc_md1150"></a>
 Conclusion</h1>
 <p>The messaging_system is production-ready with:</p><ul>
 <li>✅ Comprehensive test coverage (90%+)</li>

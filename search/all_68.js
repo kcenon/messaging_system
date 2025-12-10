@@ -1,9 +1,15 @@
 var searchData=
 [
-  ['실패하는_20작업_20를_20어떻게_20처리하나요_0',['Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1865',1,'']]],
-  ['실패함_1',['작업이 즉시 실패함',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1840',1,'']]],
-  ['실행_2',['실행',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md590',1,'독립 실행'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1740',1,'주기적 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1796',1,'주기적 실행'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1376',1,'즉시 실행'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1377',1,'지연 실행'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1744',1,'지연 작업 실행'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1495',1,'테스트 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1797',1,'Cron 기반 실행']]],
-  ['실행_20작업_20설정_3',['장기 실행 작업 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1577',1,'']]],
-  ['실행_20중인_20작업을_20어떻게_20취소하나요_4',['Q: 실행 중인 작업을 어떻게 취소하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1859',1,'']]],
-  ['실행_20추적_5',['실행 추적',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1326',1,'']]]
+  ['스레드_20안전성_0',['스레드 안전성',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1545',1,'']]],
+  ['스레드_20안전성_20검증_1',['스레드 안전성 검증',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1161',1,'']]],
+  ['스레드_20안전_2',['스레드 안전',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md654',1,'스레드 안전'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md440',1,'3. 스레드 안전']]],
+  ['스레드_20풀_3',['이전 (커스텀 스레드 풀)',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1690',1,'']]],
+  ['스레드_20풀_20구현에서_20마이그레이션_4',['스레드 풀 구현에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1689',1,'']]],
+  ['스레드_20풀_20통합_5',['스레드 풀 통합',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md650',1,'']]],
+  ['스케줄러_6',['이후 (Task 스케줄러)',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1698',1,'']]],
+  ['스케줄링_7',['스케줄링',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1803',1,'Cron 기반 스케줄링'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1857',1,'Task 스케줄링']]],
+  ['스케줄링_20편의_20메서드_8',['스케줄링 (편의 메서드)',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1493',1,'']]],
+  ['스케줄_20관리_9',['스케줄 관리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1465',1,'스케줄 관리'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1805',1,'스케줄 관리']]],
+  ['스케줄_20등록_10',['스케줄 등록',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1464',1,'']]],
+  ['스테이징_20환경_11',['스테이징 환경',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1632',1,'']]]
 ];

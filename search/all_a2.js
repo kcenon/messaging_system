@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['튜닝_0',['성능 튜닝',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1573',1,'']]]
+  ['클래스_0',['핵심 클래스',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md355',1,'']]]
 ];

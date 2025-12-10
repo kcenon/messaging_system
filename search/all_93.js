@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['체크리스트_0',['체크리스트',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1639',1,'마이그레이션 체크리스트'],['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1643',1,'테스트 체크리스트']]],
-  ['체크포인트와_20복구_1',['체크포인트와 복구',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1751',1,'']]],
-  ['체크포인트_20관리_2',['체크포인트 관리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1352',1,'']]],
-  ['체크포인트_20데이터_3',['체크포인트 데이터',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1753',1,'']]],
-  ['체크포인트_20저장_4',['체크포인트 저장',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1752',1,'']]]
+  ['직렬화_0',['직렬화',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md639',1,'메시지 직렬화'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md368',1,'직렬화'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1392',1,'직렬화']]],
+  ['직접_20의존성_1',['대안 A: logger_system 직접 의존성',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md43',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['마이그레이션_20가이드_0',['Task 모듈 마이그레이션 가이드',['../d7/d10/md_docs_2task_2MIGRATION__KO.html',1,'']]]
+  ['구조_0',['Messaging System 프로젝트 구조',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html',1,'']]]
 ];

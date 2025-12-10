@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['readme_2emd_0',['readme.md',['../df/d50/docs_2integration_2README_8md.html',1,'(Global Namespace)'],['../d4/d84/docs_2README_8md.html',1,'(Global Namespace)'],['../da/ddd/README_8md.html',1,'(Global Namespace)']]],
-  ['readme_5fko_2emd_1',['README_KO.md',['../dd/d72/README__KO_8md.html',1,'']]]
+  ['quick_5fstart_2emd_0',['quick_start.md',['../d3/d92/guides_2QUICK__START_8md.html',1,'(Global Namespace)'],['../d6/d24/task_2QUICK__START_8md.html',1,'(Global Namespace)']]],
+  ['quick_5fstart_5fko_2emd_1',['QUICK_START_KO.md',['../df/daa/QUICK__START__KO_8md.html',1,'']]]
 ];

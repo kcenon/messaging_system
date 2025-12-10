@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['📄_20license_0',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1978',1,'']]]
+  ['훅_0',['가상 라이프사이클 훅',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1405',1,'']]]
 ];

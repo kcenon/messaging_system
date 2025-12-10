@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['증가_0',['메모리 사용량 증가',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1843',1,'']]]
+  ['주기적_20실행_0',['주기적 실행',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1802',1,'주기적 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1858',1,'주기적 실행']]],
+  ['주요_20디렉토리_20설명_1',['주요 디렉토리 설명',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1215',1,'']]]
 ];

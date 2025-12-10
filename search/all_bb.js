@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['횟수를_20어떻게_20제한하나요_0',['Q: 재시도 횟수를 어떻게 제한하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1864',1,'']]]
+  ['헤더_20포함_0',['1. 헤더 포함',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1849',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['발행_20흐름_0',['메시지 발행 흐름',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md375',1,'']]]
+  ['반환_20대신_20예외를_20던짐_0',['핸들러가 에러 반환 대신 예외를 던짐',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1708',1,'']]]
 ];

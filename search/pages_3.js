@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['decisions_0',['Design Patterns and Architectural Decisions',['../d6/d58/md_docs_2advanced_2DESIGN__PATTERNS.html',1,'']]],
-  ['deployment_20guide_1',['Deployment Guide',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html',1,'']]],
-  ['design_20patterns_20and_20architectural_20decisions_2',['Design Patterns and Architectural Decisions',['../d6/d58/md_docs_2advanced_2DESIGN__PATTERNS.html',1,'']]],
-  ['developer_20guide_3',['Developer Guide',['../da/d7c/md_docs_2guides_2DEVELOPER__GUIDE.html',1,'']]],
-  ['distributed_20task_20queue_20system_20improvement_20plan_4',['Distributed Task Queue System - Improvement Plan',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html',1,'']]]
+  ['changelog_0',['Messaging System Changelog',['../da/dee/md_docs_2CHANGELOG.html',1,'']]],
+  ['ci_20performance_20optimization_1',['Windows CI Performance Optimization',['../d1/dc9/md_docs_2advanced_2WINDOWS__OPTIMIZATION.html',1,'']]],
+  ['configuration_20guide_2',['Task Module Configuration Guide',['../dc/d1e/md_docs_2task_2CONFIGURATION.html',1,'']]],
+  ['contributing_20to_20messaging_20system_3',['Contributing to Messaging System',['../d7/d4b/md_docs_2contributing_2CONTRIBUTING.html',1,'']]]
 ];

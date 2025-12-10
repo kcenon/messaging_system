@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['표현식_20형식_0',['표현식 형식',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1409',1,'Cron 표현식 형식'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1742',1,'Cron 표현식 형식']]]
+  ['트레이스_20컨텍스트_0',['트레이스 컨텍스트',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md640',1,'']]]
 ];

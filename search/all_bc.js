@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['후_0',['마이그레이션 후',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1642',1,'']]]
+  ['헬퍼_20함수_0',['헬퍼 함수',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1407',1,'']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['🌟_20integration_20with_20base_20systems_0',['🌟 Integration with Base Systems',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1950',1,'']]]
+  ['환경별_20설정_0',['환경별 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1630',1,'']]],
+  ['환경_1',['환경',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1631',1,'개발 환경'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1632',1,'스테이징 환경'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1633',1,'프로덕션 환경']]]
 ];

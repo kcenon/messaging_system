@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['컨테이너_0',['8.1 통합 서비스 컨테이너',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1898',1,'']]],
-  ['컨텍스트_1',['트레이스 컨텍스트',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md581',1,'']]]
+  ['체크리스트_0',['체크리스트',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1701',1,'마이그레이션 체크리스트'],['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1705',1,'테스트 체크리스트']]],
+  ['체크포인트와_20복구_1',['체크포인트와 복구',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1813',1,'']]],
+  ['체크포인트_20관리_2',['체크포인트 관리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1414',1,'']]],
+  ['체크포인트_20데이터_3',['체크포인트 데이터',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1815',1,'']]],
+  ['체크포인트_20저장_4',['체크포인트 저장',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1814',1,'']]]
 ];
