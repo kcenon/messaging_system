@@ -200,17 +200,17 @@ int main() {
 		const int iterations = 10000;
 
 		for (const auto& expr : cron_expressions) {
-			auto parser_result = cron_parser::parse(expr);
-			if (!parser_result.is_ok()) {
+			auto parse_result = cron_parser::parse(expr);
+			if (!parse_result.is_ok()) {
 				continue;
 			}
 
-			auto parser = parser_result.unwrap();
+			auto cron_expr = parse_result.unwrap();
 			auto now = std::chrono::system_clock::now();
 
 			BenchmarkTimer timer;
 			for (int i = 0; i < iterations; ++i) {
-				auto next = parser.next_run(now);
+				auto next = cron_parser::next_run_time(cron_expr, now);
 				(void)next;
 			}
 			double duration = timer.elapsed_seconds();
