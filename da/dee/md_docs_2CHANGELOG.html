@@ -313,6 +313,14 @@ Fixed</h2>
 <h2><a class="anchor" id="autotoc_md535"></a>
 Changed</h2>
 <ul>
+<li><b>Standalone Backend Thread System Migration (Issue #139)</b><ul>
+<li>Migrated standalone_backend from internal std::thread pool to thread_system</li>
+<li>Removed ~280 lines of internal thread pool implementation</li>
+<li>Now uses kcenon::thread::thread_pool directly as IExecutor</li>
+<li>Maintains same public API for backward compatibility</li>
+<li>Ensures consistent threading behavior across the codebase</li>
+</ul>
+</li>
 <li><b>Logging Migration (Issue #94)</b><ul>
 <li>Migrated from direct logger_system dependency to common_system's ILogger interface</li>
 <li>Logging now uses runtime binding via GlobalLoggerRegistry</li>
