@@ -9,6 +9,10 @@
  * Defines the interface for task handlers that execute tasks in the
  * distributed task queue. Handlers can be implemented as classes
  * inheriting from task_handler_interface or as simple lambda functions.
+ *
+ * C++20 Concepts are provided for compile-time type validation of
+ * task handlers, offering clearer error messages and self-documenting
+ * interface requirements.
  */
 
 #pragma once
@@ -17,14 +21,67 @@
 #include <kcenon/messaging/task/task_context.h>
 #include <kcenon/common/patterns/result.h>
 
+#include <concepts>
 #include <functional>
 #include <memory>
 #include <string>
+#include <type_traits>
 
 namespace kcenon::messaging::task {
 
 // Forward declaration
 class task_context;
+
+// =============================================================================
+// C++20 Concepts for Task Handlers
+// =============================================================================
+
+/**
+ * @concept TaskHandlerCallable
+ * @brief A callable type that can handle task execution.
+ *
+ * Types satisfying this concept can be invoked with a task and task_context,
+ * returning a Result containing a value_container. This replaces SFINAE-based
+ * constraints with clearer compile-time error messages.
+ *
+ * @tparam F The callable type to validate
+ *
+ * Example usage:
+ * @code
+ * template<TaskHandlerCallable Handler>
+ * void register_handler(const std::string& name, Handler&& handler) {
+ *     // Handler is guaranteed to be callable with (const task&, task_context&)
+ *     // and return common::Result<container_module::value_container>
+ * }
+ * @endcode
+ */
+template<typename F>
+concept TaskHandlerCallable = std::invocable<F, const task&, task_context&> &&
+	std::same_as<std::invoke_result_t<F, const task&, task_context&>,
+				 common::Result<container_module::value_container>>;
+
+/**
+ * @concept TaskHandlerLike
+ * @brief A type that satisfies the task handler interface requirements.
+ *
+ * Types satisfying this concept can be used as task handlers, providing
+ * name() and execute() methods with appropriate signatures.
+ *
+ * @tparam T The type to validate
+ *
+ * Example usage:
+ * @code
+ * template<TaskHandlerLike Handler>
+ * void add_handler(std::shared_ptr<Handler> handler) {
+ *     // Handler is guaranteed to have name() and execute() methods
+ * }
+ * @endcode
+ */
+template<typename T>
+concept TaskHandlerLike = requires(T t, const task& tsk, task_context& ctx) {
+	{ t.name() } -> std::convertible_to<std::string>;
+	{ t.execute(tsk, ctx) } -> std::same_as<common::Result<container_module::value_container>>;
+};
 
 /**
  * @class task_handler_interface
@@ -188,6 +245,40 @@ inline std::unique_ptr<task_handler_interface> make_handler(
 	simple_task_handler handler) {
 	return std::make_unique<lambda_task_handler>(std::move(name),
 												 std::move(handler));
+}
+
+/**
+ * @brief Create a task handler from any callable satisfying TaskHandlerCallable
+ *
+ * This concept-constrained overload provides better compile-time error messages
+ * when the callable doesn't match the expected signature.
+ *
+ * @tparam Handler A type satisfying TaskHandlerCallable concept
+ * @param name Handler name
+ * @param handler Any callable matching the task handler signature
+ * @return Unique pointer to task_handler_interface
+ *
+ * @example
+ * // Lambda with explicit types
+ * auto handler = make_task_handler("add", [](const task& t, task_context& ctx)
+ *     -> common::Result<container_module::value_container> {
+ *     // Implementation
+ * });
+ *
+ * // Function object
+ * struct MyHandler {
+ *     common::Result<container_module::value_container>
+ *     operator()(const task& t, task_context& ctx) const { ... }
+ * };
+ * auto handler = make_task_handler("process", MyHandler{});
+ */
+template<TaskHandlerCallable Handler>
+inline std::unique_ptr<task_handler_interface> make_task_handler(
+	std::string name,
+	Handler&& handler) {
+	return std::make_unique<lambda_task_handler>(
+		std::move(name),
+		simple_task_handler(std::forward<Handler>(handler)));
 }
 
 }  // namespace kcenon::messaging::task

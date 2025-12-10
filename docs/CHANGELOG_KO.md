@@ -8,6 +8,32 @@
 ## [Unreleased]
 
 ### 추가됨
+- **C++20 Concepts 지원 (Issue #146)**
+  - 타입 안전한 콜백 및 핸들러 검증을 위한 C++20 concept 정의 추가
+  - task 모듈의 새로운 concepts:
+    - `TaskHandlerCallable`: 태스크 핸들러 호출 가능 시그니처 검증
+    - `TaskHandlerLike`: 태스크 핸들러 인터페이스 구현 검증
+    - `ScheduleEventCallable`: 스케줄러 이벤트 콜백 검증
+  - patterns 모듈의 새로운 concepts:
+    - `MessageProcessorCallable`: 메시지 파이프라인 프로세서 검증
+    - `MessageFilterCallable`: 메시지 필터링 술어 검증
+    - `MessageTransformerCallable`: 메시지 변환기 검증
+    - `MessageEnricherCallable`: 메시지 보강 호출 가능 타입 검증
+  - core 모듈의 새로운 concepts:
+    - `SubscriptionCallable`: 토픽 구독 콜백 검증
+    - `MessageFilterCallable`: 메시지 필터 술어 검증
+  - 장점:
+    - 잘못된 콜백 타입에 대한 명확한 컴파일 시간 오류 메시지
+    - concepts를 통한 자기 문서화 인터페이스 요구사항
+    - 향상된 자동 완성을 통한 더 나은 IDE 지원
+    - 런타임 오버헤드 없는 타입 안전한 콜백 등록
+  - concept 제약 템플릿 오버로드 추가된 함수:
+    - `worker_pool::register_handler()`
+    - `task_scheduler::on_task_executed()`, `on_task_failed()`
+    - `pipeline_builder::add_stage()`, `add_filter()`, `add_transformer()`
+    - `topic_router::subscribe()`
+    - `make_task_handler()` 팩토리 함수
+
 - **분산 태스크 큐 시스템 - Sprint 7 단위 테스트 (Issue #117)**
   - `test_task_queue.cpp`: task_queue 컴포넌트의 포괄적인 단위 테스트
     - 큐 라이프사이클 테스트 (생성, 시작/종료, 이동 시맨틱)

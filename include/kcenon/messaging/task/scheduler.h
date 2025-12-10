@@ -9,6 +9,9 @@
  * Provides scheduling capabilities for automatic task execution based on
  * fixed intervals or cron expressions. Schedules are managed and persisted
  * internally, allowing tasks to be executed according to their schedules.
+ *
+ * C++20 Concepts are used for type-safe callback registration, providing
+ * clearer compile-time error messages for callback type mismatches.
  */
 
 #pragma once
@@ -21,12 +24,14 @@
 
 #include <atomic>
 #include <chrono>
+#include <concepts>
 #include <condition_variable>
 #include <functional>
 #include <memory>
 #include <mutex>
 #include <optional>
 #include <string>
+#include <type_traits>
 #include <unordered_map>
 #include <variant>
 #include <vector>
@@ -35,6 +40,34 @@ namespace kcenon::messaging::task {
 
 // Forward declaration for internal worker class
 class scheduler_worker;
+
+// Forward declaration for schedule_entry
+struct schedule_entry;
+
+// =============================================================================
+// C++20 Concepts for Scheduler Callbacks
+// =============================================================================
+
+/**
+ * @concept ScheduleEventCallable
+ * @brief A callable type for schedule event callbacks.
+ *
+ * Types satisfying this concept can be invoked with a const schedule_entry&
+ * reference. This replaces std::function-based constraints with clearer
+ * compile-time error messages.
+ *
+ * @tparam F The callable type to validate
+ *
+ * Example usage:
+ * @code
+ * template<ScheduleEventCallable Callback>
+ * void on_task_executed(Callback&& callback) {
+ *     // Callback is guaranteed to be callable with (const schedule_entry&)
+ * }
+ * @endcode
+ */
+template<typename F>
+concept ScheduleEventCallable = std::invocable<F, const schedule_entry&>;
 
 /**
  * @struct schedule_entry
@@ -331,10 +364,48 @@ public:
 	void on_task_executed(schedule_callback callback);
 
 	/**
+	 * @brief Set callback for task execution events using C++20 concept constraint
+	 *
+	 * This overload accepts any callable that satisfies the ScheduleEventCallable
+	 * concept, providing better compile-time error messages.
+	 *
+	 * @tparam Callback A type satisfying ScheduleEventCallable concept
+	 * @param callback Any callable matching the schedule event signature
+	 *
+	 * @example
+	 * scheduler.on_task_executed([](const schedule_entry& entry) {
+	 *     std::cout << "Task executed: " << entry.name << std::endl;
+	 * });
+	 */
+	template<ScheduleEventCallable Callback>
+	void on_task_executed(Callback&& callback) {
+		on_task_executed(schedule_callback(std::forward<Callback>(callback)));
+	}
+
+	/**
 	 * @brief Set callback for task failure events
 	 * @param callback Function called when a scheduled task fails to execute
 	 */
 	void on_task_failed(schedule_callback callback);
+
+	/**
+	 * @brief Set callback for task failure events using C++20 concept constraint
+	 *
+	 * This overload accepts any callable that satisfies the ScheduleEventCallable
+	 * concept, providing better compile-time error messages.
+	 *
+	 * @tparam Callback A type satisfying ScheduleEventCallable concept
+	 * @param callback Any callable matching the schedule event signature
+	 *
+	 * @example
+	 * scheduler.on_task_failed([](const schedule_entry& entry) {
+	 *     std::cerr << "Task failed: " << entry.name << std::endl;
+	 * });
+	 */
+	template<ScheduleEventCallable Callback>
+	void on_task_failed(Callback&& callback) {
+		on_task_failed(schedule_callback(std::forward<Callback>(callback)));
+	}
 
 private:
 	/**

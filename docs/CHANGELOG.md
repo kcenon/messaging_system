@@ -8,6 +8,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **C++20 Concepts Support (Issue #146)**
+  - Added C++20 concept definitions for type-safe callback and handler validation
+  - New concepts in task module:
+    - `TaskHandlerCallable`: Validates task handler callable signatures
+    - `TaskHandlerLike`: Validates task handler interface implementations
+    - `ScheduleEventCallable`: Validates scheduler event callbacks
+  - New concepts in patterns module:
+    - `MessageProcessorCallable`: Validates message pipeline processors
+    - `MessageFilterCallable`: Validates message filtering predicates
+    - `MessageTransformerCallable`: Validates message transformers
+    - `MessageEnricherCallable`: Validates message enrichment callables
+  - New concepts in core module:
+    - `SubscriptionCallable`: Validates topic subscription callbacks
+    - `MessageFilterCallable`: Validates message filter predicates
+  - Benefits:
+    - Clearer compile-time error messages for incorrect callback types
+    - Self-documenting interface requirements through concepts
+    - Better IDE support with improved auto-completion
+    - Type-safe callback registration without runtime overhead
+  - Concept-constrained template overloads added to:
+    - `worker_pool::register_handler()`
+    - `task_scheduler::on_task_executed()`, `on_task_failed()`
+    - `pipeline_builder::add_stage()`, `add_filter()`, `add_transformer()`
+    - `topic_router::subscribe()`
+    - `make_task_handler()` factory function
+
 - **Distributed Task Queue System - Sprint 7 Unit Tests (Issue #117)**
   - `test_task_queue.cpp`: Comprehensive unit tests for task_queue component
     - Queue lifecycle tests (construction, start/stop, move semantics)

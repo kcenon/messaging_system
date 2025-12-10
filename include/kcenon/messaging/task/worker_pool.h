@@ -10,6 +10,10 @@
  * handlers. Uses thread_system for thread management instead of direct
  * std::thread usage. Supports multiple queues, handler matching, graceful
  * shutdown, and statistics collection.
+ *
+ * C++20 Concepts are used for type-safe handler registration, providing
+ * clearer compile-time error messages when handler types don't match
+ * the expected signature.
  */
 
 #pragma once
@@ -23,12 +27,14 @@
 
 #include <atomic>
 #include <chrono>
+#include <concepts>
 #include <condition_variable>
 #include <functional>
 #include <future>
 #include <memory>
 #include <mutex>
 #include <string>
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 
@@ -190,6 +196,28 @@ public:
 	 * @param handler Lambda function
 	 */
 	void register_handler(const std::string& name, simple_task_handler handler);
+
+	/**
+	 * @brief Register a task handler using C++20 concept constraint
+	 *
+	 * This overload accepts any callable that satisfies the TaskHandlerCallable
+	 * concept, providing better compile-time error messages than std::function.
+	 *
+	 * @tparam Handler A type satisfying TaskHandlerCallable concept
+	 * @param name Handler name (matches task_name)
+	 * @param handler Any callable matching the task handler signature
+	 *
+	 * @example
+	 * pool.register_handler("process", [](const task& t, task_context& ctx)
+	 *     -> common::Result<container_module::value_container> {
+	 *     // Process task...
+	 *     return common::ok(container_module::value_container{});
+	 * });
+	 */
+	template<TaskHandlerCallable Handler>
+	void register_handler(const std::string& name, Handler&& handler) {
+		register_handler(name, simple_task_handler(std::forward<Handler>(handler)));
+	}
 
 	/**
 	 * @brief Unregister a handler

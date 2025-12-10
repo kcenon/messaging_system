@@ -5,13 +5,47 @@
 #include "message.h"
 
 #include <atomic>
+#include <concepts>
 #include <functional>
 #include <shared_mutex>
 #include <string>
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 
 namespace kcenon::messaging {
+
+// =============================================================================
+// C++20 Concepts for Topic Router
+// =============================================================================
+
+/**
+ * @concept SubscriptionCallable
+ * @brief A callable type for message subscription callbacks.
+ *
+ * Types satisfying this concept can be invoked with a const message&
+ * and return a VoidResult. This provides compile-time type safety
+ * for subscription callbacks.
+ *
+ * @tparam F The callable type to validate
+ */
+template<typename F>
+concept SubscriptionCallable = std::invocable<F, const message&> &&
+	std::same_as<std::invoke_result_t<F, const message&>,
+				 common::VoidResult>;
+
+/**
+ * @concept MessageFilterCallable
+ * @brief A callable type for message filtering.
+ *
+ * Types satisfying this concept can be invoked with a const message&
+ * and return a boolean indicating whether the message passes the filter.
+ *
+ * @tparam F The callable type to validate
+ */
+template<typename F>
+concept MessageFilterCallable = std::invocable<F, const message&> &&
+	std::convertible_to<std::invoke_result_t<F, const message&>, bool>;
 
 /**
  * @brief Subscription callback function type
@@ -79,6 +113,57 @@ public:
 									   subscription_callback callback,
 									   message_filter filter = nullptr,
 									   int priority = 5);
+
+	/**
+	 * @brief Subscribe to a topic pattern using C++20 concept constraints
+	 *
+	 * This overload accepts any callable that satisfies the SubscriptionCallable
+	 * concept, providing better compile-time error messages.
+	 *
+	 * @tparam Callback A type satisfying SubscriptionCallable concept
+	 * @tparam Filter A type satisfying MessageFilterCallable concept (optional)
+	 * @param pattern Topic pattern (supports * and # wildcards)
+	 * @param callback Any callable matching the subscription callback signature
+	 * @param priority Subscription priority (0-10, higher = first)
+	 * @return Subscription ID or error
+	 *
+	 * @example
+	 * router.subscribe("user.*", [](const message& msg) -> common::VoidResult {
+	 *     // Process message
+	 *     return common::ok();
+	 * });
+	 */
+	template<SubscriptionCallable Callback>
+	common::Result<uint64_t> subscribe(const std::string& pattern,
+									   Callback&& callback,
+									   int priority = 5) {
+		return subscribe(pattern,
+						 subscription_callback(std::forward<Callback>(callback)),
+						 nullptr,
+						 priority);
+	}
+
+	/**
+	 * @brief Subscribe to a topic pattern with filter using C++20 concept constraints
+	 *
+	 * @tparam Callback A type satisfying SubscriptionCallable concept
+	 * @tparam Filter A type satisfying MessageFilterCallable concept
+	 * @param pattern Topic pattern (supports * and # wildcards)
+	 * @param callback Any callable matching the subscription callback signature
+	 * @param filter Any callable matching the filter signature
+	 * @param priority Subscription priority (0-10, higher = first)
+	 * @return Subscription ID or error
+	 */
+	template<SubscriptionCallable Callback, MessageFilterCallable Filter>
+	common::Result<uint64_t> subscribe(const std::string& pattern,
+									   Callback&& callback,
+									   Filter&& filter,
+									   int priority = 5) {
+		return subscribe(pattern,
+						 subscription_callback(std::forward<Callback>(callback)),
+						 message_filter(std::forward<Filter>(filter)),
+						 priority);
+	}
 
 	/**
 	 * @brief Unsubscribe by subscription ID
