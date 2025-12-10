@@ -141,8 +141,14 @@ TEST_F(PriorityQueueTest, QueueCapacity) {
         bus_->publish(msg); // Ignore result, some may be dropped
     }
 
-    // Wait a bit for processing
-    std::this_thread::sleep_for(std::chrono::milliseconds{500});
+    // Wait for some messages to be processed
+    wait_for_condition(
+        [this, &initial_stats]() {
+            auto stats = bus_->get_statistics();
+            return stats.messages_published > initial_stats.messages_published;
+        },
+        std::chrono::milliseconds{500}
+    );
 
     auto final_stats = bus_->get_statistics();
 
