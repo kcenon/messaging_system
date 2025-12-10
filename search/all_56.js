@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['복구_0',['체크포인트와 복구',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1821',1,'']]]
+  ['벤치마크_0',['벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md517',1,'메시지 버스 벤치마크'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html',1,'Messaging System 성능 벤치마크']]],
+  ['벤치마크_20방법론_1',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md528',1,'']]]
 ];

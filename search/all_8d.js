@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['주기적_20실행_0',['주기적 실행',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1810',1,'주기적 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1866',1,'주기적 실행']]],
-  ['주요_20디렉토리_20설명_1',['주요 디렉토리 설명',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1223',1,'']]]
+  ['정의_0',['문제 정의',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md30',1,'']]],
+  ['정의_20확장_1',['1.1 Task 정의 확장',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2018',1,'']]],
+  ['정적_20메서드_2',['정적 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1557',1,'']]]
 ];

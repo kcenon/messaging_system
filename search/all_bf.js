@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['확인_0',['확인',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1919',1,'워커 상태 확인'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1918',1,'큐 상태 확인']]],
-  ['확장성_1',['확장성',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md525',1,'확장성'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md441',1,'4. 확장성']]],
-  ['확장_2',['확장',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md526',1,'수평 확장'],['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1943',1,'1.1 Task 정의 확장'],['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1942',1,'Phase 1: Task Core (기반 확장)'],['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1950',1,'Phase 3: Task Queue (확장)']]],
-  ['확장_20포인트_3',['확장 포인트',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1555',1,'']]]
+  ['핸들러가_20에러_20반환_20대신_20예외를_20던짐_0',['핸들러가 에러 반환 대신 예외를 던짐',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1791',1,'']]],
+  ['핸들러_1',['콜백 핸들러',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1866',1,'']]],
+  ['핸들러_20구현_2',['핸들러 구현',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1859',1,'']]],
+  ['핸들러_20등록_3',['핸들러 등록',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1514',1,'핸들러 등록'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1934',1,'3. Task 핸들러 등록']]],
+  ['핸들러_20등록_20방식_4',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2063',1,'']]],
+  ['핸들러_20등록_20편의_20메서드_5',['핸들러 등록 (편의 메서드)',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1574',1,'']]],
+  ['핸들러_20외부에서_20작업_20진행_20상황을_20어떻게_20얻나요_6',['Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2005',1,'']]]
 ];

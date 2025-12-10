@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['해결_20가이드_0',['Task 모듈 문제 해결 가이드',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html',1,'']]]
+  ['플랫폼_0',['지원 플랫폼',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1226',1,'']]],
+  ['플랫폼_20지원_1',['플랫폼 지원',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1225',1,'']]]
 ];

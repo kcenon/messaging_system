@@ -1,4 +1,8 @@
 var searchData=
 [
-  ['특정_20작업의_20우선순위를_20어떻게_20높이나요_0',['Q: 특정 작업의 우선순위를 어떻게 높이나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1933',1,'']]]
+  ['테스트_0',['테스트',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md711',1,'테스트'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1639',1,'테스트']]],
+  ['테스트_20실행_1',['테스트 실행',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1640',1,'']]],
+  ['테스트_20체크리스트_2',['테스트 체크리스트',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1788',1,'']]],
+  ['테스트_20커버리지_3',['테스트 커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1222',1,'']]],
+  ['테이블_4',['요약 테이블',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md515',1,'']]]
 ];

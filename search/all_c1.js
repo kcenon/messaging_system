@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['활성화_0',['로깅 활성화',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1916',1,'']]]
+  ['헤더_20포함_0',['1. 헤더 포함',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1932',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['증가_0',['메모리 사용량 증가',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1913',1,'']]]
+  ['주기적_20실행_0',['주기적 실행',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1885',1,'주기적 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1941',1,'주기적 실행']]]
 ];

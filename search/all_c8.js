@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🎯_20key_20features_0',['🎯 Key Features',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md1995',1,'']]]
+  ['횟수를_20어떻게_20제한하나요_0',['Q: 재시도 횟수를 어떻게 제한하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2009',1,'']]]
 ];

@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('da/db6/md_docs_2FEATURES.html','../../
   <div class="headertitle"><div class="title">Messaging System Features</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md580"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-18 <b>Language</b>: [English] | <a class="el" href="../../d4/d0c/md_docs_2FEATURES__KO.html">한국어</a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md580"></a> <b>Version</b>: 1.1 <b>Last Updated</b>: 2025-12-10 <b>Language</b>: [English] | <a class="el" href="../../d4/d0c/md_docs_2FEATURES__KO.html">한국어</a></p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md582"></a>
 Overview</h1>
@@ -104,6 +104,8 @@ Table of Contents</h1>
 <ol type="1">
 <li>Core Messaging</li>
 <li>Messaging Patterns</li>
+<li>Task Queue System</li>
+<li>C++20 Concepts</li>
 <li>Backend Support</li>
 <li>Message Types</li>
 <li>Topic Routing</li>
@@ -217,8 +219,246 @@ Message Pipeline</h2>
 <div class="line"><span class="keyword">auto</span> result = pipeline.process(msg);</div>
 </div><!-- fragment --><hr  />
 <h1><a class="anchor" id="autotoc_md596"></a>
-Backend Support</h1>
+Task Queue System</h1>
 <h2><a class="anchor" id="autotoc_md597"></a>
+Overview</h2>
+<p><b>Distributed task queue for background job processing</b></p>
+<p>The Task Queue System provides a complete solution for distributed task processing with features like priority queues, scheduled execution, retry mechanisms, and real-time monitoring.</p>
+<h2><a class="anchor" id="autotoc_md598"></a>
+Task System Facade</h2>
+<p><b>Unified interface for all task operations</b></p>
+<p>Features:</p><ul>
+<li><b>Single Entry Point</b>: Unified facade for task submission and management</li>
+<li><b>Component Orchestration</b>: Coordinates worker pools, schedulers, and monitors</li>
+<li><b>Configuration</b>: Centralized configuration for all components</li>
+<li><b>Lifecycle Management</b>: Start/stop all components together</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> system = std::make_shared&lt;task_system&gt;(config);</div>
+<div class="line">system-&gt;start();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Submit a task</span></div>
+<div class="line"><span class="keyword">auto</span> result = system-&gt;submit(<span class="stringliteral">&quot;process.image&quot;</span>, payload);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Wait for result</span></div>
+<div class="line"><span class="keyword">auto</span> output = result.get();</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md599"></a>
+Task Client</h2>
+<p><b>Task submission with various execution modes</b></p>
+<p>Features:</p><ul>
+<li><b>Immediate Execution</b>: Submit tasks for immediate processing</li>
+<li><b>Delayed Execution</b>: Schedule tasks for future execution</li>
+<li><b>Priority Support</b>: Submit with different priority levels</li>
+<li><b>Async Results</b>: Get async handles for result tracking</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> client = std::make_shared&lt;task_client&gt;(queue, backend);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Submit with priority</span></div>
+<div class="line"><span class="keyword">auto</span> result = client-&gt;submit_with_priority(task, task_priority::high);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Submit with delay</span></div>
+<div class="line"><span class="keyword">auto</span> delayed = client-&gt;submit_delayed(task, std::chrono::seconds(30));</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md600"></a>
+Worker Pool</h2>
+<p><b>Configurable worker threads with handler registration</b></p>
+<p>Features:</p><ul>
+<li><b>Thread Pool</b>: Configurable number of worker threads</li>
+<li><b>Handler Registration</b>: Register handlers by task name</li>
+<li><b>Load Balancing</b>: Automatic work distribution</li>
+<li><b>Graceful Shutdown</b>: Complete pending tasks before shutdown</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> pool = std::make_shared&lt;worker_pool&gt;(config);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Register handlers</span></div>
+<div class="line">pool-&gt;register_handler(<span class="stringliteral">&quot;email.send&quot;</span>, email_handler);</div>
+<div class="line">pool-&gt;register_handler(<span class="stringliteral">&quot;image.resize&quot;</span>, image_handler);</div>
+<div class="line"> </div>
+<div class="line">pool-&gt;start();</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md601"></a>
+Task Scheduler</h2>
+<p><b>Periodic and cron-based task scheduling</b></p>
+<p>Features:</p><ul>
+<li><b>Periodic Scheduling</b>: Execute tasks at fixed intervals</li>
+<li><b>Cron Expressions</b>: Standard 5-field cron expression support</li>
+<li><b>Schedule Management</b>: Enable/disable/remove schedules</li>
+<li><b>Execution Callbacks</b>: Hooks for execution events</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> scheduler = std::make_shared&lt;scheduler&gt;(client);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Periodic task (every 5 minutes)</span></div>
+<div class="line">scheduler-&gt;schedule_periodic(<span class="stringliteral">&quot;cleanup&quot;</span>, task, std::chrono::minutes(5));</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Cron task (daily at midnight)</span></div>
+<div class="line">scheduler-&gt;schedule_cron(<span class="stringliteral">&quot;daily_report&quot;</span>, task, <span class="stringliteral">&quot;0 0 * * *&quot;</span>);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md602"></a>
+Async Result</h2>
+<p><b>Async result tracking with progress support</b></p>
+<p>Features:</p><ul>
+<li><b>Status Tracking</b>: Check task status (pending, running, completed, failed)</li>
+<li><b>Progress Updates</b>: Real-time progress percentage</li>
+<li><b>Timeout Support</b>: Wait with configurable timeout</li>
+<li><b>Chaining</b>: Chain results for workflow orchestration</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> result = client-&gt;submit(task);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Check status</span></div>
+<div class="line"><span class="keywordflow">if</span> (result.is_pending()) {</div>
+<div class="line">    <span class="comment">// Still waiting</span></div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Wait with timeout</span></div>
+<div class="line"><span class="keyword">auto</span> output = result.wait_for(std::chrono::seconds(30));</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Get progress</span></div>
+<div class="line"><span class="keywordtype">double</span> progress = result.progress();</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md603"></a>
+Result Backend</h2>
+<p><b>Pluggable result storage</b></p>
+<p>Features:</p><ul>
+<li><b>Memory Backend</b>: In-memory storage for development/testing</li>
+<li><b>Interface</b>: Abstract interface for custom backends</li>
+<li><b>TTL Support</b>: Automatic result expiration</li>
+<li><b>Cleanup</b>: Periodic cleanup of expired results</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> backend = std::make_shared&lt;memory_result_backend&gt;();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Store result</span></div>
+<div class="line">backend-&gt;store(task_id, result);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Retrieve result</span></div>
+<div class="line"><span class="keyword">auto</span> stored = backend-&gt;get(task_id);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md604"></a>
+Task Monitor</h2>
+<p><b>Real-time task monitoring and statistics</b></p>
+<p>Features:</p><ul>
+<li><b>Queue Statistics</b>: Pending, running, completed counts</li>
+<li><b>Worker Statistics</b>: Active workers, utilization</li>
+<li><b>Performance Metrics</b>: Throughput, latency</li>
+<li><b>Event Callbacks</b>: Subscribe to task events</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> monitor = std::make_shared&lt;monitor&gt;(pool, backend);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Get statistics</span></div>
+<div class="line"><span class="keyword">auto</span> stats = monitor-&gt;get_statistics();</div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Pending: &quot;</span> &lt;&lt; stats.pending_count &lt;&lt; std::endl;</div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Running: &quot;</span> &lt;&lt; stats.running_count &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Subscribe to events</span></div>
+<div class="line">monitor-&gt;on_task_completed([](<span class="keyword">const</span> task&amp; t) {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Task &quot;</span> &lt;&lt; t.id() &lt;&lt; <span class="stringliteral">&quot; completed&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">});</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md605"></a>
+Chain and Chord Patterns</h2>
+<p><b>Workflow orchestration patterns</b></p>
+<p>Features:</p><ul>
+<li><b>Chain</b>: Sequential task execution</li>
+<li><b>Chord</b>: Parallel execution with final callback</li>
+<li><b>Error Handling</b>: Proper error propagation</li>
+<li><b>Result Aggregation</b>: Combine results from multiple tasks</li>
+</ul>
+<div class="fragment"><div class="line"><span class="comment">// Chain: task1 -&gt; task2 -&gt; task3</span></div>
+<div class="line"><span class="keyword">auto</span> chain_result = client-&gt;chain({task1, task2, task3});</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Chord: [task1, task2, task3] -&gt; callback</span></div>
+<div class="line"><span class="keyword">auto</span> chord_result = client-&gt;chord({task1, task2, task3}, callback_task);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md606"></a>
+Retry Mechanism</h2>
+<p><b>Automatic retry with exponential backoff</b></p>
+<p>Features:</p><ul>
+<li><b>Configurable Retries</b>: Set max retry count per task</li>
+<li><b>Exponential Backoff</b>: Increasing delays between retries</li>
+<li><b>Retry Callbacks</b>: Hook for retry events</li>
+<li><b>Final Failure</b>: Callback when all retries exhausted</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> task = task_builder()</div>
+<div class="line">    .name(<span class="stringliteral">&quot;send.email&quot;</span>)</div>
+<div class="line">    .max_retries(3)</div>
+<div class="line">    .retry_delay(std::chrono::seconds(5))</div>
+<div class="line">    .build();</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md607"></a>
+Task Timeout</h2>
+<p><b>Timeout handling for long-running tasks</b></p>
+<p>Features:</p><ul>
+<li><b>Per-Task Timeout</b>: Set timeout per task</li>
+<li><b>Cancellation</b>: Cancel timed-out tasks</li>
+<li><b>Timeout Callbacks</b>: Hook for timeout events</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> task = task_builder()</div>
+<div class="line">    .name(<span class="stringliteral">&quot;process.video&quot;</span>)</div>
+<div class="line">    .timeout(std::chrono::minutes(10))</div>
+<div class="line">    .build();</div>
+</div><!-- fragment --><hr  />
+<h1><a class="anchor" id="autotoc_md609"></a>
+C++20 Concepts</h1>
+<h2><a class="anchor" id="autotoc_md610"></a>
+Overview</h2>
+<p><b>Type-safe callback validation with C++20 Concepts</b></p>
+<p>The messaging system uses C++20 Concepts to provide compile-time type validation for callbacks and handlers. This results in clearer error messages and self-documenting interface requirements.</p>
+<h2><a class="anchor" id="autotoc_md611"></a>
+TaskHandlerCallable</h2>
+<p><b>Validates task handler signatures</b></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="line"><span class="keyword">concept </span>TaskHandlerCallable = std::invocable&lt;F, const task&amp;, task_context&amp;&gt; &amp;&amp;</div>
+<div class="line">    std::same_as&lt;std::invoke_result_t&lt;F, const task&amp;, task_context&amp;&gt;,</div>
+<div class="line">                 common::Result&lt;container_module::value_container&gt;&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Usage</span></div>
+<div class="line"><span class="keyword">template</span>&lt;TaskHandlerCallable Handler&gt;</div>
+<div class="line"><span class="keywordtype">void</span> register_handler(<span class="keyword">const</span> std::string&amp; name, Handler&amp;&amp; handler);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md612"></a>
+TaskHandlerLike</h2>
+<p><b>Validates task handler interface implementations</b></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">concept </span>TaskHandlerLike = <span class="keyword">requires</span>(T t, <span class="keyword">const</span> task&amp; tsk, task_context&amp; ctx) {</div>
+<div class="line">    { t.name() } -&gt; std::convertible_to&lt;std::string&gt;;</div>
+<div class="line">    { t.execute(tsk, ctx) } -&gt; std::same_as&lt;common::Result&lt;container_module::value_container&gt;&gt;;</div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md613"></a>
+ScheduleEventCallable</h2>
+<p><b>Validates scheduler event callbacks</b></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="line"><span class="keyword">concept </span>ScheduleEventCallable = std::invocable&lt;F, const schedule_entry&amp;&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Usage</span></div>
+<div class="line"><span class="keyword">template</span>&lt;ScheduleEventCallable Callback&gt;</div>
+<div class="line"><span class="keywordtype">void</span> on_task_executed(Callback&amp;&amp; callback);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md614"></a>
+MessageProcessorCallable</h2>
+<p><b>Validates message pipeline processors</b></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="line"><span class="keyword">concept </span>MessageProcessorCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
+<div class="line">    std::same_as&lt;std::invoke_result_t&lt;F, const message&amp;&gt;,</div>
+<div class="line">                 common::Result&lt;message&gt;&gt;;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md615"></a>
+MessageFilterCallable</h2>
+<p><b>Validates message filtering predicates</b></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="line"><span class="keyword">concept </span>MessageFilterCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
+<div class="line">    std::convertible_to&lt;std::invoke_result_t&lt;F, const message&amp;&gt;, <span class="keywordtype">bool</span>&gt;;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md616"></a>
+MessageTransformerCallable</h2>
+<p><b>Validates message transformers</b></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="line"><span class="keyword">concept </span>MessageTransformerCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
+<div class="line">    std::same_as&lt;std::invoke_result_t&lt;F, const message&amp;&gt;, message&gt;;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md617"></a>
+SubscriptionCallable</h2>
+<p><b>Validates topic subscription callbacks</b></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="line"><span class="keyword">concept </span>SubscriptionCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
+<div class="line">    std::same_as&lt;std::invoke_result_t&lt;F, const message&amp;&gt;,</div>
+<div class="line">                 common::VoidResult&gt;;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md618"></a>
+Benefits</h2>
+<ul>
+<li><b>Compile-time Validation</b>: Catch type mismatches at compile time</li>
+<li><b>Clear Error Messages</b>: Better diagnostics than SFINAE</li>
+<li><b>Self-documenting</b>: Interface requirements are explicit in code</li>
+<li><b>IDE Support</b>: Better autocomplete and type inference</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md620"></a>
+Backend Support</h1>
+<h2><a class="anchor" id="autotoc_md621"></a>
 Backend Interface</h2>
 <p><b>Pluggable execution backends</b></p>
 <p>Features:</p><ul>
@@ -228,7 +468,7 @@ Backend Interface</h2>
 <li><b>Monitoring Access</b>: Optional monitoring integration</li>
 <li><b>Lifecycle Management</b>: Initialize and shutdown</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md598"></a>
+<h2><a class="anchor" id="autotoc_md622"></a>
 Standalone Backend</h2>
 <p><b>Self-contained execution</b></p>
 <p>Features:</p><ul>
@@ -239,7 +479,7 @@ Standalone Backend</h2>
 </ul>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> backend = std::make_shared&lt;standalone_backend&gt;(num_threads);</div>
 <div class="line">backend-&gt;initialize();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md599"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md623"></a>
 Integration Backend</h2>
 <p><b>External thread pool integration</b></p>
 <p>Features:</p><ul>
@@ -253,7 +493,7 @@ Integration Backend</h2>
 <div class="line">    logger,</div>
 <div class="line">    monitoring</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md600"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md624"></a>
 Auto-Detection</h2>
 <p><b>Automatic backend selection</b></p>
 <p>Features:</p><ul>
@@ -262,9 +502,9 @@ Auto-Detection</h2>
 <li><b>Optimal Selection</b>: Choose best available backend</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md602"></a>
+<h1><a class="anchor" id="autotoc_md626"></a>
 Message Types</h1>
-<h2><a class="anchor" id="autotoc_md603"></a>
+<h2><a class="anchor" id="autotoc_md627"></a>
 Message Structure</h2>
 <p><b>Structured messages with rich metadata</b></p>
 <p>Fields:</p><ul>
@@ -281,7 +521,7 @@ Message Structure</h2>
 <li><b>Headers</b>: Additional key-value headers</li>
 <li><b>Payload</b>: Message payload (container_system)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md604"></a>
+<h2><a class="anchor" id="autotoc_md628"></a>
 Message Builder</h2>
 <p><b>Fluent API for message construction</b></p>
 <p>Features:</p><ul>
@@ -302,7 +542,7 @@ Message Builder</h2>
 <div class="line">    .header(<span class="stringliteral">&quot;version&quot;</span>, <span class="stringliteral">&quot;1.0&quot;</span>)</div>
 <div class="line">    .payload(payload)</div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md605"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md629"></a>
 Message Serialization</h2>
 <p><b>Container-based payload serialization</b></p>
 <p>Features:</p><ul>
@@ -313,9 +553,9 @@ Message Serialization</h2>
 <li><b>Zero-Copy</b>: Move semantics support</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md607"></a>
+<h1><a class="anchor" id="autotoc_md631"></a>
 Topic Routing</h1>
-<h2><a class="anchor" id="autotoc_md608"></a>
+<h2><a class="anchor" id="autotoc_md632"></a>
 Wildcard Patterns</h2>
 <p><b>Flexible topic matching</b></p>
 <p>Patterns:</p><ul>
@@ -324,7 +564,7 @@ Wildcard Patterns</h2>
 <li><b>Multi-level Wildcard</b> (<code>#</code>): <code>user.#</code> matches <code>user.created</code>, <code>user.profile.updated</code></li>
 <li><b>Combined</b>: <code>*.user.#</code> matches <code>app.user.profile.updated</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md609"></a>
+<h2><a class="anchor" id="autotoc_md633"></a>
 Subscription Management</h2>
 <p><b>Flexible subscription control</b></p>
 <p>Features:</p><ul>
@@ -340,9 +580,9 @@ Subscription Management</h2>
 <div class="line"><span class="comment">// Unsubscribe</span></div>
 <div class="line">bus-&gt;unsubscribe(sub_id.value());</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md611"></a>
+<h1><a class="anchor" id="autotoc_md635"></a>
 Message Queue</h1>
-<h2><a class="anchor" id="autotoc_md612"></a>
+<h2><a class="anchor" id="autotoc_md636"></a>
 Queue Types</h2>
 <p><b>Multiple queue implementations</b></p>
 <p>Types:</p><ul>
@@ -351,7 +591,7 @@ Queue Types</h2>
 <li><b>Dead Letter Queue</b>: Failed message handling</li>
 <li><b>Bounded Queue</b>: Capacity limits with backpressure</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md613"></a>
+<h2><a class="anchor" id="autotoc_md637"></a>
 Queue Configuration</h2>
 <p><b>Flexible queue settings</b></p>
 <p>Options:</p><ul>
@@ -367,9 +607,9 @@ Queue Configuration</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> queue = std::make_shared&lt;message_queue&gt;(config);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md615"></a>
+<h1><a class="anchor" id="autotoc_md639"></a>
 Dependency Injection</h1>
-<h2><a class="anchor" id="autotoc_md616"></a>
+<h2><a class="anchor" id="autotoc_md640"></a>
 DI Container</h2>
 <p><b>Lightweight dependency injection</b></p>
 <p>Features:</p><ul>
@@ -387,9 +627,9 @@ DI Container</h2>
 <div class="line"><span class="comment">// Resolve</span></div>
 <div class="line"><span class="keyword">auto</span> executor = container-&gt;resolve&lt;IExecutor&gt;();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md618"></a>
+<h1><a class="anchor" id="autotoc_md642"></a>
 Error Handling</h1>
-<h2><a class="anchor" id="autotoc_md619"></a>
+<h2><a class="anchor" id="autotoc_md643"></a>
 Error Codes</h2>
 <p><b>Centralized error code system (-700 to -799)</b></p>
 <p>Categories:</p><ul>
@@ -399,7 +639,7 @@ Error Codes</h2>
 <li><b>Subscription Errors</b> (-760 to -779): Subscription failed, not found, duplicate, unsubscribe failed</li>
 <li><b>Publishing Errors</b> (-780 to -799): Publication failed, no route found, message rejected, broker unavailable</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md620"></a>
+<h2><a class="anchor" id="autotoc_md644"></a>
 Result&lt;T&gt; Pattern</h2>
 <p><b>Type-safe error handling</b></p>
 <p>Features:</p><ul>
@@ -416,9 +656,9 @@ Result&lt;T&gt; Pattern</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> sub_id = result.value();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md622"></a>
+<h1><a class="anchor" id="autotoc_md646"></a>
 Integration</h1>
-<h2><a class="anchor" id="autotoc_md623"></a>
+<h2><a class="anchor" id="autotoc_md647"></a>
 Thread System Integration</h2>
 <p><b>High-performance thread pool integration</b></p>
 <p>Features:</p><ul>
@@ -427,7 +667,7 @@ Thread System Integration</h2>
 <li><b>Work Stealing</b>: Efficient load balancing</li>
 <li><b>Hazard Pointers</b>: Safe memory reclamation</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md624"></a>
+<h2><a class="anchor" id="autotoc_md648"></a>
 Logger System Integration</h2>
 <p><b>Structured async logging</b></p>
 <p>Features:</p><ul>
@@ -436,7 +676,7 @@ Logger System Integration</h2>
 <li><b>Multiple Sinks</b>: File, console, network</li>
 <li><b>Log Levels</b>: Configurable log levels</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md625"></a>
+<h2><a class="anchor" id="autotoc_md649"></a>
 Monitoring System Integration</h2>
 <p><b>Real-time metrics and telemetry</b></p>
 <p>Features:</p><ul>
@@ -445,7 +685,7 @@ Monitoring System Integration</h2>
 <li><b>Gauges</b>: Queue sizes</li>
 <li><b>Prometheus Export</b>: Metrics export</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md626"></a>
+<h2><a class="anchor" id="autotoc_md650"></a>
 Container System Integration</h2>
 <p><b>Type-safe message payloads</b></p>
 <p>Features:</p><ul>
@@ -455,9 +695,9 @@ Container System Integration</h2>
 <li><b>Thread Safety</b>: Safe concurrent access</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md628"></a>
+<h1><a class="anchor" id="autotoc_md652"></a>
 Production Features</h1>
-<h2><a class="anchor" id="autotoc_md629"></a>
+<h2><a class="anchor" id="autotoc_md653"></a>
 Reliability</h2>
 <p><b>Enterprise-grade reliability features</b></p>
 <p>Features:</p><ul>
@@ -467,7 +707,7 @@ Reliability</h2>
 <li><b>Circuit Breakers</b>: Prevent cascade failures</li>
 <li><b>Health Checks</b>: Monitor system health</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md630"></a>
+<h2><a class="anchor" id="autotoc_md654"></a>
 Observability</h2>
 <p><b>Production observability</b></p>
 <p>Features:</p><ul>
@@ -476,7 +716,7 @@ Observability</h2>
 <li><b>Queue Metrics</b>: Size, drops, overflows</li>
 <li><b>Subscriber Metrics</b>: Active subscribers, callback latency</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md631"></a>
+<h2><a class="anchor" id="autotoc_md655"></a>
 Testing Support</h2>
 <p><b>Comprehensive testing utilities</b></p>
 <p>Features:</p><ul>
@@ -486,61 +726,86 @@ Testing Support</h2>
 <li><b>Integration Tests</b>: End-to-end test scenarios</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md633"></a>
+<h1><a class="anchor" id="autotoc_md657"></a>
 Feature Matrix</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Feature   </th><th class="markdownTableHeadNone">Core   </th><th class="markdownTableHeadNone">Patterns   </th><th class="markdownTableHeadNone">Backend   </th><th class="markdownTableHeadNone">Status    </th></tr>
+<th class="markdownTableHeadNone">Feature   </th><th class="markdownTableHeadNone">Core   </th><th class="markdownTableHeadNone">Patterns   </th><th class="markdownTableHeadNone">Task   </th><th class="markdownTableHeadNone">Backend   </th><th class="markdownTableHeadNone">Status    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Message Bus</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Message Bus</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Topic Router</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Topic Router</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Message Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Message Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Pub/Sub</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Pub/Sub</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Request/Reply</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Request/Reply</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Event Streaming</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Event Streaming</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Message Pipeline</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Message Pipeline</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Standalone Backend</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Task System (Facade)</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Integration Backend</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Task Queue</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Auto-detection</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Worker Pool</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>DI Container</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Task Scheduler</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Error Codes</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Async Result</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Result&lt;T&gt;</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Result Backend</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Serialization</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Task Monitor</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Wildcards</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Cron Parser</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Priority Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Chain/Chord</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Dead Letter Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Retry Mechanism</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Tracing</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Task Timeout</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Metrics</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete   </td></tr>
+<td class="markdownTableBodyNone"><b>C++20 Concepts</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Standalone Backend</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Integration Backend</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Auto-detection</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>DI Container</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Error Codes</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Result&lt;T&gt;</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Serialization</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Wildcards</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Priority Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Dead Letter Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Tracing</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Metrics</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md635"></a>
+<h1><a class="anchor" id="autotoc_md659"></a>
 Getting Started</h1>
 <p>For usage examples and getting started guides, see:</p><ul>
 <li><a class="el" href="../../d6/d63/md_docs_2guides_2QUICK__START.html">Quick Start Guide</a></li>
 <li><a class="el" href="../../d1/dff/PATTERNS__API_8md.html">Pattern Examples</a></li>
 <li><a class="el" href="../../db/d91/md_docs_2API__REFERENCE.html">API Reference</a></li>
 <li>Integration Guide</li>
+<li><a class="el" href="../../d1/d5e/md_docs_2task_2ARCHITECTURE.html">Task System Architecture</a></li>
 </ul>
 <hr  />
-<p><b>Last Updated</b>: 2025-11-18 <b>Version</b>: 1.0 </p>
+<p><b>Last Updated</b>: 2025-12-10 <b>Version</b>: 1.1 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

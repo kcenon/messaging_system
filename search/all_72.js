@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['열거형_0',['열거형',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1390',1,'']]]
+  ['애플리케이션_20코드_0',['애플리케이션 코드',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1290',1,'']]]
 ];

@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['프로덕션_20기능_0',['프로덕션 기능',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md661',1,'']]],
-  ['프로덕션_20품질_1',['Messaging System 프로덕션 품질',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html',1,'']]],
-  ['프로덕션_20환경_2',['프로덕션 환경',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1641',1,'']]],
-  ['프로젝트_20구조_3',['Messaging System 프로젝트 구조',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html',1,'']]],
-  ['프리페치_20설정_4',['프리페치 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1630',1,'']]]
+  ['편의_20메서드_0',['편의 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1576',1,'스케줄링 (편의 메서드)'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1575',1,'작업 제출 (편의 메서드)'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1574',1,'핸들러 등록 (편의 메서드)']]],
+  ['편의_20함수_20tt_20common_5fsystem_20tt_1',['3. 편의 함수 (&lt;tt&gt;common_system&lt;/tt&gt;)',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md36',1,'']]]
 ];

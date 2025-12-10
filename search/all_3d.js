@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['등록_0',['등록',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1472',1,'스케줄 등록'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1439',1,'핸들러 등록'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1859',1,'3. Task 핸들러 등록']]],
-  ['등록_20방식_1',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1988',1,'']]],
-  ['등록_20편의_20메서드_2',['핸들러 등록 (편의 메서드)',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1499',1,'']]]
+  ['독립_20실행_0',['독립 실행',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md704',1,'']]],
+  ['독약_20메시지_20항상_20실패하는_20작업_20를_20어떻게_20처리하나요_1',['Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2010',1,'']]]
 ];

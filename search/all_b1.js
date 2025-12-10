@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['품질_0',['Messaging System 프로덕션 품질',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html',1,'']]],
-  ['품질_20및_20운영_1',['품질 및 운영',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1258',1,'']]]
+  ['패턴별_20성능_0',['패턴별 성능',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md521',1,'']]],
+  ['패턴_1',['패턴',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md673',1,'고급 패턴'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md364',1,'메시징 패턴'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md428',1,'메시징 패턴'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md362',1,'와일드카드 패턴'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1524',1,'워크플로우 패턴'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1635',1,'2. Result 타입 패턴'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1636',1,'3. 빌더 패턴'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1637',1,'4. 파사드 패턴'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1638',1,'5. 전략 패턴'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md688',1,'Chain 및 Chord 패턴'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1856',1,'Chain 패턴'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1863',1,'Chord 패턴'],['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1289',1,'Include 패턴'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html',1,'Task 모듈 워크플로우 패턴']]],
+  ['패턴_20조합_2',['패턴 조합',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1905',1,'']]],
+  ['패턴_20tt_20include_20kcenon_20messaging_20patterns_20tt_3',['패턴 (&lt;tt&gt;include/kcenon/messaging/patterns/&lt;/tt&gt;)',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1278',1,'']]]
 ];

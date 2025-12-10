@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['함수_0',['헬퍼 함수',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1415',1,'']]],
-  ['함수_20tt_20common_5fsystem_20tt_1',['3. 편의 함수 (&lt;tt&gt;common_system&lt;/tt&gt;)',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md36',1,'']]]
+  ['품질_0',['Messaging System 프로덕션 품질',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html',1,'']]],
+  ['품질_20및_20운영_1',['품질 및 운영',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1333',1,'']]]
 ];

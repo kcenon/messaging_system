@@ -1,6 +1,12 @@
 var searchData=
 [
-  ['선택적_0',['4.3 Redis Result Backend (선택적)',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1956',1,'']]],
-  ['선택적_20가상_20메서드_1',['선택적 가상 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1463',1,'']]],
-  ['선택_2',['선택',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md44',1,'대안 B: 템플릿을 통한 컴파일 타임 로거 선택'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md659',1,'런타임 백엔드 선택']]]
+  ['상속_0',['1. Task는 Message를 상속',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2061',1,'']]],
+  ['상태_1',['상태',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md27',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1526',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1516',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1564',1,'워커 상태'],['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md47',1,'현재 구현 상태']]],
+  ['상태_20메서드_2',['상태 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1529',1,'상태 메서드'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1469',1,'상태 메서드']]],
+  ['상태_20확인_3',['상태 확인',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1994',1,'워커 상태 확인'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1993',1,'큐 상태 확인']]],
+  ['상황을_20어떻게_20얻나요_4',['Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2005',1,'']]],
+  ['상황_20메서드_5',['진행 상황 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1530',1,'']]],
+  ['상황_20모니터링_6',['상황 모니터링',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1893',1,'진행 상황 모니터링'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1943',1,'진행 상황 모니터링']]],
+  ['상황_20보고_7',['진행 상황 보고',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1892',1,'']]],
+  ['상황_20추적_8',['상황 추적',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1496',1,'진행 상황 추적'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1472',1,'진행 상황 추적'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1891',1,'진행 상황 추적']]]
 ];

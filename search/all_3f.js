@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['라우터_0',['라우터',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md361',1,'토픽 라우터'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md645',1,'토픽 라우터']]],
-  ['라우팅_20성능_1',['토픽 라우팅 성능',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md519',1,'']]],
-  ['라이프사이클_2',['라이프사이클',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1430',1,'라이프사이클'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1440',1,'라이프사이클'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1474',1,'라이프사이클'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1497',1,'라이프사이클']]],
-  ['라이프사이클_20훅_3',['가상 라이프사이클 훅',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1413',1,'']]]
+  ['등록_0',['등록',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1547',1,'스케줄 등록'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1514',1,'핸들러 등록'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1934',1,'3. Task 핸들러 등록']]],
+  ['등록_20방식_1',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2063',1,'']]],
+  ['등록_20편의_20메서드_2',['핸들러 등록 (편의 메서드)',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1574',1,'']]]
 ];

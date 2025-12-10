@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['💬_20feedback_0',['💬 Feedback',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1248',1,'']]]
+  ['훅_0',['가상 라이프사이클 훅',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1488',1,'']]]
 ];

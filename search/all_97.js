@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['처리되지_20않음_0',['작업이 처리되지 않음',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1909',1,'']]],
-  ['처리량_1',['처리량',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1925',1,'낮은 처리량'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md518',1,'처리량']]],
-  ['처리하나요_2',['처리하나요',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1935',1,'Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1931',1,'Q: 작업 종속성을 어떻게 처리하나요?']]],
-  ['처리하려면_20어떻게_20하나요_3',['Q: 작업을 순서대로 처리하려면 어떻게 하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1932',1,'']]],
-  ['처리_4',['처리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1398',1,'결과/에러 처리'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1785',1,'에러 처리'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1792',1,'에러 처리'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1869',1,'에러 처리']]]
+  ['직렬화_0',['직렬화',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md671',1,'메시지 직렬화'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md368',1,'직렬화'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1475',1,'직렬화']]],
+  ['직접_20의존성_1',['대안 A: logger_system 직접 의존성',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md43',1,'']]]
 ];

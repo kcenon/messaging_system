@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d2/d8d/md_docs_2task_2MIGRATION.html',
   <div class="headertitle"><div class="title">Task Module Migration Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1655"></a> This guide helps you migrate from previous versions of the Task module or from other task queue systems.</p>
-<h1><a class="anchor" id="autotoc_md1656"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1730"></a> This guide helps you migrate from previous versions of the Task module or from other task queue systems.</p>
+<h1><a class="anchor" id="autotoc_md1731"></a>
 Table of Contents</h1>
 <ul>
 <li>Version Migration</li>
@@ -102,12 +102,12 @@ Table of Contents</h1>
 <li>Migration Checklist</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1658"></a>
+<h1><a class="anchor" id="autotoc_md1733"></a>
 Version Migration</h1>
-<h2><a class="anchor" id="autotoc_md1659"></a>
+<h2><a class="anchor" id="autotoc_md1734"></a>
 Migrating to 1.0</h2>
 <p>If you are upgrading from an earlier development version, follow these steps:</p>
-<h3><a class="anchor" id="autotoc_md1660"></a>
+<h3><a class="anchor" id="autotoc_md1735"></a>
 API Changes</h3>
 <ol type="1">
 <li><p class="startli"><b>Result Type Pattern</b></p>
@@ -157,7 +157,7 @@ API Changes</h3>
 <div class="line">});</div>
 </div><!-- fragment --></li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1661"></a>
+<h3><a class="anchor" id="autotoc_md1736"></a>
 Configuration Migration</h3>
 <p>Map your old configuration to the new structure:</p>
 <table class="markdownTable">
@@ -173,12 +173,12 @@ Configuration Migration</h3>
 <td class="markdownTableBodyNone"><code>timeout_ms</code>   </td><td class="markdownTableBodyNone"><code>task_config.timeout</code>   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1663"></a>
+<h1><a class="anchor" id="autotoc_md1738"></a>
 Migration from Custom Solutions</h1>
-<h2><a class="anchor" id="autotoc_md1664"></a>
+<h2><a class="anchor" id="autotoc_md1739"></a>
 From Thread Pool Implementation</h2>
 <p>If you have a custom thread pool, migrate to the Task module:</p>
-<h3><a class="anchor" id="autotoc_md1665"></a>
+<h3><a class="anchor" id="autotoc_md1740"></a>
 Before (Custom Thread Pool)</h3>
 <div class="fragment"><div class="line"><span class="keyword">class </span>ThreadPool {</div>
 <div class="line">    std::vector&lt;std::thread&gt; workers;</div>
@@ -196,7 +196,7 @@ Before (Custom Thread Pool)</h3>
 <div class="line">pool.enqueue([data]() {</div>
 <div class="line">    process_data(data);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1666"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1741"></a>
 After (Task Module)</h3>
 <div class="fragment"><div class="line">task_system_config config;</div>
 <div class="line">config.worker.concurrency = 4;</div>
@@ -216,7 +216,7 @@ After (Task Module)</h3>
 <div class="line">container_module::value_container payload;</div>
 <div class="line">payload.add(<span class="stringliteral">&quot;data&quot;</span>, data);</div>
 <div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;process.data&quot;</span>, payload);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1667"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1742"></a>
 Benefits of Migration</h3>
 <ul>
 <li>Automatic retry with exponential backoff</li>
@@ -226,9 +226,9 @@ Benefits of Migration</h3>
 <li>Scheduled execution</li>
 <li>Chain and chord patterns</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1668"></a>
+<h2><a class="anchor" id="autotoc_md1743"></a>
 From Message Queue Systems</h2>
-<h3><a class="anchor" id="autotoc_md1669"></a>
+<h3><a class="anchor" id="autotoc_md1744"></a>
 Mapping Concepts</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -246,7 +246,7 @@ Mapping Concepts</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Dead Letter Queue   </td><td class="markdownTableBodyNone">Failed tasks in result backend   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md1670"></a>
+<h3><a class="anchor" id="autotoc_md1745"></a>
 Migration Example</h3>
 <div class="fragment"><div class="line"><span class="comment">// Before (pseudo-code for message queue)</span></div>
 <div class="line">producer.send(<span class="stringliteral">&quot;queue-name&quot;</span>, message);</div>
@@ -267,14 +267,14 @@ Migration Example</h3>
 <div class="line">    .build().value();</div>
 <div class="line"> </div>
 <div class="line">system.submit(task);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1671"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1746"></a>
 From Cron Jobs</h2>
-<h3><a class="anchor" id="autotoc_md1672"></a>
+<h3><a class="anchor" id="autotoc_md1747"></a>
 Before (System Cron)</h3>
 <div class="fragment"><div class="line"># /etc/crontab</div>
 <div class="line">0 3 * * * /usr/bin/my-daily-job</div>
 <div class="line">*/15 * * * * /usr/bin/my-sync-job</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1673"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1748"></a>
 After (Task Scheduler)</h3>
 <div class="fragment"><div class="line"><span class="comment">// Daily at 3 AM</span></div>
 <div class="line">system.schedule_cron(</div>
@@ -289,7 +289,7 @@ After (Task Scheduler)</h3>
 <div class="line">    task_builder(<span class="stringliteral">&quot;sync.task&quot;</span>).build().value(),</div>
 <div class="line">    <span class="stringliteral">&quot;*/15 * * * *&quot;</span></div>
 <div class="line">);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1674"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1749"></a>
 Benefits</h3>
 <ul>
 <li>Centralized scheduling</li>
@@ -299,9 +299,9 @@ Benefits</h3>
 <li>Programmatic schedule management</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1676"></a>
+<h1><a class="anchor" id="autotoc_md1751"></a>
 Migration Checklist</h1>
-<h2><a class="anchor" id="autotoc_md1677"></a>
+<h2><a class="anchor" id="autotoc_md1752"></a>
 Pre-Migration</h2>
 <ul>
 <li>[ ] Inventory all existing tasks/jobs</li>
@@ -310,7 +310,7 @@ Pre-Migration</h2>
 <li>[ ] Record current scheduling patterns</li>
 <li>[ ] Backup existing data and configurations</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1678"></a>
+<h2><a class="anchor" id="autotoc_md1753"></a>
 During Migration</h2>
 <ul>
 <li>[ ] Create equivalent handlers for all tasks</li>
@@ -320,7 +320,7 @@ During Migration</h2>
 <li>[ ] Implement progress tracking where needed</li>
 <li>[ ] Set up monitoring and logging</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1679"></a>
+<h2><a class="anchor" id="autotoc_md1754"></a>
 Post-Migration</h2>
 <ul>
 <li>[ ] Verify all tasks execute correctly</li>
@@ -330,7 +330,7 @@ Post-Migration</h2>
 <li>[ ] Remove old task infrastructure</li>
 <li>[ ] Update documentation</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1680"></a>
+<h2><a class="anchor" id="autotoc_md1755"></a>
 Testing Checklist</h2>
 <ul>
 <li>[ ] Unit tests for all handlers</li>
@@ -342,9 +342,9 @@ Testing Checklist</h2>
 <li>[ ] Performance/load testing</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1682"></a>
+<h1><a class="anchor" id="autotoc_md1757"></a>
 Common Migration Issues</h1>
-<h2><a class="anchor" id="autotoc_md1683"></a>
+<h2><a class="anchor" id="autotoc_md1758"></a>
 Handler Throws Instead of Returning Error</h2>
 <div class="fragment"><div class="line"><span class="comment">// Wrong - will cause unexpected behavior</span></div>
 <div class="line">system.register_handler(<span class="stringliteral">&quot;bad&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -361,7 +361,7 @@ Handler Throws Instead of Returning Error</h2>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1684"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1759"></a>
 Missing Queue Configuration</h2>
 <div class="fragment"><div class="line"><span class="comment">// Task goes to &quot;special-queue&quot;</span></div>
 <div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;task&quot;</span>)</div>
@@ -374,7 +374,7 @@ Missing Queue Configuration</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Fix: Add all necessary queues</span></div>
 <div class="line">config.queues = {<span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;special-queue&quot;</span>};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1685"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1760"></a>
 Timeout Too Short</h2>
 <div class="fragment"><div class="line"><span class="comment">// Old system had no timeout, tasks ran forever</span></div>
 <div class="line"><span class="comment">// New system defaults to 5 minutes</span></div>
@@ -384,7 +384,7 @@ Timeout Too Short</h2>
 <div class="line">    .timeout(std::chrono::hours(2))</div>
 <div class="line">    .build().value();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1687"></a>
+<h1><a class="anchor" id="autotoc_md1762"></a>
 Related Documentation</h1>
 <ul>
 <li><a class="el" href="../../d9/dff/md_docs_2task_2QUICK__START.html">Quick Start Guide</a></li>

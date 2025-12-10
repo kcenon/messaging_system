@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['블로킹_20결과_20조회_0',['블로킹 결과 조회',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1456',1,'']]]
+  ['복구_0',['체크포인트와 복구',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1896',1,'']]]
 ];

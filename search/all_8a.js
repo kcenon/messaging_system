@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['제어_0',['작업 제어',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1458',1,'']]],
-  ['제출_1',['제출',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1806',1,'우선순위 큐에 제출'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1861',1,'5. Task 제출']]],
-  ['제출_20편의_20메서드_2',['작업 제출 (편의 메서드)',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1500',1,'']]],
-  ['제출_20흐름_3',['작업 제출 흐름',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1551',1,'']]],
-  ['제한하나요_4',['Q: 재시도 횟수를 어떻게 제한하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1934',1,'']]],
-  ['제한_20설정_5',['리소스 제한 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1646',1,'']]]
+  ['저장_0',['체크포인트 저장',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1897',1,'']]],
+  ['저지연_20설정_1',['저지연 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1720',1,'']]]
 ];

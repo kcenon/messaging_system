@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['버스_0',['버스',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md358',1,'메시지 버스'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md644',1,'메시지 버스']]],
-  ['버스_20벤치마크_1',['메시지 버스 벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md517',1,'']]],
-  ['버전_20마이그레이션_2',['버전 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1691',1,'']]],
-  ['버전_20매트릭스_3',['버전 매트릭스',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md431',1,'']]]
+  ['방법론_0',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md528',1,'']]],
+  ['방법_1',['디버깅 방법',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1990',1,'']]],
+  ['방식_2',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2063',1,'']]]
 ];

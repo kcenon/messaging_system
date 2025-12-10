@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['방법론_0',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md528',1,'']]],
-  ['방법_1',['디버깅 방법',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1915',1,'']]],
-  ['방식_2',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md1988',1,'']]]
+  ['및_20설정_0',['2. Task 시스템 생성 및 설정',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1933',1,'']]],
+  ['및_20운영_1',['품질 및 운영',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1333',1,'']]],
+  ['및_20chord_20패턴_2',['Chain 및 Chord 패턴',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md688',1,'']]]
 ];

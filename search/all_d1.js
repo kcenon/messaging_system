@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🔄_20documentation_20updates_0',['🔄 Documentation Updates',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1247',1,'']]]
+  ['📄_20license_0',['📄 License',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2123',1,'']]]
 ];

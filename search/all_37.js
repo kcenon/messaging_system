@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['단계_0',['다음 단계',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1870',1,'']]]
+  ['느슨한_20결합_0',['1. 느슨한 결합',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md438',1,'']]]
 ];

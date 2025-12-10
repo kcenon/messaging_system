@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['현재_20구현_20상태_0',['현재 구현 상태',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md47',1,'']]]
+  ['해결_20가이드_0',['Task 모듈 문제 해결 가이드',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html',1,'']]]
 ];

@@ -93,82 +93,486 @@ $(document).ready(function(){initNavTree('d5/d19/md_docs_2PROJECT__STRUCTURE__KO
   <div class="headertitle"><div class="title">Messaging System 프로젝트 구조</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1217"></a> <b>버전</b>: 1.0 <b>최종 수정일</b>: 2025-11-30 <b>언어</b>: <a class="el" href="../../d4/d22/md_docs_2PROJECT__STRUCTURE.html">English</a> | [한국어]</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1268"></a> <b>버전</b>: 1.1 <b>최종 수정일</b>: 2025-12-10 <b>언어</b>: <a class="el" href="../../d4/d22/md_docs_2PROJECT__STRUCTURE.html">English</a> | [한국어]</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1219"></a>
+<h1><a class="anchor" id="autotoc_md1270"></a>
 개요</h1>
-<p>이 문서는 messaging_system 저장소의 디렉토리 구조와 파일 구성에 대해 설명합니다.</p>
+<p>이 문서는 messaging_system 프로젝트의 전체 디렉토리 구조와 구성에 대해 설명합니다.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1221"></a>
+<h1><a class="anchor" id="autotoc_md1272"></a>
 디렉토리 구조</h1>
 <div class="fragment"><div class="line">messaging_system/</div>
-<div class="line">├── .github/                    # GitHub 설정</div>
-<div class="line">│   └── workflows/              # CI/CD 워크플로우</div>
+<div class="line">├── include/kcenon/messaging/          # 공개 API 헤더</div>
+<div class="line">│   ├── core/                          # 핵심 메시징 컴포넌트</div>
+<div class="line">│   │   ├── message.h                  # 메시지 구조 및 빌더</div>
+<div class="line">│   │   ├── message_bus.h              # 중앙 메시지 허브</div>
+<div class="line">│   │   ├── message_broker.h           # 메시지 브로커 로직</div>
+<div class="line">│   │   ├── message_queue.h            # 스레드 안전 큐</div>
+<div class="line">│   │   └── topic_router.h             # 토픽 기반 라우팅</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── interfaces/                    # 추상 인터페이스</div>
+<div class="line">│   │   ├── message_handler_interface.h</div>
+<div class="line">│   │   ├── message_router_interface.h</div>
+<div class="line">│   │   ├── publisher_interface.h</div>
+<div class="line">│   │   ├── subscriber_interface.h</div>
+<div class="line">│   │   └── queue_interface.h</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── backends/                      # 실행 백엔드</div>
+<div class="line">│   │   ├── backend_interface.h</div>
+<div class="line">│   │   ├── standalone_backend.h       # 독립 실행</div>
+<div class="line">│   │   └── integration_backend.h      # 외부 통합</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── patterns/                      # 메시징 패턴</div>
+<div class="line">│   │   ├── pub_sub.h                  # Pub/Sub 패턴</div>
+<div class="line">│   │   ├── request_reply.h            # Request/Reply 패턴</div>
+<div class="line">│   │   ├── event_streaming.h          # 이벤트 소싱</div>
+<div class="line">│   │   └── message_pipeline.h         # 메시지 파이프라인</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── task/                          # 분산 태스크 큐 시스템</div>
+<div class="line">│   │   ├── task.h                     # 태스크 정의 및 빌더</div>
+<div class="line">│   │   ├── task_handler.h             # C++20 Concepts 핸들러 인터페이스</div>
+<div class="line">│   │   ├── task_context.h             # 실행 컨텍스트</div>
+<div class="line">│   │   ├── task_queue.h               # 우선순위 태스크 큐</div>
+<div class="line">│   │   ├── worker_pool.h              # 워커 스레드 풀</div>
+<div class="line">│   │   ├── result_backend.h           # 결과 저장소 인터페이스</div>
+<div class="line">│   │   ├── memory_result_backend.h    # 인메모리 결과 백엔드</div>
+<div class="line">│   │   ├── async_result.h             # 비동기 결과 핸들</div>
+<div class="line">│   │   ├── task_client.h              # 태스크 제출 클라이언트</div>
+<div class="line">│   │   ├── scheduler.h                # 주기적/크론 스케줄러</div>
+<div class="line">│   │   ├── cron_parser.h              # 크론 표현식 파서</div>
+<div class="line">│   │   ├── monitor.h                  # 태스크 모니터링</div>
+<div class="line">│   │   └── task_system.h              # 통합 파사드</div>
+<div class="line">│   │</div>
+<div class="line">│   └── utils/                         # 유틸리티</div>
+<div class="line">│       └── integration_detector.h     # 시스템 통합 감지</div>
 <div class="line">│</div>
-<div class="line">├── cmake/                      # CMake 모듈</div>
+<div class="line">├── src/impl/                          # 구현 파일</div>
+<div class="line">│   ├── core/                          # 핵심 구현</div>
+<div class="line">│   │   ├── message_impl.cpp</div>
+<div class="line">│   │   ├── message_bus_impl.cpp</div>
+<div class="line">│   │   ├── message_broker_impl.cpp</div>
+<div class="line">│   │   ├── message_queue_impl.cpp</div>
+<div class="line">│   │   └── topic_router_impl.cpp</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── backends/                      # 백엔드 구현</div>
+<div class="line">│   │   ├── standalone_backend_impl.cpp</div>
+<div class="line">│   │   └── integration_backend_impl.cpp</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── patterns/                      # 패턴 구현</div>
+<div class="line">│   │   ├── pub_sub_impl.cpp</div>
+<div class="line">│   │   ├── request_reply_impl.cpp</div>
+<div class="line">│   │   ├── event_streaming_impl.cpp</div>
+<div class="line">│   │   └── message_pipeline_impl.cpp</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── task/                          # 태스크 큐 구현</div>
+<div class="line">│   │   ├── task.cpp</div>
+<div class="line">│   │   ├── task_context.cpp</div>
+<div class="line">│   │   ├── task_queue.cpp</div>
+<div class="line">│   │   ├── worker_pool.cpp</div>
+<div class="line">│   │   ├── memory_result_backend.cpp</div>
+<div class="line">│   │   ├── async_result.cpp</div>
+<div class="line">│   │   ├── task_client.cpp</div>
+<div class="line">│   │   ├── scheduler.cpp</div>
+<div class="line">│   │   ├── cron_parser.cpp</div>
+<div class="line">│   │   ├── monitor.cpp</div>
+<div class="line">│   │   └── task_system.cpp</div>
+<div class="line">│   │</div>
+<div class="line">│   └── di/                            # 의존성 주입</div>
+<div class="line">│       └── messaging_di_container.cpp</div>
 <div class="line">│</div>
-<div class="line">├── docs/                       # 문서</div>
-<div class="line">│   ├── README.md               # 문서 인덱스</div>
-<div class="line">│   ├── API_REFERENCE.md        # API 레퍼런스</div>
-<div class="line">│   ├── ARCHITECTURE.md         # 아키텍처 설계</div>
-<div class="line">│   ├── BENCHMARKS.md           # 성능 벤치마크</div>
-<div class="line">│   ├── CHANGELOG.md            # 변경 이력</div>
-<div class="line">│   ├── FEATURES.md             # 기능 설명</div>
-<div class="line">│   ├── PRODUCTION_QUALITY.md   # 품질 문서</div>
-<div class="line">│   ├── PROJECT_STRUCTURE.md    # 프로젝트 구조</div>
-<div class="line">│   ├── advanced/               # 고급 주제</div>
-<div class="line">│   ├── contributing/           # 기여 가이드</div>
-<div class="line">│   ├── guides/                 # 사용자 가이드</div>
-<div class="line">│   ├── integration/            # 통합 가이드</div>
-<div class="line">│   └── performance/            # 성능 문서</div>
+<div class="line">├── test/                              # 테스트 스위트</div>
+<div class="line">│   ├── unit/                          # 유닛 테스트</div>
+<div class="line">│   │   ├── core/                      # 핵심 컴포넌트 테스트</div>
+<div class="line">│   │   │   ├── test_message.cpp</div>
+<div class="line">│   │   │   ├── test_message_bus.cpp</div>
+<div class="line">│   │   │   ├── test_message_queue.cpp</div>
+<div class="line">│   │   │   └── test_topic_router.cpp</div>
+<div class="line">│   │   │</div>
+<div class="line">│   │   ├── backends/                  # 백엔드 테스트</div>
+<div class="line">│   │   │   ├── test_standalone_backend.cpp</div>
+<div class="line">│   │   │   └── test_integration_backend.cpp</div>
+<div class="line">│   │   │</div>
+<div class="line">│   │   ├── patterns/                  # 패턴 테스트</div>
+<div class="line">│   │   │   ├── test_pub_sub.cpp</div>
+<div class="line">│   │   │   ├── test_request_reply.cpp</div>
+<div class="line">│   │   │   ├── test_event_streaming.cpp</div>
+<div class="line">│   │   │   └── test_message_pipeline.cpp</div>
+<div class="line">│   │   │</div>
+<div class="line">│   │   ├── task/                      # 태스크 모듈 테스트</div>
+<div class="line">│   │   │   ├── test_task.cpp</div>
+<div class="line">│   │   │   ├── test_task_context.cpp</div>
+<div class="line">│   │   │   ├── test_task_handler.cpp</div>
+<div class="line">│   │   │   ├── test_task_queue.cpp</div>
+<div class="line">│   │   │   ├── test_worker_pool.cpp</div>
+<div class="line">│   │   │   ├── test_result_backend.cpp</div>
+<div class="line">│   │   │   ├── test_async_result.cpp</div>
+<div class="line">│   │   │   ├── test_task_client.cpp</div>
+<div class="line">│   │   │   ├── test_scheduler.cpp</div>
+<div class="line">│   │   │   ├── test_cron_parser.cpp</div>
+<div class="line">│   │   │   ├── test_monitor.cpp</div>
+<div class="line">│   │   │   ├── test_task_system.cpp</div>
+<div class="line">│   │   │   └── test_task_event_bridge.cpp</div>
+<div class="line">│   │   │</div>
+<div class="line">│   │   └── di/                        # DI 컨테이너 테스트</div>
+<div class="line">│   │       └── test_di_container.cpp</div>
+<div class="line">│   │</div>
+<div class="line">│   └── benchmarks/                    # 성능 벤치마크</div>
+<div class="line">│       ├── bench_message_creation.cpp</div>
+<div class="line">│       ├── bench_message_queue.cpp</div>
+<div class="line">│       ├── bench_topic_router.cpp</div>
+<div class="line">│       ├── bench_pub_sub_throughput.cpp</div>
+<div class="line">│       ├── bench_request_reply_latency.cpp</div>
+<div class="line">│       └── task/                      # 태스크 모듈 벤치마크</div>
+<div class="line">│           ├── bench_task_queue.cpp</div>
+<div class="line">│           ├── bench_worker_throughput.cpp</div>
+<div class="line">│           ├── bench_result_backend.cpp</div>
+<div class="line">│           └── bench_scheduler.cpp</div>
 <div class="line">│</div>
-<div class="line">├── include/                    # 공개 헤더</div>
-<div class="line">│   └── messaging_system/</div>
-<div class="line">│       ├── message_bus.h</div>
-<div class="line">│       ├── topic_router.h</div>
-<div class="line">│       └── patterns/</div>
+<div class="line">├── integration_tests/                 # 통합 테스트 스위트</div>
+<div class="line">│   ├── framework/                     # 테스트 프레임워크</div>
+<div class="line">│   │   ├── messaging_fixture.h</div>
+<div class="line">│   │   └── test_helpers.h</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── test_message_bus_router.cpp    # 버스 + 라우터 통합</div>
+<div class="line">│   ├── test_priority_queue.cpp        # 우선순위 큐 시나리오</div>
+<div class="line">│   ├── test_backend_integration.cpp   # 백엔드 통합</div>
+<div class="line">│   ├── test_full_integration.cpp      # 엔드투엔드 테스트</div>
+<div class="line">│   │</div>
+<div class="line">│   └── task/                          # 태스크 모듈 통합 테스트</div>
+<div class="line">│       ├── task_fixture.h             # 태스크 테스트 픽스처</div>
+<div class="line">│       ├── test_task_lifecycle.cpp    # 전체 태스크 생명주기</div>
+<div class="line">│       ├── test_worker_scenarios.cpp  # 워커 풀 시나리오</div>
+<div class="line">│       ├── test_scheduling.cpp        # 스케줄러 통합</div>
+<div class="line">│       ├── test_concurrent_load.cpp   # 동시 로드 테스트</div>
+<div class="line">│       └── test_failure_recovery.cpp  # 실패 및 복구</div>
 <div class="line">│</div>
-<div class="line">├── src/                        # 소스 코드</div>
-<div class="line">│   ├── core/                   # 핵심 구현</div>
-<div class="line">│   ├── patterns/               # 메시징 패턴</div>
-<div class="line">│   └── serialization/          # 직렬화</div>
+<div class="line">├── examples/                          # 예제 애플리케이션</div>
+<div class="line">│   ├── basic_pub_sub/</div>
+<div class="line">│   │   ├── CMakeLists.txt</div>
+<div class="line">│   │   └── main.cpp</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── request_reply/</div>
+<div class="line">│   │   ├── CMakeLists.txt</div>
+<div class="line">│   │   ├── server.cpp</div>
+<div class="line">│   │   └── client.cpp</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── event_streaming/</div>
+<div class="line">│   │   ├── CMakeLists.txt</div>
+<div class="line">│   │   └── main.cpp</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── message_pipeline/</div>
+<div class="line">│   │   ├── CMakeLists.txt</div>
+<div class="line">│   │   └── main.cpp</div>
+<div class="line">│   │</div>
+<div class="line">│   └── task/                          # 태스크 큐 예제</div>
+<div class="line">│       ├── CMakeLists.txt</div>
+<div class="line">│       ├── README.md                  # 태스크 예제 가이드</div>
+<div class="line">│       ├── simple_worker/             # 기본 태스크 처리</div>
+<div class="line">│       ├── priority_tasks/            # 우선순위 기반 실행</div>
+<div class="line">│       ├── scheduled_tasks/           # 주기적/크론 스케줄링</div>
+<div class="line">│       ├── chain_workflow/            # 태스크 체이닝</div>
+<div class="line">│       ├── chord_aggregation/         # 병렬 태스크 집계</div>
+<div class="line">│       ├── progress_tracking/         # 진행 상태 모니터링</div>
+<div class="line">│       └── monitoring_dashboard/      # 실시간 모니터링</div>
 <div class="line">│</div>
-<div class="line">├── tests/                      # 테스트</div>
-<div class="line">│   ├── unit/                   # 단위 테스트</div>
-<div class="line">│   └── integration/            # 통합 테스트</div>
+<div class="line">├── docs/                              # 문서</div>
+<div class="line">│   ├── README.md                      # 문서 인덱스</div>
+<div class="line">│   ├── BENCHMARKS.md                  # 성능 벤치마크</div>
+<div class="line">│   ├── FEATURES.md                    # 기능 문서</div>
+<div class="line">│   ├── PRODUCTION_QUALITY.md          # 품질 보증</div>
+<div class="line">│   ├── PROJECT_STRUCTURE.md           # 이 파일</div>
+<div class="line">│   ├── API_REFERENCE.md               # API 문서</div>
+<div class="line">│   ├── MIGRATION_GUIDE.md             # 마이그레이션 가이드</div>
+<div class="line">│   ├── PATTERNS_API.md                # 패턴 문서</div>
+<div class="line">│   ├── DESIGN_PATTERNS.md             # 아키텍처 패턴</div>
+<div class="line">│   └── task/                          # 태스크 모듈 문서</div>
+<div class="line">│       └── ARCHITECTURE.md            # 태스크 시스템 아키텍처</div>
 <div class="line">│</div>
-<div class="line">├── examples/                   # 예제 코드</div>
-<div class="line">│   ├── basic/                  # 기본 사용법</div>
-<div class="line">│   └── patterns/               # 패턴 예제</div>
+<div class="line">├── .github/                           # GitHub 설정</div>
+<div class="line">│   └── workflows/                     # CI/CD 워크플로우</div>
+<div class="line">│       ├── ci.yml                     # 메인 CI 파이프라인</div>
+<div class="line">│       ├── coverage.yml               # 코드 커버리지</div>
+<div class="line">│       ├── static-analysis.yml        # 정적 분석</div>
+<div class="line">│       └── documentation.yml          # 문서 생성</div>
 <div class="line">│</div>
-<div class="line">├── CMakeLists.txt              # 메인 CMake 파일</div>
-<div class="line">├── README.md                   # 프로젝트 README</div>
-<div class="line">└── LICENSE                     # 라이선스</div>
+<div class="line">├── CMakeLists.txt                     # 루트 CMake 설정</div>
+<div class="line">├── README.md                          # 프로젝트 README</div>
+<div class="line">└── LICENSE                            # BSD 3-Clause 라이선스</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1223"></a>
-주요 디렉토리 설명</h1>
-<h2><a class="anchor" id="autotoc_md1224"></a>
-include/</h2>
-<p>공개 API 헤더 파일들이 위치합니다.</p>
-<h2><a class="anchor" id="autotoc_md1225"></a>
-src/</h2>
-<p>라이브러리 구현 코드입니다.</p>
-<h2><a class="anchor" id="autotoc_md1226"></a>
-docs/</h2>
-<p>프로젝트 문서입니다. 영어와 한국어 버전을 모두 제공합니다.</p>
-<h2><a class="anchor" id="autotoc_md1227"></a>
-tests/</h2>
-<p>테스트 코드입니다.</p>
-<h2><a class="anchor" id="autotoc_md1228"></a>
-examples/</h2>
-<p>사용 예제입니다.</p>
+<h1><a class="anchor" id="autotoc_md1274"></a>
+컴포넌트 구성</h1>
+<h2><a class="anchor" id="autotoc_md1275"></a>
+핵심 컴포넌트 (&lt;tt&gt;include/kcenon/messaging/core/&lt;/tt&gt;)</h2>
+<p><b>목적</b>: 기본 메시징 인프라</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">파일   </th><th class="markdownTableHeadNone">설명   </th><th class="markdownTableHeadNone">의존성    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>message.h</code>   </td><td class="markdownTableBodyNone">메시지 구조, 메타데이터, 빌더   </td><td class="markdownTableBodyNone">container_system    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>message_bus.h</code>   </td><td class="markdownTableBodyNone">중앙 pub/sub 코디네이터   </td><td class="markdownTableBodyNone">모든 핵심 컴포넌트    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>message_broker.h</code>   </td><td class="markdownTableBodyNone">고급 라우팅 및 필터링   </td><td class="markdownTableBodyNone">topic_router, queue    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>message_queue.h</code>   </td><td class="markdownTableBodyNone">스레드 안전 우선순위 큐   </td><td class="markdownTableBodyNone">common_system    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>topic_router.h</code>   </td><td class="markdownTableBodyNone">패턴 기반 토픽 라우팅   </td><td class="markdownTableBodyNone">common_system   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md1276"></a>
+인터페이스 (&lt;tt&gt;include/kcenon/messaging/interfaces/&lt;/tt&gt;)</h2>
+<p><b>목적</b>: 확장성을 위한 추상 인터페이스</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">파일   </th><th class="markdownTableHeadNone">설명   </th><th class="markdownTableHeadNone">구현    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>message_handler_interface.h</code>   </td><td class="markdownTableBodyNone">메시지 처리 추상화   </td><td class="markdownTableBodyNone">사용자 정의    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>message_router_interface.h</code>   </td><td class="markdownTableBodyNone">라우팅 추상화   </td><td class="markdownTableBodyNone">topic_router    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>publisher_interface.h</code>   </td><td class="markdownTableBodyNone">발행 추상화   </td><td class="markdownTableBodyNone">publisher (patterns)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>subscriber_interface.h</code>   </td><td class="markdownTableBodyNone">구독 추상화   </td><td class="markdownTableBodyNone">subscriber (patterns)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>queue_interface.h</code>   </td><td class="markdownTableBodyNone">큐 추상화   </td><td class="markdownTableBodyNone">message_queue   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md1277"></a>
+백엔드 (&lt;tt&gt;include/kcenon/messaging/backends/&lt;/tt&gt;)</h2>
+<p><b>목적</b>: 플러그형 실행 전략</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">파일   </th><th class="markdownTableHeadNone">설명   </th><th class="markdownTableHeadNone">사용 사례    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>backend_interface.h</code>   </td><td class="markdownTableBodyNone">백엔드 추상화   </td><td class="markdownTableBodyNone">모든 백엔드    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>standalone_backend.h</code>   </td><td class="markdownTableBodyNone">thread_system 내부 사용   </td><td class="markdownTableBodyNone">테스트, 간단한 앱    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>integration_backend.h</code>   </td><td class="markdownTableBodyNone">외부 스레드 풀   </td><td class="markdownTableBodyNone">프로덕션, 통합   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md1278"></a>
+패턴 (&lt;tt&gt;include/kcenon/messaging/patterns/&lt;/tt&gt;)</h2>
+<p><b>목적</b>: 고수준 메시징 패턴</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">파일   </th><th class="markdownTableHeadNone">설명   </th><th class="markdownTableHeadNone">패턴 유형    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>pub_sub.h</code>   </td><td class="markdownTableBodyNone">Publisher와 Subscriber   </td><td class="markdownTableBodyNone">클래식 pub/sub    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>request_reply.h</code>   </td><td class="markdownTableBodyNone">Request 클라이언트와 서버   </td><td class="markdownTableBodyNone">동기 RPC    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>event_streaming.h</code>   </td><td class="markdownTableBodyNone">리플레이가 있는 이벤트 소싱   </td><td class="markdownTableBodyNone">이벤트 기반    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>message_pipeline.h</code>   </td><td class="markdownTableBodyNone">스테이지 기반 처리   </td><td class="markdownTableBodyNone">파이프-필터   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md1279"></a>
+태스크 큐 (&lt;tt&gt;include/kcenon/messaging/task/&lt;/tt&gt;)</h2>
+<p><b>목적</b>: 스케줄링과 모니터링이 포함된 분산 태스크 큐 시스템</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">파일   </th><th class="markdownTableHeadNone">설명   </th><th class="markdownTableHeadNone">의존성    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>task.h</code>   </td><td class="markdownTableBodyNone">태스크 정의 및 빌더   </td><td class="markdownTableBodyNone">container_system    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>task_handler.h</code>   </td><td class="markdownTableBodyNone">C++20 Concepts 핸들러 인터페이스   </td><td class="markdownTableBodyNone">common_system    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>task_context.h</code>   </td><td class="markdownTableBodyNone">진행 상태가 있는 실행 컨텍스트   </td><td class="markdownTableBodyNone">common_system    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>task_queue.h</code>   </td><td class="markdownTableBodyNone">우선순위 기반 태스크 큐   </td><td class="markdownTableBodyNone">thread_system    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>worker_pool.h</code>   </td><td class="markdownTableBodyNone">워커 스레드 풀 관리   </td><td class="markdownTableBodyNone">thread_system    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>result_backend.h</code>   </td><td class="markdownTableBodyNone">결과 저장소 인터페이스   </td><td class="markdownTableBodyNone">container_system    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>memory_result_backend.h</code>   </td><td class="markdownTableBodyNone">인메모리 결과 백엔드   </td><td class="markdownTableBodyNone">result_backend    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>async_result.h</code>   </td><td class="markdownTableBodyNone">진행 상태가 있는 비동기 결과 핸들   </td><td class="markdownTableBodyNone">result_backend    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>task_client.h</code>   </td><td class="markdownTableBodyNone">태스크 제출 클라이언트   </td><td class="markdownTableBodyNone">task_queue, async_result    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>scheduler.h</code>   </td><td class="markdownTableBodyNone">주기적/크론 스케줄러   </td><td class="markdownTableBodyNone">cron_parser    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>cron_parser.h</code>   </td><td class="markdownTableBodyNone">크론 표현식 파서   </td><td class="markdownTableBodyNone">-    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>monitor.h</code>   </td><td class="markdownTableBodyNone">실시간 태스크 모니터링   </td><td class="markdownTableBodyNone">worker_pool    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>task_system.h</code>   </td><td class="markdownTableBodyNone">통합 파사드   </td><td class="markdownTableBodyNone">모든 태스크 컴포넌트   </td></tr>
+</table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1230"></a>
-관련 문서</h1>
+<h1><a class="anchor" id="autotoc_md1281"></a>
+빌드 시스템</h1>
+<h2><a class="anchor" id="autotoc_md1282"></a>
+CMake 구조</h2>
+<div class="fragment"><div class="line">CMakeLists.txt                  # 루트 설정</div>
+<div class="line">├── Library: messaging_system_core</div>
+<div class="line">├── Library: messaging_system_patterns</div>
+<div class="line">├── Library: messaging_system_backends</div>
+<div class="line">├── Library: messaging_system_task</div>
+<div class="line">├── Executable: test targets</div>
+<div class="line">├── Executable: benchmark targets</div>
+<div class="line">└── Executable: example targets</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1283"></a>
+빌드 타겟</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">타겟   </th><th class="markdownTableHeadNone">유형   </th><th class="markdownTableHeadNone">설명    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>messaging_system_core</code>   </td><td class="markdownTableBodyNone">라이브러리   </td><td class="markdownTableBodyNone">핵심 메시징    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>messaging_system_patterns</code>   </td><td class="markdownTableBodyNone">라이브러리   </td><td class="markdownTableBodyNone">메시징 패턴    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>messaging_system_backends</code>   </td><td class="markdownTableBodyNone">라이브러리   </td><td class="markdownTableBodyNone">실행 백엔드    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>messaging_system_task</code>   </td><td class="markdownTableBodyNone">라이브러리   </td><td class="markdownTableBodyNone">태스크 큐 시스템    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>test_*</code>   </td><td class="markdownTableBodyNone">실행파일   </td><td class="markdownTableBodyNone">유닛 테스트    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>bench_*</code>   </td><td class="markdownTableBodyNone">실행파일   </td><td class="markdownTableBodyNone">벤치마크    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>example_*</code>   </td><td class="markdownTableBodyNone">실행파일   </td><td class="markdownTableBodyNone">예제   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md1285"></a>
+의존성</h1>
+<h2><a class="anchor" id="autotoc_md1286"></a>
+필수 의존성</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">시스템   </th><th class="markdownTableHeadNone">목적   </th><th class="markdownTableHeadNone">버전    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>common_system</b>   </td><td class="markdownTableBodyNone">Result&lt;T&gt;, 에러 처리   </td><td class="markdownTableBodyNone">&gt;= 2.0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>container_system</b>   </td><td class="markdownTableBodyNone">메시지 페이로드   </td><td class="markdownTableBodyNone">&gt;= 2.0   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md1287"></a>
+선택적 의존성</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">시스템   </th><th class="markdownTableHeadNone">목적   </th><th class="markdownTableHeadNone">버전    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>thread_system</b>   </td><td class="markdownTableBodyNone">스레드 풀   </td><td class="markdownTableBodyNone">&gt;= 2.0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>logger_system</b>   </td><td class="markdownTableBodyNone">로깅   </td><td class="markdownTableBodyNone">&gt;= 2.0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>monitoring_system</b>   </td><td class="markdownTableBodyNone">메트릭   </td><td class="markdownTableBodyNone">&gt;= 2.0   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md1289"></a>
+Include 패턴</h1>
+<h2><a class="anchor" id="autotoc_md1290"></a>
+애플리케이션 코드</h2>
+<div class="fragment"><div class="line"><span class="comment">// 핵심 기능</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// 패턴</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/pub_sub.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/patterns/request_reply.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// 백엔드</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/backends/standalone_backend.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/backends/integration_backend.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// 태스크 큐 시스템</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_system.h&gt;</span>  <span class="comment">// 통합 파사드</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_client.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/scheduler.h&gt;</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1291"></a>
+내부 구현</h2>
+<div class="fragment"><div class="line"><span class="comment">// 구현 파일은 공개 및 비공개 헤더 모두 포함해야 함</span></div>
+<div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;internal_helpers.h&quot;</span></div>
+</div><!-- fragment --><hr  />
+<h1><a class="anchor" id="autotoc_md1293"></a>
+명명 규칙</h1>
+<h2><a class="anchor" id="autotoc_md1294"></a>
+파일</h2>
 <ul>
-<li><a class="el" href="../../de/de3/md_docs_2ARCHITECTURE__KO.html">아키텍처</a></li>
-<li><a class="el" href="../../d7/d4b/md_docs_2contributing_2CONTRIBUTING.html">기여하기</a> </li>
+<li><b>헤더</b>: <code>snake_case.h</code></li>
+<li><b>구현</b>: <code>snake_case_impl.cpp</code> 또는 <code>snake_case.cpp</code></li>
+<li><b>테스트</b>: <code>test_snake_case.cpp</code></li>
+<li><b>벤치마크</b>: <code>bench_snake_case.cpp</code></li>
+<li><b>예제</b>: <code>snake_case.cpp</code></li>
 </ul>
+<h2><a class="anchor" id="autotoc_md1295"></a>
+클래스</h2>
+<ul>
+<li><b>인터페이스</b>: <code>interface_name_interface</code></li>
+<li><b>구현체</b>: <code>concrete_class_name</code></li>
+<li><b>패턴</b>: <code>pattern_name</code> (예: <code>publisher</code>, <code>subscriber</code>)</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md1296"></a>
+네임스페이스</h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span>kcenon::messaging {              <span class="comment">// 핵심 네임스페이스</span></div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging::patterns {    <span class="comment">// 패턴</span></div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging::backends {    <span class="comment">// 백엔드</span></div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging::task {        <span class="comment">// 태스크 큐 시스템</span></div>
+<div class="line"><span class="keyword">namespace </span>kcenon::messaging::di {          <span class="comment">// DI 컨테이너</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><hr  />
+<h1><a class="anchor" id="autotoc_md1298"></a>
+코드 구성 원칙</h1>
+<h2><a class="anchor" id="autotoc_md1299"></a>
+관심사 분리</h2>
+<ol type="1">
+<li><b>공개 API</b> (<code>include/</code>): 사용자 대상 헤더</li>
+<li><b>구현</b> (<code>src/impl/</code>): 비공개 구현</li>
+<li><b>테스트</b> (<code>test/</code>): 검증 코드</li>
+<li><b>예제</b> (<code>examples/</code>): 사용법 데모</li>
+<li><b>문서</b> (<code>docs/</code>): 참조 자료</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md1300"></a>
+모듈성</h2>
+<ul>
+<li><b>Core</b>: 기반 컴포넌트</li>
+<li><b>Patterns</b>: 고수준 추상화</li>
+<li><b>Backends</b>: 실행 전략</li>
+<li><b>Task</b>: 분산 태스크 큐 시스템</li>
+<li><b>Interfaces</b>: 확장 지점</li>
+<li><b>Utilities</b>: 헬퍼 함수</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md1301"></a>
+의존성</h2>
+<ul>
+<li><b>Core</b> 의존: common_system, container_system</li>
+<li><b>Patterns</b> 의존: core</li>
+<li><b>Backends</b> 의존: core, common_system</li>
+<li><b>Task</b> 의존: common_system, container_system, thread_system</li>
+<li><b>모든 것</b> 의존: common_system (Result&lt;T&gt;)</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md1303"></a>
+향후 구조</h1>
+<h2><a class="anchor" id="autotoc_md1304"></a>
+계획된 추가 사항</h2>
+<div class="fragment"><div class="line">messaging_system/</div>
+<div class="line">├── include/kcenon/messaging/</div>
+<div class="line">│   ├── reliability/               # 신뢰성 기능</div>
+<div class="line">│   │   ├── retry_policy.h</div>
+<div class="line">│   │   ├── circuit_breaker.h</div>
+<div class="line">│   │   ├── dead_letter_queue.h</div>
+<div class="line">│   │   └── message_persistence.h</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── routing/                   # 고급 라우팅</div>
+<div class="line">│   │   ├── content_router.h</div>
+<div class="line">│   │   ├── routing_table.h</div>
+<div class="line">│   │   └── load_balancer.h</div>
+<div class="line">│   │</div>
+<div class="line">│   ├── security/                  # 보안 기능</div>
+<div class="line">│   │   ├── message_validator.h</div>
+<div class="line">│   │   ├── access_control.h</div>
+<div class="line">│   │   └── encryption.h</div>
+<div class="line">│   │</div>
+<div class="line">│   └── monitoring/                # 관측성</div>
+<div class="line">│       ├── message_metrics.h</div>
+<div class="line">│       └── message_tracer.h</div>
+<div class="line">│</div>
+<div class="line">└── docs/</div>
+<div class="line">    └── guides/                    # 사용자 가이드</div>
+<div class="line">        ├── QUICK_START.md</div>
+<div class="line">        ├── INTEGRATION.md</div>
+<div class="line">        └── TROUBLESHOOTING.md</div>
+</div><!-- fragment --><hr  />
+<p><b>최종 수정일</b>: 2025-12-10 <b>버전</b>: 1.1 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

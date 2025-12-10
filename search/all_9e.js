@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['컴파일러_20지원_0',['컴파일러 지원',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1177',1,'']]],
-  ['컴파일_20타임_20로거_20선택_1',['대안 B: 템플릿을 통한 컴파일 타임 로거 선택',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md44',1,'']]],
-  ['컴포넌트별_20커버리지_2',['컴포넌트별 커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1173',1,'']]],
-  ['컴포넌트_3',['컴포넌트',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md427',1,'핵심 컴포넌트'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1539',1,'핵심 컴포넌트']]],
-  ['컴포넌트_20아키텍처_4',['컴포넌트 아키텍처',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md426',1,'']]],
-  ['컴포넌트_20접근_5',['컴포넌트 접근',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1498',1,'']]]
+  ['추가됨_0',['추가됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md548',1,'추가됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md551',1,'추가됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md554',1,'추가됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md558',1,'추가됨']]],
+  ['추가_20메서드_1',['추가 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1542',1,'']]],
+  ['추가_20사항_2',['계획된 추가 사항',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1304',1,'']]],
+  ['추적_3',['추적',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1471',1,'실행 추적'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1472',1,'진행 상황 추적'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1496',1,'진행 상황 추적'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1891',1,'진행 상황 추적'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1902',1,'하위 작업 추적']]]
 ];

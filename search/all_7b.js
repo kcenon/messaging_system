@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['워커_20상태_0',['워커 상태',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1489',1,'']]],
-  ['워커_20상태_20확인_1',['워커 상태 확인',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1919',1,'']]],
-  ['워커_20풀_20설정_2',['워커 풀 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1625',1,'']]],
-  ['워크로드_20유형별_3',['워크로드 유형별',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1651',1,'']]],
-  ['워크플로우_20패턴_4',['워크플로우 패턴',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1449',1,'워크플로우 패턴'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html',1,'Task 모듈 워크플로우 패턴']]]
+  ['외부에서_20작업_20진행_20상황을_20어떻게_20얻나요_0',['Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2005',1,'']]]
 ];

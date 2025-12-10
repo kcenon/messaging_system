@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['배경_0',['배경',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md28',1,'']]],
-  ['배경_20설명_1',['배경 설명',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md29',1,'']]],
-  ['배치_20작업_2',['배치 작업',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1448',1,'']]]
+  ['반환_20대신_20예외를_20던짐_0',['핸들러가 에러 반환 대신 예외를 던짐',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1791',1,'']]]
 ];
