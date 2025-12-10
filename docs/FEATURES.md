@@ -1,7 +1,7 @@
 # Messaging System Features
 
-**Version**: 1.0
-**Last Updated**: 2025-11-18
+**Version**: 1.1
+**Last Updated**: 2025-12-10
 **Language**: [English] | [한국어](FEATURES_KO.md)
 
 ---
@@ -16,14 +16,16 @@ This document provides a comprehensive overview of all features available in the
 
 1. [Core Messaging](#core-messaging)
 2. [Messaging Patterns](#messaging-patterns)
-3. [Backend Support](#backend-support)
-4. [Message Types](#message-types)
-5. [Topic Routing](#topic-routing)
-6. [Message Queue](#message-queue)
-7. [Dependency Injection](#dependency-injection)
-8. [Error Handling](#error-handling)
-9. [Integration](#integration)
-10. [Production Features](#production-features)
+3. [Task Queue System](#task-queue-system)
+4. [C++20 Concepts](#c20-concepts)
+5. [Backend Support](#backend-support)
+6. [Message Types](#message-types)
+7. [Topic Routing](#topic-routing)
+8. [Message Queue](#message-queue)
+9. [Dependency Injection](#dependency-injection)
+10. [Error Handling](#error-handling)
+11. [Integration](#integration)
+12. [Production Features](#production-features)
 
 ---
 
@@ -149,6 +151,317 @@ auto pipeline = pipeline_builder()
 
 auto result = pipeline.process(msg);
 ```
+
+---
+
+## Task Queue System
+
+### Overview
+
+**Distributed task queue for background job processing**
+
+The Task Queue System provides a complete solution for distributed task processing with features like priority queues, scheduled execution, retry mechanisms, and real-time monitoring.
+
+### Task System Facade
+
+**Unified interface for all task operations**
+
+Features:
+- **Single Entry Point**: Unified facade for task submission and management
+- **Component Orchestration**: Coordinates worker pools, schedulers, and monitors
+- **Configuration**: Centralized configuration for all components
+- **Lifecycle Management**: Start/stop all components together
+
+```cpp
+auto system = std::make_shared<task_system>(config);
+system->start();
+
+// Submit a task
+auto result = system->submit("process.image", payload);
+
+// Wait for result
+auto output = result.get();
+```
+
+### Task Client
+
+**Task submission with various execution modes**
+
+Features:
+- **Immediate Execution**: Submit tasks for immediate processing
+- **Delayed Execution**: Schedule tasks for future execution
+- **Priority Support**: Submit with different priority levels
+- **Async Results**: Get async handles for result tracking
+
+```cpp
+auto client = std::make_shared<task_client>(queue, backend);
+
+// Submit with priority
+auto result = client->submit_with_priority(task, task_priority::high);
+
+// Submit with delay
+auto delayed = client->submit_delayed(task, std::chrono::seconds(30));
+```
+
+### Worker Pool
+
+**Configurable worker threads with handler registration**
+
+Features:
+- **Thread Pool**: Configurable number of worker threads
+- **Handler Registration**: Register handlers by task name
+- **Load Balancing**: Automatic work distribution
+- **Graceful Shutdown**: Complete pending tasks before shutdown
+
+```cpp
+auto pool = std::make_shared<worker_pool>(config);
+
+// Register handlers
+pool->register_handler("email.send", email_handler);
+pool->register_handler("image.resize", image_handler);
+
+pool->start();
+```
+
+### Task Scheduler
+
+**Periodic and cron-based task scheduling**
+
+Features:
+- **Periodic Scheduling**: Execute tasks at fixed intervals
+- **Cron Expressions**: Standard 5-field cron expression support
+- **Schedule Management**: Enable/disable/remove schedules
+- **Execution Callbacks**: Hooks for execution events
+
+```cpp
+auto scheduler = std::make_shared<scheduler>(client);
+
+// Periodic task (every 5 minutes)
+scheduler->schedule_periodic("cleanup", task, std::chrono::minutes(5));
+
+// Cron task (daily at midnight)
+scheduler->schedule_cron("daily_report", task, "0 0 * * *");
+```
+
+### Async Result
+
+**Async result tracking with progress support**
+
+Features:
+- **Status Tracking**: Check task status (pending, running, completed, failed)
+- **Progress Updates**: Real-time progress percentage
+- **Timeout Support**: Wait with configurable timeout
+- **Chaining**: Chain results for workflow orchestration
+
+```cpp
+auto result = client->submit(task);
+
+// Check status
+if (result.is_pending()) {
+    // Still waiting
+}
+
+// Wait with timeout
+auto output = result.wait_for(std::chrono::seconds(30));
+
+// Get progress
+double progress = result.progress();
+```
+
+### Result Backend
+
+**Pluggable result storage**
+
+Features:
+- **Memory Backend**: In-memory storage for development/testing
+- **Interface**: Abstract interface for custom backends
+- **TTL Support**: Automatic result expiration
+- **Cleanup**: Periodic cleanup of expired results
+
+```cpp
+auto backend = std::make_shared<memory_result_backend>();
+
+// Store result
+backend->store(task_id, result);
+
+// Retrieve result
+auto stored = backend->get(task_id);
+```
+
+### Task Monitor
+
+**Real-time task monitoring and statistics**
+
+Features:
+- **Queue Statistics**: Pending, running, completed counts
+- **Worker Statistics**: Active workers, utilization
+- **Performance Metrics**: Throughput, latency
+- **Event Callbacks**: Subscribe to task events
+
+```cpp
+auto monitor = std::make_shared<monitor>(pool, backend);
+
+// Get statistics
+auto stats = monitor->get_statistics();
+std::cout << "Pending: " << stats.pending_count << std::endl;
+std::cout << "Running: " << stats.running_count << std::endl;
+
+// Subscribe to events
+monitor->on_task_completed([](const task& t) {
+    std::cout << "Task " << t.id() << " completed" << std::endl;
+});
+```
+
+### Chain and Chord Patterns
+
+**Workflow orchestration patterns**
+
+Features:
+- **Chain**: Sequential task execution
+- **Chord**: Parallel execution with final callback
+- **Error Handling**: Proper error propagation
+- **Result Aggregation**: Combine results from multiple tasks
+
+```cpp
+// Chain: task1 -> task2 -> task3
+auto chain_result = client->chain({task1, task2, task3});
+
+// Chord: [task1, task2, task3] -> callback
+auto chord_result = client->chord({task1, task2, task3}, callback_task);
+```
+
+### Retry Mechanism
+
+**Automatic retry with exponential backoff**
+
+Features:
+- **Configurable Retries**: Set max retry count per task
+- **Exponential Backoff**: Increasing delays between retries
+- **Retry Callbacks**: Hook for retry events
+- **Final Failure**: Callback when all retries exhausted
+
+```cpp
+auto task = task_builder()
+    .name("send.email")
+    .max_retries(3)
+    .retry_delay(std::chrono::seconds(5))
+    .build();
+```
+
+### Task Timeout
+
+**Timeout handling for long-running tasks**
+
+Features:
+- **Per-Task Timeout**: Set timeout per task
+- **Cancellation**: Cancel timed-out tasks
+- **Timeout Callbacks**: Hook for timeout events
+
+```cpp
+auto task = task_builder()
+    .name("process.video")
+    .timeout(std::chrono::minutes(10))
+    .build();
+```
+
+---
+
+## C++20 Concepts
+
+### Overview
+
+**Type-safe callback validation with C++20 Concepts**
+
+The messaging system uses C++20 Concepts to provide compile-time type validation for callbacks and handlers. This results in clearer error messages and self-documenting interface requirements.
+
+### TaskHandlerCallable
+
+**Validates task handler signatures**
+
+```cpp
+template<typename F>
+concept TaskHandlerCallable = std::invocable<F, const task&, task_context&> &&
+    std::same_as<std::invoke_result_t<F, const task&, task_context&>,
+                 common::Result<container_module::value_container>>;
+
+// Usage
+template<TaskHandlerCallable Handler>
+void register_handler(const std::string& name, Handler&& handler);
+```
+
+### TaskHandlerLike
+
+**Validates task handler interface implementations**
+
+```cpp
+template<typename T>
+concept TaskHandlerLike = requires(T t, const task& tsk, task_context& ctx) {
+    { t.name() } -> std::convertible_to<std::string>;
+    { t.execute(tsk, ctx) } -> std::same_as<common::Result<container_module::value_container>>;
+};
+```
+
+### ScheduleEventCallable
+
+**Validates scheduler event callbacks**
+
+```cpp
+template<typename F>
+concept ScheduleEventCallable = std::invocable<F, const schedule_entry&>;
+
+// Usage
+template<ScheduleEventCallable Callback>
+void on_task_executed(Callback&& callback);
+```
+
+### MessageProcessorCallable
+
+**Validates message pipeline processors**
+
+```cpp
+template<typename F>
+concept MessageProcessorCallable = std::invocable<F, const message&> &&
+    std::same_as<std::invoke_result_t<F, const message&>,
+                 common::Result<message>>;
+```
+
+### MessageFilterCallable
+
+**Validates message filtering predicates**
+
+```cpp
+template<typename F>
+concept MessageFilterCallable = std::invocable<F, const message&> &&
+    std::convertible_to<std::invoke_result_t<F, const message&>, bool>;
+```
+
+### MessageTransformerCallable
+
+**Validates message transformers**
+
+```cpp
+template<typename F>
+concept MessageTransformerCallable = std::invocable<F, const message&> &&
+    std::same_as<std::invoke_result_t<F, const message&>, message>;
+```
+
+### SubscriptionCallable
+
+**Validates topic subscription callbacks**
+
+```cpp
+template<typename F>
+concept SubscriptionCallable = std::invocable<F, const message&> &&
+    std::same_as<std::invoke_result_t<F, const message&>,
+                 common::VoidResult>;
+```
+
+### Benefits
+
+- **Compile-time Validation**: Catch type mismatches at compile time
+- **Clear Error Messages**: Better diagnostics than SFINAE
+- **Self-documenting**: Interface requirements are explicit in code
+- **IDE Support**: Better autocomplete and type inference
 
 ---
 
@@ -474,27 +787,39 @@ Features:
 
 ## Feature Matrix
 
-| Feature | Core | Patterns | Backend | Status |
-|---------|------|----------|---------|--------|
-| **Message Bus** | ✅ | - | - | Complete |
-| **Topic Router** | ✅ | - | - | Complete |
-| **Message Queue** | ✅ | - | - | Complete |
-| **Pub/Sub** | - | ✅ | - | Complete |
-| **Request/Reply** | - | ✅ | - | Complete |
-| **Event Streaming** | - | ✅ | - | Complete |
-| **Message Pipeline** | - | ✅ | - | Complete |
-| **Standalone Backend** | - | - | ✅ | Complete |
-| **Integration Backend** | - | - | ✅ | Complete |
-| **Auto-detection** | - | - | ✅ | Complete |
-| **DI Container** | ✅ | - | - | Complete |
-| **Error Codes** | ✅ | - | - | Complete |
-| **Result<T>** | ✅ | - | - | Complete |
-| **Serialization** | ✅ | - | - | Complete |
-| **Wildcards** | ✅ | - | - | Complete |
-| **Priority Queue** | ✅ | - | - | Complete |
-| **Dead Letter Queue** | ✅ | - | - | Complete |
-| **Tracing** | ✅ | - | - | Complete |
-| **Metrics** | ✅ | - | - | Complete |
+| Feature | Core | Patterns | Task | Backend | Status |
+|---------|------|----------|------|---------|--------|
+| **Message Bus** | ✅ | - | - | - | Complete |
+| **Topic Router** | ✅ | - | - | - | Complete |
+| **Message Queue** | ✅ | - | - | - | Complete |
+| **Pub/Sub** | - | ✅ | - | - | Complete |
+| **Request/Reply** | - | ✅ | - | - | Complete |
+| **Event Streaming** | - | ✅ | - | - | Complete |
+| **Message Pipeline** | - | ✅ | - | - | Complete |
+| **Task System (Facade)** | - | - | ✅ | - | Complete |
+| **Task Queue** | - | - | ✅ | - | Complete |
+| **Worker Pool** | - | - | ✅ | - | Complete |
+| **Task Scheduler** | - | - | ✅ | - | Complete |
+| **Async Result** | - | - | ✅ | - | Complete |
+| **Result Backend** | - | - | ✅ | - | Complete |
+| **Task Monitor** | - | - | ✅ | - | Complete |
+| **Cron Parser** | - | - | ✅ | - | Complete |
+| **Chain/Chord** | - | - | ✅ | - | Complete |
+| **Retry Mechanism** | - | - | ✅ | - | Complete |
+| **Task Timeout** | - | - | ✅ | - | Complete |
+| **C++20 Concepts** | ✅ | ✅ | ✅ | - | Complete |
+| **Standalone Backend** | - | - | - | ✅ | Complete |
+| **Integration Backend** | - | - | - | ✅ | Complete |
+| **Auto-detection** | - | - | - | ✅ | Complete |
+| **DI Container** | ✅ | - | - | - | Complete |
+| **Error Codes** | ✅ | - | - | - | Complete |
+| **Result<T>** | ✅ | - | - | - | Complete |
+| **Serialization** | ✅ | - | - | - | Complete |
+| **Wildcards** | ✅ | - | - | - | Complete |
+| **Priority Queue** | ✅ | - | - | - | Complete |
+| **Dead Letter Queue** | ✅ | - | - | - | Complete |
+| **Tracing** | ✅ | - | - | - | Complete |
+| **Metrics** | ✅ | - | - | - | Complete |
 
 ---
 
@@ -505,8 +830,9 @@ For usage examples and getting started guides, see:
 - [Pattern Examples](PATTERNS_API.md)
 - [API Reference](API_REFERENCE.md)
 - [Integration Guide](guides/INTEGRATION.md)
+- [Task System Architecture](task/ARCHITECTURE.md)
 
 ---
 
-**Last Updated**: 2025-11-18
-**Version**: 1.0
+**Last Updated**: 2025-12-10
+**Version**: 1.1
