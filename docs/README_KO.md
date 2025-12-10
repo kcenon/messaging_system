@@ -55,6 +55,15 @@
 
 ---
 
+## 아키텍처 결정 기록 (ADR)
+
+| 문서 | 설명 |
+|------|------|
+| [ADR 인덱스](adr/README.md) | ADR 목록 및 템플릿 |
+| [ADR-001: 로깅 아키텍처](adr/001-logging-architecture_KO.md) | ILogger 인터페이스 vs logger_system |
+
+---
+
 ## 디렉토리 구조
 
 ```
@@ -80,14 +89,18 @@ docs/
 │   ├── PERFORMANCE.md
 │   └── BASELINE.md
 │
-└── task/               # Task 큐 시스템 문서
-    ├── QUICK_START.md
-    ├── ARCHITECTURE.md
-    ├── API_REFERENCE.md
-    ├── PATTERNS.md
-    ├── CONFIGURATION.md
-    ├── TROUBLESHOOTING.md
-    └── MIGRATION.md
+├── task/               # Task 큐 시스템 문서
+│   ├── QUICK_START.md
+│   ├── ARCHITECTURE.md
+│   ├── API_REFERENCE.md
+│   ├── PATTERNS.md
+│   ├── CONFIGURATION.md
+│   ├── TROUBLESHOOTING.md
+│   └── MIGRATION.md
+│
+└── adr/                # 아키텍처 결정 기록
+    ├── README.md
+    └── 001-logging-architecture.md
 ```
 
 ---

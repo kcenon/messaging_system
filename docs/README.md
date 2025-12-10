@@ -73,6 +73,10 @@ The messaging system integrates multiple high-performance modules:
 - **[Task Module Troubleshooting](./task/TROUBLESHOOTING.md)** - Common issues and debugging
 - **[Task Module Migration](./task/MIGRATION.md)** - Migration from other systems
 
+### Architecture Decision Records (ADR)
+- **[ADR Index](./adr/README.md)** - Architecture Decision Records index
+- **[ADR-001: Logging Architecture](./adr/001-logging-architecture.md)** - ILogger interface vs logger_system
+
 ## 📖 Documentation Standards
 
 All documentation follows these principles:
