@@ -1,7 +1,7 @@
 # Messaging System Project Structure
 
-**Version**: 1.0
-**Last Updated**: 2025-11-18
+**Version**: 1.1
+**Last Updated**: 2025-12-10
 **Language**: [English] | [한국어](PROJECT_STRUCTURE_KO.md)
 
 ---
@@ -42,6 +42,21 @@ messaging_system/
 │   │   ├── event_streaming.h          # Event sourcing
 │   │   └── message_pipeline.h         # Message processing pipeline
 │   │
+│   ├── task/                          # Distributed Task Queue System
+│   │   ├── task.h                     # Task definition and builder
+│   │   ├── task_handler.h             # Handler interface with C++20 Concepts
+│   │   ├── task_context.h             # Execution context
+│   │   ├── task_queue.h               # Priority task queue
+│   │   ├── worker_pool.h              # Worker thread pool
+│   │   ├── result_backend.h           # Result storage interface
+│   │   ├── memory_result_backend.h    # In-memory result backend
+│   │   ├── async_result.h             # Async result handle
+│   │   ├── task_client.h              # Task submission client
+│   │   ├── scheduler.h                # Periodic/cron scheduler
+│   │   ├── cron_parser.h              # Cron expression parser
+│   │   ├── monitor.h                  # Task monitoring
+│   │   └── task_system.h              # Unified facade
+│   │
 │   └── utils/                         # Utilities
 │       └── integration_detector.h     # System integration detection
 │
@@ -62,6 +77,19 @@ messaging_system/
 │   │   ├── request_reply_impl.cpp
 │   │   ├── event_streaming_impl.cpp
 │   │   └── message_pipeline_impl.cpp
+│   │
+│   ├── task/                          # Task queue implementations
+│   │   ├── task.cpp
+│   │   ├── task_context.cpp
+│   │   ├── task_queue.cpp
+│   │   ├── worker_pool.cpp
+│   │   ├── memory_result_backend.cpp
+│   │   ├── async_result.cpp
+│   │   ├── task_client.cpp
+│   │   ├── scheduler.cpp
+│   │   ├── cron_parser.cpp
+│   │   ├── monitor.cpp
+│   │   └── task_system.cpp
 │   │
 │   └── di/                            # Dependency injection
 │       └── messaging_di_container.cpp
@@ -84,6 +112,21 @@ messaging_system/
 │   │   │   ├── test_event_streaming.cpp
 │   │   │   └── test_message_pipeline.cpp
 │   │   │
+│   │   ├── task/                      # Task module tests
+│   │   │   ├── test_task.cpp
+│   │   │   ├── test_task_context.cpp
+│   │   │   ├── test_task_handler.cpp
+│   │   │   ├── test_task_queue.cpp
+│   │   │   ├── test_worker_pool.cpp
+│   │   │   ├── test_result_backend.cpp
+│   │   │   ├── test_async_result.cpp
+│   │   │   ├── test_task_client.cpp
+│   │   │   ├── test_scheduler.cpp
+│   │   │   ├── test_cron_parser.cpp
+│   │   │   ├── test_monitor.cpp
+│   │   │   ├── test_task_system.cpp
+│   │   │   └── test_task_event_bridge.cpp
+│   │   │
 │   │   └── di/                        # DI container tests
 │   │       └── test_di_container.cpp
 │   │
@@ -92,7 +135,12 @@ messaging_system/
 │       ├── bench_message_queue.cpp
 │       ├── bench_topic_router.cpp
 │       ├── bench_pub_sub_throughput.cpp
-│       └── bench_request_reply_latency.cpp
+│       ├── bench_request_reply_latency.cpp
+│       └── task/                      # Task module benchmarks
+│           ├── bench_task_queue.cpp
+│           ├── bench_worker_throughput.cpp
+│           ├── bench_result_backend.cpp
+│           └── bench_scheduler.cpp
 │
 ├── integration_tests/                 # Integration test suites
 │   ├── framework/                     # Test framework
@@ -102,7 +150,15 @@ messaging_system/
 │   ├── test_message_bus_router.cpp    # Bus + Router integration
 │   ├── test_priority_queue.cpp        # Priority queue scenarios
 │   ├── test_backend_integration.cpp   # Backend integration
-│   └── test_full_integration.cpp      # End-to-end tests
+│   ├── test_full_integration.cpp      # End-to-end tests
+│   │
+│   └── task/                          # Task module integration tests
+│       ├── task_fixture.h             # Task testing fixtures
+│       ├── test_task_lifecycle.cpp    # Full task lifecycle
+│       ├── test_worker_scenarios.cpp  # Worker pool scenarios
+│       ├── test_scheduling.cpp        # Scheduler integration
+│       ├── test_concurrent_load.cpp   # Concurrent load testing
+│       └── test_failure_recovery.cpp  # Failure and recovery
 │
 ├── examples/                          # Example applications
 │   ├── basic_pub_sub/
@@ -118,9 +174,20 @@ messaging_system/
 │   │   ├── CMakeLists.txt
 │   │   └── main.cpp
 │   │
-│   └── message_pipeline/
+│   ├── message_pipeline/
+│   │   ├── CMakeLists.txt
+│   │   └── main.cpp
+│   │
+│   └── task/                          # Task queue examples
 │       ├── CMakeLists.txt
-│       └── main.cpp
+│       ├── README.md                  # Task examples guide
+│       ├── simple_worker/             # Basic task processing
+│       ├── priority_tasks/            # Priority-based execution
+│       ├── scheduled_tasks/           # Periodic/cron scheduling
+│       ├── chain_workflow/            # Task chaining
+│       ├── chord_aggregation/         # Parallel task aggregation
+│       ├── progress_tracking/         # Progress monitoring
+│       └── monitoring_dashboard/      # Real-time monitoring
 │
 ├── docs/                              # Documentation
 │   ├── README.md                      # Documentation index
@@ -131,7 +198,9 @@ messaging_system/
 │   ├── API_REFERENCE.md               # API documentation
 │   ├── MIGRATION_GUIDE.md             # Migration guide
 │   ├── PATTERNS_API.md                # Patterns documentation
-│   └── DESIGN_PATTERNS.md             # Architecture patterns
+│   ├── DESIGN_PATTERNS.md             # Architecture patterns
+│   └── task/                          # Task module documentation
+│       └── ARCHITECTURE.md            # Task system architecture
 │
 ├── .github/                           # GitHub configuration
 │   └── workflows/                     # CI/CD workflows
@@ -194,6 +263,26 @@ messaging_system/
 | `event_streaming.h` | Event sourcing with replay | Event-driven |
 | `message_pipeline.h` | Stage-based processing | Pipes-and-filters |
 
+### Task Queue (`include/kcenon/messaging/task/`)
+
+**Purpose**: Distributed task queue system with scheduling and monitoring
+
+| File | Description | Dependencies |
+|------|-------------|--------------|
+| `task.h` | Task definition and builder | container_system |
+| `task_handler.h` | Handler interface with C++20 Concepts | common_system |
+| `task_context.h` | Execution context with progress | common_system |
+| `task_queue.h` | Priority-based task queue | thread_system |
+| `worker_pool.h` | Worker thread pool management | thread_system |
+| `result_backend.h` | Result storage interface | container_system |
+| `memory_result_backend.h` | In-memory result backend | result_backend |
+| `async_result.h` | Async result handle with progress | result_backend |
+| `task_client.h` | Task submission client | task_queue, async_result |
+| `scheduler.h` | Periodic/cron scheduler | cron_parser |
+| `cron_parser.h` | Cron expression parser | - |
+| `monitor.h` | Real-time task monitoring | worker_pool |
+| `task_system.h` | Unified facade | All task components |
+
 ---
 
 ## Build System
@@ -217,6 +306,7 @@ CMakeLists.txt                  # Root configuration
 | `messaging_system_core` | Library | Core messaging |
 | `messaging_system_patterns` | Library | Messaging patterns |
 | `messaging_system_backends` | Library | Execution backends |
+| `messaging_system_task` | Library | Task queue system |
 | `test_*` | Executable | Unit tests |
 | `bench_*` | Executable | Benchmarks |
 | `example_*` | Executable | Examples |
@@ -258,6 +348,12 @@ CMakeLists.txt                  # Root configuration
 // Backends
 #include <kcenon/messaging/backends/standalone_backend.h>
 #include <kcenon/messaging/backends/integration_backend.h>
+
+// Task Queue System
+#include <kcenon/messaging/task/task_system.h>  // Unified facade
+#include <kcenon/messaging/task/task.h>
+#include <kcenon/messaging/task/task_client.h>
+#include <kcenon/messaging/task/scheduler.h>
 ```
 
 ### Internal Implementation
@@ -292,6 +388,7 @@ CMakeLists.txt                  # Root configuration
 namespace kcenon::messaging {              // Core namespace
 namespace kcenon::messaging::patterns {    // Patterns
 namespace kcenon::messaging::backends {    // Backends
+namespace kcenon::messaging::task {        // Task queue system
 namespace kcenon::messaging::di {          // DI container
 }
 ```
@@ -313,6 +410,7 @@ namespace kcenon::messaging::di {          // DI container
 - **Core**: Foundation components
 - **Patterns**: High-level abstractions
 - **Backends**: Execution strategies
+- **Task**: Distributed task queue system
 - **Interfaces**: Extension points
 - **Utilities**: Helper functions
 
@@ -321,6 +419,7 @@ namespace kcenon::messaging::di {          // DI container
 - **Core** depends on: common_system, container_system
 - **Patterns** depend on: core
 - **Backends** depend on: core, common_system
+- **Task** depends on: common_system, container_system, thread_system
 - **Everything** depends on: common_system (Result<T>)
 
 ---
@@ -361,5 +460,5 @@ messaging_system/
 
 ---
 
-**Last Updated**: 2025-11-18
-**Version**: 1.0
+**Last Updated**: 2025-12-10
+**Version**: 1.1
