@@ -93,15 +93,15 @@ $(document).ready(function(){initNavTree('d9/df1/md_docs_2performance_2BASELINE.
   <div class="headertitle"><div class="title">Performance Baseline</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1034"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-30</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1042"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-30</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1036"></a>
+<h1><a class="anchor" id="autotoc_md1044"></a>
 Overview</h1>
 <p>This document establishes performance baselines for messaging_system to enable regression detection.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1038"></a>
+<h1><a class="anchor" id="autotoc_md1046"></a>
 Baseline Metrics</h1>
-<h2><a class="anchor" id="autotoc_md1039"></a>
+<h2><a class="anchor" id="autotoc_md1047"></a>
 Message Bus Performance</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -113,7 +113,7 @@ Message Bus Performance</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Memory per 1K topics   </td><td class="markdownTableBodyNone">5 MB   </td><td class="markdownTableBodyNone">&lt;8 MB   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1040"></a>
+<h2><a class="anchor" id="autotoc_md1048"></a>
 Pattern Performance</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -126,9 +126,9 @@ Pattern Performance</h2>
 <td class="markdownTableBodyNone">Pipeline   </td><td class="markdownTableBodyNone">200K msg/s   </td><td class="markdownTableBodyNone">&gt;150K   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1042"></a>
+<h1><a class="anchor" id="autotoc_md1050"></a>
 Test Environment</h1>
-<h2><a class="anchor" id="autotoc_md1043"></a>
+<h2><a class="anchor" id="autotoc_md1051"></a>
 Reference Platform</h2>
 <ul>
 <li><b>CPU</b>: Apple M1 (8-core) @ 3.2GHz</li>
@@ -137,7 +137,7 @@ Reference Platform</h2>
 <li><b>Compiler</b>: Apple Clang 15, -O3</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1045"></a>
+<h1><a class="anchor" id="autotoc_md1053"></a>
 Benchmark Commands</h1>
 <div class="fragment"><div class="line"># Run all benchmarks</div>
 <div class="line">./build/benchmarks/messaging_benchmark</div>
@@ -148,11 +148,11 @@ Benchmark Commands</h1>
 <div class="line"># With JSON output</div>
 <div class="line">./build/benchmarks/messaging_benchmark --benchmark_format=json &gt; results.json</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1047"></a>
+<h1><a class="anchor" id="autotoc_md1055"></a>
 Regression Detection</h1>
 <p>CI will fail if any metric degrades beyond acceptable range.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1049"></a>
+<h1><a class="anchor" id="autotoc_md1057"></a>
 Historical Data</h1>
 <p>Performance history is tracked in CI artifacts. </p>
 </div></div><!-- contents -->

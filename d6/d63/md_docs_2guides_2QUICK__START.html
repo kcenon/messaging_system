@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d6/d63/md_docs_2guides_2QUICK__START.h
   <div class="headertitle"><div class="title">Getting Started</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md914"></a> Welcome to the Messaging System! This guide will help you quickly set up and start using the high-performance C++20 distributed messaging framework.</p>
-<h1><a class="anchor" id="autotoc_md915"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md922"></a> Welcome to the Messaging System! This guide will help you quickly set up and start using the high-performance C++20 distributed messaging framework.</p>
+<h1><a class="anchor" id="autotoc_md923"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Prerequisites</li>
@@ -104,9 +104,9 @@ Table of Contents</h1>
 <li>First Application</li>
 <li>Next Steps</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md916"></a>
+<h1><a class="anchor" id="autotoc_md924"></a>
 Prerequisites</h1>
-<h2><a class="anchor" id="autotoc_md917"></a>
+<h2><a class="anchor" id="autotoc_md925"></a>
 System Requirements</h2>
 <ul>
 <li><b>Operating System</b>: Linux, macOS 10.15+, Windows 10+</li>
@@ -120,7 +120,7 @@ System Requirements</h2>
 <li><b>Memory</b>: Minimum 4GB RAM (8GB+ recommended for development)</li>
 <li><b>Disk Space</b>: 2GB for full build with dependencies</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md918"></a>
+<h2><a class="anchor" id="autotoc_md926"></a>
 Development Dependencies</h2>
 <ul>
 <li><b>Git</b>: For cloning the repository and submodules</li>
@@ -128,7 +128,7 @@ Development Dependencies</h2>
 <li><b>PostgreSQL</b>: 12+ (optional, for database module)</li>
 <li><b>Python</b>: 3.8+ (optional, for Python bindings)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md919"></a>
+<h2><a class="anchor" id="autotoc_md927"></a>
 Runtime Dependencies</h2>
 <p>The messaging system automatically manages most dependencies through vcpkg:</p>
 <ul>
@@ -137,9 +137,9 @@ Runtime Dependencies</h2>
 <li><b>Google Test</b>: Testing framework (development only)</li>
 <li><b>Google Benchmark</b>: Performance testing (development only)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md920"></a>
+<h1><a class="anchor" id="autotoc_md928"></a>
 Installation</h1>
-<h2><a class="anchor" id="autotoc_md921"></a>
+<h2><a class="anchor" id="autotoc_md929"></a>
 1. Clone the Repository</h2>
 <div class="fragment"><div class="line"># Clone the main repository</div>
 <div class="line">git clone &lt;repository-url&gt; messaging_system</div>
@@ -147,9 +147,9 @@ Installation</h1>
 <div class="line"> </div>
 <div class="line"># Initialize submodules (includes thread_system and vcpkg)</div>
 <div class="line">git submodule update --init --recursive</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md922"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md930"></a>
 2. Platform-Specific Setup</h2>
-<h3><a class="anchor" id="autotoc_md923"></a>
+<h3><a class="anchor" id="autotoc_md931"></a>
 Linux (Ubuntu/Debian)</h3>
 <div class="fragment"><div class="line"># Install basic development tools</div>
 <div class="line">sudo apt update</div>
@@ -168,7 +168,7 @@ Linux (Ubuntu/Debian)</h3>
 <div class="line"> </div>
 <div class="line"># Install Python development headers (optional)</div>
 <div class="line">sudo apt install -y python3-dev python3-pip</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md924"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md932"></a>
 macOS</h3>
 <div class="fragment"><div class="line"># Install Xcode command line tools</div>
 <div class="line">xcode-select --install</div>
@@ -184,7 +184,7 @@ macOS</h3>
 <div class="line"> </div>
 <div class="line"># Install Python (optional)</div>
 <div class="line">brew install python@3.9</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md925"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md933"></a>
 Windows</h3>
 <ol type="1">
 <li><b>Install Visual Studio 2019 or later</b> with C++ development tools</li>
@@ -192,17 +192,17 @@ Windows</h3>
 <li><b>Install CMake</b> (3.16+) from <a href="https://cmake.org/download/">cmake.org</a></li>
 <li><b>Install PostgreSQL</b> (optional) from <a href="https://www.postgresql.org/download/windows/">postgresql.org</a></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md926"></a>
+<h2><a class="anchor" id="autotoc_md934"></a>
 3. Build the System</h2>
 <p>The project includes automated build scripts for all platforms:</p>
-<h3><a class="anchor" id="autotoc_md927"></a>
+<h3><a class="anchor" id="autotoc_md935"></a>
 Quick Build (Recommended)</h3>
 <div class="fragment"><div class="line"># Build with default configuration</div>
 <div class="line">./build.sh</div>
 <div class="line"> </div>
 <div class="line"># On Windows (use PowerShell or Git Bash)</div>
 <div class="line">./build.bat</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md928"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md936"></a>
 Custom Build Options</h3>
 <div class="fragment"><div class="line"># Build with specific options</div>
 <div class="line">./build.sh --release --tests --python-bindings</div>
@@ -215,7 +215,7 @@ Custom Build Options</h3>
 <div class="line"># --python-bindings: Build Python bindings</div>
 <div class="line"># --no-database    : Skip database module</div>
 <div class="line"># --clean          : Clean before building</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md929"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md937"></a>
 4. Verify Installation</h2>
 <div class="fragment"><div class="line"># Check if build was successful</div>
 <div class="line">ls build/bin/</div>
@@ -227,9 +227,9 @@ Custom Build Options</h3>
 <div class="line"> </div>
 <div class="line"># Run sample application</div>
 <div class="line">./production_ready_example</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md930"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md938"></a>
 Quick Start</h1>
-<h2><a class="anchor" id="autotoc_md931"></a>
+<h2><a class="anchor" id="autotoc_md939"></a>
 1. Basic Message Bus Usage</h2>
 <p>Create a simple messaging application:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -260,7 +260,7 @@ Quick Start</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md932"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md940"></a>
 2. Container-Based Data Handling</h2>
 <p>Work with type-safe containers:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;container/container.h&gt;</span></div>
@@ -294,7 +294,7 @@ Quick Start</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md933"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md941"></a>
 3. Network Client/Server</h2>
 <p>Set up basic networking:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;network/messaging_server.h&gt;</span></div>
@@ -340,9 +340,9 @@ Quick Start</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md934"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md942"></a>
 Basic Usage</h1>
-<h2><a class="anchor" id="autotoc_md935"></a>
+<h2><a class="anchor" id="autotoc_md943"></a>
 Project Structure</h2>
 <p>Create a basic CMake project that uses the messaging system:</p>
 <div class="fragment"><div class="line"># CMakeLists.txt</div>
@@ -365,7 +365,7 @@ Project Structure</h2>
 <div class="line">    messaging_system::database</div>
 <div class="line">    messaging_system::thread_system</div>
 <div class="line">)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md936"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md944"></a>
 Environment Configuration</h2>
 <p>Set up environment variables for database connections:</p>
 <div class="fragment"><div class="line"># Database configuration</div>
@@ -382,7 +382,7 @@ Environment Configuration</h2>
 <div class="line"># Performance tuning</div>
 <div class="line">export THREAD_POOL_SIZE=8</div>
 <div class="line">export MESSAGE_BUFFER_SIZE=1048576</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md937"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md945"></a>
 Basic Configuration File</h2>
 <p>Create a configuration file for your application:</p>
 <div class="fragment"><div class="line">{</div>
@@ -409,10 +409,10 @@ Basic Configuration File</h2>
 <div class="line">    &quot;max_file_size&quot;: &quot;100MB&quot;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md938"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md946"></a>
 First Application</h1>
 <p>Let's build a complete chat server application:</p>
-<h2><a class="anchor" id="autotoc_md939"></a>
+<h2><a class="anchor" id="autotoc_md947"></a>
 1. Chat Server (chat_server.cpp)</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
@@ -530,7 +530,7 @@ First Application</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md940"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md948"></a>
 2. Build and Run</h2>
 <div class="fragment"><div class="line"># Add to CMakeLists.txt</div>
 <div class="line">add_executable(chat_server chat_server.cpp)</div>
@@ -544,16 +544,16 @@ First Application</h1>
 <div class="line"> </div>
 <div class="line"># Run</div>
 <div class="line">./build/bin/chat_server</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md941"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md949"></a>
 3. Test with Sample Client</h2>
 <div class="fragment"><div class="line"># Use the provided sample client</div>
 <div class="line">./build/bin/chat_client</div>
 <div class="line"> </div>
 <div class="line"># Or test with telnet</div>
 <div class="line">telnet localhost 8080</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md942"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md950"></a>
 Next Steps</h1>
-<h2><a class="anchor" id="autotoc_md943"></a>
+<h2><a class="anchor" id="autotoc_md951"></a>
 1. Explore Sample Applications</h2>
 <p>Check out the comprehensive examples in <code>application_layer/samples/</code>:</p>
 <div class="fragment"><div class="line"># IoT monitoring system</div>
@@ -564,7 +564,7 @@ Next Steps</h1>
 <div class="line"> </div>
 <div class="line"># Microservices orchestrator</div>
 <div class="line">./build/bin/microservices_orchestrator</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md944"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md952"></a>
 2. Advanced Features</h2>
 <ul>
 <li><b>Database Integration</b>: See Database System</li>
@@ -572,14 +572,14 @@ Next Steps</h1>
 <li><b>Production Deployment</b>: Follow Deployment Guide</li>
 <li><b>Python Integration</b>: Explore Python bindings</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md945"></a>
+<h2><a class="anchor" id="autotoc_md953"></a>
 3. Development</h2>
 <ul>
 <li><b>API Reference</b>: Complete documentation in API Reference</li>
 <li><b>Architecture</b>: System design in <a class="el" href="../../df/d97/architecture_8md.html">Architecture</a></li>
 <li><b>Contributing</b>: Guidelines in Developer Guide</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md946"></a>
+<h2><a class="anchor" id="autotoc_md954"></a>
 4. Community</h2>
 <ul>
 <li><b>GitHub Repository</b>: Source code, issues, and discussions</li>

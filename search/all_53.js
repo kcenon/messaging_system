@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['벤치마크_0',['벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md509',1,'메시지 버스 벤치마크'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html',1,'Messaging System 성능 벤치마크']]],
-  ['벤치마크_20방법론_1',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md520',1,'']]]
+  ['벤치마크_0',['벤치마크',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md517',1,'메시지 버스 벤치마크'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html',1,'Messaging System 성능 벤치마크']]],
+  ['벤치마크_20방법론_1',['벤치마크 방법론',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md528',1,'']]]
 ];

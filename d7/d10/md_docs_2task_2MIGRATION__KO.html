@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d7/d10/md_docs_2task_2MIGRATION__KO.ht
   <div class="headertitle"><div class="title">Task 모듈 마이그레이션 가이드</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1680"></a> 이 가이드는 Task 모듈의 이전 버전이나 다른 작업 큐 시스템에서 마이그레이션하는 데 도움을 줍니다.</p>
-<h1><a class="anchor" id="autotoc_md1681"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1688"></a> 이 가이드는 Task 모듈의 이전 버전이나 다른 작업 큐 시스템에서 마이그레이션하는 데 도움을 줍니다.</p>
+<h1><a class="anchor" id="autotoc_md1689"></a>
 목차</h1>
 <ul>
 <li>버전 마이그레이션</li>
@@ -102,12 +102,12 @@ $(document).ready(function(){initNavTree('d7/d10/md_docs_2task_2MIGRATION__KO.ht
 <li>마이그레이션 체크리스트</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1683"></a>
+<h1><a class="anchor" id="autotoc_md1691"></a>
 버전 마이그레이션</h1>
-<h2><a class="anchor" id="autotoc_md1684"></a>
+<h2><a class="anchor" id="autotoc_md1692"></a>
 1.0으로 마이그레이션</h2>
 <p>이전 개발 버전에서 업그레이드하는 경우 다음 단계를 따르세요:</p>
-<h3><a class="anchor" id="autotoc_md1685"></a>
+<h3><a class="anchor" id="autotoc_md1693"></a>
 API 변경 사항</h3>
 <ol type="1">
 <li><p class="startli"><b>Result 타입 패턴</b></p>
@@ -157,7 +157,7 @@ API 변경 사항</h3>
 <div class="line">});</div>
 </div><!-- fragment --></li>
 </ol>
-<h3><a class="anchor" id="autotoc_md1686"></a>
+<h3><a class="anchor" id="autotoc_md1694"></a>
 설정 마이그레이션</h3>
 <p>이전 설정을 새 구조에 매핑:</p>
 <table class="markdownTable">
@@ -173,12 +173,12 @@ API 변경 사항</h3>
 <td class="markdownTableBodyNone"><code>timeout_ms</code>   </td><td class="markdownTableBodyNone"><code>task_config.timeout</code>   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1688"></a>
+<h1><a class="anchor" id="autotoc_md1696"></a>
 커스텀 솔루션에서 마이그레이션</h1>
-<h2><a class="anchor" id="autotoc_md1689"></a>
+<h2><a class="anchor" id="autotoc_md1697"></a>
 스레드 풀 구현에서 마이그레이션</h2>
 <p>커스텀 스레드 풀이 있다면 Task 모듈로 마이그레이션:</p>
-<h3><a class="anchor" id="autotoc_md1690"></a>
+<h3><a class="anchor" id="autotoc_md1698"></a>
 이전 (커스텀 스레드 풀)</h3>
 <div class="fragment"><div class="line"><span class="keyword">class </span>ThreadPool {</div>
 <div class="line">    std::vector&lt;std::thread&gt; workers;</div>
@@ -196,7 +196,7 @@ API 변경 사항</h3>
 <div class="line">pool.enqueue([data]() {</div>
 <div class="line">    process_data(data);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1691"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1699"></a>
 이후 (Task 모듈)</h3>
 <div class="fragment"><div class="line">task_system_config config;</div>
 <div class="line">config.worker.concurrency = 4;</div>
@@ -216,7 +216,7 @@ API 변경 사항</h3>
 <div class="line">container_module::value_container payload;</div>
 <div class="line">payload.add(<span class="stringliteral">&quot;data&quot;</span>, data);</div>
 <div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;process.data&quot;</span>, payload);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1692"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1700"></a>
 마이그레이션의 이점</h3>
 <ul>
 <li>지수 백오프를 통한 자동 재시도</li>
@@ -226,9 +226,9 @@ API 변경 사항</h3>
 <li>예약 실행</li>
 <li>Chain 및 Chord 패턴</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1693"></a>
+<h2><a class="anchor" id="autotoc_md1701"></a>
 메시지 큐 시스템에서 마이그레이션</h2>
-<h3><a class="anchor" id="autotoc_md1694"></a>
+<h3><a class="anchor" id="autotoc_md1702"></a>
 개념 매핑</h3>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -246,7 +246,7 @@ API 변경 사항</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">데드 레터 큐   </td><td class="markdownTableBodyNone">결과 백엔드의 실패한 작업   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md1695"></a>
+<h3><a class="anchor" id="autotoc_md1703"></a>
 마이그레이션 예제</h3>
 <div class="fragment"><div class="line"><span class="comment">// 이전 (메시지 큐 의사 코드)</span></div>
 <div class="line">producer.send(<span class="stringliteral">&quot;queue-name&quot;</span>, message);</div>
@@ -267,14 +267,14 @@ API 변경 사항</h3>
 <div class="line">    .build().value();</div>
 <div class="line"> </div>
 <div class="line">system.submit(task);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1696"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1704"></a>
 Cron 작업에서 마이그레이션</h2>
-<h3><a class="anchor" id="autotoc_md1697"></a>
+<h3><a class="anchor" id="autotoc_md1705"></a>
 이전 (시스템 Cron)</h3>
 <div class="fragment"><div class="line"># /etc/crontab</div>
 <div class="line">0 3 * * * /usr/bin/my-daily-job</div>
 <div class="line">*/15 * * * * /usr/bin/my-sync-job</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1698"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1706"></a>
 이후 (Task 스케줄러)</h3>
 <div class="fragment"><div class="line"><span class="comment">// 매일 오전 3시</span></div>
 <div class="line">system.schedule_cron(</div>
@@ -289,7 +289,7 @@ Cron 작업에서 마이그레이션</h2>
 <div class="line">    task_builder(<span class="stringliteral">&quot;sync.task&quot;</span>).build().value(),</div>
 <div class="line">    <span class="stringliteral">&quot;*/15 * * * *&quot;</span></div>
 <div class="line">);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1699"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1707"></a>
 이점</h3>
 <ul>
 <li>중앙화된 스케줄링</li>
@@ -299,9 +299,9 @@ Cron 작업에서 마이그레이션</h2>
 <li>프로그래밍 방식 스케줄 관리</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1701"></a>
+<h1><a class="anchor" id="autotoc_md1709"></a>
 마이그레이션 체크리스트</h1>
-<h2><a class="anchor" id="autotoc_md1702"></a>
+<h2><a class="anchor" id="autotoc_md1710"></a>
 마이그레이션 전</h2>
 <ul>
 <li>[ ] 모든 기존 작업/잡 목록화</li>
@@ -310,7 +310,7 @@ Cron 작업에서 마이그레이션</h2>
 <li>[ ] 현재 스케줄링 패턴 기록</li>
 <li>[ ] 기존 데이터 및 설정 백업</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1703"></a>
+<h2><a class="anchor" id="autotoc_md1711"></a>
 마이그레이션 중</h2>
 <ul>
 <li>[ ] 모든 작업에 대한 동등한 핸들러 생성</li>
@@ -320,7 +320,7 @@ Cron 작업에서 마이그레이션</h2>
 <li>[ ] 필요한 곳에 진행 추적 구현</li>
 <li>[ ] 모니터링 및 로깅 설정</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1704"></a>
+<h2><a class="anchor" id="autotoc_md1712"></a>
 마이그레이션 후</h2>
 <ul>
 <li>[ ] 모든 작업이 올바르게 실행되는지 확인</li>
@@ -330,7 +330,7 @@ Cron 작업에서 마이그레이션</h2>
 <li>[ ] 이전 작업 인프라 제거</li>
 <li>[ ] 문서 업데이트</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1705"></a>
+<h2><a class="anchor" id="autotoc_md1713"></a>
 테스트 체크리스트</h2>
 <ul>
 <li>[ ] 모든 핸들러에 대한 단위 테스트</li>
@@ -342,9 +342,9 @@ Cron 작업에서 마이그레이션</h2>
 <li>[ ] 성능/부하 테스트</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1707"></a>
+<h1><a class="anchor" id="autotoc_md1715"></a>
 일반적인 마이그레이션 문제</h1>
-<h2><a class="anchor" id="autotoc_md1708"></a>
+<h2><a class="anchor" id="autotoc_md1716"></a>
 핸들러가 에러 반환 대신 예외를 던짐</h2>
 <div class="fragment"><div class="line"><span class="comment">// 잘못됨 - 예기치 않은 동작 유발</span></div>
 <div class="line">system.register_handler(<span class="stringliteral">&quot;bad&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -361,7 +361,7 @@ Cron 작업에서 마이그레이션</h2>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1709"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1717"></a>
 누락된 큐 설정</h2>
 <div class="fragment"><div class="line"><span class="comment">// 작업이 &quot;special-queue&quot;로 감</span></div>
 <div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;task&quot;</span>)</div>
@@ -374,7 +374,7 @@ Cron 작업에서 마이그레이션</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 수정: 필요한 모든 큐 추가</span></div>
 <div class="line">config.queues = {<span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;special-queue&quot;</span>};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1710"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1718"></a>
 타임아웃이 너무 짧음</h2>
 <div class="fragment"><div class="line"><span class="comment">// 이전 시스템은 타임아웃이 없어 작업이 영원히 실행됨</span></div>
 <div class="line"><span class="comment">// 새 시스템은 기본값이 5분</span></div>
@@ -384,7 +384,7 @@ Cron 작업에서 마이그레이션</h2>
 <div class="line">    .timeout(std::chrono::hours(2))</div>
 <div class="line">    .build().value();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1712"></a>
+<h1><a class="anchor" id="autotoc_md1720"></a>
 관련 문서</h1>
 <ul>
 <li><a class="el" href="../../da/dee/md_docs_2task_2QUICK__START__KO.html">빠른 시작 가이드</a></li>

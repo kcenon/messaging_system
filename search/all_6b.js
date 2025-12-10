@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['실패하는_20작업_20를_20어떻게_20처리하나요_0',['Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1927',1,'']]],
-  ['실패함_1',['작업이 즉시 실패함',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1902',1,'']]],
-  ['실행_2',['실행',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md649',1,'독립 실행'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1802',1,'주기적 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1858',1,'주기적 실행'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1438',1,'즉시 실행'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1439',1,'지연 실행'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1806',1,'지연 작업 실행'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1557',1,'테스트 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1859',1,'Cron 기반 실행']]],
-  ['실행_20작업_20설정_3',['장기 실행 작업 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1639',1,'']]],
-  ['실행_20중인_20작업을_20어떻게_20취소하나요_4',['Q: 실행 중인 작업을 어떻게 취소하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1921',1,'']]],
-  ['실행_20추적_5',['실행 추적',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1388',1,'']]]
+  ['실패하는_20작업_20를_20어떻게_20처리하나요_0',['Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1935',1,'']]],
+  ['실패함_1',['작업이 즉시 실패함',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1910',1,'']]],
+  ['실행_2',['실행',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md657',1,'독립 실행'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1810',1,'주기적 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1866',1,'주기적 실행'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1446',1,'즉시 실행'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1447',1,'지연 실행'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1814',1,'지연 작업 실행'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1565',1,'테스트 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1867',1,'Cron 기반 실행']]],
+  ['실행_20작업_20설정_3',['장기 실행 작업 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1647',1,'']]],
+  ['실행_20중인_20작업을_20어떻게_20취소하나요_4',['Q: 실행 중인 작업을 어떻게 취소하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1929',1,'']]],
+  ['실행_20추적_5',['실행 추적',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1396',1,'']]]
 ];

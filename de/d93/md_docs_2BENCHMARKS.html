@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('de/d93/md_docs_2BENCHMARKS.html','../.
   <div class="headertitle"><div class="title">Messaging System Performance Benchmarks</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md444"></a> <b>Version</b>: 1.0 <b>Last Updated</b>: 2025-11-18 <b>Language</b>: [English] | <a class="el" href="../../d5/ddb/md_docs_2BENCHMARKS__KO.html">한국어</a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md444"></a> <b>Version</b>: 1.1 <b>Last Updated</b>: 2025-12-10 <b>Language</b>: [English] | <a class="el" href="../../d5/ddb/md_docs_2BENCHMARKS__KO.html">한국어</a></p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md446"></a>
 Executive Summary</h1>
@@ -116,6 +116,7 @@ Table of Contents</h1>
 <li>Topic Router Performance</li>
 <li>Pub/Sub Performance</li>
 <li>Request/Reply Performance</li>
+<li>Task Module Performance</li>
 <li>Memory Usage</li>
 <li>Latency Analysis</li>
 <li>Scalability</li>
@@ -320,8 +321,113 @@ Concurrent Request Performance</h2>
 </ul>
 <hr  />
 <h1><a class="anchor" id="autotoc_md472"></a>
-Memory Usage</h1>
+Task Module Performance</h1>
+<p>The task module provides distributed task queue capabilities with performance benchmarks for each component.</p>
 <h2><a class="anchor" id="autotoc_md473"></a>
+Task Queue Performance</h2>
+<p><b>Test Configuration</b>: 100,000 task operations</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Operation   </th><th class="markdownTableHeadNone">Target   </th><th class="markdownTableHeadNone">Typical Performance    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Task Enqueue</b>   </td><td class="markdownTableBodyNone">&gt; 100K ops/s   </td><td class="markdownTableBodyNone">~150K ops/s    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Task Dequeue</b>   </td><td class="markdownTableBodyNone">&gt; 50K ops/s   </td><td class="markdownTableBodyNone">~80K ops/s    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Priority Enqueue</b>   </td><td class="markdownTableBodyNone">&gt; 80K ops/s   </td><td class="markdownTableBodyNone">~120K ops/s    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Task Cancellation</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">~500K ops/s    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Tag-based Cancel</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">~1M ops/s   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md474"></a>
+Worker Throughput</h2>
+<p><b>Test Configuration</b>: Empty task handlers</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Configuration   </th><th class="markdownTableHeadNone">Target   </th><th class="markdownTableHeadNone">Typical Performance    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Single Worker (empty)</b>   </td><td class="markdownTableBodyNone">&gt; 10K tasks/s   </td><td class="markdownTableBodyNone">~15K tasks/s    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>4 Workers</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">~40K tasks/s    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>8 Workers</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">~70K tasks/s    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Handler Dispatch</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">&lt; 1 ms P99   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md475"></a>
+Worker Scalability</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Workers   </th><th class="markdownTableHeadNone">Throughput   </th><th class="markdownTableHeadNone">Scaling Factor    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">15K tasks/s   </td><td class="markdownTableBodyNone">1.0x    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">2   </td><td class="markdownTableBodyNone">28K tasks/s   </td><td class="markdownTableBodyNone">1.87x    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">4   </td><td class="markdownTableBodyNone">50K tasks/s   </td><td class="markdownTableBodyNone">3.33x    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">8   </td><td class="markdownTableBodyNone">80K tasks/s   </td><td class="markdownTableBodyNone">5.33x   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md476"></a>
+Result Backend Performance</h2>
+<p><b>Test Configuration</b>: memory_result_backend, 100,000 operations</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Operation   </th><th class="markdownTableHeadNone">Target   </th><th class="markdownTableHeadNone">Typical Performance    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Store State</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">~500K ops/s    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Store Result</b>   </td><td class="markdownTableBodyNone">&gt; 50K ops/s   </td><td class="markdownTableBodyNone">~200K ops/s    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Get State</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">~1M ops/s    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Get Result</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">~500K ops/s    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Progress Update</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">~300K ops/s    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Wait for Result</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">&lt; 1 ms overhead   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md477"></a>
+Scheduler Performance</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Operation   </th><th class="markdownTableHeadNone">Typical Performance    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Add Schedule</b>   </td><td class="markdownTableBodyNone">~50K schedules/s    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Schedule Lookup</b>   </td><td class="markdownTableBodyNone">~500K lookups/s    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Remove Schedule</b>   </td><td class="markdownTableBodyNone">~100K removes/s    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Cron Parsing</b>   </td><td class="markdownTableBodyNone">~100K parses/s    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Next Run Calculation</b>   </td><td class="markdownTableBodyNone">~1M calculations/s   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md478"></a>
+Performance Targets Summary</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Metric   </th><th class="markdownTableHeadNone">Target   </th><th class="markdownTableHeadNone">Notes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Queue Enqueue   </td><td class="markdownTableBodyNone">&gt; 100K ops/s   </td><td class="markdownTableBodyNone">Task queue throughput    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Queue Dequeue   </td><td class="markdownTableBodyNone">&gt; 50K ops/s   </td><td class="markdownTableBodyNone">With priority support    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Worker Throughput   </td><td class="markdownTableBodyNone">&gt; 10K tasks/s   </td><td class="markdownTableBodyNone">Empty task execution    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Result Store   </td><td class="markdownTableBodyNone">&gt; 50K ops/s   </td><td class="markdownTableBodyNone">Memory backend   </td></tr>
+</table>
+<p><b>Key Insights</b>:</p><ul>
+<li>Task queue performance exceeds targets for typical workloads</li>
+<li>Worker throughput scales near-linearly up to 4 workers</li>
+<li>Memory result backend provides excellent performance for single-process deployments</li>
+<li>Scheduler overhead is minimal for schedule management operations</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md480"></a>
+Memory Usage</h1>
+<h2><a class="anchor" id="autotoc_md481"></a>
 Per-Component Memory Overhead</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -341,7 +447,7 @@ Per-Component Memory Overhead</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Backend (integration)</b>   </td><td class="markdownTableBodyNone">10 KB   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Minimal overhead   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md474"></a>
+<h2><a class="anchor" id="autotoc_md482"></a>
 Memory Scaling</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -361,9 +467,9 @@ Memory Scaling</h2>
 <li>Memory usage is predictable and linear</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md476"></a>
+<h1><a class="anchor" id="autotoc_md484"></a>
 Latency Analysis</h1>
-<h2><a class="anchor" id="autotoc_md477"></a>
+<h2><a class="anchor" id="autotoc_md485"></a>
 Latency Distribution (Pub/Sub)</h2>
 <p><b>Test Configuration</b>: 1 million messages, 1 publisher, 1 subscriber</p>
 <table class="markdownTable">
@@ -382,7 +488,7 @@ Latency Distribution (Pub/Sub)</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Max</b>   </td><td class="markdownTableBodyNone">2 ms   </td><td class="markdownTableBodyNone">Rare outlier   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md478"></a>
+<h2><a class="anchor" id="autotoc_md486"></a>
 Latency Breakdown</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -404,9 +510,9 @@ Latency Breakdown</h2>
 <li>Latency is consistent and predictable</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md480"></a>
+<h1><a class="anchor" id="autotoc_md488"></a>
 Scalability</h1>
-<h2><a class="anchor" id="autotoc_md481"></a>
+<h2><a class="anchor" id="autotoc_md489"></a>
 Thread Scaling</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -422,7 +528,7 @@ Thread Scaling</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">16   </td><td class="markdownTableBodyNone">300K msg/s   </td><td class="markdownTableBodyNone">10.0x   </td><td class="markdownTableBodyNone">63%   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md482"></a>
+<h2><a class="anchor" id="autotoc_md490"></a>
 Publisher/Subscriber Scaling</h2>
 <p><b>Fixed Workers (4), Variable Pub/Sub</b>:</p>
 <table class="markdownTable">
@@ -443,9 +549,9 @@ Publisher/Subscriber Scaling</h2>
 <li>Multiple publishers/subscribers scale well</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md484"></a>
+<h1><a class="anchor" id="autotoc_md492"></a>
 Optimization Insights</h1>
-<h2><a class="anchor" id="autotoc_md485"></a>
+<h2><a class="anchor" id="autotoc_md493"></a>
 Performance Tuning Recommendations</h2>
 <ol type="1">
 <li><b>Queue Configuration</b><ul>
@@ -479,7 +585,7 @@ Performance Tuning Recommendations</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md486"></a>
+<h2><a class="anchor" id="autotoc_md494"></a>
 Common Bottlenecks</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -494,29 +600,27 @@ Common Bottlenecks</h2>
 <td class="markdownTableBodyNone"><b>Memory Pressure</b>   </td><td class="markdownTableBodyNone">Slow performance   </td><td class="markdownTableBodyNone">Reduce message size or implement GC   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md488"></a>
+<h1><a class="anchor" id="autotoc_md496"></a>
 Running Benchmarks</h1>
-<h2><a class="anchor" id="autotoc_md489"></a>
+<h2><a class="anchor" id="autotoc_md497"></a>
 Prerequisites</h2>
 <div class="fragment"><div class="line">cmake -B build -DMESSAGING_BUILD_BENCHMARKS=ON</div>
 <div class="line">cmake --build build -j</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md490"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md498"></a>
 Available Benchmarks</h2>
-<div class="fragment"><div class="line"># Message creation benchmark</div>
+<div class="fragment"><div class="line"># Core messaging benchmarks</div>
 <div class="line">./build/test/benchmarks/bench_message_creation</div>
-<div class="line"> </div>
-<div class="line"># Queue performance benchmark</div>
 <div class="line">./build/test/benchmarks/bench_message_queue</div>
-<div class="line"> </div>
-<div class="line"># Topic router benchmark</div>
 <div class="line">./build/test/benchmarks/bench_topic_router</div>
-<div class="line"> </div>
-<div class="line"># Pub/Sub throughput benchmark</div>
 <div class="line">./build/test/benchmarks/bench_pub_sub_throughput</div>
-<div class="line"> </div>
-<div class="line"># Request/Reply latency benchmark</div>
 <div class="line">./build/test/benchmarks/bench_request_reply_latency</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md491"></a>
+<div class="line"> </div>
+<div class="line"># Task module benchmarks</div>
+<div class="line">./build/test/benchmarks/bench_task_queue</div>
+<div class="line">./build/test/benchmarks/bench_worker_throughput</div>
+<div class="line">./build/test/benchmarks/bench_result_backend</div>
+<div class="line">./build/test/benchmarks/bench_scheduler</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md499"></a>
 Benchmark Output Format</h2>
 <div class="fragment"><div class="line">------------------------------------------------------</div>
 <div class="line">Benchmark: Message Creation</div>
@@ -530,7 +634,7 @@ Benchmark Output Format</h2>
 <div class="line">Memory usage: 300 MB</div>
 <div class="line">------------------------------------------------------</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md493"></a>
+<h1><a class="anchor" id="autotoc_md501"></a>
 Continuous Performance Monitoring</h1>
 <p>Performance metrics are automatically measured in our CI/CD pipeline:</p><ul>
 <li>Regression detection on every PR</li>
@@ -539,9 +643,9 @@ Continuous Performance Monitoring</h1>
 </ul>
 <p>See <a href="../../../.github/workflows/benchmarks.yml">CI/CD Performance Tracking</a> for details.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md495"></a>
+<h1><a class="anchor" id="autotoc_md503"></a>
 Comparison with Other Systems</h1>
-<h2><a class="anchor" id="autotoc_md496"></a>
+<h2><a class="anchor" id="autotoc_md504"></a>
 Feature Comparison</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -559,7 +663,7 @@ Feature Comparison</h2>
 </table>
 <p><b>Note</b>: Comparison is approximate and depends on configuration. messaging_system is optimized for in-process, low-latency messaging.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md498"></a>
+<h1><a class="anchor" id="autotoc_md506"></a>
 Conclusion</h1>
 <p>The messaging_system provides:</p><ul>
 <li><b>High Performance</b>: 100K+ msg/s with &lt;10 μs latency</li>
@@ -573,7 +677,7 @@ Conclusion</h1>
 <li>Monitoring of P99 latency and throughput</li>
 </ul>
 <hr  />
-<p><b>Last Updated</b>: 2025-11-18 <b>Platform</b>: Apple M1 @ 3.2GHz, 16GB RAM, macOS Sonoma <b>Version</b>: 1.0 </p>
+<p><b>Last Updated</b>: 2025-12-10 <b>Platform</b>: Apple M1 @ 3.2GHz, 16GB RAM, macOS Sonoma <b>Version</b>: 1.1 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
