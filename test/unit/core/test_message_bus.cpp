@@ -6,9 +6,43 @@
 #include <thread>
 #include <chrono>
 #include <atomic>
+#include <condition_variable>
+#include <mutex>
 
 using namespace kcenon::messaging;
 using namespace kcenon::common;
+
+namespace {
+
+/**
+ * @brief Wait for a condition with timeout using condition variable
+ */
+template<typename Predicate>
+bool wait_for_condition(Predicate&& pred, std::chrono::milliseconds timeout = std::chrono::milliseconds{1000}) {
+	if (pred()) {
+		return true;
+	}
+
+	std::mutex mtx;
+	std::condition_variable cv;
+	std::unique_lock<std::mutex> lock(mtx);
+
+	auto deadline = std::chrono::steady_clock::now() + timeout;
+
+	while (!pred()) {
+		auto remaining = deadline - std::chrono::steady_clock::now();
+		if (remaining <= std::chrono::milliseconds::zero()) {
+			return false;
+		}
+
+		auto wait_time = std::min(remaining, std::chrono::milliseconds{50});
+		cv.wait_for(lock, wait_time);
+	}
+
+	return true;
+}
+
+}  // namespace
 // Use namespace alias to avoid ambiguity with common::error
 namespace msg_error = kcenon::messaging::error;
 
@@ -153,7 +187,10 @@ TEST_F(MessageBusTest, PubSubBasic) {
 	ASSERT_TRUE(pub_result.is_ok());
 
 	// Wait for processing
-	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	ASSERT_TRUE(wait_for_condition(
+		[&received_count]() { return received_count.load() >= 1; },
+		std::chrono::milliseconds(200)
+	));
 
 	EXPECT_EQ(received_count.load(), 1);
 
@@ -186,7 +223,10 @@ TEST_F(MessageBusTest, PubSubMultipleMessages) {
 	}
 
 	// Wait for processing
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	ASSERT_TRUE(wait_for_condition(
+		[&received_count]() { return received_count.load() >= 10; },
+		std::chrono::milliseconds(500)
+	));
 
 	EXPECT_EQ(received_count.load(), 10);
 
@@ -228,7 +268,12 @@ TEST_F(MessageBusTest, PubSubMultipleSubscribers) {
 	ASSERT_TRUE(pub_result.is_ok());
 
 	// Wait for processing
-	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	ASSERT_TRUE(wait_for_condition(
+		[&subscriber1_count, &subscriber2_count]() {
+			return subscriber1_count.load() >= 1 && subscriber2_count.load() >= 1;
+		},
+		std::chrono::milliseconds(200)
+	));
 
 	EXPECT_EQ(subscriber1_count.load(), 1);
 	EXPECT_EQ(subscriber2_count.load(), 1);
@@ -260,8 +305,11 @@ TEST_F(MessageBusTest, PubSubWithWildcard) {
 	message msg3("other.topic");
 	bus_->publish(msg3);
 
-	// Wait for processing
-	std::this_thread::sleep_for(std::chrono::milliseconds(300));
+	// Wait for processing - should receive 2 messages matching "test.*"
+	ASSERT_TRUE(wait_for_condition(
+		[&received_count]() { return received_count.load() >= 2; },
+		std::chrono::milliseconds(300)
+	));
 
 	// Should receive only messages matching "test.*"
 	EXPECT_EQ(received_count.load(), 2);
@@ -297,8 +345,11 @@ TEST_F(MessageBusTest, PubSubWithFilter) {
 	msg2.metadata().priority = message_priority::high;
 	bus_->publish(msg2);
 
-	// Wait for processing
-	std::this_thread::sleep_for(std::chrono::milliseconds(300));
+	// Wait for processing - should receive 1 high priority message
+	ASSERT_TRUE(wait_for_condition(
+		[&received_count]() { return received_count.load() >= 1; },
+		std::chrono::milliseconds(300)
+	));
 
 	// Should receive only high priority message
 	EXPECT_EQ(received_count.load(), 1);
@@ -329,7 +380,10 @@ TEST_F(MessageBusTest, Statistics) {
 	bus_->publish(msg);
 
 	// Wait for processing
-	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	ASSERT_TRUE(wait_for_condition(
+		[this]() { return bus_->get_statistics().messages_processed >= 1; },
+		std::chrono::milliseconds(200)
+	));
 
 	auto stats_after = bus_->get_statistics();
 	EXPECT_EQ(stats_after.messages_published, 1);

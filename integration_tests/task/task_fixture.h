@@ -11,6 +11,7 @@
 
 #include <atomic>
 #include <chrono>
+#include <condition_variable>
 #include <functional>
 #include <memory>
 #include <mutex>
@@ -22,21 +23,38 @@ namespace kcenon::messaging::task::testing {
 namespace cmn = kcenon::common;
 
 /**
- * @brief Wait for a condition with timeout
+ * @brief Wait for a condition with timeout using condition variable
+ *
+ * Uses std::condition_variable for efficient waiting instead of polling with sleep_for.
+ * The predicate is checked periodically to avoid missed wakeups when the condition
+ * is satisfied by external events that don't notify the condition variable.
  */
 template<typename Predicate>
 bool wait_for_condition(
 	Predicate&& pred,
 	std::chrono::milliseconds timeout = std::chrono::milliseconds{5000}
 ) {
-	auto start = std::chrono::steady_clock::now();
+	if (pred()) {
+		return true;
+	}
 
+	std::mutex mtx;
+	std::condition_variable cv;
+	std::unique_lock<std::mutex> lock(mtx);
+
+	auto deadline = std::chrono::steady_clock::now() + timeout;
+
+	// Use wait_until with periodic predicate checks for conditions
+	// that may be satisfied without explicit notification
 	while (!pred()) {
-		auto elapsed = std::chrono::steady_clock::now() - start;
-		if (elapsed > timeout) {
+		auto remaining = deadline - std::chrono::steady_clock::now();
+		if (remaining <= std::chrono::milliseconds::zero()) {
 			return false;
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds{10});
+
+		// Wait for a short interval or until timeout, then recheck the predicate
+		auto wait_time = std::min(remaining, std::chrono::milliseconds{50});
+		cv.wait_for(lock, wait_time);
 	}
 
 	return true;

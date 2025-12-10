@@ -94,8 +94,11 @@ TEST_F(SchedulingTest, PeriodicTaskWithShortInterval) {
 
 	ASSERT_TRUE(schedule_result.is_ok()) << schedule_result.error().message;
 
-	// Wait for multiple executions
-	std::this_thread::sleep_for(std::chrono::seconds(3));
+	// Wait for multiple executions using wait_for_condition
+	ASSERT_TRUE(wait_for_condition(
+		[&counter]() { return counter.count() >= 2; },
+		std::chrono::seconds(5)
+	)) << "Expected at least 2 executions with 1s interval";
 
 	EXPECT_GE(counter.count(), 2) << "Expected at least 2 executions with 1s interval";
 }
@@ -241,8 +244,15 @@ TEST_F(SchedulingTest, DisableSchedule) {
 	auto disable_result = scheduler->disable("test-disable");
 	ASSERT_TRUE(disable_result.is_ok()) << disable_result.error().message;
 
-	// Wait and verify no more executions
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	// Wait a short period to verify no more executions occur
+	// Note: We use wait_for_condition with an inverse check - expecting it to timeout
+	// because the condition (count increasing) should NOT be met
+	size_t expected_max = count_before_disable + 1;  // Allow for one in-flight execution
+	bool unexpected_increase = wait_for_condition(
+		[&counter, expected_max]() { return counter.count() > expected_max; },
+		std::chrono::seconds(2)
+	);
+	EXPECT_FALSE(unexpected_increase) << "Schedule continued after disable";
 	size_t count_after_disable = counter.count();
 
 	// Count should not have increased significantly (allow for one in-flight execution)
@@ -276,8 +286,12 @@ TEST_F(SchedulingTest, EnableSchedule) {
 
 	ASSERT_TRUE(scheduler->disable("test-enable").is_ok());
 
-	// Wait - should not execute
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	// Wait and verify schedule doesn't execute while disabled
+	bool executed_while_disabled = wait_for_condition(
+		[&counter]() { return counter.count() > 0; },
+		std::chrono::seconds(2)
+	);
+	EXPECT_FALSE(executed_while_disabled) << "Schedule executed while disabled";
 	size_t count_while_disabled = counter.count();
 
 	// Re-enable

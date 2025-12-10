@@ -103,8 +103,13 @@ TEST_F(MessageBusRouterTest, UnsubscribeStopsDelivery) {
     counter.reset();
     ASSERT_TRUE(bus_->publish(create_test_message("test.topic")).is_ok());
 
-    // Wait a bit and verify no delivery
-    std::this_thread::sleep_for(std::chrono::milliseconds{100});
+    // Verify no delivery occurs after unsubscribe
+    // Use wait_for_condition expecting it to timeout (message should NOT be delivered)
+    bool unexpected_delivery = wait_for_condition(
+        [&counter]() { return counter.count() > 0; },
+        std::chrono::milliseconds{100}
+    );
+    EXPECT_FALSE(unexpected_delivery) << "Message delivered after unsubscribe";
     EXPECT_EQ(counter.count(), 0);
 }
 
