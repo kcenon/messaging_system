@@ -180,7 +180,7 @@ messaging_system/
 | File | Description | Use Case |
 |------|-------------|----------|
 | `backend_interface.h` | Backend abstraction | All backends |
-| `standalone_backend.h` | Self-contained execution | Testing, simple apps |
+| `standalone_backend.h` | Uses thread_system internally | Testing, simple apps |
 | `integration_backend.h` | External thread pool | Production, integration |
 
 ### Patterns (`include/kcenon/messaging/patterns/`)
