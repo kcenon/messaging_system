@@ -3,12 +3,46 @@
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/backends/standalone_backend.h>
 #include <chrono>
+#include <condition_variable>
+#include <mutex>
 #include <thread>
 #include <atomic>
 
 using namespace kcenon;
 using namespace kcenon::messaging;
 using namespace kcenon::messaging::patterns;
+
+namespace {
+
+/**
+ * @brief Wait for a condition with timeout using condition variable
+ */
+template<typename Predicate>
+bool wait_for_condition(Predicate&& pred, std::chrono::milliseconds timeout = std::chrono::milliseconds{1000}) {
+	if (pred()) {
+		return true;
+	}
+
+	std::mutex mtx;
+	std::condition_variable cv;
+	std::unique_lock<std::mutex> lock(mtx);
+
+	auto deadline = std::chrono::steady_clock::now() + timeout;
+
+	while (!pred()) {
+		auto remaining = deadline - std::chrono::steady_clock::now();
+		if (remaining <= std::chrono::milliseconds::zero()) {
+			return false;
+		}
+
+		auto wait_time = std::min(remaining, std::chrono::milliseconds{50});
+		cv.wait_for(lock, wait_time);
+	}
+
+	return true;
+}
+
+}  // namespace
 
 class EventStreamingTest : public ::testing::Test {
 protected:
@@ -59,8 +93,11 @@ TEST_F(EventStreamingTest, EventStreamPublish) {
 	auto result = stream.publish_event(std::move(event));
 	ASSERT_TRUE(result.is_ok());
 
-	// Allow time for event to be buffered
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	// Wait for event to be buffered
+	ASSERT_TRUE(wait_for_condition(
+		[&stream]() { return stream.event_count() >= 1; },
+		std::chrono::milliseconds(100)
+	));
 
 	// Check that event was buffered
 	EXPECT_EQ(stream.event_count(), 1);
@@ -86,7 +123,10 @@ TEST_F(EventStreamingTest, EventStreamSubscribe) {
 	}
 
 	// Wait for events to be processed
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	ASSERT_TRUE(wait_for_condition(
+		[&event_count]() { return event_count.load() >= 5; },
+		std::chrono::milliseconds(200)
+	));
 
 	EXPECT_EQ(event_count.load(), 5);
 }
@@ -108,7 +148,12 @@ TEST_F(EventStreamingTest, EventStreamUnsubscribe) {
 	// Publish one event
 	message event1("events.test", message_type::event);
 	stream.publish_event(std::move(event1));
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	// Wait for first event to be received
+	ASSERT_TRUE(wait_for_condition(
+		[&event_count]() { return event_count.load() >= 1; },
+		std::chrono::milliseconds(100)
+	));
 
 	// Unsubscribe
 	auto unsub_result = stream.unsubscribe(sub_id);
@@ -117,7 +162,13 @@ TEST_F(EventStreamingTest, EventStreamUnsubscribe) {
 	// Publish another event - should not be received
 	message event2("events.test", message_type::event);
 	stream.publish_event(std::move(event2));
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	// Verify no additional events are received (wait and check count doesn't increase)
+	bool unexpected_event = wait_for_condition(
+		[&event_count]() { return event_count.load() > 1; },
+		std::chrono::milliseconds(100)
+	);
+	EXPECT_FALSE(unexpected_event) << "Event received after unsubscribe";
 
 	// Should only have received one event
 	EXPECT_EQ(event_count.load(), 1);
@@ -137,7 +188,12 @@ TEST_F(EventStreamingTest, EventReplayDisabled) {
 		message event("events.test", message_type::event);
 		stream.publish_event(std::move(event));
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	// Wait for events to be buffered
+	wait_for_condition(
+		[&stream]() { return stream.event_count() >= 3; },
+		std::chrono::milliseconds(100)
+	);
 
 	std::atomic<int> event_count{0};
 	auto callback = [&event_count](const message& msg) -> common::VoidResult {
@@ -149,14 +205,23 @@ TEST_F(EventStreamingTest, EventReplayDisabled) {
 	auto sub_result = stream.subscribe(callback, false);
 	ASSERT_TRUE(sub_result.is_ok());
 
-	// Wait and check - should not receive past events
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	// Verify no past events are received (wait and check count stays at 0)
+	bool received_past_events = wait_for_condition(
+		[&event_count]() { return event_count.load() > 0; },
+		std::chrono::milliseconds(100)
+	);
+	EXPECT_FALSE(received_past_events) << "Past events received when replay disabled";
 	EXPECT_EQ(event_count.load(), 0);
 
 	// Publish new event - should be received
 	message new_event("events.test", message_type::event);
 	stream.publish_event(std::move(new_event));
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+	// Wait for new event to be received
+	ASSERT_TRUE(wait_for_condition(
+		[&event_count]() { return event_count.load() >= 1; },
+		std::chrono::milliseconds(100)
+	));
 	EXPECT_EQ(event_count.load(), 1);
 }
 
@@ -171,7 +236,12 @@ TEST_F(EventStreamingTest, EventReplayEnabled) {
 		message event("events.test", message_type::event);
 		stream.publish_event(std::move(event));
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+	// Wait for events to be buffered
+	wait_for_condition(
+		[&stream]() { return stream.event_count() >= 5; },
+		std::chrono::milliseconds(200)
+	);
 
 	std::atomic<int> event_count{0};
 	auto callback = [&event_count](const message& msg) -> common::VoidResult {
@@ -183,10 +253,12 @@ TEST_F(EventStreamingTest, EventReplayEnabled) {
 	auto sub_result = stream.subscribe(callback, true);
 	ASSERT_TRUE(sub_result.is_ok());
 
-	// Wait for replay to complete
-	std::this_thread::sleep_for(std::chrono::milliseconds(150));
+	// Wait for replay to complete - should receive all 5 past events
+	ASSERT_TRUE(wait_for_condition(
+		[&event_count]() { return event_count.load() >= 5; },
+		std::chrono::milliseconds(300)
+	));
 
-	// Should receive all 5 past events
 	EXPECT_EQ(event_count.load(), 5);
 }
 
@@ -203,7 +275,12 @@ TEST_F(EventStreamingTest, EventReplayWithFilter) {
 		}
 		stream.publish_event(std::move(event));
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+	// Wait for events to be buffered
+	wait_for_condition(
+		[&stream]() { return stream.event_count() >= 10; },
+		std::chrono::milliseconds(200)
+	);
 
 	std::atomic<int> high_priority_count{0};
 	auto callback = [&high_priority_count](const message& msg) -> common::VoidResult {
@@ -222,9 +299,12 @@ TEST_F(EventStreamingTest, EventReplayWithFilter) {
 	auto sub_result = stream.subscribe(callback, filter, true);
 	ASSERT_TRUE(sub_result.is_ok());
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(150));
+	// Wait for filtered replay - should only receive 5 high-priority events
+	ASSERT_TRUE(wait_for_condition(
+		[&high_priority_count]() { return high_priority_count.load() >= 5; },
+		std::chrono::milliseconds(300)
+	));
 
-	// Should only receive 5 high-priority events
 	EXPECT_EQ(high_priority_count.load(), 5);
 }
 
@@ -236,7 +316,12 @@ TEST_F(EventStreamingTest, ManualReplay) {
 		message event("events.test", message_type::event);
 		stream.publish_event(std::move(event));
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+	// Wait for events to be buffered
+	wait_for_condition(
+		[&stream]() { return stream.event_count() >= 7; },
+		std::chrono::milliseconds(200)
+	);
 
 	std::atomic<int> replayed_count{0};
 	auto callback = [&replayed_count](const message& msg) -> common::VoidResult {
@@ -265,7 +350,12 @@ TEST_F(EventStreamingTest, EventBufferSize) {
 		message event("events.test", message_type::event);
 		stream.publish_event(std::move(event));
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+	// Wait for events to be processed (buffer will cap at max_buffer_size)
+	wait_for_condition(
+		[&stream]() { return stream.event_count() >= 5; },
+		std::chrono::milliseconds(200)
+	);
 
 	// Buffer should only contain last 5 events
 	EXPECT_LE(stream.event_count(), 5);
@@ -279,7 +369,12 @@ TEST_F(EventStreamingTest, GetEvents) {
 		message event("events.test", message_type::event);
 		stream.publish_event(std::move(event));
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+	// Wait for events to be buffered
+	ASSERT_TRUE(wait_for_condition(
+		[&stream]() { return stream.event_count() >= 5; },
+		std::chrono::milliseconds(200)
+	));
 
 	// Get all events
 	auto events = stream.get_events();
@@ -299,7 +394,12 @@ TEST_F(EventStreamingTest, GetEventsWithFilter) {
 		}
 		stream.publish_event(std::move(event));
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+	// Wait for events to be buffered
+	wait_for_condition(
+		[&stream]() { return stream.event_count() >= 10; },
+		std::chrono::milliseconds(200)
+	);
 
 	// Get only high priority messages
 	auto filter = [](const message& msg) {
@@ -319,7 +419,12 @@ TEST_F(EventStreamingTest, ClearBuffer) {
 		message event("events.test", message_type::event);
 		stream.publish_event(std::move(event));
 	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+	// Wait for events to be buffered
+	ASSERT_TRUE(wait_for_condition(
+		[&stream]() { return stream.event_count() >= 5; },
+		std::chrono::milliseconds(200)
+	));
 
 	EXPECT_EQ(stream.event_count(), 5);
 
@@ -384,8 +489,11 @@ TEST_F(EventStreamingTest, BatchProcessorBatchSize) {
 		bus_->publish(std::move(event));
 	}
 
-	// Wait for batches to process
-	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	// Wait for batches to be processed
+	ASSERT_TRUE(wait_for_condition(
+		[&total_events]() { return total_events.load() >= 9; },
+		std::chrono::milliseconds(500)
+	));
 
 	processor.stop();
 
@@ -416,13 +524,18 @@ TEST_F(EventStreamingTest, BatchProcessorFlush) {
 		bus_->publish(std::move(event));
 	}
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	// Small delay to allow events to be queued
+	wait_for_condition([]() { return false; }, std::chrono::milliseconds(50));
 
 	// Manually flush
 	auto flush_result = processor.flush();
 	ASSERT_TRUE(flush_result.is_ok());
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	// Wait for flush to complete
+	ASSERT_TRUE(wait_for_condition(
+		[&batch_count]() { return batch_count.load() >= 1; },
+		std::chrono::milliseconds(200)
+	));
 
 	processor.stop();
 

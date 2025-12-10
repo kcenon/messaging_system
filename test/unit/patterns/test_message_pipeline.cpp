@@ -3,12 +3,43 @@
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/backends/standalone_backend.h>
 #include <chrono>
+#include <condition_variable>
+#include <mutex>
 #include <thread>
 #include <atomic>
 
 using namespace kcenon;
 using namespace kcenon::messaging;
 using namespace kcenon::messaging::patterns;
+
+namespace {
+
+template<typename Predicate>
+bool wait_for_condition(Predicate&& pred, std::chrono::milliseconds timeout = std::chrono::milliseconds{1000}) {
+	if (pred()) {
+		return true;
+	}
+
+	std::mutex mtx;
+	std::condition_variable cv;
+	std::unique_lock<std::mutex> lock(mtx);
+
+	auto deadline = std::chrono::steady_clock::now() + timeout;
+
+	while (!pred()) {
+		auto remaining = deadline - std::chrono::steady_clock::now();
+		if (remaining <= std::chrono::milliseconds::zero()) {
+			return false;
+		}
+
+		auto wait_time = std::min(remaining, std::chrono::milliseconds{50});
+		cv.wait_for(lock, wait_time);
+	}
+
+	return true;
+}
+
+}  // namespace
 
 class MessagePipelineTest : public ::testing::Test {
 protected:
@@ -256,7 +287,7 @@ TEST_F(MessagePipelineTest, PipelineAutoProcessing) {
 	}
 
 	// Wait for processing
-	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	ASSERT_TRUE(wait_for_condition([&output_count]() { return output_count.load() >= 5; }, std::chrono::milliseconds(500)));
 
 	pipeline.stop();
 

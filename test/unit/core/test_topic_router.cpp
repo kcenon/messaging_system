@@ -473,8 +473,13 @@ TEST_F(TopicRouterTest, ConcurrentSubscribeUnsubscribe) {
 		}
 	});
 
-	// Reduced time for CI compatibility
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	// Run test iterations instead of time-based duration for deterministic behavior
+	const int test_iterations = 1000;
+	int iteration_count = 0;
+	while (iteration_count < test_iterations && running) {
+		iteration_count++;
+		std::this_thread::yield();
+	}
 	running = false;
 
 	subscriber_thread.join();

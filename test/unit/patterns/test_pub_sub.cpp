@@ -3,11 +3,42 @@
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/backends/standalone_backend.h>
 #include <chrono>
+#include <condition_variable>
+#include <mutex>
 #include <thread>
 
 using namespace kcenon;
 using namespace kcenon::messaging;
 using namespace kcenon::messaging::patterns;
+
+namespace {
+
+template<typename Predicate>
+bool wait_for_condition(Predicate&& pred, std::chrono::milliseconds timeout = std::chrono::milliseconds{1000}) {
+	if (pred()) {
+		return true;
+	}
+
+	std::mutex mtx;
+	std::condition_variable cv;
+	std::unique_lock<std::mutex> lock(mtx);
+
+	auto deadline = std::chrono::steady_clock::now() + timeout;
+
+	while (!pred()) {
+		auto remaining = deadline - std::chrono::steady_clock::now();
+		if (remaining <= std::chrono::milliseconds::zero()) {
+			return false;
+		}
+
+		auto wait_time = std::min(remaining, std::chrono::milliseconds{50});
+		cv.wait_for(lock, wait_time);
+	}
+
+	return true;
+}
+
+}  // namespace
 
 class PubSubTest : public ::testing::Test {
 protected:
@@ -88,7 +119,7 @@ TEST_F(PubSubTest, PublisherPublishToDefaultTopic) {
 	EXPECT_TRUE(pub_result.is_ok());
 
 	// Wait for delivery
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	ASSERT_TRUE(wait_for_condition([&received]() { return received; }, std::chrono::milliseconds(200)));
 
 	EXPECT_TRUE(received);
 	EXPECT_EQ(received_topic, "test.default");
@@ -113,7 +144,7 @@ TEST_F(PubSubTest, PublisherPublishToSpecificTopic) {
 	EXPECT_TRUE(pub_result.is_ok());
 
 	// Wait for delivery
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	ASSERT_TRUE(wait_for_condition([&received]() { return received; }, std::chrono::milliseconds(200)));
 
 	EXPECT_TRUE(received);
 	EXPECT_EQ(received_topic, "test.specific");
@@ -158,7 +189,7 @@ TEST_F(PubSubTest, SubscriberSubscribe) {
 	ASSERT_TRUE(pub_result.is_ok());
 
 	// Wait for delivery
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	ASSERT_TRUE(wait_for_condition([&received]() { return received; }, std::chrono::milliseconds(200)));
 	EXPECT_TRUE(received);
 }
 
@@ -187,7 +218,7 @@ TEST_F(PubSubTest, SubscriberMultipleSubscriptions) {
 	bus_->publish(std::move(msg2));
 
 	// Wait for delivery
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	ASSERT_TRUE(wait_for_condition([&count]() { return count >= 2; }, std::chrono::milliseconds(200)));
 	EXPECT_EQ(count, 2);
 }
 
@@ -214,8 +245,9 @@ TEST_F(PubSubTest, SubscriberUnsubscribe) {
 	message msg("test.topic");
 	bus_->publish(std::move(msg));
 
-	// Wait
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	// Verify message is NOT received after unsubscribe
+	bool unexpected = wait_for_condition([&received]() { return received; }, std::chrono::milliseconds(100));
+	EXPECT_FALSE(unexpected) << "Message received after unsubscribe";
 	EXPECT_FALSE(received);
 }
 
@@ -252,8 +284,9 @@ TEST_F(PubSubTest, SubscriberUnsubscribeAll) {
 	bus_->publish(std::move(msg2));
 	bus_->publish(std::move(msg3));
 
-	// Wait
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	// Verify messages are NOT received after unsubscribe_all
+	bool unexpected = wait_for_condition([&count]() { return count > 0; }, std::chrono::milliseconds(100));
+	EXPECT_FALSE(unexpected) << "Messages received after unsubscribe_all";
 	EXPECT_EQ(count, 0);
 }
 
@@ -276,8 +309,9 @@ TEST_F(PubSubTest, SubscriberAutoUnsubscribeOnDestruction) {
 	message msg("test.topic");
 	bus_->publish(std::move(msg));
 
-	// Wait
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	// Verify message is NOT received after subscriber destruction
+	bool unexpected = wait_for_condition([&received]() { return received; }, std::chrono::milliseconds(100));
+	EXPECT_FALSE(unexpected) << "Message received after subscriber destruction";
 	EXPECT_FALSE(received);
 }
 
@@ -320,8 +354,8 @@ TEST_F(PubSubTest, SubscriberWithFilter) {
 	msg3.metadata().priority = message_priority::low;
 	bus_->publish(std::move(msg3));
 
-	// Wait for delivery
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	// Wait for all messages to be delivered
+	ASSERT_TRUE(wait_for_condition([&total_count]() { return total_count >= 3; }, std::chrono::milliseconds(200)));
 
 	EXPECT_EQ(high_priority_count, 1);  // Only high priority message
 	EXPECT_EQ(total_count, 3);          // All messages
@@ -372,7 +406,7 @@ TEST_F(PubSubTest, SubscriberWithPriority) {
 	bus_->publish(std::move(msg));
 
 	// Wait for delivery
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	ASSERT_TRUE(wait_for_condition([&execution_order]() { return execution_order.size() >= 3; }, std::chrono::milliseconds(200)));
 
 	// Verify execution order (highest priority first)
 	ASSERT_EQ(execution_order.size(), 3);
@@ -405,7 +439,7 @@ TEST_F(PubSubTest, PublisherSubscriberIntegration) {
 	EXPECT_TRUE(pub_result.is_ok());
 
 	// Wait for delivery
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	ASSERT_TRUE(wait_for_condition([&received]() { return received; }, std::chrono::milliseconds(200)));
 
 	EXPECT_TRUE(received);
 	EXPECT_EQ(received_data, "test.integration");
@@ -445,7 +479,9 @@ TEST_F(PubSubTest, MultiplePublishersAndSubscribers) {
 	}
 
 	// Wait for delivery
-	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	ASSERT_TRUE(wait_for_condition([&count1, &count2]() {
+		return count1.load() >= 5 && count2.load() >= 5;
+	}, std::chrono::milliseconds(500)));
 
 	EXPECT_EQ(count1, 5);
 	EXPECT_EQ(count2, 5);
@@ -475,8 +511,8 @@ TEST_F(PubSubTest, WildcardSubscription) {
 	pub.publish("user.deleted", std::move(msg3));
 	pub.publish("order.created", std::move(msg4));
 
-	// Wait for delivery
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	// Wait for delivery - should receive 3 matching messages (user.*)
+	ASSERT_TRUE(wait_for_condition([&count]() { return count >= 3; }, std::chrono::milliseconds(200)));
 
 	EXPECT_EQ(count, 3);  // Only user.* topics
 }
