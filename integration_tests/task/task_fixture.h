@@ -47,7 +47,8 @@ bool wait_for_condition(
 	// Use wait_until with periodic predicate checks for conditions
 	// that may be satisfied without explicit notification
 	while (!pred()) {
-		auto remaining = deadline - std::chrono::steady_clock::now();
+		auto remaining = std::chrono::duration_cast<std::chrono::milliseconds>(
+			deadline - std::chrono::steady_clock::now());
 		if (remaining <= std::chrono::milliseconds::zero()) {
 			return false;
 		}
