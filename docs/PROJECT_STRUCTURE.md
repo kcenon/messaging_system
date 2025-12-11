@@ -1,6 +1,6 @@
 # Messaging System Project Structure
 
-**Version**: 1.1
+**Version**: 0.1.1
 **Last Updated**: 2025-12-10
 **Language**: [English] | [한국어](PROJECT_STRUCTURE_KO.md)
 
@@ -461,4 +461,4 @@ messaging_system/
 ---
 
 **Last Updated**: 2025-12-10
-**Version**: 1.1
+**Version**: 0.1.1

@@ -1,6 +1,6 @@
 # Messaging System 프로덕션 품질
 
-**버전**: 1.0
+**버전**: 0.1.0
 **최종 수정일**: 2025-11-30
 **언어**: [English](PRODUCTION_QUALITY.md) | [한국어]
 

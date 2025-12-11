@@ -1,6 +1,6 @@
 # Messaging System 아키텍처
 
-**버전**: 1.0
+**버전**: 0.1.0
 **최종 수정일**: 2025-11-30
 **언어**: [English](ARCHITECTURE.md) | [한국어]
 

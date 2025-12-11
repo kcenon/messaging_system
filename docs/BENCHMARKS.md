@@ -1,6 +1,6 @@
 # Messaging System Performance Benchmarks
 
-**Version**: 1.1
+**Version**: 0.1.1
 **Last Updated**: 2025-12-10
 **Language**: [English] | [한국어](BENCHMARKS_KO.md)
 
@@ -494,4 +494,4 @@ For production deployments, we recommend:
 
 **Last Updated**: 2025-12-10
 **Platform**: Apple M1 @ 3.2GHz, 16GB RAM, macOS Sonoma
-**Version**: 1.1
+**Version**: 0.1.1

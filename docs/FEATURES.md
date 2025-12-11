@@ -1,6 +1,6 @@
 # Messaging System Features
 
-**Version**: 1.1
+**Version**: 0.1.1
 **Last Updated**: 2025-12-10
 **Language**: [English] | [한국어](FEATURES_KO.md)
 
@@ -835,4 +835,4 @@ For usage examples and getting started guides, see:
 ---
 
 **Last Updated**: 2025-12-10
-**Version**: 1.1
+**Version**: 0.1.1

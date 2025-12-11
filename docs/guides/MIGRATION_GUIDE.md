@@ -1,6 +1,6 @@
 # Migration Guide
 
-**Version**: 2.0
+**Version**: 0.2.0
 **Date**: 2025-11-17
 **Target Audience**: Developers migrating from messaging_system v1.x to v2.0
 
@@ -765,6 +765,6 @@ For migration assistance:
 
 ---
 
-**Document Version**: 1.0
+**Document Version**: 0.1.0
 **Last Updated**: 2025-11-17
 **Maintainer**: Messaging System Team

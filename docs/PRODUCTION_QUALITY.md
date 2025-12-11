@@ -1,6 +1,6 @@
 # Messaging System Production Quality
 
-**Version**: 1.0
+**Version**: 0.1.0
 **Last Updated**: 2025-11-18
 **Language**: [English] | [한국어](PRODUCTION_QUALITY_KO.md)
 
@@ -342,4 +342,4 @@ The messaging_system is production-ready with:
 ---
 
 **Last Updated**: 2025-11-18
-**Version**: 1.0
+**Version**: 0.1.0

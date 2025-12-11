@@ -1,6 +1,6 @@
 # Messaging System API 레퍼런스
 
-**버전**: 1.0
+**버전**: 0.1.0
 **최종 수정일**: 2025-11-30
 **언어**: [English](API_REFERENCE.md) | [한국어]
 
