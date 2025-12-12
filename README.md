@@ -9,7 +9,7 @@
 [![Coverage](https://github.com/kcenon/messaging_system/actions/workflows/coverage.yml/badge.svg)](https://github.com/kcenon/messaging_system/actions/workflows/coverage.yml)
 [![Static Analysis](https://github.com/kcenon/messaging_system/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/kcenon/messaging_system/actions/workflows/static-analysis.yml)
 
-**Production-Ready Messaging Infrastructure with Advanced Patterns**
+**Modern Messaging Infrastructure with Advanced Patterns**
 
 Complete pub/sub, request/reply, event streaming, and message pipeline support
 
@@ -21,7 +21,7 @@ Complete pub/sub, request/reply, event streaming, and message pipeline support
 
 ## ✨ Overview
 
-A **production-ready messaging system** built on modern C++20 with comprehensive support for enterprise messaging patterns. The system provides a complete messaging infrastructure with pluggable backends, advanced routing capabilities, and robust reliability features.
+A **modern messaging system** built on C++20 with comprehensive support for enterprise messaging patterns. The system provides a complete messaging infrastructure with pluggable backends, advanced routing capabilities, and robust reliability features.
 
 ### 🎯 Key Features
 
@@ -76,7 +76,7 @@ A **production-ready messaging system** built on modern C++20 with comprehensive
 
 ## 📦 What's Included
 
-The messaging system is fully implemented and production-ready:
+The messaging system is fully implemented:
 
 ### ✅ Core Components (Complete)
 

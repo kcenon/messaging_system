@@ -62,7 +62,7 @@ The messaging system integrates multiple high-performance modules:
 - **[Network System](../libraries/network_system/README.md)** - Asynchronous TCP messaging infrastructure
 
 ### Application Layer
-- **[Sample Applications](../application_layer/samples/SAMPLES_README.md)** - 8 production-ready examples including chat server, IoT monitoring, and microservices orchestrator
+- **[Sample Applications](../application_layer/samples/SAMPLES_README.md)** - 8 working examples including chat server, IoT monitoring, and microservices orchestrator
 
 ### Task Queue System
 - **[Task Module Quick Start](./task/QUICK_START.md)** - Get started with distributed task queue in 5 minutes
@@ -84,7 +84,7 @@ All documentation follows these principles:
 - **Example-Driven**: Code examples for every major concept
 - **Performance-Focused**: Optimization tips throughout
 - **Integration-Aware**: Shows how components work together
-- **Production-Ready**: Real-world deployment considerations
+- **Practical**: Real-world deployment considerations
 
 ## 🔄 Documentation Updates
 

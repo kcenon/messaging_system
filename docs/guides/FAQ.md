@@ -9,7 +9,7 @@
 
 ### Q: What is messaging_system?
 
-A: messaging_system is a production-ready messaging infrastructure providing pub/sub, request/reply, event streaming, and message pipeline patterns.
+A: messaging_system is a messaging infrastructure providing pub/sub, request/reply, event streaming, and message pipeline patterns.
 
 ### Q: What C++ standard is required?
 

@@ -540,7 +540,7 @@ Check out the comprehensive examples in `application_layer/samples/`:
 
 - **GitHub Repository**: Source code, issues, and discussions
 - **Documentation**: This comprehensive guide
-- **Examples**: Production-ready sample applications
+- **Examples**: Working sample applications
 - **Support**: GitHub Issues and Discussions
 
 ---
