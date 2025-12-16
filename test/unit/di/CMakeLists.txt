@@ -27,3 +27,17 @@ target_link_libraries(test_service_registry
 
 add_test(NAME ServiceRegistry COMMAND test_service_registry)
 set_tests_properties(ServiceRegistry PROPERTIES TIMEOUT 60)
+
+add_executable(test_messaging_bootstrapper
+    test_messaging_bootstrapper.cpp
+)
+
+target_link_libraries(test_messaging_bootstrapper
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME MessagingBootstrapper COMMAND test_messaging_bootstrapper)
+set_tests_properties(MessagingBootstrapper PROPERTIES TIMEOUT 120)
