@@ -40,6 +40,117 @@ target_link_libraries(your_target PRIVATE messaging_system)
 
 ## Integration with Subsystems
 
+### Using UnifiedBootstrapper (Recommended)
+
+The recommended way to integrate messaging_system is through `UnifiedBootstrapper` from common_system. This provides unified lifecycle management and automatic shutdown coordination.
+
+#### Basic Integration
+
+```cpp
+#include <kcenon/common/di/unified_bootstrapper.h>
+#include <kcenon/messaging/di/messaging_bootstrapper.h>
+
+using namespace kcenon::common::di;
+using namespace kcenon::messaging::di;
+
+int main() {
+    // Step 1: Initialize unified bootstrapper
+    auto init_result = unified_bootstrapper::initialize({
+        .enable_logging = true,
+        .enable_monitoring = true,
+        .register_signal_handlers = true
+    });
+
+    if (init_result.is_err()) {
+        std::cerr << "Bootstrapper init failed\n";
+        return 1;
+    }
+
+    // Step 2: Integrate messaging services
+    auto msg_result = messaging_bootstrapper::integrate({
+        .config = {
+            .worker_threads = 8,
+            .queue_capacity = 2000,
+            .enable_event_bridge = true
+        },
+        .auto_start = true
+    });
+
+    if (msg_result.is_err()) {
+        std::cerr << "Messaging integration failed\n";
+        unified_bootstrapper::shutdown();
+        return 1;
+    }
+
+    // Step 3: Use the message bus
+    auto bus = messaging_bootstrapper::get_message_bus();
+    if (bus) {
+        // Publish messages, subscribe to topics, etc.
+    }
+
+    // Step 4: Wait for shutdown signal
+    while (!unified_bootstrapper::is_shutdown_requested()) {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+
+    // Step 5: Graceful shutdown (messaging automatically stops via hooks)
+    unified_bootstrapper::shutdown();
+    return 0;
+}
+```
+
+#### Fluent Builder API
+
+For a more concise configuration, use the builder pattern:
+
+```cpp
+#include <kcenon/common/di/unified_bootstrapper.h>
+#include <kcenon/messaging/di/messaging_bootstrapper.h>
+
+// Initialize bootstrapper
+unified_bootstrapper::initialize({
+    .register_signal_handlers = true
+});
+
+// Configure and integrate messaging with builder
+auto result = messaging_bootstrapper::builder()
+    .with_worker_threads(8)
+    .with_queue_capacity(2000)
+    .with_event_bridge(true)
+    .with_auto_start(true)
+    .with_executor(true)
+    .integrate();
+
+// Use messaging services...
+auto bus = messaging_bootstrapper::get_message_bus();
+auto bridge = messaging_bootstrapper::get_event_bridge();
+```
+
+#### Service Resolution from DI Container
+
+You can also resolve services directly from the container:
+
+```cpp
+auto& container = unified_bootstrapper::services();
+
+auto bus_result = container.resolve<IMessageBus>();
+if (bus_result.is_ok()) {
+    auto bus = bus_result.value();
+    bus->publish(some_message);
+}
+```
+
+#### Shutdown Behavior
+
+The messaging_bootstrapper automatically registers a shutdown hook that:
+1. Stops the message bus gracefully
+2. Stops the event bridge if enabled
+3. Cleans up all messaging services
+
+This ensures proper cleanup order and prevents resource leaks.
+
+---
+
 ### Using with thread_system
 
 ```cpp

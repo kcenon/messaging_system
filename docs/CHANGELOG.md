@@ -8,6 +8,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **UnifiedBootstrapper Integration (Issue #157)**
+  - `messaging_bootstrapper`: Integration module for unified system initialization
+    - `integrate()`: Register messaging services with UnifiedBootstrapper
+    - `remove()`: Unregister messaging services and shutdown hooks
+    - Automatic shutdown hook registration for graceful cleanup
+    - Auto-start capability for message bus after registration
+    - Convenience getters: `get_message_bus()`, `get_event_bridge()`
+  - Fluent Builder API for configuration:
+    - `with_worker_threads()`: Configure worker thread count
+    - `with_queue_capacity()`: Configure message queue capacity
+    - `with_event_bridge()`: Enable/disable event bridge
+    - `with_auto_start()`: Enable/disable auto-start on registration
+    - `with_executor()`: Enable/disable executor integration
+    - `with_shutdown_hook_name()`: Customize shutdown hook name
+  - Benefits:
+    - Unified lifecycle management across all subsystems
+    - Automatic graceful shutdown coordination
+    - Simplified initialization with single entry point
+    - Type-safe DI container integration
+  - Comprehensive unit tests (18 tests)
+  - Integration documentation with usage examples
+
 - **C++20 Concepts Support (Issue #146)**
   - Added C++20 concept definitions for type-safe callback and handler validation
   - New concepts in task module:
