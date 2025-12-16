@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('d1/d5e/md_docs_2task_2ARCHITECTURE.htm
   <div class="headertitle"><div class="title">Task Module Architecture</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1580"></a> This document describes the architecture and design of the Task module.</p>
-<h1><a class="anchor" id="autotoc_md1581"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1586"></a> This document describes the architecture and design of the Task module.</p>
+<h1><a class="anchor" id="autotoc_md1587"></a>
 Overview</h1>
 <p>The Task module provides a distributed task queue system for asynchronous task execution. It is designed for reliability, scalability, and ease of use.</p>
-<h1><a class="anchor" id="autotoc_md1582"></a>
+<h1><a class="anchor" id="autotoc_md1588"></a>
 System Architecture</h1>
 <div class="fragment"><div class="line">┌─────────────────────────────────────────────────────────────────────┐</div>
 <div class="line">│                          task_system (Facade)                        │</div>
@@ -129,9 +129,9 @@ System Architecture</h1>
 <div class="line">│  └──────────────────┘              └──────────────────┘            │</div>
 <div class="line">│                                                                      │</div>
 <div class="line">└─────────────────────────────────────────────────────────────────────┘</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1583"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1589"></a>
 Core Components</h1>
-<h2><a class="anchor" id="autotoc_md1584"></a>
+<h2><a class="anchor" id="autotoc_md1590"></a>
 1. task_system (Facade)</h2>
 <p>The <code>task_system</code> is the main entry point that integrates all components. It provides:</p>
 <ul>
@@ -144,7 +144,7 @@ Core Components</h1>
 <div class="line">system.start();</div>
 <div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;task.name&quot;</span>, payload);</div>
 <div class="line">system.stop();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1585"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1591"></a>
 2. task</h2>
 <p>The <code>task</code> class represents a unit of work. It extends the <code>message</code> class from the messaging infrastructure.</p>
 <p><b>Key Properties:</b></p><ul>
@@ -176,7 +176,7 @@ Core Components</h1>
 <div class="line">           ┌───────────┐        ┌──────────┐</div>
 <div class="line">           │ CANCELLED │        │ EXPIRED  │</div>
 <div class="line">           └───────────┘        └──────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1586"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1592"></a>
 3. task_queue</h2>
 <p>The <code>task_queue</code> manages multiple named queues with priority support.</p>
 <p><b>Features:</b></p><ul>
@@ -205,7 +205,7 @@ Core Components</h1>
 <div class="line">│   └─────────────────────────────────────────────────┘   │</div>
 <div class="line">│                                                          │</div>
 <div class="line">└──────────────────────────────────────────────────────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1587"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1593"></a>
 4. worker_pool</h2>
 <p>The <code>worker_pool</code> executes tasks using a thread pool.</p>
 <p><b>Responsibilities:</b></p><ul>
@@ -253,7 +253,7 @@ Core Components</h1>
 <div class="line">│                  result_backend                                │</div>
 <div class="line">│                                                                │</div>
 <div class="line">└────────────────────────────────────────────────────────────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1588"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1594"></a>
 5. task_handler</h2>
 <p>The <code>task_handler_interface</code> defines how tasks are executed.</p>
 <p><b>Interface:</b></p>
@@ -274,7 +274,7 @@ Core Components</h1>
 <li>Class-based: Inherit from <code>task_handler_interface</code></li>
 <li>Lambda-based: Use <code>make_handler()</code> or register directly</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1589"></a>
+<h2><a class="anchor" id="autotoc_md1595"></a>
 6. task_context</h2>
 <p>The <code>task_context</code> provides execution context to handlers.</p>
 <p><b>Features:</b></p><ul>
@@ -304,7 +304,7 @@ Core Components</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1590"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1596"></a>
 7. result_backend</h2>
 <p>The <code>result_backend_interface</code> provides storage for task results.</p>
 <p><b>Implementations:</b></p><ul>
@@ -317,7 +317,7 @@ Core Components</h1>
 <li>Error information</li>
 <li>Progress data</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1591"></a>
+<h2><a class="anchor" id="autotoc_md1597"></a>
 8. async_result</h2>
 <p>The <code>async_result</code> provides a handle for tracking task execution.</p>
 <p><b>Usage Patterns:</b></p>
@@ -334,7 +334,7 @@ Core Components</h1>
 <div class="line">    [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; value) { <span class="comment">/* success */</span> },</div>
 <div class="line">    [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; error) { <span class="comment">/* failure */</span> }</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1592"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1598"></a>
 9. task_scheduler</h2>
 <p>The <code>task_scheduler</code> manages periodic and cron-based task execution.</p>
 <p><b>Schedule Types:</b></p><ul>
@@ -367,7 +367,7 @@ Core Components</h1>
 <div class="line">│            task_client.send()          │</div>
 <div class="line">│                                         │</div>
 <div class="line">└────────────────────────────────────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1593"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1599"></a>
 10. task_monitor</h2>
 <p>The <code>task_monitor</code> provides observability into the system.</p>
 <p><b>Features:</b></p><ul>
@@ -376,9 +376,9 @@ Core Components</h1>
 <li>Active/pending/failed task listings</li>
 <li>Event subscriptions</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1594"></a>
+<h1><a class="anchor" id="autotoc_md1600"></a>
 Data Flow</h1>
-<h2><a class="anchor" id="autotoc_md1595"></a>
+<h2><a class="anchor" id="autotoc_md1601"></a>
 Task Submission Flow</h2>
 <div class="fragment"><div class="line">1. Client creates task with payload</div>
 <div class="line">         │</div>
@@ -408,7 +408,7 @@ Task Submission Flow</h2>
 <div class="line">         │</div>
 <div class="line">         ▼</div>
 <div class="line">9. async_result.get() returns result</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1596"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1602"></a>
 Retry Flow</h2>
 <div class="fragment"><div class="line">1. Task execution fails</div>
 <div class="line">         │</div>
@@ -433,7 +433,7 @@ Retry Flow</h2>
 <div class="line">    │</div>
 <div class="line">    ▼</div>
 <div class="line">6a. Worker picks up again</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1597"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1603"></a>
 Thread Safety</h1>
 <p>All public APIs are thread-safe:</p>
 <table class="markdownTable">
@@ -452,7 +452,7 @@ Thread Safety</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">task_scheduler   </td><td class="markdownTableBodyNone">Mutex-protected schedules   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1598"></a>
+<h2><a class="anchor" id="autotoc_md1604"></a>
 thread_system Integration</h2>
 <p>Both <code>task_queue</code> and <code>worker_pool</code> components use <code>thread_system</code> for thread management. Instead of direct <code>std::thread</code> usage, they leverage <code>kcenon::thread::thread_base</code> which provides:</p>
 <ul>
@@ -473,9 +473,9 @@ thread_system Integration</h2>
 <li>Condition variable integration for immediate wake-up on schedule changes</li>
 <li>Consistent thread lifecycle management with other components</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1599"></a>
+<h1><a class="anchor" id="autotoc_md1605"></a>
 Extension Points</h1>
-<h2><a class="anchor" id="autotoc_md1600"></a>
+<h2><a class="anchor" id="autotoc_md1606"></a>
 Custom Result Backend</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>redis_result_backend : <span class="keyword">public</span> result_backend_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -492,7 +492,7 @@ Custom Result Backend</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// ... implement other methods</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1601"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1607"></a>
 Custom Task Handler</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>custom_handler : <span class="keyword">public</span> task_handler_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -508,24 +508,24 @@ Custom Task Handler</h2>
 <div class="line">        <span class="comment">// Custom retry logic</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1602"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1608"></a>
 Design Decisions</h1>
-<h2><a class="anchor" id="autotoc_md1603"></a>
+<h2><a class="anchor" id="autotoc_md1609"></a>
 1. Message-Based Tasks</h2>
 <p>Tasks extend the <code>message</code> class to leverage existing messaging infrastructure for serialization and metadata handling.</p>
-<h2><a class="anchor" id="autotoc_md1604"></a>
+<h2><a class="anchor" id="autotoc_md1610"></a>
 2. Result Type Pattern</h2>
 <p>All operations return <code>Result&lt;T&gt;</code> or <code>VoidResult</code> for explicit error handling without exceptions.</p>
-<h2><a class="anchor" id="autotoc_md1605"></a>
+<h2><a class="anchor" id="autotoc_md1611"></a>
 3. Builder Pattern</h2>
 <p>The <code>task_builder</code> provides a fluent API for constructing tasks with complex configurations.</p>
-<h2><a class="anchor" id="autotoc_md1606"></a>
+<h2><a class="anchor" id="autotoc_md1612"></a>
 4. Facade Pattern</h2>
 <p><code>task_system</code> acts as a facade, simplifying the interface while allowing access to individual components.</p>
-<h2><a class="anchor" id="autotoc_md1607"></a>
+<h2><a class="anchor" id="autotoc_md1613"></a>
 5. Strategy Pattern</h2>
 <p><code>result_backend_interface</code> allows different storage strategies to be swapped without changing the core logic.</p>
-<h1><a class="anchor" id="autotoc_md1608"></a>
+<h1><a class="anchor" id="autotoc_md1614"></a>
 Testing</h1>
 <p>The task module has comprehensive integration tests located in <code>integration_tests/task/</code>:</p>
 <table class="markdownTable">
@@ -542,7 +542,7 @@ Testing</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>test_concurrent_load.cpp</code>   </td><td class="markdownTableBodyNone">High volume processing, throughput measurement   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1609"></a>
+<h2><a class="anchor" id="autotoc_md1615"></a>
 Running Tests</h2>
 <div class="fragment"><div class="line"># Build tests</div>
 <div class="line">cmake --build build --target test_task_lifecycle test_worker_scenarios \</div>
@@ -553,7 +553,7 @@ Running Tests</h2>
 <div class="line"> </div>
 <div class="line"># Run specific test</div>
 <div class="line">./build/integration_tests/test_task_lifecycle</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1610"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1616"></a>
 Related Documentation</h1>
 <ul>
 <li><a class="el" href="../../d9/dff/md_docs_2task_2QUICK__START.html">Quick Start Guide</a></li>

@@ -100,6 +100,35 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md533"></a>
 Added</h2>
 <ul>
+<li><b>UnifiedBootstrapper Integration (Issue #157)</b><ul>
+<li><code>messaging_bootstrapper</code>: Integration module for unified system initialization<ul>
+<li><code>integrate()</code>: Register messaging services with UnifiedBootstrapper</li>
+<li><code>remove()</code>: Unregister messaging services and shutdown hooks</li>
+<li>Automatic shutdown hook registration for graceful cleanup</li>
+<li>Auto-start capability for message bus after registration</li>
+<li>Convenience getters: <code>get_message_bus()</code>, <code>get_event_bridge()</code></li>
+</ul>
+</li>
+<li>Fluent Builder API for configuration:<ul>
+<li><code>with_worker_threads()</code>: Configure worker thread count</li>
+<li><code>with_queue_capacity()</code>: Configure message queue capacity</li>
+<li><code>with_event_bridge()</code>: Enable/disable event bridge</li>
+<li><code>with_auto_start()</code>: Enable/disable auto-start on registration</li>
+<li><code>with_executor()</code>: Enable/disable executor integration</li>
+<li><code>with_shutdown_hook_name()</code>: Customize shutdown hook name</li>
+</ul>
+</li>
+<li>Benefits:<ul>
+<li>Unified lifecycle management across all subsystems</li>
+<li>Automatic graceful shutdown coordination</li>
+<li>Simplified initialization with single entry point</li>
+<li>Type-safe DI container integration</li>
+</ul>
+</li>
+<li>Comprehensive unit tests (18 tests)</li>
+<li>Integration documentation with usage examples</li>
+</ul>
+</li>
 <li><b>C++20 Concepts Support (Issue #146)</b><ul>
 <li>Added C++20 concept definitions for type-safe callback and handler validation</li>
 <li>New concepts in task module:<ul>

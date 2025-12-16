@@ -93,27 +93,27 @@ $(document).ready(function(){initNavTree('d9/dff/md_docs_2task_2QUICK__START.htm
   <div class="headertitle"><div class="title">Task Module Quick Start Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1910"></a> Get up and running with the Task module in 5 minutes.</p>
-<h1><a class="anchor" id="autotoc_md1911"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1916"></a> Get up and running with the Task module in 5 minutes.</p>
+<h1><a class="anchor" id="autotoc_md1917"></a>
 Prerequisites</h1>
 <ul>
 <li>C++17 or later</li>
 <li>CMake 3.16+</li>
 <li>A C++ compiler (GCC 8+, Clang 10+, or MSVC 2019+)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1912"></a>
+<h1><a class="anchor" id="autotoc_md1918"></a>
 Installation</h1>
 <p>The Task module is included in the messaging_system library. Build with CMake:</p>
 <div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
 <div class="line">cmake .. -DCMAKE_BUILD_TYPE=Release</div>
 <div class="line">cmake --build .</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1913"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1919"></a>
 Basic Usage</h1>
-<h2><a class="anchor" id="autotoc_md1914"></a>
+<h2><a class="anchor" id="autotoc_md1920"></a>
 1. Include Headers</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_system.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task.h&gt;</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1915"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1921"></a>
 2. Create and Configure the Task System</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_system.h&gt;</span></div>
 <div class="line"> </div>
@@ -130,7 +130,7 @@ Basic Usage</h1>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// ... register handlers and start</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1916"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1922"></a>
 3. Register a Task Handler</h2>
 <div class="fragment"><div class="line"><span class="comment">// Lambda-based handler</span></div>
 <div class="line">system.register_handler(<span class="stringliteral">&quot;greet&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -141,14 +141,14 @@ Basic Usage</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1917"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1923"></a>
 4. Start the System</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> start_result = system.start();</div>
 <div class="line"><span class="keywordflow">if</span> (!start_result) {</div>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to start: &quot;</span> &lt;&lt; start_result.error().message &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">return</span> 1;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1918"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1924"></a>
 5. Submit a Task</h2>
 <div class="fragment"><div class="line"><span class="comment">// Create payload</span></div>
 <div class="line">container_module::value_container payload;</div>
@@ -165,10 +165,10 @@ Basic Usage</h1>
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Task failed: &quot;</span> &lt;&lt; outcome.error().message &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1919"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1925"></a>
 6. Stop the System</h2>
 <div class="fragment"><div class="line">system.stop();</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1920"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1926"></a>
 Complete Example</h1>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_system.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -219,7 +219,7 @@ Complete Example</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1921"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1927"></a>
 Using the Task Builder</h1>
 <p>For more complex task configurations, use the task builder:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;email.send&quot;</span>)</div>
@@ -234,9 +234,9 @@ Using the Task Builder</h1>
 <div class="line"><span class="keywordflow">if</span> (task) {</div>
 <div class="line">    <span class="keyword">auto</span> result = system.submit(task.value());</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1922"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1928"></a>
 Scheduling Tasks</h1>
-<h2><a class="anchor" id="autotoc_md1923"></a>
+<h2><a class="anchor" id="autotoc_md1929"></a>
 Periodic Execution</h2>
 <div class="fragment"><div class="line"><span class="comment">// Execute every 5 minutes</span></div>
 <div class="line">system.schedule_periodic(</div>
@@ -244,7 +244,7 @@ Periodic Execution</h2>
 <div class="line">    task_builder(<span class="stringliteral">&quot;cleanup.temp&quot;</span>).build().value(),</div>
 <div class="line">    std::chrono::minutes(5)</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1924"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1930"></a>
 Cron-based Execution</h2>
 <div class="fragment"><div class="line"><span class="comment">// Execute daily at 3 AM</span></div>
 <div class="line">system.schedule_cron(</div>
@@ -252,7 +252,7 @@ Cron-based Execution</h2>
 <div class="line">    task_builder(<span class="stringliteral">&quot;report.generate&quot;</span>).build().value(),</div>
 <div class="line">    <span class="stringliteral">&quot;0 3 * * *&quot;</span></div>
 <div class="line">);</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1925"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1931"></a>
 Monitoring Progress</h1>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;long-running-task&quot;</span>, payload);</div>
 <div class="line"> </div>
@@ -262,7 +262,7 @@ Monitoring Progress</h1>
 <div class="line">              &lt;&lt; result.progress_message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    std::this_thread::sleep_for(std::chrono::seconds(1));</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1926"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1932"></a>
 Error Handling</h1>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;risky-task&quot;</span>, payload);</div>
 <div class="line"><span class="keyword">auto</span> outcome = result.get(std::chrono::seconds(30));</div>
@@ -279,7 +279,7 @@ Error Handling</h1>
 <div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Traceback: &quot;</span> &lt;&lt; result.error_traceback() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1927"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1933"></a>
 Next Steps</h1>
 <ul>
 <li><a class="el" href="../../d1/d5e/md_docs_2task_2ARCHITECTURE.html">Architecture Guide</a> - Understand the system design</li>

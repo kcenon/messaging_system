@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('dd/df5/md_docs_2task_2TROUBLESHOOTING.
   <div class="headertitle"><div class="title">Task Module Troubleshooting Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1946"></a> This guide helps you diagnose and resolve common issues with the Task module.</p>
-<h1><a class="anchor" id="autotoc_md1947"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1952"></a> This guide helps you diagnose and resolve common issues with the Task module.</p>
+<h1><a class="anchor" id="autotoc_md1953"></a>
 Table of Contents</h1>
 <ul>
 <li>Common Issues</li>
@@ -103,9 +103,9 @@ Table of Contents</h1>
 <li>FAQ</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1949"></a>
+<h1><a class="anchor" id="autotoc_md1955"></a>
 Common Issues</h1>
-<h2><a class="anchor" id="autotoc_md1950"></a>
+<h2><a class="anchor" id="autotoc_md1956"></a>
 Tasks Not Being Processed</h2>
 <p><b>Symptoms:</b></p><ul>
 <li>Tasks remain in the queue</li>
@@ -152,7 +152,7 @@ Tasks Not Being Processed</h2>
 <div class="line">          &lt;&lt; <span class="stringliteral">&quot; / &quot;</span> &lt;&lt; system.total_workers() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1951"></a>
+<h2><a class="anchor" id="autotoc_md1957"></a>
 Tasks Failing Immediately</h2>
 <p><b>Symptoms:</b></p><ul>
 <li><code>async_result.is_failed()</code> returns <code>true</code></li>
@@ -189,7 +189,7 @@ Tasks Failing Immediately</h2>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1952"></a>
+<h2><a class="anchor" id="autotoc_md1958"></a>
 Tasks Timing Out</h2>
 <p><b>Symptoms:</b></p><ul>
 <li>Tasks run for the full timeout duration then fail</li>
@@ -222,7 +222,7 @@ Tasks Timing Out</h2>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1953"></a>
+<h2><a class="anchor" id="autotoc_md1959"></a>
 Retry Not Working</h2>
 <p><b>Symptoms:</b></p><ul>
 <li>Failed tasks are not retried</li>
@@ -245,7 +245,7 @@ Retry Not Working</h2>
 <div class="line">          &lt;&lt; <span class="stringliteral">&quot; / &quot;</span> &lt;&lt; t.config().max_retries &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1954"></a>
+<h2><a class="anchor" id="autotoc_md1960"></a>
 Memory Usage Growing</h2>
 <p><b>Symptoms:</b></p><ul>
 <li>Process memory increases over time</li>
@@ -273,9 +273,9 @@ Memory Usage Growing</h2>
 </div><!-- fragment --></li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1956"></a>
+<h1><a class="anchor" id="autotoc_md1962"></a>
 Debugging Methods</h1>
-<h2><a class="anchor" id="autotoc_md1957"></a>
+<h2><a class="anchor" id="autotoc_md1963"></a>
 Enable Logging</h2>
 <p>Use the task context to log information:</p>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;debug.task&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -287,7 +287,7 @@ Enable Logging</h2>
 <div class="line">    ctx.log_info(<span class="stringliteral">&quot;Task completed successfully&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1958"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1964"></a>
 Monitor Events</h2>
 <p>Subscribe to task events for debugging:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> monitor = system.monitor();</div>
@@ -307,7 +307,7 @@ Monitor Events</h2>
 <div class="line">                  &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; error &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    });</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1959"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1965"></a>
 Check Queue Status</h2>
 <div class="fragment"><div class="line"><span class="comment">// Get queue statistics</span></div>
 <div class="line"><span class="keyword">auto</span> monitor = system.monitor();</div>
@@ -320,7 +320,7 @@ Check Queue Status</h2>
 <div class="line">                  &lt;&lt; <span class="stringliteral">&quot;, delayed=&quot;</span> &lt;&lt; q.delayed_count &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1960"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1966"></a>
 Check Worker Status</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> stats = system.get_statistics();</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Tasks processed: &quot;</span> &lt;&lt; stats.total_tasks_processed &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -328,7 +328,7 @@ Check Worker Status</h2>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Tasks failed: &quot;</span> &lt;&lt; stats.total_tasks_failed &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Tasks retried: &quot;</span> &lt;&lt; stats.total_tasks_retried &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Avg execution time: &quot;</span> &lt;&lt; stats.avg_execution_time.count() &lt;&lt; <span class="stringliteral">&quot;ms\n&quot;</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1961"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1967"></a>
 View Task Logs</h2>
 <p>Access logs from completed tasks:</p>
 <div class="fragment"><div class="line"><span class="comment">// Logs are stored in task_context</span></div>
@@ -348,9 +348,9 @@ View Task Logs</h2>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1963"></a>
+<h1><a class="anchor" id="autotoc_md1969"></a>
 Performance Issues</h1>
-<h2><a class="anchor" id="autotoc_md1964"></a>
+<h2><a class="anchor" id="autotoc_md1970"></a>
 High CPU Usage</h2>
 <p><b>Possible Causes:</b></p>
 <ol type="1">
@@ -368,7 +368,7 @@ High CPU Usage</h2>
 <p class="startli">Consider moving heavy computation to dedicated threads or batching operations.</p>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1965"></a>
+<h2><a class="anchor" id="autotoc_md1971"></a>
 High Memory Usage</h2>
 <p><b>Possible Causes:</b></p>
 <ol type="1">
@@ -387,7 +387,7 @@ High Memory Usage</h2>
 <div class="line">system.results()-&gt;cleanup_expired(std::chrono::hours(1));</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1966"></a>
+<h2><a class="anchor" id="autotoc_md1972"></a>
 Low Throughput</h2>
 <p><b>Possible Causes:</b></p>
 <ol type="1">
@@ -411,7 +411,7 @@ Low Throughput</h2>
 <div class="line">config.queues = {<span class="stringliteral">&quot;high&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;low&quot;</span>};</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1967"></a>
+<h2><a class="anchor" id="autotoc_md1973"></a>
 High Latency</h2>
 <p><b>Possible Causes:</b></p>
 <ol type="1">
@@ -430,9 +430,9 @@ High Latency</h2>
 </div><!-- fragment --></li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1969"></a>
+<h1><a class="anchor" id="autotoc_md1975"></a>
 FAQ</h1>
-<h2><a class="anchor" id="autotoc_md1970"></a>
+<h2><a class="anchor" id="autotoc_md1976"></a>
 Q: How do I cancel a running task?</h2>
 <p>Tasks can be cancelled, but the handler must check for cancellation:</p>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;cancellable.task&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -449,7 +449,7 @@ Q: How do I cancel a running task?</h2>
 <div class="line"><span class="comment">// Request cancellation</span></div>
 <div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;cancellable.task&quot;</span>, payload);</div>
 <div class="line">result.revoke();  <span class="comment">// This sets the cancellation flag</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1971"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1977"></a>
 Q: How do I get task progress from outside the handler?</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;long.task&quot;</span>, payload);</div>
 <div class="line"> </div>
@@ -460,7 +460,7 @@ Q: How do I get task progress from outside the handler?</h2>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Progress: &quot;</span> &lt;&lt; (progress * 100) &lt;&lt; <span class="stringliteral">&quot;% - &quot;</span> &lt;&lt; message &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    std::this_thread::sleep_for(std::chrono::seconds(1));</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1972"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1978"></a>
 Q: How do I handle task dependencies?</h2>
 <p>Use the chain pattern:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> step1 = task_builder(<span class="stringliteral">&quot;step1&quot;</span>).payload(data).build().value();</div>
@@ -469,13 +469,13 @@ Q: How do I handle task dependencies?</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> result = client.chain({step1, step2, step3});</div>
 <div class="line"><span class="comment">// step2 receives step1&#39;s result, step3 receives step2&#39;s result</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1973"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1979"></a>
 Q: How do I process tasks in order?</h2>
 <p>Set <code>concurrency = 1</code> for strict ordering:</p>
 <div class="fragment"><div class="line">worker_config config;</div>
 <div class="line">config.concurrency = 1;  <span class="comment">// Single worker ensures order</span></div>
 <div class="line">config.queues = {<span class="stringliteral">&quot;ordered-queue&quot;</span>};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1974"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1980"></a>
 Q: How do I prioritize certain tasks?</h2>
 <p>Use priority levels and queue names:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> urgent = task_builder(<span class="stringliteral">&quot;urgent.task&quot;</span>)</div>
@@ -491,7 +491,7 @@ Q: How do I prioritize certain tasks?</h2>
 <div class="line"><span class="comment">// Configure workers to process critical queue first</span></div>
 <div class="line">worker_config config;</div>
 <div class="line">config.queues = {<span class="stringliteral">&quot;critical&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;background&quot;</span>};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1975"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1981"></a>
 Q: How do I limit retry attempts?</h2>
 <p>Configure via task_config:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;limited.retry&quot;</span>)</div>
@@ -502,7 +502,7 @@ Q: How do I limit retry attempts?</h2>
 <div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;no.retry&quot;</span>)</div>
 <div class="line">    .retries(0)  <span class="comment">// No retries</span></div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1976"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1982"></a>
 Q: How do I handle poison messages (tasks that always fail)?</h2>
 <p>Use the <code>on_failure</code> hook to track failures:</p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>monitored_handler : <span class="keyword">public</span> task_handler_interface {</div>
@@ -518,7 +518,7 @@ Q: How do I handle poison messages (tasks that always fail)?</h2>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1977"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1983"></a>
 Q: How do I gracefully shut down the system?</h2>
 <div class="fragment"><div class="line"><span class="comment">// Graceful shutdown waits for current tasks to complete</span></div>
 <div class="line">system.shutdown_graceful(std::chrono::seconds(30));</div>
@@ -528,7 +528,7 @@ Q: How do I gracefully shut down the system?</h2>
 <div class="line"><span class="comment">// 2. Wait up to 30 seconds for running tasks to complete</span></div>
 <div class="line"><span class="comment">// 3. Force stop if timeout is reached</span></div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1979"></a>
+<h1><a class="anchor" id="autotoc_md1985"></a>
 Related Documentation</h1>
 <ul>
 <li><a class="el" href="../../d9/dff/md_docs_2task_2QUICK__START.html">Quick Start Guide</a></li>
