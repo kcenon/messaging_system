@@ -91,7 +91,7 @@ public:
 
 protected:
 	[[nodiscard]] bool should_continue_work() const override;
-	kcenon::thread::result_void do_work() override;
+	common::VoidResult do_work() override;
 
 private:
 	task_queue& parent_;
