@@ -198,6 +198,12 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 수정됨</h2>
 <ul>
 <li><code>task</code>: task_queue 조회를 위해 metadata.id와 task_id 동기화</li>
+<li><b>DI 통합 수정 (Issue #157)</b><ul>
+<li>event_bridge.h에서 <code>message.type()</code> API 호출을 <code>message.metadata().type</code>으로 수정</li>
+<li>message_bus 클래스에 <code>worker_count()</code> public 접근자 추가</li>
+<li>ServiceInterface concept 준수를 위해 <code>messaging_event_bridge</code> 및 <code>executor_message_handler</code>에 가상 소멸자 추가 (다형성 타입 요구사항)</li>
+</ul>
+</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md550"></a>
 변경됨</h2>

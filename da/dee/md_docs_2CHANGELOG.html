@@ -286,6 +286,12 @@ Added</h2>
 Fixed</h2>
 <ul>
 <li><code>task</code>: Sync metadata.id with task_id for correct task_queue lookup</li>
+<li><b>DI Integration Fixes (Issue #157)</b><ul>
+<li>Fix <code>message.type()</code> API call to use <code>message.metadata().type</code> in event_bridge.h</li>
+<li>Add <code>worker_count()</code> public accessor to message_bus class</li>
+<li>Add virtual destructors to <code>messaging_event_bridge</code> and <code>executor_message_handler</code> for ServiceInterface concept compliance (polymorphic type requirement)</li>
+</ul>
+</li>
 <li><b>Distributed Task Queue System - Sprint 2 (Issues #101, #102, #103)</b><ul>
 <li><code>task_queue</code>: Task-specific queue extending message_queue<ul>
 <li>Multiple named queues support (queue_name -&gt; independent queue)</li>
