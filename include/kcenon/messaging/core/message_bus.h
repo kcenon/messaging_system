@@ -59,6 +59,9 @@ public:
     common::VoidResult stop();
     bool is_running() const { return running_.load(); }
 
+    // Configuration accessors
+    size_t worker_count() const { return config_.worker_threads; }
+
     // Publishing
     common::VoidResult publish(const message& msg);
     common::VoidResult publish(const std::string& topic, message msg);

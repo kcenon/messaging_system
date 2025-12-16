@@ -37,7 +37,7 @@ struct message_received_event {
     message_received_event(const message& msg)
         : topic(msg.metadata().topic),
           message_id(msg.metadata().id),
-          type(msg.type()),
+          type(msg.metadata().type),
           timestamp(std::chrono::system_clock::now()) {}
 };
 
@@ -130,6 +130,11 @@ struct message_bus_stopped_event {
  */
 class messaging_event_bridge {
 public:
+    /**
+     * @brief Virtual destructor for polymorphic type support
+     */
+    virtual ~messaging_event_bridge() = default;
+
     /**
      * @brief Construct event bridge with message bus
      * @param bus Shared pointer to message bus
