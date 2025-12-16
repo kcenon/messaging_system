@@ -150,6 +150,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - `task`: Sync metadata.id with task_id for correct task_queue lookup
+- **DI Integration Fixes (Issue #157)**
+  - Fix `message.type()` API call to use `message.metadata().type` in event_bridge.h
+  - Add `worker_count()` public accessor to message_bus class
+  - Add virtual destructors to `messaging_event_bridge` and `executor_message_handler`
+    for ServiceInterface concept compliance (polymorphic type requirement)
 
 - **Distributed Task Queue System - Sprint 2 (Issues #101, #102, #103)**
   - `task_queue`: Task-specific queue extending message_queue
