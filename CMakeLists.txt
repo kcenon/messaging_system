@@ -139,6 +139,14 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
 
     # Create standard aliases for consistent linking
     unified_create_standard_aliases()
+
+    # Workaround for monitoring_system requiring kcenon::common_system alias
+    # See: https://github.com/kcenon/monitoring_system/issues/261
+    if(TARGET common_system AND NOT TARGET kcenon::common_system)
+        add_library(kcenon::common_system ALIAS common_system)
+    elseif(TARGET common AND NOT TARGET kcenon::common_system)
+        add_library(kcenon::common_system ALIAS common)
+    endif()
 else()
     message(STATUS "Building header-only library without external systems")
 endif()
@@ -190,6 +198,8 @@ set(MESSAGING_CORE_SOURCES
     src/impl/task/scheduler.cpp
     src/impl/task/monitor.cpp
     src/impl/task/task_system.cpp
+    # Collectors module (monitoring_system integration)
+    src/impl/collectors/message_bus_collector.cpp
 )
 
 add_library(messaging_system_core STATIC ${MESSAGING_CORE_SOURCES})
@@ -277,6 +287,18 @@ endif()
 
 if(MESSAGING_ENABLE_HEALTH_CHECKS)
     target_compile_definitions(messaging_system_core PUBLIC MESSAGING_ENABLE_HEALTH_CHECKS)
+endif()
+
+# Link monitoring_system if available (for message_bus_collector)
+if(monitoring_system_TARGET)
+    target_link_libraries(messaging_system_core PUBLIC ${monitoring_system_TARGET})
+    target_compile_definitions(messaging_system_core PUBLIC BUILD_WITH_MONITORING_SYSTEM)
+elseif(TARGET monitoring)
+    target_link_libraries(messaging_system_core PUBLIC monitoring)
+    target_compile_definitions(messaging_system_core PUBLIC BUILD_WITH_MONITORING_SYSTEM)
+elseif(TARGET MonitoringSystem::monitoring)
+    target_link_libraries(messaging_system_core PUBLIC MonitoringSystem::monitoring)
+    target_compile_definitions(messaging_system_core PUBLIC BUILD_WITH_MONITORING_SYSTEM)
 endif()
 
 # =============================================================================
