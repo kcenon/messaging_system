@@ -29,10 +29,10 @@ auto task_pool_worker::should_continue_work() const -> bool {
 	return pool_.running_.load() && !pool_.shutdown_requested_.load();
 }
 
-auto task_pool_worker::do_work() -> kcenon::thread::result_void {
+auto task_pool_worker::do_work() -> common::VoidResult {
 	// Process one task per do_work call
 	pool_.process_one_task();
-	return {};
+	return common::ok();
 }
 
 worker_pool::worker_pool(
@@ -118,7 +118,7 @@ common::VoidResult worker_pool::start() {
 	for (size_t i = 0; i < config_.concurrency; ++i) {
 		auto worker = std::make_unique<task_pool_worker>(i, *this);
 		auto result = worker->start();
-		if (result.has_error()) {
+		if (result.is_err()) {
 			// Stop already started workers
 			for (auto& w : workers_) {
 				w->stop();

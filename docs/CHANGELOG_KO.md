@@ -81,6 +81,11 @@
 
 ### 수정됨
 - `task`: task_queue 조회를 위해 metadata.id와 task_id 동기화
+- **DI 통합 수정 (Issue #157)**
+  - event_bridge.h에서 `message.type()` API 호출을 `message.metadata().type`으로 수정
+  - message_bus 클래스에 `worker_count()` public 접근자 추가
+  - ServiceInterface concept 준수를 위해 `messaging_event_bridge` 및 `executor_message_handler`에
+    가상 소멸자 추가 (다형성 타입 요구사항)
 
 ### 변경됨
 - CMake 설정에서 fmt 라이브러리 참조 제거

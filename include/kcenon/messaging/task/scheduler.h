@@ -489,9 +489,9 @@ protected:
 
 	/**
 	 * @brief Main work routine - checks and executes due schedules
-	 * @return result_void indicating success or failure
+	 * @return common::VoidResult indicating success or failure
 	 */
-	auto do_work() -> kcenon::thread::result_void override;
+	auto do_work() -> common::VoidResult override;
 
 private:
 	task_scheduler& scheduler_;

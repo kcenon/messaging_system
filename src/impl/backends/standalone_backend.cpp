@@ -43,7 +43,7 @@ common::VoidResult standalone_backend::initialize() {
 			auto worker = std::make_unique<kcenon::thread::thread_worker>();
 			worker->set_job_queue(thread_pool_->get_job_queue());
 			auto result = thread_pool_->enqueue(std::move(worker));
-			if (!result) {
+			if (result.is_err()) {
 				initialized_.store(false);
 				thread_pool_.reset();
 				return common::make_error<std::monostate>(
@@ -55,7 +55,7 @@ common::VoidResult standalone_backend::initialize() {
 		}
 
 		auto start_result = thread_pool_->start();
-		if (!start_result) {
+		if (start_result.is_err()) {
 			initialized_.store(false);
 			thread_pool_.reset();
 			common::logging::log_error("Failed to start thread pool");

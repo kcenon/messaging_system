@@ -111,9 +111,9 @@ protected:
 
 	/**
 	 * @brief Main work routine - processes one task per call
-	 * @return result_void indicating success or failure
+	 * @return common::VoidResult indicating success or failure
 	 */
-	auto do_work() -> kcenon::thread::result_void override;
+	auto do_work() -> common::VoidResult override;
 
 private:
 	size_t worker_id_;

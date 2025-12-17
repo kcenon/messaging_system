@@ -40,7 +40,7 @@ bool delayed_task_worker::should_continue_work() const {
 	return true;
 }
 
-kcenon::thread::result_void delayed_task_worker::do_work() {
+common::VoidResult delayed_task_worker::do_work() {
 	// Process any ready delayed tasks
 	parent_.process_delayed_tasks();
 
@@ -58,7 +58,7 @@ kcenon::thread::result_void delayed_task_worker::do_work() {
 		}
 	}
 
-	return {};
+	return common::ok();
 }
 
 // ============================================================================
@@ -123,7 +123,7 @@ common::VoidResult task_queue::start() {
 		delayed_worker_ =
 			std::make_unique<delayed_task_worker>(*this, config_.delayed_poll_interval);
 		auto result = delayed_worker_->start();
-		if (result.has_error()) {
+		if (result.is_err()) {
 			running_.store(false);
 			stopped_.store(true);
 			delayed_worker_.reset();

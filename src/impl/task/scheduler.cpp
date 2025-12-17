@@ -26,7 +26,7 @@ auto scheduler_worker::should_continue_work() const -> bool {
 		   !scheduler_.stop_requested_.load(std::memory_order_acquire);
 }
 
-auto scheduler_worker::do_work() -> kcenon::thread::result_void {
+auto scheduler_worker::do_work() -> common::VoidResult {
 	std::unique_lock<std::mutex> lock(scheduler_.mutex_);
 
 	// Find the next schedule to run
@@ -37,7 +37,7 @@ auto scheduler_worker::do_work() -> kcenon::thread::result_void {
 		scheduler_.cv_.wait_for(lock, std::chrono::seconds(1), [this]() {
 			return scheduler_.stop_requested_.load(std::memory_order_acquire);
 		});
-		return {};
+		return common::ok();
 	}
 
 	auto& entry = next_it->second;
@@ -45,7 +45,7 @@ auto scheduler_worker::do_work() -> kcenon::thread::result_void {
 
 	if (!entry.next_run.has_value()) {
 		entry.next_run = scheduler_.calculate_next_run(entry);
-		return {};
+		return common::ok();
 	}
 
 	auto next_run = entry.next_run.value();
@@ -62,7 +62,7 @@ auto scheduler_worker::do_work() -> kcenon::thread::result_void {
 		});
 	}
 
-	return {};
+	return common::ok();
 }
 
 // ============================================================================
@@ -327,7 +327,7 @@ common::VoidResult task_scheduler::start() {
 	// Create and start the scheduler worker using thread_system
 	scheduler_worker_ = std::make_unique<scheduler_worker>(*this);
 	auto result = scheduler_worker_->start();
-	if (result.has_error()) {
+	if (result.is_err()) {
 		scheduler_worker_.reset();
 		running_.store(false, std::memory_order_release);
 		return common::VoidResult(common::error_info{-1, "Failed to start scheduler worker"});

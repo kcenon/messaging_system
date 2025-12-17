@@ -165,6 +165,11 @@ private:
 class executor_message_handler {
 public:
     /**
+     * @brief Virtual destructor for polymorphic type support
+     */
+    virtual ~executor_message_handler() = default;
+
+    /**
      * @brief Construct with an executor
      * @param executor Shared pointer to executor
      */
