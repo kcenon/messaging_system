@@ -27,7 +27,7 @@ protected:
 TEST_F(TopicRouterTest, SubscribeSuccess) {
 	int call_count = 0;
 	auto result = router_->subscribe("test.topic",
-									 [&call_count](const message& msg) {
+									 [&call_count](const message& /* msg */) {
 										 call_count++;
 										 return common::ok();
 									 });
@@ -44,20 +44,20 @@ TEST_F(TopicRouterTest, SubscribeInvalidCallback) {
 
 TEST_F(TopicRouterTest, SubscribeEmptyPattern) {
 	auto result =
-		router_->subscribe("", [](const message& msg) { return common::ok(); });
+		router_->subscribe("", [](const message& /* msg */) { return common::ok(); });
 
 	EXPECT_TRUE(result.is_err());
 }
 
 TEST_F(TopicRouterTest, SubscribeInvalidPriority) {
 	auto result = router_->subscribe(
-		"test.topic", [](const message& msg) { return common::ok(); }, nullptr,
+		"test.topic", [](const message& /* msg */) { return common::ok(); }, nullptr,
 		-1);
 
 	EXPECT_TRUE(result.is_err());
 
 	auto result2 = router_->subscribe(
-		"test.topic", [](const message& msg) { return common::ok(); }, nullptr,
+		"test.topic", [](const message& /* msg */) { return common::ok(); }, nullptr,
 		11);
 
 	EXPECT_TRUE(result2.is_err());
@@ -65,7 +65,7 @@ TEST_F(TopicRouterTest, SubscribeInvalidPriority) {
 
 TEST_F(TopicRouterTest, UnsubscribeSuccess) {
 	auto sub_result = router_->subscribe(
-		"test.topic", [](const message& msg) { return common::ok(); });
+		"test.topic", [](const message& /* msg */) { return common::ok(); });
 
 	ASSERT_TRUE(sub_result.is_ok());
 	uint64_t sub_id = sub_result.unwrap();
@@ -84,7 +84,7 @@ TEST_F(TopicRouterTest, UnsubscribeNotFound) {
 TEST_F(TopicRouterTest, ExactMatch) {
 	int call_count = 0;
 	router_->subscribe("user.created",
-					   [&call_count](const message& msg) {
+					   [&call_count](const message& /* msg */) {
 						   call_count++;
 						   return common::ok();
 					   });
@@ -105,7 +105,7 @@ TEST_F(TopicRouterTest, ExactMatchNoSubscribers) {
 
 TEST_F(TopicRouterTest, SingleLevelWildcard) {
 	int call_count = 0;
-	router_->subscribe("user.*", [&call_count](const message& msg) {
+	router_->subscribe("user.*", [&call_count](const message& /* msg */) {
 		call_count++;
 		return common::ok();
 	});
@@ -129,7 +129,7 @@ TEST_F(TopicRouterTest, SingleLevelWildcard) {
 
 TEST_F(TopicRouterTest, MultiLevelWildcard) {
 	int call_count = 0;
-	router_->subscribe("user.#", [&call_count](const message& msg) {
+	router_->subscribe("user.#", [&call_count](const message& /* msg */) {
 		call_count++;
 		return common::ok();
 	});
@@ -152,7 +152,7 @@ TEST_F(TopicRouterTest, MultiLevelWildcard) {
 
 TEST_F(TopicRouterTest, WildcardAtEnd) {
 	int call_count = 0;
-	router_->subscribe("*.created", [&call_count](const message& msg) {
+	router_->subscribe("*.created", [&call_count](const message& /* msg */) {
 		call_count++;
 		return common::ok();
 	});
@@ -199,7 +199,7 @@ TEST_F(TopicRouterTest, PriorityOrdering) {
 
 	router_->subscribe(
 		"test.topic",
-		[&execution_order](const message& msg) {
+		[&execution_order](const message& /* msg */) {
 			execution_order.push_back(1);
 			return common::ok();
 		},
@@ -207,7 +207,7 @@ TEST_F(TopicRouterTest, PriorityOrdering) {
 
 	router_->subscribe(
 		"test.topic",
-		[&execution_order](const message& msg) {
+		[&execution_order](const message& /* msg */) {
 			execution_order.push_back(5);
 			return common::ok();
 		},
@@ -215,7 +215,7 @@ TEST_F(TopicRouterTest, PriorityOrdering) {
 
 	router_->subscribe(
 		"test.topic",
-		[&execution_order](const message& msg) {
+		[&execution_order](const message& /* msg */) {
 			execution_order.push_back(3);
 			return common::ok();
 		},
@@ -241,7 +241,7 @@ TEST_F(TopicRouterTest, FilterAccept) {
 
 	router_->subscribe(
 		"test.topic",
-		[&call_count](const message& msg) {
+		[&call_count](const message& /* msg */) {
 			call_count++;
 			return common::ok();
 		},
@@ -267,7 +267,7 @@ TEST_F(TopicRouterTest, FilterReject) {
 
 	router_->subscribe(
 		"test.topic",
-		[&call_count](const message& msg) {
+		[&call_count](const message& /* msg */) {
 			call_count++;
 			return common::ok();
 		},
@@ -286,12 +286,12 @@ TEST_F(TopicRouterTest, MultipleSubscribers) {
 	int call_count1 = 0;
 	int call_count2 = 0;
 
-	router_->subscribe("test.topic", [&call_count1](const message& msg) {
+	router_->subscribe("test.topic", [&call_count1](const message& /* msg */) {
 		call_count1++;
 		return common::ok();
 	});
 
-	router_->subscribe("test.topic", [&call_count2](const message& msg) {
+	router_->subscribe("test.topic", [&call_count2](const message& /* msg */) {
 		call_count2++;
 		return common::ok();
 	});
@@ -305,14 +305,14 @@ TEST_F(TopicRouterTest, MultipleSubscribers) {
 }
 
 TEST_F(TopicRouterTest, PartialFailure) {
-	router_->subscribe("test.topic", [](const message& msg) {
+	router_->subscribe("test.topic", [](const message& /* msg */) {
 		return common::error_info(
 			common::error::codes::common_errors::internal_error,
 			"Subscriber 1 failed");
 	});
 
 	router_->subscribe("test.topic",
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 
 	message msg("test.topic");
 	auto result = router_->route(msg);
@@ -322,13 +322,13 @@ TEST_F(TopicRouterTest, PartialFailure) {
 }
 
 TEST_F(TopicRouterTest, AllSubscribersFail) {
-	router_->subscribe("test.topic", [](const message& msg) {
+	router_->subscribe("test.topic", [](const message& /* msg */) {
 		return common::error_info(
 			common::error::codes::common_errors::internal_error,
 			"Subscriber 1 failed");
 	});
 
-	router_->subscribe("test.topic", [](const message& msg) {
+	router_->subscribe("test.topic", [](const message& /* msg */) {
 		return common::error_info(
 			common::error::codes::common_errors::internal_error,
 			"Subscriber 2 failed");
@@ -343,11 +343,11 @@ TEST_F(TopicRouterTest, AllSubscribersFail) {
 // Utility methods tests
 TEST_F(TopicRouterTest, SubscriberCount) {
 	router_->subscribe("user.created",
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 	router_->subscribe("user.created",
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 	router_->subscribe("user.*",
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 
 	EXPECT_EQ(router_->subscriber_count("user.created"), 3);
 	EXPECT_EQ(router_->subscriber_count("user.updated"), 1);
@@ -356,11 +356,11 @@ TEST_F(TopicRouterTest, SubscriberCount) {
 
 TEST_F(TopicRouterTest, GetTopics) {
 	router_->subscribe("user.created",
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 	router_->subscribe("user.updated",
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 	router_->subscribe("order.*",
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 
 	auto topics = router_->get_topics();
 
@@ -375,9 +375,9 @@ TEST_F(TopicRouterTest, GetTopics) {
 
 TEST_F(TopicRouterTest, Clear) {
 	router_->subscribe("user.created",
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 	router_->subscribe("user.updated",
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 
 	EXPECT_EQ(router_->get_topics().size(), 2);
 
@@ -402,7 +402,7 @@ TEST_F(TopicRouterTest, ConcurrentSubscribe) {
 				router_->subscribe(
 					"thread." + std::to_string(t) + ".msg." +
 						std::to_string(i),
-					[](const message& msg) { return common::ok(); });
+					[](const message& /* msg */) { return common::ok(); });
 			}
 		});
 	}
@@ -418,7 +418,7 @@ TEST_F(TopicRouterTest, ConcurrentSubscribe) {
 TEST_F(TopicRouterTest, ConcurrentRoute) {
 	std::atomic<int> total_calls{0};
 
-	router_->subscribe("test.topic", [&total_calls](const message& msg) {
+	router_->subscribe("test.topic", [&total_calls](const message& /* msg */) {
 		total_calls++;
 		return common::ok();
 	});
@@ -453,7 +453,7 @@ TEST_F(TopicRouterTest, ConcurrentSubscribeUnsubscribe) {
 	std::thread subscriber_thread([this, &running]() {
 		while (running) {
 			auto result = router_->subscribe(
-				"test.topic", [](const message& msg) { return common::ok(); });
+				"test.topic", [](const message& /* msg */) { return common::ok(); });
 			if (result.is_ok()) {
 				router_->unsubscribe(result.unwrap());
 			}
@@ -493,7 +493,7 @@ TEST_F(TopicRouterTest, ConcurrentSubscribeUnsubscribe) {
 // Edge cases
 TEST_F(TopicRouterTest, EmptyTopic) {
 	router_->subscribe("test.topic",
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 
 	message msg("");
 	auto result = router_->route(msg);
@@ -502,7 +502,7 @@ TEST_F(TopicRouterTest, EmptyTopic) {
 }
 
 TEST_F(TopicRouterTest, TopicWithOnlyDots) {
-	router_->subscribe("...", [](const message& msg) { return common::ok(); });
+	router_->subscribe("...", [](const message& /* msg */) { return common::ok(); });
 
 	message msg("...");
 	auto result = router_->route(msg);
@@ -519,7 +519,7 @@ TEST_F(TopicRouterTest, VeryLongTopic) {
 	}
 
 	router_->subscribe(long_topic,
-					   [](const message& msg) { return common::ok(); });
+					   [](const message& /* msg */) { return common::ok(); });
 
 	message msg(long_topic);
 	auto result = router_->route(msg);

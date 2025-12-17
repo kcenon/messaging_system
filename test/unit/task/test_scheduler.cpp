@@ -185,7 +185,7 @@ TEST_F(SchedulerTest, PeriodicScheduleExecution) {
 	std::mutex mtx;
 	std::condition_variable cv;
 
-	scheduler.on_task_executed([&](const schedule_entry& entry) {
+	scheduler.on_task_executed([&](const schedule_entry& /* entry */) {
 		execute_count.fetch_add(1);
 		cv.notify_one();
 	});
@@ -312,7 +312,7 @@ TEST_F(SchedulerTest, TriggerNow) {
 	std::mutex mtx;
 	std::condition_variable cv;
 
-	scheduler.on_task_executed([&](const schedule_entry&) {
+	scheduler.on_task_executed([&](const schedule_entry& /* entry */) {
 		executed.store(true);
 		cv.notify_one();
 	});
@@ -537,7 +537,7 @@ TEST_F(SchedulerTest, RunCountIncrement) {
 	std::condition_variable cv;
 	std::atomic<int> runs{0};
 
-	scheduler.on_task_executed([&](const schedule_entry&) {
+	scheduler.on_task_executed([&](const schedule_entry& /* entry */) {
 		runs.fetch_add(1);
 		cv.notify_one();
 	});
@@ -570,7 +570,7 @@ TEST_F(SchedulerTest, DisabledScheduleDoesNotExecute) {
 
 	std::atomic<bool> executed{false};
 
-	scheduler.on_task_executed([&](const schedule_entry&) {
+	scheduler.on_task_executed([&](const schedule_entry& /* entry */) {
 		executed.store(true);
 	});
 
@@ -596,7 +596,7 @@ TEST_F(SchedulerTest, ReenableSchedule) {
 	std::mutex mtx;
 	std::condition_variable cv;
 
-	scheduler.on_task_executed([&](const schedule_entry&) {
+	scheduler.on_task_executed([&](const schedule_entry& /* entry */) {
 		execute_count.fetch_add(1);
 		cv.notify_one();
 	});

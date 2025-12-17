@@ -144,7 +144,7 @@ TEST_F(MessageBusTest, PublishWithTopicParameter) {
 TEST_F(MessageBusTest, SubscribeSuccess) {
 	auto result = bus_->subscribe(
 		"test.topic",
-		[](const message& msg) { return ::kcenon::common::ok(); }
+		[](const message& /* msg */) { return ::kcenon::common::ok(); }
 	);
 	EXPECT_TRUE(result.is_ok());
 }
@@ -152,7 +152,7 @@ TEST_F(MessageBusTest, SubscribeSuccess) {
 TEST_F(MessageBusTest, UnsubscribeSuccess) {
 	auto sub_result = bus_->subscribe(
 		"test.topic",
-		[](const message& msg) { return ::kcenon::common::ok(); }
+		[](const message& /* msg */) { return ::kcenon::common::ok(); }
 	);
 	ASSERT_TRUE(sub_result.is_ok());
 
@@ -247,7 +247,7 @@ TEST_F(MessageBusTest, PubSubMultipleSubscribers) {
 
 	auto sub1_result = bus_->subscribe(
 		"test.topic",
-		[&subscriber1_count](const message& msg) {
+		[&subscriber1_count](const message& /* msg */) {
 			subscriber1_count++;
 			return ::kcenon::common::ok();
 		}
@@ -256,7 +256,7 @@ TEST_F(MessageBusTest, PubSubMultipleSubscribers) {
 
 	auto sub2_result = bus_->subscribe(
 		"test.topic",
-		[&subscriber2_count](const message& msg) {
+		[&subscriber2_count](const message& /* msg */) {
 			subscriber2_count++;
 			return ::kcenon::common::ok();
 		}
@@ -289,7 +289,7 @@ TEST_F(MessageBusTest, PubSubWithWildcard) {
 	std::atomic<int> received_count{0};
 	auto sub_result = bus_->subscribe(
 		"test.*",
-		[&received_count](const message& msg) {
+		[&received_count](const message& /* msg */) {
 			received_count++;
 			return ::kcenon::common::ok();
 		}
@@ -325,7 +325,7 @@ TEST_F(MessageBusTest, PubSubWithFilter) {
 	std::atomic<int> received_count{0};
 	auto sub_result = bus_->subscribe(
 		"test.topic",
-		[&received_count](const message& msg) {
+		[&received_count](const message& /* msg */) {
 			received_count++;
 			return ::kcenon::common::ok();
 		},
@@ -372,7 +372,7 @@ TEST_F(MessageBusTest, Statistics) {
 	// Subscribe
 	auto sub_result = bus_->subscribe(
 		"test.topic",
-		[](const message& msg) { return ::kcenon::common::ok(); }
+		[](const message& /* msg */) { return ::kcenon::common::ok(); }
 	);
 	ASSERT_TRUE(sub_result.is_ok());
 
