@@ -100,6 +100,39 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md533"></a>
 Added</h2>
 <ul>
+<li><b>Monitoring System Collector Integration (Issue #155)</b><ul>
+<li><code>message_bus_collector</code>: Metric collector plugin for monitoring_system integration<ul>
+<li>Implements <code>metric_collector_plugin</code> interface</li>
+<li>Collects message throughput (messages/sec)</li>
+<li>Collects message latency statistics (avg, min, max)</li>
+<li>Collects queue depth and utilization metrics</li>
+<li>Collects topic-level subscriber counts</li>
+<li>Prometheus-compatible metric naming convention</li>
+</ul>
+</li>
+<li><code>message_bus_health_monitor</code>: Health monitoring and anomaly detection<ul>
+<li>Queue saturation detection</li>
+<li>Failure rate monitoring</li>
+<li>Latency spike detection</li>
+<li>Throughput degradation alerts</li>
+<li>Configurable health thresholds</li>
+</ul>
+</li>
+<li>Collected metrics (Prometheus format):<ul>
+<li><code>messaging_messages_published_total</code></li>
+<li><code>messaging_messages_processed_total</code></li>
+<li><code>messaging_messages_failed_total</code></li>
+<li><code>messaging_queue_depth</code></li>
+<li><code>messaging_throughput_per_second</code></li>
+<li><code>messaging_latency_*_ms</code></li>
+<li><code>messaging_subscribers_per_topic</code></li>
+</ul>
+</li>
+<li>Conditional compilation with <code>BUILD_WITH_MONITORING_SYSTEM</code></li>
+<li>CMake workaround for monitoring_system alias issue (#261)</li>
+<li>Documentation with usage examples</li>
+</ul>
+</li>
 <li><b>UnifiedBootstrapper Integration (Issue #157)</b><ul>
 <li><code>messaging_bootstrapper</code>: Integration module for unified system initialization<ul>
 <li><code>integrate()</code>: Register messaging services with UnifiedBootstrapper</li>

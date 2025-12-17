@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('df/d18/md_docs_2task_2API__REFERENCE.h
   <div class="headertitle"><div class="title">Task Module API Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1348"></a> Complete API documentation for the Task module.</p>
-<h1><a class="anchor" id="autotoc_md1349"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1356"></a> Complete API documentation for the Task module.</p>
+<h1><a class="anchor" id="autotoc_md1357"></a>
 Table of Contents</h1>
 <ul>
 <li>task</li>
@@ -114,13 +114,13 @@ Table of Contents</h1>
 <li>task_system</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1351"></a>
+<h1><a class="anchor" id="autotoc_md1359"></a>
 task</h1>
 <p>Represents a unit of work to be executed asynchronously.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/task.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1352"></a>
+<h2><a class="anchor" id="autotoc_md1360"></a>
 Enumerations</h2>
-<h3><a class="anchor" id="autotoc_md1353"></a>
+<h3><a class="anchor" id="autotoc_md1361"></a>
 task_state</h3>
 <div class="fragment"><div class="line"><span class="keyword">enum class</span> task_state {</div>
 <div class="line">    pending,    <span class="comment">// Waiting to be queued</span></div>
@@ -132,13 +132,13 @@ task_state</h3>
 <div class="line">    cancelled,  <span class="comment">// Cancelled by user</span></div>
 <div class="line">    expired     <span class="comment">// Expired before execution</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1354"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1362"></a>
 Constructors</h2>
 <div class="fragment"><div class="line">task();</div>
 <div class="line">task(<span class="keyword">const</span> std::string&amp; task_name);</div>
 <div class="line">task(<span class="keyword">const</span> std::string&amp; task_name, <span class="keyword">const</span> container_module::value_container&amp; payload);</div>
 <div class="line">task(<span class="keyword">const</span> std::string&amp; task_name, std::shared_ptr&lt;container_module::value_container&gt; payload);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1355"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1363"></a>
 Identification Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -148,7 +148,7 @@ Identification Methods</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>task_name()</code>   </td><td class="markdownTableBodyNone"><code>const std::string&amp;</code>   </td><td class="markdownTableBodyNone">Get the handler name for this task   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1356"></a>
+<h2><a class="anchor" id="autotoc_md1364"></a>
 State Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -160,7 +160,7 @@ State Methods</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>is_terminal_state()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">Check if state is terminal (succeeded, failed, cancelled, expired)   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1357"></a>
+<h2><a class="anchor" id="autotoc_md1365"></a>
 Configuration Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -170,7 +170,7 @@ Configuration Methods</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>config()</code>   </td><td class="markdownTableBodyNone"><code>task_config&amp;</code>   </td><td class="markdownTableBodyNone">Get task configuration (mutable)   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1358"></a>
+<h2><a class="anchor" id="autotoc_md1366"></a>
 Execution Tracking</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -184,7 +184,7 @@ Execution Tracking</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>completed_at()</code>   </td><td class="markdownTableBodyNone"><code>const time_point&amp;</code>   </td><td class="markdownTableBodyNone">Get execution completion time   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1359"></a>
+<h2><a class="anchor" id="autotoc_md1367"></a>
 Progress Tracking</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -198,7 +198,7 @@ Progress Tracking</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>set_progress_message(const std::string&amp;)</code>   </td><td class="markdownTableBodyNone"><code>void</code>   </td><td class="markdownTableBodyNone">Set progress message   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1360"></a>
+<h2><a class="anchor" id="autotoc_md1368"></a>
 Result/Error Handling</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -218,7 +218,7 @@ Result/Error Handling</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>set_error(message, traceback)</code>   </td><td class="markdownTableBodyNone"><code>void</code>   </td><td class="markdownTableBodyNone">Set error information   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1361"></a>
+<h2><a class="anchor" id="autotoc_md1369"></a>
 Retry Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -230,7 +230,7 @@ Retry Methods</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>get_next_retry_delay()</code>   </td><td class="markdownTableBodyNone"><code>milliseconds</code>   </td><td class="markdownTableBodyNone">Calculate next retry delay with backoff   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1362"></a>
+<h2><a class="anchor" id="autotoc_md1370"></a>
 Serialization</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -241,11 +241,11 @@ Serialization</h2>
 <td class="markdownTableBodyNone"><code>deserialize(data)</code>   </td><td class="markdownTableBodyNone"><code>Result&lt;task&gt;</code>   </td><td class="markdownTableBodyNone">Static: Deserialize task from bytes   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1364"></a>
+<h1><a class="anchor" id="autotoc_md1372"></a>
 task_config</h1>
 <p>Configuration options for task execution.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/task.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1365"></a>
+<h2><a class="anchor" id="autotoc_md1373"></a>
 Fields</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -270,14 +270,14 @@ Fields</h2>
 <td class="markdownTableBodyNone"><code>tags</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;string&gt;</code>   </td><td class="markdownTableBodyNone">{}   </td><td class="markdownTableBodyNone">Task tags for filtering   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1367"></a>
+<h1><a class="anchor" id="autotoc_md1375"></a>
 task_builder</h1>
 <p>Fluent builder for constructing tasks.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/task.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1368"></a>
+<h2><a class="anchor" id="autotoc_md1376"></a>
 Constructor</h2>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> task_builder(<span class="keyword">const</span> std::string&amp; task_name);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1369"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1377"></a>
 Builder Methods</h2>
 <p>All methods return <code>task_builder&amp;</code> for chaining.</p>
 <table class="markdownTable">
@@ -310,11 +310,11 @@ Builder Methods</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>tags(const vector&lt;string&gt;&amp;)</code>   </td><td class="markdownTableBodyNone">Tag list   </td><td class="markdownTableBodyNone">Add multiple tags   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1370"></a>
+<h2><a class="anchor" id="autotoc_md1378"></a>
 Build Method</h2>
 <div class="fragment"><div class="line">common::Result&lt;task&gt; build();</div>
 </div><!-- fragment --><p>Returns <code>Result&lt;task&gt;</code> containing the constructed task or an error.</p>
-<h2><a class="anchor" id="autotoc_md1371"></a>
+<h2><a class="anchor" id="autotoc_md1379"></a>
 Example</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = task_builder(<span class="stringliteral">&quot;email.send&quot;</span>)</div>
 <div class="line">    .payload(email_data)</div>
@@ -329,11 +329,11 @@ Example</h2>
 <div class="line">    <span class="keyword">auto</span> task = result.value();</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1373"></a>
+<h1><a class="anchor" id="autotoc_md1381"></a>
 task_handler_interface</h1>
 <p>Abstract interface for task handlers.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/task_handler.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1374"></a>
+<h2><a class="anchor" id="autotoc_md1382"></a>
 Pure Virtual Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -343,7 +343,7 @@ Pure Virtual Methods</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>execute(task, context)</code>   </td><td class="markdownTableBodyNone"><code>Result&lt;value_container&gt;</code>   </td><td class="markdownTableBodyNone">Execute the task   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1375"></a>
+<h2><a class="anchor" id="autotoc_md1383"></a>
 Virtual Lifecycle Hooks</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -355,7 +355,7 @@ Virtual Lifecycle Hooks</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>on_success(task, result)</code>   </td><td class="markdownTableBodyNone">Task and result   </td><td class="markdownTableBodyNone">Called on success   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1376"></a>
+<h2><a class="anchor" id="autotoc_md1384"></a>
 Example</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>email_handler : <span class="keyword">public</span> task_handler_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -378,7 +378,7 @@ Example</h2>
 <div class="line">        <span class="comment">// Log failure, send alert, etc.</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1377"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1385"></a>
 Helper Functions</h2>
 <div class="fragment"><div class="line"><span class="comment">// Create handler from lambda</span></div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Func&gt;</div>
@@ -386,20 +386,20 @@ Helper Functions</h2>
 <div class="line">    <span class="keyword">const</span> std::string&amp; name,</div>
 <div class="line">    Func&amp;&amp; func);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1379"></a>
+<h1><a class="anchor" id="autotoc_md1387"></a>
 task_context</h1>
 <p>Execution context provided to handlers.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/task_context.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1380"></a>
+<h2><a class="anchor" id="autotoc_md1388"></a>
 Structures</h2>
-<h3><a class="anchor" id="autotoc_md1381"></a>
+<h3><a class="anchor" id="autotoc_md1389"></a>
 progress_info</h3>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>progress_info {</div>
 <div class="line">    <span class="keywordtype">double</span> progress;</div>
 <div class="line">    std::string message;</div>
 <div class="line">    std::chrono::system_clock::time_point timestamp;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1382"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1390"></a>
 task_log_entry</h3>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_log_entry {</div>
 <div class="line">    <span class="keyword">enum class</span> level { info, warning, error };</div>
@@ -407,7 +407,7 @@ task_log_entry</h3>
 <div class="line">    std::string message;</div>
 <div class="line">    std::chrono::system_clock::time_point timestamp;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1383"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1391"></a>
 Progress Tracking</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -419,7 +419,7 @@ Progress Tracking</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>progress_history()</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;progress_info&gt;</code>   </td><td class="markdownTableBodyNone">Get progress history   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1384"></a>
+<h2><a class="anchor" id="autotoc_md1392"></a>
 Checkpoint Management</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -433,7 +433,7 @@ Checkpoint Management</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>clear_checkpoint()</code>   </td><td class="markdownTableBodyNone"><code>void</code>   </td><td class="markdownTableBodyNone">Clear checkpoint   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1385"></a>
+<h2><a class="anchor" id="autotoc_md1393"></a>
 Subtask Management</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -445,7 +445,7 @@ Subtask Management</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>spawned_subtask_ids()</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;string&gt;</code>   </td><td class="markdownTableBodyNone">Get IDs of spawned subtasks   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1386"></a>
+<h2><a class="anchor" id="autotoc_md1394"></a>
 Cancellation</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -455,7 +455,7 @@ Cancellation</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>request_cancellation()</code>   </td><td class="markdownTableBodyNone"><code>void</code>   </td><td class="markdownTableBodyNone">Request cancellation   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1387"></a>
+<h2><a class="anchor" id="autotoc_md1395"></a>
 Logging</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -470,11 +470,11 @@ Logging</h2>
 <td class="markdownTableBodyNone"><code>logs()</code>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Get all log entries   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1389"></a>
+<h1><a class="anchor" id="autotoc_md1397"></a>
 task_queue</h1>
 <p>Manages task queuing with multiple named queues.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/task_queue.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1390"></a>
+<h2><a class="anchor" id="autotoc_md1398"></a>
 Configuration</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_queue_config {</div>
 <div class="line">    <span class="keywordtype">size_t</span> max_size = 100000;</div>
@@ -483,10 +483,10 @@ Configuration</h2>
 <div class="line">    <span class="keywordtype">bool</span> enable_delayed_queue = <span class="keyword">true</span>;</div>
 <div class="line">    std::chrono::milliseconds delayed_poll_interval{1000};</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1391"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1399"></a>
 Constructor</h2>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> task_queue(<span class="keyword">const</span> task_queue_config&amp; config = {});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1392"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1400"></a>
 Lifecycle</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -498,7 +498,7 @@ Lifecycle</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>is_running()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">Check if running   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1393"></a>
+<h2><a class="anchor" id="autotoc_md1401"></a>
 Enqueue Operations</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -508,7 +508,7 @@ Enqueue Operations</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>enqueue_bulk(vector&lt;task&gt;)</code>   </td><td class="markdownTableBodyNone"><code>Result&lt;vector&lt;string&gt;&gt;</code>   </td><td class="markdownTableBodyNone">Add multiple tasks   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1394"></a>
+<h2><a class="anchor" id="autotoc_md1402"></a>
 Dequeue Operations</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -518,7 +518,7 @@ Dequeue Operations</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>try_dequeue(queues)</code>   </td><td class="markdownTableBodyNone"><code>Result&lt;task&gt;</code>   </td><td class="markdownTableBodyNone">Non-blocking dequeue   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1395"></a>
+<h2><a class="anchor" id="autotoc_md1403"></a>
 Cancellation</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -528,7 +528,7 @@ Cancellation</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>cancel_by_tag(tag)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">Cancel by tag   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1396"></a>
+<h2><a class="anchor" id="autotoc_md1404"></a>
 Query Operations</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -547,11 +547,11 @@ Query Operations</h2>
 <td class="markdownTableBodyNone"><code>has_queue(name)</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">Check queue exists   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1398"></a>
+<h1><a class="anchor" id="autotoc_md1406"></a>
 worker_pool</h1>
 <p>Thread pool for executing tasks.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/worker_pool.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1399"></a>
+<h2><a class="anchor" id="autotoc_md1407"></a>
 Configuration</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>worker_config {</div>
 <div class="line">    <span class="keywordtype">size_t</span> concurrency = std::thread::hardware_concurrency();</div>
@@ -560,7 +560,7 @@ Configuration</h2>
 <div class="line">    <span class="keywordtype">bool</span> prefetch = <span class="keyword">true</span>;</div>
 <div class="line">    <span class="keywordtype">size_t</span> prefetch_count = 10;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1400"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1408"></a>
 Statistics</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>worker_statistics {</div>
 <div class="line">    <span class="keywordtype">size_t</span> total_tasks_processed = 0;</div>
@@ -573,7 +573,7 @@ Statistics</h2>
 <div class="line">    std::chrono::system_clock::time_point started_at;</div>
 <div class="line">    std::chrono::system_clock::time_point last_task_at;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1401"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1409"></a>
 Handler Registration</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -589,7 +589,7 @@ Handler Registration</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>list_handlers()</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;string&gt;</code>   </td><td class="markdownTableBodyNone">List handler names   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1402"></a>
+<h2><a class="anchor" id="autotoc_md1410"></a>
 Lifecycle</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -601,7 +601,7 @@ Lifecycle</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>shutdown_graceful(timeout)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">Graceful shutdown   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1403"></a>
+<h2><a class="anchor" id="autotoc_md1411"></a>
 Status</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -615,7 +615,7 @@ Status</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>total_workers()</code>   </td><td class="markdownTableBodyNone"><code>size_t</code>   </td><td class="markdownTableBodyNone">Total worker count   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1404"></a>
+<h2><a class="anchor" id="autotoc_md1412"></a>
 Statistics</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -626,16 +626,16 @@ Statistics</h2>
 <td class="markdownTableBodyNone"><code>reset_statistics()</code>   </td><td class="markdownTableBodyNone"><code>void</code>   </td><td class="markdownTableBodyNone">Reset statistics   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1406"></a>
+<h1><a class="anchor" id="autotoc_md1414"></a>
 task_client</h1>
 <p>High-level API for task submission.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/task_client.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1407"></a>
+<h2><a class="anchor" id="autotoc_md1415"></a>
 Constructor</h2>
 <div class="fragment"><div class="line">task_client(</div>
 <div class="line">    std::shared_ptr&lt;task_queue&gt; queue,</div>
 <div class="line">    std::shared_ptr&lt;result_backend_interface&gt; backend);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1408"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1416"></a>
 Immediate Execution</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -645,7 +645,7 @@ Immediate Execution</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>send(name, payload)</code>   </td><td class="markdownTableBodyNone"><code>async_result</code>   </td><td class="markdownTableBodyNone">Submit with name and payload   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1409"></a>
+<h2><a class="anchor" id="autotoc_md1417"></a>
 Delayed Execution</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -655,7 +655,7 @@ Delayed Execution</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>send_at(task, time_point)</code>   </td><td class="markdownTableBodyNone"><code>async_result</code>   </td><td class="markdownTableBodyNone">Submit for specific time   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1410"></a>
+<h2><a class="anchor" id="autotoc_md1418"></a>
 Batch Operations</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -663,7 +663,7 @@ Batch Operations</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>send_batch(vector&lt;task&gt;)</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;async_result&gt;</code>   </td><td class="markdownTableBodyNone">Submit multiple tasks   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1411"></a>
+<h2><a class="anchor" id="autotoc_md1419"></a>
 Workflow Patterns</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -673,7 +673,7 @@ Workflow Patterns</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>chord(tasks, callback)</code>   </td><td class="markdownTableBodyNone"><code>async_result</code>   </td><td class="markdownTableBodyNone">Parallel with callback   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1412"></a>
+<h2><a class="anchor" id="autotoc_md1420"></a>
 Result/Cancellation</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -685,7 +685,7 @@ Result/Cancellation</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>cancel_by_tag(tag)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">Cancel by tag   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1413"></a>
+<h2><a class="anchor" id="autotoc_md1421"></a>
 Status</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -696,11 +696,11 @@ Status</h2>
 <td class="markdownTableBodyNone"><code>is_connected()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">Check connection status   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1415"></a>
+<h1><a class="anchor" id="autotoc_md1423"></a>
 async_result</h1>
 <p>Handle for asynchronous task results.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/async_result.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1416"></a>
+<h2><a class="anchor" id="autotoc_md1424"></a>
 Status Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -720,7 +720,7 @@ Status Methods</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>is_cancelled()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">Check if cancelled   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1417"></a>
+<h2><a class="anchor" id="autotoc_md1425"></a>
 Progress Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -730,7 +730,7 @@ Progress Methods</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>progress_message()</code>   </td><td class="markdownTableBodyNone"><code>string</code>   </td><td class="markdownTableBodyNone">Get progress message   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1418"></a>
+<h2><a class="anchor" id="autotoc_md1426"></a>
 Blocking Result Retrieval</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -740,12 +740,12 @@ Blocking Result Retrieval</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>wait(timeout)</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">Wait for completion   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1419"></a>
+<h2><a class="anchor" id="autotoc_md1427"></a>
 Callback-Based</h2>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> then(</div>
 <div class="line">    std::function&lt;<span class="keywordtype">void</span>(<span class="keyword">const</span> value_container&amp;)&gt; on_success,</div>
 <div class="line">    std::function&lt;<span class="keywordtype">void</span>(<span class="keyword">const</span> std::string&amp;)&gt; on_failure = <span class="keyword">nullptr</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1420"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1428"></a>
 Task Control</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -762,11 +762,11 @@ Task Control</h2>
 <td class="markdownTableBodyNone"><code>error_traceback()</code>   </td><td class="markdownTableBodyNone"><code>string</code>   </td><td class="markdownTableBodyNone">Get error traceback   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1422"></a>
+<h1><a class="anchor" id="autotoc_md1430"></a>
 result_backend_interface</h1>
 <p>Abstract interface for result storage.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/result_backend.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1423"></a>
+<h2><a class="anchor" id="autotoc_md1431"></a>
 Structures</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>progress_data {</div>
 <div class="line">    <span class="keywordtype">double</span> progress{0.0};</div>
@@ -779,7 +779,7 @@ Structures</h2>
 <div class="line">    std::string traceback;</div>
 <div class="line">    std::chrono::system_clock::time_point occurred_at;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1424"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1432"></a>
 Pure Virtual Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -805,7 +805,7 @@ Pure Virtual Methods</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>cleanup_expired(max_age)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">Cleanup old entries   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1425"></a>
+<h2><a class="anchor" id="autotoc_md1433"></a>
 Optional Virtual Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -818,14 +818,14 @@ Optional Virtual Methods</h2>
 <td class="markdownTableBodyNone"><code>size()</code>   </td><td class="markdownTableBodyNone"><code>size_t</code>   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">Get entry count   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1427"></a>
+<h1><a class="anchor" id="autotoc_md1435"></a>
 memory_result_backend</h1>
 <p>In-memory implementation of result_backend_interface.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/memory_result_backend.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1428"></a>
+<h2><a class="anchor" id="autotoc_md1436"></a>
 Constructor</h2>
 <div class="fragment"><div class="line">memory_result_backend();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1429"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1437"></a>
 Additional Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -835,11 +835,11 @@ Additional Methods</h2>
 </table>
 <p>All methods from <code>result_backend_interface</code> are implemented.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1431"></a>
+<h1><a class="anchor" id="autotoc_md1439"></a>
 task_scheduler</h1>
 <p>Manages periodic and cron-based task scheduling.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/scheduler.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1432"></a>
+<h2><a class="anchor" id="autotoc_md1440"></a>
 Structures</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>schedule_entry {</div>
 <div class="line">    std::string name;</div>
@@ -856,10 +856,10 @@ Structures</h2>
 <div class="line">    std::string cron_expression() <span class="keyword">const</span>;</div>
 <div class="line">    std::chrono::seconds interval() <span class="keyword">const</span>;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1433"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1441"></a>
 Constructor</h2>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> task_scheduler(task_client&amp; client);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1434"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1442"></a>
 Schedule Registration</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -869,7 +869,7 @@ Schedule Registration</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>add_cron(name, task, expression)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">Add cron schedule   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1435"></a>
+<h2><a class="anchor" id="autotoc_md1443"></a>
 Schedule Management</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -887,7 +887,7 @@ Schedule Management</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>update_cron(name, expression)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">Update cron expression   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1436"></a>
+<h2><a class="anchor" id="autotoc_md1444"></a>
 Lifecycle</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -899,7 +899,7 @@ Lifecycle</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>is_running()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">Check if running   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1437"></a>
+<h2><a class="anchor" id="autotoc_md1445"></a>
 Query</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -913,18 +913,18 @@ Query</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>has_schedule(name)</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">Check schedule exists   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1438"></a>
+<h2><a class="anchor" id="autotoc_md1446"></a>
 Event Callbacks</h2>
 <div class="fragment"><div class="line"><span class="keyword">using </span>schedule_callback = std::function&lt;void(<span class="keyword">const</span> schedule_entry&amp;)&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> on_task_executed(schedule_callback callback);</div>
 <div class="line"><span class="keywordtype">void</span> on_task_failed(schedule_callback callback);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1440"></a>
+<h1><a class="anchor" id="autotoc_md1448"></a>
 cron_parser</h1>
 <p>Utility for parsing and evaluating cron expressions.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/cron_parser.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1441"></a>
+<h2><a class="anchor" id="autotoc_md1449"></a>
 Cron Expression Format</h2>
 <div class="fragment"><div class="line">* * * * *</div>
 <div class="line">│ │ │ │ │</div>
@@ -933,7 +933,7 @@ Cron Expression Format</h2>
 <div class="line">│ │ └───── Day of month (1-31)</div>
 <div class="line">│ └─────── Hour (0-23)</div>
 <div class="line">└───────── Minute (0-59)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1442"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1450"></a>
 Supported Syntax</h2>
 <ul>
 <li><code>*</code> - All values</li>
@@ -942,7 +942,7 @@ Supported Syntax</h2>
 <li><code>1-5</code> - Range</li>
 <li><code>1,3,5</code> - List</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1443"></a>
+<h2><a class="anchor" id="autotoc_md1451"></a>
 Structure</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>cron_expression {</div>
 <div class="line">    std::set&lt;int&gt; minutes;   <span class="comment">// 0-59</span></div>
@@ -951,7 +951,7 @@ Structure</h2>
 <div class="line">    std::set&lt;int&gt; months;    <span class="comment">// 1-12</span></div>
 <div class="line">    std::set&lt;int&gt; weekdays;  <span class="comment">// 0-6</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1444"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1452"></a>
 Static Methods</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -965,7 +965,7 @@ Static Methods</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>to_string(expr)</code>   </td><td class="markdownTableBodyNone"><code>string</code>   </td><td class="markdownTableBodyNone">Convert to string   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1445"></a>
+<h2><a class="anchor" id="autotoc_md1453"></a>
 Examples</h2>
 <div class="fragment"><div class="line"><span class="comment">// Every hour at minute 0</span></div>
 <div class="line"><span class="keyword">auto</span> expr = cron_parser::parse(<span class="stringliteral">&quot;0 * * * *&quot;</span>).value();</div>
@@ -979,11 +979,11 @@ Examples</h2>
 <div class="line"><span class="comment">// Weekdays at 9 AM</span></div>
 <div class="line"><span class="keyword">auto</span> expr = cron_parser::parse(<span class="stringliteral">&quot;0 9 * * 1-5&quot;</span>).value();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1447"></a>
+<h1><a class="anchor" id="autotoc_md1455"></a>
 task_monitor</h1>
 <p>System monitoring and event subscriptions.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/monitor.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1448"></a>
+<h2><a class="anchor" id="autotoc_md1456"></a>
 Structures</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>queue_stats {</div>
 <div class="line">    std::string name;</div>
@@ -999,12 +999,12 @@ Structures</h2>
 <div class="line">    std::chrono::system_clock::time_point last_heartbeat;</div>
 <div class="line">    <span class="keywordtype">bool</span> is_healthy = <span class="keyword">true</span>;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1449"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1457"></a>
 Constructor</h2>
 <div class="fragment"><div class="line">task_monitor(</div>
 <div class="line">    std::shared_ptr&lt;task_queue&gt; queue,</div>
 <div class="line">    worker_pool* workers);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1450"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1458"></a>
 Queue Statistics</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1014,7 +1014,7 @@ Queue Statistics</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>get_queue_stats(name)</code>   </td><td class="markdownTableBodyNone"><code>Result&lt;queue_stats&gt;</code>   </td><td class="markdownTableBodyNone">Specific queue stats   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1451"></a>
+<h2><a class="anchor" id="autotoc_md1459"></a>
 Worker Status</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1024,7 +1024,7 @@ Worker Status</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>get_worker_statistics()</code>   </td><td class="markdownTableBodyNone"><code>optional&lt;worker_statistics&gt;</code>   </td><td class="markdownTableBodyNone">Worker pool stats   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1452"></a>
+<h2><a class="anchor" id="autotoc_md1460"></a>
 Task Queries</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1036,7 +1036,7 @@ Task Queries</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>list_failed_tasks(limit)</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;task&gt;</code>   </td><td class="markdownTableBodyNone">Failed tasks   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1453"></a>
+<h2><a class="anchor" id="autotoc_md1461"></a>
 Task Management</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1048,7 +1048,7 @@ Task Management</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>purge_queue(name)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">Clear queue   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1454"></a>
+<h2><a class="anchor" id="autotoc_md1462"></a>
 Event Subscriptions</h2>
 <div class="fragment"><div class="line"><span class="keyword">using </span>task_started_handler = std::function&lt;void(<span class="keyword">const</span> task&amp;)&gt;;</div>
 <div class="line"><span class="keyword">using </span>task_completed_handler = std::function&lt;void(<span class="keyword">const</span> task&amp;, <span class="keywordtype">bool</span> success)&gt;;</div>
@@ -1060,11 +1060,11 @@ Event Subscriptions</h2>
 <div class="line"><span class="keywordtype">void</span> on_task_failed(task_failed_handler handler);</div>
 <div class="line"><span class="keywordtype">void</span> on_worker_offline(worker_offline_handler handler);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1456"></a>
+<h1><a class="anchor" id="autotoc_md1464"></a>
 task_system</h1>
 <p>Unified facade integrating all task components.</p>
 <p><b>Header:</b> <code>&lt;kcenon/messaging/task/task_system.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1457"></a>
+<h2><a class="anchor" id="autotoc_md1465"></a>
 Configuration</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_system_config {</div>
 <div class="line">    task_queue_config queue;</div>
@@ -1073,10 +1073,10 @@ Configuration</h2>
 <div class="line">    <span class="keywordtype">bool</span> enable_monitoring = <span class="keyword">true</span>;</div>
 <div class="line">    std::string result_backend_type = <span class="stringliteral">&quot;memory&quot;</span>;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1458"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1466"></a>
 Constructor</h2>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> task_system(<span class="keyword">const</span> task_system_config&amp; config = {});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1459"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1467"></a>
 Lifecycle</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1090,7 +1090,7 @@ Lifecycle</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>is_running()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">Check if running   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1460"></a>
+<h2><a class="anchor" id="autotoc_md1468"></a>
 Component Access</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1108,7 +1108,7 @@ Component Access</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>results()</code>   </td><td class="markdownTableBodyNone"><code>shared_ptr&lt;result_backend&gt;</code>   </td><td class="markdownTableBodyNone">Get result backend   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1461"></a>
+<h2><a class="anchor" id="autotoc_md1469"></a>
 Handler Registration (Convenience)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1120,7 +1120,7 @@ Handler Registration (Convenience)</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>unregister_handler(name)</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">Unregister handler   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1462"></a>
+<h2><a class="anchor" id="autotoc_md1470"></a>
 Task Submission (Convenience)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1134,7 +1134,7 @@ Task Submission (Convenience)</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>submit_batch(tasks)</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;async_result&gt;</code>   </td><td class="markdownTableBodyNone">Submit batch   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1463"></a>
+<h2><a class="anchor" id="autotoc_md1471"></a>
 Scheduling (Convenience)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1144,7 +1144,7 @@ Scheduling (Convenience)</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>schedule_cron(name, task, expression)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">Add cron   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1464"></a>
+<h2><a class="anchor" id="autotoc_md1472"></a>
 Statistics</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1159,7 +1159,7 @@ Statistics</h2>
 <td class="markdownTableBodyNone"><code>total_workers()</code>   </td><td class="markdownTableBodyNone"><code>size_t</code>   </td><td class="markdownTableBodyNone">Total worker count   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1466"></a>
+<h1><a class="anchor" id="autotoc_md1474"></a>
 Related Documentation</h1>
 <ul>
 <li><a class="el" href="../../d9/dff/md_docs_2task_2QUICK__START.html">Quick Start Guide</a></li>
