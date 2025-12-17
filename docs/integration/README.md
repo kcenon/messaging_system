@@ -184,6 +184,132 @@ auto bus = messaging_system::message_bus::create(cfg);
 
 ---
 
+## Messaging Event Bridge Integration
+
+The messaging event bridge enables cross-module communication by publishing messaging lifecycle events to the common_system event bus.
+
+### Event Types
+
+| Category | Event | Description |
+|----------|-------|-------------|
+| **Message Bus** | `message_bus_started_event` | Message bus started |
+| | `message_bus_stopped_event` | Message bus stopped |
+| **Message** | `message_received_event` | Message was received |
+| | `message_published_event` | Message was published |
+| | `message_error_event` | Message processing error |
+| **Topic/Subscription** | `topic_created_event` | New topic pattern registered |
+| | `subscriber_added_event` | Subscriber added to topic |
+| | `subscriber_removed_event` | Subscriber removed from topic |
+
+### Basic Usage
+
+```cpp
+#include <kcenon/common/patterns/event_bus.h>
+#include <kcenon/messaging/integration/event_bridge.h>
+#include <kcenon/messaging/core/message_bus.h>
+
+using namespace kcenon::messaging;
+using namespace kcenon::messaging::integration;
+using namespace kcenon::common;
+
+// Get global event bus
+auto& event_bus = get_event_bus();
+
+// Subscribe to topic creation events
+auto topic_sub = event_bus.subscribe<topic_created_event>(
+    [](const topic_created_event& evt) {
+        std::cout << "New topic created: " << evt.topic_pattern << std::endl;
+    });
+
+// Subscribe to subscriber events
+auto sub_added = event_bus.subscribe<subscriber_added_event>(
+    [](const subscriber_added_event& evt) {
+        std::cout << "Subscriber " << evt.subscription_id
+                  << " added to " << evt.topic_pattern
+                  << " with priority " << evt.priority << std::endl;
+    });
+
+auto sub_removed = event_bus.subscribe<subscriber_removed_event>(
+    [](const subscriber_removed_event& evt) {
+        std::cout << "Subscriber " << evt.subscription_id
+                  << " removed from " << evt.topic_pattern << std::endl;
+    });
+
+// Create message bus with event bridge
+auto backend = std::make_shared<standalone_backend>();
+auto bus = std::make_shared<message_bus>(backend, message_bus_config{});
+
+messaging_event_bridge bridge(bus);
+bridge.start();
+
+// Configure topic_router callbacks to connect with event bridge
+bus->get_router().set_callbacks({
+    .on_topic_created = [&bridge](const std::string& pattern) {
+        bridge.on_topic_created(pattern);
+    },
+    .on_subscriber_added = [&bridge](uint64_t id, const std::string& pattern, int prio) {
+        bridge.on_subscriber_added(id, pattern, prio);
+    },
+    .on_subscriber_removed = [&bridge](uint64_t id, const std::string& pattern) {
+        bridge.on_subscriber_removed(id, pattern);
+    }
+});
+
+// Now when you subscribe to topics, events will be published
+bus->subscribe("user.created", [](const message& msg) {
+    // Handle message
+    return common::ok();
+});
+// This triggers: topic_created_event, subscriber_added_event
+
+// Cleanup
+bridge.stop();
+event_bus.unsubscribe(topic_sub);
+event_bus.unsubscribe(sub_added);
+event_bus.unsubscribe(sub_removed);
+```
+
+### Event Schemas
+
+#### topic_created_event
+
+```cpp
+struct topic_created_event {
+    std::string topic_pattern;  // The topic pattern that was created
+    std::chrono::system_clock::time_point timestamp;
+};
+```
+
+#### subscriber_added_event
+
+```cpp
+struct subscriber_added_event {
+    uint64_t subscription_id;   // Unique ID of the subscription
+    std::string topic_pattern;  // Topic pattern subscribed to
+    int priority;               // Subscription priority (0-10)
+    std::chrono::system_clock::time_point timestamp;
+};
+```
+
+#### subscriber_removed_event
+
+```cpp
+struct subscriber_removed_event {
+    uint64_t subscription_id;   // ID of the removed subscription
+    std::string topic_pattern;  // Topic pattern that was unsubscribed
+    std::chrono::system_clock::time_point timestamp;
+};
+```
+
+### Use Cases
+
+1. **Monitoring Dashboard**: Track topic and subscriber counts in real-time
+2. **Audit Logging**: Log all subscription changes for compliance
+3. **Auto-scaling**: Trigger scaling based on subscriber patterns
+4. **Circuit Breaker**: Monitor subscription health and failures
+
+---
+
 ## Task Event Bridge Integration
 
 The task event bridge enables cross-module communication by publishing task lifecycle events to the common_system event bus.

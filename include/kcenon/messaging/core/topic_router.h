@@ -58,6 +58,44 @@ using subscription_callback =
  */
 using message_filter = std::function<bool(const message&)>;
 
+// =============================================================================
+// Event Callbacks for Topic Router
+// =============================================================================
+
+/**
+ * @brief Callback invoked when a new topic pattern is created
+ * @param topic_pattern The topic pattern that was created
+ */
+using topic_created_callback = std::function<void(const std::string& topic_pattern)>;
+
+/**
+ * @brief Callback invoked when a subscriber is added
+ * @param subscription_id The ID of the new subscription
+ * @param topic_pattern The topic pattern subscribed to
+ * @param priority The subscription priority
+ */
+using subscriber_added_callback = std::function<void(uint64_t subscription_id,
+                                                      const std::string& topic_pattern,
+                                                      int priority)>;
+
+/**
+ * @brief Callback invoked when a subscriber is removed
+ * @param subscription_id The ID of the removed subscription
+ * @param topic_pattern The topic pattern that was unsubscribed
+ */
+using subscriber_removed_callback = std::function<void(uint64_t subscription_id,
+                                                        const std::string& topic_pattern)>;
+
+/**
+ * @struct topic_router_callbacks
+ * @brief Callbacks for topic router events
+ */
+struct topic_router_callbacks {
+    topic_created_callback on_topic_created;
+    subscriber_added_callback on_subscriber_added;
+    subscriber_removed_callback on_subscriber_removed;
+};
+
 /**
  * @struct subscription
  * @brief Represents a topic subscription
@@ -97,9 +135,33 @@ class topic_router {
 	std::unordered_map<std::string, std::vector<subscription>> subscriptions_;
 	mutable std::shared_mutex mutex_;
 	std::atomic<uint64_t> next_id_{1};
+	topic_router_callbacks callbacks_;
 
 public:
 	topic_router() = default;
+
+	/**
+	 * @brief Set event callbacks for the router
+	 * @param callbacks Callback functions for topic/subscriber events
+	 *
+	 * These callbacks are invoked when:
+	 * - A new topic pattern is created (on_topic_created)
+	 * - A subscriber is added (on_subscriber_added)
+	 * - A subscriber is removed (on_subscriber_removed)
+	 *
+	 * @example
+	 * router.set_callbacks({
+	 *     .on_topic_created = [](const std::string& pattern) {
+	 *         std::cout << "New topic: " << pattern << std::endl;
+	 *     },
+	 *     .on_subscriber_added = [](uint64_t id, const std::string& pattern, int prio) {
+	 *         std::cout << "Subscriber " << id << " added to " << pattern << std::endl;
+	 *     }
+	 * });
+	 */
+	void set_callbacks(topic_router_callbacks callbacks) {
+		callbacks_ = std::move(callbacks);
+	}
 
 	/**
 	 * @brief Subscribe to a topic pattern

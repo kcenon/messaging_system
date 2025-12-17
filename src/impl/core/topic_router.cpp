@@ -213,6 +213,9 @@ common::Result<uint64_t> topic_router::subscribe(
 
 	uint64_t id = next_id_.fetch_add(1);
 
+	// Check if this is a new topic pattern
+	bool is_new_topic = (subscriptions_.find(pattern) == subscriptions_.end());
+
 	subscription sub{id, pattern, std::move(callback), std::move(filter),
 					 priority};
 
@@ -227,31 +230,54 @@ common::Result<uint64_t> topic_router::subscribe(
 	common::logging::log_debug("Subscription created, id: " + std::to_string(id) +
 		", pattern: " + pattern + ", priority: " + std::to_string(priority));
 
+	// Release lock before invoking callbacks to avoid potential deadlocks
+	lock.unlock();
+
+	// Invoke callbacks for event notification
+	if (is_new_topic && callbacks_.on_topic_created) {
+		callbacks_.on_topic_created(pattern);
+	}
+	if (callbacks_.on_subscriber_added) {
+		callbacks_.on_subscriber_added(id, pattern, priority);
+	}
+
 	return id;
 }
 
 common::VoidResult topic_router::unsubscribe(uint64_t subscription_id) {
-	std::unique_lock lock(mutex_);
+	std::string removed_pattern;
 
-	for (auto& [pattern, subs] : subscriptions_) {
-		auto it = std::find_if(subs.begin(), subs.end(),
-							   [subscription_id](const subscription& sub) {
-								   return sub.id == subscription_id;
-							   });
+	{
+		std::unique_lock lock(mutex_);
 
-		if (it != subs.end()) {
-			std::string removed_pattern = pattern;
-			subs.erase(it);
+		for (auto& [pattern, subs] : subscriptions_) {
+			auto it = std::find_if(subs.begin(), subs.end(),
+								   [subscription_id](const subscription& sub) {
+									   return sub.id == subscription_id;
+								   });
 
-			// Clean up empty patterns
-			if (subs.empty()) {
-				subscriptions_.erase(pattern);
+			if (it != subs.end()) {
+				removed_pattern = pattern;
+				subs.erase(it);
+
+				// Clean up empty patterns
+				if (subs.empty()) {
+					subscriptions_.erase(pattern);
+				}
+
+				common::logging::log_debug("Subscription removed, id: " +
+					std::to_string(subscription_id) + ", pattern: " + removed_pattern);
+				break;
 			}
-
-			common::logging::log_debug("Subscription removed, id: " +
-				std::to_string(subscription_id) + ", pattern: " + removed_pattern);
-			return common::ok();
 		}
+	}
+
+	// If subscription was found and removed, invoke callback
+	if (!removed_pattern.empty()) {
+		if (callbacks_.on_subscriber_removed) {
+			callbacks_.on_subscriber_removed(subscription_id, removed_pattern);
+		}
+		return common::ok();
 	}
 
 	common::logging::log_warning("Unsubscribe failed: subscription not found, id: " +

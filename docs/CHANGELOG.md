@@ -14,6 +14,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Affected files: test_pub_sub.cpp, test_message_bus.cpp, test_topic_router.cpp, test_event_streaming.cpp, test_scheduler.cpp, bench_worker_throughput.cpp, test_message_pipeline.cpp
 
 ### Added
+- **System Events Standardization with Event Bus (Issue #156)**
+  - New event types in `event_bridge.h`:
+    - `topic_created_event`: Published when a new topic pattern is registered
+    - `subscriber_added_event`: Published when a subscriber is added to a topic
+    - `subscriber_removed_event`: Published when a subscriber is removed
+  - New callback mechanism in `topic_router`:
+    - `topic_router_callbacks` struct for event notification
+    - `set_callbacks()` method to register event listeners
+    - Callbacks invoked outside mutex lock to prevent deadlocks
+  - New notification methods in `messaging_event_bridge`:
+    - `on_topic_created()`: Notify topic creation
+    - `on_subscriber_added()`: Notify subscriber addition
+    - `on_subscriber_removed()`: Notify subscriber removal
+  - Integration documentation with usage examples
+  - Use cases: monitoring dashboards, audit logging, auto-scaling, circuit breakers
+
 - **Monitoring System Collector Integration (Issue #155)**
   - `message_bus_collector`: Metric collector plugin for monitoring_system integration
     - Implements `metric_collector_plugin` interface
