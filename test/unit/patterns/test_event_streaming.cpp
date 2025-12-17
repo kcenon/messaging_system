@@ -108,7 +108,7 @@ TEST_F(EventStreamingTest, EventStreamSubscribe) {
 	event_stream stream(bus_, "events.test");
 
 	std::atomic<int> event_count{0};
-	auto callback = [&event_count](const message& msg) -> common::VoidResult {
+	auto callback = [&event_count](const message& /* msg */) -> common::VoidResult {
 		event_count++;
 		return common::ok();
 	};
@@ -136,7 +136,7 @@ TEST_F(EventStreamingTest, EventStreamUnsubscribe) {
 	event_stream stream(bus_, "events.test");
 
 	std::atomic<int> event_count{0};
-	auto callback = [&event_count](const message& msg) -> common::VoidResult {
+	auto callback = [&event_count](const message& /* msg */) -> common::VoidResult {
 		event_count++;
 		return common::ok();
 	};
@@ -197,7 +197,7 @@ TEST_F(EventStreamingTest, EventReplayDisabled) {
 	);
 
 	std::atomic<int> event_count{0};
-	auto callback = [&event_count](const message& msg) -> common::VoidResult {
+	auto callback = [&event_count](const message& /* msg */) -> common::VoidResult {
 		event_count++;
 		return common::ok();
 	};
@@ -245,7 +245,7 @@ TEST_F(EventStreamingTest, EventReplayEnabled) {
 	);
 
 	std::atomic<int> event_count{0};
-	auto callback = [&event_count](const message& msg) -> common::VoidResult {
+	auto callback = [&event_count](const message& /* msg */) -> common::VoidResult {
 		event_count++;
 		return common::ok();
 	};
@@ -325,7 +325,7 @@ TEST_F(EventStreamingTest, ManualReplay) {
 	);
 
 	std::atomic<int> replayed_count{0};
-	auto callback = [&replayed_count](const message& msg) -> common::VoidResult {
+	auto callback = [&replayed_count](const message& /* msg */) -> common::VoidResult {
 		replayed_count++;
 		return common::ok();
 	};
@@ -440,7 +440,7 @@ TEST_F(EventStreamingTest, ClearBuffer) {
 
 TEST_F(EventStreamingTest, BatchProcessorConstruction) {
 	std::atomic<int> batch_count{0};
-	auto batch_callback = [&batch_count](const std::vector<message>& batch) -> common::VoidResult {
+	auto batch_callback = [&batch_count](const std::vector<message>& /* batch */) -> common::VoidResult {
 		batch_count++;
 		return common::ok();
 	};
@@ -451,7 +451,7 @@ TEST_F(EventStreamingTest, BatchProcessorConstruction) {
 
 TEST_F(EventStreamingTest, BatchProcessorStart) {
 	std::atomic<int> batch_count{0};
-	auto batch_callback = [&batch_count](const std::vector<message>& batch) -> common::VoidResult {
+	auto batch_callback = [&batch_count](const std::vector<message>& /* batch */) -> common::VoidResult {
 		batch_count++;
 		return common::ok();
 	};

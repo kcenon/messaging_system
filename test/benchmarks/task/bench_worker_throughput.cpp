@@ -199,9 +199,8 @@ int main() {
 		std::mutex latency_mutex;
 
 		pool.register_handler("benchmark.latency",
-			[&latencies, &latency_mutex](const task& t, task_context& /* ctx */)
+			[](const task& /* t */, task_context& /* ctx */)
 				-> kcenon::common::Result<container_module::value_container> {
-				auto now = std::chrono::steady_clock::now();
 				// Use task metadata to get enqueue time from payload if available
 				// For now, just measure handler execution
 				tasks_processed.fetch_add(1, std::memory_order_relaxed);

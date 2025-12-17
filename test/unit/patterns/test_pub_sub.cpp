@@ -174,7 +174,7 @@ TEST_F(PubSubTest, SubscriberSubscribe) {
 	subscriber sub(bus_);
 
 	bool received = false;
-	auto result = sub.subscribe("test.topic", [&](const message& msg) {
+	auto result = sub.subscribe("test.topic", [&](const message& /* msg */) {
 		received = true;
 		return common::ok();
 	});

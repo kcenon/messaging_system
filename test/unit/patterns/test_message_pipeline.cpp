@@ -209,7 +209,7 @@ TEST_F(MessagePipelineTest, PipelineStageFailure) {
 	message_pipeline pipeline(bus_, "input.topic", "output.topic");
 
 	// Stage that fails
-	pipeline.add_stage("failing_stage", [](const message& msg) -> common::Result<message> {
+	pipeline.add_stage("failing_stage", [](const message& /* msg */) -> common::Result<message> {
 		return common::make_error<message>(-1, "Stage failed");
 	});
 
@@ -224,7 +224,7 @@ TEST_F(MessagePipelineTest, PipelineOptionalStageFailure) {
 	std::atomic<int> final_stage_count{0};
 
 	// Optional failing stage
-	pipeline.add_stage("optional_fail", [](const message& msg) -> common::Result<message> {
+	pipeline.add_stage("optional_fail", [](const message& /* msg */) -> common::Result<message> {
 		return common::make_error<message>(-1, "Optional stage failed");
 	}, true);  // Mark as optional
 
@@ -274,7 +274,7 @@ TEST_F(MessagePipelineTest, PipelineAutoProcessing) {
 	// Subscribe to output topic to verify messages are processed
 	std::atomic<int> output_count{0};
 	auto sub_result = bus_->subscribe("pipeline.output", [&output_count](
-		const message& msg
+		const message& /* msg */
 	) -> common::VoidResult {
 		output_count++;
 		return common::ok();
@@ -329,9 +329,8 @@ TEST_F(MessagePipelineTest, PipelineStatisticsWithFailures) {
 		int count = counter++;
 		if (count % 2 == 0) {
 			return common::ok(message(msg));
-		} else {
-			return common::make_error<message>(-1, "Even numbers only");
 		}
+		return common::make_error<message>(-1, "Even numbers only");
 	});
 
 	// Process 4 messages - 2 should succeed, 2 should fail
@@ -350,7 +349,7 @@ TEST_F(MessagePipelineTest, PipelineStatisticsReset) {
 	message_pipeline pipeline(bus_, "input.topic", "output.topic");
 
 	pipeline.add_stage("test", [](const message& msg) -> common::Result<message> {
-		return common::ok(message(msg));
+		return common::ok(message(msg));  // msg is used here
 	});
 
 	// Process messages
@@ -536,7 +535,7 @@ TEST_F(MessagePipelineTest, RetryStage) {
 TEST_F(MessagePipelineTest, RetryStageMaxAttemptsExceeded) {
 	std::atomic<int> attempt_count{0};
 
-	auto always_fail = [&attempt_count](const message& msg) -> common::Result<message> {
+	auto always_fail = [&attempt_count](const message& /* msg */) -> common::Result<message> {
 		attempt_count++;
 		return common::make_error<message>(-1, "Always fails");
 	};

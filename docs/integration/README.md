@@ -291,6 +291,132 @@ namespace task_event_types {
 
 ---
 
+## Monitoring System Integration
+
+The `message_bus_collector` provides integration with monitoring_system for collecting message bus performance metrics.
+
+### Prerequisites
+
+- `monitoring_system` available (automatically fetched via FetchContent)
+- `BUILD_WITH_MONITORING_SYSTEM` compile definition enabled (automatic when monitoring_system is found)
+
+### Collected Metrics
+
+| Metric Name | Type | Description |
+|-------------|------|-------------|
+| `messaging_messages_published_total` | Counter | Total messages published |
+| `messaging_messages_processed_total` | Counter | Total messages successfully processed |
+| `messaging_messages_failed_total` | Counter | Total messages that failed processing |
+| `messaging_messages_dropped_total` | Counter | Total messages dropped |
+| `messaging_queue_depth` | Gauge | Current queue depth |
+| `messaging_queue_capacity` | Gauge | Maximum queue capacity |
+| `messaging_queue_utilization_percent` | Gauge | Queue utilization percentage |
+| `messaging_throughput_per_second` | Gauge | Messages processed per second |
+| `messaging_latency_average_ms` | Gauge | Average message processing latency |
+| `messaging_latency_max_ms` | Gauge | Maximum message processing latency |
+| `messaging_latency_min_ms` | Gauge | Minimum message processing latency |
+| `messaging_topic_count` | Gauge | Number of active topics |
+| `messaging_total_subscribers` | Gauge | Total number of subscribers |
+| `messaging_subscribers_per_topic` | Gauge | Subscribers per topic (with topic label) |
+| `messaging_worker_threads` | Gauge | Number of worker threads |
+| `messaging_is_running` | Gauge | Message bus running status (1 or 0) |
+
+### Basic Usage
+
+```cpp
+#include <kcenon/messaging/collectors/message_bus_collector.h>
+#include <kcenon/messaging/core/message_bus.h>
+
+using namespace kcenon::messaging::collectors;
+
+// Create message bus
+auto backend = std::make_shared<standalone_backend>();
+auto bus = std::make_shared<message_bus>(backend, message_bus_config{});
+
+// Create and configure collector
+message_bus_collector collector;
+std::unordered_map<std::string, std::string> config{
+    {"enable_latency_tracking", "true"},
+    {"latency_sample_size", "1000"},
+    {"enable_topic_metrics", "true"}
+};
+collector.initialize(config);
+
+// Register message bus
+collector.set_message_bus(bus);
+
+// Collect metrics
+auto metrics = collector.collect();
+
+// Process metrics (e.g., send to Prometheus)
+for (const auto& metric : metrics) {
+    std::cout << metric.name << ": " << std::get<double>(metric.value) << "\n";
+}
+```
+
+### Health Monitoring
+
+The `message_bus_health_monitor` class provides anomaly detection:
+
+```cpp
+#include <kcenon/messaging/collectors/message_bus_collector.h>
+
+using namespace kcenon::messaging::collectors;
+
+// Configure health thresholds
+message_bus_health_thresholds thresholds;
+thresholds.queue_saturation_warn = 0.7;      // 70%
+thresholds.queue_saturation_critical = 0.9;  // 90%
+thresholds.failure_rate_warn = 0.05;         // 5%
+thresholds.latency_warn_ms = 100.0;          // 100ms
+
+// Create monitor
+message_bus_health_monitor monitor(thresholds);
+
+// Analyze health
+message_bus_stats stats = get_current_stats();
+auto report = monitor.analyze_health(stats, "primary_bus");
+
+switch (report.status) {
+    case message_bus_health_status::healthy:
+        std::cout << "Bus is healthy\n";
+        break;
+    case message_bus_health_status::degraded:
+        std::cout << "Bus is degraded: " << report.issues.size() << " issues\n";
+        break;
+    case message_bus_health_status::unhealthy:
+        std::cout << "Bus is unhealthy!\n";
+        break;
+    case message_bus_health_status::critical:
+        std::cout << "Bus is critical!\n";
+        break;
+}
+
+// Print issues
+for (const auto& issue : report.issues) {
+    std::cout << "  - " << issue << "\n";
+}
+```
+
+### Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enable_latency_tracking` | bool | true | Enable latency sample collection |
+| `latency_sample_size` | size_t | 1000 | Maximum latency samples to keep |
+| `enable_topic_metrics` | bool | true | Collect per-topic subscriber counts |
+| `use_event_bus` | bool | true | Enable event bus integration |
+
+### Prometheus Naming Convention
+
+All metrics follow Prometheus naming conventions:
+- Prefix: `messaging_`
+- Suffix for totals: `_total`
+- Suffix for latency: `_ms`
+- Snake_case naming
+
+---
+
 ## Related Documentation
 
 - [Quick Start](../guides/QUICK_START.md)
