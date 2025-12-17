@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['취소하나요_0',['Q: 실행 중인 작업을 어떻게 취소하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2018',1,'']]],
-  ['취소_1',['취소',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1539',1,'결과/취소'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1513',1,'취소'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1522',1,'취소']]]
+  ['취소하나요_0',['Q: 실행 중인 작업을 어떻게 취소하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2019',1,'']]],
+  ['취소_1',['취소',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1540',1,'결과/취소'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1514',1,'취소'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1523',1,'취소']]]
 ];
