@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['쿼리_0',['쿼리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1580',1,'작업 쿼리'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1565',1,'쿼리']]],
-  ['쿼리_20작업_1',['쿼리 작업',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1524',1,'']]]
+  ['쿼리_0',['쿼리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1589',1,'작업 쿼리'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1574',1,'쿼리']]],
+  ['쿼리_20작업_1',['쿼리 작업',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1533',1,'']]]
 ];

@@ -1226,986 +1226,986 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Performance Baseline", "d9/df1/md_docs_2performance_2BASELINE.html", [
-      [ "Overview", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1109", null ],
-      [ "Baseline Metrics", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1111", [
-        [ "Message Bus Performance", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1112", null ],
-        [ "Pattern Performance", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1113", null ]
+      [ "Overview", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1118", null ],
+      [ "Baseline Metrics", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1120", [
+        [ "Message Bus Performance", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1121", null ],
+        [ "Pattern Performance", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1122", null ]
       ] ],
-      [ "Test Environment", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1115", [
-        [ "Reference Platform", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1116", null ]
+      [ "Test Environment", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1124", [
+        [ "Reference Platform", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1125", null ]
       ] ],
-      [ "Benchmark Commands", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1118", null ],
-      [ "Regression Detection", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1120", null ],
-      [ "Historical Data", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1122", null ]
+      [ "Benchmark Commands", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1127", null ],
+      [ "Regression Detection", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1129", null ],
+      [ "Historical Data", "d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1131", null ]
     ] ],
     [ "Performance Guide", "d9/dd2/md_docs_2performance_2PERFORMANCE.html", [
-      [ "Table of Contents", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1124", null ],
-      [ "Performance Overview", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1125", [
-        [ "Design Goals", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1126", null ],
-        [ "Key Performance Features", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1127", null ]
+      [ "Table of Contents", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1133", null ],
+      [ "Performance Overview", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1134", [
+        [ "Design Goals", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1135", null ],
+        [ "Key Performance Features", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1136", null ]
       ] ],
-      [ "Benchmark Results", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1128", [
-        [ "Test Environment", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1129", null ],
-        [ "Overall System Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1130", null ],
-        [ "Latency Measurements", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1131", null ],
-        [ "Memory Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1132", null ]
+      [ "Benchmark Results", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1137", [
+        [ "Test Environment", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1138", null ],
+        [ "Overall System Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1139", null ],
+        [ "Latency Measurements", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1140", null ],
+        [ "Memory Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1141", null ]
       ] ],
-      [ "Component Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1133", [
-        [ "Thread System Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1134", [
-          [ "Lock-free vs Mutex Comparison", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1135", null ],
-          [ "Scaling Characteristics", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1136", null ]
+      [ "Component Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1142", [
+        [ "Thread System Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1143", [
+          [ "Lock-free vs Mutex Comparison", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1144", null ],
+          [ "Scaling Characteristics", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1145", null ]
         ] ],
-        [ "Container System Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1137", [
-          [ "Serialization Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1138", null ],
-          [ "SIMD Optimization Impact", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1139", null ]
+        [ "Container System Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1146", [
+          [ "Serialization Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1147", null ],
+          [ "SIMD Optimization Impact", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1148", null ]
         ] ],
-        [ "Network System Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1140", [
-          [ "Connection Scaling", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1141", null ],
-          [ "Protocol Overhead", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1142", null ]
+        [ "Network System Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1149", [
+          [ "Connection Scaling", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1150", null ],
+          [ "Protocol Overhead", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1151", null ]
         ] ],
-        [ "Database System Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1143", [
-          [ "Query Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1144", null ],
-          [ "Connection Pool Impact", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1145", null ]
+        [ "Database System Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1152", [
+          [ "Query Performance", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1153", null ],
+          [ "Connection Pool Impact", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1154", null ]
         ] ]
       ] ],
-      [ "Optimization Techniques", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1146", [
-        [ "1. Memory Optimization", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1147", [
-          [ "Object Pooling", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1148", null ],
-          [ "Custom Allocators", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1149", null ]
+      [ "Optimization Techniques", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1155", [
+        [ "1. Memory Optimization", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1156", [
+          [ "Object Pooling", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1157", null ],
+          [ "Custom Allocators", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1158", null ]
         ] ],
-        [ "2. CPU Optimization", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1150", [
-          [ "SIMD Utilization", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1151", null ],
-          [ "Cache Optimization", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1152", null ]
+        [ "2. CPU Optimization", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1159", [
+          [ "SIMD Utilization", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1160", null ],
+          [ "Cache Optimization", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1161", null ]
         ] ],
-        [ "3. Network Optimization", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1153", [
-          [ "Batching and Pipelining", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1154", null ]
+        [ "3. Network Optimization", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1162", [
+          [ "Batching and Pipelining", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1163", null ]
         ] ]
       ] ],
-      [ "Performance Monitoring", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1155", [
-        [ "1. Built-in Metrics", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1156", null ],
-        [ "2. Performance Profiling", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1157", null ]
+      [ "Performance Monitoring", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1164", [
+        [ "1. Built-in Metrics", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1165", null ],
+        [ "2. Performance Profiling", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1166", null ]
       ] ],
-      [ "Tuning Guidelines", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1158", [
-        [ "1. Thread Configuration", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1159", null ],
-        [ "2. Memory Configuration", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1160", null ],
-        [ "3. Network Configuration", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1161", null ]
+      [ "Tuning Guidelines", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1167", [
+        [ "1. Thread Configuration", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1168", null ],
+        [ "2. Memory Configuration", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1169", null ],
+        [ "3. Network Configuration", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1170", null ]
       ] ],
-      [ "Troubleshooting Performance Issues", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1162", [
-        [ "1. Common Performance Problems", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1163", [
-          [ "High CPU Usage", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1164", null ],
-          [ "Memory Leaks", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1165", null ],
-          [ "Network Bottlenecks", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1166", null ]
+      [ "Troubleshooting Performance Issues", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1171", [
+        [ "1. Common Performance Problems", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1172", [
+          [ "High CPU Usage", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1173", null ],
+          [ "Memory Leaks", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1174", null ],
+          [ "Network Bottlenecks", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1175", null ]
         ] ],
-        [ "2. Performance Monitoring Dashboard", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1167", null ]
+        [ "2. Performance Monitoring Dashboard", "d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1176", null ]
       ] ]
     ] ],
     [ "Messaging System Production Quality", "dd/def/md_docs_2PRODUCTION__QUALITY.html", [
-      [ "Overview", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1171", null ],
-      [ "Quality Metrics", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1173", [
-        [ "Test Coverage", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1174", null ],
-        [ "CI/CD Pipeline", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1175", null ]
+      [ "Overview", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1180", null ],
+      [ "Quality Metrics", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1182", [
+        [ "Test Coverage", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1183", null ],
+        [ "CI/CD Pipeline", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1184", null ]
       ] ],
-      [ "Code Quality", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1177", [
-        [ "Static Analysis", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1178", null ],
-        [ "Memory Safety", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1179", null ],
-        [ "Code Reviews", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1180", null ]
+      [ "Code Quality", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1186", [
+        [ "Static Analysis", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1187", null ],
+        [ "Memory Safety", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1188", null ],
+        [ "Code Reviews", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1189", null ]
       ] ],
-      [ "Testing Strategy", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1182", [
-        [ "Unit Tests", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1183", null ],
-        [ "Integration Tests", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1184", null ],
-        [ "Performance Tests", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1185", null ]
+      [ "Testing Strategy", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1191", [
+        [ "Unit Tests", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1192", null ],
+        [ "Integration Tests", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1193", null ],
+        [ "Performance Tests", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1194", null ]
       ] ],
-      [ "Reliability Features", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1187", [
-        [ "Error Handling", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1188", null ],
-        [ "Fault Tolerance", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1189", null ],
-        [ "Monitoring", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1190", null ]
+      [ "Reliability Features", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1196", [
+        [ "Error Handling", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1197", null ],
+        [ "Fault Tolerance", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1198", null ],
+        [ "Monitoring", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1199", null ]
       ] ],
-      [ "Production Deployment", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1192", [
-        [ "Configuration", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1193", null ],
-        [ "Resource Requirements", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1194", null ],
-        [ "Scalability", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1195", null ]
+      [ "Production Deployment", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1201", [
+        [ "Configuration", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1202", null ],
+        [ "Resource Requirements", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1203", null ],
+        [ "Scalability", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1204", null ]
       ] ],
-      [ "Security", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1197", [
-        [ "Input Validation", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1198", null ],
-        [ "Thread Safety", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1199", null ],
-        [ "Resource Management", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1200", null ]
+      [ "Security", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1206", [
+        [ "Input Validation", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1207", null ],
+        [ "Thread Safety", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1208", null ],
+        [ "Resource Management", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1209", null ]
       ] ],
-      [ "Documentation", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1202", [
-        [ "API Documentation", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1203", null ],
-        [ "Guides", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1204", null ]
+      [ "Documentation", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1211", [
+        [ "API Documentation", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1212", null ],
+        [ "Guides", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1213", null ]
       ] ],
-      [ "Industry Standards", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1206", [
-        [ "Compliance", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1207", null ],
-        [ "Best Practices", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1208", null ]
+      [ "Industry Standards", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1215", [
+        [ "Compliance", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1216", null ],
+        [ "Best Practices", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1217", null ]
       ] ],
-      [ "Known Limitations", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1210", [
-        [ "Current Limitations", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1211", null ],
-        [ "Planned Improvements", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1212", null ]
+      [ "Known Limitations", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1219", [
+        [ "Current Limitations", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1220", null ],
+        [ "Planned Improvements", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1221", null ]
       ] ],
-      [ "Production Checklist", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1214", [
-        [ "Pre-Deployment", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1215", null ],
-        [ "Deployment", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1216", null ],
-        [ "Post-Deployment", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1217", null ]
+      [ "Production Checklist", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1223", [
+        [ "Pre-Deployment", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1224", null ],
+        [ "Deployment", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1225", null ],
+        [ "Post-Deployment", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1226", null ]
       ] ],
-      [ "Support", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1219", [
-        [ "Getting Help", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1220", null ],
-        [ "Reporting Bugs", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1221", null ]
+      [ "Support", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1228", [
+        [ "Getting Help", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1229", null ],
+        [ "Reporting Bugs", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1230", null ]
       ] ],
-      [ "Conclusion", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1223", null ]
+      [ "Conclusion", "dd/def/md_docs_2PRODUCTION__QUALITY.html#autotoc_md1232", null ]
     ] ],
     [ "Messaging System 프로덕션 품질", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html", [
-      [ "요약", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1227", null ],
-      [ "목차", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1229", null ],
-      [ "CI/CD 인프라", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1231", [
-        [ "빌드 매트릭스", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1232", null ]
+      [ "요약", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1236", null ],
+      [ "목차", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1238", null ],
+      [ "CI/CD 인프라", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1240", [
+        [ "빌드 매트릭스", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1241", null ]
       ] ],
-      [ "스레드 안전성 검증", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1234", [
-        [ "ThreadSanitizer 결과", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1235", null ]
+      [ "스레드 안전성 검증", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1243", [
+        [ "ThreadSanitizer 결과", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1244", null ]
       ] ],
-      [ "테스트 커버리지", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1237", [
-        [ "컴포넌트별 커버리지", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1238", null ]
+      [ "테스트 커버리지", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1246", [
+        [ "컴포넌트별 커버리지", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1247", null ]
       ] ],
-      [ "플랫폼 지원", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1240", [
-        [ "지원 플랫폼", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1241", null ],
-        [ "컴파일러 지원", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1242", null ]
+      [ "플랫폼 지원", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1249", [
+        [ "지원 플랫폼", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1250", null ],
+        [ "컴파일러 지원", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1251", null ]
       ] ],
-      [ "관련 문서", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1244", null ]
+      [ "관련 문서", "d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1253", null ]
     ] ],
     [ "Messaging System Project Structure", "d4/d22/md_docs_2PROJECT__STRUCTURE.html", [
-      [ "Overview", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1247", null ],
-      [ "Directory Layout", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1249", null ],
-      [ "Component Organization", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1251", [
-        [ "Core Components (<tt>include/kcenon/messaging/core/</tt>)", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1252", null ],
-        [ "Interfaces (<tt>include/kcenon/messaging/interfaces/</tt>)", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1253", null ],
-        [ "Backends (<tt>include/kcenon/messaging/backends/</tt>)", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1254", null ],
-        [ "Patterns (<tt>include/kcenon/messaging/patterns/</tt>)", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1255", null ],
-        [ "Task Queue (<tt>include/kcenon/messaging/task/</tt>)", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1256", null ]
+      [ "Overview", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1256", null ],
+      [ "Directory Layout", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1258", null ],
+      [ "Component Organization", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1260", [
+        [ "Core Components (<tt>include/kcenon/messaging/core/</tt>)", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1261", null ],
+        [ "Interfaces (<tt>include/kcenon/messaging/interfaces/</tt>)", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1262", null ],
+        [ "Backends (<tt>include/kcenon/messaging/backends/</tt>)", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1263", null ],
+        [ "Patterns (<tt>include/kcenon/messaging/patterns/</tt>)", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1264", null ],
+        [ "Task Queue (<tt>include/kcenon/messaging/task/</tt>)", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1265", null ]
       ] ],
-      [ "Build System", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1258", [
-        [ "CMake Structure", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1259", null ],
-        [ "Build Targets", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1260", null ]
+      [ "Build System", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1267", [
+        [ "CMake Structure", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1268", null ],
+        [ "Build Targets", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1269", null ]
       ] ],
-      [ "Dependencies", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1262", [
-        [ "Required Dependencies", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1263", null ],
-        [ "Optional Dependencies", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1264", null ]
+      [ "Dependencies", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1271", [
+        [ "Required Dependencies", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1272", null ],
+        [ "Optional Dependencies", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1273", null ]
       ] ],
-      [ "Include Patterns", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1266", [
-        [ "Application Code", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1267", null ],
-        [ "Internal Implementation", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1268", null ]
+      [ "Include Patterns", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1275", [
+        [ "Application Code", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1276", null ],
+        [ "Internal Implementation", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1277", null ]
       ] ],
-      [ "Naming Conventions", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1270", [
-        [ "Files", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1271", null ],
-        [ "Classes", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1272", null ],
-        [ "Namespaces", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1273", null ]
+      [ "Naming Conventions", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1279", [
+        [ "Files", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1280", null ],
+        [ "Classes", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1281", null ],
+        [ "Namespaces", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1282", null ]
       ] ],
-      [ "Code Organization Principles", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1275", [
-        [ "Separation of Concerns", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1276", null ],
-        [ "Modularity", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1277", null ],
-        [ "Dependencies", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1278", null ]
+      [ "Code Organization Principles", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1284", [
+        [ "Separation of Concerns", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1285", null ],
+        [ "Modularity", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1286", null ],
+        [ "Dependencies", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1287", null ]
       ] ],
-      [ "Future Structure", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1280", [
-        [ "Planned Additions", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1281", null ]
+      [ "Future Structure", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1289", [
+        [ "Planned Additions", "d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1290", null ]
       ] ]
     ] ],
     [ "Messaging System 프로젝트 구조", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html", [
-      [ "개요", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1285", null ],
-      [ "디렉토리 구조", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1287", null ],
-      [ "컴포넌트 구성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1289", [
-        [ "핵심 컴포넌트 (<tt>include/kcenon/messaging/core/</tt>)", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1290", null ],
-        [ "인터페이스 (<tt>include/kcenon/messaging/interfaces/</tt>)", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1291", null ],
-        [ "백엔드 (<tt>include/kcenon/messaging/backends/</tt>)", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1292", null ],
-        [ "패턴 (<tt>include/kcenon/messaging/patterns/</tt>)", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1293", null ],
-        [ "태스크 큐 (<tt>include/kcenon/messaging/task/</tt>)", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1294", null ]
+      [ "개요", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1294", null ],
+      [ "디렉토리 구조", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1296", null ],
+      [ "컴포넌트 구성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1298", [
+        [ "핵심 컴포넌트 (<tt>include/kcenon/messaging/core/</tt>)", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1299", null ],
+        [ "인터페이스 (<tt>include/kcenon/messaging/interfaces/</tt>)", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1300", null ],
+        [ "백엔드 (<tt>include/kcenon/messaging/backends/</tt>)", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1301", null ],
+        [ "패턴 (<tt>include/kcenon/messaging/patterns/</tt>)", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1302", null ],
+        [ "태스크 큐 (<tt>include/kcenon/messaging/task/</tt>)", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1303", null ]
       ] ],
-      [ "빌드 시스템", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1296", [
-        [ "CMake 구조", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1297", null ],
-        [ "빌드 타겟", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1298", null ]
+      [ "빌드 시스템", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1305", [
+        [ "CMake 구조", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1306", null ],
+        [ "빌드 타겟", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1307", null ]
       ] ],
-      [ "의존성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1300", [
-        [ "필수 의존성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1301", null ],
-        [ "선택적 의존성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1302", null ]
+      [ "의존성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1309", [
+        [ "필수 의존성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1310", null ],
+        [ "선택적 의존성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1311", null ]
       ] ],
-      [ "Include 패턴", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1304", [
-        [ "애플리케이션 코드", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1305", null ],
-        [ "내부 구현", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1306", null ]
+      [ "Include 패턴", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1313", [
+        [ "애플리케이션 코드", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1314", null ],
+        [ "내부 구현", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1315", null ]
       ] ],
-      [ "명명 규칙", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1308", [
-        [ "파일", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1309", null ],
-        [ "클래스", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1310", null ],
-        [ "네임스페이스", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1311", null ]
+      [ "명명 규칙", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1317", [
+        [ "파일", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1318", null ],
+        [ "클래스", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1319", null ],
+        [ "네임스페이스", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1320", null ]
       ] ],
-      [ "코드 구성 원칙", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1313", [
-        [ "관심사 분리", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1314", null ],
-        [ "모듈성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1315", null ],
-        [ "의존성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1316", null ]
+      [ "코드 구성 원칙", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1322", [
+        [ "관심사 분리", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1323", null ],
+        [ "모듈성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1324", null ],
+        [ "의존성", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1325", null ]
       ] ],
-      [ "향후 구조", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1318", [
-        [ "계획된 추가 사항", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1319", null ]
+      [ "향후 구조", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1327", [
+        [ "계획된 추가 사항", "d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1328", null ]
       ] ]
     ] ],
     [ "Messaging System 문서", "d8/d0a/md_docs_2README__KO.html", [
-      [ "문서 인덱스", "d8/d0a/md_docs_2README__KO.html#autotoc_md1342", null ],
-      [ "시작하기", "d8/d0a/md_docs_2README__KO.html#autotoc_md1344", null ],
-      [ "핵심 문서", "d8/d0a/md_docs_2README__KO.html#autotoc_md1346", null ],
-      [ "품질 및 운영", "d8/d0a/md_docs_2README__KO.html#autotoc_md1348", null ],
-      [ "Task 큐 시스템", "d8/d0a/md_docs_2README__KO.html#autotoc_md1350", null ],
-      [ "아키텍처 결정 기록 (ADR)", "d8/d0a/md_docs_2README__KO.html#autotoc_md1352", null ],
-      [ "디렉토리 구조", "d8/d0a/md_docs_2README__KO.html#autotoc_md1354", null ],
-      [ "관련 링크", "d8/d0a/md_docs_2README__KO.html#autotoc_md1356", null ]
+      [ "문서 인덱스", "d8/d0a/md_docs_2README__KO.html#autotoc_md1351", null ],
+      [ "시작하기", "d8/d0a/md_docs_2README__KO.html#autotoc_md1353", null ],
+      [ "핵심 문서", "d8/d0a/md_docs_2README__KO.html#autotoc_md1355", null ],
+      [ "품질 및 운영", "d8/d0a/md_docs_2README__KO.html#autotoc_md1357", null ],
+      [ "Task 큐 시스템", "d8/d0a/md_docs_2README__KO.html#autotoc_md1359", null ],
+      [ "아키텍처 결정 기록 (ADR)", "d8/d0a/md_docs_2README__KO.html#autotoc_md1361", null ],
+      [ "디렉토리 구조", "d8/d0a/md_docs_2README__KO.html#autotoc_md1363", null ],
+      [ "관련 링크", "d8/d0a/md_docs_2README__KO.html#autotoc_md1365", null ]
     ] ],
     [ "Task Module API Reference", "df/d18/md_docs_2task_2API__REFERENCE.html", [
-      [ "Table of Contents", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1358", null ],
-      [ "task", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1360", [
-        [ "Enumerations", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1361", [
-          [ "task_state", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1362", null ]
+      [ "Table of Contents", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1367", null ],
+      [ "task", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1369", [
+        [ "Enumerations", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1370", [
+          [ "task_state", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1371", null ]
         ] ],
-        [ "Constructors", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1363", null ],
-        [ "Identification Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1364", null ],
-        [ "State Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1365", null ],
-        [ "Configuration Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1366", null ],
-        [ "Execution Tracking", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1367", null ],
-        [ "Progress Tracking", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1368", null ],
-        [ "Result/Error Handling", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1369", null ],
-        [ "Retry Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1370", null ],
-        [ "Serialization", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1371", null ]
+        [ "Constructors", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1372", null ],
+        [ "Identification Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1373", null ],
+        [ "State Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1374", null ],
+        [ "Configuration Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1375", null ],
+        [ "Execution Tracking", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1376", null ],
+        [ "Progress Tracking", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1377", null ],
+        [ "Result/Error Handling", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1378", null ],
+        [ "Retry Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1379", null ],
+        [ "Serialization", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1380", null ]
       ] ],
-      [ "task_config", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1373", [
-        [ "Fields", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1374", null ]
+      [ "task_config", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1382", [
+        [ "Fields", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1383", null ]
       ] ],
-      [ "task_builder", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1376", [
-        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1377", null ],
-        [ "Builder Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1378", null ],
-        [ "Build Method", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1379", null ],
-        [ "Example", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1380", null ]
+      [ "task_builder", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1385", [
+        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1386", null ],
+        [ "Builder Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1387", null ],
+        [ "Build Method", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1388", null ],
+        [ "Example", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1389", null ]
       ] ],
-      [ "task_handler_interface", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1382", [
-        [ "Pure Virtual Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1383", null ],
-        [ "Virtual Lifecycle Hooks", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1384", null ],
-        [ "Example", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1385", null ],
-        [ "Helper Functions", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1386", null ]
+      [ "task_handler_interface", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1391", [
+        [ "Pure Virtual Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1392", null ],
+        [ "Virtual Lifecycle Hooks", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1393", null ],
+        [ "Example", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1394", null ],
+        [ "Helper Functions", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1395", null ]
       ] ],
-      [ "task_context", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1388", [
-        [ "Structures", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1389", [
-          [ "progress_info", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1390", null ],
-          [ "task_log_entry", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1391", null ]
+      [ "task_context", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1397", [
+        [ "Structures", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1398", [
+          [ "progress_info", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1399", null ],
+          [ "task_log_entry", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1400", null ]
         ] ],
-        [ "Progress Tracking", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1392", null ],
-        [ "Checkpoint Management", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1393", null ],
-        [ "Subtask Management", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1394", null ],
-        [ "Cancellation", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1395", null ],
-        [ "Logging", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1396", null ]
-      ] ],
-      [ "task_queue", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1398", [
-        [ "Configuration", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1399", null ],
-        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1400", null ],
-        [ "Lifecycle", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1401", null ],
-        [ "Enqueue Operations", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1402", null ],
-        [ "Dequeue Operations", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1403", null ],
+        [ "Progress Tracking", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1401", null ],
+        [ "Checkpoint Management", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1402", null ],
+        [ "Subtask Management", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1403", null ],
         [ "Cancellation", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1404", null ],
-        [ "Query Operations", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1405", null ]
+        [ "Logging", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1405", null ]
       ] ],
-      [ "worker_pool", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1407", [
+      [ "task_queue", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1407", [
         [ "Configuration", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1408", null ],
-        [ "Statistics", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1409", null ],
-        [ "Handler Registration", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1410", null ],
-        [ "Lifecycle", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1411", null ],
-        [ "Status", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1412", null ],
-        [ "Statistics", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1413", null ]
+        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1409", null ],
+        [ "Lifecycle", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1410", null ],
+        [ "Enqueue Operations", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1411", null ],
+        [ "Dequeue Operations", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1412", null ],
+        [ "Cancellation", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1413", null ],
+        [ "Query Operations", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1414", null ]
       ] ],
-      [ "task_client", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1415", [
-        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1416", null ],
-        [ "Immediate Execution", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1417", null ],
-        [ "Delayed Execution", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1418", null ],
-        [ "Batch Operations", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1419", null ],
-        [ "Workflow Patterns", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1420", null ],
-        [ "Result/Cancellation", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1421", null ],
-        [ "Status", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1422", null ]
+      [ "worker_pool", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1416", [
+        [ "Configuration", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1417", null ],
+        [ "Statistics", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1418", null ],
+        [ "Handler Registration", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1419", null ],
+        [ "Lifecycle", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1420", null ],
+        [ "Status", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1421", null ],
+        [ "Statistics", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1422", null ]
       ] ],
-      [ "async_result", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1424", [
-        [ "Status Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1425", null ],
-        [ "Progress Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1426", null ],
-        [ "Blocking Result Retrieval", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1427", null ],
-        [ "Callback-Based", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1428", null ],
-        [ "Task Control", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1429", null ]
+      [ "task_client", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1424", [
+        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1425", null ],
+        [ "Immediate Execution", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1426", null ],
+        [ "Delayed Execution", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1427", null ],
+        [ "Batch Operations", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1428", null ],
+        [ "Workflow Patterns", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1429", null ],
+        [ "Result/Cancellation", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1430", null ],
+        [ "Status", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1431", null ]
       ] ],
-      [ "result_backend_interface", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1431", [
-        [ "Structures", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1432", null ],
-        [ "Pure Virtual Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1433", null ],
-        [ "Optional Virtual Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1434", null ]
+      [ "async_result", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1433", [
+        [ "Status Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1434", null ],
+        [ "Progress Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1435", null ],
+        [ "Blocking Result Retrieval", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1436", null ],
+        [ "Callback-Based", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1437", null ],
+        [ "Task Control", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1438", null ]
       ] ],
-      [ "memory_result_backend", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1436", [
-        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1437", null ],
-        [ "Additional Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1438", null ]
-      ] ],
-      [ "task_scheduler", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1440", [
+      [ "result_backend_interface", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1440", [
         [ "Structures", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1441", null ],
-        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1442", null ],
-        [ "Schedule Registration", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1443", null ],
-        [ "Schedule Management", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1444", null ],
-        [ "Lifecycle", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1445", null ],
-        [ "Query", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1446", null ],
-        [ "Event Callbacks", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1447", null ]
+        [ "Pure Virtual Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1442", null ],
+        [ "Optional Virtual Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1443", null ]
       ] ],
-      [ "cron_parser", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1449", [
-        [ "Cron Expression Format", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1450", null ],
-        [ "Supported Syntax", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1451", null ],
-        [ "Structure", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1452", null ],
-        [ "Static Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1453", null ],
-        [ "Examples", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1454", null ]
+      [ "memory_result_backend", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1445", [
+        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1446", null ],
+        [ "Additional Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1447", null ]
       ] ],
-      [ "task_monitor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1456", [
-        [ "Structures", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1457", null ],
-        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1458", null ],
-        [ "Queue Statistics", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1459", null ],
-        [ "Worker Status", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1460", null ],
-        [ "Task Queries", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1461", null ],
-        [ "Task Management", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1462", null ],
-        [ "Event Subscriptions", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1463", null ]
+      [ "task_scheduler", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1449", [
+        [ "Structures", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1450", null ],
+        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1451", null ],
+        [ "Schedule Registration", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1452", null ],
+        [ "Schedule Management", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1453", null ],
+        [ "Lifecycle", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1454", null ],
+        [ "Query", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1455", null ],
+        [ "Event Callbacks", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1456", null ]
       ] ],
-      [ "task_system", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1465", [
-        [ "Configuration", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1466", null ],
+      [ "cron_parser", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1458", [
+        [ "Cron Expression Format", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1459", null ],
+        [ "Supported Syntax", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1460", null ],
+        [ "Structure", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1461", null ],
+        [ "Static Methods", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1462", null ],
+        [ "Examples", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1463", null ]
+      ] ],
+      [ "task_monitor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1465", [
+        [ "Structures", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1466", null ],
         [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1467", null ],
-        [ "Lifecycle", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1468", null ],
-        [ "Component Access", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1469", null ],
-        [ "Handler Registration (Convenience)", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1470", null ],
-        [ "Task Submission (Convenience)", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1471", null ],
-        [ "Scheduling (Convenience)", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1472", null ],
-        [ "Statistics", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1473", null ]
+        [ "Queue Statistics", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1468", null ],
+        [ "Worker Status", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1469", null ],
+        [ "Task Queries", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1470", null ],
+        [ "Task Management", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1471", null ],
+        [ "Event Subscriptions", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1472", null ]
       ] ],
-      [ "Related Documentation", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1475", null ]
+      [ "task_system", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1474", [
+        [ "Configuration", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1475", null ],
+        [ "Constructor", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1476", null ],
+        [ "Lifecycle", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1477", null ],
+        [ "Component Access", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1478", null ],
+        [ "Handler Registration (Convenience)", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1479", null ],
+        [ "Task Submission (Convenience)", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1480", null ],
+        [ "Scheduling (Convenience)", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1481", null ],
+        [ "Statistics", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1482", null ]
+      ] ],
+      [ "Related Documentation", "df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1484", null ]
     ] ],
     [ "Task 모듈 API 레퍼런스", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html", [
-      [ "목차", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1477", null ],
-      [ "task", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1479", [
-        [ "열거형", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1480", [
-          [ "task_state", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1481", null ]
+      [ "목차", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1486", null ],
+      [ "task", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1488", [
+        [ "열거형", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1489", [
+          [ "task_state", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1490", null ]
         ] ],
-        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1482", null ],
-        [ "식별 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1483", null ],
-        [ "상태 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1484", null ],
-        [ "설정 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1485", null ],
-        [ "실행 추적", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1486", null ],
-        [ "진행 상황 추적", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1487", null ],
-        [ "결과/에러 처리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1488", null ],
-        [ "재시도 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1489", null ],
-        [ "직렬화", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1490", null ]
+        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1491", null ],
+        [ "식별 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1492", null ],
+        [ "상태 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1493", null ],
+        [ "설정 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1494", null ],
+        [ "실행 추적", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1495", null ],
+        [ "진행 상황 추적", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1496", null ],
+        [ "결과/에러 처리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1497", null ],
+        [ "재시도 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1498", null ],
+        [ "직렬화", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1499", null ]
       ] ],
-      [ "task_config", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1492", [
-        [ "필드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1493", null ]
+      [ "task_config", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1501", [
+        [ "필드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1502", null ]
       ] ],
-      [ "task_builder", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1495", [
-        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1496", null ],
-        [ "빌더 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1497", null ],
-        [ "빌드 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1498", null ],
-        [ "예제", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1499", null ]
+      [ "task_builder", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1504", [
+        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1505", null ],
+        [ "빌더 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1506", null ],
+        [ "빌드 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1507", null ],
+        [ "예제", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1508", null ]
       ] ],
-      [ "task_handler_interface", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1501", [
-        [ "순수 가상 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1502", null ],
-        [ "가상 라이프사이클 훅", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1503", null ],
-        [ "예제", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1504", null ],
-        [ "헬퍼 함수", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1505", null ]
+      [ "task_handler_interface", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1510", [
+        [ "순수 가상 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1511", null ],
+        [ "가상 라이프사이클 훅", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1512", null ],
+        [ "예제", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1513", null ],
+        [ "헬퍼 함수", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1514", null ]
       ] ],
-      [ "task_context", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1507", [
-        [ "구조체", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1508", [
-          [ "progress_info", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1509", null ],
-          [ "task_log_entry", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1510", null ]
+      [ "task_context", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1516", [
+        [ "구조체", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1517", [
+          [ "progress_info", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1518", null ],
+          [ "task_log_entry", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1519", null ]
         ] ],
-        [ "진행 상황 추적", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1511", null ],
-        [ "체크포인트 관리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1512", null ],
-        [ "하위 작업 관리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1513", null ],
-        [ "취소", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1514", null ],
-        [ "로깅", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1515", null ]
-      ] ],
-      [ "task_queue", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1517", [
-        [ "설정", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1518", null ],
-        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1519", null ],
-        [ "라이프사이클", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1520", null ],
-        [ "인큐 작업", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1521", null ],
-        [ "디큐 작업", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1522", null ],
+        [ "진행 상황 추적", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1520", null ],
+        [ "체크포인트 관리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1521", null ],
+        [ "하위 작업 관리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1522", null ],
         [ "취소", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1523", null ],
-        [ "쿼리 작업", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1524", null ]
+        [ "로깅", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1524", null ]
       ] ],
-      [ "worker_pool", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1526", [
+      [ "task_queue", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1526", [
         [ "설정", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1527", null ],
-        [ "통계", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1528", null ],
-        [ "핸들러 등록", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1529", null ],
-        [ "라이프사이클", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1530", null ],
-        [ "상태", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1531", null ],
-        [ "통계", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1532", null ]
+        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1528", null ],
+        [ "라이프사이클", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1529", null ],
+        [ "인큐 작업", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1530", null ],
+        [ "디큐 작업", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1531", null ],
+        [ "취소", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1532", null ],
+        [ "쿼리 작업", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1533", null ]
       ] ],
-      [ "task_client", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1534", [
-        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1535", null ],
-        [ "즉시 실행", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1536", null ],
-        [ "지연 실행", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1537", null ],
-        [ "배치 작업", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1538", null ],
-        [ "워크플로우 패턴", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1539", null ],
-        [ "결과/취소", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1540", null ],
-        [ "상태", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1541", null ]
+      [ "worker_pool", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1535", [
+        [ "설정", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1536", null ],
+        [ "통계", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1537", null ],
+        [ "핸들러 등록", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1538", null ],
+        [ "라이프사이클", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1539", null ],
+        [ "상태", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1540", null ],
+        [ "통계", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1541", null ]
       ] ],
-      [ "async_result", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1543", [
-        [ "상태 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1544", null ],
-        [ "진행 상황 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1545", null ],
-        [ "블로킹 결과 조회", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1546", null ],
-        [ "콜백 기반", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1547", null ],
-        [ "작업 제어", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1548", null ]
+      [ "task_client", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1543", [
+        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1544", null ],
+        [ "즉시 실행", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1545", null ],
+        [ "지연 실행", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1546", null ],
+        [ "배치 작업", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1547", null ],
+        [ "워크플로우 패턴", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1548", null ],
+        [ "결과/취소", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1549", null ],
+        [ "상태", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1550", null ]
       ] ],
-      [ "result_backend_interface", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1550", [
-        [ "구조체", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1551", null ],
-        [ "순수 가상 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1552", null ],
-        [ "선택적 가상 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1553", null ]
+      [ "async_result", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1552", [
+        [ "상태 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1553", null ],
+        [ "진행 상황 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1554", null ],
+        [ "블로킹 결과 조회", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1555", null ],
+        [ "콜백 기반", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1556", null ],
+        [ "작업 제어", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1557", null ]
       ] ],
-      [ "memory_result_backend", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1555", [
-        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1556", null ],
-        [ "추가 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1557", null ]
-      ] ],
-      [ "task_scheduler", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1559", [
+      [ "result_backend_interface", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1559", [
         [ "구조체", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1560", null ],
-        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1561", null ],
-        [ "스케줄 등록", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1562", null ],
-        [ "스케줄 관리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1563", null ],
-        [ "라이프사이클", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1564", null ],
-        [ "쿼리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1565", null ],
-        [ "이벤트 콜백", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1566", null ]
+        [ "순수 가상 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1561", null ],
+        [ "선택적 가상 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1562", null ]
       ] ],
-      [ "cron_parser", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1568", [
-        [ "Cron 표현식 형식", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1569", null ],
-        [ "지원 구문", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1570", null ],
-        [ "구조체", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1571", null ],
-        [ "정적 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1572", null ],
-        [ "예제", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1573", null ]
+      [ "memory_result_backend", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1564", [
+        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1565", null ],
+        [ "추가 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1566", null ]
       ] ],
-      [ "task_monitor", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1575", [
-        [ "구조체", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1576", null ],
-        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1577", null ],
-        [ "큐 통계", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1578", null ],
-        [ "워커 상태", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1579", null ],
-        [ "작업 쿼리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1580", null ],
-        [ "작업 관리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1581", null ],
-        [ "이벤트 구독", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1582", null ]
+      [ "task_scheduler", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1568", [
+        [ "구조체", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1569", null ],
+        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1570", null ],
+        [ "스케줄 등록", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1571", null ],
+        [ "스케줄 관리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1572", null ],
+        [ "라이프사이클", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1573", null ],
+        [ "쿼리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1574", null ],
+        [ "이벤트 콜백", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1575", null ]
       ] ],
-      [ "task_system", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1584", [
-        [ "설정", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1585", null ],
+      [ "cron_parser", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1577", [
+        [ "Cron 표현식 형식", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1578", null ],
+        [ "지원 구문", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1579", null ],
+        [ "구조체", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1580", null ],
+        [ "정적 메서드", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1581", null ],
+        [ "예제", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1582", null ]
+      ] ],
+      [ "task_monitor", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1584", [
+        [ "구조체", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1585", null ],
         [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1586", null ],
-        [ "라이프사이클", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1587", null ],
-        [ "컴포넌트 접근", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1588", null ],
-        [ "핸들러 등록 (편의 메서드)", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1589", null ],
-        [ "작업 제출 (편의 메서드)", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1590", null ],
-        [ "스케줄링 (편의 메서드)", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1591", null ],
-        [ "통계", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1592", null ]
+        [ "큐 통계", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1587", null ],
+        [ "워커 상태", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1588", null ],
+        [ "작업 쿼리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1589", null ],
+        [ "작업 관리", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1590", null ],
+        [ "이벤트 구독", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1591", null ]
       ] ],
-      [ "관련 문서", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1594", null ]
+      [ "task_system", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1593", [
+        [ "설정", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1594", null ],
+        [ "생성자", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1595", null ],
+        [ "라이프사이클", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1596", null ],
+        [ "컴포넌트 접근", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1597", null ],
+        [ "핸들러 등록 (편의 메서드)", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1598", null ],
+        [ "작업 제출 (편의 메서드)", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1599", null ],
+        [ "스케줄링 (편의 메서드)", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1600", null ],
+        [ "통계", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1601", null ]
+      ] ],
+      [ "관련 문서", "dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1603", null ]
     ] ],
     [ "Task Module Architecture", "d1/d5e/md_docs_2task_2ARCHITECTURE.html", [
-      [ "Overview", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1596", null ],
-      [ "System Architecture", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1597", null ],
-      [ "Core Components", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1598", [
-        [ "1. task_system (Facade)", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1599", null ],
-        [ "2. task", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1600", null ],
-        [ "3. task_queue", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1601", null ],
-        [ "4. worker_pool", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1602", null ],
-        [ "5. task_handler", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1603", null ],
-        [ "6. task_context", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1604", null ],
-        [ "7. result_backend", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1605", null ],
-        [ "8. async_result", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1606", null ],
-        [ "9. task_scheduler", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1607", null ],
-        [ "10. task_monitor", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1608", null ]
+      [ "Overview", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1605", null ],
+      [ "System Architecture", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1606", null ],
+      [ "Core Components", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1607", [
+        [ "1. task_system (Facade)", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1608", null ],
+        [ "2. task", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1609", null ],
+        [ "3. task_queue", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1610", null ],
+        [ "4. worker_pool", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1611", null ],
+        [ "5. task_handler", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1612", null ],
+        [ "6. task_context", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1613", null ],
+        [ "7. result_backend", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1614", null ],
+        [ "8. async_result", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1615", null ],
+        [ "9. task_scheduler", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1616", null ],
+        [ "10. task_monitor", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1617", null ]
       ] ],
-      [ "Data Flow", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1609", [
-        [ "Task Submission Flow", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1610", null ],
-        [ "Retry Flow", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1611", null ]
+      [ "Data Flow", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1618", [
+        [ "Task Submission Flow", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1619", null ],
+        [ "Retry Flow", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1620", null ]
       ] ],
-      [ "Thread Safety", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1612", [
-        [ "thread_system Integration", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1613", null ]
+      [ "Thread Safety", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1621", [
+        [ "thread_system Integration", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1622", null ]
       ] ],
-      [ "Extension Points", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1614", [
-        [ "Custom Result Backend", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1615", null ],
-        [ "Custom Task Handler", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1616", null ]
+      [ "Extension Points", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1623", [
+        [ "Custom Result Backend", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1624", null ],
+        [ "Custom Task Handler", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1625", null ]
       ] ],
-      [ "Design Decisions", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1617", [
-        [ "1. Message-Based Tasks", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1618", null ],
-        [ "2. Result Type Pattern", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1619", null ],
-        [ "3. Builder Pattern", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1620", null ],
-        [ "4. Facade Pattern", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1621", null ],
-        [ "5. Strategy Pattern", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1622", null ]
+      [ "Design Decisions", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1626", [
+        [ "1. Message-Based Tasks", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1627", null ],
+        [ "2. Result Type Pattern", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1628", null ],
+        [ "3. Builder Pattern", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1629", null ],
+        [ "4. Facade Pattern", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1630", null ],
+        [ "5. Strategy Pattern", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1631", null ]
       ] ],
-      [ "Testing", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1623", [
-        [ "Running Tests", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1624", null ]
+      [ "Testing", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1632", [
+        [ "Running Tests", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1633", null ]
       ] ],
-      [ "Related Documentation", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1625", null ]
+      [ "Related Documentation", "d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1634", null ]
     ] ],
     [ "Task 모듈 아키텍처", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html", [
-      [ "개요", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1627", null ],
-      [ "시스템 아키텍처", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1628", null ],
-      [ "핵심 컴포넌트", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1629", [
-        [ "1. task_system (파사드)", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1630", null ],
-        [ "2. task", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1631", null ],
-        [ "3. task_queue", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1632", null ],
-        [ "4. worker_pool", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1633", null ],
-        [ "5. task_handler", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1634", null ],
-        [ "6. task_context", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1635", null ],
-        [ "7. result_backend", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1636", null ],
-        [ "8. async_result", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1637", null ],
-        [ "9. task_scheduler", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1638", null ],
-        [ "10. task_monitor", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1639", null ]
+      [ "개요", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1636", null ],
+      [ "시스템 아키텍처", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1637", null ],
+      [ "핵심 컴포넌트", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1638", [
+        [ "1. task_system (파사드)", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1639", null ],
+        [ "2. task", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1640", null ],
+        [ "3. task_queue", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1641", null ],
+        [ "4. worker_pool", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1642", null ],
+        [ "5. task_handler", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1643", null ],
+        [ "6. task_context", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1644", null ],
+        [ "7. result_backend", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1645", null ],
+        [ "8. async_result", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1646", null ],
+        [ "9. task_scheduler", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1647", null ],
+        [ "10. task_monitor", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1648", null ]
       ] ],
-      [ "데이터 흐름", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1640", [
-        [ "작업 제출 흐름", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1641", null ],
-        [ "재시도 흐름", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1642", null ]
+      [ "데이터 흐름", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1649", [
+        [ "작업 제출 흐름", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1650", null ],
+        [ "재시도 흐름", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1651", null ]
       ] ],
-      [ "스레드 안전성", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1643", [
-        [ "thread_system 통합", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1644", null ]
+      [ "스레드 안전성", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1652", [
+        [ "thread_system 통합", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1653", null ]
       ] ],
-      [ "확장 포인트", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1645", [
-        [ "커스텀 Result Backend", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1646", null ],
-        [ "커스텀 Task Handler", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1647", null ]
+      [ "확장 포인트", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1654", [
+        [ "커스텀 Result Backend", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1655", null ],
+        [ "커스텀 Task Handler", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1656", null ]
       ] ],
-      [ "설계 결정", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1648", [
-        [ "1. 메시지 기반 작업", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1649", null ],
-        [ "2. Result 타입 패턴", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1650", null ],
-        [ "3. 빌더 패턴", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1651", null ],
-        [ "4. 파사드 패턴", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1652", null ],
-        [ "5. 전략 패턴", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1653", null ]
+      [ "설계 결정", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1657", [
+        [ "1. 메시지 기반 작업", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1658", null ],
+        [ "2. Result 타입 패턴", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1659", null ],
+        [ "3. 빌더 패턴", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1660", null ],
+        [ "4. 파사드 패턴", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1661", null ],
+        [ "5. 전략 패턴", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1662", null ]
       ] ],
-      [ "테스트", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1654", [
-        [ "테스트 실행", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1655", null ]
+      [ "테스트", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1663", [
+        [ "테스트 실행", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1664", null ]
       ] ],
-      [ "관련 문서", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1656", null ]
+      [ "관련 문서", "d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1665", null ]
     ] ],
     [ "Task Module Configuration Guide", "dc/d1e/md_docs_2task_2CONFIGURATION.html", [
-      [ "Table of Contents", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1658", null ],
-      [ "Task System Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1660", [
-        [ "Structure", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1661", null ],
-        [ "Options", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1662", null ],
-        [ "Example", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1663", null ]
+      [ "Table of Contents", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1667", null ],
+      [ "Task System Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1669", [
+        [ "Structure", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1670", null ],
+        [ "Options", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1671", null ],
+        [ "Example", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1672", null ]
       ] ],
-      [ "Task Queue Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1665", [
-        [ "Structure", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1666", null ],
-        [ "Options", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1667", null ],
-        [ "Persistence Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1668", null ],
-        [ "Delayed Queue Settings", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1669", null ]
+      [ "Task Queue Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1674", [
+        [ "Structure", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1675", null ],
+        [ "Options", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1676", null ],
+        [ "Persistence Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1677", null ],
+        [ "Delayed Queue Settings", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1678", null ]
       ] ],
-      [ "Worker Pool Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1671", [
-        [ "Structure", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1672", null ],
-        [ "Options", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1673", null ],
-        [ "Concurrency Settings", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1674", null ],
-        [ "Queue Priority", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1675", null ],
-        [ "Prefetch Settings", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1676", null ]
+      [ "Worker Pool Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1680", [
+        [ "Structure", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1681", null ],
+        [ "Options", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1682", null ],
+        [ "Concurrency Settings", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1683", null ],
+        [ "Queue Priority", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1684", null ],
+        [ "Prefetch Settings", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1685", null ]
       ] ],
-      [ "Task Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1678", [
-        [ "Structure", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1679", null ],
-        [ "Options", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1680", null ],
-        [ "Using Task Builder", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1681", null ],
-        [ "Priority Levels", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1682", null ]
+      [ "Task Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1687", [
+        [ "Structure", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1688", null ],
+        [ "Options", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1689", null ],
+        [ "Using Task Builder", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1690", null ],
+        [ "Priority Levels", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1691", null ]
       ] ],
-      [ "Environment-Specific Settings", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1684", [
-        [ "Development Environment", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1685", null ],
-        [ "Staging Environment", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1686", null ],
-        [ "Production Environment", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1687", null ]
+      [ "Environment-Specific Settings", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1693", [
+        [ "Development Environment", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1694", null ],
+        [ "Staging Environment", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1695", null ],
+        [ "Production Environment", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1696", null ]
       ] ],
-      [ "Performance Tuning", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1689", [
-        [ "High Throughput Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1690", null ],
-        [ "Low Latency Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1691", null ],
-        [ "Resource-Constrained Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1692", null ],
-        [ "Long-Running Tasks Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1693", null ],
-        [ "Memory Optimization", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1694", null ]
+      [ "Performance Tuning", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1698", [
+        [ "High Throughput Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1699", null ],
+        [ "Low Latency Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1700", null ],
+        [ "Resource-Constrained Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1701", null ],
+        [ "Long-Running Tasks Configuration", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1702", null ],
+        [ "Memory Optimization", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1703", null ]
       ] ],
-      [ "Configuration Recommendations", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1696", [
-        [ "By Workload Type", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1697", null ],
-        [ "By Scale", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1698", null ]
+      [ "Configuration Recommendations", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1705", [
+        [ "By Workload Type", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1706", null ],
+        [ "By Scale", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1707", null ]
       ] ],
-      [ "Related Documentation", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1700", null ]
+      [ "Related Documentation", "dc/d1e/md_docs_2task_2CONFIGURATION.html#autotoc_md1709", null ]
     ] ],
     [ "Task 모듈 설정 가이드", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html", [
-      [ "목차", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1702", null ],
-      [ "Task 시스템 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1704", [
-        [ "구조체", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1705", null ],
-        [ "옵션", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1706", null ],
-        [ "예제", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1707", null ]
+      [ "목차", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1711", null ],
+      [ "Task 시스템 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1713", [
+        [ "구조체", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1714", null ],
+        [ "옵션", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1715", null ],
+        [ "예제", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1716", null ]
       ] ],
-      [ "Task 큐 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1709", [
-        [ "구조체", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1710", null ],
-        [ "옵션", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1711", null ],
-        [ "영속성 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1712", null ],
-        [ "지연 큐 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1713", null ]
+      [ "Task 큐 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1718", [
+        [ "구조체", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1719", null ],
+        [ "옵션", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1720", null ],
+        [ "영속성 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1721", null ],
+        [ "지연 큐 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1722", null ]
       ] ],
-      [ "워커 풀 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1715", [
-        [ "구조체", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1716", null ],
-        [ "옵션", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1717", null ],
-        [ "동시성 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1718", null ],
-        [ "큐 우선순위", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1719", null ],
-        [ "프리페치 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1720", null ]
+      [ "워커 풀 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1724", [
+        [ "구조체", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1725", null ],
+        [ "옵션", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1726", null ],
+        [ "동시성 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1727", null ],
+        [ "큐 우선순위", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1728", null ],
+        [ "프리페치 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1729", null ]
       ] ],
-      [ "Task 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1722", [
-        [ "구조체", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1723", null ],
-        [ "옵션", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1724", null ],
-        [ "Task 빌더 사용", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1725", null ],
-        [ "우선순위 수준", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1726", null ]
+      [ "Task 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1731", [
+        [ "구조체", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1732", null ],
+        [ "옵션", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1733", null ],
+        [ "Task 빌더 사용", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1734", null ],
+        [ "우선순위 수준", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1735", null ]
       ] ],
-      [ "환경별 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1728", [
-        [ "개발 환경", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1729", null ],
-        [ "스테이징 환경", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1730", null ],
-        [ "프로덕션 환경", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1731", null ]
+      [ "환경별 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1737", [
+        [ "개발 환경", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1738", null ],
+        [ "스테이징 환경", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1739", null ],
+        [ "프로덕션 환경", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1740", null ]
       ] ],
-      [ "성능 튜닝", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1733", [
-        [ "고처리량 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1734", null ],
-        [ "저지연 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1735", null ],
-        [ "리소스 제한 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1736", null ],
-        [ "장기 실행 작업 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1737", null ],
-        [ "메모리 최적화", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1738", null ]
+      [ "성능 튜닝", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1742", [
+        [ "고처리량 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1743", null ],
+        [ "저지연 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1744", null ],
+        [ "리소스 제한 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1745", null ],
+        [ "장기 실행 작업 설정", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1746", null ],
+        [ "메모리 최적화", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1747", null ]
       ] ],
-      [ "설정 권장 사항", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1740", [
-        [ "워크로드 유형별", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1741", null ],
-        [ "규모별", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1742", null ]
+      [ "설정 권장 사항", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1749", [
+        [ "워크로드 유형별", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1750", null ],
+        [ "규모별", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1751", null ]
       ] ],
-      [ "관련 문서", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1744", null ]
+      [ "관련 문서", "d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1753", null ]
     ] ],
     [ "Task Module Migration Guide", "d2/d8d/md_docs_2task_2MIGRATION.html", [
-      [ "Table of Contents", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1746", null ],
-      [ "Version Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1748", [
-        [ "Migrating to 1.0", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1749", [
-          [ "API Changes", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1750", null ],
-          [ "Configuration Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1751", null ]
+      [ "Table of Contents", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1755", null ],
+      [ "Version Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1757", [
+        [ "Migrating to 1.0", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1758", [
+          [ "API Changes", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1759", null ],
+          [ "Configuration Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1760", null ]
         ] ]
       ] ],
-      [ "Migration from Custom Solutions", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1753", [
-        [ "From Thread Pool Implementation", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1754", [
-          [ "Before (Custom Thread Pool)", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1755", null ],
-          [ "After (Task Module)", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1756", null ],
-          [ "Benefits of Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1757", null ]
+      [ "Migration from Custom Solutions", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1762", [
+        [ "From Thread Pool Implementation", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1763", [
+          [ "Before (Custom Thread Pool)", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1764", null ],
+          [ "After (Task Module)", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1765", null ],
+          [ "Benefits of Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1766", null ]
         ] ],
-        [ "From Message Queue Systems", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1758", [
-          [ "Mapping Concepts", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1759", null ],
-          [ "Migration Example", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1760", null ]
+        [ "From Message Queue Systems", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1767", [
+          [ "Mapping Concepts", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1768", null ],
+          [ "Migration Example", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1769", null ]
         ] ],
-        [ "From Cron Jobs", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1761", [
-          [ "Before (System Cron)", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1762", null ],
-          [ "After (Task Scheduler)", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1763", null ],
-          [ "Benefits", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1764", null ]
+        [ "From Cron Jobs", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1770", [
+          [ "Before (System Cron)", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1771", null ],
+          [ "After (Task Scheduler)", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1772", null ],
+          [ "Benefits", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1773", null ]
         ] ]
       ] ],
-      [ "Migration Checklist", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1766", [
-        [ "Pre-Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1767", null ],
-        [ "During Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1768", null ],
-        [ "Post-Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1769", null ],
-        [ "Testing Checklist", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1770", null ]
+      [ "Migration Checklist", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1775", [
+        [ "Pre-Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1776", null ],
+        [ "During Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1777", null ],
+        [ "Post-Migration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1778", null ],
+        [ "Testing Checklist", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1779", null ]
       ] ],
-      [ "Common Migration Issues", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1772", [
-        [ "Handler Throws Instead of Returning Error", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1773", null ],
-        [ "Missing Queue Configuration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1774", null ],
-        [ "Timeout Too Short", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1775", null ]
+      [ "Common Migration Issues", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1781", [
+        [ "Handler Throws Instead of Returning Error", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1782", null ],
+        [ "Missing Queue Configuration", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1783", null ],
+        [ "Timeout Too Short", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1784", null ]
       ] ],
-      [ "Related Documentation", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1777", null ]
+      [ "Related Documentation", "d2/d8d/md_docs_2task_2MIGRATION.html#autotoc_md1786", null ]
     ] ],
     [ "Task 모듈 마이그레이션 가이드", "d7/d10/md_docs_2task_2MIGRATION__KO.html", [
-      [ "목차", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1779", null ],
-      [ "버전 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1781", [
-        [ "1.0으로 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1782", [
-          [ "API 변경 사항", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1783", null ],
-          [ "설정 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1784", null ]
+      [ "목차", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1788", null ],
+      [ "버전 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1790", [
+        [ "1.0으로 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1791", [
+          [ "API 변경 사항", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1792", null ],
+          [ "설정 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1793", null ]
         ] ]
       ] ],
-      [ "커스텀 솔루션에서 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1786", [
-        [ "스레드 풀 구현에서 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1787", [
-          [ "이전 (커스텀 스레드 풀)", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1788", null ],
-          [ "이후 (Task 모듈)", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1789", null ],
-          [ "마이그레이션의 이점", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1790", null ]
+      [ "커스텀 솔루션에서 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1795", [
+        [ "스레드 풀 구현에서 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1796", [
+          [ "이전 (커스텀 스레드 풀)", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1797", null ],
+          [ "이후 (Task 모듈)", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1798", null ],
+          [ "마이그레이션의 이점", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1799", null ]
         ] ],
-        [ "메시지 큐 시스템에서 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1791", [
-          [ "개념 매핑", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1792", null ],
-          [ "마이그레이션 예제", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1793", null ]
+        [ "메시지 큐 시스템에서 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1800", [
+          [ "개념 매핑", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1801", null ],
+          [ "마이그레이션 예제", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1802", null ]
         ] ],
-        [ "Cron 작업에서 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1794", [
-          [ "이전 (시스템 Cron)", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1795", null ],
-          [ "이후 (Task 스케줄러)", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1796", null ],
-          [ "이점", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1797", null ]
+        [ "Cron 작업에서 마이그레이션", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1803", [
+          [ "이전 (시스템 Cron)", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1804", null ],
+          [ "이후 (Task 스케줄러)", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1805", null ],
+          [ "이점", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1806", null ]
         ] ]
       ] ],
-      [ "마이그레이션 체크리스트", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1799", [
-        [ "마이그레이션 전", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1800", null ],
-        [ "마이그레이션 중", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1801", null ],
-        [ "마이그레이션 후", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1802", null ],
-        [ "테스트 체크리스트", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1803", null ]
+      [ "마이그레이션 체크리스트", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1808", [
+        [ "마이그레이션 전", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1809", null ],
+        [ "마이그레이션 중", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1810", null ],
+        [ "마이그레이션 후", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1811", null ],
+        [ "테스트 체크리스트", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1812", null ]
       ] ],
-      [ "일반적인 마이그레이션 문제", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1805", [
-        [ "핸들러가 에러 반환 대신 예외를 던짐", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1806", null ],
-        [ "누락된 큐 설정", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1807", null ],
-        [ "타임아웃이 너무 짧음", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1808", null ]
+      [ "일반적인 마이그레이션 문제", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1814", [
+        [ "핸들러가 에러 반환 대신 예외를 던짐", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1815", null ],
+        [ "누락된 큐 설정", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1816", null ],
+        [ "타임아웃이 너무 짧음", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1817", null ]
       ] ],
-      [ "관련 문서", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1810", null ]
+      [ "관련 문서", "d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1819", null ]
     ] ],
     [ "Task Module Workflow Patterns", "d5/dd2/md_docs_2task_2PATTERNS.html", [
-      [ "Table of Contents", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1812", null ],
-      [ "Chain Pattern", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1814", [
-        [ "Concept", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1815", null ],
-        [ "Usage", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1816", null ],
-        [ "Handler Implementation", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1817", null ],
-        [ "Error Handling", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1818", null ],
-        [ "Use Cases", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1819", null ]
+      [ "Table of Contents", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1821", null ],
+      [ "Chain Pattern", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1823", [
+        [ "Concept", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1824", null ],
+        [ "Usage", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1825", null ],
+        [ "Handler Implementation", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1826", null ],
+        [ "Error Handling", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1827", null ],
+        [ "Use Cases", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1828", null ]
       ] ],
-      [ "Chord Pattern", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1821", [
-        [ "Concept", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1822", null ],
-        [ "Usage", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1823", null ],
-        [ "Callback Handler", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1824", null ],
-        [ "Error Handling", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1825", null ],
-        [ "Use Cases", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1826", null ]
+      [ "Chord Pattern", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1830", [
+        [ "Concept", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1831", null ],
+        [ "Usage", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1832", null ],
+        [ "Callback Handler", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1833", null ],
+        [ "Error Handling", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1834", null ],
+        [ "Use Cases", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1835", null ]
       ] ],
-      [ "Retry Strategies", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1828", [
-        [ "Default Configuration", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1829", null ],
-        [ "Retry Delay Calculation", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1830", null ],
-        [ "Using Task Builder", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1831", null ],
-        [ "Custom Retry Logic", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1832", null ],
-        [ "Retry vs. No Retry Errors", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1833", null ]
+      [ "Retry Strategies", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1837", [
+        [ "Default Configuration", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1838", null ],
+        [ "Retry Delay Calculation", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1839", null ],
+        [ "Using Task Builder", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1840", null ],
+        [ "Custom Retry Logic", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1841", null ],
+        [ "Retry vs. No Retry Errors", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1842", null ]
       ] ],
-      [ "Priority Queues", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1835", [
-        [ "Priority Levels", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1836", null ],
-        [ "Setting Priority", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1837", null ],
-        [ "Priority Queue Setup", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1838", null ],
-        [ "Submitting to Priority Queues", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1839", null ],
-        [ "Best Practices", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1840", null ]
+      [ "Priority Queues", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1844", [
+        [ "Priority Levels", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1845", null ],
+        [ "Setting Priority", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1846", null ],
+        [ "Priority Queue Setup", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1847", null ],
+        [ "Submitting to Priority Queues", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1848", null ],
+        [ "Best Practices", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1849", null ]
       ] ],
-      [ "Scheduled Tasks", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1842", [
-        [ "Periodic Execution", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1843", null ],
-        [ "Cron-Based Scheduling", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1844", null ],
-        [ "Cron Expression Format", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1845", null ],
-        [ "Managing Schedules", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1846", null ],
-        [ "Delayed Task Execution", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1847", null ]
+      [ "Scheduled Tasks", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1851", [
+        [ "Periodic Execution", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1852", null ],
+        [ "Cron-Based Scheduling", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1853", null ],
+        [ "Cron Expression Format", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1854", null ],
+        [ "Managing Schedules", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1855", null ],
+        [ "Delayed Task Execution", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1856", null ]
       ] ],
-      [ "Progress Tracking", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1849", [
-        [ "Reporting Progress", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1850", null ],
-        [ "Monitoring Progress", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1851", null ],
-        [ "Progress History", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1852", null ]
+      [ "Progress Tracking", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1858", [
+        [ "Reporting Progress", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1859", null ],
+        [ "Monitoring Progress", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1860", null ],
+        [ "Progress History", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1861", null ]
       ] ],
-      [ "Checkpoint and Recovery", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1854", [
-        [ "Saving Checkpoints", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1855", null ],
-        [ "Checkpoint Data", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1856", null ]
+      [ "Checkpoint and Recovery", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1863", [
+        [ "Saving Checkpoints", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1864", null ],
+        [ "Checkpoint Data", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1865", null ]
       ] ],
-      [ "Subtask Spawning", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1858", [
-        [ "Spawning Subtasks", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1859", null ],
-        [ "Tracking Subtasks", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1860", null ],
-        [ "Use Cases", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1861", null ]
+      [ "Subtask Spawning", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1867", [
+        [ "Spawning Subtasks", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1868", null ],
+        [ "Tracking Subtasks", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1869", null ],
+        [ "Use Cases", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1870", null ]
       ] ],
-      [ "Combining Patterns", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1863", [
-        [ "Chain with Retry", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1864", null ],
-        [ "Scheduled Chord", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1865", null ]
+      [ "Combining Patterns", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1872", [
+        [ "Chain with Retry", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1873", null ],
+        [ "Scheduled Chord", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1874", null ]
       ] ],
-      [ "Related Documentation", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1867", null ]
+      [ "Related Documentation", "d5/dd2/md_docs_2task_2PATTERNS.html#autotoc_md1876", null ]
     ] ],
     [ "Task 모듈 워크플로우 패턴", "dd/d35/md_docs_2task_2PATTERNS__KO.html", [
-      [ "목차", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1869", null ],
-      [ "Chain 패턴", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1871", [
-        [ "개념", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1872", null ],
-        [ "사용법", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1873", null ],
-        [ "핸들러 구현", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1874", null ],
-        [ "에러 처리", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1875", null ],
-        [ "사용 사례", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1876", null ]
+      [ "목차", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1878", null ],
+      [ "Chain 패턴", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1880", [
+        [ "개념", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1881", null ],
+        [ "사용법", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1882", null ],
+        [ "핸들러 구현", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1883", null ],
+        [ "에러 처리", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1884", null ],
+        [ "사용 사례", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1885", null ]
       ] ],
-      [ "Chord 패턴", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1878", [
-        [ "개념", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1879", null ],
-        [ "사용법", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1880", null ],
-        [ "콜백 핸들러", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1881", null ],
-        [ "에러 처리", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1882", null ],
-        [ "사용 사례", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1883", null ]
+      [ "Chord 패턴", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1887", [
+        [ "개념", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1888", null ],
+        [ "사용법", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1889", null ],
+        [ "콜백 핸들러", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1890", null ],
+        [ "에러 처리", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1891", null ],
+        [ "사용 사례", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1892", null ]
       ] ],
-      [ "재시도 전략", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1885", [
-        [ "기본 설정", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1886", null ],
-        [ "재시도 지연 계산", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1887", null ],
-        [ "Task 빌더 사용", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1888", null ],
-        [ "커스텀 재시도 로직", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1889", null ],
-        [ "재시도 vs 재시도하지 않을 에러", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1890", null ]
+      [ "재시도 전략", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1894", [
+        [ "기본 설정", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1895", null ],
+        [ "재시도 지연 계산", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1896", null ],
+        [ "Task 빌더 사용", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1897", null ],
+        [ "커스텀 재시도 로직", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1898", null ],
+        [ "재시도 vs 재시도하지 않을 에러", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1899", null ]
       ] ],
-      [ "우선순위 큐", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1892", [
-        [ "우선순위 수준", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1893", null ],
-        [ "우선순위 설정", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1894", null ],
-        [ "우선순위 큐 설정", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1895", null ],
-        [ "우선순위 큐에 제출", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1896", null ],
-        [ "모범 사례", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1897", null ]
+      [ "우선순위 큐", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1901", [
+        [ "우선순위 수준", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1902", null ],
+        [ "우선순위 설정", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1903", null ],
+        [ "우선순위 큐 설정", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1904", null ],
+        [ "우선순위 큐에 제출", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1905", null ],
+        [ "모범 사례", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1906", null ]
       ] ],
-      [ "예약 작업", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1899", [
-        [ "주기적 실행", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1900", null ],
-        [ "Cron 기반 스케줄링", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1901", null ],
-        [ "Cron 표현식 형식", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1902", null ],
-        [ "스케줄 관리", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1903", null ],
-        [ "지연 작업 실행", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1904", null ]
+      [ "예약 작업", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1908", [
+        [ "주기적 실행", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1909", null ],
+        [ "Cron 기반 스케줄링", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1910", null ],
+        [ "Cron 표현식 형식", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1911", null ],
+        [ "스케줄 관리", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1912", null ],
+        [ "지연 작업 실행", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1913", null ]
       ] ],
-      [ "진행 상황 추적", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1906", [
-        [ "진행 상황 보고", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1907", null ],
-        [ "진행 상황 모니터링", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1908", null ],
-        [ "진행 기록", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1909", null ]
+      [ "진행 상황 추적", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1915", [
+        [ "진행 상황 보고", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1916", null ],
+        [ "진행 상황 모니터링", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1917", null ],
+        [ "진행 기록", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1918", null ]
       ] ],
-      [ "체크포인트와 복구", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1911", [
-        [ "체크포인트 저장", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1912", null ],
-        [ "체크포인트 데이터", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1913", null ]
+      [ "체크포인트와 복구", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1920", [
+        [ "체크포인트 저장", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1921", null ],
+        [ "체크포인트 데이터", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1922", null ]
       ] ],
-      [ "하위 작업 생성", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1915", [
-        [ "하위 작업 생성", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1916", null ],
-        [ "하위 작업 추적", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1917", null ],
-        [ "사용 사례", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1918", null ]
+      [ "하위 작업 생성", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1924", [
+        [ "하위 작업 생성", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1925", null ],
+        [ "하위 작업 추적", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1926", null ],
+        [ "사용 사례", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1927", null ]
       ] ],
-      [ "패턴 조합", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1920", [
-        [ "재시도가 있는 Chain", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1921", null ],
-        [ "예약된 Chord", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1922", null ]
+      [ "패턴 조합", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1929", [
+        [ "재시도가 있는 Chain", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1930", null ],
+        [ "예약된 Chord", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1931", null ]
       ] ],
-      [ "관련 문서", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1924", null ]
+      [ "관련 문서", "dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1933", null ]
     ] ],
     [ "Task Module Quick Start Guide", "d9/dff/md_docs_2task_2QUICK__START.html", [
-      [ "Prerequisites", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1926", null ],
-      [ "Installation", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1927", null ],
-      [ "Basic Usage", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1928", [
-        [ "1. Include Headers", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1929", null ],
-        [ "2. Create and Configure the Task System", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1930", null ],
-        [ "3. Register a Task Handler", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1931", null ],
-        [ "4. Start the System", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1932", null ],
-        [ "5. Submit a Task", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1933", null ],
-        [ "6. Stop the System", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1934", null ]
+      [ "Prerequisites", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1935", null ],
+      [ "Installation", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1936", null ],
+      [ "Basic Usage", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1937", [
+        [ "1. Include Headers", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1938", null ],
+        [ "2. Create and Configure the Task System", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1939", null ],
+        [ "3. Register a Task Handler", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1940", null ],
+        [ "4. Start the System", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1941", null ],
+        [ "5. Submit a Task", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1942", null ],
+        [ "6. Stop the System", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1943", null ]
       ] ],
-      [ "Complete Example", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1935", null ],
-      [ "Using the Task Builder", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1936", null ],
-      [ "Scheduling Tasks", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1937", [
-        [ "Periodic Execution", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1938", null ],
-        [ "Cron-based Execution", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1939", null ]
+      [ "Complete Example", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1944", null ],
+      [ "Using the Task Builder", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1945", null ],
+      [ "Scheduling Tasks", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1946", [
+        [ "Periodic Execution", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1947", null ],
+        [ "Cron-based Execution", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1948", null ]
       ] ],
-      [ "Monitoring Progress", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1940", null ],
-      [ "Error Handling", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1941", null ],
-      [ "Next Steps", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1942", null ]
+      [ "Monitoring Progress", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1949", null ],
+      [ "Error Handling", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1950", null ],
+      [ "Next Steps", "d9/dff/md_docs_2task_2QUICK__START.html#autotoc_md1951", null ]
     ] ],
     [ "Task 모듈 빠른 시작 가이드", "da/dee/md_docs_2task_2QUICK__START__KO.html", [
-      [ "사전 요구사항", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1944", null ],
-      [ "설치", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1945", null ],
-      [ "기본 사용법", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1946", [
-        [ "1. 헤더 포함", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1947", null ],
-        [ "2. Task 시스템 생성 및 설정", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1948", null ],
-        [ "3. Task 핸들러 등록", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1949", null ],
-        [ "4. 시스템 시작", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1950", null ],
-        [ "5. Task 제출", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1951", null ],
-        [ "6. 시스템 중지", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1952", null ]
+      [ "사전 요구사항", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1953", null ],
+      [ "설치", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1954", null ],
+      [ "기본 사용법", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1955", [
+        [ "1. 헤더 포함", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1956", null ],
+        [ "2. Task 시스템 생성 및 설정", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1957", null ],
+        [ "3. Task 핸들러 등록", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1958", null ],
+        [ "4. 시스템 시작", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1959", null ],
+        [ "5. Task 제출", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1960", null ],
+        [ "6. 시스템 중지", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1961", null ]
       ] ],
-      [ "전체 예제", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1953", null ],
-      [ "Task 빌더 사용하기", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1954", null ],
-      [ "Task 스케줄링", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1955", [
-        [ "주기적 실행", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1956", null ],
-        [ "Cron 기반 실행", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1957", null ]
+      [ "전체 예제", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1962", null ],
+      [ "Task 빌더 사용하기", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1963", null ],
+      [ "Task 스케줄링", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1964", [
+        [ "주기적 실행", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1965", null ],
+        [ "Cron 기반 실행", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1966", null ]
       ] ],
-      [ "진행 상황 모니터링", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1958", null ],
-      [ "에러 처리", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1959", null ],
-      [ "다음 단계", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1960", null ]
+      [ "진행 상황 모니터링", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1967", null ],
+      [ "에러 처리", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1968", null ],
+      [ "다음 단계", "da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1969", null ]
     ] ],
     [ "Task Module Troubleshooting Guide", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html", [
-      [ "Table of Contents", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1962", null ],
-      [ "Common Issues", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1964", [
-        [ "Tasks Not Being Processed", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1965", null ],
-        [ "Tasks Failing Immediately", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1966", null ],
-        [ "Tasks Timing Out", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1967", null ],
-        [ "Retry Not Working", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1968", null ],
-        [ "Memory Usage Growing", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1969", null ]
+      [ "Table of Contents", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1971", null ],
+      [ "Common Issues", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1973", [
+        [ "Tasks Not Being Processed", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1974", null ],
+        [ "Tasks Failing Immediately", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1975", null ],
+        [ "Tasks Timing Out", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1976", null ],
+        [ "Retry Not Working", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1977", null ],
+        [ "Memory Usage Growing", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1978", null ]
       ] ],
-      [ "Debugging Methods", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1971", [
-        [ "Enable Logging", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1972", null ],
-        [ "Monitor Events", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1973", null ],
-        [ "Check Queue Status", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1974", null ],
-        [ "Check Worker Status", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1975", null ],
-        [ "View Task Logs", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1976", null ]
+      [ "Debugging Methods", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1980", [
+        [ "Enable Logging", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1981", null ],
+        [ "Monitor Events", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1982", null ],
+        [ "Check Queue Status", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1983", null ],
+        [ "Check Worker Status", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1984", null ],
+        [ "View Task Logs", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1985", null ]
       ] ],
-      [ "Performance Issues", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1978", [
-        [ "High CPU Usage", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1979", null ],
-        [ "High Memory Usage", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1980", null ],
-        [ "Low Throughput", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1981", null ],
-        [ "High Latency", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1982", null ]
+      [ "Performance Issues", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1987", [
+        [ "High CPU Usage", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1988", null ],
+        [ "High Memory Usage", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1989", null ],
+        [ "Low Throughput", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1990", null ],
+        [ "High Latency", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1991", null ]
       ] ],
-      [ "FAQ", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1984", [
-        [ "Q: How do I cancel a running task?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1985", null ],
-        [ "Q: How do I get task progress from outside the handler?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1986", null ],
-        [ "Q: How do I handle task dependencies?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1987", null ],
-        [ "Q: How do I process tasks in order?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1988", null ],
-        [ "Q: How do I prioritize certain tasks?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1989", null ],
-        [ "Q: How do I limit retry attempts?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1990", null ],
-        [ "Q: How do I handle poison messages (tasks that always fail)?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1991", null ],
-        [ "Q: How do I gracefully shut down the system?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1992", null ]
+      [ "FAQ", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1993", [
+        [ "Q: How do I cancel a running task?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1994", null ],
+        [ "Q: How do I get task progress from outside the handler?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1995", null ],
+        [ "Q: How do I handle task dependencies?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1996", null ],
+        [ "Q: How do I process tasks in order?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1997", null ],
+        [ "Q: How do I prioritize certain tasks?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1998", null ],
+        [ "Q: How do I limit retry attempts?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1999", null ],
+        [ "Q: How do I handle poison messages (tasks that always fail)?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md2000", null ],
+        [ "Q: How do I gracefully shut down the system?", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md2001", null ]
       ] ],
-      [ "Related Documentation", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md1994", null ]
+      [ "Related Documentation", "dd/df5/md_docs_2task_2TROUBLESHOOTING.html#autotoc_md2003", null ]
     ] ],
     [ "Task 모듈 문제 해결 가이드", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html", [
-      [ "목차", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1996", null ],
-      [ "일반적인 문제", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1998", [
-        [ "작업이 처리되지 않음", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md1999", null ],
-        [ "작업이 즉시 실패함", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2000", null ],
-        [ "작업 타임아웃", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2001", null ],
-        [ "재시도가 작동하지 않음", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2002", null ],
-        [ "메모리 사용량 증가", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2003", null ]
+      [ "목차", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2005", null ],
+      [ "일반적인 문제", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2007", [
+        [ "작업이 처리되지 않음", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2008", null ],
+        [ "작업이 즉시 실패함", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2009", null ],
+        [ "작업 타임아웃", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2010", null ],
+        [ "재시도가 작동하지 않음", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2011", null ],
+        [ "메모리 사용량 증가", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2012", null ]
       ] ],
-      [ "디버깅 방법", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2005", [
-        [ "로깅 활성화", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2006", null ],
-        [ "이벤트 모니터링", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2007", null ],
-        [ "큐 상태 확인", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2008", null ],
-        [ "워커 상태 확인", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2009", null ],
-        [ "작업 로그 보기", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2010", null ]
+      [ "디버깅 방법", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2014", [
+        [ "로깅 활성화", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2015", null ],
+        [ "이벤트 모니터링", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2016", null ],
+        [ "큐 상태 확인", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2017", null ],
+        [ "워커 상태 확인", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2018", null ],
+        [ "작업 로그 보기", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2019", null ]
       ] ],
-      [ "성능 문제", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2012", [
-        [ "높은 CPU 사용량", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2013", null ],
-        [ "높은 메모리 사용량", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2014", null ],
-        [ "낮은 처리량", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2015", null ],
-        [ "높은 지연 시간", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2016", null ]
+      [ "성능 문제", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2021", [
+        [ "높은 CPU 사용량", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2022", null ],
+        [ "높은 메모리 사용량", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2023", null ],
+        [ "낮은 처리량", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2024", null ],
+        [ "높은 지연 시간", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2025", null ]
       ] ],
-      [ "FAQ", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2018", [
-        [ "Q: 실행 중인 작업을 어떻게 취소하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2019", null ],
-        [ "Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2020", null ],
-        [ "Q: 작업 종속성을 어떻게 처리하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2021", null ],
-        [ "Q: 작업을 순서대로 처리하려면 어떻게 하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2022", null ],
-        [ "Q: 특정 작업의 우선순위를 어떻게 높이나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2023", null ],
-        [ "Q: 재시도 횟수를 어떻게 제한하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2024", null ],
-        [ "Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2025", null ],
-        [ "Q: 시스템을 우아하게 종료하려면 어떻게 하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2026", null ]
+      [ "FAQ", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2027", [
+        [ "Q: 실행 중인 작업을 어떻게 취소하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2028", null ],
+        [ "Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2029", null ],
+        [ "Q: 작업 종속성을 어떻게 처리하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2030", null ],
+        [ "Q: 작업을 순서대로 처리하려면 어떻게 하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2031", null ],
+        [ "Q: 특정 작업의 우선순위를 어떻게 높이나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2032", null ],
+        [ "Q: 재시도 횟수를 어떻게 제한하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2033", null ],
+        [ "Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2034", null ],
+        [ "Q: 시스템을 우아하게 종료하려면 어떻게 하나요?", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2035", null ]
       ] ],
-      [ "관련 문서", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2028", null ]
+      [ "관련 문서", "de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2037", null ]
     ] ],
     [ "Distributed Task Queue System - Improvement Plan", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html", [
-      [ "Executive Summary", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2030", null ],
-      [ "Phase 1: Task Core (기반 확장)", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2032", [
-        [ "1.1 Task 정의 확장", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2033", null ],
-        [ "1.2 Task Builder", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2034", null ]
+      [ "Executive Summary", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2039", null ],
+      [ "Phase 1: Task Core (기반 확장)", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2041", [
+        [ "1.1 Task 정의 확장", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2042", null ],
+        [ "1.2 Task Builder", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2043", null ]
       ] ],
-      [ "Phase 2: Worker System", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2036", [
-        [ "2.1 Task Handler Interface", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2037", null ],
-        [ "2.2 Worker Pool", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2038", null ]
+      [ "Phase 2: Worker System", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2045", [
+        [ "2.1 Task Handler Interface", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2046", null ],
+        [ "2.2 Worker Pool", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2047", null ]
       ] ],
-      [ "Phase 3: Task Queue (확장)", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2040", [
-        [ "3.1 Priority Task Queue", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2041", null ]
+      [ "Phase 3: Task Queue (확장)", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2049", [
+        [ "3.1 Priority Task Queue", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2050", null ]
       ] ],
-      [ "Phase 4: Result Backend", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2043", [
-        [ "4.1 Result Backend Interface", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2044", null ],
-        [ "4.2 In-Memory Result Backend", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2045", null ],
-        [ "4.3 Redis Result Backend (선택적)", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2046", null ]
+      [ "Phase 4: Result Backend", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2052", [
+        [ "4.1 Result Backend Interface", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2053", null ],
+        [ "4.2 In-Memory Result Backend", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2054", null ],
+        [ "4.3 Redis Result Backend (선택적)", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2055", null ]
       ] ],
-      [ "Phase 5: Task Client (Producer)", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2048", [
-        [ "5.1 Task Client", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2049", null ]
+      [ "Phase 5: Task Client (Producer)", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2057", [
+        [ "5.1 Task Client", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2058", null ]
       ] ],
-      [ "Phase 6: Scheduler", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2051", [
-        [ "6.1 Periodic Task Scheduler", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2052", null ]
+      [ "Phase 6: Scheduler", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2060", [
+        [ "6.1 Periodic Task Scheduler", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2061", null ]
       ] ],
-      [ "Phase 7: Monitoring & Management", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2054", [
-        [ "7.1 Task Monitor", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2055", null ]
+      [ "Phase 7: Monitoring & Management", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2063", [
+        [ "7.1 Task Monitor", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2064", null ]
       ] ],
-      [ "Phase 8: Integration", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2057", [
-        [ "8.1 통합 서비스 컨테이너", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2058", null ]
+      [ "Phase 8: Integration", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2066", [
+        [ "8.1 통합 서비스 컨테이너", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2067", null ]
       ] ],
-      [ "Implementation Roadmap", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2060", [
-        [ "Sprint 1: Core Task Infrastructure ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2061", null ],
-        [ "Sprint 2: Queue & Result Backend ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2062", null ],
-        [ "Sprint 3: Worker System ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2063", null ],
-        [ "Sprint 4: Client & Async Result ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2064", null ],
-        [ "Sprint 5: Scheduler ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2065", null ],
-        [ "Sprint 6: Monitoring & System Integration ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2066", null ],
-        [ "Sprint 7: Testing & Documentation ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2067", null ]
+      [ "Implementation Roadmap", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2069", [
+        [ "Sprint 1: Core Task Infrastructure ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2070", null ],
+        [ "Sprint 2: Queue & Result Backend ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2071", null ],
+        [ "Sprint 3: Worker System ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2072", null ],
+        [ "Sprint 4: Client & Async Result ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2073", null ],
+        [ "Sprint 5: Scheduler ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2074", null ],
+        [ "Sprint 6: Monitoring & System Integration ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2075", null ],
+        [ "Sprint 7: Testing & Documentation ✅", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2076", null ]
       ] ],
-      [ "File Structure", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2069", null ],
-      [ "Usage Example", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2071", null ],
-      [ "Reusing Existing Components", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2073", null ],
-      [ "Key Design Decisions", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2075", [
-        [ "1. Task는 Message를 상속", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2076", null ],
-        [ "2. Result Backend 분리", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2077", null ],
-        [ "3. 핸들러 등록 방식", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2078", null ],
-        [ "4. 비동기 우선 설계", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2079", null ]
+      [ "File Structure", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2078", null ],
+      [ "Usage Example", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2080", null ],
+      [ "Reusing Existing Components", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2082", null ],
+      [ "Key Design Decisions", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2084", [
+        [ "1. Task는 Message를 상속", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2085", null ],
+        [ "2. Result Backend 분리", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2086", null ],
+        [ "3. 핸들러 등록 방식", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2087", null ],
+        [ "4. 비동기 우선 설계", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2088", null ]
       ] ],
-      [ "Version", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2081", null ]
+      [ "Version", "d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2090", null ]
     ] ]
   ] ]
 ];
@@ -2213,12 +2213,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "d1/d5e/md_docs_2task_2ARCHITECTURE.html",
-"d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1266",
+"d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1275",
 "d6/dab/md_docs_2guides_2TROUBLESHOOTING.html#autotoc_md1011",
-"d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1141",
+"d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1150",
 "db/d91/md_docs_2API__REFERENCE.html#autotoc_md312",
-"dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1531",
-"df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1363"
+"dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1540",
+"df/d18/md_docs_2task_2API__REFERENCE.html#autotoc_md1372"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

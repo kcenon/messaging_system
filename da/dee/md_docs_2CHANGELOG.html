@@ -110,6 +110,29 @@ Fixed</h2>
 <h2><a class="anchor" id="autotoc_md534"></a>
 Added</h2>
 <ul>
+<li><b>System Events Standardization with Event Bus (Issue #156)</b><ul>
+<li>New event types in <code>event_bridge.h</code>:<ul>
+<li><code>topic_created_event</code>: Published when a new topic pattern is registered</li>
+<li><code>subscriber_added_event</code>: Published when a subscriber is added to a topic</li>
+<li><code>subscriber_removed_event</code>: Published when a subscriber is removed</li>
+</ul>
+</li>
+<li>New callback mechanism in <code>topic_router</code>:<ul>
+<li><code>topic_router_callbacks</code> struct for event notification</li>
+<li><code>set_callbacks()</code> method to register event listeners</li>
+<li>Callbacks invoked outside mutex lock to prevent deadlocks</li>
+</ul>
+</li>
+<li>New notification methods in <code>messaging_event_bridge</code>:<ul>
+<li><code>on_topic_created()</code>: Notify topic creation</li>
+<li><code>on_subscriber_added()</code>: Notify subscriber addition</li>
+<li><code>on_subscriber_removed()</code>: Notify subscriber removal</li>
+</ul>
+</li>
+<li>Integration documentation with usage examples</li>
+<li>Use cases: monitoring dashboards, audit logging, auto-scaling, circuit breakers</li>
+</ul>
+</li>
 <li><b>Monitoring System Collector Integration (Issue #155)</b><ul>
 <li><code>message_bus_collector</code>: Metric collector plugin for monitoring_system integration<ul>
 <li>Implements <code>metric_collector_plugin</code> interface</li>
