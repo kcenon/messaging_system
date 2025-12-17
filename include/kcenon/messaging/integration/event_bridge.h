@@ -104,6 +104,54 @@ struct message_bus_stopped_event {
           timestamp(std::chrono::system_clock::now()) {}
 };
 
+/**
+ * @struct topic_created_event
+ * @brief Event published when a new topic is created
+ *
+ * This event is published when a subscription creates a new topic pattern
+ * that didn't exist before in the topic router.
+ */
+struct topic_created_event {
+    std::string topic_pattern;
+    std::chrono::system_clock::time_point timestamp;
+
+    explicit topic_created_event(const std::string& pattern)
+        : topic_pattern(pattern),
+          timestamp(std::chrono::system_clock::now()) {}
+};
+
+/**
+ * @struct subscriber_added_event
+ * @brief Event published when a subscriber is added to a topic
+ */
+struct subscriber_added_event {
+    uint64_t subscription_id;
+    std::string topic_pattern;
+    int priority;
+    std::chrono::system_clock::time_point timestamp;
+
+    subscriber_added_event(uint64_t id, const std::string& pattern, int prio)
+        : subscription_id(id),
+          topic_pattern(pattern),
+          priority(prio),
+          timestamp(std::chrono::system_clock::now()) {}
+};
+
+/**
+ * @struct subscriber_removed_event
+ * @brief Event published when a subscriber is removed from a topic
+ */
+struct subscriber_removed_event {
+    uint64_t subscription_id;
+    std::string topic_pattern;
+    std::chrono::system_clock::time_point timestamp;
+
+    subscriber_removed_event(uint64_t id, const std::string& pattern)
+        : subscription_id(id),
+          topic_pattern(pattern),
+          timestamp(std::chrono::system_clock::now()) {}
+};
+
 // ============================================================================
 // Event Bridge
 // ============================================================================
@@ -206,6 +254,42 @@ public:
                           int error_code = -1) {
         if (running_) {
             event_bus_.publish(message_error_event{topic, message_id, error_message, error_code});
+        }
+    }
+
+    /**
+     * @brief Notify that a new topic was created
+     * @param topic_pattern The topic pattern that was created
+     */
+    void on_topic_created(const std::string& topic_pattern) {
+        if (running_) {
+            event_bus_.publish(topic_created_event{topic_pattern});
+        }
+    }
+
+    /**
+     * @brief Notify that a subscriber was added
+     * @param subscription_id ID of the new subscription
+     * @param topic_pattern Topic pattern subscribed to
+     * @param priority Subscription priority
+     */
+    void on_subscriber_added(uint64_t subscription_id,
+                              const std::string& topic_pattern,
+                              int priority) {
+        if (running_) {
+            event_bus_.publish(subscriber_added_event{subscription_id, topic_pattern, priority});
+        }
+    }
+
+    /**
+     * @brief Notify that a subscriber was removed
+     * @param subscription_id ID of the removed subscription
+     * @param topic_pattern Topic pattern that was unsubscribed
+     */
+    void on_subscriber_removed(uint64_t subscription_id,
+                                const std::string& topic_pattern) {
+        if (running_) {
+            event_bus_.publish(subscriber_removed_event{subscription_id, topic_pattern});
         }
     }
 
