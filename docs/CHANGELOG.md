@@ -8,6 +8,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Monitoring System Collector Integration (Issue #155)**
+  - `message_bus_collector`: Metric collector plugin for monitoring_system integration
+    - Implements `metric_collector_plugin` interface
+    - Collects message throughput (messages/sec)
+    - Collects message latency statistics (avg, min, max)
+    - Collects queue depth and utilization metrics
+    - Collects topic-level subscriber counts
+    - Prometheus-compatible metric naming convention
+  - `message_bus_health_monitor`: Health monitoring and anomaly detection
+    - Queue saturation detection
+    - Failure rate monitoring
+    - Latency spike detection
+    - Throughput degradation alerts
+    - Configurable health thresholds
+  - Collected metrics (Prometheus format):
+    - `messaging_messages_published_total`
+    - `messaging_messages_processed_total`
+    - `messaging_messages_failed_total`
+    - `messaging_queue_depth`
+    - `messaging_throughput_per_second`
+    - `messaging_latency_*_ms`
+    - `messaging_subscribers_per_topic`
+  - Conditional compilation with `BUILD_WITH_MONITORING_SYSTEM`
+  - CMake workaround for monitoring_system alias issue (#261)
+  - Documentation with usage examples
+
 - **UnifiedBootstrapper Integration (Issue #157)**
   - `messaging_bootstrapper`: Integration module for unified system initialization
     - `integrate()`: Register messaging services with UnifiedBootstrapper
