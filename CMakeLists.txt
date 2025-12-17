@@ -81,6 +81,9 @@ if(MESSAGING_WARNING_LEVEL STREQUAL "High" OR MESSAGING_WARNING_LEVEL STREQUAL "
         endif()
     elseif(MSVC)
         add_compile_options(/W4)
+        # Disable C4996 (deprecated) warning due to common_system logger_interface.h
+        # internal deprecated method calls. See: https://github.com/kcenon/common_system/issues/XXX
+        add_compile_options(/wd4996)
         if(MESSAGING_WARNING_LEVEL STREQUAL "Pedantic")
             add_compile_options(/WX)
         endif()
