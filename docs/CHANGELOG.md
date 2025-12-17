@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **MSVC C4100 Unreferenced Parameter Warnings (Issue #155)**
+  - Fixed MSVC build failure caused by C4100 (unreferenced parameter) warnings being treated as errors
+  - Suppressed warnings using `/* param */` syntax for unused lambda parameters in test files
+  - Affected files: test_pub_sub.cpp, test_message_bus.cpp, test_topic_router.cpp, test_event_streaming.cpp, test_scheduler.cpp, bench_worker_throughput.cpp, test_message_pipeline.cpp
+
 ### Added
 - **Monitoring System Collector Integration (Issue #155)**
   - `message_bus_collector`: Metric collector plugin for monitoring_system integration
