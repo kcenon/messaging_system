@@ -175,7 +175,7 @@ TEST_F(MessageBusTest, PubSubBasic) {
 	std::atomic<int> received_count{0};
 	auto sub_result = bus_->subscribe(
 		"test.topic",
-		[&received_count](const message& msg) {
+		[&received_count](const message& /* msg */) {
 			received_count++;
 			return ::kcenon::common::ok();
 		}
@@ -209,7 +209,7 @@ TEST_F(MessageBusTest, PubSubMultipleMessages) {
 	std::atomic<int> received_count{0};
 	auto sub_result = bus_->subscribe(
 		"test.topic",
-		[&received_count](const message& msg) {
+		[&received_count](const message& /* msg */) {
 			received_count++;
 			return ::kcenon::common::ok();
 		}
