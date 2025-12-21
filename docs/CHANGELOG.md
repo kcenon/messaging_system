@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Enhanced Integration Tests for Multi-System Messaging (Issue #161)**
+  - New `test_messaging_patterns_e2e.cpp` with messaging pattern tests:
+    - `PubSubMultipleSubscribers`: Verifies 1 publisher, 3 subscribers, 100 messages with order preservation
+    - `PubSubConcurrentPublishers`: Tests 3 concurrent publishers, 1 subscriber
+    - `PubSubHighThroughput`: 1000 message throughput verification
+    - `RequestReplyWithTimeout`: Timeout handling and cleanup verification
+    - `RequestReplySequential`: 10 sequential request/reply operations
+    - `RequestReplyConcurrent`: 10 concurrent request/reply operations
+    - `SlowConsumerHandling`: Backpressure behavior with slow consumers
+    - `TopicWildcardRouting`: Exact, single-level (*), and multi-level (#) wildcard routing
+    - `UnsubscribeDuringPublish`: Safe unsubscribe during active message flow
+  - New `test_timing_accuracy.cpp` with timing and scheduling tests:
+    - `ScheduledTaskTimingAccuracy`: Periodic task execution timing verification
+    - `TaskSubmissionLatency`: Submission-to-execution latency measurement (P50, P95, P99)
+    - `TaskExecutionOrderConsistency`: FIFO order verification for same-priority tasks
+    - `TaskThroughputConsistency`: Consistent throughput measurement across batches
+    - `ScheduleNextExecutionTime`: Schedule entry validation
+    - `TaskResultWaitTiming`: Async result timeout accuracy
+
 ### Fixed
 - **MSVC C4100 Unreferenced Parameter Warnings (Issue #155)**
   - Fixed MSVC build failure caused by C4100 (unreferenced parameter) warnings being treated as errors

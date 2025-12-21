@@ -8,6 +8,25 @@
 ## [Unreleased]
 
 ### 추가됨
+- **멀티시스템 메시징 통합 테스트 강화 (Issue #161)**
+  - 새로운 `test_messaging_patterns_e2e.cpp` 메시징 패턴 테스트:
+    - `PubSubMultipleSubscribers`: 1개 발행자, 3개 구독자, 100개 메시지 순서 보존 검증
+    - `PubSubConcurrentPublishers`: 3개 동시 발행자, 1개 구독자 테스트
+    - `PubSubHighThroughput`: 1000개 메시지 처리량 검증
+    - `RequestReplyWithTimeout`: 타임아웃 처리 및 정리 검증
+    - `RequestReplySequential`: 10개 순차 요청/응답 연산
+    - `RequestReplyConcurrent`: 10개 동시 요청/응답 연산
+    - `SlowConsumerHandling`: 느린 소비자 백프레셔 동작
+    - `TopicWildcardRouting`: 정확 매칭, 단일 레벨(*), 다중 레벨(#) 와일드카드 라우팅
+    - `UnsubscribeDuringPublish`: 활성 메시지 흐름 중 안전한 구독 해제
+  - 새로운 `test_timing_accuracy.cpp` 타이밍 및 스케줄링 테스트:
+    - `ScheduledTaskTimingAccuracy`: 주기적 태스크 실행 타이밍 검증
+    - `TaskSubmissionLatency`: 제출-실행 지연 시간 측정 (P50, P95, P99)
+    - `TaskExecutionOrderConsistency`: 동일 우선순위 태스크 FIFO 순서 검증
+    - `TaskThroughputConsistency`: 배치 간 일관된 처리량 측정
+    - `ScheduleNextExecutionTime`: 스케줄 항목 검증
+    - `TaskResultWaitTiming`: 비동기 결과 타임아웃 정확도
+
 - **C++20 Concepts 지원 (Issue #146)**
   - 타입 안전한 콜백 및 핸들러 검증을 위한 C++20 concept 정의 추가
   - task 모듈의 새로운 concepts:
