@@ -93,10 +93,10 @@ $(document).ready(function(){initNavTree('d6/d3f/md_docs_2guides_2BUILD__TROUBLE
   <div class="headertitle"><div class="title">Build Troubleshooting Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md718"></a> </p>
-<h1><a class="anchor" id="autotoc_md719"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md719"></a> </p>
+<h1><a class="anchor" id="autotoc_md720"></a>
 Common Build Issues and Solutions</h1>
-<h2><a class="anchor" id="autotoc_md720"></a>
+<h2><a class="anchor" id="autotoc_md721"></a>
 Issue 1: Target Name Conflicts</h2>
 <p><b>Symptoms</b>: </p><div class="fragment"><div class="line">CMake Error: add_library cannot create target &quot;interfaces&quot; because another target with</div>
 <div class="line">the same name already exists.</div>
@@ -116,7 +116,7 @@ Issue 1: Target Name Conflicts</h2>
 <div class="line"># Then build messaging_system with find_package</div>
 <div class="line">./build.sh default</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md722"></a>
+<h2><a class="anchor" id="autotoc_md723"></a>
 Issue 2: GTest Not Found in External Systems</h2>
 <p><b>Symptoms</b>: </p><div class="fragment"><div class="line">Could NOT find GTest (missing: GTEST_LIBRARY GTEST_INCLUDE_DIR GTEST_MAIN_LIBRARY)</div>
 </div><!-- fragment --><p><b>Cause</b>: External systems' integration tests require GTest, which is not installed.</p>
@@ -129,14 +129,14 @@ Issue 2: GTest Not Found in External Systems</h2>
 <div class="line"># Or build without tests</div>
 <div class="line">cmake --preset dev-fetchcontent -DBUILD_TESTING=OFF</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md724"></a>
+<h2><a class="anchor" id="autotoc_md725"></a>
 Issue 3: grep -P Not Supported (macOS)</h2>
 <p><b>Symptoms</b>: </p><div class="fragment"><div class="line">grep: invalid option -- P</div>
 </div><!-- fragment --><p><b>Cause</b>: macOS's BSD grep doesn't support Perl regex (-P flag).</p>
 <p><b>Solution</b>: Already fixed in build.sh and dependency.sh (uses <code>grep -E</code> instead).</p>
 <p>If you see this error, ensure you're using the latest version: </p><div class="fragment"><div class="line">git pull origin feature/system-rebuild</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md726"></a>
+<h2><a class="anchor" id="autotoc_md727"></a>
 Issue 4: yaml-cpp Not Found</h2>
 <p><b>Symptoms</b>: </p><div class="fragment"><div class="line">yaml-cpp not found (ConfigLoader disabled)</div>
 </div><!-- fragment --><p><b>Cause</b>: Optional dependency yaml-cpp is not installed.</p>
@@ -150,9 +150,9 @@ Issue 4: yaml-cpp Not Found</h2>
 <div class="line">sudo dnf install yaml-cpp-devel</div>
 </div><!-- fragment --><p><b>Note</b>: ConfigLoader tests will be skipped if yaml-cpp is not available. This is not an error.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md728"></a>
+<h1><a class="anchor" id="autotoc_md729"></a>
 Recommended Build Workflow</h1>
-<h2><a class="anchor" id="autotoc_md729"></a>
+<h2><a class="anchor" id="autotoc_md730"></a>
 For Development (FetchContent Mode)</h2>
 <ol type="1">
 <li><b>Ensure No Local Conflicts</b>: <div class="fragment"><div class="line"># Temporarily rename local external systems</div>
@@ -170,7 +170,7 @@ For Development (FetchContent Mode)</h2>
 <div class="line">done</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md730"></a>
+<h2><a class="anchor" id="autotoc_md731"></a>
 For Production (find_package Mode)</h2>
 <ol type="1">
 <li><b>Install All External Systems</b>: <div class="fragment"><div class="line">for sys in common_system thread_system logger_system monitoring_system container_system database_system network_system; do</div>
@@ -185,7 +185,7 @@ For Production (find_package Mode)</h2>
 </div><!-- fragment --></li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md732"></a>
+<h1><a class="anchor" id="autotoc_md733"></a>
 Alternative: Minimal Build (No External Systems)</h1>
 <p>If external system integration is causing issues, you can build a minimal version:</p>
 <div class="fragment"><div class="line">cd ~/Sources/messaging_system</div>
@@ -198,7 +198,7 @@ Alternative: Minimal Build (No External Systems)</h1>
 <div class="line">cmake --build build-minimal</div>
 </div><!-- fragment --><p><b>Note</b>: This builds only the core messaging_system library without external integrations. Limited functionality.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md734"></a>
+<h1><a class="anchor" id="autotoc_md735"></a>
 Verifying Successful Build</h1>
 <p>After a successful build, you should see:</p>
 <div class="fragment"><div class="line">============================================</div>
@@ -224,7 +224,7 @@ Verifying Successful Build</h1>
 <div class="line">  Run tests:    ctest --test-dir build-dev</div>
 <div class="line">  Run example:  ./build-dev/bin/basic_messaging</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md736"></a>
+<h1><a class="anchor" id="autotoc_md737"></a>
 Getting Help</h1>
 <p>If you encounter issues not covered here:</p>
 <ol type="1">
@@ -234,7 +234,7 @@ Getting Help</h1>
 <li>Check <a href="https://github.com/kcenon/messaging_system/issues">GitHub Issues</a></li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md738"></a>
+<h1><a class="anchor" id="autotoc_md739"></a>
 Known Limitations</h1>
 <ol type="1">
 <li><b>FetchContent + Local Systems</b>: Cannot coexist due to CMake target name conflicts</li>
@@ -243,29 +243,29 @@ Known Limitations</h1>
 <li><b>Integration Tests</b>: Require all 7 external systems to be properly configured</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md740"></a>
+<h1><a class="anchor" id="autotoc_md741"></a>
 Platform-Specific Notes</h1>
-<h2><a class="anchor" id="autotoc_md741"></a>
+<h2><a class="anchor" id="autotoc_md742"></a>
 macOS</h2>
 <ul>
 <li>Use Homebrew for dependencies: <code>brew install cmake yaml-cpp</code></li>
 <li>Xcode Command Line Tools required: <code>xcode-select --install</code></li>
 <li>Native pthread support (no additional libraries needed)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md742"></a>
+<h2><a class="anchor" id="autotoc_md743"></a>
 Linux (Ubuntu/Debian)</h2>
 <ul>
 <li>Install build essentials: <code>sudo apt-get install build-essential cmake git</code></li>
 <li>GCC 11+ or Clang 14+ recommended for C++20 support</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md743"></a>
+<h2><a class="anchor" id="autotoc_md744"></a>
 Linux (Fedora/RHEL)</h2>
 <ul>
 <li>Install development tools: <code>sudo dnf groupinstall "Development Tools"</code></li>
 <li>Enable PowerTools repo for some dependencies</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md745"></a>
+<h1><a class="anchor" id="autotoc_md746"></a>
 Quick Fix Summary</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">

@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('da/d7c/md_docs_2guides_2DEVELOPER__GUI
   <div class="headertitle"><div class="title">Developer Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md838"></a> </p>
-<h1><a class="anchor" id="autotoc_md839"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md839"></a> </p>
+<h1><a class="anchor" id="autotoc_md840"></a>
 Quick Start</h1>
 <p>This guide helps developers get up and running with the Messaging System quickly and efficiently.</p>
-<h2><a class="anchor" id="autotoc_md840"></a>
+<h2><a class="anchor" id="autotoc_md841"></a>
 Prerequisites</h2>
 <p>Before starting, ensure you have:</p><ul>
 <li>C++20 compatible compiler (GCC 10+, Clang 12+, or MSVC 2019+)</li>
@@ -106,7 +106,7 @@ Prerequisites</h2>
 <li>PostgreSQL 12+ (optional, for database features)</li>
 <li>Python 3.8+ (optional, for Python bindings)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md841"></a>
+<h2><a class="anchor" id="autotoc_md842"></a>
 1. Clone and Setup</h2>
 <div class="fragment"><div class="line"># Clone the repository</div>
 <div class="line">git clone &lt;repository-url&gt; messaging_system</div>
@@ -117,7 +117,7 @@ Prerequisites</h2>
 <div class="line"> </div>
 <div class="line"># Install system dependencies</div>
 <div class="line">./scripts/dependency.sh</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md842"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md843"></a>
 2. Build the Project</h2>
 <div class="fragment"><div class="line"># Quick build with default settings</div>
 <div class="line">./scripts/build.sh</div>
@@ -130,7 +130,7 @@ Prerequisites</h2>
 <div class="line">cmake .. -DCMAKE_BUILD_TYPE=Release \</div>
 <div class="line">         -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake</div>
 <div class="line">cmake --build . --parallel</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md843"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md844"></a>
 3. Your First Application</h2>
 <p>Create a simple messaging application:</p>
 <div class="fragment"><div class="line"><span class="comment">// simple_app.cpp</span></div>
@@ -165,11 +165,11 @@ Prerequisites</h2>
 <div class="line">}</div>
 </div><!-- fragment --><p>Compile and run: </p><div class="fragment"><div class="line">g++ -std=c++20 simple_app.cpp -lmessaging_core -lmessaging_services -o simple_app</div>
 <div class="line">./simple_app</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md844"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md845"></a>
 Development Setup</h1>
-<h2><a class="anchor" id="autotoc_md845"></a>
+<h2><a class="anchor" id="autotoc_md846"></a>
 IDE Configuration</h2>
-<h3><a class="anchor" id="autotoc_md846"></a>
+<h3><a class="anchor" id="autotoc_md847"></a>
 Visual Studio Code</h3>
 <p><code>.vscode/settings.json</code>: </p><div class="fragment"><div class="line">{</div>
 <div class="line">    &quot;cmake.configureSettings&quot;: {</div>
@@ -182,21 +182,21 @@ Visual Studio Code</h3>
 <div class="line">        &quot;${workspaceFolder}/application_layer/include&quot;</div>
 <div class="line">    ]</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md847"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md848"></a>
 CLion</h3>
 <ol type="1">
 <li>Open project and set CMake toolchain file</li>
 <li>Add build configurations for Debug/Release</li>
 <li>Set C++20 standard in CMake settings</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md848"></a>
+<h3><a class="anchor" id="autotoc_md849"></a>
 Visual Studio</h3>
 <ol type="1">
 <li>Open folder as CMake project</li>
 <li>Configure CMake settings to use vcpkg toolchain</li>
 <li>Select x64-Debug or x64-Release configuration</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md849"></a>
+<h2><a class="anchor" id="autotoc_md850"></a>
 Development Dependencies</h2>
 <p>Install development tools:</p>
 <div class="fragment"><div class="line"># Ubuntu/Debian</div>
@@ -225,9 +225,9 @@ Development Dependencies</h2>
 <div class="line">    ninja \</div>
 <div class="line">    llvm \</div>
 <div class="line">    doxygen.install</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md850"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md851"></a>
 Project Structure</h1>
-<h2><a class="anchor" id="autotoc_md851"></a>
+<h2><a class="anchor" id="autotoc_md852"></a>
 Directory Layout</h2>
 <div class="fragment"><div class="line">messaging_system/</div>
 <div class="line">├── libraries/                  # Core system libraries</div>
@@ -247,7 +247,7 @@ Directory Layout</h2>
 <div class="line">├── scripts/                   # Build and utility scripts</div>
 <div class="line">├── cmake/                     # CMake modules</div>
 <div class="line">└── docs/                      # Documentation</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md852"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md853"></a>
 Module Organization</h2>
 <p>Each module follows this structure: </p><div class="fragment"><div class="line">module_name/</div>
 <div class="line">├── include/                   # Public headers</div>
@@ -263,11 +263,11 @@ Module Organization</h2>
 <div class="line">│   └── integration/</div>
 <div class="line">├── benchmarks/                # Performance tests</div>
 <div class="line">└── CMakeLists.txt</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md853"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md854"></a>
 Coding Standards</h1>
-<h2><a class="anchor" id="autotoc_md854"></a>
+<h2><a class="anchor" id="autotoc_md855"></a>
 C++ Style Guide</h2>
-<h3><a class="anchor" id="autotoc_md855"></a>
+<h3><a class="anchor" id="autotoc_md856"></a>
 Naming Conventions</h3>
 <div class="fragment"><div class="line"><span class="comment">// Classes: PascalCase</span></div>
 <div class="line"><span class="keyword">class </span>MessageProcessor {</div>
@@ -304,7 +304,7 @@ Naming Conventions</h3>
 <div class="line"><span class="keyword">class </span>Router {</div>
 <div class="line">    <span class="comment">// ...</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md856"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md857"></a>
 File Organization</h3>
 <div class="fragment"><div class="line"><span class="comment">// header_file.h</span></div>
 <div class="line"><span class="preprocessor">#pragma once</span></div>
@@ -347,7 +347,7 @@ File Organization</h3>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace messaging</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md857"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md858"></a>
 Best Practices</h3>
 <ol type="1">
 <li><b>RAII (Resource Acquisition Is Initialization)</b> <div class="fragment"><div class="line"><span class="keyword">class </span>FileHandler {</div>
@@ -436,9 +436,9 @@ Best Practices</h3>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md858"></a>
+<h2><a class="anchor" id="autotoc_md859"></a>
 Documentation Standards</h2>
-<h3><a class="anchor" id="autotoc_md859"></a>
+<h3><a class="anchor" id="autotoc_md860"></a>
 Code Documentation</h3>
 <div class="fragment"><div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Handler&gt;</div>
@@ -446,7 +446,7 @@ Code Documentation</h3>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <span class="keywordtype">bool</span> register_handler(<span class="keyword">const</span> std::string&amp; topic, Handler handler);</div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md860"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md861"></a>
 Comment Guidelines</h3>
 <div class="fragment"><div class="line"><span class="comment">// Good: Explains WHY</span></div>
 <div class="line"><span class="comment">// Use lock-free queue to avoid contention in high-throughput scenarios</span></div>
@@ -465,11 +465,11 @@ Comment Guidelines</h3>
 <div class="line"><span class="comment">// Good: TODO with context</span></div>
 <div class="line"><span class="comment">// TODO(john): Optimize for small arrays (&lt;100 elements) using linear search</span></div>
 <div class="line"><span class="comment">// Benchmarks show 20% improvement for small datasets</span></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md861"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md862"></a>
 Testing Guidelines</h1>
-<h2><a class="anchor" id="autotoc_md862"></a>
+<h2><a class="anchor" id="autotoc_md863"></a>
 Unit Testing</h2>
-<h3><a class="anchor" id="autotoc_md863"></a>
+<h3><a class="anchor" id="autotoc_md864"></a>
 Test Structure</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;gtest/gtest.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;messaging/core/message.h&quot;</span></div>
@@ -526,7 +526,7 @@ Test Structure</h3>
 <div class="line">TEST_F(MessageTest, NullPayloadCausesDeath) {</div>
 <div class="line">    ASSERT_DEATH(message_-&gt;set_payload(<span class="keyword">nullptr</span>), <span class="stringliteral">&quot;Assertion.*null&quot;</span>);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md864"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md865"></a>
 Test Coverage</h3>
 <p>Aim for minimum 80% code coverage:</p>
 <div class="fragment"><div class="line"># Build with coverage</div>
@@ -543,7 +543,7 @@ Test Coverage</h3>
 <div class="line"> </div>
 <div class="line"># HTML report</div>
 <div class="line">genhtml coverage.info --output-directory coverage_report</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md865"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md866"></a>
 Integration Testing</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>IntegrationTest : <span class="keyword">public</span> ::testing::Test {</div>
 <div class="line"><span class="keyword">protected</span>:</div>
@@ -575,7 +575,7 @@ Integration Testing</h2>
 <div class="line">    ASSERT_TRUE(response.has_value());</div>
 <div class="line">    EXPECT_EQ(response-&gt;status(), Status::SUCCESS);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md866"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md867"></a>
 Performance Testing</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;benchmark/benchmark.h&gt;</span></div>
 <div class="line"> </div>
@@ -607,9 +607,9 @@ Performance Testing</h2>
 <div class="line"> </div>
 <div class="line">BENCHMARK(BM_LockFreeQueue)-&gt;Threads(1)-&gt;Threads(2)-&gt;Threads(4)-&gt;Threads(8);</div>
 </div><!-- fragment --><p>Run benchmarks: </p><div class="fragment"><div class="line">./build/benchmarks/message_benchmark --benchmark_format=json &gt; results.json</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md867"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md868"></a>
 Debugging</h1>
-<h2><a class="anchor" id="autotoc_md868"></a>
+<h2><a class="anchor" id="autotoc_md869"></a>
 Using GDB</h2>
 <div class="fragment"><div class="line"># Build with debug symbols</div>
 <div class="line">cmake .. -DCMAKE_BUILD_TYPE=Debug</div>
@@ -625,7 +625,7 @@ Using GDB</h2>
 <div class="line">(gdb) print message_                   # Inspect variable</div>
 <div class="line">(gdb) watch message_count_             # Watch variable changes</div>
 <div class="line">(gdb) thread apply all backtrace       # All threads&#39; stacks</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md869"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md870"></a>
 Using Valgrind</h2>
 <p>Memory leak detection: </p><div class="fragment"><div class="line">valgrind --leak-check=full \</div>
 <div class="line">         --show-leak-kinds=all \</div>
@@ -634,7 +634,7 @@ Using Valgrind</h2>
 <div class="line">         --log-file=valgrind-out.txt \</div>
 <div class="line">         ./build/bin/my_application</div>
 </div><!-- fragment --><p>Race condition detection: </p><div class="fragment"><div class="line">valgrind --tool=helgrind ./build/bin/my_application</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md870"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md871"></a>
 Using AddressSanitizer</h2>
 <div class="fragment"><div class="line"># Build with AddressSanitizer</div>
 <div class="line">cmake .. -DCMAKE_BUILD_TYPE=Debug \</div>
@@ -643,7 +643,7 @@ Using AddressSanitizer</h2>
 <div class="line"> </div>
 <div class="line"># Run with ASAN options</div>
 <div class="line">ASAN_OPTIONS=detect_leaks=1:halt_on_error=0 ./build/bin/my_application</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md871"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md872"></a>
 Using ThreadSanitizer</h2>
 <div class="fragment"><div class="line"># Build with ThreadSanitizer</div>
 <div class="line">cmake .. -DCMAKE_BUILD_TYPE=Debug \</div>
@@ -652,9 +652,9 @@ Using ThreadSanitizer</h2>
 <div class="line"> </div>
 <div class="line"># Run with TSAN options</div>
 <div class="line">TSAN_OPTIONS=halt_on_error=0:history_size=7 ./build/bin/my_application</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md872"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md873"></a>
 Performance Profiling</h1>
-<h2><a class="anchor" id="autotoc_md873"></a>
+<h2><a class="anchor" id="autotoc_md874"></a>
 Using perf</h2>
 <div class="fragment"><div class="line"># Record performance data</div>
 <div class="line">perf record -g ./build/bin/my_application</div>
@@ -664,23 +664,23 @@ Using perf</h2>
 <div class="line"> </div>
 <div class="line"># Generate flame graph</div>
 <div class="line">perf script | ./FlameGraph/stackcollapse-perf.pl | ./FlameGraph/flamegraph.pl &gt; flame.svg</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md874"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md875"></a>
 Using Instruments (macOS)</h2>
 <div class="fragment"><div class="line"># Time Profiler</div>
 <div class="line">instruments -t &quot;Time Profiler&quot; -D trace.trace ./build/bin/my_application</div>
 <div class="line"> </div>
 <div class="line"># Allocations</div>
 <div class="line">instruments -t &quot;Allocations&quot; -D alloc.trace ./build/bin/my_application</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md875"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md876"></a>
 Using Intel VTune</h2>
 <div class="fragment"><div class="line"># Hotspot analysis</div>
 <div class="line">vtune -collect hotspots -result-dir vtune_results ./build/bin/my_application</div>
 <div class="line"> </div>
 <div class="line"># Threading analysis</div>
 <div class="line">vtune -collect threading -result-dir vtune_threading ./build/bin/my_application</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md876"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md877"></a>
 Contributing Guidelines</h1>
-<h2><a class="anchor" id="autotoc_md877"></a>
+<h2><a class="anchor" id="autotoc_md878"></a>
 Workflow</h2>
 <ol type="1">
 <li><b>Fork</b> the repository</li>
@@ -708,7 +708,7 @@ Workflow</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md878"></a>
+<h2><a class="anchor" id="autotoc_md879"></a>
 Commit Message Format</h2>
 <p>Follow Conventional Commits specification:</p>
 <div class="fragment"><div class="line">&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</div>
@@ -735,7 +735,7 @@ Commit Message Format</h2>
 <div class="line">arrays.</div>
 <div class="line"> </div>
 <div class="line">Closes #123</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md879"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md880"></a>
 Code Review Checklist</h2>
 <p>Before submitting PR, ensure:</p>
 <ul>
@@ -750,9 +750,9 @@ Code Review Checklist</h2>
 <li>[ ] Breaking changes documented</li>
 <li>[ ] Changelog updated</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md880"></a>
+<h1><a class="anchor" id="autotoc_md881"></a>
 Build System</h1>
-<h2><a class="anchor" id="autotoc_md881"></a>
+<h2><a class="anchor" id="autotoc_md882"></a>
 CMake Configuration</h2>
 <p>Basic configuration options:</p>
 <div class="fragment"><div class="line"># Build type</div>
@@ -772,7 +772,7 @@ CMake Configuration</h2>
 <div class="line"># Custom paths</div>
 <div class="line">-DCMAKE_INSTALL_PREFIX=/custom/path</div>
 <div class="line">-DVCPKG_ROOT=/path/to/vcpkg</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md882"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md883"></a>
 Creating New Modules</h2>
 <ol type="1">
 <li>Create module structure: <div class="fragment"><div class="line">mkdir -p libraries/my_module/{include/my_module,src,tests}</div>
@@ -814,9 +814,9 @@ Creating New Modules</h2>
 <li>Add to main CMakeLists.txt: <div class="fragment"><div class="line">add_subdirectory(libraries/my_module)</div>
 </div><!-- fragment --></li>
 </ol>
-<h1><a class="anchor" id="autotoc_md883"></a>
+<h1><a class="anchor" id="autotoc_md884"></a>
 Deployment</h1>
-<h2><a class="anchor" id="autotoc_md884"></a>
+<h2><a class="anchor" id="autotoc_md885"></a>
 Docker Deployment</h2>
 <div class="fragment"><div class="line"><span class="preprocessor"># Dockerfile</span></div>
 <div class="line">FROM ubuntu:22.04 AS builder</div>
@@ -853,7 +853,7 @@ Docker Deployment</h2>
 <div class="line"><span class="comment">CMD [&quot;/usr/local/bin/messaging_server&quot;]</span></div>
 </div><!-- fragment --><p>Build and run: </p><div class="fragment"><div class="line">docker build -t messaging-system .</div>
 <div class="line">docker run -p 8080:8080 messaging-system</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md885"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md886"></a>
 Kubernetes Deployment</h2>
 <div class="fragment"><div class="line"># deployment.yaml</div>
 <div class="line">apiVersion: apps/v1</div>
@@ -917,9 +917,9 @@ Kubernetes Deployment</h2>
 </div><!-- fragment --><p>Deploy: </p><div class="fragment"><div class="line">kubectl apply -f deployment.yaml</div>
 <div class="line">kubectl get pods -l app=messaging-system</div>
 <div class="line">kubectl logs -f deployment/messaging-system</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md886"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md887"></a>
 Security Best Practices</h1>
-<h2><a class="anchor" id="autotoc_md887"></a>
+<h2><a class="anchor" id="autotoc_md888"></a>
 Input Validation</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>InputValidator {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -945,7 +945,7 @@ Input Validation</h2>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> MAX_MESSAGE_SIZE = 1024 * 1024;  <span class="comment">// 1MB</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md888"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md889"></a>
 Secure Communication</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>SecureChannel {</div>
 <div class="line">    SSL_CTX* ctx_;</div>
@@ -969,7 +969,7 @@ Secure Communication</h2>
 <div class="line">        SSL_CTX_set_verify(ctx_, SSL_VERIFY_PEER, <span class="keyword">nullptr</span>);</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md889"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md890"></a>
 Rate Limiting</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>RateLimiter {</div>
 <div class="line">    <span class="keyword">struct </span>ClientInfo {</div>
@@ -1004,9 +1004,9 @@ Rate Limiting</h2>
 <div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md890"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md891"></a>
 Troubleshooting Common Issues</h1>
-<h2><a class="anchor" id="autotoc_md891"></a>
+<h2><a class="anchor" id="autotoc_md892"></a>
 Build Issues</h2>
 <p><b>Problem</b>: CMake cannot find dependencies </p><div class="fragment"><div class="line">CMake Error: Could not find PostgreSQL</div>
 </div><!-- fragment --><p><b>Solution</b>: </p><div class="fragment"><div class="line"># Install PostgreSQL development files</div>
@@ -1022,7 +1022,7 @@ Build Issues</h2>
 <div class="line"> </div>
 <div class="line"># Or use Clang</div>
 <div class="line">export CXX=clang++-12</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md892"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md893"></a>
 Runtime Issues</h2>
 <p><b>Problem</b>: Segmentation fault on startup </p><div class="fragment"><div class="line">Segmentation fault (core dumped)</div>
 </div><!-- fragment --><p><b>Debugging steps</b>: </p><div class="fragment"><div class="line"># Generate core dump</div>
@@ -1040,7 +1040,7 @@ Runtime Issues</h2>
 <div class="line"> </div>
 <div class="line"># Or use built-in monitoring</div>
 <div class="line">MESSAGING_ENABLE_MEMORY_TRACKING=1 ./my_application</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md893"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md894"></a>
 Performance Issues</h2>
 <p><b>Problem</b>: Poor throughput </p><div class="fragment"><div class="line"># Profile CPU usage</div>
 <div class="line">perf top -p &lt;pid&gt;</div>

@@ -93,12 +93,12 @@ $(document).ready(function(){initNavTree('d9/d77/md_docs_2guides_2DEPLOYMENT__GU
   <div class="headertitle"><div class="title">Deployment Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md747"></a> </p>
-<h1><a class="anchor" id="autotoc_md748"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md748"></a> </p>
+<h1><a class="anchor" id="autotoc_md749"></a>
 System Requirements</h1>
-<h2><a class="anchor" id="autotoc_md749"></a>
+<h2><a class="anchor" id="autotoc_md750"></a>
 Hardware Requirements</h2>
-<h3><a class="anchor" id="autotoc_md750"></a>
+<h3><a class="anchor" id="autotoc_md751"></a>
 Minimum Requirements</h3>
 <ul>
 <li><b>CPU</b>: 2 cores (x86_64 or ARM64)</li>
@@ -106,7 +106,7 @@ Minimum Requirements</h3>
 <li><b>Storage</b>: 10 GB available space</li>
 <li><b>Network</b>: 100 Mbps</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md751"></a>
+<h3><a class="anchor" id="autotoc_md752"></a>
 Recommended Requirements</h3>
 <ul>
 <li><b>CPU</b>: 8+ cores (x86_64 or ARM64)</li>
@@ -114,7 +114,7 @@ Recommended Requirements</h3>
 <li><b>Storage</b>: 50 GB SSD</li>
 <li><b>Network</b>: 1 Gbps</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md752"></a>
+<h3><a class="anchor" id="autotoc_md753"></a>
 Production Requirements</h3>
 <ul>
 <li><b>CPU</b>: 16+ cores (x86_64 or ARM64)</li>
@@ -122,7 +122,7 @@ Production Requirements</h3>
 <li><b>Storage</b>: 100+ GB NVMe SSD</li>
 <li><b>Network</b>: 10 Gbps</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md753"></a>
+<h2><a class="anchor" id="autotoc_md754"></a>
 Operating System Support</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -140,9 +140,9 @@ Operating System Support</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Alpine Linux   </td><td class="markdownTableBodyNone">3.16+   </td><td class="markdownTableBodyNone">x86_64, ARM64   </td><td class="markdownTableBodyNone">Container only   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md754"></a>
+<h2><a class="anchor" id="autotoc_md755"></a>
 Software Dependencies</h2>
-<h3><a class="anchor" id="autotoc_md755"></a>
+<h3><a class="anchor" id="autotoc_md756"></a>
 Build Dependencies</h3>
 <div class="fragment"><div class="line"># Ubuntu/Debian</div>
 <div class="line">sudo apt-get update</div>
@@ -167,23 +167,23 @@ Build Dependencies</h3>
 <div class="line">    cmake \</div>
 <div class="line">    postgresql \</div>
 <div class="line">    openssl</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md756"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md757"></a>
 Runtime Dependencies</h3>
 <ul>
 <li>PostgreSQL 12+ (for database features)</li>
 <li>OpenSSL 1.1.1+ (for SSL/TLS)</li>
 <li>libc++ or libstdc++ (C++20 support)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md757"></a>
+<h1><a class="anchor" id="autotoc_md758"></a>
 Installation</h1>
-<h2><a class="anchor" id="autotoc_md758"></a>
+<h2><a class="anchor" id="autotoc_md759"></a>
 From Source</h2>
-<h3><a class="anchor" id="autotoc_md759"></a>
+<h3><a class="anchor" id="autotoc_md760"></a>
 1. Clone Repository</h3>
 <div class="fragment"><div class="line">git clone https://github.com/yourorg/messaging_system.git</div>
 <div class="line">cd messaging_system</div>
 <div class="line">git submodule update --init --recursive</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md760"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md761"></a>
 2. Configure Build</h3>
 <div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
 <div class="line"> </div>
@@ -200,7 +200,7 @@ From Source</h2>
 <div class="line">    -DUSE_PYTHON_BINDING=OFF \</div>
 <div class="line">    -DENABLE_LTO=ON \</div>
 <div class="line">    -DENABLE_SIMD=ON</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md761"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md762"></a>
 3. Build and Install</h3>
 <div class="fragment"><div class="line"># Build</div>
 <div class="line">cmake --build . --parallel $(nproc)</div>
@@ -210,9 +210,9 @@ From Source</h2>
 <div class="line"> </div>
 <div class="line"># Install</div>
 <div class="line">sudo cmake --install .</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md762"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md763"></a>
 Using Package Managers</h2>
-<h3><a class="anchor" id="autotoc_md763"></a>
+<h3><a class="anchor" id="autotoc_md764"></a>
 APT Repository (Ubuntu/Debian)</h3>
 <div class="fragment"><div class="line"># Add repository</div>
 <div class="line">echo &quot;deb https://repo.messaging-system.io/apt stable main&quot; | \</div>
@@ -225,7 +225,7 @@ APT Repository (Ubuntu/Debian)</h3>
 <div class="line"># Install</div>
 <div class="line">sudo apt-get update</div>
 <div class="line">sudo apt-get install messaging-system</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md764"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md765"></a>
 YUM Repository (RHEL/CentOS)</h3>
 <div class="fragment"><div class="line"># Add repository</div>
 <div class="line">sudo tee /etc/yum.repos.d/messaging-system.repo &lt;&lt;EOF</div>
@@ -239,13 +239,13 @@ YUM Repository (RHEL/CentOS)</h3>
 <div class="line"> </div>
 <div class="line"># Install</div>
 <div class="line">sudo yum install messaging-system</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md765"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md766"></a>
 Docker Installation</h2>
-<h3><a class="anchor" id="autotoc_md766"></a>
+<h3><a class="anchor" id="autotoc_md767"></a>
 Pull Official Image</h3>
 <div class="fragment"><div class="line">docker pull messaging-system/server:latest</div>
 <div class="line">docker pull messaging-system/worker:latest</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md767"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md768"></a>
 Build Custom Image</h3>
 <div class="fragment"><div class="line"><span class="preprocessor"># Dockerfile</span></div>
 <div class="line">FROM ubuntu:22.04 AS builder</div>
@@ -296,9 +296,9 @@ Build Custom Image</h3>
 <div class="line">    -p 9090:9090 \</div>
 <div class="line">    -v /etc/messaging:/etc/messaging \</div>
 <div class="line">    my-messaging-system</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md768"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md769"></a>
 Configuration</h1>
-<h2><a class="anchor" id="autotoc_md769"></a>
+<h2><a class="anchor" id="autotoc_md770"></a>
 Configuration File Structure</h2>
 <div class="fragment"><div class="line">; /etc/messaging/config.ini</div>
 <div class="line"> </div>
@@ -359,7 +359,7 @@ Configuration File Structure</h2>
 <div class="line">consul_endpoint = consul.service.consul:8500</div>
 <div class="line">heartbeat_interval_s = 5</div>
 <div class="line">election_timeout_s = 10</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md770"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md771"></a>
 Environment Variables</h2>
 <div class="fragment"><div class="line"># System</div>
 <div class="line">export MESSAGING_INSTANCE_ID=prod-01</div>
@@ -386,9 +386,9 @@ Environment Variables</h2>
 <div class="line">export WORKER_THREADS=16</div>
 <div class="line">export MAX_CONNECTIONS=10000</div>
 <div class="line">export QUEUE_SIZE=100000</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md771"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md772"></a>
 Secrets Management</h2>
-<h3><a class="anchor" id="autotoc_md772"></a>
+<h3><a class="anchor" id="autotoc_md773"></a>
 Using HashiCorp Vault</h3>
 <div class="fragment"><div class="line"># Store secrets in Vault</div>
 <div class="line">vault kv put secret/messaging/prod \</div>
@@ -399,7 +399,7 @@ Using HashiCorp Vault</h3>
 <div class="line"># Retrieve secrets at runtime</div>
 <div class="line">export DB_PASSWORD=$(vault kv get -field=db_password secret/messaging/prod)</div>
 <div class="line">export JWT_SECRET=$(vault kv get -field=jwt_secret secret/messaging/prod)</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md773"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md774"></a>
 Using Kubernetes Secrets</h3>
 <div class="fragment"><div class="line">apiVersion: v1</div>
 <div class="line">kind: Secret</div>
@@ -409,9 +409,9 @@ Using Kubernetes Secrets</h3>
 <div class="line">data:</div>
 <div class="line">  db-password: &lt;base64-encoded-password&gt;</div>
 <div class="line">  jwt-secret: &lt;base64-encoded-secret&gt;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md774"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md775"></a>
 Deployment Scenarios</h1>
-<h2><a class="anchor" id="autotoc_md775"></a>
+<h2><a class="anchor" id="autotoc_md776"></a>
 Single Server Deployment</h2>
 <p>Suitable for development and small-scale production.</p>
 <div class="fragment"><div class="line"># Install</div>
@@ -427,10 +427,10 @@ Single Server Deployment</h2>
 <div class="line"># Check status</div>
 <div class="line">sudo systemctl status messaging-system</div>
 <div class="line">sudo journalctl -u messaging-system -f</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md776"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md777"></a>
 High Availability Deployment</h2>
 <p>Multi-server setup with load balancing and failover.</p>
-<h3><a class="anchor" id="autotoc_md777"></a>
+<h3><a class="anchor" id="autotoc_md778"></a>
 Architecture</h3>
 <div class="fragment"><div class="line">                ┌──────────────┐</div>
 <div class="line">                │Load Balancer │</div>
@@ -448,7 +448,7 @@ Architecture</h3>
 <div class="line">                │  PostgreSQL  │</div>
 <div class="line">                │   Cluster    │</div>
 <div class="line">                └─────────────┘</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md778"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md779"></a>
 HAProxy Configuration</h3>
 <div class="fragment"><div class="line"># /etc/haproxy/haproxy.cfg</div>
 <div class="line"> </div>
@@ -479,9 +479,9 @@ HAProxy Configuration</h3>
 <div class="line">    server msg1 10.0.1.10:8080 check</div>
 <div class="line">    server msg2 10.0.1.11:8080 check</div>
 <div class="line">    server msg3 10.0.1.12:8080 check</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md779"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md780"></a>
 Kubernetes Deployment</h2>
-<h3><a class="anchor" id="autotoc_md780"></a>
+<h3><a class="anchor" id="autotoc_md781"></a>
 Namespace and ConfigMap</h3>
 <div class="fragment"><div class="line"># namespace.yaml</div>
 <div class="line">apiVersion: v1</div>
@@ -510,7 +510,7 @@ Namespace and ConfigMap</h3>
 <div class="line">    host = postgres-service</div>
 <div class="line">    port = 5432</div>
 <div class="line">    database = messaging</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md781"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md782"></a>
 Deployment</h3>
 <div class="fragment"><div class="line"># deployment.yaml</div>
 <div class="line">apiVersion: apps/v1</div>
@@ -578,7 +578,7 @@ Deployment</h3>
 <div class="line">      - name: data</div>
 <div class="line">        persistentVolumeClaim:</div>
 <div class="line">          claimName: messaging-data</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md782"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md783"></a>
 Service and Ingress</h3>
 <div class="fragment"><div class="line"># service.yaml</div>
 <div class="line">apiVersion: v1</div>
@@ -624,7 +624,7 @@ Service and Ingress</h3>
 <div class="line">            name: messaging-service</div>
 <div class="line">            port:</div>
 <div class="line">              number: 8080</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md783"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md784"></a>
 Horizontal Pod Autoscaler</h3>
 <div class="fragment"><div class="line"># hpa.yaml</div>
 <div class="line">apiVersion: autoscaling/v2</div>
@@ -652,7 +652,7 @@ Horizontal Pod Autoscaler</h3>
 <div class="line">      target:</div>
 <div class="line">        type: Utilization</div>
 <div class="line">        averageUtilization: 80</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md784"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md785"></a>
 Docker Compose Deployment</h2>
 <div class="fragment"><div class="line"># docker-compose.yml</div>
 <div class="line">version: &#39;3.8&#39;</div>
@@ -746,11 +746,11 @@ Docker Compose Deployment</h2>
 <div class="line">networks:</div>
 <div class="line">  messaging_network:</div>
 <div class="line">    driver: bridge</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md785"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md786"></a>
 Performance Tuning</h1>
-<h2><a class="anchor" id="autotoc_md786"></a>
+<h2><a class="anchor" id="autotoc_md787"></a>
 System Tuning</h2>
-<h3><a class="anchor" id="autotoc_md787"></a>
+<h3><a class="anchor" id="autotoc_md788"></a>
 Linux Kernel Parameters</h3>
 <div class="fragment"><div class="line"># /etc/sysctl.d/99-messaging.conf</div>
 <div class="line"> </div>
@@ -775,7 +775,7 @@ Linux Kernel Parameters</h3>
 <div class="line"> </div>
 <div class="line"># Apply settings</div>
 <div class="line">sudo sysctl -p /etc/sysctl.d/99-messaging.conf</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md788"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md789"></a>
 ulimit Configuration</h3>
 <div class="fragment"><div class="line"># /etc/security/limits.d/messaging.conf</div>
 <div class="line"> </div>
@@ -785,9 +785,9 @@ ulimit Configuration</h3>
 <div class="line">messaging hard nproc 65536</div>
 <div class="line">messaging soft memlock unlimited</div>
 <div class="line">messaging hard memlock unlimited</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md789"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md790"></a>
 Application Tuning</h2>
-<h3><a class="anchor" id="autotoc_md790"></a>
+<h3><a class="anchor" id="autotoc_md791"></a>
 Thread Pool Configuration</h3>
 <div class="fragment"><div class="line">[thread_pool]</div>
 <div class="line">; Number of worker threads (2 * CPU cores recommended)</div>
@@ -801,7 +801,7 @@ Thread Pool Configuration</h3>
 <div class="line">; CPU affinity (bind threads to specific cores)</div>
 <div class="line">enable_cpu_affinity = true</div>
 <div class="line">cpu_affinity_mask = 0xFFFFFFFF</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md791"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md792"></a>
 Memory Management</h3>
 <div class="fragment"><div class="line">[memory]</div>
 <div class="line">; Object pool sizes</div>
@@ -816,7 +816,7 @@ Memory Management</h3>
 <div class="line">; Garbage collection</div>
 <div class="line">gc_interval_seconds = 60</div>
 <div class="line">gc_threshold_mb = 1024</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md792"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md793"></a>
 Network Optimization</h3>
 <div class="fragment"><div class="line">[network_optimization]</div>
 <div class="line">; TCP settings</div>
@@ -833,9 +833,9 @@ Network Optimization</h3>
 <div class="line">enable_batching = true</div>
 <div class="line">batch_size = 100</div>
 <div class="line">batch_timeout_ms = 10</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md793"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md794"></a>
 Database Tuning</h2>
-<h3><a class="anchor" id="autotoc_md794"></a>
+<h3><a class="anchor" id="autotoc_md795"></a>
 PostgreSQL Configuration</h3>
 <div class="fragment"><div class="line"># postgresql.conf</div>
 <div class="line"> </div>
@@ -857,7 +857,7 @@ PostgreSQL Configuration</h3>
 <div class="line"># Query tuning</div>
 <div class="line">random_page_cost = 1.1</div>
 <div class="line">effective_io_concurrency = 200</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md795"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md796"></a>
 Connection Pool Tuning</h3>
 <div class="fragment"><div class="line">[database_pool]</div>
 <div class="line">min_connections = 10</div>
@@ -866,11 +866,11 @@ Connection Pool Tuning</h3>
 <div class="line">idle_timeout_s = 300</div>
 <div class="line">validation_query = SELECT 1</div>
 <div class="line">validation_interval_s = 30</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md796"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md797"></a>
 Monitoring Setup</h1>
-<h2><a class="anchor" id="autotoc_md797"></a>
+<h2><a class="anchor" id="autotoc_md798"></a>
 Prometheus Integration</h2>
-<h3><a class="anchor" id="autotoc_md798"></a>
+<h3><a class="anchor" id="autotoc_md799"></a>
 Prometheus Configuration</h3>
 <div class="fragment"><div class="line"># prometheus.yml</div>
 <div class="line">global:</div>
@@ -884,7 +884,7 @@ Prometheus Configuration</h3>
 <div class="line">        - &#39;messaging-server-1:9090&#39;</div>
 <div class="line">        - &#39;messaging-server-2:9090&#39;</div>
 <div class="line">        - &#39;messaging-server-3:9090&#39;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md799"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md800"></a>
 Metrics Exposed</h3>
 <div class="fragment"><div class="line"># System metrics</div>
 <div class="line">messaging_system_uptime_seconds</div>
@@ -909,7 +909,7 @@ Metrics Exposed</h3>
 <div class="line">messaging_db_queries_total</div>
 <div class="line">messaging_db_query_duration_seconds</div>
 <div class="line">messaging_db_errors_total</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md800"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md801"></a>
 Grafana Dashboard</h2>
 <div class="fragment"><div class="line">{</div>
 <div class="line">  &quot;dashboard&quot;: {</div>
@@ -950,9 +950,9 @@ Grafana Dashboard</h2>
 <div class="line">    ]</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md801"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md802"></a>
 Logging Configuration</h2>
-<h3><a class="anchor" id="autotoc_md802"></a>
+<h3><a class="anchor" id="autotoc_md803"></a>
 Structured Logging</h3>
 <div class="fragment"><div class="line">[logging]</div>
 <div class="line">; Log format</div>
@@ -974,7 +974,7 @@ Structured Logging</h3>
 <div class="line">syslog.enabled = true</div>
 <div class="line">syslog.address = syslog.example.com:514</div>
 <div class="line">syslog.protocol = tcp</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md803"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md804"></a>
 Log Aggregation (ELK Stack)</h3>
 <div class="fragment"><div class="line"># filebeat.yml</div>
 <div class="line">filebeat.inputs:</div>
@@ -993,11 +993,11 @@ Log Aggregation (ELK Stack)</h3>
 <div class="line">  - add_host_metadata:</div>
 <div class="line">      when.not.contains:</div>
 <div class="line">        tags: forwarded</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md804"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md805"></a>
 Scaling Strategies</h1>
-<h2><a class="anchor" id="autotoc_md805"></a>
+<h2><a class="anchor" id="autotoc_md806"></a>
 Horizontal Scaling</h2>
-<h3><a class="anchor" id="autotoc_md806"></a>
+<h3><a class="anchor" id="autotoc_md807"></a>
 Load Balancer Configuration</h3>
 <div class="fragment"><div class="line"># nginx.conf</div>
 <div class="line">upstream messaging_backend {</div>
@@ -1014,7 +1014,7 @@ Load Balancer Configuration</h3>
 <div class="line">    # Health check</div>
 <div class="line">    check interval=3000 rise=2 fall=3 timeout=1000;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md807"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md808"></a>
 Auto-scaling Rules</h3>
 <div class="fragment"><div class="line"># AWS Auto Scaling</div>
 <div class="line">AutoScalingGroup:</div>
@@ -1034,9 +1034,9 @@ Auto-scaling Rules</h3>
 <div class="line">      StepAdjustments:</div>
 <div class="line">        - MetricIntervalLowerBound: 0</div>
 <div class="line">          ScalingAdjustment: 2</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md808"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md809"></a>
 Vertical Scaling</h2>
-<h3><a class="anchor" id="autotoc_md809"></a>
+<h3><a class="anchor" id="autotoc_md810"></a>
 Resource Allocation</h3>
 <div class="fragment"><div class="line"># CPU affinity for high-performance</div>
 <div class="line">taskset -c 0-15 /usr/local/bin/messaging_server</div>
@@ -1046,9 +1046,9 @@ Resource Allocation</h3>
 <div class="line"> </div>
 <div class="line"># I/O scheduling</div>
 <div class="line">echo noop &gt; /sys/block/sda/queue/scheduler</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md810"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md811"></a>
 Database Scaling</h2>
-<h3><a class="anchor" id="autotoc_md811"></a>
+<h3><a class="anchor" id="autotoc_md812"></a>
 Read Replicas</h3>
 <div class="fragment"><div class="line">[database_replicas]</div>
 <div class="line">master.host = db-master.example.com</div>
@@ -1065,7 +1065,7 @@ Read Replicas</h3>
 <div class="line"># Read preference</div>
 <div class="line">read_preference = replica</div>
 <div class="line">failover_to_master = true</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md812"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md813"></a>
 Sharding Strategy</h3>
 <div class="fragment"><div class="line">[database_sharding]</div>
 <div class="line">enable = true</div>
@@ -1084,11 +1084,11 @@ Sharding Strategy</h3>
 <div class="line"> </div>
 <div class="line">shard4.range = 76-100</div>
 <div class="line">shard4.host = db-shard4.example.com</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md813"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md814"></a>
 Backup and Recovery</h1>
-<h2><a class="anchor" id="autotoc_md814"></a>
+<h2><a class="anchor" id="autotoc_md815"></a>
 Backup Strategy</h2>
-<h3><a class="anchor" id="autotoc_md815"></a>
+<h3><a class="anchor" id="autotoc_md816"></a>
 Application State Backup</h3>
 <div class="fragment"><div class="line">#!/bin/bash</div>
 <div class="line"># backup.sh</div>
@@ -1124,7 +1124,7 @@ Application State Backup</h3>
 <div class="line"># Upload to S3</div>
 <div class="line">aws s3 cp $BACKUP_DIR/messaging_$DATE.tar.gz \</div>
 <div class="line">    s3://backup-bucket/messaging/</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md816"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md817"></a>
 Database Backup</h3>
 <div class="fragment"><div class="line"><span class="comment">-- Continuous archiving with PostgreSQL</span></div>
 <div class="line"><span class="comment">-- postgresql.conf</span></div>
@@ -1135,9 +1135,9 @@ Database Backup</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">-- Base backup</span></div>
 <div class="line">pg_basebackup -h localhost -D /backup/base -U replicator -W -P</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md817"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md818"></a>
 Recovery Procedures</h2>
-<h3><a class="anchor" id="autotoc_md818"></a>
+<h3><a class="anchor" id="autotoc_md819"></a>
 Service Recovery</h3>
 <div class="fragment"><div class="line">#!/bin/bash</div>
 <div class="line"># recovery.sh</div>
@@ -1167,7 +1167,7 @@ Service Recovery</h3>
 <div class="line"> </div>
 <div class="line"># Verify recovery</div>
 <div class="line">curl http://localhost:9090/health</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md819"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md820"></a>
 Disaster Recovery Plan</h3>
 <div class="fragment"><div class="line"># Disaster Recovery Configuration</div>
 <div class="line">DR:</div>
@@ -1189,11 +1189,11 @@ Disaster Recovery Plan</h3>
 <div class="line">    3. Update DNS to point to secondary</div>
 <div class="line">    4. Start services in secondary region</div>
 <div class="line">    5. Verify system health</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md820"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md821"></a>
 Security Hardening</h1>
-<h2><a class="anchor" id="autotoc_md821"></a>
+<h2><a class="anchor" id="autotoc_md822"></a>
 Network Security</h2>
-<h3><a class="anchor" id="autotoc_md822"></a>
+<h3><a class="anchor" id="autotoc_md823"></a>
 Firewall Rules</h3>
 <div class="fragment"><div class="line"># iptables rules</div>
 <div class="line">iptables -A INPUT -p tcp --dport 8080 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT</div>
@@ -1204,7 +1204,7 @@ Firewall Rules</h3>
 <div class="line"> </div>
 <div class="line"># Save rules</div>
 <div class="line">iptables-save &gt; /etc/iptables/rules.v4</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md823"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md824"></a>
 SSL/TLS Configuration</h3>
 <div class="fragment"><div class="line">[security.ssl]</div>
 <div class="line">enabled = true</div>
@@ -1214,9 +1214,9 @@ SSL/TLS Configuration</h3>
 <div class="line">ca_file = /etc/messaging/certs/ca.crt</div>
 <div class="line">verify_client = true</div>
 <div class="line">cipher_suites = TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md824"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md825"></a>
 Application Security</h2>
-<h3><a class="anchor" id="autotoc_md825"></a>
+<h3><a class="anchor" id="autotoc_md826"></a>
 Authentication</h3>
 <div class="fragment"><div class="line">[security.auth]</div>
 <div class="line">type = jwt</div>
@@ -1225,7 +1225,7 @@ Authentication</h3>
 <div class="line">private_key_file = /etc/messaging/keys/private.pem</div>
 <div class="line">token_expiry = 3600</div>
 <div class="line">refresh_token_expiry = 86400</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md826"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md827"></a>
 Rate Limiting</h3>
 <div class="fragment"><div class="line">[security.rate_limit]</div>
 <div class="line">enabled = true</div>
@@ -1234,9 +1234,9 @@ Rate Limiting</h3>
 <div class="line">burst_size = 100</div>
 <div class="line">blacklist_threshold = 10</div>
 <div class="line">blacklist_duration = 3600</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md827"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md828"></a>
 Compliance</h2>
-<h3><a class="anchor" id="autotoc_md828"></a>
+<h3><a class="anchor" id="autotoc_md829"></a>
 Audit Logging</h3>
 <div class="fragment"><div class="line">[audit]</div>
 <div class="line">enabled = true</div>
@@ -1253,18 +1253,18 @@ Audit Logging</h3>
 <div class="line">    &quot;system_start&quot;,</div>
 <div class="line">    &quot;system_stop&quot;</div>
 <div class="line">]</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md829"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md830"></a>
 Data Encryption</h3>
 <div class="fragment"><div class="line">[security.encryption]</div>
 <div class="line">data_at_rest = true</div>
 <div class="line">algorithm = AES-256-GCM</div>
 <div class="line">key_rotation_days = 90</div>
 <div class="line">key_store = /etc/messaging/keys/</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md830"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md831"></a>
 Troubleshooting Deployment</h1>
-<h2><a class="anchor" id="autotoc_md831"></a>
+<h2><a class="anchor" id="autotoc_md832"></a>
 Common Issues</h2>
-<h3><a class="anchor" id="autotoc_md832"></a>
+<h3><a class="anchor" id="autotoc_md833"></a>
 Service Won't Start</h3>
 <div class="fragment"><div class="line"># Check logs</div>
 <div class="line">journalctl -u messaging-system -n 100</div>
@@ -1278,7 +1278,7 @@ Service Won't Start</h3>
 <div class="line"> </div>
 <div class="line"># Check port availability</div>
 <div class="line">netstat -tulpn | grep 8080</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md833"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md834"></a>
 High Memory Usage</h3>
 <div class="fragment"><div class="line"># Check memory usage</div>
 <div class="line">ps aux | grep messaging</div>
@@ -1289,7 +1289,7 @@ High Memory Usage</h3>
 <div class="line"> </div>
 <div class="line"># Check for leaks</div>
 <div class="line">valgrind --leak-check=full /usr/local/bin/messaging_server</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md834"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md835"></a>
 Performance Issues</h3>
 <div class="fragment"><div class="line"># CPU profiling</div>
 <div class="line">perf top -p $(pgrep messaging)</div>
@@ -1300,9 +1300,9 @@ Performance Issues</h3>
 <div class="line"># Network analysis</div>
 <div class="line">ss -tunapl | grep messaging</div>
 <div class="line">tcpdump -i eth0 port 8080</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md835"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md836"></a>
 Health Checks</h2>
-<h3><a class="anchor" id="autotoc_md836"></a>
+<h3><a class="anchor" id="autotoc_md837"></a>
 Application Health</h3>
 <div class="fragment"><div class="line"># Basic health check</div>
 <div class="line">curl http://localhost:9090/health</div>
@@ -1321,7 +1321,7 @@ Application Health</h3>
 <div class="line">    &quot;cache&quot;: &quot;healthy&quot;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md837"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md838"></a>
 System Health</h3>
 <div class="fragment"><div class="line">#!/bin/bash</div>
 <div class="line"># health_check.sh</div>
