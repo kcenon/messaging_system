@@ -112,6 +112,28 @@ target_include_directories(test_container_serialization
 gtest_discover_tests(test_container_serialization)
 
 # ============================================================================
+# Messaging Patterns E2E Tests (Issue #161)
+# ============================================================================
+
+# Test messaging patterns end-to-end
+add_executable(test_messaging_patterns_e2e
+    test_messaging_patterns_e2e.cpp
+)
+
+target_link_libraries(test_messaging_patterns_e2e
+    PRIVATE
+        messaging_system_core
+        GTest::gtest_main
+)
+
+target_include_directories(test_messaging_patterns_e2e
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+gtest_discover_tests(test_messaging_patterns_e2e)
+
+# ============================================================================
 # Task Module Integration Tests (Issue #118)
 # ============================================================================
 
@@ -209,3 +231,22 @@ target_include_directories(test_concurrent_load
 )
 
 gtest_discover_tests(test_concurrent_load)
+
+# Test timing accuracy (Issue #161)
+add_executable(test_timing_accuracy
+    task/test_timing_accuracy.cpp
+)
+
+target_link_libraries(test_timing_accuracy
+    PRIVATE
+        messaging_system_core
+        GTest::gtest_main
+)
+
+target_include_directories(test_timing_accuracy
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/task
+)
+
+gtest_discover_tests(test_timing_accuracy)
