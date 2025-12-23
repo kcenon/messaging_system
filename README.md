@@ -558,6 +558,21 @@ genhtml coverage.info --output-directory coverage_html
 | `MESSAGING_BUILD_TESTS` | ON | Build unit and integration tests |
 | `MESSAGING_BUILD_EXAMPLES` | ON | Build example programs |
 | `MESSAGING_BUILD_BENCHMARKS` | OFF | Build performance benchmarks |
+| `KCENON_WITH_NETWORK_SYSTEM` | ON | Enable network_system integration for transport implementations |
+
+### Network System Integration
+
+The `KCENON_WITH_NETWORK_SYSTEM` option controls whether `websocket_transport` and `http_transport` use the actual network_system implementation:
+
+```bash
+# Full transport functionality (default)
+cmake -B build -DKCENON_WITH_NETWORK_SYSTEM=ON
+
+# Stub mode - transports return not_supported errors
+cmake -B build -DKCENON_WITH_NETWORK_SYSTEM=OFF
+```
+
+When disabled, transport classes compile but return `error::not_supported` for all operations. This allows building the messaging system without the network_system dependency.
 
 ### Example Builds
 

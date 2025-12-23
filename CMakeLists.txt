@@ -35,6 +35,9 @@ option(MESSAGING_ENABLE_TLS "Enable TLS/SSL support" OFF)
 option(MESSAGING_ENABLE_TRACING "Enable distributed tracing" ON)
 option(MESSAGING_ENABLE_HEALTH_CHECKS "Enable health monitoring and circuit breakers" ON)
 
+# Network system integration (for websocket_transport and http_transport)
+option(KCENON_WITH_NETWORK_SYSTEM "Enable network_system integration for transport implementations" ON)
+
 # Performance optimization flags
 option(MESSAGING_ENABLE_MOVE_SEMANTICS "Enable zero-copy move semantics optimization" ON)
 option(MESSAGING_ENABLE_SIMD "Enable SIMD optimizations for message processing" OFF)
@@ -131,7 +134,13 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
     # with runtime binding via GlobalLoggerRegistry.
     unified_find_dependency(common_system REQUIRED)      # Tier 0: Base utilities + ILogger
     unified_find_dependency(thread_system REQUIRED)      # Tier 1: Threading
-    unified_find_dependency(network_system REQUIRED)     # Tier 2: Network I/O
+
+    # Optional: network_system for transport implementations (websocket_transport, http_transport)
+    if(KCENON_WITH_NETWORK_SYSTEM)
+        unified_find_dependency(network_system REQUIRED) # Tier 2: Network I/O
+    else()
+        message(STATUS "Network system disabled - transport implementations will use stub mode")
+    endif()
 
     # Optional dependencies (must come before container_system)
     unified_find_dependency(monitoring_system OPTIONAL)  # Metrics
@@ -261,6 +270,13 @@ target_compile_definitions(messaging_system_core PUBLIC
     MESSAGING_DEFAULT_WORKER_THREADS=${MESSAGING_DEFAULT_WORKER_THREADS}
 )
 
+# Network system integration compile definition
+if(KCENON_WITH_NETWORK_SYSTEM)
+    target_compile_definitions(messaging_system_core PUBLIC KCENON_WITH_NETWORK_SYSTEM=1)
+else()
+    target_compile_definitions(messaging_system_core PUBLIC KCENON_WITH_NETWORK_SYSTEM=0)
+endif()
+
 # Feature-specific compile definitions and options
 if(MESSAGING_ENABLE_MOVE_SEMANTICS)
     target_compile_definitions(messaging_system_core PUBLIC MESSAGING_ENABLE_MOVE_SEMANTICS)
@@ -371,6 +387,7 @@ message(STATUS "Build: ${CMAKE_BUILD_TYPE} / ${MESSAGING_BUILD_PROFILE}")
 message(STATUS "")
 message(STATUS "Features: Lock-free=${MESSAGING_USE_LOCKFREE}, TLS=${MESSAGING_ENABLE_TLS}")
 message(STATUS "          Tracing=${MESSAGING_ENABLE_TRACING}, Health=${MESSAGING_ENABLE_HEALTH_CHECKS}")
+message(STATUS "          NetworkSystem=${KCENON_WITH_NETWORK_SYSTEM}")
 message(STATUS "")
 message(STATUS "Build options: Tests=${MESSAGING_BUILD_TESTS}, Examples=${MESSAGING_BUILD_EXAMPLES}")
 message(STATUS "")

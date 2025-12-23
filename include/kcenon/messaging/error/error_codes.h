@@ -98,6 +98,7 @@ constexpr int already_running = base - 85;        // -785
 constexpr int not_running = base - 86;            // -786
 constexpr int backend_not_ready = base - 87;      // -787
 constexpr int request_timeout = base - 88;        // -788
+constexpr int not_supported = base - 89;          // -789 (feature requires optional dependency)
 
 // ============================================================================
 // Error Message Lookup
@@ -162,6 +163,7 @@ inline std::string_view get_error_message(int code) {
         case not_running: return "Message bus not running";
         case backend_not_ready: return "Backend not ready";
         case request_timeout: return "Request timeout";
+        case not_supported: return "Feature not supported (requires optional dependency)";
 
         default: return "Unknown messaging error";
     }
@@ -186,6 +188,8 @@ namespace validation {
     static_assert(broker_not_started >= -799 && broker_not_started <= -700,
                   "messaging_system error codes must be in range [-799, -700]");
     static_assert(request_timeout >= -799 && request_timeout <= -700,
+                  "messaging_system error codes must be in range [-799, -700]");
+    static_assert(not_supported >= -799 && not_supported <= -700,
                   "messaging_system error codes must be in range [-799, -700]");
 } // namespace validation
 
