@@ -427,18 +427,18 @@ class mock_transport : public kcenon::messaging::adapters::transport_interface {
 public:
 	mock_transport() = default;
 
-	common::VoidResult connect() override {
+	kcenon::common::VoidResult connect() override {
 		connected_ = true;
 		state_ = kcenon::messaging::adapters::transport_state::connected;
 		if (state_handler_) state_handler_(state_);
-		return common::ok();
+		return kcenon::common::ok();
 	}
 
-	common::VoidResult disconnect() override {
+	kcenon::common::VoidResult disconnect() override {
 		connected_ = false;
 		state_ = kcenon::messaging::adapters::transport_state::disconnected;
 		if (state_handler_) state_handler_(state_);
-		return common::ok();
+		return kcenon::common::ok();
 	}
 
 	bool is_connected() const override { return connected_; }
@@ -447,32 +447,38 @@ public:
 		return state_;
 	}
 
-	common::VoidResult send(const message& msg) override {
+	kcenon::common::VoidResult send(const message& msg) override {
 		sent_messages_.push_back(msg);
-		return common::ok();
+		return kcenon::common::ok();
 	}
 
-	common::VoidResult send_binary(const std::vector<uint8_t>& /* data */) override {
-		return common::ok();
+	kcenon::common::VoidResult send_binary(const std::vector<uint8_t>& /* data */) override {
+		return kcenon::common::ok();
 	}
 
 	void set_message_handler(std::function<void(const message&)> handler) override {
 		message_handler_ = handler;
 	}
 
-	void set_binary_handler(std::function<void(const std::vector<uint8_t>&)> /* handler */) override {}
+	void set_binary_handler(std::function<void(const std::vector<uint8_t>&)> handler) override {
+		binary_handler_ = handler;
+	}
 
 	void set_state_handler(std::function<void(kcenon::messaging::adapters::transport_state)> handler) override {
 		state_handler_ = handler;
 	}
 
-	void set_error_handler(std::function<void(const std::string&)> /* handler */) override {}
-
-	kcenon::messaging::adapters::transport_statistics get_statistics() const override {
-		return {};
+	void set_error_handler(std::function<void(const std::string&)> handler) override {
+		error_handler_ = handler;
 	}
 
-	void reset_statistics() override {}
+	kcenon::messaging::adapters::transport_statistics get_statistics() const override {
+		return stats_;
+	}
+
+	void reset_statistics() override {
+		stats_ = {};
+	}
 
 	// Test helpers
 	void simulate_incoming_message(const message& msg) {
@@ -487,8 +493,11 @@ private:
 	bool connected_ = false;
 	kcenon::messaging::adapters::transport_state state_ = kcenon::messaging::adapters::transport_state::disconnected;
 	std::function<void(const message&)> message_handler_;
+	std::function<void(const std::vector<uint8_t>&)> binary_handler_;
 	std::function<void(kcenon::messaging::adapters::transport_state)> state_handler_;
+	std::function<void(const std::string&)> error_handler_;
 	std::vector<message> sent_messages_;
+	kcenon::messaging::adapters::transport_statistics stats_;
 };
 
 class MessageBusTransportTest : public ::testing::Test {
