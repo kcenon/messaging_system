@@ -72,7 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `messaging_throughput_per_second`
     - `messaging_latency_*_ms`
     - `messaging_subscribers_per_topic`
-  - Conditional compilation with `BUILD_WITH_MONITORING_SYSTEM`
+  - Conditional compilation with `KCENON_WITH_MONITORING_SYSTEM` (via feature_flags.h)
   - CMake workaround for monitoring_system alias issue (#261)
   - Documentation with usage examples
 

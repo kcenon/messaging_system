@@ -424,7 +424,8 @@ The `message_bus_collector` provides integration with monitoring_system for coll
 ### Prerequisites
 
 - `monitoring_system` available (automatically fetched via FetchContent)
-- `BUILD_WITH_MONITORING_SYSTEM` compile definition enabled (automatic when monitoring_system is found)
+- `WITH_MONITORING_SYSTEM` compile definition enabled (automatic when monitoring_system is found)
+- The `KCENON_WITH_MONITORING_SYSTEM` macro from `feature_flags.h` gates the monitoring integration
 
 ### Collected Metrics
 
