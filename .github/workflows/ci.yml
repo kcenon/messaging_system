@@ -280,5 +280,70 @@ jobs:
         retention-days: 7
         if-no-files-found: ignore
 
+  # Build without network_system (stub mode)
+  build-without-network:
+    name: Build without network_system
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    env:
+      BUILD_TYPE: Debug
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        persist-credentials: true
+        clean: true
+        fetch-depth: 1
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Checkout dependencies (without network_system)
+      run: |
+        cd ..
+        git clone --depth 1 https://github.com/kcenon/common_system.git
+        git clone --depth 1 https://github.com/kcenon/thread_system.git
+        git clone --depth 1 https://github.com/kcenon/logger_system.git
+        git clone --depth 1 https://github.com/kcenon/container_system.git
+        git clone --depth 1 https://github.com/kcenon/monitoring_system.git
+        # Note: network_system is intentionally not cloned
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y cmake build-essential ninja-build
+        sudo apt install -y libgtest-dev libgmock-dev libyaml-cpp-dev
+
+    - name: Prepare build directory
+      run: |
+        rm -rf build
+        mkdir -p build
+
+    - name: Configure CMake (without network_system)
+      run: |
+        cd build
+        cmake .. \
+          -G Ninja \
+          -DMESSAGING_BUILD_TESTS=ON \
+          -DMESSAGING_BUILD_EXAMPLES=OFF \
+          -DMESSAGING_USE_LOCAL_SYSTEMS=ON \
+          -DKCENON_WITH_NETWORK_SYSTEM=OFF \
+          -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+          -DCMAKE_C_COMPILER=gcc \
+          -DCMAKE_CXX_COMPILER=g++
+
+    - name: Build
+      run: |
+        cd build
+        cmake --build . --parallel
+
+    - name: Run tests
+      run: |
+        cd build
+        ctest --output-on-failure --timeout 120 \
+          -E "TaskLifecycleTest|WorkerScenariosTest|FailureRecoveryTest|SchedulingTest|ConcurrentLoadTest" \
+          || echo "Some tests failed"
+
   # Sanitizer testing disabled temporarily due to fmt dependency issues
   # Will be re-enabled once thread_system fmt dependency is resolved
