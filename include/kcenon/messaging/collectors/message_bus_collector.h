@@ -41,7 +41,9 @@
 
 #include "../core/message_bus.h"
 
-#ifdef BUILD_WITH_MONITORING_SYSTEM
+#include <kcenon/common/config/feature_flags.h>
+
+#if KCENON_WITH_MONITORING_SYSTEM
 #include <kcenon/monitoring/collectors/plugin_metric_collector.h>
 #include <kcenon/monitoring/core/event_bus.h>
 #include <kcenon/monitoring/core/event_types.h>
@@ -90,7 +92,7 @@ struct latency_sample {
     std::chrono::steady_clock::time_point timestamp;
 };
 
-#ifdef BUILD_WITH_MONITORING_SYSTEM
+#if KCENON_WITH_MONITORING_SYSTEM
 
 /**
  * @struct messaging_metric_event
@@ -318,7 +320,7 @@ private:
     void handle_messaging_event(const messaging_metric_event& event);
 };
 
-#else // !BUILD_WITH_MONITORING_SYSTEM
+#else // !KCENON_WITH_MONITORING_SYSTEM
 
 /**
  * @class message_bus_collector
@@ -371,7 +373,7 @@ public:
     void set_latency_sample_size(size_t) {}
 };
 
-#endif // BUILD_WITH_MONITORING_SYSTEM
+#endif // KCENON_WITH_MONITORING_SYSTEM
 
 /**
  * @enum message_bus_health_status
