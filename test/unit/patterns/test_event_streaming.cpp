@@ -238,11 +238,11 @@ TEST_F(EventStreamingTest, EventReplayEnabled) {
 		stream.publish_event(std::move(event));
 	}
 
-	// Wait for events to be buffered
-	wait_for_condition(
+	// Wait for events to be buffered with sufficient timeout for Windows
+	ASSERT_TRUE(wait_for_condition(
 		[&stream]() { return stream.event_count() >= 5; },
-		std::chrono::milliseconds(200)
-	);
+		std::chrono::milliseconds(500)
+	)) << "Events were not buffered within timeout";
 
 	std::atomic<int> event_count{0};
 	auto callback = [&event_count](const message& /* msg */) -> common::VoidResult {
@@ -255,10 +255,11 @@ TEST_F(EventStreamingTest, EventReplayEnabled) {
 	ASSERT_TRUE(sub_result.is_ok());
 
 	// Wait for replay to complete - should receive all 5 past events
+	// Use longer timeout for Windows where thread scheduling may be slower
 	ASSERT_TRUE(wait_for_condition(
 		[&event_count]() { return event_count.load() >= 5; },
-		std::chrono::milliseconds(300)
-	));
+		std::chrono::milliseconds(1000)
+	)) << "Replay did not complete within timeout, received: " << event_count.load();
 
 	EXPECT_EQ(event_count.load(), 5);
 }
@@ -277,11 +278,11 @@ TEST_F(EventStreamingTest, EventReplayWithFilter) {
 		stream.publish_event(std::move(event));
 	}
 
-	// Wait for events to be buffered
-	wait_for_condition(
+	// Wait for events to be buffered with sufficient timeout for Windows
+	ASSERT_TRUE(wait_for_condition(
 		[&stream]() { return stream.event_count() >= 10; },
-		std::chrono::milliseconds(200)
-	);
+		std::chrono::milliseconds(500)
+	)) << "Events were not buffered within timeout";
 
 	std::atomic<int> high_priority_count{0};
 	auto callback = [&high_priority_count](const message& msg) -> common::VoidResult {
@@ -301,10 +302,11 @@ TEST_F(EventStreamingTest, EventReplayWithFilter) {
 	ASSERT_TRUE(sub_result.is_ok());
 
 	// Wait for filtered replay - should only receive 5 high-priority events
+	// Use longer timeout for Windows where thread scheduling may be slower
 	ASSERT_TRUE(wait_for_condition(
 		[&high_priority_count]() { return high_priority_count.load() >= 5; },
-		std::chrono::milliseconds(300)
-	));
+		std::chrono::milliseconds(1000)
+	)) << "Filtered replay did not complete within timeout, received: " << high_priority_count.load();
 
 	EXPECT_EQ(high_priority_count.load(), 5);
 }
