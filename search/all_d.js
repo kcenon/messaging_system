@@ -70,7 +70,7 @@ var searchData=
   ['development_20fetchcontent_20mode_67',['For Development (FetchContent Mode)',['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md731',1,'']]],
   ['development_20planning_68',['Development &amp; Planning',['..//home/runner/work/messaging_system/messaging_system/docs/README.md#autotoc_md1336',1,'']]],
   ['development_20setup_69',['Development Setup',['../da/d7c/md_docs_2guides_2DEVELOPER__GUIDE.html#autotoc_md846',1,'']]],
-  ['development_20workflow_70',['development workflow',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2147',1,'Development Workflow'],['../d7/d4b/md_docs_2contributing_2CONTRIBUTING.html#autotoc_md573',1,'Development Workflow']]],
+  ['development_20workflow_70',['development workflow',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2148',1,'Development Workflow'],['../d7/d4b/md_docs_2contributing_2CONTRIBUTING.html#autotoc_md573',1,'Development Workflow']]],
   ['di_20container_71',['di container',['../da/db6/md_docs_2FEATURES.html#autotoc_md643',1,'DI Container'],['..//home/runner/work/messaging_system/messaging_system/docs/integration/README.md#autotoc_md1086',1,'Service Resolution from DI Container']]],
   ['direct_20logger_5fsystem_20dependency_72',['Alternative A: Direct logger_system Dependency',['../de/dd2/md_docs_2adr_2001-logging-architecture.html#autotoc_md17',1,'']]],
   ['directory_20layout_73',['directory layout',['../d4/d22/md_docs_2PROJECT__STRUCTURE.html#autotoc_md1260',1,'Directory Layout'],['../da/d7c/md_docs_2guides_2DEVELOPER__GUIDE.html#autotoc_md853',1,'Directory Layout']]],

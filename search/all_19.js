@@ -71,7 +71,7 @@ var searchData=
   ['platform_68',['Reference Platform',['../d9/df1/md_docs_2performance_2BASELINE.html#autotoc_md1127',1,'']]],
   ['platform_20specific_20notes_69',['Platform-Specific Notes',['../d6/d3f/md_docs_2guides_2BUILD__TROUBLESHOOTING.html#autotoc_md742',1,'']]],
   ['platform_20specific_20setup_70',['2. Platform-Specific Setup',['../d6/d63/md_docs_2guides_2QUICK__START.html#autotoc_md983',1,'']]],
-  ['platform_20support_71',['🌐 Platform Support',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2143',1,'']]],
+  ['platform_20support_71',['🌐 Platform Support',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2144',1,'']]],
   ['platforms_20are_20supported_72',['Q: Which platforms are supported?',['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md901',1,'']]],
   ['pod_20autoscaler_73',['Horizontal Pod Autoscaler',['../d9/d77/md_docs_2guides_2DEPLOYMENT__GUIDE.html#autotoc_md785',1,'']]],
   ['points_74',['points',['../d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1625',1,'Extension Points'],['../d2/d64/md_docs_2architecture.html#autotoc_md392',1,'Integration Points'],['../df/dbc/md_docs_2advanced_2SYSTEM__ARCHITECTURE.html#autotoc_md205',1,'Integration Points']]],

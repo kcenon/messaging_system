@@ -89,7 +89,7 @@ var searchData=
   ['builder_20pattern_86',['builder pattern',['../d6/d58/md_docs_2advanced_2DESIGN__PATTERNS.html#autotoc_md64',1,'3. Builder Pattern'],['../d1/d5e/md_docs_2task_2ARCHITECTURE.html#autotoc_md1631',1,'3. Builder Pattern']]],
   ['builder_20performance_87',['Message Builder Performance',['../de/d93/md_docs_2BENCHMARKS.html#autotoc_md454',1,'']]],
   ['building_20for_20development_88',['Building for Development',['../d7/d4b/md_docs_2contributing_2CONTRIBUTING.html#autotoc_md571',1,'']]],
-  ['builds_89',['Example Builds',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2141',1,'']]],
+  ['builds_89',['Example Builds',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2142',1,'']]],
   ['built_20in_20metrics_90',['1. Built-in Metrics',['../d9/dd2/md_docs_2performance_2PERFORMANCE.html#autotoc_md1167',1,'']]],
   ['bus_91',['bus',['../da/db6/md_docs_2FEATURES.html#autotoc_md590',1,'Message Bus'],['../d4/da1/md_docs_2guides_2FAQ.html#autotoc_md908',1,'Q: How do I create a message bus?']]],
   ['bus_20api_92',['bus api',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md946',1,'Message Bus API'],['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md302',1,'Message Bus API']]],
