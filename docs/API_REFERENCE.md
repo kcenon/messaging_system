@@ -353,26 +353,46 @@ db.disconnect();
 
 ## Message Bus API
 
-### Namespace: `kcenon::messaging::core`
+### Namespace: `kcenon::messaging`
+
+### Enum: `transport_mode`
+
+Defines how message_bus handles message routing.
+
+```cpp
+enum class transport_mode {
+    local,   // Local-only: messages are routed only to local subscribers
+    remote,  // Remote-only: messages are sent only via transport
+    hybrid   // Hybrid: messages are routed both locally and remotely
+};
+```
 
 ### Class: `message_bus`
 
-Central message routing and distribution system.
+Central message routing and distribution system with optional distributed messaging support.
 
 #### Constructor
 ```cpp
-explicit message_bus(const message_bus_config& config = {});
+explicit message_bus(
+    std::shared_ptr<backend_interface> backend,
+    message_bus_config config = {}
+);
 ```
 
 #### Configuration Structure
 ```cpp
 struct message_bus_config {
+    size_t queue_capacity = 10000;
     size_t worker_threads = 4;
-    size_t max_queue_size = 10000;
-    std::chrono::milliseconds processing_timeout{30000};
     bool enable_priority_queue = true;
-    bool enable_message_persistence = false;
+    bool enable_dead_letter_queue = true;
     bool enable_metrics = true;
+    std::chrono::milliseconds processing_timeout{5000};
+
+    // Transport configuration
+    transport_mode mode = transport_mode::local;
+    std::shared_ptr<adapters::transport_interface> transport = nullptr;
+    std::string local_node_id;  // Unique identifier for distributed routing
 };
 ```
 
@@ -409,61 +429,89 @@ struct statistics_snapshot {
     uint64_t messages_published;
     uint64_t messages_processed;
     uint64_t messages_failed;
-    uint64_t active_subscriptions;
-    uint64_t pending_requests;
+    uint64_t messages_dropped;
+    uint64_t messages_sent_remote;      // Messages sent via transport
+    uint64_t messages_received_remote;  // Messages received from transport
 };
 
 statistics_snapshot get_statistics() const;
 void reset_statistics();
 ```
 
-#### Usage Example
+#### Transport Accessors
+```cpp
+transport_mode get_transport_mode() const;
+bool has_transport() const;
+bool is_transport_connected() const;
+```
+
+#### Usage Example (Local Mode)
 ```cpp
 #include <kcenon/messaging/core/message_bus.h>
-using namespace kcenon::messaging::core;
+#include <kcenon/messaging/backends/standalone_backend.h>
+using namespace kcenon::messaging;
 
-// Configure and create message bus
+// Create backend
+auto backend = std::make_shared<standalone_backend>(4);
+
+// Configure message bus (local-only mode, default)
 message_bus_config config;
-config.worker_threads = 8;
-config.max_queue_size = 50000;
-config.enable_metrics = true;
+config.worker_threads = 4;
+config.queue_capacity = 10000;
 
-message_bus bus(config);
-bus.initialize();
+message_bus bus(backend, config);
+bus.start();
 
 // Subscribe to topics
 bus.subscribe("user.created", [](const message& msg) {
-    auto payload = msg.get_payload();
-    std::cout << "New user: " << payload.get<std::string>("username") << std::endl;
-    return message_status::processed;
-});
-
-bus.subscribe("order.*", [](const message& msg) {
-    std::cout << "Order event: " << msg.get_topic() << std::endl;
-    return message_status::processed;
+    std::cout << "New user event received" << std::endl;
+    return common::ok();
 });
 
 // Publish messages
-message_payload user_payload;
-user_payload.set("username", "john_doe");
-user_payload.set("email", "john@example.com");
-bus.publish("user.created", user_payload);
-
-// Request-response pattern
-message request;
-request.set_topic("service.query");
-request.set_payload({{"query", "get_status"}});
-
-auto future = bus.request(request);
-auto response = future.get();
-std::cout << "Service status: " << response.get_payload().get<std::string>("status") << std::endl;
+message msg("user.created");
+bus.publish(msg);
 
 // Get statistics
 auto stats = bus.get_statistics();
 std::cout << "Messages processed: " << stats.messages_processed << std::endl;
 
 // Shutdown
-bus.shutdown();
+bus.stop();
+```
+
+#### Usage Example (Hybrid Mode with Transport)
+```cpp
+#include <kcenon/messaging/core/message_bus.h>
+#include <kcenon/messaging/backends/standalone_backend.h>
+#include <kcenon/messaging/adapters/websocket_transport.h>
+using namespace kcenon::messaging;
+
+// Create backend and transport
+auto backend = std::make_shared<standalone_backend>(4);
+auto transport = std::make_shared<adapters::websocket_transport>(
+    adapters::websocket_transport_config{"localhost", 8080}
+);
+
+// Configure message bus for hybrid mode
+message_bus_config config;
+config.worker_threads = 4;
+config.mode = transport_mode::hybrid;  // Route to both local and remote
+config.transport = transport;
+config.local_node_id = "node-1";
+
+message_bus bus(backend, config);
+bus.start();  // Connects transport automatically
+
+// Messages now route to local subscribers AND remote nodes
+message msg("user.created");
+bus.publish(msg);
+
+auto stats = bus.get_statistics();
+std::cout << "Sent remote: " << stats.messages_sent_remote << std::endl;
+std::cout << "Received remote: " << stats.messages_received_remote << std::endl;
+
+bus.stop();  // Disconnects transport automatically
 ```
 
 ---
