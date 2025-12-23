@@ -233,10 +233,14 @@ endif()
 
 if(common_system_TARGET)
     target_link_libraries(messaging_system_core PUBLIC ${common_system_TARGET})
+    # Enable IExecutor interface in thread_pool when common_system is available
+    target_compile_definitions(messaging_system_core PUBLIC KCENON_HAS_COMMON_EXECUTOR=1)
 elseif(TARGET common)
     target_link_libraries(messaging_system_core PUBLIC common)
+    target_compile_definitions(messaging_system_core PUBLIC KCENON_HAS_COMMON_EXECUTOR=1)
 elseif(TARGET CommonSystem::common)
     target_link_libraries(messaging_system_core PUBLIC CommonSystem::common)
+    target_compile_definitions(messaging_system_core PUBLIC KCENON_HAS_COMMON_EXECUTOR=1)
 endif()
 
 # Link thread_system (required for task_queue's delayed_task_worker)
