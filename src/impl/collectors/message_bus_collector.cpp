@@ -8,7 +8,7 @@
 #include <cmath>
 #include <numeric>
 
-#ifdef BUILD_WITH_MONITORING_SYSTEM
+#if KCENON_WITH_MONITORING_SYSTEM
 
 namespace kcenon::messaging::collectors {
 
@@ -708,4 +708,4 @@ void message_bus_health_monitor::check_throughput(
 
 }  // namespace kcenon::messaging::collectors
 
-#endif // BUILD_WITH_MONITORING_SYSTEM
+#endif // KCENON_WITH_MONITORING_SYSTEM
