@@ -417,3 +417,264 @@ TEST_F(MessageBusTest, ResetStatistics) {
 
 	bus_->stop();
 }
+
+// ============================================================================
+// Transport Integration Tests
+// ============================================================================
+
+// Mock transport for testing
+class mock_transport : public kcenon::messaging::adapters::transport_interface {
+public:
+	mock_transport() = default;
+
+	common::VoidResult connect() override {
+		connected_ = true;
+		state_ = kcenon::messaging::adapters::transport_state::connected;
+		if (state_handler_) state_handler_(state_);
+		return common::ok();
+	}
+
+	common::VoidResult disconnect() override {
+		connected_ = false;
+		state_ = kcenon::messaging::adapters::transport_state::disconnected;
+		if (state_handler_) state_handler_(state_);
+		return common::ok();
+	}
+
+	bool is_connected() const override { return connected_; }
+
+	kcenon::messaging::adapters::transport_state get_state() const override {
+		return state_;
+	}
+
+	common::VoidResult send(const message& msg) override {
+		sent_messages_.push_back(msg);
+		return common::ok();
+	}
+
+	common::VoidResult send_binary(const std::vector<uint8_t>& /* data */) override {
+		return common::ok();
+	}
+
+	void set_message_handler(std::function<void(const message&)> handler) override {
+		message_handler_ = handler;
+	}
+
+	void set_binary_handler(std::function<void(const std::vector<uint8_t>&)> /* handler */) override {}
+
+	void set_state_handler(std::function<void(kcenon::messaging::adapters::transport_state)> handler) override {
+		state_handler_ = handler;
+	}
+
+	void set_error_handler(std::function<void(const std::string&)> /* handler */) override {}
+
+	kcenon::messaging::adapters::transport_statistics get_statistics() const override {
+		return {};
+	}
+
+	void reset_statistics() override {}
+
+	// Test helpers
+	void simulate_incoming_message(const message& msg) {
+		if (message_handler_) {
+			message_handler_(msg);
+		}
+	}
+
+	const std::vector<message>& get_sent_messages() const { return sent_messages_; }
+
+private:
+	bool connected_ = false;
+	kcenon::messaging::adapters::transport_state state_ = kcenon::messaging::adapters::transport_state::disconnected;
+	std::function<void(const message&)> message_handler_;
+	std::function<void(kcenon::messaging::adapters::transport_state)> state_handler_;
+	std::vector<message> sent_messages_;
+};
+
+class MessageBusTransportTest : public ::testing::Test {
+protected:
+	void SetUp() override {
+		backend_ = std::make_shared<standalone_backend>(2);
+		mock_transport_ = std::make_shared<mock_transport>();
+	}
+
+	std::shared_ptr<standalone_backend> backend_;
+	std::shared_ptr<mock_transport> mock_transport_;
+};
+
+TEST_F(MessageBusTransportTest, LocalModeDefault) {
+	message_bus_config config;
+	config.queue_capacity = 100;
+	config.worker_threads = 2;
+
+	auto bus = std::make_unique<message_bus>(backend_, config);
+	EXPECT_EQ(bus->get_transport_mode(), transport_mode::local);
+	EXPECT_FALSE(bus->has_transport());
+}
+
+TEST_F(MessageBusTransportTest, ConfigureWithTransport) {
+	message_bus_config config;
+	config.queue_capacity = 100;
+	config.worker_threads = 2;
+	config.mode = transport_mode::hybrid;
+	config.transport = mock_transport_;
+
+	auto bus = std::make_unique<message_bus>(backend_, config);
+	EXPECT_EQ(bus->get_transport_mode(), transport_mode::hybrid);
+	EXPECT_TRUE(bus->has_transport());
+}
+
+TEST_F(MessageBusTransportTest, TransportConnectOnStart) {
+	message_bus_config config;
+	config.queue_capacity = 100;
+	config.worker_threads = 2;
+	config.mode = transport_mode::remote;
+	config.transport = mock_transport_;
+
+	auto bus = std::make_unique<message_bus>(backend_, config);
+	EXPECT_FALSE(bus->is_transport_connected());
+
+	auto result = bus->start();
+	ASSERT_TRUE(result.is_ok());
+	EXPECT_TRUE(bus->is_transport_connected());
+
+	bus->stop();
+	EXPECT_FALSE(bus->is_transport_connected());
+}
+
+TEST_F(MessageBusTransportTest, RemoteModePublish) {
+	message_bus_config config;
+	config.queue_capacity = 100;
+	config.worker_threads = 2;
+	config.mode = transport_mode::remote;
+	config.transport = mock_transport_;
+
+	auto bus = std::make_unique<message_bus>(backend_, config);
+	auto result = bus->start();
+	ASSERT_TRUE(result.is_ok());
+
+	message msg("test.topic");
+	auto pub_result = bus->publish(msg);
+	EXPECT_TRUE(pub_result.is_ok());
+
+	// Check that message was sent via transport
+	EXPECT_EQ(mock_transport_->get_sent_messages().size(), 1);
+
+	auto stats = bus->get_statistics();
+	EXPECT_EQ(stats.messages_published, 1);
+	EXPECT_EQ(stats.messages_sent_remote, 1);
+
+	bus->stop();
+}
+
+TEST_F(MessageBusTransportTest, HybridModePublish) {
+	message_bus_config config;
+	config.queue_capacity = 100;
+	config.worker_threads = 2;
+	config.mode = transport_mode::hybrid;
+	config.transport = mock_transport_;
+
+	auto bus = std::make_unique<message_bus>(backend_, config);
+	auto result = bus->start();
+	ASSERT_TRUE(result.is_ok());
+
+	std::atomic<int> received_count{0};
+	auto sub_result = bus->subscribe(
+		"test.topic",
+		[&received_count](const message& /* msg */) {
+			received_count++;
+			return ::kcenon::common::ok();
+		}
+	);
+	ASSERT_TRUE(sub_result.is_ok());
+
+	message msg("test.topic");
+	auto pub_result = bus->publish(msg);
+	EXPECT_TRUE(pub_result.is_ok());
+
+	// Wait for local processing
+	ASSERT_TRUE(wait_for_condition(
+		[&received_count]() { return received_count.load() >= 1; },
+		std::chrono::milliseconds(200)
+	));
+
+	// Check both local and remote
+	EXPECT_EQ(received_count.load(), 1);
+	EXPECT_EQ(mock_transport_->get_sent_messages().size(), 1);
+
+	auto stats = bus->get_statistics();
+	EXPECT_EQ(stats.messages_published, 1);
+	EXPECT_EQ(stats.messages_sent_remote, 1);
+	EXPECT_EQ(stats.messages_processed, 1);
+
+	bus->stop();
+}
+
+TEST_F(MessageBusTransportTest, ReceiveRemoteMessage) {
+	message_bus_config config;
+	config.queue_capacity = 100;
+	config.worker_threads = 2;
+	config.mode = transport_mode::hybrid;
+	config.transport = mock_transport_;
+
+	auto bus = std::make_unique<message_bus>(backend_, config);
+	auto result = bus->start();
+	ASSERT_TRUE(result.is_ok());
+
+	std::atomic<int> received_count{0};
+	auto sub_result = bus->subscribe(
+		"remote.topic",
+		[&received_count](const message& /* msg */) {
+			received_count++;
+			return ::kcenon::common::ok();
+		}
+	);
+	ASSERT_TRUE(sub_result.is_ok());
+
+	// Simulate incoming remote message
+	message remote_msg("remote.topic");
+	mock_transport_->simulate_incoming_message(remote_msg);
+
+	// Wait for processing
+	ASSERT_TRUE(wait_for_condition(
+		[&received_count]() { return received_count.load() >= 1; },
+		std::chrono::milliseconds(200)
+	));
+
+	EXPECT_EQ(received_count.load(), 1);
+
+	auto stats = bus->get_statistics();
+	EXPECT_EQ(stats.messages_received_remote, 1);
+	EXPECT_EQ(stats.messages_processed, 1);
+
+	bus->stop();
+}
+
+TEST_F(MessageBusTransportTest, StatisticsIncludeRemote) {
+	message_bus_config config;
+	config.queue_capacity = 100;
+	config.worker_threads = 2;
+	config.mode = transport_mode::remote;
+	config.transport = mock_transport_;
+
+	auto bus = std::make_unique<message_bus>(backend_, config);
+	auto result = bus->start();
+	ASSERT_TRUE(result.is_ok());
+
+	for (int i = 0; i < 5; ++i) {
+		message msg("test.topic");
+		bus->publish(msg);
+	}
+
+	auto stats = bus->get_statistics();
+	EXPECT_EQ(stats.messages_published, 5);
+	EXPECT_EQ(stats.messages_sent_remote, 5);
+
+	bus->reset_statistics();
+
+	auto stats_after = bus->get_statistics();
+	EXPECT_EQ(stats_after.messages_sent_remote, 0);
+	EXPECT_EQ(stats_after.messages_received_remote, 0);
+
+	bus->stop();
+}
