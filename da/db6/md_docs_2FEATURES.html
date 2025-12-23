@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('da/db6/md_docs_2FEATURES.html','../../
   <div class="headertitle"><div class="title">Messaging System Features</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md583"></a> <b>Version</b>: 0.1.1 <b>Last Updated</b>: 2025-12-10 <b>Language</b>: [English] | <a class="el" href="../../d4/d0c/md_docs_2FEATURES__KO.html">한국어</a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md586"></a> <b>Version</b>: 0.1.1 <b>Last Updated</b>: 2025-12-10 <b>Language</b>: [English] | <a class="el" href="../../d4/d0c/md_docs_2FEATURES__KO.html">한국어</a></p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md585"></a>
+<h1><a class="anchor" id="autotoc_md588"></a>
 Overview</h1>
 <p>This document provides a comprehensive overview of all features available in the messaging_system, including core messaging capabilities, advanced patterns, integration options, and reliability features.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md587"></a>
+<h1><a class="anchor" id="autotoc_md590"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Core Messaging</li>
@@ -116,9 +116,9 @@ Table of Contents</h1>
 <li>Production Features</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md589"></a>
+<h1><a class="anchor" id="autotoc_md592"></a>
 Core Messaging</h1>
-<h2><a class="anchor" id="autotoc_md590"></a>
+<h2><a class="anchor" id="autotoc_md593"></a>
 Message Bus</h2>
 <p><b>Central pub/sub coordinator for all messaging operations</b></p>
 <p>Features:</p><ul>
@@ -139,7 +139,7 @@ Message Bus</h2>
 <div class="line">    <span class="comment">// Handle message</span></div>
 <div class="line">    <span class="keywordflow">return</span> common::VoidResult::ok();</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md591"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md594"></a>
 Message Broker</h2>
 <p><b>Advanced routing and filtering capabilities</b></p>
 <p>Features:</p><ul>
@@ -150,9 +150,9 @@ Message Broker</h2>
 <li><b>Retry Policies</b>: Configurable retry strategies</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md593"></a>
+<h1><a class="anchor" id="autotoc_md596"></a>
 Messaging Patterns</h1>
-<h2><a class="anchor" id="autotoc_md594"></a>
+<h2><a class="anchor" id="autotoc_md597"></a>
 Pub/Sub Pattern</h2>
 <p><b>Classic publish-subscribe messaging</b></p>
 <p>Features:</p><ul>
@@ -166,7 +166,7 @@ Pub/Sub Pattern</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> subscriber = std::make_shared&lt;patterns::subscriber&gt;(bus);</div>
 <div class="line">subscriber-&gt;subscribe(<span class="stringliteral">&quot;events.*&quot;</span>, callback);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md595"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md598"></a>
 Request/Reply Pattern</h2>
 <p><b>Synchronous RPC over async messaging</b></p>
 <p>Features:</p><ul>
@@ -183,7 +183,7 @@ Request/Reply Pattern</h2>
 <div class="line"><span class="comment">// Client</span></div>
 <div class="line"><span class="keyword">auto</span> client = std::make_shared&lt;request_client&gt;(bus);</div>
 <div class="line"><span class="keyword">auto</span> response = client-&gt;request(request, timeout);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md596"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md599"></a>
 Event Streaming</h2>
 <p><b>Event sourcing with replay capability</b></p>
 <p>Features:</p><ul>
@@ -200,7 +200,7 @@ Event Streaming</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Replay from timestamp</span></div>
 <div class="line">stream-&gt;replay_from(timestamp, callback);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md597"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md600"></a>
 Message Pipeline</h2>
 <p><b>Pipes-and-filters message processing</b></p>
 <p>Features:</p><ul>
@@ -218,13 +218,13 @@ Message Pipeline</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> result = pipeline.process(msg);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md599"></a>
+<h1><a class="anchor" id="autotoc_md602"></a>
 Task Queue System</h1>
-<h2><a class="anchor" id="autotoc_md600"></a>
+<h2><a class="anchor" id="autotoc_md603"></a>
 Overview</h2>
 <p><b>Distributed task queue for background job processing</b></p>
 <p>The Task Queue System provides a complete solution for distributed task processing with features like priority queues, scheduled execution, retry mechanisms, and real-time monitoring.</p>
-<h2><a class="anchor" id="autotoc_md601"></a>
+<h2><a class="anchor" id="autotoc_md604"></a>
 Task System Facade</h2>
 <p><b>Unified interface for all task operations</b></p>
 <p>Features:</p><ul>
@@ -241,7 +241,7 @@ Task System Facade</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Wait for result</span></div>
 <div class="line"><span class="keyword">auto</span> output = result.get();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md602"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md605"></a>
 Task Client</h2>
 <p><b>Task submission with various execution modes</b></p>
 <p>Features:</p><ul>
@@ -257,7 +257,7 @@ Task Client</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Submit with delay</span></div>
 <div class="line"><span class="keyword">auto</span> delayed = client-&gt;submit_delayed(task, std::chrono::seconds(30));</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md603"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md606"></a>
 Worker Pool</h2>
 <p><b>Configurable worker threads with handler registration</b></p>
 <p>Features:</p><ul>
@@ -273,7 +273,7 @@ Worker Pool</h2>
 <div class="line">pool-&gt;register_handler(<span class="stringliteral">&quot;image.resize&quot;</span>, image_handler);</div>
 <div class="line"> </div>
 <div class="line">pool-&gt;start();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md604"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md607"></a>
 Task Scheduler</h2>
 <p><b>Periodic and cron-based task scheduling</b></p>
 <p>Features:</p><ul>
@@ -289,7 +289,7 @@ Task Scheduler</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Cron task (daily at midnight)</span></div>
 <div class="line">scheduler-&gt;schedule_cron(<span class="stringliteral">&quot;daily_report&quot;</span>, task, <span class="stringliteral">&quot;0 0 * * *&quot;</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md605"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md608"></a>
 Async Result</h2>
 <p><b>Async result tracking with progress support</b></p>
 <p>Features:</p><ul>
@@ -310,7 +310,7 @@ Async Result</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Get progress</span></div>
 <div class="line"><span class="keywordtype">double</span> progress = result.progress();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md606"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md609"></a>
 Result Backend</h2>
 <p><b>Pluggable result storage</b></p>
 <p>Features:</p><ul>
@@ -326,7 +326,7 @@ Result Backend</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Retrieve result</span></div>
 <div class="line"><span class="keyword">auto</span> stored = backend-&gt;get(task_id);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md607"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md610"></a>
 Task Monitor</h2>
 <p><b>Real-time task monitoring and statistics</b></p>
 <p>Features:</p><ul>
@@ -346,7 +346,7 @@ Task Monitor</h2>
 <div class="line">monitor-&gt;on_task_completed([](<span class="keyword">const</span> task&amp; t) {</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Task &quot;</span> &lt;&lt; t.id() &lt;&lt; <span class="stringliteral">&quot; completed&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md608"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md611"></a>
 Chain and Chord Patterns</h2>
 <p><b>Workflow orchestration patterns</b></p>
 <p>Features:</p><ul>
@@ -360,7 +360,7 @@ Chain and Chord Patterns</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Chord: [task1, task2, task3] -&gt; callback</span></div>
 <div class="line"><span class="keyword">auto</span> chord_result = client-&gt;chord({task1, task2, task3}, callback_task);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md609"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md612"></a>
 Retry Mechanism</h2>
 <p><b>Automatic retry with exponential backoff</b></p>
 <p>Features:</p><ul>
@@ -374,7 +374,7 @@ Retry Mechanism</h2>
 <div class="line">    .max_retries(3)</div>
 <div class="line">    .retry_delay(std::chrono::seconds(5))</div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md610"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md613"></a>
 Task Timeout</h2>
 <p><b>Timeout handling for long-running tasks</b></p>
 <p>Features:</p><ul>
@@ -387,13 +387,13 @@ Task Timeout</h2>
 <div class="line">    .timeout(std::chrono::minutes(10))</div>
 <div class="line">    .build();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md612"></a>
+<h1><a class="anchor" id="autotoc_md615"></a>
 C++20 Concepts</h1>
-<h2><a class="anchor" id="autotoc_md613"></a>
+<h2><a class="anchor" id="autotoc_md616"></a>
 Overview</h2>
 <p><b>Type-safe callback validation with C++20 Concepts</b></p>
 <p>The messaging system uses C++20 Concepts to provide compile-time type validation for callbacks and handlers. This results in clearer error messages and self-documenting interface requirements.</p>
-<h2><a class="anchor" id="autotoc_md614"></a>
+<h2><a class="anchor" id="autotoc_md617"></a>
 TaskHandlerCallable</h2>
 <p><b>Validates task handler signatures</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
@@ -404,7 +404,7 @@ TaskHandlerCallable</h2>
 <div class="line"><span class="comment">// Usage</span></div>
 <div class="line"><span class="keyword">template</span>&lt;TaskHandlerCallable Handler&gt;</div>
 <div class="line"><span class="keywordtype">void</span> register_handler(<span class="keyword">const</span> std::string&amp; name, Handler&amp;&amp; handler);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md615"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md618"></a>
 TaskHandlerLike</h2>
 <p><b>Validates task handler interface implementations</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
@@ -412,7 +412,7 @@ TaskHandlerLike</h2>
 <div class="line">    { t.name() } -&gt; std::convertible_to&lt;std::string&gt;;</div>
 <div class="line">    { t.execute(tsk, ctx) } -&gt; std::same_as&lt;common::Result&lt;container_module::value_container&gt;&gt;;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md616"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md619"></a>
 ScheduleEventCallable</h2>
 <p><b>Validates scheduler event callbacks</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
@@ -421,33 +421,33 @@ ScheduleEventCallable</h2>
 <div class="line"><span class="comment">// Usage</span></div>
 <div class="line"><span class="keyword">template</span>&lt;ScheduleEventCallable Callback&gt;</div>
 <div class="line"><span class="keywordtype">void</span> on_task_executed(Callback&amp;&amp; callback);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md617"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md620"></a>
 MessageProcessorCallable</h2>
 <p><b>Validates message pipeline processors</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
 <div class="line"><span class="keyword">concept </span>MessageProcessorCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
 <div class="line">    std::same_as&lt;std::invoke_result_t&lt;F, const message&amp;&gt;,</div>
 <div class="line">                 common::Result&lt;message&gt;&gt;;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md618"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md621"></a>
 MessageFilterCallable</h2>
 <p><b>Validates message filtering predicates</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
 <div class="line"><span class="keyword">concept </span>MessageFilterCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
 <div class="line">    std::convertible_to&lt;std::invoke_result_t&lt;F, const message&amp;&gt;, <span class="keywordtype">bool</span>&gt;;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md619"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md622"></a>
 MessageTransformerCallable</h2>
 <p><b>Validates message transformers</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
 <div class="line"><span class="keyword">concept </span>MessageTransformerCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
 <div class="line">    std::same_as&lt;std::invoke_result_t&lt;F, const message&amp;&gt;, message&gt;;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md620"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md623"></a>
 SubscriptionCallable</h2>
 <p><b>Validates topic subscription callbacks</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
 <div class="line"><span class="keyword">concept </span>SubscriptionCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
 <div class="line">    std::same_as&lt;std::invoke_result_t&lt;F, const message&amp;&gt;,</div>
 <div class="line">                 common::VoidResult&gt;;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md621"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md624"></a>
 Benefits</h2>
 <ul>
 <li><b>Compile-time Validation</b>: Catch type mismatches at compile time</li>
@@ -456,9 +456,9 @@ Benefits</h2>
 <li><b>IDE Support</b>: Better autocomplete and type inference</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md623"></a>
+<h1><a class="anchor" id="autotoc_md626"></a>
 Backend Support</h1>
-<h2><a class="anchor" id="autotoc_md624"></a>
+<h2><a class="anchor" id="autotoc_md627"></a>
 Backend Interface</h2>
 <p><b>Pluggable execution backends</b></p>
 <p>Features:</p><ul>
@@ -468,7 +468,7 @@ Backend Interface</h2>
 <li><b>Monitoring Access</b>: Optional monitoring integration</li>
 <li><b>Lifecycle Management</b>: Initialize and shutdown</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md625"></a>
+<h2><a class="anchor" id="autotoc_md628"></a>
 Standalone Backend</h2>
 <p><b>Self-contained execution</b></p>
 <p>Features:</p><ul>
@@ -479,7 +479,7 @@ Standalone Backend</h2>
 </ul>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> backend = std::make_shared&lt;standalone_backend&gt;(num_threads);</div>
 <div class="line">backend-&gt;initialize();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md626"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md629"></a>
 Integration Backend</h2>
 <p><b>External thread pool integration</b></p>
 <p>Features:</p><ul>
@@ -493,7 +493,7 @@ Integration Backend</h2>
 <div class="line">    logger,</div>
 <div class="line">    monitoring</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md627"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md630"></a>
 Auto-Detection</h2>
 <p><b>Automatic backend selection</b></p>
 <p>Features:</p><ul>
@@ -502,9 +502,9 @@ Auto-Detection</h2>
 <li><b>Optimal Selection</b>: Choose best available backend</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md629"></a>
+<h1><a class="anchor" id="autotoc_md632"></a>
 Message Types</h1>
-<h2><a class="anchor" id="autotoc_md630"></a>
+<h2><a class="anchor" id="autotoc_md633"></a>
 Message Structure</h2>
 <p><b>Structured messages with rich metadata</b></p>
 <p>Fields:</p><ul>
@@ -521,7 +521,7 @@ Message Structure</h2>
 <li><b>Headers</b>: Additional key-value headers</li>
 <li><b>Payload</b>: Message payload (container_system)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md631"></a>
+<h2><a class="anchor" id="autotoc_md634"></a>
 Message Builder</h2>
 <p><b>Fluent API for message construction</b></p>
 <p>Features:</p><ul>
@@ -542,7 +542,7 @@ Message Builder</h2>
 <div class="line">    .header(<span class="stringliteral">&quot;version&quot;</span>, <span class="stringliteral">&quot;1.0&quot;</span>)</div>
 <div class="line">    .payload(payload)</div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md632"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md635"></a>
 Message Serialization</h2>
 <p><b>Container-based payload serialization</b></p>
 <p>Features:</p><ul>
@@ -553,9 +553,9 @@ Message Serialization</h2>
 <li><b>Zero-Copy</b>: Move semantics support</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md634"></a>
+<h1><a class="anchor" id="autotoc_md637"></a>
 Topic Routing</h1>
-<h2><a class="anchor" id="autotoc_md635"></a>
+<h2><a class="anchor" id="autotoc_md638"></a>
 Wildcard Patterns</h2>
 <p><b>Flexible topic matching</b></p>
 <p>Patterns:</p><ul>
@@ -564,7 +564,7 @@ Wildcard Patterns</h2>
 <li><b>Multi-level Wildcard</b> (<code>#</code>): <code>user.#</code> matches <code>user.created</code>, <code>user.profile.updated</code></li>
 <li><b>Combined</b>: <code>*.user.#</code> matches <code>app.user.profile.updated</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md636"></a>
+<h2><a class="anchor" id="autotoc_md639"></a>
 Subscription Management</h2>
 <p><b>Flexible subscription control</b></p>
 <p>Features:</p><ul>
@@ -580,9 +580,9 @@ Subscription Management</h2>
 <div class="line"><span class="comment">// Unsubscribe</span></div>
 <div class="line">bus-&gt;unsubscribe(sub_id.value());</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md638"></a>
+<h1><a class="anchor" id="autotoc_md641"></a>
 Message Queue</h1>
-<h2><a class="anchor" id="autotoc_md639"></a>
+<h2><a class="anchor" id="autotoc_md642"></a>
 Queue Types</h2>
 <p><b>Multiple queue implementations</b></p>
 <p>Types:</p><ul>
@@ -591,7 +591,7 @@ Queue Types</h2>
 <li><b>Dead Letter Queue</b>: Failed message handling</li>
 <li><b>Bounded Queue</b>: Capacity limits with backpressure</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md640"></a>
+<h2><a class="anchor" id="autotoc_md643"></a>
 Queue Configuration</h2>
 <p><b>Flexible queue settings</b></p>
 <p>Options:</p><ul>
@@ -607,9 +607,9 @@ Queue Configuration</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> queue = std::make_shared&lt;message_queue&gt;(config);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md642"></a>
+<h1><a class="anchor" id="autotoc_md645"></a>
 Dependency Injection</h1>
-<h2><a class="anchor" id="autotoc_md643"></a>
+<h2><a class="anchor" id="autotoc_md646"></a>
 DI Container</h2>
 <p><b>Lightweight dependency injection</b></p>
 <p>Features:</p><ul>
@@ -627,9 +627,9 @@ DI Container</h2>
 <div class="line"><span class="comment">// Resolve</span></div>
 <div class="line"><span class="keyword">auto</span> executor = container-&gt;resolve&lt;IExecutor&gt;();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md645"></a>
+<h1><a class="anchor" id="autotoc_md648"></a>
 Error Handling</h1>
-<h2><a class="anchor" id="autotoc_md646"></a>
+<h2><a class="anchor" id="autotoc_md649"></a>
 Error Codes</h2>
 <p><b>Centralized error code system (-700 to -799)</b></p>
 <p>Categories:</p><ul>
@@ -639,7 +639,7 @@ Error Codes</h2>
 <li><b>Subscription Errors</b> (-760 to -779): Subscription failed, not found, duplicate, unsubscribe failed</li>
 <li><b>Publishing Errors</b> (-780 to -799): Publication failed, no route found, message rejected, broker unavailable</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md647"></a>
+<h2><a class="anchor" id="autotoc_md650"></a>
 Result&lt;T&gt; Pattern</h2>
 <p><b>Type-safe error handling</b></p>
 <p>Features:</p><ul>
@@ -656,9 +656,9 @@ Result&lt;T&gt; Pattern</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> sub_id = result.value();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md649"></a>
+<h1><a class="anchor" id="autotoc_md652"></a>
 Integration</h1>
-<h2><a class="anchor" id="autotoc_md650"></a>
+<h2><a class="anchor" id="autotoc_md653"></a>
 Thread System Integration</h2>
 <p><b>High-performance thread pool integration</b></p>
 <p>Features:</p><ul>
@@ -667,7 +667,7 @@ Thread System Integration</h2>
 <li><b>Work Stealing</b>: Efficient load balancing</li>
 <li><b>Hazard Pointers</b>: Safe memory reclamation</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md651"></a>
+<h2><a class="anchor" id="autotoc_md654"></a>
 Logger System Integration</h2>
 <p><b>Structured async logging</b></p>
 <p>Features:</p><ul>
@@ -676,7 +676,7 @@ Logger System Integration</h2>
 <li><b>Multiple Sinks</b>: File, console, network</li>
 <li><b>Log Levels</b>: Configurable log levels</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md652"></a>
+<h2><a class="anchor" id="autotoc_md655"></a>
 Monitoring System Integration</h2>
 <p><b>Real-time metrics and telemetry</b></p>
 <p>Features:</p><ul>
@@ -685,7 +685,7 @@ Monitoring System Integration</h2>
 <li><b>Gauges</b>: Queue sizes</li>
 <li><b>Prometheus Export</b>: Metrics export</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md653"></a>
+<h2><a class="anchor" id="autotoc_md656"></a>
 Container System Integration</h2>
 <p><b>Type-safe message payloads</b></p>
 <p>Features:</p><ul>
@@ -695,9 +695,9 @@ Container System Integration</h2>
 <li><b>Thread Safety</b>: Safe concurrent access</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md655"></a>
+<h1><a class="anchor" id="autotoc_md658"></a>
 Production Features</h1>
-<h2><a class="anchor" id="autotoc_md656"></a>
+<h2><a class="anchor" id="autotoc_md659"></a>
 Reliability</h2>
 <p><b>Enterprise-grade reliability features</b></p>
 <p>Features:</p><ul>
@@ -707,7 +707,7 @@ Reliability</h2>
 <li><b>Circuit Breakers</b>: Prevent cascade failures</li>
 <li><b>Health Checks</b>: Monitor system health</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md657"></a>
+<h2><a class="anchor" id="autotoc_md660"></a>
 Observability</h2>
 <p><b>Production observability</b></p>
 <p>Features:</p><ul>
@@ -716,7 +716,7 @@ Observability</h2>
 <li><b>Queue Metrics</b>: Size, drops, overflows</li>
 <li><b>Subscriber Metrics</b>: Active subscribers, callback latency</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md658"></a>
+<h2><a class="anchor" id="autotoc_md661"></a>
 Testing Support</h2>
 <p><b>Comprehensive testing utilities</b></p>
 <p>Features:</p><ul>
@@ -726,7 +726,7 @@ Testing Support</h2>
 <li><b>Integration Tests</b>: End-to-end test scenarios</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md660"></a>
+<h1><a class="anchor" id="autotoc_md663"></a>
 Feature Matrix</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -795,7 +795,7 @@ Feature Matrix</h1>
 <td class="markdownTableBodyNone"><b>Metrics</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md662"></a>
+<h1><a class="anchor" id="autotoc_md665"></a>
 Getting Started</h1>
 <p>For usage examples and getting started guides, see:</p><ul>
 <li><a class="el" href="../../d6/d63/md_docs_2guides_2QUICK__START.html">Quick Start Guide</a></li>

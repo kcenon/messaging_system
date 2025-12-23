@@ -93,27 +93,27 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2task_2QUICK__START__KO
   <div class="headertitle"><div class="title">Task 모듈 빠른 시작 가이드</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1954"></a> 5분 만에 Task 모듈을 시작하세요.</p>
-<h1><a class="anchor" id="autotoc_md1955"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1957"></a> 5분 만에 Task 모듈을 시작하세요.</p>
+<h1><a class="anchor" id="autotoc_md1958"></a>
 사전 요구사항</h1>
 <ul>
 <li>C++17 이상</li>
 <li>CMake 3.16+</li>
 <li>C++ 컴파일러 (GCC 8+, Clang 10+, 또는 MSVC 2019+)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1956"></a>
+<h1><a class="anchor" id="autotoc_md1959"></a>
 설치</h1>
 <p>Task 모듈은 messaging_system 라이브러리에 포함되어 있습니다. CMake로 빌드하세요:</p>
 <div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
 <div class="line">cmake .. -DCMAKE_BUILD_TYPE=Release</div>
 <div class="line">cmake --build .</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1957"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1960"></a>
 기본 사용법</h1>
-<h2><a class="anchor" id="autotoc_md1958"></a>
+<h2><a class="anchor" id="autotoc_md1961"></a>
 1. 헤더 포함</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_system.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task.h&gt;</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1959"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1962"></a>
 2. Task 시스템 생성 및 설정</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_system.h&gt;</span></div>
 <div class="line"> </div>
@@ -130,7 +130,7 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2task_2QUICK__START__KO
 <div class="line"> </div>
 <div class="line">    <span class="comment">// ... 핸들러 등록 및 시작</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1960"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1963"></a>
 3. Task 핸들러 등록</h2>
 <div class="fragment"><div class="line"><span class="comment">// 람다 기반 핸들러</span></div>
 <div class="line">system.register_handler(<span class="stringliteral">&quot;greet&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -141,14 +141,14 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2task_2QUICK__START__KO
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1961"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1964"></a>
 4. 시스템 시작</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> start_result = system.start();</div>
 <div class="line"><span class="keywordflow">if</span> (!start_result) {</div>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;시작 실패: &quot;</span> &lt;&lt; start_result.error().message &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">return</span> 1;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1962"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1965"></a>
 5. Task 제출</h2>
 <div class="fragment"><div class="line"><span class="comment">// 페이로드 생성</span></div>
 <div class="line">container_module::value_container payload;</div>
@@ -165,10 +165,10 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2task_2QUICK__START__KO
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Task 실패: &quot;</span> &lt;&lt; outcome.error().message &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1963"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1966"></a>
 6. 시스템 중지</h2>
 <div class="fragment"><div class="line">system.stop();</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1964"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1967"></a>
 전체 예제</h1>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_system.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -219,7 +219,7 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2task_2QUICK__START__KO
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1965"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1968"></a>
 Task 빌더 사용하기</h1>
 <p>복잡한 Task 설정을 위해 Task 빌더를 사용하세요:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;email.send&quot;</span>)</div>
@@ -234,9 +234,9 @@ Task 빌더 사용하기</h1>
 <div class="line"><span class="keywordflow">if</span> (task) {</div>
 <div class="line">    <span class="keyword">auto</span> result = system.submit(task.value());</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1966"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1969"></a>
 Task 스케줄링</h1>
-<h2><a class="anchor" id="autotoc_md1967"></a>
+<h2><a class="anchor" id="autotoc_md1970"></a>
 주기적 실행</h2>
 <div class="fragment"><div class="line"><span class="comment">// 5분마다 실행</span></div>
 <div class="line">system.schedule_periodic(</div>
@@ -244,7 +244,7 @@ Task 스케줄링</h1>
 <div class="line">    task_builder(<span class="stringliteral">&quot;cleanup.temp&quot;</span>).build().value(),</div>
 <div class="line">    std::chrono::minutes(5)</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1968"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1971"></a>
 Cron 기반 실행</h2>
 <div class="fragment"><div class="line"><span class="comment">// 매일 오전 3시에 실행</span></div>
 <div class="line">system.schedule_cron(</div>
@@ -252,7 +252,7 @@ Cron 기반 실행</h2>
 <div class="line">    task_builder(<span class="stringliteral">&quot;report.generate&quot;</span>).build().value(),</div>
 <div class="line">    <span class="stringliteral">&quot;0 3 * * *&quot;</span></div>
 <div class="line">);</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1969"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1972"></a>
 진행 상황 모니터링</h1>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;long-running-task&quot;</span>, payload);</div>
 <div class="line"> </div>
@@ -262,7 +262,7 @@ Cron 기반 실행</h2>
 <div class="line">              &lt;&lt; result.progress_message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    std::this_thread::sleep_for(std::chrono::seconds(1));</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1970"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1973"></a>
 에러 처리</h1>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;risky-task&quot;</span>, payload);</div>
 <div class="line"><span class="keyword">auto</span> outcome = result.get(std::chrono::seconds(30));</div>
@@ -279,7 +279,7 @@ Cron 기반 실행</h2>
 <div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;트레이스백: &quot;</span> &lt;&lt; result.error_traceback() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1971"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1974"></a>
 다음 단계</h1>
 <ul>
 <li><a class="el" href="../../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html">아키텍처 가이드</a> - 시스템 설계 이해하기</li>

@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d4/de7/md_docs_2task_2CONFIGURATION__K
   <div class="headertitle"><div class="title">Task 모듈 설정 가이드</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1712"></a> 이 가이드는 Task 모듈의 모든 설정 옵션을 다룹니다.</p>
-<h1><a class="anchor" id="autotoc_md1713"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1715"></a> 이 가이드는 Task 모듈의 모든 설정 옵션을 다룹니다.</p>
+<h1><a class="anchor" id="autotoc_md1716"></a>
 목차</h1>
 <ul>
 <li>Task 시스템 설정</li>
@@ -105,10 +105,10 @@ $(document).ready(function(){initNavTree('d4/de7/md_docs_2task_2CONFIGURATION__K
 <li>성능 튜닝</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1715"></a>
+<h1><a class="anchor" id="autotoc_md1718"></a>
 Task 시스템 설정</h1>
 <p><code>task_system_config</code>는 전체 Task 시스템의 메인 설정 구조체입니다.</p>
-<h2><a class="anchor" id="autotoc_md1716"></a>
+<h2><a class="anchor" id="autotoc_md1719"></a>
 구조체</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_system_config {</div>
 <div class="line">    task_queue_config queue;</div>
@@ -117,7 +117,7 @@ Task 시스템 설정</h1>
 <div class="line">    <span class="keywordtype">bool</span> enable_monitoring = <span class="keyword">true</span>;</div>
 <div class="line">    std::string result_backend_type = <span class="stringliteral">&quot;memory&quot;</span>;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1717"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1720"></a>
 옵션</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -133,7 +133,7 @@ Task 시스템 설정</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>result_backend_type</code>   </td><td class="markdownTableBodyNone"><code>std::string</code>   </td><td class="markdownTableBodyNone"><code>"memory"</code>   </td><td class="markdownTableBodyNone">결과 저장소 백엔드 타입   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1718"></a>
+<h2><a class="anchor" id="autotoc_md1721"></a>
 예제</h2>
 <div class="fragment"><div class="line">task_system_config config;</div>
 <div class="line"> </div>
@@ -152,10 +152,10 @@ Task 시스템 설정</h1>
 <div class="line"> </div>
 <div class="line">task_system system(config);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1720"></a>
+<h1><a class="anchor" id="autotoc_md1723"></a>
 Task 큐 설정</h1>
 <p><code>task_queue_config</code>는 작업 큐 동작을 제어합니다.</p>
-<h2><a class="anchor" id="autotoc_md1721"></a>
+<h2><a class="anchor" id="autotoc_md1724"></a>
 구조체</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_queue_config {</div>
 <div class="line">    <span class="keywordtype">size_t</span> max_size = 100000;</div>
@@ -164,7 +164,7 @@ Task 큐 설정</h1>
 <div class="line">    <span class="keywordtype">bool</span> enable_delayed_queue = <span class="keyword">true</span>;</div>
 <div class="line">    std::chrono::milliseconds delayed_poll_interval{1000};</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1722"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1725"></a>
 옵션</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -180,24 +180,24 @@ Task 큐 설정</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>delayed_poll_interval</code>   </td><td class="markdownTableBodyNone"><code>milliseconds</code>   </td><td class="markdownTableBodyNone"><code>1000</code>   </td><td class="markdownTableBodyNone">지연 작업 폴링 간격   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1723"></a>
+<h2><a class="anchor" id="autotoc_md1726"></a>
 영속성 설정</h2>
 <p>영속성을 활성화하면 프로세스 재시작 시에도 작업이 유지됩니다:</p>
 <div class="fragment"><div class="line">task_queue_config queue_config;</div>
 <div class="line">queue_config.enable_persistence = <span class="keyword">true</span>;</div>
 <div class="line">queue_config.persistence_path = <span class="stringliteral">&quot;/var/lib/task_queue/&quot;</span>;</div>
 <div class="line">queue_config.max_size = 500000;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1724"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1727"></a>
 지연 큐 설정</h2>
 <p>나중에 실행할 작업 스케줄링용:</p>
 <div class="fragment"><div class="line">task_queue_config queue_config;</div>
 <div class="line">queue_config.enable_delayed_queue = <span class="keyword">true</span>;</div>
 <div class="line">queue_config.delayed_poll_interval = std::chrono::milliseconds(500);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1726"></a>
+<h1><a class="anchor" id="autotoc_md1729"></a>
 워커 풀 설정</h1>
 <p><code>worker_config</code>는 작업 실행 방식을 제어합니다.</p>
-<h2><a class="anchor" id="autotoc_md1727"></a>
+<h2><a class="anchor" id="autotoc_md1730"></a>
 구조체</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>worker_config {</div>
 <div class="line">    <span class="keywordtype">size_t</span> concurrency = std::thread::hardware_concurrency();</div>
@@ -206,7 +206,7 @@ Task 큐 설정</h1>
 <div class="line">    <span class="keywordtype">bool</span> prefetch = <span class="keyword">true</span>;</div>
 <div class="line">    <span class="keywordtype">size_t</span> prefetch_count = 10;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1728"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1731"></a>
 옵션</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -222,7 +222,7 @@ Task 큐 설정</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>prefetch_count</code>   </td><td class="markdownTableBodyNone"><code>size_t</code>   </td><td class="markdownTableBodyNone"><code>10</code>   </td><td class="markdownTableBodyNone">프리페치할 작업 수   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1729"></a>
+<h2><a class="anchor" id="autotoc_md1732"></a>
 동시성 설정</h2>
 <p>워크로드에 맞게 동시성 조정:</p>
 <div class="fragment"><div class="line">worker_config worker;</div>
@@ -235,14 +235,14 @@ Task 큐 설정</h1>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 제한된 리소스: 스레드 제한</span></div>
 <div class="line">worker.concurrency = 4;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1730"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1733"></a>
 큐 우선순위</h2>
 <p>큐는 지정된 순서대로 처리됩니다:</p>
 <div class="fragment"><div class="line">worker_config worker;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// critical 먼저, 그 다음 high, 그 다음 default 처리</span></div>
 <div class="line">worker.queues = {<span class="stringliteral">&quot;critical&quot;</span>, <span class="stringliteral">&quot;high&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;low&quot;</span>};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1731"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1734"></a>
 프리페치 설정</h2>
 <p>프리페칭은 짧은 작업의 처리량을 개선합니다:</p>
 <div class="fragment"><div class="line">worker_config worker;</div>
@@ -254,10 +254,10 @@ Task 큐 설정</h1>
 <div class="line"><span class="comment">// 장기 실행 작업에서는 비활성화</span></div>
 <div class="line">worker.prefetch = <span class="keyword">false</span>;</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1733"></a>
+<h1><a class="anchor" id="autotoc_md1736"></a>
 Task 설정</h1>
 <p><code>task_config</code>를 통한 개별 작업 설정.</p>
-<h2><a class="anchor" id="autotoc_md1734"></a>
+<h2><a class="anchor" id="autotoc_md1737"></a>
 구조체</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_config {</div>
 <div class="line">    std::chrono::milliseconds timeout{300000};</div>
@@ -270,7 +270,7 @@ Task 설정</h1>
 <div class="line">    std::string queue_name = <span class="stringliteral">&quot;default&quot;</span>;</div>
 <div class="line">    std::vector&lt;std::string&gt; tags;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1735"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1738"></a>
 옵션</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -294,7 +294,7 @@ Task 설정</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>tags</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;string&gt;</code>   </td><td class="markdownTableBodyNone"><code>{}</code>   </td><td class="markdownTableBodyNone">작업 태그   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1736"></a>
+<h2><a class="anchor" id="autotoc_md1739"></a>
 Task 빌더 사용</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;process.data&quot;</span>)</div>
 <div class="line">    .payload(data)</div>
@@ -308,7 +308,7 @@ Task 빌더 사용</h2>
 <div class="line">    .tag(<span class="stringliteral">&quot;important&quot;</span>)</div>
 <div class="line">    .expires_in(std::chrono::hours(1))</div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1737"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1740"></a>
 우선순위 수준</h2>
 <div class="fragment"><div class="line"><span class="keyword">enum class</span> message_priority {</div>
 <div class="line">    lowest = 1,</div>
@@ -318,9 +318,9 @@ Task 빌더 사용</h2>
 <div class="line">    highest = 9</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1739"></a>
+<h1><a class="anchor" id="autotoc_md1742"></a>
 환경별 설정</h1>
-<h2><a class="anchor" id="autotoc_md1740"></a>
+<h2><a class="anchor" id="autotoc_md1743"></a>
 개발 환경</h2>
 <div class="fragment"><div class="line">task_system_config dev_config;</div>
 <div class="line"> </div>
@@ -337,7 +337,7 @@ Task 빌더 사용</h2>
 <div class="line"><span class="comment">// 모든 모니터링 활성화</span></div>
 <div class="line">dev_config.enable_monitoring = <span class="keyword">true</span>;</div>
 <div class="line">dev_config.enable_scheduler = <span class="keyword">true</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1741"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1744"></a>
 스테이징 환경</h2>
 <div class="fragment"><div class="line">task_system_config staging_config;</div>
 <div class="line"> </div>
@@ -352,7 +352,7 @@ Task 빌더 사용</h2>
 <div class="line"><span class="comment">// 테스트를 위한 영속성 활성화</span></div>
 <div class="line">staging_config.queue.enable_persistence = <span class="keyword">true</span>;</div>
 <div class="line">staging_config.queue.persistence_path = <span class="stringliteral">&quot;/tmp/task_queue/&quot;</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1742"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1745"></a>
 프로덕션 환경</h2>
 <div class="fragment"><div class="line">task_system_config prod_config;</div>
 <div class="line"> </div>
@@ -376,9 +376,9 @@ Task 빌더 사용</h2>
 <div class="line">prod_config.enable_monitoring = <span class="keyword">true</span>;</div>
 <div class="line">prod_config.enable_scheduler = <span class="keyword">true</span>;</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1744"></a>
+<h1><a class="anchor" id="autotoc_md1747"></a>
 성능 튜닝</h1>
-<h2><a class="anchor" id="autotoc_md1745"></a>
+<h2><a class="anchor" id="autotoc_md1748"></a>
 고처리량 설정</h2>
 <p>많은 짧은 작업 처리용:</p>
 <div class="fragment"><div class="line">task_system_config high_throughput;</div>
@@ -398,7 +398,7 @@ Task 빌더 사용</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 빠른 지연 큐 폴링</span></div>
 <div class="line">high_throughput.queue.delayed_poll_interval = std::chrono::milliseconds(100);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1746"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1749"></a>
 저지연 설정</h2>
 <p>최소 지연으로 빠른 작업 실행:</p>
 <div class="fragment"><div class="line">task_system_config low_latency;</div>
@@ -414,7 +414,7 @@ Task 빌더 사용</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 단일 고우선순위 큐</span></div>
 <div class="line">low_latency.worker.queues = {<span class="stringliteral">&quot;realtime&quot;</span>};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1747"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1750"></a>
 리소스 제한 설정</h2>
 <p>제한된 CPU/메모리 환경용:</p>
 <div class="fragment"><div class="line">task_system_config constrained;</div>
@@ -438,7 +438,7 @@ Task 빌더 사용</h2>
 <div class="line"><span class="comment">// 선택적 컴포넌트 비활성화</span></div>
 <div class="line">constrained.enable_scheduler = <span class="keyword">false</span>;</div>
 <div class="line">constrained.enable_monitoring = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1748"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1751"></a>
 장기 실행 작업 설정</h2>
 <p>몇 분에서 몇 시간 걸리는 작업용:</p>
 <div class="fragment"><div class="line">task_system_config long_running;</div>
@@ -454,7 +454,7 @@ Task 빌더 사용</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 장기 작업을 위한 기본값</span></div>
 <div class="line"><span class="comment">// (개별 작업에는 task_builder 사용)</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1749"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1752"></a>
 메모리 최적화</h2>
 <div class="fragment"><div class="line">task_system_config memory_optimized;</div>
 <div class="line"> </div>
@@ -468,9 +468,9 @@ Task 빌더 사용</h2>
 <div class="line">memory_optimized.queue.enable_persistence = <span class="keyword">true</span>;</div>
 <div class="line">memory_optimized.queue.persistence_path = <span class="stringliteral">&quot;/var/lib/task_queue/&quot;</span>;</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1751"></a>
+<h1><a class="anchor" id="autotoc_md1754"></a>
 설정 권장 사항</h1>
-<h2><a class="anchor" id="autotoc_md1752"></a>
+<h2><a class="anchor" id="autotoc_md1755"></a>
 워크로드 유형별</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -486,7 +486,7 @@ Task 빌더 사용</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">실시간   </td><td class="markdownTableBodyNone">CPU 코어 수   </td><td class="markdownTableBodyNone">비활성화   </td><td class="markdownTableBodyNone">1-10ms   </td><td class="markdownTableBodyNone">작음   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1753"></a>
+<h2><a class="anchor" id="autotoc_md1756"></a>
 규모별</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -501,7 +501,7 @@ Task 빌더 사용</h2>
 <td class="markdownTableBodyNone">초대규모 (&gt;10000/분)   </td><td class="markdownTableBodyNone">16+   </td><td class="markdownTableBodyNone">1,000,000+   </td><td class="markdownTableBodyNone">필수   </td><td class="markdownTableBodyNone">필수   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1755"></a>
+<h1><a class="anchor" id="autotoc_md1758"></a>
 관련 문서</h1>
 <ul>
 <li><a class="el" href="../../da/dee/md_docs_2task_2QUICK__START__KO.html">빠른 시작 가이드</a></li>

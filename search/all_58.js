@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['보고_0',['진행 상황 보고',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1918',1,'']]],
-  ['보기_1',['작업 로그 보기',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2021',1,'']]]
+  ['보고_0',['진행 상황 보고',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1921',1,'']]],
+  ['보기_1',['작업 로그 보기',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2024',1,'']]]
 ];
