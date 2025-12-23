@@ -426,6 +426,7 @@ The `message_bus_collector` provides integration with monitoring_system for coll
 - `monitoring_system` available (automatically fetched via FetchContent)
 - `WITH_MONITORING_SYSTEM` compile definition enabled (automatic when monitoring_system is found)
 - The `KCENON_WITH_MONITORING_SYSTEM` macro from `feature_flags.h` gates the monitoring integration
+- `KCENON_HAS_COMMON_EXECUTOR=1` is automatically defined when `common_system` is linked, enabling the `thread_pool` to inherit from `IExecutor` interface
 
 ### Collected Metrics
 

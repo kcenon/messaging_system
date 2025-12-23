@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Build Fix: Enable KCENON_HAS_COMMON_EXECUTOR for thread_pool IExecutor support**
+  - Added `KCENON_HAS_COMMON_EXECUTOR=1` compile definition when common_system is linked
+  - Fixes standalone_backend::get_executor() compilation error
+  - The thread_pool class conditionally inherits from IExecutor interface only when
+    this macro is defined, enabling proper shared_ptr<thread_pool> to shared_ptr<IExecutor>
+    conversion
+
 ### Added
 - **Enhanced Integration Tests for Multi-System Messaging (Issue #161)**
   - New `test_messaging_patterns_e2e.cpp` with messaging pattern tests:
