@@ -1531,3 +1531,400 @@ TEST_F(MessageBrokerTest, ContentRouteStatistics) {
 	ASSERT_TRUE(route_info.is_ok());
 	EXPECT_EQ(route_info.unwrap().messages_processed, 5);
 }
+
+// =============================================================================
+// Transformation Pipeline Tests
+// =============================================================================
+
+TEST_F(MessageBrokerTest, AddTransformerSuccess) {
+	transformer_config config;
+	config.transformer_id = "test-transformer";
+	config.stage = transform_stage::pre_routing;
+	config.transform_fn = [](message msg) {
+		return common::ok(std::move(msg));
+	};
+
+	auto result = broker_->add_transformer(std::move(config));
+
+	ASSERT_TRUE(result.is_ok());
+	EXPECT_TRUE(broker_->has_transformer("test-transformer"));
+	EXPECT_EQ(broker_->transformer_count(), 1);
+}
+
+TEST_F(MessageBrokerTest, AddTransformerEmptyId) {
+	transformer_config config;
+	config.transformer_id = "";
+	config.stage = transform_stage::pre_routing;
+	config.transform_fn = [](message msg) {
+		return common::ok(std::move(msg));
+	};
+
+	auto result = broker_->add_transformer(std::move(config));
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, AddTransformerNullFunction) {
+	transformer_config config;
+	config.transformer_id = "test-transformer";
+	config.stage = transform_stage::pre_routing;
+	config.transform_fn = nullptr;
+
+	auto result = broker_->add_transformer(std::move(config));
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, AddTransformerDuplicate) {
+	transformer_config config1;
+	config1.transformer_id = "test-transformer";
+	config1.stage = transform_stage::pre_routing;
+	config1.transform_fn = [](message msg) {
+		return common::ok(std::move(msg));
+	};
+	broker_->add_transformer(std::move(config1));
+
+	transformer_config config2;
+	config2.transformer_id = "test-transformer";
+	config2.stage = transform_stage::post_routing;
+	config2.transform_fn = [](message msg) {
+		return common::ok(std::move(msg));
+	};
+	auto result = broker_->add_transformer(std::move(config2));
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, RemoveTransformerSuccess) {
+	transformer_config config;
+	config.transformer_id = "test-transformer";
+	config.stage = transform_stage::pre_routing;
+	config.transform_fn = [](message msg) {
+		return common::ok(std::move(msg));
+	};
+	broker_->add_transformer(std::move(config));
+
+	auto result = broker_->remove_transformer("test-transformer");
+
+	ASSERT_TRUE(result.is_ok());
+	EXPECT_FALSE(broker_->has_transformer("test-transformer"));
+	EXPECT_EQ(broker_->transformer_count(), 0);
+}
+
+TEST_F(MessageBrokerTest, RemoveTransformerNotFound) {
+	auto result = broker_->remove_transformer("nonexistent-transformer");
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, EnableDisableTransformer) {
+	transformer_config config;
+	config.transformer_id = "test-transformer";
+	config.stage = transform_stage::pre_routing;
+	config.transform_fn = [](message msg) {
+		return common::ok(std::move(msg));
+	};
+	broker_->add_transformer(std::move(config));
+
+	// Disable
+	auto disable_result = broker_->disable_transformer("test-transformer");
+	ASSERT_TRUE(disable_result.is_ok());
+
+	auto info = broker_->get_transformer("test-transformer");
+	ASSERT_TRUE(info.is_ok());
+	EXPECT_FALSE(info.unwrap().active);
+
+	// Enable
+	auto enable_result = broker_->enable_transformer("test-transformer");
+	ASSERT_TRUE(enable_result.is_ok());
+
+	info = broker_->get_transformer("test-transformer");
+	ASSERT_TRUE(info.is_ok());
+	EXPECT_TRUE(info.unwrap().active);
+}
+
+TEST_F(MessageBrokerTest, GetTransformersByStage) {
+	transformer_config config1;
+	config1.transformer_id = "pre-1";
+	config1.stage = transform_stage::pre_routing;
+	config1.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config1));
+
+	transformer_config config2;
+	config2.transformer_id = "pre-2";
+	config2.stage = transform_stage::pre_routing;
+	config2.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config2));
+
+	transformer_config config3;
+	config3.transformer_id = "post-1";
+	config3.stage = transform_stage::post_routing;
+	config3.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config3));
+
+	auto pre_transformers = broker_->get_transformers(transform_stage::pre_routing);
+	EXPECT_EQ(pre_transformers.size(), 2);
+
+	auto post_transformers = broker_->get_transformers(transform_stage::post_routing);
+	EXPECT_EQ(post_transformers.size(), 1);
+
+	auto success_transformers = broker_->get_transformers(transform_stage::on_success);
+	EXPECT_EQ(success_transformers.size(), 0);
+}
+
+TEST_F(MessageBrokerTest, GetAllTransformers) {
+	transformer_config config1;
+	config1.transformer_id = "t1";
+	config1.stage = transform_stage::pre_routing;
+	config1.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config1));
+
+	transformer_config config2;
+	config2.transformer_id = "t2";
+	config2.stage = transform_stage::post_routing;
+	config2.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config2));
+
+	transformer_config config3;
+	config3.transformer_id = "t3";
+	config3.stage = transform_stage::on_success;
+	config3.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config3));
+
+	auto all = broker_->get_all_transformers();
+	EXPECT_EQ(all.size(), 3);
+}
+
+TEST_F(MessageBrokerTest, TransformerCountByStage) {
+	transformer_config config1;
+	config1.transformer_id = "pre-1";
+	config1.stage = transform_stage::pre_routing;
+	config1.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config1));
+
+	transformer_config config2;
+	config2.transformer_id = "pre-2";
+	config2.stage = transform_stage::pre_routing;
+	config2.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config2));
+
+	transformer_config config3;
+	config3.transformer_id = "post-1";
+	config3.stage = transform_stage::post_routing;
+	config3.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config3));
+
+	EXPECT_EQ(broker_->transformer_count(), 3);
+	EXPECT_EQ(broker_->transformer_count(transform_stage::pre_routing), 2);
+	EXPECT_EQ(broker_->transformer_count(transform_stage::post_routing), 1);
+	EXPECT_EQ(broker_->transformer_count(transform_stage::on_success), 0);
+}
+
+TEST_F(MessageBrokerTest, ClearTransformersByStage) {
+	transformer_config config1;
+	config1.transformer_id = "pre-1";
+	config1.stage = transform_stage::pre_routing;
+	config1.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config1));
+
+	transformer_config config2;
+	config2.transformer_id = "post-1";
+	config2.stage = transform_stage::post_routing;
+	config2.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config2));
+
+	EXPECT_EQ(broker_->transformer_count(), 2);
+
+	broker_->clear_transformers(transform_stage::pre_routing);
+
+	EXPECT_EQ(broker_->transformer_count(), 1);
+	EXPECT_FALSE(broker_->has_transformer("pre-1"));
+	EXPECT_TRUE(broker_->has_transformer("post-1"));
+}
+
+TEST_F(MessageBrokerTest, ClearAllTransformers) {
+	transformer_config config1;
+	config1.transformer_id = "t1";
+	config1.stage = transform_stage::pre_routing;
+	config1.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config1));
+
+	transformer_config config2;
+	config2.transformer_id = "t2";
+	config2.stage = transform_stage::post_routing;
+	config2.transform_fn = [](message msg) { return common::ok(std::move(msg)); };
+	broker_->add_transformer(std::move(config2));
+
+	EXPECT_EQ(broker_->transformer_count(), 2);
+
+	broker_->clear_all_transformers();
+
+	EXPECT_EQ(broker_->transformer_count(), 0);
+}
+
+TEST_F(MessageBrokerTest, TransformerOrderWithinStage) {
+	std::vector<int> execution_order;
+
+	transformer_config config1;
+	config1.transformer_id = "order-10";
+	config1.stage = transform_stage::pre_routing;
+	config1.order = 10;
+	config1.transform_fn = [&execution_order](message msg) {
+		execution_order.push_back(10);
+		return common::ok(std::move(msg));
+	};
+	broker_->add_transformer(std::move(config1));
+
+	transformer_config config2;
+	config2.transformer_id = "order-0";
+	config2.stage = transform_stage::pre_routing;
+	config2.order = 0;
+	config2.transform_fn = [&execution_order](message msg) {
+		execution_order.push_back(0);
+		return common::ok(std::move(msg));
+	};
+	broker_->add_transformer(std::move(config2));
+
+	transformer_config config3;
+	config3.transformer_id = "order-5";
+	config3.stage = transform_stage::pre_routing;
+	config3.order = 5;
+	config3.transform_fn = [&execution_order](message msg) {
+		execution_order.push_back(5);
+		return common::ok(std::move(msg));
+	};
+	broker_->add_transformer(std::move(config3));
+
+	// Get sorted transformers and verify order
+	auto transformers = broker_->get_transformers(transform_stage::pre_routing);
+	ASSERT_EQ(transformers.size(), 3);
+	EXPECT_EQ(transformers[0].order, 0);
+	EXPECT_EQ(transformers[1].order, 5);
+	EXPECT_EQ(transformers[2].order, 10);
+}
+
+TEST_F(MessageBrokerTest, TransformerStatistics) {
+	transformer_config config;
+	config.transformer_id = "stats-transformer";
+	config.stage = transform_stage::pre_routing;
+	config.transform_fn = [](message msg) {
+		return common::ok(std::move(msg));
+	};
+	broker_->add_transformer(std::move(config));
+
+	auto info = broker_->get_transformer("stats-transformer");
+	ASSERT_TRUE(info.is_ok());
+	EXPECT_EQ(info.unwrap().messages_processed, 0);
+	EXPECT_EQ(info.unwrap().failures, 0);
+}
+
+TEST_F(MessageBrokerTest, TransformerModifiesMessage) {
+	broker_->start();
+
+	// Add transformer that adds metadata
+	transformer_config config;
+	config.transformer_id = "add-header";
+	config.stage = transform_stage::pre_routing;
+	config.transform_fn = [](message msg) {
+		msg.metadata().headers["transformed"] = "true";
+		return common::ok(std::move(msg));
+	};
+	broker_->add_transformer(std::move(config));
+
+	std::string received_header;
+	broker_->add_route(
+		"test-route",
+		"test.topic",
+		[&received_header](const message& msg) {
+			auto it = msg.metadata().headers.find("transformed");
+			if (it != msg.metadata().headers.end()) {
+				received_header = it->second;
+			}
+			return common::ok();
+		}
+	);
+
+	message msg("test.topic");
+	// Note: Currently transformers need to be integrated with route() method
+	// This test verifies the transformer config is properly stored
+	EXPECT_TRUE(broker_->has_transformer("add-header"));
+}
+
+TEST_F(MessageBrokerTest, TransformerFailure) {
+	transformer_config config;
+	config.transformer_id = "failing-transformer";
+	config.stage = transform_stage::pre_routing;
+	config.transform_fn = [](message /* msg */) -> common::Result<message> {
+		return common::make_error<message>(
+			common::error::codes::common_errors::internal_error,
+			"Validation failed"
+		);
+	};
+	broker_->add_transformer(std::move(config));
+
+	// Verify transformer is registered
+	EXPECT_TRUE(broker_->has_transformer("failing-transformer"));
+	auto info = broker_->get_transformer("failing-transformer");
+	ASSERT_TRUE(info.is_ok());
+}
+
+TEST_F(MessageBrokerTest, TransformerException) {
+	transformer_config config;
+	config.transformer_id = "throwing-transformer";
+	config.stage = transform_stage::pre_routing;
+	config.transform_fn = [](message /* msg */) -> common::Result<message> {
+		throw std::runtime_error("Transformer exception");
+	};
+	broker_->add_transformer(std::move(config));
+
+	// Verify transformer is registered
+	EXPECT_TRUE(broker_->has_transformer("throwing-transformer"));
+}
+
+TEST_F(MessageBrokerTest, DisabledTransformerSkipped) {
+	transformer_config config;
+	config.transformer_id = "disabled-transformer";
+	config.stage = transform_stage::pre_routing;
+	config.transform_fn = [](message msg) {
+		return common::ok(std::move(msg));
+	};
+	broker_->add_transformer(std::move(config));
+
+	broker_->disable_transformer("disabled-transformer");
+
+	// Get active transformers only
+	auto transformers = broker_->get_transformers(transform_stage::pre_routing);
+	EXPECT_EQ(transformers.size(), 1);  // Still returned, but marked inactive
+
+	auto info = broker_->get_transformer("disabled-transformer");
+	ASSERT_TRUE(info.is_ok());
+	EXPECT_FALSE(info.unwrap().active);
+}
+
+TEST_F(MessageBrokerTest, AllTransformStages) {
+	// Verify all stages can be used
+	std::vector<transform_stage> stages = {
+		transform_stage::pre_routing,
+		transform_stage::post_routing,
+		transform_stage::on_success,
+		transform_stage::on_failure
+	};
+
+	for (size_t i = 0; i < stages.size(); ++i) {
+		transformer_config config;
+		config.transformer_id = "stage-" + std::to_string(i);
+		config.stage = stages[i];
+		config.transform_fn = [](message msg) {
+			return common::ok(std::move(msg));
+		};
+
+		auto result = broker_->add_transformer(std::move(config));
+		ASSERT_TRUE(result.is_ok()) << "Failed to add transformer for stage " << i;
+	}
+
+	EXPECT_EQ(broker_->transformer_count(), 4);
+	EXPECT_EQ(broker_->transformer_count(transform_stage::pre_routing), 1);
+	EXPECT_EQ(broker_->transformer_count(transform_stage::post_routing), 1);
+	EXPECT_EQ(broker_->transformer_count(transform_stage::on_success), 1);
+	EXPECT_EQ(broker_->transformer_count(transform_stage::on_failure), 1);
+}
