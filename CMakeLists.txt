@@ -214,6 +214,7 @@ set(MESSAGING_CORE_SOURCES
     src/impl/collectors/message_bus_collector.cpp
     # Adapters module (transport implementations)
     src/impl/adapters/websocket_transport.cpp
+    src/impl/adapters/http_transport.cpp
 )
 
 add_library(messaging_system_core STATIC ${MESSAGING_CORE_SOURCES})

@@ -648,6 +648,69 @@ cmake -DKCENON_WITH_NETWORK_SYSTEM=ON ..
 
 When disabled, transport operations return `error::not_supported`.
 
+### HTTP Transport
+
+**Request/reply messaging over HTTP/1.1**
+
+Features:
+- **HTTP Methods**: GET and POST for message transmission
+- **Content Types**: JSON, binary, and msgpack serialization
+- **Custom Headers**: Per-request and default header management
+- **State Management**: Connection state tracking with callbacks
+- **Statistics**: Performance metrics collection
+- **SSL/TLS Support**: HTTPS connections
+
+```cpp
+http_transport_config config;
+config.host = "api.example.com";
+config.port = 443;
+config.use_ssl = true;
+config.base_path = "/v1/messages";
+config.content_type = http_content_type::json;
+config.default_headers["Authorization"] = "Bearer token123";
+
+auto transport = std::make_shared<http_transport>(config);
+
+transport->set_message_handler([](const message& msg) {
+    std::cout << "Response received" << std::endl;
+});
+
+transport->set_error_handler([](const std::string& error) {
+    std::cerr << "Error: " << error << std::endl;
+});
+
+transport->connect();
+
+// Send message via POST
+auto msg = message_builder()
+    .topic("orders.create")
+    .source("client-001")
+    .build();
+transport->send(msg.value());
+
+// HTTP-specific methods
+auto response = transport->post("/orders", msg.value());
+auto data = transport->get("/orders", {{"status", "pending"}});
+```
+
+### HTTP Configuration Options
+
+**HTTP transport configuration**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| host | string | "" | Server hostname |
+| port | uint16 | 0 | Server port (default: 80/443) |
+| base_path | string | "/api/messages" | Base URL path |
+| content_type | enum | json | Serialization format |
+| use_ssl | bool | false | Enable HTTPS |
+| connect_timeout | ms | 10000 | Connection timeout |
+| request_timeout | ms | 30000 | Request timeout |
+| default_headers | map | {} | Default HTTP headers |
+| publish_endpoint | string | "/publish" | Publish endpoint path |
+| subscribe_endpoint | string | "/subscribe" | Subscribe endpoint path |
+| request_endpoint | string | "/request" | Request endpoint path |
+
 ---
 
 ## Message Types
