@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['커버리지_0',['커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1263',1,'컴포넌트별 커버리지'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1262',1,'테스트 커버리지']]],
-  ['커스텀_20솔루션에서_20마이그레이션_1',['커스텀 솔루션에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1811',1,'']]],
-  ['커스텀_20스레드_20풀_2',['이전 (커스텀 스레드 풀)',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1813',1,'']]],
-  ['커스텀_20재시도_20로직_3',['커스텀 재시도 로직',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1914',1,'']]],
-  ['커스텀_20result_20backend_4',['커스텀 Result Backend',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1671',1,'']]],
-  ['커스텀_20task_20handler_5',['커스텀 Task Handler',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1672',1,'']]]
+  ['취소하나요_0',['Q: 실행 중인 작업을 어떻게 취소하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2117',1,'']]],
+  ['취소_1',['취소',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1638',1,'결과/취소'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1612',1,'취소'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1621',1,'취소']]]
 ];

@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d4/d54/md_docs_2API__REFERENCE__KO.htm
   <div class="headertitle"><div class="title">Messaging System API 레퍼런스</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md352"></a> <b>버전</b>: 0.1.0 <b>최종 수정일</b>: 2025-11-30 <b>언어</b>: <a class="el" href="../../db/d91/md_docs_2API__REFERENCE.html">English</a> | [한국어]</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md367"></a> <b>버전</b>: 0.1.0 <b>최종 수정일</b>: 2025-11-30 <b>언어</b>: <a class="el" href="../../db/d91/md_docs_2API__REFERENCE.html">English</a> | [한국어]</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md354"></a>
+<h1><a class="anchor" id="autotoc_md369"></a>
 개요</h1>
 <p>이 문서는 messaging_system의 공개 API에 대한 포괄적인 레퍼런스를 제공합니다.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md356"></a>
+<h1><a class="anchor" id="autotoc_md371"></a>
 목차</h1>
 <ol type="1">
 <li>핵심 클래스</li>
@@ -109,9 +109,9 @@ $(document).ready(function(){initNavTree('d4/d54/md_docs_2API__REFERENCE__KO.htm
 <li>직렬화</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md358"></a>
+<h1><a class="anchor" id="autotoc_md373"></a>
 핵심 클래스</h1>
-<h2><a class="anchor" id="autotoc_md359"></a>
+<h2><a class="anchor" id="autotoc_md374"></a>
 message_bus</h2>
 <p>중앙 pub/sub 코디네이터:</p>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>messaging {</div>
@@ -134,9 +134,9 @@ message_bus</h2>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace messaging</span></div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md361"></a>
+<h1><a class="anchor" id="autotoc_md376"></a>
 메시지 버스</h1>
-<h2><a class="anchor" id="autotoc_md362"></a>
+<h2><a class="anchor" id="autotoc_md377"></a>
 사용 예제</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> bus = messaging::message_bus::create();</div>
 <div class="line">bus-&gt;start();</div>
@@ -153,9 +153,9 @@ message_bus</h2>
 <div class="line">bus-&gt;unsubscribe(sub_id);</div>
 <div class="line">bus-&gt;stop();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md364"></a>
+<h1><a class="anchor" id="autotoc_md379"></a>
 토픽 라우터</h1>
-<h2><a class="anchor" id="autotoc_md365"></a>
+<h2><a class="anchor" id="autotoc_md380"></a>
 와일드카드 패턴</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -166,9 +166,9 @@ message_bus</h2>
 <td class="markdownTableBodyNone"><code>#</code>   </td><td class="markdownTableBodyNone">다중 레벨   </td><td class="markdownTableBodyNone"><code>events.#</code> → <code>events.user.created</code>   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md367"></a>
+<h1><a class="anchor" id="autotoc_md382"></a>
 메시징 패턴</h1>
-<h2><a class="anchor" id="autotoc_md368"></a>
+<h2><a class="anchor" id="autotoc_md383"></a>
 Pub/Sub</h2>
 <div class="fragment"><div class="line"><span class="comment">// 퍼블리셔</span></div>
 <div class="line"><span class="keyword">auto</span> publisher = messaging::publisher(bus, <span class="stringliteral">&quot;notifications&quot;</span>);</div>
@@ -177,7 +177,7 @@ Pub/Sub</h2>
 <div class="line"><span class="comment">// 구독자</span></div>
 <div class="line"><span class="keyword">auto</span> subscriber = messaging::subscriber(bus, <span class="stringliteral">&quot;notifications&quot;</span>);</div>
 <div class="line">subscriber.on_message([](<span class="keyword">const</span> message&amp; msg) { <span class="comment">/* 처리 */</span> });</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md369"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md384"></a>
 Request/Reply</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> client = messaging::request_client(bus, <span class="stringliteral">&quot;services.calculator&quot;</span>);</div>
 <div class="line"><span class="keyword">auto</span> result = client.request(calculate_request);</div>
@@ -186,9 +186,9 @@ Request/Reply</h2>
 <div class="line">    <span class="keyword">auto</span> response = result.value();</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md371"></a>
+<h1><a class="anchor" id="autotoc_md386"></a>
 직렬화</h1>
-<h2><a class="anchor" id="autotoc_md372"></a>
+<h2><a class="anchor" id="autotoc_md387"></a>
 메시지 구조</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>message {</div>
 <div class="line">    std::string topic;</div>
@@ -197,7 +197,7 @@ Request/Reply</h2>
 <div class="line">    std::chrono::system_clock::time_point timestamp;</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md374"></a>
+<h1><a class="anchor" id="autotoc_md389"></a>
 관련 문서</h1>
 <ul>
 <li><a class="el" href="../../d4/d0c/md_docs_2FEATURES__KO.html">기능</a></li>

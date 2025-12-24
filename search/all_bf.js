@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['핸들러가_20에러_20반환_20대신_20예외를_20던짐_0',['핸들러가 에러 반환 대신 예외를 던짐',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1831',1,'']]],
-  ['핸들러_1',['콜백 핸들러',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1906',1,'']]],
-  ['핸들러_20구현_2',['핸들러 구현',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1899',1,'']]],
-  ['핸들러_20등록_3',['핸들러 등록',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1554',1,'핸들러 등록'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1974',1,'3. Task 핸들러 등록']]],
-  ['핸들러_20등록_20방식_4',['3. 핸들러 등록 방식',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2103',1,'']]],
-  ['핸들러_20등록_20편의_20메서드_5',['핸들러 등록 (편의 메서드)',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1614',1,'']]],
-  ['핸들러_20외부에서_20작업_20진행_20상황을_20어떻게_20얻나요_6',['Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2045',1,'']]]
+  ['핵심_20메시징_0',['핵심 메시징',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md756',1,'']]],
+  ['핵심_20문서_1',['핵심 문서',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1444',1,'']]],
+  ['핵심_20성능_20메트릭_2',['핵심 성능 메트릭',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md532',1,'']]],
+  ['핵심_20컴포넌트_3',['핵심 컴포넌트',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md445',1,'핵심 컴포넌트'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1727',1,'핵심 컴포넌트']]],
+  ['핵심_20컴포넌트_20tt_20include_20kcenon_20messaging_20core_20tt_4',['핵심 컴포넌트 (&lt;tt&gt;include/kcenon/messaging/core/&lt;/tt&gt;)',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1388',1,'']]],
+  ['핵심_20클래스_5',['핵심 클래스',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md373',1,'']]]
 ];

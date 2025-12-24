@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['솔루션에서_20마이그레이션_0',['커스텀 솔루션에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1811',1,'']]]
+  ['세부사항_0',['구현 세부사항',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md33',1,'']]]
 ];

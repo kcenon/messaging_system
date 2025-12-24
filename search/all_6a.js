@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['순서대로_20처리하려면_20어떻게_20하나요_0',['Q: 작업을 순서대로 처리하려면 어떻게 하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2047',1,'']]],
-  ['순수_20가상_20메서드_1',['순수 가상 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1527',1,'순수 가상 메서드'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1577',1,'순수 가상 메서드']]]
+  ['수정됨_0',['수정됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md571',1,'']]],
+  ['수정_20이력_1',['수정 이력',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md51',1,'']]],
+  ['수준_2',['수준',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1824',1,'우선순위 수준'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1991',1,'우선순위 수준']]],
+  ['수평_20확장_3',['수평 확장',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md544',1,'']]]
 ];

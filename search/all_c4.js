@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['형식_0',['형식',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1594',1,'Cron 표현식 형식'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1927',1,'Cron 표현식 형식']]]
+  ['현재_20구현_20상태_0',['현재 구현 상태',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md47',1,'']]]
 ];

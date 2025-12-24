@@ -1,4 +1,8 @@
 var searchData=
 [
-  ['템플릿을_20통한_20컴파일_20타임_20로거_20선택_0',['대안 B: 템플릿을 통한 컴파일 타임 로거 선택',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md44',1,'']]]
+  ['테스트_0',['테스트',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md801',1,'테스트'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1752',1,'테스트']]],
+  ['테스트_20실행_1',['테스트 실행',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1753',1,'']]],
+  ['테스트_20체크리스트_2',['테스트 체크리스트',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1901',1,'']]],
+  ['테스트_20커버리지_3',['테스트 커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1335',1,'']]],
+  ['테이블_4',['요약 테이블',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md533',1,'']]]
 ];

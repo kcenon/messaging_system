@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('de/de3/md_docs_2ARCHITECTURE__KO.html'
   <div class="headertitle"><div class="title">Messaging System 아키텍처</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md421"></a> <b>버전</b>: 0.1.0 <b>최종 수정일</b>: 2025-11-30 <b>언어</b>: <a class="el" href="../../da/d01/ARCHITECTURE_8md.html">English</a> | [한국어]</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md436"></a> <b>버전</b>: 0.1.0 <b>최종 수정일</b>: 2025-11-30 <b>언어</b>: <a class="el" href="../../da/d01/ARCHITECTURE_8md.html">English</a> | [한국어]</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md423"></a>
+<h1><a class="anchor" id="autotoc_md438"></a>
 개요</h1>
 <p>이 문서는 messaging_system의 아키텍처 설계, 컴포넌트 구조 및 데이터 흐름에 대해 설명합니다.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md425"></a>
+<h1><a class="anchor" id="autotoc_md440"></a>
 목차</h1>
 <ol type="1">
 <li>시스템 개요</li>
@@ -109,7 +109,7 @@ $(document).ready(function(){initNavTree('de/de3/md_docs_2ARCHITECTURE__KO.html'
 <li>설계 원칙</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md427"></a>
+<h1><a class="anchor" id="autotoc_md442"></a>
 시스템 개요</h1>
 <p>messaging_system은 고성능 메시징 인프라를 제공하는 라이브러리입니다:</p>
 <div class="fragment"><div class="line">┌─────────────────────────────────────────────┐</div>
@@ -135,9 +135,9 @@ $(document).ready(function(){initNavTree('de/de3/md_docs_2ARCHITECTURE__KO.html'
 <div class="line">  │ system    │ │ system     │ │ system    │</div>
 <div class="line">  └───────────┘ └────────────┘ └───────────┘</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md429"></a>
+<h1><a class="anchor" id="autotoc_md444"></a>
 컴포넌트 아키텍처</h1>
-<h2><a class="anchor" id="autotoc_md430"></a>
+<h2><a class="anchor" id="autotoc_md445"></a>
 핵심 컴포넌트</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -151,7 +151,7 @@ $(document).ready(function(){initNavTree('de/de3/md_docs_2ARCHITECTURE__KO.html'
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Serializer</b>   </td><td class="markdownTableBodyNone">직렬화   </td><td class="markdownTableBodyNone">container_system 기반   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md431"></a>
+<h2><a class="anchor" id="autotoc_md446"></a>
 메시징 패턴</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -166,9 +166,9 @@ $(document).ready(function(){initNavTree('de/de3/md_docs_2ARCHITECTURE__KO.html'
 <td class="markdownTableBodyNone"><b>Pipeline</b>   </td><td class="markdownTableBodyNone">변환 체인   </td><td class="markdownTableBodyNone">파이프-필터   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md433"></a>
+<h1><a class="anchor" id="autotoc_md448"></a>
 의존성 구조</h1>
-<h2><a class="anchor" id="autotoc_md434"></a>
+<h2><a class="anchor" id="autotoc_md449"></a>
 버전 매트릭스</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -187,9 +187,9 @@ $(document).ready(function(){initNavTree('de/de3/md_docs_2ARCHITECTURE__KO.html'
 <td class="markdownTableBodyNone">network_system   </td><td class="markdownTableBodyNone">v1.0.0   </td><td class="markdownTableBodyNone">네트워크 전송   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md436"></a>
+<h1><a class="anchor" id="autotoc_md451"></a>
 데이터 흐름</h1>
-<h2><a class="anchor" id="autotoc_md437"></a>
+<h2><a class="anchor" id="autotoc_md452"></a>
 메시지 발행 흐름</h2>
 <div class="fragment"><div class="line">Publisher</div>
 <div class="line">    │</div>
@@ -207,7 +207,7 @@ $(document).ready(function(){initNavTree('de/de3/md_docs_2ARCHITECTURE__KO.html'
 <div class="line">┌───────────────┐</div>
 <div class="line">│  Subscribers  │</div>
 <div class="line">└───────────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md438"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md453"></a>
 Request/Reply 흐름</h2>
 <div class="fragment"><div class="line">Client                     Server</div>
 <div class="line">   │                          │</div>
@@ -216,22 +216,22 @@ Request/Reply 흐름</h2>
 <div class="line">   │◄─── Response ────────────│</div>
 <div class="line">   │                          │</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md440"></a>
+<h1><a class="anchor" id="autotoc_md455"></a>
 설계 원칙</h1>
-<h2><a class="anchor" id="autotoc_md441"></a>
+<h2><a class="anchor" id="autotoc_md456"></a>
 1. 느슨한 결합</h2>
 <p>퍼블리셔와 구독자가 서로를 알 필요 없음</p>
-<h2><a class="anchor" id="autotoc_md442"></a>
+<h2><a class="anchor" id="autotoc_md457"></a>
 2. 비동기 우선</h2>
 <p>기본적으로 비동기 메시징, 필요시 동기 패턴</p>
-<h2><a class="anchor" id="autotoc_md443"></a>
+<h2><a class="anchor" id="autotoc_md458"></a>
 3. 스레드 안전</h2>
 <p>모든 핵심 컴포넌트는 스레드 안전</p>
-<h2><a class="anchor" id="autotoc_md444"></a>
+<h2><a class="anchor" id="autotoc_md459"></a>
 4. 확장성</h2>
 <p>플러그인 가능한 백엔드와 직렬화</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md446"></a>
+<h1><a class="anchor" id="autotoc_md461"></a>
 관련 문서</h1>
 <ul>
 <li><a class="el" href="../../d4/d54/md_docs_2API__REFERENCE__KO.html">API 레퍼런스</a></li>

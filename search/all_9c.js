@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['체크리스트_0',['체크리스트',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1824',1,'마이그레이션 체크리스트'],['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1828',1,'테스트 체크리스트']]],
-  ['체크포인트와_20복구_1',['체크포인트와 복구',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1936',1,'']]],
-  ['체크포인트_20관리_2',['체크포인트 관리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1537',1,'']]],
-  ['체크포인트_20데이터_3',['체크포인트 데이터',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1938',1,'']]],
-  ['체크포인트_20저장_4',['체크포인트 저장',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1937',1,'']]]
+  ['처리되지_20않음_0',['작업이 처리되지 않음',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2097',1,'']]],
+  ['처리량_1',['처리량',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2113',1,'낮은 처리량'],['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md536',1,'처리량']]],
+  ['처리하나요_2',['처리하나요',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2123',1,'Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2119',1,'Q: 작업 종속성을 어떻게 처리하나요?']]],
+  ['처리하려면_20어떻게_20하나요_3',['Q: 작업을 순서대로 처리하려면 어떻게 하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2120',1,'']]],
+  ['처리_4',['처리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1586',1,'결과/에러 처리'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1973',1,'에러 처리'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1980',1,'에러 처리'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md2057',1,'에러 처리']]]
 ];

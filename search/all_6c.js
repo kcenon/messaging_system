@@ -1,18 +1,15 @@
 var searchData=
 [
-  ['시간_0',['높은 지연 시간',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2041',1,'']]],
-  ['시스템에서_20마이그레이션_1',['메시지 큐 시스템에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1816',1,'']]],
-  ['시스템을_20우아하게_20종료하려면_20어떻게_20하나요_2',['Q: 시스템을 우아하게 종료하려면 어떻게 하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2051',1,'']]],
-  ['시스템_3',['시스템',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1321',1,'빌드 시스템'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md696',1,'태스크 큐 시스템'],['../d8/d0a/md_docs_2README__KO.html#autotoc_md1375',1,'Task 큐 시스템']]],
-  ['시스템_20개요_4',['시스템 개요',['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md427',1,'']]],
-  ['시스템_20생성_20및_20설정_5',['2. Task 시스템 생성 및 설정',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1973',1,'']]],
-  ['시스템_20설정_6',['Task 시스템 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1729',1,'']]],
-  ['시스템_20시작_7',['4. 시스템 시작',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1975',1,'']]],
-  ['시스템_20아키텍처_8',['시스템 아키텍처',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1653',1,'']]],
-  ['시스템_20중지_9',['6. 시스템 중지',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1977',1,'']]],
-  ['시스템_20파사드_10',['태스크 시스템 파사드',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md698',1,'']]],
-  ['시스템_20cron_11',['이전 (시스템 Cron)',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1820',1,'']]],
-  ['시작하기_12',['시작하기',['../d8/d0a/md_docs_2README__KO.html#autotoc_md1369',1,'시작하기'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md732',1,'시작하기']]],
-  ['시작_13',['4. 시스템 시작',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1975',1,'']]],
-  ['시작_20가이드_14',['Task 모듈 빠른 시작 가이드',['../da/dee/md_docs_2task_2QUICK__START__KO.html',1,'']]]
+  ['스레드_20안전성_0',['스레드 안전성',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1741',1,'']]],
+  ['스레드_20안전성_20검증_1',['스레드 안전성 검증',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1332',1,'']]],
+  ['스레드_20안전_2',['스레드 안전',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md799',1,'스레드 안전'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md458',1,'3. 스레드 안전']]],
+  ['스레드_20풀_3',['이전 (커스텀 스레드 풀)',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1886',1,'']]],
+  ['스레드_20풀_20구현에서_20마이그레이션_4',['스레드 풀 구현에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1885',1,'']]],
+  ['스레드_20풀_20통합_5',['스레드 풀 통합',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md795',1,'']]],
+  ['스케줄러_6',['스케줄러',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1894',1,'이후 (Task 스케줄러)'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md774',1,'태스크 스케줄러']]],
+  ['스케줄링_7',['스케줄링',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1999',1,'Cron 기반 스케줄링'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md2053',1,'Task 스케줄링']]],
+  ['스케줄링_20편의_20메서드_8',['스케줄링 (편의 메서드)',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1689',1,'']]],
+  ['스케줄_20관리_9',['스케줄 관리',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1661',1,'스케줄 관리'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2001',1,'스케줄 관리']]],
+  ['스케줄_20등록_10',['스케줄 등록',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1660',1,'']]],
+  ['스테이징_20환경_11',['스테이징 환경',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1828',1,'']]]
 ];

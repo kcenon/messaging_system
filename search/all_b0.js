@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['파사드_0',['파사드',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md698',1,'태스크 시스템 파사드'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1655',1,'1. task_system (파사드)']]],
-  ['파사드_20패턴_1',['4. 파사드 패턴',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1677',1,'']]],
-  ['파일_2',['파일',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1334',1,'']]]
+  ['특정_20작업의_20우선순위를_20어떻게_20높이나요_0',['Q: 특정 작업의 우선순위를 어떻게 높이나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2121',1,'']]]
 ];

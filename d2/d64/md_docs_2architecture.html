@@ -93,34 +93,34 @@ $(document).ready(function(){initNavTree('d2/d64/md_docs_2architecture.html','..
   <div class="headertitle"><div class="title">Architecture</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md375"></a> Technical architecture and system design of the high-performance C++20 distributed messaging framework.</p>
-<h1><a class="anchor" id="autotoc_md376"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md390"></a> Technical architecture and system design of the high-performance C++20 distributed messaging framework.</p>
+<h1><a class="anchor" id="autotoc_md391"></a>
 Overview</h1>
 <p>The Messaging System is a high-performance, distributed messaging framework built on C++20 with a focus on production readiness, scalability, and real-time performance. The system employs a layered architecture with lock-free components, SIMD optimizations, and comprehensive service integration.</p>
-<h1><a class="anchor" id="autotoc_md377"></a>
+<h1><a class="anchor" id="autotoc_md392"></a>
 Related Documentation</h1>
-<h2><a class="anchor" id="autotoc_md378"></a>
+<h2><a class="anchor" id="autotoc_md393"></a>
 Component-Specific Architecture</h2>
 <ul>
 <li><b>Thread System Architecture</b> - Lock-free thread pools and memory management</li>
 <li><b>Logger System Architecture</b> - Asynchronous logging pipeline design</li>
 <li><b>Monitoring System Architecture</b> - Real-time metrics collection</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md379"></a>
+<h2><a class="anchor" id="autotoc_md394"></a>
 Module Documentation</h2>
 <ul>
 <li><b>Container System</b> - Type-safe data containers with SIMD optimization</li>
 <li><b>Database System</b> - PostgreSQL integration with connection pooling</li>
 <li><b>Network System</b> - Asynchronous TCP messaging infrastructure</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md380"></a>
+<h2><a class="anchor" id="autotoc_md395"></a>
 Integration Guides</h2>
 <ul>
 <li><b><a class="el" href="../../d8/d74/PERFORMANCE_8md.html">Performance Guide</a></b> - Performance characteristics and optimization</li>
 <li><b><a class="el" href="../../d7/d96/DESIGN__PATTERNS_8md.html">Design Patterns</a></b> - Architectural patterns and best practices</li>
 <li><b>Sample Applications</b> - Production examples and integration patterns</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md381"></a>
+<h1><a class="anchor" id="autotoc_md396"></a>
 Architectural Principles</h1>
 <ul>
 <li><b>Lock-free Performance</b>: Utilizes hazard pointers and atomic operations for thread-safe, high-throughput processing</li>
@@ -129,7 +129,7 @@ Architectural Principles</h1>
 <li><b>Zero-copy Operations</b>: Minimizes memory allocations in hot paths for optimal performance</li>
 <li><b>Fault Tolerance</b>: Built-in error recovery, connection pooling, and retry mechanisms</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md382"></a>
+<h1><a class="anchor" id="autotoc_md397"></a>
 System Layers</h1>
 <div class="fragment"><div class="line">┌─────────────────────────────────────────────────────────────────┐</div>
 <div class="line">│                     Application Layer                           │</div>
@@ -162,9 +162,9 @@ System Layers</h1>
 <div class="line">│  │  OS Abstractions, SIMD Support, Memory Management        │  │</div>
 <div class="line">│  └──────────────────────────────────────────────────────────┘  │</div>
 <div class="line">└─────────────────────────────────────────────────────────────────┘</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md383"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md398"></a>
 Component Architecture</h1>
-<h2><a class="anchor" id="autotoc_md384"></a>
+<h2><a class="anchor" id="autotoc_md399"></a>
 1. Container System</h2>
 <p><b>Purpose</b>: Type-safe, high-performance data serialization and storage</p>
 <div class="fragment"><div class="line">Container System</div>
@@ -189,7 +189,7 @@ Component Architecture</h1>
 <li>Memory-pooled allocations for reduced fragmentation</li>
 <li>Batch operations with SIMD acceleration</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md385"></a>
+<h2><a class="anchor" id="autotoc_md400"></a>
 2. Network System</h2>
 <p><b>Purpose</b>: Asynchronous, high-throughput network communication</p>
 <div class="fragment"><div class="line">Network System</div>
@@ -215,7 +215,7 @@ Component Architecture</h1>
 <li>Built-in SSL/TLS support</li>
 <li>Backpressure handling</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md386"></a>
+<h2><a class="anchor" id="autotoc_md401"></a>
 3. Database System</h2>
 <p><b>Purpose</b>: Enterprise-grade database connectivity with PostgreSQL</p>
 <div class="fragment"><div class="line">Database System</div>
@@ -241,7 +241,7 @@ Component Architecture</h1>
 <li>Query result caching</li>
 <li>Connection multiplexing</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md387"></a>
+<h2><a class="anchor" id="autotoc_md402"></a>
 4. Thread System</h2>
 <p><b>Purpose</b>: Lock-free concurrent processing with hazard pointers</p>
 <div class="fragment"><div class="line">Thread System</div>
@@ -267,9 +267,9 @@ Component Architecture</h1>
 <li>Linear scaling to 32+ cores</li>
 <li>Zero allocation in hot paths</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md388"></a>
+<h1><a class="anchor" id="autotoc_md403"></a>
 Data Flow Architecture</h1>
-<h2><a class="anchor" id="autotoc_md389"></a>
+<h2><a class="anchor" id="autotoc_md404"></a>
 Message Processing Pipeline</h2>
 <div class="fragment"><div class="line">┌─────────────┐     ┌──────────────┐     ┌──────────────┐</div>
 <div class="line">│   Producer  │────▶│ Input Queue  │────▶│   Router     │</div>
@@ -279,7 +279,7 @@ Message Processing Pipeline</h2>
 <div class="line">┌─────────────┐     ┌──────────────┐     ┌──────────────┐</div>
 <div class="line">│  Consumer   │◀────│ Output Queue │◀────│ Transformer  │</div>
 <div class="line">└─────────────┘     └──────────────┘     └──────────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md390"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md405"></a>
 Request-Response Flow</h2>
 <div class="fragment"><div class="line">Client                    Message Bus                  Service</div>
 <div class="line">  │                           │                           │</div>
@@ -291,7 +291,7 @@ Request-Response Flow</h2>
 <div class="line">  │                           │                           │</div>
 <div class="line">  │◀─────Response─────────────┤                           │</div>
 <div class="line">  │                           │                           │</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md391"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md406"></a>
 Distributed Architecture</h2>
 <div class="fragment"><div class="line">┌──────────────────────────────────────────────────────────┐</div>
 <div class="line">│                    Load Balancer                          │</div>
@@ -309,9 +309,9 @@ Distributed Architecture</h2>
 <div class="line">     ┌───────▼──────┐ ┌────▼─────┐ ┌──────▼──────┐</div>
 <div class="line">     │  Database    │ │  Cache   │ │   Storage   │</div>
 <div class="line">     └──────────────┘ └──────────┘ └─────────────┘</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md392"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md407"></a>
 Scalability Patterns</h1>
-<h2><a class="anchor" id="autotoc_md393"></a>
+<h2><a class="anchor" id="autotoc_md408"></a>
 Horizontal Scaling</h2>
 <ul>
 <li><b>Service Discovery</b>: Automatic service registration and discovery</li>
@@ -319,7 +319,7 @@ Horizontal Scaling</h2>
 <li><b>State Management</b>: Distributed state with eventual consistency</li>
 <li><b>Failover</b>: Automatic failover with health checks</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md394"></a>
+<h2><a class="anchor" id="autotoc_md409"></a>
 Vertical Scaling</h2>
 <ul>
 <li><b>CPU Optimization</b>: SIMD instructions for data processing</li>
@@ -327,9 +327,9 @@ Vertical Scaling</h2>
 <li><b>I/O Optimization</b>: Async I/O with coroutines</li>
 <li><b>Cache Optimization</b>: Cache-line aligned data structures</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md395"></a>
+<h1><a class="anchor" id="autotoc_md410"></a>
 Integration Points</h1>
-<h2><a class="anchor" id="autotoc_md396"></a>
+<h2><a class="anchor" id="autotoc_md411"></a>
 External Systems</h2>
 <ol type="1">
 <li><b>REST APIs</b>: HTTP/HTTPS endpoints with JSON payloads</li>
@@ -338,7 +338,7 @@ External Systems</h2>
 <li><b>Monitoring</b>: Prometheus metrics, Grafana dashboards</li>
 <li><b>Logging</b>: Syslog, ELK stack integration</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md397"></a>
+<h2><a class="anchor" id="autotoc_md412"></a>
 Internal Communication</h2>
 <ol type="1">
 <li><b>Message Bus</b>: Central pub/sub messaging</li>
@@ -346,9 +346,9 @@ Internal Communication</h2>
 <li><b>Event Streaming</b>: Real-time event processing</li>
 <li><b>RPC</b>: Remote procedure calls with protobuf</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md398"></a>
+<h1><a class="anchor" id="autotoc_md413"></a>
 Performance Optimization</h1>
-<h2><a class="anchor" id="autotoc_md399"></a>
+<h2><a class="anchor" id="autotoc_md414"></a>
 Memory Management</h2>
 <ul>
 <li><b>Arena Allocators</b>: Bulk allocation for related objects</li>
@@ -356,7 +356,7 @@ Memory Management</h2>
 <li><b>Reference Counting</b>: Smart pointer management</li>
 <li><b>Memory Mapping</b>: Large file handling with mmap</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md400"></a>
+<h2><a class="anchor" id="autotoc_md415"></a>
 Concurrency</h2>
 <ul>
 <li><b>Lock-free Algorithms</b>: CAS-based data structures</li>
@@ -364,7 +364,7 @@ Concurrency</h2>
 <li><b>Thread Affinity</b>: CPU pinning for reduced context switches</li>
 <li><b>Batch Processing</b>: Amortize synchronization costs</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md401"></a>
+<h2><a class="anchor" id="autotoc_md416"></a>
 Network</h2>
 <ul>
 <li><b>Connection Pooling</b>: Reuse established connections</li>
@@ -372,9 +372,9 @@ Network</h2>
 <li><b>Compression</b>: Adaptive compression based on payload size</li>
 <li><b>Multiplexing</b>: Multiple streams over single connection</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md402"></a>
+<h1><a class="anchor" id="autotoc_md417"></a>
 Fault Tolerance</h1>
-<h2><a class="anchor" id="autotoc_md403"></a>
+<h2><a class="anchor" id="autotoc_md418"></a>
 Error Recovery</h2>
 <ul>
 <li><b>Circuit Breakers</b>: Prevent cascade failures</li>
@@ -382,7 +382,7 @@ Error Recovery</h2>
 <li><b>Timeout Management</b>: Configurable timeouts per operation</li>
 <li><b>Graceful Degradation</b>: Feature flags for fallback behavior</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md404"></a>
+<h2><a class="anchor" id="autotoc_md419"></a>
 High Availability</h2>
 <ul>
 <li><b>Replication</b>: Master-slave replication for services</li>
@@ -390,16 +390,16 @@ High Availability</h2>
 <li><b>Automatic Failover</b>: Leader election with consensus</li>
 <li><b>Data Redundancy</b>: Multiple data replicas</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md405"></a>
+<h1><a class="anchor" id="autotoc_md420"></a>
 Security Considerations</h1>
-<h2><a class="anchor" id="autotoc_md406"></a>
+<h2><a class="anchor" id="autotoc_md421"></a>
 Transport Security</h2>
 <ul>
 <li><b>TLS/SSL</b>: Encrypted communication channels</li>
 <li><b>Certificate Validation</b>: X.509 certificate verification</li>
 <li><b>Perfect Forward Secrecy</b>: Ephemeral key exchange</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md407"></a>
+<h2><a class="anchor" id="autotoc_md422"></a>
 Application Security</h2>
 <ul>
 <li><b>Input Validation</b>: Sanitization of all external inputs</li>
@@ -407,32 +407,32 @@ Application Security</h2>
 <li><b>Authentication</b>: Token-based authentication (JWT)</li>
 <li><b>Authorization</b>: Role-based access control (RBAC)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md408"></a>
+<h1><a class="anchor" id="autotoc_md423"></a>
 Monitoring and Observability</h1>
-<h2><a class="anchor" id="autotoc_md409"></a>
+<h2><a class="anchor" id="autotoc_md424"></a>
 Metrics Collection</h2>
 <ul>
 <li><b>System Metrics</b>: CPU, memory, disk, network usage</li>
 <li><b>Application Metrics</b>: Request rate, latency, error rate</li>
 <li><b>Business Metrics</b>: Custom KPIs and SLAs</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md410"></a>
+<h2><a class="anchor" id="autotoc_md425"></a>
 Distributed Tracing</h2>
 <ul>
 <li><b>Request Correlation</b>: Unique request IDs across services</li>
 <li><b>Span Collection</b>: Detailed timing information</li>
 <li><b>Context Propagation</b>: Trace context in headers</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md411"></a>
+<h2><a class="anchor" id="autotoc_md426"></a>
 Logging</h2>
 <ul>
 <li><b>Structured Logging</b>: JSON formatted logs</li>
 <li><b>Log Aggregation</b>: Centralized log collection</li>
 <li><b>Log Levels</b>: Configurable verbosity per component</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md412"></a>
+<h1><a class="anchor" id="autotoc_md427"></a>
 Configuration Management</h1>
-<h2><a class="anchor" id="autotoc_md413"></a>
+<h2><a class="anchor" id="autotoc_md428"></a>
 Static Configuration</h2>
 <div class="fragment"><div class="line">[messaging]</div>
 <div class="line">worker_threads = 8</div>
@@ -448,16 +448,16 @@ Static Configuration</h2>
 <div class="line">pool_size = 20</div>
 <div class="line">connection_timeout = 5000</div>
 <div class="line">retry_count = 3</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md414"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md429"></a>
 Dynamic Configuration</h2>
 <ul>
 <li><b>Hot Reload</b>: Configuration changes without restart</li>
 <li><b>Feature Flags</b>: Runtime feature toggling</li>
 <li><b>A/B Testing</b>: Traffic splitting for experiments</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md415"></a>
+<h1><a class="anchor" id="autotoc_md430"></a>
 Deployment Architecture</h1>
-<h2><a class="anchor" id="autotoc_md416"></a>
+<h2><a class="anchor" id="autotoc_md431"></a>
 Container Deployment</h2>
 <div class="fragment"><div class="line">services:</div>
 <div class="line">  message-bus:</div>
@@ -477,7 +477,7 @@ Container Deployment</h2>
 <div class="line">    resources:</div>
 <div class="line">      cpu: 8</div>
 <div class="line">      memory: 16Gi</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md417"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md432"></a>
 Kubernetes Integration</h2>
 <ul>
 <li><b>Service Discovery</b>: Kubernetes DNS</li>
@@ -485,9 +485,9 @@ Kubernetes Integration</h2>
 <li><b>Configuration</b>: ConfigMaps and Secrets</li>
 <li><b>Scaling</b>: Horizontal Pod Autoscaler</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md418"></a>
+<h1><a class="anchor" id="autotoc_md433"></a>
 Future Considerations</h1>
-<h2><a class="anchor" id="autotoc_md419"></a>
+<h2><a class="anchor" id="autotoc_md434"></a>
 Planned Enhancements</h2>
 <ol type="1">
 <li><b>WebSocket Support</b>: Real-time bidirectional communication</li>
@@ -496,7 +496,7 @@ Planned Enhancements</h2>
 <li><b>Blockchain Integration</b>: Distributed ledger for audit trails</li>
 <li><b>Edge Computing</b>: Support for edge deployment scenarios</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md420"></a>
+<h2><a class="anchor" id="autotoc_md435"></a>
 Technology Evaluation</h2>
 <ul>
 <li><b>Rust Integration</b>: Memory-safe system components</li>

@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d6/dab/md_docs_2guides_2TROUBLESHOOTIN
   <div class="headertitle"><div class="title">Troubleshooting Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1023"></a> </p>
-<h1><a class="anchor" id="autotoc_md1024"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1096"></a> </p>
+<h1><a class="anchor" id="autotoc_md1097"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>FAQ</li>
@@ -104,31 +104,31 @@ Table of Contents</h1>
 <li>Error Messages</li>
 <li>Common Problems</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md1025"></a>
+<h1><a class="anchor" id="autotoc_md1098"></a>
 FAQ</h1>
-<h2><a class="anchor" id="autotoc_md1026"></a>
+<h2><a class="anchor" id="autotoc_md1099"></a>
 General Questions</h2>
 <p><b>Q: What are the minimum system requirements?</b> A: The messaging system requires at least 2 CPU cores, 4GB RAM, and 10GB disk space. For production, we recommend 8+ cores, 16GB+ RAM, and SSD storage.</p>
 <p><b>Q: Which operating systems are supported?</b> A: Full support for Ubuntu 20.04+, Debian 11+, RHEL/CentOS 8+, macOS 11+. Partial support for Windows 10/11.</p>
 <p><b>Q: Can I use this without PostgreSQL?</b> A: Yes, compile with <code>-DUSE_DATABASE=OFF</code>. However, you'll lose persistence and some features.</p>
 <p><b>Q: How do I enable Python bindings?</b> A: Build with <code>-DUSE_PYTHON_BINDING=ON</code> and ensure Python 3.8+ development headers are installed.</p>
 <p><b>Q: What's the maximum message size?</b> A: Default is 1MB, configurable up to 100MB via <code>max_message_size</code> setting.</p>
-<h2><a class="anchor" id="autotoc_md1027"></a>
+<h2><a class="anchor" id="autotoc_md1100"></a>
 Performance Questions</h2>
 <p><b>Q: How many concurrent connections can it handle?</b> A: Default configuration supports 10,000 connections. With tuning, it can handle 100,000+.</p>
 <p><b>Q: What's the typical message throughput?</b> A: On modern hardware: 2.48M messages/sec with lock-free queues, 1.16M/sec with mutex-based queues.</p>
 <p><b>Q: How much latency does the system add?</b> A: Sub-microsecond for in-memory operations, 1-5ms for network operations, 5-20ms with persistence.</p>
 <p><b>Q: Can it scale horizontally?</b> A: Yes, supports clustering with automatic load balancing and failover.</p>
-<h2><a class="anchor" id="autotoc_md1028"></a>
+<h2><a class="anchor" id="autotoc_md1101"></a>
 Configuration Questions</h2>
 <p><b>Q: Where are configuration files located?</b> A: Default location is <code>/etc/messaging/config.ini</code>. Override with <code>MESSAGING_CONFIG_PATH</code> environment variable.</p>
 <p><b>Q: How do I change the listening port?</b> A: Set <code>listen_port</code> in config file or use <code>MESSAGING_PORT</code> environment variable.</p>
 <p><b>Q: Can I use environment variables for secrets?</b> A: Yes, use <code>${VAR_NAME}</code> syntax in config files to reference environment variables.</p>
-<h1><a class="anchor" id="autotoc_md1029"></a>
+<h1><a class="anchor" id="autotoc_md1102"></a>
 Debug Techniques</h1>
-<h2><a class="anchor" id="autotoc_md1030"></a>
+<h2><a class="anchor" id="autotoc_md1103"></a>
 Enable Debug Logging</h2>
-<h3><a class="anchor" id="autotoc_md1031"></a>
+<h3><a class="anchor" id="autotoc_md1104"></a>
 Runtime Configuration</h3>
 <div class="fragment"><div class="line"># config.ini</div>
 <div class="line">[logging]</div>
@@ -136,18 +136,18 @@ Runtime Configuration</h3>
 <div class="line">verbose = true</div>
 <div class="line">include_source_location = true</div>
 <div class="line">include_thread_id = true</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1032"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1105"></a>
 Environment Variables</h3>
 <div class="fragment"><div class="line">export MESSAGING_LOG_LEVEL=debug</div>
 <div class="line">export MESSAGING_LOG_VERBOSE=1</div>
 <div class="line">export MESSAGING_LOG_FILE=/tmp/messaging_debug.log</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1033"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1106"></a>
 Programmatic</h3>
 <div class="fragment"><div class="line">logger_manager::instance().set_level(log_level::debug);</div>
 <div class="line">logger_manager::instance().enable_verbose(<span class="keyword">true</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1034"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1107"></a>
 Using GDB for Debugging</h2>
-<h3><a class="anchor" id="autotoc_md1035"></a>
+<h3><a class="anchor" id="autotoc_md1108"></a>
 Attach to Running Process</h3>
 <div class="fragment"><div class="line"># Find process ID</div>
 <div class="line">ps aux | grep messaging</div>
@@ -162,7 +162,7 @@ Attach to Running Process</h3>
 <div class="line">(gdb) watch message_count_            # Watch variable</div>
 <div class="line">(gdb) print *this                     # Print object state</div>
 <div class="line">(gdb) call dump_state()               # Call debug function</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1036"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1109"></a>
 Debug Core Dumps</h3>
 <div class="fragment"><div class="line"># Enable core dumps</div>
 <div class="line">ulimit -c unlimited</div>
@@ -177,9 +177,9 @@ Debug Core Dumps</h3>
 <div class="line">(gdb) info registers                  # Register state</div>
 <div class="line">(gdb) frame 0                         # Select frame</div>
 <div class="line">(gdb) list                           # Show source code</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1037"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1110"></a>
 Memory Debugging</h2>
-<h3><a class="anchor" id="autotoc_md1038"></a>
+<h3><a class="anchor" id="autotoc_md1111"></a>
 Using Valgrind</h3>
 <div class="fragment"><div class="line"># Memory leak detection</div>
 <div class="line">valgrind --leak-check=full \</div>
@@ -191,7 +191,7 @@ Using Valgrind</h3>
 <div class="line"># Analyze results</div>
 <div class="line">grep &quot;definitely lost&quot; valgrind.log</div>
 <div class="line">grep &quot;indirectly lost&quot; valgrind.log</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1039"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1112"></a>
 Using AddressSanitizer</h3>
 <div class="fragment"><div class="line"># Compile with ASAN</div>
 <div class="line">cmake .. -DCMAKE_BUILD_TYPE=Debug \</div>
@@ -200,16 +200,16 @@ Using AddressSanitizer</h3>
 <div class="line"># Run with ASAN options</div>
 <div class="line">ASAN_OPTIONS=verbosity=3:halt_on_error=0:print_stats=1 \</div>
 <div class="line">./messaging_server</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1040"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1113"></a>
 Using HeapTrack</h3>
 <div class="fragment"><div class="line"># Record heap usage</div>
 <div class="line">heaptrack ./messaging_server</div>
 <div class="line"> </div>
 <div class="line"># Analyze results</div>
 <div class="line">heaptrack_gui heaptrack.messaging_server.12345.gz</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1041"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1114"></a>
 Network Debugging</h2>
-<h3><a class="anchor" id="autotoc_md1042"></a>
+<h3><a class="anchor" id="autotoc_md1115"></a>
 TCP Dump</h3>
 <div class="fragment"><div class="line"># Capture all traffic on port 8080</div>
 <div class="line">sudo tcpdump -i any -w capture.pcap port 8080</div>
@@ -219,7 +219,7 @@ TCP Dump</h3>
 <div class="line"> </div>
 <div class="line"># Analyze with Wireshark</div>
 <div class="line">wireshark capture.pcap</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1043"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1116"></a>
 Network Statistics</h3>
 <div class="fragment"><div class="line"># Connection states</div>
 <div class="line">ss -tan | grep :8080</div>
@@ -229,7 +229,7 @@ Network Statistics</h3>
 <div class="line"> </div>
 <div class="line"># Connection tracking</div>
 <div class="line">sudo conntrack -L -p tcp --dport 8080</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1044"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1117"></a>
 Test Connectivity</h3>
 <div class="fragment"><div class="line"># Test TCP connection</div>
 <div class="line">nc -zv localhost 8080</div>
@@ -242,9 +242,9 @@ Test Connectivity</h3>
 <div class="line"> </div>
 <div class="line"># Performance test</div>
 <div class="line">iperf3 -c localhost -p 8080 -t 10</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1045"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1118"></a>
 Thread Debugging</h2>
-<h3><a class="anchor" id="autotoc_md1046"></a>
+<h3><a class="anchor" id="autotoc_md1119"></a>
 Thread Analysis</h3>
 <div class="fragment"><div class="line"># Thread count and states</div>
 <div class="line">ps -eLf | grep messaging</div>
@@ -254,7 +254,7 @@ Thread Analysis</h3>
 <div class="line"> </div>
 <div class="line"># Thread stacks</div>
 <div class="line">pstack $(pgrep messaging)</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1047"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1120"></a>
 Detect Deadlocks</h3>
 <div class="fragment"><div class="line"># Using GDB</div>
 <div class="line">gdb -p $(pgrep messaging)</div>
@@ -266,7 +266,7 @@ Detect Deadlocks</h3>
 <div class="line">&gt;    thread.switch()</div>
 <div class="line">&gt;    print(f&quot;Thread {thread.num}: {thread.is_stopped()}&quot;)</div>
 <div class="line">&gt;end</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1048"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1121"></a>
 ThreadSanitizer</h3>
 <div class="fragment"><div class="line"># Compile with TSAN</div>
 <div class="line">cmake .. -DCMAKE_BUILD_TYPE=Debug \</div>
@@ -274,9 +274,9 @@ ThreadSanitizer</h3>
 <div class="line"> </div>
 <div class="line"># Run with TSAN</div>
 <div class="line">TSAN_OPTIONS=halt_on_error=0:history_size=7 ./messaging_server</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1049"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1122"></a>
 Tracing and Profiling</h2>
-<h3><a class="anchor" id="autotoc_md1050"></a>
+<h3><a class="anchor" id="autotoc_md1123"></a>
 System Tracing with strace</h3>
 <div class="fragment"><div class="line"># Trace system calls</div>
 <div class="line">strace -f -e trace=network ./messaging_server</div>
@@ -286,7 +286,7 @@ System Tracing with strace</h3>
 <div class="line"> </div>
 <div class="line"># Count system calls</div>
 <div class="line">strace -c ./messaging_server</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1051"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1124"></a>
 Performance Profiling with perf</h3>
 <div class="fragment"><div class="line"># Record CPU profile</div>
 <div class="line">sudo perf record -F 99 -g ./messaging_server</div>
@@ -301,7 +301,7 @@ Performance Profiling with perf</h3>
 <div class="line">sudo perf record -F 99 -g --call-graph dwarf ./messaging_server</div>
 <div class="line">sudo perf script | ./FlameGraph/stackcollapse-perf.pl | \</div>
 <div class="line">    ./FlameGraph/flamegraph.pl &gt; flame.svg</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1052"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1125"></a>
 Application Tracing</h3>
 <div class="fragment"><div class="line"><span class="comment">// Add trace points in code</span></div>
 <div class="line"><span class="keyword">class </span>Tracer {</div>
@@ -328,11 +328,11 @@ Application Tracing</h3>
 <div class="line">    Tracer trace(__FUNCTION__);</div>
 <div class="line">    <span class="comment">// Function implementation</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1053"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1126"></a>
 Performance Optimization</h1>
-<h2><a class="anchor" id="autotoc_md1054"></a>
+<h2><a class="anchor" id="autotoc_md1127"></a>
 CPU Optimization</h2>
-<h3><a class="anchor" id="autotoc_md1055"></a>
+<h3><a class="anchor" id="autotoc_md1128"></a>
 Identify CPU Bottlenecks</h3>
 <div class="fragment"><div class="line"># CPU profiling</div>
 <div class="line">perf stat -d ./messaging_server</div>
@@ -342,7 +342,7 @@ Identify CPU Bottlenecks</h3>
 <div class="line"> </div>
 <div class="line"># Branch prediction</div>
 <div class="line">perf stat -e branch-misses,branches ./messaging_server</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1056"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1129"></a>
 Optimization Techniques</h3>
 <div class="fragment"><div class="line"><span class="comment">// 1. Use likely/unlikely hints</span></div>
 <div class="line"><span class="keywordflow">if</span> (LIKELY(msg.type() == MessageType::NORMAL)) {</div>
@@ -373,9 +373,9 @@ Optimization Techniques</h3>
 <div class="line">        data[i] *= 2.0f;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1057"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1130"></a>
 Memory Optimization</h2>
-<h3><a class="anchor" id="autotoc_md1058"></a>
+<h3><a class="anchor" id="autotoc_md1131"></a>
 Memory Usage Analysis</h3>
 <div class="fragment"><div class="line"># Memory map</div>
 <div class="line">pmap -x $(pgrep messaging)</div>
@@ -385,7 +385,7 @@ Memory Usage Analysis</h3>
 <div class="line"> </div>
 <div class="line"># Heap profile</div>
 <div class="line">gprof ./messaging_server gmon.out</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1059"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1132"></a>
 Optimization Techniques</h3>
 <div class="fragment"><div class="line"><span class="comment">// 1. Use memory pools</span></div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
@@ -424,9 +424,9 @@ Optimization Techniques</h3>
 <div class="line"><span class="keywordtype">void</span> process(std::string_view data) {</div>
 <div class="line">    <span class="comment">// No allocation, just reference</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1060"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1133"></a>
 I/O Optimization</h2>
-<h3><a class="anchor" id="autotoc_md1061"></a>
+<h3><a class="anchor" id="autotoc_md1134"></a>
 Disk I/O Analysis</h3>
 <div class="fragment"><div class="line"># I/O statistics</div>
 <div class="line">iostat -x 1</div>
@@ -436,7 +436,7 @@ Disk I/O Analysis</h3>
 <div class="line"> </div>
 <div class="line"># File system cache</div>
 <div class="line">free -h</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1062"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1135"></a>
 Optimization Techniques</h3>
 <div class="fragment"><div class="line"><span class="comment">// 1. Async I/O</span></div>
 <div class="line">boost::asio::async_write(socket, buffer,</div>
@@ -486,9 +486,9 @@ Optimization Techniques</h3>
 <div class="line">        munmap(addr_, size_);</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1063"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1136"></a>
 Network Optimization</h2>
-<h3><a class="anchor" id="autotoc_md1064"></a>
+<h3><a class="anchor" id="autotoc_md1137"></a>
 Network Analysis</h3>
 <div class="fragment"><div class="line"># TCP tuning parameters</div>
 <div class="line">sysctl net.ipv4.tcp_wmem</div>
@@ -497,7 +497,7 @@ Network Analysis</h3>
 <div class="line"> </div>
 <div class="line"># Network statistics</div>
 <div class="line">netstat -s | grep -i tcp</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1065"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1138"></a>
 Optimization Techniques</h3>
 <div class="fragment"><div class="line"><span class="comment">// 1. TCP_NODELAY for low latency</span></div>
 <div class="line"><span class="keywordtype">int</span> flag = 1;</div>
@@ -548,9 +548,9 @@ Optimization Techniques</h3>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1066"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1139"></a>
 Known Issues</h1>
-<h2><a class="anchor" id="autotoc_md1067"></a>
+<h2><a class="anchor" id="autotoc_md1140"></a>
 Issue 1: High CPU Usage with Small Messages</h2>
 <p><b>Symptoms</b>: CPU usage near 100% when processing many small messages.</p>
 <p><b>Cause</b>: Overhead of processing individual messages exceeds payload processing time.</p>
@@ -581,7 +581,7 @@ Issue 1: High CPU Usage with Small Messages</h2>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1068"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1141"></a>
 Issue 2: Memory Leak in Long-Running Connections</h2>
 <p><b>Symptoms</b>: Memory usage grows over time with persistent connections.</p>
 <p><b>Cause</b>: Connection buffers not properly cleared on partial reads.</p>
@@ -601,7 +601,7 @@ Issue 2: Memory Leak in Long-Running Connections</h2>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1069"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1142"></a>
 Issue 3: Database Connection Pool Exhaustion</h2>
 <p><b>Symptoms</b>: "Connection pool exhausted" errors under load.</p>
 <p><b>Cause</b>: Connections not returned to pool due to exceptions.</p>
@@ -628,7 +628,7 @@ Issue 3: Database Connection Pool Exhaustion</h2>
 <div class="line">    PooledConnection conn(&amp;pool);</div>
 <div class="line">    conn-&gt;execute(<span class="stringliteral">&quot;SELECT * FROM messages&quot;</span>);</div>
 <div class="line">}  <span class="comment">// Connection automatically returned</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1070"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1143"></a>
 Issue 4: Deadlock in Message Processing</h2>
 <p><b>Symptoms</b>: System hangs, threads waiting on locks.</p>
 <p><b>Cause</b>: Lock ordering violation between queue and handler locks.</p>
@@ -657,7 +657,7 @@ Issue 4: Deadlock in Message Processing</h2>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1071"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1144"></a>
 Issue 5: Performance Degradation with Many Topics</h2>
 <p><b>Symptoms</b>: Slow message routing with 1000+ topics.</p>
 <p><b>Cause</b>: Linear search through topic list for pattern matching.</p>
@@ -689,11 +689,11 @@ Issue 5: Performance Degradation with Many Topics</h2>
 <div class="line">        <span class="comment">// Efficient O(n) matching where n is topic length</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1072"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1145"></a>
 Error Messages</h1>
-<h2><a class="anchor" id="autotoc_md1073"></a>
+<h2><a class="anchor" id="autotoc_md1146"></a>
 Connection Errors</h2>
-<h3><a class="anchor" id="autotoc_md1074"></a>
+<h3><a class="anchor" id="autotoc_md1147"></a>
 "Connection refused"</h3>
 <div class="fragment"><div class="line">Error: Connection refused to localhost:8080</div>
 </div><!-- fragment --><p><b>Causes</b>:</p><ul>
@@ -709,7 +709,7 @@ Connection Errors</h2>
 <div class="line"> </div>
 <div class="line"># Check firewall</div>
 <div class="line">sudo iptables -L -n | grep 8080</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1075"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1148"></a>
 "Connection timeout"</h3>
 <div class="fragment"><div class="line">Error: Connection timeout after 5000ms</div>
 </div><!-- fragment --><p><b>Causes</b>:</p><ul>
@@ -721,9 +721,9 @@ Connection Errors</h2>
 <div class="line">connection_timeout_ms = 30000</div>
 <div class="line">keepalive_enabled = true</div>
 <div class="line">keepalive_interval_s = 30</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1076"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1149"></a>
 Database Errors</h2>
-<h3><a class="anchor" id="autotoc_md1077"></a>
+<h3><a class="anchor" id="autotoc_md1150"></a>
 "Database connection failed"</h3>
 <div class="fragment"><div class="line">Error: Failed to connect to database: FATAL: password authentication failed</div>
 </div><!-- fragment --><p><b>Solutions</b>: </p><div class="fragment"><div class="line"># Check PostgreSQL is running</div>
@@ -734,7 +734,7 @@ Database Errors</h2>
 <div class="line"> </div>
 <div class="line"># Check pg_hba.conf</div>
 <div class="line">sudo vi /etc/postgresql/14/main/pg_hba.conf</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1078"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1151"></a>
 "Deadlock detected"</h3>
 <div class="fragment"><div class="line">Error: Database deadlock detected, transaction rolled back</div>
 </div><!-- fragment --><p><b>Solutions</b>: </p><div class="fragment"><div class="line"><span class="comment">// Retry with exponential backoff</span></div>
@@ -749,9 +749,9 @@ Database Errors</h2>
 <div class="line">            std::chrono::milliseconds(100 * (1 &lt;&lt; retry)));</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1079"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1152"></a>
 Memory Errors</h2>
-<h3><a class="anchor" id="autotoc_md1080"></a>
+<h3><a class="anchor" id="autotoc_md1153"></a>
 "Out of memory"</h3>
 <div class="fragment"><div class="line">Error: Failed to allocate 1048576 bytes</div>
 </div><!-- fragment --><p><b>Solutions</b>: </p><div class="fragment"><div class="line"># Check memory usage</div>
@@ -764,7 +764,7 @@ Memory Errors</h2>
 <div class="line"># Adjust configuration</div>
 <div class="line">echo &quot;vm.overcommit_memory = 1&quot; &gt;&gt; /etc/sysctl.conf</div>
 <div class="line">sysctl -p</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1081"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1154"></a>
 "Segmentation fault"</h3>
 <div class="fragment"><div class="line">Segmentation fault (core dumped)</div>
 </div><!-- fragment --><p><b>Debugging</b>: </p><div class="fragment"><div class="line"># Enable core dumps</div>
@@ -775,9 +775,9 @@ Memory Errors</h2>
 <div class="line">(gdb) bt</div>
 <div class="line">(gdb) info registers</div>
 <div class="line">(gdb) x/10x $rsp</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1082"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1155"></a>
 Common Problems</h1>
-<h2><a class="anchor" id="autotoc_md1083"></a>
+<h2><a class="anchor" id="autotoc_md1156"></a>
 Problem: Service Won't Start</h2>
 <p><b>Symptoms</b>: Service fails to start, exits immediately.</p>
 <p><b>Diagnosis</b>: </p><div class="fragment"><div class="line"># Check logs</div>
@@ -803,7 +803,7 @@ Problem: Service Won't Start</h2>
 <div class="line"> </div>
 <div class="line"># Install missing dependencies</div>
 <div class="line">ldd /usr/local/bin/messaging_server | grep &quot;not found&quot;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1084"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1157"></a>
 Problem: Slow Message Processing</h2>
 <p><b>Symptoms</b>: High latency, messages queuing up.</p>
 <p><b>Diagnosis</b>: </p><div class="fragment"><div class="line"># Check queue size</div>
@@ -819,7 +819,7 @@ Problem: Slow Message Processing</h2>
 <div class="line">queue_size = 100000             # Larger queue</div>
 <div class="line">batch_processing = true         # Enable batching</div>
 <div class="line">batch_size = 100</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1085"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1158"></a>
 Problem: Connection Drops</h2>
 <p><b>Symptoms</b>: Clients disconnecting frequently.</p>
 <p><b>Diagnosis</b>: </p><div class="fragment"><div class="line"># Check network errors</div>
@@ -835,7 +835,7 @@ Problem: Connection Drops</h2>
 <div class="line">keepalive_interval_s = 30</div>
 <div class="line">keepalive_probes = 3</div>
 <div class="line">connection_timeout_ms = 60000</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1086"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1159"></a>
 Problem: High Memory Usage</h2>
 <p><b>Symptoms</b>: Memory usage continuously growing.</p>
 <p><b>Diagnosis</b>: </p><div class="fragment"><div class="line"># Monitor memory growth</div>
@@ -856,7 +856,7 @@ Problem: High Memory Usage</h2>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1087"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1160"></a>
 Problem: Database Bottleneck</h2>
 <p><b>Symptoms</b>: Database queries slow, connection pool exhausted.</p>
 <p><b>Diagnosis</b>: </p><div class="fragment"><div class="line"><span class="comment">-- Check slow queries</span></div>

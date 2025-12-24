@@ -1,5 +1,11 @@
 var searchData=
 [
-  ['직렬화_0',['직렬화',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md688',1,'메시지 직렬화'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md371',1,'직렬화'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1515',1,'직렬화']]],
-  ['직접_20의존성_1',['대안 A: logger_system 직접 의존성',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md43',1,'']]]
+  ['지연_20계산_0',['재시도 지연 계산',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1985',1,'']]],
+  ['지연_20시간_1',['높은 지연 시간',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2114',1,'']]],
+  ['지연_20실행_2',['지연 실행',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1635',1,'']]],
+  ['지연_20작업_20실행_3',['지연 작업 실행',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2002',1,'']]],
+  ['지연_20큐_20설정_4',['지연 큐 설정',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1811',1,'']]],
+  ['지원_5',['지원',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md793',1,'백엔드 지원'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1340',1,'컴파일러 지원'],['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1338',1,'플랫폼 지원']]],
+  ['지원_20구문_6',['지원 구문',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1668',1,'']]],
+  ['지원_20플랫폼_7',['지원 플랫폼',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1339',1,'']]]
 ];

@@ -101,6 +101,7 @@ Table of Contents</h1>
 <li>Network System API</li>
 <li>Database System API</li>
 <li>Message Bus API</li>
+<li>Message Broker API</li>
 <li>Service Container API</li>
 <li>Thread System API</li>
 <li>Logger System API</li>
@@ -541,13 +542,145 @@ Usage Example (Hybrid Mode with Transport)</h3>
 <div class="line">bus.stop();  <span class="comment">// Disconnects transport automatically</span></div>
 </div><!-- fragment --><hr  />
 <h1><a class="anchor" id="autotoc_md317"></a>
-Service Container API</h1>
+Message Broker API</h1>
 <h2><a class="anchor" id="autotoc_md318"></a>
-Namespace: &lt;tt&gt;kcenon::messaging::services&lt;/tt&gt;</h2>
+Namespace: &lt;tt&gt;kcenon::messaging&lt;/tt&gt;</h2>
 <h2><a class="anchor" id="autotoc_md319"></a>
+Overview</h2>
+<p>The <code>message_broker</code> provides a central message routing component with advanced routing capabilities. It integrates with <code>topic_router</code> for pattern matching while providing a higher-level abstraction for route management.</p>
+<h2><a class="anchor" id="autotoc_md320"></a>
+Struct: &lt;tt&gt;broker_config&lt;/tt&gt;</h2>
+<p>Configuration for message_broker.</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>broker_config {</div>
+<div class="line">    <span class="keywordtype">size_t</span> max_routes = 1000;           <span class="comment">// Maximum number of routes</span></div>
+<div class="line">    <span class="keywordtype">bool</span> enable_statistics = <span class="keyword">true</span>;       <span class="comment">// Enable statistics collection</span></div>
+<div class="line">    <span class="keywordtype">bool</span> enable_trace_logging = <span class="keyword">false</span>;   <span class="comment">// Enable trace-level logging</span></div>
+<div class="line">    std::chrono::milliseconds default_timeout{0};  <span class="comment">// Default timeout (0 = no timeout)</span></div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md321"></a>
+Struct: &lt;tt&gt;broker_statistics&lt;/tt&gt;</h2>
+<p>Runtime statistics for message_broker.</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>broker_statistics {</div>
+<div class="line">    uint64_t messages_routed = 0;     <span class="comment">// Total messages routed</span></div>
+<div class="line">    uint64_t messages_delivered = 0;  <span class="comment">// Successfully delivered</span></div>
+<div class="line">    uint64_t messages_failed = 0;     <span class="comment">// Failed to route</span></div>
+<div class="line">    uint64_t messages_unrouted = 0;   <span class="comment">// No matching route</span></div>
+<div class="line">    uint64_t active_routes = 0;       <span class="comment">// Number of active routes</span></div>
+<div class="line">    std::chrono::steady_clock::time_point last_reset;  <span class="comment">// Last statistics reset</span></div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md322"></a>
+Struct: &lt;tt&gt;route_info&lt;/tt&gt;</h2>
+<p>Information about a registered route.</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>route_info {</div>
+<div class="line">    std::string route_id;        <span class="comment">// Unique route identifier</span></div>
+<div class="line">    std::string topic_pattern;   <span class="comment">// Topic pattern (supports wildcards)</span></div>
+<div class="line">    <span class="keywordtype">int</span> priority = 5;            <span class="comment">// Route priority (higher = first)</span></div>
+<div class="line">    <span class="keywordtype">bool</span> active = <span class="keyword">true</span>;          <span class="comment">// Whether route is active</span></div>
+<div class="line">    uint64_t messages_processed = 0;  <span class="comment">// Messages processed by this route</span></div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md323"></a>
+Class: &lt;tt&gt;message_broker&lt;/tt&gt;</h2>
+<p>Central message routing component with route management.</p>
+<h3><a class="anchor" id="autotoc_md324"></a>
+Constructor</h3>
+<div class="fragment"><div class="line"><span class="keyword">explicit</span> message_broker(broker_config config = {});</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md325"></a>
+Lifecycle Management</h3>
+<div class="fragment"><div class="line">common::VoidResult start();</div>
+<div class="line">common::VoidResult stop();</div>
+<div class="line"><span class="keywordtype">bool</span> is_running() <span class="keyword">const</span>;</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md326"></a>
+Route Management</h3>
+<div class="fragment"><div class="line"><span class="comment">// Add a new route with handler and optional priority (0-10)</span></div>
+<div class="line">common::VoidResult add_route(</div>
+<div class="line">    <span class="keyword">const</span> std::string&amp; route_id,</div>
+<div class="line">    <span class="keyword">const</span> std::string&amp; topic_pattern,</div>
+<div class="line">    message_handler handler,</div>
+<div class="line">    <span class="keywordtype">int</span> priority = 5</div>
+<div class="line">);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Remove a route</span></div>
+<div class="line">common::VoidResult remove_route(<span class="keyword">const</span> std::string&amp; route_id);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Enable/disable routes</span></div>
+<div class="line">common::VoidResult enable_route(<span class="keyword">const</span> std::string&amp; route_id);</div>
+<div class="line">common::VoidResult disable_route(<span class="keyword">const</span> std::string&amp; route_id);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Query routes</span></div>
+<div class="line"><span class="keywordtype">bool</span> has_route(<span class="keyword">const</span> std::string&amp; route_id) <span class="keyword">const</span>;</div>
+<div class="line">common::Result&lt;route_info&gt; get_route(<span class="keyword">const</span> std::string&amp; route_id) <span class="keyword">const</span>;</div>
+<div class="line">std::vector&lt;route_info&gt; get_routes() <span class="keyword">const</span>;</div>
+<div class="line"><span class="keywordtype">size_t</span> route_count() <span class="keyword">const</span>;</div>
+<div class="line"><span class="keywordtype">void</span> clear_routes();</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md327"></a>
+Message Routing</h3>
+<div class="fragment"><div class="line"><span class="comment">// Route a message to matching handlers (priority order)</span></div>
+<div class="line">common::VoidResult route(<span class="keyword">const</span> message&amp; msg);</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md328"></a>
+Statistics</h3>
+<div class="fragment"><div class="line">broker_statistics get_statistics() <span class="keyword">const</span>;</div>
+<div class="line"><span class="keywordtype">void</span> reset_statistics();</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md329"></a>
+Usage Example</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_broker.h&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>kcenon::messaging;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Create and start broker</span></div>
+<div class="line">message_broker broker;</div>
+<div class="line">broker.start();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Add routes with different priorities</span></div>
+<div class="line">broker.add_route(<span class="stringliteral">&quot;user-handler&quot;</span>, <span class="stringliteral">&quot;user.*&quot;</span>, [](<span class="keyword">const</span> message&amp; msg) {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Processing user event: &quot;</span> &lt;&lt; msg.metadata().topic &lt;&lt; std::endl;</div>
+<div class="line">    <span class="keywordflow">return</span> common::ok();</div>
+<div class="line">}, 5);</div>
+<div class="line"> </div>
+<div class="line">broker.add_route(<span class="stringliteral">&quot;audit-handler&quot;</span>, <span class="stringliteral">&quot;user.#&quot;</span>, [](<span class="keyword">const</span> message&amp; msg) {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Auditing: &quot;</span> &lt;&lt; msg.metadata().topic &lt;&lt; std::endl;</div>
+<div class="line">    <span class="keywordflow">return</span> common::ok();</div>
+<div class="line">}, 10);  <span class="comment">// Higher priority, processed first</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Route messages</span></div>
+<div class="line">message msg(<span class="stringliteral">&quot;user.created&quot;</span>);</div>
+<div class="line"><span class="keyword">auto</span> result = broker.route(msg);</div>
+<div class="line"><span class="keywordflow">if</span> (!result.is_ok()) {</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Routing failed: &quot;</span> &lt;&lt; result.error().message &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Check statistics</span></div>
+<div class="line"><span class="keyword">auto</span> stats = broker.get_statistics();</div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Messages routed: &quot;</span> &lt;&lt; stats.messages_routed &lt;&lt; std::endl;</div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Messages delivered: &quot;</span> &lt;&lt; stats.messages_delivered &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Manage routes</span></div>
+<div class="line">broker.disable_route(<span class="stringliteral">&quot;audit-handler&quot;</span>);</div>
+<div class="line">broker.remove_route(<span class="stringliteral">&quot;user-handler&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">broker.stop();</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md330"></a>
+Topic Pattern Wildcards</h3>
+<p>The broker supports MQTT-style wildcards via <code>topic_router</code>:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Pattern   </th><th class="markdownTableHeadNone">Matches   </th><th class="markdownTableHeadNone">Does Not Match    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>user.created</code>   </td><td class="markdownTableBodyNone"><code>user.created</code>   </td><td class="markdownTableBodyNone"><code>user.updated</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>user.*</code>   </td><td class="markdownTableBodyNone"><code>user.created</code>, <code>user.updated</code>   </td><td class="markdownTableBodyNone"><code>user.profile.updated</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>user.#</code>   </td><td class="markdownTableBodyNone"><code>user.created</code>, <code>user.profile.updated</code>   </td><td class="markdownTableBodyNone"><code>order.created</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>*.user.#</code>   </td><td class="markdownTableBodyNone"><code>app.user.profile</code>   </td><td class="markdownTableBodyNone"><code>user.profile</code>   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md332"></a>
+Service Container API</h1>
+<h2><a class="anchor" id="autotoc_md333"></a>
+Namespace: &lt;tt&gt;kcenon::messaging::services&lt;/tt&gt;</h2>
+<h2><a class="anchor" id="autotoc_md334"></a>
 Class: &lt;tt&gt;service_container&lt;/tt&gt;</h2>
 <p>Dependency injection container for service management.</p>
-<h3><a class="anchor" id="autotoc_md320"></a>
+<h3><a class="anchor" id="autotoc_md335"></a>
 Methods</h3>
 <div class="fragment"><div class="line"><span class="comment">// Service registration</span></div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Interface, <span class="keyword">typename</span> Implementation&gt;</div>
@@ -567,14 +700,14 @@ Methods</h3>
 <div class="line"><span class="comment">// Lifecycle management</span></div>
 <div class="line"><span class="keywordtype">void</span> initialize_all();</div>
 <div class="line"><span class="keywordtype">void</span> shutdown_all();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md321"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md336"></a>
 Service Lifetimes</h3>
 <div class="fragment"><div class="line"><span class="keyword">enum class</span> service_lifetime {</div>
 <div class="line">    singleton,   <span class="comment">// Single instance for application lifetime</span></div>
 <div class="line">    transient,   <span class="comment">// New instance for each request</span></div>
 <div class="line">    scoped       <span class="comment">// Single instance per scope</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md322"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md337"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/services/service_container.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>kcenon::messaging::services;</div>
@@ -633,18 +766,18 @@ Usage Example</h3>
 <div class="line"><span class="comment">// Shutdown when done</span></div>
 <div class="line">container.shutdown_all();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md324"></a>
+<h1><a class="anchor" id="autotoc_md339"></a>
 Thread System API</h1>
-<h2><a class="anchor" id="autotoc_md325"></a>
+<h2><a class="anchor" id="autotoc_md340"></a>
 Namespace: &lt;tt&gt;thread_system&lt;/tt&gt;</h2>
-<h2><a class="anchor" id="autotoc_md326"></a>
+<h2><a class="anchor" id="autotoc_md341"></a>
 Class: &lt;tt&gt;thread_pool&lt;/tt&gt;</h2>
 <p>Lock-free thread pool with priority scheduling.</p>
-<h3><a class="anchor" id="autotoc_md327"></a>
+<h3><a class="anchor" id="autotoc_md342"></a>
 Constructor</h3>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> thread_pool(<span class="keywordtype">size_t</span> num_threads = std::thread::hardware_concurrency());</div>
 <div class="line">thread_pool(<span class="keywordtype">size_t</span> num_threads, pool_priority priority);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md328"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md343"></a>
 Job Submission</h3>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Func&gt;</div>
 <div class="line"><span class="keyword">auto</span> submit(Func&amp;&amp; func) -&gt; std::future&lt;<span class="keyword">decltype</span>(func())&gt;;</div>
@@ -655,14 +788,14 @@ Job Submission</h3>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Func&gt;</div>
 <div class="line"><span class="keywordtype">void</span> submit_detached(Func&amp;&amp; func);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md329"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md344"></a>
 Pool Management</h3>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> start();</div>
 <div class="line"><span class="keywordtype">void</span> stop();</div>
 <div class="line"><span class="keywordtype">void</span> wait_for_all();</div>
 <div class="line"><span class="keywordtype">size_t</span> pending_jobs() <span class="keyword">const</span>;</div>
 <div class="line"><span class="keywordtype">size_t</span> active_threads() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md330"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md345"></a>
 Priority Levels</h3>
 <div class="fragment"><div class="line"><span class="keyword">enum class</span> job_priority {</div>
 <div class="line">    real_time = 0,</div>
@@ -677,7 +810,7 @@ Priority Levels</h3>
 <div class="line">    batch,</div>
 <div class="line">    background</div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md331"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md346"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;thread_system/thread_pool.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>thread_system;</div>
@@ -722,20 +855,20 @@ Usage Example</h3>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Shutdown pool</span></div>
 <div class="line">pool.stop();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md332"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md347"></a>
 Class: &lt;tt&gt;lock_free_queue&lt;/tt&gt;</h2>
 <p>Multi-producer, multi-consumer lock-free queue.</p>
-<h3><a class="anchor" id="autotoc_md333"></a>
+<h3><a class="anchor" id="autotoc_md348"></a>
 Constructor</h3>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> lock_free_queue(<span class="keywordtype">size_t</span> capacity = 1024);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md334"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md349"></a>
 Methods</h3>
 <div class="fragment"><div class="line"><span class="keywordtype">bool</span> push(<span class="keyword">const</span> T&amp; item);</div>
 <div class="line"><span class="keywordtype">bool</span> pop(T&amp; item);</div>
 <div class="line"><span class="keywordtype">bool</span> try_pop(T&amp; item);</div>
 <div class="line"><span class="keywordtype">size_t</span> size() <span class="keyword">const</span>;</div>
 <div class="line"><span class="keywordtype">bool</span> empty() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md335"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md350"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;thread_system/lock_free_queue.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>thread_system;</div>
@@ -767,14 +900,14 @@ Usage Example</h3>
 <div class="line">    t.join();</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md337"></a>
+<h1><a class="anchor" id="autotoc_md352"></a>
 Logger System API</h1>
-<h2><a class="anchor" id="autotoc_md338"></a>
+<h2><a class="anchor" id="autotoc_md353"></a>
 Namespace: &lt;tt&gt;logger&lt;/tt&gt;</h2>
-<h2><a class="anchor" id="autotoc_md339"></a>
+<h2><a class="anchor" id="autotoc_md354"></a>
 Class: &lt;tt&gt;logger_manager&lt;/tt&gt;</h2>
 <p>High-performance asynchronous logging system.</p>
-<h3><a class="anchor" id="autotoc_md340"></a>
+<h3><a class="anchor" id="autotoc_md355"></a>
 Configuration</h3>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>logger_config {</div>
 <div class="line">    log_level min_level = log_level::info;</div>
@@ -786,7 +919,7 @@ Configuration</h3>
 <div class="line">    <span class="keywordtype">bool</span> async_logging = <span class="keyword">true</span>;</div>
 <div class="line">    <span class="keywordtype">size_t</span> buffer_size = 8192;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md341"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md356"></a>
 Log Levels</h3>
 <div class="fragment"><div class="line"><span class="keyword">enum class</span> log_level {</div>
 <div class="line">    trace = 0,</div>
@@ -796,7 +929,7 @@ Log Levels</h3>
 <div class="line">    error = 4,</div>
 <div class="line">    critical = 5</div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md342"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md357"></a>
 Methods</h3>
 <div class="fragment"><div class="line"><span class="keyword">static</span> logger_manager&amp; instance();</div>
 <div class="line"><span class="keywordtype">void</span> configure(<span class="keyword">const</span> logger_config&amp; config);</div>
@@ -810,7 +943,7 @@ Methods</h3>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><span class="keywordtype">void</span> log(log_level level, <span class="keyword">const</span> std::string&amp; format, Args&amp;&amp;... args);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md343"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md358"></a>
 Usage Example</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;logger/logger_manager.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>logger;</div>
@@ -849,9 +982,9 @@ Usage Example</h3>
 <div class="line"><span class="keyword">auto</span> duration = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(end - start);</div>
 <div class="line">logger.info(<span class="stringliteral">&quot;Processing completed in {} ms&quot;</span>, duration.count());</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md345"></a>
+<h1><a class="anchor" id="autotoc_md360"></a>
 Error Codes</h1>
-<h2><a class="anchor" id="autotoc_md346"></a>
+<h2><a class="anchor" id="autotoc_md361"></a>
 System Error Codes</h2>
 <div class="fragment"><div class="line"><span class="keyword">enum class</span> error_code {</div>
 <div class="line">    <span class="comment">// Success</span></div>
@@ -909,7 +1042,7 @@ System Error Codes</h2>
 <div class="line">    queue_full = 603,</div>
 <div class="line">    publish_failed = 604</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md347"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md362"></a>
 Error Handling</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>system_error : <span class="keyword">public</span> std::exception {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -931,7 +1064,7 @@ Error Handling</h2>
 <div class="line">        retry_connection();</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md348"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md363"></a>
 Error Recovery Strategies</h2>
 <div class="fragment"><div class="line"><span class="comment">// Retry with exponential backoff</span></div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Func&gt;</div>
@@ -998,9 +1131,9 @@ Error Recovery Strategies</h2>
 <div class="line">        <span class="keywordflow">return</span> time_since_failure &gt; std::chrono::seconds(30);</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md349"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md364"></a>
 Configuration Reference</h1>
-<h2><a class="anchor" id="autotoc_md350"></a>
+<h2><a class="anchor" id="autotoc_md365"></a>
 System Configuration File Format</h2>
 <div class="fragment"><div class="line">; messaging_config.ini</div>
 <div class="line"> </div>
@@ -1054,7 +1187,7 @@ System Configuration File Format</h2>
 <div class="line">enable_rate_limiting = true</div>
 <div class="line">rate_limit_requests = 1000</div>
 <div class="line">rate_limit_window_seconds = 60</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md351"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md366"></a>
 Environment Variables</h2>
 <div class="fragment"><div class="line"># Database configuration</div>
 <div class="line">export DB_HOST=localhost</div>

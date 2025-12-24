@@ -1,5 +1,12 @@
 var searchData=
 [
-  ['클라이언트_0',['태스크 클라이언트',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md699',1,'']]],
-  ['클래스_1',['클래스',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1335',1,'클래스'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md358',1,'핵심 클래스']]]
+  ['큐에_20제출_0',['우선순위 큐에 제출',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1994',1,'']]],
+  ['큐_1',['큐',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md760',1,'메시지 큐'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1990',1,'우선순위 큐']]],
+  ['큐_20상태_20확인_2',['큐 상태 확인',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2106',1,'']]],
+  ['큐_20설정_3',['큐 설정',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1905',1,'누락된 큐 설정'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1993',1,'우선순위 큐 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1811',1,'지연 큐 설정'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1807',1,'Task 큐 설정']]],
+  ['큐_20시스템에서_20마이그레이션_4',['메시지 큐 시스템에서 마이그레이션',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1889',1,'']]],
+  ['큐_20시스템_5',['큐 시스템',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md769',1,'태스크 큐 시스템'],['../d8/d0a/md_docs_2README__KO.html#autotoc_md1448',1,'Task 큐 시스템']]],
+  ['큐_20우선순위_6',['큐 우선순위',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1817',1,'']]],
+  ['큐_20통계_7',['큐 통계',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1676',1,'']]],
+  ['큐_20tt_20include_20kcenon_20messaging_20task_20tt_8',['태스크 큐 (&lt;tt&gt;include/kcenon/messaging/task/&lt;/tt&gt;)',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1392',1,'']]]
 ];

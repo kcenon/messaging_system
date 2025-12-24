@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['편의_20메서드_0',['편의 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1616',1,'스케줄링 (편의 메서드)'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1615',1,'작업 제출 (편의 메서드)'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1614',1,'핸들러 등록 (편의 메서드)']]],
-  ['편의_20함수_20tt_20common_5fsystem_20tt_1',['3. 편의 함수 (&lt;tt&gt;common_system&lt;/tt&gt;)',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md36',1,'']]]
+  ['패턴별_20성능_0',['패턴별 성능',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md539',1,'']]],
+  ['패턴_1',['패턴',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md763',1,'고급 패턴'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md382',1,'메시징 패턴'],['../de/de3/md_docs_2ARCHITECTURE__KO.html#autotoc_md446',1,'메시징 패턴'],['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md380',1,'와일드카드 패턴'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1637',1,'워크플로우 패턴'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1748',1,'2. Result 타입 패턴'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1749',1,'3. 빌더 패턴'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1750',1,'4. 파사드 패턴'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1751',1,'5. 전략 패턴'],['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md778',1,'Chain 및 Chord 패턴'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1969',1,'Chain 패턴'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1976',1,'Chord 패턴'],['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1402',1,'Include 패턴'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html',1,'Task 모듈 워크플로우 패턴']]],
+  ['패턴_20조합_2',['패턴 조합',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2018',1,'']]],
+  ['패턴_20tt_20include_20kcenon_20messaging_20patterns_20tt_3',['패턴 (&lt;tt&gt;include/kcenon/messaging/patterns/&lt;/tt&gt;)',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1391',1,'']]]
 ];

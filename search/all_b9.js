@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['필드_0',['필드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1518',1,'']]],
-  ['필수_20의존성_1',['필수 의존성',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1326',1,'']]]
+  ['플랫폼_0',['지원 플랫폼',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1339',1,'']]],
+  ['플랫폼_20지원_1',['플랫폼 지원',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1338',1,'']]]
 ];

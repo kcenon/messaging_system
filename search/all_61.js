@@ -1,12 +1,14 @@
 var searchData=
 [
-  ['상속_0',['1. Task는 Message를 상속',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2101',1,'']]],
-  ['상태_1',['상태',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md27',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1566',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1556',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1604',1,'워커 상태'],['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md47',1,'현재 구현 상태']]],
-  ['상태_20메서드_2',['상태 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1569',1,'상태 메서드'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1509',1,'상태 메서드']]],
-  ['상태_20확인_3',['상태 확인',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2034',1,'워커 상태 확인'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2033',1,'큐 상태 확인']]],
-  ['상황을_20어떻게_20얻나요_4',['Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2045',1,'']]],
-  ['상황_20메서드_5',['진행 상황 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1570',1,'']]],
-  ['상황_20모니터링_6',['상황 모니터링',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1933',1,'진행 상황 모니터링'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1983',1,'진행 상황 모니터링']]],
-  ['상황_20보고_7',['진행 상황 보고',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1932',1,'']]],
-  ['상황_20추적_8',['상황 추적',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1536',1,'진행 상황 추적'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1512',1,'진행 상황 추적'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1931',1,'진행 상황 추적']]]
+  ['사례_0',['사례',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1995',1,'모범 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2016',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1974',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1981',1,'사용 사례']]],
+  ['사용량_1',['사용량',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2112',1,'높은 메모리 사용량'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2111',1,'높은 CPU 사용량']]],
+  ['사용량_20증가_2',['메모리 사용량 증가',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2101',1,'']]],
+  ['사용법_3',['사용법',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md2044',1,'기본 사용법'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1971',1,'사용법'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1978',1,'사용법']]],
+  ['사용하기_4',['Task 빌더 사용하기',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md2052',1,'']]],
+  ['사용_5',['사용',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1823',1,'Task 빌더 사용'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1986',1,'Task 빌더 사용']]],
+  ['사용_20사례_6',['사용 사례',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1981',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2016',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1974',1,'사용 사례']]],
+  ['사용_20예시_7',['messaging_system에서의 사용 예시',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md48',1,'']]],
+  ['사용_20예제_8',['사용 예제',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md377',1,'']]],
+  ['사전_20요구사항_9',['사전 요구사항',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md2042',1,'']]],
+  ['사항_10',['사항',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1417',1,'계획된 추가 사항'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1838',1,'설정 권장 사항'],['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md46',1,'준수 사항'],['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1881',1,'API 변경 사항']]]
 ];

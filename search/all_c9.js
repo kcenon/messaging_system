@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['후_0',['마이그레이션 후',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1827',1,'']]]
+  ['횟수를_20어떻게_20제한하나요_0',['Q: 재시도 횟수를 어떻게 제한하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2122',1,'']]]
 ];

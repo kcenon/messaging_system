@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['콜백_0',['이벤트 콜백',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1591',1,'']]],
-  ['콜백_20기반_1',['콜백 기반',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1572',1,'']]],
-  ['콜백_20핸들러_2',['콜백 핸들러',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1906',1,'']]]
+  ['코드_0',['애플리케이션 코드',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1403',1,'']]],
+  ['코드_20구성_20원칙_1',['코드 구성 원칙',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1411',1,'']]]
 ];

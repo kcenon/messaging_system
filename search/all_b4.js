@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['표현식_20형식_0',['표현식 형식',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1594',1,'Cron 표현식 형식'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1927',1,'Cron 표현식 형식']]]
+  ['포인트_0',['확장 포인트',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1743',1,'']]],
+  ['포함_1',['1. 헤더 포함',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md2045',1,'']]]
 ];

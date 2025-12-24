@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['테스트_0',['테스트',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md728',1,'테스트'],['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1679',1,'테스트']]],
-  ['테스트_20실행_1',['테스트 실행',['../d9/db8/md_docs_2task_2ARCHITECTURE__KO.html#autotoc_md1680',1,'']]],
-  ['테스트_20체크리스트_2',['테스트 체크리스트',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1828',1,'']]],
-  ['테스트_20커버리지_3',['테스트 커버리지',['../d2/d74/md_docs_2PRODUCTION__QUALITY__KO.html#autotoc_md1262',1,'']]],
-  ['테이블_4',['요약 테이블',['../d5/ddb/md_docs_2BENCHMARKS__KO.html#autotoc_md518',1,'']]]
+  ['태스크_20모니터_0',['태스크 모니터',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md777',1,'']]],
+  ['태스크_20스케줄러_1',['태스크 스케줄러',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md774',1,'']]],
+  ['태스크_20시스템_20파사드_2',['태스크 시스템 파사드',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md771',1,'']]],
+  ['태스크_20큐_20시스템_3',['태스크 큐 시스템',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md769',1,'']]],
+  ['태스크_20큐_20tt_20include_20kcenon_20messaging_20task_20tt_4',['태스크 큐 (&lt;tt&gt;include/kcenon/messaging/task/&lt;/tt&gt;)',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1392',1,'']]],
+  ['태스크_20클라이언트_5',['태스크 클라이언트',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md772',1,'']]],
+  ['태스크_20타임아웃_6',['태스크 타임아웃',['../d4/d0c/md_docs_2FEATURES__KO.html#autotoc_md780',1,'']]]
 ];

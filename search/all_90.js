@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['종료하려면_20어떻게_20하나요_0',['Q: 시스템을 우아하게 종료하려면 어떻게 하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2051',1,'']]],
-  ['종속성을_20어떻게_20처리하나요_1',['Q: 작업 종속성을 어떻게 처리하나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2046',1,'']]]
+  ['조합_0',['패턴 조합',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2018',1,'']]],
+  ['조회_1',['블로킹 결과 조회',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1644',1,'']]]
 ];
