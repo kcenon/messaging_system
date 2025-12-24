@@ -42,11 +42,16 @@ struct message_bus_config {
     std::string local_node_id;  ///< Unique identifier for distributed routing
 };
 
+// Forward declaration for friend class
+class message_processing_job;
+
 /**
  * @class message_bus
  * @brief Central message hub for publish-subscribe messaging
  */
 class message_bus {
+    friend class message_processing_job;
+
     message_bus_config config_;
     std::shared_ptr<backend_interface> backend_;
     std::unique_ptr<message_queue> queue_;
@@ -121,6 +126,7 @@ public:
 
 private:
     void process_messages();
+    void process_single_message();
     common::VoidResult handle_message(const message& msg);
     void start_workers();
     void stop_workers();

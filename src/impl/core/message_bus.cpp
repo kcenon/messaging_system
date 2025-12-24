@@ -2,11 +2,51 @@
 
 #include <kcenon/messaging/error/error_codes.h>
 #include <kcenon/common/logging/log_functions.h>
+#include <kcenon/common/interfaces/executor_interface.h>
 
 #include <thread>
 #include <algorithm>
 
 namespace kcenon::messaging {
+
+// ============================================================================
+// message_processing_job - IJob implementation for worker threads
+// ============================================================================
+
+/**
+ * @class message_processing_job
+ * @brief Job implementation that processes messages from the queue
+ *
+ * This class encapsulates the message processing logic for use with
+ * the backend's IExecutor, allowing worker threads to be managed by
+ * the thread pool instead of std::async.
+ */
+class message_processing_job : public common::interfaces::IJob {
+public:
+	message_processing_job(message_bus* bus, std::atomic<bool>* running)
+		: bus_(bus)
+		, running_(running) {
+	}
+
+	common::VoidResult execute() override {
+		while (running_->load()) {
+			bus_->process_single_message();
+		}
+		return common::ok();
+	}
+
+	std::string get_name() const override {
+		return "message_processing_job";
+	}
+
+	int get_priority() const override {
+		return 0;
+	}
+
+private:
+	message_bus* bus_;
+	std::atomic<bool>* running_;
+};
 
 // ============================================================================
 // message_bus implementation
@@ -291,28 +331,32 @@ bool message_bus::is_transport_connected() const {
 
 void message_bus::process_messages() {
 	while (running_.load()) {
-		// Try to dequeue message
-		auto result = queue_->dequeue(std::chrono::milliseconds(100));
+		process_single_message();
+	}
+}
 
-		if (!result.is_ok()) {
-			// Queue might be empty or stopped, continue
-			continue;
-		}
+void message_bus::process_single_message() {
+	// Try to dequeue message with timeout
+	auto result = queue_->dequeue(std::chrono::milliseconds(100));
 
-		auto msg = result.unwrap();
+	if (!result.is_ok()) {
+		// Queue might be empty or stopped, return and let caller decide
+		return;
+	}
 
-		// Handle message
-		auto handle_result = handle_message(msg);
+	auto msg = result.unwrap();
 
-		if (handle_result.is_ok()) {
-			stats_.messages_processed.fetch_add(1);
-		} else {
-			stats_.messages_failed.fetch_add(1);
+	// Handle message
+	auto handle_result = handle_message(msg);
 
-			// Move to dead letter queue if enabled
-			if (dead_letter_queue_) {
-				dead_letter_queue_->enqueue(std::move(msg));
-			}
+	if (handle_result.is_ok()) {
+		stats_.messages_processed.fetch_add(1);
+	} else {
+		stats_.messages_failed.fetch_add(1);
+
+		// Move to dead letter queue if enabled
+		if (dead_letter_queue_) {
+			dead_letter_queue_->enqueue(std::move(msg));
 		}
 	}
 }
@@ -344,14 +388,40 @@ common::VoidResult message_bus::handle_message(const message& msg) {
 }
 
 void message_bus::start_workers() {
-	// Use std::async for worker threads
-	// TODO: Implement IJob wrapper for executor->execute() integration
-	for (size_t i = 0; i < config_.worker_threads; ++i) {
-		workers_.push_back(
-			std::async(std::launch::async, [this]() {
-				this->process_messages();
-			})
-		);
+	auto executor = backend_->get_executor();
+
+	if (executor && executor->is_running()) {
+		// Use executor for worker threads (preferred)
+		common::logging::log_debug("Starting workers using backend executor");
+
+		for (size_t i = 0; i < config_.worker_threads; ++i) {
+			auto job = std::make_unique<message_processing_job>(this, &running_);
+			auto result = executor->execute(std::move(job));
+
+			if (result.is_ok()) {
+				workers_.push_back(std::move(result.value()));
+			} else {
+				common::logging::log_warning(
+					"Failed to submit worker job to executor: " + result.error().message);
+			}
+		}
+
+		common::logging::log_info("Started " + std::to_string(workers_.size()) +
+			" workers using executor");
+	} else {
+		// Fallback to std::async for backward compatibility
+		common::logging::log_debug("Starting workers using std::async (fallback)");
+
+		for (size_t i = 0; i < config_.worker_threads; ++i) {
+			workers_.push_back(
+				std::async(std::launch::async, [this]() {
+					this->process_messages();
+				})
+			);
+		}
+
+		common::logging::log_info("Started " + std::to_string(config_.worker_threads) +
+			" workers using std::async");
 	}
 }
 
