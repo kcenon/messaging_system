@@ -142,13 +142,36 @@ Message Bus</h2>
 <div class="line">});</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md595"></a>
 Message Broker</h2>
-<p><b>Advanced routing and filtering capabilities</b></p>
+<p><b>Central message routing component with advanced routing capabilities</b></p>
 <p>Features:</p><ul>
-<li><b>Content-based Routing</b>: Route messages based on content, not just topic</li>
-<li><b>Message Filtering</b>: Apply filters before delivery</li>
-<li><b>Transformation Pipeline</b>: Transform messages during routing</li>
-<li><b>Dead Letter Queue</b>: Automatic handling of failed messages</li>
-<li><b>Retry Policies</b>: Configurable retry strategies</li>
+<li><b>Route Management</b>: Add, remove, enable, and disable routes dynamically</li>
+<li><b>Topic Pattern Matching</b>: Wildcard support via topic_router integration (<code>*</code> and <code>#</code>)</li>
+<li><b>Priority-based Ordering</b>: Routes processed in priority order (higher = first)</li>
+<li><b>Statistics Collection</b>: Track messages routed, delivered, failed, and unrouted</li>
+<li><b>Thread-safe Operations</b>: Concurrent access with shared_mutex</li>
+</ul>
+<div class="fragment"><div class="line">message_broker broker;</div>
+<div class="line">broker.start();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Add a route for user events</span></div>
+<div class="line">broker.add_route(<span class="stringliteral">&quot;user-handler&quot;</span>, <span class="stringliteral">&quot;user.*&quot;</span>, [](<span class="keyword">const</span> message&amp; msg) {</div>
+<div class="line">    <span class="comment">// Process user message</span></div>
+<div class="line">    <span class="keywordflow">return</span> common::ok();</div>
+<div class="line">}, 5);  <span class="comment">// priority 5</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Route a message</span></div>
+<div class="line">message msg(<span class="stringliteral">&quot;user.created&quot;</span>);</div>
+<div class="line">broker.route(msg);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Get statistics</span></div>
+<div class="line"><span class="keyword">auto</span> stats = broker.get_statistics();</div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Routed: &quot;</span> &lt;&lt; stats.messages_routed &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">broker.stop();</div>
+</div><!-- fragment --><p><b>Planned Features</b> (see #181, #182, #183):</p><ul>
+<li>Content-based Routing</li>
+<li>Dead Letter Queue</li>
+<li>Transformation Pipeline</li>
 </ul>
 <hr  />
 <h1><a class="anchor" id="autotoc_md597"></a>
@@ -925,66 +948,68 @@ Feature Matrix</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Message Bus</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Message Broker</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Topic Router</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Message Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Pub/Sub</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Request/Reply</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Event Streaming</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Message Pipeline</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Task System (Facade)</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Task Queue</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Worker Pool</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Task Scheduler</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Async Result</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Result Backend</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Task Monitor</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Cron Parser</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Chain/Chord</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Retry Mechanism</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Task Timeout</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>C++20 Concepts</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Standalone Backend</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Integration Backend</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Auto-detection</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>WebSocket Transport</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>DI Container</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Error Codes</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Result&lt;T&gt;</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Serialization</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Wildcards</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Priority Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Dead Letter Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Tracing</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Dead Letter Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Tracing</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Metrics</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete   </td></tr>
 </table>
 <hr  />
