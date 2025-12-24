@@ -12,7 +12,9 @@
 #include <atomic>
 #include <chrono>
 #include <functional>
+#include <map>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -32,6 +34,106 @@ class message_broker_impl;
  * @brief Handler function type for processing messages in a route
  */
 using message_handler = std::function<common::VoidResult(const message&)>;
+
+// =============================================================================
+// Dead Letter Queue Types
+// =============================================================================
+
+/**
+ * @enum dlq_policy
+ * @brief Policy for handling DLQ overflow
+ */
+enum class dlq_policy {
+	drop_oldest,  ///< Drop oldest message when full
+	drop_newest,  ///< Reject new messages when full
+	block         ///< Block routing when full
+};
+
+/**
+ * @struct dlq_config
+ * @brief Configuration for Dead Letter Queue
+ */
+struct dlq_config {
+	/// Maximum number of messages in DLQ
+	std::size_t max_size = 10000;
+
+	/// How long to retain messages in DLQ
+	std::chrono::seconds retention_period{3600};
+
+	/// Policy when DLQ is full
+	dlq_policy on_full = dlq_policy::drop_oldest;
+
+	/// Whether to automatically retry failed messages
+	bool enable_automatic_retry = false;
+
+	/// Maximum number of automatic retry attempts
+	std::size_t max_auto_retries = 3;
+
+	/// Delay between retry attempts
+	std::chrono::milliseconds retry_delay{1000};
+
+	/// Whether to move unrouted messages to DLQ
+	bool capture_unrouted = false;
+};
+
+/**
+ * @struct dlq_entry
+ * @brief Entry in the Dead Letter Queue
+ */
+struct dlq_entry {
+	/// Original message that failed
+	message original_message;
+
+	/// Reason for failure
+	std::string failure_reason;
+
+	/// Timestamp when message was moved to DLQ
+	std::chrono::system_clock::time_point failed_at;
+
+	/// Number of retry attempts
+	std::size_t retry_count = 0;
+
+	/// Last error message (from retry attempts)
+	std::optional<std::string> last_error;
+};
+
+/**
+ * @struct dlq_statistics
+ * @brief Statistics for Dead Letter Queue
+ */
+struct dlq_statistics {
+	/// Current number of messages in DLQ
+	std::size_t current_size = 0;
+
+	/// Total messages received by DLQ
+	std::size_t total_received = 0;
+
+	/// Total messages successfully replayed
+	std::size_t total_replayed = 0;
+
+	/// Total messages purged from DLQ
+	std::size_t total_purged = 0;
+
+	/// Timestamp of oldest entry in DLQ
+	std::optional<std::chrono::system_clock::time_point> oldest_entry;
+
+	/// Failure reasons and their counts
+	std::map<std::string, std::size_t> failure_reasons;
+};
+
+// =============================================================================
+// DLQ Event Callbacks
+// =============================================================================
+
+/**
+ * @brief Callback type for DLQ message events
+ */
+using dlq_message_callback = std::function<void(const dlq_entry&)>;
+
+/**
+ * @brief Callback type for DLQ full events
+ */
+using dlq_full_callback = std::function<void(std::size_t size)>;
 
 // =============================================================================
 // Broker Configuration
@@ -283,6 +385,88 @@ public:
 	 * @brief Reset all statistics to zero
 	 */
 	void reset_statistics();
+
+	// =========================================================================
+	// Dead Letter Queue Management
+	// =========================================================================
+
+	/**
+	 * @brief Configure the Dead Letter Queue
+	 * @param config DLQ configuration
+	 * @return Result indicating success or error
+	 */
+	common::VoidResult configure_dlq(dlq_config config);
+
+	/**
+	 * @brief Move a message to the Dead Letter Queue
+	 * @param msg Message to move
+	 * @param reason Failure reason
+	 * @return Result indicating success or error
+	 */
+	common::VoidResult move_to_dlq(const message& msg, const std::string& reason);
+
+	/**
+	 * @brief Get messages from the Dead Letter Queue
+	 * @param limit Maximum number of messages to retrieve (0 = all)
+	 * @return Vector of DLQ entries
+	 */
+	std::vector<dlq_entry> get_dlq_messages(std::size_t limit = 0) const;
+
+	/**
+	 * @brief Get the current size of the Dead Letter Queue
+	 * @return Number of messages in DLQ
+	 */
+	std::size_t get_dlq_size() const;
+
+	/**
+	 * @brief Replay a specific message from the DLQ
+	 * @param message_id ID of the message to replay
+	 * @return Result indicating success or error
+	 */
+	common::VoidResult replay_dlq_message(const std::string& message_id);
+
+	/**
+	 * @brief Replay all messages from the DLQ
+	 * @return Number of messages successfully replayed
+	 */
+	std::size_t replay_all_dlq_messages();
+
+	/**
+	 * @brief Purge all messages from the DLQ
+	 * @return Number of messages purged
+	 */
+	std::size_t purge_dlq();
+
+	/**
+	 * @brief Purge messages older than specified age
+	 * @param age Age threshold
+	 * @return Number of messages purged
+	 */
+	std::size_t purge_dlq_older_than(std::chrono::seconds age);
+
+	/**
+	 * @brief Get DLQ statistics
+	 * @return DLQ statistics snapshot
+	 */
+	dlq_statistics get_dlq_statistics() const;
+
+	/**
+	 * @brief Set callback for when a message enters the DLQ
+	 * @param callback Function to call when message enters DLQ
+	 */
+	void on_dlq_message(dlq_message_callback callback);
+
+	/**
+	 * @brief Set callback for when the DLQ is full
+	 * @param callback Function to call when DLQ is full
+	 */
+	void on_dlq_full(dlq_full_callback callback);
+
+	/**
+	 * @brief Check if DLQ is configured
+	 * @return true if DLQ is configured, false otherwise
+	 */
+	bool is_dlq_configured() const;
 
 private:
 	std::unique_ptr<message_broker_impl> impl_;

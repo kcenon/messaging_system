@@ -8,6 +8,7 @@
 #include <kcenon/common/logging/log_functions.h>
 #include <kcenon/messaging/error/error_codes.h>
 
+#include <deque>
 #include <mutex>
 #include <shared_mutex>
 #include <unordered_map>
@@ -436,6 +437,270 @@ public:
 		common::logging::log_debug("Statistics reset");
 	}
 
+	// =========================================================================
+	// Dead Letter Queue Operations
+	// =========================================================================
+
+	common::VoidResult configure_dlq(dlq_config config) {
+		std::unique_lock lock(dlq_mutex_);
+		dlq_config_ = std::move(config);
+		common::logging::log_info("DLQ configured, max_size: " +
+			std::to_string(dlq_config_->max_size) +
+			", retention: " + std::to_string(dlq_config_->retention_period.count()) + "s");
+		return common::ok();
+	}
+
+	common::VoidResult move_to_dlq(const message& msg, const std::string& reason) {
+		std::unique_lock lock(dlq_mutex_);
+
+		if (!dlq_config_) {
+			return common::make_error<std::monostate>(
+				error::dlq_not_configured,
+				"Dead letter queue not configured"
+			);
+		}
+
+		// Check if DLQ is full
+		if (dlq_entries_.size() >= dlq_config_->max_size) {
+			// Notify callback if registered
+			if (dlq_full_callback_) {
+				lock.unlock();
+				dlq_full_callback_(dlq_config_->max_size);
+				lock.lock();
+			}
+
+			switch (dlq_config_->on_full) {
+				case dlq_policy::drop_oldest:
+					if (!dlq_entries_.empty()) {
+						dlq_entries_.pop_front();
+						dlq_total_purged_.fetch_add(1);
+						common::logging::log_debug("DLQ full, dropped oldest message");
+					}
+					break;
+				case dlq_policy::drop_newest:
+					common::logging::log_warning("DLQ full, rejecting new message: " +
+						msg.metadata().id);
+					return common::make_error<std::monostate>(
+						error::dlq_full,
+						"Dead letter queue is full"
+					);
+				case dlq_policy::block:
+					common::logging::log_warning("DLQ full, blocking not implemented yet");
+					return common::make_error<std::monostate>(
+						error::dlq_full,
+						"Dead letter queue is full (blocking mode)"
+					);
+			}
+		}
+
+		// Create DLQ entry
+		dlq_entry entry;
+		entry.original_message = msg;
+		entry.failure_reason = reason;
+		entry.failed_at = std::chrono::system_clock::now();
+		entry.retry_count = 0;
+
+		dlq_entries_.push_back(entry);
+		dlq_total_received_.fetch_add(1);
+
+		common::logging::log_debug("Message moved to DLQ, id: " + msg.metadata().id +
+			", reason: " + reason);
+
+		// Notify callback if registered
+		if (dlq_message_callback_) {
+			lock.unlock();
+			dlq_message_callback_(entry);
+		}
+
+		return common::ok();
+	}
+
+	std::vector<dlq_entry> get_dlq_messages(std::size_t limit) const {
+		std::shared_lock lock(dlq_mutex_);
+
+		std::vector<dlq_entry> result;
+		std::size_t count = (limit == 0) ? dlq_entries_.size()
+			: std::min(limit, dlq_entries_.size());
+		result.reserve(count);
+
+		for (std::size_t i = 0; i < count; ++i) {
+			result.push_back(dlq_entries_[i]);
+		}
+
+		return result;
+	}
+
+	std::size_t get_dlq_size() const {
+		std::shared_lock lock(dlq_mutex_);
+		return dlq_entries_.size();
+	}
+
+	common::VoidResult replay_dlq_message(const std::string& message_id) {
+		if (!running_.load()) {
+			return common::make_error<std::monostate>(
+				error::broker_not_started,
+				"Message broker is not running"
+			);
+		}
+
+		dlq_entry entry_to_replay;
+		bool found = false;
+
+		{
+			std::unique_lock lock(dlq_mutex_);
+
+			for (auto it = dlq_entries_.begin(); it != dlq_entries_.end(); ++it) {
+				if (it->original_message.metadata().id == message_id) {
+					entry_to_replay = *it;
+					dlq_entries_.erase(it);
+					found = true;
+					break;
+				}
+			}
+		}
+
+		if (!found) {
+			return common::make_error<std::monostate>(
+				error::dlq_message_not_found,
+				"Message not found in DLQ: " + message_id
+			);
+		}
+
+		// Try to route the message again
+		auto result = route(entry_to_replay.original_message);
+
+		if (result.is_ok()) {
+			dlq_total_replayed_.fetch_add(1);
+			common::logging::log_debug("DLQ message replayed successfully, id: " + message_id);
+			return common::ok();
+		}
+
+		// If replay failed, put back in DLQ with updated retry count
+		{
+			std::unique_lock lock(dlq_mutex_);
+			entry_to_replay.retry_count++;
+			entry_to_replay.last_error = result.error().message;
+			dlq_entries_.push_back(entry_to_replay);
+		}
+
+		return common::make_error<std::monostate>(
+			error::dlq_replay_failed,
+			"Failed to replay message: " + result.error().message
+		);
+	}
+
+	std::size_t replay_all_dlq_messages() {
+		if (!running_.load()) {
+			return 0;
+		}
+
+		std::vector<dlq_entry> entries_to_replay;
+
+		{
+			std::unique_lock lock(dlq_mutex_);
+			entries_to_replay.reserve(dlq_entries_.size());
+			while (!dlq_entries_.empty()) {
+				entries_to_replay.push_back(std::move(dlq_entries_.front()));
+				dlq_entries_.pop_front();
+			}
+		}
+
+		std::size_t success_count = 0;
+		std::vector<dlq_entry> failed_entries;
+
+		for (auto& entry : entries_to_replay) {
+			auto result = route(entry.original_message);
+
+			if (result.is_ok()) {
+				success_count++;
+				dlq_total_replayed_.fetch_add(1);
+			} else {
+				entry.retry_count++;
+				entry.last_error = result.error().message;
+				failed_entries.push_back(std::move(entry));
+			}
+		}
+
+		// Put failed entries back
+		if (!failed_entries.empty()) {
+			std::unique_lock lock(dlq_mutex_);
+			for (auto& entry : failed_entries) {
+				dlq_entries_.push_back(std::move(entry));
+			}
+		}
+
+		common::logging::log_info("DLQ replay complete, success: " +
+			std::to_string(success_count) +
+			", failed: " + std::to_string(failed_entries.size()));
+
+		return success_count;
+	}
+
+	std::size_t purge_dlq() {
+		std::unique_lock lock(dlq_mutex_);
+		std::size_t purged = dlq_entries_.size();
+		dlq_entries_.clear();
+		dlq_total_purged_.fetch_add(purged);
+		common::logging::log_info("DLQ purged, count: " + std::to_string(purged));
+		return purged;
+	}
+
+	std::size_t purge_dlq_older_than(std::chrono::seconds age) {
+		std::unique_lock lock(dlq_mutex_);
+		auto threshold = std::chrono::system_clock::now() - age;
+		std::size_t purged = 0;
+
+		auto it = dlq_entries_.begin();
+		while (it != dlq_entries_.end()) {
+			if (it->failed_at < threshold) {
+				it = dlq_entries_.erase(it);
+				purged++;
+			} else {
+				++it;
+			}
+		}
+
+		dlq_total_purged_.fetch_add(purged);
+		common::logging::log_debug("DLQ purged old entries, count: " + std::to_string(purged));
+		return purged;
+	}
+
+	dlq_statistics get_dlq_statistics() const {
+		std::shared_lock lock(dlq_mutex_);
+
+		dlq_statistics stats;
+		stats.current_size = dlq_entries_.size();
+		stats.total_received = dlq_total_received_.load();
+		stats.total_replayed = dlq_total_replayed_.load();
+		stats.total_purged = dlq_total_purged_.load();
+
+		if (!dlq_entries_.empty()) {
+			stats.oldest_entry = dlq_entries_.front().failed_at;
+		}
+
+		// Count failure reasons
+		for (const auto& entry : dlq_entries_) {
+			stats.failure_reasons[entry.failure_reason]++;
+		}
+
+		return stats;
+	}
+
+	void on_dlq_message(dlq_message_callback callback) {
+		std::unique_lock lock(dlq_mutex_);
+		dlq_message_callback_ = std::move(callback);
+	}
+
+	void on_dlq_full(dlq_full_callback callback) {
+		std::unique_lock lock(dlq_mutex_);
+		dlq_full_callback_ = std::move(callback);
+	}
+
+	bool is_dlq_configured() const {
+		std::shared_lock lock(dlq_mutex_);
+		return dlq_config_.has_value();
+	}
+
 private:
 	common::VoidResult handle_route_message(const std::string& route_id,
 											const message& msg) {
@@ -489,6 +754,18 @@ private:
 	std::atomic<uint64_t> messages_failed_{0};
 	std::atomic<uint64_t> messages_unrouted_{0};
 	broker_statistics statistics_;
+
+	// Dead Letter Queue
+	mutable std::shared_mutex dlq_mutex_;
+	std::optional<dlq_config> dlq_config_;
+	std::deque<dlq_entry> dlq_entries_;
+	dlq_message_callback dlq_message_callback_;
+	dlq_full_callback dlq_full_callback_;
+
+	// DLQ statistics (atomic for thread safety)
+	std::atomic<std::size_t> dlq_total_received_{0};
+	std::atomic<std::size_t> dlq_total_replayed_{0};
+	std::atomic<std::size_t> dlq_total_purged_{0};
 };
 
 // =============================================================================
@@ -565,6 +842,55 @@ broker_statistics message_broker::get_statistics() const {
 
 void message_broker::reset_statistics() {
 	impl_->reset_statistics();
+}
+
+common::VoidResult message_broker::configure_dlq(dlq_config config) {
+	return impl_->configure_dlq(std::move(config));
+}
+
+common::VoidResult message_broker::move_to_dlq(const message& msg,
+											   const std::string& reason) {
+	return impl_->move_to_dlq(msg, reason);
+}
+
+std::vector<dlq_entry> message_broker::get_dlq_messages(std::size_t limit) const {
+	return impl_->get_dlq_messages(limit);
+}
+
+std::size_t message_broker::get_dlq_size() const {
+	return impl_->get_dlq_size();
+}
+
+common::VoidResult message_broker::replay_dlq_message(const std::string& message_id) {
+	return impl_->replay_dlq_message(message_id);
+}
+
+std::size_t message_broker::replay_all_dlq_messages() {
+	return impl_->replay_all_dlq_messages();
+}
+
+std::size_t message_broker::purge_dlq() {
+	return impl_->purge_dlq();
+}
+
+std::size_t message_broker::purge_dlq_older_than(std::chrono::seconds age) {
+	return impl_->purge_dlq_older_than(age);
+}
+
+dlq_statistics message_broker::get_dlq_statistics() const {
+	return impl_->get_dlq_statistics();
+}
+
+void message_broker::on_dlq_message(dlq_message_callback callback) {
+	impl_->on_dlq_message(std::move(callback));
+}
+
+void message_broker::on_dlq_full(dlq_full_callback callback) {
+	impl_->on_dlq_full(std::move(callback));
+}
+
+bool message_broker::is_dlq_configured() const {
+	return impl_->is_dlq_configured();
 }
 
 }  // namespace kcenon::messaging

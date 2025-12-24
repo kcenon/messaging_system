@@ -683,3 +683,331 @@ TEST_F(MessageBrokerTest, MoveAssignment) {
 
 	other_broker.stop();
 }
+
+// =============================================================================
+// Dead Letter Queue Tests
+// =============================================================================
+
+TEST_F(MessageBrokerTest, DLQNotConfigured) {
+	EXPECT_FALSE(broker_->is_dlq_configured());
+
+	message msg("test.topic");
+	auto result = broker_->move_to_dlq(msg, "test failure");
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, DLQConfiguration) {
+	dlq_config config;
+	config.max_size = 100;
+	config.retention_period = std::chrono::seconds(3600);
+	config.on_full = dlq_policy::drop_oldest;
+
+	auto result = broker_->configure_dlq(config);
+
+	ASSERT_TRUE(result.is_ok());
+	EXPECT_TRUE(broker_->is_dlq_configured());
+}
+
+TEST_F(MessageBrokerTest, DLQMoveMessage) {
+	dlq_config config;
+	config.max_size = 100;
+	broker_->configure_dlq(config);
+
+	message msg("test.topic");
+	auto result = broker_->move_to_dlq(msg, "handler failed");
+
+	ASSERT_TRUE(result.is_ok());
+	EXPECT_EQ(broker_->get_dlq_size(), 1);
+}
+
+TEST_F(MessageBrokerTest, DLQGetMessages) {
+	dlq_config config;
+	config.max_size = 100;
+	broker_->configure_dlq(config);
+
+	// Add 3 messages
+	for (int i = 0; i < 3; ++i) {
+		message msg("test.topic." + std::to_string(i));
+		broker_->move_to_dlq(msg, "failure " + std::to_string(i));
+	}
+
+	// Get all messages
+	auto all_messages = broker_->get_dlq_messages();
+	EXPECT_EQ(all_messages.size(), 3);
+
+	// Get limited messages
+	auto limited_messages = broker_->get_dlq_messages(2);
+	EXPECT_EQ(limited_messages.size(), 2);
+}
+
+TEST_F(MessageBrokerTest, DLQReplayMessage) {
+	broker_->start();
+
+	dlq_config config;
+	config.max_size = 100;
+	broker_->configure_dlq(config);
+
+	int call_count = 0;
+	broker_->add_route(
+		"test-route",
+		"test.topic",
+		[&call_count](const message& /* msg */) {
+			call_count++;
+			return common::ok();
+		}
+	);
+
+	message msg("test.topic");
+	std::string msg_id = msg.metadata().id;
+
+	// Move message to DLQ
+	broker_->move_to_dlq(msg, "initial failure");
+	EXPECT_EQ(broker_->get_dlq_size(), 1);
+	EXPECT_EQ(call_count, 0);
+
+	// Replay the message
+	auto result = broker_->replay_dlq_message(msg_id);
+	ASSERT_TRUE(result.is_ok());
+	EXPECT_EQ(broker_->get_dlq_size(), 0);
+	EXPECT_EQ(call_count, 1);
+}
+
+TEST_F(MessageBrokerTest, DLQReplayMessageNotFound) {
+	broker_->start();
+
+	dlq_config config;
+	config.max_size = 100;
+	broker_->configure_dlq(config);
+
+	auto result = broker_->replay_dlq_message("nonexistent-id");
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, DLQReplayAll) {
+	broker_->start();
+
+	dlq_config config;
+	config.max_size = 100;
+	broker_->configure_dlq(config);
+
+	int call_count = 0;
+	broker_->add_route(
+		"test-route",
+		"test.topic",
+		[&call_count](const message& /* msg */) {
+			call_count++;
+			return common::ok();
+		}
+	);
+
+	// Add 3 messages to DLQ
+	for (int i = 0; i < 3; ++i) {
+		message msg("test.topic");
+		broker_->move_to_dlq(msg, "failure");
+	}
+	EXPECT_EQ(broker_->get_dlq_size(), 3);
+
+	// Replay all
+	std::size_t replayed = broker_->replay_all_dlq_messages();
+
+	EXPECT_EQ(replayed, 3);
+	EXPECT_EQ(broker_->get_dlq_size(), 0);
+	EXPECT_EQ(call_count, 3);
+}
+
+TEST_F(MessageBrokerTest, DLQPurge) {
+	dlq_config config;
+	config.max_size = 100;
+	broker_->configure_dlq(config);
+
+	// Add messages
+	for (int i = 0; i < 5; ++i) {
+		message msg("test.topic");
+		broker_->move_to_dlq(msg, "failure");
+	}
+	EXPECT_EQ(broker_->get_dlq_size(), 5);
+
+	// Purge all
+	std::size_t purged = broker_->purge_dlq();
+
+	EXPECT_EQ(purged, 5);
+	EXPECT_EQ(broker_->get_dlq_size(), 0);
+}
+
+TEST_F(MessageBrokerTest, DLQPurgeOld) {
+	dlq_config config;
+	config.max_size = 100;
+	broker_->configure_dlq(config);
+
+	// Add a message
+	message msg("test.topic");
+	broker_->move_to_dlq(msg, "failure");
+	EXPECT_EQ(broker_->get_dlq_size(), 1);
+
+	// Purge messages older than 1 hour - should not purge recent message
+	std::size_t purged = broker_->purge_dlq_older_than(std::chrono::seconds(3600));
+	EXPECT_EQ(purged, 0);
+	EXPECT_EQ(broker_->get_dlq_size(), 1);
+
+	// Purge messages older than 0 seconds - should purge all
+	purged = broker_->purge_dlq_older_than(std::chrono::seconds(0));
+	EXPECT_EQ(purged, 1);
+	EXPECT_EQ(broker_->get_dlq_size(), 0);
+}
+
+TEST_F(MessageBrokerTest, DLQStatistics) {
+	dlq_config config;
+	config.max_size = 100;
+	broker_->configure_dlq(config);
+
+	// Initial stats
+	auto stats = broker_->get_dlq_statistics();
+	EXPECT_EQ(stats.current_size, 0);
+	EXPECT_EQ(stats.total_received, 0);
+
+	// Add messages
+	message msg1("test.topic");
+	broker_->move_to_dlq(msg1, "reason1");
+
+	message msg2("test.topic");
+	broker_->move_to_dlq(msg2, "reason2");
+
+	message msg3("test.topic");
+	broker_->move_to_dlq(msg3, "reason1");
+
+	stats = broker_->get_dlq_statistics();
+	EXPECT_EQ(stats.current_size, 3);
+	EXPECT_EQ(stats.total_received, 3);
+	EXPECT_EQ(stats.failure_reasons["reason1"], 2);
+	EXPECT_EQ(stats.failure_reasons["reason2"], 1);
+	EXPECT_TRUE(stats.oldest_entry.has_value());
+}
+
+TEST_F(MessageBrokerTest, DLQOverflowDropOldest) {
+	dlq_config config;
+	config.max_size = 3;
+	config.on_full = dlq_policy::drop_oldest;
+	broker_->configure_dlq(config);
+
+	// Add 5 messages (exceeds max_size of 3)
+	for (int i = 0; i < 5; ++i) {
+		message msg("test.topic." + std::to_string(i));
+		broker_->move_to_dlq(msg, "failure");
+	}
+
+	// Should only have 3 messages (oldest dropped)
+	EXPECT_EQ(broker_->get_dlq_size(), 3);
+
+	// Verify statistics show dropped messages
+	auto stats = broker_->get_dlq_statistics();
+	EXPECT_EQ(stats.total_received, 5);
+	EXPECT_EQ(stats.total_purged, 2);  // 2 messages were dropped
+}
+
+TEST_F(MessageBrokerTest, DLQOverflowDropNewest) {
+	dlq_config config;
+	config.max_size = 3;
+	config.on_full = dlq_policy::drop_newest;
+	broker_->configure_dlq(config);
+
+	// Add 3 messages to fill DLQ
+	for (int i = 0; i < 3; ++i) {
+		message msg("test.topic." + std::to_string(i));
+		auto result = broker_->move_to_dlq(msg, "failure");
+		ASSERT_TRUE(result.is_ok());
+	}
+
+	// Try to add 4th message - should be rejected
+	message msg4("test.topic.3");
+	auto result = broker_->move_to_dlq(msg4, "failure");
+
+	EXPECT_TRUE(result.is_err());
+	EXPECT_EQ(broker_->get_dlq_size(), 3);
+}
+
+TEST_F(MessageBrokerTest, DLQCallback) {
+	dlq_config config;
+	config.max_size = 100;
+	broker_->configure_dlq(config);
+
+	int callback_count = 0;
+	std::string last_reason;
+
+	broker_->on_dlq_message([&callback_count, &last_reason](const dlq_entry& entry) {
+		callback_count++;
+		last_reason = entry.failure_reason;
+	});
+
+	message msg("test.topic");
+	broker_->move_to_dlq(msg, "test reason");
+
+	EXPECT_EQ(callback_count, 1);
+	EXPECT_EQ(last_reason, "test reason");
+}
+
+TEST_F(MessageBrokerTest, DLQFullCallback) {
+	dlq_config config;
+	config.max_size = 2;
+	config.on_full = dlq_policy::drop_oldest;
+	broker_->configure_dlq(config);
+
+	int full_callback_count = 0;
+	std::size_t reported_size = 0;
+
+	broker_->on_dlq_full([&full_callback_count, &reported_size](std::size_t size) {
+		full_callback_count++;
+		reported_size = size;
+	});
+
+	// Fill the DLQ
+	for (int i = 0; i < 2; ++i) {
+		message msg("test.topic");
+		broker_->move_to_dlq(msg, "failure");
+	}
+	EXPECT_EQ(full_callback_count, 0);  // Not full yet when adding
+
+	// Add one more - triggers full callback
+	message msg("test.topic");
+	broker_->move_to_dlq(msg, "failure");
+
+	EXPECT_EQ(full_callback_count, 1);
+	EXPECT_EQ(reported_size, 2);
+}
+
+TEST_F(MessageBrokerTest, DLQReplayFailureUpdatesRetryCount) {
+	broker_->start();
+
+	dlq_config config;
+	config.max_size = 100;
+	broker_->configure_dlq(config);
+
+	// Add route that always fails
+	broker_->add_route(
+		"failing-route",
+		"test.topic",
+		[](const message& /* msg */) {
+			return common::make_error<std::monostate>(
+				common::error::codes::common_errors::internal_error,
+				"Simulated failure"
+			);
+		}
+	);
+
+	message msg("test.topic");
+	std::string msg_id = msg.metadata().id;
+	broker_->move_to_dlq(msg, "initial failure");
+
+	// Try to replay - should fail and increment retry count
+	auto result = broker_->replay_dlq_message(msg_id);
+	EXPECT_TRUE(result.is_err());
+
+	// Message should still be in DLQ with updated retry count
+	EXPECT_EQ(broker_->get_dlq_size(), 1);
+
+	auto messages = broker_->get_dlq_messages();
+	ASSERT_EQ(messages.size(), 1);
+	EXPECT_EQ(messages[0].retry_count, 1);
+	EXPECT_TRUE(messages[0].last_error.has_value());
+}

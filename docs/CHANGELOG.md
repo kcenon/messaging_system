@@ -8,6 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Dead Letter Queue for Message Broker (Issue #182)**
+  - Full DLQ implementation in `message_broker`:
+    - `dlq_config` structure with configurable max_size, retention_period, and overflow policies
+    - `dlq_entry` structure to store failed messages with metadata and retry count
+    - `dlq_statistics` for tracking DLQ metrics
+    - Overflow policies: drop_oldest, drop_newest, block
+  - DLQ operations:
+    - `configure_dlq()`: Configure DLQ settings
+    - `move_to_dlq()`: Move failed messages to DLQ
+    - `get_dlq_messages()`: Query messages in DLQ
+    - `get_dlq_size()`: Get current DLQ size
+    - `replay_dlq_message()`: Replay a specific message
+    - `replay_all_dlq_messages()`: Replay all DLQ messages
+    - `purge_dlq()`: Clear all messages
+    - `purge_dlq_older_than()`: Purge old messages
+  - Event callbacks:
+    - `on_dlq_message()`: Called when message enters DLQ
+    - `on_dlq_full()`: Called when DLQ is full
+  - New error codes in `error_codes.h`:
+    - `dlq_full`, `dlq_empty`, `dlq_message_not_found`, `dlq_replay_failed`, `dlq_not_configured`
+  - 15 comprehensive unit tests for DLQ functionality
+  - Updated `docs/core/MESSAGE_BROKER.md` with DLQ documentation
+
 - **Message Broker Documentation (Issue #184)**
   - New `docs/core/MESSAGE_BROKER.md` with comprehensive usage guide:
     - Architecture overview and component relationships

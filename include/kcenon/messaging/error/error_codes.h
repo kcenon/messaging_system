@@ -75,6 +75,13 @@ constexpr int enqueue_failed = base - 43;        // -743
 constexpr int dequeue_failed = base - 44;        // -744
 constexpr int queue_timeout = base - 45;         // -745
 
+// Dead Letter Queue errors
+constexpr int dlq_full = base - 46;              // -746
+constexpr int dlq_empty = base - 47;             // -747
+constexpr int dlq_message_not_found = base - 48; // -748
+constexpr int dlq_replay_failed = base - 49;     // -749
+constexpr int dlq_not_configured = base - 50;    // -750
+
 // ============================================================================
 // Subscription Errors (-760 to -779)
 // ============================================================================
@@ -145,6 +152,13 @@ inline std::string_view get_error_message(int code) {
         case enqueue_failed: return "Failed to enqueue message";
         case dequeue_failed: return "Failed to dequeue message";
         case queue_timeout: return "Queue operation timeout";
+
+        // Dead Letter Queue errors
+        case dlq_full: return "Dead letter queue full";
+        case dlq_empty: return "Dead letter queue empty";
+        case dlq_message_not_found: return "Message not found in dead letter queue";
+        case dlq_replay_failed: return "Failed to replay message from dead letter queue";
+        case dlq_not_configured: return "Dead letter queue not configured";
 
         // Subscription errors
         case subscription_failed: return "Subscription failed";
