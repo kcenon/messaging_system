@@ -190,6 +190,7 @@ set(MESSAGING_CORE_SOURCES
     src/impl/core/message_queue.cpp
     src/impl/core/topic_router.cpp
     src/impl/core/message_bus.cpp
+    src/impl/core/message_broker.cpp
     src/impl/backends/standalone_backend.cpp
     src/impl/backends/integration_backend.cpp
     src/impl/di/messaging_di_container.cpp
