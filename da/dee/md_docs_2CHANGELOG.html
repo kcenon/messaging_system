@@ -100,6 +100,36 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md536"></a>
 Added</h2>
 <ul>
+<li><b>Distributed Messaging E2E Integration Tests (Issue #165)</b><ul>
+<li>New <code>test_distributed_messaging.cpp</code> with 17 comprehensive integration tests:<ul>
+<li><code>TwoNodeMessageExchange</code>: Basic message delivery between two nodes</li>
+<li><code>BidirectionalCommunication</code>: Bidirectional message flow verification</li>
+<li><code>RemoteModeOnlyRemoteDelivery</code>: Remote-only mode behavior validation</li>
+<li><code>HybridModeLocalAndRemote</code>: Hybrid mode local and remote delivery</li>
+<li><code>WildcardSubscriptionAcrossNodes</code>: Single-level wildcard (*) subscription routing</li>
+<li><code>MultiLevelWildcardAcrossNodes</code>: Multi-level wildcard (#) subscription routing</li>
+<li><code>HighVolumeMessageExchange</code>: 500 message stress test</li>
+<li><code>ConcurrentPublishFromMultipleThreads</code>: Thread-safety under concurrent publishing</li>
+<li><code>MessagesDuringDisconnection</code>: Message handling during network failures</li>
+<li><code>TransportStateTransitions</code>: State machine transition verification</li>
+<li><code>DistributedStatisticsTracking</code>: Remote message statistics validation</li>
+<li><code>TransportStatisticsReset</code>: Statistics reset functionality</li>
+<li><code>PubSubPatternAcrossNodes</code>: Pub/sub pattern integration test</li>
+<li><code>MultipleSubscribersAcrossNodes</code>: Multiple subscriber delivery</li>
+<li><code>MessageContentPreservedAcrossNodes</code>: Message integrity across network</li>
+<li><code>GracefulShutdownWithPendingMessages</code>: Graceful shutdown behavior</li>
+<li><code>TransportDisconnectOnShutdown</code>: Transport cleanup on bus shutdown</li>
+</ul>
+</li>
+<li><code>bridged_transport</code>: Mock transport for simulating distributed communication<ul>
+<li>Bidirectional message forwarding between nodes</li>
+<li>Network failure simulation (disconnect/reconnect)</li>
+<li>Transport statistics tracking</li>
+</ul>
+</li>
+<li>Completes Epic #165 (Network System Integration) success criteria</li>
+</ul>
+</li>
 <li><b>HTTP Transport Implementation (Issue #168)</b><ul>
 <li><code>http_transport</code>: HTTP transport adapter using <code>network_system::http_client</code><ul>
 <li>PIMPL pattern with network_system integration</li>
