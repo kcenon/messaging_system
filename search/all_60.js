@@ -1,14 +1,14 @@
 var searchData=
 [
-  ['사례_0',['사례',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1918',1,'모범 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1939',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1897',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1904',1,'사용 사례']]],
-  ['사용량_1',['사용량',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2035',1,'높은 메모리 사용량'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2034',1,'높은 CPU 사용량']]],
-  ['사용량_20증가_2',['메모리 사용량 증가',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2024',1,'']]],
-  ['사용법_3',['사용법',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1967',1,'기본 사용법'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1894',1,'사용법'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1901',1,'사용법']]],
-  ['사용하기_4',['Task 빌더 사용하기',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1975',1,'']]],
-  ['사용_5',['사용',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1746',1,'Task 빌더 사용'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1909',1,'Task 빌더 사용']]],
-  ['사용_20사례_6',['사용 사례',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1904',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1939',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1897',1,'사용 사례']]],
+  ['사례_0',['사례',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1919',1,'모범 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1940',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1898',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1905',1,'사용 사례']]],
+  ['사용량_1',['사용량',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2036',1,'높은 메모리 사용량'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2035',1,'높은 CPU 사용량']]],
+  ['사용량_20증가_2',['메모리 사용량 증가',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2025',1,'']]],
+  ['사용법_3',['사용법',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1968',1,'기본 사용법'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1895',1,'사용법'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1902',1,'사용법']]],
+  ['사용하기_4',['Task 빌더 사용하기',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1976',1,'']]],
+  ['사용_5',['사용',['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1747',1,'Task 빌더 사용'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1910',1,'Task 빌더 사용']]],
+  ['사용_20사례_6',['사용 사례',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1905',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1940',1,'사용 사례'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md1898',1,'사용 사례']]],
   ['사용_20예시_7',['messaging_system에서의 사용 예시',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md48',1,'']]],
   ['사용_20예제_8',['사용 예제',['../d4/d54/md_docs_2API__REFERENCE__KO.html#autotoc_md362',1,'']]],
-  ['사전_20요구사항_9',['사전 요구사항',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1965',1,'']]],
-  ['사항_10',['사항',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1340',1,'계획된 추가 사항'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1761',1,'설정 권장 사항'],['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md46',1,'준수 사항'],['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1804',1,'API 변경 사항']]]
+  ['사전_20요구사항_9',['사전 요구사항',['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md1966',1,'']]],
+  ['사항_10',['사항',['../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html#autotoc_md1341',1,'계획된 추가 사항'],['../d4/de7/md_docs_2task_2CONFIGURATION__KO.html#autotoc_md1762',1,'설정 권장 사항'],['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md46',1,'준수 사항'],['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1805',1,'API 변경 사항']]]
 ];

@@ -470,6 +470,20 @@ Backend Interface</h2>
 <li><b>Lifecycle Management</b>: Initialize and shutdown</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md628"></a>
+Executor Integration</h2>
+<p><b>Worker threads managed by backend executor</b></p>
+<p>The message bus uses the backend's executor (IExecutor) to manage worker threads instead of raw std::async calls. This provides:</p>
+<ul>
+<li><b>Unified Thread Pool</b>: Workers share the thread pool with other subsystems</li>
+<li><b>Better Resource Control</b>: Thread pool configuration in one place</li>
+<li><b>Job-based Execution</b>: Workers use IJob interface for better testability</li>
+<li><b>Automatic Fallback</b>: Falls back to std::async if executor unavailable</li>
+</ul>
+<div class="fragment"><div class="line"><span class="comment">// Workers automatically use executor when available</span></div>
+<div class="line"><span class="keyword">auto</span> backend = std::make_shared&lt;standalone_backend&gt;(4);  <span class="comment">// 4 threads in pool</span></div>
+<div class="line"><span class="keyword">auto</span> bus = std::make_shared&lt;message_bus&gt;(backend, config);</div>
+<div class="line">bus-&gt;start();  <span class="comment">// Workers use backend&#39;s executor</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md629"></a>
 Standalone Backend</h2>
 <p><b>Self-contained execution</b></p>
 <p>Features:</p><ul>
@@ -480,7 +494,7 @@ Standalone Backend</h2>
 </ul>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> backend = std::make_shared&lt;standalone_backend&gt;(num_threads);</div>
 <div class="line">backend-&gt;initialize();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md629"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md630"></a>
 Integration Backend</h2>
 <p><b>External thread pool integration</b></p>
 <p>Features:</p><ul>
@@ -494,7 +508,7 @@ Integration Backend</h2>
 <div class="line">    logger,</div>
 <div class="line">    monitoring</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md630"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md631"></a>
 Auto-Detection</h2>
 <p><b>Automatic backend selection</b></p>
 <p>Features:</p><ul>
@@ -503,13 +517,13 @@ Auto-Detection</h2>
 <li><b>Optimal Selection</b>: Choose best available backend</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md632"></a>
+<h1><a class="anchor" id="autotoc_md633"></a>
 Transport Adapters</h1>
-<h2><a class="anchor" id="autotoc_md633"></a>
+<h2><a class="anchor" id="autotoc_md634"></a>
 Overview</h2>
 <p><b>Network transport for distributed messaging</b></p>
 <p>Transport adapters enable message transmission over network protocols, transforming the messaging system from an in-process library to a distributed system.</p>
-<h2><a class="anchor" id="autotoc_md634"></a>
+<h2><a class="anchor" id="autotoc_md635"></a>
 Transport Interface</h2>
 <p><b>Abstract interface for network transports</b></p>
 <p>Features:</p><ul>
@@ -530,7 +544,7 @@ Transport Interface</h2>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_message_handler(std::function&lt;<span class="keywordtype">void</span>(<span class="keyword">const</span> message&amp;)&gt; handler) = 0;</div>
 <div class="line">    <span class="keyword">virtual</span> transport_statistics get_statistics() <span class="keyword">const</span> = 0;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md635"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md636"></a>
 WebSocket Transport</h2>
 <p><b>Real-time bidirectional messaging over WebSocket</b></p>
 <p>Features:</p><ul>
@@ -570,7 +584,7 @@ WebSocket Transport</h2>
 <div class="line">    .source(<span class="stringliteral">&quot;client-001&quot;</span>)</div>
 <div class="line">    .build();</div>
 <div class="line">transport-&gt;send(msg.value());</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md636"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md637"></a>
 Configuration Options</h2>
 <p><b>WebSocket transport configuration</b></p>
 <table class="markdownTable">
@@ -603,15 +617,15 @@ Configuration Options</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">max_reconnect_delay   </td><td class="markdownTableBodyNone">ms   </td><td class="markdownTableBodyNone">30000   </td><td class="markdownTableBodyNone">Max retry delay   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md637"></a>
+<h2><a class="anchor" id="autotoc_md638"></a>
 Build Configuration</h2>
 <p>WebSocket transport requires <code>network_system</code> dependency:</p>
 <div class="fragment"><div class="line">cmake -DKCENON_WITH_NETWORK_SYSTEM=ON ..</div>
 </div><!-- fragment --><p>When disabled, transport operations return <code>error::not_supported</code>.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md639"></a>
+<h1><a class="anchor" id="autotoc_md640"></a>
 Message Types</h1>
-<h2><a class="anchor" id="autotoc_md640"></a>
+<h2><a class="anchor" id="autotoc_md641"></a>
 Message Structure</h2>
 <p><b>Structured messages with rich metadata</b></p>
 <p>Fields:</p><ul>
@@ -628,7 +642,7 @@ Message Structure</h2>
 <li><b>Headers</b>: Additional key-value headers</li>
 <li><b>Payload</b>: Message payload (container_system)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md641"></a>
+<h2><a class="anchor" id="autotoc_md642"></a>
 Message Builder</h2>
 <p><b>Fluent API for message construction</b></p>
 <p>Features:</p><ul>
@@ -649,7 +663,7 @@ Message Builder</h2>
 <div class="line">    .header(<span class="stringliteral">&quot;version&quot;</span>, <span class="stringliteral">&quot;1.0&quot;</span>)</div>
 <div class="line">    .payload(payload)</div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md642"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md643"></a>
 Message Serialization</h2>
 <p><b>Container-based payload serialization</b></p>
 <p>Features:</p><ul>
@@ -660,9 +674,9 @@ Message Serialization</h2>
 <li><b>Zero-Copy</b>: Move semantics support</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md644"></a>
+<h1><a class="anchor" id="autotoc_md645"></a>
 Topic Routing</h1>
-<h2><a class="anchor" id="autotoc_md645"></a>
+<h2><a class="anchor" id="autotoc_md646"></a>
 Wildcard Patterns</h2>
 <p><b>Flexible topic matching</b></p>
 <p>Patterns:</p><ul>
@@ -671,7 +685,7 @@ Wildcard Patterns</h2>
 <li><b>Multi-level Wildcard</b> (<code>#</code>): <code>user.#</code> matches <code>user.created</code>, <code>user.profile.updated</code></li>
 <li><b>Combined</b>: <code>*.user.#</code> matches <code>app.user.profile.updated</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md646"></a>
+<h2><a class="anchor" id="autotoc_md647"></a>
 Subscription Management</h2>
 <p><b>Flexible subscription control</b></p>
 <p>Features:</p><ul>
@@ -687,9 +701,9 @@ Subscription Management</h2>
 <div class="line"><span class="comment">// Unsubscribe</span></div>
 <div class="line">bus-&gt;unsubscribe(sub_id.value());</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md648"></a>
+<h1><a class="anchor" id="autotoc_md649"></a>
 Message Queue</h1>
-<h2><a class="anchor" id="autotoc_md649"></a>
+<h2><a class="anchor" id="autotoc_md650"></a>
 Queue Types</h2>
 <p><b>Multiple queue implementations</b></p>
 <p>Types:</p><ul>
@@ -698,7 +712,7 @@ Queue Types</h2>
 <li><b>Dead Letter Queue</b>: Failed message handling</li>
 <li><b>Bounded Queue</b>: Capacity limits with backpressure</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md650"></a>
+<h2><a class="anchor" id="autotoc_md651"></a>
 Queue Configuration</h2>
 <p><b>Flexible queue settings</b></p>
 <p>Options:</p><ul>
@@ -714,9 +728,9 @@ Queue Configuration</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> queue = std::make_shared&lt;message_queue&gt;(config);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md652"></a>
+<h1><a class="anchor" id="autotoc_md653"></a>
 Dependency Injection</h1>
-<h2><a class="anchor" id="autotoc_md653"></a>
+<h2><a class="anchor" id="autotoc_md654"></a>
 DI Container</h2>
 <p><b>Lightweight dependency injection</b></p>
 <p>Features:</p><ul>
@@ -734,9 +748,9 @@ DI Container</h2>
 <div class="line"><span class="comment">// Resolve</span></div>
 <div class="line"><span class="keyword">auto</span> executor = container-&gt;resolve&lt;IExecutor&gt;();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md655"></a>
+<h1><a class="anchor" id="autotoc_md656"></a>
 Error Handling</h1>
-<h2><a class="anchor" id="autotoc_md656"></a>
+<h2><a class="anchor" id="autotoc_md657"></a>
 Error Codes</h2>
 <p><b>Centralized error code system (-700 to -799)</b></p>
 <p>Categories:</p><ul>
@@ -746,7 +760,7 @@ Error Codes</h2>
 <li><b>Subscription Errors</b> (-760 to -779): Subscription failed, not found, duplicate, unsubscribe failed</li>
 <li><b>Publishing Errors</b> (-780 to -799): Publication failed, no route found, message rejected, broker unavailable</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md657"></a>
+<h2><a class="anchor" id="autotoc_md658"></a>
 Result&lt;T&gt; Pattern</h2>
 <p><b>Type-safe error handling</b></p>
 <p>Features:</p><ul>
@@ -763,9 +777,9 @@ Result&lt;T&gt; Pattern</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> sub_id = result.value();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md659"></a>
+<h1><a class="anchor" id="autotoc_md660"></a>
 Integration</h1>
-<h2><a class="anchor" id="autotoc_md660"></a>
+<h2><a class="anchor" id="autotoc_md661"></a>
 Thread System Integration</h2>
 <p><b>High-performance thread pool integration</b></p>
 <p>Features:</p><ul>
@@ -774,7 +788,7 @@ Thread System Integration</h2>
 <li><b>Work Stealing</b>: Efficient load balancing</li>
 <li><b>Hazard Pointers</b>: Safe memory reclamation</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md661"></a>
+<h2><a class="anchor" id="autotoc_md662"></a>
 Logger System Integration</h2>
 <p><b>Structured async logging</b></p>
 <p>Features:</p><ul>
@@ -783,7 +797,7 @@ Logger System Integration</h2>
 <li><b>Multiple Sinks</b>: File, console, network</li>
 <li><b>Log Levels</b>: Configurable log levels</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md662"></a>
+<h2><a class="anchor" id="autotoc_md663"></a>
 Monitoring System Integration</h2>
 <p><b>Real-time metrics and telemetry</b></p>
 <p>Features:</p><ul>
@@ -792,7 +806,7 @@ Monitoring System Integration</h2>
 <li><b>Gauges</b>: Queue sizes</li>
 <li><b>Prometheus Export</b>: Metrics export</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md663"></a>
+<h2><a class="anchor" id="autotoc_md664"></a>
 Container System Integration</h2>
 <p><b>Type-safe message payloads</b></p>
 <p>Features:</p><ul>
@@ -802,9 +816,9 @@ Container System Integration</h2>
 <li><b>Thread Safety</b>: Safe concurrent access</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md665"></a>
+<h1><a class="anchor" id="autotoc_md666"></a>
 Production Features</h1>
-<h2><a class="anchor" id="autotoc_md666"></a>
+<h2><a class="anchor" id="autotoc_md667"></a>
 Reliability</h2>
 <p><b>Enterprise-grade reliability features</b></p>
 <p>Features:</p><ul>
@@ -814,7 +828,7 @@ Reliability</h2>
 <li><b>Circuit Breakers</b>: Prevent cascade failures</li>
 <li><b>Health Checks</b>: Monitor system health</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md667"></a>
+<h2><a class="anchor" id="autotoc_md668"></a>
 Observability</h2>
 <p><b>Production observability</b></p>
 <p>Features:</p><ul>
@@ -823,7 +837,7 @@ Observability</h2>
 <li><b>Queue Metrics</b>: Size, drops, overflows</li>
 <li><b>Subscriber Metrics</b>: Active subscribers, callback latency</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md668"></a>
+<h2><a class="anchor" id="autotoc_md669"></a>
 Testing Support</h2>
 <p><b>Comprehensive testing utilities</b></p>
 <p>Features:</p><ul>
@@ -833,7 +847,7 @@ Testing Support</h2>
 <li><b>Integration Tests</b>: End-to-end test scenarios</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md670"></a>
+<h1><a class="anchor" id="autotoc_md671"></a>
 Feature Matrix</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -904,7 +918,7 @@ Feature Matrix</h1>
 <td class="markdownTableBodyNone"><b>Metrics</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md672"></a>
+<h1><a class="anchor" id="autotoc_md673"></a>
 Getting Started</h1>
 <p>For usage examples and getting started guides, see:</p><ul>
 <li><a class="el" href="../../d6/d63/md_docs_2guides_2QUICK__START.html">Quick Start Guide</a></li>
