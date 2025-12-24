@@ -59,14 +59,40 @@ bus->subscribe("user.*", [](const message& msg) {
 
 ### Message Broker
 
-**Advanced routing and filtering capabilities**
+**Central message routing component with advanced routing capabilities**
 
 Features:
-- **Content-based Routing**: Route messages based on content, not just topic
-- **Message Filtering**: Apply filters before delivery
-- **Transformation Pipeline**: Transform messages during routing
-- **Dead Letter Queue**: Automatic handling of failed messages
-- **Retry Policies**: Configurable retry strategies
+- **Route Management**: Add, remove, enable, and disable routes dynamically
+- **Topic Pattern Matching**: Wildcard support via topic_router integration (`*` and `#`)
+- **Priority-based Ordering**: Routes processed in priority order (higher = first)
+- **Statistics Collection**: Track messages routed, delivered, failed, and unrouted
+- **Thread-safe Operations**: Concurrent access with shared_mutex
+
+```cpp
+message_broker broker;
+broker.start();
+
+// Add a route for user events
+broker.add_route("user-handler", "user.*", [](const message& msg) {
+    // Process user message
+    return common::ok();
+}, 5);  // priority 5
+
+// Route a message
+message msg("user.created");
+broker.route(msg);
+
+// Get statistics
+auto stats = broker.get_statistics();
+std::cout << "Routed: " << stats.messages_routed << std::endl;
+
+broker.stop();
+```
+
+**Planned Features** (see #181, #182, #183):
+- Content-based Routing
+- Dead Letter Queue
+- Transformation Pipeline
 
 ---
 
@@ -981,6 +1007,7 @@ Features:
 | Feature | Core | Patterns | Task | Backend | Status |
 |---------|------|----------|------|---------|--------|
 | **Message Bus** | ✅ | - | - | - | Complete |
+| **Message Broker** | ✅ | - | - | - | Complete |
 | **Topic Router** | ✅ | - | - | - | Complete |
 | **Message Queue** | ✅ | - | - | - | Complete |
 | **Pub/Sub** | - | ✅ | - | - | Complete |

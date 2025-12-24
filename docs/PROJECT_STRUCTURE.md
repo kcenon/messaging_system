@@ -62,11 +62,11 @@ messaging_system/
 │
 ├── src/impl/                          # Implementation files
 │   ├── core/                          # Core implementations
-│   │   ├── message_impl.cpp
-│   │   ├── message_bus_impl.cpp
-│   │   ├── message_broker_impl.cpp
-│   │   ├── message_queue_impl.cpp
-│   │   └── topic_router_impl.cpp
+│   │   ├── message.cpp
+│   │   ├── message_bus.cpp
+│   │   ├── message_broker.cpp
+│   │   ├── message_queue.cpp
+│   │   └── topic_router.cpp
 │   │
 │   ├── backends/                      # Backend implementations
 │   │   ├── standalone_backend_impl.cpp
@@ -99,6 +99,7 @@ messaging_system/
 │   │   ├── core/                      # Core component tests
 │   │   │   ├── test_message.cpp
 │   │   │   ├── test_message_bus.cpp
+│   │   │   ├── test_message_broker.cpp
 │   │   │   ├── test_message_queue.cpp
 │   │   │   └── test_topic_router.cpp
 │   │   │
