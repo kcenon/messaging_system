@@ -8,8 +8,10 @@
 #include <kcenon/common/logging/log_functions.h>
 #include <kcenon/messaging/error/error_codes.h>
 
+#include <algorithm>
 #include <deque>
 #include <mutex>
+#include <regex>
 #include <shared_mutex>
 #include <unordered_map>
 
@@ -23,6 +25,14 @@ struct internal_route {
 	route_info info;
 	message_handler handler;
 	uint64_t subscription_id = 0;
+};
+
+// =============================================================================
+// Internal Content Route Data
+// =============================================================================
+
+struct internal_content_route {
+	content_route info;
 };
 
 // =============================================================================
@@ -701,6 +711,272 @@ public:
 		return dlq_config_.has_value();
 	}
 
+	// =========================================================================
+	// Content-Based Routing Operations
+	// =========================================================================
+
+	common::VoidResult add_content_route(const std::string& route_id,
+										 content_filter filter,
+										 message_handler handler,
+										 int priority) {
+		if (route_id.empty()) {
+			common::logging::log_error("Add content route failed: route_id is empty");
+			return common::error_info(
+				common::error::codes::common_errors::invalid_argument,
+				"Content route ID cannot be empty"
+			);
+		}
+
+		if (!filter) {
+			common::logging::log_error("Add content route failed: filter is null");
+			return common::error_info(
+				common::error::codes::common_errors::invalid_argument,
+				"Content filter cannot be null"
+			);
+		}
+
+		if (!handler) {
+			common::logging::log_error("Add content route failed: handler is null");
+			return common::error_info(
+				common::error::codes::common_errors::invalid_argument,
+				"Handler cannot be null"
+			);
+		}
+
+		std::unique_lock lock(content_routes_mutex_);
+
+		// Check for duplicate route
+		if (content_routes_.find(route_id) != content_routes_.end()) {
+			common::logging::log_error("Add content route failed: duplicate route_id " + route_id);
+			return common::error_info(
+				error::duplicate_subscription,
+				"Content route already exists: " + route_id
+			);
+		}
+
+		// Check max routes limit
+		if (content_routes_.size() >= config_.max_routes) {
+			common::logging::log_error("Add content route failed: max routes limit reached");
+			return common::error_info(
+				error::queue_full,
+				"Maximum number of content routes reached"
+			);
+		}
+
+		// Create internal content route
+		internal_content_route route;
+		route.info.route_id = route_id;
+		route.info.filter = std::move(filter);
+		route.info.handler = std::move(handler);
+		route.info.priority = priority;
+		route.info.active = true;
+		route.info.messages_processed = 0;
+
+		content_routes_[route_id] = std::move(route);
+
+		common::logging::log_debug("Content route added, id: " + route_id +
+			", priority: " + std::to_string(priority));
+
+		return common::ok();
+	}
+
+	common::VoidResult remove_content_route(const std::string& route_id) {
+		std::unique_lock lock(content_routes_mutex_);
+
+		auto it = content_routes_.find(route_id);
+		if (it == content_routes_.end()) {
+			common::logging::log_warning("Remove content route failed: route not found " + route_id);
+			return common::make_error<std::monostate>(
+				error::route_not_found,
+				"Content route not found: " + route_id,
+				"messaging_system"
+			);
+		}
+
+		content_routes_.erase(it);
+		common::logging::log_debug("Content route removed, id: " + route_id);
+		return common::ok();
+	}
+
+	common::VoidResult enable_content_route(const std::string& route_id) {
+		std::unique_lock lock(content_routes_mutex_);
+
+		auto it = content_routes_.find(route_id);
+		if (it == content_routes_.end()) {
+			common::logging::log_warning("Enable content route failed: route not found " + route_id);
+			return common::make_error<std::monostate>(
+				error::route_not_found,
+				"Content route not found: " + route_id,
+				"messaging_system"
+			);
+		}
+
+		if (it->second.info.active) {
+			common::logging::log_debug("Content route already active: " + route_id);
+			return common::ok();
+		}
+
+		it->second.info.active = true;
+		common::logging::log_debug("Content route enabled, id: " + route_id);
+		return common::ok();
+	}
+
+	common::VoidResult disable_content_route(const std::string& route_id) {
+		std::unique_lock lock(content_routes_mutex_);
+
+		auto it = content_routes_.find(route_id);
+		if (it == content_routes_.end()) {
+			common::logging::log_warning("Disable content route failed: route not found " + route_id);
+			return common::make_error<std::monostate>(
+				error::route_not_found,
+				"Content route not found: " + route_id,
+				"messaging_system"
+			);
+		}
+
+		if (!it->second.info.active) {
+			common::logging::log_debug("Content route already disabled: " + route_id);
+			return common::ok();
+		}
+
+		it->second.info.active = false;
+		common::logging::log_debug("Content route disabled, id: " + route_id);
+		return common::ok();
+	}
+
+	bool has_content_route(const std::string& route_id) const {
+		std::shared_lock lock(content_routes_mutex_);
+		return content_routes_.find(route_id) != content_routes_.end();
+	}
+
+	common::Result<content_route> get_content_route(const std::string& route_id) const {
+		std::shared_lock lock(content_routes_mutex_);
+
+		auto it = content_routes_.find(route_id);
+		if (it == content_routes_.end()) {
+			return common::make_error<content_route>(
+				error::route_not_found,
+				"Content route not found: " + route_id,
+				"messaging_system"
+			);
+		}
+
+		return common::ok(it->second.info);
+	}
+
+	std::vector<content_route> get_content_routes() const {
+		std::shared_lock lock(content_routes_mutex_);
+
+		std::vector<content_route> result;
+		result.reserve(content_routes_.size());
+
+		for (const auto& [id, route] : content_routes_) {
+			result.push_back(route.info);
+		}
+
+		return result;
+	}
+
+	size_t content_route_count() const {
+		std::shared_lock lock(content_routes_mutex_);
+		return content_routes_.size();
+	}
+
+	void clear_content_routes() {
+		std::unique_lock lock(content_routes_mutex_);
+		content_routes_.clear();
+		common::logging::log_debug("All content routes cleared");
+	}
+
+	common::VoidResult route_by_content(const message& msg) {
+		if (!running_.load()) {
+			common::logging::log_debug("Content route rejected: broker not running");
+			return common::make_error<std::monostate>(
+				error::broker_not_started,
+				"Message broker is not running"
+			);
+		}
+
+		if (config_.enable_trace_logging) {
+			common::logging::log_trace("Content routing message, topic: " + msg.metadata().topic +
+				", id: " + msg.metadata().id);
+		}
+
+		// Get sorted routes by priority (highest first)
+		std::vector<std::pair<std::string, internal_content_route>> sorted_routes;
+		{
+			std::shared_lock lock(content_routes_mutex_);
+			sorted_routes.reserve(content_routes_.size());
+			for (const auto& [id, route] : content_routes_) {
+				if (route.info.active) {
+					sorted_routes.emplace_back(id, route);
+				}
+			}
+		}
+
+		// Sort by priority (descending)
+		std::sort(sorted_routes.begin(), sorted_routes.end(),
+			[](const auto& a, const auto& b) {
+				return a.second.info.priority > b.second.info.priority;
+			});
+
+		// Evaluate filters and call handlers
+		bool any_matched = false;
+		bool any_failed = false;
+		std::string last_error;
+
+		for (auto& [route_id, route] : sorted_routes) {
+			try {
+				// Evaluate filter
+				if (route.info.filter(msg)) {
+					any_matched = true;
+
+					// Call handler
+					auto result = route.info.handler(msg);
+
+					if (result.is_ok()) {
+						// Update statistics
+						std::unique_lock lock(content_routes_mutex_);
+						auto it = content_routes_.find(route_id);
+						if (it != content_routes_.end()) {
+							it->second.info.messages_processed++;
+						}
+					} else {
+						any_failed = true;
+						last_error = result.error().message;
+						common::logging::log_warning("Content route handler failed, route: " +
+							route_id + ", error: " + last_error);
+					}
+				}
+			} catch (const std::exception& e) {
+				any_failed = true;
+				last_error = e.what();
+				common::logging::log_error("Content route filter/handler threw exception, route: " +
+					route_id + ", error: " + last_error);
+			}
+		}
+
+		if (!any_matched) {
+			if (config_.enable_trace_logging) {
+				common::logging::log_trace("No content routes matched message, id: " +
+					msg.metadata().id);
+			}
+			return common::make_error<std::monostate>(
+				common::error::codes::common_errors::not_found,
+				"No content routes matched the message"
+			);
+		}
+
+		if (any_failed) {
+			return common::make_error<std::monostate>(
+				common::error::codes::common_errors::internal_error,
+				"One or more content route handlers failed: " + last_error
+			);
+		}
+
+		return common::ok();
+	}
+
 private:
 	common::VoidResult handle_route_message(const std::string& route_id,
 											const message& msg) {
@@ -766,6 +1042,10 @@ private:
 	std::atomic<std::size_t> dlq_total_received_{0};
 	std::atomic<std::size_t> dlq_total_replayed_{0};
 	std::atomic<std::size_t> dlq_total_purged_{0};
+
+	// Content-based routing
+	mutable std::shared_mutex content_routes_mutex_;
+	std::unordered_map<std::string, internal_content_route> content_routes_;
 };
 
 // =============================================================================
@@ -892,5 +1172,155 @@ void message_broker::on_dlq_full(dlq_full_callback callback) {
 bool message_broker::is_dlq_configured() const {
 	return impl_->is_dlq_configured();
 }
+
+// =============================================================================
+// Content-Based Routing Public Interface
+// =============================================================================
+
+common::VoidResult message_broker::add_content_route(const std::string& route_id,
+													 content_filter filter,
+													 message_handler handler,
+													 int priority) {
+	return impl_->add_content_route(route_id, std::move(filter), std::move(handler), priority);
+}
+
+common::VoidResult message_broker::remove_content_route(const std::string& route_id) {
+	return impl_->remove_content_route(route_id);
+}
+
+common::VoidResult message_broker::enable_content_route(const std::string& route_id) {
+	return impl_->enable_content_route(route_id);
+}
+
+common::VoidResult message_broker::disable_content_route(const std::string& route_id) {
+	return impl_->disable_content_route(route_id);
+}
+
+bool message_broker::has_content_route(const std::string& route_id) const {
+	return impl_->has_content_route(route_id);
+}
+
+common::Result<content_route> message_broker::get_content_route(const std::string& route_id) const {
+	return impl_->get_content_route(route_id);
+}
+
+std::vector<content_route> message_broker::get_content_routes() const {
+	return impl_->get_content_routes();
+}
+
+size_t message_broker::content_route_count() const {
+	return impl_->content_route_count();
+}
+
+void message_broker::clear_content_routes() {
+	impl_->clear_content_routes();
+}
+
+common::VoidResult message_broker::route_by_content(const message& msg) {
+	return impl_->route_by_content(msg);
+}
+
+// =============================================================================
+// Content Filter Utilities Implementation
+// =============================================================================
+
+namespace content_filters {
+
+content_filter has_field(const std::string& field_name) {
+	return [field_name](const message& msg) -> bool {
+		try {
+			auto value = msg.payload().get_value(field_name);
+			return value.has_value() && value->type != container_module::value_types::null_value;
+		} catch (...) {
+			return false;
+		}
+	};
+}
+
+content_filter field_equals(const std::string& field_name, const std::string& value) {
+	return [field_name, value](const message& msg) -> bool {
+		try {
+			auto field_value = msg.payload().get_value(field_name);
+			if (!field_value.has_value()) {
+				return false;
+			}
+			return container_module::variant_helpers::to_string(
+				field_value->data, field_value->type) == value;
+		} catch (...) {
+			return false;
+		}
+	};
+}
+
+content_filter field_matches(const std::string& field_name, const std::string& pattern) {
+	auto regex_ptr = std::make_shared<std::regex>(pattern);
+	return [field_name, regex_ptr](const message& msg) -> bool {
+		try {
+			auto field_value = msg.payload().get_value(field_name);
+			if (!field_value.has_value()) {
+				return false;
+			}
+			std::string str_value = container_module::variant_helpers::to_string(
+				field_value->data, field_value->type);
+			return std::regex_search(str_value, *regex_ptr);
+		} catch (...) {
+			return false;
+		}
+	};
+}
+
+content_filter metadata_equals(const std::string& key, const std::string& value) {
+	return [key, value](const message& msg) -> bool {
+		const auto& headers = msg.metadata().headers;
+		auto it = headers.find(key);
+		if (it != headers.end()) {
+			return it->second == value;
+		}
+		return false;
+	};
+}
+
+content_filter message_type_is(message_type type) {
+	return [type](const message& msg) -> bool {
+		return msg.metadata().type == type;
+	};
+}
+
+content_filter priority_at_least(message_priority min_priority) {
+	return [min_priority](const message& msg) -> bool {
+		return static_cast<uint8_t>(msg.metadata().priority) >=
+			   static_cast<uint8_t>(min_priority);
+	};
+}
+
+content_filter all_of(std::vector<content_filter> filters) {
+	return [filters = std::move(filters)](const message& msg) -> bool {
+		for (const auto& filter : filters) {
+			if (!filter(msg)) {
+				return false;
+			}
+		}
+		return true;
+	};
+}
+
+content_filter any_of(std::vector<content_filter> filters) {
+	return [filters = std::move(filters)](const message& msg) -> bool {
+		for (const auto& filter : filters) {
+			if (filter(msg)) {
+				return true;
+			}
+		}
+		return false;
+	};
+}
+
+content_filter not_filter(content_filter filter) {
+	return [filter = std::move(filter)](const message& msg) -> bool {
+		return !filter(msg);
+	};
+}
+
+}  // namespace content_filters
 
 }  // namespace kcenon::messaging
