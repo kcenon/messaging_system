@@ -6,10 +6,11 @@
 2. [Network System API](#network-system-api)
 3. [Database System API](#database-system-api)
 4. [Message Bus API](#message-bus-api)
-5. [Service Container API](#service-container-api)
-6. [Thread System API](#thread-system-api)
-7. [Logger System API](#logger-system-api)
-8. [Error Codes](#error-codes)
+5. [Message Broker API](#message-broker-api)
+6. [Service Container API](#service-container-api)
+7. [Thread System API](#thread-system-api)
+8. [Logger System API](#logger-system-api)
+9. [Error Codes](#error-codes)
 
 ---
 
@@ -513,6 +514,161 @@ std::cout << "Received remote: " << stats.messages_received_remote << std::endl;
 
 bus.stop();  // Disconnects transport automatically
 ```
+
+---
+
+## Message Broker API
+
+### Namespace: `kcenon::messaging`
+
+### Overview
+
+The `message_broker` provides a central message routing component with advanced routing capabilities. It integrates with `topic_router` for pattern matching while providing a higher-level abstraction for route management.
+
+### Struct: `broker_config`
+
+Configuration for message_broker.
+
+```cpp
+struct broker_config {
+    size_t max_routes = 1000;           // Maximum number of routes
+    bool enable_statistics = true;       // Enable statistics collection
+    bool enable_trace_logging = false;   // Enable trace-level logging
+    std::chrono::milliseconds default_timeout{0};  // Default timeout (0 = no timeout)
+};
+```
+
+### Struct: `broker_statistics`
+
+Runtime statistics for message_broker.
+
+```cpp
+struct broker_statistics {
+    uint64_t messages_routed = 0;     // Total messages routed
+    uint64_t messages_delivered = 0;  // Successfully delivered
+    uint64_t messages_failed = 0;     // Failed to route
+    uint64_t messages_unrouted = 0;   // No matching route
+    uint64_t active_routes = 0;       // Number of active routes
+    std::chrono::steady_clock::time_point last_reset;  // Last statistics reset
+};
+```
+
+### Struct: `route_info`
+
+Information about a registered route.
+
+```cpp
+struct route_info {
+    std::string route_id;        // Unique route identifier
+    std::string topic_pattern;   // Topic pattern (supports wildcards)
+    int priority = 5;            // Route priority (higher = first)
+    bool active = true;          // Whether route is active
+    uint64_t messages_processed = 0;  // Messages processed by this route
+};
+```
+
+### Class: `message_broker`
+
+Central message routing component with route management.
+
+#### Constructor
+```cpp
+explicit message_broker(broker_config config = {});
+```
+
+#### Lifecycle Management
+```cpp
+common::VoidResult start();
+common::VoidResult stop();
+bool is_running() const;
+```
+
+#### Route Management
+```cpp
+// Add a new route with handler and optional priority (0-10)
+common::VoidResult add_route(
+    const std::string& route_id,
+    const std::string& topic_pattern,
+    message_handler handler,
+    int priority = 5
+);
+
+// Remove a route
+common::VoidResult remove_route(const std::string& route_id);
+
+// Enable/disable routes
+common::VoidResult enable_route(const std::string& route_id);
+common::VoidResult disable_route(const std::string& route_id);
+
+// Query routes
+bool has_route(const std::string& route_id) const;
+common::Result<route_info> get_route(const std::string& route_id) const;
+std::vector<route_info> get_routes() const;
+size_t route_count() const;
+void clear_routes();
+```
+
+#### Message Routing
+```cpp
+// Route a message to matching handlers (priority order)
+common::VoidResult route(const message& msg);
+```
+
+#### Statistics
+```cpp
+broker_statistics get_statistics() const;
+void reset_statistics();
+```
+
+#### Usage Example
+```cpp
+#include <kcenon/messaging/core/message_broker.h>
+using namespace kcenon::messaging;
+
+// Create and start broker
+message_broker broker;
+broker.start();
+
+// Add routes with different priorities
+broker.add_route("user-handler", "user.*", [](const message& msg) {
+    std::cout << "Processing user event: " << msg.metadata().topic << std::endl;
+    return common::ok();
+}, 5);
+
+broker.add_route("audit-handler", "user.#", [](const message& msg) {
+    std::cout << "Auditing: " << msg.metadata().topic << std::endl;
+    return common::ok();
+}, 10);  // Higher priority, processed first
+
+// Route messages
+message msg("user.created");
+auto result = broker.route(msg);
+if (!result.is_ok()) {
+    std::cerr << "Routing failed: " << result.error().message << std::endl;
+}
+
+// Check statistics
+auto stats = broker.get_statistics();
+std::cout << "Messages routed: " << stats.messages_routed << std::endl;
+std::cout << "Messages delivered: " << stats.messages_delivered << std::endl;
+
+// Manage routes
+broker.disable_route("audit-handler");
+broker.remove_route("user-handler");
+
+broker.stop();
+```
+
+#### Topic Pattern Wildcards
+
+The broker supports MQTT-style wildcards via `topic_router`:
+
+| Pattern | Matches | Does Not Match |
+|---------|---------|----------------|
+| `user.created` | `user.created` | `user.updated` |
+| `user.*` | `user.created`, `user.updated` | `user.profile.updated` |
+| `user.#` | `user.created`, `user.profile.updated` | `order.created` |
+| `*.user.#` | `app.user.profile` | `user.profile` |
 
 ---
 
