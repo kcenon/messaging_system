@@ -84,7 +84,7 @@ public:
 			return VoidResult::err(error_info(
 				error::publication_failed,
 				"Failed to start WebSocket client: " +
-					std::string(result.error().message())));
+					result.error().message));
 		}
 
 		return ok();
@@ -132,7 +132,7 @@ public:
 			return VoidResult::err(error_info(
 				error::message_serialization_failed,
 				"Failed to serialize message: " +
-					std::string(serialized.error().message())));
+					serialized.error().message));
 		}
 
 		auto& data = serialized.value();
@@ -142,7 +142,7 @@ public:
 			return VoidResult::err(error_info(
 				error::publication_failed,
 				"Failed to send message: " +
-					std::string(result.error().message())));
+					result.error().message));
 		}
 
 		++stats_.messages_sent;
@@ -163,7 +163,7 @@ public:
 			return VoidResult::err(error_info(
 				error::publication_failed,
 				"Failed to send binary data: " +
-					std::string(result.error().message())));
+					result.error().message));
 		}
 
 		stats_.bytes_sent += data.size();
@@ -280,7 +280,7 @@ public:
 			return VoidResult::err(error_info(
 				error::publication_failed,
 				"Failed to send text: " +
-					std::string(result.error().message())));
+					result.error().message));
 		}
 
 		stats_.bytes_sent += text.size();
@@ -299,7 +299,7 @@ public:
 			return VoidResult::err(error_info(
 				error::publication_failed,
 				"Failed to send ping: " +
-					std::string(result.error().message())));
+					result.error().message));
 		}
 
 		return ok();
