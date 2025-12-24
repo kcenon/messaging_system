@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('d5/dd2/md_docs_2task_2PATTERNS.html','
   <div class="headertitle"><div class="title">Task Module Workflow Patterns</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1913"></a> This guide covers common workflow patterns for the Task module.</p>
-<h1><a class="anchor" id="autotoc_md1914"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1923"></a> This guide covers common workflow patterns for the Task module.</p>
+<h1><a class="anchor" id="autotoc_md1924"></a>
 Table of Contents</h1>
 <ul>
 <li>Chain Pattern</li>
@@ -107,15 +107,15 @@ Table of Contents</h1>
 <li>Subtask Spawning</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1916"></a>
+<h1><a class="anchor" id="autotoc_md1926"></a>
 Chain Pattern</h1>
 <p>The chain pattern executes tasks sequentially, where the result of one task becomes the input for the next.</p>
-<h2><a class="anchor" id="autotoc_md1917"></a>
+<h2><a class="anchor" id="autotoc_md1927"></a>
 Concept</h2>
 <div class="fragment"><div class="line">Task A → Task B → Task C</div>
 <div class="line">         ↑         ↑</div>
 <div class="line">     A&#39;s result  B&#39;s result</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1918"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1928"></a>
 Usage</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_client.h&gt;</span></div>
 <div class="line"> </div>
@@ -136,7 +136,7 @@ Usage</h2>
 <div class="line">    <span class="comment">// This is the result from task_c</span></div>
 <div class="line">    <span class="keyword">auto</span> final_result = outcome.value();</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1919"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1929"></a>
 Handler Implementation</h2>
 <div class="fragment"><div class="line"><span class="comment">// Each handler receives the previous task&#39;s result</span></div>
 <div class="line">system.register_handler(<span class="stringliteral">&quot;step.two&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -149,7 +149,7 @@ Handler Implementation</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1920"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1930"></a>
 Error Handling</h2>
 <p>If any task in the chain fails, the entire chain stops and the error is propagated:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = client.chain({task_a, task_b, task_c});</div>
@@ -159,7 +159,7 @@ Error Handling</h2>
 <div class="line">    <span class="comment">// Chain failed at some point</span></div>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Chain failed: &quot;</span> &lt;&lt; result.error_message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1921"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1931"></a>
 Use Cases</h2>
 <ul>
 <li>Multi-step data processing pipelines</li>
@@ -167,15 +167,15 @@ Use Cases</h2>
 <li>Dependent operations that must run in order</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1923"></a>
+<h1><a class="anchor" id="autotoc_md1933"></a>
 Chord Pattern</h1>
 <p>The chord pattern executes multiple tasks in parallel, then runs a callback task with the aggregated results.</p>
-<h2><a class="anchor" id="autotoc_md1924"></a>
+<h2><a class="anchor" id="autotoc_md1934"></a>
 Concept</h2>
 <div class="fragment"><div class="line">Task A ─┐</div>
 <div class="line">Task B ─┼→ Callback Task (with all results)</div>
 <div class="line">Task C ─┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1925"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1935"></a>
 Usage</h2>
 <div class="fragment"><div class="line"><span class="comment">// Define parallel tasks</span></div>
 <div class="line"><span class="keyword">auto</span> task_a = task_builder(<span class="stringliteral">&quot;process.part1&quot;</span>)</div>
@@ -198,7 +198,7 @@ Usage</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Wait for final result</span></div>
 <div class="line"><span class="keyword">auto</span> outcome = result.get(std::chrono::minutes(10));</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1926"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1936"></a>
 Callback Handler</h2>
 <p>The callback receives all results as an array:</p>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;aggregate.results&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -216,7 +216,7 @@ Callback Handler</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1927"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1937"></a>
 Error Handling</h2>
 <p>The chord fails if any parallel task fails:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = client.chord(tasks, callback);</div>
@@ -226,7 +226,7 @@ Error Handling</h2>
 <div class="line">    <span class="comment">// One or more parallel tasks failed</span></div>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Chord failed: &quot;</span> &lt;&lt; result.error_message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1928"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1938"></a>
 Use Cases</h2>
 <ul>
 <li>Map-reduce operations</li>
@@ -235,16 +235,16 @@ Use Cases</h2>
 <li>Fan-out/fan-in workflows</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1930"></a>
+<h1><a class="anchor" id="autotoc_md1940"></a>
 Retry Strategies</h1>
 <p>The Task module supports automatic retry with exponential backoff.</p>
-<h2><a class="anchor" id="autotoc_md1931"></a>
+<h2><a class="anchor" id="autotoc_md1941"></a>
 Default Configuration</h2>
 <div class="fragment"><div class="line">task_config config;</div>
 <div class="line">config.max_retries = 3;</div>
 <div class="line">config.retry_delay = std::chrono::milliseconds(1000);</div>
 <div class="line">config.retry_backoff_multiplier = 2.0;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1932"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1942"></a>
 Retry Delay Calculation</h2>
 <div class="fragment"><div class="line">delay = retry_delay * (backoff_multiplier ^ attempt)</div>
 <div class="line"> </div>
@@ -253,7 +253,7 @@ Retry Delay Calculation</h2>
 <div class="line">- Attempt 2 fails → Wait 2000ms</div>
 <div class="line">- Attempt 3 fails → Wait 4000ms</div>
 <div class="line">- Attempt 4 fails → Task marked as failed</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1933"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1943"></a>
 Using Task Builder</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;email.send&quot;</span>)</div>
 <div class="line">    .payload(email_data)</div>
@@ -261,7 +261,7 @@ Using Task Builder</h2>
 <div class="line">    .retry_delay(std::chrono::seconds(2))    <span class="comment">// Start with 2s delay</span></div>
 <div class="line">    .backoff(1.5)                            <span class="comment">// 1.5x multiplier</span></div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1934"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1944"></a>
 Custom Retry Logic</h2>
 <p>Implement <code>on_retry</code> hook for custom behavior:</p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>resilient_handler : <span class="keyword">public</span> task_handler_interface {</div>
@@ -282,7 +282,7 @@ Custom Retry Logic</h2>
 <div class="line">        <span class="comment">// Could also update metrics, send alerts, etc.</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1935"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1945"></a>
 Retry vs. No Retry Errors</h2>
 <p>To prevent retry on certain errors:</p>
 <div class="fragment"><div class="line">common::Result&lt;value_container&gt; execute(<span class="keyword">const</span> task&amp; t, task_context&amp; ctx)<span class="keyword"> override </span>{</div>
@@ -297,10 +297,10 @@ Retry vs. No Retry Errors</h2>
 <div class="line">    <span class="keywordflow">return</span> process_data(t.payload());</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1937"></a>
+<h1><a class="anchor" id="autotoc_md1947"></a>
 Priority Queues</h1>
 <p>Tasks can be assigned different priority levels to control execution order.</p>
-<h2><a class="anchor" id="autotoc_md1938"></a>
+<h2><a class="anchor" id="autotoc_md1948"></a>
 Priority Levels</h2>
 <div class="fragment"><div class="line"><span class="keyword">enum class</span> message_priority {</div>
 <div class="line">    lowest = 1,</div>
@@ -309,7 +309,7 @@ Priority Levels</h2>
 <div class="line">    high = 7,</div>
 <div class="line">    highest = 9</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1939"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1949"></a>
 Setting Priority</h2>
 <div class="fragment"><div class="line"><span class="comment">// Using task builder</span></div>
 <div class="line"><span class="keyword">auto</span> urgent_task = task_builder(<span class="stringliteral">&quot;notification.send&quot;</span>)</div>
@@ -320,14 +320,14 @@ Setting Priority</h2>
 <div class="line"><span class="comment">// Using task_config</span></div>
 <div class="line">task t(<span class="stringliteral">&quot;report.generate&quot;</span>, payload);</div>
 <div class="line">t.config().priority = message_priority::low;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1940"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1950"></a>
 Priority Queue Setup</h2>
 <div class="fragment"><div class="line">task_system_config config;</div>
 <div class="line">config.worker.queues = {<span class="stringliteral">&quot;critical&quot;</span>, <span class="stringliteral">&quot;high&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;low&quot;</span>};</div>
 <div class="line">config.worker.concurrency = 8;</div>
 <div class="line"> </div>
 <div class="line">task_system system(config);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1941"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1951"></a>
 Submitting to Priority Queues</h2>
 <div class="fragment"><div class="line"><span class="comment">// Critical notifications go to critical queue</span></div>
 <div class="line"><span class="keyword">auto</span> critical = task_builder(<span class="stringliteral">&quot;alert.send&quot;</span>)</div>
@@ -340,7 +340,7 @@ Submitting to Priority Queues</h2>
 <div class="line">    .queue(<span class="stringliteral">&quot;low&quot;</span>)</div>
 <div class="line">    .priority(message_priority::lowest)</div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1942"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1952"></a>
 Best Practices</h2>
 <ol type="1">
 <li><b>Don't overuse highest priority</b> - It defeats the purpose</li>
@@ -349,9 +349,9 @@ Best Practices</h2>
 <li><b>Set appropriate timeouts</b> - Low priority tasks may wait longer</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1944"></a>
+<h1><a class="anchor" id="autotoc_md1954"></a>
 Scheduled Tasks</h1>
-<h2><a class="anchor" id="autotoc_md1945"></a>
+<h2><a class="anchor" id="autotoc_md1955"></a>
 Periodic Execution</h2>
 <p>Execute tasks at fixed intervals:</p>
 <div class="fragment"><div class="line"><span class="comment">// Every 5 minutes</span></div>
@@ -367,7 +367,7 @@ Periodic Execution</h2>
 <div class="line">    task_builder(<span class="stringliteral">&quot;sync.external&quot;</span>).build().value(),</div>
 <div class="line">    std::chrono::hours(1)</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1946"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1956"></a>
 Cron-Based Scheduling</h2>
 <p>Use cron expressions for complex schedules:</p>
 <div class="fragment"><div class="line"><span class="comment">// Daily at 3 AM</span></div>
@@ -390,7 +390,7 @@ Cron-Based Scheduling</h2>
 <div class="line">    task_builder(<span class="stringliteral">&quot;sync.crm&quot;</span>).build().value(),</div>
 <div class="line">    <span class="stringliteral">&quot;*/15 9-17 * * 1-5&quot;</span></div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1947"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1957"></a>
 Cron Expression Format</h2>
 <div class="fragment"><div class="line">* * * * *</div>
 <div class="line">│ │ │ │ │</div>
@@ -406,7 +406,7 @@ Cron Expression Format</h2>
 <div class="line">- */15  Every 15 units</div>
 <div class="line">- 1-5   Range</div>
 <div class="line">- 1,3,5 List</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1948"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1958"></a>
 Managing Schedules</h2>
 <div class="fragment"><div class="line"><span class="comment">// Disable a schedule temporarily</span></div>
 <div class="line">system.scheduler()-&gt;disable(<span class="stringliteral">&quot;daily-report&quot;</span>);</div>
@@ -423,7 +423,7 @@ Managing Schedules</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Remove schedule</span></div>
 <div class="line">system.scheduler()-&gt;remove(<span class="stringliteral">&quot;obsolete-job&quot;</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1949"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1959"></a>
 Delayed Task Execution</h2>
 <p>Execute a task after a delay:</p>
 <div class="fragment"><div class="line"><span class="comment">// Execute after 30 seconds</span></div>
@@ -439,10 +439,10 @@ Delayed Task Execution</h2>
 <div class="line">    tomorrow_9am</div>
 <div class="line">);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1951"></a>
+<h1><a class="anchor" id="autotoc_md1961"></a>
 Progress Tracking</h1>
 <p>Report and monitor task progress during execution.</p>
-<h2><a class="anchor" id="autotoc_md1952"></a>
+<h2><a class="anchor" id="autotoc_md1962"></a>
 Reporting Progress</h2>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;large-file.process&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
 <div class="line">    <span class="keyword">auto</span> file_path = t.payload().get_string(<span class="stringliteral">&quot;path&quot;</span>).value();</div>
@@ -466,7 +466,7 @@ Reporting Progress</h2>
 <div class="line">    result.add(<span class="stringliteral">&quot;lines_processed&quot;</span>, processed);</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1953"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1963"></a>
 Monitoring Progress</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;large-file.process&quot;</span>, payload);</div>
 <div class="line"> </div>
@@ -482,7 +482,7 @@ Monitoring Progress</h2>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;\nComplete!\n&quot;</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1954"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1964"></a>
 Progress History</h2>
 <div class="fragment"><div class="line"><span class="comment">// Get detailed progress history</span></div>
 <div class="line"><span class="keyword">auto</span> history = result.progress_history();</div>
@@ -492,10 +492,10 @@ Progress History</h2>
 <div class="line">              &lt;&lt; entry.message &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1956"></a>
+<h1><a class="anchor" id="autotoc_md1966"></a>
 Checkpoint and Recovery</h1>
 <p>Save progress for recovery after failures.</p>
-<h2><a class="anchor" id="autotoc_md1957"></a>
+<h2><a class="anchor" id="autotoc_md1967"></a>
 Saving Checkpoints</h2>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;batch.process&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
 <div class="line">    <span class="keyword">auto</span> items = t.payload().get_array(<span class="stringliteral">&quot;items&quot;</span>);</div>
@@ -536,7 +536,7 @@ Saving Checkpoints</h2>
 <div class="line">    result.add(<span class="stringliteral">&quot;processed_count&quot;</span>, items.size());</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1958"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1968"></a>
 Checkpoint Data</h2>
 <p>Store any data needed for recovery:</p>
 <div class="fragment"><div class="line">container_module::value_container checkpoint;</div>
@@ -545,10 +545,10 @@ Checkpoint Data</h2>
 <div class="line">checkpoint.add(<span class="stringliteral">&quot;intermediate_results&quot;</span>, partial_results);</div>
 <div class="line">ctx.save_checkpoint(checkpoint);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1960"></a>
+<h1><a class="anchor" id="autotoc_md1970"></a>
 Subtask Spawning</h1>
 <p>Create child tasks from within a handler.</p>
-<h2><a class="anchor" id="autotoc_md1961"></a>
+<h2><a class="anchor" id="autotoc_md1971"></a>
 Spawning Subtasks</h2>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;order.process&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
 <div class="line">    <span class="keyword">auto</span> order_items = t.payload().get_array(<span class="stringliteral">&quot;items&quot;</span>);</div>
@@ -574,7 +574,7 @@ Spawning Subtasks</h2>
 <div class="line">    result.add(<span class="stringliteral">&quot;subtask_ids&quot;</span>, subtask_ids);</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1962"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1972"></a>
 Tracking Subtasks</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;order.process&quot;</span>, order_data);</div>
 <div class="line"><span class="keyword">auto</span> outcome = result.get(timeout);</div>
@@ -586,7 +586,7 @@ Tracking Subtasks</h2>
 <div class="line">        <span class="comment">// Process child result</span></div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1963"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1973"></a>
 Use Cases</h2>
 <ul>
 <li>Breaking large tasks into smaller units</li>
@@ -594,9 +594,9 @@ Use Cases</h2>
 <li>Dynamic workflow creation</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1965"></a>
+<h1><a class="anchor" id="autotoc_md1975"></a>
 Combining Patterns</h1>
-<h2><a class="anchor" id="autotoc_md1966"></a>
+<h2><a class="anchor" id="autotoc_md1976"></a>
 Chain with Retry</h2>
 <div class="fragment"><div class="line"><span class="comment">// Each task in the chain has its own retry policy</span></div>
 <div class="line"><span class="keyword">auto</span> step1 = task_builder(<span class="stringliteral">&quot;extract&quot;</span>)</div>
@@ -613,7 +613,7 @@ Chain with Retry</h2>
 <div class="line">    .build().value();</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> result = client.chain({step1, step2, step3});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1967"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1977"></a>
 Scheduled Chord</h2>
 <div class="fragment"><div class="line"><span class="comment">// Schedule a parallel processing job</span></div>
 <div class="line"><span class="keyword">auto</span> header_tasks = create_header_tasks();</div>
@@ -628,7 +628,7 @@ Scheduled Chord</h2>
 <div class="line">    <span class="stringliteral">&quot;0 * * * *&quot;</span>  <span class="comment">// Every hour</span></div>
 <div class="line">);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1969"></a>
+<h1><a class="anchor" id="autotoc_md1979"></a>
 Related Documentation</h1>
 <ul>
 <li><a class="el" href="../../d9/dff/md_docs_2task_2QUICK__START.html">Quick Start Guide</a></li>

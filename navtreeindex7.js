@@ -1,5 +1,14 @@
 var NAVTREEINDEX7 =
 {
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md125":[4,3,0],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md126":[4,3,1],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md127":[4,3,2],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md128":[4,3,2,0],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md129":[4,3,2,1],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md130":[4,3,2,1,0],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md131":[4,3,2,1,1],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md132":[4,3,2,1,2],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md133":[4,3,2,1,3],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md134":[4,3,2,1,4],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md135":[4,3,2,1,5],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md136":[4,3,2,1,6],

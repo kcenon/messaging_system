@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d5/d19/md_docs_2PROJECT__STRUCTURE__KO
   <div class="headertitle"><div class="title">Messaging System 프로젝트 구조</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1385"></a> <b>버전</b>: 0.1.1 <b>최종 수정일</b>: 2025-12-10 <b>언어</b>: <a class="el" href="../../d4/d22/md_docs_2PROJECT__STRUCTURE.html">English</a> | [한국어]</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1395"></a> <b>버전</b>: 0.1.1 <b>최종 수정일</b>: 2025-12-10 <b>언어</b>: <a class="el" href="../../d4/d22/md_docs_2PROJECT__STRUCTURE.html">English</a> | [한국어]</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1387"></a>
+<h1><a class="anchor" id="autotoc_md1397"></a>
 개요</h1>
 <p>이 문서는 messaging_system 프로젝트의 전체 디렉토리 구조와 구성에 대해 설명합니다.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1389"></a>
+<h1><a class="anchor" id="autotoc_md1399"></a>
 디렉토리 구조</h1>
 <div class="fragment"><div class="line">messaging_system/</div>
 <div class="line">├── include/kcenon/messaging/          # 공개 API 헤더</div>
@@ -299,9 +299,9 @@ $(document).ready(function(){initNavTree('d5/d19/md_docs_2PROJECT__STRUCTURE__KO
 <div class="line">├── README.md                          # 프로젝트 README</div>
 <div class="line">└── LICENSE                            # BSD 3-Clause 라이선스</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1391"></a>
+<h1><a class="anchor" id="autotoc_md1401"></a>
 컴포넌트 구성</h1>
-<h2><a class="anchor" id="autotoc_md1392"></a>
+<h2><a class="anchor" id="autotoc_md1402"></a>
 핵심 컴포넌트 (&lt;tt&gt;include/kcenon/messaging/core/&lt;/tt&gt;)</h2>
 <p><b>목적</b>: 기본 메시징 인프라</p>
 <table class="markdownTable">
@@ -318,7 +318,7 @@ $(document).ready(function(){initNavTree('d5/d19/md_docs_2PROJECT__STRUCTURE__KO
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>topic_router.h</code>   </td><td class="markdownTableBodyNone">패턴 기반 토픽 라우팅   </td><td class="markdownTableBodyNone">common_system   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1393"></a>
+<h2><a class="anchor" id="autotoc_md1403"></a>
 인터페이스 (&lt;tt&gt;include/kcenon/messaging/interfaces/&lt;/tt&gt;)</h2>
 <p><b>목적</b>: 확장성을 위한 추상 인터페이스</p>
 <table class="markdownTable">
@@ -335,7 +335,7 @@ $(document).ready(function(){initNavTree('d5/d19/md_docs_2PROJECT__STRUCTURE__KO
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>queue_interface.h</code>   </td><td class="markdownTableBodyNone">큐 추상화   </td><td class="markdownTableBodyNone">message_queue   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1394"></a>
+<h2><a class="anchor" id="autotoc_md1404"></a>
 백엔드 (&lt;tt&gt;include/kcenon/messaging/backends/&lt;/tt&gt;)</h2>
 <p><b>목적</b>: 플러그형 실행 전략</p>
 <table class="markdownTable">
@@ -348,7 +348,7 @@ $(document).ready(function(){initNavTree('d5/d19/md_docs_2PROJECT__STRUCTURE__KO
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>integration_backend.h</code>   </td><td class="markdownTableBodyNone">외부 스레드 풀   </td><td class="markdownTableBodyNone">프로덕션, 통합   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1395"></a>
+<h2><a class="anchor" id="autotoc_md1405"></a>
 패턴 (&lt;tt&gt;include/kcenon/messaging/patterns/&lt;/tt&gt;)</h2>
 <p><b>목적</b>: 고수준 메시징 패턴</p>
 <table class="markdownTable">
@@ -363,7 +363,7 @@ $(document).ready(function(){initNavTree('d5/d19/md_docs_2PROJECT__STRUCTURE__KO
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>message_pipeline.h</code>   </td><td class="markdownTableBodyNone">스테이지 기반 처리   </td><td class="markdownTableBodyNone">파이프-필터   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1396"></a>
+<h2><a class="anchor" id="autotoc_md1406"></a>
 태스크 큐 (&lt;tt&gt;include/kcenon/messaging/task/&lt;/tt&gt;)</h2>
 <p><b>목적</b>: 스케줄링과 모니터링이 포함된 분산 태스크 큐 시스템</p>
 <table class="markdownTable">
@@ -397,9 +397,9 @@ $(document).ready(function(){initNavTree('d5/d19/md_docs_2PROJECT__STRUCTURE__KO
 <td class="markdownTableBodyNone"><code>task_system.h</code>   </td><td class="markdownTableBodyNone">통합 파사드   </td><td class="markdownTableBodyNone">모든 태스크 컴포넌트   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1398"></a>
+<h1><a class="anchor" id="autotoc_md1408"></a>
 빌드 시스템</h1>
-<h2><a class="anchor" id="autotoc_md1399"></a>
+<h2><a class="anchor" id="autotoc_md1409"></a>
 CMake 구조</h2>
 <div class="fragment"><div class="line">CMakeLists.txt                  # 루트 설정</div>
 <div class="line">├── Library: messaging_system_core</div>
@@ -409,7 +409,7 @@ CMake 구조</h2>
 <div class="line">├── Executable: test targets</div>
 <div class="line">├── Executable: benchmark targets</div>
 <div class="line">└── Executable: example targets</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1400"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1410"></a>
 빌드 타겟</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -430,9 +430,9 @@ CMake 구조</h2>
 <td class="markdownTableBodyNone"><code>example_*</code>   </td><td class="markdownTableBodyNone">실행파일   </td><td class="markdownTableBodyNone">예제   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1402"></a>
+<h1><a class="anchor" id="autotoc_md1412"></a>
 의존성</h1>
-<h2><a class="anchor" id="autotoc_md1403"></a>
+<h2><a class="anchor" id="autotoc_md1413"></a>
 필수 의존성</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -442,7 +442,7 @@ CMake 구조</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>container_system</b>   </td><td class="markdownTableBodyNone">메시지 페이로드   </td><td class="markdownTableBodyNone">&gt;= 2.0   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1404"></a>
+<h2><a class="anchor" id="autotoc_md1414"></a>
 선택적 의존성</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -455,9 +455,9 @@ CMake 구조</h2>
 <td class="markdownTableBodyNone"><b>monitoring_system</b>   </td><td class="markdownTableBodyNone">메트릭   </td><td class="markdownTableBodyNone">&gt;= 2.0   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1406"></a>
+<h1><a class="anchor" id="autotoc_md1416"></a>
 Include 패턴</h1>
-<h2><a class="anchor" id="autotoc_md1407"></a>
+<h2><a class="anchor" id="autotoc_md1417"></a>
 애플리케이션 코드</h2>
 <div class="fragment"><div class="line"><span class="comment">// 핵심 기능</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
@@ -476,15 +476,15 @@ Include 패턴</h1>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_client.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/scheduler.h&gt;</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1408"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1418"></a>
 내부 구현</h2>
 <div class="fragment"><div class="line"><span class="comment">// 구현 파일은 공개 및 비공개 헤더 모두 포함해야 함</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;internal_helpers.h&quot;</span></div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1410"></a>
+<h1><a class="anchor" id="autotoc_md1420"></a>
 명명 규칙</h1>
-<h2><a class="anchor" id="autotoc_md1411"></a>
+<h2><a class="anchor" id="autotoc_md1421"></a>
 파일</h2>
 <ul>
 <li><b>헤더</b>: <code>snake_case.h</code></li>
@@ -493,14 +493,14 @@ Include 패턴</h1>
 <li><b>벤치마크</b>: <code>bench_snake_case.cpp</code></li>
 <li><b>예제</b>: <code>snake_case.cpp</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1412"></a>
+<h2><a class="anchor" id="autotoc_md1422"></a>
 클래스</h2>
 <ul>
 <li><b>인터페이스</b>: <code>interface_name_interface</code></li>
 <li><b>구현체</b>: <code>concrete_class_name</code></li>
 <li><b>패턴</b>: <code>pattern_name</code> (예: <code>publisher</code>, <code>subscriber</code>)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1413"></a>
+<h2><a class="anchor" id="autotoc_md1423"></a>
 네임스페이스</h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>kcenon::messaging {              <span class="comment">// 핵심 네임스페이스</span></div>
 <div class="line"><span class="keyword">namespace </span>kcenon::messaging::patterns {    <span class="comment">// 패턴</span></div>
@@ -509,9 +509,9 @@ Include 패턴</h1>
 <div class="line"><span class="keyword">namespace </span>kcenon::messaging::di {          <span class="comment">// DI 컨테이너</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1415"></a>
+<h1><a class="anchor" id="autotoc_md1425"></a>
 코드 구성 원칙</h1>
-<h2><a class="anchor" id="autotoc_md1416"></a>
+<h2><a class="anchor" id="autotoc_md1426"></a>
 관심사 분리</h2>
 <ol type="1">
 <li><b>공개 API</b> (<code>include/</code>): 사용자 대상 헤더</li>
@@ -520,7 +520,7 @@ Include 패턴</h1>
 <li><b>예제</b> (<code>examples/</code>): 사용법 데모</li>
 <li><b>문서</b> (<code>docs/</code>): 참조 자료</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1417"></a>
+<h2><a class="anchor" id="autotoc_md1427"></a>
 모듈성</h2>
 <ul>
 <li><b>Core</b>: 기반 컴포넌트</li>
@@ -530,7 +530,7 @@ Include 패턴</h1>
 <li><b>Interfaces</b>: 확장 지점</li>
 <li><b>Utilities</b>: 헬퍼 함수</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1418"></a>
+<h2><a class="anchor" id="autotoc_md1428"></a>
 의존성</h2>
 <ul>
 <li><b>Core</b> 의존: common_system, container_system</li>
@@ -540,9 +540,9 @@ Include 패턴</h1>
 <li><b>모든 것</b> 의존: common_system (Result&lt;T&gt;)</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1420"></a>
+<h1><a class="anchor" id="autotoc_md1430"></a>
 향후 구조</h1>
-<h2><a class="anchor" id="autotoc_md1421"></a>
+<h2><a class="anchor" id="autotoc_md1431"></a>
 계획된 추가 사항</h2>
 <div class="fragment"><div class="line">messaging_system/</div>
 <div class="line">├── include/kcenon/messaging/</div>

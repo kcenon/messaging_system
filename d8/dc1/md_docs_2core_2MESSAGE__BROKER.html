@@ -111,6 +111,7 @@ Table of Contents</h1>
 <li>Statistics</li>
 <li>Best Practices</li>
 <li>Migration from topic_router</li>
+<li>Dead Letter Queue</li>
 <li>Planned Features</li>
 </ol>
 <hr  />
@@ -132,7 +133,9 @@ Implemented</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Thread-safe Operations   </td><td class="markdownTableBodyNone">Concurrent access with shared_mutex   </td><td class="markdownTableBodyNone">Implemented    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">PIMPL Pattern   </td><td class="markdownTableBodyNone">ABI stability and compile-time isolation   </td><td class="markdownTableBodyNone">Implemented   </td></tr>
+<td class="markdownTableBodyNone">PIMPL Pattern   </td><td class="markdownTableBodyNone">ABI stability and compile-time isolation   </td><td class="markdownTableBodyNone">Implemented    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Dead Letter Queue   </td><td class="markdownTableBodyNone">Handle failed messages with replay support   </td><td class="markdownTableBodyNone">Implemented   </td></tr>
 </table>
 <h2><a class="anchor" id="autotoc_md614"></a>
 Planned</h2>
@@ -142,8 +145,6 @@ Planned</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Content-based Routing   </td><td class="markdownTableBodyNone">Route based on message content/headers   </td><td class="markdownTableBodyNone">#181    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Dead Letter Queue   </td><td class="markdownTableBodyNone">Handle unroutable/failed messages   </td><td class="markdownTableBodyNone">#182    </td></tr>
-<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Transformation Pipeline   </td><td class="markdownTableBodyNone">Transform messages during routing   </td><td class="markdownTableBodyNone">#183   </td></tr>
 </table>
 <hr  />
@@ -501,9 +502,121 @@ Key Differences</h2>
 </table>
 <hr  />
 <h1><a class="anchor" id="autotoc_md656"></a>
+Dead Letter Queue</h1>
+<p>The message broker includes a fully-featured Dead Letter Queue (DLQ) for handling failed messages.</p>
+<h2><a class="anchor" id="autotoc_md657"></a>
+DLQ Configuration</h2>
+<div class="fragment"><div class="line">dlq_config config;</div>
+<div class="line">config.max_size = 10000;                        <span class="comment">// Maximum DLQ capacity</span></div>
+<div class="line">config.retention_period = std::chrono::hours(24);  <span class="comment">// 24 hour retention</span></div>
+<div class="line">config.on_full = dlq_policy::drop_oldest;       <span class="comment">// Overflow policy</span></div>
+<div class="line">config.enable_automatic_retry = <span class="keyword">false</span>;          <span class="comment">// Manual replay only</span></div>
+<div class="line">config.capture_unrouted = <span class="keyword">false</span>;                <span class="comment">// Don&#39;t capture unrouted</span></div>
+<div class="line"> </div>
+<div class="line">broker.configure_dlq(config);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md658"></a>
+DLQ Configuration Options</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Option   </th><th class="markdownTableHeadNone">Type   </th><th class="markdownTableHeadNone">Default   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>max_size</code>   </td><td class="markdownTableBodyNone"><code>size_t</code>   </td><td class="markdownTableBodyNone">10000   </td><td class="markdownTableBodyNone">Maximum messages in DLQ    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>retention_period</code>   </td><td class="markdownTableBodyNone"><code>chrono::seconds</code>   </td><td class="markdownTableBodyNone">3600   </td><td class="markdownTableBodyNone">Message retention time    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>on_full</code>   </td><td class="markdownTableBodyNone"><code>dlq_policy</code>   </td><td class="markdownTableBodyNone">drop_oldest   </td><td class="markdownTableBodyNone">Policy when full    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>enable_automatic_retry</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">false   </td><td class="markdownTableBodyNone">Auto-retry failed messages    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>max_auto_retries</code>   </td><td class="markdownTableBodyNone"><code>size_t</code>   </td><td class="markdownTableBodyNone">3   </td><td class="markdownTableBodyNone">Max auto-retry attempts    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>retry_delay</code>   </td><td class="markdownTableBodyNone"><code>chrono::milliseconds</code>   </td><td class="markdownTableBodyNone">1000   </td><td class="markdownTableBodyNone">Delay between retries    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>capture_unrouted</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">false   </td><td class="markdownTableBodyNone">Move unrouted to DLQ   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md659"></a>
+Overflow Policies</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Policy   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>drop_oldest</code>   </td><td class="markdownTableBodyNone">Drop oldest message when full    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>drop_newest</code>   </td><td class="markdownTableBodyNone">Reject new messages when full    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>block</code>   </td><td class="markdownTableBodyNone">Block routing when full   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md660"></a>
+Moving Messages to DLQ</h2>
+<div class="fragment"><div class="line"><span class="comment">// Manually move a failed message to DLQ</span></div>
+<div class="line">broker.move_to_dlq(msg, <span class="stringliteral">&quot;Handler threw exception: database unavailable&quot;</span>);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md661"></a>
+Querying DLQ</h2>
+<div class="fragment"><div class="line"><span class="comment">// Get DLQ size</span></div>
+<div class="line">std::size_t size = broker.get_dlq_size();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Get DLQ messages (limited)</span></div>
+<div class="line"><span class="keyword">auto</span> messages = broker.get_dlq_messages(10);  <span class="comment">// Get first 10</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Get all DLQ messages</span></div>
+<div class="line"><span class="keyword">auto</span> all_messages = broker.get_dlq_messages();  <span class="comment">// Get all</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry : messages) {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Message: &quot;</span> &lt;&lt; entry.original_message.metadata().id &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Reason: &quot;</span> &lt;&lt; entry.failure_reason &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Failed at: &quot;</span> &lt;&lt; <span class="comment">/* format timestamp */</span> &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Retries: &quot;</span> &lt;&lt; entry.retry_count &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md662"></a>
+Replaying Messages</h2>
+<div class="fragment"><div class="line"><span class="comment">// Replay a specific message</span></div>
+<div class="line"><span class="keyword">auto</span> result = broker.replay_dlq_message(message_id);</div>
+<div class="line"><span class="keywordflow">if</span> (result.is_ok()) {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Message replayed successfully&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Replay failed: &quot;</span> &lt;&lt; result.error().message &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Replay all messages</span></div>
+<div class="line">std::size_t replayed = broker.replay_all_dlq_messages();</div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Replayed &quot;</span> &lt;&lt; replayed &lt;&lt; <span class="stringliteral">&quot; messages&quot;</span> &lt;&lt; std::endl;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md663"></a>
+Purging DLQ</h2>
+<div class="fragment"><div class="line"><span class="comment">// Purge all messages</span></div>
+<div class="line">std::size_t purged = broker.purge_dlq();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Purge old messages (older than 1 hour)</span></div>
+<div class="line">std::size_t purged = broker.purge_dlq_older_than(std::chrono::hours(1));</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md664"></a>
+DLQ Statistics</h2>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> stats = broker.get_dlq_statistics();</div>
+<div class="line"> </div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Current size: &quot;</span> &lt;&lt; stats.current_size &lt;&lt; std::endl;</div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Total received: &quot;</span> &lt;&lt; stats.total_received &lt;&lt; std::endl;</div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Total replayed: &quot;</span> &lt;&lt; stats.total_replayed &lt;&lt; std::endl;</div>
+<div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Total purged: &quot;</span> &lt;&lt; stats.total_purged &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Failure reason breakdown</span></div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [reason, count] : stats.failure_reasons) {</div>
+<div class="line">    std::cout &lt;&lt; reason &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; count &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md665"></a>
+DLQ Event Callbacks</h2>
+<div class="fragment"><div class="line"><span class="comment">// Callback when message enters DLQ</span></div>
+<div class="line">broker.on_dlq_message([](<span class="keyword">const</span> dlq_entry&amp; entry) {</div>
+<div class="line">    log_error(<span class="stringliteral">&quot;Message moved to DLQ: &quot;</span> + entry.original_message.metadata().id +</div>
+<div class="line">              <span class="stringliteral">&quot;, reason: &quot;</span> + entry.failure_reason);</div>
+<div class="line">});</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Callback when DLQ is full</span></div>
+<div class="line">broker.on_dlq_full([](std::size_t size) {</div>
+<div class="line">    send_alert(<span class="stringliteral">&quot;DLQ is full! Size: &quot;</span> + std::to_string(size));</div>
+<div class="line">});</div>
+</div><!-- fragment --><hr  />
+<h1><a class="anchor" id="autotoc_md667"></a>
 Planned Features</h1>
 <p>The following features are planned for future releases:</p>
-<h2><a class="anchor" id="autotoc_md657"></a>
+<h2><a class="anchor" id="autotoc_md668"></a>
 Content-based Routing (#181)</h2>
 <p>Route messages based on payload content or headers.</p>
 <div class="fragment"><div class="line"><span class="comment">// Planned API</span></div>
@@ -512,14 +625,7 @@ Content-based Routing (#181)</h2>
 <div class="line">        <span class="keywordflow">return</span> msg.payload().get&lt;int&gt;(<span class="stringliteral">&quot;amount&quot;</span>) &gt; 1000;</div>
 <div class="line">    },</div>
 <div class="line">    large_order_handler);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md658"></a>
-Dead Letter Queue (#182)</h2>
-<p>Handle messages that fail routing or delivery.</p>
-<div class="fragment"><div class="line"><span class="comment">// Planned API</span></div>
-<div class="line">broker.set_dead_letter_handler([](<span class="keyword">const</span> message&amp; msg, <span class="keyword">const</span> error&amp; err) {</div>
-<div class="line">    log_failed_message(msg, err);</div>
-<div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md659"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md669"></a>
 Transformation Pipeline (#183)</h2>
 <p>Transform messages during routing.</p>
 <div class="fragment"><div class="line"><span class="comment">// Planned API</span></div>
@@ -529,7 +635,7 @@ Transformation Pipeline (#183)</h2>
 <div class="line">        <span class="keywordflow">return</span> msg;</div>
 <div class="line">    });</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md661"></a>
+<h1><a class="anchor" id="autotoc_md671"></a>
 See Also</h1>
 <ul>
 <li><a href="../../../API_REFERENCE.md#message-broker-api">API Reference</a></li>

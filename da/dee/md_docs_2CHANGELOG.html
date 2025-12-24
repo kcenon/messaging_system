@@ -100,6 +100,38 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md551"></a>
 Added</h2>
 <ul>
+<li><b>Dead Letter Queue for Message Broker (Issue #182)</b><ul>
+<li>Full DLQ implementation in <code>message_broker</code>:<ul>
+<li><code>dlq_config</code> structure with configurable max_size, retention_period, and overflow policies</li>
+<li><code>dlq_entry</code> structure to store failed messages with metadata and retry count</li>
+<li><code>dlq_statistics</code> for tracking DLQ metrics</li>
+<li>Overflow policies: drop_oldest, drop_newest, block</li>
+</ul>
+</li>
+<li>DLQ operations:<ul>
+<li><code>configure_dlq()</code>: Configure DLQ settings</li>
+<li><code>move_to_dlq()</code>: Move failed messages to DLQ</li>
+<li><code>get_dlq_messages()</code>: Query messages in DLQ</li>
+<li><code>get_dlq_size()</code>: Get current DLQ size</li>
+<li><code>replay_dlq_message()</code>: Replay a specific message</li>
+<li><code>replay_all_dlq_messages()</code>: Replay all DLQ messages</li>
+<li><code>purge_dlq()</code>: Clear all messages</li>
+<li><code>purge_dlq_older_than()</code>: Purge old messages</li>
+</ul>
+</li>
+<li>Event callbacks:<ul>
+<li><code>on_dlq_message()</code>: Called when message enters DLQ</li>
+<li><code>on_dlq_full()</code>: Called when DLQ is full</li>
+</ul>
+</li>
+<li>New error codes in <code>error_codes.h</code>:<ul>
+<li><code>dlq_full</code>, <code>dlq_empty</code>, <code>dlq_message_not_found</code>, <code>dlq_replay_failed</code>, <code>dlq_not_configured</code></li>
+</ul>
+</li>
+<li>15 comprehensive unit tests for DLQ functionality</li>
+<li>Updated <code><a class="el" href="../../db/df5/MESSAGE__BROKER_8md.html">docs/core/MESSAGE_BROKER.md</a></code> with DLQ documentation</li>
+</ul>
+</li>
 <li><b>Message Broker Documentation (Issue #184)</b><ul>
 <li>New <code><a class="el" href="../../db/df5/MESSAGE__BROKER_8md.html">docs/core/MESSAGE_BROKER.md</a></code> with comprehensive usage guide:<ul>
 <li>Architecture overview and component relationships</li>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['주기적_20실행_0',['주기적 실행',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2002',1,'주기적 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md2058',1,'주기적 실행']]]
+  ['주기적_20실행_0',['주기적 실행',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2012',1,'주기적 실행'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md2068',1,'주기적 실행']]]
 ];
