@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d4/d22/md_docs_2PROJECT__STRUCTURE.htm
   <div class="headertitle"><div class="title">Messaging System Project Structure</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1367"></a> <b>Version</b>: 0.1.1 <b>Last Updated</b>: 2025-12-10 <b>Language</b>: [English] | <a class="el" href="../../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html">한국어</a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1368"></a> <b>Version</b>: 0.1.1 <b>Last Updated</b>: 2025-12-10 <b>Language</b>: [English] | <a class="el" href="../../d5/d19/md_docs_2PROJECT__STRUCTURE__KO.html">한국어</a></p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1369"></a>
+<h1><a class="anchor" id="autotoc_md1370"></a>
 Overview</h1>
 <p>This document describes the complete directory structure and organization of the messaging_system project.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1371"></a>
+<h1><a class="anchor" id="autotoc_md1372"></a>
 Directory Layout</h1>
 <div class="fragment"><div class="line">messaging_system/</div>
 <div class="line">├── include/kcenon/messaging/          # Public API headers</div>
@@ -300,9 +300,9 @@ Directory Layout</h1>
 <div class="line">├── README.md                          # Project README</div>
 <div class="line">└── LICENSE                            # BSD 3-Clause License</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1373"></a>
+<h1><a class="anchor" id="autotoc_md1374"></a>
 Component Organization</h1>
-<h2><a class="anchor" id="autotoc_md1374"></a>
+<h2><a class="anchor" id="autotoc_md1375"></a>
 Core Components (&lt;tt&gt;include/kcenon/messaging/core/&lt;/tt&gt;)</h2>
 <p><b>Purpose</b>: Fundamental messaging infrastructure</p>
 <table class="markdownTable">
@@ -319,7 +319,7 @@ Core Components (&lt;tt&gt;include/kcenon/messaging/core/&lt;/tt&gt;)</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>topic_router.h</code>   </td><td class="markdownTableBodyNone">Pattern-based topic routing   </td><td class="markdownTableBodyNone">common_system   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1375"></a>
+<h2><a class="anchor" id="autotoc_md1376"></a>
 Interfaces (&lt;tt&gt;include/kcenon/messaging/interfaces/&lt;/tt&gt;)</h2>
 <p><b>Purpose</b>: Abstract interfaces for extensibility</p>
 <table class="markdownTable">
@@ -336,7 +336,7 @@ Interfaces (&lt;tt&gt;include/kcenon/messaging/interfaces/&lt;/tt&gt;)</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>queue_interface.h</code>   </td><td class="markdownTableBodyNone">Queue abstraction   </td><td class="markdownTableBodyNone">message_queue   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1376"></a>
+<h2><a class="anchor" id="autotoc_md1377"></a>
 Backends (&lt;tt&gt;include/kcenon/messaging/backends/&lt;/tt&gt;)</h2>
 <p><b>Purpose</b>: Pluggable execution strategies</p>
 <table class="markdownTable">
@@ -349,7 +349,7 @@ Backends (&lt;tt&gt;include/kcenon/messaging/backends/&lt;/tt&gt;)</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>integration_backend.h</code>   </td><td class="markdownTableBodyNone">External thread pool   </td><td class="markdownTableBodyNone">Production, integration   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1377"></a>
+<h2><a class="anchor" id="autotoc_md1378"></a>
 Patterns (&lt;tt&gt;include/kcenon/messaging/patterns/&lt;/tt&gt;)</h2>
 <p><b>Purpose</b>: High-level messaging patterns</p>
 <table class="markdownTable">
@@ -364,7 +364,7 @@ Patterns (&lt;tt&gt;include/kcenon/messaging/patterns/&lt;/tt&gt;)</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>message_pipeline.h</code>   </td><td class="markdownTableBodyNone">Stage-based processing   </td><td class="markdownTableBodyNone">Pipes-and-filters   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1378"></a>
+<h2><a class="anchor" id="autotoc_md1379"></a>
 Task Queue (&lt;tt&gt;include/kcenon/messaging/task/&lt;/tt&gt;)</h2>
 <p><b>Purpose</b>: Distributed task queue system with scheduling and monitoring</p>
 <table class="markdownTable">
@@ -398,9 +398,9 @@ Task Queue (&lt;tt&gt;include/kcenon/messaging/task/&lt;/tt&gt;)</h2>
 <td class="markdownTableBodyNone"><code>task_system.h</code>   </td><td class="markdownTableBodyNone">Unified facade   </td><td class="markdownTableBodyNone">All task components   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1380"></a>
+<h1><a class="anchor" id="autotoc_md1381"></a>
 Build System</h1>
-<h2><a class="anchor" id="autotoc_md1381"></a>
+<h2><a class="anchor" id="autotoc_md1382"></a>
 CMake Structure</h2>
 <div class="fragment"><div class="line">CMakeLists.txt                  # Root configuration</div>
 <div class="line">├── Library: messaging_system_core</div>
@@ -409,7 +409,7 @@ CMake Structure</h2>
 <div class="line">├── Executable: test targets</div>
 <div class="line">├── Executable: benchmark targets</div>
 <div class="line">└── Executable: example targets</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1382"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1383"></a>
 Build Targets</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -430,9 +430,9 @@ Build Targets</h2>
 <td class="markdownTableBodyNone"><code>example_*</code>   </td><td class="markdownTableBodyNone">Executable   </td><td class="markdownTableBodyNone">Examples   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1384"></a>
+<h1><a class="anchor" id="autotoc_md1385"></a>
 Dependencies</h1>
-<h2><a class="anchor" id="autotoc_md1385"></a>
+<h2><a class="anchor" id="autotoc_md1386"></a>
 Required Dependencies</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -442,7 +442,7 @@ Required Dependencies</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>container_system</b>   </td><td class="markdownTableBodyNone">Message payloads   </td><td class="markdownTableBodyNone">&gt;= 2.0   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1386"></a>
+<h2><a class="anchor" id="autotoc_md1387"></a>
 Optional Dependencies</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -455,9 +455,9 @@ Optional Dependencies</h2>
 <td class="markdownTableBodyNone"><b>monitoring_system</b>   </td><td class="markdownTableBodyNone">Metrics   </td><td class="markdownTableBodyNone">&gt;= 2.0   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1388"></a>
+<h1><a class="anchor" id="autotoc_md1389"></a>
 Include Patterns</h1>
-<h2><a class="anchor" id="autotoc_md1389"></a>
+<h2><a class="anchor" id="autotoc_md1390"></a>
 Application Code</h2>
 <div class="fragment"><div class="line"><span class="comment">// Core functionality</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
@@ -476,15 +476,15 @@ Application Code</h2>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_client.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/scheduler.h&gt;</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1390"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1391"></a>
 Internal Implementation</h2>
 <div class="fragment"><div class="line"><span class="comment">// Implementation files should include both public and private headers</span></div>
 <div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_bus.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;internal_helpers.h&quot;</span></div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1392"></a>
+<h1><a class="anchor" id="autotoc_md1393"></a>
 Naming Conventions</h1>
-<h2><a class="anchor" id="autotoc_md1393"></a>
+<h2><a class="anchor" id="autotoc_md1394"></a>
 Files</h2>
 <ul>
 <li><b>Headers</b>: <code>snake_case.h</code></li>
@@ -493,14 +493,14 @@ Files</h2>
 <li><b>Benchmarks</b>: <code>bench_snake_case.cpp</code></li>
 <li><b>Examples</b>: <code>snake_case.cpp</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1394"></a>
+<h2><a class="anchor" id="autotoc_md1395"></a>
 Classes</h2>
 <ul>
 <li><b>Interfaces</b>: <code>interface_name_interface</code></li>
 <li><b>Implementations</b>: <code>concrete_class_name</code></li>
 <li><b>Patterns</b>: <code>pattern_name</code> (e.g., <code>publisher</code>, <code>subscriber</code>)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1395"></a>
+<h2><a class="anchor" id="autotoc_md1396"></a>
 Namespaces</h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>kcenon::messaging {              <span class="comment">// Core namespace</span></div>
 <div class="line"><span class="keyword">namespace </span>kcenon::messaging::patterns {    <span class="comment">// Patterns</span></div>
@@ -509,9 +509,9 @@ Namespaces</h2>
 <div class="line"><span class="keyword">namespace </span>kcenon::messaging::di {          <span class="comment">// DI container</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1397"></a>
+<h1><a class="anchor" id="autotoc_md1398"></a>
 Code Organization Principles</h1>
-<h2><a class="anchor" id="autotoc_md1398"></a>
+<h2><a class="anchor" id="autotoc_md1399"></a>
 Separation of Concerns</h2>
 <ol type="1">
 <li><b>Public API</b> (<code>include/</code>): User-facing headers</li>
@@ -520,7 +520,7 @@ Separation of Concerns</h2>
 <li><b>Examples</b> (<code>examples/</code>): Usage demonstrations</li>
 <li><b>Documentation</b> (<code>docs/</code>): Reference materials</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md1399"></a>
+<h2><a class="anchor" id="autotoc_md1400"></a>
 Modularity</h2>
 <ul>
 <li><b>Core</b>: Foundation components</li>
@@ -530,7 +530,7 @@ Modularity</h2>
 <li><b>Interfaces</b>: Extension points</li>
 <li><b>Utilities</b>: Helper functions</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1400"></a>
+<h2><a class="anchor" id="autotoc_md1401"></a>
 Dependencies</h2>
 <ul>
 <li><b>Core</b> depends on: common_system, container_system</li>
@@ -540,9 +540,9 @@ Dependencies</h2>
 <li><b>Everything</b> depends on: common_system (Result&lt;T&gt;)</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1402"></a>
+<h1><a class="anchor" id="autotoc_md1403"></a>
 Future Structure</h1>
-<h2><a class="anchor" id="autotoc_md1403"></a>
+<h2><a class="anchor" id="autotoc_md1404"></a>
 Planned Additions</h2>
 <div class="fragment"><div class="line">messaging_system/</div>
 <div class="line">├── include/kcenon/messaging/</div>
