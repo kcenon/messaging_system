@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
   <div class="headertitle"><div class="title">Task 모듈 문제 해결 가이드</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md2107"></a> 이 가이드는 Task 모듈의 일반적인 문제를 진단하고 해결하는 데 도움을 줍니다.</p>
-<h1><a class="anchor" id="autotoc_md2108"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md2117"></a> 이 가이드는 Task 모듈의 일반적인 문제를 진단하고 해결하는 데 도움을 줍니다.</p>
+<h1><a class="anchor" id="autotoc_md2118"></a>
 목차</h1>
 <ul>
 <li>일반적인 문제</li>
@@ -103,9 +103,9 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <li>FAQ</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md2110"></a>
+<h1><a class="anchor" id="autotoc_md2120"></a>
 일반적인 문제</h1>
-<h2><a class="anchor" id="autotoc_md2111"></a>
+<h2><a class="anchor" id="autotoc_md2121"></a>
 작업이 처리되지 않음</h2>
 <p><b>증상:</b></p><ul>
 <li>작업이 큐에 남아 있음</li>
@@ -152,7 +152,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">          &lt;&lt; <span class="stringliteral">&quot; / &quot;</span> &lt;&lt; system.total_workers() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2112"></a>
+<h2><a class="anchor" id="autotoc_md2122"></a>
 작업이 즉시 실패함</h2>
 <p><b>증상:</b></p><ul>
 <li><code>async_result.is_failed()</code>가 <code>true</code> 반환</li>
@@ -189,7 +189,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2113"></a>
+<h2><a class="anchor" id="autotoc_md2123"></a>
 작업 타임아웃</h2>
 <p><b>증상:</b></p><ul>
 <li>작업이 전체 타임아웃 시간 동안 실행된 후 실패</li>
@@ -222,7 +222,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2114"></a>
+<h2><a class="anchor" id="autotoc_md2124"></a>
 재시도가 작동하지 않음</h2>
 <p><b>증상:</b></p><ul>
 <li>실패한 작업이 재시도되지 않음</li>
@@ -245,7 +245,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">          &lt;&lt; <span class="stringliteral">&quot; / &quot;</span> &lt;&lt; t.config().max_retries &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2115"></a>
+<h2><a class="anchor" id="autotoc_md2125"></a>
 메모리 사용량 증가</h2>
 <p><b>증상:</b></p><ul>
 <li>시간이 지남에 따라 프로세스 메모리가 증가</li>
@@ -273,9 +273,9 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 </div><!-- fragment --></li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md2117"></a>
+<h1><a class="anchor" id="autotoc_md2127"></a>
 디버깅 방법</h1>
-<h2><a class="anchor" id="autotoc_md2118"></a>
+<h2><a class="anchor" id="autotoc_md2128"></a>
 로깅 활성화</h2>
 <p>task context를 사용하여 정보 로깅:</p>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;debug.task&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -287,7 +287,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">    ctx.log_info(<span class="stringliteral">&quot;작업 성공적으로 완료&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2119"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2129"></a>
 이벤트 모니터링</h2>
 <p>디버깅을 위해 작업 이벤트 구독:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> monitor = system.monitor();</div>
@@ -307,7 +307,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">                  &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; error &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    });</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2120"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2130"></a>
 큐 상태 확인</h2>
 <div class="fragment"><div class="line"><span class="comment">// 큐 통계 가져오기</span></div>
 <div class="line"><span class="keyword">auto</span> monitor = system.monitor();</div>
@@ -320,7 +320,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">                  &lt;&lt; <span class="stringliteral">&quot;, 지연=&quot;</span> &lt;&lt; q.delayed_count &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2121"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2131"></a>
 워커 상태 확인</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> stats = system.get_statistics();</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;처리된 작업: &quot;</span> &lt;&lt; stats.total_tasks_processed &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -328,7 +328,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;실패한 작업: &quot;</span> &lt;&lt; stats.total_tasks_failed &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;재시도한 작업: &quot;</span> &lt;&lt; stats.total_tasks_retried &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;평균 실행 시간: &quot;</span> &lt;&lt; stats.avg_execution_time.count() &lt;&lt; <span class="stringliteral">&quot;ms\n&quot;</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2122"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2132"></a>
 작업 로그 보기</h2>
 <p>완료된 작업에서 로그 접근:</p>
 <div class="fragment"><div class="line"><span class="comment">// 로그는 task_context에 저장됨</span></div>
@@ -348,9 +348,9 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md2124"></a>
+<h1><a class="anchor" id="autotoc_md2134"></a>
 성능 문제</h1>
-<h2><a class="anchor" id="autotoc_md2125"></a>
+<h2><a class="anchor" id="autotoc_md2135"></a>
 높은 CPU 사용량</h2>
 <p><b>가능한 원인:</b></p>
 <ol type="1">
@@ -368,7 +368,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <p class="startli">무거운 계산을 전용 스레드로 이동하거나 작업을 배치로 처리하는 것을 고려하세요.</p>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2126"></a>
+<h2><a class="anchor" id="autotoc_md2136"></a>
 높은 메모리 사용량</h2>
 <p><b>가능한 원인:</b></p>
 <ol type="1">
@@ -387,7 +387,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">system.results()-&gt;cleanup_expired(std::chrono::hours(1));</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2127"></a>
+<h2><a class="anchor" id="autotoc_md2137"></a>
 낮은 처리량</h2>
 <p><b>가능한 원인:</b></p>
 <ol type="1">
@@ -411,7 +411,7 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 <div class="line">config.queues = {<span class="stringliteral">&quot;high&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;low&quot;</span>};</div>
 </div><!-- fragment --></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md2128"></a>
+<h2><a class="anchor" id="autotoc_md2138"></a>
 높은 지연 시간</h2>
 <p><b>가능한 원인:</b></p>
 <ol type="1">
@@ -430,9 +430,9 @@ $(document).ready(function(){initNavTree('de/da3/md_docs_2task_2TROUBLESHOOTING_
 </div><!-- fragment --></li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md2130"></a>
+<h1><a class="anchor" id="autotoc_md2140"></a>
 FAQ</h1>
-<h2><a class="anchor" id="autotoc_md2131"></a>
+<h2><a class="anchor" id="autotoc_md2141"></a>
 Q: 실행 중인 작업을 어떻게 취소하나요?</h2>
 <p>작업은 취소할 수 있지만 핸들러가 취소를 확인해야 합니다:</p>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;cancellable.task&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -449,7 +449,7 @@ Q: 실행 중인 작업을 어떻게 취소하나요?</h2>
 <div class="line"><span class="comment">// 취소 요청</span></div>
 <div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;cancellable.task&quot;</span>, payload);</div>
 <div class="line">result.revoke();  <span class="comment">// 취소 플래그 설정</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2132"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2142"></a>
 Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;long.task&quot;</span>, payload);</div>
 <div class="line"> </div>
@@ -460,7 +460,7 @@ Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?</h2>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;진행률: &quot;</span> &lt;&lt; (progress * 100) &lt;&lt; <span class="stringliteral">&quot;% - &quot;</span> &lt;&lt; message &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">    std::this_thread::sleep_for(std::chrono::seconds(1));</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2133"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2143"></a>
 Q: 작업 종속성을 어떻게 처리하나요?</h2>
 <p>Chain 패턴 사용:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> step1 = task_builder(<span class="stringliteral">&quot;step1&quot;</span>).payload(data).build().value();</div>
@@ -469,13 +469,13 @@ Q: 작업 종속성을 어떻게 처리하나요?</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> result = client.chain({step1, step2, step3});</div>
 <div class="line"><span class="comment">// step2는 step1의 결과를 받고, step3는 step2의 결과를 받음</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2134"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2144"></a>
 Q: 작업을 순서대로 처리하려면 어떻게 하나요?</h2>
 <p>엄격한 순서를 위해 <code>concurrency = 1</code> 설정:</p>
 <div class="fragment"><div class="line">worker_config config;</div>
 <div class="line">config.concurrency = 1;  <span class="comment">// 단일 워커가 순서 보장</span></div>
 <div class="line">config.queues = {<span class="stringliteral">&quot;ordered-queue&quot;</span>};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2135"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2145"></a>
 Q: 특정 작업의 우선순위를 어떻게 높이나요?</h2>
 <p>우선순위 수준과 큐 이름 사용:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> urgent = task_builder(<span class="stringliteral">&quot;urgent.task&quot;</span>)</div>
@@ -491,7 +491,7 @@ Q: 특정 작업의 우선순위를 어떻게 높이나요?</h2>
 <div class="line"><span class="comment">// critical 큐를 먼저 처리하도록 워커 설정</span></div>
 <div class="line">worker_config config;</div>
 <div class="line">config.queues = {<span class="stringliteral">&quot;critical&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;background&quot;</span>};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2136"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2146"></a>
 Q: 재시도 횟수를 어떻게 제한하나요?</h2>
 <p>task_config를 통해 설정:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;limited.retry&quot;</span>)</div>
@@ -502,7 +502,7 @@ Q: 재시도 횟수를 어떻게 제한하나요?</h2>
 <div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;no.retry&quot;</span>)</div>
 <div class="line">    .retries(0)  <span class="comment">// 재시도 없음</span></div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2137"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2147"></a>
 Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?</h2>
 <p><code>on_failure</code> 훅을 사용하여 실패 추적:</p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>monitored_handler : <span class="keyword">public</span> task_handler_interface {</div>
@@ -518,7 +518,7 @@ Q: 독약 메시지(항상 실패하는 작업)를 어떻게 처리하나요?</h
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2138"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2148"></a>
 Q: 시스템을 우아하게 종료하려면 어떻게 하나요?</h2>
 <div class="fragment"><div class="line"><span class="comment">// 우아한 종료는 현재 작업이 완료될 때까지 대기</span></div>
 <div class="line">system.shutdown_graceful(std::chrono::seconds(30));</div>
@@ -528,7 +528,7 @@ Q: 시스템을 우아하게 종료하려면 어떻게 하나요?</h2>
 <div class="line"><span class="comment">// 2. 실행 중인 작업이 완료될 때까지 최대 30초 대기</span></div>
 <div class="line"><span class="comment">// 3. 타임아웃에 도달하면 강제 중지</span></div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md2140"></a>
+<h1><a class="anchor" id="autotoc_md2150"></a>
 관련 문서</h1>
 <ul>
 <li><a class="el" href="../../da/dee/md_docs_2task_2QUICK__START__KO.html">빠른 시작 가이드</a></li>

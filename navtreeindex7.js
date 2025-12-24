@@ -1,5 +1,14 @@
 var NAVTREEINDEX7 =
 {
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md115":[4,2,2,1,0],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md116":[4,2,2,2],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md117":[4,2,3],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md118":[4,2,3,0],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md119":[4,2,3,1],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md120":[4,2,3,1,0],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md121":[4,2,3,1,1],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md122":[4,2,3,2],
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md124":[4,3],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md125":[4,3,0],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md126":[4,3,1],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md127":[4,3,2],
