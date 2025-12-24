@@ -212,6 +212,8 @@ set(MESSAGING_CORE_SOURCES
     src/impl/task/task_system.cpp
     # Collectors module (monitoring_system integration)
     src/impl/collectors/message_bus_collector.cpp
+    # Adapters module (transport implementations)
+    src/impl/adapters/websocket_transport.cpp
 )
 
 add_library(messaging_system_core STATIC ${MESSAGING_CORE_SOURCES})
@@ -322,6 +324,18 @@ elseif(TARGET monitoring)
 elseif(TARGET MonitoringSystem::monitoring)
     target_link_libraries(messaging_system_core PUBLIC MonitoringSystem::monitoring)
     target_compile_definitions(messaging_system_core PUBLIC WITH_MONITORING_SYSTEM)
+endif()
+
+# Link network_system if available (for websocket_transport, http_transport)
+# Note: PRIVATE because PIMPL pattern hides network_system from public headers
+if(KCENON_WITH_NETWORK_SYSTEM)
+    if(network_system_TARGET)
+        target_link_libraries(messaging_system_core PRIVATE ${network_system_TARGET})
+    elseif(TARGET network)
+        target_link_libraries(messaging_system_core PRIVATE network)
+    elseif(TARGET NetworkSystem::network)
+        target_link_libraries(messaging_system_core PRIVATE NetworkSystem::network)
+    endif()
 endif()
 
 # =============================================================================
