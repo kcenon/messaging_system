@@ -8,6 +8,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Distributed Messaging E2E Integration Tests (Issue #165)**
+  - New `test_distributed_messaging.cpp` with 17 comprehensive integration tests:
+    - `TwoNodeMessageExchange`: Basic message delivery between two nodes
+    - `BidirectionalCommunication`: Bidirectional message flow verification
+    - `RemoteModeOnlyRemoteDelivery`: Remote-only mode behavior validation
+    - `HybridModeLocalAndRemote`: Hybrid mode local and remote delivery
+    - `WildcardSubscriptionAcrossNodes`: Single-level wildcard (*) subscription routing
+    - `MultiLevelWildcardAcrossNodes`: Multi-level wildcard (#) subscription routing
+    - `HighVolumeMessageExchange`: 500 message stress test
+    - `ConcurrentPublishFromMultipleThreads`: Thread-safety under concurrent publishing
+    - `MessagesDuringDisconnection`: Message handling during network failures
+    - `TransportStateTransitions`: State machine transition verification
+    - `DistributedStatisticsTracking`: Remote message statistics validation
+    - `TransportStatisticsReset`: Statistics reset functionality
+    - `PubSubPatternAcrossNodes`: Pub/sub pattern integration test
+    - `MultipleSubscribersAcrossNodes`: Multiple subscriber delivery
+    - `MessageContentPreservedAcrossNodes`: Message integrity across network
+    - `GracefulShutdownWithPendingMessages`: Graceful shutdown behavior
+    - `TransportDisconnectOnShutdown`: Transport cleanup on bus shutdown
+  - `bridged_transport`: Mock transport for simulating distributed communication
+    - Bidirectional message forwarding between nodes
+    - Network failure simulation (disconnect/reconnect)
+    - Transport statistics tracking
+  - Completes Epic #165 (Network System Integration) success criteria
+
 - **HTTP Transport Implementation (Issue #168)**
   - `http_transport`: HTTP transport adapter using `network_system::http_client`
     - PIMPL pattern with network_system integration
