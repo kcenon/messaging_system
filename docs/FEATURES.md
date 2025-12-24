@@ -1,7 +1,7 @@
 # Messaging System Features
 
-**Version**: 0.1.1
-**Last Updated**: 2025-12-10
+**Version**: 0.1.2
+**Last Updated**: 2025-12-24
 **Language**: [English] | [한국어](FEATURES_KO.md)
 
 ---
@@ -19,13 +19,14 @@ This document provides a comprehensive overview of all features available in the
 3. [Task Queue System](#task-queue-system)
 4. [C++20 Concepts](#c20-concepts)
 5. [Backend Support](#backend-support)
-6. [Message Types](#message-types)
-7. [Topic Routing](#topic-routing)
-8. [Message Queue](#message-queue)
-9. [Dependency Injection](#dependency-injection)
-10. [Error Handling](#error-handling)
-11. [Integration](#integration)
-12. [Production Features](#production-features)
+6. [Transport Adapters](#transport-adapters)
+7. [Message Types](#message-types)
+8. [Topic Routing](#topic-routing)
+9. [Message Queue](#message-queue)
+10. [Dependency Injection](#dependency-injection)
+11. [Error Handling](#error-handling)
+12. [Integration](#integration)
+13. [Production Features](#production-features)
 
 ---
 
@@ -522,6 +523,115 @@ Features:
 
 ---
 
+## Transport Adapters
+
+### Overview
+
+**Network transport for distributed messaging**
+
+Transport adapters enable message transmission over network protocols, transforming the messaging system from an in-process library to a distributed system.
+
+### Transport Interface
+
+**Abstract interface for network transports**
+
+Features:
+- **Protocol Abstraction**: Common interface for all transports
+- **Connection Management**: Connect/disconnect lifecycle
+- **State Tracking**: Connection state monitoring
+- **Message Handling**: Send and receive messages
+- **Statistics**: Performance metrics collection
+
+```cpp
+class transport_interface {
+public:
+    virtual VoidResult connect() = 0;
+    virtual VoidResult disconnect() = 0;
+    virtual bool is_connected() const = 0;
+    virtual transport_state get_state() const = 0;
+    virtual VoidResult send(const message& msg) = 0;
+    virtual VoidResult send_binary(const std::vector<uint8_t>& data) = 0;
+    virtual void set_message_handler(std::function<void(const message&)> handler) = 0;
+    virtual transport_statistics get_statistics() const = 0;
+};
+```
+
+### WebSocket Transport
+
+**Real-time bidirectional messaging over WebSocket**
+
+Features:
+- **Bidirectional Communication**: Full-duplex message exchange
+- **Topic Subscriptions**: Wildcard pattern support (`*` and `#`)
+- **Automatic Reconnection**: Exponential backoff retry
+- **Ping/Pong Keepalive**: Connection health monitoring
+- **Binary and Text Support**: Multiple message formats
+- **Message Serialization**: Automatic container_system serialization
+
+```cpp
+websocket_transport_config config;
+config.host = "ws.example.com";
+config.port = 8080;
+config.path = "/messaging";
+config.auto_reconnect = true;
+config.ping_interval = std::chrono::milliseconds(30000);
+
+auto transport = std::make_shared<websocket_transport>(config);
+
+transport->set_message_handler([](const message& msg) {
+    std::cout << "Received: " << msg.metadata().topic << std::endl;
+});
+
+transport->set_state_handler([](transport_state state) {
+    std::cout << "State: " << static_cast<int>(state) << std::endl;
+});
+
+transport->connect();
+
+// Subscribe to topics with wildcards
+transport->subscribe("events.user.*");
+transport->subscribe("events.order.#");
+
+// Send message
+auto msg = message_builder()
+    .topic("events.user.login")
+    .source("client-001")
+    .build();
+transport->send(msg.value());
+```
+
+### Configuration Options
+
+**WebSocket transport configuration**
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| host | string | "" | Server hostname |
+| port | uint16 | 0 | Server port |
+| path | string | "/ws" | WebSocket path |
+| use_ssl | bool | false | Enable SSL/TLS |
+| connect_timeout | ms | 10000 | Connection timeout |
+| ping_interval | ms | 30000 | Ping interval |
+| auto_pong | bool | true | Auto-respond to pings |
+| max_message_size | size_t | 10MB | Max message size |
+| auto_reconnect | bool | false | Enable auto-reconnect |
+| max_retries | size_t | 3 | Max retry attempts |
+| reconnect_delay | ms | 1000 | Initial retry delay |
+| reconnect_backoff_multiplier | double | 2.0 | Backoff multiplier |
+| max_reconnect_delay | ms | 30000 | Max retry delay |
+
+### Build Configuration
+
+WebSocket transport requires `network_system` dependency:
+
+```cmake
+cmake -DKCENON_WITH_NETWORK_SYSTEM=ON ..
+```
+
+When disabled, transport operations return `error::not_supported`.
+
+---
+
 ## Message Types
 
 ### Message Structure
@@ -811,6 +921,7 @@ Features:
 | **Standalone Backend** | - | - | - | ✅ | Complete |
 | **Integration Backend** | - | - | - | ✅ | Complete |
 | **Auto-detection** | - | - | - | ✅ | Complete |
+| **WebSocket Transport** | - | - | - | ✅ | Complete |
 | **DI Container** | ✅ | - | - | - | Complete |
 | **Error Codes** | ✅ | - | - | - | Complete |
 | **Result<T>** | ✅ | - | - | - | Complete |
@@ -834,5 +945,5 @@ For usage examples and getting started guides, see:
 
 ---
 
-**Last Updated**: 2025-12-10
-**Version**: 0.1.1
+**Last Updated**: 2025-12-24
+**Version**: 0.1.2
