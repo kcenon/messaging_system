@@ -23,7 +23,8 @@
 namespace kcenon::messaging::adapters {
 
 using namespace kcenon::common;
-using namespace kcenon::network;
+// Note: We don't use 'using namespace kcenon::network' to avoid
+// VoidResult ambiguity between common::VoidResult and network::VoidResult
 
 // ============================================================================
 // websocket_transport::impl
@@ -34,7 +35,7 @@ public:
 	explicit impl(const websocket_transport_config& config)
 		: config_(config)
 		, state_(transport_state::disconnected)
-		, client_(std::make_shared<core::messaging_ws_client>(
+		, client_(std::make_shared<network::core::messaging_ws_client>(
 			  generate_client_id()))
 		, serializer_()
 		, reconnect_attempts_(0)
@@ -66,7 +67,7 @@ public:
 		state_ = transport_state::connecting;
 		notify_state_change(transport_state::connecting);
 
-		core::ws_client_config ws_config;
+		network::core::ws_client_config ws_config;
 		ws_config.host = config_.host;
 		ws_config.port = config_.port;
 		ws_config.path = config_.path;
@@ -326,7 +327,7 @@ private:
 		});
 
 		client_->set_disconnected_callback(
-			[this](internal::ws_close_code code, const std::string& reason) {
+			[this](network::internal::ws_close_code code, const std::string& reason) {
 				on_disconnected(static_cast<uint16_t>(code), reason);
 			});
 
@@ -455,7 +456,7 @@ private:
 
 			notify_state_change(transport_state::connecting);
 
-			core::ws_client_config ws_config;
+			network::core::ws_client_config ws_config;
 			ws_config.host = config_.host;
 			ws_config.port = config_.port;
 			ws_config.path = config_.path;
@@ -525,7 +526,7 @@ private:
 
 	websocket_transport_config config_;
 	std::atomic<transport_state> state_;
-	std::shared_ptr<core::messaging_ws_client> client_;
+	std::shared_ptr<network::core::messaging_ws_client> client_;
 	serialization::message_serializer serializer_;
 
 	mutable std::mutex mutex_;
