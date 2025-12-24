@@ -23,7 +23,8 @@ The `message_broker` is a central message routing component that provides advanc
 7. [Statistics](#statistics)
 8. [Best Practices](#best-practices)
 9. [Migration from topic_router](#migration-from-topic_router)
-10. [Planned Features](#planned-features)
+10. [Dead Letter Queue](#dead-letter-queue)
+11. [Planned Features](#planned-features)
 
 ---
 
@@ -39,13 +40,13 @@ The `message_broker` is a central message routing component that provides advanc
 | Statistics Collection | Track routed, delivered, failed messages | Implemented |
 | Thread-safe Operations | Concurrent access with shared_mutex | Implemented |
 | PIMPL Pattern | ABI stability and compile-time isolation | Implemented |
+| Dead Letter Queue | Handle failed messages with replay support | Implemented |
 
 ### Planned
 
 | Feature | Description | Issue |
 |---------|-------------|-------|
 | Content-based Routing | Route based on message content/headers | #181 |
-| Dead Letter Queue | Handle unroutable/failed messages | #182 |
 | Transformation Pipeline | Transform messages during routing | #183 |
 
 ---
@@ -455,6 +456,129 @@ broker.stop();
 
 ---
 
+## Dead Letter Queue
+
+The message broker includes a fully-featured Dead Letter Queue (DLQ) for handling failed messages.
+
+### DLQ Configuration
+
+```cpp
+dlq_config config;
+config.max_size = 10000;                        // Maximum DLQ capacity
+config.retention_period = std::chrono::hours(24);  // 24 hour retention
+config.on_full = dlq_policy::drop_oldest;       // Overflow policy
+config.enable_automatic_retry = false;          // Manual replay only
+config.capture_unrouted = false;                // Don't capture unrouted
+
+broker.configure_dlq(config);
+```
+
+### DLQ Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `max_size` | `size_t` | 10000 | Maximum messages in DLQ |
+| `retention_period` | `chrono::seconds` | 3600 | Message retention time |
+| `on_full` | `dlq_policy` | drop_oldest | Policy when full |
+| `enable_automatic_retry` | `bool` | false | Auto-retry failed messages |
+| `max_auto_retries` | `size_t` | 3 | Max auto-retry attempts |
+| `retry_delay` | `chrono::milliseconds` | 1000 | Delay between retries |
+| `capture_unrouted` | `bool` | false | Move unrouted to DLQ |
+
+### Overflow Policies
+
+| Policy | Description |
+|--------|-------------|
+| `drop_oldest` | Drop oldest message when full |
+| `drop_newest` | Reject new messages when full |
+| `block` | Block routing when full |
+
+### Moving Messages to DLQ
+
+```cpp
+// Manually move a failed message to DLQ
+broker.move_to_dlq(msg, "Handler threw exception: database unavailable");
+```
+
+### Querying DLQ
+
+```cpp
+// Get DLQ size
+std::size_t size = broker.get_dlq_size();
+
+// Get DLQ messages (limited)
+auto messages = broker.get_dlq_messages(10);  // Get first 10
+
+// Get all DLQ messages
+auto all_messages = broker.get_dlq_messages();  // Get all
+
+for (const auto& entry : messages) {
+    std::cout << "Message: " << entry.original_message.metadata().id << std::endl;
+    std::cout << "Reason: " << entry.failure_reason << std::endl;
+    std::cout << "Failed at: " << /* format timestamp */ << std::endl;
+    std::cout << "Retries: " << entry.retry_count << std::endl;
+}
+```
+
+### Replaying Messages
+
+```cpp
+// Replay a specific message
+auto result = broker.replay_dlq_message(message_id);
+if (result.is_ok()) {
+    std::cout << "Message replayed successfully" << std::endl;
+} else {
+    std::cout << "Replay failed: " << result.error().message << std::endl;
+}
+
+// Replay all messages
+std::size_t replayed = broker.replay_all_dlq_messages();
+std::cout << "Replayed " << replayed << " messages" << std::endl;
+```
+
+### Purging DLQ
+
+```cpp
+// Purge all messages
+std::size_t purged = broker.purge_dlq();
+
+// Purge old messages (older than 1 hour)
+std::size_t purged = broker.purge_dlq_older_than(std::chrono::hours(1));
+```
+
+### DLQ Statistics
+
+```cpp
+auto stats = broker.get_dlq_statistics();
+
+std::cout << "Current size: " << stats.current_size << std::endl;
+std::cout << "Total received: " << stats.total_received << std::endl;
+std::cout << "Total replayed: " << stats.total_replayed << std::endl;
+std::cout << "Total purged: " << stats.total_purged << std::endl;
+
+// Failure reason breakdown
+for (const auto& [reason, count] : stats.failure_reasons) {
+    std::cout << reason << ": " << count << std::endl;
+}
+```
+
+### DLQ Event Callbacks
+
+```cpp
+// Callback when message enters DLQ
+broker.on_dlq_message([](const dlq_entry& entry) {
+    log_error("Message moved to DLQ: " + entry.original_message.metadata().id +
+              ", reason: " + entry.failure_reason);
+});
+
+// Callback when DLQ is full
+broker.on_dlq_full([](std::size_t size) {
+    send_alert("DLQ is full! Size: " + std::to_string(size));
+});
+```
+
+---
+
 ## Planned Features
 
 The following features are planned for future releases:
@@ -470,17 +594,6 @@ broker.add_content_route("large-orders", "order.*",
         return msg.payload().get<int>("amount") > 1000;
     },
     large_order_handler);
-```
-
-### Dead Letter Queue (#182)
-
-Handle messages that fail routing or delivery.
-
-```cpp
-// Planned API
-broker.set_dead_letter_handler([](const message& msg, const error& err) {
-    log_failed_message(msg, err);
-});
 ```
 
 ### Transformation Pipeline (#183)
