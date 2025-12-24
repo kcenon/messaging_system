@@ -36,6 +36,14 @@ struct internal_content_route {
 };
 
 // =============================================================================
+// Internal Transformer Data
+// =============================================================================
+
+struct internal_transformer {
+	transformer_config config;
+};
+
+// =============================================================================
 // Message Broker Implementation (PIMPL)
 // =============================================================================
 
@@ -977,6 +985,297 @@ public:
 		return common::ok();
 	}
 
+	// =========================================================================
+	// Transformation Pipeline Operations
+	// =========================================================================
+
+	common::VoidResult add_transformer(transformer_config config) {
+		if (config.transformer_id.empty()) {
+			common::logging::log_error("Add transformer failed: transformer_id is empty");
+			return common::error_info(
+				common::error::codes::common_errors::invalid_argument,
+				"Transformer ID cannot be empty"
+			);
+		}
+
+		if (!config.transform_fn) {
+			common::logging::log_error("Add transformer failed: transform_fn is null");
+			return common::error_info(
+				common::error::codes::common_errors::invalid_argument,
+				"Transform function cannot be null"
+			);
+		}
+
+		std::unique_lock lock(transformers_mutex_);
+
+		// Check for duplicate transformer
+		if (transformers_.find(config.transformer_id) != transformers_.end()) {
+			common::logging::log_error("Add transformer failed: duplicate transformer_id " +
+				config.transformer_id);
+			return common::error_info(
+				error::duplicate_subscription,
+				"Transformer already exists: " + config.transformer_id
+			);
+		}
+
+		// Create internal transformer
+		internal_transformer t;
+		t.config = std::move(config);
+		t.config.active = true;
+		t.config.messages_processed = 0;
+		t.config.failures = 0;
+
+		std::string transformer_id = t.config.transformer_id;
+		int stage_int = static_cast<int>(t.config.stage);
+		int order = t.config.order;
+
+		transformers_[transformer_id] = std::move(t);
+
+		common::logging::log_debug("Transformer added, id: " + transformer_id +
+			", stage: " + std::to_string(stage_int) +
+			", order: " + std::to_string(order));
+
+		return common::ok();
+	}
+
+	common::VoidResult remove_transformer(const std::string& transformer_id) {
+		std::unique_lock lock(transformers_mutex_);
+
+		auto it = transformers_.find(transformer_id);
+		if (it == transformers_.end()) {
+			common::logging::log_warning("Remove transformer failed: transformer not found " +
+				transformer_id);
+			return common::make_error<std::monostate>(
+				error::route_not_found,
+				"Transformer not found: " + transformer_id,
+				"messaging_system"
+			);
+		}
+
+		transformers_.erase(it);
+		common::logging::log_debug("Transformer removed, id: " + transformer_id);
+		return common::ok();
+	}
+
+	common::VoidResult enable_transformer(const std::string& transformer_id) {
+		std::unique_lock lock(transformers_mutex_);
+
+		auto it = transformers_.find(transformer_id);
+		if (it == transformers_.end()) {
+			common::logging::log_warning("Enable transformer failed: transformer not found " +
+				transformer_id);
+			return common::make_error<std::monostate>(
+				error::route_not_found,
+				"Transformer not found: " + transformer_id,
+				"messaging_system"
+			);
+		}
+
+		if (it->second.config.active) {
+			common::logging::log_debug("Transformer already active: " + transformer_id);
+			return common::ok();
+		}
+
+		it->second.config.active = true;
+		common::logging::log_debug("Transformer enabled, id: " + transformer_id);
+		return common::ok();
+	}
+
+	common::VoidResult disable_transformer(const std::string& transformer_id) {
+		std::unique_lock lock(transformers_mutex_);
+
+		auto it = transformers_.find(transformer_id);
+		if (it == transformers_.end()) {
+			common::logging::log_warning("Disable transformer failed: transformer not found " +
+				transformer_id);
+			return common::make_error<std::monostate>(
+				error::route_not_found,
+				"Transformer not found: " + transformer_id,
+				"messaging_system"
+			);
+		}
+
+		if (!it->second.config.active) {
+			common::logging::log_debug("Transformer already disabled: " + transformer_id);
+			return common::ok();
+		}
+
+		it->second.config.active = false;
+		common::logging::log_debug("Transformer disabled, id: " + transformer_id);
+		return common::ok();
+	}
+
+	bool has_transformer(const std::string& transformer_id) const {
+		std::shared_lock lock(transformers_mutex_);
+		return transformers_.find(transformer_id) != transformers_.end();
+	}
+
+	common::Result<transformer_config> get_transformer(const std::string& transformer_id) const {
+		std::shared_lock lock(transformers_mutex_);
+
+		auto it = transformers_.find(transformer_id);
+		if (it == transformers_.end()) {
+			return common::make_error<transformer_config>(
+				error::route_not_found,
+				"Transformer not found: " + transformer_id,
+				"messaging_system"
+			);
+		}
+
+		return common::ok(it->second.config);
+	}
+
+	std::vector<transformer_config> get_transformers(transform_stage stage) const {
+		std::shared_lock lock(transformers_mutex_);
+
+		std::vector<transformer_config> result;
+		for (const auto& [id, t] : transformers_) {
+			if (t.config.stage == stage) {
+				result.push_back(t.config);
+			}
+		}
+
+		// Sort by order (ascending)
+		std::sort(result.begin(), result.end(),
+			[](const auto& a, const auto& b) {
+				return a.order < b.order;
+			});
+
+		return result;
+	}
+
+	std::vector<transformer_config> get_all_transformers() const {
+		std::shared_lock lock(transformers_mutex_);
+
+		std::vector<transformer_config> result;
+		result.reserve(transformers_.size());
+
+		for (const auto& [id, t] : transformers_) {
+			result.push_back(t.config);
+		}
+
+		return result;
+	}
+
+	size_t transformer_count() const {
+		std::shared_lock lock(transformers_mutex_);
+		return transformers_.size();
+	}
+
+	size_t transformer_count(transform_stage stage) const {
+		std::shared_lock lock(transformers_mutex_);
+
+		size_t count = 0;
+		for (const auto& [id, t] : transformers_) {
+			if (t.config.stage == stage) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	void clear_transformers(transform_stage stage) {
+		std::unique_lock lock(transformers_mutex_);
+
+		for (auto it = transformers_.begin(); it != transformers_.end();) {
+			if (it->second.config.stage == stage) {
+				it = transformers_.erase(it);
+			} else {
+				++it;
+			}
+		}
+
+		common::logging::log_debug("Transformers cleared for stage: " +
+			std::to_string(static_cast<int>(stage)));
+	}
+
+	void clear_all_transformers() {
+		std::unique_lock lock(transformers_mutex_);
+		transformers_.clear();
+		common::logging::log_debug("All transformers cleared");
+	}
+
+	// Helper method to apply transformers for a stage
+	common::Result<message> apply_transformers(
+		transform_stage stage,
+		message msg) {
+
+		// Get sorted transformers for this stage
+		std::vector<std::pair<std::string, internal_transformer>> sorted_transformers;
+		{
+			std::shared_lock lock(transformers_mutex_);
+			for (const auto& [id, t] : transformers_) {
+				if (t.config.stage == stage && t.config.active) {
+					sorted_transformers.emplace_back(id, t);
+				}
+			}
+		}
+
+		if (sorted_transformers.empty()) {
+			return common::ok(std::move(msg));
+		}
+
+		// Sort by order (ascending)
+		std::sort(sorted_transformers.begin(), sorted_transformers.end(),
+			[](const auto& a, const auto& b) {
+				return a.second.config.order < b.second.config.order;
+			});
+
+		// Apply transformers
+		for (auto& [transformer_id, t] : sorted_transformers) {
+			try {
+				auto result = t.config.transform_fn(std::move(msg));
+
+				if (result.is_ok()) {
+					msg = std::move(result.unwrap());
+
+					// Update statistics
+					std::unique_lock lock(transformers_mutex_);
+					auto it = transformers_.find(transformer_id);
+					if (it != transformers_.end()) {
+						it->second.config.messages_processed++;
+					}
+				} else {
+					// Update failure statistics
+					{
+						std::unique_lock lock(transformers_mutex_);
+						auto it = transformers_.find(transformer_id);
+						if (it != transformers_.end()) {
+							it->second.config.failures++;
+						}
+					}
+
+					common::logging::log_warning("Transformer failed, id: " + transformer_id +
+						", error: " + result.error().message);
+					return common::make_error<message>(
+						result.error().code,
+						"Transformer '" + transformer_id + "' failed: " + result.error().message,
+						"messaging_system"
+					);
+				}
+			} catch (const std::exception& e) {
+				// Update failure statistics
+				{
+					std::unique_lock lock(transformers_mutex_);
+					auto it = transformers_.find(transformer_id);
+					if (it != transformers_.end()) {
+						it->second.config.failures++;
+					}
+				}
+
+				common::logging::log_error("Transformer threw exception, id: " + transformer_id +
+					", error: " + std::string(e.what()));
+				return common::make_error<message>(
+					common::error::codes::common_errors::internal_error,
+					"Transformer '" + transformer_id + "' threw exception: " + e.what(),
+					"messaging_system"
+				);
+			}
+		}
+
+		return common::ok(std::move(msg));
+	}
+
 private:
 	common::VoidResult handle_route_message(const std::string& route_id,
 											const message& msg) {
@@ -1046,6 +1345,10 @@ private:
 	// Content-based routing
 	mutable std::shared_mutex content_routes_mutex_;
 	std::unordered_map<std::string, internal_content_route> content_routes_;
+
+	// Transformation pipeline
+	mutable std::shared_mutex transformers_mutex_;
+	std::unordered_map<std::string, internal_transformer> transformers_;
 };
 
 // =============================================================================
@@ -1218,6 +1521,59 @@ void message_broker::clear_content_routes() {
 
 common::VoidResult message_broker::route_by_content(const message& msg) {
 	return impl_->route_by_content(msg);
+}
+
+// =============================================================================
+// Transformation Pipeline Public Interface
+// =============================================================================
+
+common::VoidResult message_broker::add_transformer(transformer_config config) {
+	return impl_->add_transformer(std::move(config));
+}
+
+common::VoidResult message_broker::remove_transformer(const std::string& transformer_id) {
+	return impl_->remove_transformer(transformer_id);
+}
+
+common::VoidResult message_broker::enable_transformer(const std::string& transformer_id) {
+	return impl_->enable_transformer(transformer_id);
+}
+
+common::VoidResult message_broker::disable_transformer(const std::string& transformer_id) {
+	return impl_->disable_transformer(transformer_id);
+}
+
+bool message_broker::has_transformer(const std::string& transformer_id) const {
+	return impl_->has_transformer(transformer_id);
+}
+
+common::Result<transformer_config> message_broker::get_transformer(
+	const std::string& transformer_id) const {
+	return impl_->get_transformer(transformer_id);
+}
+
+std::vector<transformer_config> message_broker::get_transformers(transform_stage stage) const {
+	return impl_->get_transformers(stage);
+}
+
+std::vector<transformer_config> message_broker::get_all_transformers() const {
+	return impl_->get_all_transformers();
+}
+
+size_t message_broker::transformer_count() const {
+	return impl_->transformer_count();
+}
+
+size_t message_broker::transformer_count(transform_stage stage) const {
+	return impl_->transformer_count(stage);
+}
+
+void message_broker::clear_transformers(transform_stage stage) {
+	impl_->clear_transformers(stage);
+}
+
+void message_broker::clear_all_transformers() {
+	impl_->clear_all_transformers();
 }
 
 // =============================================================================

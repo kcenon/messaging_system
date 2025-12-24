@@ -136,6 +136,56 @@ using dlq_message_callback = std::function<void(const dlq_entry&)>;
 using dlq_full_callback = std::function<void(std::size_t size)>;
 
 // =============================================================================
+// Transformation Pipeline Types
+// =============================================================================
+
+/**
+ * @enum transform_stage
+ * @brief Stage at which a transformer is executed
+ */
+enum class transform_stage {
+	pre_routing,   ///< Before route matching
+	post_routing,  ///< After route matching, before handler
+	on_success,    ///< After successful handling
+	on_failure     ///< After failed handling
+};
+
+/**
+ * @brief Transformer function type that modifies a message
+ *
+ * Returns a modified message on success, or an error to stop the pipeline.
+ * If an error is returned, the message may be moved to DLQ (if configured).
+ */
+using transformer = std::function<common::Result<message>(message)>;
+
+/**
+ * @struct transformer_config
+ * @brief Configuration for a message transformer
+ */
+struct transformer_config {
+	/// Unique identifier for this transformer
+	std::string transformer_id;
+
+	/// Stage at which transformer executes
+	transform_stage stage = transform_stage::pre_routing;
+
+	/// Transformation function
+	transformer transform_fn;
+
+	/// Execution order within stage (lower = executed first)
+	int order = 0;
+
+	/// Whether this transformer is currently active
+	bool active = true;
+
+	/// Number of messages processed by this transformer
+	uint64_t messages_processed = 0;
+
+	/// Number of transformation failures
+	uint64_t failures = 0;
+};
+
+// =============================================================================
 // Content-Based Routing Types
 // =============================================================================
 
@@ -581,6 +631,106 @@ public:
 	 * @return true if DLQ is configured, false otherwise
 	 */
 	bool is_dlq_configured() const;
+
+	// =========================================================================
+	// Transformation Pipeline
+	// =========================================================================
+
+	/**
+	 * @brief Add a transformer to the pipeline
+	 * @param config Transformer configuration
+	 * @return Result indicating success or error
+	 *
+	 * Transformers are executed in order within each stage. Multiple transformers
+	 * can be registered for the same stage. If a transformer returns an error,
+	 * the pipeline stops and the message may be moved to DLQ.
+	 *
+	 * @example
+	 * ```cpp
+	 * broker.add_transformer({
+	 *     .transformer_id = "add-timestamp",
+	 *     .stage = transform_stage::pre_routing,
+	 *     .transform_fn = [](message msg) {
+	 *         msg.metadata().headers["processed_at"] = get_timestamp();
+	 *         return common::ok(std::move(msg));
+	 *     },
+	 *     .order = 0
+	 * });
+	 * ```
+	 */
+	common::VoidResult add_transformer(transformer_config config);
+
+	/**
+	 * @brief Remove a transformer by ID
+	 * @param transformer_id Transformer identifier to remove
+	 * @return Result indicating success or error
+	 */
+	common::VoidResult remove_transformer(const std::string& transformer_id);
+
+	/**
+	 * @brief Enable a transformer
+	 * @param transformer_id Transformer identifier to enable
+	 * @return Result indicating success or error
+	 */
+	common::VoidResult enable_transformer(const std::string& transformer_id);
+
+	/**
+	 * @brief Disable a transformer
+	 * @param transformer_id Transformer identifier to disable
+	 * @return Result indicating success or error
+	 */
+	common::VoidResult disable_transformer(const std::string& transformer_id);
+
+	/**
+	 * @brief Check if a transformer exists
+	 * @param transformer_id Transformer identifier to check
+	 * @return true if transformer exists, false otherwise
+	 */
+	bool has_transformer(const std::string& transformer_id) const;
+
+	/**
+	 * @brief Get information about a transformer
+	 * @param transformer_id Transformer identifier
+	 * @return Transformer configuration or error if not found
+	 */
+	common::Result<transformer_config> get_transformer(const std::string& transformer_id) const;
+
+	/**
+	 * @brief Get all transformers for a specific stage
+	 * @param stage Stage to get transformers for
+	 * @return Vector of transformer configurations for the stage
+	 */
+	std::vector<transformer_config> get_transformers(transform_stage stage) const;
+
+	/**
+	 * @brief Get all transformers
+	 * @return Vector of all transformer configurations
+	 */
+	std::vector<transformer_config> get_all_transformers() const;
+
+	/**
+	 * @brief Get number of transformers
+	 * @return Total number of transformers
+	 */
+	size_t transformer_count() const;
+
+	/**
+	 * @brief Get number of transformers for a specific stage
+	 * @param stage Stage to count transformers for
+	 * @return Number of transformers in the stage
+	 */
+	size_t transformer_count(transform_stage stage) const;
+
+	/**
+	 * @brief Clear all transformers for a specific stage
+	 * @param stage Stage to clear
+	 */
+	void clear_transformers(transform_stage stage);
+
+	/**
+	 * @brief Clear all transformers
+	 */
+	void clear_all_transformers();
 
 	// =========================================================================
 	// Content-Based Routing
