@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **HTTP Transport Implementation (Issue #168)**
+  - `http_transport`: HTTP transport adapter using `network_system::http_client`
+    - PIMPL pattern with network_system integration
+    - HTTP GET and POST methods for message transmission
+    - Custom header management (set/remove headers)
+    - Content-Type support (JSON, binary, msgpack)
+    - State management with handler callbacks
+    - Transport statistics tracking (messages sent/received, bytes, errors)
+  - Configuration options in `http_transport_config`:
+    - `base_path`: Base URL path for API endpoints
+    - `content_type`: Serialization format (json, binary, msgpack)
+    - `use_ssl`: Enable HTTPS
+    - `default_headers`: Default HTTP headers for all requests
+    - `publish_endpoint`, `subscribe_endpoint`, `request_endpoint`: Configurable endpoints
+  - Comprehensive unit tests (24 tests)
+  - Follows `transport_interface` contract for consistency with `websocket_transport`
+
 ### Fixed
 - **Build Fix: Enable KCENON_HAS_COMMON_EXECUTOR for thread_pool IExecutor support**
   - Added `KCENON_HAS_COMMON_EXECUTOR=1` compile definition when common_system is linked
