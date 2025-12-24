@@ -1,6 +1,6 @@
 # Message Broker
 
-**Version**: 0.1.0
+**Version**: 0.2.1
 **Last Updated**: 2025-12-24
 **Language**: [English]
 
@@ -20,11 +20,12 @@ The `message_broker` is a central message routing component that provides advanc
 4. [Configuration](#configuration)
 5. [Route Management](#route-management)
 6. [Message Routing](#message-routing)
-7. [Statistics](#statistics)
-8. [Best Practices](#best-practices)
-9. [Migration from topic_router](#migration-from-topic_router)
-10. [Dead Letter Queue](#dead-letter-queue)
-11. [Planned Features](#planned-features)
+7. [Content-Based Routing](#content-based-routing)
+8. [Statistics](#statistics)
+9. [Best Practices](#best-practices)
+10. [Migration from topic_router](#migration-from-topic_router)
+11. [Dead Letter Queue](#dead-letter-queue)
+12. [Planned Features](#planned-features)
 
 ---
 
@@ -46,8 +47,13 @@ The `message_broker` is a central message routing component that provides advanc
 
 | Feature | Description | Issue |
 |---------|-------------|-------|
-| Content-based Routing | Route based on message content/headers | #181 |
 | Transformation Pipeline | Transform messages during routing | #183 |
+
+### Recently Added
+
+| Feature | Description | Version |
+|---------|-------------|---------|
+| Content-based Routing | Route based on message content/headers | v0.2.1 |
 
 ---
 
@@ -307,6 +313,184 @@ if (!result.is_ok()) {
     }
 }
 ```
+
+---
+
+## Content-Based Routing
+
+Content-based routing allows you to route messages based on their payload content, metadata headers, message type, or priority, rather than just the topic.
+
+### Content Filter Types
+
+The `content_filters` namespace provides helper functions for creating common filters:
+
+| Filter | Description |
+|--------|-------------|
+| `has_field(field_name)` | Check if payload contains a field |
+| `field_equals(field_name, value)` | Check if field equals a specific value |
+| `field_matches(field_name, pattern)` | Check if field matches a regex pattern |
+| `metadata_equals(key, value)` | Check if metadata header equals a value |
+| `message_type_is(type)` | Check message type |
+| `priority_at_least(priority)` | Check minimum priority level |
+| `all_of(filters)` | Combine filters with AND logic |
+| `any_of(filters)` | Combine filters with OR logic |
+| `not_filter(filter)` | Negate a filter |
+
+### Adding Content Routes
+
+```cpp
+#include <kcenon/messaging/core/message_broker.h>
+using namespace kcenon::messaging;
+using namespace kcenon::messaging::content_filters;
+
+message_broker broker;
+broker.start();
+
+// Route based on metadata header
+broker.add_content_route("eu-orders",
+    metadata_equals("region", "EU"),
+    [](const message& msg) {
+        // Handle EU orders
+        return common::ok();
+    }
+);
+
+// Route based on message type
+broker.add_content_route("event-handler",
+    message_type_is(message_type::event),
+    [](const message& msg) {
+        // Handle events only
+        return common::ok();
+    }
+);
+
+// Route based on priority
+broker.add_content_route("high-priority-handler",
+    priority_at_least(message_priority::high),
+    [](const message& msg) {
+        // Handle high priority messages
+        return common::ok();
+    },
+    10  // priority
+);
+```
+
+### Combining Filters
+
+```cpp
+// Route messages that are events from EU region
+broker.add_content_route("eu-events",
+    all_of({
+        metadata_equals("region", "EU"),
+        message_type_is(message_type::event)
+    }),
+    handler
+);
+
+// Route messages from EU or UK region
+broker.add_content_route("european-orders",
+    any_of({
+        metadata_equals("region", "EU"),
+        metadata_equals("region", "UK")
+    }),
+    handler
+);
+
+// Route messages that are NOT from EU
+broker.add_content_route("non-eu-orders",
+    not_filter(metadata_equals("region", "EU")),
+    handler
+);
+```
+
+### Custom Content Filters
+
+You can create custom filters using lambda expressions:
+
+```cpp
+// Custom filter for high-value orders
+broker.add_content_route("high-value-orders",
+    [](const message& msg) -> bool {
+        auto& payload = msg.payload();
+        auto value = payload.get_value("order_value");
+        if (!value.has_value()) return false;
+        return container_module::variant_helpers::to_string(
+            value->data, value->type) > "10000";
+    },
+    high_value_handler
+);
+
+// Filter based on topic pattern
+broker.add_content_route("order-filter",
+    [](const message& msg) -> bool {
+        return msg.metadata().topic.find("order.") == 0;
+    },
+    order_handler
+);
+```
+
+### Managing Content Routes
+
+```cpp
+// Check if route exists
+bool exists = broker.has_content_route("eu-orders");
+
+// Get route information
+auto route_result = broker.get_content_route("eu-orders");
+if (route_result.is_ok()) {
+    auto route = route_result.unwrap();
+    std::cout << "Route ID: " << route.route_id << std::endl;
+    std::cout << "Active: " << route.active << std::endl;
+    std::cout << "Priority: " << route.priority << std::endl;
+    std::cout << "Messages processed: " << route.messages_processed << std::endl;
+}
+
+// Get all content routes
+auto routes = broker.get_content_routes();
+
+// Get route count
+size_t count = broker.content_route_count();
+
+// Enable/disable routes
+broker.disable_content_route("eu-orders");
+broker.enable_content_route("eu-orders");
+
+// Remove a route
+broker.remove_content_route("eu-orders");
+
+// Clear all content routes
+broker.clear_content_routes();
+```
+
+### Routing by Content
+
+```cpp
+// Route a message using content-based routing
+message msg("orders.new");
+msg.metadata().headers["region"] = "EU";
+
+auto result = broker.route_by_content(msg);
+if (result.is_err()) {
+    std::cout << "No matching routes or handler failed" << std::endl;
+}
+```
+
+### Content vs Topic Routing
+
+| Aspect | Topic Routing | Content-Based Routing |
+|--------|--------------|----------------------|
+| Method | `route()` | `route_by_content()` |
+| Matching | Topic pattern | Filter predicate |
+| Performance | O(1) hash lookup | O(n) filter evaluation |
+| Use case | Simple routing | Complex routing logic |
+| Multiple matches | All matching handlers | All matching handlers |
+
+### Best Practices
+
+1. **Use topic routing when possible**: It's more efficient than content-based routing
+2. **Order by specificity**: Higher priority for more specific filters
+3. **Handle exceptions**: Filters should not throw; wrap in try-catch if needed
+4. **Monitor statistics**: Track `messages_processed` to identify hot routes
 
 ---
 
@@ -583,19 +767,6 @@ broker.on_dlq_full([](std::size_t size) {
 
 The following features are planned for future releases:
 
-### Content-based Routing (#181)
-
-Route messages based on payload content or headers.
-
-```cpp
-// Planned API
-broker.add_content_route("large-orders", "order.*",
-    [](const message& msg) {
-        return msg.payload().get<int>("amount") > 1000;
-    },
-    large_order_handler);
-```
-
 ### Transformation Pipeline (#183)
 
 Transform messages during routing.
@@ -621,4 +792,4 @@ broker.add_route("enriched", "order.*", handler)
 ---
 
 **Last Updated**: 2025-12-24
-**Version**: 0.1.0
+**Version**: 0.2.1

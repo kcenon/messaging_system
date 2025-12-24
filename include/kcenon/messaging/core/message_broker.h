@@ -136,6 +136,120 @@ using dlq_message_callback = std::function<void(const dlq_entry&)>;
 using dlq_full_callback = std::function<void(std::size_t size)>;
 
 // =============================================================================
+// Content-Based Routing Types
+// =============================================================================
+
+/**
+ * @brief Content filter predicate for content-based routing
+ *
+ * A function that inspects a message and returns true if the message
+ * should be routed to the associated handler.
+ */
+using content_filter = std::function<bool(const message&)>;
+
+/**
+ * @struct content_route
+ * @brief Configuration for a content-based route
+ */
+struct content_route {
+	/// Unique identifier for this content route
+	std::string route_id;
+
+	/// Filter function to determine if message matches
+	content_filter filter;
+
+	/// Handler to process matching messages
+	message_handler handler;
+
+	/// Priority for route ordering (higher = processed first)
+	int priority = 0;
+
+	/// Whether this route is currently active
+	bool active = true;
+
+	/// Number of messages processed by this route
+	uint64_t messages_processed = 0;
+};
+
+// =============================================================================
+// Content Filter Utilities
+// =============================================================================
+
+/**
+ * @namespace content_filters
+ * @brief Helper functions for creating common content filters
+ */
+namespace content_filters {
+
+/**
+ * @brief Create a filter that checks if a field exists in the payload
+ * @param field_name Name of the field to check
+ * @return Content filter predicate
+ */
+content_filter has_field(const std::string& field_name);
+
+/**
+ * @brief Create a filter that checks if a string field equals a value
+ * @param field_name Name of the field to check
+ * @param value Expected string value
+ * @return Content filter predicate
+ */
+content_filter field_equals(const std::string& field_name, const std::string& value);
+
+/**
+ * @brief Create a filter that checks if a field matches a regex pattern
+ * @param field_name Name of the field to check
+ * @param pattern Regular expression pattern
+ * @return Content filter predicate
+ */
+content_filter field_matches(const std::string& field_name, const std::string& pattern);
+
+/**
+ * @brief Create a filter that checks if a metadata header equals a value
+ * @param key Metadata header key
+ * @param value Expected value
+ * @return Content filter predicate
+ */
+content_filter metadata_equals(const std::string& key, const std::string& value);
+
+/**
+ * @brief Create a filter that checks message type
+ * @param type Expected message type
+ * @return Content filter predicate
+ */
+content_filter message_type_is(message_type type);
+
+/**
+ * @brief Create a filter that checks message priority
+ * @param min_priority Minimum priority level (inclusive)
+ * @return Content filter predicate
+ */
+content_filter priority_at_least(message_priority min_priority);
+
+/**
+ * @brief Combine multiple filters with AND logic
+ * @param filters Vector of filters to combine
+ * @return Content filter that passes only if all filters pass
+ */
+content_filter all_of(std::vector<content_filter> filters);
+
+/**
+ * @brief Combine multiple filters with OR logic
+ * @param filters Vector of filters to combine
+ * @return Content filter that passes if any filter passes
+ */
+content_filter any_of(std::vector<content_filter> filters);
+
+/**
+ * @brief Negate a filter
+ * @param filter Filter to negate
+ * @return Content filter that passes when original filter fails
+ */
+content_filter not_filter(content_filter filter);
+
+}  // namespace content_filters
+
+// =============================================================================
 // Broker Configuration
 // =============================================================================
 
@@ -467,6 +581,105 @@ public:
 	 * @return true if DLQ is configured, false otherwise
 	 */
 	bool is_dlq_configured() const;
+
+	// =========================================================================
+	// Content-Based Routing
+	// =========================================================================
+
+	/**
+	 * @brief Add a content-based route
+	 * @param route_id Unique identifier for the route
+	 * @param filter Content filter predicate
+	 * @param handler Handler function for matched messages
+	 * @param priority Route priority (higher = processed first)
+	 * @return Result indicating success or error
+	 *
+	 * Content-based routes are evaluated for every message, regardless of topic.
+	 * Multiple routes can match the same message - all matching handlers are called.
+	 *
+	 * @example
+	 * ```cpp
+	 * broker.add_content_route("high-value-orders",
+	 *     [](const message& msg) {
+	 *         auto& payload = msg.payload();
+	 *         auto value = payload.get_value("order_value");
+	 *         return value && ov_to_double(value) > 10000.0;
+	 *     },
+	 *     [](const message& msg) {
+	 *         // Handle high-value orders
+	 *         return common::ok();
+	 *     },
+	 *     10  // priority
+	 * );
+	 * ```
+	 */
+	common::VoidResult add_content_route(const std::string& route_id,
+										 content_filter filter,
+										 message_handler handler,
+										 int priority = 0);
+
+	/**
+	 * @brief Remove a content-based route
+	 * @param route_id Route identifier to remove
+	 * @return Result indicating success or error
+	 */
+	common::VoidResult remove_content_route(const std::string& route_id);
+
+	/**
+	 * @brief Enable a content-based route
+	 * @param route_id Route identifier to enable
+	 * @return Result indicating success or error
+	 */
+	common::VoidResult enable_content_route(const std::string& route_id);
+
+	/**
+	 * @brief Disable a content-based route
+	 * @param route_id Route identifier to disable
+	 * @return Result indicating success or error
+	 */
+	common::VoidResult disable_content_route(const std::string& route_id);
+
+	/**
+	 * @brief Check if a content-based route exists
+	 * @param route_id Route identifier to check
+	 * @return true if route exists, false otherwise
+	 */
+	bool has_content_route(const std::string& route_id) const;
+
+	/**
+	 * @brief Get information about a content-based route
+	 * @param route_id Route identifier
+	 * @return Content route information or error if not found
+	 */
+	common::Result<content_route> get_content_route(const std::string& route_id) const;
+
+	/**
+	 * @brief Get all content-based routes
+	 * @return Vector of content route information
+	 */
+	std::vector<content_route> get_content_routes() const;
+
+	/**
+	 * @brief Get number of content-based routes
+	 * @return Number of content routes
+	 */
+	size_t content_route_count() const;
+
+	/**
+	 * @brief Clear all content-based routes
+	 */
+	void clear_content_routes();
+
+	/**
+	 * @brief Route a message using content-based routing
+	 * @param msg Message to route
+	 * @return Result indicating success or error
+	 *
+	 * Evaluates all content filters and calls handlers for matching routes.
+	 * Routes are processed in priority order (highest first).
+	 * All matching handlers are called (not just the first match).
+	 */
+	common::VoidResult route_by_content(const message& msg);
 
 private:
 	std::unique_ptr<message_broker_impl> impl_;

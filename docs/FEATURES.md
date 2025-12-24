@@ -89,11 +89,11 @@ std::cout << "Routed: " << stats.messages_routed << std::endl;
 broker.stop();
 ```
 
-**Planned Features** (see #181, #183):
-- Content-based Routing (#181)
+**Planned Features** (see #183):
 - Transformation Pipeline (#183)
 
 **Recently Implemented**:
+- Content-based Routing (v0.2.1) - Route messages based on payload content
 - Dead Letter Queue (v0.2.0) - Full DLQ support with replay and purge functionality
 
 ---

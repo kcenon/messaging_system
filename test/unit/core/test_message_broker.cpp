@@ -1011,3 +1011,523 @@ TEST_F(MessageBrokerTest, DLQReplayFailureUpdatesRetryCount) {
 	EXPECT_EQ(messages[0].retry_count, 1);
 	EXPECT_TRUE(messages[0].last_error.has_value());
 }
+
+// =============================================================================
+// Content-Based Routing Tests
+// =============================================================================
+
+TEST_F(MessageBrokerTest, AddContentRouteSuccess) {
+	auto result = broker_->add_content_route(
+		"test-content-route",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	ASSERT_TRUE(result.is_ok());
+	EXPECT_TRUE(broker_->has_content_route("test-content-route"));
+	EXPECT_EQ(broker_->content_route_count(), 1);
+}
+
+TEST_F(MessageBrokerTest, AddContentRouteEmptyId) {
+	auto result = broker_->add_content_route(
+		"",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, AddContentRouteNullFilter) {
+	auto result = broker_->add_content_route(
+		"test-content-route",
+		nullptr,
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, AddContentRouteNullHandler) {
+	auto result = broker_->add_content_route(
+		"test-content-route",
+		[](const message& /* msg */) { return true; },
+		nullptr
+	);
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, AddContentRouteDuplicate) {
+	broker_->add_content_route(
+		"test-content-route",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	auto result = broker_->add_content_route(
+		"test-content-route",
+		[](const message& /* msg */) { return false; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, RemoveContentRouteSuccess) {
+	broker_->add_content_route(
+		"test-content-route",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	auto result = broker_->remove_content_route("test-content-route");
+
+	ASSERT_TRUE(result.is_ok());
+	EXPECT_FALSE(broker_->has_content_route("test-content-route"));
+	EXPECT_EQ(broker_->content_route_count(), 0);
+}
+
+TEST_F(MessageBrokerTest, RemoveContentRouteNotFound) {
+	auto result = broker_->remove_content_route("nonexistent-route");
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, EnableDisableContentRoute) {
+	broker_->add_content_route(
+		"test-content-route",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	// Disable route
+	auto disable_result = broker_->disable_content_route("test-content-route");
+	ASSERT_TRUE(disable_result.is_ok());
+
+	auto route_info = broker_->get_content_route("test-content-route");
+	ASSERT_TRUE(route_info.is_ok());
+	EXPECT_FALSE(route_info.unwrap().active);
+
+	// Enable route
+	auto enable_result = broker_->enable_content_route("test-content-route");
+	ASSERT_TRUE(enable_result.is_ok());
+
+	route_info = broker_->get_content_route("test-content-route");
+	ASSERT_TRUE(route_info.is_ok());
+	EXPECT_TRUE(route_info.unwrap().active);
+}
+
+TEST_F(MessageBrokerTest, GetContentRoutes) {
+	broker_->add_content_route(
+		"route-1",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+	broker_->add_content_route(
+		"route-2",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	auto routes = broker_->get_content_routes();
+
+	EXPECT_EQ(routes.size(), 2);
+}
+
+TEST_F(MessageBrokerTest, ClearContentRoutes) {
+	broker_->add_content_route(
+		"route-1",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+	broker_->add_content_route(
+		"route-2",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	EXPECT_EQ(broker_->content_route_count(), 2);
+
+	broker_->clear_content_routes();
+
+	EXPECT_EQ(broker_->content_route_count(), 0);
+}
+
+TEST_F(MessageBrokerTest, RouteByContentSuccess) {
+	broker_->start();
+
+	int call_count = 0;
+	broker_->add_content_route(
+		"test-content-route",
+		[](const message& msg) {
+			return msg.metadata().topic == "test.topic";
+		},
+		[&call_count](const message& /* msg */) {
+			call_count++;
+			return common::ok();
+		}
+	);
+
+	message msg("test.topic");
+	auto result = broker_->route_by_content(msg);
+
+	ASSERT_TRUE(result.is_ok());
+	EXPECT_EQ(call_count, 1);
+}
+
+TEST_F(MessageBrokerTest, RouteByContentNotRunning) {
+	broker_->add_content_route(
+		"test-content-route",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	message msg("test.topic");
+	auto result = broker_->route_by_content(msg);
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, RouteByContentNoMatch) {
+	broker_->start();
+
+	broker_->add_content_route(
+		"test-content-route",
+		[](const message& /* msg */) { return false; },  // Never matches
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	message msg("test.topic");
+	auto result = broker_->route_by_content(msg);
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, RouteByContentMultipleMatches) {
+	broker_->start();
+
+	int call_count1 = 0;
+	int call_count2 = 0;
+
+	broker_->add_content_route(
+		"route-1",
+		[](const message& /* msg */) { return true; },
+		[&call_count1](const message& /* msg */) {
+			call_count1++;
+			return common::ok();
+		}
+	);
+
+	broker_->add_content_route(
+		"route-2",
+		[](const message& /* msg */) { return true; },
+		[&call_count2](const message& /* msg */) {
+			call_count2++;
+			return common::ok();
+		}
+	);
+
+	message msg("test.topic");
+	auto result = broker_->route_by_content(msg);
+
+	ASSERT_TRUE(result.is_ok());
+	EXPECT_EQ(call_count1, 1);
+	EXPECT_EQ(call_count2, 1);
+}
+
+TEST_F(MessageBrokerTest, RouteByContentPriorityOrdering) {
+	broker_->start();
+
+	std::vector<int> execution_order;
+
+	broker_->add_content_route(
+		"low-priority",
+		[](const message& /* msg */) { return true; },
+		[&execution_order](const message& /* msg */) {
+			execution_order.push_back(1);
+			return common::ok();
+		},
+		1
+	);
+
+	broker_->add_content_route(
+		"high-priority",
+		[](const message& /* msg */) { return true; },
+		[&execution_order](const message& /* msg */) {
+			execution_order.push_back(10);
+			return common::ok();
+		},
+		10
+	);
+
+	broker_->add_content_route(
+		"medium-priority",
+		[](const message& /* msg */) { return true; },
+		[&execution_order](const message& /* msg */) {
+			execution_order.push_back(5);
+			return common::ok();
+		},
+		5
+	);
+
+	message msg("test.topic");
+	auto result = broker_->route_by_content(msg);
+
+	ASSERT_TRUE(result.is_ok());
+	ASSERT_EQ(execution_order.size(), 3);
+	EXPECT_EQ(execution_order[0], 10);  // Highest priority first
+	EXPECT_EQ(execution_order[1], 5);
+	EXPECT_EQ(execution_order[2], 1);   // Lowest priority last
+}
+
+TEST_F(MessageBrokerTest, RouteByContentDisabledRoute) {
+	broker_->start();
+
+	int call_count = 0;
+	broker_->add_content_route(
+		"test-content-route",
+		[](const message& /* msg */) { return true; },
+		[&call_count](const message& /* msg */) {
+			call_count++;
+			return common::ok();
+		}
+	);
+
+	broker_->disable_content_route("test-content-route");
+
+	message msg("test.topic");
+	auto result = broker_->route_by_content(msg);
+
+	EXPECT_TRUE(result.is_err());  // No active routes matched
+	EXPECT_EQ(call_count, 0);
+}
+
+TEST_F(MessageBrokerTest, RouteByContentHandlerFailure) {
+	broker_->start();
+
+	broker_->add_content_route(
+		"failing-route",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) {
+			return common::make_error<std::monostate>(
+				common::error::codes::common_errors::internal_error,
+				"Simulated failure"
+			);
+		}
+	);
+
+	message msg("test.topic");
+	auto result = broker_->route_by_content(msg);
+
+	EXPECT_TRUE(result.is_err());
+}
+
+TEST_F(MessageBrokerTest, ContentFilterMetadataEquals) {
+	broker_->start();
+
+	int call_count = 0;
+	broker_->add_content_route(
+		"region-filter",
+		content_filters::metadata_equals("region", "EU"),
+		[&call_count](const message& /* msg */) {
+			call_count++;
+			return common::ok();
+		}
+	);
+
+	// Message with matching header
+	message msg1("test.topic");
+	msg1.metadata().headers["region"] = "EU";
+	auto result1 = broker_->route_by_content(msg1);
+	ASSERT_TRUE(result1.is_ok());
+	EXPECT_EQ(call_count, 1);
+
+	// Message with non-matching header
+	message msg2("test.topic");
+	msg2.metadata().headers["region"] = "US";
+	auto result2 = broker_->route_by_content(msg2);
+	EXPECT_TRUE(result2.is_err());
+	EXPECT_EQ(call_count, 1);
+}
+
+TEST_F(MessageBrokerTest, ContentFilterMessageType) {
+	broker_->start();
+
+	int call_count = 0;
+	broker_->add_content_route(
+		"event-filter",
+		content_filters::message_type_is(message_type::event),
+		[&call_count](const message& /* msg */) {
+			call_count++;
+			return common::ok();
+		}
+	);
+
+	// Event message should match
+	message msg1("test.topic", message_type::event);
+	auto result1 = broker_->route_by_content(msg1);
+	ASSERT_TRUE(result1.is_ok());
+	EXPECT_EQ(call_count, 1);
+
+	// Command message should not match
+	message msg2("test.topic", message_type::command);
+	auto result2 = broker_->route_by_content(msg2);
+	EXPECT_TRUE(result2.is_err());
+	EXPECT_EQ(call_count, 1);
+}
+
+TEST_F(MessageBrokerTest, ContentFilterPriorityAtLeast) {
+	broker_->start();
+
+	int call_count = 0;
+	broker_->add_content_route(
+		"high-priority-filter",
+		content_filters::priority_at_least(message_priority::high),
+		[&call_count](const message& /* msg */) {
+			call_count++;
+			return common::ok();
+		}
+	);
+
+	// Build high priority message
+	auto high_msg_result = message_builder()
+		.topic("test.topic")
+		.priority(message_priority::high)
+		.build();
+	ASSERT_TRUE(high_msg_result.is_ok());
+
+	auto result1 = broker_->route_by_content(high_msg_result.unwrap());
+	ASSERT_TRUE(result1.is_ok());
+	EXPECT_EQ(call_count, 1);
+
+	// Build low priority message
+	auto low_msg_result = message_builder()
+		.topic("test.topic")
+		.priority(message_priority::low)
+		.build();
+	ASSERT_TRUE(low_msg_result.is_ok());
+
+	auto result2 = broker_->route_by_content(low_msg_result.unwrap());
+	EXPECT_TRUE(result2.is_err());
+	EXPECT_EQ(call_count, 1);
+}
+
+TEST_F(MessageBrokerTest, ContentFilterCombineAllOf) {
+	broker_->start();
+
+	int call_count = 0;
+	broker_->add_content_route(
+		"combined-filter",
+		content_filters::all_of({
+			content_filters::metadata_equals("region", "EU"),
+			content_filters::message_type_is(message_type::event)
+		}),
+		[&call_count](const message& /* msg */) {
+			call_count++;
+			return common::ok();
+		}
+	);
+
+	// Message with both conditions met
+	message msg1("test.topic", message_type::event);
+	msg1.metadata().headers["region"] = "EU";
+	auto result1 = broker_->route_by_content(msg1);
+	ASSERT_TRUE(result1.is_ok());
+	EXPECT_EQ(call_count, 1);
+
+	// Message with only one condition met
+	message msg2("test.topic", message_type::command);
+	msg2.metadata().headers["region"] = "EU";
+	auto result2 = broker_->route_by_content(msg2);
+	EXPECT_TRUE(result2.is_err());
+	EXPECT_EQ(call_count, 1);
+}
+
+TEST_F(MessageBrokerTest, ContentFilterCombineAnyOf) {
+	broker_->start();
+
+	int call_count = 0;
+	broker_->add_content_route(
+		"combined-filter",
+		content_filters::any_of({
+			content_filters::metadata_equals("region", "EU"),
+			content_filters::metadata_equals("region", "UK")
+		}),
+		[&call_count](const message& /* msg */) {
+			call_count++;
+			return common::ok();
+		}
+	);
+
+	// Message matching first filter
+	message msg1("test.topic");
+	msg1.metadata().headers["region"] = "EU";
+	auto result1 = broker_->route_by_content(msg1);
+	ASSERT_TRUE(result1.is_ok());
+	EXPECT_EQ(call_count, 1);
+
+	// Message matching second filter
+	message msg2("test.topic");
+	msg2.metadata().headers["region"] = "UK";
+	auto result2 = broker_->route_by_content(msg2);
+	ASSERT_TRUE(result2.is_ok());
+	EXPECT_EQ(call_count, 2);
+
+	// Message matching neither filter
+	message msg3("test.topic");
+	msg3.metadata().headers["region"] = "US";
+	auto result3 = broker_->route_by_content(msg3);
+	EXPECT_TRUE(result3.is_err());
+	EXPECT_EQ(call_count, 2);
+}
+
+TEST_F(MessageBrokerTest, ContentFilterNot) {
+	broker_->start();
+
+	int call_count = 0;
+	broker_->add_content_route(
+		"not-filter",
+		content_filters::not_filter(
+			content_filters::metadata_equals("region", "EU")
+		),
+		[&call_count](const message& /* msg */) {
+			call_count++;
+			return common::ok();
+		}
+	);
+
+	// Message that would match the inner filter should NOT match
+	message msg1("test.topic");
+	msg1.metadata().headers["region"] = "EU";
+	auto result1 = broker_->route_by_content(msg1);
+	EXPECT_TRUE(result1.is_err());
+	EXPECT_EQ(call_count, 0);
+
+	// Message that would not match the inner filter SHOULD match
+	message msg2("test.topic");
+	msg2.metadata().headers["region"] = "US";
+	auto result2 = broker_->route_by_content(msg2);
+	ASSERT_TRUE(result2.is_ok());
+	EXPECT_EQ(call_count, 1);
+}
+
+TEST_F(MessageBrokerTest, ContentRouteStatistics) {
+	broker_->start();
+
+	broker_->add_content_route(
+		"test-content-route",
+		[](const message& /* msg */) { return true; },
+		[](const message& /* msg */) { return common::ok(); }
+	);
+
+	// Route some messages
+	for (int i = 0; i < 5; ++i) {
+		message msg("test.topic");
+		broker_->route_by_content(msg);
+	}
+
+	auto route_info = broker_->get_content_route("test-content-route");
+	ASSERT_TRUE(route_info.is_ok());
+	EXPECT_EQ(route_info.unwrap().messages_processed, 5);
+}
