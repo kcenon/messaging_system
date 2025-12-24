@@ -306,7 +306,7 @@ inline common::Result<std::string> message_serializer::to_json(
 }
 
 inline common::Result<std::shared_ptr<container_module::value_container>>
-message_serializer::from_json(const std::string& json) const {
+message_serializer::from_json(const std::string& /*json*/) const {
 	// Note: JSON parsing requires additional implementation
 	// For now, we return an error indicating the feature needs implementation
 	return common::make_error<std::shared_ptr<container_module::value_container>>(
