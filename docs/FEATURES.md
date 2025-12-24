@@ -1,7 +1,7 @@
 # Messaging System Features
 
-**Version**: 0.1.2
-**Last Updated**: 2025-12-24
+**Version**: 0.2.2
+**Last Updated**: 2025-12-25
 **Language**: [English] | [한국어](FEATURES_KO.md)
 
 ---
@@ -89,10 +89,61 @@ std::cout << "Routed: " << stats.messages_routed << std::endl;
 broker.stop();
 ```
 
-**Planned Features** (see #183):
-- Transformation Pipeline (#183)
+#### Transformation Pipeline
+
+Register transformers to modify messages at different stages of the routing process:
+
+```cpp
+// Add a pre-routing transformer to add timestamp
+broker.add_transformer({
+    .transformer_id = "add-timestamp",
+    .stage = transform_stage::pre_routing,
+    .transform_fn = [](message msg) {
+        msg.metadata().headers["processed_at"] = std::to_string(
+            std::chrono::system_clock::now().time_since_epoch().count());
+        return common::ok(std::move(msg));
+    },
+    .order = 0  // Execute first
+});
+
+// Add post-routing transformer for logging
+broker.add_transformer({
+    .transformer_id = "log-message",
+    .stage = transform_stage::post_routing,
+    .transform_fn = [](message msg) {
+        std::cout << "Message routed: " << msg.metadata().topic << std::endl;
+        return common::ok(std::move(msg));
+    }
+});
+
+// On-failure transformer for error handling
+broker.add_transformer({
+    .transformer_id = "error-handler",
+    .stage = transform_stage::on_failure,
+    .transform_fn = [](message msg) {
+        msg.metadata().headers["error_time"] = "timestamp";
+        return common::ok(std::move(msg));
+    }
+});
+
+// Manage transformers dynamically
+broker.disable_transformer("log-message");  // Disable temporarily
+broker.enable_transformer("log-message");   // Re-enable
+broker.remove_transformer("error-handler"); // Remove
+
+// Get transformer statistics
+auto info = broker.get_transformer("add-timestamp");
+std::cout << "Processed: " << info.unwrap().messages_processed << std::endl;
+```
+
+**Transform Stages**:
+- `pre_routing`: Before route matching - modify messages before they're routed
+- `post_routing`: After route matching, before handler - final modifications before delivery
+- `on_success`: After successful handling - logging, metrics, cleanup
+- `on_failure`: After failed handling - error tracking, DLQ preparation
 
 **Recently Implemented**:
+- Transformation Pipeline (v0.2.2) - Message modification at routing stages (#183)
 - Content-based Routing (v0.2.1) - Route messages based on payload content
 - Dead Letter Queue (v0.2.0) - Full DLQ support with replay and purge functionality
 
@@ -1039,6 +1090,7 @@ Features:
 | **Wildcards** | ✅ | - | - | - | Complete |
 | **Priority Queue** | ✅ | - | - | - | Complete |
 | **Dead Letter Queue** | ✅ | - | - | - | Complete |
+| **Transformation Pipeline** | ✅ | - | - | - | Complete |
 | **Tracing** | ✅ | - | - | - | Complete |
 | **Metrics** | ✅ | - | - | - | Complete |
 
@@ -1055,5 +1107,5 @@ For usage examples and getting started guides, see:
 
 ---
 
-**Last Updated**: 2025-12-24
-**Version**: 0.1.2
+**Last Updated**: 2025-12-25
+**Version**: 0.2.2
