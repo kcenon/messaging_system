@@ -479,6 +479,24 @@ Features:
 - **Monitoring Access**: Optional monitoring integration
 - **Lifecycle Management**: Initialize and shutdown
 
+### Executor Integration
+
+**Worker threads managed by backend executor**
+
+The message bus uses the backend's executor (IExecutor) to manage worker threads instead of raw std::async calls. This provides:
+
+- **Unified Thread Pool**: Workers share the thread pool with other subsystems
+- **Better Resource Control**: Thread pool configuration in one place
+- **Job-based Execution**: Workers use IJob interface for better testability
+- **Automatic Fallback**: Falls back to std::async if executor unavailable
+
+```cpp
+// Workers automatically use executor when available
+auto backend = std::make_shared<standalone_backend>(4);  // 4 threads in pool
+auto bus = std::make_shared<message_bus>(backend, config);
+bus->start();  // Workers use backend's executor
+```
+
 ### Standalone Backend
 
 **Self-contained execution**

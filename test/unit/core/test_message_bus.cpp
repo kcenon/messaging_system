@@ -2,6 +2,7 @@
 #include <kcenon/messaging/core/message_bus.h>
 #include <kcenon/messaging/core/message.h>
 #include <kcenon/messaging/backends/standalone_backend.h>
+#include <kcenon/messaging/backends/integration_backend.h>
 #include <kcenon/messaging/error/error_codes.h>
 #include <thread>
 #include <chrono>
@@ -686,4 +687,199 @@ TEST_F(MessageBusTransportTest, StatisticsIncludeRemote) {
 	EXPECT_EQ(stats_after.messages_received_remote, 0);
 
 	bus->stop();
+}
+
+// ============================================================================
+// Executor Integration Tests
+// ============================================================================
+
+class MessageBusExecutorTest : public ::testing::Test {
+protected:
+	void SetUp() override {
+		// Use standalone_backend which provides executor via thread_pool
+		backend_ = std::make_shared<standalone_backend>(4);
+
+		message_bus_config config;
+		config.queue_capacity = 100;
+		config.worker_threads = 2;
+		config.enable_priority_queue = true;
+		config.enable_dead_letter_queue = true;
+		config.enable_metrics = true;
+
+		bus_ = std::make_unique<message_bus>(backend_, config);
+	}
+
+	void TearDown() override {
+		if (bus_ && bus_->is_running()) {
+			bus_->stop();
+		}
+	}
+
+	std::shared_ptr<standalone_backend> backend_;
+	std::unique_ptr<message_bus> bus_;
+};
+
+TEST_F(MessageBusExecutorTest, WorkersUseExecutorWhenAvailable) {
+	// Start the message bus - workers should use executor
+	auto start_result = bus_->start();
+	ASSERT_TRUE(start_result.is_ok());
+	EXPECT_TRUE(bus_->is_running());
+
+	// Publish and verify processing works with executor-based workers
+	std::atomic<int> received_count{0};
+	auto sub_result = bus_->subscribe(
+		"executor.test",
+		[&received_count](const message& /* msg */) {
+			received_count++;
+			return ::kcenon::common::ok();
+		}
+	);
+	ASSERT_TRUE(sub_result.is_ok());
+
+	// Publish multiple messages to verify executor workers process them
+	for (int i = 0; i < 10; ++i) {
+		message msg("executor.test");
+		auto pub_result = bus_->publish(msg);
+		ASSERT_TRUE(pub_result.is_ok());
+	}
+
+	// Wait for processing
+	ASSERT_TRUE(wait_for_condition(
+		[&received_count]() { return received_count.load() >= 10; },
+		std::chrono::milliseconds(500)
+	));
+
+	EXPECT_EQ(received_count.load(), 10);
+
+	auto stats = bus_->get_statistics();
+	EXPECT_EQ(stats.messages_published, 10);
+	EXPECT_EQ(stats.messages_processed, 10);
+
+	bus_->stop();
+}
+
+TEST_F(MessageBusExecutorTest, GracefulShutdownWithExecutor) {
+	auto start_result = bus_->start();
+	ASSERT_TRUE(start_result.is_ok());
+
+	// Subscribe and publish messages
+	std::atomic<int> received_count{0};
+	bus_->subscribe(
+		"shutdown.test",
+		[&received_count](const message& /* msg */) {
+			received_count++;
+			return ::kcenon::common::ok();
+		}
+	);
+
+	for (int i = 0; i < 5; ++i) {
+		message msg("shutdown.test");
+		bus_->publish(msg);
+	}
+
+	// Wait briefly for some processing
+	ASSERT_TRUE(wait_for_condition(
+		[&received_count]() { return received_count.load() >= 5; },
+		std::chrono::milliseconds(300)
+	));
+
+	// Stop should complete gracefully
+	auto stop_result = bus_->stop();
+	ASSERT_TRUE(stop_result.is_ok());
+	EXPECT_FALSE(bus_->is_running());
+}
+
+TEST_F(MessageBusExecutorTest, ConcurrentProcessingWithExecutor) {
+	auto start_result = bus_->start();
+	ASSERT_TRUE(start_result.is_ok());
+
+	std::atomic<int> total_received{0};
+	std::atomic<int> topic1_count{0};
+	std::atomic<int> topic2_count{0};
+
+	// Subscribe to multiple topics
+	bus_->subscribe(
+		"concurrent.topic1",
+		[&topic1_count, &total_received](const message& /* msg */) {
+			topic1_count++;
+			total_received++;
+			return ::kcenon::common::ok();
+		}
+	);
+
+	bus_->subscribe(
+		"concurrent.topic2",
+		[&topic2_count, &total_received](const message& /* msg */) {
+			topic2_count++;
+			total_received++;
+			return ::kcenon::common::ok();
+		}
+	);
+
+	// Publish to both topics concurrently
+	for (int i = 0; i < 20; ++i) {
+		message msg1("concurrent.topic1");
+		message msg2("concurrent.topic2");
+		bus_->publish(msg1);
+		bus_->publish(msg2);
+	}
+
+	// Wait for all messages to be processed
+	ASSERT_TRUE(wait_for_condition(
+		[&total_received]() { return total_received.load() >= 40; },
+		std::chrono::milliseconds(1000)
+	));
+
+	EXPECT_EQ(topic1_count.load(), 20);
+	EXPECT_EQ(topic2_count.load(), 20);
+	EXPECT_EQ(total_received.load(), 40);
+
+	bus_->stop();
+}
+
+// Test with integration_backend to verify external executor support
+TEST(MessageBusIntegrationBackendTest, WorksWithExternalExecutor) {
+	// Create a standalone backend to get its executor
+	auto standalone = std::make_shared<standalone_backend>(2);
+	auto init_result = standalone->initialize();
+	ASSERT_TRUE(init_result.is_ok());
+
+	auto executor = standalone->get_executor();
+	ASSERT_NE(executor, nullptr);
+
+	// Create integration_backend with the executor
+	auto integration = std::make_shared<kcenon::messaging::integration_backend>(executor);
+
+	message_bus_config config;
+	config.queue_capacity = 100;
+	config.worker_threads = 2;
+
+	auto bus = std::make_unique<message_bus>(integration, config);
+
+	auto start_result = bus->start();
+	ASSERT_TRUE(start_result.is_ok());
+
+	std::atomic<int> received_count{0};
+	bus->subscribe(
+		"integration.test",
+		[&received_count](const message& /* msg */) {
+			received_count++;
+			return ::kcenon::common::ok();
+		}
+	);
+
+	for (int i = 0; i < 5; ++i) {
+		message msg("integration.test");
+		bus->publish(msg);
+	}
+
+	ASSERT_TRUE(wait_for_condition(
+		[&received_count]() { return received_count.load() >= 5; },
+		std::chrono::milliseconds(300)
+	));
+
+	EXPECT_EQ(received_count.load(), 5);
+
+	bus->stop();
+	standalone->shutdown();
 }
