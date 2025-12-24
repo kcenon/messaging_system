@@ -209,7 +209,7 @@ public:
     }
 
     common::VoidResult disconnect() override {
-        return common::VoidResult::ok();
+        return common::ok();
     }
 
     bool is_connected() const override { return false; }
