@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('da/db6/md_docs_2FEATURES.html','../../
   <div class="headertitle"><div class="title">Messaging System Features</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md586"></a> <b>Version</b>: 0.1.1 <b>Last Updated</b>: 2025-12-10 <b>Language</b>: [English] | <a class="el" href="../../d4/d0c/md_docs_2FEATURES__KO.html">한국어</a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md586"></a> <b>Version</b>: 0.1.2 <b>Last Updated</b>: 2025-12-24 <b>Language</b>: [English] | <a class="el" href="../../d4/d0c/md_docs_2FEATURES__KO.html">한국어</a></p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md588"></a>
 Overview</h1>
@@ -107,6 +107,7 @@ Table of Contents</h1>
 <li>Task Queue System</li>
 <li>C++20 Concepts</li>
 <li>Backend Support</li>
+<li>Transport Adapters</li>
 <li>Message Types</li>
 <li>Topic Routing</li>
 <li>Message Queue</li>
@@ -503,8 +504,114 @@ Auto-Detection</h2>
 </ul>
 <hr  />
 <h1><a class="anchor" id="autotoc_md632"></a>
-Message Types</h1>
+Transport Adapters</h1>
 <h2><a class="anchor" id="autotoc_md633"></a>
+Overview</h2>
+<p><b>Network transport for distributed messaging</b></p>
+<p>Transport adapters enable message transmission over network protocols, transforming the messaging system from an in-process library to a distributed system.</p>
+<h2><a class="anchor" id="autotoc_md634"></a>
+Transport Interface</h2>
+<p><b>Abstract interface for network transports</b></p>
+<p>Features:</p><ul>
+<li><b>Protocol Abstraction</b>: Common interface for all transports</li>
+<li><b>Connection Management</b>: Connect/disconnect lifecycle</li>
+<li><b>State Tracking</b>: Connection state monitoring</li>
+<li><b>Message Handling</b>: Send and receive messages</li>
+<li><b>Statistics</b>: Performance metrics collection</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">class </span>transport_interface {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    <span class="keyword">virtual</span> VoidResult connect() = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> VoidResult disconnect() = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> is_connected() <span class="keyword">const</span> = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> transport_state get_state() <span class="keyword">const</span> = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> VoidResult send(<span class="keyword">const</span> message&amp; msg) = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> VoidResult send_binary(<span class="keyword">const</span> std::vector&lt;uint8_t&gt;&amp; data) = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_message_handler(std::function&lt;<span class="keywordtype">void</span>(<span class="keyword">const</span> message&amp;)&gt; handler) = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> transport_statistics get_statistics() <span class="keyword">const</span> = 0;</div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md635"></a>
+WebSocket Transport</h2>
+<p><b>Real-time bidirectional messaging over WebSocket</b></p>
+<p>Features:</p><ul>
+<li><b>Bidirectional Communication</b>: Full-duplex message exchange</li>
+<li><b>Topic Subscriptions</b>: Wildcard pattern support (<code>*</code> and <code>#</code>)</li>
+<li><b>Automatic Reconnection</b>: Exponential backoff retry</li>
+<li><b>Ping/Pong Keepalive</b>: Connection health monitoring</li>
+<li><b>Binary and Text Support</b>: Multiple message formats</li>
+<li><b>Message Serialization</b>: Automatic container_system serialization</li>
+</ul>
+<div class="fragment"><div class="line">websocket_transport_config config;</div>
+<div class="line">config.host = <span class="stringliteral">&quot;ws.example.com&quot;</span>;</div>
+<div class="line">config.port = 8080;</div>
+<div class="line">config.path = <span class="stringliteral">&quot;/messaging&quot;</span>;</div>
+<div class="line">config.auto_reconnect = <span class="keyword">true</span>;</div>
+<div class="line">config.ping_interval = std::chrono::milliseconds(30000);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> transport = std::make_shared&lt;websocket_transport&gt;(config);</div>
+<div class="line"> </div>
+<div class="line">transport-&gt;set_message_handler([](<span class="keyword">const</span> message&amp; msg) {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Received: &quot;</span> &lt;&lt; msg.metadata().topic &lt;&lt; std::endl;</div>
+<div class="line">});</div>
+<div class="line"> </div>
+<div class="line">transport-&gt;set_state_handler([](transport_state state) {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;State: &quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(state) &lt;&lt; std::endl;</div>
+<div class="line">});</div>
+<div class="line"> </div>
+<div class="line">transport-&gt;connect();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Subscribe to topics with wildcards</span></div>
+<div class="line">transport-&gt;subscribe(<span class="stringliteral">&quot;events.user.*&quot;</span>);</div>
+<div class="line">transport-&gt;subscribe(<span class="stringliteral">&quot;events.order.#&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Send message</span></div>
+<div class="line"><span class="keyword">auto</span> msg = message_builder()</div>
+<div class="line">    .topic(<span class="stringliteral">&quot;events.user.login&quot;</span>)</div>
+<div class="line">    .source(<span class="stringliteral">&quot;client-001&quot;</span>)</div>
+<div class="line">    .build();</div>
+<div class="line">transport-&gt;send(msg.value());</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md636"></a>
+Configuration Options</h2>
+<p><b>WebSocket transport configuration</b></p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Option   </th><th class="markdownTableHeadNone">Type   </th><th class="markdownTableHeadNone">Default   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">host   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">""   </td><td class="markdownTableBodyNone">Server hostname    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">port   </td><td class="markdownTableBodyNone">uint16   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">Server port    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">path   </td><td class="markdownTableBodyNone">string   </td><td class="markdownTableBodyNone">"/ws"   </td><td class="markdownTableBodyNone">WebSocket path    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">use_ssl   </td><td class="markdownTableBodyNone">bool   </td><td class="markdownTableBodyNone">false   </td><td class="markdownTableBodyNone">Enable SSL/TLS    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">connect_timeout   </td><td class="markdownTableBodyNone">ms   </td><td class="markdownTableBodyNone">10000   </td><td class="markdownTableBodyNone">Connection timeout    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ping_interval   </td><td class="markdownTableBodyNone">ms   </td><td class="markdownTableBodyNone">30000   </td><td class="markdownTableBodyNone">Ping interval    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">auto_pong   </td><td class="markdownTableBodyNone">bool   </td><td class="markdownTableBodyNone">true   </td><td class="markdownTableBodyNone">Auto-respond to pings    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">max_message_size   </td><td class="markdownTableBodyNone">size_t   </td><td class="markdownTableBodyNone">10MB   </td><td class="markdownTableBodyNone">Max message size    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">auto_reconnect   </td><td class="markdownTableBodyNone">bool   </td><td class="markdownTableBodyNone">false   </td><td class="markdownTableBodyNone">Enable auto-reconnect    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">max_retries   </td><td class="markdownTableBodyNone">size_t   </td><td class="markdownTableBodyNone">3   </td><td class="markdownTableBodyNone">Max retry attempts    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">reconnect_delay   </td><td class="markdownTableBodyNone">ms   </td><td class="markdownTableBodyNone">1000   </td><td class="markdownTableBodyNone">Initial retry delay    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">reconnect_backoff_multiplier   </td><td class="markdownTableBodyNone">double   </td><td class="markdownTableBodyNone">2.0   </td><td class="markdownTableBodyNone">Backoff multiplier    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">max_reconnect_delay   </td><td class="markdownTableBodyNone">ms   </td><td class="markdownTableBodyNone">30000   </td><td class="markdownTableBodyNone">Max retry delay   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md637"></a>
+Build Configuration</h2>
+<p>WebSocket transport requires <code>network_system</code> dependency:</p>
+<div class="fragment"><div class="line">cmake -DKCENON_WITH_NETWORK_SYSTEM=ON ..</div>
+</div><!-- fragment --><p>When disabled, transport operations return <code>error::not_supported</code>.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md639"></a>
+Message Types</h1>
+<h2><a class="anchor" id="autotoc_md640"></a>
 Message Structure</h2>
 <p><b>Structured messages with rich metadata</b></p>
 <p>Fields:</p><ul>
@@ -521,7 +628,7 @@ Message Structure</h2>
 <li><b>Headers</b>: Additional key-value headers</li>
 <li><b>Payload</b>: Message payload (container_system)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md634"></a>
+<h2><a class="anchor" id="autotoc_md641"></a>
 Message Builder</h2>
 <p><b>Fluent API for message construction</b></p>
 <p>Features:</p><ul>
@@ -542,7 +649,7 @@ Message Builder</h2>
 <div class="line">    .header(<span class="stringliteral">&quot;version&quot;</span>, <span class="stringliteral">&quot;1.0&quot;</span>)</div>
 <div class="line">    .payload(payload)</div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md635"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md642"></a>
 Message Serialization</h2>
 <p><b>Container-based payload serialization</b></p>
 <p>Features:</p><ul>
@@ -553,9 +660,9 @@ Message Serialization</h2>
 <li><b>Zero-Copy</b>: Move semantics support</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md637"></a>
+<h1><a class="anchor" id="autotoc_md644"></a>
 Topic Routing</h1>
-<h2><a class="anchor" id="autotoc_md638"></a>
+<h2><a class="anchor" id="autotoc_md645"></a>
 Wildcard Patterns</h2>
 <p><b>Flexible topic matching</b></p>
 <p>Patterns:</p><ul>
@@ -564,7 +671,7 @@ Wildcard Patterns</h2>
 <li><b>Multi-level Wildcard</b> (<code>#</code>): <code>user.#</code> matches <code>user.created</code>, <code>user.profile.updated</code></li>
 <li><b>Combined</b>: <code>*.user.#</code> matches <code>app.user.profile.updated</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md639"></a>
+<h2><a class="anchor" id="autotoc_md646"></a>
 Subscription Management</h2>
 <p><b>Flexible subscription control</b></p>
 <p>Features:</p><ul>
@@ -580,9 +687,9 @@ Subscription Management</h2>
 <div class="line"><span class="comment">// Unsubscribe</span></div>
 <div class="line">bus-&gt;unsubscribe(sub_id.value());</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md641"></a>
+<h1><a class="anchor" id="autotoc_md648"></a>
 Message Queue</h1>
-<h2><a class="anchor" id="autotoc_md642"></a>
+<h2><a class="anchor" id="autotoc_md649"></a>
 Queue Types</h2>
 <p><b>Multiple queue implementations</b></p>
 <p>Types:</p><ul>
@@ -591,7 +698,7 @@ Queue Types</h2>
 <li><b>Dead Letter Queue</b>: Failed message handling</li>
 <li><b>Bounded Queue</b>: Capacity limits with backpressure</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md643"></a>
+<h2><a class="anchor" id="autotoc_md650"></a>
 Queue Configuration</h2>
 <p><b>Flexible queue settings</b></p>
 <p>Options:</p><ul>
@@ -607,9 +714,9 @@ Queue Configuration</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> queue = std::make_shared&lt;message_queue&gt;(config);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md645"></a>
+<h1><a class="anchor" id="autotoc_md652"></a>
 Dependency Injection</h1>
-<h2><a class="anchor" id="autotoc_md646"></a>
+<h2><a class="anchor" id="autotoc_md653"></a>
 DI Container</h2>
 <p><b>Lightweight dependency injection</b></p>
 <p>Features:</p><ul>
@@ -627,9 +734,9 @@ DI Container</h2>
 <div class="line"><span class="comment">// Resolve</span></div>
 <div class="line"><span class="keyword">auto</span> executor = container-&gt;resolve&lt;IExecutor&gt;();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md648"></a>
+<h1><a class="anchor" id="autotoc_md655"></a>
 Error Handling</h1>
-<h2><a class="anchor" id="autotoc_md649"></a>
+<h2><a class="anchor" id="autotoc_md656"></a>
 Error Codes</h2>
 <p><b>Centralized error code system (-700 to -799)</b></p>
 <p>Categories:</p><ul>
@@ -639,7 +746,7 @@ Error Codes</h2>
 <li><b>Subscription Errors</b> (-760 to -779): Subscription failed, not found, duplicate, unsubscribe failed</li>
 <li><b>Publishing Errors</b> (-780 to -799): Publication failed, no route found, message rejected, broker unavailable</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md650"></a>
+<h2><a class="anchor" id="autotoc_md657"></a>
 Result&lt;T&gt; Pattern</h2>
 <p><b>Type-safe error handling</b></p>
 <p>Features:</p><ul>
@@ -656,9 +763,9 @@ Result&lt;T&gt; Pattern</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> sub_id = result.value();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md652"></a>
+<h1><a class="anchor" id="autotoc_md659"></a>
 Integration</h1>
-<h2><a class="anchor" id="autotoc_md653"></a>
+<h2><a class="anchor" id="autotoc_md660"></a>
 Thread System Integration</h2>
 <p><b>High-performance thread pool integration</b></p>
 <p>Features:</p><ul>
@@ -667,7 +774,7 @@ Thread System Integration</h2>
 <li><b>Work Stealing</b>: Efficient load balancing</li>
 <li><b>Hazard Pointers</b>: Safe memory reclamation</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md654"></a>
+<h2><a class="anchor" id="autotoc_md661"></a>
 Logger System Integration</h2>
 <p><b>Structured async logging</b></p>
 <p>Features:</p><ul>
@@ -676,7 +783,7 @@ Logger System Integration</h2>
 <li><b>Multiple Sinks</b>: File, console, network</li>
 <li><b>Log Levels</b>: Configurable log levels</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md655"></a>
+<h2><a class="anchor" id="autotoc_md662"></a>
 Monitoring System Integration</h2>
 <p><b>Real-time metrics and telemetry</b></p>
 <p>Features:</p><ul>
@@ -685,7 +792,7 @@ Monitoring System Integration</h2>
 <li><b>Gauges</b>: Queue sizes</li>
 <li><b>Prometheus Export</b>: Metrics export</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md656"></a>
+<h2><a class="anchor" id="autotoc_md663"></a>
 Container System Integration</h2>
 <p><b>Type-safe message payloads</b></p>
 <p>Features:</p><ul>
@@ -695,9 +802,9 @@ Container System Integration</h2>
 <li><b>Thread Safety</b>: Safe concurrent access</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md658"></a>
+<h1><a class="anchor" id="autotoc_md665"></a>
 Production Features</h1>
-<h2><a class="anchor" id="autotoc_md659"></a>
+<h2><a class="anchor" id="autotoc_md666"></a>
 Reliability</h2>
 <p><b>Enterprise-grade reliability features</b></p>
 <p>Features:</p><ul>
@@ -707,7 +814,7 @@ Reliability</h2>
 <li><b>Circuit Breakers</b>: Prevent cascade failures</li>
 <li><b>Health Checks</b>: Monitor system health</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md660"></a>
+<h2><a class="anchor" id="autotoc_md667"></a>
 Observability</h2>
 <p><b>Production observability</b></p>
 <p>Features:</p><ul>
@@ -716,7 +823,7 @@ Observability</h2>
 <li><b>Queue Metrics</b>: Size, drops, overflows</li>
 <li><b>Subscriber Metrics</b>: Active subscribers, callback latency</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md661"></a>
+<h2><a class="anchor" id="autotoc_md668"></a>
 Testing Support</h2>
 <p><b>Comprehensive testing utilities</b></p>
 <p>Features:</p><ul>
@@ -726,7 +833,7 @@ Testing Support</h2>
 <li><b>Integration Tests</b>: End-to-end test scenarios</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md663"></a>
+<h1><a class="anchor" id="autotoc_md670"></a>
 Feature Matrix</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -776,26 +883,28 @@ Feature Matrix</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Auto-detection</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>WebSocket Transport</b>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>DI Container</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Error Codes</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Result&lt;T&gt;</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Serialization</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Wildcards</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Priority Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><b>Dead Letter Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>Tracing</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<td class="markdownTableBodyNone"><b>Dead Letter Queue</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Tracing</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><b>Metrics</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">Complete   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md665"></a>
+<h1><a class="anchor" id="autotoc_md672"></a>
 Getting Started</h1>
 <p>For usage examples and getting started guides, see:</p><ul>
 <li><a class="el" href="../../d6/d63/md_docs_2guides_2QUICK__START.html">Quick Start Guide</a></li>
@@ -805,7 +914,7 @@ Getting Started</h1>
 <li><a class="el" href="../../d1/d5e/md_docs_2task_2ARCHITECTURE.html">Task System Architecture</a></li>
 </ul>
 <hr  />
-<p><b>Last Updated</b>: 2025-12-10 <b>Version</b>: 0.1.1 </p>
+<p><b>Last Updated</b>: 2025-12-24 <b>Version</b>: 0.1.2 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
