@@ -250,3 +250,25 @@ target_include_directories(test_timing_accuracy
 )
 
 gtest_discover_tests(test_timing_accuracy)
+
+# ============================================================================
+# Distributed Messaging E2E Tests (Issue #165)
+# ============================================================================
+
+# Test distributed messaging scenarios
+add_executable(test_distributed_messaging
+    test_distributed_messaging.cpp
+)
+
+target_link_libraries(test_distributed_messaging
+    PRIVATE
+        messaging_system_core
+        GTest::gtest_main
+)
+
+target_include_directories(test_distributed_messaging
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+gtest_discover_tests(test_distributed_messaging)
