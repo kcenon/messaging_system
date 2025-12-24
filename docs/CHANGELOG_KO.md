@@ -8,6 +8,26 @@
 ## [Unreleased]
 
 ### 추가됨
+- **메시지 브로커 문서화 (Issue #184)**
+  - 새로운 `docs/core/MESSAGE_BROKER.md` 종합 사용 가이드:
+    - 아키텍처 개요 및 컴포넌트 관계
+    - 빠른 시작 예제 및 설정 옵션
+    - 라우트 관리 및 와일드카드 패턴 참조
+    - 통계 모니터링 및 모범 사례
+    - topic_router에서 마이그레이션 가이드
+  - `docs/API_REFERENCE.md`에 Message Broker API 섹션 업데이트:
+    - `broker_config`, `broker_statistics`, `route_info` 구조체 문서
+    - `message_broker` 클래스 전체 공개 메서드
+    - 사용 예제 및 와일드카드 패턴 표
+  - `docs/FEATURES_KO.md`에 message_broker 섹션 한국어 번역 추가
+
+### 수정됨
+- **HTTP Transport 빌드 오류 (PR #186)**
+  - `http_transport.cpp`에서 `Result<http_response>` 사용 수정
+  - 유효하지 않은 `operator!`를 `is_err()` 메서드로 교체
+  - macOS/clang, Ubuntu/gcc, Windows/MSVC 빌드 실패 해결
+
+### 추가됨
 - **멀티시스템 메시징 통합 테스트 강화 (Issue #161)**
   - 새로운 `test_messaging_patterns_e2e.cpp` 메시징 패턴 테스트:
     - `PubSubMultipleSubscribers`: 1개 발행자, 3개 구독자, 100개 메시지 순서 보존 검증

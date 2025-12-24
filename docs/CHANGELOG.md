@@ -8,6 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Message Broker Documentation (Issue #184)**
+  - New `docs/core/MESSAGE_BROKER.md` with comprehensive usage guide:
+    - Architecture overview and component relationships
+    - Quick start examples and configuration options
+    - Route management and wildcard pattern reference
+    - Statistics monitoring and best practices
+    - Migration guide from topic_router
+  - Updated `docs/API_REFERENCE.md` with Message Broker API section:
+    - `broker_config`, `broker_statistics`, `route_info` struct documentation
+    - `message_broker` class with all public methods
+    - Usage examples and wildcard pattern table
+  - Updated `docs/FEATURES_KO.md` with Korean translation of message_broker section
+
+### Fixed
+- **HTTP Transport Build Error (PR #186)**
+  - Fixed `Result<http_response>` usage in `http_transport.cpp`
+  - Replaced invalid `operator!` with `is_err()` method
+  - Resolves build failures on macOS/clang, Ubuntu/gcc, and Windows/MSVC
+
+### Added
 - **Distributed Messaging E2E Integration Tests (Issue #165)**
   - New `test_distributed_messaging.cpp` with 17 comprehensive integration tests:
     - `TwoNodeMessageExchange`: Basic message delivery between two nodes
