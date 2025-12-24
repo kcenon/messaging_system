@@ -93,11 +93,43 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
   <div class="headertitle"><div class="title">Messaging System 변경 이력</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md568"></a> 이 프로젝트의 모든 주요 변경 사항은 이 파일에 문서화됩니다.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md570"></a> 이 프로젝트의 모든 주요 변경 사항은 이 파일에 문서화됩니다.</p>
 <p>이 형식은 <a href="https://keepachangelog.com/ko/1.0.0/">Keep a Changelog</a>를 기반으로 하며, 이 프로젝트는 <a href="https://semver.org/lang/ko/">Semantic Versioning</a>을 준수합니다.</p>
-<h1><a class="anchor" id="autotoc_md569"></a>
+<h1><a class="anchor" id="autotoc_md571"></a>
 [Unreleased]</h1>
-<h2><a class="anchor" id="autotoc_md570"></a>
+<h2><a class="anchor" id="autotoc_md572"></a>
+추가됨</h2>
+<ul>
+<li><b>메시지 브로커 문서화 (Issue #184)</b><ul>
+<li>새로운 <code><a class="el" href="../../db/df5/MESSAGE__BROKER_8md.html">docs/core/MESSAGE_BROKER.md</a></code> 종합 사용 가이드:<ul>
+<li>아키텍처 개요 및 컴포넌트 관계</li>
+<li>빠른 시작 예제 및 설정 옵션</li>
+<li>라우트 관리 및 와일드카드 패턴 참조</li>
+<li>통계 모니터링 및 모범 사례</li>
+<li>topic_router에서 마이그레이션 가이드</li>
+</ul>
+</li>
+<li><code><a class="el" href="../../d2/dff/API__REFERENCE_8md.html">docs/API_REFERENCE.md</a></code>에 Message Broker API 섹션 업데이트:<ul>
+<li><code>broker_config</code>, <code>broker_statistics</code>, <code>route_info</code> 구조체 문서</li>
+<li><code>message_broker</code> 클래스 전체 공개 메서드</li>
+<li>사용 예제 및 와일드카드 패턴 표</li>
+</ul>
+</li>
+<li><code><a class="el" href="../../db/dd0/FEATURES__KO_8md.html">docs/FEATURES_KO.md</a></code>에 message_broker 섹션 한국어 번역 추가</li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md573"></a>
+수정됨</h2>
+<ul>
+<li><b>HTTP Transport 빌드 오류 (PR #186)</b><ul>
+<li><code>http_transport.cpp</code>에서 <code>Result&lt;http_response&gt;</code> 사용 수정</li>
+<li>유효하지 않은 <code>operator!</code>를 <code>is_err()</code> 메서드로 교체</li>
+<li>macOS/clang, Ubuntu/gcc, Windows/MSVC 빌드 실패 해결</li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md574"></a>
 추가됨</h2>
 <ul>
 <li><b>멀티시스템 메시징 통합 테스트 강화 (Issue #161)</b><ul>
@@ -218,7 +250,7 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md571"></a>
+<h2><a class="anchor" id="autotoc_md575"></a>
 수정됨</h2>
 <ul>
 <li><code>task</code>: task_queue 조회를 위해 metadata.id와 task_id 동기화</li>
@@ -229,7 +261,7 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md572"></a>
+<h2><a class="anchor" id="autotoc_md576"></a>
 변경됨</h2>
 <ul>
 <li>CMake 설정에서 fmt 라이브러리 참조 제거<ul>
@@ -238,16 +270,16 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md573"></a>
+<h2><a class="anchor" id="autotoc_md577"></a>
 추가됨</h2>
 <ul>
 <li>문서 구조 표준화</li>
 <li>한국어 문서 지원</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md575"></a>
+<h1><a class="anchor" id="autotoc_md579"></a>
 [1.0.0] - 2025-11-17</h1>
-<h2><a class="anchor" id="autotoc_md576"></a>
+<h2><a class="anchor" id="autotoc_md580"></a>
 추가됨</h2>
 <ul>
 <li><b>핵심 메시징 인프라</b><ul>
@@ -283,7 +315,7 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md577"></a>
+<h2><a class="anchor" id="autotoc_md581"></a>
 의존성</h2>
 <ul>
 <li>common_system: Result&lt;T&gt;, 인터페이스</li>
@@ -294,16 +326,16 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 <li>network_system: 네트워크 전송</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md579"></a>
+<h1><a class="anchor" id="autotoc_md583"></a>
 [0.9.0] - 2025-10-20</h1>
-<h2><a class="anchor" id="autotoc_md580"></a>
+<h2><a class="anchor" id="autotoc_md584"></a>
 추가됨</h2>
 <ul>
 <li>초기 메시지 버스 구현</li>
 <li>기본 pub/sub 패턴</li>
 <li>와일드카드 토픽 라우팅</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md581"></a>
+<h2><a class="anchor" id="autotoc_md585"></a>
 변경됨</h2>
 <ul>
 <li>CMake FetchContent로 마이그레이션</li>
