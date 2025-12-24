@@ -139,7 +139,7 @@ public:
 		headers["Content-Type"] = "application/octet-stream";
 
 		auto result = client_->post(url, data, headers);
-		if (!result) {
+		if (result.is_err()) {
 			++stats_.errors;
 			return VoidResult::err(error_info(
 				error::publication_failed,
@@ -218,7 +218,7 @@ public:
 		std::map<std::string, std::string> headers = headers_;
 
 		auto result = client_->get(url, query, headers);
-		if (!result) {
+		if (result.is_err()) {
 			++stats_.errors;
 			notify_error("GET request failed: " + result.error().message);
 			return Result<message>::err(error_info(
@@ -322,7 +322,7 @@ private:
 		headers["Content-Type"] = get_content_type();
 
 		auto result = client_->post(url, serialized.value(), headers);
-		if (!result) {
+		if (result.is_err()) {
 			++stats_.errors;
 			notify_error("POST request failed: " + result.error().message);
 			return Result<message>::err(error_info(
