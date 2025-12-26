@@ -137,6 +137,15 @@ struct messaging_metric_event {
  */
 class message_bus_collector : public monitoring::metric_collector_plugin {
 public:
+    /**
+     * @brief Indicates if monitoring collector is available at compile time
+     *
+     * When KCENON_WITH_MONITORING_SYSTEM is enabled, this is true and the
+     * collector provides full functionality. When disabled, this is false
+     * and all operations are no-ops.
+     */
+    static constexpr bool is_available = true;
+
     message_bus_collector();
     ~message_bus_collector() override;
 
@@ -328,9 +337,18 @@ private:
  *
  * This provides a minimal interface for code that wants to use
  * message_bus_collector but doesn't have monitoring_system available.
+ * All operations are no-ops that silently ignore calls.
  */
 class message_bus_collector {
 public:
+    /**
+     * @brief Indicates if monitoring collector is available at compile time
+     *
+     * This is false when KCENON_WITH_MONITORING_SYSTEM is disabled.
+     * Use this to conditionally handle unavailable monitoring at compile time.
+     */
+    static constexpr bool is_available = false;
+
     message_bus_collector() = default;
     ~message_bus_collector() = default;
 
