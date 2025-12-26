@@ -92,6 +92,15 @@ struct websocket_transport_config : transport_config {
 class websocket_transport : public transport_interface {
 public:
     /**
+     * @brief Indicates if WebSocket transport is available at compile time
+     *
+     * When KCENON_WITH_NETWORK_SYSTEM is enabled, this is true and the
+     * transport provides full functionality. When disabled, this is false
+     * and all operations return not_supported errors.
+     */
+    static constexpr bool is_available = true;
+
+    /**
      * @brief Construct WebSocket transport with configuration
      * @param config Transport configuration
      */
@@ -206,6 +215,14 @@ struct websocket_transport_config : transport_config {
  */
 class websocket_transport : public transport_interface {
 public:
+    /**
+     * @brief Indicates if WebSocket transport is available at compile time
+     *
+     * This is false when KCENON_WITH_NETWORK_SYSTEM is disabled.
+     * Use this to conditionally handle unavailable transport at compile time.
+     */
+    static constexpr bool is_available = false;
+
     explicit websocket_transport(const websocket_transport_config& /*config*/) {}
     ~websocket_transport() override = default;
 

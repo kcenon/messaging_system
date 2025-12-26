@@ -35,6 +35,26 @@
 #endif
 
 // =============================================================================
+// Monitoring System Integration
+// =============================================================================
+
+/**
+ * @def KCENON_WITH_MONITORING_SYSTEM
+ * @brief Controls monitoring_system integration for metrics collection
+ *
+ * When set to 1, message_bus_collector provides full monitoring integration
+ * with Prometheus-compatible metrics.
+ *
+ * When set to 0, message_bus_collector provides a null/stub implementation
+ * that silently ignores all operations.
+ *
+ * This is typically set via CMake or inherited from common_system feature_flags.
+ */
+#ifndef KCENON_WITH_MONITORING_SYSTEM
+#define KCENON_WITH_MONITORING_SYSTEM 0
+#endif
+
+// =============================================================================
 // Feature Detection Helpers
 // =============================================================================
 
@@ -46,6 +66,14 @@ namespace kcenon::messaging::config {
  */
 inline constexpr bool has_network_system() noexcept {
     return KCENON_WITH_NETWORK_SYSTEM != 0;
+}
+
+/**
+ * @brief Check if monitoring_system integration is available
+ * @return true if KCENON_WITH_MONITORING_SYSTEM is enabled
+ */
+inline constexpr bool has_monitoring_system() noexcept {
+    return KCENON_WITH_MONITORING_SYSTEM != 0;
 }
 
 } // namespace kcenon::messaging::config
