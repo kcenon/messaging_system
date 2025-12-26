@@ -559,6 +559,37 @@ genhtml coverage.info --output-directory coverage_html
 | `MESSAGING_BUILD_EXAMPLES` | ON | Build example programs |
 | `MESSAGING_BUILD_BENCHMARKS` | OFF | Build performance benchmarks |
 | `KCENON_WITH_NETWORK_SYSTEM` | ON | Enable network_system integration for transport implementations |
+| `KCENON_WITH_MONITORING_SYSTEM` | OFF | Enable monitoring_system integration for metrics collection |
+
+### Optional Dependency Matrix
+
+The messaging_system has optional dependencies that can be enabled or disabled at compile time:
+
+| Dependency | Guard Macro | Components Affected | Fallback Behavior |
+|------------|-------------|---------------------|-------------------|
+| network_system | `KCENON_WITH_NETWORK_SYSTEM` | `http_transport`, `websocket_transport` | Returns `error::not_supported` |
+| monitoring_system | `KCENON_WITH_MONITORING_SYSTEM` | `message_bus_collector` | No-op (silently ignores operations) |
+
+Each optional component provides a compile-time `is_available` constant:
+
+```cpp
+#include <kcenon/messaging/adapters/http_transport.h>
+#include <kcenon/messaging/adapters/websocket_transport.h>
+#include <kcenon/messaging/collectors/message_bus_collector.h>
+
+// Check at compile time
+static_assert(http_transport::is_available || !http_transport::is_available,
+              "Compile-time check example");
+
+// Or check at runtime via feature flags
+#include <kcenon/messaging/config/feature_flags.h>
+
+if (kcenon::messaging::config::has_network_system()) {
+    // Use full transport functionality
+} else {
+    // Handle fallback case
+}
+```
 
 ### Network System Integration
 
@@ -573,6 +604,24 @@ cmake -B build -DKCENON_WITH_NETWORK_SYSTEM=OFF
 ```
 
 When disabled, transport classes compile but return `error::not_supported` for all operations. This allows building the messaging system without the network_system dependency.
+
+### Isolated Build (No Optional Dependencies)
+
+To verify that fallback implementations work correctly, use the isolated build preset:
+
+```bash
+# Configure and build in isolated mode
+cmake --preset=isolated
+cmake --build --preset=isolated
+
+# Run tests in isolated mode
+ctest --preset=isolated
+
+# Or use the verification script
+./scripts/verify_isolated_build.sh
+```
+
+The isolated preset disables all optional dependencies (`KCENON_WITH_NETWORK_SYSTEM=OFF`, `KCENON_WITH_MONITORING_SYSTEM=OFF`) and runs tests to verify fallback implementations.
 
 ### Example Builds
 
