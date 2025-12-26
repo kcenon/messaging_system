@@ -47,7 +47,7 @@ var searchData=
   ['example_202_3a_20request_20reply_20migration_44',['Example 2: Request-Reply Migration',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md1063',1,'']]],
   ['example_203_3a_20event_20streaming_45',['Example 3: Event Streaming',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md1064',1,'']]],
   ['example_204_3a_20message_20pipeline_46',['Example 4: Message Pipeline',['../dc/d15/md_docs_2guides_2MIGRATION__GUIDE.html#autotoc_md1065',1,'']]],
-  ['example_20builds_47',['Example Builds',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2254',1,'']]],
+  ['example_20builds_47',['Example Builds',['..//home/runner/work/messaging_system/messaging_system/README.md#autotoc_md2256',1,'']]],
   ['example_20configuration_48',['Example Configuration',['../d8/dc1/md_docs_2core_2MESSAGE__BROKER.html#autotoc_md627',1,'']]],
   ['example_20hybrid_20mode_20with_20transport_49',['Usage Example (Hybrid Mode with Transport)',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md315',1,'']]],
   ['example_20local_20mode_50',['Usage Example (Local Mode)',['../db/d91/md_docs_2API__REFERENCE.html#autotoc_md314',1,'']]],
