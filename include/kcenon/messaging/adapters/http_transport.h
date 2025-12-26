@@ -91,6 +91,15 @@ struct http_transport_config : transport_config {
 class http_transport : public transport_interface {
 public:
     /**
+     * @brief Indicates if HTTP transport is available at compile time
+     *
+     * When KCENON_WITH_NETWORK_SYSTEM is enabled, this is true and the
+     * transport provides full functionality. When disabled, this is false
+     * and all operations return not_supported errors.
+     */
+    static constexpr bool is_available = true;
+
+    /**
      * @brief Construct HTTP transport with configuration
      * @param config Transport configuration
      */
@@ -197,6 +206,14 @@ struct http_transport_config : transport_config {
  */
 class http_transport : public transport_interface {
 public:
+    /**
+     * @brief Indicates if HTTP transport is available at compile time
+     *
+     * This is false when KCENON_WITH_NETWORK_SYSTEM is disabled.
+     * Use this to conditionally handle unavailable transport at compile time.
+     */
+    static constexpr bool is_available = false;
+
     explicit http_transport(const http_transport_config& /*config*/) {}
     ~http_transport() override = default;
 
