@@ -147,6 +147,21 @@
         "MESSAGING_BUILD_BENCHMARKS": "OFF",
         "MESSAGING_BUILD_EXAMPLES": "OFF"
       }
+    },
+    {
+      "name": "isolated",
+      "displayName": "Isolated Build (no optional deps)",
+      "description": "Build with only required dependencies - verifies fallback implementations work correctly",
+      "inherits": "default",
+      "binaryDir": "${sourceDir}/build-isolated",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "KCENON_WITH_NETWORK_SYSTEM": "OFF",
+        "KCENON_WITH_MONITORING_SYSTEM": "OFF",
+        "MESSAGING_BUILD_TESTS": "ON",
+        "MESSAGING_BUILD_EXAMPLES": "OFF",
+        "MESSAGING_BUILD_BENCHMARKS": "OFF"
+      }
     }
   ],
   "buildPresets": [
@@ -189,6 +204,10 @@
     {
       "name": "ci",
       "configurePreset": "ci"
+    },
+    {
+      "name": "isolated",
+      "configurePreset": "isolated"
     }
   ],
   "testPresets": [
@@ -205,6 +224,13 @@
       "output": {
         "outputOnFailure": true,
         "verbosity": "verbose"
+      }
+    },
+    {
+      "name": "isolated",
+      "configurePreset": "isolated",
+      "output": {
+        "outputOnFailure": true
       }
     }
   ]
