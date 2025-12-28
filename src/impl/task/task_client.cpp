@@ -147,7 +147,7 @@ async_result task_client::chain(std::vector<task> tasks) {
 
 			// Set the previous result as input for the next task
 			auto payload = std::make_shared<container_module::value_container>(result.value());
-			next_task.set_task_payload(payload);
+			next_task.set_payload(payload);
 
 			// Submit next task
 			auto enqueue_result = queue_copy->enqueue(std::move(next_task));
@@ -238,7 +238,7 @@ async_result task_client::chord(std::vector<task> tasks, task callback) {
 
 		// Create payload with results count (simplified approach)
 		auto payload = std::make_shared<container_module::value_container>();
-		callback_copy.set_task_payload(payload);
+		callback_copy.set_payload(payload);
 
 		// Submit callback task
 		auto enqueue_result = queue_copy->enqueue(std::move(callback_copy));
