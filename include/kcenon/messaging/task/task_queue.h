@@ -6,15 +6,18 @@
  * @file task_queue.h
  * @brief Task queue for distributed task queue system
  *
- * Implements a task-specific queue that extends the existing message_queue
- * with support for multiple named queues, delayed execution, and tag-based
- * cancellation.
+ * Implements a task-specific queue with support for multiple named queues,
+ * delayed execution, and tag-based cancellation.
+ *
+ * Design changes from Issue #192:
+ * - No longer uses message_queue (which caused object slicing)
+ * - Directly stores task objects in priority queues
+ * - Eliminated redundant task_registry_ lookup pattern
  */
 
 #pragma once
 
 #include <kcenon/messaging/task/task.h>
-#include <kcenon/messaging/core/message_queue.h>
 #include <kcenon/common/patterns/result.h>
 #include <kcenon/thread/core/thread_base.h>
 
@@ -300,29 +303,74 @@ private:
 	// Allow delayed_task_worker to access private members
 	friend class delayed_task_worker;
 
+	/**
+	 * @struct task_priority_comparator
+	 * @brief Comparator for task priority queue (higher priority first)
+	 */
+	struct task_priority_comparator {
+		bool operator()(const task& a, const task& b) const {
+			return static_cast<int>(a.priority()) < static_cast<int>(b.priority());
+		}
+	};
+
+	/**
+	 * @struct task_priority_queue
+	 * @brief Thread-safe priority queue for tasks (replaces message_queue)
+	 *
+	 * Design change from Issue #192:
+	 * - Directly stores task objects (no slicing)
+	 * - Provides wait/notify for blocking dequeue
+	 */
+	struct task_priority_queue {
+		std::priority_queue<task, std::vector<task>, task_priority_comparator> queue;
+		mutable std::mutex mutex;
+		std::condition_variable cv;
+
+		void push(task t) {
+			std::lock_guard<std::mutex> lock(mutex);
+			queue.push(std::move(t));
+			cv.notify_one();
+		}
+
+		std::optional<task> try_pop() {
+			std::lock_guard<std::mutex> lock(mutex);
+			if (queue.empty()) return std::nullopt;
+			task t = std::move(const_cast<task&>(queue.top()));
+			queue.pop();
+			return t;
+		}
+
+		size_t size() const {
+			std::lock_guard<std::mutex> lock(mutex);
+			return queue.size();
+		}
+
+		bool empty() const {
+			std::lock_guard<std::mutex> lock(mutex);
+			return queue.empty();
+		}
+	};
+
 	// Internal helpers
 	void ensure_queue_exists(const std::string& queue_name);
 	void process_delayed_tasks();
 	bool is_task_cancelled(const std::string& task_id) const;
-	void register_task(const task& t);
-	void unregister_task(const std::string& task_id);
+	void register_task_tags(const task& t);
+	void unregister_task_tags(const std::string& task_id,
+							  const std::vector<std::string>& tags);
 
 	// Calculate wait time until next delayed task is ready
 	std::chrono::milliseconds get_next_delayed_wait_time() const;
 
 	task_queue_config config_;
 
-	// Per-queue message queues (queue_name -> message_queue)
+	// Per-queue task priority queues (directly stores tasks, no slicing)
 	mutable std::mutex queues_mutex_;
-	std::unordered_map<std::string, std::unique_ptr<message_queue>> queues_;
+	std::unordered_map<std::string, std::unique_ptr<task_priority_queue>> queues_;
 
 	// Delayed tasks
 	mutable std::mutex delayed_mutex_;
 	std::priority_queue<delayed_task> delayed_queue_;
-
-	// Task registry (task_id -> task metadata)
-	mutable std::mutex registry_mutex_;
-	std::unordered_map<std::string, task> task_registry_;
 
 	// Cancelled task IDs
 	mutable std::mutex cancelled_mutex_;
@@ -338,6 +386,10 @@ private:
 
 	// Delayed task worker using thread_system
 	std::unique_ptr<delayed_task_worker> delayed_worker_;
+
+	// Condition variable for dequeue waiting
+	mutable std::mutex dequeue_mutex_;
+	std::condition_variable dequeue_cv_;
 };
 
 }  // namespace kcenon::messaging::task
