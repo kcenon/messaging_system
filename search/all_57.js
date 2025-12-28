@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['변경됨_0',['변경됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md576',1,'변경됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md585',1,'변경됨']]],
-  ['변경_20사항_1',['API 변경 사항',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1906',1,'']]],
+  ['변경됨_0',['변경됨',['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md573',1,'변경됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md578',1,'변경됨'],['../db/d9f/md_docs_2CHANGELOG__KO.html#autotoc_md587',1,'변경됨']]],
+  ['변경_20사항_1',['API 변경 사항',['../d7/d10/md_docs_2task_2MIGRATION__KO.html#autotoc_md1908',1,'']]],
   ['변경_20이력_2',['Messaging System 변경 이력',['../db/d9f/md_docs_2CHANGELOG__KO.html',1,'']]]
 ];

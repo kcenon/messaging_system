@@ -93,11 +93,11 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
   <div class="headertitle"><div class="title">Task 모듈 아키텍처</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1749"></a> 이 문서는 Task 모듈의 아키텍처와 설계를 설명합니다.</p>
-<h1><a class="anchor" id="autotoc_md1750"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1751"></a> 이 문서는 Task 모듈의 아키텍처와 설계를 설명합니다.</p>
+<h1><a class="anchor" id="autotoc_md1752"></a>
 개요</h1>
 <p>Task 모듈은 비동기 작업 실행을 위한 분산 작업 큐 시스템을 제공합니다. 신뢰성, 확장성, 사용 편의성을 위해 설계되었습니다.</p>
-<h1><a class="anchor" id="autotoc_md1751"></a>
+<h1><a class="anchor" id="autotoc_md1753"></a>
 시스템 아키텍처</h1>
 <div class="fragment"><div class="line">┌─────────────────────────────────────────────────────────────────────┐</div>
 <div class="line">│                          task_system (파사드)                        │</div>
@@ -129,9 +129,9 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <div class="line">│  └──────────────────┘              └──────────────────┘            │</div>
 <div class="line">│                                                                      │</div>
 <div class="line">└─────────────────────────────────────────────────────────────────────┘</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1752"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1754"></a>
 핵심 컴포넌트</h1>
-<h2><a class="anchor" id="autotoc_md1753"></a>
+<h2><a class="anchor" id="autotoc_md1755"></a>
 1. task_system (파사드)</h2>
 <p><code>task_system</code>은 모든 컴포넌트를 통합하는 메인 진입점입니다. 제공 기능:</p>
 <ul>
@@ -144,7 +144,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <div class="line">system.start();</div>
 <div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;task.name&quot;</span>, payload);</div>
 <div class="line">system.stop();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1754"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1756"></a>
 2. task</h2>
 <p><code>task</code> 클래스는 작업 단위를 나타냅니다. 메시징 인프라의 <code>message</code> 클래스를 확장합니다.</p>
 <p><b>주요 속성:</b></p><ul>
@@ -180,7 +180,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <div class="line">           │ CANCELLED │        │ EXPIRED  │</div>
 <div class="line">           │  (취소됨) │        │ (만료됨) │</div>
 <div class="line">           └───────────┘        └──────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1755"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1757"></a>
 3. task_queue</h2>
 <p><code>task_queue</code>는 우선순위를 지원하는 다중 명명 큐를 관리합니다.</p>
 <p><b>기능:</b></p><ul>
@@ -209,7 +209,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <div class="line">│   └─────────────────────────────────────────────────┘   │</div>
 <div class="line">│                                                          │</div>
 <div class="line">└──────────────────────────────────────────────────────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1756"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1758"></a>
 4. worker_pool</h2>
 <p><code>worker_pool</code>은 스레드 풀을 사용하여 작업을 실행합니다.</p>
 <p><b>책임:</b></p><ul>
@@ -257,7 +257,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <div class="line">│                  result_backend                                │</div>
 <div class="line">│                                                                │</div>
 <div class="line">└────────────────────────────────────────────────────────────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1757"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1759"></a>
 5. task_handler</h2>
 <p><code>task_handler_interface</code>는 작업 실행 방법을 정의합니다.</p>
 <p><b>인터페이스:</b></p>
@@ -278,7 +278,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <li>클래스 기반: <code>task_handler_interface</code> 상속</li>
 <li>람다 기반: <code>make_handler()</code> 사용 또는 직접 등록</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1758"></a>
+<h2><a class="anchor" id="autotoc_md1760"></a>
 6. task_context</h2>
 <p><code>task_context</code>는 핸들러에게 실행 컨텍스트를 제공합니다.</p>
 <p><b>기능:</b></p><ul>
@@ -308,7 +308,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1759"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1761"></a>
 7. result_backend</h2>
 <p><code>result_backend_interface</code>는 작업 결과 저장소를 제공합니다.</p>
 <p><b>구현체:</b></p><ul>
@@ -321,7 +321,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <li>에러 정보</li>
 <li>진행 데이터</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1760"></a>
+<h2><a class="anchor" id="autotoc_md1762"></a>
 8. async_result</h2>
 <p><code>async_result</code>는 작업 실행 추적을 위한 핸들을 제공합니다.</p>
 <p><b>사용 패턴:</b></p>
@@ -338,7 +338,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <div class="line">    [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; value) { <span class="comment">/* 성공 */</span> },</div>
 <div class="line">    [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; error) { <span class="comment">/* 실패 */</span> }</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1761"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1763"></a>
 9. task_scheduler</h2>
 <p><code>task_scheduler</code>는 주기적 및 cron 기반 작업 실행을 관리합니다.</p>
 <p><b>스케줄 유형:</b></p><ul>
@@ -371,7 +371,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <div class="line">│            task_client.send()          │</div>
 <div class="line">│                                         │</div>
 <div class="line">└────────────────────────────────────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1762"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1764"></a>
 10. task_monitor</h2>
 <p><code>task_monitor</code>는 시스템 관측성을 제공합니다.</p>
 <p><b>기능:</b></p><ul>
@@ -380,9 +380,9 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <li>활성/대기/실패 작업 목록</li>
 <li>이벤트 구독</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1763"></a>
+<h1><a class="anchor" id="autotoc_md1765"></a>
 데이터 흐름</h1>
-<h2><a class="anchor" id="autotoc_md1764"></a>
+<h2><a class="anchor" id="autotoc_md1766"></a>
 작업 제출 흐름</h2>
 <div class="fragment"><div class="line">1. 클라이언트가 페이로드로 작업 생성</div>
 <div class="line">         │</div>
@@ -412,7 +412,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <div class="line">         │</div>
 <div class="line">         ▼</div>
 <div class="line">9. async_result.get()이 결과 반환</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1765"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1767"></a>
 재시도 흐름</h2>
 <div class="fragment"><div class="line">1. 작업 실행 실패</div>
 <div class="line">         │</div>
@@ -438,7 +438,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <div class="line">    │</div>
 <div class="line">    ▼</div>
 <div class="line">6a. 워커가 다시 작업을 가져감</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1766"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1768"></a>
 스레드 안전성</h1>
 <p>모든 공개 API는 스레드 안전합니다:</p>
 <table class="markdownTable">
@@ -457,7 +457,7 @@ $(document).ready(function(){initNavTree('d9/db8/md_docs_2task_2ARCHITECTURE__KO
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">task_scheduler   </td><td class="markdownTableBodyNone">뮤텍스로 보호되는 스케줄   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1767"></a>
+<h2><a class="anchor" id="autotoc_md1769"></a>
 thread_system 통합</h2>
 <p><code>task_queue</code>와 <code>worker_pool</code> 컴포넌트 모두 스레드 관리를 위해 <code>thread_system</code>을 사용합니다. 직접적인 <code>std::thread</code> 사용 대신 <code>kcenon::thread::thread_base</code>를 활용하여 다음을 제공합니다:</p>
 <ul>
@@ -478,9 +478,9 @@ thread_system 통합</h2>
 <li>스케줄 변경 시 즉시 깨어나기 위한 조건 변수 통합</li>
 <li>다른 컴포넌트와 일관된 스레드 수명 주기 관리</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1768"></a>
+<h1><a class="anchor" id="autotoc_md1770"></a>
 확장 포인트</h1>
-<h2><a class="anchor" id="autotoc_md1769"></a>
+<h2><a class="anchor" id="autotoc_md1771"></a>
 커스텀 Result Backend</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>redis_result_backend : <span class="keyword">public</span> result_backend_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -497,7 +497,7 @@ thread_system 통합</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// ... 다른 메서드 구현</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1770"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1772"></a>
 커스텀 Task Handler</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>custom_handler : <span class="keyword">public</span> task_handler_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -513,24 +513,24 @@ thread_system 통합</h2>
 <div class="line">        <span class="comment">// 커스텀 재시도 로직</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1771"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1773"></a>
 설계 결정</h1>
-<h2><a class="anchor" id="autotoc_md1772"></a>
+<h2><a class="anchor" id="autotoc_md1774"></a>
 1. 메시지 기반 작업</h2>
 <p>작업은 직렬화 및 메타데이터 처리를 위해 기존 메시징 인프라를 활용하도록 <code>message</code> 클래스를 확장합니다.</p>
-<h2><a class="anchor" id="autotoc_md1773"></a>
+<h2><a class="anchor" id="autotoc_md1775"></a>
 2. Result 타입 패턴</h2>
 <p>모든 작업은 예외 없이 명시적 에러 처리를 위해 <code>Result&lt;T&gt;</code> 또는 <code>VoidResult</code>를 반환합니다.</p>
-<h2><a class="anchor" id="autotoc_md1774"></a>
+<h2><a class="anchor" id="autotoc_md1776"></a>
 3. 빌더 패턴</h2>
 <p><code>task_builder</code>는 복잡한 설정의 작업 구성을 위한 유창한 API를 제공합니다.</p>
-<h2><a class="anchor" id="autotoc_md1775"></a>
+<h2><a class="anchor" id="autotoc_md1777"></a>
 4. 파사드 패턴</h2>
 <p><code>task_system</code>은 개별 컴포넌트 접근을 허용하면서 인터페이스를 단순화하는 파사드 역할을 합니다.</p>
-<h2><a class="anchor" id="autotoc_md1776"></a>
+<h2><a class="anchor" id="autotoc_md1778"></a>
 5. 전략 패턴</h2>
 <p><code>result_backend_interface</code>는 핵심 로직을 변경하지 않고 다른 저장소 전략을 교체할 수 있게 합니다.</p>
-<h1><a class="anchor" id="autotoc_md1777"></a>
+<h1><a class="anchor" id="autotoc_md1779"></a>
 테스트</h1>
 <p>작업 모듈은 <code>integration_tests/task/</code>에 위치한 포괄적인 통합 테스트를 제공합니다:</p>
 <table class="markdownTable">
@@ -547,7 +547,7 @@ thread_system 통합</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>test_concurrent_load.cpp</code>   </td><td class="markdownTableBodyNone">대용량 처리, 처리량 측정   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1778"></a>
+<h2><a class="anchor" id="autotoc_md1780"></a>
 테스트 실행</h2>
 <div class="fragment"><div class="line"># 테스트 빌드</div>
 <div class="line">cmake --build build --target test_task_lifecycle test_worker_scenarios \</div>
@@ -558,7 +558,7 @@ thread_system 통합</h2>
 <div class="line"> </div>
 <div class="line"># 특정 테스트 실행</div>
 <div class="line">./build/integration_tests/test_task_lifecycle</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1779"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1781"></a>
 관련 문서</h1>
 <ul>
 <li><a class="el" href="../../da/dee/md_docs_2task_2QUICK__START__KO.html">빠른 시작 가이드</a></li>

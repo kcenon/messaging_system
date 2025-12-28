@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d4/d0c/md_docs_2FEATURES__KO.html','..
   <div class="headertitle"><div class="title">Messaging System 기능</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md775"></a> <b>버전</b>: 0.1.2 <b>최종 수정일</b>: 2025-12-24 <b>언어</b>: <a class="el" href="../../da/db6/md_docs_2FEATURES.html">English</a> | [한국어]</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md777"></a> <b>버전</b>: 0.1.2 <b>최종 수정일</b>: 2025-12-24 <b>언어</b>: <a class="el" href="../../da/db6/md_docs_2FEATURES.html">English</a> | [한국어]</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md777"></a>
+<h1><a class="anchor" id="autotoc_md779"></a>
 개요</h1>
 <p>이 문서는 messaging_system의 핵심 메시징 기능, 고급 패턴, 태스크 큐 시스템, 통합 옵션 및 신뢰성 기능을 포함한 모든 기능을 포괄적으로 설명합니다.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md779"></a>
+<h1><a class="anchor" id="autotoc_md781"></a>
 목차</h1>
 <ol type="1">
 <li>핵심 메시징</li>
@@ -111,9 +111,9 @@ $(document).ready(function(){initNavTree('d4/d0c/md_docs_2FEATURES__KO.html','..
 <li>기능 매트릭스</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md781"></a>
+<h1><a class="anchor" id="autotoc_md783"></a>
 핵심 메시징</h1>
-<h2><a class="anchor" id="autotoc_md782"></a>
+<h2><a class="anchor" id="autotoc_md784"></a>
 메시지 버스</h2>
 <p>중앙 pub/sub 코디네이터:</p><ul>
 <li>토픽 기반 라우팅</li>
@@ -132,14 +132,14 @@ $(document).ready(function(){initNavTree('d4/d0c/md_docs_2FEATURES__KO.html','..
 <div class="line">bus-&gt;subscribe(<span class="stringliteral">&quot;user.*&quot;</span>, [](<span class="keyword">const</span> message&amp; msg) {</div>
 <div class="line">    <span class="keywordflow">return</span> common::VoidResult::ok();</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md783"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md785"></a>
 토픽 라우터</h2>
 <p>와일드카드 패턴 매칭:</p><ul>
 <li><code>*</code>: 단일 레벨 와일드카드</li>
 <li><code>#</code>: 다중 레벨 와일드카드</li>
 <li>정확한 매칭</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md784"></a>
+<h2><a class="anchor" id="autotoc_md786"></a>
 메시지 브로커</h2>
 <p><b>고급 라우팅 기능을 갖춘 중앙 메시지 라우팅 컴포넌트</b></p>
 <p>기능:</p><ul>
@@ -174,14 +174,14 @@ $(document).ready(function(){initNavTree('d4/d0c/md_docs_2FEATURES__KO.html','..
 <li>콘텐츠 기반 라우팅 (v0.2.1) - 페이로드 내용 기반 메시지 라우팅</li>
 <li>데드 레터 큐 (v0.2.0) - 실패 메시지 재시도 및 삭제 지원</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md785"></a>
+<h2><a class="anchor" id="autotoc_md787"></a>
 메시지 큐</h2>
 <p>스레드 안전 우선순위 큐:</p><ul>
 <li>우선순위 기반 정렬</li>
 <li>용량 제한</li>
 <li>백프레셔 지원</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md786"></a>
+<h2><a class="anchor" id="autotoc_md788"></a>
 메시지 직렬화</h2>
 <p>container_system 기반 페이로드:</p><ul>
 <li>타입 안전 직렬화</li>
@@ -189,16 +189,16 @@ $(document).ready(function(){initNavTree('d4/d0c/md_docs_2FEATURES__KO.html','..
 <li>스키마 진화</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md788"></a>
+<h1><a class="anchor" id="autotoc_md790"></a>
 고급 패턴</h1>
-<h2><a class="anchor" id="autotoc_md789"></a>
+<h2><a class="anchor" id="autotoc_md791"></a>
 Pub/Sub</h2>
 <p>퍼블리셔와 구독자 헬퍼: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> publisher = std::make_shared&lt;patterns::publisher&gt;(bus, <span class="stringliteral">&quot;events&quot;</span>);</div>
 <div class="line">publisher-&gt;publish(msg);</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> subscriber = std::make_shared&lt;patterns::subscriber&gt;(bus);</div>
 <div class="line">subscriber-&gt;subscribe(<span class="stringliteral">&quot;events.*&quot;</span>, callback);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md790"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md792"></a>
 Request/Reply</h2>
 <p>비동기 메시징 위의 동기 RPC: </p><div class="fragment"><div class="line"><span class="comment">// 서버</span></div>
 <div class="line"><span class="keyword">auto</span> server = std::make_shared&lt;request_server&gt;(bus, <span class="stringliteral">&quot;calculator&quot;</span>);</div>
@@ -207,7 +207,7 @@ Request/Reply</h2>
 <div class="line"><span class="comment">// 클라이언트</span></div>
 <div class="line"><span class="keyword">auto</span> client = std::make_shared&lt;request_client&gt;(bus);</div>
 <div class="line"><span class="keyword">auto</span> response = client-&gt;request(request, timeout);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md791"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md793"></a>
 Event Streaming</h2>
 <p>리플레이 기능의 이벤트 소싱: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> stream = std::make_shared&lt;event_stream&gt;(bus, <span class="stringliteral">&quot;orders&quot;</span>);</div>
 <div class="line"> </div>
@@ -216,7 +216,7 @@ Event Streaming</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 타임스탬프부터 리플레이</span></div>
 <div class="line">stream-&gt;replay_from(timestamp, callback);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md792"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md794"></a>
 Message Pipeline</h2>
 <p>파이프-필터 처리: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> pipeline = pipeline_builder()</div>
 <div class="line">    .add_stage(<span class="stringliteral">&quot;validate&quot;</span>, validate_fn)</div>
@@ -226,13 +226,13 @@ Message Pipeline</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> result = pipeline.process(msg);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md794"></a>
+<h1><a class="anchor" id="autotoc_md796"></a>
 태스크 큐 시스템</h1>
-<h2><a class="anchor" id="autotoc_md795"></a>
+<h2><a class="anchor" id="autotoc_md797"></a>
 개요</h2>
 <p><b>백그라운드 작업 처리를 위한 분산 태스크 큐</b></p>
 <p>태스크 큐 시스템은 우선순위 큐, 예약 실행, 재시도 메커니즘, 실시간 모니터링 기능을 갖춘 완전한 분산 태스크 처리 솔루션을 제공합니다.</p>
-<h2><a class="anchor" id="autotoc_md796"></a>
+<h2><a class="anchor" id="autotoc_md798"></a>
 태스크 시스템 파사드</h2>
 <p><b>모든 태스크 작업을 위한 통합 인터페이스</b></p>
 <p>기능:</p><ul>
@@ -249,7 +249,7 @@ Message Pipeline</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 결과 대기</span></div>
 <div class="line"><span class="keyword">auto</span> output = result.get();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md797"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md799"></a>
 태스크 클라이언트</h2>
 <p><b>다양한 실행 모드의 태스크 제출</b></p>
 <p>기능:</p><ul>
@@ -265,7 +265,7 @@ Message Pipeline</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 지연 제출</span></div>
 <div class="line"><span class="keyword">auto</span> delayed = client-&gt;submit_delayed(task, std::chrono::seconds(30));</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md798"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md800"></a>
 워커 풀</h2>
 <p><b>핸들러 등록이 가능한 설정 가능 워커 스레드</b></p>
 <p>기능:</p><ul>
@@ -281,7 +281,7 @@ Message Pipeline</h2>
 <div class="line">pool-&gt;register_handler(<span class="stringliteral">&quot;image.resize&quot;</span>, image_handler);</div>
 <div class="line"> </div>
 <div class="line">pool-&gt;start();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md799"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md801"></a>
 태스크 스케줄러</h2>
 <p><b>주기적 및 크론 기반 태스크 스케줄링</b></p>
 <p>기능:</p><ul>
@@ -297,7 +297,7 @@ Message Pipeline</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 크론 태스크 (매일 자정)</span></div>
 <div class="line">scheduler-&gt;schedule_cron(<span class="stringliteral">&quot;daily_report&quot;</span>, task, <span class="stringliteral">&quot;0 0 * * *&quot;</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md800"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md802"></a>
 비동기 결과</h2>
 <p><b>진행 상태 지원이 있는 비동기 결과 추적</b></p>
 <p>기능:</p><ul>
@@ -318,7 +318,7 @@ Message Pipeline</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 진행률 가져오기</span></div>
 <div class="line"><span class="keywordtype">double</span> progress = result.progress();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md801"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md803"></a>
 결과 백엔드</h2>
 <p><b>플러그형 결과 저장소</b></p>
 <p>기능:</p><ul>
@@ -334,7 +334,7 @@ Message Pipeline</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 결과 조회</span></div>
 <div class="line"><span class="keyword">auto</span> stored = backend-&gt;get(task_id);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md802"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md804"></a>
 태스크 모니터</h2>
 <p><b>실시간 태스크 모니터링 및 통계</b></p>
 <p>기능:</p><ul>
@@ -354,7 +354,7 @@ Message Pipeline</h2>
 <div class="line">monitor-&gt;on_task_completed([](<span class="keyword">const</span> task&amp; t) {</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;태스크 &quot;</span> &lt;&lt; t.id() &lt;&lt; <span class="stringliteral">&quot; 완료&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md803"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md805"></a>
 Chain 및 Chord 패턴</h2>
 <p><b>워크플로우 조정 패턴</b></p>
 <p>기능:</p><ul>
@@ -368,7 +368,7 @@ Chain 및 Chord 패턴</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Chord: [task1, task2, task3] -&gt; callback</span></div>
 <div class="line"><span class="keyword">auto</span> chord_result = client-&gt;chord({task1, task2, task3}, callback_task);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md804"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md806"></a>
 재시도 메커니즘</h2>
 <p><b>지수 백오프가 있는 자동 재시도</b></p>
 <p>기능:</p><ul>
@@ -382,7 +382,7 @@ Chain 및 Chord 패턴</h2>
 <div class="line">    .max_retries(3)</div>
 <div class="line">    .retry_delay(std::chrono::seconds(5))</div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md805"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md807"></a>
 태스크 타임아웃</h2>
 <p><b>장시간 실행 태스크를 위한 타임아웃 처리</b></p>
 <p>기능:</p><ul>
@@ -395,13 +395,13 @@ Chain 및 Chord 패턴</h2>
 <div class="line">    .timeout(std::chrono::minutes(10))</div>
 <div class="line">    .build();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md807"></a>
+<h1><a class="anchor" id="autotoc_md809"></a>
 C++20 Concepts</h1>
-<h2><a class="anchor" id="autotoc_md808"></a>
+<h2><a class="anchor" id="autotoc_md810"></a>
 개요</h2>
 <p><b>C++20 Concepts를 사용한 타입 안전 콜백 검증</b></p>
 <p>메시징 시스템은 C++20 Concepts를 사용하여 콜백과 핸들러의 컴파일 타임 타입 검증을 제공합니다. 이를 통해 더 명확한 에러 메시지와 자체 문서화되는 인터페이스 요구사항을 얻을 수 있습니다.</p>
-<h2><a class="anchor" id="autotoc_md809"></a>
+<h2><a class="anchor" id="autotoc_md811"></a>
 TaskHandlerCallable</h2>
 <p><b>태스크 핸들러 시그니처 검증</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
@@ -412,7 +412,7 @@ TaskHandlerCallable</h2>
 <div class="line"><span class="comment">// 사용법</span></div>
 <div class="line"><span class="keyword">template</span>&lt;TaskHandlerCallable Handler&gt;</div>
 <div class="line"><span class="keywordtype">void</span> register_handler(<span class="keyword">const</span> std::string&amp; name, Handler&amp;&amp; handler);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md810"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md812"></a>
 TaskHandlerLike</h2>
 <p><b>태스크 핸들러 인터페이스 구현 검증</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
@@ -420,7 +420,7 @@ TaskHandlerLike</h2>
 <div class="line">    { t.name() } -&gt; std::convertible_to&lt;std::string&gt;;</div>
 <div class="line">    { t.execute(tsk, ctx) } -&gt; std::same_as&lt;common::Result&lt;container_module::value_container&gt;&gt;;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md811"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md813"></a>
 ScheduleEventCallable</h2>
 <p><b>스케줄러 이벤트 콜백 검증</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
@@ -429,33 +429,33 @@ ScheduleEventCallable</h2>
 <div class="line"><span class="comment">// 사용법</span></div>
 <div class="line"><span class="keyword">template</span>&lt;ScheduleEventCallable Callback&gt;</div>
 <div class="line"><span class="keywordtype">void</span> on_task_executed(Callback&amp;&amp; callback);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md812"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md814"></a>
 MessageProcessorCallable</h2>
 <p><b>메시지 파이프라인 프로세서 검증</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
 <div class="line"><span class="keyword">concept </span>MessageProcessorCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
 <div class="line">    std::same_as&lt;std::invoke_result_t&lt;F, const message&amp;&gt;,</div>
 <div class="line">                 common::Result&lt;message&gt;&gt;;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md813"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md815"></a>
 MessageFilterCallable</h2>
 <p><b>메시지 필터링 술어 검증</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
 <div class="line"><span class="keyword">concept </span>MessageFilterCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
 <div class="line">    std::convertible_to&lt;std::invoke_result_t&lt;F, const message&amp;&gt;, <span class="keywordtype">bool</span>&gt;;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md814"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md816"></a>
 MessageTransformerCallable</h2>
 <p><b>메시지 변환기 검증</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
 <div class="line"><span class="keyword">concept </span>MessageTransformerCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
 <div class="line">    std::same_as&lt;std::invoke_result_t&lt;F, const message&amp;&gt;, message&gt;;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md815"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md817"></a>
 SubscriptionCallable</h2>
 <p><b>토픽 구독 콜백 검증</b></p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
 <div class="line"><span class="keyword">concept </span>SubscriptionCallable = std::invocable&lt;F, const message&amp;&gt; &amp;&amp;</div>
 <div class="line">    std::same_as&lt;std::invoke_result_t&lt;F, const message&amp;&gt;,</div>
 <div class="line">                 common::VoidResult&gt;;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md816"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md818"></a>
 장점</h2>
 <ul>
 <li><b>컴파일 타임 검증</b>: 컴파일 시 타입 불일치 감지</li>
@@ -464,9 +464,9 @@ SubscriptionCallable</h2>
 <li><b>IDE 지원</b>: 더 나은 자동 완성 및 타입 추론</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md818"></a>
+<h1><a class="anchor" id="autotoc_md820"></a>
 백엔드 지원</h1>
-<h2><a class="anchor" id="autotoc_md819"></a>
+<h2><a class="anchor" id="autotoc_md821"></a>
 독립 실행</h2>
 <p>자체 포함 실행:</p><ul>
 <li>내장 스레드 풀</li>
@@ -474,7 +474,7 @@ SubscriptionCallable</h2>
 </ul>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> backend = std::make_shared&lt;standalone_backend&gt;(num_threads);</div>
 <div class="line">backend-&gt;initialize();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md820"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md822"></a>
 스레드 풀 통합</h2>
 <p>외부 실행자 사용:</p><ul>
 <li>IExecutor 인터페이스</li>
@@ -485,23 +485,23 @@ SubscriptionCallable</h2>
 <div class="line">    logger,</div>
 <div class="line">    monitoring</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md821"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md823"></a>
 런타임 백엔드 선택</h2>
 <p>자동 감지 및 선택:</p><ul>
 <li>환경 기반</li>
 <li>설정 기반</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md823"></a>
+<h1><a class="anchor" id="autotoc_md825"></a>
 프로덕션 기능</h1>
-<h2><a class="anchor" id="autotoc_md824"></a>
+<h2><a class="anchor" id="autotoc_md826"></a>
 스레드 안전</h2>
 <p>모든 핵심 연산은 스레드 안전:</p><ul>
 <li>락 기반 동기화</li>
 <li>원자적 연산</li>
 <li>락프리 큐</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md825"></a>
+<h2><a class="anchor" id="autotoc_md827"></a>
 타입 안전</h2>
 <p>Result&lt;T&gt; 에러 처리:</p><ul>
 <li>예외 없는 에러 처리</li>
@@ -515,7 +515,7 @@ SubscriptionCallable</h2>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> sub_id = result.value();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md826"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md828"></a>
 테스트</h2>
 <p>포괄적인 테스트 스위트:</p><ul>
 <li>단위 테스트</li>
@@ -523,7 +523,7 @@ SubscriptionCallable</h2>
 <li>성능 벤치마크</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md828"></a>
+<h1><a class="anchor" id="autotoc_md830"></a>
 기능 매트릭스</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -594,7 +594,7 @@ SubscriptionCallable</h2>
 <td class="markdownTableBodyNone"><b>메트릭</b>   </td><td class="markdownTableBodyNone">✅   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">완료   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md830"></a>
+<h1><a class="anchor" id="autotoc_md832"></a>
 시작하기</h1>
 <p>사용 예제 및 시작 가이드:</p><ul>
 <li><a class="el" href="../../d6/d63/md_docs_2guides_2QUICK__START.html">빠른 시작 가이드</a></li>

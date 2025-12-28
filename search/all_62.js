@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['상속_0',['1. Task는 Message를 상속',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2199',1,'']]],
-  ['상태_1',['상태',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md27',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1664',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1654',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1702',1,'워커 상태'],['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md47',1,'현재 구현 상태']]],
-  ['상태_20메서드_2',['상태 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1667',1,'상태 메서드'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1607',1,'상태 메서드']]],
-  ['상태_20확인_3',['상태 확인',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2132',1,'워커 상태 확인'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2131',1,'큐 상태 확인']]],
-  ['상황을_20어떻게_20얻나요_4',['Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2143',1,'']]],
-  ['상황_20메서드_5',['진행 상황 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1668',1,'']]],
-  ['상황_20모니터링_6',['상황 모니터링',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2031',1,'진행 상황 모니터링'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md2081',1,'진행 상황 모니터링']]],
-  ['상황_20보고_7',['진행 상황 보고',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2030',1,'']]],
-  ['상황_20추적_8',['상황 추적',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1634',1,'진행 상황 추적'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1610',1,'진행 상황 추적'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2029',1,'진행 상황 추적']]]
+  ['상속_0',['1. Task는 Message를 상속',['../d1/db3/md_docs_2TASK__QUEUE__IMPROVEMENT__PLAN.html#autotoc_md2201',1,'']]],
+  ['상태_1',['상태',['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md27',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1666',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1656',1,'상태'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1704',1,'워커 상태'],['../dd/da0/md_docs_2adr_2001-logging-architecture__KO.html#autotoc_md47',1,'현재 구현 상태']]],
+  ['상태_20메서드_2',['상태 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1669',1,'상태 메서드'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1609',1,'상태 메서드']]],
+  ['상태_20확인_3',['상태 확인',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2134',1,'워커 상태 확인'],['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2133',1,'큐 상태 확인']]],
+  ['상황을_20어떻게_20얻나요_4',['Q: 핸들러 외부에서 작업 진행 상황을 어떻게 얻나요?',['../de/da3/md_docs_2task_2TROUBLESHOOTING__KO.html#autotoc_md2145',1,'']]],
+  ['상황_20메서드_5',['진행 상황 메서드',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1670',1,'']]],
+  ['상황_20모니터링_6',['상황 모니터링',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2033',1,'진행 상황 모니터링'],['../da/dee/md_docs_2task_2QUICK__START__KO.html#autotoc_md2083',1,'진행 상황 모니터링']]],
+  ['상황_20보고_7',['진행 상황 보고',['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2032',1,'']]],
+  ['상황_20추적_8',['상황 추적',['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1636',1,'진행 상황 추적'],['../dd/db9/md_docs_2task_2API__REFERENCE__KO.html#autotoc_md1612',1,'진행 상황 추적'],['../dd/d35/md_docs_2task_2PATTERNS__KO.html#autotoc_md2031',1,'진행 상황 추적']]]
 ];
