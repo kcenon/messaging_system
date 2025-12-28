@@ -86,7 +86,7 @@ int main() {
             auto t = task_result.unwrap();
             auto payload = make_payload("Low-" + std::to_string(i),
                                         static_cast<int>(low_priority));
-            t.set_task_payload(std::move(payload));
+            t.set_payload(std::move(payload));
 
             results.push_back(system.submit(std::move(t)));
             std::cout << "  Submitted: Low-" << i << " (priority "
@@ -106,7 +106,7 @@ int main() {
             auto t = task_result.unwrap();
             auto payload = make_payload("Medium-" + std::to_string(i),
                                         static_cast<int>(medium_priority));
-            t.set_task_payload(std::move(payload));
+            t.set_payload(std::move(payload));
 
             results.push_back(system.submit(std::move(t)));
             std::cout << "  Submitted: Medium-" << i << " (priority "
@@ -126,7 +126,7 @@ int main() {
             auto t = task_result.unwrap();
             auto payload = make_payload("High-0",
                                         static_cast<int>(high_priority));
-            t.set_task_payload(std::move(payload));
+            t.set_payload(std::move(payload));
 
             results.push_back(system.submit(std::move(t)));
             std::cout << "  Submitted: High-0 (priority "

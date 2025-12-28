@@ -76,12 +76,12 @@ task_queue::task_queue(task_queue&& other) noexcept
 	: config_(std::move(other.config_)),
 	  queues_(std::move(other.queues_)),
 	  delayed_queue_(std::move(other.delayed_queue_)),
-	  task_registry_(std::move(other.task_registry_)),
 	  cancelled_tasks_(std::move(other.cancelled_tasks_)),
 	  tag_to_tasks_(std::move(other.tag_to_tasks_)),
 	  running_(other.running_.load()),
 	  stopped_(other.stopped_.load()),
 	  delayed_worker_(std::move(other.delayed_worker_)) {
+	// Note: task_registry_ removed in Issue #192
 	other.running_.store(false);
 	other.stopped_.store(true);
 }
@@ -93,12 +93,12 @@ task_queue& task_queue::operator=(task_queue&& other) noexcept {
 		config_ = std::move(other.config_);
 		queues_ = std::move(other.queues_);
 		delayed_queue_ = std::move(other.delayed_queue_);
-		task_registry_ = std::move(other.task_registry_);
 		cancelled_tasks_ = std::move(other.cancelled_tasks_);
 		tag_to_tasks_ = std::move(other.tag_to_tasks_);
 		running_.store(other.running_.load());
 		stopped_.store(other.stopped_.load());
 		delayed_worker_ = std::move(other.delayed_worker_);
+		// Note: task_registry_ removed in Issue #192
 
 		other.running_.store(false);
 		other.stopped_.store(true);
@@ -144,12 +144,13 @@ void task_queue::stop() {
 	stopped_.store(true);
 	running_.store(false);
 
-	// Stop all queues
+	// Wake up any waiting dequeue operations
+	dequeue_cv_.notify_all();
+
+	// Clear queues (task_priority_queue doesn't need explicit stop - Issue #192)
 	{
 		std::lock_guard<std::mutex> lock(queues_mutex_);
-		for (auto& [name, queue] : queues_) {
-			queue->stop();
-		}
+		queues_.clear();
 	}
 
 	// Stop delayed worker using thread_system's lifecycle management
@@ -200,8 +201,8 @@ common::Result<std::string> task_queue::enqueue(task t) {
 		}
 	}
 
-	// Register task
-	register_task(t);
+	// Register task tags for tag-based cancellation
+	register_task_tags(t);
 
 	// Set task state to queued
 	t.set_state(task_state::queued);
@@ -209,25 +210,20 @@ common::Result<std::string> task_queue::enqueue(task t) {
 	// Ensure queue exists
 	ensure_queue_exists(queue_name);
 
-	// Enqueue to the appropriate queue
-	message msg = static_cast<message>(t);
-
-	common::VoidResult result = common::ok();
+	// Enqueue task directly (no object slicing - Issue #192)
 	{
 		std::lock_guard<std::mutex> lock(queues_mutex_);
 		auto it = queues_.find(queue_name);
 		if (it != queues_.end()) {
-			result = it->second->enqueue(std::move(msg));
+			it->second->push(std::move(t));
 		} else {
-			result = common::VoidResult(
+			return common::Result<std::string>(
 				common::error_info{error::queue_empty, "Queue not found"});
 		}
 	}
 
-	if (!result.is_ok()) {
-		unregister_task(task_id);
-		return common::Result<std::string>(result.error());
-	}
+	// Notify waiting dequeue operations
+	dequeue_cv_.notify_all();
 
 	common::logging::log_trace("Task " + task_id + " enqueued to " + queue_name);
 	return common::ok(task_id);
@@ -275,38 +271,35 @@ common::Result<task> task_queue::dequeue(
 			std::lock_guard<std::mutex> lock(queues_mutex_);
 			auto it = queues_.find(queue_name);
 			if (it != queues_.end()) {
-				auto result = it->second->try_dequeue();
-				if (result.is_ok()) {
-					message msg = std::move(result.unwrap());
+				// Direct task dequeue - no object slicing (Issue #192)
+				auto maybe_task = it->second->try_pop();
+				if (maybe_task.has_value()) {
+					task t = std::move(maybe_task.value());
+					const std::string task_id = t.task_id();
 
-					// Reconstruct task from message
-					// For now, we look up from registry
-					auto msg_id = msg.metadata().id;
-					{
-						std::lock_guard<std::mutex> reg_lock(registry_mutex_);
-						auto task_it = task_registry_.find(msg_id);
-						if (task_it != task_registry_.end()) {
-							// Check if cancelled
-							if (is_task_cancelled(msg_id)) {
-								unregister_task(msg_id);
-								continue;  // Skip cancelled tasks
-							}
-
-							task t = std::move(task_it->second);
-							t.set_state(task_state::running);
-							t.set_started_at(std::chrono::system_clock::now());
-							task_registry_.erase(task_it);
-
-							common::logging::log_trace("Task " + msg_id + " dequeued from " + queue_name);
-							return common::ok(std::move(t));
-						}
+					// Check if cancelled
+					if (is_task_cancelled(task_id)) {
+						unregister_task_tags(task_id, t.config().tags);
+						continue;  // Skip cancelled tasks
 					}
+
+					t.set_state(task_state::running);
+					t.set_started_at(std::chrono::system_clock::now());
+
+					common::logging::log_trace("Task " + task_id + " dequeued from " + queue_name);
+					return common::ok(std::move(t));
 				}
 			}
 		}
 
-		// Wait a bit before retrying
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		// Wait for new tasks or timeout
+		{
+			std::unique_lock<std::mutex> lock(dequeue_mutex_);
+			auto wait_time = std::min(remaining_timeout, std::chrono::milliseconds(10));
+			dequeue_cv_.wait_for(lock, wait_time, [this]() {
+				return !is_running();
+			});
+		}
 
 		if (timeout != std::chrono::milliseconds::max()) {
 			auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -338,14 +331,8 @@ common::VoidResult task_queue::cancel(const std::string& task_id) {
 		cancelled_tasks_.insert(task_id);
 	}
 
-	// Update task state in registry
-	{
-		std::lock_guard<std::mutex> lock(registry_mutex_);
-		auto it = task_registry_.find(task_id);
-		if (it != task_registry_.end()) {
-			it->second.set_state(task_state::cancelled);
-		}
-	}
+	// Note: Task state will be checked during dequeue (Issue #192)
+	// No need for task_registry_ lookup since we store tasks directly
 
 	common::logging::log_trace("Task " + task_id + " cancelled");
 	return common::ok();
@@ -376,13 +363,25 @@ common::VoidResult task_queue::cancel_by_tag(const std::string& tag) {
 // ============================================================================
 
 common::Result<task> task_queue::get_task(const std::string& task_id) const {
-	std::lock_guard<std::mutex> lock(registry_mutex_);
-	auto it = task_registry_.find(task_id);
-	if (it == task_registry_.end()) {
-		return common::Result<task>(
-			common::error_info{error::task_not_found, "Task not found: " + task_id});
+	// Note (Issue #192): With the composition-based design, tasks are stored
+	// directly in priority queues which don't support random access by ID.
+	// This function now returns task_not_found for queued tasks.
+	// Consider using dequeue() to retrieve tasks instead.
+
+	// Check if task is in cancelled set (we know about it)
+	{
+		std::lock_guard<std::mutex> lock(cancelled_mutex_);
+		if (cancelled_tasks_.find(task_id) != cancelled_tasks_.end()) {
+			// Task was cancelled but we can't retrieve its full state
+			return common::Result<task>(
+				common::error_info{error::task_not_found,
+								   "Task " + task_id + " was cancelled"});
+		}
 	}
-	return common::ok(task(it->second));
+
+	return common::Result<task>(
+		common::error_info{error::task_not_found,
+						   "Task lookup by ID not supported in composition-based design"});
 }
 
 size_t task_queue::queue_size(const std::string& queue_name) const {
@@ -430,11 +429,8 @@ bool task_queue::has_queue(const std::string& queue_name) const {
 void task_queue::ensure_queue_exists(const std::string& queue_name) {
 	std::lock_guard<std::mutex> lock(queues_mutex_);
 	if (queues_.find(queue_name) == queues_.end()) {
-		queue_config qconfig;
-		qconfig.max_size = config_.max_size;
-		qconfig.enable_priority = true;  // Always enable priority for tasks
-		queues_[queue_name] = std::make_unique<message_queue>(qconfig);
-
+		// Create task priority queue directly (no message_queue - Issue #192)
+		queues_[queue_name] = std::make_unique<task_priority_queue>();
 		common::logging::log_trace("Created queue: " + queue_name);
 	}
 }
@@ -492,18 +488,12 @@ bool task_queue::is_task_cancelled(const std::string& task_id) const {
 	return cancelled_tasks_.find(task_id) != cancelled_tasks_.end();
 }
 
-void task_queue::register_task(const task& t) {
-	const std::string& task_id = t.task_id();
-
-	// Register in task registry
-	{
-		std::lock_guard<std::mutex> lock(registry_mutex_);
-		task_registry_[task_id] = t;
-	}
-
-	// Register tags
+void task_queue::register_task_tags(const task& t) {
+	// Register tags for tag-based cancellation (Issue #192)
+	// No longer store full task in registry - tasks are in priority queues
 	const auto& tags = t.config().tags;
 	if (!tags.empty()) {
+		const std::string& task_id = t.task_id();
 		std::lock_guard<std::mutex> lock(tags_mutex_);
 		for (const auto& tag : tags) {
 			tag_to_tasks_[tag].insert(task_id);
@@ -511,18 +501,8 @@ void task_queue::register_task(const task& t) {
 	}
 }
 
-void task_queue::unregister_task(const std::string& task_id) {
-	// Get tags before removing from registry
-	std::vector<std::string> tags;
-	{
-		std::lock_guard<std::mutex> lock(registry_mutex_);
-		auto it = task_registry_.find(task_id);
-		if (it != task_registry_.end()) {
-			tags = it->second.config().tags;
-			task_registry_.erase(it);
-		}
-	}
-
+void task_queue::unregister_task_tags(const std::string& task_id,
+									  const std::vector<std::string>& tags) {
 	// Remove from tag mappings
 	if (!tags.empty()) {
 		std::lock_guard<std::mutex> lock(tags_mutex_);

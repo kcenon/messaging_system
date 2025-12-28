@@ -7,6 +7,26 @@
 
 ## [Unreleased]
 
+### 변경됨
+- **Task-Message 컴포지션 리팩토링 (Issue #192)**
+  - `task`의 `message` 상속을 컴포지션 패턴으로 변경
+  - 주요 아키텍처 변경사항:
+    - `task`가 더 이상 `message` 클래스를 상속하지 않음
+    - `task`가 `payload_`와 `created_at_` 멤버를 직접 소유
+    - 공유 `message_priority` enum을 위한 `priority.h` 헤더 추가
+    - `task_queue`가 메시지로 슬라이싱하지 않고 태스크를 직접 저장
+    - `task_registry_` 제거 (태스크 재구성에 더 이상 필요 없음)
+  - 이점:
+    - `task_queue`에서 객체 슬라이싱 문제 해결
+    - ~50% 메모리 감소 (미사용 메시지 필드 제거)
+    - 명확한 아키텍처 (task HAS-A payload, not IS-A message)
+    - 리스코프 치환 원칙 위반 수정
+  - API 변경:
+    - `set_task_payload()` → `set_payload()`로 이름 변경
+    - `get_task()`가 에러 반환 (`dequeue()` 사용 권장)
+    - 새로운 `has_payload()`, `priority()` 접근자
+  - 직렬화가 포맷 버전 3으로 업데이트 (v2와 하위 호환)
+
 ### 추가됨
 - **메시지 브로커 문서화 (Issue #184)**
   - 새로운 `docs/core/MESSAGE_BROKER.md` 종합 사용 가이드:

@@ -1,6 +1,9 @@
 #pragma once
 
 #include <core/container.h>
+#include <kcenon/messaging/core/priority.h>
+#include <kcenon/common/patterns/result.h>
+
 #include <chrono>
 #include <memory>
 #include <optional>
@@ -8,22 +11,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include <kcenon/common/patterns/result.h>
-
 namespace kcenon::messaging {
-
-/**
- * @enum message_priority
- * @brief Message priority levels
- */
-enum class message_priority : uint8_t {
-	lowest = 0,
-	low = 1,
-	normal = 2,
-	high = 3,
-	highest = 4,
-	critical = 5
-};
 
 /**
  * @enum message_type

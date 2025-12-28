@@ -100,7 +100,7 @@ int main() {
             auto payload = std::make_shared<container_module::value_container>();
             payload->set_value("message",
                                std::string("This was delayed by 3 seconds"));
-            t.set_task_payload(std::move(payload));
+            t.set_payload(std::move(payload));
             system.submit_later(std::move(t), std::chrono::seconds(3));
         }
     }
@@ -146,7 +146,7 @@ int main() {
             auto payload = std::make_shared<container_module::value_container>();
             payload->set_value("message",
                                std::string("This was delayed by 5 seconds"));
-            t.set_task_payload(std::move(payload));
+            t.set_payload(std::move(payload));
             system.submit_later(std::move(t), std::chrono::seconds(5));
         }
     }

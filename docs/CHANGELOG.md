@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Task-Message Composition Refactoring (Issue #192)**
+  - Replaced `task` inheritance from `message` with composition pattern
+  - Key architectural changes:
+    - `task` no longer inherits from `message` class
+    - `task` now directly owns `payload_` and `created_at_` members
+    - Added `priority.h` header for shared `message_priority` enum
+    - `task_queue` stores tasks directly instead of slicing to messages
+    - Removed `task_registry_` (no longer needed for reconstruction)
+  - Benefits:
+    - Eliminates object slicing issue in `task_queue`
+    - ~50% memory reduction (unused message fields removed)
+    - Clearer architecture (task HAS-A payload, not IS-A message)
+    - Fixes Liskov Substitution Principle violation
+  - API changes:
+    - `set_task_payload()` renamed to `set_payload()`
+    - `get_task()` now returns error (use `dequeue()` instead)
+    - New `has_payload()`, `priority()` accessors
+  - Serialization updated to format version 3 (backward compatible with v2)
+
 ### Added
 - **Dead Letter Queue for Message Broker (Issue #182)**
   - Full DLQ implementation in `message_broker`:

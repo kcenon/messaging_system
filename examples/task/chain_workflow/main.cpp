@@ -129,7 +129,7 @@ int main() {
         auto t = extract_result.unwrap();
         auto payload = std::make_shared<container_module::value_container>();
         payload->set_value("source_table", std::string("users"));
-        t.set_task_payload(std::move(payload));
+        t.set_payload(std::move(payload));
         chain_tasks.push_back(std::move(t));
     }
 

@@ -6,23 +6,34 @@
  * @file task.h
  * @brief Task class for distributed task queue system
  *
- * Provides a task abstraction that extends the message class with additional
- * features for task scheduling, retry handling, and progress tracking.
+ * Provides a task abstraction using composition instead of inheritance,
+ * with support for task scheduling, retry handling, and progress tracking.
+ *
+ * Design Decision (Issue #192):
+ * - Uses composition instead of inheriting from message
+ * - Eliminates object slicing in task_queue
+ * - Reduces memory overhead by ~50% (unused message fields removed)
+ * - Improves architectural clarity (task is not a message)
  */
 
 #pragma once
 
-#include <kcenon/messaging/core/message.h>
+#include <core/container.h>
+#include <kcenon/messaging/core/priority.h>
 #include <kcenon/common/patterns/result.h>
 
 #include <atomic>
 #include <chrono>
+#include <memory>
 #include <mutex>
 #include <optional>
 #include <string>
 #include <vector>
 
 namespace kcenon::messaging::task {
+
+// Import message_priority into task namespace for convenience
+using kcenon::messaging::message_priority;
 
 /**
  * @enum task_state
@@ -93,13 +104,19 @@ struct task_config {
 
 /**
  * @class task
- * @brief Distributed task queue task extending message
+ * @brief Distributed task queue task using composition
  *
  * A task represents a unit of work that can be queued, executed by workers,
- * and tracked for progress and results. It extends the message class to
- * leverage existing messaging infrastructure.
+ * and tracked for progress and results. Uses composition instead of inheritance
+ * to avoid object slicing and reduce memory overhead.
+ *
+ * Design changes from Issue #192:
+ * - No longer inherits from message (was causing object slicing in task_queue)
+ * - Directly owns payload_ instead of delegating to message base
+ * - Added created_at_ timestamp (previously used metadata_.timestamp)
+ * - Removed unused fields (source, target, correlation_id, trace_id, headers, ttl)
  */
-class task : public message {
+class task {
 	friend class task_builder;
 
 public:
@@ -145,12 +162,30 @@ public:
 	}
 	void set_completed_at(std::chrono::system_clock::time_point time);
 
+	/**
+	 * @brief Get task creation timestamp
+	 * @return Time when task was created
+	 */
+	const std::chrono::system_clock::time_point& created_at() const {
+		return created_at_;
+	}
+
 	// Progress tracking (thread-safe)
 	double progress() const { return progress_.load(std::memory_order_acquire); }
 	void set_progress(double progress);
 
 	const std::string& progress_message() const;
 	void set_progress_message(const std::string& message);
+
+	// Payload access (direct ownership, not inherited)
+	bool has_payload() const { return payload_ != nullptr; }
+	const container_module::value_container& payload() const;
+	container_module::value_container& payload();
+	void set_payload(std::shared_ptr<container_module::value_container> payload);
+
+	// Priority access (direct, not via message metadata)
+	message_priority priority() const { return config_.priority; }
+	void set_priority(message_priority p) { config_.priority = p; }
 
 	// Result/Error
 	bool has_result() const;
@@ -161,14 +196,6 @@ public:
 	const std::string& error_message() const;
 	const std::string& error_traceback() const;
 	void set_error(const std::string& message, const std::string& traceback = "");
-
-	/**
-	 * @brief Set the task payload
-	 * @param payload Shared pointer to value_container
-	 */
-	void set_task_payload(std::shared_ptr<container_module::value_container> payload) {
-		set_payload(std::move(payload));
-	}
 
 	// Utility methods
 
@@ -211,20 +238,27 @@ public:
 	 */
 	std::chrono::milliseconds get_next_retry_delay() const;
 
-	// Serialization
+	// Serialization (format version 3 for composition-based design)
 	common::Result<std::vector<uint8_t>> serialize() const;
 	static common::Result<task> deserialize(const std::vector<uint8_t>& data);
 
 private:
+	// Task identification
 	std::string task_id_;
 	std::string task_name_;
 	task_state state_ = task_state::pending;
 	task_config config_;
 
-	// Execution tracking
-	size_t attempt_count_ = 0;
+	// Timing (previously partially inherited from message)
+	std::chrono::system_clock::time_point created_at_;
 	std::chrono::system_clock::time_point started_at_;
 	std::chrono::system_clock::time_point completed_at_;
+
+	// Payload (composition, not inheritance)
+	std::shared_ptr<container_module::value_container> payload_;
+
+	// Execution tracking
+	size_t attempt_count_ = 0;
 
 	// Progress (atomic for thread-safe access)
 	std::atomic<double> progress_{0.0};

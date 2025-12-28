@@ -126,7 +126,7 @@ int main() {
             auto t = task_result.unwrap();
             auto payload = std::make_shared<container_module::value_container>();
             payload->set_value("source", source);
-            t.set_task_payload(std::move(payload));
+            t.set_payload(std::move(payload));
             parallel_tasks.push_back(std::move(t));
             std::cout << "  Added fetch task for: " << source << std::endl;
         }
@@ -179,7 +179,7 @@ int main() {
             auto t = task_result.unwrap();
             auto payload = std::make_shared<container_module::value_container>();
             payload->set_value("source", source);
-            t.set_task_payload(std::move(payload));
+            t.set_payload(std::move(payload));
             individual_results.push_back(system.submit(std::move(t)));
         }
     }

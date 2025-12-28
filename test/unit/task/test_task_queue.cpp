@@ -404,6 +404,9 @@ TEST(TaskQueueTest, CancelByTag) {
 // ============================================================================
 
 TEST(TaskQueueTest, GetTask) {
+	// Note: Issue #192 changed task_queue to use composition-based design.
+	// get_task() no longer supports lookup by ID (priority_queue doesn't allow random access).
+	// This test now verifies the expected error behavior.
 	task_queue queue;
 	queue.start();
 
@@ -412,9 +415,14 @@ TEST(TaskQueueTest, GetTask) {
 
 	queue.enqueue(std::move(t));
 
+	// get_task returns error in composition-based design
 	auto result = queue.get_task(task_id);
-	EXPECT_TRUE(result.is_ok());
-	EXPECT_EQ(result.unwrap().task_id(), task_id);
+	EXPECT_TRUE(result.is_err());
+
+	// Use dequeue to retrieve task instead
+	auto dequeue_result = queue.dequeue({"default"}, std::chrono::milliseconds(100));
+	EXPECT_TRUE(dequeue_result.is_ok());
+	EXPECT_EQ(dequeue_result.unwrap().task_id(), task_id);
 
 	queue.stop();
 }
