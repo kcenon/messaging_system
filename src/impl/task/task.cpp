@@ -36,28 +36,27 @@ std::string generate_unique_id() {
 // task implementation
 // ============================================================================
 
-task::task() : message("task", message_type::command), task_id_(generate_task_id()) {
-	// Sync metadata.id with task_id for task_queue lookup
-	metadata().id = task_id_;
+task::task()
+	: task_id_(generate_task_id()),
+	  created_at_(std::chrono::system_clock::now()) {
 }
 
 task::task(const std::string& task_name)
-	: message("task", message_type::command),
-	  task_id_(generate_task_id()),
-	  task_name_(task_name) {
-	// Sync metadata.id with task_id for task_queue lookup
-	metadata().id = task_id_;
+	: task_id_(generate_task_id()),
+	  task_name_(task_name),
+	  created_at_(std::chrono::system_clock::now()) {
 }
 
 task::task(const task& other)
-	: message(other),
-	  task_id_(other.task_id_),
+	: task_id_(other.task_id_),
 	  task_name_(other.task_name_),
 	  state_(other.state_),
 	  config_(other.config_),
-	  attempt_count_(other.attempt_count_),
+	  created_at_(other.created_at_),
 	  started_at_(other.started_at_),
 	  completed_at_(other.completed_at_),
+	  payload_(other.payload_),
+	  attempt_count_(other.attempt_count_),
 	  progress_(other.progress_.load()),
 	  progress_message_(other.progress_message_),
 	  result_(other.result_),
@@ -66,14 +65,15 @@ task::task(const task& other)
 }
 
 task::task(task&& other) noexcept
-	: message(std::move(other)),
-	  task_id_(std::move(other.task_id_)),
+	: task_id_(std::move(other.task_id_)),
 	  task_name_(std::move(other.task_name_)),
 	  state_(other.state_),
 	  config_(std::move(other.config_)),
-	  attempt_count_(other.attempt_count_),
+	  created_at_(other.created_at_),
 	  started_at_(other.started_at_),
 	  completed_at_(other.completed_at_),
+	  payload_(std::move(other.payload_)),
+	  attempt_count_(other.attempt_count_),
 	  progress_(other.progress_.load()),
 	  progress_message_(std::move(other.progress_message_)),
 	  result_(std::move(other.result_)),
@@ -83,14 +83,15 @@ task::task(task&& other) noexcept
 
 task& task::operator=(const task& other) {
 	if (this != &other) {
-		message::operator=(other);
 		task_id_ = other.task_id_;
 		task_name_ = other.task_name_;
 		state_ = other.state_;
 		config_ = other.config_;
-		attempt_count_ = other.attempt_count_;
+		created_at_ = other.created_at_;
 		started_at_ = other.started_at_;
 		completed_at_ = other.completed_at_;
+		payload_ = other.payload_;
+		attempt_count_ = other.attempt_count_;
 		progress_.store(other.progress_.load());
 		progress_message_ = other.progress_message_;
 		result_ = other.result_;
@@ -102,14 +103,15 @@ task& task::operator=(const task& other) {
 
 task& task::operator=(task&& other) noexcept {
 	if (this != &other) {
-		message::operator=(std::move(other));
 		task_id_ = std::move(other.task_id_);
 		task_name_ = std::move(other.task_name_);
 		state_ = other.state_;
 		config_ = std::move(other.config_);
-		attempt_count_ = other.attempt_count_;
+		created_at_ = other.created_at_;
 		started_at_ = other.started_at_;
 		completed_at_ = other.completed_at_;
+		payload_ = std::move(other.payload_);
+		attempt_count_ = other.attempt_count_;
 		progress_.store(other.progress_.load());
 		progress_message_ = std::move(other.progress_message_);
 		result_ = std::move(other.result_);
@@ -195,9 +197,27 @@ bool task::is_expired() const {
 
 	auto now = std::chrono::system_clock::now();
 	auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
-		now - metadata().timestamp);
+		now - created_at_);
 
 	return elapsed >= config_.expires.value();
+}
+
+const container_module::value_container& task::payload() const {
+	if (!payload_) {
+		throw std::runtime_error("Task has no payload");
+	}
+	return *payload_;
+}
+
+container_module::value_container& task::payload() {
+	if (!payload_) {
+		payload_ = std::make_shared<container_module::value_container>();
+	}
+	return *payload_;
+}
+
+void task::set_payload(std::shared_ptr<container_module::value_container> payload) {
+	payload_ = std::move(payload);
 }
 
 bool task::should_retry() const {
@@ -230,24 +250,80 @@ std::string task::generate_task_id() {
 	return generate_unique_id();
 }
 
+namespace {
+
+// Helper to write a string with 2-byte length prefix
+void write_string(std::vector<uint8_t>& buffer, const std::string& str) {
+	auto len = static_cast<uint16_t>(str.size());
+	buffer.push_back(static_cast<uint8_t>(len & 0xFF));
+	buffer.push_back(static_cast<uint8_t>((len >> 8) & 0xFF));
+	buffer.insert(buffer.end(), str.begin(), str.end());
+}
+
+// Helper to read a string with 2-byte length prefix
+bool read_string(const std::vector<uint8_t>& data, size_t& offset, std::string& str) {
+	if (offset + 2 > data.size()) return false;
+	uint16_t len = data[offset] | (static_cast<uint16_t>(data[offset + 1]) << 8);
+	offset += 2;
+	if (offset + len > data.size()) return false;
+	str.assign(data.begin() + offset, data.begin() + offset + len);
+	offset += len;
+	return true;
+}
+
+// Helper to write a 64-bit integer
+void write_int64(std::vector<uint8_t>& buffer, int64_t value) {
+	for (int i = 0; i < 8; ++i) {
+		buffer.push_back(static_cast<uint8_t>((value >> (i * 8)) & 0xFF));
+	}
+}
+
+// Helper to read a 64-bit integer
+bool read_int64(const std::vector<uint8_t>& data, size_t& offset, int64_t& value) {
+	if (offset + 8 > data.size()) return false;
+	value = 0;
+	for (int i = 0; i < 8; ++i) {
+		value |= static_cast<int64_t>(data[offset + i]) << (i * 8);
+	}
+	offset += 8;
+	return true;
+}
+
+}  // namespace
+
 common::Result<std::vector<uint8_t>> task::serialize() const {
-	// TODO: Implement full serialization
-	// For now, return a placeholder
 	std::vector<uint8_t> result;
-	result.push_back(0x02);  // Format version 2 for task
 
-	// Serialize task_id length and content
-	auto id_size = static_cast<uint8_t>(task_id_.size());
-	result.push_back(id_size);
-	result.insert(result.end(), task_id_.begin(), task_id_.end());
+	// Format version 3 for composition-based task (Issue #192)
+	result.push_back(0x03);
 
-	// Serialize task_name length and content
-	auto name_size = static_cast<uint8_t>(task_name_.size());
-	result.push_back(name_size);
-	result.insert(result.end(), task_name_.begin(), task_name_.end());
+	// Serialize task_id and task_name
+	write_string(result, task_id_);
+	write_string(result, task_name_);
 
 	// Serialize state
 	result.push_back(static_cast<uint8_t>(state_));
+
+	// Serialize priority
+	result.push_back(static_cast<uint8_t>(config_.priority));
+
+	// Serialize created_at timestamp
+	auto created_ts = std::chrono::duration_cast<std::chrono::microseconds>(
+		created_at_.time_since_epoch()).count();
+	write_int64(result, created_ts);
+
+	// Serialize attempt_count
+	result.push_back(static_cast<uint8_t>(attempt_count_ & 0xFF));
+
+	// Serialize queue_name
+	write_string(result, config_.queue_name);
+
+	// Serialize error info if present
+	result.push_back(has_error() ? 1 : 0);
+	if (has_error()) {
+		write_string(result, error_message_);
+		write_string(result, error_traceback_);
+	}
 
 	return common::ok(std::move(result));
 }
@@ -258,55 +334,121 @@ common::Result<task> task::deserialize(const std::vector<uint8_t>& data) {
 			common::error_info{error::invalid_message, "Empty data cannot be deserialized"});
 	}
 
-	if (data[0] != 0x02) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed,
-							   "Invalid task format version"});
-	}
-
-	if (data.size() < 3) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed,
-							   "Task data too short"});
-	}
-
+	uint8_t version = data[0];
 	size_t offset = 1;
 
-	// Deserialize task_id
-	auto id_size = data[offset++];
-	if (offset + id_size > data.size()) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed,
-							   "Invalid task_id length"});
-	}
-	std::string task_id(data.begin() + offset, data.begin() + offset + id_size);
-	offset += id_size;
+	// Support both v2 (legacy) and v3 (composition-based) formats
+	if (version == 0x02) {
+		// Legacy format (v2) - basic deserialization for backward compatibility
+		if (data.size() < 3) {
+			return common::Result<task>(
+				common::error_info{error::message_deserialization_failed,
+								   "Task data too short"});
+		}
 
-	// Deserialize task_name
-	if (offset >= data.size()) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed,
-							   "Missing task_name"});
-	}
-	auto name_size = data[offset++];
-	if (offset + name_size > data.size()) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed,
-							   "Invalid task_name length"});
-	}
-	std::string task_name(data.begin() + offset, data.begin() + offset + name_size);
-	offset += name_size;
+		// Deserialize task_id (1-byte length prefix in v2)
+		auto id_size = data[offset++];
+		if (offset + id_size > data.size()) {
+			return common::Result<task>(
+				common::error_info{error::message_deserialization_failed,
+								   "Invalid task_id length"});
+		}
+		std::string task_id(data.begin() + offset, data.begin() + offset + id_size);
+		offset += id_size;
 
-	// Deserialize state
+		// Deserialize task_name
+		if (offset >= data.size()) {
+			return common::Result<task>(
+				common::error_info{error::message_deserialization_failed,
+								   "Missing task_name"});
+		}
+		auto name_size = data[offset++];
+		if (offset + name_size > data.size()) {
+			return common::Result<task>(
+				common::error_info{error::message_deserialization_failed,
+								   "Invalid task_name length"});
+		}
+		std::string task_name(data.begin() + offset, data.begin() + offset + name_size);
+		offset += name_size;
+
+		// Deserialize state
+		if (offset >= data.size()) {
+			return common::Result<task>(
+				common::error_info{error::message_deserialization_failed, "Missing state"});
+		}
+		auto state = static_cast<task_state>(data[offset]);
+
+		task t(task_name);
+		t.task_id_ = task_id;
+		t.state_ = state;
+
+		return common::ok(std::move(t));
+	}
+
+	if (version != 0x03) {
+		return common::Result<task>(
+			common::error_info{error::message_deserialization_failed,
+							   "Unsupported task format version"});
+	}
+
+	// Version 3 format (composition-based)
+	std::string task_id, task_name;
+	if (!read_string(data, offset, task_id) || !read_string(data, offset, task_name)) {
+		return common::Result<task>(
+			common::error_info{error::message_deserialization_failed,
+							   "Failed to read task identification"});
+	}
+
 	if (offset >= data.size()) {
 		return common::Result<task>(
 			common::error_info{error::message_deserialization_failed, "Missing state"});
 	}
-	auto state = static_cast<task_state>(data[offset]);
+	auto state = static_cast<task_state>(data[offset++]);
 
+	if (offset >= data.size()) {
+		return common::Result<task>(
+			common::error_info{error::message_deserialization_failed, "Missing priority"});
+	}
+	auto priority = static_cast<message_priority>(data[offset++]);
+
+	int64_t created_ts;
+	if (!read_int64(data, offset, created_ts)) {
+		return common::Result<task>(
+			common::error_info{error::message_deserialization_failed, "Missing timestamp"});
+	}
+
+	if (offset >= data.size()) {
+		return common::Result<task>(
+			common::error_info{error::message_deserialization_failed, "Missing attempt_count"});
+	}
+	auto attempt_count = static_cast<size_t>(data[offset++]);
+
+	std::string queue_name;
+	if (!read_string(data, offset, queue_name)) {
+		return common::Result<task>(
+			common::error_info{error::message_deserialization_failed, "Missing queue_name"});
+	}
+
+	// Create task and populate fields
 	task t(task_name);
 	t.task_id_ = task_id;
 	t.state_ = state;
+	t.config_.priority = priority;
+	t.created_at_ = std::chrono::system_clock::time_point(
+		std::chrono::microseconds(created_ts));
+	t.attempt_count_ = attempt_count;
+	t.config_.queue_name = queue_name;
+
+	// Read error info if present
+	if (offset < data.size() && data[offset++] == 1) {
+		std::string error_msg, error_tb;
+		if (read_string(data, offset, error_msg)) {
+			t.error_message_ = error_msg;
+		}
+		if (read_string(data, offset, error_tb)) {
+			t.error_traceback_ = error_tb;
+		}
+	}
 
 	return common::ok(std::move(t));
 }
@@ -321,7 +463,7 @@ task_builder::task_builder(const std::string& task_name) : task_(task_name) {
 task_builder& task_builder::payload(
 	std::shared_ptr<container_module::value_container> payload) {
 	if (payload) {
-		task_.set_task_payload(std::move(payload));
+		task_.set_payload(std::move(payload));
 	}
 	return *this;
 }
@@ -329,13 +471,12 @@ task_builder& task_builder::payload(
 task_builder& task_builder::payload(const container_module::value_container& payload) {
 	// Create a copy of the value_container
 	auto payload_copy = std::make_shared<container_module::value_container>(payload, false);
-	task_.set_task_payload(std::move(payload_copy));
+	task_.set_payload(std::move(payload_copy));
 	return *this;
 }
 
 task_builder& task_builder::priority(message_priority priority) {
 	task_.config_.priority = priority;
-	task_.metadata().priority = priority;
 	return *this;
 }
 
