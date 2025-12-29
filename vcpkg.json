@@ -1,14 +1,39 @@
 {
-  "name": "messaging-system",
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "kcenon-messaging-system",
   "version": "1.0.0",
-  "description": "Messaging system with container, database, and network modules",
+  "port-version": 0,
+  "description": "Modern C++20 messaging infrastructure with pub/sub, request/reply, and event streaming patterns",
+  "homepage": "https://github.com/kcenon/messaging_system",
+  "license": "BSD-3-Clause",
+  "supports": "!(uwp | xbox)",
   "dependencies": [
-    "fmt",
-    "gtest",
-    "benchmark",
-    "spdlog",
-    "libpqxx",
-    "asio",
-    "nlohmann-json"
-  ]
+    "kcenon-common-system",
+    "kcenon-thread-system",
+    "kcenon-container-system"
+  ],
+  "features": {
+    "network": {
+      "description": "Enable distributed messaging via network_system",
+      "dependencies": ["kcenon-network-system"]
+    },
+    "monitoring": {
+      "description": "Enable metrics collection via monitoring_system",
+      "dependencies": ["kcenon-monitoring-system"]
+    },
+    "persistence": {
+      "description": "Enable message persistence via database_system",
+      "dependencies": ["kcenon-database-system"]
+    },
+    "testing": {
+      "description": "Build unit tests and benchmarks",
+      "dependencies": [
+        {
+          "name": "gtest",
+          "features": ["gmock"]
+        },
+        "benchmark"
+      ]
+    }
+  }
 }
