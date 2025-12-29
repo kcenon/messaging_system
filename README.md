@@ -393,14 +393,14 @@ The messaging system integrates seamlessly with specialized base systems:
 ### Required Systems
 
 - **common_system** - Result<T> pattern, error handling, base interfaces
+- **thread_system** - High-performance thread pools for message dispatch
 - **container_system** - Type-safe message payloads and serialization
 
 ### Optional Systems
 
-- **thread_system** - High-performance thread pools for message dispatch
+- **network_system** - Distributed messaging over TCP/IP
 - **monitoring_system** - Real-time metrics and performance telemetry
 - **database_system** - Message persistence and audit logging
-- **network_system** - Distributed messaging over TCP/IP
 
 ### Logging Configuration
 
