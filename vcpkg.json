@@ -8,32 +8,40 @@
   "license": "BSD-3-Clause",
   "supports": "!(uwp | xbox)",
   "dependencies": [
-    {
-      "name": "gtest",
-      "features": ["gmock"]
-    },
-    "benchmark"
+    "asio",
+    "nlohmann-json"
   ],
   "features": {
-    "ecosystem": {
-      "description": "Enable kcenon ecosystem dependencies (requires vcpkg registry registration)",
+    "testing": {
+      "description": "Build unit tests and benchmarks",
       "dependencies": [
-        "kcenon-common-system",
-        "kcenon-thread-system",
-        "kcenon-container-system"
+        {
+          "name": "gtest",
+          "features": ["gmock"]
+        },
+        "benchmark"
       ]
     },
-    "network": {
-      "description": "Enable distributed messaging via network_system",
-      "dependencies": ["kcenon-network-system"]
+    "ssl": {
+      "description": "Enable SSL/TLS support for secure messaging",
+      "dependencies": [
+        {
+          "name": "openssl",
+          "version>=": "3.0.0"
+        }
+      ]
     },
-    "monitoring": {
-      "description": "Enable metrics collection via monitoring_system",
-      "dependencies": ["kcenon-monitoring-system"]
+    "database": {
+      "description": "Enable PostgreSQL database backend for message persistence",
+      "dependencies": ["libpqxx"]
     },
-    "persistence": {
-      "description": "Enable message persistence via database_system",
-      "dependencies": ["kcenon-database-system"]
+    "logging": {
+      "description": "Enable spdlog-based logging",
+      "dependencies": ["spdlog"]
+    },
+    "fmt-support": {
+      "description": "Use fmt library for formatting (fallback for compilers without std::format)",
+      "dependencies": ["fmt"]
     }
   }
 }
