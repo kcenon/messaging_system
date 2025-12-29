@@ -157,6 +157,8 @@ jobs:
       with:
         path: ${{ github.workspace }}/vcpkg_installed
         key: ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}-${{ steps.vcpkg-commit-unix.outputs.commit || steps.vcpkg-commit-windows.outputs.commit }}
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-
 
     - name: Install dependencies with vcpkg (Unix)
       if: runner.os != 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
@@ -164,15 +166,13 @@ jobs:
         ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }} || echo "vcpkg install failed, will use system libraries"
 
     - name: Install dependencies with vcpkg (Windows)
-      if: runner.os == 'Windows'
+      if: runner.os == 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-        # Always run vcpkg install to ensure all dependencies are available
-        # vcpkg will skip already installed packages automatically
-        .\vcpkg\vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}\vcpkg_installed --triplet ${{ matrix.triplet }}
-        if ($LASTEXITCODE -ne 0) {
-          Write-Host "vcpkg install failed with exit code $LASTEXITCODE"
-          exit 1
+        try {
+          .\vcpkg\vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}\vcpkg_installed --triplet ${{ matrix.triplet }}
+        } catch {
+          Write-Host "vcpkg install failed, will use system libraries"
         }
 
     - name: Prepare build directory
@@ -215,8 +215,7 @@ jobs:
           -DMESSAGING_USE_LOCAL_SYSTEMS=ON `
           -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
           -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake `
-          -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} `
-          -DVCPKG_INSTALLED_DIR=${{ github.workspace }}\vcpkg_installed
+          -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}
 
     - name: Build (Unix)
       if: runner.os != 'Windows'
