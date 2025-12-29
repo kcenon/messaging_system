@@ -9,9 +9,12 @@
   "supports": "!(uwp | xbox)",
   "dependencies": [
     "asio",
-    "nlohmann-json",
+    "benchmark",
+    "fmt",
     "gtest",
-    "benchmark"
+    "libpqxx",
+    "nlohmann-json",
+    "spdlog"
   ],
   "features": {
     "ssl": {
@@ -22,18 +25,6 @@
           "version>=": "3.0.0"
         }
       ]
-    },
-    "database": {
-      "description": "Enable PostgreSQL database backend for message persistence",
-      "dependencies": ["libpqxx"]
-    },
-    "logging": {
-      "description": "Enable spdlog-based logging",
-      "dependencies": ["spdlog"]
-    },
-    "fmt-support": {
-      "description": "Use fmt library for formatting (fallback for compilers without std::format)",
-      "dependencies": ["fmt"]
     }
   }
 }
