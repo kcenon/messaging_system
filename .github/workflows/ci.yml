@@ -166,13 +166,15 @@ jobs:
         ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }} || echo "vcpkg install failed, will use system libraries"
 
     - name: Install dependencies with vcpkg (Windows)
-      if: runner.os == 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
+      if: runner.os == 'Windows'
       shell: pwsh
       run: |
-        try {
-          .\vcpkg\vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}\vcpkg_installed --triplet ${{ matrix.triplet }}
-        } catch {
-          Write-Host "vcpkg install failed, will use system libraries"
+        # Always run vcpkg install to ensure all dependencies are available
+        # vcpkg will skip already installed packages automatically
+        .\vcpkg\vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}\vcpkg_installed --triplet ${{ matrix.triplet }}
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "vcpkg install failed with exit code $LASTEXITCODE"
+          exit 1
         }
 
     - name: Prepare build directory
