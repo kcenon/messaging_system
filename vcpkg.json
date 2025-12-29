@@ -9,16 +9,11 @@
   "supports": "!(uwp | xbox)",
   "dependencies": [
     "asio",
-    "nlohmann-json"
+    "nlohmann-json",
+    "gtest",
+    "benchmark"
   ],
   "features": {
-    "testing": {
-      "description": "Build unit tests and benchmarks",
-      "dependencies": [
-        "gtest",
-        "benchmark"
-      ]
-    },
     "ssl": {
       "description": "Enable SSL/TLS support for secure messaging",
       "dependencies": [

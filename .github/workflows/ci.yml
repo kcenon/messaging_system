@@ -170,7 +170,7 @@ jobs:
       shell: pwsh
       run: |
         try {
-          .\vcpkg\vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}\vcpkg_installed --triplet ${{ matrix.triplet }} --x-feature=testing
+          .\vcpkg\vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}\vcpkg_installed --triplet ${{ matrix.triplet }}
         } catch {
           Write-Host "vcpkg install failed, will use system libraries"
         }
