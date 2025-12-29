@@ -7,12 +7,16 @@
   "homepage": "https://github.com/kcenon/messaging_system",
   "license": "BSD-3-Clause",
   "supports": "!(uwp | xbox)",
-  "dependencies": [
-    "kcenon-common-system",
-    "kcenon-thread-system",
-    "kcenon-container-system"
-  ],
+  "dependencies": [],
   "features": {
+    "ecosystem": {
+      "description": "Enable kcenon ecosystem dependencies (requires vcpkg registry registration)",
+      "dependencies": [
+        "kcenon-common-system",
+        "kcenon-thread-system",
+        "kcenon-container-system"
+      ]
+    },
     "network": {
       "description": "Enable distributed messaging via network_system",
       "dependencies": ["kcenon-network-system"]
