@@ -338,6 +338,20 @@ if(KCENON_WITH_NETWORK_SYSTEM)
     elseif(TARGET NetworkSystem::network)
         target_link_libraries(messaging_system_core PRIVATE NetworkSystem::network)
     endif()
+
+    # Workaround: network_system links asio as PRIVATE, so asio headers are not
+    # propagated to dependent targets. We need to find and link asio directly
+    # to ensure asio.hpp is available when compiling network_system headers.
+    # See: https://github.com/kcenon/network_system/issues/XXX
+    find_package(asio CONFIG QUIET)
+    if(TARGET asio::asio)
+        target_link_libraries(messaging_system_core PUBLIC asio::asio)
+        target_compile_definitions(messaging_system_core PUBLIC ASIO_STANDALONE ASIO_NO_DEPRECATED)
+        if(WIN32)
+            target_compile_definitions(messaging_system_core PUBLIC _WIN32_WINNT=0x0601)
+        endif()
+        message(STATUS "Linked asio::asio directly to messaging_system_core (network_system workaround)")
+    endif()
 endif()
 
 # =============================================================================
