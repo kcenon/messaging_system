@@ -156,9 +156,9 @@ jobs:
       id: vcpkg-installed
       with:
         path: ${{ github.workspace }}/vcpkg_installed
-        key: ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}-${{ steps.vcpkg-commit-unix.outputs.commit || steps.vcpkg-commit-windows.outputs.commit }}
+        key: ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-testing-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}-${{ steps.vcpkg-commit-unix.outputs.commit || steps.vcpkg-commit-windows.outputs.commit }}
         restore-keys: |
-          ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-
+          ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-testing-
 
     - name: Install dependencies with vcpkg (Unix)
       if: runner.os != 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
