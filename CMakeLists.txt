@@ -1,24 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 
-# =============================================================================
-# vcpkg Manifest Features Configuration (MUST be before project())
-# =============================================================================
-# vcpkg toolchain is loaded during project() call, so features must be set first.
-# Check cache variables that may be passed via -D flags from CI.
-
-# Use BUILD_TESTS as the primary flag (set by CI), fallback to MESSAGING_BUILD_TESTS
-if(NOT DEFINED MESSAGING_BUILD_TESTS)
-    set(MESSAGING_BUILD_TESTS ON)  # Default ON
-endif()
-
-if(MESSAGING_BUILD_TESTS OR BUILD_TESTS)
-    list(APPEND VCPKG_MANIFEST_FEATURES "testing")
-endif()
-
-if(MESSAGING_ENABLE_TLS)
-    list(APPEND VCPKG_MANIFEST_FEATURES "ssl")
-endif()
-
 project(messaging_system
     VERSION 0.1.0.0
     DESCRIPTION "Modern messaging infrastructure with advanced patterns"
