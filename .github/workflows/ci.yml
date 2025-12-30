@@ -151,12 +151,14 @@ jobs:
         $commit = git -C vcpkg rev-parse HEAD
         "commit=$commit" >> $env:GITHUB_OUTPUT
 
-    - name: Cache vcpkg installed
+    # Cache vcpkg_installed for Unix only (Windows uses vcpkg binary caching via x-gha)
+    - name: Cache vcpkg installed (Unix)
+      if: runner.os != 'Windows'
       uses: actions/cache@v4
       id: vcpkg-installed
       with:
         path: ${{ github.workspace }}/vcpkg_installed
-        key: ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-testing-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}-${{ steps.vcpkg-commit-unix.outputs.commit || steps.vcpkg-commit-windows.outputs.commit }}
+        key: ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-testing-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}-${{ steps.vcpkg-commit-unix.outputs.commit }}
         restore-keys: |
           ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-testing-
 
@@ -165,15 +167,8 @@ jobs:
       run: |
         ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }} --x-feature=testing || echo "vcpkg install failed, will use system libraries"
 
-    - name: Install dependencies with vcpkg (Windows)
-      if: runner.os == 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
-      shell: pwsh
-      run: |
-        try {
-          .\vcpkg\vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}\vcpkg_installed --triplet ${{ matrix.triplet }} --x-feature=testing
-        } catch {
-          Write-Host "vcpkg install failed, will use system libraries"
-        }
+    # Windows: vcpkg toolchain handles installation in manifest mode
+    # Uses binary caching (VCPKG_BINARY_SOURCES) for build speed
 
     - name: Prepare build directory
       if: runner.os != 'Windows'
@@ -216,8 +211,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
           -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake `
           -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} `
-          -DVCPKG_INSTALLED_DIR=${{ github.workspace }}\vcpkg_installed `
-          -DVCPKG_MANIFEST_INSTALL=OFF
+          -DVCPKG_MANIFEST_FEATURES=testing
 
     - name: Build (Unix)
       if: runner.os != 'Windows'
