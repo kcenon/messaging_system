@@ -49,10 +49,7 @@
     "testing": {
       "description": "Build unit tests and benchmarks",
       "dependencies": [
-        {
-          "name": "gtest",
-          "features": ["gmock"]
-        },
+        "gtest",
         "benchmark"
       ]
     }
