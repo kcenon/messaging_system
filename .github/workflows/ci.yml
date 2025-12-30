@@ -216,8 +216,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
           -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake `
           -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} `
-          -DVCPKG_INSTALLED_DIR=${{ github.workspace }}\vcpkg_installed `
-          -DVCPKG_MANIFEST_MODE=OFF
+          -DVCPKG_MANIFEST_FEATURES="testing"
 
     - name: Build (Unix)
       if: runner.os != 'Windows'
