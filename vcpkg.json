@@ -1,14 +1,30 @@
 {
-  "name": "messaging-system",
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "kcenon-messaging-system",
   "version": "1.0.0",
-  "description": "Messaging system with container, database, and network modules",
+  "port-version": 0,
+  "description": "Modern C++20 messaging infrastructure with pub/sub, request/reply, and event streaming patterns",
+  "homepage": "https://github.com/kcenon/messaging_system",
+  "license": "BSD-3-Clause",
+  "supports": "!(uwp | xbox)",
   "dependencies": [
+    "asio",
+    "benchmark",
     "fmt",
     "gtest",
-    "benchmark",
-    "spdlog",
     "libpqxx",
-    "asio",
-    "nlohmann-json"
-  ]
+    "nlohmann-json",
+    "spdlog"
+  ],
+  "features": {
+    "ssl": {
+      "description": "Enable SSL/TLS support for secure messaging",
+      "dependencies": [
+        {
+          "name": "openssl",
+          "version>=": "3.0.0"
+        }
+      ]
+    }
+  }
 }

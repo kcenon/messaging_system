@@ -289,12 +289,14 @@ bool worker_pool::process_one_task() {
 		// Task succeeded
 		t.set_state(task_state::succeeded);
 		t.set_completed_at(std::chrono::system_clock::now());
-		results_->store_state(t.task_id(), task_state::succeeded);
 
-		// Store result if available
+		// Store result BEFORE state to prevent race condition in wait_for_result
+		// (wait_for_result checks state first, then result - if state is set first,
+		// another thread may wake up and find no result yet)
 		if (t.has_result()) {
 			results_->store_result(t.task_id(), t.result());
 		}
+		results_->store_state(t.task_id(), task_state::succeeded);
 
 		handler->on_success(t, t.has_result() ? t.result() : container_module::value_container{});
 		record_task_completed(true, duration);
