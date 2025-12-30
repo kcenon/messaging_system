@@ -199,7 +199,9 @@ jobs:
           -DMESSAGING_USE_LOCAL_SYSTEMS=ON \
           -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
           -DCMAKE_C_COMPILER=${{ matrix.compiler == 'gcc' && 'gcc' || 'clang' }} \
-          -DCMAKE_CXX_COMPILER=${{ matrix.compiler == 'gcc' && 'g++' || 'clang++' }}
+          -DCMAKE_CXX_COMPILER=${{ matrix.compiler == 'gcc' && 'g++' || 'clang++' }} \
+          -DVCPKG_INSTALLED_DIR=${{ github.workspace }}/vcpkg_installed \
+          -DVCPKG_MANIFEST_FEATURES="testing"
 
     - name: Configure CMake (Windows)
       if: runner.os == 'Windows'
@@ -215,7 +217,9 @@ jobs:
           -DMESSAGING_USE_LOCAL_SYSTEMS=ON `
           -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
           -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake `
-          -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}
+          -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} `
+          -DVCPKG_INSTALLED_DIR=${{ github.workspace }}\vcpkg_installed `
+          -DVCPKG_MANIFEST_FEATURES="testing"
 
     - name: Build (Unix)
       if: runner.os != 'Windows'
