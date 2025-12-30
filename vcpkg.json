@@ -8,15 +8,29 @@
   "license": "BSD-3-Clause",
   "supports": "!(uwp | xbox)",
   "dependencies": [
-    "asio",
-    "benchmark",
-    "fmt",
-    "gtest",
-    "libpqxx",
-    "nlohmann-json",
-    "spdlog"
+    "kcenon-common-system",
+    "kcenon-thread-system",
+    "kcenon-container-system"
   ],
   "features": {
+    "network": {
+      "description": "Enable network transport implementations (WebSocket, HTTP)",
+      "dependencies": [
+        "kcenon-network-system"
+      ]
+    },
+    "monitoring": {
+      "description": "Enable runtime monitoring integration",
+      "dependencies": [
+        "kcenon-monitoring-system"
+      ]
+    },
+    "database": {
+      "description": "Enable database persistence support",
+      "dependencies": [
+        "kcenon-database-system"
+      ]
+    },
     "ssl": {
       "description": "Enable SSL/TLS support for secure messaging",
       "dependencies": [
@@ -24,6 +38,16 @@
           "name": "openssl",
           "version>=": "3.0.0"
         }
+      ]
+    },
+    "testing": {
+      "description": "Build unit tests and benchmarks",
+      "dependencies": [
+        {
+          "name": "gtest",
+          "features": ["gmock"]
+        },
+        "benchmark"
       ]
     }
   }
