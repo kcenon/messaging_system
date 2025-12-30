@@ -8,11 +8,23 @@
   "license": "BSD-3-Clause",
   "supports": "!(uwp | xbox)",
   "dependencies": [
-    "kcenon-common-system",
-    "kcenon-thread-system",
-    "kcenon-container-system"
+    "asio",
+    {
+      "name": "fmt",
+      "version>=": "10.0.0"
+    },
+    "nlohmann-json",
+    "spdlog"
   ],
   "features": {
+    "ecosystem": {
+      "description": "Enable kcenon ecosystem dependencies (requires vcpkg registry registration)",
+      "dependencies": [
+        "kcenon-common-system",
+        "kcenon-thread-system",
+        "kcenon-container-system"
+      ]
+    },
     "network": {
       "description": "Enable network transport implementations (WebSocket, HTTP)",
       "dependencies": [
