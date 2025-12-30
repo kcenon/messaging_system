@@ -165,8 +165,11 @@ jobs:
       run: |
         ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }} --x-feature=testing || echo "vcpkg install failed, will use system libraries"
 
+    # Windows: Skip manual vcpkg install - let vcpkg toolchain handle it in manifest mode
+    # This ensures packages are installed in CMAKE_BINARY_DIR/vcpkg_installed
+    # which is the default path vcpkg toolchain uses
     - name: Install dependencies with vcpkg (Windows)
-      if: runner.os == 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
+      if: false
       shell: pwsh
       run: |
         try {
