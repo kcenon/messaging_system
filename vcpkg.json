@@ -9,10 +9,7 @@
   "supports": "!(uwp | xbox)",
   "dependencies": [
     "asio",
-    {
-      "name": "fmt",
-      "version>=": "10.0.0"
-    },
+    "fmt",
     "nlohmann-json",
     "spdlog"
   ],
@@ -46,10 +43,7 @@
     "ssl": {
       "description": "Enable SSL/TLS support for secure messaging",
       "dependencies": [
-        {
-          "name": "openssl",
-          "version>=": "3.0.0"
-        }
+        "openssl"
       ]
     },
     "testing": {
