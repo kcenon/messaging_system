@@ -205,6 +205,33 @@ cmake -B build -DCMAKE_TOOLCHAIN_FILE=/path/to/vcpkg/scripts/buildsystems/vcpkg.
 cmake --build build -j
 ```
 
+### C++20 Module Build (Experimental)
+
+For C++20 module support (requires CMake 3.28+ and compatible compiler):
+
+```bash
+# Build with C++20 modules enabled
+cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+    -DMESSAGING_BUILD_MODULES=ON \
+    -DMESSAGING_USE_LOCAL_SYSTEMS=ON
+cmake --build build -j
+
+# Use the module in your project:
+# import kcenon.messaging;
+```
+
+**Requirements:**
+- CMake 3.28+
+- Ninja or Ninja Multi-Config generator
+- Clang 16+ or GCC 14+ or MSVC 17.4+
+
+**Module Structure:**
+- `kcenon.messaging` - Primary module interface
+- `kcenon.messaging:core` - Core messaging (message, queue, bus, broker)
+- `kcenon.messaging:patterns` - Messaging patterns (pub/sub, request/reply)
+- `kcenon.messaging:task` - Distributed task queue system
+- `kcenon.messaging:integration` - Transports, backends, DI
+
 ### Dependency Management
 
 The build system uses `UnifiedDependencies.cmake` module which supports three modes:

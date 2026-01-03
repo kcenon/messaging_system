@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **C++20 Module Support (Issue #204)**
+  - Added C++20 module files for `kcenon.messaging`
+  - Module partitions:
+    - `kcenon.messaging:core` - Core messaging (message, queue, bus, broker)
+    - `kcenon.messaging:patterns` - Messaging patterns (pub/sub, request/reply)
+    - `kcenon.messaging:task` - Distributed task queue system
+    - `kcenon.messaging:integration` - Transports, backends, DI
+  - CMake option `MESSAGING_BUILD_MODULES` (OFF by default, requires CMake 3.28+)
+  - Usage: `import kcenon.messaging;`
+  - Part of C++20 Module Migration Epic (kcenon/common_system#256)
+
 ### Changed
 - **Task-Message Composition Refactoring (Issue #192)**
   - Replaced `task` inheritance from `message` with composition pattern
