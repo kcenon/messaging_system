@@ -250,9 +250,9 @@ public:
 			if (response_msg.is_ok()) {
 				// Store response body in message payload
 				auto& built_msg = response_msg.value();
-				built_msg.payload().set_value(
+				built_msg.payload().set(
 					"body", response.get_body_string());
-				built_msg.payload().set_value(
+				built_msg.payload().set(
 					"status_code", response.status_code);
 				return ok(std::move(built_msg));
 			}
@@ -368,9 +368,9 @@ private:
 
 			if (response_msg.is_ok()) {
 				auto& built_msg = response_msg.value();
-				built_msg.payload().set_value(
+				built_msg.payload().set(
 					"body", response.get_body_string());
-				built_msg.payload().set_value(
+				built_msg.payload().set(
 					"status_code", response.status_code);
 				return ok(std::move(built_msg));
 			}
@@ -383,7 +383,7 @@ private:
 			.build();
 
 		if (success_msg.is_ok()) {
-			success_msg.value().payload().set_value(
+			success_msg.value().payload().set(
 				"status_code", response.status_code);
 			return ok(std::move(success_msg.value()));
 		}

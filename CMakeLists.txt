@@ -55,6 +55,22 @@ option(MESSAGING_BUILD_BENCHMARKS "Build performance benchmarks" OFF)
 option(MESSAGING_BUILD_EXAMPLES "Build example applications" ON)
 option(MESSAGING_BUILD_DOCS "Build documentation with Doxygen" OFF)
 
+# =============================================================================
+# C++20 Module Support (Experimental)
+#
+# Enable C++20 modules with CMake 3.28+ when building with module-capable compilers.
+# This creates a separate module library target (messaging_system_modules) that can be
+# used instead of the header-based library.
+#
+# Usage:
+#   cmake -DMESSAGING_BUILD_MODULES=ON ..
+#
+# Requirements:
+#   - CMake 3.28+
+#   - Clang 16+ or GCC 14+ or MSVC 17.4+
+# =============================================================================
+option(MESSAGING_BUILD_MODULES "Build C++20 module version of messaging_system" OFF)
+
 # Build profile
 set(MESSAGING_BUILD_PROFILE "Release" CACHE STRING "Build profile")
 set_property(CACHE MESSAGING_BUILD_PROFILE PROPERTY STRINGS
@@ -380,6 +396,86 @@ if(MESSAGING_BUILD_DOCS)
 endif()
 
 # =============================================================================
+# C++20 Module Library Target
+# =============================================================================
+
+if(MESSAGING_BUILD_MODULES)
+    if(CMAKE_VERSION VERSION_LESS "3.28")
+        message(WARNING "C++20 modules require CMake 3.28+. Disabling module build.")
+        set(MESSAGING_BUILD_MODULES OFF)
+    else()
+        message(STATUS "C++20 module build enabled")
+
+        # Create module library target
+        add_library(messaging_system_modules)
+        add_library(kcenon::messaging_modules ALIAS messaging_system_modules)
+
+        # Set C++20 standard for module target
+        target_compile_features(messaging_system_modules PUBLIC cxx_std_20)
+
+        # Enable module scanning
+        set_target_properties(messaging_system_modules PROPERTIES
+            CXX_SCAN_FOR_MODULES ON
+        )
+
+        # Add module source files
+        target_sources(messaging_system_modules
+            PUBLIC FILE_SET CXX_MODULES
+            FILES
+                # Primary module
+                src/modules/messaging.cppm
+                # Partitions
+                src/modules/core.cppm
+                src/modules/patterns.cppm
+                src/modules/task.cppm
+                src/modules/integration.cppm
+        )
+
+        # Include directories for module target
+        target_include_directories(messaging_system_modules PUBLIC
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+            $<INSTALL_INTERFACE:include>
+        )
+
+        # Link dependencies - module targets from dependent systems
+        # Note: These targets must be available when building with modules
+        if(TARGET kcenon::common_modules)
+            target_link_libraries(messaging_system_modules PUBLIC kcenon::common_modules)
+        endif()
+        if(TARGET kcenon::thread_modules)
+            target_link_libraries(messaging_system_modules PUBLIC kcenon::thread_modules)
+        endif()
+        if(TARGET kcenon::container_modules)
+            target_link_libraries(messaging_system_modules PUBLIC kcenon::container_modules)
+        endif()
+        if(TARGET kcenon::logger_modules)
+            target_link_libraries(messaging_system_modules PUBLIC kcenon::logger_modules)
+        endif()
+        if(TARGET kcenon::database_modules)
+            target_link_libraries(messaging_system_modules PUBLIC kcenon::database_modules)
+        endif()
+        if(TARGET kcenon::network_modules)
+            target_link_libraries(messaging_system_modules PUBLIC kcenon::network_modules)
+        endif()
+
+        # Also link header-based targets for implementation files
+        if(TARGET ${container_system_TARGET})
+            target_link_libraries(messaging_system_modules PRIVATE ${container_system_TARGET})
+        elseif(TARGET container)
+            target_link_libraries(messaging_system_modules PRIVATE container)
+        endif()
+
+        # Define compile-time flags
+        target_compile_definitions(messaging_system_modules PUBLIC
+            KCENON_MESSAGING_MODULES=1
+            KCENON_USE_MODULES=1
+        )
+
+        message(STATUS "C++20 module target: messaging_system_modules")
+    endif()
+endif()
+
+# =============================================================================
 # Installation
 # =============================================================================
 
@@ -420,6 +516,7 @@ message(STATUS "          Tracing=${MESSAGING_ENABLE_TRACING}, Health=${MESSAGIN
 message(STATUS "          NetworkSystem=${KCENON_WITH_NETWORK_SYSTEM}")
 message(STATUS "")
 message(STATUS "Build options: Tests=${MESSAGING_BUILD_TESTS}, Examples=${MESSAGING_BUILD_EXAMPLES}")
+message(STATUS "               C++20 Modules=${MESSAGING_BUILD_MODULES}")
 message(STATUS "")
 
 if(MESSAGING_USE_EXTERNAL_SYSTEMS)

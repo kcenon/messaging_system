@@ -120,7 +120,7 @@ TEST(TaskContextTest, CheckpointSaveLoad) {
 	EXPECT_FALSE(ctx.has_checkpoint());
 
 	container_module::value_container state;
-	state.set_value("step", 5);
+	state.set("step", 5);
 	ctx.save_checkpoint(state);
 
 	EXPECT_TRUE(ctx.has_checkpoint());
@@ -138,7 +138,7 @@ TEST(TaskContextTest, CheckpointClear) {
 	task_context ctx(task);
 
 	container_module::value_container state;
-	state.set_value("key", std::string("value"));
+	state.set("key", std::string("value"));
 	ctx.save_checkpoint(state);
 
 	EXPECT_TRUE(ctx.has_checkpoint());
@@ -155,7 +155,7 @@ TEST(TaskContextTest, CheckpointWithSharedPtr) {
 	task_context ctx(task);
 
 	auto state = std::make_shared<container_module::value_container>();
-	state->set_value("shared_key", std::string("shared_value"));
+	state->set("shared_key", std::string("shared_value"));
 	ctx.save_checkpoint(state);
 
 	EXPECT_TRUE(ctx.has_checkpoint());
