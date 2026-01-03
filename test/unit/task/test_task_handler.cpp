@@ -22,7 +22,7 @@ TEST(LambdaTaskHandlerTest, BasicExecution) {
 		(void)ctx;
 		(void)t;
 		container_module::value_container result;
-		result.set_value("status", std::string("success"));
+		result.set("status", std::string("success"));
 		return cmn::ok(result);
 	};
 
@@ -62,7 +62,7 @@ TEST(MakeHandlerTest, CreatesValidHandler) {
 		(void)ctx;
 		(void)t;
 		container_module::value_container result;
-		result.set_value("sum", 42);
+		result.set("sum", 42);
 		return cmn::ok(result);
 	});
 
@@ -86,7 +86,7 @@ public:
 		(void)t;
 
 		container_module::value_container result;
-		result.set_value("processed", true);
+		result.set("processed", true);
 		return cmn::ok(result);
 	}
 

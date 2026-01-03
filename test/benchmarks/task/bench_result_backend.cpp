@@ -36,8 +36,8 @@ std::string generate_task_id(int i) {
 
 container_module::value_container create_test_result() {
 	container_module::value_container result;
-	result.set_value("status", std::string{"completed"});
-	result.set_value("value", 42);
+	result.set("status", std::string{"completed"});
+	result.set("value", 42);
 	return result;
 }
 

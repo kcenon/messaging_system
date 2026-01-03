@@ -199,7 +199,7 @@ TEST(WorkerPoolTest, ExecuteSimpleTask) {
 		(void)ctx;
 		executed = true;
 		container_module::value_container result;
-		result.set_value("status", std::string("done"));
+		result.set("status", std::string("done"));
 		return cmn::ok(result);
 	});
 
@@ -240,7 +240,7 @@ TEST(WorkerPoolTest, ExecuteTaskWithPayload) {
 			payload_received = true;
 		}
 		container_module::value_container result;
-		result.set_value("processed", true);
+		result.set("processed", true);
 		return cmn::ok(result);
 	});
 
@@ -248,7 +248,7 @@ TEST(WorkerPoolTest, ExecuteTaskWithPayload) {
 
 	// Submit a task with payload
 	container_module::value_container payload;
-	payload.set_value("data", std::string("test"));
+	payload.set("data", std::string("test"));
 
 	auto task = task_builder("payload.task")
 		.payload(payload)
@@ -570,7 +570,7 @@ TEST(WorkerPoolTest, RetrySucceedsOnSecondAttempt) {
 
 		// Succeed on second attempt
 		container_module::value_container result;
-		result.set_value("status", std::string("success"));
+		result.set("status", std::string("success"));
 		return cmn::ok(result);
 	});
 
@@ -970,7 +970,7 @@ TEST(WorkerPoolTest, TaskCompletesBeforeTimeout) {
 		// Complete quickly
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 		container_module::value_container result;
-		result.set_value("status", std::string("completed"));
+		result.set("status", std::string("completed"));
 		return cmn::ok(result);
 	});
 
