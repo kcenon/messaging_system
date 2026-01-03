@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('dc/d1e/md_docs_2task_2CONFIGURATION.ht
   <div class="headertitle"><div class="title">Task Module Configuration Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1782"></a> This guide covers all configuration options for the Task module.</p>
-<h1><a class="anchor" id="autotoc_md1783"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1783"></a> This guide covers all configuration options for the Task module.</p>
+<h1><a class="anchor" id="autotoc_md1784"></a>
 Table of Contents</h1>
 <ul>
 <li>Task System Configuration</li>
@@ -105,10 +105,10 @@ Table of Contents</h1>
 <li>Performance Tuning</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1785"></a>
+<h1><a class="anchor" id="autotoc_md1786"></a>
 Task System Configuration</h1>
 <p>The <code>task_system_config</code> is the main configuration structure for the entire Task system.</p>
-<h2><a class="anchor" id="autotoc_md1786"></a>
+<h2><a class="anchor" id="autotoc_md1787"></a>
 Structure</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_system_config {</div>
 <div class="line">    task_queue_config queue;</div>
@@ -117,7 +117,7 @@ Structure</h2>
 <div class="line">    <span class="keywordtype">bool</span> enable_monitoring = <span class="keyword">true</span>;</div>
 <div class="line">    std::string result_backend_type = <span class="stringliteral">&quot;memory&quot;</span>;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1787"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1788"></a>
 Options</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -133,7 +133,7 @@ Options</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>result_backend_type</code>   </td><td class="markdownTableBodyNone"><code>std::string</code>   </td><td class="markdownTableBodyNone"><code>"memory"</code>   </td><td class="markdownTableBodyNone">Result storage backend type   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1788"></a>
+<h2><a class="anchor" id="autotoc_md1789"></a>
 Example</h2>
 <div class="fragment"><div class="line">task_system_config config;</div>
 <div class="line"> </div>
@@ -152,10 +152,10 @@ Example</h2>
 <div class="line"> </div>
 <div class="line">task_system system(config);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1790"></a>
+<h1><a class="anchor" id="autotoc_md1791"></a>
 Task Queue Configuration</h1>
 <p>The <code>task_queue_config</code> controls the task queue behavior.</p>
-<h2><a class="anchor" id="autotoc_md1791"></a>
+<h2><a class="anchor" id="autotoc_md1792"></a>
 Structure</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_queue_config {</div>
 <div class="line">    <span class="keywordtype">size_t</span> max_size = 100000;</div>
@@ -164,7 +164,7 @@ Structure</h2>
 <div class="line">    <span class="keywordtype">bool</span> enable_delayed_queue = <span class="keyword">true</span>;</div>
 <div class="line">    std::chrono::milliseconds delayed_poll_interval{1000};</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1792"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1793"></a>
 Options</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -180,24 +180,24 @@ Options</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>delayed_poll_interval</code>   </td><td class="markdownTableBodyNone"><code>milliseconds</code>   </td><td class="markdownTableBodyNone"><code>1000</code>   </td><td class="markdownTableBodyNone">Poll interval for delayed tasks   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1793"></a>
+<h2><a class="anchor" id="autotoc_md1794"></a>
 Persistence Configuration</h2>
 <p>When persistence is enabled, tasks survive process restarts:</p>
 <div class="fragment"><div class="line">task_queue_config queue_config;</div>
 <div class="line">queue_config.enable_persistence = <span class="keyword">true</span>;</div>
 <div class="line">queue_config.persistence_path = <span class="stringliteral">&quot;/var/lib/task_queue/&quot;</span>;</div>
 <div class="line">queue_config.max_size = 500000;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1794"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1795"></a>
 Delayed Queue Settings</h2>
 <p>For scheduling tasks to run later:</p>
 <div class="fragment"><div class="line">task_queue_config queue_config;</div>
 <div class="line">queue_config.enable_delayed_queue = <span class="keyword">true</span>;</div>
 <div class="line">queue_config.delayed_poll_interval = std::chrono::milliseconds(500);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1796"></a>
+<h1><a class="anchor" id="autotoc_md1797"></a>
 Worker Pool Configuration</h1>
 <p>The <code>worker_config</code> controls how tasks are executed.</p>
-<h2><a class="anchor" id="autotoc_md1797"></a>
+<h2><a class="anchor" id="autotoc_md1798"></a>
 Structure</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>worker_config {</div>
 <div class="line">    <span class="keywordtype">size_t</span> concurrency = std::thread::hardware_concurrency();</div>
@@ -206,7 +206,7 @@ Structure</h2>
 <div class="line">    <span class="keywordtype">bool</span> prefetch = <span class="keyword">true</span>;</div>
 <div class="line">    <span class="keywordtype">size_t</span> prefetch_count = 10;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1798"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1799"></a>
 Options</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -222,7 +222,7 @@ Options</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>prefetch_count</code>   </td><td class="markdownTableBodyNone"><code>size_t</code>   </td><td class="markdownTableBodyNone"><code>10</code>   </td><td class="markdownTableBodyNone">Number of tasks to prefetch   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1799"></a>
+<h2><a class="anchor" id="autotoc_md1800"></a>
 Concurrency Settings</h2>
 <p>Match concurrency to your workload:</p>
 <div class="fragment"><div class="line">worker_config worker;</div>
@@ -235,14 +235,14 @@ Concurrency Settings</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Limited resources: constrain threads</span></div>
 <div class="line">worker.concurrency = 4;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1800"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1801"></a>
 Queue Priority</h2>
 <p>Queues are processed in the order specified:</p>
 <div class="fragment"><div class="line">worker_config worker;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Process critical first, then high, then default</span></div>
 <div class="line">worker.queues = {<span class="stringliteral">&quot;critical&quot;</span>, <span class="stringliteral">&quot;high&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;low&quot;</span>};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1801"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1802"></a>
 Prefetch Settings</h2>
 <p>Prefetching improves throughput for short tasks:</p>
 <div class="fragment"><div class="line">worker_config worker;</div>
@@ -254,10 +254,10 @@ Prefetch Settings</h2>
 <div class="line"><span class="comment">// Disable for long-running tasks</span></div>
 <div class="line">worker.prefetch = <span class="keyword">false</span>;</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1803"></a>
+<h1><a class="anchor" id="autotoc_md1804"></a>
 Task Configuration</h1>
 <p>Individual task settings via <code>task_config</code>.</p>
-<h2><a class="anchor" id="autotoc_md1804"></a>
+<h2><a class="anchor" id="autotoc_md1805"></a>
 Structure</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_config {</div>
 <div class="line">    std::chrono::milliseconds timeout{300000};</div>
@@ -270,7 +270,7 @@ Structure</h2>
 <div class="line">    std::string queue_name = <span class="stringliteral">&quot;default&quot;</span>;</div>
 <div class="line">    std::vector&lt;std::string&gt; tags;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1805"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1806"></a>
 Options</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -294,7 +294,7 @@ Options</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>tags</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;string&gt;</code>   </td><td class="markdownTableBodyNone"><code>{}</code>   </td><td class="markdownTableBodyNone">Task tags   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1806"></a>
+<h2><a class="anchor" id="autotoc_md1807"></a>
 Using Task Builder</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;process.data&quot;</span>)</div>
 <div class="line">    .payload(data)</div>
@@ -308,7 +308,7 @@ Using Task Builder</h2>
 <div class="line">    .tag(<span class="stringliteral">&quot;important&quot;</span>)</div>
 <div class="line">    .expires_in(std::chrono::hours(1))</div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1807"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1808"></a>
 Priority Levels</h2>
 <div class="fragment"><div class="line"><span class="keyword">enum class</span> message_priority {</div>
 <div class="line">    lowest = 1,</div>
@@ -318,9 +318,9 @@ Priority Levels</h2>
 <div class="line">    highest = 9</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1809"></a>
+<h1><a class="anchor" id="autotoc_md1810"></a>
 Environment-Specific Settings</h1>
-<h2><a class="anchor" id="autotoc_md1810"></a>
+<h2><a class="anchor" id="autotoc_md1811"></a>
 Development Environment</h2>
 <div class="fragment"><div class="line">task_system_config dev_config;</div>
 <div class="line"> </div>
@@ -337,7 +337,7 @@ Development Environment</h2>
 <div class="line"><span class="comment">// Enable all monitoring</span></div>
 <div class="line">dev_config.enable_monitoring = <span class="keyword">true</span>;</div>
 <div class="line">dev_config.enable_scheduler = <span class="keyword">true</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1811"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1812"></a>
 Staging Environment</h2>
 <div class="fragment"><div class="line">task_system_config staging_config;</div>
 <div class="line"> </div>
@@ -352,7 +352,7 @@ Staging Environment</h2>
 <div class="line"><span class="comment">// Enable persistence for testing</span></div>
 <div class="line">staging_config.queue.enable_persistence = <span class="keyword">true</span>;</div>
 <div class="line">staging_config.queue.persistence_path = <span class="stringliteral">&quot;/tmp/task_queue/&quot;</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1812"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1813"></a>
 Production Environment</h2>
 <div class="fragment"><div class="line">task_system_config prod_config;</div>
 <div class="line"> </div>
@@ -376,9 +376,9 @@ Production Environment</h2>
 <div class="line">prod_config.enable_monitoring = <span class="keyword">true</span>;</div>
 <div class="line">prod_config.enable_scheduler = <span class="keyword">true</span>;</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1814"></a>
+<h1><a class="anchor" id="autotoc_md1815"></a>
 Performance Tuning</h1>
-<h2><a class="anchor" id="autotoc_md1815"></a>
+<h2><a class="anchor" id="autotoc_md1816"></a>
 High Throughput Configuration</h2>
 <p>For processing many short tasks:</p>
 <div class="fragment"><div class="line">task_system_config high_throughput;</div>
@@ -398,7 +398,7 @@ High Throughput Configuration</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Fast delayed queue polling</span></div>
 <div class="line">high_throughput.queue.delayed_poll_interval = std::chrono::milliseconds(100);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1816"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1817"></a>
 Low Latency Configuration</h2>
 <p>For quick task execution with minimal delay:</p>
 <div class="fragment"><div class="line">task_system_config low_latency;</div>
@@ -414,7 +414,7 @@ Low Latency Configuration</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Single high-priority queue</span></div>
 <div class="line">low_latency.worker.queues = {<span class="stringliteral">&quot;realtime&quot;</span>};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1817"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1818"></a>
 Resource-Constrained Configuration</h2>
 <p>For limited CPU/memory environments:</p>
 <div class="fragment"><div class="line">task_system_config constrained;</div>
@@ -438,7 +438,7 @@ Resource-Constrained Configuration</h2>
 <div class="line"><span class="comment">// Disable optional components</span></div>
 <div class="line">constrained.enable_scheduler = <span class="keyword">false</span>;</div>
 <div class="line">constrained.enable_monitoring = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1818"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1819"></a>
 Long-Running Tasks Configuration</h2>
 <p>For tasks that take minutes to hours:</p>
 <div class="fragment"><div class="line">task_system_config long_running;</div>
@@ -454,7 +454,7 @@ Long-Running Tasks Configuration</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Task defaults for long operations</span></div>
 <div class="line"><span class="comment">// (Use task_builder for individual tasks)</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1819"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1820"></a>
 Memory Optimization</h2>
 <div class="fragment"><div class="line">task_system_config memory_optimized;</div>
 <div class="line"> </div>
@@ -468,9 +468,9 @@ Memory Optimization</h2>
 <div class="line">memory_optimized.queue.enable_persistence = <span class="keyword">true</span>;</div>
 <div class="line">memory_optimized.queue.persistence_path = <span class="stringliteral">&quot;/var/lib/task_queue/&quot;</span>;</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1821"></a>
+<h1><a class="anchor" id="autotoc_md1822"></a>
 Configuration Recommendations</h1>
-<h2><a class="anchor" id="autotoc_md1822"></a>
+<h2><a class="anchor" id="autotoc_md1823"></a>
 By Workload Type</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -486,7 +486,7 @@ By Workload Type</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Real-time   </td><td class="markdownTableBodyNone">CPU cores   </td><td class="markdownTableBodyNone">Disabled   </td><td class="markdownTableBodyNone">1-10ms   </td><td class="markdownTableBodyNone">Small   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1823"></a>
+<h2><a class="anchor" id="autotoc_md1824"></a>
 By Scale</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -501,7 +501,7 @@ By Scale</h2>
 <td class="markdownTableBodyNone">Very Large (&gt;10000/min)   </td><td class="markdownTableBodyNone">16+   </td><td class="markdownTableBodyNone">1,000,000+   </td><td class="markdownTableBodyNone">Required   </td><td class="markdownTableBodyNone">Required   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1825"></a>
+<h1><a class="anchor" id="autotoc_md1826"></a>
 Related Documentation</h1>
 <ul>
 <li><a class="el" href="../../d9/dff/md_docs_2task_2QUICK__START.html">Quick Start Guide</a></li>
