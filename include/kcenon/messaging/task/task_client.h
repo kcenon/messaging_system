@@ -18,6 +18,7 @@
 #include <kcenon/messaging/task/async_result.h>
 #include <kcenon/messaging/task/result_backend.h>
 #include <kcenon/common/patterns/result.h>
+#include <kcenon/common/interfaces/executor_interface.h>
 
 #include <chrono>
 #include <functional>
@@ -69,10 +70,15 @@ public:
 	 * @brief Construct a task client
 	 * @param queue Shared pointer to the task queue
 	 * @param results Shared pointer to the result backend
+	 * @param executor Optional executor for async operations (recommended)
+	 *
+	 * If executor is provided, workflow operations (chain, chord) use it
+	 * for background tasks. If not provided, falls back to std::thread.
 	 */
 	task_client(
 		std::shared_ptr<task_queue> queue,
-		std::shared_ptr<result_backend_interface> results
+		std::shared_ptr<result_backend_interface> results,
+		std::shared_ptr<common::interfaces::IExecutor> executor = nullptr
 	);
 
 	/**
@@ -230,8 +236,12 @@ private:
 	// Helper to create chain/chord task IDs
 	static std::string generate_workflow_id();
 
+	// Helper to execute a function using executor or std::thread fallback
+	void execute_async(std::function<void()> func);
+
 	std::shared_ptr<task_queue> queue_;
 	std::shared_ptr<result_backend_interface> results_;
+	std::shared_ptr<common::interfaces::IExecutor> executor_;
 };
 
 }  // namespace kcenon::messaging::task
