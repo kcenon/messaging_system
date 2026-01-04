@@ -93,13 +93,13 @@ $(document).ready(function(){initNavTree('d8/dc1/md_docs_2core_2MESSAGE__BROKER.
   <div class="headertitle"><div class="title">Message Broker</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md609"></a> <b>Version</b>: 0.2.1 <b>Last Updated</b>: 2025-12-24 <b>Language</b>: [English]</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md610"></a> <b>Version</b>: 0.2.1 <b>Last Updated</b>: 2025-12-24 <b>Language</b>: [English]</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md611"></a>
+<h1><a class="anchor" id="autotoc_md612"></a>
 Overview</h1>
 <p>The <code>message_broker</code> is a central message routing component that provides advanced routing capabilities for the messaging system. It builds upon the <code>topic_router</code> component to offer a higher-level abstraction for managing message routes with priority ordering, statistics collection, and lifecycle management.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md613"></a>
+<h1><a class="anchor" id="autotoc_md614"></a>
 Table of Contents</h1>
 <ol type="1">
 <li>Features</li>
@@ -116,9 +116,9 @@ Table of Contents</h1>
 <li>Planned Features</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md615"></a>
+<h1><a class="anchor" id="autotoc_md616"></a>
 Features</h1>
-<h2><a class="anchor" id="autotoc_md616"></a>
+<h2><a class="anchor" id="autotoc_md617"></a>
 Implemented</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -138,7 +138,7 @@ Implemented</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Dead Letter Queue   </td><td class="markdownTableBodyNone">Handle failed messages with replay support   </td><td class="markdownTableBodyNone">Implemented   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md617"></a>
+<h2><a class="anchor" id="autotoc_md618"></a>
 Planned</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -146,7 +146,7 @@ Planned</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Transformation Pipeline   </td><td class="markdownTableBodyNone">Transform messages during routing   </td><td class="markdownTableBodyNone">#183   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md618"></a>
+<h2><a class="anchor" id="autotoc_md619"></a>
 Recently Added</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -155,9 +155,9 @@ Recently Added</h2>
 <td class="markdownTableBodyNone">Content-based Routing   </td><td class="markdownTableBodyNone">Route based on message content/headers   </td><td class="markdownTableBodyNone">v0.2.1   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md620"></a>
+<h1><a class="anchor" id="autotoc_md621"></a>
 Architecture</h1>
-<h2><a class="anchor" id="autotoc_md621"></a>
+<h2><a class="anchor" id="autotoc_md622"></a>
 Component Diagram</h2>
 <div class="fragment"><div class="line">┌─────────────────────┐</div>
 <div class="line">│   message_broker    │</div>
@@ -177,7 +177,7 @@ Component Diagram</h2>
 <div class="line">│  │  Statistics   │  │</div>
 <div class="line">│  └───────────────┘  │</div>
 <div class="line">└─────────────────────┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md622"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md623"></a>
 Class Structure</h2>
 <div class="fragment"><div class="line"><span class="comment">// Main class uses PIMPL pattern</span></div>
 <div class="line"><span class="keyword">class </span>message_broker {</div>
@@ -206,9 +206,9 @@ Class Structure</h2>
 <div class="line">    std::unique_ptr&lt;message_broker_impl&gt; impl_;</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md624"></a>
+<h1><a class="anchor" id="autotoc_md625"></a>
 Quick Start</h1>
-<h2><a class="anchor" id="autotoc_md625"></a>
+<h2><a class="anchor" id="autotoc_md626"></a>
 Basic Usage</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_broker.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>kcenon::messaging;</div>
@@ -238,7 +238,7 @@ Basic Usage</h2>
 <div class="line">    broker.stop();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md626"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md627"></a>
 With Custom Configuration</h2>
 <div class="fragment"><div class="line">broker_config config;</div>
 <div class="line">config.max_routes = 500;</div>
@@ -248,9 +248,9 @@ With Custom Configuration</h2>
 <div class="line">message_broker broker(config);</div>
 <div class="line">broker.start();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md628"></a>
+<h1><a class="anchor" id="autotoc_md629"></a>
 Configuration</h1>
-<h2><a class="anchor" id="autotoc_md629"></a>
+<h2><a class="anchor" id="autotoc_md630"></a>
 broker_config</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -264,7 +264,7 @@ broker_config</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>default_timeout</code>   </td><td class="markdownTableBodyNone"><code>chrono::milliseconds</code>   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">Default timeout for operations (0 = no timeout)   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md630"></a>
+<h2><a class="anchor" id="autotoc_md631"></a>
 Example Configuration</h2>
 <div class="fragment"><div class="line">broker_config config;</div>
 <div class="line">config.max_routes = 100;              <span class="comment">// Limit to 100 routes</span></div>
@@ -274,9 +274,9 @@ Example Configuration</h2>
 <div class="line"> </div>
 <div class="line">message_broker broker(config);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md632"></a>
+<h1><a class="anchor" id="autotoc_md633"></a>
 Route Management</h1>
-<h2><a class="anchor" id="autotoc_md633"></a>
+<h2><a class="anchor" id="autotoc_md634"></a>
 Adding Routes</h2>
 <div class="fragment"><div class="line"><span class="comment">// Basic route</span></div>
 <div class="line">broker.add_route(<span class="stringliteral">&quot;order-handler&quot;</span>, <span class="stringliteral">&quot;order.*&quot;</span>, order_handler);</div>
@@ -284,7 +284,7 @@ Adding Routes</h2>
 <div class="line"><span class="comment">// Route with priority (0-10, higher = processed first)</span></div>
 <div class="line">broker.add_route(<span class="stringliteral">&quot;audit-handler&quot;</span>, <span class="stringliteral">&quot;order.#&quot;</span>, audit_handler, 10);  <span class="comment">// High priority</span></div>
 <div class="line">broker.add_route(<span class="stringliteral">&quot;analytics&quot;</span>, <span class="stringliteral">&quot;order.#&quot;</span>, analytics_handler, 1);   <span class="comment">// Low priority</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md634"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md635"></a>
 Removing Routes</h2>
 <div class="fragment"><div class="line"><span class="comment">// Remove a specific route</span></div>
 <div class="line"><span class="keyword">auto</span> result = broker.remove_route(<span class="stringliteral">&quot;order-handler&quot;</span>);</div>
@@ -294,14 +294,14 @@ Removing Routes</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Clear all routes</span></div>
 <div class="line">broker.clear_routes();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md635"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md636"></a>
 Enabling/Disabling Routes</h2>
 <div class="fragment"><div class="line"><span class="comment">// Temporarily disable a route</span></div>
 <div class="line">broker.disable_route(<span class="stringliteral">&quot;analytics&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Re-enable the route</span></div>
 <div class="line">broker.enable_route(<span class="stringliteral">&quot;analytics&quot;</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md636"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md637"></a>
 Querying Routes</h2>
 <div class="fragment"><div class="line"><span class="comment">// Check if route exists</span></div>
 <div class="line"><span class="keywordflow">if</span> (broker.has_route(<span class="stringliteral">&quot;order-handler&quot;</span>)) {</div>
@@ -328,9 +328,9 @@ Querying Routes</h2>
 <div class="line"><span class="comment">// Get route count</span></div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Total routes: &quot;</span> &lt;&lt; broker.route_count() &lt;&lt; std::endl;</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md638"></a>
+<h1><a class="anchor" id="autotoc_md639"></a>
 Message Routing</h1>
-<h2><a class="anchor" id="autotoc_md639"></a>
+<h2><a class="anchor" id="autotoc_md640"></a>
 How Routing Works</h2>
 <ol type="1">
 <li>Message arrives with a topic</li>
@@ -339,7 +339,7 @@ How Routing Works</h2>
 <li>Message is delivered to each matching handler in order</li>
 <li>Statistics are updated</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md640"></a>
+<h2><a class="anchor" id="autotoc_md641"></a>
 Topic Pattern Matching</h2>
 <p>The broker uses MQTT-style wildcard patterns:</p>
 <table class="markdownTable">
@@ -354,7 +354,7 @@ Topic Pattern Matching</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>*.user.#</code>   </td><td class="markdownTableBodyNone">Combined wildcards   </td><td class="markdownTableBodyNone"><code>app.user.settings.theme</code>   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md641"></a>
+<h2><a class="anchor" id="autotoc_md642"></a>
 Routing Example</h2>
 <div class="fragment"><div class="line"><span class="comment">// Add routes with different patterns</span></div>
 <div class="line">broker.add_route(<span class="stringliteral">&quot;specific&quot;</span>, <span class="stringliteral">&quot;order.created&quot;</span>, handler1);      <span class="comment">// Exact</span></div>
@@ -369,7 +369,7 @@ Routing Example</h2>
 <div class="line"><span class="comment">// 1. all-orders (priority 10)</span></div>
 <div class="line"><span class="comment">// 2. specific (priority 5, added first)</span></div>
 <div class="line"><span class="comment">// 3. category (priority 5, added second)</span></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md642"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md643"></a>
 Error Handling</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = broker.route(msg);</div>
 <div class="line"><span class="keywordflow">if</span> (!result.is_ok()) {</div>
@@ -386,10 +386,10 @@ Error Handling</h2>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md644"></a>
+<h1><a class="anchor" id="autotoc_md645"></a>
 Content-Based Routing</h1>
 <p>Content-based routing allows you to route messages based on their payload content, metadata headers, message type, or priority, rather than just the topic.</p>
-<h2><a class="anchor" id="autotoc_md645"></a>
+<h2><a class="anchor" id="autotoc_md646"></a>
 Content Filter Types</h2>
 <p>The <code>content_filters</code> namespace provides helper functions for creating common filters:</p>
 <table class="markdownTable">
@@ -414,7 +414,7 @@ Content Filter Types</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>not_filter(filter)</code>   </td><td class="markdownTableBodyNone">Negate a filter   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md646"></a>
+<h2><a class="anchor" id="autotoc_md647"></a>
 Adding Content Routes</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/core/message_broker.h&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>kcenon::messaging;</div>
@@ -450,7 +450,7 @@ Adding Content Routes</h2>
 <div class="line">    },</div>
 <div class="line">    10  <span class="comment">// priority</span></div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md647"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md648"></a>
 Combining Filters</h2>
 <div class="fragment"><div class="line"><span class="comment">// Route messages that are events from EU region</span></div>
 <div class="line">broker.add_content_route(<span class="stringliteral">&quot;eu-events&quot;</span>,</div>
@@ -475,7 +475,7 @@ Combining Filters</h2>
 <div class="line">    not_filter(metadata_equals(<span class="stringliteral">&quot;region&quot;</span>, <span class="stringliteral">&quot;EU&quot;</span>)),</div>
 <div class="line">    handler</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md648"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md649"></a>
 Custom Content Filters</h2>
 <p>You can create custom filters using lambda expressions:</p>
 <div class="fragment"><div class="line"><span class="comment">// Custom filter for high-value orders</span></div>
@@ -497,7 +497,7 @@ Custom Content Filters</h2>
 <div class="line">    },</div>
 <div class="line">    order_handler</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md649"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md650"></a>
 Managing Content Routes</h2>
 <div class="fragment"><div class="line"><span class="comment">// Check if route exists</span></div>
 <div class="line"><span class="keywordtype">bool</span> exists = broker.has_content_route(<span class="stringliteral">&quot;eu-orders&quot;</span>);</div>
@@ -527,7 +527,7 @@ Managing Content Routes</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Clear all content routes</span></div>
 <div class="line">broker.clear_content_routes();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md650"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md651"></a>
 Routing by Content</h2>
 <div class="fragment"><div class="line"><span class="comment">// Route a message using content-based routing</span></div>
 <div class="line">message msg(<span class="stringliteral">&quot;orders.new&quot;</span>);</div>
@@ -537,7 +537,7 @@ Routing by Content</h2>
 <div class="line"><span class="keywordflow">if</span> (result.is_err()) {</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;No matching routes or handler failed&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md651"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md652"></a>
 Content vs Topic Routing</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -553,7 +553,7 @@ Content vs Topic Routing</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Multiple matches   </td><td class="markdownTableBodyNone">All matching handlers   </td><td class="markdownTableBodyNone">All matching handlers   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md652"></a>
+<h2><a class="anchor" id="autotoc_md653"></a>
 Best Practices</h2>
 <ol type="1">
 <li><b>Use topic routing when possible</b>: It's more efficient than content-based routing</li>
@@ -562,9 +562,9 @@ Best Practices</h2>
 <li><b>Monitor statistics</b>: Track <code>messages_processed</code> to identify hot routes</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md654"></a>
+<h1><a class="anchor" id="autotoc_md655"></a>
 Statistics</h1>
-<h2><a class="anchor" id="autotoc_md655"></a>
+<h2><a class="anchor" id="autotoc_md656"></a>
 Available Statistics</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>broker_statistics {</div>
 <div class="line">    uint64_t messages_routed;     <span class="comment">// Total routing attempts</span></div>
@@ -574,7 +574,7 @@ Available Statistics</h2>
 <div class="line">    uint64_t active_routes;       <span class="comment">// Current active routes</span></div>
 <div class="line">    std::chrono::steady_clock::time_point last_reset;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md656"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md657"></a>
 Using Statistics</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> stats = broker.get_statistics();</div>
 <div class="line"> </div>
@@ -593,9 +593,9 @@ Using Statistics</h2>
 <div class="line"><span class="comment">// Reset statistics</span></div>
 <div class="line">broker.reset_statistics();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md658"></a>
+<h1><a class="anchor" id="autotoc_md659"></a>
 Best Practices</h1>
-<h2><a class="anchor" id="autotoc_md659"></a>
+<h2><a class="anchor" id="autotoc_md660"></a>
 1. Use Meaningful Route IDs</h2>
 <div class="fragment"><div class="line"><span class="comment">// Good: Descriptive and unique</span></div>
 <div class="line">broker.add_route(<span class="stringliteral">&quot;order-notification-handler&quot;</span>, <span class="stringliteral">&quot;order.created&quot;</span>, handler);</div>
@@ -604,13 +604,13 @@ Best Practices</h1>
 <div class="line"><span class="comment">// Bad: Generic or duplicate-prone</span></div>
 <div class="line">broker.add_route(<span class="stringliteral">&quot;handler1&quot;</span>, <span class="stringliteral">&quot;order.created&quot;</span>, handler);</div>
 <div class="line">broker.add_route(<span class="stringliteral">&quot;handler&quot;</span>, <span class="stringliteral">&quot;user.#&quot;</span>, logger);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md660"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md661"></a>
 2. Set Appropriate Priorities</h2>
 <div class="fragment"><div class="line"><span class="comment">// Critical handlers first</span></div>
 <div class="line">broker.add_route(<span class="stringliteral">&quot;validation&quot;</span>, <span class="stringliteral">&quot;order.*&quot;</span>, validate, 10);</div>
 <div class="line">broker.add_route(<span class="stringliteral">&quot;processing&quot;</span>, <span class="stringliteral">&quot;order.*&quot;</span>, process, 5);</div>
 <div class="line">broker.add_route(<span class="stringliteral">&quot;analytics&quot;</span>, <span class="stringliteral">&quot;order.*&quot;</span>, track, 1);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md661"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md662"></a>
 3. Handle Errors in Handlers</h2>
 <div class="fragment"><div class="line">broker.add_route(<span class="stringliteral">&quot;safe-handler&quot;</span>, <span class="stringliteral">&quot;data.*&quot;</span>, [](<span class="keyword">const</span> message&amp; msg) {</div>
 <div class="line">    <span class="keywordflow">try</span> {</div>
@@ -620,7 +620,7 @@ Best Practices</h1>
 <div class="line">        <span class="keywordflow">return</span> common::error(error_code::handler_failed, e.what());</div>
 <div class="line">    }</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md662"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md663"></a>
 4. Monitor Statistics</h2>
 <div class="fragment"><div class="line"><span class="comment">// Periodic health check</span></div>
 <div class="line"><span class="keywordtype">void</span> check_broker_health(<span class="keyword">const</span> message_broker&amp; broker) {</div>
@@ -634,7 +634,7 @@ Best Practices</h1>
 <div class="line">        log_error(<span class="stringliteral">&quot;More than 10% of messages failing&quot;</span>);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md663"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md664"></a>
 5. Graceful Shutdown</h2>
 <div class="fragment"><div class="line"><span class="comment">// Stop accepting new routes</span></div>
 <div class="line"><span class="comment">// Wait for pending routes to complete</span></div>
@@ -643,17 +643,17 @@ Best Practices</h1>
 <div class="line"><span class="comment">// Then clear routes if needed</span></div>
 <div class="line">broker.clear_routes();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md665"></a>
+<h1><a class="anchor" id="autotoc_md666"></a>
 Migration from topic_router</h1>
 <p>If you're currently using <code>topic_router</code> directly, here's how to migrate to <code>message_broker</code>:</p>
-<h2><a class="anchor" id="autotoc_md666"></a>
+<h2><a class="anchor" id="autotoc_md667"></a>
 Before (topic_router)</h2>
 <div class="fragment"><div class="line">topic_router router;</div>
 <div class="line">router.add_pattern(<span class="stringliteral">&quot;user.*&quot;</span>, [](<span class="keyword">const</span> message&amp; msg) {</div>
 <div class="line">    <span class="comment">// Handle</span></div>
 <div class="line">});</div>
 <div class="line">router.route(msg);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md667"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md668"></a>
 After (message_broker)</h2>
 <div class="fragment"><div class="line">message_broker broker;</div>
 <div class="line">broker.start();</div>
@@ -665,7 +665,7 @@ After (message_broker)</h2>
 <div class="line"> </div>
 <div class="line">broker.route(msg);</div>
 <div class="line">broker.stop();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md668"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md669"></a>
 Key Differences</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -684,10 +684,10 @@ Key Differences</h2>
 <td class="markdownTableBodyNone">Enable/Disable   </td><td class="markdownTableBodyNone">Not supported   </td><td class="markdownTableBodyNone">Supported   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md670"></a>
+<h1><a class="anchor" id="autotoc_md671"></a>
 Dead Letter Queue</h1>
 <p>The message broker includes a fully-featured Dead Letter Queue (DLQ) for handling failed messages.</p>
-<h2><a class="anchor" id="autotoc_md671"></a>
+<h2><a class="anchor" id="autotoc_md672"></a>
 DLQ Configuration</h2>
 <div class="fragment"><div class="line">dlq_config config;</div>
 <div class="line">config.max_size = 10000;                        <span class="comment">// Maximum DLQ capacity</span></div>
@@ -697,7 +697,7 @@ DLQ Configuration</h2>
 <div class="line">config.capture_unrouted = <span class="keyword">false</span>;                <span class="comment">// Don&#39;t capture unrouted</span></div>
 <div class="line"> </div>
 <div class="line">broker.configure_dlq(config);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md672"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md673"></a>
 DLQ Configuration Options</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -717,7 +717,7 @@ DLQ Configuration Options</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>capture_unrouted</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">false   </td><td class="markdownTableBodyNone">Move unrouted to DLQ   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md673"></a>
+<h2><a class="anchor" id="autotoc_md674"></a>
 Overflow Policies</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -729,11 +729,11 @@ Overflow Policies</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>block</code>   </td><td class="markdownTableBodyNone">Block routing when full   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md674"></a>
+<h2><a class="anchor" id="autotoc_md675"></a>
 Moving Messages to DLQ</h2>
 <div class="fragment"><div class="line"><span class="comment">// Manually move a failed message to DLQ</span></div>
 <div class="line">broker.move_to_dlq(msg, <span class="stringliteral">&quot;Handler threw exception: database unavailable&quot;</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md675"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md676"></a>
 Querying DLQ</h2>
 <div class="fragment"><div class="line"><span class="comment">// Get DLQ size</span></div>
 <div class="line">std::size_t size = broker.get_dlq_size();</div>
@@ -750,7 +750,7 @@ Querying DLQ</h2>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Failed at: &quot;</span> &lt;&lt; <span class="comment">/* format timestamp */</span> &lt;&lt; std::endl;</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Retries: &quot;</span> &lt;&lt; entry.retry_count &lt;&lt; std::endl;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md676"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md677"></a>
 Replaying Messages</h2>
 <div class="fragment"><div class="line"><span class="comment">// Replay a specific message</span></div>
 <div class="line"><span class="keyword">auto</span> result = broker.replay_dlq_message(message_id);</div>
@@ -763,14 +763,14 @@ Replaying Messages</h2>
 <div class="line"><span class="comment">// Replay all messages</span></div>
 <div class="line">std::size_t replayed = broker.replay_all_dlq_messages();</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Replayed &quot;</span> &lt;&lt; replayed &lt;&lt; <span class="stringliteral">&quot; messages&quot;</span> &lt;&lt; std::endl;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md677"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md678"></a>
 Purging DLQ</h2>
 <div class="fragment"><div class="line"><span class="comment">// Purge all messages</span></div>
 <div class="line">std::size_t purged = broker.purge_dlq();</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Purge old messages (older than 1 hour)</span></div>
 <div class="line">std::size_t purged = broker.purge_dlq_older_than(std::chrono::hours(1));</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md678"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md679"></a>
 DLQ Statistics</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> stats = broker.get_dlq_statistics();</div>
 <div class="line"> </div>
@@ -783,7 +783,7 @@ DLQ Statistics</h2>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [reason, count] : stats.failure_reasons) {</div>
 <div class="line">    std::cout &lt;&lt; reason &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; count &lt;&lt; std::endl;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md679"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md680"></a>
 DLQ Event Callbacks</h2>
 <div class="fragment"><div class="line"><span class="comment">// Callback when message enters DLQ</span></div>
 <div class="line">broker.on_dlq_message([](<span class="keyword">const</span> dlq_entry&amp; entry) {</div>
@@ -796,10 +796,10 @@ DLQ Event Callbacks</h2>
 <div class="line">    send_alert(<span class="stringliteral">&quot;DLQ is full! Size: &quot;</span> + std::to_string(size));</div>
 <div class="line">});</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md681"></a>
+<h1><a class="anchor" id="autotoc_md682"></a>
 Planned Features</h1>
 <p>The following features are planned for future releases:</p>
-<h2><a class="anchor" id="autotoc_md682"></a>
+<h2><a class="anchor" id="autotoc_md683"></a>
 Transformation Pipeline (#183)</h2>
 <p>Transform messages during routing.</p>
 <div class="fragment"><div class="line"><span class="comment">// Planned API</span></div>
@@ -809,7 +809,7 @@ Transformation Pipeline (#183)</h2>
 <div class="line">        <span class="keywordflow">return</span> msg;</div>
 <div class="line">    });</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md684"></a>
+<h1><a class="anchor" id="autotoc_md685"></a>
 See Also</h1>
 <ul>
 <li><a href="../../../API_REFERENCE.md#message-broker-api">API Reference</a></li>

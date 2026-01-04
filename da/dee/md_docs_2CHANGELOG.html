@@ -98,8 +98,62 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h1><a class="anchor" id="autotoc_md550"></a>
 [Unreleased]</h1>
 <h2><a class="anchor" id="autotoc_md551"></a>
+Changed</h2>
+<ul>
+<li><b>IExecutor Interface Integration into Backends (Issue #206)</b><ul>
+<li>Integrated <code>IExecutor</code> interface from <code>common_system</code> into messaging backends</li>
+<li>Key changes:<ul>
+<li><code>task_client</code>: Added optional <code>executor</code> parameter to constructor<ul>
+<li><code>chain()</code> and <code>chord()</code> now use executor for background tasks</li>
+<li>Falls back to <code>std::thread</code> when executor is not provided</li>
+</ul>
+</li>
+<li><code>async_result</code>: Added optional <code>executor</code> parameter to constructor<ul>
+<li><code>start_callback_monitor()</code> now uses executor for callback monitoring</li>
+<li>Falls back to <code>std::thread</code> when executor is not provided</li>
+</ul>
+</li>
+<li><code>websocket_transport_config</code>: Added optional <code>executor</code> field<ul>
+<li><code>schedule_reconnect()</code> now uses executor for reconnection tasks</li>
+<li>Falls back to <code>std::thread</code> when executor is not provided</li>
+</ul>
+</li>
+<li><code>messaging_di_container</code>: Added executor helper functions<ul>
+<li><code>register_executor()</code>: Register IExecutor with global DI container</li>
+<li><code>resolve_executor()</code>: Resolve registered executor</li>
+<li><code>has_executor()</code>: Check if executor is registered</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Benefits:<ul>
+<li>Consistent thread management across messaging components</li>
+<li>Better integration with thread_system's thread pool</li>
+<li>Reduced direct std::thread usage in backend code</li>
+<li>Backward compatible (executor is optional, falls back to std::thread)</li>
+</ul>
+</li>
+<li>Part of Foundation System Improvements Integration Epic (#210)</li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md552"></a>
 Added</h2>
 <ul>
+<li><b>CRTP-Based Message Handler Pattern (Issue #209)</b><ul>
+<li>Zero-overhead polymorphism for message handlers via CRTP</li>
+<li>New header files:<ul>
+<li><code>message_handler_base.h</code> - CRTP base class with compile-time dispatch</li>
+<li><code>message_handler_wrapper.h</code> - Type erasure for heterogeneous containers</li>
+<li><code>handlers/topic_handler.h</code> - Concrete CRTP handlers (topic, event, priority, command)</li>
+</ul>
+</li>
+<li>C++20 concept constraints (<code>message_handler_concept</code>) for compile-time verification</li>
+<li>Factory functions: <code>make_handler&lt;T&gt;()</code>, <code>make_shared_handler&lt;T&gt;()</code></li>
+<li>Backward compatible with existing <code>message_handler_interface</code></li>
+<li>Part of Foundation System Improvements Integration Epic (#210)</li>
+</ul>
+</li>
 <li><b>C++20 Module Support (Issue #204)</b><ul>
 <li>Added C++20 module files for <code>kcenon.messaging</code></li>
 <li>Module partitions:<ul>
@@ -115,7 +169,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md552"></a>
+<h2><a class="anchor" id="autotoc_md553"></a>
 Changed</h2>
 <ul>
 <li><b>Task-Message Composition Refactoring (Issue #192)</b><ul>
@@ -145,7 +199,7 @@ Changed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md553"></a>
+<h2><a class="anchor" id="autotoc_md554"></a>
 Added</h2>
 <ul>
 <li><b>Dead Letter Queue for Message Broker (Issue #182)</b><ul>
@@ -199,7 +253,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md554"></a>
+<h2><a class="anchor" id="autotoc_md555"></a>
 Fixed</h2>
 <ul>
 <li><b>HTTP Transport Build Error (PR #186)</b><ul>
@@ -209,7 +263,7 @@ Fixed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md555"></a>
+<h2><a class="anchor" id="autotoc_md556"></a>
 Added</h2>
 <ul>
 <li><b>Distributed Messaging E2E Integration Tests (Issue #165)</b><ul>
@@ -265,7 +319,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md556"></a>
+<h2><a class="anchor" id="autotoc_md557"></a>
 Fixed</h2>
 <ul>
 <li><b>Build Fix: Enable KCENON_HAS_COMMON_EXECUTOR for thread_pool IExecutor support</b><ul>
@@ -275,7 +329,7 @@ Fixed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md557"></a>
+<h2><a class="anchor" id="autotoc_md558"></a>
 Added</h2>
 <ul>
 <li><b>Enhanced Integration Tests for Multi-System Messaging (Issue #161)</b><ul>
@@ -303,7 +357,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md558"></a>
+<h2><a class="anchor" id="autotoc_md559"></a>
 Fixed</h2>
 <ul>
 <li><b>MSVC C4100 Unreferenced Parameter Warnings (Issue #155)</b><ul>
@@ -313,7 +367,7 @@ Fixed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md559"></a>
+<h2><a class="anchor" id="autotoc_md560"></a>
 Added</h2>
 <ul>
 <li><b>System Events Standardization with Event Bus (Issue #156)</b><ul>
@@ -554,7 +608,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md560"></a>
+<h2><a class="anchor" id="autotoc_md561"></a>
 Fixed</h2>
 <ul>
 <li><code>task</code>: Sync metadata.id with task_id for correct task_queue lookup</li>
@@ -617,7 +671,7 @@ Fixed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md561"></a>
+<h2><a class="anchor" id="autotoc_md562"></a>
 Changed</h2>
 <ul>
 <li><b>Standalone Backend Thread System Migration (Issue #139)</b><ul>
@@ -642,7 +696,7 @@ Changed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md562"></a>
+<h2><a class="anchor" id="autotoc_md563"></a>
 Added</h2>
 <ul>
 <li>Documentation structure standardization</li>
@@ -650,9 +704,9 @@ Added</h2>
 <li><code>has_common_system()</code> method in integration_detector for compile-time detection</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md564"></a>
+<h1><a class="anchor" id="autotoc_md565"></a>
 [1.0.0] - 2025-11-17</h1>
-<h2><a class="anchor" id="autotoc_md565"></a>
+<h2><a class="anchor" id="autotoc_md566"></a>
 Added</h2>
 <ul>
 <li><b>Core Messaging Infrastructure</b><ul>
@@ -688,7 +742,7 @@ Added</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md566"></a>
+<h2><a class="anchor" id="autotoc_md567"></a>
 Dependencies</h2>
 <ul>
 <li>common_system: Result&lt;T&gt;, interfaces, ILogger (runtime binding)</li>
@@ -698,16 +752,16 @@ Dependencies</h2>
 <li>network_system: Network transport</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md568"></a>
+<h1><a class="anchor" id="autotoc_md569"></a>
 [0.9.0] - 2025-10-20</h1>
-<h2><a class="anchor" id="autotoc_md569"></a>
+<h2><a class="anchor" id="autotoc_md570"></a>
 Added</h2>
 <ul>
 <li>Initial message bus implementation</li>
 <li>Basic pub/sub pattern</li>
 <li>Topic routing with wildcards</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md570"></a>
+<h2><a class="anchor" id="autotoc_md571"></a>
 Changed</h2>
 <ul>
 <li>Migrated to CMake FetchContent</li>
