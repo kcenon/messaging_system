@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('dd/d35/md_docs_2task_2PATTERNS__KO.htm
   <div class="headertitle"><div class="title">Task 모듈 워크플로우 패턴</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1995"></a> 이 가이드는 Task 모듈의 일반적인 워크플로우 패턴을 다룹니다.</p>
-<h1><a class="anchor" id="autotoc_md1996"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1997"></a> 이 가이드는 Task 모듈의 일반적인 워크플로우 패턴을 다룹니다.</p>
+<h1><a class="anchor" id="autotoc_md1998"></a>
 목차</h1>
 <ul>
 <li>Chain 패턴</li>
@@ -107,15 +107,15 @@ $(document).ready(function(){initNavTree('dd/d35/md_docs_2task_2PATTERNS__KO.htm
 <li>하위 작업 생성</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1998"></a>
+<h1><a class="anchor" id="autotoc_md2000"></a>
 Chain 패턴</h1>
 <p>Chain 패턴은 작업을 순차적으로 실행하며, 하나의 작업 결과가 다음 작업의 입력이 됩니다.</p>
-<h2><a class="anchor" id="autotoc_md1999"></a>
+<h2><a class="anchor" id="autotoc_md2001"></a>
 개념</h2>
 <div class="fragment"><div class="line">작업 A → 작업 B → 작업 C</div>
 <div class="line">          ↑          ↑</div>
 <div class="line">      A의 결과    B의 결과</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2000"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2002"></a>
 사용법</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;kcenon/messaging/task/task_client.h&gt;</span></div>
 <div class="line"> </div>
@@ -136,7 +136,7 @@ Chain 패턴</h1>
 <div class="line">    <span class="comment">// task_c의 결과입니다</span></div>
 <div class="line">    <span class="keyword">auto</span> final_result = outcome.value();</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2001"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2003"></a>
 핸들러 구현</h2>
 <div class="fragment"><div class="line"><span class="comment">// 각 핸들러는 이전 작업의 결과를 받습니다</span></div>
 <div class="line">system.register_handler(<span class="stringliteral">&quot;step.two&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -149,7 +149,7 @@ Chain 패턴</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2002"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2004"></a>
 에러 처리</h2>
 <p>체인의 어떤 작업이든 실패하면 전체 체인이 중지되고 에러가 전파됩니다:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = client.chain({task_a, task_b, task_c});</div>
@@ -159,7 +159,7 @@ Chain 패턴</h1>
 <div class="line">    <span class="comment">// 체인이 어느 시점에서 실패함</span></div>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;체인 실패: &quot;</span> &lt;&lt; result.error_message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2003"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2005"></a>
 사용 사례</h2>
 <ul>
 <li>다단계 데이터 처리 파이프라인</li>
@@ -167,15 +167,15 @@ Chain 패턴</h1>
 <li>순서대로 실행해야 하는 의존적 작업</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md2005"></a>
+<h1><a class="anchor" id="autotoc_md2007"></a>
 Chord 패턴</h1>
 <p>Chord 패턴은 여러 작업을 병렬로 실행한 후, 집계된 결과로 콜백 작업을 실행합니다.</p>
-<h2><a class="anchor" id="autotoc_md2006"></a>
+<h2><a class="anchor" id="autotoc_md2008"></a>
 개념</h2>
 <div class="fragment"><div class="line">작업 A ─┐</div>
 <div class="line">작업 B ─┼→ 콜백 작업 (모든 결과 포함)</div>
 <div class="line">작업 C ─┘</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2007"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2009"></a>
 사용법</h2>
 <div class="fragment"><div class="line"><span class="comment">// 병렬 작업 정의</span></div>
 <div class="line"><span class="keyword">auto</span> task_a = task_builder(<span class="stringliteral">&quot;process.part1&quot;</span>)</div>
@@ -198,7 +198,7 @@ Chord 패턴</h1>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 최종 결과 대기</span></div>
 <div class="line"><span class="keyword">auto</span> outcome = result.get(std::chrono::minutes(10));</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2008"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2010"></a>
 콜백 핸들러</h2>
 <p>콜백은 모든 결과를 배열로 받습니다:</p>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;aggregate.results&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
@@ -216,7 +216,7 @@ Chord 패턴</h1>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2009"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2011"></a>
 에러 처리</h2>
 <p>병렬 작업 중 하나라도 실패하면 코드가 실패합니다:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = client.chord(tasks, callback);</div>
@@ -226,7 +226,7 @@ Chord 패턴</h1>
 <div class="line">    <span class="comment">// 하나 이상의 병렬 작업이 실패함</span></div>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;코드 실패: &quot;</span> &lt;&lt; result.error_message() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2010"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2012"></a>
 사용 사례</h2>
 <ul>
 <li>Map-reduce 작업</li>
@@ -235,16 +235,16 @@ Chord 패턴</h1>
 <li>Fan-out/fan-in 워크플로우</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md2012"></a>
+<h1><a class="anchor" id="autotoc_md2014"></a>
 재시도 전략</h1>
 <p>Task 모듈은 지수 백오프를 사용한 자동 재시도를 지원합니다.</p>
-<h2><a class="anchor" id="autotoc_md2013"></a>
+<h2><a class="anchor" id="autotoc_md2015"></a>
 기본 설정</h2>
 <div class="fragment"><div class="line">task_config config;</div>
 <div class="line">config.max_retries = 3;</div>
 <div class="line">config.retry_delay = std::chrono::milliseconds(1000);</div>
 <div class="line">config.retry_backoff_multiplier = 2.0;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2014"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2016"></a>
 재시도 지연 계산</h2>
 <div class="fragment"><div class="line">지연 = retry_delay * (backoff_multiplier ^ 시도 횟수)</div>
 <div class="line"> </div>
@@ -253,7 +253,7 @@ Chord 패턴</h1>
 <div class="line">- 시도 2 실패 → 2000ms 대기</div>
 <div class="line">- 시도 3 실패 → 4000ms 대기</div>
 <div class="line">- 시도 4 실패 → 작업이 실패로 표시됨</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2015"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2017"></a>
 Task 빌더 사용</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> task = task_builder(<span class="stringliteral">&quot;email.send&quot;</span>)</div>
 <div class="line">    .payload(email_data)</div>
@@ -261,7 +261,7 @@ Task 빌더 사용</h2>
 <div class="line">    .retry_delay(std::chrono::seconds(2))    <span class="comment">// 2초 지연으로 시작</span></div>
 <div class="line">    .backoff(1.5)                            <span class="comment">// 1.5배 승수</span></div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2016"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2018"></a>
 커스텀 재시도 로직</h2>
 <p>커스텀 동작을 위해 <code>on_retry</code> 훅 구현:</p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>resilient_handler : <span class="keyword">public</span> task_handler_interface {</div>
@@ -282,7 +282,7 @@ Task 빌더 사용</h2>
 <div class="line">        <span class="comment">// 메트릭 업데이트, 알림 전송 등도 가능</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2017"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2019"></a>
 재시도 vs 재시도하지 않을 에러</h2>
 <p>특정 에러에서 재시도를 방지하려면:</p>
 <div class="fragment"><div class="line">common::Result&lt;value_container&gt; execute(<span class="keyword">const</span> task&amp; t, task_context&amp; ctx)<span class="keyword"> override </span>{</div>
@@ -297,10 +297,10 @@ Task 빌더 사용</h2>
 <div class="line">    <span class="keywordflow">return</span> process_data(t.payload());</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md2019"></a>
+<h1><a class="anchor" id="autotoc_md2021"></a>
 우선순위 큐</h1>
 <p>작업에 다른 우선순위 수준을 할당하여 실행 순서를 제어할 수 있습니다.</p>
-<h2><a class="anchor" id="autotoc_md2020"></a>
+<h2><a class="anchor" id="autotoc_md2022"></a>
 우선순위 수준</h2>
 <div class="fragment"><div class="line"><span class="keyword">enum class</span> message_priority {</div>
 <div class="line">    lowest = 1,</div>
@@ -309,7 +309,7 @@ Task 빌더 사용</h2>
 <div class="line">    high = 7,</div>
 <div class="line">    highest = 9</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2021"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2023"></a>
 우선순위 설정</h2>
 <div class="fragment"><div class="line"><span class="comment">// task 빌더 사용</span></div>
 <div class="line"><span class="keyword">auto</span> urgent_task = task_builder(<span class="stringliteral">&quot;notification.send&quot;</span>)</div>
@@ -320,14 +320,14 @@ Task 빌더 사용</h2>
 <div class="line"><span class="comment">// task_config 사용</span></div>
 <div class="line">task t(<span class="stringliteral">&quot;report.generate&quot;</span>, payload);</div>
 <div class="line">t.config().priority = message_priority::low;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2022"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2024"></a>
 우선순위 큐 설정</h2>
 <div class="fragment"><div class="line">task_system_config config;</div>
 <div class="line">config.worker.queues = {<span class="stringliteral">&quot;critical&quot;</span>, <span class="stringliteral">&quot;high&quot;</span>, <span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;low&quot;</span>};</div>
 <div class="line">config.worker.concurrency = 8;</div>
 <div class="line"> </div>
 <div class="line">task_system system(config);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2023"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2025"></a>
 우선순위 큐에 제출</h2>
 <div class="fragment"><div class="line"><span class="comment">// 중요 알림은 critical 큐로</span></div>
 <div class="line"><span class="keyword">auto</span> critical = task_builder(<span class="stringliteral">&quot;alert.send&quot;</span>)</div>
@@ -340,7 +340,7 @@ Task 빌더 사용</h2>
 <div class="line">    .queue(<span class="stringliteral">&quot;low&quot;</span>)</div>
 <div class="line">    .priority(message_priority::lowest)</div>
 <div class="line">    .build();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2024"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2026"></a>
 모범 사례</h2>
 <ol type="1">
 <li><b>highest 우선순위를 남용하지 마세요</b> - 목적을 무효화합니다</li>
@@ -349,9 +349,9 @@ Task 빌더 사용</h2>
 <li><b>적절한 타임아웃을 설정하세요</b> - 낮은 우선순위 작업은 더 오래 대기할 수 있습니다</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md2026"></a>
+<h1><a class="anchor" id="autotoc_md2028"></a>
 예약 작업</h1>
-<h2><a class="anchor" id="autotoc_md2027"></a>
+<h2><a class="anchor" id="autotoc_md2029"></a>
 주기적 실행</h2>
 <p>고정 간격으로 작업 실행:</p>
 <div class="fragment"><div class="line"><span class="comment">// 5분마다</span></div>
@@ -367,7 +367,7 @@ Task 빌더 사용</h2>
 <div class="line">    task_builder(<span class="stringliteral">&quot;sync.external&quot;</span>).build().value(),</div>
 <div class="line">    std::chrono::hours(1)</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2028"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2030"></a>
 Cron 기반 스케줄링</h2>
 <p>복잡한 스케줄을 위한 cron 표현식 사용:</p>
 <div class="fragment"><div class="line"><span class="comment">// 매일 오전 3시</span></div>
@@ -390,7 +390,7 @@ Cron 기반 스케줄링</h2>
 <div class="line">    task_builder(<span class="stringliteral">&quot;sync.crm&quot;</span>).build().value(),</div>
 <div class="line">    <span class="stringliteral">&quot;*/15 9-17 * * 1-5&quot;</span></div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2029"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2031"></a>
 Cron 표현식 형식</h2>
 <div class="fragment"><div class="line">* * * * *</div>
 <div class="line">│ │ │ │ │</div>
@@ -406,7 +406,7 @@ Cron 표현식 형식</h2>
 <div class="line">- */15  15 단위마다</div>
 <div class="line">- 1-5   범위</div>
 <div class="line">- 1,3,5 목록</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2030"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2032"></a>
 스케줄 관리</h2>
 <div class="fragment"><div class="line"><span class="comment">// 스케줄 일시 비활성화</span></div>
 <div class="line">system.scheduler()-&gt;disable(<span class="stringliteral">&quot;daily-report&quot;</span>);</div>
@@ -423,7 +423,7 @@ Cron 표현식 형식</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 스케줄 제거</span></div>
 <div class="line">system.scheduler()-&gt;remove(<span class="stringliteral">&quot;obsolete-job&quot;</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2031"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2033"></a>
 지연 작업 실행</h2>
 <p>지연 후 작업 실행:</p>
 <div class="fragment"><div class="line"><span class="comment">// 30초 후 실행</span></div>
@@ -439,10 +439,10 @@ Cron 표현식 형식</h2>
 <div class="line">    tomorrow_9am</div>
 <div class="line">);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md2033"></a>
+<h1><a class="anchor" id="autotoc_md2035"></a>
 진행 상황 추적</h1>
 <p>실행 중 작업 진행 상황을 보고하고 모니터링합니다.</p>
-<h2><a class="anchor" id="autotoc_md2034"></a>
+<h2><a class="anchor" id="autotoc_md2036"></a>
 진행 상황 보고</h2>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;large-file.process&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
 <div class="line">    <span class="keyword">auto</span> file_path = t.payload().get_string(<span class="stringliteral">&quot;path&quot;</span>).value();</div>
@@ -466,7 +466,7 @@ Cron 표현식 형식</h2>
 <div class="line">    result.add(<span class="stringliteral">&quot;lines_processed&quot;</span>, processed);</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2035"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2037"></a>
 진행 상황 모니터링</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;large-file.process&quot;</span>, payload);</div>
 <div class="line"> </div>
@@ -482,7 +482,7 @@ Cron 표현식 형식</h2>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;\n완료!\n&quot;</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2036"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2038"></a>
 진행 기록</h2>
 <div class="fragment"><div class="line"><span class="comment">// 상세 진행 기록 가져오기</span></div>
 <div class="line"><span class="keyword">auto</span> history = result.progress_history();</div>
@@ -492,10 +492,10 @@ Cron 표현식 형식</h2>
 <div class="line">              &lt;&lt; entry.message &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md2038"></a>
+<h1><a class="anchor" id="autotoc_md2040"></a>
 체크포인트와 복구</h1>
 <p>실패 후 복구를 위해 진행 상황을 저장합니다.</p>
-<h2><a class="anchor" id="autotoc_md2039"></a>
+<h2><a class="anchor" id="autotoc_md2041"></a>
 체크포인트 저장</h2>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;batch.process&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
 <div class="line">    <span class="keyword">auto</span> items = t.payload().get_array(<span class="stringliteral">&quot;items&quot;</span>);</div>
@@ -536,7 +536,7 @@ Cron 표현식 형식</h2>
 <div class="line">    result.add(<span class="stringliteral">&quot;processed_count&quot;</span>, items.size());</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2040"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2042"></a>
 체크포인트 데이터</h2>
 <p>복구에 필요한 모든 데이터 저장:</p>
 <div class="fragment"><div class="line">container_module::value_container checkpoint;</div>
@@ -545,10 +545,10 @@ Cron 표현식 형식</h2>
 <div class="line">checkpoint.add(<span class="stringliteral">&quot;intermediate_results&quot;</span>, partial_results);</div>
 <div class="line">ctx.save_checkpoint(checkpoint);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md2042"></a>
+<h1><a class="anchor" id="autotoc_md2044"></a>
 하위 작업 생성</h1>
 <p>핸들러 내에서 자식 작업을 생성합니다.</p>
-<h2><a class="anchor" id="autotoc_md2043"></a>
+<h2><a class="anchor" id="autotoc_md2045"></a>
 하위 작업 생성</h2>
 <div class="fragment"><div class="line">system.register_handler(<span class="stringliteral">&quot;order.process&quot;</span>, [](<span class="keyword">const</span> task&amp; t, task_context&amp; ctx) {</div>
 <div class="line">    <span class="keyword">auto</span> order_items = t.payload().get_array(<span class="stringliteral">&quot;items&quot;</span>);</div>
@@ -574,7 +574,7 @@ Cron 표현식 형식</h2>
 <div class="line">    result.add(<span class="stringliteral">&quot;subtask_ids&quot;</span>, subtask_ids);</div>
 <div class="line">    <span class="keywordflow">return</span> common::ok(result);</div>
 <div class="line">});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2044"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2046"></a>
 하위 작업 추적</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = system.submit(<span class="stringliteral">&quot;order.process&quot;</span>, order_data);</div>
 <div class="line"><span class="keyword">auto</span> outcome = result.get(timeout);</div>
@@ -586,7 +586,7 @@ Cron 표현식 형식</h2>
 <div class="line">        <span class="comment">// 자식 결과 처리</span></div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2045"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2047"></a>
 사용 사례</h2>
 <ul>
 <li>대규모 작업을 작은 단위로 분할</li>
@@ -594,9 +594,9 @@ Cron 표현식 형식</h2>
 <li>동적 워크플로우 생성</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md2047"></a>
+<h1><a class="anchor" id="autotoc_md2049"></a>
 패턴 조합</h1>
-<h2><a class="anchor" id="autotoc_md2048"></a>
+<h2><a class="anchor" id="autotoc_md2050"></a>
 재시도가 있는 Chain</h2>
 <div class="fragment"><div class="line"><span class="comment">// 체인의 각 작업은 자체 재시도 정책을 가짐</span></div>
 <div class="line"><span class="keyword">auto</span> step1 = task_builder(<span class="stringliteral">&quot;extract&quot;</span>)</div>
@@ -613,7 +613,7 @@ Cron 표현식 형식</h2>
 <div class="line">    .build().value();</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> result = client.chain({step1, step2, step3});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2049"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2051"></a>
 예약된 Chord</h2>
 <div class="fragment"><div class="line"><span class="comment">// 병렬 처리 작업 예약</span></div>
 <div class="line"><span class="keyword">auto</span> header_tasks = create_header_tasks();</div>
@@ -628,7 +628,7 @@ Cron 표현식 형식</h2>
 <div class="line">    <span class="stringliteral">&quot;0 * * * *&quot;</span>  <span class="comment">// 매 시간</span></div>
 <div class="line">);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md2051"></a>
+<h1><a class="anchor" id="autotoc_md2053"></a>
 관련 문서</h1>
 <ul>
 <li><a class="el" href="../../da/dee/md_docs_2task_2QUICK__START__KO.html">빠른 시작 가이드</a></li>
