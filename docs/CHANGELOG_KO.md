@@ -63,6 +63,24 @@
     - 하위 호환 (executor는 선택적, std::thread로 폴백)
   - Foundation System Improvements Integration Epic (#210)의 일부
 
+### 추가됨
+- **CRTP 기반 메시지 핸들러 패턴 (Issue #209)**
+  - CRTP를 통한 제로 오버헤드 다형성 지원
+  - CRTP 베이스 클래스:
+    - `message_handler_base<Derived>` - 메시지 핸들러용 CRTP 템플릿
+    - `task_handler_base<Derived>` - 태스크 핸들러용 CRTP 템플릿
+  - 이종 컨테이너를 위한 Type Erasure 래퍼:
+    - `message_handler_wrapper<Handler>` - CRTP 핸들러를 인터페이스로 래핑
+    - `task_handler_wrapper<Handler>` - CRTP 태스크 핸들러를 인터페이스로 래핑
+  - 컴파일 타임 검증을 위한 C++20 concept:
+    - `MessageHandlerConcept` - CRTP 메시지 핸들러 검증
+    - `TaskHandlerCRTPConcept` - CRTP 태스크 핸들러 검증
+  - 팩토리 함수:
+    - `make_message_handler<Handler>()` - 래핑된 메시지 핸들러 생성
+    - `make_crtp_task_handler<Handler>()` - 래핑된 태스크 핸들러 생성
+  - 기존 인터페이스와 하위 호환
+  - Foundation System Improvements Integration Epic (#210)의 일부
+
 - **Task-Message 컴포지션 리팩토링 (Issue #192)**
   - `task`의 `message` 상속을 컴포지션 패턴으로 변경
   - 주요 아키텍처 변경사항:
