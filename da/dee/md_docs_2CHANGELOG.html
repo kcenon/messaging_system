@@ -100,6 +100,28 @@ $(document).ready(function(){initNavTree('da/dee/md_docs_2CHANGELOG.html','../..
 <h2><a class="anchor" id="autotoc_md551"></a>
 Added</h2>
 <ul>
+<li><b>Complete C++20 Module Export Coverage (Issue #208)</b><ul>
+<li>Extended module exports for complete feature parity with headers</li>
+<li>New exports in <code>kcenon.messaging:task</code>:<ul>
+<li><code>task_context</code> - Execution context for handlers</li>
+<li><code>progress_info</code> - Progress update information</li>
+<li><code>task_log_entry</code> - Log entry during task execution</li>
+</ul>
+</li>
+<li>New exports in <code>kcenon.messaging:integration</code>:<ul>
+<li><code>message_processor_job</code> - IJob implementation for message processing</li>
+<li><code>message_reply_job</code> - IJob for request-reply pattern</li>
+<li><code>executor_message_handler</code> - High-level executor adapter</li>
+</ul>
+</li>
+<li>New exports in <code>kcenon.messaging:core</code>:<ul>
+<li><code>kcenon::messaging::error</code> namespace with all error codes</li>
+<li><code>get_error_message()</code> for human-readable error messages</li>
+</ul>
+</li>
+<li>Part of C++20 Module Migration Epic (kcenon/common_system#256)</li>
+</ul>
+</li>
 <li><b>Transport-Specific Error Codes (Issue #207)</b><ul>
 <li>New error codes for transport layer error handling:<ul>
 <li><code>connection_failed</code> (-790): For failed connection attempts</li>

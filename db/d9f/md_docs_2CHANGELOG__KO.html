@@ -100,6 +100,28 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 <h2><a class="anchor" id="autotoc_md576"></a>
 추가됨</h2>
 <ul>
+<li><b>완전한 C++20 모듈 Export 지원 (Issue #208)</b><ul>
+<li>헤더와 완전한 기능 동등성을 위한 모듈 export 확장</li>
+<li><code>kcenon.messaging:task</code>의 새로운 export:<ul>
+<li><code>task_context</code> - 핸들러를 위한 실행 컨텍스트</li>
+<li><code>progress_info</code> - 진행 상황 업데이트 정보</li>
+<li><code>task_log_entry</code> - 태스크 실행 중 로그 항목</li>
+</ul>
+</li>
+<li><code>kcenon.messaging:integration</code>의 새로운 export:<ul>
+<li><code>message_processor_job</code> - 메시지 처리를 위한 IJob 구현</li>
+<li><code>message_reply_job</code> - request-reply 패턴을 위한 IJob</li>
+<li><code>executor_message_handler</code> - 고수준 executor 어댑터</li>
+</ul>
+</li>
+<li><code>kcenon.messaging:core</code>의 새로운 export:<ul>
+<li>모든 에러 코드가 포함된 <code>kcenon::messaging::error</code> 네임스페이스</li>
+<li>사람이 읽을 수 있는 에러 메시지를 위한 <code>get_error_message()</code></li>
+</ul>
+</li>
+<li>C++20 Module Migration Epic (kcenon/common_system#256)의 일부</li>
+</ul>
+</li>
 <li><b>Transport 전용 에러 코드 (Issue #207)</b><ul>
 <li>transport 레이어 에러 처리를 위한 새로운 에러 코드:<ul>
 <li><code>connection_failed</code> (-790): 연결 실패 시</li>
