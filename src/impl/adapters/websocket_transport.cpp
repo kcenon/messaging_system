@@ -14,7 +14,6 @@
 #include <kcenon/messaging/error/error_codes.h>
 #include <kcenon/messaging/serialization/message_serializer.h>
 #include <kcenon/network/core/messaging_ws_client.h>
-#include <kcenon/thread/core/callback_job.h>
 
 #include <atomic>
 #include <chrono>
@@ -26,6 +25,25 @@ namespace kcenon::messaging::adapters {
 using namespace kcenon::common;
 // Note: We don't use 'using namespace kcenon::network' to avoid
 // VoidResult ambiguity between common::VoidResult and network::VoidResult
+
+// Simple IJob wrapper for reconnect tasks
+class reconnect_job : public common::interfaces::IJob {
+public:
+	explicit reconnect_job(std::function<void()> func)
+		: func_(std::move(func)) {
+	}
+
+	common::VoidResult execute() override {
+		func_();
+		return common::ok();
+	}
+
+	std::string get_name() const override { return "websocket_reconnect_job"; }
+	int get_priority() const override { return 0; }
+
+private:
+	std::function<void()> func_;
+};
 
 // ============================================================================
 // websocket_transport::impl
@@ -484,13 +502,7 @@ private:
 
 		if (config_.executor && config_.executor->is_running()) {
 			// Use executor (preferred)
-			auto job = std::make_unique<kcenon::thread::callback_job>(
-				[reconnect_func = std::move(reconnect_func)]() -> common::VoidResult {
-					reconnect_func();
-					return common::ok();
-				},
-				"websocket_reconnect_job"
-			);
+			auto job = std::make_unique<reconnect_job>(std::move(reconnect_func));
 			auto result = config_.executor->execute(std::move(job));
 			if (!result.is_ok()) {
 				// If executor fails, fall back to std::thread

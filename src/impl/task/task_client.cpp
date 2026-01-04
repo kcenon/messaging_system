@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for full license information.
 
 #include <kcenon/messaging/task/task_client.h>
-#include <kcenon/thread/core/callback_job.h>
 
 #include <atomic>
 #include <random>
@@ -12,6 +11,27 @@
 #include <thread>
 
 namespace kcenon::messaging::task {
+
+// Simple IJob wrapper for lambda functions
+class lambda_job : public common::interfaces::IJob {
+public:
+	explicit lambda_job(std::function<void()> func, std::string name = "lambda_job")
+		: func_(std::move(func))
+		, name_(std::move(name)) {
+	}
+
+	common::VoidResult execute() override {
+		func_();
+		return common::ok();
+	}
+
+	std::string get_name() const override { return name_; }
+	int get_priority() const override { return 0; }
+
+private:
+	std::function<void()> func_;
+	std::string name_;
+};
 
 task_client::task_client(
 	std::shared_ptr<task_queue> queue,
@@ -342,11 +362,8 @@ std::string task_client::generate_workflow_id() {
 void task_client::execute_async(std::function<void()> func) {
 	if (executor_ && executor_->is_running()) {
 		// Use executor (preferred)
-		auto job = std::make_unique<kcenon::thread::callback_job>(
-			[func = std::move(func)]() -> common::VoidResult {
-				func();
-				return common::ok();
-			},
+		auto job = std::make_unique<lambda_job>(
+			std::move(func),
 			"task_client_workflow_job"
 		);
 		auto result = executor_->execute(std::move(job));

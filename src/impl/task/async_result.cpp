@@ -3,11 +3,29 @@
 // See the LICENSE file in the project root for full license information.
 
 #include <kcenon/messaging/task/async_result.h>
-#include <kcenon/thread/core/callback_job.h>
 
 #include <thread>
 
 namespace kcenon::messaging::task {
+
+// Simple IJob wrapper for lambda functions
+class callback_monitor_job : public common::interfaces::IJob {
+public:
+	explicit callback_monitor_job(std::function<void()> func)
+		: func_(std::move(func)) {
+	}
+
+	common::VoidResult execute() override {
+		func_();
+		return common::ok();
+	}
+
+	std::string get_name() const override { return "async_result_callback_monitor"; }
+	int get_priority() const override { return 0; }
+
+private:
+	std::function<void()> func_;
+};
 
 async_result::async_result(
 	std::string task_id,
@@ -317,13 +335,7 @@ void async_result::start_callback_monitor() {
 
 	if (executor_ && executor_->is_running()) {
 		// Use executor (preferred)
-		auto job = std::make_unique<kcenon::thread::callback_job>(
-			[monitor_func = std::move(monitor_func)]() -> common::VoidResult {
-				monitor_func();
-				return common::ok();
-			},
-			"async_result_callback_monitor"
-		);
+		auto job = std::make_unique<callback_monitor_job>(std::move(monitor_func));
 		auto result = executor_->execute(std::move(job));
 		if (!result.is_ok()) {
 			// If executor fails, fall back to std::thread
