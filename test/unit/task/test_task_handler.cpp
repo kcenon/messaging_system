@@ -358,7 +358,8 @@ TEST(TaskHandlerWrapperTest, HooksWorkThroughWrapper) {
 
 TEST(TaskHandlerWrapperTest, UsableAsInterface) {
 	std::shared_ptr<task_handler_interface> handler =
-		std::make_shared<task_handler_wrapper<crtp_test_handler>>("interface.handler");
+		std::make_shared<task_handler_wrapper<crtp_test_handler>>(
+			std::in_place, "interface.handler");
 
 	EXPECT_EQ(handler->name(), "interface.handler");
 
