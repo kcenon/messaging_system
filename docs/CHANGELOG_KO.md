@@ -8,6 +8,21 @@
 ## [Unreleased]
 
 ### 추가됨
+- **완전한 C++20 모듈 Export 지원 (Issue #208)**
+  - 헤더와 완전한 기능 동등성을 위한 모듈 export 확장
+  - `kcenon.messaging:task`의 새로운 export:
+    - `task_context` - 핸들러를 위한 실행 컨텍스트
+    - `progress_info` - 진행 상황 업데이트 정보
+    - `task_log_entry` - 태스크 실행 중 로그 항목
+  - `kcenon.messaging:integration`의 새로운 export:
+    - `message_processor_job` - 메시지 처리를 위한 IJob 구현
+    - `message_reply_job` - request-reply 패턴을 위한 IJob
+    - `executor_message_handler` - 고수준 executor 어댑터
+  - `kcenon.messaging:core`의 새로운 export:
+    - 모든 에러 코드가 포함된 `kcenon::messaging::error` 네임스페이스
+    - 사람이 읽을 수 있는 에러 메시지를 위한 `get_error_message()`
+  - C++20 Module Migration Epic (kcenon/common_system#256)의 일부
+
 - **Transport 전용 에러 코드 (Issue #207)**
   - transport 레이어 에러 처리를 위한 새로운 에러 코드:
     - `connection_failed` (-790): 연결 실패 시

@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Complete C++20 Module Export Coverage (Issue #208)**
+  - Extended module exports for complete feature parity with headers
+  - New exports in `kcenon.messaging:task`:
+    - `task_context` - Execution context for handlers
+    - `progress_info` - Progress update information
+    - `task_log_entry` - Log entry during task execution
+  - New exports in `kcenon.messaging:integration`:
+    - `message_processor_job` - IJob implementation for message processing
+    - `message_reply_job` - IJob for request-reply pattern
+    - `executor_message_handler` - High-level executor adapter
+  - New exports in `kcenon.messaging:core`:
+    - `kcenon::messaging::error` namespace with all error codes
+    - `get_error_message()` for human-readable error messages
+  - Part of C++20 Module Migration Epic (kcenon/common_system#256)
+
 - **Transport-Specific Error Codes (Issue #207)**
   - New error codes for transport layer error handling:
     - `connection_failed` (-790): For failed connection attempts
