@@ -93,8 +93,8 @@ $(document).ready(function(){initNavTree('dd/db9/md_docs_2task_2API__REFERENCE__
   <div class="headertitle"><div class="title">Task 모듈 API 레퍼런스</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md1605"></a> Task 모듈의 완전한 API 문서입니다.</p>
-<h1><a class="anchor" id="autotoc_md1606"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md1606"></a> Task 모듈의 완전한 API 문서입니다.</p>
+<h1><a class="anchor" id="autotoc_md1607"></a>
 목차</h1>
 <ul>
 <li>task</li>
@@ -114,13 +114,13 @@ $(document).ready(function(){initNavTree('dd/db9/md_docs_2task_2API__REFERENCE__
 <li>task_system</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1608"></a>
+<h1><a class="anchor" id="autotoc_md1609"></a>
 task</h1>
 <p>비동기적으로 실행될 작업 단위를 나타냅니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/task.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1609"></a>
+<h2><a class="anchor" id="autotoc_md1610"></a>
 열거형</h2>
-<h3><a class="anchor" id="autotoc_md1610"></a>
+<h3><a class="anchor" id="autotoc_md1611"></a>
 task_state</h3>
 <div class="fragment"><div class="line"><span class="keyword">enum class</span> task_state {</div>
 <div class="line">    pending,    <span class="comment">// 큐 대기 중</span></div>
@@ -132,13 +132,13 @@ task_state</h3>
 <div class="line">    cancelled,  <span class="comment">// 사용자에 의해 취소됨</span></div>
 <div class="line">    expired     <span class="comment">// 실행 전 만료됨</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1611"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1612"></a>
 생성자</h2>
 <div class="fragment"><div class="line">task();</div>
 <div class="line">task(<span class="keyword">const</span> std::string&amp; task_name);</div>
 <div class="line">task(<span class="keyword">const</span> std::string&amp; task_name, <span class="keyword">const</span> container_module::value_container&amp; payload);</div>
 <div class="line">task(<span class="keyword">const</span> std::string&amp; task_name, std::shared_ptr&lt;container_module::value_container&gt; payload);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1612"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1613"></a>
 식별 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -148,7 +148,7 @@ task_state</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>task_name()</code>   </td><td class="markdownTableBodyNone"><code>const std::string&amp;</code>   </td><td class="markdownTableBodyNone">이 작업의 핸들러 이름 반환   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1613"></a>
+<h2><a class="anchor" id="autotoc_md1614"></a>
 상태 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -160,7 +160,7 @@ task_state</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>is_terminal_state()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">상태가 최종인지 확인 (succeeded, failed, cancelled, expired)   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1614"></a>
+<h2><a class="anchor" id="autotoc_md1615"></a>
 설정 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -170,7 +170,7 @@ task_state</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>config()</code>   </td><td class="markdownTableBodyNone"><code>task_config&amp;</code>   </td><td class="markdownTableBodyNone">작업 설정 반환 (수정 가능)   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1615"></a>
+<h2><a class="anchor" id="autotoc_md1616"></a>
 실행 추적</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -184,7 +184,7 @@ task_state</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>completed_at()</code>   </td><td class="markdownTableBodyNone"><code>const time_point&amp;</code>   </td><td class="markdownTableBodyNone">실행 완료 시간 반환   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1616"></a>
+<h2><a class="anchor" id="autotoc_md1617"></a>
 진행 상황 추적</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -198,7 +198,7 @@ task_state</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>set_progress_message(const std::string&amp;)</code>   </td><td class="markdownTableBodyNone"><code>void</code>   </td><td class="markdownTableBodyNone">진행 메시지 설정   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1617"></a>
+<h2><a class="anchor" id="autotoc_md1618"></a>
 결과/에러 처리</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -218,7 +218,7 @@ task_state</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>set_error(message, traceback)</code>   </td><td class="markdownTableBodyNone"><code>void</code>   </td><td class="markdownTableBodyNone">에러 정보 설정   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1618"></a>
+<h2><a class="anchor" id="autotoc_md1619"></a>
 재시도 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -230,7 +230,7 @@ task_state</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>get_next_retry_delay()</code>   </td><td class="markdownTableBodyNone"><code>milliseconds</code>   </td><td class="markdownTableBodyNone">백오프를 적용한 다음 재시도 지연 계산   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1619"></a>
+<h2><a class="anchor" id="autotoc_md1620"></a>
 직렬화</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -241,11 +241,11 @@ task_state</h3>
 <td class="markdownTableBodyNone"><code>deserialize(data)</code>   </td><td class="markdownTableBodyNone"><code>Result&lt;task&gt;</code>   </td><td class="markdownTableBodyNone">정적: 바이트에서 작업 역직렬화   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1621"></a>
+<h1><a class="anchor" id="autotoc_md1622"></a>
 task_config</h1>
 <p>작업 실행을 위한 설정 옵션입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/task.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1622"></a>
+<h2><a class="anchor" id="autotoc_md1623"></a>
 필드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -270,14 +270,14 @@ task_config</h1>
 <td class="markdownTableBodyNone"><code>tags</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;string&gt;</code>   </td><td class="markdownTableBodyNone">{}   </td><td class="markdownTableBodyNone">필터링용 작업 태그   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1624"></a>
+<h1><a class="anchor" id="autotoc_md1625"></a>
 task_builder</h1>
 <p>작업 구성을 위한 플루언트 빌더입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/task.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1625"></a>
+<h2><a class="anchor" id="autotoc_md1626"></a>
 생성자</h2>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> task_builder(<span class="keyword">const</span> std::string&amp; task_name);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1626"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1627"></a>
 빌더 메서드</h2>
 <p>모든 메서드는 체이닝을 위해 <code>task_builder&amp;</code>를 반환합니다.</p>
 <table class="markdownTable">
@@ -310,11 +310,11 @@ task_builder</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>tags(const vector&lt;string&gt;&amp;)</code>   </td><td class="markdownTableBodyNone">태그 목록   </td><td class="markdownTableBodyNone">여러 태그 추가   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1627"></a>
+<h2><a class="anchor" id="autotoc_md1628"></a>
 빌드 메서드</h2>
 <div class="fragment"><div class="line">common::Result&lt;task&gt; build();</div>
 </div><!-- fragment --><p>구성된 작업 또는 에러를 포함하는 <code>Result&lt;task&gt;</code>를 반환합니다.</p>
-<h2><a class="anchor" id="autotoc_md1628"></a>
+<h2><a class="anchor" id="autotoc_md1629"></a>
 예제</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> result = task_builder(<span class="stringliteral">&quot;email.send&quot;</span>)</div>
 <div class="line">    .payload(email_data)</div>
@@ -329,11 +329,11 @@ task_builder</h1>
 <div class="line">    <span class="keyword">auto</span> task = result.value();</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1630"></a>
+<h1><a class="anchor" id="autotoc_md1631"></a>
 task_handler_interface</h1>
 <p>작업 핸들러를 위한 추상 인터페이스입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/task_handler.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1631"></a>
+<h2><a class="anchor" id="autotoc_md1632"></a>
 순수 가상 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -343,7 +343,7 @@ task_handler_interface</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>execute(task, context)</code>   </td><td class="markdownTableBodyNone"><code>Result&lt;value_container&gt;</code>   </td><td class="markdownTableBodyNone">작업 실행   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1632"></a>
+<h2><a class="anchor" id="autotoc_md1633"></a>
 가상 라이프사이클 훅</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -355,7 +355,7 @@ task_handler_interface</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>on_success(task, result)</code>   </td><td class="markdownTableBodyNone">작업과 결과   </td><td class="markdownTableBodyNone">성공 시 호출   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1633"></a>
+<h2><a class="anchor" id="autotoc_md1634"></a>
 예제</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>email_handler : <span class="keyword">public</span> task_handler_interface {</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -378,7 +378,7 @@ task_handler_interface</h1>
 <div class="line">        <span class="comment">// 실패 로깅, 알림 전송 등</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1634"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1635"></a>
 헬퍼 함수</h2>
 <div class="fragment"><div class="line"><span class="comment">// 람다에서 핸들러 생성</span></div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Func&gt;</div>
@@ -386,20 +386,20 @@ task_handler_interface</h1>
 <div class="line">    <span class="keyword">const</span> std::string&amp; name,</div>
 <div class="line">    Func&amp;&amp; func);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1636"></a>
+<h1><a class="anchor" id="autotoc_md1637"></a>
 task_context</h1>
 <p>핸들러에 제공되는 실행 컨텍스트입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/task_context.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1637"></a>
+<h2><a class="anchor" id="autotoc_md1638"></a>
 구조체</h2>
-<h3><a class="anchor" id="autotoc_md1638"></a>
+<h3><a class="anchor" id="autotoc_md1639"></a>
 progress_info</h3>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>progress_info {</div>
 <div class="line">    <span class="keywordtype">double</span> progress;</div>
 <div class="line">    std::string message;</div>
 <div class="line">    std::chrono::system_clock::time_point timestamp;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1639"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1640"></a>
 task_log_entry</h3>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_log_entry {</div>
 <div class="line">    <span class="keyword">enum class</span> level { info, warning, error };</div>
@@ -407,7 +407,7 @@ task_log_entry</h3>
 <div class="line">    std::string message;</div>
 <div class="line">    std::chrono::system_clock::time_point timestamp;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1640"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1641"></a>
 진행 상황 추적</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -419,7 +419,7 @@ task_log_entry</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>progress_history()</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;progress_info&gt;</code>   </td><td class="markdownTableBodyNone">진행 기록 반환   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1641"></a>
+<h2><a class="anchor" id="autotoc_md1642"></a>
 체크포인트 관리</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -435,7 +435,7 @@ task_log_entry</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>clear_checkpoint()</code>   </td><td class="markdownTableBodyNone"><code>void</code>   </td><td class="markdownTableBodyNone">체크포인트 삭제   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1642"></a>
+<h2><a class="anchor" id="autotoc_md1643"></a>
 하위 작업 관리</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -447,7 +447,7 @@ task_log_entry</h3>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>spawned_subtask_ids()</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;string&gt;</code>   </td><td class="markdownTableBodyNone">생성된 하위 작업 ID 반환   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1643"></a>
+<h2><a class="anchor" id="autotoc_md1644"></a>
 취소</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -457,7 +457,7 @@ task_log_entry</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>request_cancellation()</code>   </td><td class="markdownTableBodyNone"><code>void</code>   </td><td class="markdownTableBodyNone">취소 요청   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1644"></a>
+<h2><a class="anchor" id="autotoc_md1645"></a>
 로깅</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -472,11 +472,11 @@ task_log_entry</h3>
 <td class="markdownTableBodyNone"><code>logs()</code>   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">모든 로그 항목 반환   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1646"></a>
+<h1><a class="anchor" id="autotoc_md1647"></a>
 task_queue</h1>
 <p>다중 명명 큐로 작업 큐잉을 관리합니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/task_queue.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1647"></a>
+<h2><a class="anchor" id="autotoc_md1648"></a>
 설정</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_queue_config {</div>
 <div class="line">    <span class="keywordtype">size_t</span> max_size = 100000;</div>
@@ -485,10 +485,10 @@ task_queue</h1>
 <div class="line">    <span class="keywordtype">bool</span> enable_delayed_queue = <span class="keyword">true</span>;</div>
 <div class="line">    std::chrono::milliseconds delayed_poll_interval{1000};</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1648"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1649"></a>
 생성자</h2>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> task_queue(<span class="keyword">const</span> task_queue_config&amp; config = {});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1649"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1650"></a>
 라이프사이클</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -500,7 +500,7 @@ task_queue</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>is_running()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">실행 중인지 확인   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1650"></a>
+<h2><a class="anchor" id="autotoc_md1651"></a>
 인큐 작업</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -510,7 +510,7 @@ task_queue</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>enqueue_bulk(vector&lt;task&gt;)</code>   </td><td class="markdownTableBodyNone"><code>Result&lt;vector&lt;string&gt;&gt;</code>   </td><td class="markdownTableBodyNone">여러 작업 추가   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1651"></a>
+<h2><a class="anchor" id="autotoc_md1652"></a>
 디큐 작업</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -520,7 +520,7 @@ task_queue</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>try_dequeue(queues)</code>   </td><td class="markdownTableBodyNone"><code>Result&lt;task&gt;</code>   </td><td class="markdownTableBodyNone">논블로킹 디큐   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1652"></a>
+<h2><a class="anchor" id="autotoc_md1653"></a>
 취소</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -530,7 +530,7 @@ task_queue</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>cancel_by_tag(tag)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">태그로 취소   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1653"></a>
+<h2><a class="anchor" id="autotoc_md1654"></a>
 쿼리 작업</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -549,11 +549,11 @@ task_queue</h1>
 <td class="markdownTableBodyNone"><code>has_queue(name)</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">큐 존재 확인   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1655"></a>
+<h1><a class="anchor" id="autotoc_md1656"></a>
 worker_pool</h1>
 <p>작업 실행을 위한 스레드 풀입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/worker_pool.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1656"></a>
+<h2><a class="anchor" id="autotoc_md1657"></a>
 설정</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>worker_config {</div>
 <div class="line">    <span class="keywordtype">size_t</span> concurrency = std::thread::hardware_concurrency();</div>
@@ -562,7 +562,7 @@ worker_pool</h1>
 <div class="line">    <span class="keywordtype">bool</span> prefetch = <span class="keyword">true</span>;</div>
 <div class="line">    <span class="keywordtype">size_t</span> prefetch_count = 10;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1657"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1658"></a>
 통계</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>worker_statistics {</div>
 <div class="line">    <span class="keywordtype">size_t</span> total_tasks_processed = 0;</div>
@@ -575,7 +575,7 @@ worker_pool</h1>
 <div class="line">    std::chrono::system_clock::time_point started_at;</div>
 <div class="line">    std::chrono::system_clock::time_point last_task_at;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1658"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1659"></a>
 핸들러 등록</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -591,7 +591,7 @@ worker_pool</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>list_handlers()</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;string&gt;</code>   </td><td class="markdownTableBodyNone">핸들러 이름 목록 반환   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1659"></a>
+<h2><a class="anchor" id="autotoc_md1660"></a>
 라이프사이클</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -603,7 +603,7 @@ worker_pool</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>shutdown_graceful(timeout)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">우아한 종료   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1660"></a>
+<h2><a class="anchor" id="autotoc_md1661"></a>
 상태</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -617,7 +617,7 @@ worker_pool</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>total_workers()</code>   </td><td class="markdownTableBodyNone"><code>size_t</code>   </td><td class="markdownTableBodyNone">전체 워커 수   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1661"></a>
+<h2><a class="anchor" id="autotoc_md1662"></a>
 통계</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -628,16 +628,16 @@ worker_pool</h1>
 <td class="markdownTableBodyNone"><code>reset_statistics()</code>   </td><td class="markdownTableBodyNone"><code>void</code>   </td><td class="markdownTableBodyNone">통계 초기화   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1663"></a>
+<h1><a class="anchor" id="autotoc_md1664"></a>
 task_client</h1>
 <p>작업 제출을 위한 고수준 API입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/task_client.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1664"></a>
+<h2><a class="anchor" id="autotoc_md1665"></a>
 생성자</h2>
 <div class="fragment"><div class="line">task_client(</div>
 <div class="line">    std::shared_ptr&lt;task_queue&gt; queue,</div>
 <div class="line">    std::shared_ptr&lt;result_backend_interface&gt; backend);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1665"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1666"></a>
 즉시 실행</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -647,7 +647,7 @@ task_client</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>send(name, payload)</code>   </td><td class="markdownTableBodyNone"><code>async_result</code>   </td><td class="markdownTableBodyNone">이름과 페이로드로 제출   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1666"></a>
+<h2><a class="anchor" id="autotoc_md1667"></a>
 지연 실행</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -657,7 +657,7 @@ task_client</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>send_at(task, time_point)</code>   </td><td class="markdownTableBodyNone"><code>async_result</code>   </td><td class="markdownTableBodyNone">특정 시간에 제출   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1667"></a>
+<h2><a class="anchor" id="autotoc_md1668"></a>
 배치 작업</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -665,7 +665,7 @@ task_client</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>send_batch(vector&lt;task&gt;)</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;async_result&gt;</code>   </td><td class="markdownTableBodyNone">여러 작업 제출   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1668"></a>
+<h2><a class="anchor" id="autotoc_md1669"></a>
 워크플로우 패턴</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -675,7 +675,7 @@ task_client</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>chord(tasks, callback)</code>   </td><td class="markdownTableBodyNone"><code>async_result</code>   </td><td class="markdownTableBodyNone">병렬 실행 후 콜백   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1669"></a>
+<h2><a class="anchor" id="autotoc_md1670"></a>
 결과/취소</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -687,7 +687,7 @@ task_client</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>cancel_by_tag(tag)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">태그로 취소   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1670"></a>
+<h2><a class="anchor" id="autotoc_md1671"></a>
 상태</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -698,11 +698,11 @@ task_client</h1>
 <td class="markdownTableBodyNone"><code>is_connected()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">연결 상태 확인   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1672"></a>
+<h1><a class="anchor" id="autotoc_md1673"></a>
 async_result</h1>
 <p>비동기 작업 결과를 위한 핸들입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/async_result.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1673"></a>
+<h2><a class="anchor" id="autotoc_md1674"></a>
 상태 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -722,7 +722,7 @@ async_result</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>is_cancelled()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">취소 여부 확인   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1674"></a>
+<h2><a class="anchor" id="autotoc_md1675"></a>
 진행 상황 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -732,7 +732,7 @@ async_result</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>progress_message()</code>   </td><td class="markdownTableBodyNone"><code>string</code>   </td><td class="markdownTableBodyNone">진행 메시지 반환   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1675"></a>
+<h2><a class="anchor" id="autotoc_md1676"></a>
 블로킹 결과 조회</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -742,12 +742,12 @@ async_result</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>wait(timeout)</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">완료 대기   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1676"></a>
+<h2><a class="anchor" id="autotoc_md1677"></a>
 콜백 기반</h2>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> then(</div>
 <div class="line">    std::function&lt;<span class="keywordtype">void</span>(<span class="keyword">const</span> value_container&amp;)&gt; on_success,</div>
 <div class="line">    std::function&lt;<span class="keywordtype">void</span>(<span class="keyword">const</span> std::string&amp;)&gt; on_failure = <span class="keyword">nullptr</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1677"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1678"></a>
 작업 제어</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -764,11 +764,11 @@ async_result</h1>
 <td class="markdownTableBodyNone"><code>error_traceback()</code>   </td><td class="markdownTableBodyNone"><code>string</code>   </td><td class="markdownTableBodyNone">에러 트레이스백 반환   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1679"></a>
+<h1><a class="anchor" id="autotoc_md1680"></a>
 result_backend_interface</h1>
 <p>결과 저장을 위한 추상 인터페이스입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/result_backend.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1680"></a>
+<h2><a class="anchor" id="autotoc_md1681"></a>
 구조체</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>progress_data {</div>
 <div class="line">    <span class="keywordtype">double</span> progress{0.0};</div>
@@ -781,7 +781,7 @@ result_backend_interface</h1>
 <div class="line">    std::string traceback;</div>
 <div class="line">    std::chrono::system_clock::time_point occurred_at;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1681"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1682"></a>
 순수 가상 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -807,7 +807,7 @@ result_backend_interface</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>cleanup_expired(max_age)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">오래된 항목 정리   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1682"></a>
+<h2><a class="anchor" id="autotoc_md1683"></a>
 선택적 가상 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -820,14 +820,14 @@ result_backend_interface</h1>
 <td class="markdownTableBodyNone"><code>size()</code>   </td><td class="markdownTableBodyNone"><code>size_t</code>   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">항목 수 반환   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1684"></a>
+<h1><a class="anchor" id="autotoc_md1685"></a>
 memory_result_backend</h1>
 <p>result_backend_interface의 인메모리 구현입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/memory_result_backend.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1685"></a>
+<h2><a class="anchor" id="autotoc_md1686"></a>
 생성자</h2>
 <div class="fragment"><div class="line">memory_result_backend();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1686"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1687"></a>
 추가 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -837,11 +837,11 @@ memory_result_backend</h1>
 </table>
 <p><code>result_backend_interface</code>의 모든 메서드가 구현되어 있습니다.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1688"></a>
+<h1><a class="anchor" id="autotoc_md1689"></a>
 task_scheduler</h1>
 <p>주기적 및 cron 기반 작업 스케줄링을 관리합니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/scheduler.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1689"></a>
+<h2><a class="anchor" id="autotoc_md1690"></a>
 구조체</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>schedule_entry {</div>
 <div class="line">    std::string name;</div>
@@ -858,10 +858,10 @@ task_scheduler</h1>
 <div class="line">    std::string cron_expression() <span class="keyword">const</span>;</div>
 <div class="line">    std::chrono::seconds interval() <span class="keyword">const</span>;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1690"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1691"></a>
 생성자</h2>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> task_scheduler(task_client&amp; client);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1691"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1692"></a>
 스케줄 등록</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -871,7 +871,7 @@ task_scheduler</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>add_cron(name, task, expression)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">cron 스케줄 추가   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1692"></a>
+<h2><a class="anchor" id="autotoc_md1693"></a>
 스케줄 관리</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -889,7 +889,7 @@ task_scheduler</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>update_cron(name, expression)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">cron 표현식 업데이트   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1693"></a>
+<h2><a class="anchor" id="autotoc_md1694"></a>
 라이프사이클</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -901,7 +901,7 @@ task_scheduler</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>is_running()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">실행 중인지 확인   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1694"></a>
+<h2><a class="anchor" id="autotoc_md1695"></a>
 쿼리</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -915,18 +915,18 @@ task_scheduler</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>has_schedule(name)</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">스케줄 존재 확인   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1695"></a>
+<h2><a class="anchor" id="autotoc_md1696"></a>
 이벤트 콜백</h2>
 <div class="fragment"><div class="line"><span class="keyword">using </span>schedule_callback = std::function&lt;void(<span class="keyword">const</span> schedule_entry&amp;)&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> on_task_executed(schedule_callback callback);</div>
 <div class="line"><span class="keywordtype">void</span> on_task_failed(schedule_callback callback);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1697"></a>
+<h1><a class="anchor" id="autotoc_md1698"></a>
 cron_parser</h1>
 <p>Cron 표현식 파싱 및 평가를 위한 유틸리티입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/cron_parser.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1698"></a>
+<h2><a class="anchor" id="autotoc_md1699"></a>
 Cron 표현식 형식</h2>
 <div class="fragment"><div class="line">* * * * *</div>
 <div class="line">│ │ │ │ │</div>
@@ -935,7 +935,7 @@ Cron 표현식 형식</h2>
 <div class="line">│ │ └───── 일 (1-31)</div>
 <div class="line">│ └─────── 시 (0-23)</div>
 <div class="line">└───────── 분 (0-59)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1699"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1700"></a>
 지원 구문</h2>
 <ul>
 <li><code>*</code> - 모든 값</li>
@@ -944,7 +944,7 @@ Cron 표현식 형식</h2>
 <li><code>1-5</code> - 범위</li>
 <li><code>1,3,5</code> - 목록</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md1700"></a>
+<h2><a class="anchor" id="autotoc_md1701"></a>
 구조체</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>cron_expression {</div>
 <div class="line">    std::set&lt;int&gt; minutes;   <span class="comment">// 0-59</span></div>
@@ -953,7 +953,7 @@ Cron 표현식 형식</h2>
 <div class="line">    std::set&lt;int&gt; months;    <span class="comment">// 1-12</span></div>
 <div class="line">    std::set&lt;int&gt; weekdays;  <span class="comment">// 0-6</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1701"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1702"></a>
 정적 메서드</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -967,7 +967,7 @@ Cron 표현식 형식</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>to_string(expr)</code>   </td><td class="markdownTableBodyNone"><code>string</code>   </td><td class="markdownTableBodyNone">문자열로 변환   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1702"></a>
+<h2><a class="anchor" id="autotoc_md1703"></a>
 예제</h2>
 <div class="fragment"><div class="line"><span class="comment">// 매 시간 0분에 실행</span></div>
 <div class="line"><span class="keyword">auto</span> expr = cron_parser::parse(<span class="stringliteral">&quot;0 * * * *&quot;</span>).value();</div>
@@ -981,11 +981,11 @@ Cron 표현식 형식</h2>
 <div class="line"><span class="comment">// 평일 오전 9시에 실행</span></div>
 <div class="line"><span class="keyword">auto</span> expr = cron_parser::parse(<span class="stringliteral">&quot;0 9 * * 1-5&quot;</span>).value();</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1704"></a>
+<h1><a class="anchor" id="autotoc_md1705"></a>
 task_monitor</h1>
 <p>시스템 모니터링 및 이벤트 구독입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/monitor.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1705"></a>
+<h2><a class="anchor" id="autotoc_md1706"></a>
 구조체</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>queue_stats {</div>
 <div class="line">    std::string name;</div>
@@ -1001,12 +1001,12 @@ task_monitor</h1>
 <div class="line">    std::chrono::system_clock::time_point last_heartbeat;</div>
 <div class="line">    <span class="keywordtype">bool</span> is_healthy = <span class="keyword">true</span>;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1706"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1707"></a>
 생성자</h2>
 <div class="fragment"><div class="line">task_monitor(</div>
 <div class="line">    std::shared_ptr&lt;task_queue&gt; queue,</div>
 <div class="line">    worker_pool* workers);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1707"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1708"></a>
 큐 통계</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1016,7 +1016,7 @@ task_monitor</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>get_queue_stats(name)</code>   </td><td class="markdownTableBodyNone"><code>Result&lt;queue_stats&gt;</code>   </td><td class="markdownTableBodyNone">특정 큐 통계   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1708"></a>
+<h2><a class="anchor" id="autotoc_md1709"></a>
 워커 상태</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1026,7 +1026,7 @@ task_monitor</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>get_worker_statistics()</code>   </td><td class="markdownTableBodyNone"><code>optional&lt;worker_statistics&gt;</code>   </td><td class="markdownTableBodyNone">워커 풀 통계   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1709"></a>
+<h2><a class="anchor" id="autotoc_md1710"></a>
 작업 쿼리</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1038,7 +1038,7 @@ task_monitor</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>list_failed_tasks(limit)</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;task&gt;</code>   </td><td class="markdownTableBodyNone">실패한 작업   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1710"></a>
+<h2><a class="anchor" id="autotoc_md1711"></a>
 작업 관리</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1050,7 +1050,7 @@ task_monitor</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>purge_queue(name)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">큐 비우기   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1711"></a>
+<h2><a class="anchor" id="autotoc_md1712"></a>
 이벤트 구독</h2>
 <div class="fragment"><div class="line"><span class="keyword">using </span>task_started_handler = std::function&lt;void(<span class="keyword">const</span> task&amp;)&gt;;</div>
 <div class="line"><span class="keyword">using </span>task_completed_handler = std::function&lt;void(<span class="keyword">const</span> task&amp;, <span class="keywordtype">bool</span> success)&gt;;</div>
@@ -1062,11 +1062,11 @@ task_monitor</h1>
 <div class="line"><span class="keywordtype">void</span> on_task_failed(task_failed_handler handler);</div>
 <div class="line"><span class="keywordtype">void</span> on_worker_offline(worker_offline_handler handler);</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md1713"></a>
+<h1><a class="anchor" id="autotoc_md1714"></a>
 task_system</h1>
 <p>모든 작업 컴포넌트를 통합하는 통합 파사드입니다.</p>
 <p><b>헤더:</b> <code>&lt;kcenon/messaging/task/task_system.h&gt;</code></p>
-<h2><a class="anchor" id="autotoc_md1714"></a>
+<h2><a class="anchor" id="autotoc_md1715"></a>
 설정</h2>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>task_system_config {</div>
 <div class="line">    task_queue_config queue;</div>
@@ -1075,10 +1075,10 @@ task_system</h1>
 <div class="line">    <span class="keywordtype">bool</span> enable_monitoring = <span class="keyword">true</span>;</div>
 <div class="line">    std::string result_backend_type = <span class="stringliteral">&quot;memory&quot;</span>;</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1715"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1716"></a>
 생성자</h2>
 <div class="fragment"><div class="line"><span class="keyword">explicit</span> task_system(<span class="keyword">const</span> task_system_config&amp; config = {});</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1716"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1717"></a>
 라이프사이클</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1092,7 +1092,7 @@ task_system</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>is_running()</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">실행 중인지 확인   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1717"></a>
+<h2><a class="anchor" id="autotoc_md1718"></a>
 컴포넌트 접근</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1110,7 +1110,7 @@ task_system</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>results()</code>   </td><td class="markdownTableBodyNone"><code>shared_ptr&lt;result_backend&gt;</code>   </td><td class="markdownTableBodyNone">결과 백엔드 반환   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1718"></a>
+<h2><a class="anchor" id="autotoc_md1719"></a>
 핸들러 등록 (편의 메서드)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1122,7 +1122,7 @@ task_system</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>unregister_handler(name)</code>   </td><td class="markdownTableBodyNone"><code>bool</code>   </td><td class="markdownTableBodyNone">핸들러 등록 해제   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1719"></a>
+<h2><a class="anchor" id="autotoc_md1720"></a>
 작업 제출 (편의 메서드)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1136,7 +1136,7 @@ task_system</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>submit_batch(tasks)</code>   </td><td class="markdownTableBodyNone"><code>vector&lt;async_result&gt;</code>   </td><td class="markdownTableBodyNone">배치 제출   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1720"></a>
+<h2><a class="anchor" id="autotoc_md1721"></a>
 스케줄링 (편의 메서드)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1146,7 +1146,7 @@ task_system</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>schedule_cron(name, task, expression)</code>   </td><td class="markdownTableBodyNone"><code>VoidResult</code>   </td><td class="markdownTableBodyNone">cron 추가   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md1721"></a>
+<h2><a class="anchor" id="autotoc_md1722"></a>
 통계</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1161,7 +1161,7 @@ task_system</h1>
 <td class="markdownTableBodyNone"><code>total_workers()</code>   </td><td class="markdownTableBodyNone"><code>size_t</code>   </td><td class="markdownTableBodyNone">전체 워커 수   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md1723"></a>
+<h1><a class="anchor" id="autotoc_md1724"></a>
 관련 문서</h1>
 <ul>
 <li><a class="el" href="../../da/dee/md_docs_2task_2QUICK__START__KO.html">빠른 시작 가이드</a></li>

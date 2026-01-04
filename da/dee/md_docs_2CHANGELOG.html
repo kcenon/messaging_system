@@ -188,15 +188,27 @@ Added</h2>
 <ul>
 <li><b>CRTP-Based Message Handler Pattern (Issue #209)</b><ul>
 <li>Zero-overhead polymorphism for message handlers via CRTP</li>
-<li>New header files:<ul>
-<li><code>message_handler_base.h</code> - CRTP base class with compile-time dispatch</li>
-<li><code>message_handler_wrapper.h</code> - Type erasure for heterogeneous containers</li>
-<li><code>handlers/topic_handler.h</code> - Concrete CRTP handlers (topic, event, priority, command)</li>
+<li>CRTP base classes:<ul>
+<li><code>message_handler_base&lt;Derived&gt;</code> - CRTP template for message handlers</li>
+<li><code>task_handler_base&lt;Derived&gt;</code> - CRTP template for task handlers</li>
 </ul>
 </li>
-<li>C++20 concept constraints (<code>message_handler_concept</code>) for compile-time verification</li>
-<li>Factory functions: <code>make_handler&lt;T&gt;()</code>, <code>make_shared_handler&lt;T&gt;()</code></li>
-<li>Backward compatible with existing <code>message_handler_interface</code></li>
+<li>Type erasure wrappers for heterogeneous containers:<ul>
+<li><code>message_handler_wrapper&lt;Handler&gt;</code> - Wraps CRTP handlers as interface</li>
+<li><code>task_handler_wrapper&lt;Handler&gt;</code> - Wraps CRTP task handlers as interface</li>
+</ul>
+</li>
+<li>C++20 concept constraints for compile-time verification:<ul>
+<li><code>MessageHandlerConcept</code> - Validates CRTP message handlers</li>
+<li><code>TaskHandlerCRTPConcept</code> - Validates CRTP task handlers</li>
+</ul>
+</li>
+<li>Factory functions:<ul>
+<li><code>make_message_handler&lt;Handler&gt;()</code> - Creates wrapped message handlers</li>
+<li><code>make_crtp_task_handler&lt;Handler&gt;()</code> - Creates wrapped task handlers</li>
+</ul>
+</li>
+<li>Backward compatible with existing interfaces</li>
 <li>Part of Foundation System Improvements Integration Epic (#210)</li>
 </ul>
 </li>

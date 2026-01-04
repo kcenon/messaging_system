@@ -1,5 +1,6 @@
 var NAVTREEINDEX7 =
 {
+"df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md107":[4,2,1,0],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md108":[4,2,1,1],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md109":[4,2,1,1,0],
 "df/dde/md_docs_2advanced_2PATTERNS__API.html#autotoc_md110":[4,2,1,1,1],

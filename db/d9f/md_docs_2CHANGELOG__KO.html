@@ -182,6 +182,36 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 <li>Foundation System Improvements Integration Epic (#210)의 일부</li>
 </ul>
 </li>
+</ul>
+<h2><a class="anchor" id="autotoc_md578"></a>
+추가됨</h2>
+<ul>
+<li><b>CRTP 기반 메시지 핸들러 패턴 (Issue #209)</b><ul>
+<li>CRTP를 통한 제로 오버헤드 다형성 지원</li>
+<li>CRTP 베이스 클래스:<ul>
+<li><code>message_handler_base&lt;Derived&gt;</code> - 메시지 핸들러용 CRTP 템플릿</li>
+<li><code>task_handler_base&lt;Derived&gt;</code> - 태스크 핸들러용 CRTP 템플릿</li>
+</ul>
+</li>
+<li>이종 컨테이너를 위한 Type Erasure 래퍼:<ul>
+<li><code>message_handler_wrapper&lt;Handler&gt;</code> - CRTP 핸들러를 인터페이스로 래핑</li>
+<li><code>task_handler_wrapper&lt;Handler&gt;</code> - CRTP 태스크 핸들러를 인터페이스로 래핑</li>
+</ul>
+</li>
+<li>컴파일 타임 검증을 위한 C++20 concept:<ul>
+<li><code>MessageHandlerConcept</code> - CRTP 메시지 핸들러 검증</li>
+<li><code>TaskHandlerCRTPConcept</code> - CRTP 태스크 핸들러 검증</li>
+</ul>
+</li>
+<li>팩토리 함수:<ul>
+<li><code>make_message_handler&lt;Handler&gt;()</code> - 래핑된 메시지 핸들러 생성</li>
+<li><code>make_crtp_task_handler&lt;Handler&gt;()</code> - 래핑된 태스크 핸들러 생성</li>
+</ul>
+</li>
+<li>기존 인터페이스와 하위 호환</li>
+<li>Foundation System Improvements Integration Epic (#210)의 일부</li>
+</ul>
+</li>
 <li><b>Task-Message 컴포지션 리팩토링 (Issue #192)</b><ul>
 <li><code>task</code>의 <code>message</code> 상속을 컴포지션 패턴으로 변경</li>
 <li>주요 아키텍처 변경사항:<ul>
@@ -209,7 +239,7 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md578"></a>
+<h2><a class="anchor" id="autotoc_md579"></a>
 추가됨</h2>
 <ul>
 <li><b>메시지 브로커 문서화 (Issue #184)</b><ul>
@@ -231,7 +261,7 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md579"></a>
+<h2><a class="anchor" id="autotoc_md580"></a>
 수정됨</h2>
 <ul>
 <li><b>HTTP Transport 빌드 오류 (PR #186)</b><ul>
@@ -241,7 +271,7 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md580"></a>
+<h2><a class="anchor" id="autotoc_md581"></a>
 추가됨</h2>
 <ul>
 <li><b>멀티시스템 메시징 통합 테스트 강화 (Issue #161)</b><ul>
@@ -362,7 +392,7 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md581"></a>
+<h2><a class="anchor" id="autotoc_md582"></a>
 수정됨</h2>
 <ul>
 <li><code>task</code>: task_queue 조회를 위해 metadata.id와 task_id 동기화</li>
@@ -373,7 +403,7 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md582"></a>
+<h2><a class="anchor" id="autotoc_md583"></a>
 변경됨</h2>
 <ul>
 <li>CMake 설정에서 fmt 라이브러리 참조 제거<ul>
@@ -382,16 +412,16 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md583"></a>
+<h2><a class="anchor" id="autotoc_md584"></a>
 추가됨</h2>
 <ul>
 <li>문서 구조 표준화</li>
 <li>한국어 문서 지원</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md585"></a>
+<h1><a class="anchor" id="autotoc_md586"></a>
 [1.0.0] - 2025-11-17</h1>
-<h2><a class="anchor" id="autotoc_md586"></a>
+<h2><a class="anchor" id="autotoc_md587"></a>
 추가됨</h2>
 <ul>
 <li><b>핵심 메시징 인프라</b><ul>
@@ -427,7 +457,7 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md587"></a>
+<h2><a class="anchor" id="autotoc_md588"></a>
 의존성</h2>
 <ul>
 <li>common_system: Result&lt;T&gt;, 인터페이스</li>
@@ -438,16 +468,16 @@ $(document).ready(function(){initNavTree('db/d9f/md_docs_2CHANGELOG__KO.html','.
 <li>network_system: 네트워크 전송</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md589"></a>
+<h1><a class="anchor" id="autotoc_md590"></a>
 [0.9.0] - 2025-10-20</h1>
-<h2><a class="anchor" id="autotoc_md590"></a>
+<h2><a class="anchor" id="autotoc_md591"></a>
 추가됨</h2>
 <ul>
 <li>초기 메시지 버스 구현</li>
 <li>기본 pub/sub 패턴</li>
 <li>와일드카드 토픽 라우팅</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md591"></a>
+<h2><a class="anchor" id="autotoc_md592"></a>
 변경됨</h2>
 <ul>
 <li>CMake FetchContent로 마이그레이션</li>
