@@ -15,6 +15,7 @@
 #include <kcenon/messaging/task/task.h>
 #include <kcenon/messaging/task/result_backend.h>
 #include <kcenon/common/patterns/result.h>
+#include <kcenon/common/interfaces/executor_interface.h>
 
 #include <atomic>
 #include <chrono>
@@ -70,10 +71,15 @@ public:
 	 * @brief Construct an async result handle
 	 * @param task_id Unique identifier of the submitted task
 	 * @param backend Shared pointer to the result backend
+	 * @param executor Optional executor for callback monitoring (recommended)
+	 *
+	 * If executor is provided, callback monitoring uses it for background tasks.
+	 * If not provided, falls back to std::thread.
 	 */
 	async_result(
 		std::string task_id,
-		std::shared_ptr<result_backend_interface> backend
+		std::shared_ptr<result_backend_interface> backend,
+		std::shared_ptr<common::interfaces::IExecutor> executor = nullptr
 	);
 
 	/**
@@ -255,6 +261,7 @@ private:
 
 	std::string task_id_;
 	std::shared_ptr<result_backend_interface> backend_;
+	std::shared_ptr<common::interfaces::IExecutor> executor_;
 
 	// Thread-safe callback management
 	mutable std::mutex mutex_;
