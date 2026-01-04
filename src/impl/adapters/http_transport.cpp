@@ -114,7 +114,7 @@ public:
 	VoidResult send(const message& msg) {
 		if (!is_connected()) {
 			return VoidResult::err(error_info(
-				error::broker_unavailable,
+				error::not_connected,
 				"HTTP transport is not connected"));
 		}
 
@@ -130,7 +130,7 @@ public:
 	VoidResult send_binary(const std::vector<uint8_t>& data) {
 		if (!is_connected()) {
 			return VoidResult::err(error_info(
-				error::broker_unavailable,
+				error::not_connected,
 				"HTTP transport is not connected"));
 		}
 
@@ -198,7 +198,7 @@ public:
 	Result<message> post(const std::string& endpoint, const message& msg) {
 		if (!is_connected()) {
 			return Result<message>::err(error_info(
-				error::broker_unavailable,
+				error::not_connected,
 				"HTTP transport is not connected"));
 		}
 
@@ -210,7 +210,7 @@ public:
 		const std::map<std::string, std::string>& query) {
 		if (!is_connected()) {
 			return Result<message>::err(error_info(
-				error::broker_unavailable,
+				error::not_connected,
 				"HTTP transport is not connected"));
 		}
 
