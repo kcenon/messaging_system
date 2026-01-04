@@ -26,6 +26,25 @@ using namespace kcenon::common;
 // Note: We don't use 'using namespace kcenon::network' to avoid
 // VoidResult ambiguity between common::VoidResult and network::VoidResult
 
+// Simple IJob wrapper for reconnect tasks
+class reconnect_job : public common::interfaces::IJob {
+public:
+	explicit reconnect_job(std::function<void()> func)
+		: func_(std::move(func)) {
+	}
+
+	common::VoidResult execute() override {
+		func_();
+		return common::ok();
+	}
+
+	std::string get_name() const override { return "websocket_reconnect_job"; }
+	int get_priority() const override { return 0; }
+
+private:
+	std::function<void()> func_;
+};
+
 // ============================================================================
 // websocket_transport::impl
 // ============================================================================
@@ -430,7 +449,7 @@ private:
 	void schedule_reconnect() {
 		++reconnect_attempts_;
 
-		std::thread([this]() {
+		auto reconnect_func = [this]() {
 			std::this_thread::sleep_for(current_reconnect_delay_);
 
 			// Apply exponential backoff
@@ -479,7 +498,20 @@ private:
 					schedule_reconnect();
 				}
 			}
-		}).detach();
+		};
+
+		if (config_.executor && config_.executor->is_running()) {
+			// Use executor (preferred)
+			auto job = std::make_unique<reconnect_job>(std::move(reconnect_func));
+			auto result = config_.executor->execute(std::move(job));
+			if (!result.is_ok()) {
+				// If executor fails, fall back to std::thread
+				std::thread(reconnect_func).detach();
+			}
+		} else {
+			// Fallback to std::thread for backward compatibility
+			std::thread(std::move(reconnect_func)).detach();
+		}
 	}
 
 	void resubscribe_all() {

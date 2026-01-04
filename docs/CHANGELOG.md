@@ -7,7 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **IExecutor Interface Integration into Backends (Issue #206)**
+  - Integrated `IExecutor` interface from `common_system` into messaging backends
+  - Key changes:
+    - `task_client`: Added optional `executor` parameter to constructor
+      - `chain()` and `chord()` now use executor for background tasks
+      - Falls back to `std::thread` when executor is not provided
+    - `async_result`: Added optional `executor` parameter to constructor
+      - `start_callback_monitor()` now uses executor for callback monitoring
+      - Falls back to `std::thread` when executor is not provided
+    - `websocket_transport_config`: Added optional `executor` field
+      - `schedule_reconnect()` now uses executor for reconnection tasks
+      - Falls back to `std::thread` when executor is not provided
+    - `messaging_di_container`: Added executor helper functions
+      - `register_executor()`: Register IExecutor with global DI container
+      - `resolve_executor()`: Resolve registered executor
+      - `has_executor()`: Check if executor is registered
+  - Benefits:
+    - Consistent thread management across messaging components
+    - Better integration with thread_system's thread pool
+    - Reduced direct std::thread usage in backend code
+    - Backward compatible (executor is optional, falls back to std::thread)
+  - Part of Foundation System Improvements Integration Epic (#210)
+
 ### Added
+- **CRTP-Based Message Handler Pattern (Issue #209)**
+  - Zero-overhead polymorphism for message handlers via CRTP
+  - New header files:
+    - `message_handler_base.h` - CRTP base class with compile-time dispatch
+    - `message_handler_wrapper.h` - Type erasure for heterogeneous containers
+    - `handlers/topic_handler.h` - Concrete CRTP handlers (topic, event, priority, command)
+  - C++20 concept constraints (`message_handler_concept`) for compile-time verification
+  - Factory functions: `make_handler<T>()`, `make_shared_handler<T>()`
+  - Backward compatible with existing `message_handler_interface`
+  - Part of Foundation System Improvements Integration Epic (#210)
+
 - **C++20 Module Support (Issue #204)**
   - Added C++20 module files for `kcenon.messaging`
   - Module partitions:

@@ -67,4 +67,47 @@ public:
  */
 messaging_di_container& get_global_container();
 
+// ============================================================================
+// Executor Helper Functions
+// ============================================================================
+
+/**
+ * @brief Register an executor with the global DI container
+ * @param executor The executor to register
+ *
+ * This is a convenience function for registering an IExecutor.
+ * The executor can then be resolved and passed to components like
+ * task_client, async_result, and websocket_transport.
+ *
+ * Example:
+ * @code
+ * auto pool = std::make_shared<kcenon::thread::thread_pool>();
+ * pool->start();
+ * register_executor(pool);
+ *
+ * // Later, in component creation:
+ * auto executor = resolve_executor();
+ * task_client client(queue, backend, executor);
+ * @endcode
+ */
+inline void register_executor(std::shared_ptr<common::interfaces::IExecutor> executor) {
+    get_global_container().register_service<common::interfaces::IExecutor>(std::move(executor));
+}
+
+/**
+ * @brief Resolve the registered executor from the global DI container
+ * @return The registered executor, or nullptr if not registered
+ */
+inline std::shared_ptr<common::interfaces::IExecutor> resolve_executor() {
+    return get_global_container().resolve<common::interfaces::IExecutor>();
+}
+
+/**
+ * @brief Check if an executor is registered
+ * @return true if an executor is registered
+ */
+inline bool has_executor() {
+    return get_global_container().has_service<common::interfaces::IExecutor>();
+}
+
 } // namespace kcenon::messaging::di

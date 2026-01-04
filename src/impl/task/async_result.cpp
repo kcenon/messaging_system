@@ -8,21 +8,44 @@
 
 namespace kcenon::messaging::task {
 
+// Simple IJob wrapper for lambda functions
+class callback_monitor_job : public common::interfaces::IJob {
+public:
+	explicit callback_monitor_job(std::function<void()> func)
+		: func_(std::move(func)) {
+	}
+
+	common::VoidResult execute() override {
+		func_();
+		return common::ok();
+	}
+
+	std::string get_name() const override { return "async_result_callback_monitor"; }
+	int get_priority() const override { return 0; }
+
+private:
+	std::function<void()> func_;
+};
+
 async_result::async_result(
 	std::string task_id,
-	std::shared_ptr<result_backend_interface> backend)
+	std::shared_ptr<result_backend_interface> backend,
+	std::shared_ptr<common::interfaces::IExecutor> executor)
 	: task_id_(std::move(task_id))
-	, backend_(std::move(backend)) {
+	, backend_(std::move(backend))
+	, executor_(std::move(executor)) {
 }
 
 async_result::async_result()
 	: task_id_()
-	, backend_(nullptr) {
+	, backend_(nullptr)
+	, executor_(nullptr) {
 }
 
 async_result::async_result(const async_result& other)
 	: task_id_(other.task_id_)
 	, backend_(other.backend_)
+	, executor_(other.executor_)
 	, callback_invoked_(other.callback_invoked_.load())
 	, callback_monitor_started_(false) {
 	std::lock_guard<std::mutex> lock(other.mutex_);
@@ -34,6 +57,7 @@ async_result::async_result(const async_result& other)
 async_result::async_result(async_result&& other) noexcept
 	: task_id_(std::move(other.task_id_))
 	, backend_(std::move(other.backend_))
+	, executor_(std::move(other.executor_))
 	, callback_invoked_(other.callback_invoked_.load())
 	, callback_monitor_started_(other.callback_monitor_started_.load()) {
 	std::lock_guard<std::mutex> lock(other.mutex_);
@@ -48,6 +72,7 @@ async_result& async_result::operator=(const async_result& other) {
 		std::lock_guard<std::mutex> lock2(other.mutex_);
 		task_id_ = other.task_id_;
 		backend_ = other.backend_;
+		executor_ = other.executor_;
 		success_callback_ = other.success_callback_;
 		failure_callback_ = other.failure_callback_;
 		callback_invoked_ = other.callback_invoked_.load();
@@ -63,6 +88,7 @@ async_result& async_result::operator=(async_result&& other) noexcept {
 		std::lock_guard<std::mutex> lock2(other.mutex_);
 		task_id_ = std::move(other.task_id_);
 		backend_ = std::move(other.backend_);
+		executor_ = std::move(other.executor_);
 		success_callback_ = std::move(other.success_callback_);
 		failure_callback_ = std::move(other.failure_callback_);
 		callback_invoked_ = other.callback_invoked_.load();
@@ -275,12 +301,12 @@ void async_result::start_callback_monitor() {
 		return;  // Already started
 	}
 
-	// Start a detached thread to monitor task completion
+	// Capture necessary data for the monitoring task
 	std::string task_id_copy = task_id_;
 	auto backend_copy = backend_;
 	auto* self = this;
 
-	std::thread([task_id_copy, backend_copy, self]() {
+	auto monitor_func = [task_id_copy, backend_copy, self]() {
 		const auto poll_interval = std::chrono::milliseconds(100);
 		const auto max_wait = std::chrono::hours(24);  // Safety limit
 		auto start = std::chrono::steady_clock::now();
@@ -305,7 +331,20 @@ void async_result::start_callback_monitor() {
 
 			std::this_thread::sleep_for(poll_interval);
 		}
-	}).detach();
+	};
+
+	if (executor_ && executor_->is_running()) {
+		// Use executor (preferred)
+		auto job = std::make_unique<callback_monitor_job>(std::move(monitor_func));
+		auto result = executor_->execute(std::move(job));
+		if (!result.is_ok()) {
+			// If executor fails, fall back to std::thread
+			std::thread(monitor_func).detach();
+		}
+	} else {
+		// Fallback to std::thread for backward compatibility
+		std::thread(std::move(monitor_func)).detach();
+	}
 }
 
 }  // namespace kcenon::messaging::task

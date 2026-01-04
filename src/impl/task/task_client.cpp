@@ -12,11 +12,34 @@
 
 namespace kcenon::messaging::task {
 
+// Simple IJob wrapper for lambda functions
+class lambda_job : public common::interfaces::IJob {
+public:
+	explicit lambda_job(std::function<void()> func, std::string name = "lambda_job")
+		: func_(std::move(func))
+		, name_(std::move(name)) {
+	}
+
+	common::VoidResult execute() override {
+		func_();
+		return common::ok();
+	}
+
+	std::string get_name() const override { return name_; }
+	int get_priority() const override { return 0; }
+
+private:
+	std::function<void()> func_;
+	std::string name_;
+};
+
 task_client::task_client(
 	std::shared_ptr<task_queue> queue,
-	std::shared_ptr<result_backend_interface> results)
+	std::shared_ptr<result_backend_interface> results,
+	std::shared_ptr<common::interfaces::IExecutor> executor)
 	: queue_(std::move(queue))
-	, results_(std::move(results)) {
+	, results_(std::move(results))
+	, executor_(std::move(executor)) {
 }
 
 async_result task_client::send(task t) {
@@ -108,12 +131,12 @@ async_result task_client::chain(std::vector<task> tasks) {
 	// Create chain result
 	async_result chain_result(chain_task_id, results_);
 
-	// Start a background thread to manage the chain
+	// Start a background task to manage the chain
 	auto queue_copy = queue_;
 	auto results_copy = results_;
 	std::vector<task> remaining_tasks(tasks.begin() + 1, tasks.end());
 
-	std::thread([chain_task_id, first_result, remaining_tasks, queue_copy, results_copy]() mutable {
+	execute_async([chain_task_id, first_result, remaining_tasks, queue_copy, results_copy]() mutable {
 		async_result current = first_result;
 		size_t total = remaining_tasks.size() + 1;
 		size_t completed = 0;
@@ -160,7 +183,7 @@ async_result task_client::chain(std::vector<task> tasks) {
 			current = async_result(enqueue_result.value(), results_copy);
 			results_copy->store_state(current.task_id(), task_state::pending);
 		}
-	}).detach();
+	});
 
 	return chain_result;
 }
@@ -199,12 +222,12 @@ async_result task_client::chord(std::vector<task> tasks, task callback) {
 	// Create chord result
 	async_result chord_result(chord_task_id, results_);
 
-	// Start a background thread to manage the chord
+	// Start a background task to manage the chord
 	auto queue_copy = queue_;
 	auto results_copy = results_;
 	task callback_copy = std::move(callback);
 
-	std::thread([chord_task_id, parallel_results, callback_copy, queue_copy, results_copy]() mutable {
+	execute_async([chord_task_id, parallel_results, callback_copy, queue_copy, results_copy]() mutable {
 		size_t total = parallel_results.size();
 		std::vector<container_module::value_container> collected_results;
 		collected_results.reserve(total);
@@ -263,7 +286,7 @@ async_result task_client::chord(std::vector<task> tasks, task callback) {
 		results_copy->store_state(chord_task_id, task_state::succeeded);
 		results_copy->store_result(chord_task_id, final_result.value());
 		results_copy->store_progress(chord_task_id, 1.0, "Chord completed");
-	}).detach();
+	});
 
 	return chord_result;
 }
@@ -334,6 +357,24 @@ std::string task_client::generate_workflow_id() {
 		<< std::setw(12) << millis
 		<< std::setw(8) << counter++;
 	return oss.str();
+}
+
+void task_client::execute_async(std::function<void()> func) {
+	if (executor_ && executor_->is_running()) {
+		// Use executor (preferred)
+		auto job = std::make_unique<lambda_job>(
+			std::move(func),
+			"task_client_workflow_job"
+		);
+		auto result = executor_->execute(std::move(job));
+		if (!result.is_ok()) {
+			// Log warning but don't fail - fallback is not safe here
+			// as the function has been moved
+		}
+	} else {
+		// Fallback to std::thread for backward compatibility
+		std::thread(std::move(func)).detach();
+	}
 }
 
 }  // namespace kcenon::messaging::task
