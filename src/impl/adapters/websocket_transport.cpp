@@ -14,6 +14,7 @@
 #include <kcenon/messaging/error/error_codes.h>
 #include <kcenon/messaging/serialization/message_serializer.h>
 #include <kcenon/network/core/messaging_ws_client.h>
+#include <kcenon/thread/core/callback_job.h>
 
 #include <atomic>
 #include <chrono>
@@ -430,7 +431,7 @@ private:
 	void schedule_reconnect() {
 		++reconnect_attempts_;
 
-		std::thread([this]() {
+		auto reconnect_func = [this]() {
 			std::this_thread::sleep_for(current_reconnect_delay_);
 
 			// Apply exponential backoff
@@ -479,7 +480,26 @@ private:
 					schedule_reconnect();
 				}
 			}
-		}).detach();
+		};
+
+		if (config_.executor && config_.executor->is_running()) {
+			// Use executor (preferred)
+			auto job = std::make_unique<kcenon::thread::callback_job>(
+				[reconnect_func = std::move(reconnect_func)]() -> common::VoidResult {
+					reconnect_func();
+					return common::ok();
+				},
+				"websocket_reconnect_job"
+			);
+			auto result = config_.executor->execute(std::move(job));
+			if (!result.is_ok()) {
+				// If executor fails, fall back to std::thread
+				std::thread(reconnect_func).detach();
+			}
+		} else {
+			// Fallback to std::thread for backward compatibility
+			std::thread(std::move(reconnect_func)).detach();
+		}
 	}
 
 	void resubscribe_all() {

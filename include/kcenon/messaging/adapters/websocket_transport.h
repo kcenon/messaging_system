@@ -21,6 +21,7 @@
 #include <kcenon/messaging/config/feature_flags.h>
 #include <kcenon/messaging/adapters/transport_interface.h>
 #include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/common/interfaces/executor_interface.h>
 
 #include <memory>
 #include <set>
@@ -46,6 +47,10 @@ struct websocket_transport_config : transport_config {
     std::chrono::milliseconds reconnect_delay{1000};
     double reconnect_backoff_multiplier = 2.0;
     std::chrono::milliseconds max_reconnect_delay{30000};
+
+    // Optional executor for background tasks (recommended)
+    // If provided, reconnection uses it instead of std::thread
+    std::shared_ptr<common::interfaces::IExecutor> executor = nullptr;
 };
 
 /**
