@@ -10,6 +10,10 @@
  * distributed task queue. Handlers can be implemented as classes
  * inheriting from task_handler_interface or as simple lambda functions.
  *
+ * Supports both virtual polymorphism and CRTP (Curiously Recurring Template
+ * Pattern) for performance-critical paths. CRTP eliminates virtual function
+ * call overhead while type erasure wrappers maintain API compatibility.
+ *
  * C++20 Concepts are provided for compile-time type validation of
  * task handlers, offering clearer error messages and self-documenting
  * interface requirements.
@@ -84,12 +88,128 @@ concept TaskHandlerLike = requires(T t, const task& tsk, task_context& ctx) {
 };
 
 /**
+ * @concept TaskHandlerCRTPConcept
+ * @brief Validates that a type can serve as a CRTP task handler
+ *
+ * Types satisfying this concept must provide name_impl and execute_impl
+ * methods with the expected signatures.
+ *
+ * @tparam T The type to validate
+ */
+template<typename T>
+concept TaskHandlerCRTPConcept = requires(T handler, const task& t, task_context& ctx) {
+	{ handler.name_impl() } -> std::convertible_to<std::string>;
+	{ handler.execute_impl(t, ctx) } -> std::same_as<common::Result<container_module::value_container>>;
+};
+
+// =============================================================================
+// CRTP Base Class
+// =============================================================================
+
+/**
+ * @class task_handler_base
+ * @brief CRTP base class for task handlers
+ *
+ * Provides compile-time polymorphism for task handling, eliminating
+ * virtual function call overhead. Derived classes implement name_impl,
+ * execute_impl, and optional hook methods (on_retry_impl, on_failure_impl,
+ * on_success_impl).
+ *
+ * @tparam Derived The derived class type (CRTP pattern)
+ *
+ * @example
+ * class email_handler : public task_handler_base<email_handler> {
+ *     friend class task_handler_base<email_handler>;
+ *
+ *     std::string name_impl() const { return "email.send"; }
+ *
+ *     common::Result<container_module::value_container> execute_impl(
+ *         const task& t, task_context& ctx) {
+ *         // Send email logic...
+ *         container_module::value_container result;
+ *         result.add("status", "sent");
+ *         return common::ok(result);
+ *     }
+ * };
+ */
+template<typename Derived>
+class task_handler_base {
+public:
+	/**
+	 * @brief Get the handler name using compile-time dispatch
+	 * @return Handler name
+	 */
+	[[nodiscard]] std::string name() const {
+		return static_cast<const Derived*>(this)->name_impl();
+	}
+
+	/**
+	 * @brief Execute the task using compile-time dispatch
+	 * @param t The task to execute
+	 * @param ctx Execution context
+	 * @return Result containing the output or error
+	 */
+	common::Result<container_module::value_container> execute(
+		const task& t, task_context& ctx) {
+		return static_cast<Derived*>(this)->execute_impl(t, ctx);
+	}
+
+	/**
+	 * @brief Hook called before a retry attempt
+	 * @param t The task being retried
+	 * @param attempt The retry attempt number (1-based)
+	 */
+	void on_retry(const task& t, size_t attempt) {
+		static_cast<Derived*>(this)->on_retry_impl(t, attempt);
+	}
+
+	/**
+	 * @brief Hook called when a task fails permanently
+	 * @param t The failed task
+	 * @param error The error message
+	 */
+	void on_failure(const task& t, const std::string& error) {
+		static_cast<Derived*>(this)->on_failure_impl(t, error);
+	}
+
+	/**
+	 * @brief Hook called when a task succeeds
+	 * @param t The completed task
+	 * @param result The task result
+	 */
+	void on_success(const task& t, const container_module::value_container& result) {
+		static_cast<Derived*>(this)->on_success_impl(t, result);
+	}
+
+protected:
+	// Default implementations for optional hooks
+	void on_retry_impl(const task& /*t*/, size_t /*attempt*/) {}
+	void on_failure_impl(const task& /*t*/, const std::string& /*error*/) {}
+	void on_success_impl(const task& /*t*/, const container_module::value_container& /*result*/) {}
+
+	~task_handler_base() = default;
+	task_handler_base() = default;
+	task_handler_base(const task_handler_base&) = default;
+	task_handler_base& operator=(const task_handler_base&) = default;
+	task_handler_base(task_handler_base&&) = default;
+	task_handler_base& operator=(task_handler_base&&) = default;
+};
+
+// =============================================================================
+// Virtual Interface (for type erasure and polymorphic containers)
+// =============================================================================
+
+/**
  * @class task_handler_interface
  * @brief Abstract interface for task execution handlers
  *
  * Task handlers are responsible for executing tasks and returning results.
  * Implement this interface to create custom task handlers with full
  * lifecycle control including retry and failure hooks.
+ *
+ * For performance-critical paths, consider using task_handler_base<>
+ * with task_handler_wrapper for type erasure when heterogeneous
+ * collections are needed.
  *
  * @example
  * class email_handler : public task_handler_interface {
@@ -279,6 +399,108 @@ inline std::unique_ptr<task_handler_interface> make_task_handler(
 	return std::make_unique<lambda_task_handler>(
 		std::move(name),
 		simple_task_handler(std::forward<Handler>(handler)));
+}
+
+// =============================================================================
+// Type Erasure Wrapper for CRTP Handlers
+// =============================================================================
+
+/**
+ * @class task_handler_wrapper
+ * @brief Type erasure wrapper for CRTP task handlers
+ *
+ * Wraps a CRTP-based handler to implement task_handler_interface,
+ * allowing CRTP handlers to be stored in heterogeneous containers while
+ * still benefiting from compile-time dispatch within the wrapper.
+ *
+ * @tparam Handler The CRTP handler type
+ *
+ * @example
+ * class my_handler : public task_handler_base<my_handler> {
+ *     friend class task_handler_base<my_handler>;
+ *
+ *     std::string name_impl() const { return "my.task"; }
+ *     common::Result<container_module::value_container> execute_impl(
+ *         const task& t, task_context& ctx) { ... }
+ * };
+ *
+ * // Store in polymorphic container
+ * std::vector<std::shared_ptr<task_handler_interface>> handlers;
+ * handlers.push_back(std::make_shared<task_handler_wrapper<my_handler>>());
+ */
+template<typename Handler>
+class task_handler_wrapper : public task_handler_interface {
+public:
+	/**
+	 * @brief Default construct with default-constructed handler
+	 */
+	task_handler_wrapper() : handler_() {}
+
+	/**
+	 * @brief Construct with a handler instance
+	 * @param handler Handler to wrap (moved)
+	 */
+	explicit task_handler_wrapper(Handler handler)
+		: handler_(std::move(handler)) {}
+
+	/**
+	 * @brief Construct handler in-place with arguments
+	 * @tparam Args Constructor argument types
+	 * @param args Arguments to forward to handler constructor
+	 */
+	template<typename... Args>
+	explicit task_handler_wrapper(std::in_place_t, Args&&... args)
+		: handler_(std::forward<Args>(args)...) {}
+
+	std::string name() const override {
+		return handler_.name();
+	}
+
+	common::Result<container_module::value_container> execute(
+		const task& t, task_context& ctx) override {
+		return handler_.execute(t, ctx);
+	}
+
+	void on_retry(const task& t, size_t attempt) override {
+		handler_.on_retry(t, attempt);
+	}
+
+	void on_failure(const task& t, const std::string& error) override {
+		handler_.on_failure(t, error);
+	}
+
+	void on_success(const task& t,
+					const container_module::value_container& result) override {
+		handler_.on_success(t, result);
+	}
+
+	/**
+	 * @brief Get direct access to the wrapped handler
+	 * @return Reference to the handler
+	 */
+	Handler& get() { return handler_; }
+
+	/**
+	 * @brief Get direct access to the wrapped handler (const)
+	 * @return Const reference to the handler
+	 */
+	[[nodiscard]] const Handler& get() const { return handler_; }
+
+private:
+	Handler handler_;
+};
+
+/**
+ * @brief Create a wrapped CRTP task handler
+ * @tparam Handler The CRTP handler type
+ * @tparam Args Constructor argument types
+ * @param args Arguments to forward to handler constructor
+ * @return Shared pointer to the wrapped handler
+ */
+template<typename Handler, typename... Args>
+std::shared_ptr<task_handler_interface> make_crtp_task_handler(Args&&... args) {
+	return std::make_shared<task_handler_wrapper<Handler>>(
+		std::in_place, std::forward<Args>(args)...);
 }
 
 }  // namespace kcenon::messaging::task

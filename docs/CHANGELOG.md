@@ -66,13 +66,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **CRTP-Based Message Handler Pattern (Issue #209)**
   - Zero-overhead polymorphism for message handlers via CRTP
-  - New header files:
-    - `message_handler_base.h` - CRTP base class with compile-time dispatch
-    - `message_handler_wrapper.h` - Type erasure for heterogeneous containers
-    - `handlers/topic_handler.h` - Concrete CRTP handlers (topic, event, priority, command)
-  - C++20 concept constraints (`message_handler_concept`) for compile-time verification
-  - Factory functions: `make_handler<T>()`, `make_shared_handler<T>()`
-  - Backward compatible with existing `message_handler_interface`
+  - CRTP base classes:
+    - `message_handler_base<Derived>` - CRTP template for message handlers
+    - `task_handler_base<Derived>` - CRTP template for task handlers
+  - Type erasure wrappers for heterogeneous containers:
+    - `message_handler_wrapper<Handler>` - Wraps CRTP handlers as interface
+    - `task_handler_wrapper<Handler>` - Wraps CRTP task handlers as interface
+  - C++20 concept constraints for compile-time verification:
+    - `MessageHandlerConcept` - Validates CRTP message handlers
+    - `TaskHandlerCRTPConcept` - Validates CRTP task handlers
+  - Factory functions:
+    - `make_message_handler<Handler>()` - Creates wrapped message handlers
+    - `make_crtp_task_handler<Handler>()` - Creates wrapped task handlers
+  - Backward compatible with existing interfaces
   - Part of Foundation System Improvements Integration Epic (#210)
 
 - **C++20 Module Support (Issue #204)**
