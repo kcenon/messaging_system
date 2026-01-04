@@ -64,6 +64,7 @@ export namespace kcenon::messaging::task {
 
 class task;
 class task_builder;
+class task_context;
 class task_queue;
 class worker_pool;
 class scheduler;
@@ -1031,6 +1032,147 @@ private:
     std::shared_ptr<result_backend> backend_;
     std::unordered_map<std::string, std::shared_ptr<task_queue>> queues_;
     mutable std::shared_mutex mutex_;
+};
+
+} // namespace kcenon::messaging::task
+
+// =============================================================================
+// Task Context
+// =============================================================================
+
+export namespace kcenon::messaging::task {
+
+/**
+ * @struct progress_info
+ * @brief Progress update information
+ */
+struct progress_info {
+    double progress{0.0};       ///< Progress value 0.0 to 1.0
+    std::string message;        ///< Optional progress message
+    std::chrono::system_clock::time_point timestamp;
+};
+
+/**
+ * @struct task_log_entry
+ * @brief Log entry created during task execution
+ */
+struct task_log_entry {
+    enum class level { info, warning, error };
+
+    level log_level;
+    std::string message;
+    std::chrono::system_clock::time_point timestamp;
+};
+
+/**
+ * @class task_context
+ * @brief Execution context provided to handlers during task execution
+ *
+ * The task context provides utilities for:
+ * - Progress tracking and reporting
+ * - Checkpoint save/restore for long-running tasks
+ * - Subtask spawning for workflow patterns
+ * - Cancellation checking
+ * - Task-specific logging
+ *
+ * @example
+ * common::Result<value_container> handler(const task& t, task_context& ctx) {
+ *     ctx.update_progress(0.0, "Starting...");
+ *
+ *     // Check for previous checkpoint
+ *     auto checkpoint = ctx.load_checkpoint();
+ *     int start = checkpoint.get_int_or("step", 0);
+ *
+ *     for (int i = start; i < 100; ++i) {
+ *         if (ctx.is_cancelled()) {
+ *             return error("Task cancelled");
+ *         }
+ *
+ *         // Do work...
+ *
+ *         ctx.update_progress(i / 100.0, "Processing step " + std::to_string(i));
+ *         ctx.save_checkpoint({{"step", i}});
+ *     }
+ *
+ *     ctx.log_info("Task completed successfully");
+ *     return ok(result);
+ * }
+ */
+class task_context {
+public:
+    /**
+     * @brief Callback type for subtask spawning
+     *
+     * Returns the task ID of the spawned subtask on success
+     */
+    using subtask_spawner = std::function<kcenon::common::Result<std::string>(task)>;
+
+    /**
+     * @brief Construct a task context
+     * @param current_task Reference to the task being executed
+     * @param attempt Current attempt number (1-based)
+     */
+    explicit task_context(task& current_task, size_t attempt = 1);
+
+    ~task_context() = default;
+
+    // Non-copyable, non-movable (context is bound to specific execution)
+    task_context(const task_context&) = delete;
+    task_context& operator=(const task_context&) = delete;
+    task_context(task_context&&) = delete;
+    task_context& operator=(task_context&&) = delete;
+
+    // Progress tracking
+    void update_progress(double progress, const std::string& message = "");
+    double progress() const;
+    std::vector<progress_info> progress_history() const;
+
+    // Checkpoint management
+    void save_checkpoint(const container_module::value_container& state);
+    void save_checkpoint(std::shared_ptr<container_module::value_container> state);
+    container_module::value_container load_checkpoint() const;
+    bool has_checkpoint() const;
+    void clear_checkpoint();
+
+    // Subtask management
+    void set_subtask_spawner(subtask_spawner spawner);
+    kcenon::common::Result<std::string> spawn_subtask(task subtask);
+    std::vector<std::string> spawned_subtask_ids() const;
+
+    // Cancellation
+    bool is_cancelled() const;
+    void request_cancellation();
+
+    // Logging
+    void log_info(const std::string& message);
+    void log_warning(const std::string& message);
+    void log_error(const std::string& message);
+    std::vector<task_log_entry> logs() const;
+
+    // Task information
+    const task& current_task() const;
+    size_t attempt_number() const;
+    std::chrono::system_clock::time_point started_at() const;
+    std::chrono::milliseconds elapsed() const;
+
+private:
+    void add_log(task_log_entry::level level, const std::string& message);
+
+    task& task_;
+    size_t attempt_;
+    std::chrono::system_clock::time_point started_at_;
+
+    std::atomic<bool> cancelled_{false};
+    std::atomic<double> progress_{0.0};
+
+    mutable std::mutex mutex_;
+    std::string progress_message_;
+    std::vector<progress_info> progress_history_;
+    std::shared_ptr<container_module::value_container> checkpoint_;
+    std::vector<task_log_entry> logs_;
+    std::vector<std::string> spawned_subtasks_;
+
+    subtask_spawner subtask_spawner_;
 };
 
 } // namespace kcenon::messaging::task
