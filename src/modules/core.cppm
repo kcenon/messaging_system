@@ -661,3 +661,155 @@ public:
 };
 
 } // namespace kcenon::messaging
+
+// =============================================================================
+// Error Codes
+// =============================================================================
+
+export namespace kcenon::messaging::error {
+
+/**
+ * @brief Base value for all messaging_system error codes
+ *
+ * messaging_system uses error code range -700 to -799.
+ * Error Code Organization:
+ * - -700 to -719: Message errors
+ * - -720 to -739: Routing errors
+ * - -740 to -759: Queue errors
+ * - -760 to -779: Subscription errors
+ * - -780 to -799: Publishing errors
+ */
+constexpr int base = -700;
+
+// Message Errors (-700 to -719)
+constexpr int invalid_message = base - 0;
+constexpr int message_too_large = base - 1;
+constexpr int message_expired = base - 2;
+constexpr int invalid_payload = base - 3;
+constexpr int message_serialization_failed = base - 4;
+constexpr int message_deserialization_failed = base - 5;
+
+// Task-specific errors
+constexpr int task_not_found = base - 6;
+constexpr int task_already_running = base - 7;
+constexpr int task_cancelled = base - 8;
+constexpr int task_timeout = base - 9;
+constexpr int task_failed = base - 10;
+constexpr int task_handler_not_found = base - 11;
+constexpr int task_spawner_not_configured = base - 12;
+constexpr int task_invalid_argument = base - 13;
+constexpr int task_operation_failed = base - 14;
+constexpr int schedule_already_exists = base - 15;
+
+// Routing Errors (-720 to -739)
+constexpr int routing_failed = base - 20;
+constexpr int unknown_topic = base - 21;
+constexpr int no_subscribers = base - 22;
+constexpr int invalid_topic_pattern = base - 23;
+constexpr int route_not_found = base - 24;
+
+// Queue Errors (-740 to -759)
+constexpr int queue_full = base - 40;
+constexpr int queue_empty = base - 41;
+constexpr int queue_stopped = base - 42;
+constexpr int enqueue_failed = base - 43;
+constexpr int dequeue_failed = base - 44;
+constexpr int queue_timeout = base - 45;
+
+// Dead Letter Queue errors
+constexpr int dlq_full = base - 46;
+constexpr int dlq_empty = base - 47;
+constexpr int dlq_message_not_found = base - 48;
+constexpr int dlq_replay_failed = base - 49;
+constexpr int dlq_not_configured = base - 50;
+
+// Subscription Errors (-760 to -779)
+constexpr int subscription_failed = base - 60;
+constexpr int subscription_not_found = base - 61;
+constexpr int duplicate_subscription = base - 62;
+constexpr int unsubscribe_failed = base - 63;
+constexpr int invalid_subscription = base - 64;
+
+// Publishing Errors (-780 to -799)
+constexpr int publication_failed = base - 80;
+constexpr int no_route_found = base - 81;
+constexpr int message_rejected = base - 82;
+constexpr int broker_unavailable = base - 83;
+constexpr int broker_not_started = base - 84;
+constexpr int already_running = base - 85;
+constexpr int not_running = base - 86;
+constexpr int backend_not_ready = base - 87;
+constexpr int request_timeout = base - 88;
+constexpr int not_supported = base - 89;
+
+// Transport-specific errors
+constexpr int connection_failed = base - 90;
+constexpr int send_timeout = base - 91;
+constexpr int receive_timeout = base - 92;
+constexpr int authentication_failed = base - 93;
+constexpr int not_connected = base - 94;
+
+/**
+ * @brief Get human-readable error message for error code
+ * @param code Error code
+ * @return Error message string
+ */
+constexpr std::string_view get_error_message(int code) noexcept {
+    switch (code) {
+        case invalid_message: return "Invalid message";
+        case message_too_large: return "Message too large";
+        case message_expired: return "Message expired";
+        case invalid_payload: return "Invalid message payload";
+        case message_serialization_failed: return "Message serialization failed";
+        case message_deserialization_failed: return "Message deserialization failed";
+        case task_not_found: return "Task not found";
+        case task_already_running: return "Task already running";
+        case task_cancelled: return "Task cancelled";
+        case task_timeout: return "Task timeout";
+        case task_failed: return "Task execution failed";
+        case task_handler_not_found: return "Task handler not found";
+        case task_spawner_not_configured: return "Subtask spawner not configured";
+        case task_invalid_argument: return "Invalid task argument";
+        case task_operation_failed: return "Task operation failed";
+        case schedule_already_exists: return "Schedule already exists";
+        case routing_failed: return "Message routing failed";
+        case unknown_topic: return "Unknown topic";
+        case no_subscribers: return "No subscribers for topic";
+        case invalid_topic_pattern: return "Invalid topic pattern";
+        case route_not_found: return "Route not found";
+        case queue_full: return "Message queue full";
+        case queue_empty: return "Message queue empty";
+        case queue_stopped: return "Message queue stopped";
+        case enqueue_failed: return "Failed to enqueue message";
+        case dequeue_failed: return "Failed to dequeue message";
+        case queue_timeout: return "Queue operation timeout";
+        case dlq_full: return "Dead letter queue full";
+        case dlq_empty: return "Dead letter queue empty";
+        case dlq_message_not_found: return "Message not found in dead letter queue";
+        case dlq_replay_failed: return "Failed to replay message from dead letter queue";
+        case dlq_not_configured: return "Dead letter queue not configured";
+        case subscription_failed: return "Subscription failed";
+        case subscription_not_found: return "Subscription not found";
+        case duplicate_subscription: return "Duplicate subscription";
+        case unsubscribe_failed: return "Unsubscribe failed";
+        case invalid_subscription: return "Invalid subscription";
+        case publication_failed: return "Publication failed";
+        case no_route_found: return "No route found for message";
+        case message_rejected: return "Message rejected";
+        case broker_unavailable: return "Message broker unavailable";
+        case broker_not_started: return "Message broker not started";
+        case already_running: return "Message bus already running";
+        case not_running: return "Message bus not running";
+        case backend_not_ready: return "Backend not ready";
+        case request_timeout: return "Request timeout";
+        case not_supported: return "Feature not supported";
+        case connection_failed: return "Connection failed";
+        case send_timeout: return "Send operation timed out";
+        case receive_timeout: return "Receive operation timed out";
+        case authentication_failed: return "Authentication failed";
+        case not_connected: return "Transport not connected";
+        default: return "Unknown messaging error";
+    }
+}
+
+} // namespace kcenon::messaging::error

@@ -972,3 +972,157 @@ private:
 };
 
 } // namespace kcenon::messaging::integration
+
+// =============================================================================
+// Executor Adapter
+// =============================================================================
+
+export namespace kcenon::messaging::integration {
+
+/**
+ * @class message_processor_job
+ * @brief IJob implementation for processing messages
+ *
+ * This class wraps message processing logic in an IJob interface,
+ * enabling execution via the common_system's IExecutor.
+ */
+class message_processor_job : public kcenon::common::interfaces::IJob {
+public:
+    using handler_t = std::function<kcenon::common::VoidResult(const message&)>;
+
+    /**
+     * @brief Construct a message processor job
+     * @param msg Message to process
+     * @param handler Handler function to process the message
+     * @param priority Job priority (default: 0)
+     */
+    message_processor_job(message msg, handler_t handler, int priority = 0);
+
+    /**
+     * @brief Execute the job
+     * @return VoidResult indicating success or failure
+     */
+    kcenon::common::VoidResult execute() override;
+
+    /**
+     * @brief Get the name of the job
+     * @return Job name including topic info
+     */
+    std::string get_name() const override;
+
+    /**
+     * @brief Get the priority of the job
+     * @return Job priority
+     */
+    int get_priority() const override;
+
+    /**
+     * @brief Get the message being processed
+     * @return Const reference to the message
+     */
+    const message& get_message() const;
+
+private:
+    message msg_;
+    handler_t handler_;
+    int priority_;
+};
+
+/**
+ * @class message_reply_job
+ * @brief IJob implementation for request-reply pattern
+ *
+ * This job handles request processing and generates a reply message.
+ */
+class message_reply_job : public kcenon::common::interfaces::IJob {
+public:
+    using handler_t = std::function<kcenon::common::Result<message>(const message&)>;
+
+    /**
+     * @brief Construct a message reply job
+     * @param request Request message
+     * @param handler Handler function that returns a reply
+     * @param reply_callback Callback to send the reply
+     * @param priority Job priority
+     */
+    message_reply_job(
+        message request,
+        handler_t handler,
+        std::function<void(kcenon::common::Result<message>)> reply_callback,
+        int priority = 0);
+
+    kcenon::common::VoidResult execute() override;
+    std::string get_name() const override;
+    int get_priority() const override;
+
+private:
+    message request_;
+    handler_t handler_;
+    std::function<void(kcenon::common::Result<message>)> reply_callback_;
+    int priority_;
+};
+
+/**
+ * @class executor_message_handler
+ * @brief Adapter for processing messages via IExecutor
+ *
+ * This class provides a high-level interface for submitting message
+ * processing jobs to an IExecutor implementation.
+ */
+class executor_message_handler {
+public:
+    /**
+     * @brief Virtual destructor for polymorphic type support
+     */
+    virtual ~executor_message_handler() = default;
+
+    /**
+     * @brief Construct with an executor
+     * @param executor Shared pointer to executor
+     */
+    explicit executor_message_handler(
+        std::shared_ptr<kcenon::common::interfaces::IExecutor> executor);
+
+    /**
+     * @brief Process a message asynchronously
+     * @param msg Message to process
+     * @param handler Handler function
+     * @param priority Job priority
+     * @return Result containing future or error
+     */
+    kcenon::common::Result<std::future<void>> process_async(
+        message msg,
+        message_processor_job::handler_t handler,
+        int priority = 0);
+
+    /**
+     * @brief Process a request and get a reply asynchronously
+     * @param request Request message
+     * @param handler Handler function that returns a reply
+     * @param reply_callback Callback for the reply
+     * @param priority Job priority
+     * @return Result containing future for completion or error
+     */
+    kcenon::common::Result<std::future<void>> request_async(
+        message request,
+        message_reply_job::handler_t handler,
+        std::function<void(kcenon::common::Result<message>)> reply_callback,
+        int priority = 0);
+
+    /**
+     * @brief Get the executor
+     * @return Shared pointer to executor
+     */
+    std::shared_ptr<kcenon::common::interfaces::IExecutor> get_executor() const;
+
+    /**
+     * @brief Check if executor is available and running
+     * @return true if executor is available and running
+     */
+    bool is_available() const;
+
+private:
+    std::shared_ptr<kcenon::common::interfaces::IExecutor> executor_;
+};
+
+} // namespace kcenon::messaging::integration
