@@ -8,6 +8,29 @@
 ## [Unreleased]
 
 ### 변경됨
+- **IExecutor 인터페이스 백엔드 통합 (Issue #206)**
+  - `common_system`의 `IExecutor` 인터페이스를 메시징 백엔드에 통합
+  - 주요 변경사항:
+    - `task_client`: 생성자에 선택적 `executor` 매개변수 추가
+      - `chain()` 및 `chord()`가 백그라운드 작업에 executor 사용
+      - executor가 제공되지 않으면 `std::thread`로 폴백
+    - `async_result`: 생성자에 선택적 `executor` 매개변수 추가
+      - `start_callback_monitor()`가 콜백 모니터링에 executor 사용
+      - executor가 제공되지 않으면 `std::thread`로 폴백
+    - `websocket_transport_config`: 선택적 `executor` 필드 추가
+      - `schedule_reconnect()`가 재연결 작업에 executor 사용
+      - executor가 제공되지 않으면 `std::thread`로 폴백
+    - `messaging_di_container`: executor 헬퍼 함수 추가
+      - `register_executor()`: 전역 DI 컨테이너에 IExecutor 등록
+      - `resolve_executor()`: 등록된 executor 해결
+      - `has_executor()`: executor 등록 여부 확인
+  - 이점:
+    - 메시징 컴포넌트 전반에 일관된 스레드 관리
+    - thread_system의 스레드 풀과 더 나은 통합
+    - 백엔드 코드에서 직접적인 std::thread 사용 감소
+    - 하위 호환 (executor는 선택적, std::thread로 폴백)
+  - Foundation System Improvements Integration Epic (#210)의 일부
+
 - **Task-Message 컴포지션 리팩토링 (Issue #192)**
   - `task`의 `message` 상속을 컴포지션 패턴으로 변경
   - 주요 아키텍처 변경사항:
