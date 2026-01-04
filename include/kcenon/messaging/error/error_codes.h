@@ -107,6 +107,13 @@ constexpr int backend_not_ready = base - 87;      // -787
 constexpr int request_timeout = base - 88;        // -788
 constexpr int not_supported = base - 89;          // -789 (feature requires optional dependency)
 
+// Transport-specific errors (from Issue #207)
+constexpr int connection_failed = base - 90;      // -790
+constexpr int send_timeout = base - 91;           // -791
+constexpr int receive_timeout = base - 92;        // -792
+constexpr int authentication_failed = base - 93;  // -793
+constexpr int not_connected = base - 94;          // -794
+
 // ============================================================================
 // Error Message Lookup
 // ============================================================================
@@ -179,6 +186,13 @@ inline std::string_view get_error_message(int code) {
         case request_timeout: return "Request timeout";
         case not_supported: return "Feature not supported (requires optional dependency)";
 
+        // Transport-specific errors
+        case connection_failed: return "Connection failed";
+        case send_timeout: return "Send operation timed out";
+        case receive_timeout: return "Receive operation timed out";
+        case authentication_failed: return "Authentication failed";
+        case not_connected: return "Transport not connected";
+
         default: return "Unknown messaging error";
     }
 }
@@ -204,6 +218,10 @@ namespace validation {
     static_assert(request_timeout >= -799 && request_timeout <= -700,
                   "messaging_system error codes must be in range [-799, -700]");
     static_assert(not_supported >= -799 && not_supported <= -700,
+                  "messaging_system error codes must be in range [-799, -700]");
+    static_assert(connection_failed >= -799 && connection_failed <= -700,
+                  "messaging_system error codes must be in range [-799, -700]");
+    static_assert(not_connected >= -799 && not_connected <= -700,
                   "messaging_system error codes must be in range [-799, -700]");
 } // namespace validation
 

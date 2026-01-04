@@ -142,7 +142,7 @@ public:
 	VoidResult send(const message& msg) {
 		if (!is_connected()) {
 			return VoidResult::err(error_info(
-				error::broker_unavailable,
+				error::not_connected,
 				"WebSocket transport is not connected"));
 		}
 
@@ -171,7 +171,7 @@ public:
 	VoidResult send_binary(const std::vector<uint8_t>& data) {
 		if (!is_connected()) {
 			return VoidResult::err(error_info(
-				error::broker_unavailable,
+				error::not_connected,
 				"WebSocket transport is not connected"));
 		}
 
@@ -228,7 +228,7 @@ public:
 	VoidResult subscribe(const std::string& topic_pattern) {
 		if (!is_connected()) {
 			return VoidResult::err(error_info(
-				error::broker_unavailable,
+				error::not_connected,
 				"WebSocket transport is not connected"));
 		}
 
@@ -245,7 +245,7 @@ public:
 	VoidResult unsubscribe(const std::string& topic_pattern) {
 		if (!is_connected()) {
 			return VoidResult::err(error_info(
-				error::broker_unavailable,
+				error::not_connected,
 				"WebSocket transport is not connected"));
 		}
 
@@ -288,7 +288,7 @@ public:
 	VoidResult send_text(const std::string& text) {
 		if (!is_connected()) {
 			return VoidResult::err(error_info(
-				error::broker_unavailable,
+				error::not_connected,
 				"WebSocket transport is not connected"));
 		}
 
@@ -309,7 +309,7 @@ public:
 	VoidResult ping() {
 		if (!is_connected()) {
 			return VoidResult::err(error_info(
-				error::broker_unavailable,
+				error::not_connected,
 				"WebSocket transport is not connected"));
 		}
 
