@@ -7,7 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Transport-Specific Error Codes (Issue #207)**
+  - New error codes for transport layer error handling:
+    - `connection_failed` (-790): For failed connection attempts
+    - `send_timeout` (-791): For send operation timeouts
+    - `receive_timeout` (-792): For receive operation timeouts
+    - `authentication_failed` (-793): For authentication failures
+    - `not_connected` (-794): For operations when transport is disconnected
+  - These error codes support the Result<T> pattern for consistent error handling
+  - Part of Foundation System Improvements Integration Epic (#210)
+
 ### Changed
+- **Transport Error Code Improvements (Issue #207)**
+  - Replaced generic `broker_unavailable` with specific `not_connected` error code
+  - Affected transports: `http_transport`, `websocket_transport`
+  - Clearer error semantics when operations fail due to disconnected transport
+  - Part of Foundation System Improvements Integration Epic (#210)
+
 - **IExecutor Interface Integration into Backends (Issue #206)**
   - Integrated `IExecutor` interface from `common_system` into messaging backends
   - Key changes:

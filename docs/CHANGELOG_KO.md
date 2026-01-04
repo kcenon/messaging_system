@@ -7,7 +7,24 @@
 
 ## [Unreleased]
 
+### 추가됨
+- **Transport 전용 에러 코드 (Issue #207)**
+  - transport 레이어 에러 처리를 위한 새로운 에러 코드:
+    - `connection_failed` (-790): 연결 실패 시
+    - `send_timeout` (-791): 전송 작업 타임아웃 시
+    - `receive_timeout` (-792): 수신 작업 타임아웃 시
+    - `authentication_failed` (-793): 인증 실패 시
+    - `not_connected` (-794): transport가 연결되지 않은 상태에서 작업 시
+  - 일관된 에러 처리를 위한 Result<T> 패턴 지원
+  - Foundation System Improvements Integration Epic (#210)의 일부
+
 ### 변경됨
+- **Transport 에러 코드 개선 (Issue #207)**
+  - 일반적인 `broker_unavailable`을 구체적인 `not_connected` 에러 코드로 교체
+  - 영향받는 transport: `http_transport`, `websocket_transport`
+  - 연결되지 않은 transport로 인한 작업 실패 시 더 명확한 에러 의미
+  - Foundation System Improvements Integration Epic (#210)의 일부
+
 - **IExecutor 인터페이스 백엔드 통합 (Issue #206)**
   - `common_system`의 `IExecutor` 인터페이스를 메시징 백엔드에 통합
   - 주요 변경사항:
