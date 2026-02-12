@@ -1,6 +1,7 @@
 #include <kcenon/messaging/backends/standalone_backend.h>
 #include <kcenon/messaging/error/error_codes.h>
 #include <kcenon/common/logging/log_functions.h>
+#include <kcenon/thread/adapters/common_executor_adapter.h>
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/thread_worker.h>
 
@@ -66,6 +67,8 @@ common::VoidResult standalone_backend::initialize() {
 			);
 		}
 
+		executor_ = std::make_shared<kcenon::thread::adapters::thread_pool_executor_adapter>(thread_pool_);
+
 		common::logging::log_info("Standalone backend initialized successfully");
 		return common::ok();
 	} catch (const std::exception& e) {
@@ -93,6 +96,8 @@ common::VoidResult standalone_backend::shutdown() {
 
 	common::logging::log_info("Shutting down standalone backend");
 
+	executor_.reset();
+
 	if (thread_pool_) {
 		thread_pool_->stop();
 		thread_pool_.reset();
@@ -103,7 +108,7 @@ common::VoidResult standalone_backend::shutdown() {
 }
 
 std::shared_ptr<common::interfaces::IExecutor> standalone_backend::get_executor() {
-	return thread_pool_;
+	return executor_;
 }
 
 bool standalone_backend::is_ready() const {

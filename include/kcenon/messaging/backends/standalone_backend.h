@@ -44,6 +44,7 @@ public:
 private:
 	size_t num_threads_;
 	std::shared_ptr<kcenon::thread::thread_pool> thread_pool_;
+	std::shared_ptr<common::interfaces::IExecutor> executor_;
 	std::atomic<bool> initialized_{false};
 };
 
