@@ -1,3 +1,9 @@
+// Suppress MSVC C4996 for gmtime in thread_system's execution_event.h
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996)
+#endif
+
 #include <kcenon/messaging/backends/standalone_backend.h>
 #include <kcenon/messaging/error/error_codes.h>
 #include <kcenon/common/logging/log_functions.h>
@@ -7,6 +13,10 @@
 
 #include <future>
 #include <thread>
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 namespace kcenon::messaging {
 

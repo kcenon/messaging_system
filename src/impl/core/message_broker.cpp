@@ -1585,7 +1585,7 @@ namespace content_filters {
 content_filter has_field(const std::string& field_name) {
 	return [field_name](const message& msg) -> bool {
 		try {
-			auto value = msg.payload().get_value(field_name);
+			auto value = msg.payload().get(field_name);
 			return value.has_value() && value->type != container_module::value_types::null_value;
 		} catch (...) {
 			return false;
@@ -1596,7 +1596,7 @@ content_filter has_field(const std::string& field_name) {
 content_filter field_equals(const std::string& field_name, const std::string& value) {
 	return [field_name, value](const message& msg) -> bool {
 		try {
-			auto field_value = msg.payload().get_value(field_name);
+			auto field_value = msg.payload().get(field_name);
 			if (!field_value.has_value()) {
 				return false;
 			}
@@ -1612,7 +1612,7 @@ content_filter field_matches(const std::string& field_name, const std::string& p
 	auto regex_ptr = std::make_shared<std::regex>(pattern);
 	return [field_name, regex_ptr](const message& msg) -> bool {
 		try {
-			auto field_value = msg.payload().get_value(field_name);
+			auto field_value = msg.payload().get(field_name);
 			if (!field_value.has_value()) {
 				return false;
 			}

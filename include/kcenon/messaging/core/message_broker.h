@@ -752,7 +752,7 @@ public:
 	 * broker.add_content_route("high-value-orders",
 	 *     [](const message& msg) {
 	 *         auto& payload = msg.payload();
-	 *         auto value = payload.get_value("order_value");
+	 *         auto value = payload.get("order_value");
 	 *         return value && ov_to_double(value) > 10000.0;
 	 *     },
 	 *     [](const message& msg) {

@@ -49,9 +49,9 @@ int main() {
                      " records");
 
         container_module::value_container result;
-        result.set_value("record_count", static_cast<int>(records.size()));
-        result.set_value("source", std::string("database"));
-        result.set_value("step", std::string("extract"));
+        result.set("record_count", static_cast<int>(records.size()));
+        result.set("source", std::string("database"));
+        result.set("step", std::string("extract"));
         return ok(result);
     });
 
@@ -75,9 +75,9 @@ int main() {
                      " records");
 
         container_module::value_container result;
-        result.set_value("record_count", transformed_count);
-        result.set_value("transformation", std::string("normalized"));
-        result.set_value("step", std::string("transform"));
+        result.set("record_count", transformed_count);
+        result.set("transformation", std::string("normalized"));
+        result.set("step", std::string("transform"));
         return ok(result);
     });
 
@@ -100,11 +100,11 @@ int main() {
                      " records to destination");
 
         container_module::value_container result;
-        result.set_value("loaded_count", record_count);
-        result.set_value("destination", std::string("data_warehouse"));
-        result.set_value("transformation_applied", transformation);
-        result.set_value("step", std::string("load"));
-        result.set_value("success", true);
+        result.set("loaded_count", record_count);
+        result.set("destination", std::string("data_warehouse"));
+        result.set("transformation_applied", transformation);
+        result.set("step", std::string("load"));
+        result.set("success", true);
         return ok(result);
     });
 

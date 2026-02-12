@@ -215,15 +215,15 @@ inline serialization_format message_serializer::get_format() const noexcept {
 
 inline common::Result<std::vector<uint8_t>> message_serializer::serialize(
 	const container_module::value_container& container) const {
-	try {
-		auto data = container.serialize_array();
-		return common::ok(std::move(data));
-	} catch (const std::exception& e) {
+	using container_fmt = container_module::value_container::serialization_format;
+	auto result = container.serialize(container_fmt::binary);
+	if (result.is_err()) {
 		return common::make_error<std::vector<uint8_t>>(
 			common::error_codes::INTERNAL_ERROR,
-			std::string("Serialization failed: ") + e.what(),
+			std::string("Serialization failed: ") + result.error().message,
 			"message_serializer");
 	}
+	return common::ok(std::move(result.value()));
 }
 
 inline common::Result<std::vector<uint8_t>> message_serializer::serialize(
@@ -278,15 +278,15 @@ inline common::Result<message> message_serializer::deserialize_message(
 
 inline common::Result<std::string> message_serializer::to_json(
 	const container_module::value_container& container) const {
-	try {
-		auto json = const_cast<container_module::value_container&>(container).to_json();
-		return common::ok(std::move(json));
-	} catch (const std::exception& e) {
+	using container_fmt = container_module::value_container::serialization_format;
+	auto result = container.serialize_string(container_fmt::json);
+	if (result.is_err()) {
 		return common::make_error<std::string>(
 			common::error_codes::INTERNAL_ERROR,
-			std::string("JSON conversion failed: ") + e.what(),
+			std::string("JSON conversion failed: ") + result.error().message,
 			"message_serializer");
 	}
+	return common::ok(std::move(result.value()));
 }
 
 inline common::Result<std::string> message_serializer::to_json(
@@ -317,15 +317,15 @@ message_serializer::from_json(const std::string& /*json*/) const {
 
 inline common::Result<std::string> message_serializer::to_xml(
 	const container_module::value_container& container) const {
-	try {
-		auto xml = const_cast<container_module::value_container&>(container).to_xml();
-		return common::ok(std::move(xml));
-	} catch (const std::exception& e) {
+	using container_fmt = container_module::value_container::serialization_format;
+	auto result = container.serialize_string(container_fmt::xml);
+	if (result.is_err()) {
 		return common::make_error<std::string>(
 			common::error_codes::INTERNAL_ERROR,
-			std::string("XML conversion failed: ") + e.what(),
+			std::string("XML conversion failed: ") + result.error().message,
 			"message_serializer");
 	}
+	return common::ok(std::move(result.value()));
 }
 
 inline common::Result<std::string> message_serializer::to_xml(
