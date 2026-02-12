@@ -165,6 +165,15 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
     # container_system MUST be loaded last (macro conflict workaround)
     unified_find_dependency(container_system REQUIRED)   # Tier 4: Serialization
 
+    # Fix: Ensure database_system gets container_system compile definitions.
+    # database_system is loaded before container_system (due to macro overwrite constraint),
+    # so it falls back to header-only linking without PUBLIC compile definitions.
+    # Re-link here with the proper CMake target to propagate definitions
+    # (e.g., KCENON_HAS_COMMON_SYSTEM=1 which gates Result-returning serialize APIs).
+    if(TARGET database AND TARGET container_system)
+        target_link_libraries(database PUBLIC container_system)
+    endif()
+
     # Create standard aliases for consistent linking
     unified_create_standard_aliases()
 
@@ -344,6 +353,21 @@ elseif(TARGET MonitoringSystem::monitoring)
     target_compile_definitions(messaging_system_core PUBLIC WITH_MONITORING_SYSTEM)
 endif()
 
+# Workaround: monitoring_system's INTERFACE target propagates /WX and /w14996,
+# which re-enables C4996 warnings (deprecated CRT functions like std::gmtime in
+# thread_system's execution_event.h) and treats them as errors.
+# CMake appends INTERFACE options AFTER target PRIVATE options, so MSVC's
+# "last flag wins" rule means /w14996 overrides our /wd4996.
+# Fix: strip the problematic flags from the INTERFACE target directly.
+if(MSVC AND TARGET monitoring_system_interface)
+    get_target_property(_monitor_opts monitoring_system_interface INTERFACE_COMPILE_OPTIONS)
+    if(_monitor_opts)
+        list(REMOVE_ITEM _monitor_opts "/WX" "/w14996")
+        set_target_properties(monitoring_system_interface PROPERTIES
+            INTERFACE_COMPILE_OPTIONS "${_monitor_opts}")
+    endif()
+endif()
+
 # Link network_system if available (for websocket_transport, http_transport)
 # Note: PRIVATE because PIMPL pattern hides network_system from public headers
 if(KCENON_WITH_NETWORK_SYSTEM)
@@ -354,6 +378,21 @@ if(KCENON_WITH_NETWORK_SYSTEM)
     elseif(TARGET NetworkSystem::network)
         target_link_libraries(messaging_system_core PRIVATE NetworkSystem::network)
     endif()
+
+    # Workaround: network_system v2.0 moved transport implementation headers
+    # (messaging_ws_client.h, http_client.h) from include/ to src/internal/.
+    # Grant PRIVATE access to src/ until transport adapters migrate to the
+    # new facade API (Issue #217).
+    foreach(_ns_target NetworkSystem network network_system)
+        if(TARGET ${_ns_target})
+            get_target_property(_ns_src ${_ns_target} SOURCE_DIR)
+            if(_ns_src AND EXISTS "${_ns_src}/src")
+                target_include_directories(messaging_system_core PRIVATE "${_ns_src}/src")
+                message(STATUS "Added network_system internal headers: ${_ns_src}/src")
+            endif()
+            break()
+        endif()
+    endforeach()
 
     # Workaround: network_system links asio as PRIVATE, so asio headers are not
     # propagated to dependent targets. We need to find and link asio directly

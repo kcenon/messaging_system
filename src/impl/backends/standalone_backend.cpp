@@ -10,6 +10,7 @@
 #include <kcenon/thread/core/job.h>
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/thread_worker.h>
+#include <kcenon/thread/core/job_builder.h>
 
 #include <future>
 #include <thread>
