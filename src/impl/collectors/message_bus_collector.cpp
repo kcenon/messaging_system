@@ -21,8 +21,8 @@ message_bus_collector::message_bus_collector()
 
 message_bus_collector::~message_bus_collector() = default;
 
-bool message_bus_collector::initialize(
-    const std::unordered_map<std::string, std::string>& config) {
+auto message_bus_collector::initialize(
+    const monitoring::config_map& config) -> bool {
 
     // Parse configuration
     auto it = config.find("enable_latency_tracking");
@@ -49,16 +49,46 @@ bool message_bus_collector::initialize(
         use_event_bus_ = (it->second == "true" || it->second == "1");
     }
 
+    it = config.find("collection_interval_ms");
+    if (it != config.end()) {
+        try {
+            collection_interval_ = std::chrono::milliseconds(std::stoull(it->second));
+        } catch (...) {
+            // Keep default
+        }
+    }
+
     // Subscribe to events if enabled
     if (use_event_bus_) {
         subscribe_to_events();
     }
 
-    is_healthy_.store(true);
+    is_available_.store(true);
     return true;
 }
 
-std::vector<monitoring::metric> message_bus_collector::collect() {
+void message_bus_collector::shutdown() {
+    is_available_.store(false);
+    primary_bus_.reset();
+
+    {
+        std::lock_guard<std::mutex> lock(buses_mutex_);
+        bus_providers_.clear();
+        last_stats_.clear();
+    }
+
+    {
+        std::lock_guard<std::mutex> lock(latency_mutex_);
+        latency_samples_.clear();
+    }
+
+    {
+        std::lock_guard<std::mutex> lock(throughput_mutex_);
+        throughput_trackers_.clear();
+    }
+}
+
+auto message_bus_collector::collect() -> std::vector<monitoring::metric> {
     ++collection_count_;
 
     std::vector<monitoring::metric> metrics;
@@ -99,16 +129,16 @@ std::vector<monitoring::metric> message_bus_collector::collect() {
             }
         }
 
-        is_healthy_.store(true);
+        is_available_.store(true);
     } catch (...) {
         ++collection_errors_;
-        is_healthy_.store(false);
+        is_available_.store(false);
     }
 
     return metrics;
 }
 
-std::vector<std::string> message_bus_collector::get_metric_types() const {
+auto message_bus_collector::get_metric_types() const -> std::vector<std::string> {
     return {
         "messaging_messages_published_total",
         "messaging_messages_processed_total",
@@ -129,11 +159,22 @@ std::vector<std::string> message_bus_collector::get_metric_types() const {
     };
 }
 
-bool message_bus_collector::is_healthy() const {
-    return is_healthy_.load();
+auto message_bus_collector::is_available() const -> bool {
+    return is_available_.load();
 }
 
-std::unordered_map<std::string, double> message_bus_collector::get_statistics() const {
+auto message_bus_collector::get_metadata() const -> monitoring::plugin_metadata {
+    return monitoring::plugin_metadata{
+        .name = "message_bus_collector",
+        .description = "Collects message bus performance metrics",
+        .category = monitoring::plugin_category::system,
+        .version = "2.0.0",
+        .dependencies = {},
+        .requires_platform_support = false
+    };
+}
+
+auto message_bus_collector::get_statistics() const -> monitoring::stats_map {
     std::lock_guard<std::mutex> lock(stats_mutex_);
 
     auto now = std::chrono::steady_clock::now();
@@ -390,7 +431,7 @@ void message_bus_collector::add_topic_metrics(
         m.value = static_cast<double>(count);
         m.tags["bus"] = bus_name;
         m.tags["topic"] = topic;
-        m.tags["collector"] = get_name();
+        m.tags["collector"] = std::string(name());
         m.type = monitoring::metric_type::gauge;
         m.timestamp = std::chrono::system_clock::now();
         metrics.push_back(m);
@@ -450,15 +491,15 @@ std::tuple<double, double, double> message_bus_collector::calculate_latency_stat
 }
 
 monitoring::metric message_bus_collector::create_metric(
-    const std::string& name,
+    const std::string& metric_name,
     double value,
     const std::string& bus_name) const {
 
     monitoring::metric m;
-    m.name = name;
+    m.name = metric_name;
     m.value = value;
     m.tags["bus"] = bus_name;
-    m.tags["collector"] = get_name();
+    m.tags["collector"] = std::string(name());
     m.type = monitoring::metric_type::gauge;
     m.timestamp = std::chrono::system_clock::now();
     return m;

@@ -44,7 +44,7 @@
 #include <kcenon/common/config/feature_flags.h>
 
 #if KCENON_WITH_MONITORING_SYSTEM
-#include <kcenon/monitoring/collectors/plugin_metric_collector.h>
+#include <kcenon/monitoring/plugins/collector_plugin.h>
 #include <kcenon/monitoring/core/event_bus.h>
 #include <kcenon/monitoring/core/event_types.h>
 #endif
@@ -135,7 +135,7 @@ struct messaging_metric_event {
  * auto metrics = collector.collect();
  * @endcode
  */
-class message_bus_collector : public monitoring::metric_collector_plugin {
+class message_bus_collector : public monitoring::collector_plugin {
 public:
     /**
      * @brief Indicates if monitoring collector is available at compile time
@@ -144,7 +144,7 @@ public:
      * collector provides full functionality. When disabled, this is false
      * and all operations are no-ops.
      */
-    static constexpr bool is_available = true;
+    static constexpr bool is_compile_time_available = true;
 
     message_bus_collector();
     ~message_bus_collector() override;
@@ -158,8 +158,40 @@ public:
     message_bus_collector& operator=(message_bus_collector&&) = delete;
 
     // ========================================================================
-    // metric_collector_plugin interface
+    // collector_plugin interface
     // ========================================================================
+
+    /**
+     * @brief Get the unique name of this plugin
+     * @return "message_bus_collector"
+     */
+    auto name() const -> std::string_view override { return "message_bus_collector"; }
+
+    /**
+     * @brief Collect metrics from registered message buses
+     * @return Vector of collected metrics
+     */
+    auto collect() -> std::vector<monitoring::metric> override;
+
+    /**
+     * @brief Get the collection interval
+     * @return Collection interval (default: 5 seconds)
+     */
+    auto interval() const -> std::chrono::milliseconds override {
+        return collection_interval_;
+    }
+
+    /**
+     * @brief Check if collector is available on the current system
+     * @return true if at least one message bus is registered
+     */
+    auto is_available() const -> bool override;
+
+    /**
+     * @brief Get plugin metadata
+     * @return Metadata describing this collector plugin
+     */
+    auto get_metadata() const -> monitoring::plugin_metadata override;
 
     /**
      * @brief Initialize the collector with configuration
@@ -168,39 +200,27 @@ public:
      *        - latency_sample_size: number of samples to keep (default: 1000)
      *        - enable_topic_metrics: "true" or "false" (default: true)
      *        - use_event_bus: "true" or "false" (default: true)
+     *        - collection_interval_ms: interval in milliseconds (default: 5000)
      * @return true if initialization successful
      */
-    bool initialize(const std::unordered_map<std::string, std::string>& config) override;
+    auto initialize(const monitoring::config_map& config) -> bool override;
 
     /**
-     * @brief Collect metrics from registered message buses
-     * @return Vector of collected metrics
+     * @brief Shutdown the collector and release resources
      */
-    std::vector<monitoring::metric> collect() override;
-
-    /**
-     * @brief Get the collector name
-     * @return "message_bus_collector"
-     */
-    std::string get_name() const override { return "message_bus_collector"; }
+    void shutdown() override;
 
     /**
      * @brief Get supported metric types
      * @return Vector of metric type names
      */
-    std::vector<std::string> get_metric_types() const override;
-
-    /**
-     * @brief Check if collector is healthy
-     * @return true if operational
-     */
-    bool is_healthy() const override;
+    auto get_metric_types() const -> std::vector<std::string> override;
 
     /**
      * @brief Get collector statistics
      * @return Map of statistic name to value
      */
-    std::unordered_map<std::string, double> get_statistics() const override;
+    auto get_statistics() const -> monitoring::stats_map override;
 
     // ========================================================================
     // Message Bus Registration
@@ -298,12 +318,13 @@ private:
     bool enable_latency_tracking_{true};
     bool enable_topic_metrics_{true};
     bool use_event_bus_{true};
+    std::chrono::milliseconds collection_interval_{5000};
 
     // Statistics tracking
     mutable std::mutex stats_mutex_;
     std::atomic<size_t> collection_count_{0};
     std::atomic<size_t> collection_errors_{0};
-    std::atomic<bool> is_healthy_{true};
+    std::atomic<bool> is_available_{true};
     std::chrono::steady_clock::time_point init_time_;
 
     // Event bus integration
@@ -322,7 +343,7 @@ private:
                                      const message_bus_stats& stats);
     std::tuple<double, double, double> calculate_latency_stats(
         const std::deque<latency_sample>& samples) const;
-    monitoring::metric create_metric(const std::string& name,
+    monitoring::metric create_metric(const std::string& metric_name,
                                       double value,
                                       const std::string& bus_name) const;
     void subscribe_to_events();
@@ -347,7 +368,7 @@ public:
      * This is false when KCENON_WITH_MONITORING_SYSTEM is disabled.
      * Use this to conditionally handle unavailable monitoring at compile time.
      */
-    static constexpr bool is_available = false;
+    static constexpr bool is_compile_time_available = false;
 
     message_bus_collector() = default;
     ~message_bus_collector() = default;
@@ -356,13 +377,13 @@ public:
         return false;
     }
 
-    std::string get_name() const { return "message_bus_collector"; }
+    std::string_view name() const { return "message_bus_collector"; }
 
     std::vector<std::string> get_metric_types() const {
         return {};
     }
 
-    bool is_healthy() const { return false; }
+    bool is_available() const { return false; }
 
     std::unordered_map<std::string, double> get_statistics() const {
         return {};
