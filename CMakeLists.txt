@@ -165,6 +165,15 @@ if(MESSAGING_USE_EXTERNAL_SYSTEMS)
     # container_system MUST be loaded last (macro conflict workaround)
     unified_find_dependency(container_system REQUIRED)   # Tier 4: Serialization
 
+    # Fix: Ensure database_system gets container_system compile definitions.
+    # database_system is loaded before container_system (due to macro overwrite constraint),
+    # so it falls back to header-only linking without PUBLIC compile definitions.
+    # Re-link here with the proper CMake target to propagate definitions
+    # (e.g., KCENON_HAS_COMMON_SYSTEM=1 which gates Result-returning serialize APIs).
+    if(TARGET database AND TARGET container_system)
+        target_link_libraries(database PUBLIC container_system)
+    endif()
+
     # Create standard aliases for consistent linking
     unified_create_standard_aliases()
 

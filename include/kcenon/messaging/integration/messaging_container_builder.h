@@ -242,37 +242,37 @@ inline messaging_container_builder& messaging_container_builder::message_type(
 
 inline messaging_container_builder& messaging_container_builder::add_value(
 	const std::string& key, const std::string& value) {
-	container_->add_value(key, value);
+	container_->set(key, value);
 	return *this;
 }
 
 inline messaging_container_builder& messaging_container_builder::add_value(
 	const std::string& key, const char* value) {
-	container_->add_value(key, std::string(value));
+	container_->set(key, std::string(value));
 	return *this;
 }
 
 inline messaging_container_builder& messaging_container_builder::add_value(
 	const std::string& key, int value) {
-	container_->add_value(key, value);
+	container_->set(key, value);
 	return *this;
 }
 
 inline messaging_container_builder& messaging_container_builder::add_value(
 	const std::string& key, long long value) {
-	container_->add_value(key, value);
+	container_->set(key, value);
 	return *this;
 }
 
 inline messaging_container_builder& messaging_container_builder::add_value(
 	const std::string& key, double value) {
-	container_->add_value(key, value);
+	container_->set(key, value);
 	return *this;
 }
 
 inline messaging_container_builder& messaging_container_builder::add_value(
 	const std::string& key, bool value) {
-	container_->add_value(key, value);
+	container_->set(key, value);
 	return *this;
 }
 
@@ -280,22 +280,20 @@ inline messaging_container_builder& messaging_container_builder::add_value(
 	const std::string& key, std::chrono::system_clock::time_point value) {
 	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
 		value.time_since_epoch()).count();
-	container_->add_value(key, static_cast<long long>(ms));
+	container_->set(key, static_cast<long long>(ms));
 	return *this;
 }
 
 inline messaging_container_builder& messaging_container_builder::add_binary(
 	const std::string& key, const std::vector<uint8_t>& data) {
-	container_->add_value(key, container_module::value_types::bytes_value,
-						  container_module::value_variant{data});
+	container_->set(key, data);
 	return *this;
 }
 
 inline messaging_container_builder& messaging_container_builder::add_container(
 	const std::string& key,
 	std::shared_ptr<container_module::value_container> nested) {
-	container_->add_value(key, container_module::value_types::container_value,
-						  container_module::value_variant{nested});
+	container_->set(key, nested);
 	return *this;
 }
 

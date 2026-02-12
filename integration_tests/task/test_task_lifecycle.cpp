@@ -88,7 +88,7 @@ TEST_F(TaskLifecycleTest, TaskWithPayloadLifecycle) {
 
 		// Verify payload was received correctly
 		const auto& payload = t.payload();
-		auto value = payload.get_value("test_key");
+		auto value = payload.get("test_key");
 		if (value.has_value()) {
 			payload_verified = true;
 		}

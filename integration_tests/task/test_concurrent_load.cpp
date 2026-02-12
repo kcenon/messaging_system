@@ -258,7 +258,7 @@ TEST_F(ConcurrentLoadTest, LargePayloadProcessing) {
 
 		// Verify payload is received correctly
 		const auto& payload = t.payload();
-		auto data = payload.get_value("data");
+		auto data = payload.get("data");
 
 		if (data.has_value()) {
 			counter.increment_success();
