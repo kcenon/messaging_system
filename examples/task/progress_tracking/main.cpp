@@ -84,9 +84,9 @@ int main() {
             ctx.log_info("Processing complete for: " + filename);
 
             container_module::value_container result;
-            result.set_value("filename", filename);
-            result.set_value("steps_completed", total_steps);
-            result.set_value("status", std::string("completed"));
+            result.set("filename", filename);
+            result.set("steps_completed", total_steps);
+            result.set("status", std::string("completed"));
             return ok(result);
         });
 
@@ -118,7 +118,7 @@ int main() {
 
                 // Save checkpoint after each phase
                 container_module::value_container state;
-                state.set_value("phase", phase + 1);
+                state.set("phase", phase + 1);
                 ctx.save_checkpoint(state);
 
                 ctx.log_info("Completed phase " + std::to_string(phase));
@@ -127,7 +127,7 @@ int main() {
             ctx.update_progress(1.0, "All phases complete");
 
             container_module::value_container result;
-            result.set_value("phases_completed", total_phases);
+            result.set("phases_completed", total_phases);
             return ok(result);
         });
 
@@ -143,8 +143,8 @@ int main() {
     // Submit a file processing task
     std::cout << "=== Processing File ===" << std::endl;
     container_module::value_container payload;
-    payload.set_value("filename", std::string("large_dataset.csv"));
-    payload.set_value("steps", 15);
+    payload.set("filename", std::string("large_dataset.csv"));
+    payload.set("steps", 15);
 
     auto file_result = system.submit("process.file", payload);
     std::string task_id = file_result.task_id();

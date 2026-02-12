@@ -45,8 +45,8 @@ int main() {
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
             container_module::value_container result;
-            result.set_value("processed", name);
-            result.set_value("priority", priority);
+            result.set("processed", name);
+            result.set("priority", priority);
             return ok(result);
         });
 

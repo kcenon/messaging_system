@@ -4,7 +4,7 @@
 
 /**
  * @file websocket_transport.cpp
- * @brief WebSocket transport implementation using network_system
+ * @brief WebSocket transport implementation using network_system v2.0 facade API
  */
 
 #include <kcenon/messaging/adapters/websocket_transport.h>
@@ -13,7 +13,10 @@
 
 #include <kcenon/messaging/error/error_codes.h>
 #include <kcenon/messaging/serialization/message_serializer.h>
-#include <kcenon/network/core/messaging_ws_client.h>
+#include <kcenon/network/facade/websocket_facade.h>
+#include <kcenon/network/interfaces/i_protocol_client.h>
+#include <kcenon/network/interfaces/i_websocket_client.h>
+#include <kcenon/network/interfaces/connection_observer.h>
 
 #include <atomic>
 #include <chrono>
@@ -54,11 +57,20 @@ public:
 	explicit impl(const websocket_transport_config& config)
 		: config_(config)
 		, state_(transport_state::disconnected)
-		, client_(std::make_shared<network::core::messaging_ws_client>(
-			  generate_client_id()))
 		, serializer_()
 		, reconnect_attempts_(0)
 		, current_reconnect_delay_(config.reconnect_delay) {
+		// Create WebSocket client via facade
+		network::facade::websocket_facade facade;
+		client_ = facade.create_client({
+			.client_id = generate_client_id(),
+			.ping_interval = config.ping_interval
+		});
+
+		// Try to get WebSocket-specific interface
+		ws_client_ = dynamic_cast<network::interfaces::i_websocket_client*>(
+			client_.get());
+
 		setup_callbacks();
 	}
 
@@ -86,17 +98,11 @@ public:
 		state_ = transport_state::connecting;
 		notify_state_change(transport_state::connecting);
 
-		network::core::ws_client_config ws_config;
-		ws_config.host = config_.host;
-		ws_config.port = config_.port;
-		ws_config.path = config_.path;
-		ws_config.connect_timeout = config_.connect_timeout;
-		ws_config.ping_interval = config_.ping_interval;
-		ws_config.auto_pong = config_.auto_pong;
-		ws_config.auto_reconnect = false;  // We handle reconnection ourselves
-		ws_config.max_message_size = config_.max_message_size;
+		// Use WebSocket-specific start with path if available
+		auto result = ws_client_
+			? ws_client_->start(config_.host, config_.port, config_.path)
+			: client_->start(config_.host, config_.port);
 
-		auto result = client_->start_client(ws_config);
 		if (result.is_err()) {
 			state_ = transport_state::error;
 			notify_state_change(transport_state::error);
@@ -122,8 +128,11 @@ public:
 		// Cancel any pending reconnection
 		reconnect_attempts_ = config_.max_retries + 1;
 
-		auto result = client_->stop_client();
-		client_->wait_for_stop();
+		if (ws_client_) {
+			[[maybe_unused]] auto _ = ws_client_->stop();
+		} else {
+			[[maybe_unused]] auto _ = client_->stop();
+		}
 
 		state_ = transport_state::disconnected;
 		notify_state_change(transport_state::disconnected);
@@ -132,7 +141,12 @@ public:
 	}
 
 	bool is_connected() const {
-		return state_ == transport_state::connected && client_->is_connected();
+		if (ws_client_) {
+			return state_ == transport_state::connected
+				&& ws_client_->is_connected();
+		}
+		return state_ == transport_state::connected
+			&& client_->is_connected();
 	}
 
 	transport_state get_state() const {
@@ -155,7 +169,10 @@ public:
 		}
 
 		auto& data = serialized.value();
-		auto result = client_->send_binary(std::move(data));
+		auto result = ws_client_
+			? ws_client_->send_binary(std::move(data))
+			: client_->send(std::move(data));
+
 		if (result.is_err()) {
 			++stats_.errors;
 			return VoidResult::err(error_info(
@@ -176,7 +193,10 @@ public:
 		}
 
 		std::vector<uint8_t> data_copy = data;
-		auto result = client_->send_binary(std::move(data_copy));
+		auto result = ws_client_
+			? ws_client_->send_binary(std::move(data_copy))
+			: client_->send(std::move(data_copy));
+
 		if (result.is_err()) {
 			++stats_.errors;
 			return VoidResult::err(error_info(
@@ -292,14 +312,27 @@ public:
 				"WebSocket transport is not connected"));
 		}
 
-		std::string text_copy = text;
-		auto result = client_->send_text(std::move(text_copy));
-		if (result.is_err()) {
-			++stats_.errors;
-			return VoidResult::err(error_info(
-				error::publication_failed,
-				"Failed to send text: " +
-					result.error().message));
+		if (ws_client_) {
+			std::string text_copy = text;
+			auto result = ws_client_->send_text(std::move(text_copy));
+			if (result.is_err()) {
+				++stats_.errors;
+				return VoidResult::err(error_info(
+					error::publication_failed,
+					"Failed to send text: " +
+						result.error().message));
+			}
+		} else {
+			// Fallback: send as binary via unified interface
+			std::vector<uint8_t> data(text.begin(), text.end());
+			auto result = client_->send(std::move(data));
+			if (result.is_err()) {
+				++stats_.errors;
+				return VoidResult::err(error_info(
+					error::publication_failed,
+					"Failed to send text: " +
+						result.error().message));
+			}
 		}
 
 		stats_.bytes_sent += text.size();
@@ -313,12 +346,14 @@ public:
 				"WebSocket transport is not connected"));
 		}
 
-		auto result = client_->send_ping();
-		if (result.is_err()) {
-			return VoidResult::err(error_info(
-				error::publication_failed,
-				"Failed to send ping: " +
-					result.error().message));
+		if (ws_client_) {
+			auto result = ws_client_->ping();
+			if (result.is_err()) {
+				return VoidResult::err(error_info(
+					error::publication_failed,
+					"Failed to send ping: " +
+						result.error().message));
+			}
 		}
 
 		return ok();
@@ -341,28 +376,46 @@ private:
 	}
 
 	void setup_callbacks() {
-		client_->set_connected_callback([this]() {
-			on_connected();
-		});
-
-		client_->set_disconnected_callback(
-			[this](network::internal::ws_close_code code, const std::string& reason) {
-				on_disconnected(static_cast<uint16_t>(code), reason);
+		if (ws_client_) {
+			// Use WebSocket-specific callbacks for richer event handling
+			ws_client_->set_connected_callback([this]() {
+				on_connected();
 			});
 
-		client_->set_binary_message_callback(
-			[this](const std::vector<uint8_t>& data) {
-				on_binary_message(data);
-			});
+			ws_client_->set_disconnected_callback(
+				[this](uint16_t code, std::string_view reason) {
+					on_disconnected(code, std::string(reason));
+				});
 
-		client_->set_text_message_callback(
-			[this](const std::string& text) {
-				on_text_message(text);
-			});
+			ws_client_->set_binary_callback(
+				[this](const std::vector<uint8_t>& data) {
+					on_binary_message(data);
+				});
 
-		client_->set_error_callback([this](std::error_code ec) {
-			on_error(ec);
-		});
+			ws_client_->set_text_callback(
+				[this](const std::string& text) {
+					on_text_message(text);
+				});
+
+			ws_client_->set_error_callback([this](std::error_code ec) {
+				on_error(ec);
+			});
+		} else {
+			// Use unified protocol client observer
+			auto observer = std::make_shared<network::interfaces::callback_adapter>();
+			observer->on_connected([this]() {
+				on_connected();
+			}).on_disconnected([this](std::optional<std::string_view> reason) {
+				on_disconnected(1000, reason.has_value()
+					? std::string(*reason) : std::string{});
+			}).on_receive([this](std::span<const uint8_t> data) {
+				std::vector<uint8_t> vec(data.begin(), data.end());
+				on_binary_message(vec);
+			}).on_error([this](std::error_code ec) {
+				on_error(ec);
+			});
+			client_->set_observer(observer);
+		}
 	}
 
 	void on_connected() {
@@ -475,17 +528,10 @@ private:
 
 			notify_state_change(transport_state::connecting);
 
-			network::core::ws_client_config ws_config;
-			ws_config.host = config_.host;
-			ws_config.port = config_.port;
-			ws_config.path = config_.path;
-			ws_config.connect_timeout = config_.connect_timeout;
-			ws_config.ping_interval = config_.ping_interval;
-			ws_config.auto_pong = config_.auto_pong;
-			ws_config.auto_reconnect = false;
-			ws_config.max_message_size = config_.max_message_size;
+			auto result = ws_client_
+				? ws_client_->start(config_.host, config_.port, config_.path)
+				: client_->start(config_.host, config_.port);
 
-			auto result = client_->start_client(ws_config);
 			if (result.is_err()) {
 				{
 					std::lock_guard lock(mutex_);
@@ -558,7 +604,8 @@ private:
 
 	websocket_transport_config config_;
 	std::atomic<transport_state> state_;
-	std::shared_ptr<network::core::messaging_ws_client> client_;
+	std::shared_ptr<network::interfaces::i_protocol_client> client_;
+	network::interfaces::i_websocket_client* ws_client_ = nullptr;
 	serialization::message_serializer serializer_;
 
 	mutable std::mutex mutex_;

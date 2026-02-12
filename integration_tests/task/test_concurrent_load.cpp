@@ -221,7 +221,7 @@ TEST_F(ConcurrentLoadTest, MemoryStabilityUnderLoad) {
 		}
 
 		container_module::value_container result;
-		result.set_value("buffer_size", static_cast<int>(buffer.size()));
+		result.set("buffer_size", static_cast<int>(buffer.size()));
 
 		counter.increment();
 		return cmn::ok(result);
@@ -258,7 +258,7 @@ TEST_F(ConcurrentLoadTest, LargePayloadProcessing) {
 
 		// Verify payload is received correctly
 		const auto& payload = t.payload();
-		auto data = payload.get_value("data");
+		auto data = payload.get("data");
 
 		if (data.has_value()) {
 			counter.increment_success();
@@ -277,7 +277,7 @@ TEST_F(ConcurrentLoadTest, LargePayloadProcessing) {
 
 	for (int i = 0; i < task_count; ++i) {
 		container_module::value_container payload;
-		payload.set_value("data", large_data);
+		payload.set("data", large_data);
 		system_->submit("load.large_payload", payload);
 	}
 

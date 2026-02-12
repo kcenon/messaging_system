@@ -198,8 +198,8 @@ public:
         }
 
         auto& msg = msg_result.value();
-        msg.payload().set_value("text", text);
-        msg.payload().set_value("timestamp",
+        msg.payload().set("text", text);
+        msg.payload().set("timestamp",
             std::chrono::system_clock::now().time_since_epoch().count());
 
         return transport_->send(msg);

@@ -67,9 +67,9 @@ int main() {
             ctx.log_info(source + " returned value: " + std::to_string(value));
 
             container_module::value_container result;
-            result.set_value("source", source);
-            result.set_value("value", value);
-            result.set_value("latency_ms", static_cast<int>(delay.count()));
+            result.set("source", source);
+            result.set("value", value);
+            result.set("latency_ms", static_cast<int>(delay.count()));
             return ok(result);
         });
 
@@ -93,10 +93,10 @@ int main() {
                          ", average: " + std::to_string(avg));
 
             container_module::value_container result;
-            result.set_value("total", total);
-            result.set_value("average", avg);
-            result.set_value("source_count", 4);
-            result.set_value("aggregation_type", std::string("sum_and_avg"));
+            result.set("total", total);
+            result.set("average", avg);
+            result.set("source_count", 4);
+            result.set("aggregation_type", std::string("sum_and_avg"));
             return ok(result);
         });
 
