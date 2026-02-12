@@ -100,7 +100,7 @@ TEST_F(TaskLifecycleTest, TaskWithPayloadLifecycle) {
 
 	// Submit task with payload
 	container_module::value_container payload;
-	payload.set_value("test_key", std::string("test_value"));
+	payload.set("test_key", std::string("test_value"));
 
 	auto async_result = system_->submit("lifecycle.payload", payload);
 	auto result = async_result.get(std::chrono::seconds(10));
@@ -226,7 +226,7 @@ TEST_F(TaskLifecycleTest, TaskResultRetrieval) {
 		handler_executed = true;
 
 		container_module::value_container result;
-		result.set_value("status", std::string("completed"));
+		result.set("status", std::string("completed"));
 
 		return cmn::ok(result);
 	});
@@ -253,7 +253,7 @@ TEST_F(TaskLifecycleTest, TaskResultFromBackend) {
 		(void)ctx;
 
 		container_module::value_container result;
-		result.set_value("source", std::string("backend_test"));
+		result.set("source", std::string("backend_test"));
 
 		return cmn::ok(result);
 	});
