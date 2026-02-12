@@ -1,13 +1,103 @@
 #include <kcenon/messaging/backends/standalone_backend.h>
 #include <kcenon/messaging/error/error_codes.h>
 #include <kcenon/common/logging/log_functions.h>
-#include <kcenon/thread/adapters/common_executor_adapter.h>
+#include <kcenon/thread/core/job.h>
 #include <kcenon/thread/core/thread_pool.h>
 #include <kcenon/thread/core/thread_worker.h>
 
+#include <future>
 #include <thread>
 
 namespace kcenon::messaging {
+
+namespace {
+
+// Wraps a common::interfaces::IJob as a thread::job for thread_pool enqueue
+class executor_job_wrapper : public kcenon::thread::job {
+public:
+	executor_job_wrapper(std::unique_ptr<common::interfaces::IJob> wrapped,
+						 std::shared_ptr<std::promise<void>> promise)
+		: wrapped_(std::move(wrapped)), promise_(std::move(promise)) {}
+
+protected:
+	auto do_work() -> common::VoidResult override {
+		try {
+			auto result = wrapped_->execute();
+			if (result.is_err()) {
+				promise_->set_exception(
+					std::make_exception_ptr(
+						std::runtime_error(result.error().message)));
+				return result;
+			}
+			promise_->set_value();
+			return common::ok();
+		} catch (...) {
+			promise_->set_exception(std::current_exception());
+			return common::make_error<std::monostate>(
+				error::base,
+				"Exception during job execution",
+				"messaging_system"
+			);
+		}
+	}
+
+private:
+	std::unique_ptr<common::interfaces::IJob> wrapped_;
+	std::shared_ptr<std::promise<void>> promise_;
+};
+
+// Minimal IExecutor adapter for thread_pool (avoids broken common_executor_adapter.h
+// which has ::common namespace mismatch with kcenon::common)
+class thread_pool_executor : public common::interfaces::IExecutor {
+public:
+	explicit thread_pool_executor(std::shared_ptr<kcenon::thread::thread_pool> pool)
+		: pool_(std::move(pool)) {}
+
+	common::Result<std::future<void>> execute(
+		std::unique_ptr<common::interfaces::IJob>&& job) override {
+		auto promise = std::make_shared<std::promise<void>>();
+		auto future = promise->get_future();
+
+		auto wrapper = std::make_unique<executor_job_wrapper>(
+			std::move(job), promise);
+
+		auto result = pool_->enqueue(std::move(wrapper));
+		if (result.is_err()) {
+			return common::Result<std::future<void>>(result.error());
+		}
+		return common::Result<std::future<void>>::ok(std::move(future));
+	}
+
+	common::Result<std::future<void>> execute_delayed(
+		std::unique_ptr<common::interfaces::IJob>&& job,
+		std::chrono::milliseconds /*delay*/) override {
+		// Simplified: immediate execution (delay support requires additional thread_pool API)
+		return execute(std::move(job));
+	}
+
+	size_t worker_count() const override {
+		return pool_ ? pool_->get_active_worker_count() : 0;
+	}
+
+	bool is_running() const override {
+		return pool_ && pool_->is_running();
+	}
+
+	size_t pending_tasks() const override {
+		return pool_ ? pool_->get_pending_task_count() : 0;
+	}
+
+	void shutdown(bool wait_for_completion) override {
+		if (pool_) {
+			[[maybe_unused]] auto _ = pool_->stop(!wait_for_completion);
+		}
+	}
+
+private:
+	std::shared_ptr<kcenon::thread::thread_pool> pool_;
+};
+
+} // anonymous namespace
 
 standalone_backend::standalone_backend(size_t num_threads)
 	: num_threads_(num_threads > 0 ? num_threads : std::thread::hardware_concurrency())
@@ -67,7 +157,7 @@ common::VoidResult standalone_backend::initialize() {
 			);
 		}
 
-		executor_ = std::make_shared<kcenon::thread::adapters::thread_pool_executor_adapter>(thread_pool_);
+		executor_ = std::make_shared<thread_pool_executor>(thread_pool_);
 
 		common::logging::log_info("Standalone backend initialized successfully");
 		return common::ok();
