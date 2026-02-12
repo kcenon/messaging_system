@@ -156,7 +156,7 @@ TEST_F(TimingAccuracyTest, ScheduledTaskTimingAccuracy) {
 	// Wait for 5 executions
 	const int target_executions = 5;
 	ASSERT_TRUE(wait_for_condition(
-		[&sequence, target_executions]() {
+		[&sequence]() {
 			return sequence.load() >= target_executions;
 		},
 		std::chrono::seconds(15)
@@ -390,7 +390,7 @@ TEST_F(TimingAccuracyTest, TaskThroughputConsistency) {
 
 	// Wait for completion
 	ASSERT_TRUE(wait_for_condition(
-		[&completed, total_tasks]() { return completed.load() >= total_tasks; },
+		[&completed]() { return completed.load() >= total_tasks; },
 		std::chrono::seconds(60)
 	)) << "Expected " << total_tasks << " completions, got " << completed.load();
 

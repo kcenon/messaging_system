@@ -86,7 +86,7 @@ TEST_F(EventBusIntegrationTest, MessageBusTrigersEventBus) {
     );
 
     // Subscribe to message bus and publish event on receive
-    auto msg_sub = bus_->subscribe("events.test", [&](const message& msg) -> VoidResult {
+    auto msg_sub = bus_->subscribe("events.test", [&]([[maybe_unused]] const message& msg) -> VoidResult {
         event_bus_.publish(message_received_event{"events.test", "test_source"});
         return ok();
     });

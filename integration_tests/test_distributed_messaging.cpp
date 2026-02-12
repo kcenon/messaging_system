@@ -548,7 +548,7 @@ TEST_F(DistributedMessagingTest, ConcurrentPublishFromMultipleThreads) {
     // Launch multiple publisher threads
     std::vector<std::thread> threads;
     for (int t = 0; t < threads_count; ++t) {
-        threads.emplace_back([this, messages_per_thread]() {
+        threads.emplace_back([this]() {
             for (int i = 0; i < messages_per_thread; ++i) {
                 bus_node1_->publish(create_test_message("concurrent.test"));
             }

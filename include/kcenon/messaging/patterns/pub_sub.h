@@ -89,9 +89,9 @@ public:
 	subscriber(const subscriber&) = delete;
 	subscriber& operator=(const subscriber&) = delete;
 
-	// Movable
-	subscriber(subscriber&&) noexcept = default;
-	subscriber& operator=(subscriber&&) noexcept = default;
+	// Non-movable (std::mutex is not movable)
+	subscriber(subscriber&&) noexcept = delete;
+	subscriber& operator=(subscriber&&) noexcept = delete;
 
 	/**
 	 * @brief Subscribe to a topic pattern
