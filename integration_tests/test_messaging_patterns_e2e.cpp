@@ -151,7 +151,7 @@ TEST_F(MessagingPatternsE2ETest, PubSubConcurrentPublishers) {
 	std::atomic<int> publish_errors{0};
 
 	for (int p = 0; p < num_publishers; ++p) {
-		threads.emplace_back([&, p]() {
+		threads.emplace_back([&]() {
 			auto pub = std::make_shared<publisher>(bus_, topic);
 			for (int i = 0; i < messages_per_publisher; ++i) {
 				auto msg = create_test_message(topic);
@@ -347,7 +347,7 @@ TEST_F(MessagingPatternsE2ETest, RequestReplyConcurrent) {
 	std::atomic<int> failure_count{0};
 
 	for (int i = 0; i < num_requests; ++i) {
-		threads.emplace_back([&, i]() {
+		threads.emplace_back([&]() {
 			auto request_msg = create_test_message(topic);
 			auto reply_result = handler->request(request_msg, std::chrono::seconds{5});
 
@@ -393,7 +393,7 @@ TEST_F(MessagingPatternsE2ETest, SlowConsumerHandling) {
 	auto sub = std::make_shared<subscriber>(bus_);
 	auto sub_result = sub->subscribe(
 		topic,
-		[&processed_count](const message& msg) -> VoidResult {
+		[&processed_count]([[maybe_unused]] const message& msg) -> VoidResult {
 			// Simulate slow processing
 			std::this_thread::sleep_for(std::chrono::milliseconds{5});
 			processed_count.fetch_add(1);

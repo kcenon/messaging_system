@@ -50,7 +50,7 @@ bool wait_for_condition(Predicate&& pred, std::chrono::milliseconds timeout = st
 /**
  * @brief Create a test message
  */
-inline message create_test_message(const std::string& topic, const std::string& content = "test") {
+inline message create_test_message(const std::string& topic, [[maybe_unused]] const std::string& content = "test") {
     auto msg_result = message_builder()
         .topic(topic)
         .type(message_type::event)
@@ -99,7 +99,7 @@ public:
  * @brief Create a counting callback
  */
 inline subscription_callback create_counting_callback(MessageCounter& counter) {
-    return [&counter](const message& msg) -> common::VoidResult {
+    return [&counter]([[maybe_unused]] const message& msg) -> common::VoidResult {
         counter.increment();
         return common::ok();
     };

@@ -175,7 +175,7 @@ TEST_F(ConcurrentLoadTest, MultipleProducers) {
 	std::atomic<int> submitted{0};
 
 	for (int p = 0; p < num_producers; ++p) {
-		producers.emplace_back([this, &submitted, tasks_per_producer]() {
+		producers.emplace_back([this, &submitted]() {
 			for (int i = 0; i < tasks_per_producer; ++i) {
 				container_module::value_container payload;
 				system_->submit("load.multi_producer", payload);
@@ -193,7 +193,7 @@ TEST_F(ConcurrentLoadTest, MultipleProducers) {
 
 	// Wait for all tasks to be processed
 	ASSERT_TRUE(wait_for_condition(
-		[&counter, num_producers, tasks_per_producer]() {
+		[&counter]() {
 			return counter.count() >= static_cast<size_t>(num_producers * tasks_per_producer);
 		},
 		std::chrono::seconds(60)
@@ -239,7 +239,7 @@ TEST_F(ConcurrentLoadTest, MemoryStabilityUnderLoad) {
 
 	// Wait for completion
 	ASSERT_TRUE(wait_for_condition(
-		[&counter, task_count]() { return counter.count() >= static_cast<size_t>(task_count); },
+		[&counter]() { return counter.count() >= static_cast<size_t>(task_count); },
 		std::chrono::seconds(60)
 	));
 
@@ -283,7 +283,7 @@ TEST_F(ConcurrentLoadTest, LargePayloadProcessing) {
 
 	// Wait for completion
 	ASSERT_TRUE(wait_for_condition(
-		[&counter, task_count]() { return counter.count() >= static_cast<size_t>(task_count); },
+		[&counter]() { return counter.count() >= static_cast<size_t>(task_count); },
 		std::chrono::seconds(60)
 	));
 
@@ -425,7 +425,7 @@ TEST_F(ConcurrentLoadTest, RapidSubmissionBursts) {
 
 	// Wait for all to complete
 	ASSERT_TRUE(wait_for_condition(
-		[&counter, bursts, tasks_per_burst]() {
+		[&counter]() {
 			return counter.count() >= static_cast<size_t>(bursts * tasks_per_burst);
 		},
 		std::chrono::seconds(60)
@@ -499,7 +499,7 @@ TEST_F(ConcurrentLoadTest, MixedPriorityLoad) {
 
 	// Wait for completion
 	ASSERT_TRUE(wait_for_condition(
-		[&high_counter, &normal_counter, &low_counter, tasks_per_priority]() {
+		[&high_counter, &normal_counter, &low_counter]() {
 			return (high_counter.count() + normal_counter.count() + low_counter.count()) >=
 			       static_cast<size_t>(tasks_per_priority * 3);
 		},
@@ -553,7 +553,7 @@ TEST_F(ConcurrentLoadTest, StabilityWithFailingTasks) {
 
 	// Wait for all to complete
 	ASSERT_TRUE(wait_for_condition(
-		[&success_counter, &failure_counter, task_count]() {
+		[&success_counter, &failure_counter]() {
 			return (success_counter.count() + failure_counter.count()) >= static_cast<size_t>(task_count);
 		},
 		std::chrono::seconds(60)
@@ -655,7 +655,7 @@ TEST_F(ConcurrentLoadTest, QueueCapacityHandling) {
 
 	// Wait for completion
 	ASSERT_TRUE(wait_for_condition(
-		[&counter, queue_fill]() { return counter.count() >= static_cast<size_t>(queue_fill); },
+		[&counter]() { return counter.count() >= static_cast<size_t>(queue_fill); },
 		std::chrono::seconds(60)
 	));
 
