@@ -353,6 +353,21 @@ elseif(TARGET MonitoringSystem::monitoring)
     target_compile_definitions(messaging_system_core PUBLIC WITH_MONITORING_SYSTEM)
 endif()
 
+# Workaround: monitoring_system's INTERFACE target propagates /WX and /w14996,
+# which re-enables C4996 warnings (deprecated CRT functions like std::gmtime in
+# thread_system's execution_event.h) and treats them as errors.
+# CMake appends INTERFACE options AFTER target PRIVATE options, so MSVC's
+# "last flag wins" rule means /w14996 overrides our /wd4996.
+# Fix: strip the problematic flags from the INTERFACE target directly.
+if(MSVC AND TARGET monitoring_system_interface)
+    get_target_property(_monitor_opts monitoring_system_interface INTERFACE_COMPILE_OPTIONS)
+    if(_monitor_opts)
+        list(REMOVE_ITEM _monitor_opts "/WX" "/w14996")
+        set_target_properties(monitoring_system_interface PROPERTIES
+            INTERFACE_COMPILE_OPTIONS "${_monitor_opts}")
+    endif()
+endif()
+
 # Link network_system if available (for websocket_transport, http_transport)
 # Note: PRIVATE because PIMPL pattern hides network_system from public headers
 if(KCENON_WITH_NETWORK_SYSTEM)
