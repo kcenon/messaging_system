@@ -144,8 +144,8 @@ public:
             return common::VoidResult::err(msg_result.error());
         }
 
-        msg_result.value().payload().set_value("order_id", order_id);
-        msg_result.value().payload().set_value("reason", "user_requested");
+        msg_result.value().payload().set("order_id", order_id);
+        msg_result.value().payload().set("reason", "user_requested");
 
         return transport_->send(msg_result.value());
     }
@@ -222,9 +222,9 @@ public:
         }
 
         auto& payload = msg_result.value().payload();
-        payload.set_value("title", title);
-        payload.set_value("body", body);
-        payload.set_value("sent_at",
+        payload.set("title", title);
+        payload.set("body", body);
+        payload.set("sent_at",
             std::chrono::system_clock::now().time_since_epoch().count());
 
         return transport_->send(msg_result.value());

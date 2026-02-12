@@ -160,7 +160,7 @@ int main() {
     system.register_handler("quick.task", [](const task& t, task_context& ctx) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         container_module::value_container result;
-        result.set_value("status", std::string("done"));
+        result.set("status", std::string("done"));
         return ok(result);
     });
 
@@ -168,14 +168,14 @@ int main() {
         "medium.task", [](const task& t, task_context& ctx) {
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
             container_module::value_container result;
-            result.set_value("status", std::string("done"));
+            result.set("status", std::string("done"));
             return ok(result);
         });
 
     system.register_handler("slow.task", [](const task& t, task_context& ctx) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
         container_module::value_container result;
-        result.set_value("status", std::string("done"));
+        result.set("status", std::string("done"));
         return ok(result);
     });
 
@@ -190,7 +190,7 @@ int main() {
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(200));
             container_module::value_container result;
-            result.set_value("status", std::string("done"));
+            result.set("status", std::string("done"));
             return ok(result);
         });
 

@@ -38,8 +38,8 @@ int main() {
 
         // Create the result
         container_module::value_container result;
-        result.set_value("greeting", "Hello, " + name + "!");
-        result.set_value("processed", true);
+        result.set("greeting", "Hello, " + name + "!");
+        result.set("processed", true);
 
         ctx.update_progress(1.0, "Completed");
         return ok(result);
@@ -59,7 +59,7 @@ int main() {
         int sum = a_opt.value() + b_opt.value();
 
         container_module::value_container result;
-        result.set_value("sum", sum);
+        result.set("sum", sum);
         ctx.log_info("Calculated sum: " + std::to_string(sum));
 
         return ok(result);
@@ -77,7 +77,7 @@ int main() {
 
     // Submit greeting task
     container_module::value_container greet_payload;
-    greet_payload.set_value("name", std::string("Task System"));
+    greet_payload.set("name", std::string("Task System"));
 
     std::cout << "\nSubmitting greeting task..." << std::endl;
     auto greet_result = system.submit("greet", greet_payload);
@@ -96,8 +96,8 @@ int main() {
 
     // Submit addition task
     container_module::value_container add_payload;
-    add_payload.set_value("a", 10);
-    add_payload.set_value("b", 25);
+    add_payload.set("a", 10);
+    add_payload.set("b", 25);
 
     std::cout << "\nSubmitting addition task (10 + 25)..." << std::endl;
     auto add_result = system.submit("add", add_payload);

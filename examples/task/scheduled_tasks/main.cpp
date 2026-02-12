@@ -56,7 +56,7 @@ int main() {
                       << message << std::endl;
 
             container_module::value_container result;
-            result.set_value("executed_at", current_time());
+            result.set("executed_at", current_time());
             return ok(result);
         });
 
@@ -68,7 +68,7 @@ int main() {
                       << std::endl;
 
             container_module::value_container result;
-            result.set_value("count", count);
+            result.set("count", count);
             return ok(result);
         });
 
@@ -78,7 +78,7 @@ int main() {
                   << std::endl;
 
         container_module::value_container result;
-        result.set_value("status", std::string("cleaned"));
+        result.set("status", std::string("cleaned"));
         return ok(result);
     });
 

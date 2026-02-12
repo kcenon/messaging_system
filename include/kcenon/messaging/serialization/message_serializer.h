@@ -215,8 +215,9 @@ inline serialization_format message_serializer::get_format() const noexcept {
 
 inline common::Result<std::vector<uint8_t>> message_serializer::serialize(
 	const container_module::value_container& container) const {
-	auto result = container.serialize(container_module::value_container::serialization_format::binary);
-	if (!result.is_ok()) {
+	using container_fmt = container_module::value_container::serialization_format;
+	auto result = container.serialize(container_fmt::binary);
+	if (result.is_err()) {
 		return common::make_error<std::vector<uint8_t>>(
 			common::error_codes::INTERNAL_ERROR,
 			std::string("Serialization failed: ") + result.error().message,
@@ -277,8 +278,9 @@ inline common::Result<message> message_serializer::deserialize_message(
 
 inline common::Result<std::string> message_serializer::to_json(
 	const container_module::value_container& container) const {
-	auto result = container.serialize_string(container_module::value_container::serialization_format::json);
-	if (!result.is_ok()) {
+	using container_fmt = container_module::value_container::serialization_format;
+	auto result = container.serialize_string(container_fmt::json);
+	if (result.is_err()) {
 		return common::make_error<std::string>(
 			common::error_codes::INTERNAL_ERROR,
 			std::string("JSON conversion failed: ") + result.error().message,
@@ -315,8 +317,9 @@ message_serializer::from_json(const std::string& /*json*/) const {
 
 inline common::Result<std::string> message_serializer::to_xml(
 	const container_module::value_container& container) const {
-	auto result = container.serialize_string(container_module::value_container::serialization_format::xml);
-	if (!result.is_ok()) {
+	using container_fmt = container_module::value_container::serialization_format;
+	auto result = container.serialize_string(container_fmt::xml);
+	if (result.is_err()) {
 		return common::make_error<std::string>(
 			common::error_codes::INTERNAL_ERROR,
 			std::string("XML conversion failed: ") + result.error().message,
