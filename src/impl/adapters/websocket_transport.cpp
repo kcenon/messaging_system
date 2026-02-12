@@ -13,7 +13,8 @@
 
 #include <kcenon/messaging/error/error_codes.h>
 #include <kcenon/messaging/serialization/message_serializer.h>
-#include <kcenon/network/core/messaging_ws_client.h>
+// network_system v2.0: headers moved from include/ to src/internal/ (Issue #217)
+#include <internal/http/websocket_client.h>
 
 #include <atomic>
 #include <chrono>
@@ -346,16 +347,16 @@ private:
 		});
 
 		client_->set_disconnected_callback(
-			[this](network::internal::ws_close_code code, const std::string& reason) {
-				on_disconnected(static_cast<uint16_t>(code), reason);
+			[this](uint16_t code, std::string_view reason) {
+				on_disconnected(code, std::string(reason));
 			});
 
-		client_->set_binary_message_callback(
+		client_->set_binary_callback(
 			[this](const std::vector<uint8_t>& data) {
 				on_binary_message(data);
 			});
 
-		client_->set_text_message_callback(
+		client_->set_text_callback(
 			[this](const std::string& text) {
 				on_text_message(text);
 			});

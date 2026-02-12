@@ -364,6 +364,21 @@ if(KCENON_WITH_NETWORK_SYSTEM)
         target_link_libraries(messaging_system_core PRIVATE NetworkSystem::network)
     endif()
 
+    # Workaround: network_system v2.0 moved transport implementation headers
+    # (messaging_ws_client.h, http_client.h) from include/ to src/internal/.
+    # Grant PRIVATE access to src/ until transport adapters migrate to the
+    # new facade API (Issue #217).
+    foreach(_ns_target NetworkSystem network network_system)
+        if(TARGET ${_ns_target})
+            get_target_property(_ns_src ${_ns_target} SOURCE_DIR)
+            if(_ns_src AND EXISTS "${_ns_src}/src")
+                target_include_directories(messaging_system_core PRIVATE "${_ns_src}/src")
+                message(STATUS "Added network_system internal headers: ${_ns_src}/src")
+            endif()
+            break()
+        endif()
+    endforeach()
+
     # Workaround: network_system links asio as PRIVATE, so asio headers are not
     # propagated to dependent targets. We need to find and link asio directly
     # to ensure asio.hpp is available when compiling network_system headers.

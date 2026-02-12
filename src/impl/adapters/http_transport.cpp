@@ -13,8 +13,9 @@
 
 #include <kcenon/messaging/error/error_codes.h>
 #include <kcenon/messaging/serialization/message_serializer.h>
-#include <kcenon/network/core/http_client.h>
-#include <kcenon/network/internal/http_types.h>
+// network_system v2.0: headers moved from include/ to src/internal/ (Issue #217)
+#include <internal/http/http_client.h>
+#include <internal/http/http_types.h>
 
 #include <atomic>
 #include <mutex>
