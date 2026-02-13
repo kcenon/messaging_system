@@ -52,7 +52,6 @@ export module kcenon.messaging:integration;
 
 export import kcenon.common;
 export import kcenon.thread;
-export import kcenon.logger;
 export import :core;
 
 // =============================================================================

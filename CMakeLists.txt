@@ -476,33 +476,28 @@ if(MESSAGING_BUILD_MODULES)
             $<INSTALL_INTERFACE:include>
         )
 
-        # Link dependencies - module targets from dependent systems
-        # Note: These targets must be available when building with modules
-        if(TARGET kcenon::common_modules)
-            target_link_libraries(messaging_system_modules PUBLIC kcenon::common_modules)
-        endif()
-        if(TARGET kcenon::thread_modules)
-            target_link_libraries(messaging_system_modules PUBLIC kcenon::thread_modules)
-        endif()
-        if(TARGET kcenon::container_modules)
-            target_link_libraries(messaging_system_modules PUBLIC kcenon::container_modules)
-        endif()
-        if(TARGET kcenon::logger_modules)
-            target_link_libraries(messaging_system_modules PUBLIC kcenon::logger_modules)
-        endif()
-        if(TARGET kcenon::database_modules)
-            target_link_libraries(messaging_system_modules PUBLIC kcenon::database_modules)
-        endif()
-        if(TARGET kcenon::network_modules)
-            target_link_libraries(messaging_system_modules PUBLIC kcenon::network_modules)
-        endif()
+        # Link dependencies for module compilation.
+        # The global module fragment #includes upstream headers (e.g., core/container.h),
+        # so we need their include directories available during dependency scanning.
+        # Link to messaging_system_core (PRIVATE) to transitively get all upstream
+        # include paths, then optionally link upstream module targets (PUBLIC) when
+        # they become available.
+        target_link_libraries(messaging_system_modules PRIVATE messaging_system_core)
 
-        # Also link header-based targets for implementation files
-        if(TARGET ${container_system_TARGET})
-            target_link_libraries(messaging_system_modules PRIVATE ${container_system_TARGET})
-        elseif(TARGET container)
-            target_link_libraries(messaging_system_modules PRIVATE container)
-        endif()
+        # When upstream systems provide C++20 module targets, link them publicly
+        # so consumers can import the full module dependency chain.
+        foreach(_mod_target
+            kcenon::common_modules
+            kcenon::thread_modules
+            kcenon::container_modules
+            kcenon::logger_modules
+            kcenon::database_modules
+            kcenon::network_modules
+        )
+            if(TARGET ${_mod_target})
+                target_link_libraries(messaging_system_modules PUBLIC ${_mod_target})
+            endif()
+        endforeach()
 
         # Define compile-time flags
         target_compile_definitions(messaging_system_modules PUBLIC

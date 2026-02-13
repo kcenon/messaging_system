@@ -61,9 +61,8 @@ export module kcenon.messaging;
 export import kcenon.common;
 export import kcenon.thread;
 export import kcenon.container;
-export import kcenon.logger;
-export import kcenon.database;
 export import kcenon.network;
+export import kcenon.monitoring;
 
 // Tier 1: Core messaging infrastructure
 export import :core;
