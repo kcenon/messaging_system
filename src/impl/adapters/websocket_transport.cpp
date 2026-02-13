@@ -11,7 +11,7 @@
 
 #if KCENON_WITH_NETWORK_SYSTEM
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/messaging/serialization/message_serializer.h>
 #include <kcenon/network/facade/websocket_facade.h>
 #include <kcenon/network/interfaces/i_protocol_client.h>
@@ -90,9 +90,8 @@ public:
 		}
 
 		if (state_ == transport_state::connecting) {
-			return VoidResult::err(error_info(
-				error::already_running,
-				"Connection already in progress"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::already_running));
 		}
 
 		state_ = transport_state::connecting;
@@ -106,10 +105,8 @@ public:
 		if (result.is_err()) {
 			state_ = transport_state::error;
 			notify_state_change(transport_state::error);
-			return VoidResult::err(error_info(
-				error::publication_failed,
-				"Failed to start WebSocket client: " +
-					result.error().message));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		return ok();
@@ -155,17 +152,14 @@ public:
 
 	VoidResult send(const message& msg) {
 		if (!is_connected()) {
-			return VoidResult::err(error_info(
-				error::not_connected,
-				"WebSocket transport is not connected"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::not_connected));
 		}
 
 		auto serialized = serializer_.serialize(msg);
 		if (serialized.is_err()) {
-			return VoidResult::err(error_info(
-				error::message_serialization_failed,
-				"Failed to serialize message: " +
-					serialized.error().message));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::message_serialization_failed));
 		}
 
 		auto& data = serialized.value();
@@ -175,10 +169,8 @@ public:
 
 		if (result.is_err()) {
 			++stats_.errors;
-			return VoidResult::err(error_info(
-				error::publication_failed,
-				"Failed to send message: " +
-					result.error().message));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		++stats_.messages_sent;
@@ -187,9 +179,8 @@ public:
 
 	VoidResult send_binary(const std::vector<uint8_t>& data) {
 		if (!is_connected()) {
-			return VoidResult::err(error_info(
-				error::not_connected,
-				"WebSocket transport is not connected"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::not_connected));
 		}
 
 		std::vector<uint8_t> data_copy = data;
@@ -199,10 +190,8 @@ public:
 
 		if (result.is_err()) {
 			++stats_.errors;
-			return VoidResult::err(error_info(
-				error::publication_failed,
-				"Failed to send binary data: " +
-					result.error().message));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		stats_.bytes_sent += data.size();
@@ -247,9 +236,8 @@ public:
 
 	VoidResult subscribe(const std::string& topic_pattern) {
 		if (!is_connected()) {
-			return VoidResult::err(error_info(
-				error::not_connected,
-				"WebSocket transport is not connected"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::not_connected));
 		}
 
 		{
@@ -264,9 +252,8 @@ public:
 
 	VoidResult unsubscribe(const std::string& topic_pattern) {
 		if (!is_connected()) {
-			return VoidResult::err(error_info(
-				error::not_connected,
-				"WebSocket transport is not connected"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::not_connected));
 		}
 
 		{
@@ -307,9 +294,8 @@ public:
 
 	VoidResult send_text(const std::string& text) {
 		if (!is_connected()) {
-			return VoidResult::err(error_info(
-				error::not_connected,
-				"WebSocket transport is not connected"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::not_connected));
 		}
 
 		if (ws_client_) {
@@ -317,10 +303,8 @@ public:
 			auto result = ws_client_->send_text(std::move(text_copy));
 			if (result.is_err()) {
 				++stats_.errors;
-				return VoidResult::err(error_info(
-					error::publication_failed,
-					"Failed to send text: " +
-						result.error().message));
+				return VoidResult::err(
+					make_typed_error_code(messaging_error_category::publication_failed));
 			}
 		} else {
 			// Fallback: send as binary via unified interface
@@ -328,10 +312,8 @@ public:
 			auto result = client_->send(std::move(data));
 			if (result.is_err()) {
 				++stats_.errors;
-				return VoidResult::err(error_info(
-					error::publication_failed,
-					"Failed to send text: " +
-						result.error().message));
+				return VoidResult::err(
+					make_typed_error_code(messaging_error_category::publication_failed));
 			}
 		}
 
@@ -341,18 +323,15 @@ public:
 
 	VoidResult ping() {
 		if (!is_connected()) {
-			return VoidResult::err(error_info(
-				error::not_connected,
-				"WebSocket transport is not connected"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::not_connected));
 		}
 
 		if (ws_client_) {
 			auto result = ws_client_->ping();
 			if (result.is_err()) {
-				return VoidResult::err(error_info(
-					error::publication_failed,
-					"Failed to send ping: " +
-						result.error().message));
+				return VoidResult::err(
+					make_typed_error_code(messaging_error_category::publication_failed));
 			}
 		}
 

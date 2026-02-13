@@ -4,6 +4,8 @@
 
 #include <kcenon/messaging/task/task_system.h>
 
+#include <kcenon/messaging/error/messaging_error_category.h>
+
 namespace kcenon::messaging::task {
 
 // ============================================================================
@@ -28,8 +30,8 @@ common::VoidResult task_system::start() {
 	std::lock_guard<std::mutex> lock(init_mutex_);
 
 	if (running_) {
-		return common::VoidResult(
-			common::error_info{-1, "Task system is already running"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::already_running));
 	}
 
 	// Initialize components if not already done
@@ -43,17 +45,13 @@ common::VoidResult task_system::start() {
 	// Start task queue
 	auto queue_result = queue_->start();
 	if (!queue_result.is_ok()) {
-		return common::VoidResult(
-			common::error_info{-1, "Failed to start task queue: " +
-				queue_result.error().message});
+		return queue_result;
 	}
 
 	// Start worker pool
 	auto worker_result = workers_->start();
 	if (!worker_result.is_ok()) {
-		return common::VoidResult(
-			common::error_info{-1, "Failed to start worker pool: " +
-				worker_result.error().message});
+		return worker_result;
 	}
 
 	// Start scheduler if enabled
@@ -61,9 +59,7 @@ common::VoidResult task_system::start() {
 		auto scheduler_result = scheduler_->start();
 		if (!scheduler_result.is_ok()) {
 			workers_->stop();
-			return common::VoidResult(
-				common::error_info{-1, "Failed to start scheduler: " +
-					scheduler_result.error().message});
+			return scheduler_result;
 		}
 	}
 
@@ -264,8 +260,8 @@ common::VoidResult task_system::schedule_periodic(
 	std::chrono::seconds interval) {
 	auto* sched = scheduler();
 	if (!sched) {
-		return common::VoidResult(
-			common::error_info{-1, "Scheduler is not enabled"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 	return sched->add_periodic(name, std::move(task_template), interval);
 }
@@ -276,8 +272,8 @@ common::VoidResult task_system::schedule_cron(
 	const std::string& cron_expression) {
 	auto* sched = scheduler();
 	if (!sched) {
-		return common::VoidResult(
-			common::error_info{-1, "Scheduler is not enabled"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 	return sched->add_cron(name, std::move(task_template), cron_expression);
 }

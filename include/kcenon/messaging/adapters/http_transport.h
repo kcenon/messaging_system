@@ -20,7 +20,7 @@
 
 #include <kcenon/messaging/config/feature_flags.h>
 #include <kcenon/messaging/adapters/transport_interface.h>
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 
 #include <map>
 #include <memory>
@@ -218,11 +218,8 @@ public:
     ~http_transport() override = default;
 
     common::VoidResult connect() override {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "HTTP transport requires network_system. "
-            "Build with -DKCENON_WITH_NETWORK_SYSTEM=ON"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     common::VoidResult disconnect() override {
@@ -236,17 +233,13 @@ public:
     }
 
     common::VoidResult send(const message& /*msg*/) override {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "HTTP transport requires network_system"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     common::VoidResult send_binary(const std::vector<uint8_t>& /*data*/) override {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "HTTP transport requires network_system"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     void set_message_handler(std::function<void(const message&)> /*handler*/) override {}
@@ -259,19 +252,15 @@ public:
 
     // HTTP-specific stubs
     common::Result<message> post(const std::string& /*endpoint*/, const message& /*msg*/) {
-        return common::Result<message>::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "HTTP transport requires network_system"
-        ));
+        return common::Result<message>::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     common::Result<message> get(
         const std::string& /*endpoint*/,
         const std::map<std::string, std::string>& /*query*/ = {}) {
-        return common::Result<message>::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "HTTP transport requires network_system"
-        ));
+        return common::Result<message>::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     void set_header(const std::string& /*key*/, const std::string& /*value*/) {}

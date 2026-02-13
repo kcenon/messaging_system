@@ -20,7 +20,7 @@
 
 #include <kcenon/messaging/config/feature_flags.h>
 #include <kcenon/messaging/adapters/transport_interface.h>
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/common/interfaces/executor_interface.h>
 
 #include <memory>
@@ -232,11 +232,8 @@ public:
     ~websocket_transport() override = default;
 
     common::VoidResult connect() override {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "WebSocket transport requires network_system. "
-            "Build with -DKCENON_WITH_NETWORK_SYSTEM=ON"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     common::VoidResult disconnect() override {
@@ -250,17 +247,13 @@ public:
     }
 
     common::VoidResult send(const message& /*msg*/) override {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "WebSocket transport requires network_system"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     common::VoidResult send_binary(const std::vector<uint8_t>& /*data*/) override {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "WebSocket transport requires network_system"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     void set_message_handler(std::function<void(const message&)> /*handler*/) override {}
@@ -273,40 +266,30 @@ public:
 
     // WebSocket-specific stubs
     common::VoidResult subscribe(const std::string& /*topic_pattern*/) {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "WebSocket transport requires network_system"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     common::VoidResult unsubscribe(const std::string& /*topic_pattern*/) {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "WebSocket transport requires network_system"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     common::VoidResult unsubscribe_all() {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "WebSocket transport requires network_system"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     std::set<std::string> get_subscriptions() const { return {}; }
 
     common::VoidResult send_text(const std::string& /*text*/) {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "WebSocket transport requires network_system"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     common::VoidResult ping() {
-        return common::VoidResult::err(common::error_info(
-            static_cast<int>(error::not_supported),
-            "WebSocket transport requires network_system"
-        ));
+        return common::VoidResult::err(
+            make_typed_error_code(messaging_error_category::not_supported));
     }
 
     void set_disconnect_handler(

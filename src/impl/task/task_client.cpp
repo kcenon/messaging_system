@@ -4,6 +4,8 @@
 
 #include <kcenon/messaging/task/task_client.h>
 
+#include <kcenon/messaging/error/messaging_error_category.h>
+
 #include <atomic>
 #include <random>
 #include <sstream>
@@ -297,7 +299,8 @@ async_result task_client::get_result(const std::string& task_id) {
 
 common::VoidResult task_client::cancel(const std::string& task_id) {
 	if (!queue_) {
-		return common::VoidResult(common::error_info{-1, "Queue not available"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::queue_stopped));
 	}
 
 	auto cancel_result = queue_->cancel(task_id);
@@ -309,7 +312,8 @@ common::VoidResult task_client::cancel(const std::string& task_id) {
 
 common::VoidResult task_client::cancel_by_tag(const std::string& tag) {
 	if (!queue_) {
-		return common::VoidResult(common::error_info{-1, "Queue not available"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::queue_stopped));
 	}
 	return queue_->cancel_by_tag(tag);
 }

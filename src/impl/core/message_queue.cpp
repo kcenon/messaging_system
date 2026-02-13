@@ -1,5 +1,5 @@
 #include "kcenon/messaging/core/message_queue.h"
-#include "kcenon/messaging/error/error_codes.h"
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/common/logging/log_functions.h>
 
 #include <algorithm>
@@ -24,9 +24,8 @@ common::VoidResult message_queue::enqueue(message msg) {
 
 	if (stopped_.load()) {
 		common::logging::log_debug("Enqueue rejected: queue stopped");
-		return common::VoidResult(
-			common::error_info{error::queue_stopped,
-							   "Queue has been stopped"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::queue_stopped));
 	}
 
 	size_t current_size = get_queue_size();
@@ -42,16 +41,14 @@ common::VoidResult message_queue::enqueue(message msg) {
 			} else {
 				// For priority queue, cannot drop specific message
 				common::logging::log_warning("Priority queue full, cannot drop messages");
-				return common::VoidResult(
-					common::error_info{error::queue_full,
-									   "Priority queue is full"});
+				return common::VoidResult::err(
+					make_typed_error_code(messaging_error_category::queue_full));
 			}
 		} else {
 			common::logging::log_warning("Queue full, size: " +
 				std::to_string(current_size));
-			return common::VoidResult(
-				common::error_info{error::queue_full,
-								   "Queue is full"});
+			return common::VoidResult::err(
+				make_typed_error_code(messaging_error_category::queue_full));
 		}
 	}
 
@@ -71,24 +68,21 @@ common::Result<message> message_queue::dequeue(std::chrono::milliseconds timeout
 			cv_.wait(lock);
 		} else {
 			if (cv_.wait_until(lock, wait_until) == std::cv_status::timeout) {
-				return common::Result<message>(
-					common::error_info{error::queue_empty,
-									   "Queue is empty (timeout)"});
+				return common::Result<message>::err(
+					make_typed_error_code(messaging_error_category::queue_empty));
 			}
 		}
 	}
 
 	if (stopped_.load()) {
-		return common::Result<message>(
-			common::error_info{error::queue_stopped,
-							   "Queue has been stopped"});
+		return common::Result<message>::err(
+			make_typed_error_code(messaging_error_category::queue_stopped));
 	}
 
 	auto msg_opt = pop_from_queue();
 	if (!msg_opt.has_value()) {
-		return common::Result<message>(
-			common::error_info{error::dequeue_failed,
-							   "Failed to dequeue message"});
+		return common::Result<message>::err(
+			make_typed_error_code(messaging_error_category::dequeue_failed));
 	}
 
 	return common::ok(std::move(msg_opt.value()));
@@ -98,22 +92,19 @@ common::Result<message> message_queue::try_dequeue() {
 	std::unique_lock lock(mutex_);
 
 	if (get_queue_size() == 0) {
-		return common::Result<message>(
-			common::error_info{error::queue_empty,
-							   "Queue is empty"});
+		return common::Result<message>::err(
+			make_typed_error_code(messaging_error_category::queue_empty));
 	}
 
 	if (stopped_.load()) {
-		return common::Result<message>(
-			common::error_info{error::queue_stopped,
-							   "Queue has been stopped"});
+		return common::Result<message>::err(
+			make_typed_error_code(messaging_error_category::queue_stopped));
 	}
 
 	auto msg_opt = pop_from_queue();
 	if (!msg_opt.has_value()) {
-		return common::Result<message>(
-			common::error_info{error::dequeue_failed,
-							   "Failed to dequeue message"});
+		return common::Result<message>::err(
+			make_typed_error_code(messaging_error_category::dequeue_failed));
 	}
 
 	return common::ok(std::move(msg_opt.value()));

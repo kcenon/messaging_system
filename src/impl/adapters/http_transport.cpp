@@ -11,7 +11,7 @@
 
 #if KCENON_WITH_NETWORK_SYSTEM
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/messaging/serialization/message_serializer.h>
 #include <kcenon/network/facade/http_facade.h>
 #include <kcenon/network/interfaces/i_protocol_client.h>
@@ -125,9 +125,8 @@ public:
 		}
 
 		if (state_ == transport_state::connecting) {
-			return VoidResult::err(error_info(
-				error::already_running,
-				"Connection already in progress"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::already_running));
 		}
 
 		state_ = transport_state::connecting;
@@ -137,9 +136,8 @@ public:
 		if (config_.host.empty()) {
 			state_ = transport_state::error;
 			notify_state_change(transport_state::error);
-			return VoidResult::err(error_info(
-				error::invalid_message,
-				"HTTP transport host is not configured"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::invalid_message));
 		}
 
 		if (config_.port == 0) {
@@ -152,10 +150,8 @@ public:
 		if (start_result.is_err()) {
 			state_ = transport_state::error;
 			notify_state_change(transport_state::error);
-			return VoidResult::err(error_info(
-				error::publication_failed,
-				"Failed to start HTTP client: " +
-					start_result.error().message));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		state_ = transport_state::connected;
@@ -193,27 +189,22 @@ public:
 
 	VoidResult send(const message& msg) {
 		if (!is_connected()) {
-			return VoidResult::err(error_info(
-				error::not_connected,
-				"HTTP transport is not connected"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::not_connected));
 		}
 
 		auto serialized = serializer_.serialize(msg);
 		if (serialized.is_err()) {
-			return VoidResult::err(error_info(
-				error::message_serialization_failed,
-				"Failed to serialize message: " +
-					serialized.error().message));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::message_serialization_failed));
 		}
 
 		observer_->reset();
 		auto send_result = client_->send(std::move(serialized.value()));
 		if (send_result.is_err()) {
 			++stats_.errors;
-			return VoidResult::err(error_info(
-				error::publication_failed,
-				"Failed to send message: " +
-					send_result.error().message));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		// Wait for response
@@ -238,9 +229,8 @@ public:
 
 	VoidResult send_binary(const std::vector<uint8_t>& data) {
 		if (!is_connected()) {
-			return VoidResult::err(error_info(
-				error::not_connected,
-				"HTTP transport is not connected"));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::not_connected));
 		}
 
 		std::vector<uint8_t> data_copy = data;
@@ -248,9 +238,8 @@ public:
 		auto result = client_->send(std::move(data_copy));
 		if (result.is_err()) {
 			++stats_.errors;
-			return VoidResult::err(error_info(
-				error::publication_failed,
-				"Failed to send binary data: " + result.error().message));
+			return VoidResult::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		stats_.bytes_sent += data.size();
@@ -295,9 +284,8 @@ public:
 
 	Result<message> post(const std::string& endpoint, const message& msg) {
 		if (!is_connected()) {
-			return Result<message>::err(error_info(
-				error::not_connected,
-				"HTTP transport is not connected"));
+			return Result<message>::err(
+				make_typed_error_code(messaging_error_category::not_connected));
 		}
 
 		return post_internal(endpoint, msg);
@@ -307,9 +295,8 @@ public:
 		const std::string& endpoint,
 		const std::map<std::string, std::string>& query) {
 		if (!is_connected()) {
-			return Result<message>::err(error_info(
-				error::not_connected,
-				"HTTP transport is not connected"));
+			return Result<message>::err(
+				make_typed_error_code(messaging_error_category::not_connected));
 		}
 
 		// With facade API, GET is implemented as a POST with query params
@@ -328,9 +315,8 @@ public:
 		if (start_result.is_err()) {
 			++stats_.errors;
 			notify_error("GET request failed: " + start_result.error().message);
-			return Result<message>::err(error_info(
-				error::publication_failed,
-				"GET request failed: " + start_result.error().message));
+			return Result<message>::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		// Encode query parameters as simple key=value pairs in the body
@@ -349,9 +335,8 @@ public:
 			++stats_.errors;
 			notify_error("GET request failed: " + send_result.error().message);
 			[[maybe_unused]] auto _ = endpoint_client->stop();
-			return Result<message>::err(error_info(
-				error::publication_failed,
-				"GET request failed: " + send_result.error().message));
+			return Result<message>::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		auto response = endpoint_observer->wait_for_response(config_.request_timeout);
@@ -359,9 +344,8 @@ public:
 
 		if (!response.has_value()) {
 			++stats_.errors;
-			return Result<message>::err(error_info(
-				error::publication_failed,
-				"GET request timed out"));
+			return Result<message>::err(
+				make_typed_error_code(messaging_error_category::request_timeout));
 		}
 
 		++stats_.messages_received;
@@ -386,9 +370,8 @@ public:
 			return ok(std::move(built_msg));
 		}
 
-		return Result<message>::err(error_info(
-			error::message_deserialization_failed,
-			"Failed to parse response"));
+		return Result<message>::err(
+			make_typed_error_code(messaging_error_category::message_deserialization_failed));
 	}
 
 	void set_header(const std::string& key, const std::string& value) {
@@ -412,10 +395,8 @@ private:
 
 		auto serialized = serializer_.serialize(msg);
 		if (serialized.is_err()) {
-			return Result<message>::err(error_info(
-				error::message_serialization_failed,
-				"Failed to serialize message: " +
-					serialized.error().message));
+			return Result<message>::err(
+				make_typed_error_code(messaging_error_category::message_serialization_failed));
 		}
 
 		// Create per-endpoint client for specific endpoint routing
@@ -433,9 +414,8 @@ private:
 		if (start_result.is_err()) {
 			++stats_.errors;
 			notify_error("POST request failed: " + start_result.error().message);
-			return Result<message>::err(error_info(
-				error::publication_failed,
-				"POST request failed: " + start_result.error().message));
+			return Result<message>::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		auto send_result = endpoint_client->send(std::move(serialized.value()));
@@ -443,9 +423,8 @@ private:
 			++stats_.errors;
 			notify_error("POST request failed: " + send_result.error().message);
 			[[maybe_unused]] auto stop_res = endpoint_client->stop();
-			return Result<message>::err(error_info(
-				error::publication_failed,
-				"POST request failed: " + send_result.error().message));
+			return Result<message>::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		++stats_.messages_sent;
@@ -465,9 +444,8 @@ private:
 				return ok(std::move(success_msg.value()));
 			}
 
-			return Result<message>::err(error_info(
-				error::publication_failed,
-				"Failed to create response message"));
+			return Result<message>::err(
+				make_typed_error_code(messaging_error_category::publication_failed));
 		}
 
 		++stats_.messages_received;
@@ -499,9 +477,8 @@ private:
 			return ok(std::move(built_msg));
 		}
 
-		return Result<message>::err(error_info(
-			error::publication_failed,
-			"Failed to create response message"));
+		return Result<message>::err(
+			make_typed_error_code(messaging_error_category::publication_failed));
 	}
 
 	void notify_state_change(transport_state new_state) {

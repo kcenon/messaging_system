@@ -6,7 +6,7 @@
 
 #include <kcenon/common/error/error_codes.h>
 #include <kcenon/common/logging/log_functions.h>
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 
 #include <algorithm>
 #include <deque>
@@ -69,10 +69,7 @@ public:
 	common::VoidResult start() {
 		if (running_.load()) {
 			common::logging::log_warning("Message broker start called but already running");
-			return common::make_error<std::monostate>(
-				error::already_running,
-				"Message broker is already running"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::already_running));
 		}
 
 		common::logging::log_info("Starting message broker");
@@ -84,10 +81,7 @@ public:
 	common::VoidResult stop() {
 		if (!running_.load()) {
 			common::logging::log_debug("Message broker stop called but not running");
-			return common::make_error<std::monostate>(
-				error::not_running,
-				"Message broker is not running"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::not_running));
 		}
 
 		common::logging::log_info("Stopping message broker");
@@ -146,19 +140,13 @@ public:
 		// Check for duplicate route
 		if (routes_.find(route_id) != routes_.end()) {
 			common::logging::log_error("Add route failed: duplicate route_id " + route_id);
-			return common::error_info(
-				error::duplicate_subscription,
-				"Route already exists: " + route_id
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::duplicate_subscription));
 		}
 
 		// Check max routes limit
 		if (routes_.size() >= config_.max_routes) {
 			common::logging::log_error("Add route failed: max routes limit reached");
-			return common::error_info(
-				error::queue_full,
-				"Maximum number of routes reached"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::queue_full));
 		}
 
 		// Create internal route
@@ -183,11 +171,7 @@ public:
 		if (!sub_result.is_ok()) {
 			common::logging::log_error("Add route failed: subscription error - " +
 				sub_result.error().message);
-			return common::make_error<std::monostate>(
-				sub_result.error().code,
-				sub_result.error().message,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>(sub_result.error());
 		}
 
 		route.subscription_id = sub_result.unwrap();
@@ -209,11 +193,7 @@ public:
 		auto it = routes_.find(route_id);
 		if (it == routes_.end()) {
 			common::logging::log_warning("Remove route failed: route not found " + route_id);
-			return common::make_error<std::monostate>(
-				error::route_not_found,
-				"Route not found: " + route_id,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		// Unsubscribe from topic router
@@ -239,11 +219,7 @@ public:
 		auto it = routes_.find(route_id);
 		if (it == routes_.end()) {
 			common::logging::log_warning("Enable route failed: route not found " + route_id);
-			return common::make_error<std::monostate>(
-				error::route_not_found,
-				"Route not found: " + route_id,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		if (it->second.info.active) {
@@ -264,11 +240,7 @@ public:
 		if (!sub_result.is_ok()) {
 			common::logging::log_error("Enable route failed: subscription error - " +
 				sub_result.error().message);
-			return common::make_error<std::monostate>(
-				sub_result.error().code,
-				sub_result.error().message,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>(sub_result.error());
 		}
 
 		it->second.subscription_id = sub_result.unwrap();
@@ -288,11 +260,7 @@ public:
 		auto it = routes_.find(route_id);
 		if (it == routes_.end()) {
 			common::logging::log_warning("Disable route failed: route not found " + route_id);
-			return common::make_error<std::monostate>(
-				error::route_not_found,
-				"Route not found: " + route_id,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		if (!it->second.info.active) {
@@ -328,11 +296,7 @@ public:
 
 		auto it = routes_.find(route_id);
 		if (it == routes_.end()) {
-			return common::make_error<route_info>(
-				error::route_not_found,
-				"Route not found: " + route_id,
-				"messaging_system"
-			);
+			return common::Result<route_info>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		return common::ok(it->second.info);
@@ -382,10 +346,7 @@ public:
 	common::VoidResult route(const message& msg) {
 		if (!running_.load()) {
 			common::logging::log_debug("Route rejected: broker not running");
-			return common::make_error<std::monostate>(
-				error::broker_not_started,
-				"Message broker is not running"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::broker_not_started));
 		}
 
 		if (config_.enable_trace_logging) {
@@ -472,10 +433,7 @@ public:
 		std::unique_lock lock(dlq_mutex_);
 
 		if (!dlq_config_) {
-			return common::make_error<std::monostate>(
-				error::dlq_not_configured,
-				"Dead letter queue not configured"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::dlq_not_configured));
 		}
 
 		// Check if DLQ is full
@@ -498,16 +456,10 @@ public:
 				case dlq_policy::drop_newest:
 					common::logging::log_warning("DLQ full, rejecting new message: " +
 						msg.metadata().id);
-					return common::make_error<std::monostate>(
-						error::dlq_full,
-						"Dead letter queue is full"
-					);
+					return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::dlq_full));
 				case dlq_policy::block:
 					common::logging::log_warning("DLQ full, blocking not implemented yet");
-					return common::make_error<std::monostate>(
-						error::dlq_full,
-						"Dead letter queue is full (blocking mode)"
-					);
+					return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::dlq_full));
 			}
 		}
 
@@ -555,10 +507,7 @@ public:
 
 	common::VoidResult replay_dlq_message(const std::string& message_id) {
 		if (!running_.load()) {
-			return common::make_error<std::monostate>(
-				error::broker_not_started,
-				"Message broker is not running"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::broker_not_started));
 		}
 
 		dlq_entry entry_to_replay;
@@ -578,10 +527,7 @@ public:
 		}
 
 		if (!found) {
-			return common::make_error<std::monostate>(
-				error::dlq_message_not_found,
-				"Message not found in DLQ: " + message_id
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::dlq_message_not_found));
 		}
 
 		// Try to route the message again
@@ -601,10 +547,7 @@ public:
 			dlq_entries_.push_back(entry_to_replay);
 		}
 
-		return common::make_error<std::monostate>(
-			error::dlq_replay_failed,
-			"Failed to replay message: " + result.error().message
-		);
+		return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::dlq_replay_failed));
 	}
 
 	std::size_t replay_all_dlq_messages() {
@@ -756,19 +699,13 @@ public:
 		// Check for duplicate route
 		if (content_routes_.find(route_id) != content_routes_.end()) {
 			common::logging::log_error("Add content route failed: duplicate route_id " + route_id);
-			return common::error_info(
-				error::duplicate_subscription,
-				"Content route already exists: " + route_id
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::duplicate_subscription));
 		}
 
 		// Check max routes limit
 		if (content_routes_.size() >= config_.max_routes) {
 			common::logging::log_error("Add content route failed: max routes limit reached");
-			return common::error_info(
-				error::queue_full,
-				"Maximum number of content routes reached"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::queue_full));
 		}
 
 		// Create internal content route
@@ -794,11 +731,7 @@ public:
 		auto it = content_routes_.find(route_id);
 		if (it == content_routes_.end()) {
 			common::logging::log_warning("Remove content route failed: route not found " + route_id);
-			return common::make_error<std::monostate>(
-				error::route_not_found,
-				"Content route not found: " + route_id,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		content_routes_.erase(it);
@@ -812,11 +745,7 @@ public:
 		auto it = content_routes_.find(route_id);
 		if (it == content_routes_.end()) {
 			common::logging::log_warning("Enable content route failed: route not found " + route_id);
-			return common::make_error<std::monostate>(
-				error::route_not_found,
-				"Content route not found: " + route_id,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		if (it->second.info.active) {
@@ -835,11 +764,7 @@ public:
 		auto it = content_routes_.find(route_id);
 		if (it == content_routes_.end()) {
 			common::logging::log_warning("Disable content route failed: route not found " + route_id);
-			return common::make_error<std::monostate>(
-				error::route_not_found,
-				"Content route not found: " + route_id,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		if (!it->second.info.active) {
@@ -862,11 +787,7 @@ public:
 
 		auto it = content_routes_.find(route_id);
 		if (it == content_routes_.end()) {
-			return common::make_error<content_route>(
-				error::route_not_found,
-				"Content route not found: " + route_id,
-				"messaging_system"
-			);
+			return common::Result<content_route>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		return common::ok(it->second.info);
@@ -899,10 +820,7 @@ public:
 	common::VoidResult route_by_content(const message& msg) {
 		if (!running_.load()) {
 			common::logging::log_debug("Content route rejected: broker not running");
-			return common::make_error<std::monostate>(
-				error::broker_not_started,
-				"Message broker is not running"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::broker_not_started));
 		}
 
 		if (config_.enable_trace_logging) {
@@ -1012,10 +930,7 @@ public:
 		if (transformers_.find(config.transformer_id) != transformers_.end()) {
 			common::logging::log_error("Add transformer failed: duplicate transformer_id " +
 				config.transformer_id);
-			return common::error_info(
-				error::duplicate_subscription,
-				"Transformer already exists: " + config.transformer_id
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::duplicate_subscription));
 		}
 
 		// Create internal transformer
@@ -1045,11 +960,7 @@ public:
 		if (it == transformers_.end()) {
 			common::logging::log_warning("Remove transformer failed: transformer not found " +
 				transformer_id);
-			return common::make_error<std::monostate>(
-				error::route_not_found,
-				"Transformer not found: " + transformer_id,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		transformers_.erase(it);
@@ -1064,11 +975,7 @@ public:
 		if (it == transformers_.end()) {
 			common::logging::log_warning("Enable transformer failed: transformer not found " +
 				transformer_id);
-			return common::make_error<std::monostate>(
-				error::route_not_found,
-				"Transformer not found: " + transformer_id,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		if (it->second.config.active) {
@@ -1088,11 +995,7 @@ public:
 		if (it == transformers_.end()) {
 			common::logging::log_warning("Disable transformer failed: transformer not found " +
 				transformer_id);
-			return common::make_error<std::monostate>(
-				error::route_not_found,
-				"Transformer not found: " + transformer_id,
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		if (!it->second.config.active) {
@@ -1115,11 +1018,7 @@ public:
 
 		auto it = transformers_.find(transformer_id);
 		if (it == transformers_.end()) {
-			return common::make_error<transformer_config>(
-				error::route_not_found,
-				"Transformer not found: " + transformer_id,
-				"messaging_system"
-			);
+			return common::Result<transformer_config>::err(make_typed_error_code(messaging_error_category::route_not_found));
 		}
 
 		return common::ok(it->second.config);
@@ -1247,11 +1146,7 @@ public:
 
 					common::logging::log_warning("Transformer failed, id: " + transformer_id +
 						", error: " + result.error().message);
-					return common::make_error<message>(
-						result.error().code,
-						"Transformer '" + transformer_id + "' failed: " + result.error().message,
-						"messaging_system"
-					);
+					return common::Result<message>(result.error());
 				}
 			} catch (const std::exception& e) {
 				// Update failure statistics
@@ -1285,10 +1180,7 @@ private:
 			std::shared_lock lock(mutex_);
 			auto it = routes_.find(route_id);
 			if (it == routes_.end() || !it->second.info.active) {
-				return common::error_info(
-					error::route_not_found,
-					"Route not found or inactive: " + route_id
-				);
+				return common::Result<std::monostate>::err(make_typed_error_code(messaging_error_category::route_not_found));
 			}
 			handler = it->second.handler;
 		}

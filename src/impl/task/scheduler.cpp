@@ -4,7 +4,7 @@
 
 #include "kcenon/messaging/task/scheduler.h"
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 
 #include <algorithm>
 
@@ -112,20 +112,20 @@ common::VoidResult task_scheduler::add_periodic(
 	task task_template,
 	std::chrono::seconds interval) {
 	if (name.empty()) {
-		return common::VoidResult(
-			common::error_info{error::task_invalid_argument, "Schedule name cannot be empty"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	if (interval.count() <= 0) {
-		return common::VoidResult(common::error_info{
-			error::task_invalid_argument, "Interval must be positive"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	std::lock_guard<std::mutex> lock(mutex_);
 
 	if (schedules_.find(name) != schedules_.end()) {
-		return common::VoidResult(common::error_info{
-			error::schedule_already_exists, "Schedule already exists: " + name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::schedule_already_exists));
 	}
 
 	schedule_entry entry;
@@ -148,21 +148,21 @@ common::VoidResult task_scheduler::add_cron(
 	task task_template,
 	const std::string& cron_expression) {
 	if (name.empty()) {
-		return common::VoidResult(
-			common::error_info{error::task_invalid_argument, "Schedule name cannot be empty"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	// Validate cron expression
 	if (!cron_parser::is_valid(cron_expression)) {
-		return common::VoidResult(common::error_info{
-			error::task_invalid_argument, "Invalid cron expression: " + cron_expression});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	std::lock_guard<std::mutex> lock(mutex_);
 
 	if (schedules_.find(name) != schedules_.end()) {
-		return common::VoidResult(common::error_info{
-			error::schedule_already_exists, "Schedule already exists: " + name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::schedule_already_exists));
 	}
 
 	schedule_entry entry;
@@ -189,8 +189,8 @@ common::VoidResult task_scheduler::remove(const std::string& name) {
 
 	auto it = schedules_.find(name);
 	if (it == schedules_.end()) {
-		return common::VoidResult(
-			common::error_info{error::task_not_found, "Schedule not found: " + name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	schedules_.erase(it);
@@ -204,8 +204,8 @@ common::VoidResult task_scheduler::enable(const std::string& name) {
 
 	auto it = schedules_.find(name);
 	if (it == schedules_.end()) {
-		return common::VoidResult(
-			common::error_info{error::task_not_found, "Schedule not found: " + name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	if (!it->second.enabled) {
@@ -222,8 +222,8 @@ common::VoidResult task_scheduler::disable(const std::string& name) {
 
 	auto it = schedules_.find(name);
 	if (it == schedules_.end()) {
-		return common::VoidResult(
-			common::error_info{error::task_not_found, "Schedule not found: " + name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	it->second.enabled = false;
@@ -236,8 +236,8 @@ common::VoidResult task_scheduler::trigger_now(const std::string& name) {
 
 	auto it = schedules_.find(name);
 	if (it == schedules_.end()) {
-		return common::VoidResult(
-			common::error_info{error::task_not_found, "Schedule not found: " + name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	execute_schedule(it->second);
@@ -249,21 +249,21 @@ common::VoidResult task_scheduler::update_interval(
 	const std::string& name,
 	std::chrono::seconds interval) {
 	if (interval.count() <= 0) {
-		return common::VoidResult(common::error_info{
-			error::task_invalid_argument, "Interval must be positive"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	std::lock_guard<std::mutex> lock(mutex_);
 
 	auto it = schedules_.find(name);
 	if (it == schedules_.end()) {
-		return common::VoidResult(
-			common::error_info{error::task_not_found, "Schedule not found: " + name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	if (!it->second.is_periodic()) {
-		return common::VoidResult(common::error_info{
-			error::task_invalid_argument, "Schedule is not periodic: " + name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	it->second.schedule = interval;
@@ -277,21 +277,21 @@ common::VoidResult task_scheduler::update_cron(
 	const std::string& name,
 	const std::string& cron_expression) {
 	if (!cron_parser::is_valid(cron_expression)) {
-		return common::VoidResult(common::error_info{
-			error::task_invalid_argument, "Invalid cron expression: " + cron_expression});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	std::lock_guard<std::mutex> lock(mutex_);
 
 	auto it = schedules_.find(name);
 	if (it == schedules_.end()) {
-		return common::VoidResult(
-			common::error_info{error::task_not_found, "Schedule not found: " + name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	if (!it->second.is_cron()) {
-		return common::VoidResult(common::error_info{
-			error::task_invalid_argument, "Schedule is not cron-based: " + name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	it->second.schedule = cron_expression;
@@ -330,7 +330,8 @@ common::VoidResult task_scheduler::start() {
 	if (result.is_err()) {
 		scheduler_worker_.reset();
 		running_.store(false, std::memory_order_release);
-		return common::VoidResult(common::error_info{-1, "Failed to start scheduler worker"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_operation_failed));
 	}
 
 	return common::ok();
@@ -381,8 +382,8 @@ common::Result<schedule_entry> task_scheduler::get_schedule(const std::string& n
 
 	auto it = schedules_.find(name);
 	if (it == schedules_.end()) {
-		return common::Result<schedule_entry>(
-			common::error_info{error::task_not_found, "Schedule not found: " + name});
+		return common::Result<schedule_entry>::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	return common::Result<schedule_entry>(it->second);

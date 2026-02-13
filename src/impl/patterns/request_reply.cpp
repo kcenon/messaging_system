@@ -1,6 +1,6 @@
 #include <kcenon/messaging/patterns/request_reply.h>
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <chrono>
 #include <random>
 #include <sstream>
@@ -37,15 +37,11 @@ Result<message> request_reply_handler::request(
 	std::chrono::milliseconds timeout
 ) {
 	if (!bus_) {
-		return Result<message>(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not available"});
+		return Result<message>::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!bus_->is_running()) {
-		return Result<message>(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not running"});
+		return Result<message>::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	// Setup reply subscription if not already done
@@ -87,9 +83,7 @@ Result<message> request_reply_handler::request(
 		// Clean up pending request
 		std::lock_guard lock(mutex_);
 		pending_requests_.erase(correlation_id);
-		return Result<message>(
-			error_info{messaging::error::publication_failed,
-					   "Request timed out waiting for reply"});
+		return Result<message>::err(make_typed_error_code(messaging_error_category::publication_failed));
 	}
 
 	return reply_future.get();
@@ -99,21 +93,15 @@ VoidResult request_reply_handler::register_handler(
 	std::function<Result<message>(const message&)> handler
 ) {
 	if (!bus_) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not available"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!bus_->is_running()) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not running"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!handler) {
-		return VoidResult(
-			error_info{messaging::error::subscription_failed,
-					   "Handler cannot be null"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::subscription_failed));
 	}
 
 	// Unregister previous handler if exists
@@ -150,9 +138,7 @@ VoidResult request_reply_handler::unregister_handler() {
 	}
 
 	if (!bus_) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not available"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	auto result = bus_->unsubscribe(service_subscription_id_);
@@ -233,9 +219,7 @@ std::string request_reply_handler::generate_correlation_id() {
 
 VoidResult request_reply_handler::setup_reply_subscription() {
 	if (!bus_) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not available"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	auto sub_result = bus_->subscribe(

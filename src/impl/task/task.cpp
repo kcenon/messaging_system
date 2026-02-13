@@ -4,7 +4,7 @@
 
 #include "kcenon/messaging/task/task.h"
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 
 #include <iomanip>
 #include <random>
@@ -330,8 +330,8 @@ common::Result<std::vector<uint8_t>> task::serialize() const {
 
 common::Result<task> task::deserialize(const std::vector<uint8_t>& data) {
 	if (data.empty()) {
-		return common::Result<task>(
-			common::error_info{error::invalid_message, "Empty data cannot be deserialized"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::invalid_message));
 	}
 
 	uint8_t version = data[0];
@@ -341,40 +341,36 @@ common::Result<task> task::deserialize(const std::vector<uint8_t>& data) {
 	if (version == 0x02) {
 		// Legacy format (v2) - basic deserialization for backward compatibility
 		if (data.size() < 3) {
-			return common::Result<task>(
-				common::error_info{error::message_deserialization_failed,
-								   "Task data too short"});
+			return common::Result<task>::err(
+				make_typed_error_code(messaging_error_category::message_deserialization_failed));
 		}
 
 		// Deserialize task_id (1-byte length prefix in v2)
 		auto id_size = data[offset++];
 		if (offset + id_size > data.size()) {
-			return common::Result<task>(
-				common::error_info{error::message_deserialization_failed,
-								   "Invalid task_id length"});
+			return common::Result<task>::err(
+				make_typed_error_code(messaging_error_category::message_deserialization_failed));
 		}
 		std::string task_id(data.begin() + offset, data.begin() + offset + id_size);
 		offset += id_size;
 
 		// Deserialize task_name
 		if (offset >= data.size()) {
-			return common::Result<task>(
-				common::error_info{error::message_deserialization_failed,
-								   "Missing task_name"});
+			return common::Result<task>::err(
+				make_typed_error_code(messaging_error_category::message_deserialization_failed));
 		}
 		auto name_size = data[offset++];
 		if (offset + name_size > data.size()) {
-			return common::Result<task>(
-				common::error_info{error::message_deserialization_failed,
-								   "Invalid task_name length"});
+			return common::Result<task>::err(
+				make_typed_error_code(messaging_error_category::message_deserialization_failed));
 		}
 		std::string task_name(data.begin() + offset, data.begin() + offset + name_size);
 		offset += name_size;
 
 		// Deserialize state
 		if (offset >= data.size()) {
-			return common::Result<task>(
-				common::error_info{error::message_deserialization_failed, "Missing state"});
+			return common::Result<task>::err(
+				make_typed_error_code(messaging_error_category::message_deserialization_failed));
 		}
 		auto state = static_cast<task_state>(data[offset]);
 
@@ -386,47 +382,45 @@ common::Result<task> task::deserialize(const std::vector<uint8_t>& data) {
 	}
 
 	if (version != 0x03) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed,
-							   "Unsupported task format version"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::message_deserialization_failed));
 	}
 
 	// Version 3 format (composition-based)
 	std::string task_id, task_name;
 	if (!read_string(data, offset, task_id) || !read_string(data, offset, task_name)) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed,
-							   "Failed to read task identification"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::message_deserialization_failed));
 	}
 
 	if (offset >= data.size()) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed, "Missing state"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::message_deserialization_failed));
 	}
 	auto state = static_cast<task_state>(data[offset++]);
 
 	if (offset >= data.size()) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed, "Missing priority"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::message_deserialization_failed));
 	}
 	auto priority = static_cast<message_priority>(data[offset++]);
 
 	int64_t created_ts;
 	if (!read_int64(data, offset, created_ts)) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed, "Missing timestamp"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::message_deserialization_failed));
 	}
 
 	if (offset >= data.size()) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed, "Missing attempt_count"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::message_deserialization_failed));
 	}
 	auto attempt_count = static_cast<size_t>(data[offset++]);
 
 	std::string queue_name;
 	if (!read_string(data, offset, queue_name)) {
-		return common::Result<task>(
-			common::error_info{error::message_deserialization_failed, "Missing queue_name"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::message_deserialization_failed));
 	}
 
 	// Create task and populate fields
@@ -532,8 +526,8 @@ task_builder& task_builder::tags(const std::vector<std::string>& tags) {
 
 common::Result<task> task_builder::build() {
 	if (task_.task_name_.empty()) {
-		return common::Result<task>(
-			common::error_info{error::invalid_message, "Task name cannot be empty"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::invalid_message));
 	}
 
 	task result = std::move(task_);

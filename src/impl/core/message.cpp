@@ -1,6 +1,6 @@
 #include "kcenon/messaging/core/message.h"
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 
 #include <random>
 #include <sstream>
@@ -108,9 +108,8 @@ common::Result<message> message::deserialize(const std::vector<uint8_t>& data) {
 	// TODO: Implement proper deserialization
 	// For now, return a default message
 	if (data.empty()) {
-		return common::Result<message>(
-			common::error_info{error::invalid_message,
-							   "Empty data cannot be deserialized"});
+		return common::Result<message>::err(
+			make_typed_error_code(messaging_error_category::invalid_message));
 	}
 
 	message msg;
@@ -178,9 +177,8 @@ message_builder& message_builder::payload(
 common::Result<message> message_builder::build() {
 	// Validate the message
 	if (msg_.metadata_.topic.empty()) {
-		return common::Result<message>(
-			common::error_info{error::invalid_message,
-							   "Message topic cannot be empty"});
+		return common::Result<message>::err(
+			make_typed_error_code(messaging_error_category::invalid_message));
 	}
 
 	// Create a copy to return

@@ -1,6 +1,6 @@
 #include <kcenon/messaging/patterns/event_streaming.h>
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <algorithm>
 
 namespace kcenon::messaging::patterns {
@@ -33,15 +33,11 @@ event_stream::~event_stream() {
 
 VoidResult event_stream::publish_event(message event) {
 	if (!bus_) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not available"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!bus_->is_running()) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not running"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	// Set topic and type
@@ -70,21 +66,15 @@ Result<uint64_t> event_stream::subscribe(
 	bool replay_past_events
 ) {
 	if (!bus_) {
-		return Result<uint64_t>(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not available"});
+		return Result<uint64_t>::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!bus_->is_running()) {
-		return Result<uint64_t>(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not running"});
+		return Result<uint64_t>::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!callback) {
-		return Result<uint64_t>(
-			error_info{messaging::error::subscription_failed,
-					   "Callback cannot be null"});
+		return Result<uint64_t>::err(make_typed_error_code(messaging_error_category::subscription_failed));
 	}
 
 	// Replay past events if requested
@@ -104,9 +94,7 @@ Result<uint64_t> event_stream::subscribe(
 
 VoidResult event_stream::unsubscribe(uint64_t subscription_id) {
 	if (!bus_) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not available"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	auto result = bus_->unsubscribe(subscription_id);
@@ -127,9 +115,7 @@ VoidResult event_stream::replay(
 	message_filter filter
 ) {
 	if (!callback) {
-		return VoidResult(
-			error_info{messaging::error::subscription_failed,
-					   "Callback cannot be null"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::subscription_failed));
 	}
 
 	replay_buffered_events(callback, filter);
@@ -209,21 +195,15 @@ event_batch_processor::~event_batch_processor() {
 
 VoidResult event_batch_processor::start() {
 	if (!bus_) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not available"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!bus_->is_running()) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not running"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!batch_callback_) {
-		return VoidResult(
-			error_info{messaging::error::subscription_failed,
-					   "Batch callback cannot be null"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::subscription_failed));
 	}
 
 	if (running_.load()) {
