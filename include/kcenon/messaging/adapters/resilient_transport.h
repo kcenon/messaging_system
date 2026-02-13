@@ -17,6 +17,8 @@
 
 #include <kcenon/messaging/adapters/transport_interface.h>
 
+#include <kcenon/common/resilience/resilience.h>
+
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -25,14 +27,23 @@
 namespace kcenon::messaging::adapters {
 
 /**
- * @enum circuit_state
- * @brief Circuit breaker states
+ * @brief Circuit breaker state from common_system resilience module
+ *
+ * Values: CLOSED (normal), OPEN (failing fast), HALF_OPEN (testing recovery)
  */
-enum class circuit_state {
-    closed,     // Normal operation
-    open,       // Failing fast, not allowing requests
-    half_open   // Testing if service recovered
-};
+using circuit_state = common::resilience::circuit_state;
+
+/**
+ * @brief Circuit breaker configuration from common_system resilience module
+ *
+ * Fields:
+ * - failure_threshold: Failures before opening circuit (default: 5)
+ * - success_threshold: Successes to close circuit in half-open (default: 2)
+ * - failure_window: Time window for failure tracking (default: 60s)
+ * - timeout: Time before transitioning OPEN to HALF_OPEN (default: 30s)
+ * - half_open_max_requests: Test requests in half-open state (default: 3)
+ */
+using circuit_breaker_config = common::resilience::circuit_breaker_config;
 
 /**
  * @struct retry_config
@@ -44,17 +55,6 @@ struct retry_config {
     double backoff_multiplier = 2.0;
     std::chrono::milliseconds max_delay{10000};
     bool retry_on_timeout = true;
-};
-
-/**
- * @struct circuit_breaker_config
- * @brief Configuration for circuit breaker
- */
-struct circuit_breaker_config {
-    std::size_t failure_threshold = 5;       // Failures before opening circuit
-    std::chrono::milliseconds reset_timeout{30000};  // Time before half-open
-    std::size_t half_open_max_calls = 3;     // Test calls in half-open state
-    double success_threshold = 0.5;          // Success rate to close circuit
 };
 
 /**
@@ -83,7 +83,7 @@ struct resilience_statistics {
     uint64_t circuit_opens = 0;
     uint64_t circuit_closes = 0;
     uint64_t rejected_by_circuit = 0;
-    circuit_state current_circuit_state = circuit_state::closed;
+    circuit_state current_circuit_state = circuit_state::CLOSED;
 
     // Timing
     std::chrono::milliseconds avg_success_latency{0};
@@ -113,7 +113,7 @@ struct resilience_statistics {
  * config.retry.max_retries = 3;
  * config.retry.initial_delay = std::chrono::milliseconds(100);
  * config.circuit_breaker.failure_threshold = 5;
- * config.circuit_breaker.reset_timeout = std::chrono::seconds(30);
+ * config.circuit_breaker.timeout = std::chrono::seconds(30);
  *
  * auto resilient = std::make_shared<resilient_transport>(primary, config);
  *
