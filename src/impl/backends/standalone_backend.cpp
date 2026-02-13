@@ -84,7 +84,7 @@ public:
 	}
 
 	size_t worker_count() const override {
-		return pool_ ? pool_->get_active_worker_count() : 0;
+		return pool_ ? pool_->get_active_worker_count() + pool_->get_idle_worker_count() : 0;
 	}
 
 	bool is_running() const override {
