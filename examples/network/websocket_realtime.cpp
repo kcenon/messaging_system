@@ -53,7 +53,7 @@ public:
         resilient_transport_config resilient_config;
         resilient_config.retry.max_retries = 3;
         resilient_config.circuit_breaker.failure_threshold = 5;
-        resilient_config.circuit_breaker.reset_timeout = std::chrono::seconds(30);
+        resilient_config.circuit_breaker.timeout = std::chrono::seconds(30);
 
         transport_ = std::make_shared<resilient_transport>(
             ws_transport, resilient_config);

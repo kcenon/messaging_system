@@ -299,8 +299,8 @@ int main() {
 
         // Circuit breaker configuration
         resilient_config.circuit_breaker.failure_threshold = 5;
-        resilient_config.circuit_breaker.reset_timeout = std::chrono::seconds(30);
-        resilient_config.circuit_breaker.half_open_max_calls = 3;
+        resilient_config.circuit_breaker.timeout = std::chrono::seconds(30);
+        resilient_config.circuit_breaker.half_open_max_requests = 3;
 
         auto resilient = std::make_shared<resilient_transport>(
             http, resilient_config);
@@ -308,13 +308,13 @@ int main() {
         // Set up monitoring
         resilient->set_circuit_state_handler([](circuit_state state) {
             switch (state) {
-                case circuit_state::closed:
+                case circuit_state::CLOSED:
                     std::cout << "[Circuit] Closed - Normal operation\n";
                     break;
-                case circuit_state::open:
+                case circuit_state::OPEN:
                     std::cout << "[Circuit] Open - Failing fast\n";
                     break;
-                case circuit_state::half_open:
+                case circuit_state::HALF_OPEN:
                     std::cout << "[Circuit] Half-open - Testing recovery\n";
                     break;
             }
