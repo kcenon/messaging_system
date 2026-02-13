@@ -4,6 +4,8 @@
 
 #include <kcenon/messaging/task/memory_result_backend.h>
 
+#include <kcenon/messaging/error/messaging_error_category.h>
+
 #include <algorithm>
 
 namespace kcenon::messaging::task {
@@ -105,11 +107,8 @@ common::Result<task_state> memory_result_backend::get_state(
 
 	auto it = results_.find(task_id);
 	if (it == results_.end()) {
-		return common::make_error<task_state>(
-			-1,
-			"Task not found: " + task_id,
-			"memory_result_backend"
-		);
+		return common::Result<task_state>::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	return common::ok(it->second.state);
@@ -122,19 +121,13 @@ common::Result<container_module::value_container> memory_result_backend::get_res
 
 	auto it = results_.find(task_id);
 	if (it == results_.end()) {
-		return common::make_error<container_module::value_container>(
-			-1,
-			"Task not found: " + task_id,
-			"memory_result_backend"
-		);
+		return common::Result<container_module::value_container>::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	if (!it->second.result.has_value()) {
-		return common::make_error<container_module::value_container>(
-			-2,
-			"Result not available for task: " + task_id,
-			"memory_result_backend"
-		);
+		return common::Result<container_module::value_container>::err(
+			make_typed_error_code(messaging_error_category::task_operation_failed));
 	}
 
 	return common::ok(it->second.result.value());
@@ -147,11 +140,8 @@ common::Result<progress_data> memory_result_backend::get_progress(
 
 	auto it = results_.find(task_id);
 	if (it == results_.end()) {
-		return common::make_error<progress_data>(
-			-1,
-			"Task not found: " + task_id,
-			"memory_result_backend"
-		);
+		return common::Result<progress_data>::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	return common::ok(progress_data{
@@ -168,19 +158,13 @@ common::Result<error_data> memory_result_backend::get_error(
 
 	auto it = results_.find(task_id);
 	if (it == results_.end()) {
-		return common::make_error<error_data>(
-			-1,
-			"Task not found: " + task_id,
-			"memory_result_backend"
-		);
+		return common::Result<error_data>::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	if (!it->second.error.has_value()) {
-		return common::make_error<error_data>(
-			-2,
-			"Error not available for task: " + task_id,
-			"memory_result_backend"
-		);
+		return common::Result<error_data>::err(
+			make_typed_error_code(messaging_error_category::task_operation_failed));
 	}
 
 	return common::ok(it->second.error.value());
@@ -205,11 +189,8 @@ common::Result<container_module::value_container> memory_result_backend::wait_fo
 		if (it == results_.end()) {
 			// Task doesn't exist yet, wait for it
 			if (cv_.wait_until(lock, deadline) == std::cv_status::timeout) {
-				return common::make_error<container_module::value_container>(
-					-3,
-					"Timeout waiting for task: " + task_id,
-					"memory_result_backend"
-				);
+				return common::Result<container_module::value_container>::err(
+					make_typed_error_code(messaging_error_category::task_timeout));
 			}
 			continue;
 		}
@@ -221,52 +202,32 @@ common::Result<container_module::value_container> memory_result_backend::wait_fo
 			if (entry.result.has_value()) {
 				return common::ok(entry.result.value());
 			}
-			return common::make_error<container_module::value_container>(
-				-2,
-				"Task succeeded but no result available: " + task_id,
-				"memory_result_backend"
-			);
+			return common::Result<container_module::value_container>::err(
+				make_typed_error_code(messaging_error_category::task_operation_failed));
 		}
 
 		// Check if task failed
 		if (entry.state == task_state::failed) {
-			std::string error_msg = "Task failed";
-			if (entry.error.has_value()) {
-				error_msg = entry.error->message;
-			}
-			return common::make_error<container_module::value_container>(
-				-4,
-				error_msg,
-				"memory_result_backend",
-				entry.error.has_value() ? entry.error->traceback : ""
-			);
+			return common::Result<container_module::value_container>::err(
+				make_typed_error_code(messaging_error_category::task_failed));
 		}
 
 		// Check if task was cancelled
 		if (entry.state == task_state::cancelled) {
-			return common::make_error<container_module::value_container>(
-				-5,
-				"Task was cancelled: " + task_id,
-				"memory_result_backend"
-			);
+			return common::Result<container_module::value_container>::err(
+				make_typed_error_code(messaging_error_category::task_cancelled));
 		}
 
 		// Check if task expired
 		if (entry.state == task_state::expired) {
-			return common::make_error<container_module::value_container>(
-				-6,
-				"Task expired: " + task_id,
-				"memory_result_backend"
-			);
+			return common::Result<container_module::value_container>::err(
+				make_typed_error_code(messaging_error_category::task_timeout));
 		}
 
 		// Task still running, wait for update
 		if (cv_.wait_until(lock, deadline) == std::cv_status::timeout) {
-			return common::make_error<container_module::value_container>(
-				-3,
-				"Timeout waiting for task: " + task_id,
-				"memory_result_backend"
-			);
+			return common::Result<container_module::value_container>::err(
+				make_typed_error_code(messaging_error_category::task_timeout));
 		}
 	}
 }

@@ -15,6 +15,7 @@
 
 #include <kcenon/common/interfaces/executor_interface.h>
 #include <kcenon/common/patterns/result.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include "../core/message.h"
 #include <functional>
 #include <memory>
@@ -65,8 +66,8 @@ public:
      */
     common::VoidResult execute() override {
         if (!handler_) {
-            return common::make_error<std::monostate>(
-                -1, "No handler registered", "messaging::message_processor_job");
+            return common::VoidResult::err(
+                make_typed_error_code(messaging_error_category::task_failed));
         }
         return handler_(msg_);
     }
@@ -126,13 +127,13 @@ public:
 
     common::VoidResult execute() override {
         if (!handler_) {
-            auto error = common::make_error<message>(
-                -1, "No handler registered", "messaging::message_reply_job");
+            auto error = common::Result<message>::err(
+                make_typed_error_code(messaging_error_category::task_failed));
             if (reply_callback_) {
                 reply_callback_(std::move(error));
             }
-            return common::make_error<std::monostate>(
-                -1, "No handler registered", "messaging::message_reply_job");
+            return common::VoidResult::err(
+                make_typed_error_code(messaging_error_category::task_failed));
         }
 
         auto result = handler_(request_);
@@ -190,8 +191,8 @@ public:
         int priority = 0) {
 
         if (!executor_) {
-            return common::make_error<std::future<void>>(
-                -1, "No executor available", "messaging::executor_message_handler");
+            return common::Result<std::future<void>>::err(
+                make_typed_error_code(messaging_error_category::broker_unavailable));
         }
 
         auto job = std::make_unique<message_processor_job>(
@@ -214,8 +215,8 @@ public:
         int priority = 0) {
 
         if (!executor_) {
-            return common::make_error<std::future<void>>(
-                -1, "No executor available", "messaging::executor_message_handler");
+            return common::Result<std::future<void>>::err(
+                make_typed_error_code(messaging_error_category::broker_unavailable));
         }
 
         auto job = std::make_unique<message_reply_job>(

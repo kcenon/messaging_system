@@ -1,5 +1,5 @@
 #include <kcenon/messaging/backends/integration_backend.h>
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/common/logging/log_functions.h>
 
 namespace kcenon::messaging {
@@ -17,11 +17,8 @@ integration_backend::integration_backend(
 common::VoidResult integration_backend::initialize() {
 	if (initialized_.exchange(true)) {
 		common::logging::log_warning("Integration backend already initialized");
-		return common::make_error<std::monostate>(
-			error::base,
-			"Backend already initialized",
-			"messaging_system"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::already_running));
 	}
 
 	common::logging::log_info("Initializing integration backend");
@@ -29,11 +26,8 @@ common::VoidResult integration_backend::initialize() {
 	if (!executor_) {
 		initialized_.store(false);
 		common::logging::log_error("Integration backend initialization failed: executor is null");
-		return common::make_error<std::monostate>(
-			error::base,
-			"Executor is required for integration backend",
-			"messaging_system"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::backend_not_ready));
 	}
 
 	common::logging::log_info("Integration backend initialized successfully");
@@ -43,11 +37,8 @@ common::VoidResult integration_backend::initialize() {
 common::VoidResult integration_backend::shutdown() {
 	if (!initialized_.exchange(false)) {
 		common::logging::log_debug("Integration backend shutdown called but not initialized");
-		return common::make_error<std::monostate>(
-			error::base,
-			"Backend not initialized",
-			"messaging_system"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 
 	common::logging::log_info("Integration backend shutting down");

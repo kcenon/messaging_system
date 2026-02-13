@@ -1,6 +1,6 @@
 #include <kcenon/messaging/patterns/pub_sub.h>
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 
 namespace kcenon::messaging::patterns {
 
@@ -17,19 +17,16 @@ publisher::publisher(std::shared_ptr<message_bus> bus, std::string default_topic
 
 VoidResult publisher::publish(message msg) {
 	if (!bus_) {
-		return VoidResult(error_info{messaging::error::broker_unavailable,
-					  "Message bus is not available"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!bus_->is_running()) {
-		return VoidResult(error_info{messaging::error::broker_unavailable,
-					  "Message bus is not running"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	// Check if message has a topic or default topic is available
 	if (msg.metadata().topic.empty() && default_topic_.empty()) {
-		return VoidResult(error_info{messaging::error::invalid_topic_pattern,
-					  "No default topic set and message has no topic"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::invalid_topic_pattern));
 	}
 
 	// Set the topic if not already set
@@ -42,18 +39,15 @@ VoidResult publisher::publish(message msg) {
 
 VoidResult publisher::publish(const std::string& topic, message msg) {
 	if (!bus_) {
-		return VoidResult(error_info{messaging::error::broker_unavailable,
-					  "Message bus is not available"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!bus_->is_running()) {
-		return VoidResult(error_info{messaging::error::broker_unavailable,
-					  "Message bus is not running"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (topic.empty()) {
-		return VoidResult(error_info{messaging::error::invalid_topic_pattern,
-					  "Topic cannot be empty"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::invalid_topic_pattern));
 	}
 
 	return bus_->publish(topic, std::move(msg));
@@ -79,23 +73,19 @@ Result<uint64_t> subscriber::subscribe(
 	int priority
 ) {
 	if (!bus_) {
-		return Result<uint64_t>(error_info{messaging::error::broker_unavailable,
-					  "Message bus is not available"});
+		return Result<uint64_t>::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!bus_->is_running()) {
-		return Result<uint64_t>(error_info{messaging::error::broker_unavailable,
-					  "Message bus is not running"});
+		return Result<uint64_t>::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (topic_pattern.empty()) {
-		return Result<uint64_t>(error_info{messaging::error::invalid_topic_pattern,
-					  "Topic pattern cannot be empty"});
+		return Result<uint64_t>::err(make_typed_error_code(messaging_error_category::invalid_topic_pattern));
 	}
 
 	if (!callback) {
-		return Result<uint64_t>(error_info{messaging::error::subscription_failed,
-					  "Callback cannot be null"});
+		return Result<uint64_t>::err(make_typed_error_code(messaging_error_category::subscription_failed));
 	}
 
 	auto result = bus_->subscribe(topic_pattern, callback, filter, priority);
@@ -109,8 +99,7 @@ Result<uint64_t> subscriber::subscribe(
 
 VoidResult subscriber::unsubscribe(uint64_t subscription_id) {
 	if (!bus_) {
-		return VoidResult(error_info{messaging::error::broker_unavailable,
-					  "Message bus is not available"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	auto result = bus_->unsubscribe(subscription_id);

@@ -4,6 +4,8 @@
 
 #include <kcenon/messaging/task/monitor.h>
 
+#include <kcenon/messaging/error/messaging_error_category.h>
+
 #include <algorithm>
 
 namespace kcenon::messaging::task {
@@ -79,19 +81,13 @@ common::Result<queue_stats> task_monitor::get_queue_stats(
 	const std::string& queue_name) const
 {
 	if (!queue_) {
-		return common::make_error<queue_stats>(
-			-1,
-			"Queue not available",
-			"task_monitor"
-		);
+		return common::Result<queue_stats>::err(
+			make_typed_error_code(messaging_error_category::backend_not_ready));
 	}
 
 	if (!queue_->has_queue(queue_name)) {
-		return common::make_error<queue_stats>(
-			-2,
-			"Queue not found: " + queue_name,
-			"task_monitor"
-		);
+		return common::Result<queue_stats>::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	queue_stats qs;
@@ -198,8 +194,8 @@ std::vector<task> task_monitor::list_failed_tasks(size_t limit) const {
 
 common::VoidResult task_monitor::cancel_task(const std::string& task_id) {
 	if (!queue_) {
-		return common::VoidResult(
-			common::error_info{-1, "Queue not available"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::backend_not_ready));
 	}
 
 	return queue_->cancel(task_id);
@@ -207,23 +203,23 @@ common::VoidResult task_monitor::cancel_task(const std::string& task_id) {
 
 common::VoidResult task_monitor::retry_task(const std::string& task_id) {
 	if (!queue_ || !results_) {
-		return common::VoidResult(
-			common::error_info{-1, "Queue or results backend not available"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::backend_not_ready));
 	}
 
 	// Get the task from queue
 	auto task_result = queue_->get_task(task_id);
 	if (task_result.is_err()) {
-		return common::VoidResult(
-			common::error_info{-2, "Task not found: " + task_id});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	auto t = task_result.unwrap();
 
 	// Check if task is in failed state
 	if (t.state() != task_state::failed) {
-		return common::VoidResult(
-			common::error_info{-3, "Task is not in failed state"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_operation_failed));
 	}
 
 	// Reset task state and re-enqueue
@@ -231,8 +227,8 @@ common::VoidResult task_monitor::retry_task(const std::string& task_id) {
 
 	auto enqueue_result = queue_->enqueue(std::move(t));
 	if (enqueue_result.is_err()) {
-		return common::VoidResult(
-			common::error_info{-4, "Failed to re-enqueue task"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::enqueue_failed));
 	}
 
 	// Remove from failed tasks list
@@ -253,13 +249,13 @@ common::VoidResult task_monitor::retry_task(const std::string& task_id) {
 
 common::VoidResult task_monitor::purge_queue(const std::string& queue_name) {
 	if (!queue_) {
-		return common::VoidResult(
-			common::error_info{-1, "Queue not available"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::backend_not_ready));
 	}
 
 	if (!queue_->has_queue(queue_name)) {
-		return common::VoidResult(
-			common::error_info{-2, "Queue not found: " + queue_name});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	// Cancel all tasks with tag matching queue name

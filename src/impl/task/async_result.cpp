@@ -4,6 +4,8 @@
 
 #include <kcenon/messaging/task/async_result.h>
 
+#include <kcenon/messaging/error/messaging_error_category.h>
+
 #include <thread>
 
 namespace kcenon::messaging::task {
@@ -157,8 +159,8 @@ std::string async_result::progress_message() const {
 common::Result<container_module::value_container> async_result::get(
 	std::chrono::milliseconds timeout) {
 	if (!is_valid()) {
-		return common::Result<container_module::value_container>(
-			common::error_info{-1, "Invalid async_result handle"});
+		return common::Result<container_module::value_container>::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	return backend_->wait_for_result(task_id_, timeout);
@@ -216,8 +218,8 @@ void async_result::then(
 
 common::VoidResult async_result::revoke() {
 	if (!is_valid()) {
-		return common::VoidResult(
-			common::error_info{-1, "Invalid async_result handle"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_not_found));
 	}
 
 	return backend_->store_state(task_id_, task_state::cancelled);

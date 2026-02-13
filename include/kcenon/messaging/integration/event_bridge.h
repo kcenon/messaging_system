@@ -13,6 +13,7 @@
 #pragma once
 
 #include <kcenon/common/patterns/event_bus.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include "../core/message_bus.h"
 #include <chrono>
 #include <memory>
@@ -197,8 +198,8 @@ public:
      */
     common::VoidResult start() {
         if (running_) {
-            return common::make_error<std::monostate>(
-                -1, "Event bridge already running", "messaging::event_bridge");
+            return common::VoidResult::err(
+                make_typed_error_code(messaging_error_category::already_running));
         }
 
         running_ = true;

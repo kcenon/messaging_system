@@ -1,6 +1,6 @@
 #include <kcenon/messaging/patterns/message_pipeline.h>
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/common/logging/log_functions.h>
 #include <algorithm>
 #include <thread>
@@ -47,9 +47,7 @@ VoidResult message_pipeline::remove_stage(const std::string& name) {
 						   });
 
 	if (it == stages_.end()) {
-		return VoidResult(
-			error_info{messaging::error::invalid_topic_pattern,
-					   "Stage not found: " + name});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::invalid_topic_pattern));
 	}
 
 	stages_.erase(it);
@@ -58,15 +56,11 @@ VoidResult message_pipeline::remove_stage(const std::string& name) {
 
 VoidResult message_pipeline::start() {
 	if (!bus_) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not available"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (!bus_->is_running()) {
-		return VoidResult(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not running"});
+		return VoidResult::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (running_.load()) {
@@ -225,9 +219,7 @@ pipeline_builder& pipeline_builder::add_filter(
 			if (filter(msg)) {
 				return msg;
 			} else {
-				return Result<message>(
-					error_info{messaging::error::message_rejected,
-							   "Message filtered out"});
+				return Result<message>::err(make_typed_error_code(messaging_error_category::message_rejected));
 			}
 		}
 	);
@@ -247,21 +239,15 @@ pipeline_builder& pipeline_builder::add_transformer(
 
 Result<std::unique_ptr<message_pipeline>> pipeline_builder::build() {
 	if (!bus_) {
-		return Result<std::unique_ptr<message_pipeline>>(
-			error_info{messaging::error::broker_unavailable,
-					   "Message bus is not available"});
+		return Result<std::unique_ptr<message_pipeline>>::err(make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	if (input_topic_.empty()) {
-		return Result<std::unique_ptr<message_pipeline>>(
-			error_info{messaging::error::invalid_topic_pattern,
-					   "Input topic not set"});
+		return Result<std::unique_ptr<message_pipeline>>::err(make_typed_error_code(messaging_error_category::invalid_topic_pattern));
 	}
 
 	if (output_topic_.empty()) {
-		return Result<std::unique_ptr<message_pipeline>>(
-			error_info{messaging::error::invalid_topic_pattern,
-					   "Output topic not set"});
+		return Result<std::unique_ptr<message_pipeline>>::err(make_typed_error_code(messaging_error_category::invalid_topic_pattern));
 	}
 
 	auto pipeline = std::make_unique<message_pipeline>(bus_, input_topic_, output_topic_);
@@ -299,9 +285,7 @@ message_processor create_validation_stage(
 		if (validator(msg)) {
 			return msg;
 		} else {
-			return Result<message>(
-				error_info{messaging::error::invalid_message,
-						   "Message validation failed"});
+			return Result<message>::err(make_typed_error_code(messaging_error_category::invalid_message));
 		}
 	};
 }
@@ -323,9 +307,8 @@ message_processor create_retry_stage(
 ) {
 	return [processor = std::move(processor), max_retries, retry_delay]
 		   (const message& msg) -> Result<message> {
-		Result<message> result = Result<message>(
-			error_info{messaging::error::publication_failed,
-					   "No attempts made"});
+		Result<message> result = Result<message>::err(
+			make_typed_error_code(messaging_error_category::publication_failed));
 
 		for (size_t attempt = 0; attempt <= max_retries; ++attempt) {
 			result = processor(msg);

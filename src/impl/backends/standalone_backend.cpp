@@ -5,7 +5,7 @@
 #endif
 
 #include <kcenon/messaging/backends/standalone_backend.h>
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/common/logging/log_functions.h>
 #include <kcenon/thread/core/job.h>
 #include <kcenon/thread/core/thread_pool.h>
@@ -44,11 +44,8 @@ protected:
 			return common::ok();
 		} catch (...) {
 			promise_->set_exception(std::current_exception());
-			return common::make_error<std::monostate>(
-				error::base,
-				"Exception during job execution",
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(
+				make_typed_error_code(messaging_error_category::task_failed));
 		}
 	}
 
@@ -128,11 +125,8 @@ standalone_backend::~standalone_backend() {
 common::VoidResult standalone_backend::initialize() {
 	if (initialized_.exchange(true)) {
 		common::logging::log_warning("Standalone backend already initialized");
-		return common::make_error<std::monostate>(
-			error::base,
-			"Backend already initialized",
-			"messaging_system"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::already_running));
 	}
 
 	common::logging::log_info("Initializing standalone backend with " +
@@ -148,11 +142,8 @@ common::VoidResult standalone_backend::initialize() {
 			if (result.is_err()) {
 				initialized_.store(false);
 				thread_pool_.reset();
-				return common::make_error<std::monostate>(
-					error::base,
-					"Failed to add worker to thread pool",
-					"messaging_system"
-				);
+				return common::Result<std::monostate>::err(
+					make_typed_error_code(messaging_error_category::backend_not_ready));
 			}
 		}
 
@@ -161,11 +152,8 @@ common::VoidResult standalone_backend::initialize() {
 			initialized_.store(false);
 			thread_pool_.reset();
 			common::logging::log_error("Failed to start thread pool");
-			return common::make_error<std::monostate>(
-				error::base,
-				"Failed to start thread pool",
-				"messaging_system"
-			);
+			return common::Result<std::monostate>::err(
+				make_typed_error_code(messaging_error_category::backend_not_ready));
 		}
 
 		executor_ = std::make_shared<thread_pool_executor>(thread_pool_);
@@ -177,22 +165,16 @@ common::VoidResult standalone_backend::initialize() {
 		thread_pool_.reset();
 		common::logging::log_error("Failed to initialize standalone backend: " +
 			std::string(e.what()));
-		return common::make_error<std::monostate>(
-			error::base,
-			std::string("Failed to initialize backend: ") + e.what(),
-			"messaging_system"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::backend_not_ready));
 	}
 }
 
 common::VoidResult standalone_backend::shutdown() {
 	if (!initialized_.exchange(false)) {
 		common::logging::log_debug("Standalone backend shutdown called but not initialized");
-		return common::make_error<std::monostate>(
-			error::base,
-			"Backend not initialized",
-			"messaging_system"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 
 	common::logging::log_info("Shutting down standalone backend");

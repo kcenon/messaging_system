@@ -5,6 +5,8 @@
 #include <kcenon/messaging/task/worker_pool.h>
 #include <kcenon/messaging/task/task_context.h>
 
+#include <kcenon/messaging/error/messaging_error_category.h>
+
 #include <algorithm>
 #include <chrono>
 #include <future>
@@ -93,15 +95,18 @@ std::vector<std::string> worker_pool::list_handlers() const {
 
 common::VoidResult worker_pool::start() {
 	if (running_) {
-		return common::VoidResult(common::error_info{-1, "Worker pool is already running"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::already_running));
 	}
 
 	if (!queue_) {
-		return common::VoidResult(common::error_info{-1, "Task queue is not set"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::queue_stopped));
 	}
 
 	if (!results_) {
-		return common::VoidResult(common::error_info{-1, "Result backend is not set"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::backend_not_ready));
 	}
 
 	running_ = true;
@@ -125,8 +130,8 @@ common::VoidResult worker_pool::start() {
 			}
 			workers_.clear();
 			running_ = false;
-			return common::VoidResult(common::error_info{
-				-1, "Failed to start worker " + std::to_string(i)});
+			return common::VoidResult::err(
+				make_typed_error_code(messaging_error_category::task_operation_failed));
 		}
 		workers_.push_back(std::move(worker));
 	}
@@ -136,7 +141,8 @@ common::VoidResult worker_pool::start() {
 
 common::VoidResult worker_pool::stop() {
 	if (!running_) {
-		return common::VoidResult(common::error_info{-1, "Worker pool is not running"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 
 	running_ = false;
@@ -156,7 +162,8 @@ common::VoidResult worker_pool::stop() {
 
 common::VoidResult worker_pool::shutdown_graceful(std::chrono::milliseconds timeout) {
 	if (!running_) {
-		return common::VoidResult(common::error_info{-1, "Worker pool is not running"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 
 	shutdown_requested_ = true;
@@ -184,8 +191,8 @@ common::VoidResult worker_pool::shutdown_graceful(std::chrono::milliseconds time
 	workers_.clear();
 
 	if (timed_out) {
-		return common::VoidResult(
-			common::error_info{-1, "Graceful shutdown timed out with active tasks"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_timeout));
 	}
 
 	return common::ok();
@@ -341,8 +348,8 @@ bool worker_pool::process_one_task() {
 common::VoidResult worker_pool::execute_task(task& t, task_context& ctx) {
 	auto handler = find_handler(t.task_name());
 	if (!handler) {
-		return common::VoidResult(
-			common::error_info{-1, "No handler registered for task: " + t.task_name()});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_handler_not_found));
 	}
 
 	try {
@@ -350,7 +357,8 @@ common::VoidResult worker_pool::execute_task(task& t, task_context& ctx) {
 		if (ctx.is_cancelled()) {
 			t.set_state(task_state::cancelled);
 			results_->store_state(t.task_id(), task_state::cancelled);
-			return common::VoidResult(common::error_info{-1, "Task was cancelled"});
+			return common::VoidResult::err(
+				make_typed_error_code(messaging_error_category::task_cancelled));
 		}
 
 		// Get timeout from task config
@@ -372,9 +380,8 @@ common::VoidResult worker_pool::execute_task(task& t, task_context& ctx) {
 			record_task_timed_out();
 
 			// Return timeout error
-			return common::VoidResult(common::error_info{
-				-1, "Task execution timed out after " +
-					std::to_string(timeout.count()) + "ms"});
+			return common::VoidResult::err(
+				make_typed_error_code(messaging_error_category::task_timeout));
 		}
 
 		// Get the result (may throw if handler threw)
@@ -393,9 +400,11 @@ common::VoidResult worker_pool::execute_task(task& t, task_context& ctx) {
 
 		return common::ok();
 	} catch (const std::exception& e) {
-		return common::VoidResult(common::error_info{-1, std::string("Exception: ") + e.what()});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_failed));
 	} catch (...) {
-		return common::VoidResult(common::error_info{-1, "Unknown exception occurred"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::task_failed));
 	}
 }
 

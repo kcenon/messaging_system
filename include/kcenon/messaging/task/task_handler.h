@@ -23,6 +23,7 @@
 
 #include <kcenon/messaging/task/task.h>
 #include <kcenon/messaging/task/task_context.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/common/patterns/result.h>
 
 #include <concepts>
@@ -343,8 +344,8 @@ public:
 		const task& t,
 		task_context& ctx) override {
 		if (!handler_) {
-			return common::Result<container_module::value_container>(
-				common::error_info{-1, "Handler function is null"});
+			return common::Result<container_module::value_container>::err(
+				make_typed_error_code(messaging_error_category::task_failed));
 		}
 		return handler_(t, ctx);
 	}

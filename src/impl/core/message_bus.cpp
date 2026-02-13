@@ -1,6 +1,6 @@
 #include "kcenon/messaging/core/message_bus.h"
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/common/logging/log_functions.h>
 #include <kcenon/common/interfaces/executor_interface.h>
 
@@ -95,10 +95,8 @@ message_bus::~message_bus() {
 common::VoidResult message_bus::start() {
 	if (running_.load()) {
 		common::logging::log_warning("Message bus start called but already running");
-		return common::make_error<std::monostate>(
-			error::already_running,
-			"Message bus is already running"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::already_running));
 	}
 
 	common::logging::log_info("Starting message bus with " +
@@ -114,10 +112,8 @@ common::VoidResult message_bus::start() {
 
 	if (!backend_->is_ready()) {
 		common::logging::log_error("Backend is not ready after initialization");
-		return common::make_error<std::monostate>(
-			error::backend_not_ready,
-			"Backend is not ready"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::backend_not_ready));
 	}
 
 	// Connect transport if configured and mode requires it
@@ -142,10 +138,8 @@ common::VoidResult message_bus::start() {
 common::VoidResult message_bus::stop() {
 	if (!running_.load()) {
 		common::logging::log_debug("Message bus stop called but not running");
-		return common::make_error<std::monostate>(
-			error::not_running,
-			"Message bus is not running"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 
 	common::logging::log_info("Stopping message bus");
@@ -178,10 +172,8 @@ common::VoidResult message_bus::stop() {
 common::VoidResult message_bus::publish(const message& msg) {
 	if (!running_.load()) {
 		common::logging::log_debug("Publish rejected: message bus not running");
-		return common::make_error<std::monostate>(
-			error::not_running,
-			"Message bus is not running"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 
 	common::logging::log_trace("Publishing message to topic: " + msg.metadata().topic +
@@ -240,11 +232,8 @@ common::Result<message> message_bus::request(
 	std::chrono::milliseconds timeout) {
 
 	if (!running_.load()) {
-		return common::make_error<message>(
-			error::not_running,
-			"Message bus is not running",
-			"messaging_system"
-		);
+		return common::Result<message>::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 
 	// Generate correlation ID for request-reply
@@ -265,11 +254,7 @@ common::Result<message> message_bus::request(
 	);
 
 	if (!sub_result.is_ok()) {
-		return common::make_error<message>(
-			sub_result.error().code,
-			sub_result.error().message,
-			"messaging_system"
-		);
+		return common::Result<message>(sub_result.error());
 	}
 
 	uint64_t sub_id = sub_result.unwrap();
@@ -281,11 +266,7 @@ common::Result<message> message_bus::request(
 	auto pub_result = publish(msg_copy);
 	if (!pub_result.is_ok()) {
 		unsubscribe(sub_id);
-		return common::make_error<message>(
-			pub_result.error().code,
-			pub_result.error().message,
-			"messaging_system"
-		);
+		return common::Result<message>(pub_result.error());
 	}
 
 	// Wait for reply
@@ -295,11 +276,8 @@ common::Result<message> message_bus::request(
 	unsubscribe(sub_id);
 
 	if (status == std::future_status::timeout) {
-		return common::make_error<message>(
-			error::request_timeout,
-			"Request timeout",
-			"messaging_system"
-		);
+		return common::Result<message>::err(
+			make_typed_error_code(messaging_error_category::request_timeout));
 	}
 
 	return reply_future.get();
@@ -366,11 +344,8 @@ common::VoidResult message_bus::handle_message(const message& msg) {
 	if (msg.is_expired()) {
 		common::logging::log_debug("Message expired, id: " + msg.metadata().id +
 			", topic: " + msg.metadata().topic);
-		return common::make_error<std::monostate>(
-			error::message_expired,
-			"Message has expired",
-			"messaging_system"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::message_expired));
 	}
 
 	common::logging::log_trace("Routing message, id: " + msg.metadata().id +
@@ -504,18 +479,14 @@ void message_bus::handle_remote_message(const message& msg) {
 common::VoidResult message_bus::send_to_remote(const message& msg) {
 	if (!transport_) {
 		common::logging::log_debug("No transport configured for remote send");
-		return common::make_error<std::monostate>(
-			error::no_route_found,
-			"No transport configured"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::no_route_found));
 	}
 
 	if (!transport_->is_connected()) {
 		common::logging::log_debug("Transport not connected for remote send");
-		return common::make_error<std::monostate>(
-			error::broker_unavailable,
-			"Transport not connected"
-		);
+		return common::Result<std::monostate>::err(
+			make_typed_error_code(messaging_error_category::broker_unavailable));
 	}
 
 	auto result = transport_->send(msg);

@@ -13,6 +13,7 @@
 #pragma once
 
 #include <kcenon/common/patterns/event_bus.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/messaging/integration/task_events.h>
 #include <kcenon/messaging/task/task.h>
 
@@ -301,8 +302,8 @@ inline task_event_bridge::~task_event_bridge() {
 
 inline common::VoidResult task_event_bridge::start() {
 	if (running_) {
-		return common::make_error<std::monostate>(
-			-1, "Task event bridge already running", "task::event_bridge");
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::already_running));
 	}
 	running_ = true;
 	return common::ok();

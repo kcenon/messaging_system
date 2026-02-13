@@ -4,7 +4,7 @@
 
 #include "kcenon/messaging/task/task_queue.h"
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <kcenon/common/logging/log_functions.h>
 
 #include <algorithm>
@@ -112,8 +112,8 @@ task_queue& task_queue::operator=(task_queue&& other) noexcept {
 
 common::VoidResult task_queue::start() {
 	if (running_.load()) {
-		return common::VoidResult(
-			common::error_info{error::already_running, "Task queue already running"});
+		return common::VoidResult::err(
+			make_typed_error_code(messaging_error_category::already_running));
 	}
 
 	stopped_.store(false);
@@ -127,8 +127,8 @@ common::VoidResult task_queue::start() {
 			running_.store(false);
 			stopped_.store(true);
 			delayed_worker_.reset();
-			return common::VoidResult(
-				common::error_info{error::not_running, "Failed to start delayed task worker"});
+			return common::VoidResult::err(
+				make_typed_error_code(messaging_error_category::task_operation_failed));
 		}
 	}
 
@@ -173,8 +173,8 @@ bool task_queue::is_running() const {
 
 common::Result<std::string> task_queue::enqueue(task t) {
 	if (!is_running()) {
-		return common::Result<std::string>(
-			common::error_info{error::not_running, "Task queue not running"});
+		return common::Result<std::string>::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 
 	const std::string task_id = t.task_id();
@@ -217,8 +217,8 @@ common::Result<std::string> task_queue::enqueue(task t) {
 		if (it != queues_.end()) {
 			it->second->push(std::move(t));
 		} else {
-			return common::Result<std::string>(
-				common::error_info{error::queue_empty, "Queue not found"});
+			return common::Result<std::string>::err(
+				make_typed_error_code(messaging_error_category::queue_empty));
 		}
 	}
 
@@ -253,13 +253,13 @@ common::Result<task> task_queue::dequeue(
 	std::chrono::milliseconds timeout) {
 
 	if (!is_running()) {
-		return common::Result<task>(
-			common::error_info{error::not_running, "Task queue not running"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::not_running));
 	}
 
 	if (queue_names.empty()) {
-		return common::Result<task>(
-			common::error_info{error::queue_empty, "No queue names specified"});
+		return common::Result<task>::err(
+			make_typed_error_code(messaging_error_category::queue_empty));
 	}
 
 	auto start_time = std::chrono::steady_clock::now();
@@ -312,8 +312,8 @@ common::Result<task> task_queue::dequeue(
 		}
 	}
 
-	return common::Result<task>(
-		common::error_info{error::queue_empty, "No tasks available (timeout)"});
+	return common::Result<task>::err(
+		make_typed_error_code(messaging_error_category::queue_empty));
 }
 
 common::Result<task> task_queue::try_dequeue(
@@ -373,15 +373,13 @@ common::Result<task> task_queue::get_task(const std::string& task_id) const {
 		std::lock_guard<std::mutex> lock(cancelled_mutex_);
 		if (cancelled_tasks_.find(task_id) != cancelled_tasks_.end()) {
 			// Task was cancelled but we can't retrieve its full state
-			return common::Result<task>(
-				common::error_info{error::task_not_found,
-								   "Task " + task_id + " was cancelled"});
+			return common::Result<task>::err(
+				make_typed_error_code(messaging_error_category::task_cancelled));
 		}
 	}
 
-	return common::Result<task>(
-		common::error_info{error::task_not_found,
-						   "Task lookup by ID not supported in composition-based design"});
+	return common::Result<task>::err(
+		make_typed_error_code(messaging_error_category::task_not_found));
 }
 
 size_t task_queue::queue_size(const std::string& queue_name) const {

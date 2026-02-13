@@ -4,7 +4,7 @@
 
 #include "kcenon/messaging/task/cron_parser.h"
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 
 #include <algorithm>
 #include <ctime>
@@ -73,8 +73,8 @@ common::Result<std::set<int>> cron_parser::parse_field(const std::string& field,
 													   int max) {
 	std::string trimmed = trim(field);
 	if (trimmed.empty()) {
-		return common::Result<std::set<int>>(
-			common::error_info{error::task_invalid_argument, "Empty cron field"});
+		return common::Result<std::set<int>>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	std::set<int> result;
@@ -92,9 +92,8 @@ common::Result<std::set<int>> cron_parser::parse_field(const std::string& field,
 
 		int step;
 		if (!parse_int(step_str, step) || step <= 0) {
-			return common::Result<std::set<int>>(common::error_info{
-				error::task_invalid_argument,
-				"Invalid step value in cron field: " + trimmed});
+			return common::Result<std::set<int>>::err(
+				make_typed_error_code(messaging_error_category::task_invalid_argument));
 		}
 
 		if (base == "*") {
@@ -136,15 +135,13 @@ common::Result<std::set<int>> cron_parser::parse_field(const std::string& field,
 	// Handle single value
 	int value;
 	if (!parse_int(trimmed, value)) {
-		return common::Result<std::set<int>>(common::error_info{
-			error::task_invalid_argument, "Invalid cron field value: " + trimmed});
+		return common::Result<std::set<int>>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	if (value < min || value > max) {
-		return common::Result<std::set<int>>(common::error_info{
-			error::task_invalid_argument,
-			"Cron field value out of range [" + std::to_string(min) + "-"
-				+ std::to_string(max) + "]: " + std::to_string(value)});
+		return common::Result<std::set<int>>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	result.insert(value);
@@ -156,21 +153,19 @@ common::Result<std::set<int>> cron_parser::parse_range(const std::string& range,
 													   int max) {
 	auto parts = split(range, '-');
 	if (parts.size() != 2) {
-		return common::Result<std::set<int>>(
-			common::error_info{error::task_invalid_argument, "Invalid range: " + range});
+		return common::Result<std::set<int>>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	int start, end;
 	if (!parse_int(parts[0], start) || !parse_int(parts[1], end)) {
-		return common::Result<std::set<int>>(common::error_info{
-			error::task_invalid_argument, "Invalid range values: " + range});
+		return common::Result<std::set<int>>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	if (start < min || end > max || start > end) {
-		return common::Result<std::set<int>>(common::error_info{
-			error::task_invalid_argument,
-			"Range out of bounds [" + std::to_string(min) + "-" + std::to_string(max)
-				+ "]: " + range});
+		return common::Result<std::set<int>>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	return common::Result<std::set<int>>(generate_range(start, end));
@@ -183,8 +178,8 @@ common::Result<std::set<int>> cron_parser::parse_range(const std::string& range,
 common::Result<cron_expression> cron_parser::parse(const std::string& expr) {
 	std::string trimmed = trim(expr);
 	if (trimmed.empty()) {
-		return common::Result<cron_expression>(
-			common::error_info{error::task_invalid_argument, "Empty cron expression"});
+		return common::Result<cron_expression>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	// Split by whitespace
@@ -196,9 +191,8 @@ common::Result<cron_expression> cron_parser::parse(const std::string& expr) {
 	}
 
 	if (fields.size() != 5) {
-		return common::Result<cron_expression>(common::error_info{
-			error::task_invalid_argument,
-			"Cron expression must have exactly 5 fields, got " + std::to_string(fields.size())});
+		return common::Result<cron_expression>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 
 	cron_expression result;
@@ -206,45 +200,40 @@ common::Result<cron_expression> cron_parser::parse(const std::string& expr) {
 	// Parse minutes (0-59)
 	auto minutes_result = parse_field(fields[0], 0, 59);
 	if (!minutes_result.is_ok()) {
-		return common::Result<cron_expression>(
-			common::error_info{error::task_invalid_argument,
-							   "Invalid minutes field: " + minutes_result.error().message});
+		return common::Result<cron_expression>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 	result.minutes = minutes_result.unwrap();
 
 	// Parse hours (0-23)
 	auto hours_result = parse_field(fields[1], 0, 23);
 	if (!hours_result.is_ok()) {
-		return common::Result<cron_expression>(
-			common::error_info{error::task_invalid_argument,
-							   "Invalid hours field: " + hours_result.error().message});
+		return common::Result<cron_expression>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 	result.hours = hours_result.unwrap();
 
 	// Parse days (1-31)
 	auto days_result = parse_field(fields[2], 1, 31);
 	if (!days_result.is_ok()) {
-		return common::Result<cron_expression>(
-			common::error_info{error::task_invalid_argument,
-							   "Invalid days field: " + days_result.error().message});
+		return common::Result<cron_expression>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 	result.days = days_result.unwrap();
 
 	// Parse months (1-12)
 	auto months_result = parse_field(fields[3], 1, 12);
 	if (!months_result.is_ok()) {
-		return common::Result<cron_expression>(
-			common::error_info{error::task_invalid_argument,
-							   "Invalid months field: " + months_result.error().message});
+		return common::Result<cron_expression>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 	result.months = months_result.unwrap();
 
 	// Parse weekdays (0-6)
 	auto weekdays_result = parse_field(fields[4], 0, 6);
 	if (!weekdays_result.is_ok()) {
-		return common::Result<cron_expression>(common::error_info{
-			error::task_invalid_argument,
-			"Invalid weekdays field: " + weekdays_result.error().message});
+		return common::Result<cron_expression>::err(
+			make_typed_error_code(messaging_error_category::task_invalid_argument));
 	}
 	result.weekdays = weekdays_result.unwrap();
 
@@ -457,9 +446,8 @@ common::Result<std::chrono::system_clock::time_point> cron_parser::next_run_time
 		iterations++;
 	}
 
-	return common::Result<std::chrono::system_clock::time_point>(common::error_info{
-		error::task_operation_failed,
-		"Could not find next run time within 4 years"});
+	return common::Result<std::chrono::system_clock::time_point>::err(
+		make_typed_error_code(messaging_error_category::task_operation_failed));
 }
 
 // ============================================================================

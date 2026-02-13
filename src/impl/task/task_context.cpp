@@ -4,7 +4,7 @@
 
 #include "kcenon/messaging/task/task_context.h"
 
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 
 namespace kcenon::messaging::task {
 
@@ -100,8 +100,8 @@ common::Result<std::string> task_context::spawn_subtask(task subtask) {
 	}
 
 	if (!spawner) {
-		return common::Result<std::string>(common::error_info{
-			error::task_spawner_not_configured, "Subtask spawner not configured"});
+		return common::Result<std::string>::err(
+			make_typed_error_code(messaging_error_category::task_spawner_not_configured));
 	}
 
 	auto result = spawner(std::move(subtask));

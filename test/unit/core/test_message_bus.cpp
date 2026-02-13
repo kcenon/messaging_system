@@ -3,7 +3,7 @@
 #include <kcenon/messaging/core/message.h>
 #include <kcenon/messaging/backends/standalone_backend.h>
 #include <kcenon/messaging/backends/integration_backend.h>
-#include <kcenon/messaging/error/error_codes.h>
+#include <kcenon/messaging/error/messaging_error_category.h>
 #include <thread>
 #include <chrono>
 #include <atomic>
@@ -45,8 +45,8 @@ bool wait_for_condition(Predicate&& pred, std::chrono::milliseconds timeout = st
 }
 
 }  // namespace
-// Use namespace alias to avoid ambiguity with common::error
-namespace msg_error = kcenon::messaging::error;
+/// Use type alias for messaging error category
+using msg_error = kcenon::messaging::messaging_error_category;
 
 class MessageBusTest : public ::testing::Test {
 protected:
