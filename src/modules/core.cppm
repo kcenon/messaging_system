@@ -813,3 +813,46 @@ constexpr std::string_view get_error_message(int code) noexcept {
 }
 
 } // namespace kcenon::messaging::error
+
+// =============================================================================
+// Error Category
+// =============================================================================
+
+export namespace kcenon::messaging {
+
+/**
+ * @class messaging_error_category
+ * @brief Error category for messaging_system typed error codes
+ *
+ * Integrates with common_system's typed_error_code infrastructure.
+ * Singleton pattern, thread-safe via C++11 static local initialization.
+ */
+class messaging_error_category : public common::error_category {
+public:
+    static const messaging_error_category& instance() noexcept {
+        static messaging_error_category inst;
+        return inst;
+    }
+
+    std::string_view name() const noexcept override {
+        return "messaging";
+    }
+
+    std::string message(int code) const override {
+        return std::string(error::get_error_message(code));
+    }
+
+private:
+    messaging_error_category() = default;
+};
+
+/**
+ * @brief Create a typed_error_code for a messaging error code
+ * @param code Messaging error code (from error:: namespace)
+ * @return typed_error_code with messaging_error_category
+ */
+inline common::typed_error_code make_messaging_error_code(int code) noexcept {
+    return common::typed_error_code(code, messaging_error_category::instance());
+}
+
+} // namespace kcenon::messaging

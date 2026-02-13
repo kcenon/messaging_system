@@ -26,11 +26,14 @@ module;
 #include <chrono>
 #include <concepts>
 #include <condition_variable>
+#include <format>
 #include <functional>
 #include <future>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <optional>
+#include <set>
 #include <shared_mutex>
 #include <span>
 #include <string>
@@ -125,102 +128,83 @@ constexpr std::string_view to_string(transport_state state) noexcept {
 }
 
 /**
- * @struct transport_options
- * @brief Options for transport configuration
+ * @struct transport_config
+ * @brief Base configuration for transports
  */
-struct transport_options {
+struct transport_config {
     std::string host;
     uint16_t port = 0;
-    std::chrono::milliseconds connect_timeout{5000};
-    std::chrono::milliseconds read_timeout{30000};
-    std::chrono::milliseconds write_timeout{30000};
-    bool auto_reconnect = true;
-    std::chrono::milliseconds reconnect_delay{1000};
-    size_t max_reconnect_attempts = 10;
-    bool enable_ssl = false;
-    std::string ssl_cert_path;
-    std::string ssl_key_path;
-    std::unordered_map<std::string, std::string> headers;
+    std::chrono::milliseconds connect_timeout{10000};
+    std::chrono::milliseconds request_timeout{30000};
+    bool auto_reconnect = false;
+    std::size_t max_retries = 3;
+    std::chrono::milliseconds retry_delay{1000};
+};
+
+/**
+ * @struct transport_statistics
+ * @brief Transport performance statistics
+ */
+struct transport_statistics {
+    uint64_t messages_sent = 0;
+    uint64_t messages_received = 0;
+    uint64_t bytes_sent = 0;
+    uint64_t bytes_received = 0;
+    uint64_t errors = 0;
+    std::chrono::milliseconds avg_latency{0};
 };
 
 /**
  * @class transport_interface
- * @brief Interface for message transport implementations
+ * @brief Abstract interface for network transports
  *
  * Provides an abstraction for different transport mechanisms
  * (WebSocket, HTTP, etc.) for sending and receiving messages.
  */
 class transport_interface {
 public:
-    using message_handler = std::function<void(const message&)>;
-    using connection_handler = std::function<void()>;
-    using error_handler = std::function<void(const std::string&)>;
-
     virtual ~transport_interface() = default;
 
-    /**
-     * @brief Connect to the remote endpoint
-     * @return Result indicating success or failure
-     */
+    // Connection management
     virtual kcenon::common::VoidResult connect() = 0;
+    virtual kcenon::common::VoidResult disconnect() = 0;
+    virtual bool is_connected() const = 0;
+    virtual transport_state get_state() const = 0;
 
-    /**
-     * @brief Disconnect from the remote endpoint
-     */
-    virtual void disconnect() = 0;
-
-    /**
-     * @brief Check if connected
-     */
-    virtual bool is_connected() const noexcept = 0;
-
-    /**
-     * @brief Get current connection state
-     */
-    virtual transport_state state() const noexcept = 0;
-
-    /**
-     * @brief Send a message
-     * @param msg Message to send
-     * @return Result indicating success or failure
-     */
+    // Message sending
     virtual kcenon::common::VoidResult send(const message& msg) = 0;
+    virtual kcenon::common::VoidResult send_binary(
+        const std::vector<uint8_t>& data) = 0;
 
-    /**
-     * @brief Send a message asynchronously
-     * @param msg Message to send
-     * @return Future resolving to result
-     */
-    virtual std::future<kcenon::common::VoidResult> send_async(message msg) = 0;
+    // Callbacks
+    virtual void set_message_handler(
+        std::function<void(const message&)> handler) = 0;
+    virtual void set_binary_handler(
+        std::function<void(const std::vector<uint8_t>&)> handler) = 0;
+    virtual void set_state_handler(
+        std::function<void(transport_state)> handler) = 0;
+    virtual void set_error_handler(
+        std::function<void(const std::string&)> handler) = 0;
 
-    /**
-     * @brief Set message received handler
-     * @param handler Handler function
-     */
-    virtual void set_message_handler(message_handler handler) = 0;
+    // Statistics
+    virtual transport_statistics get_statistics() const = 0;
+    virtual void reset_statistics() = 0;
+};
 
-    /**
-     * @brief Set connection established handler
-     * @param handler Handler function
-     */
-    virtual void set_connection_handler(connection_handler handler) = 0;
-
-    /**
-     * @brief Set disconnection handler
-     * @param handler Handler function
-     */
-    virtual void set_disconnection_handler(connection_handler handler) = 0;
-
-    /**
-     * @brief Set error handler
-     * @param handler Handler function
-     */
-    virtual void set_error_handler(error_handler handler) = 0;
-
-    /**
-     * @brief Get transport options
-     */
-    virtual const transport_options& options() const noexcept = 0;
+/**
+ * @struct websocket_transport_config
+ * @brief Configuration for WebSocket transport
+ */
+struct websocket_transport_config : transport_config {
+    std::string path = "/ws";
+    bool use_ssl = false;
+    std::chrono::milliseconds ping_interval{30000};
+    bool auto_pong = true;
+    std::size_t max_message_size = 10 * 1024 * 1024;  // 10MB
+    std::chrono::milliseconds reconnect_delay{1000};
+    double reconnect_backoff_multiplier = 2.0;
+    std::chrono::milliseconds max_reconnect_delay{30000};
+    std::shared_ptr<kcenon::common::interfaces::IExecutor> executor = nullptr;
 };
 
 /**
@@ -228,33 +212,79 @@ public:
  * @brief WebSocket-based message transport
  *
  * Provides bidirectional message transport over WebSocket protocol.
- * Requires network_system integration.
+ * Requires KCENON_WITH_NETWORK_SYSTEM for full functionality.
  */
 class websocket_transport : public transport_interface {
 public:
-    explicit websocket_transport(const transport_options& options);
+    static constexpr bool is_available =
+#if KCENON_WITH_NETWORK_SYSTEM
+        true;
+#else
+        false;
+#endif
+
+    explicit websocket_transport(const websocket_transport_config& config);
     ~websocket_transport() override;
 
     // Non-copyable
     websocket_transport(const websocket_transport&) = delete;
     websocket_transport& operator=(const websocket_transport&) = delete;
 
+    // transport_interface implementation
     kcenon::common::VoidResult connect() override;
-    void disconnect() override;
-    bool is_connected() const noexcept override;
-    transport_state state() const noexcept override;
+    kcenon::common::VoidResult disconnect() override;
+    bool is_connected() const override;
+    transport_state get_state() const override;
     kcenon::common::VoidResult send(const message& msg) override;
-    std::future<kcenon::common::VoidResult> send_async(message msg) override;
-    void set_message_handler(message_handler handler) override;
-    void set_connection_handler(connection_handler handler) override;
-    void set_disconnection_handler(connection_handler handler) override;
-    void set_error_handler(error_handler handler) override;
-    const transport_options& options() const noexcept override { return options_; }
+    kcenon::common::VoidResult send_binary(const std::vector<uint8_t>& data) override;
+    void set_message_handler(
+        std::function<void(const message&)> handler) override;
+    void set_binary_handler(
+        std::function<void(const std::vector<uint8_t>&)> handler) override;
+    void set_state_handler(
+        std::function<void(transport_state)> handler) override;
+    void set_error_handler(
+        std::function<void(const std::string&)> handler) override;
+    transport_statistics get_statistics() const override;
+    void reset_statistics() override;
+
+    // WebSocket-specific methods
+    kcenon::common::VoidResult subscribe(const std::string& topic_pattern);
+    kcenon::common::VoidResult unsubscribe(const std::string& topic_pattern);
+    kcenon::common::VoidResult unsubscribe_all();
+    std::set<std::string> get_subscriptions() const;
+    kcenon::common::VoidResult send_text(const std::string& text);
+    kcenon::common::VoidResult ping();
+    void set_disconnect_handler(
+        std::function<void(uint16_t code, const std::string& reason)> handler);
 
 private:
     class impl;
     std::unique_ptr<impl> pimpl_;
-    transport_options options_;
+};
+
+/**
+ * @enum http_content_type
+ * @brief HTTP content types for message serialization
+ */
+enum class http_content_type {
+    json,
+    binary,
+    msgpack
+};
+
+/**
+ * @struct http_transport_config
+ * @brief Configuration for HTTP transport
+ */
+struct http_transport_config : transport_config {
+    std::string base_path = "/api/messages";
+    http_content_type content_type = http_content_type::json;
+    bool use_ssl = false;
+    std::map<std::string, std::string> default_headers;
+    std::string publish_endpoint = "/publish";
+    std::string subscribe_endpoint = "/subscribe";
+    std::string request_endpoint = "/request";
 };
 
 /**
@@ -262,117 +292,162 @@ private:
  * @brief HTTP-based message transport
  *
  * Provides message transport over HTTP/HTTPS protocol.
- * Uses request/response pattern for message exchange.
+ * Requires KCENON_WITH_NETWORK_SYSTEM for full functionality.
  */
 class http_transport : public transport_interface {
 public:
-    explicit http_transport(const transport_options& options);
+    static constexpr bool is_available =
+#if KCENON_WITH_NETWORK_SYSTEM
+        true;
+#else
+        false;
+#endif
+
+    explicit http_transport(const http_transport_config& config);
     ~http_transport() override;
 
     // Non-copyable
     http_transport(const http_transport&) = delete;
     http_transport& operator=(const http_transport&) = delete;
 
+    // transport_interface implementation
     kcenon::common::VoidResult connect() override;
-    void disconnect() override;
-    bool is_connected() const noexcept override;
-    transport_state state() const noexcept override;
+    kcenon::common::VoidResult disconnect() override;
+    bool is_connected() const override;
+    transport_state get_state() const override;
     kcenon::common::VoidResult send(const message& msg) override;
-    std::future<kcenon::common::VoidResult> send_async(message msg) override;
-    void set_message_handler(message_handler handler) override;
-    void set_connection_handler(connection_handler handler) override;
-    void set_disconnection_handler(connection_handler handler) override;
-    void set_error_handler(error_handler handler) override;
-    const transport_options& options() const noexcept override { return options_; }
+    kcenon::common::VoidResult send_binary(const std::vector<uint8_t>& data) override;
+    void set_message_handler(
+        std::function<void(const message&)> handler) override;
+    void set_binary_handler(
+        std::function<void(const std::vector<uint8_t>&)> handler) override;
+    void set_state_handler(
+        std::function<void(transport_state)> handler) override;
+    void set_error_handler(
+        std::function<void(const std::string&)> handler) override;
+    transport_statistics get_statistics() const override;
+    void reset_statistics() override;
 
-    /**
-     * @brief Set the HTTP endpoint path
-     * @param path URL path for HTTP requests
-     */
-    void set_path(std::string path);
-
-    /**
-     * @brief Set HTTP method for requests
-     * @param method HTTP method (GET, POST, PUT, etc.)
-     */
-    void set_method(std::string method);
+    // HTTP-specific methods
+    kcenon::common::Result<message> post(
+        const std::string& endpoint, const message& msg);
+    kcenon::common::Result<message> get(
+        const std::string& endpoint,
+        const std::map<std::string, std::string>& query = {});
+    void set_header(const std::string& key, const std::string& value);
+    void remove_header(const std::string& key);
 
 private:
     class impl;
     std::unique_ptr<impl> pimpl_;
-    transport_options options_;
+};
+
+// =============================================================================
+// Resilience Types
+// =============================================================================
+
+/**
+ * @brief Circuit breaker state from common_system resilience module
+ */
+using circuit_state = kcenon::common::resilience::circuit_state;
+
+/**
+ * @brief Circuit breaker configuration from common_system resilience module
+ */
+using circuit_breaker_config = kcenon::common::resilience::circuit_breaker_config;
+
+/**
+ * @struct retry_config
+ * @brief Configuration for retry behavior
+ */
+struct retry_config {
+    std::size_t max_retries = 3;
+    std::chrono::milliseconds initial_delay{100};
+    double backoff_multiplier = 2.0;
+    std::chrono::milliseconds max_delay{10000};
+    bool retry_on_timeout = true;
+};
+
+/**
+ * @struct resilient_transport_config
+ * @brief Configuration for resilient transport
+ */
+struct resilient_transport_config {
+    retry_config retry;
+    circuit_breaker_config circuit_breaker;
+    std::chrono::milliseconds operation_timeout{30000};
+    bool enable_fallback = false;
+};
+
+/**
+ * @struct resilience_statistics
+ * @brief Statistics for resilience features
+ */
+struct resilience_statistics {
+    uint64_t total_attempts = 0;
+    uint64_t successful_first_attempts = 0;
+    uint64_t successful_retries = 0;
+    uint64_t failed_after_retries = 0;
+    uint64_t circuit_opens = 0;
+    uint64_t circuit_closes = 0;
+    uint64_t rejected_by_circuit = 0;
+    circuit_state current_circuit_state = circuit_state::CLOSED;
+    std::chrono::milliseconds avg_success_latency{0};
+    std::chrono::milliseconds avg_failure_latency{0};
 };
 
 /**
  * @class resilient_transport
- * @brief Transport wrapper with resilience features
+ * @brief Transport wrapper with retry and circuit breaker
  *
- * Wraps another transport to provide:
- * - Automatic reconnection
- * - Circuit breaker pattern
- * - Request retries
- * - Fallback transports
+ * Wraps any transport_interface to provide:
+ * - Automatic retry with exponential backoff
+ * - Circuit breaker pattern for fault isolation
+ * - Timeout management
+ * - Fallback support
  */
 class resilient_transport : public transport_interface {
 public:
-    /**
-     * @struct resilience_options
-     * @brief Configuration for resilience features
-     */
-    struct resilience_options {
-        bool enable_circuit_breaker = true;
-        size_t circuit_breaker_threshold = 5;
-        std::chrono::milliseconds circuit_breaker_timeout{30000};
-        bool enable_retry = true;
-        size_t max_retries = 3;
-        std::chrono::milliseconds retry_delay{1000};
-        bool enable_fallback = false;
-    };
-
-    explicit resilient_transport(std::unique_ptr<transport_interface> inner,
-                                 const resilience_options& resilience = {});
+    resilient_transport(
+        std::shared_ptr<transport_interface> transport,
+        const resilient_transport_config& config = {});
     ~resilient_transport() override;
 
-    // Non-copyable
-    resilient_transport(const resilient_transport&) = delete;
-    resilient_transport& operator=(const resilient_transport&) = delete;
-
-    /**
-     * @brief Add a fallback transport
-     * @param transport Fallback transport instance
-     */
-    void add_fallback(std::unique_ptr<transport_interface> transport);
-
+    // transport_interface implementation
     kcenon::common::VoidResult connect() override;
-    void disconnect() override;
-    bool is_connected() const noexcept override;
-    transport_state state() const noexcept override;
+    kcenon::common::VoidResult disconnect() override;
+    bool is_connected() const override;
+    transport_state get_state() const override;
     kcenon::common::VoidResult send(const message& msg) override;
-    std::future<kcenon::common::VoidResult> send_async(message msg) override;
-    void set_message_handler(message_handler handler) override;
-    void set_connection_handler(connection_handler handler) override;
-    void set_disconnection_handler(connection_handler handler) override;
-    void set_error_handler(error_handler handler) override;
-    const transport_options& options() const noexcept override;
+    kcenon::common::VoidResult send_binary(const std::vector<uint8_t>& data) override;
+    void set_message_handler(
+        std::function<void(const message&)> handler) override;
+    void set_binary_handler(
+        std::function<void(const std::vector<uint8_t>&)> handler) override;
+    void set_state_handler(
+        std::function<void(transport_state)> handler) override;
+    void set_error_handler(
+        std::function<void(const std::string&)> handler) override;
+    transport_statistics get_statistics() const override;
+    void reset_statistics() override;
 
-    /**
-     * @brief Check if circuit breaker is open
-     */
-    bool is_circuit_open() const noexcept;
-
-    /**
-     * @brief Reset the circuit breaker
-     */
-    void reset_circuit();
+    // Resilience-specific methods
+    void set_fallback(std::shared_ptr<transport_interface> fallback);
+    circuit_state get_circuit_state() const;
+    void force_circuit_open();
+    void force_circuit_close();
+    resilience_statistics get_resilience_statistics() const;
+    void reset_resilience_statistics();
+    void set_retry_config(const retry_config& config);
+    void set_circuit_breaker_config(const circuit_breaker_config& config);
+    void set_circuit_state_handler(
+        std::function<void(circuit_state)> handler);
+    void set_retry_handler(
+        std::function<void(std::size_t attempt, std::chrono::milliseconds delay)> handler);
 
 private:
-    std::unique_ptr<transport_interface> inner_;
-    std::vector<std::unique_ptr<transport_interface>> fallbacks_;
-    resilience_options resilience_;
-    std::atomic<size_t> failure_count_{0};
-    std::atomic<bool> circuit_open_{false};
-    std::chrono::steady_clock::time_point circuit_opened_at_;
-    mutable std::mutex mutex_;
+    class impl;
+    std::unique_ptr<impl> pimpl_;
 };
 
 } // namespace kcenon::messaging::adapters
@@ -481,7 +556,7 @@ public:
         bool enable_persistence = false;
         bool enable_network = false;
         std::string persistence_path;
-        transport_options network_options;
+        adapters::transport_config network_options;
     };
 
     explicit integration_backend(const integration_options& options = {});
@@ -1124,5 +1199,121 @@ public:
 private:
     std::shared_ptr<kcenon::common::interfaces::IExecutor> executor_;
 };
+
+} // namespace kcenon::messaging::integration
+
+// =============================================================================
+// Health Check Adapters
+// =============================================================================
+
+export namespace kcenon::messaging::integration {
+
+/**
+ * @brief Map messaging health status to common_system health status
+ */
+inline kcenon::common::interfaces::health_status map_health_status(
+    collectors::message_bus_health_status status) {
+    switch (status) {
+        case collectors::message_bus_health_status::healthy:
+            return kcenon::common::interfaces::health_status::healthy;
+        case collectors::message_bus_health_status::degraded:
+            return kcenon::common::interfaces::health_status::degraded;
+        case collectors::message_bus_health_status::unhealthy:
+            return kcenon::common::interfaces::health_status::unhealthy;
+        case collectors::message_bus_health_status::critical:
+            return kcenon::common::interfaces::health_status::unhealthy;
+        default:
+            return kcenon::common::interfaces::health_status::unknown;
+    }
+}
+
+/**
+ * @class messaging_health_check
+ * @brief Health check for overall message bus health
+ */
+class messaging_health_check : public kcenon::common::interfaces::health_check {
+public:
+    using stats_provider = std::function<collectors::message_bus_stats()>;
+
+    messaging_health_check(
+        std::string bus_name,
+        stats_provider provider,
+        const collectors::message_bus_health_thresholds& thresholds = {});
+
+    [[nodiscard]] std::string get_name() const override;
+    [[nodiscard]] kcenon::common::interfaces::health_check_type get_type() const override;
+    kcenon::common::interfaces::health_check_result check() override;
+
+private:
+    std::string bus_name_;
+    stats_provider stats_provider_;
+    collectors::message_bus_health_monitor monitor_;
+};
+
+/**
+ * @class queue_health_check
+ * @brief Health check for message queue saturation
+ */
+class queue_health_check : public kcenon::common::interfaces::health_check {
+public:
+    using stats_provider = std::function<collectors::message_bus_stats()>;
+
+    queue_health_check(
+        std::string bus_name,
+        stats_provider provider,
+        double warn_threshold = 0.7,
+        double critical_threshold = 0.9);
+
+    [[nodiscard]] std::string get_name() const override;
+    [[nodiscard]] kcenon::common::interfaces::health_check_type get_type() const override;
+    [[nodiscard]] bool is_critical() const override;
+    kcenon::common::interfaces::health_check_result check() override;
+
+private:
+    std::string bus_name_;
+    stats_provider stats_provider_;
+    double warn_threshold_;
+    double critical_threshold_;
+};
+
+/**
+ * @class transport_health_check
+ * @brief Health check for transport layer connectivity
+ */
+class transport_health_check : public kcenon::common::interfaces::health_check {
+public:
+    transport_health_check(
+        std::string name,
+        std::shared_ptr<adapters::transport_interface> transport);
+
+    [[nodiscard]] std::string get_name() const override;
+    [[nodiscard]] kcenon::common::interfaces::health_check_type get_type() const override;
+    kcenon::common::interfaces::health_check_result check() override;
+
+private:
+    std::string name_;
+    std::shared_ptr<adapters::transport_interface> transport_;
+};
+
+/**
+ * @brief Create a composite health check aggregating all messaging components
+ */
+std::shared_ptr<kcenon::common::interfaces::composite_health_check>
+create_messaging_composite_check(
+    const std::string& bus_name,
+    std::function<collectors::message_bus_stats()> stats_provider,
+    const std::unordered_map<std::string,
+        std::shared_ptr<adapters::transport_interface>>& transports = {},
+    const collectors::message_bus_health_thresholds& thresholds = {});
+
+/**
+ * @brief Register messaging health checks with the global health monitor
+ */
+kcenon::common::Result<bool> register_messaging_health_checks(
+    const std::string& bus_name,
+    std::function<collectors::message_bus_stats()> stats_provider,
+    const std::unordered_map<std::string,
+        std::shared_ptr<adapters::transport_interface>>& transports = {},
+    const collectors::message_bus_health_thresholds& thresholds = {});
 
 } // namespace kcenon::messaging::integration
