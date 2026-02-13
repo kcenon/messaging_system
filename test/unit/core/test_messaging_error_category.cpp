@@ -145,3 +145,110 @@ TEST(MessagingErrorCategoryTest, ResultIntegration) {
 
     EXPECT_FALSE(result.is_ok());
 }
+
+// =============================================================================
+// codes enum Tests
+// =============================================================================
+
+TEST(MessagingErrorCategoryTest, CodesEnumValuesMatchConstants) {
+    // Verify enum values are identical to constexpr int values
+    EXPECT_EQ(static_cast<int>(msg::messaging_error_category::invalid_message),
+              msg::error::invalid_message);
+    EXPECT_EQ(static_cast<int>(msg::messaging_error_category::queue_full),
+              msg::error::queue_full);
+    EXPECT_EQ(static_cast<int>(msg::messaging_error_category::routing_failed),
+              msg::error::routing_failed);
+    EXPECT_EQ(static_cast<int>(msg::messaging_error_category::subscription_failed),
+              msg::error::subscription_failed);
+    EXPECT_EQ(static_cast<int>(msg::messaging_error_category::publication_failed),
+              msg::error::publication_failed);
+    EXPECT_EQ(static_cast<int>(msg::messaging_error_category::connection_failed),
+              msg::error::connection_failed);
+    EXPECT_EQ(static_cast<int>(msg::messaging_error_category::task_not_found),
+              msg::error::task_not_found);
+    EXPECT_EQ(static_cast<int>(msg::messaging_error_category::dlq_full),
+              msg::error::dlq_full);
+    EXPECT_EQ(static_cast<int>(msg::messaging_error_category::not_supported),
+              msg::error::not_supported);
+    EXPECT_EQ(static_cast<int>(msg::messaging_error_category::not_connected),
+              msg::error::not_connected);
+}
+
+TEST(MessagingErrorCategoryTest, MakeTypedErrorCodeFromEnum) {
+    auto ec = msg::make_typed_error_code(
+        msg::messaging_error_category::queue_full);
+
+    EXPECT_EQ(ec.value(), msg::error::queue_full);
+    EXPECT_EQ(ec.category().name(), "messaging");
+    EXPECT_EQ(ec.message(), "Message queue full");
+    EXPECT_TRUE(static_cast<bool>(ec));
+}
+
+TEST(MessagingErrorCategoryTest, EnumCodesAllGroups) {
+    // Test one code from each error group via the enum
+    auto msg_ec = msg::make_typed_error_code(
+        msg::messaging_error_category::invalid_message);
+    EXPECT_EQ(msg_ec.value(), -700);
+
+    auto task_ec = msg::make_typed_error_code(
+        msg::messaging_error_category::task_timeout);
+    EXPECT_EQ(task_ec.value(), -709);
+
+    auto route_ec = msg::make_typed_error_code(
+        msg::messaging_error_category::unknown_topic);
+    EXPECT_EQ(route_ec.value(), -721);
+
+    auto queue_ec = msg::make_typed_error_code(
+        msg::messaging_error_category::queue_stopped);
+    EXPECT_EQ(queue_ec.value(), -742);
+
+    auto sub_ec = msg::make_typed_error_code(
+        msg::messaging_error_category::duplicate_subscription);
+    EXPECT_EQ(sub_ec.value(), -762);
+
+    auto pub_ec = msg::make_typed_error_code(
+        msg::messaging_error_category::broker_unavailable);
+    EXPECT_EQ(pub_ec.value(), -783);
+
+    auto transport_ec = msg::make_typed_error_code(
+        msg::messaging_error_category::not_connected);
+    EXPECT_EQ(transport_ec.value(), -794);
+}
+
+TEST(MessagingErrorCategoryTest, EnumResultIntegration) {
+    // Direct construction via Result<T> constructor
+    auto ec = msg::make_typed_error_code(
+        msg::messaging_error_category::broker_not_started);
+    cmn::Result<std::string> result{ec};
+
+    EXPECT_FALSE(result.is_ok());
+
+    // Factory method
+    auto result2 = cmn::Result<int>::err(
+        msg::make_typed_error_code(
+            msg::messaging_error_category::queue_full));
+
+    EXPECT_FALSE(result2.is_ok());
+}
+
+TEST(MessagingErrorCategoryTest, EnumAndIntProduceSameErrorCode) {
+    // Verify enum-based and int-based construction produce equal results
+    auto from_enum = msg::make_typed_error_code(
+        msg::messaging_error_category::queue_full);
+    auto from_int = msg::make_messaging_error_code(msg::error::queue_full);
+
+    EXPECT_EQ(from_enum, from_int);
+    EXPECT_EQ(from_enum.value(), from_int.value());
+    EXPECT_EQ(from_enum.category(), from_int.category());
+    EXPECT_EQ(from_enum.message(), from_int.message());
+}
+
+TEST(MessagingErrorCategoryTest, EnumCrossCategoryInequality) {
+    auto messaging_ec = msg::make_typed_error_code(
+        msg::messaging_error_category::invalid_message);
+    auto common_ec = cmn::make_typed_error_code(
+        cmn::common_error_category::internal_error);
+
+    // Same underlying int value could exist but different categories
+    EXPECT_NE(messaging_ec, common_ec);
+}
