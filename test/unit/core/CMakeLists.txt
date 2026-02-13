@@ -74,3 +74,18 @@ target_link_libraries(test_message_broker
 
 add_test(NAME test_message_broker COMMAND test_message_broker)
 set_tests_properties(test_message_broker PROPERTIES TIMEOUT 60)
+
+# Test: messaging_error_category
+add_executable(test_messaging_error_category
+    test_messaging_error_category.cpp
+)
+
+target_link_libraries(test_messaging_error_category
+    PRIVATE
+        messaging_system_core
+        GTest::gtest
+        GTest::gtest_main
+)
+
+add_test(NAME test_messaging_error_category COMMAND test_messaging_error_category)
+set_tests_properties(test_messaging_error_category PROPERTIES TIMEOUT 60)
