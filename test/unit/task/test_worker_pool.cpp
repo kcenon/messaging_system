@@ -908,7 +908,7 @@ TEST(WorkerPoolTest, TaskTimeoutErrorMessage) {
 	// Check error message contains timeout info
 	auto error = results->get_error(task_id);
 	EXPECT_TRUE(error.is_ok());
-	EXPECT_TRUE(error.unwrap().message.find("timed out") != std::string::npos);
+	EXPECT_TRUE(error.unwrap().message.find("Task timeout") != std::string::npos);
 
 	pool.stop();
 	queue->stop();

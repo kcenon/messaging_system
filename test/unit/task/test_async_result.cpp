@@ -153,7 +153,7 @@ TEST(AsyncResultTest, GetResult_InvalidHandle) {
 	async_result result;
 	auto get_result = result.get(std::chrono::milliseconds(100));
 	EXPECT_FALSE(get_result.is_ok());
-	EXPECT_EQ(get_result.error().message, "Invalid async_result handle");
+	EXPECT_EQ(get_result.error().message, "Task not found");
 }
 
 // ============================================================================

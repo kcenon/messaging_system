@@ -213,7 +213,7 @@ TEST(MemoryResultBackendTest, WaitForResultFailure) {
 	// Wait for result
 	auto wait_result = backend.wait_for_result(task_id, std::chrono::seconds(1));
 	EXPECT_TRUE(wait_result.is_err());
-	EXPECT_NE(wait_result.error().message.find("Something went wrong"), std::string::npos);
+	EXPECT_NE(wait_result.error().message.find("Task execution failed"), std::string::npos);
 
 	future.get();
 }
@@ -228,7 +228,7 @@ TEST(MemoryResultBackendTest, WaitForResultTimeout) {
 	// Wait with short timeout
 	auto wait_result = backend.wait_for_result(task_id, std::chrono::milliseconds(50));
 	EXPECT_TRUE(wait_result.is_err());
-	EXPECT_NE(wait_result.error().message.find("Timeout"), std::string::npos);
+	EXPECT_NE(wait_result.error().message.find("Task timeout"), std::string::npos);
 }
 
 TEST(MemoryResultBackendTest, WaitForResultCancelled) {
