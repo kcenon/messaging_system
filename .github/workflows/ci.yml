@@ -45,6 +45,9 @@ jobs:
         fetch-depth: 1
         token: ${{ secrets.GITHUB_TOKEN }}
 
+    # Dependencies are cloned from HEAD of each repo's default branch.
+    # If a dependency has test failures, they must be fixed upstream first.
+    # To debug: check the "Log dependency versions" step for exact commits used.
     - name: Checkout dependencies (Unix)
       if: runner.os != 'Windows'
       run: |
@@ -67,6 +70,25 @@ jobs:
         git clone --depth 1 https://github.com/kcenon/container_system.git
         git clone --depth 1 https://github.com/kcenon/network_system.git
         git clone --depth 1 https://github.com/kcenon/monitoring_system.git
+
+    - name: Log dependency versions (Unix)
+      if: runner.os != 'Windows'
+      run: |
+        echo "=== Dependency commits cloned for this CI run ==="
+        for dep in common_system thread_system logger_system container_system network_system monitoring_system; do
+          commit=$(git -C "../$dep" rev-parse HEAD)
+          echo "$dep: $commit"
+        done
+
+    - name: Log dependency versions (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        Write-Host "=== Dependency commits cloned for this CI run ==="
+        foreach ($dep in @("common_system","thread_system","logger_system","container_system","network_system","monitoring_system")) {
+          $commit = git -C "../$dep" rev-parse HEAD
+          Write-Host "${dep}: $commit"
+        }
 
     - name: Install dependencies (Ubuntu)
       if: runner.os == 'Linux'
@@ -237,10 +259,9 @@ jobs:
         # These tests pass on macOS and Windows but have issues on Linux
         if [ "$RUNNER_OS" = "Linux" ]; then
           ctest --output-on-failure --timeout 120 \
-            -E "TaskLifecycleTest|WorkerScenariosTest|FailureRecoveryTest|SchedulingTest|ConcurrentLoadTest" \
-            || echo "Some tests failed"
+            -E "TaskLifecycleTest|WorkerScenariosTest|FailureRecoveryTest|SchedulingTest|ConcurrentLoadTest"
         else
-          ctest --output-on-failure --timeout 120 || echo "Some tests failed"
+          ctest --output-on-failure --timeout 120
         fi
 
     - name: Run tests (Windows)
@@ -248,10 +269,12 @@ jobs:
       shell: pwsh
       run: |
         cd build
-        # Run tests with timeout and parallel execution
         # Exclude test_request_reply due to known flaky behavior on Windows
         ctest -C $env:BUILD_TYPE --output-on-failure --timeout 120 --parallel 4 -E "test_request_reply"
-        if ($LASTEXITCODE -ne 0) { Write-Host "Some tests failed" }
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "::error::Some tests failed on Windows"
+          exit $LASTEXITCODE
+        }
 
     - name: Upload test results
       if: always()
@@ -338,8 +361,7 @@ jobs:
       run: |
         cd build
         ctest --output-on-failure --timeout 120 \
-          -E "TaskLifecycleTest|WorkerScenariosTest|FailureRecoveryTest|SchedulingTest|ConcurrentLoadTest" \
-          || echo "Some tests failed"
+          -E "TaskLifecycleTest|WorkerScenariosTest|FailureRecoveryTest|SchedulingTest|ConcurrentLoadTest"
 
   # Sanitizer testing disabled temporarily due to fmt dependency issues
   # Will be re-enabled once thread_system fmt dependency is resolved
