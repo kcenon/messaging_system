@@ -53,5 +53,11 @@
         "benchmark"
       ]
     }
-  }
+  },
+  "overrides": [
+    { "name": "gtest", "version": "1.17.0" },
+    { "name": "benchmark", "version": "1.9.5" },
+    { "name": "spdlog", "version": "1.15.3" },
+    { "name": "asio", "version": "1.30.2" }
+  ]
 }
