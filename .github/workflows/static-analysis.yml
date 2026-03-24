@@ -11,7 +11,7 @@ jobs:
   clang-tidy:
     name: Clang-Tidy Analysis
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 60
     continue-on-error: true  # Phase 0: Baseline collection
 
     steps:
@@ -60,7 +60,11 @@ jobs:
       run: |
         cd build
         # Phase 0: Just collect baseline, don't fail
-        run-clang-tidy -p . || echo "clang-tidy found issues (baseline collection)"
+        # Scope to messaging_system sources only (exclude dependency code)
+        run-clang-tidy -p . \
+          -header-filter='messaging_system/(include|src)/.*' \
+          ../src/ ../include/ \
+          || echo "clang-tidy found issues (baseline collection)"
 
     - name: Upload clang-tidy results
       if: always()
