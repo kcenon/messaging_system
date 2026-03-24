@@ -1,0 +1,14 @@
+{
+  "default-registry": {
+    "kind": "builtin",
+    "baseline": "d90a9b159c08169f39adcd1b0f1ac0ca12c4b96c"
+  },
+  "registries": [
+    {
+      "kind": "git",
+      "repository": "https://github.com/kcenon/vcpkg-registry.git",
+      "baseline": "77cc46d5ba5e2aef1581f2ec674f83e1ac906b43",
+      "packages": ["kcenon-*"]
+    }
+  ]
+}
