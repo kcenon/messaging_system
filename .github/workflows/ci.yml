@@ -109,58 +109,10 @@ jobs:
           echo "VCPKG_FORCE_SYSTEM_BINARIES=arm" >> $GITHUB_ENV
         fi
 
-    - name: Cache vcpkg
-      uses: actions/cache@v4
-      id: vcpkg-cache
+    - name: Setup vcpkg
+      uses: kcenon/common_system/.github/actions/setup-vcpkg@main
       with:
-        path: |
-          ${{ github.workspace }}/vcpkg
-          !${{ github.workspace }}/vcpkg/buildtrees
-          !${{ github.workspace }}/vcpkg/packages
-          !${{ github.workspace }}/vcpkg/downloads
-        key: ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-tool-${{ hashFiles('vcpkg.json') }}
-        restore-keys: |
-          ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-tool-
-
-    - name: Set up vcpkg (Unix)
-      if: runner.os != 'Windows'
-      run: |
-        if [ ! -d "vcpkg" ]; then
-          git clone https://github.com/Microsoft/vcpkg.git
-        fi
-        cd vcpkg
-        if [ "${{ steps.vcpkg-cache.outputs.cache-hit }}" != "true" ]; then
-          git pull
-          ./bootstrap-vcpkg.sh
-        fi
-        cd ..
-
-    - name: Set up vcpkg (Windows)
-      if: runner.os == 'Windows'
-      shell: pwsh
-      run: |
-        if (!(Test-Path "vcpkg")) {
-          git clone https://github.com/Microsoft/vcpkg.git
-        }
-        cd vcpkg
-        if ("${{ steps.vcpkg-cache.outputs.cache-hit }}" -ne "true") {
-          git pull
-          .\bootstrap-vcpkg.bat
-        }
-        cd ..
-
-    - name: Determine vcpkg commit (Unix)
-      if: runner.os != 'Windows'
-      id: vcpkg-commit-unix
-      run: echo "commit=$(git -C vcpkg rev-parse HEAD)" >> $GITHUB_OUTPUT
-
-    - name: Determine vcpkg commit (Windows)
-      if: runner.os == 'Windows'
-      id: vcpkg-commit-windows
-      shell: pwsh
-      run: |
-        $commit = git -C vcpkg rev-parse HEAD
-        "commit=$commit" >> $env:GITHUB_OUTPUT
+        extra-cache-key: 'messaging-system'
 
     # Cache vcpkg_installed for Unix only (Windows uses vcpkg binary caching via x-gha)
     - name: Cache vcpkg installed (Unix)
@@ -169,14 +121,14 @@ jobs:
       id: vcpkg-installed
       with:
         path: ${{ github.workspace }}/vcpkg_installed
-        key: ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-testing-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}-${{ steps.vcpkg-commit-unix.outputs.commit }}
+        key: ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-testing-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
         restore-keys: |
           ${{ runner.os }}-${{ matrix.compiler }}-vcpkg-installed-${{ matrix.triplet }}-testing-
 
     - name: Install dependencies with vcpkg (Unix)
       if: runner.os != 'Windows' && steps.vcpkg-installed.outputs.cache-hit != 'true'
       run: |
-        ./vcpkg/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }} --x-feature=testing || echo "vcpkg install failed, will use system libraries"
+        ${{ env.VCPKG_ROOT }}/vcpkg install --x-manifest-root=. --x-install-root=${{ github.workspace }}/vcpkg_installed --triplet ${{ matrix.triplet }} --x-feature=testing || echo "vcpkg install failed, will use system libraries"
 
     # Windows: vcpkg toolchain handles installation in manifest mode
     # Uses binary caching (VCPKG_BINARY_SOURCES) for build speed
@@ -220,7 +172,7 @@ jobs:
           -DMESSAGING_BUILD_EXAMPLES=OFF `
           -DMESSAGING_USE_LOCAL_SYSTEMS=ON `
           -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE `
-          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake `
+          -DCMAKE_TOOLCHAIN_FILE=${{ env.CMAKE_TOOLCHAIN_FILE }} `
           -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} `
           -DVCPKG_MANIFEST_FEATURES=testing
 
