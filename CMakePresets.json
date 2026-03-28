@@ -7,6 +7,18 @@
   },
   "configurePresets": [
     {
+      "name": "vcpkg",
+      "displayName": "vcpkg Manifest Mode",
+      "description": "Build using vcpkg manifest mode with ecosystem dependencies",
+      "binaryDir": "${sourceDir}/build-vcpkg",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "MESSAGING_USE_EXTERNAL_SYSTEMS": "ON",
+        "MESSAGING_USE_FETCHCONTENT": "OFF"
+      }
+    },
+    {
       "name": "default",
       "displayName": "Default Config",
       "description": "Default build using system-installed external packages",
@@ -165,6 +177,10 @@
     }
   ],
   "buildPresets": [
+    {
+      "name": "vcpkg",
+      "configurePreset": "vcpkg"
+    },
     {
       "name": "default",
       "configurePreset": "default"
