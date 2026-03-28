@@ -215,6 +215,20 @@ If you encounter issues not covered here:
 
 ---
 
+## vcpkg Baseline Issues
+
+If dependencies fail to resolve or you see unexpected version mismatches, ensure `vcpkg-configuration.json` has a current baseline. An outdated baseline can cause missing or incompatible packages.
+
+**Quick check**:
+```bash
+# View current baseline
+cat vcpkg-configuration.json | grep baseline
+```
+
+If the baseline is stale, update it to the latest vcpkg commit hash from the [vcpkg repository](https://github.com/microsoft/vcpkg).
+
+---
+
 ## Known Limitations
 
 1. **FetchContent + Local Systems**: Cannot coexist due to CMake target name conflicts
