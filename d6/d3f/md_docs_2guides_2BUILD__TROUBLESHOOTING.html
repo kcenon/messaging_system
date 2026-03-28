@@ -235,6 +235,13 @@ Getting Help</h1>
 </ol>
 <hr  />
 <h1><a class="anchor" id="autotoc_md859"></a>
+vcpkg Baseline Issues</h1>
+<p>If dependencies fail to resolve or you see unexpected version mismatches, ensure <code>vcpkg-configuration.json</code> has a current baseline. An outdated baseline can cause missing or incompatible packages.</p>
+<p><b>Quick check</b>: </p><div class="fragment"><div class="line"># View current baseline</div>
+<div class="line">cat vcpkg-configuration.json | grep baseline</div>
+</div><!-- fragment --><p>If the baseline is stale, update it to the latest vcpkg commit hash from the <a href="https://github.com/microsoft/vcpkg">vcpkg repository</a>.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md861"></a>
 Known Limitations</h1>
 <ol type="1">
 <li><b>FetchContent + Local Systems</b>: Cannot coexist due to CMake target name conflicts</li>
@@ -243,29 +250,29 @@ Known Limitations</h1>
 <li><b>Integration Tests</b>: Require all 7 external systems to be properly configured</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md861"></a>
+<h1><a class="anchor" id="autotoc_md863"></a>
 Platform-Specific Notes</h1>
-<h2><a class="anchor" id="autotoc_md862"></a>
+<h2><a class="anchor" id="autotoc_md864"></a>
 macOS</h2>
 <ul>
 <li>Use Homebrew for dependencies: <code>brew install cmake yaml-cpp</code></li>
 <li>Xcode Command Line Tools required: <code>xcode-select --install</code></li>
 <li>Native pthread support (no additional libraries needed)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md863"></a>
+<h2><a class="anchor" id="autotoc_md865"></a>
 Linux (Ubuntu/Debian)</h2>
 <ul>
 <li>Install build essentials: <code>sudo apt-get install build-essential cmake git</code></li>
 <li>GCC 11+ or Clang 14+ recommended for C++20 support</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md864"></a>
+<h2><a class="anchor" id="autotoc_md866"></a>
 Linux (Fedora/RHEL)</h2>
 <ul>
 <li>Install development tools: <code>sudo dnf groupinstall "Development Tools"</code></li>
 <li>Enable PowerTools repo for some dependencies</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md866"></a>
+<h1><a class="anchor" id="autotoc_md868"></a>
 Quick Fix Summary</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
