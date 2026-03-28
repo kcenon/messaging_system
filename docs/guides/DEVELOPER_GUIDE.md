@@ -41,6 +41,10 @@ mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release \
          -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build . --parallel
+
+# Or use the vcpkg preset (requires VCPKG_ROOT environment variable)
+cmake --preset vcpkg
+cmake --build --preset vcpkg
 ```
 
 ### 3. Your First Application

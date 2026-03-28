@@ -518,11 +518,11 @@ macro(_unified_resolve_find_package DEP_NAME VERSION IS_REQUIRED)
         set(_pkg_name "${DEP_NAME}")
     endif()
 
-    # Try find_package
+    # Try find_package (CONFIG mode preferred for vcpkg-installed packages)
     if(VERSION)
-        find_package(${_pkg_name} ${VERSION} QUIET)
+        find_package(${_pkg_name} ${VERSION} CONFIG QUIET)
     else()
-        find_package(${_pkg_name} QUIET)
+        find_package(${_pkg_name} CONFIG QUIET)
     endif()
 
     if(${_pkg_name}_FOUND)

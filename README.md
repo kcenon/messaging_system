@@ -200,7 +200,11 @@ cd messaging_system
 cmake -B build -DMESSAGING_USE_LOCAL_SYSTEMS=ON
 cmake --build build -j
 
-# Alternative: Build with vcpkg
+# Alternative: Build with vcpkg (using preset)
+cmake --preset vcpkg
+cmake --build --preset vcpkg
+
+# Alternative: Build with vcpkg (manual toolchain)
 cmake -B build -DCMAKE_TOOLCHAIN_FILE=/path/to/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build build -j
 ```
