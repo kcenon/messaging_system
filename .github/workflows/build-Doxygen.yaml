@@ -1,5 +1,12 @@
 name: Generate-Documentation
 
+# Builds the Doxygen documentation as a check only. This workflow used to push
+# the output to the gh-pages branch, which no site served (GitHub Pages is
+# disabled) and which had grown to 275 MB; the branch was deleted in
+# kcenon/messaging_system#249. To publish the documentation again, add an
+# actions/upload-pages-artifact + actions/deploy-pages job instead of pushing
+# to a branch.
+
 on:
   push:
     branches:
@@ -12,15 +19,13 @@ on:
 jobs:
   generate_docs:
     permissions:
-      contents: write
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: true
-          clean: true
+          persist-credentials: false
           fetch-depth: 1
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Doxygen
         run: |
@@ -37,11 +42,3 @@ jobs:
 
       - name: Generate Documentation
         run: doxygen Doxyfile
-
-      - name: Deploy Documentation
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./documents/html
-          commit_message: "Update documentation via GitHub Actions"
-          enable_jekyll: false
